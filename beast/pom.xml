@@ -44,6 +44,14 @@
 			</configuration>
 		</plugin>
 	  </plugins>
+          <resources>
+            <resource>
+              <directory>src/resources/stringfiles</directory>
+                <includes>
+                    <include>/*.txt</include>
+              </includes>
+            </resource>
+    </resources>
 	</build>
 
 </project>
