@@ -25,26 +25,30 @@ public class UserInputHandler implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent ke) {
-        if(isArrowKey(ke)) return;
-        else if(!isShortcut(ke)) {
-            codeInputHandler.handleKey(ke);
+    public void keyTyped(KeyEvent ke) {    
+        if(letTextPaneHandleKey(ke)) {
+            return;
+        }
+        if(!isShortcut(ke)) {
+            codeInputHandler.handleKey(ke);            
         }
         ke.consume();
     }
 
     @Override
-    public void keyPressed(KeyEvent ke) {
-        if(isArrowKey(ke)) return;   
+    public void keyPressed(KeyEvent ke) {  
+        if(letTextPaneHandleKey(ke)) {
+            return;
+        }
         ke.consume();
     }
 
     @Override
-    public void keyReleased(KeyEvent ke) {  
-        if(isArrowKey(ke)) return;
-        else if(isShortcut(ke)) {
-            shortcutHandler.handleKey(ke);
+    public void keyReleased(KeyEvent ke) {
+        if(letTextPaneHandleKey(ke)) {
             return;
+        } else if(isShortcut(ke)) {
+            shortcutHandler.handleKey(ke);
         }
         ke.consume();
     }
@@ -53,10 +57,14 @@ public class UserInputHandler implements KeyListener {
         return ke.isControlDown();
     }
     
-    private boolean isArrowKey(KeyEvent ke) {
-        return (ke.getKeyCode() == KeyEvent.VK_LEFT ||
+    private boolean letTextPaneHandleKey(KeyEvent ke) {
+        return ke.getKeyCode() == KeyEvent.VK_LEFT ||
                 ke.getKeyCode() == KeyEvent.VK_RIGHT ||
                 ke.getKeyCode() == KeyEvent.VK_UP ||
-                ke.getKeyCode() == KeyEvent.VK_DOWN);
+                ke.getKeyCode() == KeyEvent.VK_DOWN ||
+                ke.getKeyChar()== KeyEvent.VK_DELETE ||
+                ke.getKeyChar()== KeyEvent.VK_BACK_SPACE;
+                
     }
+    
 }
