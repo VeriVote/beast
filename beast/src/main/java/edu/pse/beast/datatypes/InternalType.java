@@ -11,5 +11,28 @@ package edu.pse.beast.datatypes;
  */
 
 public enum InternalType {
-    VOTER, CANDIDATE, SEAT, APPROVAL, WEIGHTEDAPPROVAL, INTEGER
+    /**
+     * VoterType
+     */
+    VOTER, 
+    /**
+     * CandidateType
+     */
+    CANDIDATE,
+    /**
+     * SeatType
+     */
+    SEAT,
+    /**
+     * ApprovalType
+     */
+    APPROVAL,
+    /**
+     * Weithedapprovaltype
+     */
+    WEIGHTEDAPPROVAL, 
+    /**
+     * IntergerType
+     */
+    INTEGER
 }
