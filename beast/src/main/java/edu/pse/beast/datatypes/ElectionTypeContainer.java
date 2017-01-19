@@ -1,5 +1,10 @@
 package edu.pse.beast.datatypes;
 
+/**
+ * 
+ * @author Lukas
+ *
+ */
 public class ElectionTypeContainer {
     private final InternalTypeContainer type;
     private int lowerBound;

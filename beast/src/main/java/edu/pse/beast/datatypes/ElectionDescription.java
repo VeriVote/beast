@@ -1,5 +1,10 @@
 package edu.pse.beast.datatypes;
 
+/**
+ * 
+ * @author Lukas
+ *
+ */
 public class ElectionDescription {
     private String name;
     private String code;
