@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.pse.beast.codearea.InputToCode.NewlineInserter;
+package edu.pse.beast.codearea.InputToCode.NewlineInserter;
 
+import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
@@ -12,11 +13,11 @@ import javax.swing.text.StyledDocument;
  *
  * @author Holger-Desktop
  */
-public class StandardNewlineInserter implements NewlineInserter {
-
+public class StandardNewlineInserter extends NewlineInserter {
     @Override
-    public void insertNewlineAtCurrentPosition(StyledDocument doc, int pos) throws BadLocationException {
-        doc.insertString(pos, Character.toString('\r'), null);
+    public void insertNewlineAtCurrentPosition(JTextPane pane, int pos) throws BadLocationException {
+        pane.getStyledDocument().insertString(pos, "\r", null);
+        setTabLevel(pane, pos);
     }
     
 }

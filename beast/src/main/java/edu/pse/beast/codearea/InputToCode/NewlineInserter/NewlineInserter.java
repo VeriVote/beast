@@ -3,15 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.pse.beast.codearea.InputToCode.NewlineInserter;
+package edu.pse.beast.codearea.InputToCode.NewlineInserter;
 
+import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.StyledDocument;
 
 /**
  *
  * @author Holger-Desktop
  */
-public interface NewlineInserter {
-    public void insertNewlineAtCurrentPosition(StyledDocument doc, int pos) throws BadLocationException ;
+public abstract class NewlineInserter {
+    public abstract void insertNewlineAtCurrentPosition(JTextPane pane, int pos) throws BadLocationException; 
+    
+    protected void setTabLevel(JTextPane pane, int pos) throws BadLocationException {
+        int scopeLvl = getScopeLevel(pane.getText(), pos);
+        for(int i = 0; i < scopeLvl; ++i) {
+            pane.getStyledDocument().insertString(pos + 1, "\t", null);
+        }
+    }
+    
+    private int getScopeLevel(String text, int pos) {
+        int lvl = 0;
+        for(int i = 0; i < pos; ++i) {
+            if(text.charAt(i) == '{') ++lvl;
+            else if(text.charAt(i) == '}') --lvl;
+        }
+        return lvl;
+    }
 }

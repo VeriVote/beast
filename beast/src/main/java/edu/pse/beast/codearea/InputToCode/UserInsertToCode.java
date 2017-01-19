@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.pse.beast.codearea.InputToCode;
+package edu.pse.beast.codearea.InputToCode;
 
-import com.pse.beast.codearea.InputToCode.NewlineInserter.NewlineInserter;
-import com.pse.beast.codearea.InputToCode.NewlineInserter.NewlineInserterChooser;
+import edu.pse.beast.codearea.InputToCode.NewlineInserter.NewlineInserter;
+import edu.pse.beast.codearea.InputToCode.NewlineInserter.NewlineInserterChooser;
 import javax.swing.JTextPane;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
@@ -26,35 +26,40 @@ public class UserInsertToCode implements CaretListener {
     private NewlineInserterChooser newlineInserterChooser;
     private NewlineInserter currentInserter;
     private int currentCaretPosition;
-    
+    private TabHandler tabHandler;
     public UserInsertToCode(JTextPane pane, OpenCloseCharList openCloseCharList) {
         this.pane = pane;
         this.pane.addCaretListener(this);
         this.styledDoc = pane.getStyledDocument();
+        this.tabHandler = new TabHandler(this.pane);
         this.openCloseCharList = openCloseCharList;
         this.lockedLines = new LockedLinesHandler(styledDoc);
         this.newlineInserterChooser = new NewlineInserterChooser(pane, lockedLines);
         this.currentInserter = this.newlineInserterChooser.getNewlineInserter();
-        
+                
     }
 
     void insertNewline() throws BadLocationException {    
-        currentInserter.insertNewlineAtCurrentPosition(styledDoc, currentCaretPosition);               
+        currentInserter.insertNewlineAtCurrentPosition(pane, currentCaretPosition);               
         newlineInserterChooser.getNewlineInserter();
+    }
+    
+    void insertTab() throws BadLocationException {
+        tabHandler.insertTabAtPos(currentCaretPosition);
     }
 
     void insertChar(char keyChar) throws BadLocationException {
         if(openCloseCharList.isOpenChar(keyChar)) {
             OpenCloseChar occ = openCloseCharList.getOpenCloseChar(keyChar);
-            occ.insertIntoDocument(currentCaretPosition, styledDoc);
+            occ.insertIntoDocument(pane, currentCaretPosition);
         } else {
             styledDoc.insertString(currentCaretPosition, Character.toString(keyChar), null);
         }
-        newlineInserterChooser.getNewlineInserter();
     }
 
     @Override
     public void caretUpdate(CaretEvent ce) {
         currentCaretPosition = ce.getDot();
+        currentInserter = newlineInserterChooser.getNewlineInserter();
     }
 }

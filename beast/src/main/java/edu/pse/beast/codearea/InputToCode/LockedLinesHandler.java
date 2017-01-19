@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.pse.beast.codearea.InputToCode;
+package edu.pse.beast.codearea.InputToCode;
 
 import java.util.ArrayList;
 import javax.swing.event.DocumentEvent;

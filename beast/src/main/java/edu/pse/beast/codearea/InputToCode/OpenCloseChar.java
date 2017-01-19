@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.pse.beast.codearea.InputToCode;
+package edu.pse.beast.codearea.InputToCode;
 
+import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
@@ -30,8 +31,9 @@ public class OpenCloseChar {
         return this.close;
     }
 
-    public void insertIntoDocument(int currentCaretPosition, StyledDocument styledDoc) throws BadLocationException {
+    public void insertIntoDocument(JTextPane pane, int pos) throws BadLocationException {        
         String stringToInsert = Character.toString(open) + Character.toString(close);
-        styledDoc.insertString(currentCaretPosition, stringToInsert, null);
+        pane.getStyledDocument().insertString(pos, stringToInsert, null);
+        pane.setCaretPosition(pos + 1);
     }
 }

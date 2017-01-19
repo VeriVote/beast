@@ -5,8 +5,8 @@
  */
 package edu.pse.beast.CodeArea.InputToCode;
 
-import com.pse.beast.codearea.InputToCode.OpenCloseChar;
-import com.pse.beast.codearea.InputToCode.OpenCloseCharList;
+import edu.pse.beast.codearea.InputToCode.OpenCloseChar;
+import edu.pse.beast.codearea.InputToCode.OpenCloseCharList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

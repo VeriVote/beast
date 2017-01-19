@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.pse.beast.codearea.InputToCode;
+package edu.pse.beast.codearea.InputToCode;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -28,8 +28,10 @@ public class UserInputHandler implements KeyListener {
     public void keyTyped(KeyEvent ke) {    
         if(letTextPaneHandleKey(ke)) {
             return;
+        } else if(isShortcut(ke)) {
+            return;
         }
-        if(!isShortcut(ke)) {
+        else {
             codeInputHandler.handleKey(ke);            
         }
         ke.consume();
@@ -37,7 +39,7 @@ public class UserInputHandler implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent ke) {  
-        if(letTextPaneHandleKey(ke)) {
+        if(letTextPaneHandleKey(ke) || isShortcut(ke)) {
             return;
         }
         ke.consume();
@@ -48,7 +50,8 @@ public class UserInputHandler implements KeyListener {
         if(letTextPaneHandleKey(ke)) {
             return;
         } else if(isShortcut(ke)) {
-            shortcutHandler.handleKey(ke);
+            shortcutHandler.handleKey(ke); 
+            return;
         }
         ke.consume();
     }
@@ -63,8 +66,8 @@ public class UserInputHandler implements KeyListener {
                 ke.getKeyCode() == KeyEvent.VK_UP ||
                 ke.getKeyCode() == KeyEvent.VK_DOWN ||
                 ke.getKeyChar()== KeyEvent.VK_DELETE ||
-                ke.getKeyChar()== KeyEvent.VK_BACK_SPACE;
-                
+                ke.getKeyChar()== KeyEvent.VK_BACK_SPACE ||
+                ke.getKeyChar()== KeyEvent.VK_ESCAPE;                
     }
     
 }

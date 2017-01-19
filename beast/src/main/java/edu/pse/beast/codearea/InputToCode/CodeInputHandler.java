@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.pse.beast.codearea.InputToCode;
+package edu.pse.beast.codearea.InputToCode;
 
 import java.awt.event.KeyEvent;
 import java.util.logging.Level;
@@ -23,16 +23,16 @@ public class CodeInputHandler {
     }
     
     public void handleKey(KeyEvent ke) {
-        if(ke.getKeyChar() == '\n') try {
+        try{
+            if(ke.getKeyCode()== KeyEvent.VK_ENTER) {
             insertToCode.insertNewline();
-        } catch (BadLocationException ex) {
-            Logger.getLogger(CodeInputHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            insertToCode.insertChar(ke.getKeyChar());
-        } catch (BadLocationException ex) {
-            Logger.getLogger(CodeInputHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            } else if(ke.getKeyCode() == KeyEvent.VK_TAB || ke.getKeyChar() == '\t') {
+                insertToCode.insertTab();
+            }else {            
+                insertToCode.insertChar(ke.getKeyChar());
+            } 
+        } catch(BadLocationException ex) {
+            
+        }        
     }
-    
-}
+    }

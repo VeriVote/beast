@@ -5,7 +5,7 @@
  */
 package edu.pse.beast.CodeArea.InputToCode;
 
-import com.pse.beast.codearea.InputToCode.OpenCloseChar;
+import edu.pse.beast.codearea.InputToCode.OpenCloseChar;
 import javax.swing.JTextPane;
 import javax.swing.text.StyledDocument;
 import org.junit.After;
