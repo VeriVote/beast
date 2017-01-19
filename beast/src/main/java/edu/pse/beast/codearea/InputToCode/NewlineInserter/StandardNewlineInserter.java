@@ -16,7 +16,7 @@ public class StandardNewlineInserter implements NewlineInserter {
 
     @Override
     public void insertNewlineAtCurrentPosition(StyledDocument doc, int pos) throws BadLocationException {
-        doc.insertString(pos, Character.toString('\n'), null);
+        doc.insertString(pos, Character.toString('\r'), null);
     }
     
 }
