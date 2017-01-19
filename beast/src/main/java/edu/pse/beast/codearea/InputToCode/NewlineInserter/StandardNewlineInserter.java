@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.codearea.InputToCode.NewlineInserter;
 
+import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
@@ -15,9 +16,9 @@ import javax.swing.text.StyledDocument;
  */
 public class StandardNewlineInserter extends NewlineInserter {
     @Override
-    public void insertNewlineAtCurrentPosition(JTextPane pane, int pos) throws BadLocationException {
-        pane.getStyledDocument().insertString(pos, "\r", null);
-        setTabLevel(pane, pos);
+    public void insertNewlineAtCurrentPosition(UserInsertToCode insertToCode, int pos) throws BadLocationException {
+        insertToCode.getTextPane().getStyledDocument().insertString(pos, "|\n\r", null);
+        setTabLevel(insertToCode, pos);
     }
     
 }

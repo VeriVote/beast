@@ -24,15 +24,15 @@ public class CodeInputHandler {
     
     public void handleKey(KeyEvent ke) {
         try{
-            if(ke.getKeyCode()== KeyEvent.VK_ENTER) {
-            insertToCode.insertNewline();
+            if(ke.getKeyCode()== KeyEvent.VK_ENTER || ke.getKeyChar() == '\n') {
+                insertToCode.insertNewline();
             } else if(ke.getKeyCode() == KeyEvent.VK_TAB || ke.getKeyChar() == '\t') {
                 insertToCode.insertTab();
-            }else {            
+            } else {            
                 insertToCode.insertChar(ke.getKeyChar());
             } 
         } catch(BadLocationException ex) {
             ex.printStackTrace();
         }        
     }
-    }
+}

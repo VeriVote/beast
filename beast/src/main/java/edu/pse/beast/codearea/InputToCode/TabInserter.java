@@ -15,7 +15,7 @@ import javax.swing.text.BadLocationException;
 public class TabInserter {
     private JTextPane pane; 
     private LineHandler lineHandler;
-    private int spacesPerTab = 4;   
+    private int spacesPerTab = 8;   
     
     TabInserter(JTextPane pane, LineHandler lineHandler) {
         this.pane = pane;
@@ -30,12 +30,13 @@ public class TabInserter {
         while(nextTabPos <= distToLineBeginning) {
             nextTabPos += spacesPerTab;
         }
-        System.out.println(nextTabPos);
+        
         int distToNextTabPos = nextTabPos - distToLineBeginning;
-        System.out.println(distToNextTabPos);
         String spacesToInsert = "";
+        
         for(int i = 0; i < distToNextTabPos; ++i) spacesToInsert += " ";
+        
         pane.getStyledDocument().insertString(pos, spacesToInsert, null);
     }
-    
+        
 }

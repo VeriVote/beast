@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.codearea.InputToCode.NewlineInserter;
 
+import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
@@ -15,11 +16,11 @@ import javax.swing.text.StyledDocument;
  */
 public class BetweenCurlyBracesNewlineInserter extends NewlineInserter {
     @Override
-    public void insertNewlineAtCurrentPosition(JTextPane pane, int pos) throws BadLocationException {
+    public void insertNewlineAtCurrentPosition(UserInsertToCode insertToCode, int pos) throws BadLocationException {
         System.out.println("curlies");
-        pane.getStyledDocument().insertString(pos, "\n", null);
-        pane.setCaretPosition(pos);        
-        setTabLevel(pane, pos);
+        insertToCode.getTextPane().getStyledDocument().insertString(pos, "|\n\r", null);
+        insertToCode.getTextPane().setCaretPosition(pos);        
+        setTabLevel(insertToCode, pos);
     }    
 
 }

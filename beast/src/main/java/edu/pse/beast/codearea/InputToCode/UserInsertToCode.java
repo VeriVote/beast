@@ -43,16 +43,16 @@ public class UserInsertToCode implements CaretListener {
                 
     }
 
-    void insertNewline() throws BadLocationException {    
-        currentInserter.insertNewlineAtCurrentPosition(pane, currentCaretPosition);               
+    public void insertNewline() throws BadLocationException {  
+        currentInserter.insertNewlineAtCurrentPosition(this, currentCaretPosition);               
         newlineInserterChooser.getNewlineInserter();
     }
     
-    void insertTab() throws BadLocationException {
+    public void insertTab() throws BadLocationException {
         tabHandler.insertTabAtPos(currentCaretPosition);
     }
 
-    void insertChar(char keyChar) throws BadLocationException {
+    public void insertChar(char keyChar) throws BadLocationException {
         if(openCloseCharList.isOpenChar(keyChar)) {
             OpenCloseChar occ = openCloseCharList.getOpenCloseChar(keyChar);
             occ.insertIntoDocument(pane, currentCaretPosition);
@@ -61,6 +61,10 @@ public class UserInsertToCode implements CaretListener {
         }
     }
 
+    public JTextPane getTextPane() {
+        return pane;
+    }
+    
     @Override
     public void caretUpdate(CaretEvent ce) {
         currentCaretPosition = ce.getDot();

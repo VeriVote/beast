@@ -21,7 +21,7 @@ public class LineHandler {
     public int getClosestLineBeginning(int pos) {
         String code = pane.getText();
         for(int i = pos; i >= 0; --i) {
-            if(code.charAt(i) == '\n') return i;
+            if(code.charAt(i) == '\n' || code.charAt(i) == '\r') return i;
         }
         return 0;
     }
@@ -29,7 +29,7 @@ public class LineHandler {
     public int getDistanceToLineBeginning(int pos) {
         String code = pane.getText();
         for(int i = pos - 1; i >= 0; --i) {
-            if(code.charAt(i) == '\n') return pos - i;
+            if(code.charAt(i) == '\n' || code.charAt(i) == '\r') return pos - i;
         }
         System.out.println(pos);
         return pos;
