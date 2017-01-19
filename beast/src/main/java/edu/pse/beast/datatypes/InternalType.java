@@ -7,14 +7,14 @@ package edu.pse.beast.datatypes;
 
 /**
  * Represents the InternalType of the Variables
+ *
  * @author Niels
  */
-
 public enum InternalType {
     /**
      * VoterType
      */
-    VOTER, 
+    VOTER,
     /**
      * CandidateType
      */
@@ -30,7 +30,7 @@ public enum InternalType {
     /**
      * Weithedapprovaltype
      */
-    WEIGHTEDAPPROVAL, 
+    WEIGHTEDAPPROVAL,
     /**
      * IntergerType
      */

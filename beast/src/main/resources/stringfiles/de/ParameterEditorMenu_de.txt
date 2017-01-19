@@ -1,0 +1,7 @@
+showResult : Zeige Ergebnis
+analyseProperty : bla
+editProperty : sdfasd
+deleteProperty : sdfasd
+addProperty : sdf
+newProperty : sadf
+loadProperty : gasd

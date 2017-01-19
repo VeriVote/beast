@@ -10,5 +10,13 @@ package edu.pse.beast.stringresource;
  * @author Niels
  */
 public class StringLoaderInterface {
+    private PropertyListStringResProvider propListStr;
+    
+    public StringLoaderInterface(String languageId) {
+            propListStr = new PropertyListStringResProvider(languageId, "src/main/resources/stringfiles/");
+    }
+    public PropertyListStringResProvider getPropertyListStringResProvider() {
+        return propListStr;
+    }
     
 }
