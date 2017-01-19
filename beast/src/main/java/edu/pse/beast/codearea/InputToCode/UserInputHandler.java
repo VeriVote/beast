@@ -34,8 +34,14 @@ public class UserInputHandler implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent ke) {      
-        if(isCode(ke)) codeInputHandler.handleKey(ke);
-        else if(isShortcut(ke)) shortcutHandler.handleKey(ke);
+        if(isShortcut(ke)) {
+            codeInputHandler.handleKey(ke);
+            ke.consume();
+        }
+        else if(isCode(ke)) {
+            shortcutHandler.handleKey(ke);
+            ke.consume();
+        }
     }  
 
     private boolean isCode(KeyEvent ke) {

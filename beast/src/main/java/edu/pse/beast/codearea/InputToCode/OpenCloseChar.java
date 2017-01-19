@@ -6,6 +6,8 @@
 package com.pse.beast.codearea.InputToCode;
 
 import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
 
 /**
  *
@@ -26,5 +28,10 @@ public class OpenCloseChar {
     
     public char getClose() {
         return this.close;
+    }
+
+    void insertIntoDocument(int currentCaretPosition, StyledDocument styledDoc) throws BadLocationException {
+        String stringToInsert = Character.toString(open) + Character.toString(close);
+        styledDoc.insertString(currentCaretPosition, stringToInsert, null);
     }
 }

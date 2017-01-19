@@ -26,11 +26,20 @@ public class OpenCloseCharList {
         }
         return false;
     }
-
+    
+    OpenCloseChar getOpenCloseChar(char c) {
+         for(int i = 0; i < openChars.length; ++i) {
+            if(openCloseChars.get(i).getOpen() == c) return openCloseChars.get(i);
+        }
+        return null;
+    }
+    
     private void initializeOpenCloseChars() {
         for(int i = 0; i < openChars.length; ++i) {
             openCloseChars.add(new OpenCloseChar(openChars[i], closeChars[i]));
         }
     }
+
+    
 
 }

@@ -8,13 +8,16 @@ package com.pse.beast.codearea.InputToCode;
 import com.pse.beast.codearea.InputToCode.NewlineInserter.NewlineInserter;
 import com.pse.beast.codearea.InputToCode.NewlineInserter.NewlineInserterChooser;
 import javax.swing.JTextPane;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
 /**
  *
  * @author Holger-Desktop
  */
-public class UserInsertToCode {
+public class UserInsertToCode implements CaretListener {
     
     private JTextPane pane;
     private StyledDocument styledDoc;
@@ -22,9 +25,11 @@ public class UserInsertToCode {
     private LockedLinesHandler lockedLines;
     private NewlineInserterChooser newlineInserterChooser;
     private NewlineInserter currentInserter;
+    private int currentCaretPosition;
     
     public UserInsertToCode(JTextPane pane, OpenCloseCharList openCloseCharList) {
         this.pane = pane;
+        this.pane.addCaretListener(this);
         this.styledDoc = pane.getStyledDocument();
         this.openCloseCharList = openCloseCharList;
         this.lockedLines = new LockedLinesHandler(styledDoc);
@@ -33,10 +38,21 @@ public class UserInsertToCode {
     }
 
     void insertNewline() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        currentInserter.insertNewlineAtCurrentPosition(styledDoc, currentCaretPosition);
     }
 
-    void insertChar(char keyChar) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    void insertChar(char keyChar) throws BadLocationException {
+        if(openCloseCharList.isOpenChar(keyChar)) {
+            OpenCloseChar occ = openCloseCharList.getOpenCloseChar(keyChar);
+            occ.insertIntoDocument(currentCaretPosition, styledDoc);
+        } else {
+            styledDoc.insertString(currentCaretPosition, Character.toString(keyChar), null);
+        }
+        pane.setCaretPosition(currentCaretPosition + 1);
+    }
+
+    @Override
+    public void caretUpdate(CaretEvent ce) {
+        currentCaretPosition = ce.getDot();
     }
 }
