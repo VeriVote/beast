@@ -25,4 +25,12 @@ public class LineHandler {
         }
         return 0;
     }
+    
+    public int getDistanceToLineBeginning(int pos) {
+        String code = pane.getText();
+        for(int i = pos; i >= 0; --i) {
+            if(code.charAt(i) == '\n') return pos - i;
+        }
+        return pos;
+    }
 }

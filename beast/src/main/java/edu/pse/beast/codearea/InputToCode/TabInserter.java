@@ -12,16 +12,17 @@ import javax.swing.text.BadLocationException;
  *
  * @author Holger-Desktop
  */
-public class TabHandler {
-    private JTextPane pane;
-    private int spacesPerTab = 4;    
+public class TabInserter {
+    private JTextPane pane; 
+    private LineHandler lineHandler;
+    private int spacesPerTab = 4;   
     
-    TabHandler(JTextPane pane) {
+    TabInserter(JTextPane pane, LineHandler lineHandler) {
         this.pane = pane;
+        this.lineHandler = lineHandler;
     }
     
-    public void insertTabAtPos(int pos) throws BadLocationException {
-        System.out.println("Tab");
+    public void insertTabAtPos(int pos) throws BadLocationException {        
         pane.getStyledDocument().insertString(pos, "TABS MOSAFUGGA", null);
     }
     

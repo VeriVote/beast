@@ -26,12 +26,16 @@ public class UserInsertToCode implements CaretListener {
     private NewlineInserterChooser newlineInserterChooser;
     private NewlineInserter currentInserter;
     private int currentCaretPosition;
-    private TabHandler tabHandler;
+    private LineHandler lineHandler;
+    private TabInserter tabHandler;
+    
+    
     public UserInsertToCode(JTextPane pane, OpenCloseCharList openCloseCharList) {
         this.pane = pane;
         this.pane.addCaretListener(this);
         this.styledDoc = pane.getStyledDocument();
-        this.tabHandler = new TabHandler(this.pane);
+        this.lineHandler = new LineHandler(pane);
+        this.tabHandler = new TabInserter(this.pane, lineHandler);
         this.openCloseCharList = openCloseCharList;
         this.lockedLines = new LockedLinesHandler(styledDoc);
         this.newlineInserterChooser = new NewlineInserterChooser(pane, lockedLines);
