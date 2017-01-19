@@ -23,6 +23,7 @@ public class LineHandler implements DocumentListener {
     private JTextPane pane;
     private StyledDocument doc;
     private ArrayList<Integer> newLinePos = new ArrayList<Integer>();
+    
     public LineHandler(JTextPane pane) {
         this.pane = pane;
         this.doc = pane.getStyledDocument();
@@ -41,7 +42,7 @@ public class LineHandler implements DocumentListener {
         int minDist = pos;
         for(int i = 0; i < newLinePos.size() && minDist > 0; ++i) {
             if(newLinePos.get(i) <= pos) {
-                int dist = pos - newLinePos.get(i);
+                int dist = pos - newLinePos.get(i) - 1;
                 if(dist < minDist) minDist = dist;
             }
         }
@@ -52,9 +53,8 @@ public class LineHandler implements DocumentListener {
     public void insertUpdate(DocumentEvent de) {
         try {
             String addedText = doc.getText(de.getOffset(), de.getLength());
-            System.out.println(addedText);
             for(int i = 0; i < de.getLength(); ++i) {
-                if(addedText.charAt(i) == '\n') newLinePos.add(de.getOffset() + i);
+                if(addedText.charAt(i) == '\n' || addedText.charAt(i) == '\r') newLinePos.add(de.getOffset() + i);
             }
         } catch (BadLocationException ex) {
             Logger.getLogger(LineHandler.class.getName()).log(Level.SEVERE, null, ex);

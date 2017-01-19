@@ -34,9 +34,10 @@ public class TabInserter {
         int distToNextTabPos = nextTabPos - distToLineBeginning;
          
         String spacesToInsert = "";
+        System.out.println(distToNextTabPos);
         
-        for(int i = 0; i < distToNextTabPos; ++i) spacesToInsert += " ";
-        
+        for(int i = 0; i < distToNextTabPos - 1; ++i) spacesToInsert += " ";
+        spacesToInsert += "|";
         pane.getStyledDocument().insertString(pos, spacesToInsert, null);
     }
         
