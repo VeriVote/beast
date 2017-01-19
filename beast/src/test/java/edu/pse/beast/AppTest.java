@@ -1,4 +1,4 @@
-package com.pse.beast;
+package edu.pse.beast;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
