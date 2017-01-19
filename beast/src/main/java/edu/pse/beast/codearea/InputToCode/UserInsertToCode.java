@@ -35,10 +35,12 @@ public class UserInsertToCode implements CaretListener {
         this.lockedLines = new LockedLinesHandler(styledDoc);
         this.newlineInserterChooser = new NewlineInserterChooser(pane, lockedLines);
         this.currentInserter = this.newlineInserterChooser.getNewlineInserter();
+        
     }
 
-    void insertNewline() {
-        currentInserter.insertNewlineAtCurrentPosition(styledDoc, currentCaretPosition);
+    void insertNewline() throws BadLocationException {    
+        currentInserter.insertNewlineAtCurrentPosition(styledDoc, currentCaretPosition);               
+        newlineInserterChooser.getNewlineInserter();
     }
 
     void insertChar(char keyChar) throws BadLocationException {
@@ -48,6 +50,7 @@ public class UserInsertToCode implements CaretListener {
         } else {
             styledDoc.insertString(currentCaretPosition, Character.toString(keyChar), null);
         }
+        newlineInserterChooser.getNewlineInserter();
     }
 
     @Override

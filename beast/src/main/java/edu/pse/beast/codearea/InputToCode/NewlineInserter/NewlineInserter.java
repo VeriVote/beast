@@ -5,6 +5,7 @@
  */
 package com.pse.beast.codearea.InputToCode.NewlineInserter;
 
+import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
 /**
@@ -12,5 +13,5 @@ import javax.swing.text.StyledDocument;
  * @author Holger-Desktop
  */
 public interface NewlineInserter {
-    public void insertNewlineAtCurrentPosition(StyledDocument doc, int pos);
+    public void insertNewlineAtCurrentPosition(StyledDocument doc, int pos) throws BadLocationException ;
 }

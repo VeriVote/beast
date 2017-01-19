@@ -5,6 +5,7 @@
  */
 package com.pse.beast.codearea.InputToCode.NewlineInserter;
 
+import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
 /**
@@ -14,8 +15,8 @@ import javax.swing.text.StyledDocument;
 public class StandardNewlineInserter implements NewlineInserter {
 
     @Override
-    public void insertNewlineAtCurrentPosition(StyledDocument doc, int pos) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void insertNewlineAtCurrentPosition(StyledDocument doc, int pos) throws BadLocationException {
+        doc.insertString(pos, Character.toString('\n'), null);
     }
     
 }

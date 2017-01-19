@@ -23,7 +23,11 @@ public class CodeInputHandler {
     }
     
     public void handleKey(KeyEvent ke) {
-        if(ke.getKeyChar() == '\n') insertToCode.insertNewline();
+        if(ke.getKeyChar() == '\n') try {
+            insertToCode.insertNewline();
+        } catch (BadLocationException ex) {
+            Logger.getLogger(CodeInputHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {
             insertToCode.insertChar(ke.getKeyChar());
         } catch (BadLocationException ex) {

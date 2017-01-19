@@ -17,9 +17,9 @@ import javax.swing.text.BadLocationException;
  */
 public class NewlineInserterChooser {
     private JTextPane pane;
-    private StandardNewlineInserter standardInserter;
-    private LockedLineNewlineInserter lockedInserter;
-    private BetweenCurlyBracesNewlineInserter curlyBracesInserter;
+    private StandardNewlineInserter standardInserter = new StandardNewlineInserter();
+    private LockedLineNewlineInserter lockedInserter = new LockedLineNewlineInserter();
+    private BetweenCurlyBracesNewlineInserter curlyBracesInserter = new BetweenCurlyBracesNewlineInserter();
     private LockedLinesHandler lockedLinesHandler;
     
     public NewlineInserterChooser(JTextPane pane, LockedLinesHandler lockedLinesHandler) {

@@ -5,6 +5,7 @@
  */
 package com.pse.beast.codearea.InputToCode.NewlineInserter;
 
+import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
 /**
@@ -14,7 +15,7 @@ import javax.swing.text.StyledDocument;
 public class LockedLineNewlineInserter implements NewlineInserter {
 
     @Override
-    public void insertNewlineAtCurrentPosition(StyledDocument doc, int pos) {
+    public void insertNewlineAtCurrentPosition(StyledDocument doc, int pos) throws BadLocationException {
         
     }
     
