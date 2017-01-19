@@ -17,7 +17,7 @@ import javax.swing.text.StyledDocument;
 public class StandardNewlineInserter extends NewlineInserter {
     @Override
     public void insertNewlineAtCurrentPosition(UserInsertToCode insertToCode, int pos) throws BadLocationException {
-        insertToCode.getTextPane().getStyledDocument().insertString(pos, "|\n\r", null);
+        insertToCode.getTextPane().getStyledDocument().insertString(pos, "\n", null);
         setTabLevel(insertToCode, pos);
     }
     

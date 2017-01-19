@@ -18,7 +18,7 @@ public class BetweenCurlyBracesNewlineInserter extends NewlineInserter {
     @Override
     public void insertNewlineAtCurrentPosition(UserInsertToCode insertToCode, int pos) throws BadLocationException {
         System.out.println("curlies");
-        insertToCode.getTextPane().getStyledDocument().insertString(pos, "\n\r\n\r", null);
+        insertToCode.getTextPane().getStyledDocument().insertString(pos, "\n\n", null);
         insertToCode.getTextPane().setCaretPosition(pos + 1);        
         setTabLevel(insertToCode, pos);
     }    

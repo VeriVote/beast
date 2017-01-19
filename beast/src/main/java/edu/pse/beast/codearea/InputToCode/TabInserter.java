@@ -32,6 +32,7 @@ public class TabInserter {
         }
         
         int distToNextTabPos = nextTabPos - distToLineBeginning;
+         
         String spacesToInsert = "";
         
         for(int i = 0; i < distToNextTabPos; ++i) spacesToInsert += " ";
