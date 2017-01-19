@@ -38,3 +38,4 @@ $RECYCLE.BIN/
 # Maven
 log/
 target/
+/beast/nbproject/
