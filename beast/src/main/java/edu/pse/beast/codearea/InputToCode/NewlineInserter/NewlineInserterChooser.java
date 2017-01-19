@@ -25,6 +25,7 @@ public class NewlineInserterChooser {
     public NewlineInserterChooser(JTextPane pane, LockedLinesHandler lockedLinesHandler) {
         this.pane = pane;
         this.lockedLinesHandler = lockedLinesHandler;
+        
     }
     
     public NewlineInserter getNewlineInserter() {

@@ -27,7 +27,7 @@ public class UserInsertToCode implements CaretListener {
     private NewlineInserter currentInserter;
     private int currentCaretPosition;
     private LineHandler lineHandler;
-    private TabInserter tabHandler;
+    private TabInserter tabInserter;
     
     
     public UserInsertToCode(JTextPane pane, OpenCloseCharList openCloseCharList) {
@@ -35,7 +35,7 @@ public class UserInsertToCode implements CaretListener {
         this.pane.addCaretListener(this);
         this.styledDoc = pane.getStyledDocument();
         this.lineHandler = new LineHandler(pane);
-        this.tabHandler = new TabInserter(this.pane, lineHandler);
+        this.tabInserter = new TabInserter(this.pane, lineHandler);
         this.openCloseCharList = openCloseCharList;
         this.lockedLines = new LockedLinesHandler(styledDoc);
         this.newlineInserterChooser = new NewlineInserterChooser(pane, lockedLines);
@@ -49,7 +49,7 @@ public class UserInsertToCode implements CaretListener {
     }
     
     public void insertTab() throws BadLocationException {
-        tabHandler.insertTabAtPos(currentCaretPosition);
+        tabInserter.insertTabAtPos(currentCaretPosition);
     }
 
     public void insertChar(char keyChar) throws BadLocationException {
@@ -63,6 +63,10 @@ public class UserInsertToCode implements CaretListener {
 
     public JTextPane getTextPane() {
         return pane;
+    }
+    
+    public TabInserter getTabInserter() {
+        return tabInserter;
     }
     
     @Override

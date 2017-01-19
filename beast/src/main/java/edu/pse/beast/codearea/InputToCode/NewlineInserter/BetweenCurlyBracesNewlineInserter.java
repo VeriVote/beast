@@ -15,12 +15,23 @@ import javax.swing.text.StyledDocument;
  * @author Holger-Desktop
  */
 public class BetweenCurlyBracesNewlineInserter extends NewlineInserter {
+    
+    public BetweenCurlyBracesNewlineInserter() {
+        
+    }
+    
     @Override
     public void insertNewlineAtCurrentPosition(UserInsertToCode insertToCode, int pos) throws BadLocationException {
-        System.out.println("curlies");
-        insertToCode.getTextPane().getStyledDocument().insertString(pos, "\n\n", null);
-        insertToCode.getTextPane().setCaretPosition(pos + 1);        
-        setTabLevel(insertToCode, pos);
+        insertToCode.getTextPane().getStyledDocument().insertString(pos, "\n\r", null);
+        insertToCode.getTextPane().getStyledDocument().insertString(pos + 1, "\n\r", null);
+        int tabs = getScopeLevel(insertToCode.getTextPane().getText(), pos + 2);
+        for(int i = 0; i < tabs - 1; ++i) {
+            insertToCode.getTabInserter().insertTabAtPos(pos + 2);            
+        }
+        insertToCode.getTextPane().setCaretPosition(pos + 1);
+        for(int i = 0; i < tabs; ++i) {
+            insertToCode.getTabInserter().insertTabAtPos(pos + 1);            
+        }
     }    
 
 }

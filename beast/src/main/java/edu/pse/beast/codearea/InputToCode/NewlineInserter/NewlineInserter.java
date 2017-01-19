@@ -16,20 +16,17 @@ import javax.swing.text.BadLocationException;
  */
 public abstract class NewlineInserter {
     public abstract void insertNewlineAtCurrentPosition(UserInsertToCode insertToCode, int pos) throws BadLocationException; 
+   
     
-    protected void setTabLevel(UserInsertToCode insertToCode, int pos) throws BadLocationException {
-        int scopeLvl = getScopeLevel(insertToCode.getTextPane().getText(), pos);
-        for(int i = 0; i < scopeLvl; ++i) {
-            insertToCode.insertTab();
-        }
-    }
-    
-    private int getScopeLevel(String text, int pos) {
+    protected int getScopeLevel(String text, int pos) {
         int lvl = 0;
-        for(int i = 0; i < pos; ++i) {
+        for(int i = 0; i <= pos; ++i) {
             if(text.charAt(i) == '{') ++lvl;
             else if(text.charAt(i) == '}') --lvl;
         }
+        for(int i = pos + 1; text.charAt(i) != '\n'; ++i) {
+            if(text.charAt(i) == '}') --lvl; 
+        } 
         return lvl;
     }
 }
