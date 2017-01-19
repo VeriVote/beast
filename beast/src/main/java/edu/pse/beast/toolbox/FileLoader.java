@@ -14,14 +14,17 @@ import java.util.LinkedList;
  */
 public final class FileLoader {
     private FileLoader() {
-        
+
     }
+
     /**
      *
-     * @param file is the file that gets loaded
+     * @param file
+     *            is the file that gets loaded
      * @return A Stringstack of all Lines
-     * @throws FileNotFoundException Stringpath must be correct
-     * @throws IOException
+     * @throws FileNotFoundException
+     *             Stringpath must be correct
+     * @throws IOException 
      */
     public static LinkedList<String> loadFileAsString(File file) throws FileNotFoundException, IOException {
         FileReader fr = new FileReader(file);
@@ -32,7 +35,7 @@ public final class FileLoader {
         String line;
 
         line = br.readLine();
-        while (line != null){
+        while (line != null) {
             stringlist.push(line);
             line = br.readLine();
         }
