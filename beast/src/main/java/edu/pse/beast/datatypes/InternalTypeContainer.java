@@ -30,7 +30,7 @@ public class InternalTypeContainer {
     /**
      * Constructor for a TypeContainer that is NOT a List
      *
-     * @param internalType
+     * @param internalType the type of this election
      */
     InternalTypeContainer(InternalType internalType) {
         this.isList = false;
