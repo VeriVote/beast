@@ -30,7 +30,7 @@ public class OpenCloseChar {
         return this.close;
     }
 
-    void insertIntoDocument(int currentCaretPosition, StyledDocument styledDoc) throws BadLocationException {
+    public void insertIntoDocument(int currentCaretPosition, StyledDocument styledDoc) throws BadLocationException {
         String stringToInsert = Character.toString(open) + Character.toString(close);
         styledDoc.insertString(currentCaretPosition, stringToInsert, null);
     }

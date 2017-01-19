@@ -26,29 +26,37 @@ public class UserInputHandler implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent ke) {
+        if(isArrowKey(ke)) return;
+        else if(!isShortcut(ke)) {
+            codeInputHandler.handleKey(ke);
+        }
+        ke.consume();
     }
 
     @Override
     public void keyPressed(KeyEvent ke) {
+        if(isArrowKey(ke)) return;   
+        ke.consume();
     }
 
     @Override
-    public void keyReleased(KeyEvent ke) {      
-        if(isShortcut(ke)) {
-            codeInputHandler.handleKey(ke);
-            ke.consume();
-        }
-        else if(isCode(ke)) {
+    public void keyReleased(KeyEvent ke) {  
+        if(isArrowKey(ke)) return;
+        else if(isShortcut(ke)) {
             shortcutHandler.handleKey(ke);
-            ke.consume();
+            return;
         }
-    }  
-
-    private boolean isCode(KeyEvent ke) {
-        return Character.isAlphabetic(ke.getKeyChar());
+        ke.consume();
     }
     
     private boolean isShortcut(KeyEvent ke) {
         return ke.isControlDown();
+    }
+    
+    private boolean isArrowKey(KeyEvent ke) {
+        return (ke.getKeyCode() == KeyEvent.VK_LEFT ||
+                ke.getKeyCode() == KeyEvent.VK_RIGHT ||
+                ke.getKeyCode() == KeyEvent.VK_UP ||
+                ke.getKeyCode() == KeyEvent.VK_DOWN);
     }
 }

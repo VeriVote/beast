@@ -48,7 +48,6 @@ public class UserInsertToCode implements CaretListener {
         } else {
             styledDoc.insertString(currentCaretPosition, Character.toString(keyChar), null);
         }
-        pane.setCaretPosition(currentCaretPosition + 1);
     }
 
     @Override
