@@ -32,7 +32,7 @@ public class CodeInputHandler {
                 insertToCode.insertChar(ke.getKeyChar());
             } 
         } catch(BadLocationException ex) {
-            
+            ex.printStackTrace();
         }        
     }
     }

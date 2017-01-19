@@ -22,8 +22,20 @@ public class TabInserter {
         this.lineHandler = lineHandler;
     }
     
-    public void insertTabAtPos(int pos) throws BadLocationException {        
-        pane.getStyledDocument().insertString(pos, "TABS MOSAFUGGA", null);
+    public void insertTabAtPos(int pos) throws BadLocationException {   
+        int distToLineBeginning = lineHandler.getDistanceToLineBeginning(pos);
+        
+        int nextTabPos = 0;
+        
+        while(nextTabPos <= distToLineBeginning) {
+            nextTabPos += spacesPerTab;
+        }
+        System.out.println(nextTabPos);
+        int distToNextTabPos = nextTabPos - distToLineBeginning;
+        System.out.println(distToNextTabPos);
+        String spacesToInsert = "";
+        for(int i = 0; i < distToNextTabPos; ++i) spacesToInsert += " ";
+        pane.getStyledDocument().insertString(pos, spacesToInsert, null);
     }
     
 }
