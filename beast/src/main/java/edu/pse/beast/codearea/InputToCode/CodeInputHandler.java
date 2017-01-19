@@ -6,6 +6,9 @@
 package com.pse.beast.codearea.InputToCode;
 
 import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.text.BadLocationException;
 
 /**
  *
@@ -21,7 +24,11 @@ public class CodeInputHandler {
     
     public void handleKey(KeyEvent ke) {
         if(ke.getKeyChar() == '\n') insertToCode.insertNewline();
-        insertToCode.insertChar(ke.getKeyChar());
+        try {
+            insertToCode.insertChar(ke.getKeyChar());
+        } catch (BadLocationException ex) {
+            Logger.getLogger(CodeInputHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

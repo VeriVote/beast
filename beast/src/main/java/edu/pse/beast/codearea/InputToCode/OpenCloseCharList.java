@@ -21,25 +21,25 @@ public class OpenCloseCharList {
     }
     
     public boolean isOpenChar(char c) {
-        for(int i = 0; i < openChars.length; ++i) {
+        for(int i = 0; i < openCloseChars.size(); ++i) {
             if(openCloseChars.get(i).getOpen() == c) return true;
         }
         return false;
     }
     
-    OpenCloseChar getOpenCloseChar(char c) {
-         for(int i = 0; i < openChars.length; ++i) {
+    public OpenCloseChar getOpenCloseChar(char c) {
+         for(int i = 0; i < openCloseChars.size(); ++i) {
             if(openCloseChars.get(i).getOpen() == c) return openCloseChars.get(i);
         }
         return null;
     }
-    
+        
     private void initializeOpenCloseChars() {
         for(int i = 0; i < openChars.length; ++i) {
             openCloseChars.add(new OpenCloseChar(openChars[i], closeChars[i]));
         }
-    }
-
+    }    
+    
     
 
 }

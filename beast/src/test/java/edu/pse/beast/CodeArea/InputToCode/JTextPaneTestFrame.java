@@ -55,8 +55,6 @@ public class JTextPaneTestFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
-
-    
     public javax.swing.JTextPane getTextPane() {
         return jTextPane1;
     }
