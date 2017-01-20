@@ -20,28 +20,39 @@ import static org.junit.Assert.*;
  */
 public class FileLoaderTest {
     
+    /**
+     * 
+     */
     public FileLoaderTest() {
     }
-    
+    /**
+     * 
+     */
     @BeforeClass
     public static void setUpClass() {
     }
-    
+    /**
+     * 
+     */
     @AfterClass
     public static void tearDownClass() {
     }
-    
+    /**
+     * 
+     */
     @Before
     public void setUp() {
     }
-    
+    /**
+     * 
+     */
     @After
     public void tearDown() {
     }
 
     /**
      * Test of loadFileAsString method, of class FileLoader.
-     * @throws java.lang.Exception
+     * @throws java.lang.Exception throws an exception if the file is not read correctly or not available
      */
     @Test
     public void testLoadFileAsString() throws Exception {
