@@ -46,9 +46,9 @@
 	  </plugins>
           <resources>
             <resource>
-              <directory>src/resources/stringfiles</directory>
+              <directory>src/resources/stringfiles/de/</directory>
                 <includes>
-                    <include>/*/*.txt</include>
+                    <include>*.txt</include>
               </includes>
             </resource>
     </resources>
