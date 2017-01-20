@@ -21,8 +21,8 @@ public final class FileLoader {
      *
      * @param file the file that gets loaded into the String
      * @return A LinkedList of String elements which are in the same order as in the file
-     * @throws FileNotFoundException
-     * @throws IOException
+     * @throws FileNotFoundException if the file is not found it throws an exception
+     * @throws IOException throws Exception
      */
     public static LinkedList<String> loadFileAsString(File file) throws FileNotFoundException, IOException {
         FileReader fr = new FileReader(file);
