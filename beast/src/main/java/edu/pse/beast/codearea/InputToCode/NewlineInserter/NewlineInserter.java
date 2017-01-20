@@ -14,19 +14,6 @@ import javax.swing.text.BadLocationException;
  *
  * @author Holger-Desktop
  */
-public abstract class NewlineInserter {
-    public abstract void insertNewlineAtCurrentPosition(UserInsertToCode insertToCode, int pos) throws BadLocationException; 
-   
-    
-    protected int getScopeLevel(String text, int pos) {
-        int lvl = 0;
-        for(int i = 0; i <= pos; ++i) {
-            if(text.charAt(i) == '{') ++lvl;
-            else if(text.charAt(i) == '}') --lvl;
-        }
-        for(int i = pos + 1; text.charAt(i) != '\n'; ++i) {
-            if(text.charAt(i) == '}') --lvl; 
-        } 
-        return lvl;
-    }
+public interface NewlineInserter {
+    public abstract void insertNewlineAtCurrentPosition(UserInsertToCode insertToCode, int pos) throws BadLocationException;    
 }

@@ -28,6 +28,7 @@ public class UserInsertToCode implements CaretListener {
     private int currentCaretPosition;
     private LineHandler lineHandler;
     private TabInserter tabInserter;
+    private LineBeginningTabsHandler lineBeginningTabsHandler;
     
     
     public UserInsertToCode(JTextPane pane, OpenCloseCharList openCloseCharList) {
@@ -38,6 +39,7 @@ public class UserInsertToCode implements CaretListener {
         this.tabInserter = new TabInserter(this.pane, lineHandler);
         this.openCloseCharList = openCloseCharList;
         this.lockedLines = new LockedLinesHandler(styledDoc);
+        this.lineBeginningTabsHandler = new LineBeginningTabsHandler(pane, lineHandler);
         this.newlineInserterChooser = new NewlineInserterChooser(pane, lockedLines);
         this.currentInserter = this.newlineInserterChooser.getNewlineInserter();
                 
@@ -67,6 +69,10 @@ public class UserInsertToCode implements CaretListener {
     
     public TabInserter getTabInserter() {
         return tabInserter;
+    }
+    
+    public LineBeginningTabsHandler getLineBeginningTabHandler() {
+        return lineBeginningTabsHandler;
     }
     
     @Override

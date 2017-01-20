@@ -14,7 +14,7 @@ import javax.swing.text.StyledDocument;
  *
  * @author Holger-Desktop
  */
-public class LockedLineNewlineInserter extends NewlineInserter {
+public class LockedLineNewlineInserter implements NewlineInserter {
 
   
     @Override

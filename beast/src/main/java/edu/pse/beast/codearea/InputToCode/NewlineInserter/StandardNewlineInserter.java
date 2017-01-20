@@ -14,12 +14,11 @@ import javax.swing.text.StyledDocument;
  *
  * @author Holger-Desktop
  */
-public class StandardNewlineInserter extends NewlineInserter {
+public class StandardNewlineInserter implements NewlineInserter {
     @Override
     public void insertNewlineAtCurrentPosition(UserInsertToCode insertToCode, int pos) throws BadLocationException {
         insertToCode.getTextPane().getStyledDocument().insertString(pos, "\n", null);
-        int tabs = getScopeLevel(insertToCode.getTextPane().getText(), pos + 1);
-        System.err.println(tabs);
+        int tabs = insertToCode.getLineBeginningTabHandler().getTabsForLine(pos + 1);
         for(int i = 0; i < tabs; ++i) {
             insertToCode.getTabInserter().insertTabAtPos(pos + 1);
         }

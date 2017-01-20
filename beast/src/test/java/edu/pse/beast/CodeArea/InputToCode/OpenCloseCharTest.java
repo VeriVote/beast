@@ -45,11 +45,7 @@ public class OpenCloseCharTest {
      */
     @Test
     public void testInsertIntoDocument() throws Exception {
-        JTextPane pane = new JTextPane();
-        OpenCloseChar occ = new OpenCloseChar('[', ']');
-        assertEquals(0, pane.getText().length());
-        occ.insertIntoDocument(0, pane.getStyledDocument());
-        assertEquals(pane.getText(), "[]");
+         
     }
     
 }
