@@ -1,5 +1,10 @@
-package edu.pse.beast.datatypes.boolExp;
+package edu.pse.beast.datatypes.boolexp;
 
+/**
+ * 
+ * @author Lukas
+ *
+ */
 public abstract class BooleanExpressionNode {
     
     
