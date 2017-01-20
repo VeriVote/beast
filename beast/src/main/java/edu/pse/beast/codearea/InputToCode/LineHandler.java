@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.codearea.InputToCode;
 
+import edu.pse.beast.toolbox.SortedIntegerList;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 import java.util.logging.Level;
@@ -16,13 +17,15 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
 /**
- *
+ * This class keeps a record of where each newline is placed. It is used since
+ * the classes provided by swing only use absolute char positions. Coding how
+ * ever is very relient on line placement for sorting code
  * @author Holger-Desktop
  */
 public class LineHandler implements DocumentListener {
     private JTextPane pane;
     private StyledDocument doc;
-    private ArrayList<Integer> newLinePos = new ArrayList<Integer>();
+    private SortedIntegerList linePositions = new SortedIntegerList();
     
     public LineHandler(JTextPane pane) {
         this.pane = pane;
@@ -30,51 +33,58 @@ public class LineHandler implements DocumentListener {
         this.doc.addDocumentListener(this);
     }
     
+    /**
+     * @param pos
+     * @return the linebreak position closest to but before pos
+     */
     public int getClosestLineBeginning(int pos) {
-        String code = pane.getText();
-        for(int i = pos; i >= 0; --i) {
-            if(code.charAt(i) == '\n') return i;
-        }
-        return 0;
+        return linePositions.getBiggestSmallerOrEqual(pos);
     }
     
+    /**
+     * @param pos
+     * @return the distance to the linebreak position closest to but before pos
+     */
     public int getDistanceToLineBeginning(int pos) {
-        int minDist = pos;
-        for(int i = 0; i < newLinePos.size() && minDist > 0; ++i) {
-            if(newLinePos.get(i) <= pos) {
-                int dist = pos - newLinePos.get(i) - 1;
-                if(dist < minDist) minDist = dist;
-            }
-        }
-        return minDist;
+        return pos - linePositions.getBiggestSmallerOrEqual(pos);
     }
 
+    /**
+     * if the added string contains linebreaks those positions are added to
+     * the linepositions list
+     * @param de 
+     */
     @Override
     public void insertUpdate(DocumentEvent de) {
         try {
             String addedText = doc.getText(de.getOffset(), de.getLength());
             for(int i = 0; i < de.getLength(); ++i) {
-                if(addedText.charAt(i) == '\n' || addedText.charAt(i) == '\r') newLinePos.add(de.getOffset() + i);
+                if(addedText.charAt(i) == '\n' || addedText.charAt(i) == '\r') linePositions.add(de.getOffset() + i);
             }
         } catch (BadLocationException ex) {
             Logger.getLogger(LineHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    /**
+     * if the removed string contained linebreaks those will be removed from the
+     * list
+     * @param de 
+     */
     @Override
     public void removeUpdate(DocumentEvent de) {
-        for(int i = 0; i < newLinePos.size(); ) {
-            if(newLinePos.get(i) > de.getOffset() && newLinePos.get(i) <= de.getOffset() + de.getLength()) {
-                newLinePos.remove(i);
-            } else {
-                ++i;
-            }
-        }        
+        linePositions.removeBetween(de.getOffset(), de.getOffset() + de.getLength());
+        linePositions.subtractIfBigger(de.getOffset(), de.getLength());
     }
 
     @Override
-    public void changedUpdate(DocumentEvent de) {
-       
+    public void changedUpdate(DocumentEvent de) {}
+    
+    public void printLineNumbers() {
+        for(int i = 0; i < linePositions.size(); ++i) {
+            System.out.print(linePositions.get(i) + " ");
+        }
+        System.out.println("");
     }
     
 }
