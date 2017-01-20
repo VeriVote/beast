@@ -1,5 +1,10 @@
 package edu.pse.beast.toolbox;
 
+/**
+ * 
+ * @author Lukas
+ *
+ */
 public class ErrorLogger {
     /**
      * logs all the errors to the error stream
