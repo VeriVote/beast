@@ -21,6 +21,14 @@ public class OptionStringResProvider extends StringResourceProvider {
 
     public OptionStringResProvider(String languageId, String relativePath) {
         super(languageId, relativePath);
+    }
+
+    public StringResourceLoader getOptionStringRes() {
+        return optionStringRes;
+    }
+
+    @Override
+    protected void initialize() {
         File optionFile;
         optionFile = new File(getFileLocationString("Option"));
         try {
@@ -34,9 +42,4 @@ public class OptionStringResProvider extends StringResourceProvider {
         }
 
     }
-
-    public StringResourceLoader getOptionStringRes() {
-        return optionStringRes;
-    }
-
 }

@@ -5,11 +5,6 @@
  */
 package edu.pse.beast.stringresource;
 
-import edu.pse.beast.toolbox.FileLoader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 /**
  *
  * @author Niels
@@ -23,12 +18,16 @@ public abstract class StringResourceProvider {
     public StringResourceProvider(String languageId, String relativePath) {
         this.containingFolder = languageId;
         this.relativePath = relativePath;
+        this.initialize();
     }
 
-    public void changeLanguage(String languageId) {
-
+    public void changeLanguage(String languageId){
+        this.languageId = languageId;
+        this.initialize();
     }
 
+    protected abstract void initialize();
+    
     protected final String getFileLocationString(String moduleName) {
         return (relativePath + languageId + "/" + moduleName + "_" + languageId + ".txt");
     }

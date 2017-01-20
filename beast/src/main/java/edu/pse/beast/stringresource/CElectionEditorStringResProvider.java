@@ -16,12 +16,29 @@ import java.util.LinkedList;
  * @author Niels
  */
 public class CElectionEditorStringResProvider extends StringResourceProvider {
+
     private StringResourceLoader menuStringRes;
     private StringResourceLoader toolbarTipStringRes;
     private StringResourceLoader cErrorStringRes;
 
     public CElectionEditorStringResProvider(String languageId, String relativePath) {
         super(languageId, relativePath);
+    }
+
+    public StringResourceLoader getMenuStringRes() {
+        return menuStringRes;
+    }
+
+    public StringResourceLoader getToolbarTipStringRes() {
+        return toolbarTipStringRes;
+    }
+
+    public StringResourceLoader getCErrorStringRes() {
+        return cErrorStringRes;
+    }
+
+    @Override
+    protected void initialize() {
         File toolbarFile;
         toolbarFile = new File(getFileLocationString("CEditorToolbar"));
         try {
@@ -57,18 +74,4 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
         }
     }
 
-    public StringResourceLoader getMenuStringRes() {
-        return menuStringRes;
-    }
-
-    public StringResourceLoader getToolbarTipStringRes() {
-        return toolbarTipStringRes;
-    }
-
-    public StringResourceLoader getCErrorStringRes() {
-        return cErrorStringRes;
-    }
-    
-        
 }
-

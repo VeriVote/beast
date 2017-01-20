@@ -23,6 +23,26 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
 
     public BooleanExpEditorStringResProvider(String languageId, String relativePath) {
         super(languageId, relativePath);
+
+    }
+
+    public StringResourceLoader getMenuStringRes() {
+        return menuStringRes;
+    }
+
+    public StringResourceLoader getToolbarTipStringRes() {
+        return toolbarTipStringRes;
+    }
+
+    public StringResourceLoader getCErrorStringRes() {
+        return booleanExpErrorStringRes;
+    }
+
+    /**
+     *
+     */
+    @Override
+    protected void initialize() {
         File toolbarFile;
         toolbarFile = new File(getFileLocationString("BooleanExpEditorMenuToolbar"));
         try {
@@ -56,18 +76,6 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
         } catch (IOException e) {
 
         }
-    }
-
-    public StringResourceLoader getMenuStringRes() {
-        return menuStringRes;
-    }
-
-    public StringResourceLoader getToolbarTipStringRes() {
-        return toolbarTipStringRes;
-    }
-
-    public StringResourceLoader getCErrorStringRes() {
-        return booleanExpErrorStringRes;
     }
 
 }

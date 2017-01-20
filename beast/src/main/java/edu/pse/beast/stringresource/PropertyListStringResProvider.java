@@ -22,7 +22,17 @@ public class PropertyListStringResProvider extends StringResourceProvider {
 
     public PropertyListStringResProvider(String languageId, String relativePath) {
         super (languageId, relativePath);
-        
+    }
+    
+    public StringResourceLoader getMenuStringRes() {
+        return menuStringRes;
+    }
+
+    public StringResourceLoader getToolbarTipStringRes() {
+        return toolbarTipStringRes;
+    }
+    @Override
+    protected void initialize(){
         File toolbarFile;
         toolbarFile = new File(getFileLocationString("PropertyListToolbar"));
         try {
@@ -45,15 +55,6 @@ public class PropertyListStringResProvider extends StringResourceProvider {
         } catch (IOException e) {
 
         }
-
-    }
-    
-    public StringResourceLoader getMenuStringRes() {
-        return menuStringRes;
-    }
-
-    public StringResourceLoader getToolbarTipStringRes() {
-        return toolbarTipStringRes;
     }
 
 }

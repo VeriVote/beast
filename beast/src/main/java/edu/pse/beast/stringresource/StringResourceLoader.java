@@ -14,7 +14,7 @@ import java.util.LinkedList;
  */
 public class StringResourceLoader {
 
-    private HashMap<String, String> idsToString;
+    private final HashMap<String, String> idsToString;
 
     public StringResourceLoader(LinkedList<String> stringRes) {
         idsToString = new HashMap<String, String>() {

@@ -15,13 +15,31 @@ import java.util.LinkedList;
  *
  * @author Niels
  */
-public class ParameterEditorStringResProvider extends StringResourceProvider{
+public class ParameterEditorStringResProvider extends StringResourceProvider {
+
     private StringResourceLoader menuStringRes;
     private StringResourceLoader toolbarTipStringRes;
     private StringResourceLoader otherStringRes;
-    
+
     public ParameterEditorStringResProvider(String languageId, String relativePath) {
         super(languageId, relativePath);
+
+    }
+
+    public StringResourceLoader getMenuStringRes() {
+        return menuStringRes;
+    }
+
+    public StringResourceLoader getToolbarTipStringRes() {
+        return toolbarTipStringRes;
+    }
+
+    public StringResourceLoader getOtherStringRes() {
+        return otherStringRes;
+    }
+
+    @Override
+    protected void initialize() {
         File toolbarFile;
         toolbarFile = new File(getFileLocationString("ParameterEditorToolbar"));
         try {
@@ -56,17 +74,4 @@ public class ParameterEditorStringResProvider extends StringResourceProvider{
 
         }
     }
-
-    public StringResourceLoader getMenuStringRes() {
-        return menuStringRes;
-    }
-
-    public StringResourceLoader getToolbarTipStringRes() {
-        return toolbarTipStringRes;
-    }
-
-    public StringResourceLoader getOtherStringRes() {
-        return otherStringRes;
-    }
-    
 }
