@@ -16,9 +16,8 @@ public class StringResourceLoader {
 
     private final HashMap<String, String> idsToString;
 
-    public StringResourceLoader(LinkedList<String> stringRes) {
-        idsToString = new HashMap<String, String>() {
-        };
+    public StringResourceLoader(LinkedList<String> stringRes) throws ArrayIndexOutOfBoundsException {
+        idsToString = new HashMap<String, String>();
         String line;
         String[] split;
         String id;

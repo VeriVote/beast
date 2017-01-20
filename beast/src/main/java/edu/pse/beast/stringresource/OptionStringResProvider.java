@@ -21,6 +21,7 @@ public class OptionStringResProvider extends StringResourceProvider {
 
     public OptionStringResProvider(String languageId, String relativePath) {
         super(languageId, relativePath);
+        this.initialize();
     }
 
     public StringResourceLoader getOptionStringRes() {
@@ -28,7 +29,7 @@ public class OptionStringResProvider extends StringResourceProvider {
     }
 
     @Override
-    protected void initialize() {
+    protected final void initialize() {
         File optionFile;
         optionFile = new File(getFileLocationString("Option"));
         try {
@@ -36,10 +37,11 @@ public class OptionStringResProvider extends StringResourceProvider {
             optionList = FileLoader.loadFileAsString(optionFile);
             optionStringRes = new StringResourceLoader(optionList);
         } catch (FileNotFoundException e) {
-
+            errorFileNotFound(optionFile);
         } catch (IOException e) {
-
+            errorFileHasWrongFormat(optionFile);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            errorFileHasWrongFormat(optionFile);
         }
-
     }
 }

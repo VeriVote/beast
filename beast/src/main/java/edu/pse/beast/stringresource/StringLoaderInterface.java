@@ -11,6 +11,7 @@ package edu.pse.beast.stringresource;
  */
 public class StringLoaderInterface {
 
+    private String languageId;
     private final PropertyListStringResProvider propListStr;
     private final BooleanExpEditorStringResProvider booleanExpStr;
     private final CElectionEditorStringResProvider cElecStr;
@@ -19,6 +20,7 @@ public class StringLoaderInterface {
     private final String fileLocation = "src/main/resources/stringfiles/";
 
     public StringLoaderInterface(String languageId) {
+        this.languageId = languageId;
         propListStr = new PropertyListStringResProvider(languageId, fileLocation);
         booleanExpStr = new BooleanExpEditorStringResProvider(languageId, fileLocation);
         cElecStr = new CElectionEditorStringResProvider(languageId, fileLocation);
@@ -47,11 +49,11 @@ public class StringLoaderInterface {
     }
 
     public void setLanguage(String languageId) {
+        this.languageId = languageId;
         propListStr.changeLanguage(languageId);
         booleanExpStr.changeLanguage(languageId);
         cElecStr.changeLanguage(languageId);
         paramEdStr.changeLanguage(languageId);
         optionStr.changeLanguage(languageId);
     }
-
 }

@@ -23,7 +23,7 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
 
     public BooleanExpEditorStringResProvider(String languageId, String relativePath) {
         super(languageId, relativePath);
-
+        this.initialize();
     }
 
     public StringResourceLoader getMenuStringRes() {
@@ -42,17 +42,19 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
      *
      */
     @Override
-    protected void initialize() {
+    protected final void initialize() {
         File toolbarFile;
-        toolbarFile = new File(getFileLocationString("BooleanExpEditorMenuToolbar"));
+        toolbarFile = new File(getFileLocationString("BooleanExpEditorToolbar"));
         try {
             LinkedList<String> toolbarList;
             toolbarList = FileLoader.loadFileAsString(toolbarFile);
             toolbarTipStringRes = new StringResourceLoader(toolbarList);
         } catch (FileNotFoundException e) {
-
+            errorFileNotFound(toolbarFile);
         } catch (IOException e) {
-
+            errorFileHasWrongFormat(toolbarFile);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            errorFileHasWrongFormat(toolbarFile);
         }
         File menuFile;
         menuFile = new File(getFileLocationString("BooleanExpEditorMenu"));
@@ -61,9 +63,11 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
             menuList = FileLoader.loadFileAsString(menuFile);
             menuStringRes = new StringResourceLoader(menuList);
         } catch (FileNotFoundException e) {
-
+            errorFileNotFound(menuFile);
         } catch (IOException e) {
-
+            errorFileHasWrongFormat(menuFile);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            errorFileHasWrongFormat(menuFile);
         }
         File expErrorFile;
         expErrorFile = new File(getFileLocationString("BooleanExpEditorBooleanExpError"));
@@ -72,9 +76,11 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
             booleanExpErrorList = FileLoader.loadFileAsString(expErrorFile);
             booleanExpErrorStringRes = new StringResourceLoader(booleanExpErrorList);
         } catch (FileNotFoundException e) {
-
+            errorFileNotFound(expErrorFile);
         } catch (IOException e) {
-
+            errorFileHasWrongFormat(expErrorFile);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            errorFileHasWrongFormat(expErrorFile);
         }
     }
 

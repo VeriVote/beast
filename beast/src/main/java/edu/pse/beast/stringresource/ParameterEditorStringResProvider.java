@@ -23,7 +23,7 @@ public class ParameterEditorStringResProvider extends StringResourceProvider {
 
     public ParameterEditorStringResProvider(String languageId, String relativePath) {
         super(languageId, relativePath);
-
+        this.initialize();
     }
 
     public StringResourceLoader getMenuStringRes() {
@@ -39,7 +39,7 @@ public class ParameterEditorStringResProvider extends StringResourceProvider {
     }
 
     @Override
-    protected void initialize() {
+    protected final void initialize() {
         File toolbarFile;
         toolbarFile = new File(getFileLocationString("ParameterEditorToolbar"));
         try {
@@ -47,9 +47,11 @@ public class ParameterEditorStringResProvider extends StringResourceProvider {
             toolbarList = FileLoader.loadFileAsString(toolbarFile);
             toolbarTipStringRes = new StringResourceLoader(toolbarList);
         } catch (FileNotFoundException e) {
-
+            errorFileNotFound(toolbarFile);
         } catch (IOException e) {
-
+            errorFileHasWrongFormat(toolbarFile);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            errorFileHasWrongFormat(toolbarFile);
         }
         File menuFile;
         menuFile = new File(getFileLocationString("ParameterEditorMenu"));
@@ -58,20 +60,24 @@ public class ParameterEditorStringResProvider extends StringResourceProvider {
             menuList = FileLoader.loadFileAsString(menuFile);
             menuStringRes = new StringResourceLoader(menuList);
         } catch (FileNotFoundException e) {
-
+            errorFileNotFound(menuFile);
         } catch (IOException e) {
-
+            errorFileHasWrongFormat(menuFile);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            errorFileHasWrongFormat(menuFile);
         }
-        File otherParam;
-        otherParam = new File(getFileLocationString("ParameterEditorOther"));
+        File otherFile;
+        otherFile = new File(getFileLocationString("ParameterEditorOther"));
         try {
             LinkedList<String> otherList;
-            otherList = FileLoader.loadFileAsString(otherParam);
+            otherList = FileLoader.loadFileAsString(otherFile);
             otherStringRes = new StringResourceLoader(otherList);
         } catch (FileNotFoundException e) {
-
+            errorFileNotFound(otherFile);
         } catch (IOException e) {
-
+            errorFileHasWrongFormat(otherFile);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            errorFileHasWrongFormat(otherFile);
         }
     }
 }

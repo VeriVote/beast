@@ -48,7 +48,7 @@
             <resource>
               <directory>src/resources/stringfiles</directory>
                 <includes>
-                    <include>/*.txt</include>
+                    <include>/*/*.txt</include>
               </includes>
             </resource>
     </resources>

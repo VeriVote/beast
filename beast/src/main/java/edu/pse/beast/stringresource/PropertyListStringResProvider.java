@@ -21,9 +21,10 @@ public class PropertyListStringResProvider extends StringResourceProvider {
     private StringResourceLoader toolbarTipStringRes;
 
     public PropertyListStringResProvider(String languageId, String relativePath) {
-        super (languageId, relativePath);
+        super(languageId, relativePath);
+        this.initialize();
     }
-    
+
     public StringResourceLoader getMenuStringRes() {
         return menuStringRes;
     }
@@ -31,8 +32,9 @@ public class PropertyListStringResProvider extends StringResourceProvider {
     public StringResourceLoader getToolbarTipStringRes() {
         return toolbarTipStringRes;
     }
+
     @Override
-    protected void initialize(){
+    protected final void initialize() {
         File toolbarFile;
         toolbarFile = new File(getFileLocationString("PropertyListToolbar"));
         try {
@@ -40,9 +42,11 @@ public class PropertyListStringResProvider extends StringResourceProvider {
             toolbarList = FileLoader.loadFileAsString(toolbarFile);
             toolbarTipStringRes = new StringResourceLoader(toolbarList);
         } catch (FileNotFoundException e) {
-            
+            errorFileNotFound(toolbarFile);
         } catch (IOException e) {
-            
+            errorFileHasWrongFormat(toolbarFile);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            errorFileHasWrongFormat(toolbarFile);
         }
         File menuFile;
         menuFile = new File(getFileLocationString("PropertyListMenu"));
@@ -51,9 +55,11 @@ public class PropertyListStringResProvider extends StringResourceProvider {
             menuList = FileLoader.loadFileAsString(menuFile);
             menuStringRes = new StringResourceLoader(menuList);
         } catch (FileNotFoundException e) {
-            
+            errorFileNotFound(menuFile);
         } catch (IOException e) {
-
+            errorFileHasWrongFormat(menuFile);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            errorFileHasWrongFormat(menuFile);
         }
     }
 

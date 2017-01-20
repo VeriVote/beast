@@ -23,6 +23,7 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
 
     public CElectionEditorStringResProvider(String languageId, String relativePath) {
         super(languageId, relativePath);
+        this.initialize();
     }
 
     public StringResourceLoader getMenuStringRes() {
@@ -38,39 +39,45 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
     }
 
     @Override
-    protected void initialize() {
+    protected final void initialize() {
         File toolbarFile;
-        toolbarFile = new File(getFileLocationString("CEditorToolbar"));
+        toolbarFile = new File(getFileLocationString("CElectionEditorToolbar"));
         try {
             LinkedList<String> toolbarList;
             toolbarList = FileLoader.loadFileAsString(toolbarFile);
             toolbarTipStringRes = new StringResourceLoader(toolbarList);
         } catch (FileNotFoundException e) {
-
+            errorFileNotFound(toolbarFile);
         } catch (IOException e) {
-
+            errorFileHasWrongFormat(toolbarFile);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            errorFileHasWrongFormat(toolbarFile);
         }
         File menuFile;
-        menuFile = new File(getFileLocationString("CEditorMenu"));
+        menuFile = new File(getFileLocationString("CElectionEditorMenu"));
         try {
             LinkedList<String> menuList;
             menuList = FileLoader.loadFileAsString(menuFile);
             menuStringRes = new StringResourceLoader(menuList);
         } catch (FileNotFoundException e) {
-
+            errorFileNotFound(menuFile);
         } catch (IOException e) {
-
+            errorFileHasWrongFormat(menuFile);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            errorFileHasWrongFormat(menuFile);
         }
-        File cError;
-        cError = new File(getFileLocationString("CEditorCError"));
+        File cErrorFile;
+        cErrorFile = new File(getFileLocationString("CElectionEditorCError"));
         try {
             LinkedList<String> cErrorList;
-            cErrorList = FileLoader.loadFileAsString(cError);
+            cErrorList = FileLoader.loadFileAsString(cErrorFile);
             cErrorStringRes = new StringResourceLoader(cErrorList);
         } catch (FileNotFoundException e) {
-
+            errorFileNotFound(cErrorFile);
         } catch (IOException e) {
-
+            errorFileHasWrongFormat(cErrorFile);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            errorFileHasWrongFormat(cErrorFile);
         }
     }
 

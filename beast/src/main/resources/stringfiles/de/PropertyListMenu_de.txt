@@ -1,1 +1,9 @@
-test : dasIstEinTest
+showResult : Ergebnis anzeigen
+analyseProperty : Überprüfen
+editProperty : Bearbeiten
+deleteProperty : Löschen
+addProperty : Neu
+newProperty : Neue Eigenschaft erstellen
+loadProperty : Eigenschaft wählen
+menuFile : Datei
+menuEdit : Bearbeiten
