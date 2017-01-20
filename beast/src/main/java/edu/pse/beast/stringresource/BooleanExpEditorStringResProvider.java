@@ -34,7 +34,7 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
         return toolbarTipStringRes;
     }
 
-    public StringResourceLoader getCErrorStringRes() {
+    public StringResourceLoader getBooleanExpErrorStringRes() {
         return booleanExpErrorStringRes;
     }
 
