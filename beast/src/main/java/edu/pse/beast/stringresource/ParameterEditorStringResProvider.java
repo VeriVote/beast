@@ -15,39 +15,48 @@ import java.util.LinkedList;
  *
  * @author Niels
  */
-public class PropertyListStringResProvider extends StringResourceProvider {
-
+public class ParameterEditorStringResProvider extends StringResourceProvider{
     private StringResourceLoader menuStringRes;
     private StringResourceLoader toolbarTipStringRes;
-
-    public PropertyListStringResProvider(String languageId, String relativePath) {
-        super (languageId, relativePath);
-        
+    private StringResourceLoader otherStringRes;
+    
+    public ParameterEditorStringResProvider(String languageId, String relativePath) {
+        super(languageId, relativePath);
         File toolbarFile;
-        toolbarFile = new File(getFileLocationString("PropertyListToolbar"));
+        toolbarFile = new File(getFileLocationString("ParameterEditorToolbar"));
         try {
             LinkedList<String> toolbarList;
             toolbarList = FileLoader.loadFileAsString(toolbarFile);
             toolbarTipStringRes = new StringResourceLoader(toolbarList);
         } catch (FileNotFoundException e) {
-            
+
         } catch (IOException e) {
-            
+
         }
         File menuFile;
-        menuFile = new File(getFileLocationString("PropertyListMenu"));
+        menuFile = new File(getFileLocationString("ParameterEditorMenu"));
         try {
             LinkedList<String> menuList;
             menuList = FileLoader.loadFileAsString(menuFile);
             menuStringRes = new StringResourceLoader(menuList);
         } catch (FileNotFoundException e) {
-            
+
         } catch (IOException e) {
 
         }
+        File otherParam;
+        otherParam = new File(getFileLocationString("ParameterEditorOther"));
+        try {
+            LinkedList<String> otherList;
+            otherList = FileLoader.loadFileAsString(otherParam);
+            otherStringRes = new StringResourceLoader(otherList);
+        } catch (FileNotFoundException e) {
 
+        } catch (IOException e) {
+
+        }
     }
-    
+
     public StringResourceLoader getMenuStringRes() {
         return menuStringRes;
     }
@@ -56,4 +65,8 @@ public class PropertyListStringResProvider extends StringResourceProvider {
         return toolbarTipStringRes;
     }
 
+    public StringResourceLoader getOtherStringRes() {
+        return otherStringRes;
+    }
+    
 }

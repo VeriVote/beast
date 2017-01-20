@@ -17,19 +17,19 @@ public class StringResourceLoader {
     private HashMap<String, String> idsToString;
 
     public StringResourceLoader(LinkedList<String> stringRes) {
-        idsToString = new HashMap<String, String>() {};
+        idsToString = new HashMap<String, String>() {
+        };
         String line;
         String[] split;
         String id;
         String displayedText;
-        while(!stringRes.isEmpty()){
+        while (!stringRes.isEmpty()) {
             line = stringRes.pop();
             split = line.split(":");
             id = split[0].trim();
             displayedText = split[1].trim();
             idsToString.put(id, displayedText);
         }
-        
     }
 
     public String getStringFromID(String id) {
