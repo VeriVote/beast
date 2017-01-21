@@ -12,6 +12,8 @@ import javax.swing.JTextPane;
  *
  * @author Holger-Desktop
  */
-public class CElectionCodeArea {
-   
+public class CElectionCodeArea extends CodeArea {
+    public CElectionCodeArea(CodeArea codeArea) {
+        super(codeArea);
+    }
 }

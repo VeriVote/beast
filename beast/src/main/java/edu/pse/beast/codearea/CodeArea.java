@@ -10,6 +10,7 @@ import edu.pse.beast.codearea.Autocompletion.AutocompletionController;
 import edu.pse.beast.codearea.ErrorHandling.ErrorController;
 import edu.pse.beast.codearea.InputToCode.UserInputHandler;
 import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
+import edu.pse.beast.codearea.UserActions.CodeAreaUserActions;
 
 /**
  *
@@ -23,6 +24,7 @@ public class CodeArea {
     protected Actionlist actionList;
     protected ErrorController errorCtrl;
     protected AutocompletionController autoComplCtrl;
+    protected CodeAreaUserActions userActionList;
                     
     public CodeArea(
             TextLineNumber tln, 
@@ -46,5 +48,15 @@ public class CodeArea {
         this.actionList = codeArea.actionList;
         this.errorCtrl = codeArea.errorCtrl;
         this.autoComplCtrl = codeArea.autoComplCtrl;
+        this.userActionList = codeArea.userActionList;
     }
+    
+    public void setUserActionList(CodeAreaUserActions userActionList) {
+        this.userActionList = userActionList;
+    }
+    
+    public CodeAreaUserActions getUserActionList() {
+        return userActionList;
+    }
+    
 }

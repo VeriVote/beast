@@ -13,6 +13,7 @@ import edu.pse.beast.codearea.InputToCode.OpenCloseCharList;
 import edu.pse.beast.codearea.InputToCode.ShortcutHandler;
 import edu.pse.beast.codearea.InputToCode.UserInputHandler;
 import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
+import edu.pse.beast.codearea.UserActions.CodeAreaUserActions;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
@@ -38,6 +39,9 @@ public class CodeAreaBuilder {
         AutocompletionController autocompletion = new AutocompletionController();
         Actionlist actionList = new Actionlist();
         
-        return new CodeArea(tln, userInputHandler, insertToCode, actionList, error, autocompletion);
+        CodeArea created = new CodeArea(tln, userInputHandler, insertToCode, actionList, error, autocompletion);
+        CodeAreaUserActions userActions = new CodeAreaUserActions(created);
+        created.setUserActionList(userActions);
+        return created;
     }
 }

@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea;
 
+import edu.pse.beast.codearea.CodeAreaBuilder;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
@@ -13,9 +14,9 @@ import javax.swing.JTextPane;
  *
  * @author Holger-Desktop
  */
-public class CElectionCodeAreaBuilder {
+public class CElectionCodeAreaBuilder extends CodeAreaBuilder {
     
     public CElectionCodeArea createCElectionCodeArea(JTextPane codeArea, JScrollPane codeAreaScrollPane, ObjectRefsForBuilder refs) {
-        return null;
+        
     }
 }
