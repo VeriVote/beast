@@ -5,21 +5,20 @@
  */
 package edu.pse.beast.booleanexpeditor;
 
+import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 
-import javax.swing.*;
-
 /**
- *
- * @author scooby
+ * The JFrame that serves as the View for the booleanexpeditor Package.
+ * @author Nikolai
  */
-public class BooleanExpEditorWindow extends javax.swing.JFrame {
+public class BooleanExpEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser{
 
     /**
-     * Creates new form BooleanExpEditorWindow
+     * Constructor
      */
-    public BooleanExpEditorWindow(StringLoaderInterface stringLoaderInterface) {
-        initComponents(stringLoaderInterface);
+    BooleanExpEditorWindow() {
+        initComponents();
     }
 
     /**
@@ -29,10 +28,9 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents(StringLoaderInterface stringLoaderInterface) {
-        //TODO load strings from stringloaderinterface
+    private void initComponents( ) {
         toolbar = new javax.swing.JToolBar();
-        symVarLabel = new javax.swing.JLabel();
+        symbVarLabel = new javax.swing.JLabel();
         addSymVarButton = new javax.swing.JButton();
         removeSymVarButton = new javax.swing.JButton();
         prePropLabel = new javax.swing.JLabel();
@@ -46,20 +44,18 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame {
         errorScrollPane = new javax.swing.JScrollPane();
         errorTextPane = new javax.swing.JTextPane();
         menubar = new javax.swing.JMenuBar();
-        prePropTextLineNumber = new TextLineNumber(prePropTextPane);
-        postPropTextLineNumber = new TextLineNumber(postPropTextPane);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         toolbar.setRollover(true);
         toolbar.setFloatable(false);
 
-        prePropScrollPane.setViewportView(prePropTextPane);
-        prePropScrollPane.setRowHeaderView(prePropTextLineNumber);
         symVarScrollPane.setViewportView(symVarList);
 
+        prePropScrollPane.setViewportView(prePropTextPane);
+
+
         postPropScrollPane.setViewportView(postPropTextPane);
-        postPropScrollPane.setRowHeaderView(postPropTextLineNumber);
 
         errorScrollPane.setViewportView(errorTextPane);
 
@@ -76,7 +72,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(symVarLabel)
+                                .addComponent(symbVarLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(addSymVarButton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -100,7 +96,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame {
                 .addComponent(toolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(symVarLabel)
+                    .addComponent(symbVarLabel)
                     .addComponent(addSymVarButton)
                     .addComponent(removeSymVarButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -119,34 +115,29 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    protected javax.swing.JTextPane getPrePropTextPane() {
-        return prePropTextPane;
-    }
-    protected javax.swing.JTextPane getPostPropTextPane() {
-        return postPropTextPane;
-    }
-    protected javax.swing.JTextPane getErrorTextPane() {
-        return errorTextPane;
-    }
-    protected javax.swing.JList getSymVarList(){
-        return symVarList;
-    }
-    protected javax.swing.JButton getAddSymVarButton(){
-        return addSymVarButton;
-    }
-    protected javax.swing.JButton getRemoveSymVarButton(){
-        return removeSymVarButton;
+
+    /**
+     * Update the language dependent displayed Strings in this class.
+     * @param stringLoaderInterface the new stringLoaderInterface
+     */
+    public void updateStringRes(StringLoaderInterface stringLoaderInterface) {
+        postPropLabel.setText(stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpEditorWindowStringRes().getStringFromID("postProperties"));
+        prePropLabel.setText(stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpEditorWindowStringRes().getStringFromID("preProperties"));
+        addSymVarButton.setText(stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpEditorWindowStringRes().getStringFromID("add"));
+        removeSymVarButton.setText(stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpEditorWindowStringRes().getStringFromID("remove"));
+        symbVarLabel.setText(stringLoaderInterface.getBooleanExpEditorStringResProvider().getBooleanExpEditorWindowStringRes().getStringFromID("symbolicVariablesLabel"));
     }
 
-    protected void setToolbar(javax.swing.JToolBar toolbar) {
-        this.toolbar = toolbar;
-    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addSymVarButton;
     private javax.swing.JButton removeSymVarButton;
-    private javax.swing.JLabel symVarLabel;
+    private javax.swing.JLabel symbVarLabel;
     private javax.swing.JLabel prePropLabel;
     private javax.swing.JLabel postPropLabel;
     private javax.swing.JList<String> symVarList;
@@ -159,7 +150,77 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame {
     private javax.swing.JTextPane errorTextPane;
     private javax.swing.JToolBar toolbar;
     private javax.swing.JTextPane prePropTextPane;
-    private TextLineNumber prePropTextLineNumber;
-    private TextLineNumber postPropTextLineNumber;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration//GEN-END:variable
+
+    /**
+     * Getter
+     * @return The JTextPane for the precondition.
+     */
+    javax.swing.JTextPane getPrePropTextPane() {
+        return prePropTextPane;
+    }
+
+    /**
+     * Getter
+     * @return The JScrollPane for the precondition.
+     */
+    javax.swing.JScrollPane getPrePropScrollPane() {
+        return prePropScrollPane;
+    }
+
+    /**
+     * Getter
+     * @return The JTextPane for the postcondition.
+     */
+    javax.swing.JTextPane getPostPropTextPane() {
+        return postPropTextPane;
+    }
+
+    /**
+     * Getter
+     * @return The JScrollPane for the postcondition.
+     */
+    javax.swing.JScrollPane getPostPropScrollPane() {
+        return postPropScrollPane;
+    }
+
+    /**
+     * Getter
+     * @return the JTextPane for static error displaying
+     */
+    javax.swing.JTextPane getErrorTextPane() {
+        return errorTextPane;
+    }
+
+    /**
+     * Getter
+     * @return the JList that contains the user defined symbolic variables
+     */
+    javax.swing.JList getSymVarList(){
+        return symVarList;
+    }
+
+    /**
+     * Getter
+     * @return the JButton to add symbolic variables
+     */
+    javax.swing.JButton getAddSymVarButton(){
+        return addSymVarButton;
+    }
+
+    /**
+     * Getter
+     * @return the JButton to remove symbolic variables
+     */
+    javax.swing.JButton getRemoveSymVarButton(){
+        return removeSymVarButton;
+    }
+
+    /**
+     * This method allows the ToolbarHandler of BooleanExpEditor to set the toolbar dynamically at runtime.
+     * @param toolbar the new JToolBar object.
+     */
+    void setToolbar(javax.swing.JToolBar toolbar) {
+        this.toolbar = toolbar;
+    }
 }

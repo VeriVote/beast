@@ -1,0 +1,8 @@
+symbolicVariablesLabel : Symbolische Variablen
+preProperties : Vorbedingungen
+postProperties : Nachbedingungen
+add : Hinzufügen
+remove : Entfernen
+voter : Wähler
+candidate : Kandidat
+seat : Sitz
