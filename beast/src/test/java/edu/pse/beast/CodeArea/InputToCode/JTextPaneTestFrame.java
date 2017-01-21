@@ -5,6 +5,8 @@
  */
 package edu.pse.beast.CodeArea.InputToCode;
 
+import javax.swing.JScrollPane;
+
 /**
  *
  * @author Holger-Desktop
@@ -57,6 +59,10 @@ public class JTextPaneTestFrame extends javax.swing.JFrame {
     
     public javax.swing.JTextPane getTextPane() {
         return jTextPane1;
+    }
+    
+    public JScrollPane getScrollPane() {
+        return jScrollPane1;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
