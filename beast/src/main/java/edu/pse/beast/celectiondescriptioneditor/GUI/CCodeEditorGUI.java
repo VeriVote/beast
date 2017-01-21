@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.GUI;
 
+import javax.swing.JMenuBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
@@ -27,6 +28,10 @@ public class CCodeEditorGUI extends javax.swing.JFrame {
     
     public JScrollPane getCodeAreaScrollPane() {
         return jScrollPane1;
+    }
+    
+    public void setMenuBar(JMenuBar menuBar) {
+        setJMenuBar(menuBar);
     }
     
     /**
