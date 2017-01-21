@@ -14,7 +14,7 @@ import edu.pse.beast.toolbox.UserAction;
 public class StaticCheckUserAction extends UserAction {
 
     public StaticCheckUserAction() {
-        super("static_code_analysis");
+        super("static_analysis");
     }
     
     @Override

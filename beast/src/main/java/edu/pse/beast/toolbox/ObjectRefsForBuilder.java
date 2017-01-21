@@ -17,11 +17,17 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
  */
 public class ObjectRefsForBuilder {
 
+    private StringLoaderInterface stringIF;
+    
+    public ObjectRefsForBuilder(StringLoaderInterface stringIF) {
+        this.stringIF = stringIF; 
+    }
+    
     /**
      * Temporary method declaration to test other classes
      * @return null
      */
     public StringLoaderInterface getStringIF() {
-        return null;
+        return stringIF;
     }
 }
