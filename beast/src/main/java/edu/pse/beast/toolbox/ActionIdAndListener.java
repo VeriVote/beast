@@ -12,7 +12,19 @@ import java.awt.event.ActionListener;
  * @author Holger-Desktop
  */
 public class ActionIdAndListener {
+    final private String id;
+    final private ActionListener l;
     public ActionIdAndListener(String id, ActionListener l) {
-        
+        this.l = l;
+        this.id = id;
     }
+    
+    public String getId() {
+        return this.id;
+    }
+    
+    public ActionListener getListener() {
+        return this.l;
+    }
+    
 }

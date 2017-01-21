@@ -5,10 +5,17 @@
  */
 package edu.pse.beast.toolbox;
 
+import edu.pse.beast.stringresource.StringResourceLoader;
+import java.util.ArrayList;
+
 /**
  *
  * @author Holger-Desktop
  */
 public class MenuBarHandler {
+    private String[] headingIds;
+    private ArrayList<ArrayList<ActionIdAndListener>> actionIDAndListener;
+    private StringResourceLoader currentStringResLoader;
     
+    public 
 }
