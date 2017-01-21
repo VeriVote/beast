@@ -5,8 +5,12 @@
  */
 package edu.pse.beast.toolbox;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.LinkedList;
+
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -40,5 +44,21 @@ public final class FileLoader {
 
         br.close();
         return stringlist;
+    }
+    
+    /**
+     * 
+     * @param file the file to be read as an image
+     * @return the image, if it was possible to read it. In case it couldn't be read, the methode returns null
+     */
+    public static BufferedImage loadFileAsImage(File file) {
+        BufferedImage toReturn = null;
+        try {
+            toReturn = ImageIO.read(file);
+        } catch (IOException e) {
+            ErrorLogger.log("The specified file: " + file.toString() + " couldn't be loaded");
+        }
+        
+        return toReturn;
     }
 }
