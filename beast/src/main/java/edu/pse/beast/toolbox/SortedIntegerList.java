@@ -8,6 +8,7 @@ package edu.pse.beast.toolbox;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * This class is simple wrapper around a sorted ArrayList (or other type of 
@@ -98,24 +99,86 @@ public class SortedIntegerList {
     
     /**
      * @param num
-     * @return the biggest integer smaller or equal to than the thun
+     * @return the biggest integer smaller or equal to than the num
      */
     public int getBiggestSmallerOrEqual(int num) {
-        int max = 0;
+        int max = Integer.MIN_VALUE;
         for(int i = 0; i < container.size() && container.get(i) <= num; ++i) {
             max = container.get(i);
         }
         return max;
     }
 
+    /**
+     * subtracts subtract from all saved numbers bigger than start
+     * @param start
+     * @param subtract 
+     */
     public void subtractIfBigger(int start, int subtract) {
         int i = 0;
-        while(container.get(i) <= start) {
+        while(i < container.size() && container.get(i) <= start) {
             ++i;
-        }
-        
+        }        
         for(; i < container.size(); ++i) {
             container.set(i, container.get(i) - subtract);
         }
     }
+
+    /**
+     * adds add to all numbers bigger than startc
+     * @param start
+     * @param add 
+     */
+    public void addIfBigger(int start, int add) {
+        int i = 0;
+        while(i < container.size() && container.get(i) <= start) {
+            ++i;
+        }        
+        for(; i < container.size(); ++i) {
+            container.set(i, container.get(i) + add);
+        }
+    }
+    
+    /**
+     * uses binary search to quickly determine whether container contains i
+     * @param i
+     * @return 
+     */
+    public boolean contains(int i) {
+        return Arrays.binarySearch(container.toArray(), i) >= 0;
+    }
+    
+    public int getPositionOf(int i) {
+        return Arrays.binarySearch(container.toArray(), i);
+    }
+    
+    public int getAmountBefore(int num) {
+        int amt = 0;
+        for(int i = 0; i < container.size() && container.get(i) < num; ++i) {
+            amt++;
+        }
+        return amt;
+    }
+
+    public void clear() {
+        container.clear();
+    }
+
+    public int[] getArr() {
+        int[] arr = new int[container.size()];
+        for(int i = 0; i < container.size(); ++i) {
+            arr[i] = container.get(i);
+        }
+        return arr;
+    }
+    
+    @Override
+    public String toString() {
+        String s = "";
+        for(int num : container) {
+            s += num + " ";
+        }
+        return s;
+    }
+            
 }

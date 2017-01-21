@@ -11,30 +11,6 @@ import javax.swing.JTextPane;
  *
  * @author Holger-Desktop
  */
-public class LineBeginningTabsHandler {
-    private LineHandler lineHandler;
-    private JTextPane pane;
-    
-    public LineBeginningTabsHandler(JTextPane pane, LineHandler lineHandler) {
-        this.pane = pane;
-        this.lineHandler = lineHandler;
-    }
-    
-    public int getTabsForLine(int absPos) {
-        String code = pane.getText();
-        int amtTabs = 0;
-        for(int i = absPos - 1; i >= 0; --i) {
-            if(code.charAt(i) == '{') {
-                amtTabs++;
-                while(i >= 0 && code.charAt(i) != '\n') ++i;
-            } else if(code.charAt(i) == '}') {
-                amtTabs--;
-                while(i >= 0 && code.charAt(i) != '\n') ++i;
-            } 
-        }
-        for(int i = absPos + 1; i < code.length() && code.charAt(i) == '{'; ++i) {
-            amtTabs--;
-        }
-        return amtTabs;
-    }
+public interface LineBeginningTabsHandler {
+    public int getTabsForLine(int absPos);
 }

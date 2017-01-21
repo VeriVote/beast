@@ -130,5 +130,72 @@ public class SortedIntegerListTest {
         assertEquals(6, list.get(5));
         
     }
+
+   
+
+    /**
+     * Test of addIfBigger method, of class SortedIntegerList.
+     */
+    @Test
+    public void testAddIfBigger() {
+        int numbers[] =     {0,1,2,3,4,5,6,7,8,9,10};
+        int newnumbers[] =  {0,1,2,3,4,5,8,9,10,11,12};
+        
+        for(int num : numbers) {
+            list.add(num);
+        }
+        list.addIfBigger(5, 2);
+        assertArrayEquals(newnumbers, list.getArr());
+    }
+
+    /**
+     * Test of contains method, of class SortedIntegerList.
+     */
+    @Test
+    public void testContains() {
+        System.out.println("contains");
+        int numbers[] =     {0,1,2,5,4,3,6,7,10,9,8};
+        
+        for(int num : numbers) {
+            list.add(num);
+        }
+        
+        assertTrue(list.contains(4));
+        assertFalse(list.contains(11));
+    }
+
+    /**
+     * Test of getPositionOf method, of class SortedIntegerList.
+     */
+    @Test
+    public void testGetPositionOf() {
+        System.out.println("getPositionOf");
+        int numbers[] =     {0,1,2,5,4,3,6,7,10,9,8};
+        
+        for(int num : numbers) {
+            list.add(num);
+        }
+        
+        int pos = list.getPositionOf(6);
+        assertEquals(6, pos);
+        pos = list.getPositionOf(0);
+        assertEquals(0, pos);        
+    }
+
+    /**
+     * Test of getAmountBefore method, of class SortedIntegerList.
+     */
+    @Test
+    public void testGetAmountBefore() {
+        System.out.println("getAmountBefore");
+        int numbers[] =     {0,1,2,5,4,3,6,10,9,8};
+        
+        for(int num : numbers) {
+            list.add(num);
+        }
+        System.out.println(list.toString());
+        int pos = list.getAmountBefore(7);
+        assertEquals(7, pos);  
+    }
     
 }

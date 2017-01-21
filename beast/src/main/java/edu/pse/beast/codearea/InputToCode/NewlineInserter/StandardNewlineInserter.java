@@ -5,6 +5,9 @@
  */
 package edu.pse.beast.codearea.InputToCode.NewlineInserter;
 
+import edu.pse.beast.codearea.InputToCode.LineBeginningTabsHandler;
+import edu.pse.beast.codearea.InputToCode.TabInserter;
+import edu.pse.beast.codearea.InputToCode.TextPaneSystemInfo;
 import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
@@ -15,13 +18,26 @@ import javax.swing.text.StyledDocument;
  * @author Holger-Desktop
  */
 public class StandardNewlineInserter implements NewlineInserter {
+        
     @Override
-    public void insertNewlineAtCurrentPosition(UserInsertToCode insertToCode, int pos) throws BadLocationException {
-        insertToCode.getTextPane().getStyledDocument().insertString(pos, "\n", null);
-        int tabs = insertToCode.getLineBeginningTabHandler().getTabsForLine(pos + 1);
+    public void insertNewlineAtCurrentPosition(
+            JTextPane pane, TabInserter tabInserter,
+            LineBeginningTabsHandler beginningTabsHandler,
+            int pos) throws BadLocationException {
+        
+        pane.getStyledDocument().insertString(pos, System.lineSeparator(), null);
+        
+        if(TextPaneSystemInfo.getCharsPerNewline() == 2) pane.getStyledDocument().remove(pos, 1);
+        
+        int newLinePos = pos + 1;
+        
+        int tabs = beginningTabsHandler.getTabsForLine(newLinePos);
+        
         for(int i = 0; i < tabs; ++i) {
-            insertToCode.getTabInserter().insertTabAtPos(pos + 1);
-        }
+            tabInserter.insertTabAtPos(newLinePos + i * tabInserter.getSpacesPerTab());
+        }      
+        
+        
     }
     
 }

@@ -19,13 +19,13 @@ public class NewlineInserterChooser {
     private JTextPane pane;
     private StandardNewlineInserter standardInserter = new StandardNewlineInserter();
     private LockedLineNewlineInserter lockedInserter = new LockedLineNewlineInserter();
-    private BetweenCurlyBracesNewlineInserter curlyBracesInserter = new BetweenCurlyBracesNewlineInserter();
+    private BetweenCurlyBracesNewlineInserter curlyBracesInserter;
     private LockedLinesHandler lockedLinesHandler;
     
     public NewlineInserterChooser(JTextPane pane, LockedLinesHandler lockedLinesHandler) {
         this.pane = pane;
         this.lockedLinesHandler = lockedLinesHandler;
-        
+        this.curlyBracesInserter = new BetweenCurlyBracesNewlineInserter(standardInserter);
     }
     
     public NewlineInserter getNewlineInserter() {

@@ -5,6 +5,8 @@
  */
 package edu.pse.beast.codearea.InputToCode.NewlineInserter;
 
+import edu.pse.beast.codearea.InputToCode.LineBeginningTabsHandler;
+import edu.pse.beast.codearea.InputToCode.TabInserter;
 import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
@@ -18,7 +20,11 @@ public class LockedLineNewlineInserter implements NewlineInserter {
 
   
     @Override
-    public void insertNewlineAtCurrentPosition(UserInsertToCode insertToCode, int pos) throws BadLocationException {
+   public void insertNewlineAtCurrentPosition(
+            JTextPane pane, TabInserter tabInserter,
+            LineBeginningTabsHandler beginningTabsHandler,
+            int pos) throws BadLocationException {
+       
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

@@ -6,6 +6,7 @@
 package edu.pse.beast.CodeArea.InputToCode;
 
 import edu.pse.beast.codearea.InputToCode.LineHandler;
+import edu.pse.beast.codearea.InputToCode.NewlineInserter.StandardNewlineInserter;
 import javax.swing.JTextPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.text.BadLocationException;
@@ -47,64 +48,64 @@ public class LineHandlerTest {
         handler = null;
         pane = null;
     }
-
-    /**
-     * Test of getClosestLineBeginning method, of class LineHandler.
-     */
+  
     @Test
-    public void testGetClosestLineBeginning() throws BadLocationException {        
-        System.out.println("getClosestLineBeginning");
-        pane.getStyledDocument().insertString(0, "\n1\n345\n789\n", null);
+    public void testTransformToLine() throws BadLocationException {
+        String insert = "0" + System.lineSeparator() + "1" +
+                System.lineSeparator() + "2" + System.lineSeparator() + "3";
+        pane.getStyledDocument().insertString(0, insert, null);
+        assertEquals(4 + 9, pane.getText().length());
+        int line = handler.transformToLineNumber(0);
+        assertEquals(0, line);
+        line = handler.transformToLineNumber(1);
+        assertEquals(0, line);
+        line = handler.transformToLineNumber(2);
+        assertEquals(0, line);
         
-        int closest = handler.getClosestLineBeginning(0);
-        assertEquals(0, closest);
-        closest = handler.getClosestLineBeginning(1);
-        assertEquals(0, closest);
-        closest = handler.getClosestLineBeginning(5);
-        assertEquals(2, closest);
-        closest = handler.getClosestLineBeginning(8);
-        assertEquals(6, closest);
-        closest = handler.getClosestLineBeginning(9);
-        assertEquals(6, closest);
-    }
-
-    /**
-     * Test of getDistanceToLineBeginning method, of class LineHandler.
-     */
-    @Test
-    public void testGetDistanceToLineBeginning() throws BadLocationException {
-        System.out.println("getDistanceToLineBeginning");
-        pane.getStyledDocument().insertString(0, "\n1\n345\n789\n", null);
-        
-        int dist = handler.getDistanceToLineBeginning(0);
-        assertEquals(0, dist);
-        
-        dist = handler.getDistanceToLineBeginning(1);
-        assertEquals(1, dist);
-        
-        dist = handler.getDistanceToLineBeginning(4);
-        assertEquals(2, dist);
-        
-        dist = handler.getDistanceToLineBeginning(5);
-        assertEquals(3, dist);
-    } 
-    
-    @Test
-    public void testHandleRemovedLines() throws BadLocationException {
-        System.out.println("handleRemovedLines");
-        pane.getStyledDocument().insertString(0, "\n1\n345\n789\n", null);
-        pane.getStyledDocument().remove(2, 5); // \n1789\n
-        handler.printLineNumbers();
-        System.out.println(pane.getText());
-        
-        int dist = handler.getDistanceToLineBeginning(0);
-        assertEquals(0, dist);
-        
-        dist = handler.getDistanceToLineBeginning(1);
-        assertEquals(1, dist);
-        
-        dist = handler.getDistanceToLineBeginning(3);
-        assertEquals(3, dist);
+        line = handler.transformToLineNumber(4);
+        assertEquals(1, line);        
     }
     
+     @Test
+    public void testCaretMovement() throws BadLocationException {
+        int pos = pane.getCaretPosition();
+        assertEquals(0, pos);
+        String insert = "0" + System.lineSeparator() + "1" +
+                System.lineSeparator() + "2" + System.lineSeparator() + "3";
+        pane.getStyledDocument().insertString(0, insert, null);
+        
+        pos = pane.getCaretPosition();
+        assertEquals(0, pos);
+        
+        pane = new JTextPane();
+        pane.getStyledDocument().insertString(0, System.lineSeparator(), null);
+        
+        pos = pane.getCaretPosition();
+        assertEquals(0, pos);
+    }
+    
+     @Test
+    public void testInsertion() throws BadLocationException {
+        String insert = "\n" + "123" + "\n" + "123";
+        pane.getStyledDocument().insertString(0, insert, null);
+        int pos = handler.getDistanceToLineBeginning(2);
+        
+        assertEquals(0, pos);
+        
+        pos = handler.getDistanceToLineBeginning(3);
+        assertEquals(1, pos);
+        
+        pos = handler.getDistanceToLineBeginning(7);
+        assertEquals(0, pos);        
+    }
+    
+    @Test 
+    public void testTranformCaret() throws BadLocationException {
+        String insert = "\n123\n123";
+        pane.getStyledDocument().insertString(0, insert, null);
+        int abs = handler.caretPosToAbsPos(1);
+        assertEquals(2, abs);
+        abs = handler.caretPosToAbsPos(5);
+        assertEquals(7, abs);
+    }
 }

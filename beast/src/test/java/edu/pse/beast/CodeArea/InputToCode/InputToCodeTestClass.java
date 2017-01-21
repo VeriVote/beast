@@ -34,8 +34,6 @@ public class InputToCodeTestClass {
                 new ShortcutHandler());
         WindowStarter starter = new WindowStarter(frame);
         starter.show();        
-    }   
-    
-    
+    }  
     
 }

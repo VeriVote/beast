@@ -1,0 +1,129 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package edu.pse.beast.CodeArea.InputToCode;
+
+import edu.pse.beast.codearea.InputToCode.CurlyBracesLineBeginningTabHandler;
+import edu.pse.beast.codearea.InputToCode.LineHandler;
+import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+/**
+ *
+ * @author Holger-Desktop
+ */
+public class CurlyBracesLineBeginningTabHandlerTest {
+    
+    private JTextPane pane;
+    private CurlyBracesLineBeginningTabHandler handler;
+    private LineHandler lineHandler;
+    
+    public CurlyBracesLineBeginningTabHandlerTest() {
+    }
+    
+    @BeforeClass
+    public static void setUpClass() {
+    }
+    
+    @AfterClass
+    public static void tearDownClass() {
+    }
+    
+    @Before
+    public void setUp() {
+        pane = new JTextPane();
+        lineHandler = new LineHandler(pane);
+        handler = new CurlyBracesLineBeginningTabHandler(pane, lineHandler);
+    }
+    
+    @After
+    public void tearDown() {
+    }
+
+    /**
+     * Test of getTabsForLine method, of class CurlyBracesLineBeginningTabHandler.
+     */
+    @Test
+    public void testGetZeroTabsForLine() throws BadLocationException {
+        System.out.println("getTabsForLine");
+        String insert = "asdasd" + System.lineSeparator() + "asdasd";
+        pane.getStyledDocument().insertString(0, insert, null);
+        
+        assertEquals(15, pane.getText().length());
+        
+        int tabs = handler.getTabsForLine(0);
+        assertEquals(0, tabs);
+        
+        tabs = handler.getTabsForLine(9);
+        assertEquals(0, tabs);        
+    }
+    
+    @Test
+    public void testGetEasyCurlyTabsForLine() throws BadLocationException {
+        System.out.println("getTabsForLine");
+        String insert = "{" + System.lineSeparator() + " " + System.lineSeparator() + "}";
+        pane.getStyledDocument().insertString(0, insert, null);
+        
+        int tabs = handler.getTabsForLine(0);
+        assertEquals(0, tabs);
+        
+        tabs = handler.getTabsForLine(4);
+        assertEquals(1, tabs);    
+        
+        tabs = handler.getTabsForLine(5);
+        assertEquals(1, tabs);  
+        
+        tabs = handler.getTabsForLine(9);
+        assertEquals(0, tabs);    
+    }
+    
+    @Test
+    public void testGetTabsForLineClosingCurlyAtEnd() throws BadLocationException {
+        System.out.println("getTabsForLine");
+        String insert = "{" + System.lineSeparator() + " " + System.lineSeparator() + "}";
+        pane.getStyledDocument().insertString(0, insert, null);
+        
+        int tabs = handler.getTabsForLine(8);
+        assertEquals(0, tabs);    
+    }
+    
+    @Test
+    public void testGetTabsForLineManyCurlysinLine() throws BadLocationException {
+        System.out.println("getTabsForLine");
+        String insert = "{{{{{{" + System.lineSeparator() + " " + System.lineSeparator() + "}";
+        pane.getStyledDocument().insertString(0, insert, null);
+        
+        int tabs = handler.getTabsForLine(9);
+        assertEquals(1, tabs);  
+        tabs = handler.getTabsForLine(10);
+        assertEquals(1, tabs);    
+    }
+    
+    @Test
+    public void testGetTabsForLineManyCurlysinManyLines() throws BadLocationException {
+        System.out.println("getTabsForLine");
+        String insert = "{" + System.lineSeparator() + 
+                            "{" + System.lineSeparator() + 
+                                "{" + System.lineSeparator() + 
+                                    " " + System.lineSeparator() + 
+                                "}";
+        pane.getStyledDocument().insertString(0, insert, null);
+        
+        int tabs = handler.getTabsForLine(12);
+        assertEquals(3, tabs);  
+        tabs = handler.getTabsForLine(13);
+        assertEquals(3, tabs);    
+        tabs = handler.getTabsForLine(16);
+        assertEquals(2, tabs);  
+        tabs = handler.getTabsForLine(17);
+        assertEquals(2, tabs);  
+    }
+}
