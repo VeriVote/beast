@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class CodeAreaUserActions {
     private CodeArea area;
-    private ArrayList<UserAction> actions;
+    private ArrayList<UserAction> actions = new ArrayList<>();
     
     public CodeAreaUserActions(CodeArea area) {
         addCopyAction();

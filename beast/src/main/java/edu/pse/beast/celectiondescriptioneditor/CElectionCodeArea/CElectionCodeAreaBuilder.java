@@ -17,6 +17,6 @@ import javax.swing.JTextPane;
 public class CElectionCodeAreaBuilder extends CodeAreaBuilder {
     
     public CElectionCodeArea createCElectionCodeArea(JTextPane codeArea, JScrollPane codeAreaScrollPane, ObjectRefsForBuilder refs) {
-        
+        return new CElectionCodeArea(createCodeArea(codeArea, codeAreaScrollPane, refs));
     }
 }

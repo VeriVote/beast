@@ -27,7 +27,7 @@ public class CCodeEditorGUI extends javax.swing.JFrame {
     }
     
     public JScrollPane getCodeAreaScrollPane() {
-        return jScrollPane1;
+        return jScrollPane3;
     }
     
     public void setMenuBar(JMenuBar menuBar) {

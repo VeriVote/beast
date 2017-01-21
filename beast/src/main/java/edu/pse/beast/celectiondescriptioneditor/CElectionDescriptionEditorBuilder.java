@@ -42,14 +42,13 @@ public class CElectionDescriptionEditorBuilder {
                 gui.getCodeAreaScrollPane(),
                 objRefsForBuilder);
         
-        CElectionDescriptionEditor editor = new CElectionDescriptionEditor(codeArea, gui);
-        
+        CElectionDescriptionEditor editor = new CElectionDescriptionEditor(codeArea, gui);        
         
         CElectionEditorMenubarHandler menuBarHandler = 
                 new CElectionEditorMenubarHandler(
                         menuHeadingIds,
                         gui,
-                        createActionIdAndListenerList(objRefsForBuilder, editor),
+                        createActionIdAndListenerList(objRefsForBuilder, editor, codeArea),
                         objRefsForBuilder.getStringIF());
         
         starter.start();
@@ -60,7 +59,8 @@ public class CElectionDescriptionEditorBuilder {
     private ArrayList<ArrayList<ActionIdAndListener>> 
         createActionIdAndListenerList(
                 ObjectRefsForBuilder objRefsForBuilder,
-                CElectionDescriptionEditor editor) {
+                CElectionDescriptionEditor editor,
+                CElectionCodeArea codeArea) {
         ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
         
         ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
@@ -76,6 +76,11 @@ public class CElectionDescriptionEditorBuilder {
         
         ArrayList<ActionIdAndListener> editList = new ArrayList<>();
         UserAction changeElec = createChangeElectionTypeUserAction();
+        editList.add(createFromUserAction(codeArea.getUserActionList().getActionById("copy")));
+        editList.add(createFromUserAction(codeArea.getUserActionList().getActionById("cut")));
+        editList.add(createFromUserAction(codeArea.getUserActionList().getActionById("paste")));
+        editList.add(createFromUserAction(codeArea.getUserActionList().getActionById("undo")));
+        editList.add(createFromUserAction(codeArea.getUserActionList().getActionById("redo")));
         editList.add(createFromUserAction(changeElec));
         
         ArrayList<ActionIdAndListener> editorList = new ArrayList<>();
