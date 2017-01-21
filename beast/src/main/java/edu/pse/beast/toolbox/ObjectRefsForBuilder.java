@@ -5,7 +5,10 @@
  */
 package edu.pse.beast.toolbox;
 
+import edu.pse.beast.saverloader.SaverLoaderInterface;
 import edu.pse.beast.stringresource.StringLoaderInterface;
+import toBeImplemented.LanguageOptions;
+import toBeImplemented.OptionsInterface;
 
 /**
  * This holds references to all interfaces needed by the several builder classes 
@@ -13,21 +16,60 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
  * OptionsInterface
  * StringLoaderInterface
  * SaverLoaderInterface
- * @author Holger-Desktop
+ * @author Holger-Desktop & Lukas
  */
 public class ObjectRefsForBuilder {
 
-    private StringLoaderInterface stringIF;
+    private final OptionsInterface optionsIF;
+    private final StringLoaderInterface stringIF;
+    private final LanguageOptions languageOpts;
+    private final SaverLoaderInterface saverLoaderIF;
     
-    public ObjectRefsForBuilder(StringLoaderInterface stringIF) {
-        this.stringIF = stringIF; 
+    /**
+     * 
+     * @param optionIF the optionInterface
+     * @param stringIF the Stringloaderinterface
+     * @param languageOpts this languageoptionsinterface
+     * @param saverLoaderIF the saverloaderinterface
+     */
+    public ObjectRefsForBuilder(OptionsInterface optionsIF, StringLoaderInterface stringIF,
+            LanguageOptions languageOpts, SaverLoaderInterface saverLoaderIF) {
+        this.optionsIF = optionsIF;
+        this.stringIF = stringIF;
+        this.languageOpts = languageOpts;
+        this.saverLoaderIF = saverLoaderIF;
     }
     
     /**
-     * Temporary method declaration to test other classes
-     * @return null
+     * 
+     * @return the optionsInterface
+     */
+    public OptionsInterface getOptionIF() {
+        return optionsIF;
+    }
+    
+    /**
+     * 
+     * @return the stringloaderinterface
      */
     public StringLoaderInterface getStringIF() {
         return stringIF;
     }
+    
+    /**
+     * 
+     * @return the languageOptionsInterface
+     */
+    public LanguageOptions getLanguageOpts() {
+        return languageOpts;
+    }
+    
+    /**
+     * 
+     * @return the saverloaderinterface
+     */
+    public SaverLoaderInterface getSaverLoaderIF() {
+        return saverLoaderIF;
+    }
+    
 }
