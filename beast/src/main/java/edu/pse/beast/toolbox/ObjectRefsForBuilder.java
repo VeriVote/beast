@@ -5,6 +5,8 @@
  */
 package edu.pse.beast.toolbox;
 
+import edu.pse.beast.stringresource.StringLoaderInterface;
+
 /**
  * This holds references to all interfaces needed by the several builder classes 
  * in this project. These references are:
@@ -14,5 +16,12 @@ package edu.pse.beast.toolbox;
  * @author Holger-Desktop
  */
 public class ObjectRefsForBuilder {
-    
+
+    /**
+     * Temporary method declaration to test other classes
+     * @return null
+     */
+    public StringLoaderInterface getStringIF() {
+        return null;
+    }
 }
