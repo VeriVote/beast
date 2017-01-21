@@ -5,7 +5,6 @@
  */
 package edu.pse.beast.toolbox;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.LinkedList;

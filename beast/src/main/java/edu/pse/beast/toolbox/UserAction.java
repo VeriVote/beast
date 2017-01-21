@@ -12,13 +12,24 @@ package edu.pse.beast.toolbox;
 public abstract class UserAction {
     private String id;
     
+    /**
+     * 
+     * @param id the identification
+     */
     public UserAction(String id) {
         this.id = id;
     }
     
+    /**
+     * 
+     * @return the identification
+     */
     public String getId() {
         return id;
     }
     
+    /**
+     * performs the action of the user
+     */
     public abstract void perform();
 }
