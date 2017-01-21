@@ -5,12 +5,20 @@
  */
 package edu.pse.beast.celectiondescriptioneditor;
 
+import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
+import edu.pse.beast.highlevel.ElectionDescriptionSource;
+
 /**
- *
- * @author Niels
+ *  
+ * @author Holger Klein
  */
-public class CElectionDescriptionEditor {
+public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     public CElectionDescriptionEditor() {
         
+    }
+
+    @Override
+    public ElectionDescription getElectionDescription() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

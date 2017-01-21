@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.toolbox;
 
+import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 import java.util.ArrayList;
 
@@ -15,7 +16,12 @@ import java.util.ArrayList;
 public class MenuBarHandler {
     private String[] headingIds;
     private ArrayList<ArrayList<ActionIdAndListener>> actionIDAndListener;
-    private StringResourceLoader currentStringResLoader;
+    private StringResourceLoader stringInterface;
     
-    public n 
+    public MenuBarHandler(
+            String[] headingIds, 
+            ArrayList<ArrayList<ActionIdAndListener>> actionIDAndListener, 
+            StringResourceLoader stringInterface) {
+        
+    }
 }
