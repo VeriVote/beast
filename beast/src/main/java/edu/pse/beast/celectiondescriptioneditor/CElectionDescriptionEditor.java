@@ -5,6 +5,8 @@
  */
 package edu.pse.beast.celectiondescriptioneditor;
 
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
+import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 
@@ -13,12 +15,22 @@ import edu.pse.beast.highlevel.ElectionDescriptionSource;
  * @author Holger Klein
  */
 public class CElectionDescriptionEditor implements ElectionDescriptionSource{
-    public CElectionDescriptionEditor() {
-        
+    private CElectionCodeArea codeArea;
+    private ElectionDescription currentDescription;
+    private CCodeEditorGUI gui;
+    
+    public CElectionDescriptionEditor(CElectionCodeArea codeArea, CCodeEditorGUI gui) {
+        this.codeArea = codeArea;
+        this.gui = gui;
     }
 
     @Override
     public ElectionDescription getElectionDescription() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        updateCurrentDescription();
+        return currentDescription;
+    }
+    
+    private void updateCurrentDescription() {
+        
     }
 }

@@ -20,10 +20,11 @@ import javax.swing.JMenuItem;
 public abstract class MenuBarHandler implements DisplaysStringsToUser {
     private String[] headingIds;
     private ArrayList<ArrayList<ActionIdAndListener>> actionIDAndListener;
-    private StringResourceLoader currentResourceLoader;
-    private JMenuBar createdMenuBar;
     private JMenu[] createdMenus;
     private ArrayList<ArrayList<JMenuItem>> createdItems = new ArrayList<>();
+    private StringResourceLoader currentResourceLoader;
+    
+    protected JMenuBar createdMenuBar;
     
     public MenuBarHandler(
             String[] headingIds, 
@@ -41,6 +42,7 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
     
     protected void updateStringResLoader(StringResourceLoader resLoader) {
         this.currentResourceLoader = resLoader;
+        createMenuBar();
     }
     
     private void createMenuBar() {

@@ -1,12 +1,16 @@
+file : File
 new : New
 save : Save
 save_as : Save As
 open : Open
+edit : Edit
 undo : Undo
 redo : Redo
 copy : Copy
 cut : Cut
 paste : Paste
 change_election_type : Change Election Type
+editor : Editor
 options : Options
+code : Code
 static_analysis : Static Code Analysis
