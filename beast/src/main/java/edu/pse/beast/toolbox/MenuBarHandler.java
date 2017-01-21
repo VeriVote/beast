@@ -17,5 +17,5 @@ public class MenuBarHandler {
     private ArrayList<ArrayList<ActionIdAndListener>> actionIDAndListener;
     private StringResourceLoader currentStringResLoader;
     
-    public 
+    public n 
 }
