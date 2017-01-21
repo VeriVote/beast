@@ -48,9 +48,7 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
             toolbarTipStringRes = new StringResourceLoader(toolbarList);
         } catch (FileNotFoundException e) {
             errorFileNotFound(toolbarFile);
-        } catch (IOException e) {
-            errorFileHasWrongFormat(toolbarFile);
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
             errorFileHasWrongFormat(toolbarFile);
         }
         File menuFile;
@@ -61,9 +59,7 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
             menuStringRes = new StringResourceLoader(menuList);
         } catch (FileNotFoundException e) {
             errorFileNotFound(menuFile);
-        } catch (IOException e) {
-            errorFileHasWrongFormat(menuFile);
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
             errorFileHasWrongFormat(menuFile);
         }
         File cErrorFile;
@@ -74,9 +70,7 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
             cErrorStringRes = new StringResourceLoader(cErrorList);
         } catch (FileNotFoundException e) {
             errorFileNotFound(cErrorFile);
-        } catch (IOException e) {
-            errorFileHasWrongFormat(cErrorFile);
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
             errorFileHasWrongFormat(cErrorFile);
         }
     }

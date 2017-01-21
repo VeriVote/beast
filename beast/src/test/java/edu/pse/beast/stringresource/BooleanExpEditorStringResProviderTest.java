@@ -5,7 +5,6 @@
  */
 package edu.pse.beast.stringresource;
 
-import java.util.LinkedList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -90,6 +89,18 @@ public class BooleanExpEditorStringResProviderTest {
     public void testInitialize() {
         System.out.println("initialize");
 
+    }
+
+    /**
+     * Test of getWindowStringRes method, of class BooleanExpEditorStringResProvider.
+     */
+    @Test
+    public void testGetBooleanExpEditorWindowStringRes() {
+        System.out.println("getBooleanExpEditorWindowStringRes");
+        StringResourceLoader result = instance.getBooleanExpEditorWindowStringRes();
+        assertEquals("this is a test", result.getStringFromID("test"));
+        assertEquals("this is test 2", result.getStringFromID("test2"));
+        assertEquals("Window", result.getStringFromID("filename"));
     }
 
 }

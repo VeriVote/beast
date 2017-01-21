@@ -38,9 +38,7 @@ public class OptionStringResProvider extends StringResourceProvider {
             optionStringRes = new StringResourceLoader(optionList);
         } catch (FileNotFoundException e) {
             errorFileNotFound(optionFile);
-        } catch (IOException e) {
-            errorFileHasWrongFormat(optionFile);
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
             errorFileHasWrongFormat(optionFile);
         }
     }

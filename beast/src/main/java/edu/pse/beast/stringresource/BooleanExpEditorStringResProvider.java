@@ -20,6 +20,7 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
     private StringResourceLoader menuStringRes;
     private StringResourceLoader toolbarTipStringRes;
     private StringResourceLoader booleanExpErrorStringRes;
+    private StringResourceLoader booleanExpEditorWindow;
 
     public BooleanExpEditorStringResProvider(String languageId, String relativePath) {
         super(languageId, relativePath);
@@ -37,6 +38,9 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
     public StringResourceLoader getBooleanExpErrorStringRes() {
         return booleanExpErrorStringRes;
     }
+    public StringResourceLoader getBooleanExpEditorWindowStringRes() {
+        return booleanExpEditorWindow;
+    }
 
     /**
      *
@@ -51,9 +55,7 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
             toolbarTipStringRes = new StringResourceLoader(toolbarList);
         } catch (FileNotFoundException e) {
             errorFileNotFound(toolbarFile);
-        } catch (IOException e) {
-            errorFileHasWrongFormat(toolbarFile);
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
             errorFileHasWrongFormat(toolbarFile);
         }
         File menuFile;
@@ -64,9 +66,7 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
             menuStringRes = new StringResourceLoader(menuList);
         } catch (FileNotFoundException e) {
             errorFileNotFound(menuFile);
-        } catch (IOException e) {
-            errorFileHasWrongFormat(menuFile);
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
             errorFileHasWrongFormat(menuFile);
         }
         File expErrorFile;
@@ -77,10 +77,19 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
             booleanExpErrorStringRes = new StringResourceLoader(booleanExpErrorList);
         } catch (FileNotFoundException e) {
             errorFileNotFound(expErrorFile);
-        } catch (IOException e) {
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
             errorFileHasWrongFormat(expErrorFile);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            errorFileHasWrongFormat(expErrorFile);
+        }
+        File windowFile;
+        windowFile = new File(getFileLocationString("BooleanExpEditorWindow"));
+        try {
+            LinkedList<String> windowList;
+            windowList = FileLoader.loadFileAsString(windowFile);
+            booleanExpEditorWindow = new StringResourceLoader(windowList);
+        } catch (FileNotFoundException e) {
+            errorFileNotFound(windowFile);
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
+            errorFileHasWrongFormat(windowFile);
         }
     }
 

@@ -32,6 +32,7 @@ public class PropertyListStringResProvider extends StringResourceProvider {
     public StringResourceLoader getToolbarTipStringRes() {
         return toolbarTipStringRes;
     }
+    
 
     @Override
     protected final void initialize() {
@@ -43,9 +44,7 @@ public class PropertyListStringResProvider extends StringResourceProvider {
             toolbarTipStringRes = new StringResourceLoader(toolbarList);
         } catch (FileNotFoundException e) {
             errorFileNotFound(toolbarFile);
-        } catch (IOException e) {
-            errorFileHasWrongFormat(toolbarFile);
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
             errorFileHasWrongFormat(toolbarFile);
         }
         File menuFile;
@@ -56,9 +55,7 @@ public class PropertyListStringResProvider extends StringResourceProvider {
             menuStringRes = new StringResourceLoader(menuList);
         } catch (FileNotFoundException e) {
             errorFileNotFound(menuFile);
-        } catch (IOException e) {
-            errorFileHasWrongFormat(menuFile);
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
             errorFileHasWrongFormat(menuFile);
         }
     }

@@ -6,6 +6,7 @@
 package edu.pse.beast.stringresource;
 
 import java.io.File;
+import edu.pse.beast.toolbox.ErrorLogger;
 
 /**
  *
@@ -33,13 +34,13 @@ public abstract class StringResourceProvider {
     }
 
     protected static void errorFileNotFound(File file) {
-        System.err.println("The file " + file.getName() + " could not be found");
-        System.err.println("It is supposed to be in this directory: " + file.getAbsolutePath());
+        ErrorLogger.log("The file " + file.getName() + " could not be found");
+        ErrorLogger.log("It is supposed to be in this directory: " + file.getAbsolutePath());
     }
 
     protected static void errorFileHasWrongFormat(File file) {
-        System.err.println("The file " + file.getName() + " is not correclty formated");
-        System.err.println("You can find and correct the file in this directory " + file.getAbsolutePath());
+        ErrorLogger.log("The file " + file.getName() + " is not correclty formated");
+        ErrorLogger.log("You can find and correct the file in this directory " + file.getAbsolutePath());
     }
 
 }

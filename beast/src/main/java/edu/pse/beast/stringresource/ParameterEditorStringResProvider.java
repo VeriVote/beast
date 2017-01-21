@@ -48,9 +48,7 @@ public class ParameterEditorStringResProvider extends StringResourceProvider {
             toolbarTipStringRes = new StringResourceLoader(toolbarList);
         } catch (FileNotFoundException e) {
             errorFileNotFound(toolbarFile);
-        } catch (IOException e) {
-            errorFileHasWrongFormat(toolbarFile);
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
             errorFileHasWrongFormat(toolbarFile);
         }
         File menuFile;
@@ -61,9 +59,7 @@ public class ParameterEditorStringResProvider extends StringResourceProvider {
             menuStringRes = new StringResourceLoader(menuList);
         } catch (FileNotFoundException e) {
             errorFileNotFound(menuFile);
-        } catch (IOException e) {
-            errorFileHasWrongFormat(menuFile);
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
             errorFileHasWrongFormat(menuFile);
         }
         File otherFile;
@@ -74,9 +70,7 @@ public class ParameterEditorStringResProvider extends StringResourceProvider {
             otherStringRes = new StringResourceLoader(otherList);
         } catch (FileNotFoundException e) {
             errorFileNotFound(otherFile);
-        } catch (IOException e) {
-            errorFileHasWrongFormat(otherFile);
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
             errorFileHasWrongFormat(otherFile);
         }
     }
