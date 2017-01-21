@@ -1,0 +1,19 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea;
+
+import edu.pse.beast.codearea.CodeArea;
+import javax.swing.JTextPane;
+
+/**
+ *
+ * @author Holger-Desktop
+ */
+public class CElectionCodeArea extends CodeArea {
+    public CElectionCodeArea(JTextPane pane) {
+        super(pane);
+    }
+}

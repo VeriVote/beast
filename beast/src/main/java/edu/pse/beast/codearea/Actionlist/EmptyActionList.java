@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.pse.beast.celectiondescriptioneditor;
+package edu.pse.beast.codearea.Actionlist;
 
 /**
  *
- * @author Niels
+ * @author Holger-Desktop
  */
-public class CElectionDescriptionEditor {
-    public CElectionDescriptionEditor() {
-        
-    }
+public class EmptyActionList extends Actionlist {
+    @Override
+    public void add(Action acc) {}
 }

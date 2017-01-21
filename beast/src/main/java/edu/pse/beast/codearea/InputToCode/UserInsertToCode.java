@@ -21,16 +21,16 @@ import javax.swing.text.StyledDocument;
  */
 public class UserInsertToCode implements CaretListener {
     
-    protected JTextPane pane;
-    protected StyledDocument styledDoc;
-    protected OpenCloseCharList openCloseCharList;
-    protected LockedLinesHandler lockedLines;
-    protected NewlineInserterChooser newlineInserterChooser;
-    protected NewlineInserter currentInserter;
-    protected int currentCaretPosition;
-    protected LineHandler lineHandler;
-    protected TabInserter tabInserter;
-    protected LineBeginningTabsHandler lineBeginningTabsHandler;
+    private JTextPane pane;
+    private StyledDocument styledDoc;
+    private OpenCloseCharList openCloseCharList;
+    private LockedLinesHandler lockedLines;
+    private NewlineInserterChooser newlineInserterChooser;
+    private NewlineInserter currentInserter;
+    private int currentCaretPosition;
+    private LineHandler lineHandler;
+    private TabInserter tabInserter;
+    private LineBeginningTabsHandler lineBeginningTabsHandler;
     
     public UserInsertToCode(JTextPane pane, OpenCloseCharList openCloseCharList) {
         this.pane = pane;
