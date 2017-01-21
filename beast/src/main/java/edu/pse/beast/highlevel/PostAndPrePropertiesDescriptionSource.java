@@ -13,5 +13,5 @@ public interface PostAndPrePropertiesDescriptionSource {
      * election check.
      * @return PostAndPrePropertiesDescription
      */
-    PostAndPrePropertiesDescription getPostAndPrePropertiesDescription();
+    PostAndPrePropertiesDescription getPostAndPrePropertiesDescriptions(); //TODO: Return type array or not?
 }
