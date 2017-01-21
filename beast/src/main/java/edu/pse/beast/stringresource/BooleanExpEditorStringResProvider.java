@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 /**
+ * Class that Manages all StringResources for the BooleanExpEditor
  *
  * @author Niels
  */
@@ -22,28 +23,53 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
     private StringResourceLoader booleanExpErrorStringRes;
     private StringResourceLoader booleanExpEditorWindow;
 
+    /**
+     *
+     * @param languageId the languageId. Set to "de" for german
+     * @param relativePath the location of the folder with the languagesorted
+     * stringfiles
+     */
     public BooleanExpEditorStringResProvider(String languageId, String relativePath) {
         super(languageId, relativePath);
         this.initialize();
     }
 
+    /**
+     *
+     * @return returns the MenuStringRes
+     */
     public StringResourceLoader getMenuStringRes() {
         return menuStringRes;
     }
 
+    /**
+     *
+     * @return returns the ToolbarStringRes
+     */
     public StringResourceLoader getToolbarTipStringRes() {
         return toolbarTipStringRes;
     }
 
+    /**
+     *
+     * @return returns the BooleanExpErrorStringRes
+     */
     public StringResourceLoader getBooleanExpErrorStringRes() {
         return booleanExpErrorStringRes;
     }
+
+    /**
+     *
+     * @return the BooleanExpEditorWindowStringRes
+     */
     public StringResourceLoader getBooleanExpEditorWindowStringRes() {
         return booleanExpEditorWindow;
     }
 
     /**
-     *
+     * Initializes all attributes Loads all StringResourceLoaders with the files
+     * It uses the super classes methods errorFileHasWrongFormat,
+     * errorFileNotFound and getFileLocationString
      */
     @Override
     protected final void initialize() {

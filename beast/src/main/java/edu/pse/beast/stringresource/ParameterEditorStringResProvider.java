@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 /**
+ * Class that Manages all StringResources for the ParameterEditor
  *
  * @author Niels
  */
@@ -21,23 +22,43 @@ public class ParameterEditorStringResProvider extends StringResourceProvider {
     private StringResourceLoader toolbarTipStringRes;
     private StringResourceLoader otherStringRes;
 
+    /**
+     *
+     * @param languageId the languageId. Set to "de" for german
+     * @param relativePath the location of the folder with the languagesorted
+     * stringfiles
+     */
     public ParameterEditorStringResProvider(String languageId, String relativePath) {
         super(languageId, relativePath);
         this.initialize();
     }
-
+    /**
+     * 
+     * @return MenuStringRes
+     */
     public StringResourceLoader getMenuStringRes() {
         return menuStringRes;
     }
-
+    /**
+     * 
+     * @return ToolbarTipStringRes
+     */
     public StringResourceLoader getToolbarTipStringRes() {
         return toolbarTipStringRes;
     }
-
+    /**
+     * 
+     * @return OtherStringRes
+     */
     public StringResourceLoader getOtherStringRes() {
         return otherStringRes;
     }
 
+    /**
+     * Initializes all attributes Loads all StringResourceLoaders with the files
+     * It uses the super classes methods errorFileHasWrongFormat,
+     * errorFileNotFound and getFileLocationString
+     */
     @Override
     protected final void initialize() {
         File toolbarFile;

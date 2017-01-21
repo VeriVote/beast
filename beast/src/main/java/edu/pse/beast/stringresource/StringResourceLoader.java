@@ -16,8 +16,14 @@ public class StringResourceLoader {
 
     private final HashMap<String, String> idsToString;
 
+    /**
+     *
+     * @param stringRes a Linked List with the correct format. Id : string
+     * @throws ArrayIndexOutOfBoundsException if the list is not correctly
+     * formatted
+     */
     public StringResourceLoader(LinkedList<String> stringRes) throws ArrayIndexOutOfBoundsException {
-        idsToString = new HashMap<String, String>();
+        idsToString = new HashMap<>();
         String line;
         String[] split;
         String id;
@@ -31,6 +37,11 @@ public class StringResourceLoader {
         }
     }
 
+    /**
+     *
+     * @param id Id of the String you want to load
+     * @return the String with the id
+     */
     public String getStringFromID(String id) {
         return idsToString.get(id);
     }
