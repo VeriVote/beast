@@ -13,7 +13,7 @@ import edu.pse.beast.celectiondescriptioneditor.GUI.CEditorWindowStarter;
  */
 public class CElectionDescriptionEditorBuilder {
     
-    final String[] menuHeadingIds = {"file", "edit", "editor", "code"};
+    private final String[] menuHeadingIds = {"file", "edit", "editor", "code"};
     
     public CElectionDescriptionEditor createCElectionDescriptionEditor() {
         CEditorWindowStarter starter = new CEditorWindowStarter();

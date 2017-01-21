@@ -5,10 +5,21 @@
  */
 package edu.pse.beast.codearea.UserActions;
 
+import edu.pse.beast.toolbox.UserAction;
+
 /**
  *
  * @author Holger-Desktop
  */
-public class CopyUserAction {
+public class CopyUserAction extends UserAction {
+
+    public CopyUserAction() {
+        super("copy");
+    }
+    
+    @Override
+    public void perform() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

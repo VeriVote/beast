@@ -5,10 +5,21 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.UserActions;
 
+import edu.pse.beast.toolbox.UserAction;
+
 /**
  *
  * @author Holger-Desktop
  */
-public class SaveElectionUserAction {
+public class SaveElectionUserAction extends UserAction {
+
+    public SaveElectionUserAction() {
+        super("save");
+    }
+    
+    @Override
+    public void perform() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
