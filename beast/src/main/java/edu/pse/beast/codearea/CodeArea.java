@@ -38,4 +38,13 @@ public class CodeArea {
         this.errorCtrl = errorCtrl;
         this.autoComplCtrl = autoComplCtrl;
     }
+
+    public CodeArea(CodeArea codeArea) {
+        this.tln = codeArea.tln;
+        this.userInputHandler = codeArea.userInputHandler;
+        this.insertToCode = codeArea.insertToCode;
+        this.actionList = codeArea.actionList;
+        this.errorCtrl = codeArea.errorCtrl;
+        this.autoComplCtrl = codeArea.autoComplCtrl;
+    }
 }
