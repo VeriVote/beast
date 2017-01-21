@@ -22,6 +22,7 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
     private StringResourceLoader toolbarTipStringRes;
     private StringResourceLoader booleanExpErrorStringRes;
     private StringResourceLoader booleanExpEditorWindow;
+    private StringResourceLoader booleanExpEditorSymbVarListRes;
 
     /**
      *
@@ -41,7 +42,13 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
     public StringResourceLoader getMenuStringRes() {
         return menuStringRes;
     }
-
+    /**
+     * 
+     * @return returns the booleanExpEditorSymbVarListRes
+     */
+    public StringResourceLoader getBooleanExpEditorSymbVarListRes() {
+        return booleanExpEditorSymbVarListRes;
+    }
     /**
      *
      * @return returns the ToolbarStringRes
@@ -116,6 +123,17 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
             errorFileNotFound(windowFile);
         } catch (IOException | ArrayIndexOutOfBoundsException e) {
             errorFileHasWrongFormat(windowFile);
+        }
+        File symbVarFile;
+        symbVarFile = new File(getFileLocationString("BooleanExpEditorSymbVarList"));
+        try {
+            LinkedList<String> symbVarList;
+            symbVarList = FileLoader.loadFileAsString(symbVarFile);
+            booleanExpEditorSymbVarListRes = new StringResourceLoader(symbVarList);
+        } catch (FileNotFoundException e) {
+            errorFileNotFound(symbVarFile);
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
+            errorFileHasWrongFormat(symbVarFile);
         }
     }
 
