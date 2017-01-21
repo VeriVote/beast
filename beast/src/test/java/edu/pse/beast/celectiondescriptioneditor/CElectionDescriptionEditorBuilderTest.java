@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.celectiondescriptioneditor;
 
+import edu.pse.beast.saverloader.SaverLoaderInterface;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import org.junit.After;
@@ -13,6 +14,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import toBeImplemented.LanguageOptions;
+import toBeImplemented.OptionsInterface;
 
 /**
  *
@@ -40,7 +43,10 @@ public class CElectionDescriptionEditorBuilderTest {
     }
 
     public static void main(String[] args) {
-        ObjectRefsForBuilder refs = new ObjectRefsForBuilder(new StringLoaderInterface("de"));
+        OptionsInterface opt = new OptionsInterface();
+        ObjectRefsForBuilder refs = new ObjectRefsForBuilder(
+                opt, new StringLoaderInterface("de"), 
+                new LanguageOptions(), new SaverLoaderInterface());
         CElectionDescriptionEditorBuilder builder = new CElectionDescriptionEditorBuilder();
         builder.createCElectionDescriptionEditor(refs);
     }

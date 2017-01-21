@@ -15,6 +15,11 @@ import edu.pse.beast.codearea.InputToCode.UserInputHandler;
 import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
 import edu.pse.beast.codearea.UserActions.CodeAreaUserActions;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
@@ -24,6 +29,9 @@ import javax.swing.JTextPane;
  */
 public class CodeAreaBuilder {
     public CodeArea createCodeArea(JTextPane codeArea, JScrollPane codeAreaScroll, ObjectRefsForBuilder refs) {
+                
+        codeArea.setFont(new Font("Inconsolata", Font.PLAIN, 14));
+        
         OpenCloseCharList occL = new OpenCloseCharList();
         UserInsertToCode insertToCode = new UserInsertToCode(codeArea, occL);    
         
@@ -42,6 +50,7 @@ public class CodeAreaBuilder {
         CodeArea created = new CodeArea(tln, userInputHandler, insertToCode, actionList, error, autocompletion);
         CodeAreaUserActions userActions = new CodeAreaUserActions(created);
         created.setUserActionList(userActions);
+        
         return created;
     }
 }
