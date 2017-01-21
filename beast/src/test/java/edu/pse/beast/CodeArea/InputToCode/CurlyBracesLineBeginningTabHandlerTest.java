@@ -75,13 +75,13 @@ public class CurlyBracesLineBeginningTabHandlerTest {
         int tabs = handler.getTabsForLine(0);
         assertEquals(0, tabs);
         
-        tabs = handler.getTabsForLine(4);
+        tabs = handler.getTabsForLine(2);
         assertEquals(1, tabs);    
         
-        tabs = handler.getTabsForLine(5);
+        tabs = handler.getTabsForLine(3);
         assertEquals(1, tabs);  
         
-        tabs = handler.getTabsForLine(9);
+        tabs = handler.getTabsForLine(4);
         assertEquals(0, tabs);    
     }
     
@@ -91,7 +91,7 @@ public class CurlyBracesLineBeginningTabHandlerTest {
         String insert = "{" + System.lineSeparator() + " " + System.lineSeparator() + "}";
         pane.getStyledDocument().insertString(0, insert, null);
         
-        int tabs = handler.getTabsForLine(8);
+        int tabs = handler.getTabsForLine(4);
         assertEquals(0, tabs);    
     }
     
@@ -101,9 +101,9 @@ public class CurlyBracesLineBeginningTabHandlerTest {
         String insert = "{{{{{{" + System.lineSeparator() + " " + System.lineSeparator() + "}";
         pane.getStyledDocument().insertString(0, insert, null);
         
-        int tabs = handler.getTabsForLine(9);
+        int tabs = handler.getTabsForLine(7);
         assertEquals(1, tabs);  
-        tabs = handler.getTabsForLine(10);
+        tabs = handler.getTabsForLine(8);
         assertEquals(1, tabs);    
     }
     
@@ -117,13 +117,13 @@ public class CurlyBracesLineBeginningTabHandlerTest {
                                 "}";
         pane.getStyledDocument().insertString(0, insert, null);
         
-        int tabs = handler.getTabsForLine(12);
+        int tabs = handler.getTabsForLine(6);
         assertEquals(3, tabs);  
-        tabs = handler.getTabsForLine(13);
+        tabs = handler.getTabsForLine(7);
         assertEquals(3, tabs);    
-        tabs = handler.getTabsForLine(16);
+        tabs = handler.getTabsForLine(8);
         assertEquals(2, tabs);  
-        tabs = handler.getTabsForLine(17);
+        tabs = handler.getTabsForLine(9);
         assertEquals(2, tabs);  
     }
 }

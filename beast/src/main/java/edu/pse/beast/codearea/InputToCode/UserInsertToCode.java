@@ -68,7 +68,7 @@ public class UserInsertToCode implements CaretListener {
     private void setupObjects() {
         this.lineHandler = new LineHandler(this.pane);
         this.tabInserter = new TabInserter(this.pane, lineHandler);
-        this.lockedLines = new LockedLinesHandler(styledDoc);
+        this.lockedLines = new LockedLinesHandler(styledDoc, lineHandler);
         this.lineBeginningTabsHandler = new CurlyBracesLineBeginningTabHandler(pane, lineHandler);
         this.newlineInserterChooser = new NewlineInserterChooser(pane, lockedLines);
         this.currentInserter = this.newlineInserterChooser.getNewlineInserter();          

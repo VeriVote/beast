@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.codearea.InputToCode;
 
+import edu.pse.beast.toolbox.SortedIntegerList;
 import java.util.ArrayList;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -16,10 +17,12 @@ import javax.swing.text.StyledDocument;
  */
 public class LockedLinesHandler implements DocumentListener {
     
-    private ArrayList<Integer> lockedLines = new ArrayList();
-   
-    public LockedLinesHandler(StyledDocument doc) {
+    private SortedIntegerList lockedLines = new SortedIntegerList();
+    private LineHandler lineHandler;
+    
+    public LockedLinesHandler(StyledDocument doc, LineHandler lineHandler) {
         doc.addDocumentListener(this);
+        this.lineHandler = lineHandler;
     }
 
     public void lockLine(int line) {
