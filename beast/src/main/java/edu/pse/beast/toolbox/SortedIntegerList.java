@@ -84,7 +84,7 @@ public class SortedIntegerList {
         while (i < container.size() && container.get(i) < number) {
             i++;
         }
-        while (container.get(i) == number) {
+        while (i < container.size() && container.get(i) == number) {
             container.remove(i);
             i++;
         }
