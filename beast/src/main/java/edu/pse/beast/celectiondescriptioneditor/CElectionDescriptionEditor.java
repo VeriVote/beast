@@ -30,6 +30,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         return currentDescription;
     }
     
+    
     private void updateCurrentDescription() {
         
     }

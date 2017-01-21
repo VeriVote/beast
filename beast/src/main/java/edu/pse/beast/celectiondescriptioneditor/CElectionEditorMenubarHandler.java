@@ -27,6 +27,7 @@ public class CElectionEditorMenubarHandler extends MenuBarHandler {
             StringLoaderInterface stringif) {
         super(headingIds, actionIdAndListener, stringif.getCElectionEditorStringResProvider().getMenuStringRes());
         this.cgui = cgui;
+        this.cgui.setMenuBar(createdMenuBar);
     }
     
     @Override
