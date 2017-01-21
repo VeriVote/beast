@@ -1,16 +1,17 @@
 package edu.pse.beast.BooleanExpEditor;
 
-import edu.pse.beast.booleanexpeditor.BooleanExpEditorWindow;
-import edu.pse.beast.booleanexpeditor.BooleanExpEditorWindowStarter;
+import edu.pse.beast.booleanexpeditor.BooleanExpEditorBuilder;
+import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.stringresource.StringLoaderInterface;
+import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 
 /**
  * @author Nikolai
  */
 public class WindowStarterTestClass {
     public static void main(String[] args) {
-        BooleanExpEditorWindow window = new BooleanExpEditorWindow(new StringLoaderInterface("de"));
-        BooleanExpEditorWindowStarter windowStarter = new BooleanExpEditorWindowStarter(window);
-        windowStarter.showWindow();
+        BooleanExpEditor editor = BooleanExpEditorBuilder.createBooleanExpEditorObject(new ObjectRefsForBuilder(
+                new StringLoaderInterface("de")));
+        editor.showWindow();
     }
 }

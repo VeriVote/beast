@@ -1,17 +1,20 @@
 package edu.pse.beast.booleanexpeditor;
 
+import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 
 import javax.swing.*;
 
-/** TODO implement methods
+/**
+ * Controller/Model of the list of symbolic variables in BooleanExpressionWindow.
  * @author Nikolai
  */
-public class SymbolicVarList {
+public class SymbolicVarList implements DisplaysStringsToUser{
     private JList symbVarList;
     private JButton addVarButton;
     private JButton removeVarButton;
     private StringLoaderInterface stringLoaderInterface;
+
     /**
      * Constructor
      * @param symbVarList the JList element for the symbolic Variables
@@ -29,9 +32,16 @@ public class SymbolicVarList {
 
     /**
      * Getter
-     * @return the List of symbolic variables
+     * @return the JList containing the symbolic variables
      */
     public JList getSymbVarList() {
         return symbVarList;
+    }
+
+    /**
+     * Update the language dependent displayed Strings in this class.
+     * @param stringLoaderInterface the new stringLoaderInterface
+     */
+    public void updateStringRes(StringLoaderInterface stringLoaderInterface) {
     }
 }

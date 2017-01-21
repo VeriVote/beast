@@ -9,17 +9,24 @@ public class BooleanExpEditorWindowStarter{
 
     /**
      * Constructor
-     * @param window Window this class starts
+     * @param window BooleanExpEditorWindow object this class starts
      */
-    public BooleanExpEditorWindowStarter(BooleanExpEditorWindow window) {
+    protected BooleanExpEditorWindowStarter(BooleanExpEditorWindow window) {
         this.window = window;
     }
-    
+
+    /**
+     * Getter
+     * @return BooleanExpEditorWindow instance of this class
+     */
     public BooleanExpEditorWindow getBooleanExpEditorWindow() {
         return window;
     }
-    
-    public void showWindow(){
+
+    /**
+     * Starts the BooleanExpEditorWindow instance "window" in a new thread.
+     */
+    protected void showWindow(){
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override

@@ -8,10 +8,10 @@ package edu.pse.beast.CodeArea;
 import edu.pse.beast.CodeArea.InputToCode.JTextPaneTestFrame;
 import edu.pse.beast.codearea.CodeArea;
 import edu.pse.beast.codearea.CodeAreaBuilder;
+import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
-import org.cyberneko.html.HTMLElements;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -54,7 +54,7 @@ public class CodeAreaBuilderTest {
     public static void main(String[] args) {
         JTextPaneTestFrame frame = new  JTextPaneTestFrame();
         CodeAreaBuilder b = new CodeAreaBuilder();
-        CodeArea ca = b.createCodeArea(frame.getTextPane(), frame.getScrollPane(), new ObjectRefsForBuilder());
+        CodeArea ca = b.createCodeArea(frame.getTextPane(), frame.getScrollPane(), new ObjectRefsForBuilder(new StringLoaderInterface("de")));
         frame.setVisible(true);
     }
     

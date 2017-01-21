@@ -1,0 +1,20 @@
+fileMenu : Datei
+newBooleanExp : Neu
+openBooleanExp : Öffnen
+saveBooleanExp : Speichern
+saveAsBooleanExp : Speichern unter
+editMenu : Bearbeiten
+undo : Rückgängig
+redo : Wiederholen
+copy : Kopieren
+cut : Ausschneiden
+paste : Einfügen
+editorMenu : Editor
+options : Einstellungen
+makroMenu : Makros
+constantsMenu : Konstanten
+numberOfVoters : Anzahl der Wähler (V)
+numberOfCandidates : Anzahl der Kandidaten (C)
+numberOfSeats : Anzahl vorhandener Sitze (S)
+codeMenu : Code
+staticAnalysis : Statische Analyse
