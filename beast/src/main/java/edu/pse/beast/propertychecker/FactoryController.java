@@ -5,19 +5,10 @@
  */
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.highlevel.ResultCheckerCommunicator;
-
 /**
  *
  * @author Niels
  */
-public class PropertyChecker implements ResultCheckerCommunicator {
-    private FactoryController factoryController ;
-    
-    /*
-    public boolean abortChecking() {
-        
-    }
-    */
+public class FactoryController {
     
 }

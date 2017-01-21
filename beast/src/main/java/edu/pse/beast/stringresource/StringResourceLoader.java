@@ -14,24 +14,34 @@ import java.util.LinkedList;
  */
 public class StringResourceLoader {
 
-    private HashMap<String, String> idsToString;
+    private final HashMap<String, String> idsToString;
 
-    public StringResourceLoader(LinkedList<String> stringRes) {
-        idsToString = new HashMap<String, String>() {};
+    /**
+     *
+     * @param stringRes a Linked List with the correct format. Id : string
+     * @throws ArrayIndexOutOfBoundsException if the list is not correctly
+     * formatted
+     */
+    public StringResourceLoader(LinkedList<String> stringRes) throws ArrayIndexOutOfBoundsException {
+        idsToString = new HashMap<>();
         String line;
         String[] split;
         String id;
         String displayedText;
-        while(!stringRes.isEmpty()){
+        while (!stringRes.isEmpty()) {
             line = stringRes.pop();
             split = line.split(":");
             id = split[0].trim();
             displayedText = split[1].trim();
             idsToString.put(id, displayedText);
         }
-        
     }
 
+    /**
+     *
+     * @param id Id of the String you want to load
+     * @return the String with the id
+     */
     public String getStringFromID(String id) {
         return idsToString.get(id);
     }

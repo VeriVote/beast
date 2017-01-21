@@ -12,14 +12,15 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 /**
- * Class that Manages all StringResources for the PropertyList
+ * Class that Manages all StringResources for the ParameterEditor
  *
  * @author Niels
  */
-public class PropertyListStringResProvider extends StringResourceProvider {
+public class ParameterEditorStringResProvider extends StringResourceProvider {
 
     private StringResourceLoader menuStringRes;
     private StringResourceLoader toolbarTipStringRes;
+    private StringResourceLoader otherStringRes;
 
     /**
      *
@@ -27,25 +28,30 @@ public class PropertyListStringResProvider extends StringResourceProvider {
      * @param relativePath the location of the folder with the languagesorted
      * stringfiles
      */
-    public PropertyListStringResProvider(String languageId, String relativePath) {
+    public ParameterEditorStringResProvider(String languageId, String relativePath) {
         super(languageId, relativePath);
         this.initialize();
     }
-
     /**
-     *
+     * 
      * @return MenuStringRes
      */
     public StringResourceLoader getMenuStringRes() {
         return menuStringRes;
     }
-
     /**
-     *
+     * 
      * @return ToolbarTipStringRes
      */
     public StringResourceLoader getToolbarTipStringRes() {
         return toolbarTipStringRes;
+    }
+    /**
+     * 
+     * @return OtherStringRes
+     */
+    public StringResourceLoader getOtherStringRes() {
+        return otherStringRes;
     }
 
     /**
@@ -56,7 +62,7 @@ public class PropertyListStringResProvider extends StringResourceProvider {
     @Override
     protected final void initialize() {
         File toolbarFile;
-        toolbarFile = new File(getFileLocationString("PropertyListToolbar"));
+        toolbarFile = new File(getFileLocationString("ParameterEditorToolbar"));
         try {
             LinkedList<String> toolbarList;
             toolbarList = FileLoader.loadFileAsString(toolbarFile);
@@ -67,7 +73,7 @@ public class PropertyListStringResProvider extends StringResourceProvider {
             errorFileHasWrongFormat(toolbarFile);
         }
         File menuFile;
-        menuFile = new File(getFileLocationString("PropertyListMenu"));
+        menuFile = new File(getFileLocationString("ParameterEditorMenu"));
         try {
             LinkedList<String> menuList;
             menuList = FileLoader.loadFileAsString(menuFile);
@@ -77,6 +83,16 @@ public class PropertyListStringResProvider extends StringResourceProvider {
         } catch (IOException | ArrayIndexOutOfBoundsException e) {
             errorFileHasWrongFormat(menuFile);
         }
+        File otherFile;
+        otherFile = new File(getFileLocationString("ParameterEditorOther"));
+        try {
+            LinkedList<String> otherList;
+            otherList = FileLoader.loadFileAsString(otherFile);
+            otherStringRes = new StringResourceLoader(otherList);
+        } catch (FileNotFoundException e) {
+            errorFileNotFound(otherFile);
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
+            errorFileHasWrongFormat(otherFile);
+        }
     }
-
 }

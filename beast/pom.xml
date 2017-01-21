@@ -57,16 +57,16 @@
 			<artifactId>maven-compiler-plugin</artifactId>
 			<version>2.3.2</version>
 			<configuration>
-				<source>1.6</source>
-				<target>1.6</target>
+				<source>1.8</source>
+				<target>1.8</target>
 			</configuration>
 		</plugin>
 	  </plugins>
           <resources>
             <resource>
-              <directory>src/resources/stringfiles</directory>
+              <directory>src/resources/stringfiles/de/</directory>
                 <includes>
-                    <include>/*.txt</include>
+                    <include>*.txt</include>
               </includes>
             </resource>
     </resources>

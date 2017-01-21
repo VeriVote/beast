@@ -12,14 +12,16 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 /**
- * Class that Manages all StringResources for the PropertyList
+ * Class that Manages all StringResources for the BooleanExpEditor
  *
  * @author Niels
  */
-public class PropertyListStringResProvider extends StringResourceProvider {
+public class BooleanExpEditorStringResProvider extends StringResourceProvider {
 
     private StringResourceLoader menuStringRes;
     private StringResourceLoader toolbarTipStringRes;
+    private StringResourceLoader booleanExpErrorStringRes;
+    private StringResourceLoader booleanExpEditorWindow;
 
     /**
      *
@@ -27,14 +29,14 @@ public class PropertyListStringResProvider extends StringResourceProvider {
      * @param relativePath the location of the folder with the languagesorted
      * stringfiles
      */
-    public PropertyListStringResProvider(String languageId, String relativePath) {
+    public BooleanExpEditorStringResProvider(String languageId, String relativePath) {
         super(languageId, relativePath);
         this.initialize();
     }
 
     /**
      *
-     * @return MenuStringRes
+     * @return returns the MenuStringRes
      */
     public StringResourceLoader getMenuStringRes() {
         return menuStringRes;
@@ -42,10 +44,26 @@ public class PropertyListStringResProvider extends StringResourceProvider {
 
     /**
      *
-     * @return ToolbarTipStringRes
+     * @return returns the ToolbarStringRes
      */
     public StringResourceLoader getToolbarTipStringRes() {
         return toolbarTipStringRes;
+    }
+
+    /**
+     *
+     * @return returns the BooleanExpErrorStringRes
+     */
+    public StringResourceLoader getBooleanExpErrorStringRes() {
+        return booleanExpErrorStringRes;
+    }
+
+    /**
+     *
+     * @return the BooleanExpEditorWindowStringRes
+     */
+    public StringResourceLoader getBooleanExpEditorWindowStringRes() {
+        return booleanExpEditorWindow;
     }
 
     /**
@@ -56,7 +74,7 @@ public class PropertyListStringResProvider extends StringResourceProvider {
     @Override
     protected final void initialize() {
         File toolbarFile;
-        toolbarFile = new File(getFileLocationString("PropertyListToolbar"));
+        toolbarFile = new File(getFileLocationString("BooleanExpEditorToolbar"));
         try {
             LinkedList<String> toolbarList;
             toolbarList = FileLoader.loadFileAsString(toolbarFile);
@@ -67,7 +85,7 @@ public class PropertyListStringResProvider extends StringResourceProvider {
             errorFileHasWrongFormat(toolbarFile);
         }
         File menuFile;
-        menuFile = new File(getFileLocationString("PropertyListMenu"));
+        menuFile = new File(getFileLocationString("BooleanExpEditorMenu"));
         try {
             LinkedList<String> menuList;
             menuList = FileLoader.loadFileAsString(menuFile);
@@ -76,6 +94,28 @@ public class PropertyListStringResProvider extends StringResourceProvider {
             errorFileNotFound(menuFile);
         } catch (IOException | ArrayIndexOutOfBoundsException e) {
             errorFileHasWrongFormat(menuFile);
+        }
+        File expErrorFile;
+        expErrorFile = new File(getFileLocationString("BooleanExpEditorBooleanExpError"));
+        try {
+            LinkedList<String> booleanExpErrorList;
+            booleanExpErrorList = FileLoader.loadFileAsString(expErrorFile);
+            booleanExpErrorStringRes = new StringResourceLoader(booleanExpErrorList);
+        } catch (FileNotFoundException e) {
+            errorFileNotFound(expErrorFile);
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
+            errorFileHasWrongFormat(expErrorFile);
+        }
+        File windowFile;
+        windowFile = new File(getFileLocationString("BooleanExpEditorWindow"));
+        try {
+            LinkedList<String> windowList;
+            windowList = FileLoader.loadFileAsString(windowFile);
+            booleanExpEditorWindow = new StringResourceLoader(windowList);
+        } catch (FileNotFoundException e) {
+            errorFileNotFound(windowFile);
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
+            errorFileHasWrongFormat(windowFile);
         }
     }
 

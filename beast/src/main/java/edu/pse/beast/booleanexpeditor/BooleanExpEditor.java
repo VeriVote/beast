@@ -6,9 +6,22 @@
 package edu.pse.beast.booleanexpeditor;
 
 /**
- *
- * @author Niels
+ * The main class of this package that serves as an interface to the outside.
+ * @author Nikolai
  */
-public class BooleanExpEditor {
-    
+class BooleanExpEditor {
+    private BooleanExpEditorWindow window;
+    private SymbolicVarList symbolicVarList;
+    private BooleanExpEditorWindowStarter windowStarter;
+
+    /**
+     * Temporary Constructor to build BooleanExpEditor for Dummy-GUI
+     * @param window BooleanExpEditorWindow object
+     * @param symbolicVarList SymbolicVarList object
+     */
+    BooleanExpEditor(BooleanExpEditorWindow window, SymbolicVarList symbolicVarList, ErrorWindow errorWindow){
+        this.window = window;
+        this.symbolicVarList = symbolicVarList;
+        windowStarter = new BooleanExpEditorWindowStarter(window);
+    }
 }
