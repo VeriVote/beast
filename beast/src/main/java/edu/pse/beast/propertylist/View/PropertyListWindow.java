@@ -5,9 +5,11 @@
  */
 package edu.pse.beast.propertylist.View;
 
+import javax.swing.JToolBar;
+
 /**
  *
- * @author Exos
+ * @author Justin
  */
 public class PropertyListWindow extends javax.swing.JFrame {
 
@@ -16,6 +18,10 @@ public class PropertyListWindow extends javax.swing.JFrame {
      */
     public PropertyListWindow() {
         initComponents();
+    }
+    
+    public JToolBar getToolbar() {
+    	return jToolBar1;
     }
 
     /**

@@ -7,3 +7,4 @@ newProperty : Neue Eigenschaft erstellen
 loadProperty : Eigenschaft wählen
 menuFile : Datei
 menuEdit : Bearbeiten
+load : Laden

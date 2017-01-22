@@ -5,10 +5,7 @@
  */
 package edu.pse.beast.propertylist;
 
-/**
-*
-* @author Justin
-*/
+
 import java.util.ArrayList;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
@@ -16,7 +13,7 @@ import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescripti
 
 /**
  *
- * @author Niels
+ * @author Justin
  */
 public class PropertyList {
 	
