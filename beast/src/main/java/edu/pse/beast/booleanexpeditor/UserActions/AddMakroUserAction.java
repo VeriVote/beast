@@ -14,7 +14,7 @@ public class AddMakroUserAction extends UserAction {
 
     @Override
     public void perform() {
-
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     public BooleanExpEditorMakro getMakro() {
