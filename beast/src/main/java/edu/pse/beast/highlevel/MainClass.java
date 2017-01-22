@@ -8,7 +8,6 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import edu.pse.beast.options.OptionsInterface;
 import edu.pse.beast.propertylist.PropertyListBuilder;
-import toBeImplemented.LanguageOptions;
 import edu.pse.beast.parametereditor.ParameterEditorWindowStarter;
 
 /**
@@ -26,7 +25,8 @@ public class MainClass {
      */
     public static void main(String[] args) {
         OptionsInterface opt = new OptionsInterface();
-        ObjectRefsForBuilder objRefsForBuilder = new ObjectRefsForBuilder(new toBeImplemented.OptionsInterface(),
+        ObjectRefsForBuilder objRefsForBuilder;
+        objRefsForBuilder = new ObjectRefsForBuilder(new OptionsInterface(),
                 new StringLoaderInterface("de"),
                 new toBeImplemented.LanguageOptions(), new SaverLoaderInterface());
 

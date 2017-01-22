@@ -8,7 +8,7 @@ package edu.pse.beast.toolbox;
 import edu.pse.beast.saverloader.SaverLoaderInterface;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import toBeImplemented.LanguageOptions;
-import toBeImplemented.OptionsInterface;
+import edu.pse.beast.options.OptionsInterface;
 
 /**
  * This holds references to all interfaces needed by the several builder classes 
