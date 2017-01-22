@@ -2,17 +2,19 @@ package edu.pse.beast.options;
 
 import toBeImplemented.CElectionEditor;
 
-public class CElectionEditorOptions {
+public class CElectionEditorOptions extends Options {
     private final CElectionEditor editor;
     private final CElectionCodeAreaOptions cElectionCodeAreaOptions;
     
     /**
      * 
+     * @param id the id
      * @param editor the editor
      * @param cElectionCodeAreaOptions the options
      */
-    public CElectionEditorOptions(CElectionEditor editor,
+    public CElectionEditorOptions(String id, CElectionEditor editor,
             CElectionCodeAreaOptions cElectionCodeAreaOptions) {
+        super(id);
         this.editor = editor;
         this.cElectionCodeAreaOptions = cElectionCodeAreaOptions;
     }
@@ -31,6 +33,12 @@ public class CElectionEditorOptions {
      */
     public CElectionCodeAreaOptions getcElectionCodeAreaOptions() {
         return cElectionCodeAreaOptions;
+    }
+
+    @Override
+    public void reapply() {
+        // TODO Auto-generated method stub
+        
     }
     
 }

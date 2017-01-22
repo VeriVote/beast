@@ -6,6 +6,7 @@ package edu.pse.beast.parametereditor;
  */
 public class ParameterEditorWindow extends javax.swing.JFrame {
 
+    private AdvancedWindow advWindow = new AdvancedWindow();
     /**
      * Creates new form ParameterEditorWindow
      */
@@ -41,6 +42,12 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
         seatMax = new javax.swing.JSpinner();
         advancedButton = new javax.swing.JButton();
         jToolBar1 = new javax.swing.JToolBar();
+        newIcon = new javax.swing.JButton();
+        saveIcon = new javax.swing.JButton();
+        saveAsIcon = new javax.swing.JButton();
+        openIcon = new javax.swing.JButton();
+        startIcon = new javax.swing.JButton();
+        stopIcon = new javax.swing.JButton();
         timeoutUnit = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -95,8 +102,49 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
         seatMax.setMaximumSize(new java.awt.Dimension(0, 10000));
 
         advancedButton.setText("Erweitert...");
+        advancedButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                advancedButtonActionPerformed(evt);
+            }
+        });
 
         jToolBar1.setRollover(true);
+
+        newIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jonas\\Desktop\\Uni\\PSE\\Git\\PSE-Wahlverfahren-Implementierung\\beast\\src\\resources\\images\\toolbar\\new.png")); // NOI18N
+        newIcon.setFocusable(false);
+        newIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        newIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(newIcon);
+
+        saveIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jonas\\Desktop\\Uni\\PSE\\Git\\PSE-Wahlverfahren-Implementierung\\beast\\src\\resources\\images\\toolbar\\save.png")); // NOI18N
+        saveIcon.setFocusable(false);
+        saveIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        saveIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(saveIcon);
+
+        saveAsIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jonas\\Desktop\\Uni\\PSE\\Git\\PSE-Wahlverfahren-Implementierung\\beast\\src\\resources\\images\\toolbar\\save_as.png")); // NOI18N
+        saveAsIcon.setFocusable(false);
+        saveAsIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        saveAsIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(saveAsIcon);
+
+        openIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jonas\\Desktop\\Uni\\PSE\\Git\\PSE-Wahlverfahren-Implementierung\\beast\\src\\resources\\images\\toolbar\\load.png")); // NOI18N
+        openIcon.setFocusable(false);
+        openIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        openIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(openIcon);
+
+        startIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jonas\\Desktop\\Uni\\PSE\\Git\\PSE-Wahlverfahren-Implementierung\\beast\\src\\resources\\images\\toolbar\\start.png")); // NOI18N
+        startIcon.setFocusable(false);
+        startIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        startIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(startIcon);
+
+        stopIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jonas\\Desktop\\Uni\\PSE\\Git\\PSE-Wahlverfahren-Implementierung\\beast\\src\\resources\\images\\toolbar\\stop.png")); // NOI18N
+        stopIcon.setFocusable(false);
+        stopIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        stopIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(stopIcon);
 
         timeoutUnit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sekunden", "Minuten", "Stunden", "Tage" }));
 
@@ -183,13 +231,15 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(voterMax, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(timeoutUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 54, Short.MAX_VALUE))))
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 169, Short.MAX_VALUE))))
+            .addGroup(jInternalFrame1Layout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jInternalFrame1Layout.setVerticalGroup(
             jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jInternalFrame1Layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
@@ -220,7 +270,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
                 .addGroup(jInternalFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(amountProcessesSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(advancedButton)
                 .addContainerGap())
         );
@@ -231,7 +281,9 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jInternalFrame1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jInternalFrame1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,6 +296,10 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void advancedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_advancedButtonActionPerformed
+        advWindow.setVisible(true);
+    }//GEN-LAST:event_advancedButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -305,8 +361,14 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JButton newIcon;
+    private javax.swing.JButton openIcon;
+    private javax.swing.JButton saveAsIcon;
+    private javax.swing.JButton saveIcon;
     private javax.swing.JSpinner seatMax;
     private javax.swing.JSpinner seatMin;
+    private javax.swing.JButton startIcon;
+    private javax.swing.JButton stopIcon;
     private javax.swing.JSpinner timeoutNum;
     private javax.swing.JComboBox<String> timeoutUnit;
     private javax.swing.JSpinner voterMax;

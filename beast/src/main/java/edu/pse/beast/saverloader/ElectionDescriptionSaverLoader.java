@@ -20,7 +20,7 @@ public final class ElectionDescriptionSaverLoader {
     private final static String tagRight = ">";
     private final static String tagEnder = "/";
     private final static String listIdentfier = "@";
-
+    
     private ElectionDescriptionSaverLoader() {
 
     }
@@ -35,7 +35,7 @@ public final class ElectionDescriptionSaverLoader {
 
         // create the list
         List<String> savedFormat = new ArrayList<String>();
-        savedFormat.add("<EletionDescription>");
+        savedFormat.add("<ElectionDescription>");
 
         // save the name
         saveBasicType(savedFormat, "name", descr.getName());
@@ -90,8 +90,35 @@ public final class ElectionDescriptionSaverLoader {
             return null;
         }
         
+        //TODO finish
         
-        return new ElectionDescription(name, inputType, outputType, votingDeclLine)
+        Stack<String> tags = new Stack<String>();
+        /**
+         * a string that sits at the front. it prevents nullpointer errors
+         */
+        tags.add(headTag);
+        
+        
+        
+        for (Iterator<String> iterator = format.iterator(); iterator.hasNext();) {
+            String line = (String) iterator.next();
+
+            // search for tags
+            if (line.contains(tagLeft)) {
+                line = line.replace(tagLeft, "").replace(tagRight, "");
+                if (line.contains(tagEnder)) {
+                    if (!((tagEnder + tags.pop()).equals(line))) {
+                    }
+                } else {
+                    tags.push(line);
+                }
+            }
+        }
+        
+        
+        
+        //TODO finish
+        return null;
     }
 
     private static boolean checkFormat(List<String> format) {
