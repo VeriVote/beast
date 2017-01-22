@@ -1,6 +1,6 @@
 fileMenu : Datei
 new : Neu
-load : Öffnen
+load : Ã–ffnen
 save : Speichern
 save_as : Speichern unter
 editMenu : Bearbeiten
