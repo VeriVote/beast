@@ -5,10 +5,12 @@
  */
 package edu.pse.beast.codearea.ErrorHandling;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Holger-Desktop
  */
 public interface ErrorFinder {
-    
+    public ArrayList<Error> getErrors();
 }

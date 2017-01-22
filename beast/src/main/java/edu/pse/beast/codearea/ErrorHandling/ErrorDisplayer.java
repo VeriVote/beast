@@ -5,10 +5,16 @@
  */
 package edu.pse.beast.codearea.ErrorHandling;
 
+import javax.swing.JTextPane;
+
 /**
  *
  * @author Holger-Desktop
  */
 public class ErrorDisplayer {
+    private JTextPane pane;
     
+    public ErrorDisplayer(JTextPane pane) {
+        this.pane = pane;
+    }
 }

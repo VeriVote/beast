@@ -5,10 +5,23 @@
  */
 package edu.pse.beast.codearea.ErrorHandling;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Holger-Desktop
  */
 public class ErrorFinderList {
+    private ArrayList<ErrorFinder> errorFinderList = new ArrayList<>();
     
+    public ArrayList<Error>  getErrors() {
+        ArrayList<Error> created = new ArrayList<>();
+        for(ErrorFinder finder : errorFinderList) 
+            created.addAll(finder.getErrors());
+        return created;
+    }
+    
+    public void add(ErrorFinder errorFinder) {
+        errorFinderList.add(errorFinder);
+    }
 }
