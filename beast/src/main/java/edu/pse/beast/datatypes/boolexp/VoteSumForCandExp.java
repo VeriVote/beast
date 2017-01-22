@@ -29,5 +29,10 @@ public class VoteSumForCandExp extends TypeExpression {
     public SymbolicVariable getSymbolicVariable() {
         return symbVar;
     }
+
+    @Override
+    public void getVisited(BooleanExpNodeVisitor visitor) {
+        visitor.visitVoteSumExp(this);
+    }
     
 }

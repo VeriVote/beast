@@ -16,4 +16,9 @@ public class LogicalOrNode extends BinaryRelationshipNode {
         super(lhsExpNode, rhsExpNode);
     }
 
+    @Override
+    public void getVisited(BooleanExpNodeVisitor visitor) {
+        visitor.visitOrNode(this);
+    }
+
 }

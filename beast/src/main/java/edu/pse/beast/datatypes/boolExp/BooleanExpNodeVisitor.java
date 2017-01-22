@@ -66,6 +66,12 @@ public interface BooleanExpNodeVisitor {
      * @param exp the symbolic variable expression to visit
      */
     void visitSymbVarExp(SymbolicVarExp exp);
+    
+    /**
+     * 
+     * @param exp the expression to visit
+     */
+    void visitConstExp(ConstantExp exp);
 
     /**
      * 

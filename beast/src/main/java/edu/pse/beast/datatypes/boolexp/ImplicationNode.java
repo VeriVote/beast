@@ -16,4 +16,9 @@ public class ImplicationNode extends BinaryRelationshipNode {
         super(lhsExpNode, rhsExpNode);
     }
 
+    @Override
+    public void getVisited(BooleanExpNodeVisitor visitor) {
+        visitor.visitImplicationNode(this);
+    }
+    
 }

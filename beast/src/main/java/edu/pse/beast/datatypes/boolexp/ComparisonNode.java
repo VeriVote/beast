@@ -49,8 +49,7 @@ public class ComparisonNode extends BooleanExpressionNode {
     
     @Override
     public void getVisited(BooleanExpNodeVisitor visitor) {
-        // TODO Auto-generated method stub
-        
+        visitor.visitComparisonNode(this);
     }
 
 }

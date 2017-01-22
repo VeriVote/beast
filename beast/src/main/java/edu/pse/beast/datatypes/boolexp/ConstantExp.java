@@ -29,4 +29,9 @@ public class ConstantExp extends TypeExpression {
     public BooleanExpConstant getConstant() {
         return constant;
     }
+
+    @Override
+    public void getVisited(BooleanExpNodeVisitor visitor) {
+        visitor.visitConstExp(this);
+    }
 }

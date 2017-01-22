@@ -5,7 +5,7 @@ package edu.pse.beast.datatypes.boolexp;
  * @author Lukas
  *
  */
-public class BinaryRelationshipNode extends BooleanExpressionNode {
+public abstract class BinaryRelationshipNode extends BooleanExpressionNode {
 
     private final BinaryRelationshipNode lhsExpNode;
     private final BinaryRelationshipNode rhsExpNode;
@@ -35,11 +35,4 @@ public class BinaryRelationshipNode extends BooleanExpressionNode {
     public BooleanExpressionNode getRHSBooleanExpNode() {
         return rhsExpNode;
     }
-
-    @Override
-    public void getVisited(BooleanExpNodeVisitor visitor) {
-        // TODO Auto-generated method stub
-
-    }
-
 }

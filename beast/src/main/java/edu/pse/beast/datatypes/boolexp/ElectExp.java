@@ -29,4 +29,9 @@ public class ElectExp extends TypeExpression {
         return count;
     }
 
+    @Override
+    public void getVisited(BooleanExpNodeVisitor visitor) {
+        visitor.visitElectExp(this);
+    }
+
 }
