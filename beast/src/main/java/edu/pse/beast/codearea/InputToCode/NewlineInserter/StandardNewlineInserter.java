@@ -25,9 +25,7 @@ public class StandardNewlineInserter implements NewlineInserter {
             LineBeginningTabsHandler beginningTabsHandler,
             int pos) throws BadLocationException {
         
-        pane.getStyledDocument().insertString(pos, System.lineSeparator(), null);
-        
-        if(TextPaneSystemInfo.getCharsPerNewline() == 2) pane.getStyledDocument().remove(pos, 1);
+        pane.getStyledDocument().insertString(pos, "\n", null);
         
         int newLinePos = pos + 1;
         
