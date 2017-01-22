@@ -2,6 +2,10 @@ package edu.pse.beast.propertylist;
 
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 
+/**
+*
+* @author Justin
+*/
 public class PropertyItem {
 	
 	private final PostAndPrePropertiesDescription description;

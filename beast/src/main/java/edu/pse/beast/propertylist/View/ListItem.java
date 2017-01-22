@@ -9,6 +9,10 @@ import edu.pse.beast.datatypes.Result;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.FailureExample;
 
+/**
+*
+* @author Justin
+*/
 public class ListItem extends JPanel{
 	
 	private PostAndPrePropertiesDescription descr;

@@ -1,5 +1,9 @@
 package edu.pse.beast.saverloader;
 
+/**
+*
+* @author Justin
+*/
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;

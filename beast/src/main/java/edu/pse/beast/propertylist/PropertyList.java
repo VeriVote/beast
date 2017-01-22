@@ -5,6 +5,10 @@
  */
 package edu.pse.beast.propertylist;
 
+/**
+*
+* @author Justin
+*/
 import java.util.ArrayList;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;

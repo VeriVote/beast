@@ -7,7 +7,7 @@ package edu.pse.beast.saverloader;
 
 /**
  *
- * @author Niels
+ * @author Justin
  */
 public class SaverLoaderInterface {
 	
