@@ -8,11 +8,20 @@ import edu.pse.beast.toolbox.UserAction;
  */
 public class AddConstUserAction extends UserAction {
     private BooleanExpEditorConst booleanExpEditorConst;
+
+    /**
+     * Constructor
+     * @param booleanExpEditorConst the BooleanExpEditorConst object this UserAction adds
+     */
     public AddConstUserAction(BooleanExpEditorConst booleanExpEditorConst) {
         super("numberOf" + booleanExpEditorConst.getConstantString());
         this.booleanExpEditorConst = booleanExpEditorConst;
     }
 
+    /**
+     * Getter
+     * @return booleanExpEditorConst
+     */
     public BooleanExpEditorConst getBooleanExpEditorConst() {
         return booleanExpEditorConst;
     }

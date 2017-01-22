@@ -14,10 +14,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 /**
- * Builder Class to create BooleanExpEditor Object. Called by PropertyList.
+ * Builder Class to create BooleanExpEditor Object.
  * @author Nikolai
  */
 public class BooleanExpEditorBuilder{
+
     private String[] menuHeadingIds = {
             "fileMenu",
             "editMenu",
@@ -33,32 +34,43 @@ public class BooleanExpEditorBuilder{
      * @return BooleanExpEditor Object
      */
     public BooleanExpEditor createBooleanExpEditorObject(ObjectRefsForBuilder objectRefsForBuilder) {
-        BooleanExpCodeAreaBuilder codeAreaBuilder = new BooleanExpCodeAreaBuilder();
+        //creation of BooleanExpEditorWindow object
         BooleanExpEditorWindow window = new BooleanExpEditorWindow();
         window.updateStringRes(objectRefsForBuilder.getStringIF());
 
+        //creation of SymbolicVarList object
         SymbolicVarList symbolicVarList = new SymbolicVarList(window.getSymVarList(), window.getAddSymVarButton(),
                 window.getRemoveSymVarButton(), objectRefsForBuilder.getStringIF());
 
-        //creation of ErrorWindow
+        //creation of ErrorWindow object
         ErrorWindow errorWindow = new ErrorWindow(window.getErrorTextPane(), objectRefsForBuilder.getStringIF());
 
-        // creation of BooleanExpCodeAreas using the JTextPanes from window
+        //creation of BooleanExpCodeAreas objects using the JTextPanes from the BooleanExpEditorWindow instance "window"
+        BooleanExpCodeAreaBuilder codeAreaBuilder = new BooleanExpCodeAreaBuilder();
         BooleanExpCodeArea prePropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
                 window.getPrePropTextPane(), window.getPrePropScrollPane());
         BooleanExpCodeArea postPropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
                 window.getPostPropTextPane(), window.getPostPropScrollPane());
 
+        //creation of BooleanExpEditorMenubarHandler
         BooleanExpEditorMenubarHandler menuBarHandler = new BooleanExpEditorMenubarHandler(menuHeadingIds, window,
                 createActionIdAndListenerListForMenuHandler(), objectRefsForBuilder.getStringIF());
+
+        //creation of BooleanExpEditorToolbarHandler
         BooleanExpEditorToolbarHandler toolbarHandler = new BooleanExpEditorToolbarHandler(window,
                 ImageResourceProvider.getToolbarImages(),
                 objectRefsForBuilder.getStringIF().getBooleanExpEditorStringResProvider().getToolbarTipStringRes(),
                 createActionIdAndListenerListForToolbarHandler());
+
         return new BooleanExpEditor(prePropCodeArea, postPropCodeArea, window, symbolicVarList, errorWindow,
                 menuBarHandler, toolbarHandler);
     }
 
+    /**
+     * Method creating the ArrayList of ArrayLists of ActionIdAndListener objects, containing necessary elements
+     * for building and handling the JMenuBar of a BooleanExpEditorWindow object.
+     * @return said list, a ArrayList<ArrayList<ActionIdAndListener>> object
+     */
     private ArrayList<ArrayList<ActionIdAndListener>>
     createActionIdAndListenerListForMenuHandler() {
         ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
@@ -127,6 +139,11 @@ public class BooleanExpEditorBuilder{
         return created;
     }
 
+    /**
+     * Method creating the an Array of ActionIdAndListener objects necessary for building and handling the JToolBar of
+     * a BooleanExpEditorWindow object.
+     * @return said list, a ActionIdAndListener[] object
+     */
     private ActionIdAndListener[] createActionIdAndListenerListForToolbarHandler() {
         ActionIdAndListener[] created = new ActionIdAndListener[9];
 
@@ -152,10 +169,12 @@ public class BooleanExpEditorBuilder{
         return created;
     }
 
-    //file
+    //TODO
     private SaveBeforeChangeHandler createSaveBeforeChangeHandler() {
         return new SaveBeforeChangeHandler();
     }
+
+    //file
     private NewPropsUserAction createNewPropsUserAction() {
         return new NewPropsUserAction();
     }

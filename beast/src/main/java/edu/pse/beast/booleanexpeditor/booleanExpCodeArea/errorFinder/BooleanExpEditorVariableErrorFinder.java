@@ -4,7 +4,7 @@ import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpANTLRHandler;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 
 /**
- * CLass for finding typeerrors in symbolic variable comparison operations in the BooleanExpression(s) of the CodeArea
+ * Class for finding type-errors in symbolic variable usage in the BooleanExpression(s) of the CodeArea
  * this class is an attribute of.
  * @author Nikolai
  */
@@ -14,7 +14,7 @@ public class BooleanExpEditorVariableErrorFinder {
 
     /**
      * Constructor
-     * @param antlrHandler BooleanExpEditorANTLRHandler object
+     * @param antlrHandler BooleanExpEditorANTLRHandler object this class uses to find errors
      */
     public BooleanExpEditorVariableErrorFinder(BooleanExpANTLRHandler antlrHandler) {
         this.antlrHandler = antlrHandler;

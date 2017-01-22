@@ -4,11 +4,6 @@ import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.autocompletion.BooleanE
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorGrammarErrorFinder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorVariableErrorFinder;
 import edu.pse.beast.codearea.CodeArea;
-import edu.pse.beast.codearea.CodeAreaBuilder;
-import edu.pse.beast.codearea.TextLineNumber;
-import edu.pse.beast.toolbox.ObjectRefsForBuilder;
-
-import javax.swing.*;
 
 /**
  * Class extending CodeArea Class of package codearea and giving it extra functionality specific to BooleanExpEditor.
@@ -19,16 +14,16 @@ public class BooleanExpCodeArea extends CodeArea{
     private BooleanExpEditorGrammarErrorFinder grammarErrorFinder;
     private BooleanExpEditorVariableErrorFinder variableErrorFinder;
     private BooleanExpAutoCompletionSrc autoCompletionSrc;
+
     /**
-     * Constructor //TODO JAVA DOC
-     * @param textPane s
-     * @param scrollPane s
-     * @param objectRefs s
-     * @param antlrHandler s
-     * @param variableErrorFinder s
-     * @param grammarErrorFinder s
+     * Constructor
+     * @param codeArea the codeArea object the super constructor is called with
+     * @param antlrHandler BooleanExpAntlrHandler object
+     * @param variableErrorFinder the BooleanExpEditorVariableErrorFinder object
+     * @param grammarErrorFinder the BooleanExpEditorGrammarErrorFinder object
+     * @param autoCompletionSrc the BooleanExpEditorAutocompletionSrc object
      */
-    public BooleanExpCodeArea(CodeArea codeArea,
+    BooleanExpCodeArea(CodeArea codeArea,
                               BooleanExpANTLRHandler antlrHandler,
                               BooleanExpEditorVariableErrorFinder variableErrorFinder,
                               BooleanExpEditorGrammarErrorFinder grammarErrorFinder,

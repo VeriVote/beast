@@ -9,12 +9,14 @@ import javax.swing.*;
  * Controller/Model of the list of symbolic variables in BooleanExpressionWindow.
  * @author Nikolai
  */
-public class SymbolicVarList implements DisplaysStringsToUser{
+public class SymbolicVarList implements DisplaysStringsToUser {
     private JList symbVarList;
     private JButton addVarButton;
     private JButton removeVarButton;
     private StringLoaderInterface stringLoaderInterface;
-
+    private String voterString;
+    private String candidateString;
+    private String seatString;
     /**
      * Constructor
      * @param symbVarList the JList element for the symbolic Variables
@@ -22,12 +24,18 @@ public class SymbolicVarList implements DisplaysStringsToUser{
      * @param removeVarButton the JButton to remove a variable from the list
      * @param stringLoaderInterface the interface to load needed strings
      */
-    public SymbolicVarList(JList symbVarList, JButton addVarButton, JButton removeVarButton,
-                           StringLoaderInterface stringLoaderInterface){
+    SymbolicVarList(JList symbVarList, JButton addVarButton, JButton removeVarButton,
+                           StringLoaderInterface stringLoaderInterface) {
         this.symbVarList = symbVarList;
         this.addVarButton = addVarButton;
         this.removeVarButton = removeVarButton;
         this.stringLoaderInterface = stringLoaderInterface;
+        this.voterString = stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpEditorSymbVarListRes().getStringFromID("voter");
+        this.candidateString = stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpEditorSymbVarListRes().getStringFromID("candidate");
+        this.seatString = stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpEditorSymbVarListRes().getStringFromID("seat");
     }
 
     /**
@@ -43,6 +51,11 @@ public class SymbolicVarList implements DisplaysStringsToUser{
      * @param stringLoaderInterface the new stringLoaderInterface
      */
     public void updateStringRes(StringLoaderInterface stringLoaderInterface) {
-        //TODO implement
+        this.voterString = stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpEditorSymbVarListRes().getStringFromID("voter");
+        this.candidateString = stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpEditorSymbVarListRes().getStringFromID("candidate");
+        this.seatString = stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpEditorSymbVarListRes().getStringFromID("seat");
     }
 }

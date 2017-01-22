@@ -14,14 +14,17 @@ public class ErrorWindow implements DisplaysStringsToUser{
     private StringLoaderInterface stringLoaderInterface;
     private JTextPane textPane;
     private ArrayList<Error> errors;
+    private String errorString;
     /**
      * Constructor
      * @param textPane JTextPane for ErrorWindow
      * @param stringLoaderInterface stringLoaderInterface to load needed Strings
      */
-    public ErrorWindow(JTextPane textPane, StringLoaderInterface stringLoaderInterface) {
+    ErrorWindow(JTextPane textPane, StringLoaderInterface stringLoaderInterface) {
         this.stringLoaderInterface = stringLoaderInterface;
         this.textPane = textPane;
+        errorString = stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpErrorStringRes().getStringFromID("error");
     }
 
     /**
@@ -37,5 +40,7 @@ public class ErrorWindow implements DisplaysStringsToUser{
      * @param stringLoaderInterface the new stringLoaderInterface
      */
     public void updateStringRes(StringLoaderInterface stringLoaderInterface) {
+        errorString = stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpErrorStringRes().getStringFromID("error");
     }
 }

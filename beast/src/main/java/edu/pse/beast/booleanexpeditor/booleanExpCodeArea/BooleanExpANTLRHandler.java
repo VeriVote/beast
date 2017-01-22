@@ -14,7 +14,7 @@ public class BooleanExpANTLRHandler {
      * Constructor
      * @param styledDocument the StyledDocument instance to analyse
      */
-    public BooleanExpANTLRHandler(StyledDocument styledDocument) {
+    BooleanExpANTLRHandler(StyledDocument styledDocument) {
         this.styledDocument = styledDocument;
     }
 }

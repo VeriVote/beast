@@ -11,7 +11,7 @@ public class BooleanExpEditorWindowStarter{
      * Constructor
      * @param window BooleanExpEditorWindow object this class starts
      */
-    protected BooleanExpEditorWindowStarter(BooleanExpEditorWindow window) {
+    BooleanExpEditorWindowStarter(BooleanExpEditorWindow window) {
         this.window = window;
     }
 
@@ -26,7 +26,7 @@ public class BooleanExpEditorWindowStarter{
     /**
      * Starts the BooleanExpEditorWindow instance "window" in a new thread.
      */
-    protected void showWindow(){
+    void showWindow(){
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override

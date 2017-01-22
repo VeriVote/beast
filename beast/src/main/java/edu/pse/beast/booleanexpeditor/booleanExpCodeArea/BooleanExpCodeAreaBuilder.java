@@ -17,10 +17,10 @@ public class BooleanExpCodeAreaBuilder extends CodeAreaBuilder{
 
     /**
      * Creates a BooleanExpCodeArea object with the given parameters
-     * @param objectRefs
-     * @param textPane
-     * @param scrollPane
-     * @return
+     * @param objectRefs the ObjectRefsForBuilder instance providing the references to needed loading interfaces
+     * @param textPane the JTextPane this CodeArea controls
+     * @param scrollPane the ScrollPane of said JTextPane
+     * @return a BooleanExpCodeArea object
      */
     public BooleanExpCodeArea createBooleanExpCodeAreaObject(ObjectRefsForBuilder objectRefs,
                                                                  JTextPane textPane, JScrollPane scrollPane) {

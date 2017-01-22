@@ -1,0 +1,3 @@
+voter : Wähler
+candidate : Kandidat
+seat : Sitz

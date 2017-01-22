@@ -7,6 +7,11 @@ import edu.pse.beast.toolbox.UserAction;
  */
 public class AddMakroUserAction extends UserAction {
     private BooleanExpEditorMakro makro;
+
+    /**
+     * Constructor
+     * @param makro the BooleanExpEditorMakro object this UserAction adds
+     */
     public AddMakroUserAction(BooleanExpEditorMakro makro) {
         super(makro.toString());
         this.makro = makro;
@@ -17,6 +22,10 @@ public class AddMakroUserAction extends UserAction {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /**
+     * Getter
+     * @return makro
+     */
     public BooleanExpEditorMakro getMakro() {
         return makro;
     }

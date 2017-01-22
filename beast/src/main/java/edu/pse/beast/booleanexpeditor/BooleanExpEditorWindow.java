@@ -46,7 +46,6 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
         errorScrollPane = new javax.swing.JScrollPane();
         errorTextPane = new javax.swing.JTextPane();
         menubar = new javax.swing.JMenuBar();
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         toolbar.setRollover(true);

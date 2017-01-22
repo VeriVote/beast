@@ -15,7 +15,15 @@ import java.util.ArrayList;
 public class BooleanExpEditorMenubarHandler extends MenuBarHandler implements DisplaysStringsToUser{
     private BooleanExpEditorWindow window;
 
-    public BooleanExpEditorMenubarHandler(String[] headingIds, BooleanExpEditorWindow window,
+    /**
+     * Constructor
+     * @param headingIds the String Array of header IDs for the Menus
+     * @param window the BooleanExpEditorWindow object whos menu this class handles
+     * @param actionIdAndListener the ActionIdAndListener ArrayListArrayList which contains UserActions and
+     *                            Actionlisteners for this menu
+     * @param stringif the StringLoaderInterface to load the language dependent strings for this menu
+     */
+    BooleanExpEditorMenubarHandler(String[] headingIds, BooleanExpEditorWindow window,
             ArrayList<ArrayList<ActionIdAndListener>> actionIdAndListener, StringLoaderInterface stringif) {
         super(headingIds, actionIdAndListener, stringif.getBooleanExpEditorStringResProvider().getMenuStringRes());
         this.window = window;
