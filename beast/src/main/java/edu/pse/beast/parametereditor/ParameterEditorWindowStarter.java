@@ -9,7 +9,7 @@ public class ParameterEditorWindowStarter implements Runnable{
     /**
      * Constructor
      */
-    ParameterEditorWindowStarter() {
+    public ParameterEditorWindowStarter() {
         
     }
     /**
@@ -23,7 +23,7 @@ public class ParameterEditorWindowStarter implements Runnable{
     /**
      * Makes the corresponding window visible.
      */
-    void start() {
+    public void start() {
         java.awt.EventQueue.invokeLater(this);
     }
     @Override

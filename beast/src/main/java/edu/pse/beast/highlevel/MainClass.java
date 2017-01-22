@@ -9,6 +9,7 @@ import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import edu.pse.beast.options.OptionsInterface;
 import edu.pse.beast.propertylist.PropertyListBuilder;
 import toBeImplemented.LanguageOptions;
+import edu.pse.beast.parametereditor.ParameterEditorWindowStarter;
 
 /**
  * The MainClass creates an AbstractBeastFactory and with it a BEASTCommunicator
@@ -39,6 +40,9 @@ public class MainClass {
         
         BooleanExpEditor booleanEditor = booleanBuilder.createBooleanExpEditorObject(objRefsForBuilder);
         booleanEditor.showWindow();
+        
+        ParameterEditorWindowStarter paramsStarter = new ParameterEditorWindowStarter();
+        paramsStarter.start();
             
     }
 }
