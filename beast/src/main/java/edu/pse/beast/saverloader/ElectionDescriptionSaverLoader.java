@@ -19,6 +19,7 @@ public final class ElectionDescriptionSaverLoader {
     private final static String tagLeft = "<";
     private final static String tagRight = ">";
     private final static String tagEnder = "/";
+    private final static String listIdentfier = "@";
 
     private ElectionDescriptionSaverLoader() {
 
@@ -56,30 +57,32 @@ public final class ElectionDescriptionSaverLoader {
     }
 
     private static void saveBasicType(List<String> resultList, String varName, String value) {
-        resultList.add("<" + varName + ">");
+        resultList.add(tagLeft + varName + tagRight);
         resultList.add(value);
-        resultList.add("<!" + varName + ">");
+        resultList.add(tagLeft + tagEnder + varName + tagRight);
     }
 
     private static void saveCodeLines(List<String> resultList, String varName, List<String> codeList) {
+        //signals that it is a list
+        varName = varName + listIdentfier;
         // save the code
-        resultList.add("<" + varName + ">");
+        resultList.add(tagLeft + varName + tagRight);
         for (Iterator<String> iterator = codeList.iterator(); iterator.hasNext();) {
             String codeLine = (String) iterator.next();
             resultList.add(codeLine);
         }
-        resultList.add("<!" + varName + ">");
+        resultList.add(tagLeft + tagEnder + varName + tagRight);
     }
 
     private static void saveElectionTypeContainer(List<String> resultList, String varName,
             ElectionTypeContainer container) {
         List<String> containerLines = ElectionTypeContainerSaverLoader.createSaveFormat(container);
-        resultList.add("<" + varName + ">");
+        resultList.add(tagLeft + varName + tagRight);
         for (Iterator<String> iterator = containerLines.iterator(); iterator.hasNext();) {
             String codeLine = (String) iterator.next();
             resultList.add(codeLine);
         }
-        resultList.add("<!" + varName + ">");
+        resultList.add(tagLeft + tagEnder + varName + tagRight);
     }
 
     public static ElectionDescription createFromSaveFormat(List<String> format) {
