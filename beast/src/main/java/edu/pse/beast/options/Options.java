@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.options;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,6 +15,8 @@ import java.util.List;
 public abstract class Options {
 
     private final String id;
+    private List<Options> subOptions = new ArrayList<Options>();
+    private List<OptionElement> optElements = new ArrayList<OptionElement>();
 
     /**
      * creates a new Options object
@@ -35,13 +38,33 @@ public abstract class Options {
      * 
      * @return the List of OptionElements
      */
-    public abstract List<OptionElement> getOptionElements();
+    public List<OptionElement> getOptionElements() {
+        return optElements;
+    }
 
     /**
      * 
      * @return the list of all subOptions.
      */
-    public abstract List<Options> getSubOptions();
+    public List<Options> getSubOptions() {
+        return subOptions;
+    }
+    
+    /**
+     * 
+     * @param elementToAdd the element to be added to the list
+     */
+    public void addOptionElement(OptionElement elementToAdd) {
+        optElements.add(elementToAdd);
+    }
+    
+    /**
+     * 
+     * @param optionToAdd the suboption to be added
+     */
+    public void addSubOptions(Options optionToAdd) {
+        subOptions.add(optionToAdd);
+    }
 
     /**
      * Gets called when an option got changed and reapplies it where

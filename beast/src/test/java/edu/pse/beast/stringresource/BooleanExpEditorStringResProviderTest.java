@@ -103,4 +103,16 @@ public class BooleanExpEditorStringResProviderTest {
         assertEquals("Window", result.getStringFromID("filename"));
     }
 
+    /**
+     * Test of getBooleanExpEditorSymbVarListRes method, of class BooleanExpEditorStringResProvider.
+     */
+    @Test
+    public void testGetBooleanExpEditorSymbVarListRes() {
+        System.out.println("getBooleanExpEditorSymbVarListRes");
+        StringResourceLoader result = instance.getBooleanExpEditorSymbVarListRes();
+        assertEquals("this is a test", result.getStringFromID("test"));
+        assertEquals("this is test 2", result.getStringFromID("test2"));
+        assertEquals("SymbVarList", result.getStringFromID("filename"));
+    }
+
 }

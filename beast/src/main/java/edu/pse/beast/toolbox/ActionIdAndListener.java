@@ -9,22 +9,36 @@ import java.awt.event.ActionListener;
 
 /**
  *
- * @author Holger-Desktop
+ * @author Holger-Desktop & Lukas
  */
 public class ActionIdAndListener {
-    final private String id;
-    final private ActionListener l;
-    public ActionIdAndListener(String id, ActionListener l) {
-        this.l = l;
+    private final String id;
+    private final ActionListener listener;
+    
+    /**
+     * 
+     * @param id the id
+     * @param listener the listener to be save here
+     */
+    public ActionIdAndListener(String id, ActionListener listener) {
+        this.listener = listener;
         this.id = id;
     }
     
+    /**
+     * 
+     * @return the id
+     */
     public String getId() {
         return this.id;
     }
     
+    /**
+     * 
+     * @return the listener that got saved here
+     */
     public ActionListener getListener() {
-        return this.l;
+        return this.listener;
     }
     
 }

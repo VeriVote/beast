@@ -38,6 +38,10 @@ public class PostAndPrePropertiesDescription {
         this.postPropertiesDescription = postDescr;
         this.prePropertiesDescription = preDescr;
     }
+    
+    public String getName() {
+    	return this.name;
+    }
 
     public FormalPropertiesDescription getPrePropertiesDescription() {
         return prePropertiesDescription;

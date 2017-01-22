@@ -12,7 +12,7 @@ import edu.pse.beast.toolbox.ToolBarHandler;
 /**
  * The main class of this package that serves as an interface to the outside.
  * Part of the "Controller" in an MVC-Pattern.
- * @author Nikolai
+ * @author NikolaiLMS
  */
 public class BooleanExpEditor {
     private BooleanExpEditorWindow window;
@@ -30,12 +30,14 @@ public class BooleanExpEditor {
      * @param symbolicVarList SymbolicVarList object
      */
     BooleanExpEditor(BooleanExpCodeArea prePropCodeArea, BooleanExpCodeArea postPropCodeArea,
-                     BooleanExpEditorWindow window, SymbolicVarList symbolicVarList, ErrorWindow errorWindow){
+                     BooleanExpEditorWindow window, SymbolicVarList symbolicVarList, ErrorWindow errorWindow,
+                     BooleanExpEditorMenubarHandler menuBarHandler){
         this.window = window;
         this.errorWindow = errorWindow;
         this.symbolicVarList = symbolicVarList;
         this.prePropCodeArea = prePropCodeArea;
         this.postPropCodeArea = postPropCodeArea;
+        this.menuBarHandler = menuBarHandler;
         windowStarter = new BooleanExpEditorWindowStarter(window);
     }
 

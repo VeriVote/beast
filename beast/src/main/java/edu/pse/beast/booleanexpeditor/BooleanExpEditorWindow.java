@@ -129,7 +129,8 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
                 getBooleanExpEditorWindowStringRes().getStringFromID("add"));
         removeSymVarButton.setText(stringLoaderInterface.getBooleanExpEditorStringResProvider().
                 getBooleanExpEditorWindowStringRes().getStringFromID("remove"));
-        symbVarLabel.setText(stringLoaderInterface.getBooleanExpEditorStringResProvider().getBooleanExpEditorWindowStringRes().getStringFromID("symbolicVariablesLabel"));
+        symbVarLabel.setText(stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpEditorWindowStringRes().getStringFromID("symbolicVariablesLabel"));
     }
 
 
