@@ -18,6 +18,7 @@ import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveBeforeChangeHand
 import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveElectionUserAction;
 import edu.pse.beast.celectiondescriptioneditor.UserActions.StaticCheckUserAction;
 import edu.pse.beast.toolbox.ActionIdAndListener;
+import edu.pse.beast.toolbox.ImageResourceProvider;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import edu.pse.beast.toolbox.UserAction;
 import java.awt.event.ActionEvent;
@@ -66,10 +67,21 @@ public class CElectionDescriptionEditorBuilder {
             createFromUserAction(save),
             createFromUserAction(saveAs),
             createFromUserAction(load),
+            createFromUserAction(codeArea.getUserActionList().getActionById("undo")),
+            createFromUserAction(codeArea.getUserActionList().getActionById("redo")), 
+            createFromUserAction(codeArea.getUserActionList().getActionById("copy")),
+            createFromUserAction(codeArea.getUserActionList().getActionById("cut")),
+            createFromUserAction(codeArea.getUserActionList().getActionById("paste"))             
         };
         
+        ImageResourceProvider imageRes = ImageResourceProvider.getToolbarImages();
+        
         CElectionEditorToolbarHandler toolbarHandler = 
-                new CElectionEditorToolbarHandler(actionIdAndListener, imageRes, stringif, gui)
+                new CElectionEditorToolbarHandler(
+                        idAndListener,
+                        imageRes, 
+                        objRefsForBuilder.getStringIF(), 
+                        gui);
         
         starter.start();
         
