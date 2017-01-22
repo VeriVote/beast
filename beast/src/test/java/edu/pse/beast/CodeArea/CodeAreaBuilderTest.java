@@ -52,10 +52,7 @@ public class CodeAreaBuilderTest {
     }
     
     public static void main(String[] args) {
-        JTextPaneTestFrame frame = new  JTextPaneTestFrame();
-        CodeAreaBuilder b = new CodeAreaBuilder();
-        CodeArea ca = b.createCodeArea(frame.getTextPane(), frame.getScrollPane(), new ObjectRefsForBuilder(new StringLoaderInterface("de")));
-        frame.setVisible(true);
+        
     }
     
 }
