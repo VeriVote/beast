@@ -31,13 +31,14 @@ public class BooleanExpEditor {
      */
     BooleanExpEditor(BooleanExpCodeArea prePropCodeArea, BooleanExpCodeArea postPropCodeArea,
                      BooleanExpEditorWindow window, SymbolicVarList symbolicVarList, ErrorWindow errorWindow,
-                     BooleanExpEditorMenubarHandler menuBarHandler){
+                     BooleanExpEditorMenubarHandler menuBarHandler, BooleanExpEditorToolbarHandler toolBarHandler){
         this.window = window;
         this.errorWindow = errorWindow;
         this.symbolicVarList = symbolicVarList;
         this.prePropCodeArea = prePropCodeArea;
         this.postPropCodeArea = postPropCodeArea;
         this.menuBarHandler = menuBarHandler;
+        this.toolBarHandler = toolBarHandler;
         windowStarter = new BooleanExpEditorWindowStarter(window);
     }
 

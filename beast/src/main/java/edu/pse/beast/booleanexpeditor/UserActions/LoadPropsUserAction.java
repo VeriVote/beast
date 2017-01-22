@@ -7,7 +7,7 @@ import edu.pse.beast.toolbox.UserAction;
  */
 public class LoadPropsUserAction extends UserAction {
     public LoadPropsUserAction() {
-        super("loadBooleanExp");
+        super("load");
     }
 
     @Override

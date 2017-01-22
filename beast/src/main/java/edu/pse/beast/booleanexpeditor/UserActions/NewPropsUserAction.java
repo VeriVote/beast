@@ -7,7 +7,7 @@ import edu.pse.beast.toolbox.UserAction;
  */
 public class NewPropsUserAction extends UserAction {
     public NewPropsUserAction() {
-        super("newBooleanExp");
+        super("new");
     }
 
     @Override

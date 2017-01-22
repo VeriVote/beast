@@ -1,0 +1,9 @@
+new : Neu
+load : Öffnen
+save : Speichern
+save_as : Speichern unter
+undo : Rückgängig
+redo : Wiederholen
+copy : Kopieren
+cut : Ausschneiden
+paste : Einfügen
