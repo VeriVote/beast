@@ -132,6 +132,8 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
                 getBooleanExpEditorWindowStringRes().getStringFromID("remove"));
         symbVarLabel.setText(stringLoaderInterface.getBooleanExpEditorStringResProvider().
                 getBooleanExpEditorWindowStringRes().getStringFromID("symbolicVariablesLabel"));
+        setTitle(stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpEditorWindowStringRes().getStringFromID("windowTitle"));
     }
 
 
@@ -225,4 +227,5 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
     JToolBar getToolbar() {
         return toolbar;
     }
+
 }

@@ -1,3 +1,4 @@
+windowTitle : Eigenschafteneditor
 symbolicVariablesLabel : Symbolische Variablen
 preProperties : Vorbedingungen
 postProperties : Nachbedingungen
