@@ -4,11 +4,11 @@ load : Ã–ffnen
 save : Speichern
 save_as : Speichern unter
 editMenu : Bearbeiten
-undo : Rückgängig
+undo : RÃ¼ckgÃ¤ngig
 redo : Wiederholen
 copy : Kopieren
 cut : Ausschneiden
-paste : Einfügen
+paste : EinfÃ¼gen
 editorMenu : Editor
 options : Einstellungen
 makroMenu : Makros
@@ -20,7 +20,7 @@ existsOneCandidate : EXISTS_ONE_CANDIDATE()
 existsOneSeat : EXISTS_ONE_SEAT()
 sumVotesForCandidate : SUM_VOTES_FOR_CANDIDATE()
 constantsMenu : Konstanten
-numberOfVoters : Anzahl der Wähler (V)
+numberOfVoters : Anzahl der WÃ¤hler (V)
 numberOfCandidates : Anzahl der Kandidaten (C)
 numberOfSeats : Anzahl vorhandener Sitze (S)
 codeMenu : Code

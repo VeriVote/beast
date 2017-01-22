@@ -1,10 +1,10 @@
 showResult : Ergebnis anzeigen
-analyseProperty : Überprüfen
+analyseProperty : ÃœberprÃ¼fen
 editProperty : Bearbeiten
-deleteProperty : Löschen
+deleteProperty : LÃ¶schen
 addProperty : Neu
 newProperty : Neue Eigenschaft erstellen
-loadProperty : Eigenschaft wählen
+loadProperty : Eigenschaft wÃ¤hlen
 menuFile : Datei
 menuEdit : Bearbeiten
 load : Laden
