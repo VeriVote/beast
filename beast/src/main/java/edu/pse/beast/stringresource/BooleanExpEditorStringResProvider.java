@@ -125,7 +125,7 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
             errorFileHasWrongFormat(windowFile);
         }
         File symbVarFile;
-        symbVarFile = new File(getFileLocationString("BooleanExpEditorSymbVarList"));
+        symbVarFile = new File(getFileLocationString("BooleanExpEditorSymbVarListRes"));
         try {
             LinkedList<String> symbVarList;
             symbVarList = FileLoader.loadFileAsString(symbVarFile);
