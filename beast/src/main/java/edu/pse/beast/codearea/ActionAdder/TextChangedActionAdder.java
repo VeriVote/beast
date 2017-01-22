@@ -69,11 +69,13 @@ public class TextChangedActionAdder implements ActionAdder, CaretListener, Docum
     public void insertUpdate(DocumentEvent de) {
         if(!listen) return;
         try {
-            if(de.getOffset() == currentCaretPosition && de.getLength() == 1) {
-                recordingString += pane.getStyledDocument().getText(de.getOffset(), de.getLength());            
+            String text = pane.getStyledDocument().getText(de.getOffset(), de.getLength());
+            if(de.getOffset() == currentCaretPosition && de.getLength() == 1 &&
+                    !text.equals("\n")) {
+                System.out.println(text);
+                recordingString += text;            
             } else {
                 addCurrentRecording();
-                String text = pane.getStyledDocument().getText(de.getOffset(), de.getLength());
                 actionList.add(new TextAddedAction(
                         new TextDelta(de.getOffset(), text, currentCaretPosition),
                         pane.getStyledDocument()));
