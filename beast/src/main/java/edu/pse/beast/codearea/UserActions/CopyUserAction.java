@@ -6,6 +6,9 @@
 package edu.pse.beast.codearea.UserActions;
 
 import edu.pse.beast.toolbox.UserAction;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import javax.swing.JTextPane;
 
 /**
  *
@@ -13,13 +16,18 @@ import edu.pse.beast.toolbox.UserAction;
  */
 public class CopyUserAction extends UserAction {
 
-    public CopyUserAction() {
+    private JTextPane pane;
+    private Clipboard clipboard;
+    
+    public CopyUserAction(JTextPane pane) {
         super("copy");
+        this.pane = pane;
+        this.clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
     }
     
     @Override
     public void perform() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     
 }

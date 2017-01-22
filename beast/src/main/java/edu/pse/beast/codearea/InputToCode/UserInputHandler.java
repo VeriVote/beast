@@ -50,7 +50,11 @@ public class UserInputHandler implements KeyListener {
         if(letTextPaneHandleKey(ke)) {
             return;
         } else if(isShortcut(ke)) {
-            shortcutHandler.handleKey(ke); 
+            try {
+                shortcutHandler.handleKey(ke); 
+            } catch(NullPointerException ex) {
+                System.err.println("key not mapped");
+            }            
             return;
         }
         ke.consume();

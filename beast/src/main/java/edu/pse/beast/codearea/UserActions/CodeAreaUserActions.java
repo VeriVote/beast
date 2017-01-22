@@ -18,6 +18,7 @@ public class CodeAreaUserActions {
     private ArrayList<UserAction> actions = new ArrayList<>();
     
     public CodeAreaUserActions(CodeArea area) {
+        this.area = area;
         addCopyAction();
         addCutAction();
         addPasteAction();
@@ -33,7 +34,7 @@ public class CodeAreaUserActions {
     }
     
     private void addCopyAction() {
-        actions.add(new CopyUserAction());
+        actions.add(new CopyUserAction(area.getPane()));
     }
     
     private void addCutAction() {
@@ -45,10 +46,10 @@ public class CodeAreaUserActions {
     }
     
     private void addRedoAction() {
-        actions.add(new RedoLastUserAction());
+        actions.add(new RedoLastUserAction(area.getActionlist()));
     }
     
     private void addUndoAction() {
-        actions.add(new UndoLastUserAction());
+        actions.add(new UndoLastUserAction(area.getActionlist()));
     }
 }

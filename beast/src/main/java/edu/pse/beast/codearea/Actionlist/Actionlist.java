@@ -25,18 +25,24 @@ public class Actionlist {
         lastUndone.clear();
     }
     
-    public void undoLast() {        
+    public void undoLast() {   
+        if(lastPerformed.isEmpty()) return;
+        msgAllAdderStop();
         Action latestAcc = lastPerformed.get(lastPerformed.size() - 1);
         lastPerformed.remove(lastPerformed.size() - 1);
         latestAcc.undo();
         lastUndone.add(latestAcc);
+        msgAllAdderRes();
     }
     
     public void redoLast() {
+        if(lastUndone.isEmpty()) return;
+        msgAllAdderStop();
         Action latestUndoneAcc = lastUndone.get(lastUndone.size() - 1);
         lastUndone.remove(lastUndone.size() - 1);
         latestUndoneAcc.redo();
         lastPerformed.add(latestUndoneAcc);
+        msgAllAdderRes();
     }
     
     public void addActionAdder(ActionAdder adder) {

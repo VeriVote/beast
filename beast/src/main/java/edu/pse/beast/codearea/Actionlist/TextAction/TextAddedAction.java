@@ -41,6 +41,7 @@ public class TextAddedAction implements Action {
         } catch (BadLocationException ex) {
             Logger.getLogger(TextAddedAction.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
     
 }

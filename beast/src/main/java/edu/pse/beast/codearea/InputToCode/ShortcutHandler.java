@@ -5,16 +5,25 @@
  */
 package edu.pse.beast.codearea.InputToCode;
 
+import edu.pse.beast.toolbox.UserAction;
 import java.awt.event.KeyEvent;
+import java.util.HashMap;
 
 /**
  *
  * @author Holger-Desktop
  */
 public class ShortcutHandler {
+    
+    private HashMap<Integer, UserAction> shortcutMap = new HashMap<>();
 
     public void handleKey(KeyEvent ke) {
-        
+        System.out.println(ke.getKeyCode());        
+        shortcutMap.get(ke.getKeyCode()).perform();
     }
     
+    public void addAction(int keyCode, UserAction ac) {
+        shortcutMap.put(keyCode, ac);
+    }
+
 }

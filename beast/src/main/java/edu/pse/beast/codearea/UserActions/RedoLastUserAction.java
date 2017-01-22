@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.codearea.UserActions;
 
+import edu.pse.beast.codearea.Actionlist.Actionlist;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
@@ -12,13 +13,17 @@ import edu.pse.beast.toolbox.UserAction;
  * @author Holger-Desktop
  */
 public class RedoLastUserAction extends UserAction {
-    public RedoLastUserAction() {
+    private Actionlist list;
+    
+    public RedoLastUserAction(Actionlist list) {
         super("redo");
+        this.list = list;        
     }
 
     @Override
     public void perform() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("redo");
+        list.redoLast();
     }
     
     

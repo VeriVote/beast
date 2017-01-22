@@ -12,10 +12,12 @@ package edu.pse.beast.codearea.Actionlist.TextAction;
 public class TextDelta {
     private int offset;
     private String text;
+    private int caretPos;
     
-    public TextDelta(int offset, String text) {
+    public TextDelta(int offset, String text, int caretPos) {
         this.offset = offset;
-        this.text = text;
+        this.text = text;        
+        this.caretPos = caretPos;
     }
     
     public int getOffset() {
@@ -24,5 +26,9 @@ public class TextDelta {
     
     public String getText() {
         return text;
+    }
+    
+    public int getCaretPos() {
+        return caretPos;
     }
 }

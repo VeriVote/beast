@@ -11,6 +11,7 @@ import edu.pse.beast.codearea.ErrorHandling.ErrorController;
 import edu.pse.beast.codearea.InputToCode.UserInputHandler;
 import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
 import edu.pse.beast.codearea.UserActions.CodeAreaUserActions;
+import javax.swing.JTextPane;
 
 /**
  *
@@ -18,6 +19,7 @@ import edu.pse.beast.codearea.UserActions.CodeAreaUserActions;
  */
 public class CodeArea {
     
+    protected JTextPane pane;
     protected TextLineNumber tln;
     protected UserInputHandler userInputHandler;
     protected UserInsertToCode insertToCode;
@@ -27,6 +29,7 @@ public class CodeArea {
     protected CodeAreaUserActions userActionList;
                     
     public CodeArea(
+            JTextPane pane,
             TextLineNumber tln, 
             UserInputHandler userInputHandler, 
             UserInsertToCode insertToCode,
@@ -42,6 +45,7 @@ public class CodeArea {
     }
 
     public CodeArea(CodeArea codeArea) {
+        this.pane = codeArea.pane;
         this.tln = codeArea.tln;
         this.userInputHandler = codeArea.userInputHandler;
         this.insertToCode = codeArea.insertToCode;
@@ -57,6 +61,14 @@ public class CodeArea {
     
     public CodeAreaUserActions getUserActionList() {
         return userActionList;
+    }
+
+    public JTextPane getPane() {
+        return this.pane;
+    }
+
+    public Actionlist getActionlist() {
+        return actionList;
     }
     
 }

@@ -42,7 +42,7 @@ public class CElectionDescriptionEditorBuilderTest {
     public void tearDown() {
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) {    
         OptionsInterface opt = new OptionsInterface();
         ObjectRefsForBuilder refs = new ObjectRefsForBuilder(
                 opt, new StringLoaderInterface("de"), 

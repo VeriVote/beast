@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.codearea;
 
+import edu.pse.beast.codearea.ActionAdder.TextChangedActionAdder;
 import edu.pse.beast.codearea.Actionlist.Actionlist;
 import edu.pse.beast.codearea.Autocompletion.AutocompletionController;
 import edu.pse.beast.codearea.ErrorHandling.ErrorController;
@@ -30,8 +31,6 @@ import javax.swing.JTextPane;
 public class CodeAreaBuilder {
     public CodeArea createCodeArea(JTextPane codeArea, JScrollPane codeAreaScroll, ObjectRefsForBuilder refs) {
                 
-        codeArea.setFont(new Font("Inconsolata", Font.PLAIN, 14));
-        
         OpenCloseCharList occL = new OpenCloseCharList();
         UserInsertToCode insertToCode = new UserInsertToCode(codeArea, occL);    
         
@@ -47,10 +46,27 @@ public class CodeAreaBuilder {
         AutocompletionController autocompletion = new AutocompletionController();
         Actionlist actionList = new Actionlist();
         
-        CodeArea created = new CodeArea(tln, userInputHandler, insertToCode, actionList, error, autocompletion);
+        TextChangedActionAdder actionAdder = new TextChangedActionAdder(codeArea, actionList);
+        
+        CodeArea created = new CodeArea(codeArea, tln, userInputHandler, insertToCode, actionList, error, autocompletion);
         CodeAreaUserActions userActions = new CodeAreaUserActions(created);
         created.setUserActionList(userActions);
         
+        //maybe change it up so user can change it?
+        shortcutHandler.addAction(getKeyCodeFor('z'), userActions.getActionById("undo"));
+        shortcutHandler.addAction(getKeyCodeFor('r'), userActions.getActionById("redo"));
+                
         return created;
+    }
+    
+    private int getKeyCodeFor(char c) {
+        switch(c) {
+                case 'z':
+                    return 90;
+                case 'r':
+                    return 82;
+                default:
+                    return -1;                            
+        }                    
     }
 }
