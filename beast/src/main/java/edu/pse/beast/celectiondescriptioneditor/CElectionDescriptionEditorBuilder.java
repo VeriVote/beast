@@ -33,6 +33,14 @@ public class CElectionDescriptionEditorBuilder {
     private final String[] menuHeadingIds = {"file", "edit", "editor", "code"};
     private CElectionCodeAreaBuilder codeAreaBuilder = new CElectionCodeAreaBuilder();
     
+    private UserAction newAcc;
+    private UserAction save;
+    private UserAction saveAs;
+    private UserAction load;
+    private UserAction changeElec;
+    private UserAction options;
+    private UserAction staticCodeAnalysis;
+    
     public CElectionDescriptionEditor createCElectionDescriptionEditor(ObjectRefsForBuilder objRefsForBuilder) {
         CEditorWindowStarter starter = new CEditorWindowStarter();
         CCodeEditorGUI gui = starter.getGUIWindow();
@@ -51,7 +59,17 @@ public class CElectionDescriptionEditorBuilder {
                         createActionIdAndListenerList(objRefsForBuilder, editor, codeArea),
                         objRefsForBuilder.getStringIF());
         
+        //toolbar: new save save_as load copy cut paste undo redo
         
+        ActionIdAndListener[] idAndListener = {
+            createFromUserAction(newAcc),
+            createFromUserAction(save),
+            createFromUserAction(saveAs),
+            createFromUserAction(load),
+        };
+        
+        CElectionEditorToolbarHandler toolbarHandler = 
+                new CElectionEditorToolbarHandler(actionIdAndListener, imageRes, stringif, gui)
         
         starter.start();
         
@@ -66,10 +84,10 @@ public class CElectionDescriptionEditorBuilder {
         ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
         
         ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
-        UserAction newAcc = createNewElectionUserAction();
-        UserAction save = createSaveElectionUserAction();
-        UserAction saveAs = createSaveAsElectionUserAction();
-        UserAction load = createLoadElectionUserAction();
+        newAcc = createNewElectionUserAction();
+        save = createSaveElectionUserAction();
+        saveAs = createSaveAsElectionUserAction();
+        load = createLoadElectionUserAction();
         
         fileList.add(createFromUserAction(newAcc));
         fileList.add(createFromUserAction(save));
@@ -77,7 +95,7 @@ public class CElectionDescriptionEditorBuilder {
         fileList.add(createFromUserAction(load));
         
         ArrayList<ActionIdAndListener> editList = new ArrayList<>();
-        UserAction changeElec = createChangeElectionTypeUserAction();
+        changeElec = createChangeElectionTypeUserAction();
         editList.add(createFromUserAction(codeArea.getUserActionList().getActionById("copy")));
         editList.add(createFromUserAction(codeArea.getUserActionList().getActionById("cut")));
         editList.add(createFromUserAction(codeArea.getUserActionList().getActionById("paste")));
@@ -86,11 +104,11 @@ public class CElectionDescriptionEditorBuilder {
         editList.add(createFromUserAction(changeElec));
         
         ArrayList<ActionIdAndListener> editorList = new ArrayList<>();
-        UserAction options = createPresentOptionsUserAction();
+        options = createPresentOptionsUserAction();
         editorList.add(createFromUserAction(options));
         
         ArrayList<ActionIdAndListener> codeList = new ArrayList<>();
-        UserAction staticCodeAnalysis = createStaticCheckUserAction();
+        staticCodeAnalysis = createStaticCheckUserAction();
         codeList.add(createFromUserAction(staticCodeAnalysis));
         
         created.add(fileList);
