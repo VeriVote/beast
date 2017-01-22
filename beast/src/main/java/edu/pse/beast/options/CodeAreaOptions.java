@@ -4,7 +4,7 @@ import edu.pse.beast.codearea.CodeArea;
 
 public class CodeAreaOptions {
     private final CodeArea codeArea;
-    private final FonttypeOptionElement fontType;
+    private final FontTypeOptionElement fontType;
     private final FontSizeOptionElement fontSize;
     private final SpacesPerTabOptionElement spacesPerTab;
 
@@ -15,7 +15,7 @@ public class CodeAreaOptions {
      * @param fontSize the font size
      * @param spacesPerTab the spaces per tab
      */
-    public CodeAreaOptions(CodeArea codeArea, FonttypeOptionElement fontType, FontSizeOptionElement fontSize,
+    public CodeAreaOptions(CodeArea codeArea, FontTypeOptionElement fontType, FontSizeOptionElement fontSize,
             SpacesPerTabOptionElement spacesPerTab) {
         this.codeArea = codeArea;
         this.fontType = fontType;
@@ -35,7 +35,7 @@ public class CodeAreaOptions {
      * 
      * @return the font type
      */
-    public FonttypeOptionElement getFontType() {
+    public FontTypeOptionElement getFontType() {
         return fontType;
     }
 

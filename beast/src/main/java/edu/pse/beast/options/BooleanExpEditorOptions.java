@@ -2,17 +2,19 @@ package edu.pse.beast.options;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 
-public class BooleanExpEditorOptions {
+public class BooleanExpEditorOptions extends Options {
     private final BooleanExpEditor editor;
     private final BooleanExpCodeAreaOptions booleanExpCodeAreaOptions;
     
     /**
      * 
+     * @param id the id of these options
      * @param editor the editor
      * @param booleanExpCodeAreaOptions the options
      */
-    public BooleanExpEditorOptions(BooleanExpEditor editor,
+    public BooleanExpEditorOptions(String id, BooleanExpEditor editor,
             BooleanExpCodeAreaOptions booleanExpCodeAreaOptions) {
+        super(id);
         this.editor = editor;
         this.booleanExpCodeAreaOptions = booleanExpCodeAreaOptions;
     }
@@ -31,5 +33,11 @@ public class BooleanExpEditorOptions {
      */
     public BooleanExpEditor getBooleanExpEditor() {
         return editor;
+    }
+
+    @Override
+    public void reapply() {
+        // TODO Auto-generated method stub
+        
     }
 }
