@@ -21,5 +21,4 @@ public class WindowStarterTestClass {
         BooleanExpEditor editor = builder.createBooleanExpEditorObject(objectRefsForBuilder);
         editor.showWindow();
     }
-
 }

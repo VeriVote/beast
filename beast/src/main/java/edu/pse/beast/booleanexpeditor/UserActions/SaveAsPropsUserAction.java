@@ -7,7 +7,7 @@ import edu.pse.beast.toolbox.UserAction;
  */
 public class SaveAsPropsUserAction extends UserAction {
     public SaveAsPropsUserAction() {
-        super("saveAsBooleanExp");
+        super("save_as");
     }
 
     @Override

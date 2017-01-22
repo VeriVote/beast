@@ -5,6 +5,7 @@ import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeArea;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeAreaBuilder;
 import edu.pse.beast.celectiondescriptioneditor.UserActions.*;
 import edu.pse.beast.toolbox.ActionIdAndListener;
+import edu.pse.beast.toolbox.ImageResourceProvider;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import edu.pse.beast.toolbox.UserAction;
 
@@ -35,29 +36,39 @@ public class BooleanExpEditorBuilder{
         BooleanExpCodeAreaBuilder codeAreaBuilder = new BooleanExpCodeAreaBuilder();
         BooleanExpEditorWindow window = new BooleanExpEditorWindow();
         window.updateStringRes(objectRefsForBuilder.getStringIF());
+
         SymbolicVarList symbolicVarList = new SymbolicVarList(window.getSymVarList(), window.getAddSymVarButton(),
                 window.getRemoveSymVarButton(), objectRefsForBuilder.getStringIF());
+
+        //creation of ErrorWindow
         ErrorWindow errorWindow = new ErrorWindow(window.getErrorTextPane(), objectRefsForBuilder.getStringIF());
+
+        // creation of BooleanExpCodeAreas using the JTextPanes from window
         BooleanExpCodeArea prePropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
                 window.getPrePropTextPane(), window.getPrePropScrollPane());
         BooleanExpCodeArea postPropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
                 window.getPostPropTextPane(), window.getPostPropScrollPane());
+
         BooleanExpEditorMenubarHandler menuBarHandler = new BooleanExpEditorMenubarHandler(menuHeadingIds, window,
-                createActionIdAndListenerList(), objectRefsForBuilder.getStringIF());
+                createActionIdAndListenerListForMenuHandler(), objectRefsForBuilder.getStringIF());
+        BooleanExpEditorToolbarHandler toolbarHandler = new BooleanExpEditorToolbarHandler(window,
+                ImageResourceProvider.getToolbarImages(),
+                objectRefsForBuilder.getStringIF().getBooleanExpEditorStringResProvider().getToolbarTipStringRes(),
+                createActionIdAndListenerListForToolbarHandler());
         return new BooleanExpEditor(prePropCodeArea, postPropCodeArea, window, symbolicVarList, errorWindow,
-                menuBarHandler);
+                menuBarHandler, toolbarHandler);
     }
 
     private ArrayList<ArrayList<ActionIdAndListener>>
-    createActionIdAndListenerList() {
+    createActionIdAndListenerListForMenuHandler() {
         ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
 
         ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
-        UserAction newAcc = createNewPropsUserAction();
+        UserAction newProps = createNewPropsUserAction();
         UserAction load = createLoadPropsUserAction();
         UserAction save = createSavePropsUserAction();
         UserAction saveAs = createSaveAsPropsUserAction();
-        fileList.add(createFromUserAction(newAcc));
+        fileList.add(createFromUserAction(newProps));
         fileList.add(createFromUserAction(load));
         fileList.add(createFromUserAction(save));
         fileList.add(createFromUserAction(saveAs));
@@ -112,6 +123,31 @@ public class BooleanExpEditorBuilder{
         created.add(makroList);
         created.add(constantsList);
         created.add(codeList);
+
+        return created;
+    }
+
+    private ActionIdAndListener[] createActionIdAndListenerListForToolbarHandler() {
+        ActionIdAndListener[] created = new ActionIdAndListener[9];
+
+        UserAction newProps = createNewPropsUserAction();
+        UserAction undo = createUndoUserAction();
+        UserAction redo = createRedoUserAction();
+        UserAction save = createSavePropsUserAction();
+        UserAction saveAs = createSaveAsPropsUserAction();
+        UserAction load = createLoadPropsUserAction();
+        UserAction copy = createCopyUserAction();
+        UserAction cut = createCutUserAction();
+        UserAction paste = createPasteUserAction();
+        created[0] = createFromUserAction(newProps);
+        created[1] = createFromUserAction(undo);
+        created[2] = createFromUserAction(redo);
+        created[3] = createFromUserAction(save);
+        created[4] = createFromUserAction(saveAs);
+        created[5] = createFromUserAction(load);
+        created[6] = createFromUserAction(copy);
+        created[7] = createFromUserAction(cut);
+        created[8] = createFromUserAction(paste);
 
         return created;
     }

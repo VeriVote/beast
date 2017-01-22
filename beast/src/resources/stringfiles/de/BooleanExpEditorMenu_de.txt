@@ -1,8 +1,8 @@
 fileMenu : Datei
-newBooleanExp : Neu
-loadBooleanExp : Öffnen
-saveBooleanExp : Speichern
-saveAsBooleanExp : Speichern unter
+new : Neu
+load : Öffnen
+save : Speichern
+save_as : Speichern unter
 editMenu : Bearbeiten
 undo : Rückgängig
 redo : Wiederholen

@@ -8,6 +8,8 @@ package edu.pse.beast.booleanexpeditor;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 
+import javax.swing.*;
+
 /**
  * The JFrame that serves as the View for the booleanexpeditor Package.
  * @author Nikolai
@@ -65,7 +67,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(toolbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(toolbar, javax.swing.GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,7 +95,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(toolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(toolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(symbVarLabel)
@@ -218,10 +220,10 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
     }
 
     /**
-     * This method allows the ToolbarHandler of BooleanExpEditor to set the toolbar dynamically at runtime.
-     * @param toolbar the new JToolBar object.
+     * Getter
+     * @return toolbar the JToolBar object.
      */
-    void setToolbar(javax.swing.JToolBar toolbar) {
-        this.toolbar = toolbar;
+    JToolBar getToolbar() {
+        return toolbar;
     }
 }
