@@ -2,6 +2,7 @@ package edu.pse.beast.propertylist.View;
 
 import static org.junit.Assert.*;
 
+import edu.pse.beast.options.OptionsInterface;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -15,7 +16,6 @@ import edu.pse.beast.saverloader.SaverLoaderInterface;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import toBeImplemented.LanguageOptions;
-import toBeImplemented.OptionsInterface;
 
 public class PropertyListWindowStarterTest {
 
