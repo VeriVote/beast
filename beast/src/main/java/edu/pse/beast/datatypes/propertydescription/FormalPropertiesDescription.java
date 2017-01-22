@@ -16,7 +16,7 @@ public class FormalPropertiesDescription {
     private String code;
     private BooleanExpCodeToASTConverter converter;
 
-    public FormalPropertiesDescription(BooleanExpCodeToASTConverter convertern) {
+    public FormalPropertiesDescription(BooleanExpCodeToASTConverter converter) {
         this.converter = converter;
     }
 

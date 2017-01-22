@@ -1,5 +1,7 @@
 package edu.pse.beast.datatypes.descofvoting;
 
+import java.util.List;
+
 /**
  * 
  * @author Lukas
@@ -7,7 +9,7 @@ package edu.pse.beast.datatypes.descofvoting;
  */
 public class ElectionDescription {
     private String name;
-    private String code;
+    private List<String> code;
     private ElectionTypeContainer inputType;
     private ElectionTypeContainer outputType;
     private int votingDeclLine;
@@ -31,7 +33,7 @@ public class ElectionDescription {
      * 
      * @return code of this description;
      */
-    public String getCode() {
+    public List<String> getCode() {
         return code;
     }
     
@@ -71,7 +73,7 @@ public class ElectionDescription {
      * 
      * @param code of this description
      */
-    public void setCode(String code) {
+    public void setCode(List<String> code) {
         this.code = code;
     }
     

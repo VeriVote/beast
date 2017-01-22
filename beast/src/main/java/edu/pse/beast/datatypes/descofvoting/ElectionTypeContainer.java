@@ -3,7 +3,7 @@ package edu.pse.beast.datatypes.descofvoting;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 
 /**
- * 
+ * Datatype for the Input and Output of an Election
  * @author Lukas
  *
  */

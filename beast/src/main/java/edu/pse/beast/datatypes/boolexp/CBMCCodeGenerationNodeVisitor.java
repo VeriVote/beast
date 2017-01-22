@@ -1,6 +1,6 @@
 package edu.pse.beast.datatypes.boolexp;
 
-public class CBMCCodeGenerationNodeVisitor implements BooleanExpNodeVisitor{
+public class CBMCCodeGenerationNodeVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitBooleanListNode(BooleanListNode node) {

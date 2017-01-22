@@ -10,7 +10,7 @@ package edu.pse.beast.saverloader;
  * @author Justin
  */
 public class SaverLoaderInterface {
-	
+
     private final PropertyListSaverLoader propListSL = null;
     private final ProjectSaverLoader projSL = null;
     private final ElectionDescriptionSaverLoader electionDescrSL = null;
@@ -18,34 +18,33 @@ public class SaverLoaderInterface {
     private final PostAndPrePropertiesDescriptionSaverLoader propDescrSL = null;
     private final FormalPropertiesDescriptionSaverLoader formalPropDescrSL = null;
     private final OptionsSaverLoaderInterface optSLI = null;
-    
 
-	public PropertyListSaverLoader getPropertyListSaverLoader() {
-		return propListSL;
-	}
+    public PropertyListSaverLoader getPropertyListSaverLoader() {
+        return propListSL;
+    }
 
-	public ProjectSaverLoader getProjectSaverLoader() {
-		return projSL;
-	}
+    public ProjectSaverLoader getProjectSaverLoader() {
+        return projSL;
+    }
 
-	public ElectionDescriptionSaverLoader getElectionDescriptionSaverLoader() {
-		return electionDescrSL;
-	}
+    public ElectionDescriptionSaverLoader getElectionDescriptionSaverLoader() {
+        return electionDescrSL;
+    }
 
-	public SymbolicVariableListSaverLoader getSymbolicVariableListSaverLoader() {
-		return symVarListSL;
-	}
+    public SymbolicVariableListSaverLoader getSymbolicVariableListSaverLoader() {
+        return symVarListSL;
+    }
 
-	public PostAndPrePropertiesDescriptionSaverLoader getPostAndPrePropertiesDescriptionSaverLoader() {
-		return propDescrSL;
-	}
+    public PostAndPrePropertiesDescriptionSaverLoader getPostAndPrePropertiesDescriptionSaverLoader() {
+        return propDescrSL;
+    }
 
-	public FormalPropertiesDescriptionSaverLoader getFormalPropertiesDescriptionSaverLoader() {
-		return formalPropDescrSL;
-	}
+    public FormalPropertiesDescriptionSaverLoader getFormalPropertiesDescriptionSaverLoader() {
+        return formalPropDescrSL;
+    }
 
-	public OptionsSaverLoaderInterface getOptionsSaverLoaderInterface() {
-		return optSLI;
-	}
-    
+    public OptionsSaverLoaderInterface getOptionsSaverLoaderInterface() {
+        return optSLI;
+    }
+
 }
