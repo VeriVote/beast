@@ -6,6 +6,11 @@ import java.util.ArrayList;
 
 import edu.pse.beast.booleanexpeditor.UserActions.LoadPropsUserAction;
 import edu.pse.beast.propertylist.UserActions.LoadPropertyList;
+import edu.pse.beast.propertylist.UserActions.NewPropertyList;
+import edu.pse.beast.propertylist.UserActions.RedoChangesPropertyList;
+import edu.pse.beast.propertylist.UserActions.SaveAsPropertyList;
+import edu.pse.beast.propertylist.UserActions.SavePropertyList;
+import edu.pse.beast.propertylist.UserActions.UndoChangesPropertyList;
 import edu.pse.beast.propertylist.View.PropertyListWindow;
 import edu.pse.beast.propertylist.View.PropertyListWindowStarter;
 import edu.pse.beast.toolbox.ActionIdAndListener;
@@ -63,12 +68,22 @@ public class PropertyListBuilder {
     }
 
     private ActionIdAndListener[] createActionIdAndListenerListForToolbarHandler() {
-        ActionIdAndListener[] created = new ActionIdAndListener[1];
+        ActionIdAndListener[] created = new ActionIdAndListener[6];
 
 
+        UserAction newly = createNewPropertyList();
+        UserAction undo = createUndoChangesPropertyList();
+        UserAction redo = createRedoChangesPropertyList();
+        UserAction save = createSavePropertyList();
+        UserAction saveAs = createSaveAsPropertyList();
         UserAction load = createLoadPropertyList();
 
-        created[0] = createFromUserAction(load);
+        created[0] = createFromUserAction(newly);
+        created[1] = createFromUserAction(undo);
+        created[2] = createFromUserAction(redo);
+        created[3] = createFromUserAction(save);
+        created[4] = createFromUserAction(saveAs);
+        created[5] = createFromUserAction(load);
 
 
         return created;
@@ -76,6 +91,21 @@ public class PropertyListBuilder {
     
     private LoadPropertyList createLoadPropertyList() {
         return new LoadPropertyList();
+    }
+    private NewPropertyList createNewPropertyList() {
+    	return new NewPropertyList();
+    }
+    private RedoChangesPropertyList createRedoChangesPropertyList() {
+    	return new RedoChangesPropertyList();
+    }
+    private SaveAsPropertyList createSaveAsPropertyList() {
+    	return new SaveAsPropertyList();
+    }
+    private SavePropertyList createSavePropertyList() {
+    	return new SavePropertyList();
+    }
+    private UndoChangesPropertyList createUndoChangesPropertyList() {
+    	return new UndoChangesPropertyList();
     }
     
     private ActionIdAndListener createFromUserAction(UserAction userAc) {
