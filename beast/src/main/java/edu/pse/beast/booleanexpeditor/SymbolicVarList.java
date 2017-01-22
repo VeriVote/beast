@@ -43,5 +43,6 @@ public class SymbolicVarList implements DisplaysStringsToUser{
      * @param stringLoaderInterface the new stringLoaderInterface
      */
     public void updateStringRes(StringLoaderInterface stringLoaderInterface) {
+
     }
 }
