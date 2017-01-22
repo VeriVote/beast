@@ -10,8 +10,8 @@
     <name>Beast</name>
     <url>http://maven.apache.org</url>
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <project.build.sourceEncoding>UTF-16</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-16</project.reporting.outputEncoding>
     </properties>
     <dependencies>
         <dependency>
