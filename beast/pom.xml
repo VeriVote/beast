@@ -9,10 +9,6 @@
     <version>1.0-SNAPSHOT</version>
     <name>Beast</name>
     <url>http://maven.apache.org</url>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -27,7 +23,10 @@
             <scope>test</scope>
         </dependency>
          
-        
+        <properties>
+            <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+            <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        </properties>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
