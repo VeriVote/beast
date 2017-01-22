@@ -19,10 +19,14 @@ public class BEASTCommunicator {
      * Starts all actions that have to take place before checking the election
      * for the properties.
      */
-    protected void beforeChecking() { }
+    protected void beforeChecking() {
+        
+    }
     /**
      * Starts all actions that have to take place after checking the election
      * for the properties.
      */
-    protected void afterChecking() { }
+    protected void afterChecking() {
+        
+    }
 }
