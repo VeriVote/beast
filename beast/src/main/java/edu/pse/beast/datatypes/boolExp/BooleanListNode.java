@@ -17,7 +17,11 @@ public class BooleanListNode {
         return boolNodes;
     }
     
-    public void getVisited() {
-        
+    /**
+     * 
+     * @param visitor to be visited
+     */
+    public void getVisited(BooleanExpNodeVisitor visitor) {
+        //TOTO
     }
 }

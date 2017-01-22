@@ -30,4 +30,9 @@ public class SymbolicVarExp extends TypeExpression {
         return symbVar;
     }
 
+    @Override
+    public void getVisited(BooleanExpNodeVisitor visitor) {
+        visitor.visitSymbVarExp(this);
+    }
+
 }

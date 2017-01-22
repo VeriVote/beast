@@ -40,4 +40,9 @@ public class VoteExp extends TypeExpression {
     public int getCount() {
         return count;
     }
+
+    @Override
+    public void getVisited(BooleanExpNodeVisitor visitor) {
+        visitor.visitVoteExp(this);
+    }
 }

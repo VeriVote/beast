@@ -15,5 +15,10 @@ public class LogicalAndNode extends BinaryRelationshipNode {
     public LogicalAndNode(BinaryRelationshipNode lhsExpNode, BinaryRelationshipNode rhsExpNode) {
         super(lhsExpNode, rhsExpNode);
     }
+
+    @Override
+    public void getVisited(BooleanExpNodeVisitor visitor) {
+        visitor.visitAndNode(this);
+    }
     
 }

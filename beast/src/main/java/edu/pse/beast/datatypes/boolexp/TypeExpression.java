@@ -7,7 +7,7 @@ import toBeImplemented.InternalTypeRep;
  * @author Lukas
  *
  */
-public abstract class TypeExpression {
+public abstract class TypeExpression extends BooleanExpressionNode {
 
     private final InternalTypeRep internalTypeRep;
 
@@ -17,13 +17,6 @@ public abstract class TypeExpression {
      */
     public TypeExpression(InternalTypeRep internalTypeRep) {
         this.internalTypeRep = internalTypeRep;
-    }
-
-    /**
-     * visits the node
-     */
-    public void getVisited() {
-        //TODO
     }
 
     /**

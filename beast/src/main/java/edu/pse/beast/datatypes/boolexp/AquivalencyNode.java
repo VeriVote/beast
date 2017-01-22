@@ -16,4 +16,8 @@ public class AquivalencyNode extends BinaryRelationshipNode {
         super(lhsExpNode, rhsExpNode);
     }
 
+    @Override
+    public void getVisited(BooleanExpNodeVisitor visitor) {
+        visitor.visitAquivalencyNode(this);
+    }
 }
