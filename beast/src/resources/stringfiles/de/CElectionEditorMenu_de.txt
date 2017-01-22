@@ -2,14 +2,14 @@ file : Datei
 new : Neu
 save : Speichern
 save_as : Speichern unter
-load : Öffnen
+load : Ã–ffnen
 edit : Bearbeiten
-undo : Rückgängig
+undo : RÃ¼ckgÃ¤ngig
 redo : Wiederholen
 copy : Kopieren
 cut : Ausschneiden
-paste : Einfügen
-change_election_type : Wahlart ändern
+paste : EinfÃ¼gen
+change_election_type : Wahlart Ã¤ndern
 editor : Editor
 options : Eigenschaften
 code : Code
