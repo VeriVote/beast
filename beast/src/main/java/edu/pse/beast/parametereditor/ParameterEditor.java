@@ -4,11 +4,12 @@
  * and open the template in the editor.
  */
 package edu.pse.beast.parametereditor;
+//import edu.pse.beast.highlevel.BEASTCommunicator;
 
 /**
  *
- * @author Niels
+ * @author Jonas
  */
-public class ParameterEditor {
+public class ParameterEditor{
     
 }
