@@ -8,6 +8,7 @@ package edu.pse.beast.celectiondescriptioneditor.GUI;
 import javax.swing.JMenuBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import javax.swing.JToolBar;
 
 /**
  *
@@ -32,6 +33,10 @@ public class CCodeEditorGUI extends javax.swing.JFrame {
     
     public void setMenuBar(JMenuBar menuBar) {
         setJMenuBar(menuBar);
+    }
+    
+    public JToolBar getToolBar() {
+        return jToolBar1;
     }
     
     /**
@@ -81,6 +86,7 @@ public class CCodeEditorGUI extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jTextPane2);
 
+        jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
         jMenu1.setText("Datei");
@@ -157,9 +163,9 @@ public class CCodeEditorGUI extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
         );
@@ -196,4 +202,6 @@ public class CCodeEditorGUI extends javax.swing.JFrame {
     private javax.swing.JTextPane jTextPane2;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
+
+    
 }

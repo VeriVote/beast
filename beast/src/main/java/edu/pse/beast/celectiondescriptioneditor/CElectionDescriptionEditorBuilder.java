@@ -51,6 +51,8 @@ public class CElectionDescriptionEditorBuilder {
                         createActionIdAndListenerList(objRefsForBuilder, editor, codeArea),
                         objRefsForBuilder.getStringIF());
         
+        
+        
         starter.start();
         
         return editor;

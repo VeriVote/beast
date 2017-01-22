@@ -113,8 +113,7 @@ public class TextChangedActionAdder implements ActionAdder, CaretListener, Docum
     }
 
     @Override
-    public void keyReleased(KeyEvent ke) {
-        
+    public void keyReleased(KeyEvent ke) {        
     }
 
     private void addCurrentRecording() {

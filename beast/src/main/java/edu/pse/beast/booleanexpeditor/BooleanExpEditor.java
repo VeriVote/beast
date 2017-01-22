@@ -7,7 +7,7 @@ package edu.pse.beast.booleanexpeditor;
 
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeArea;
 import edu.pse.beast.toolbox.MenuBarHandler;
-import edu.pse.beast.toolbox.ToolBarHandler;
+import edu.pse.beast.toolbox.ToolbarHandler;
 
 /**
  * The main class of this package that serves as an interface to the outside.
@@ -20,7 +20,7 @@ public class BooleanExpEditor {
     private BooleanExpEditorWindowStarter windowStarter;
     private ErrorWindow errorWindow;
     private MenuBarHandler menuBarHandler;
-    private ToolBarHandler toolBarHandler;
+    private ToolbarHandler toolBarHandler;
     private BooleanExpCodeArea prePropCodeArea;
     private BooleanExpCodeArea postPropCodeArea;
 
