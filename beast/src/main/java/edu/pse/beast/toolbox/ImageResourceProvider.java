@@ -19,7 +19,8 @@ public class ImageResourceProvider {
     public static ImageResourceProvider getToolbarImages() {
         if(toolbar == null) {
             String[] ids = {"new", "save", "save_as", 
-                "load", "copy", "cut", "paste", "undo", "redo"};
+                "load", "copy", "cut", "paste", "undo", "redo",
+            "start", "stop"};
             toolbar = 
                     new ImageResourceProvider("src/resources/images/toolbar/", 
                     ids);
