@@ -17,6 +17,4 @@ public class ForAllNode extends QuantorNode {
     public ForAllNode(SymbolicVariable declSymbVar, BooleanExpressionNode followingNode) {
         super(declSymbVar, followingNode);
     }
-
-
 }

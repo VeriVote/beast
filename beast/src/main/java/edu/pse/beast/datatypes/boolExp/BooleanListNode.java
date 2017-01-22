@@ -1,5 +1,6 @@
 package edu.pse.beast.datatypes.boolexp;
 
+import java.util.Iterator;
 import java.util.List;
 /**
  * 
@@ -22,6 +23,9 @@ public class BooleanListNode {
      * @param visitor to be visited
      */
     public void getVisited(BooleanExpNodeVisitor visitor) {
-        //TOTO
+        for (Iterator iterator = boolNodes.iterator(); iterator.hasNext();) {
+            BooleanExpressionNode booleanExpressionNode = (BooleanExpressionNode) iterator.next();
+            booleanExpressionNode.getVisited(visitor);
+        }
     }
 }
