@@ -1,5 +1,6 @@
 package edu.pse.beast.highlevel;
 
+import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.booleanexpeditor.BooleanExpEditorBuilder;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditorBuilder;
 import edu.pse.beast.saverloader.SaverLoaderInterface;
@@ -35,7 +36,9 @@ public class MainClass {
         propertyBuilder.createPropertyList(objRefsForBuilder);
         
         BooleanExpEditorBuilder booleanBuilder = new BooleanExpEditorBuilder();
-        booleanBuilder.createBooleanExpEditorObject(objRefsForBuilder);
+        
+        BooleanExpEditor booleanEditor = booleanBuilder.createBooleanExpEditorObject(objRefsForBuilder);
+        booleanEditor.showWindow();
             
     }
 }
