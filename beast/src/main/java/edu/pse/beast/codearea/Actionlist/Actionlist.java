@@ -25,9 +25,9 @@ public class Actionlist {
         lastUndone.clear();
     }
     
-    public void undoLast() {   
+    public void undoLast() {  
+        msgAllAdderStop();        
         if(lastPerformed.isEmpty()) return;
-        msgAllAdderStop();
         Action latestAcc = lastPerformed.get(lastPerformed.size() - 1);
         lastPerformed.remove(lastPerformed.size() - 1);
         latestAcc.undo();
@@ -36,8 +36,8 @@ public class Actionlist {
     }
     
     public void redoLast() {
+        msgAllAdderStop();        
         if(lastUndone.isEmpty()) return;
-        msgAllAdderStop();
         Action latestUndoneAcc = lastUndone.get(lastUndone.size() - 1);
         lastUndone.remove(lastUndone.size() - 1);
         latestUndoneAcc.redo();

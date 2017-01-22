@@ -47,6 +47,7 @@ public class TextChangedActionAdder implements ActionAdder, CaretListener, Docum
 
     @Override
     public void stopListening() {
+        addCurrentRecording();
         listen = false;
     }
 
@@ -59,6 +60,7 @@ public class TextChangedActionAdder implements ActionAdder, CaretListener, Docum
     public void caretUpdate(CaretEvent ce) {
         if(ce.getDot() != currentCaretPosition + 1) {            
             addCurrentRecording();
+            recordingStartPos = ce.getDot();
         }
         currentCaretPosition = ce.getDot();
     }
@@ -66,21 +68,25 @@ public class TextChangedActionAdder implements ActionAdder, CaretListener, Docum
     @Override
     public void insertUpdate(DocumentEvent de) {
         if(!listen) return;
-        
         try {
-            String text = pane.getStyledDocument().getText(de.getOffset(), de.getLength());
-            actionList.add(new TextAddedAction(
-                    new TextDelta(de.getOffset(), text, currentCaretPosition),
-                    pane.getStyledDocument()));
-        } catch (BadLocationException ex) {
-            Logger.getLogger(TextChangedActionAdder.class.getName()).log(Level.SEVERE, null, ex);
+            if(de.getOffset() == currentCaretPosition && de.getLength() == 1) {
+                recordingString += pane.getStyledDocument().getText(de.getOffset(), de.getLength());            
+            } else {
+                addCurrentRecording();
+                String text = pane.getStyledDocument().getText(de.getOffset(), de.getLength());
+                actionList.add(new TextAddedAction(
+                        new TextDelta(de.getOffset(), text, currentCaretPosition),
+                        pane.getStyledDocument()));
+            }
+        } catch(BadLocationException ex) {
+            ex.printStackTrace();
         }
     }
 
     @Override
     public void removeUpdate(DocumentEvent de) {
         if(!listen) return;     
-        
+        addCurrentRecording();
         String text = prevText.substring(
                 de.getOffset(), 
                 de.getOffset() + de.getLength());
@@ -111,13 +117,11 @@ public class TextChangedActionAdder implements ActionAdder, CaretListener, Docum
 
     private void addCurrentRecording() {
         if(recordingString.length() != 0) {
-            TextDelta td = new TextDelta(recordingStartPos, recordingString, currentCaretPosition);
-            TextAddedAction action = new TextAddedAction(td, pane.getStyledDocument());
-            System.out.println("adding string action " + recordingString);                
-            actionList.add(action);
+            TextDelta td = new TextDelta(
+                    recordingStartPos, recordingString, currentCaretPosition);
+            actionList.add(new TextAddedAction(td, pane.getStyledDocument()));
+            recordingString = "";
         }
-        recordingString = "";
-        recordingStartPos = currentCaretPosition;
     }
     
 }
