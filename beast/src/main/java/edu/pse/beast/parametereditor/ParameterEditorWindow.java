@@ -64,7 +64,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
 
         jToolBar.setRollover(true);
 
-        newIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/pse/beast/parametereditor/new.png"))); // NOI18N
+        newIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/new.png"))); // NOI18N
         newIcon.setFocusable(false);
         newIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         newIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -75,37 +75,37 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
         });
         jToolBar.add(newIcon);
 
-        saveIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/pse/beast/parametereditor/save.png"))); // NOI18N
+        saveIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/save.png"))); // NOI18N
         saveIcon.setFocusable(false);
         saveIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         saveIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar.add(saveIcon);
 
-        saveAsIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/pse/beast/parametereditor/save_as.png"))); // NOI18N
+        saveAsIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/save_as.png"))); // NOI18N
         saveAsIcon.setFocusable(false);
         saveAsIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         saveAsIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar.add(saveAsIcon);
 
-        openIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/pse/beast/parametereditor/load.png"))); // NOI18N
+        openIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/load.png"))); // NOI18N
         openIcon.setFocusable(false);
         openIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         openIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar.add(openIcon);
 
-        startIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/pse/beast/parametereditor/start.png"))); // NOI18N
+        startIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/start.png"))); // NOI18N
         startIcon.setFocusable(false);
         startIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         startIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar.add(startIcon);
 
-        stopIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/pse/beast/parametereditor/stop.png"))); // NOI18N
+        stopIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/stop.png"))); // NOI18N
         stopIcon.setFocusable(false);
         stopIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         stopIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar.add(stopIcon);
 
-        jLabel2.setText("Wähler");
+        jLabel2.setText("WÃ¤hler");
 
         voterMin.setMaximumSize(new java.awt.Dimension(0, 10000));
 
@@ -166,7 +166,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
         jMenu4.add(jMenuItem9);
 
         jMenuItem10.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem10.setText("Öffnen...");
+        jMenuItem10.setText("Ã–ffnen...");
         jMenu4.add(jMenuItem10);
 
         jMenuBar2.add(jMenu4);
