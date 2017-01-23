@@ -56,17 +56,7 @@ public abstract class StringResourceProvider {
      * @return the relative fileLocation
      */
     protected final String getFileLocationString(String moduleName) {
-        return (relativePath + languageId + "/" + moduleName + "_" + languageId + ".txt");
-    }
-
-    /**
-     * reports Error to the class in toolbox
-     *
-     * @param file The file that was not found
-     */
-    protected static void errorFileNotFound(File file) {
-        ErrorLogger.log("The file " + file.getName() + " could not be found");
-        ErrorLogger.log("It is supposed to be in this directory: " + file.getAbsolutePath());
+        return ("/stringfiles/" + languageId + "/" + moduleName + "_" + languageId + ".txt");
     }
 
     /**

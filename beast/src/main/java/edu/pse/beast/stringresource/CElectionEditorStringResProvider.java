@@ -9,7 +9,10 @@ import edu.pse.beast.toolbox.FileLoader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class that Manages all StringResources for the CElectionEditor
@@ -64,16 +67,19 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
      */
     @Override
     protected final void initialize() {
-        File toolbarFile;
-        toolbarFile = new File(getFileLocationString("CElectionEditorToolbar"));
         try {
-            LinkedList<String> toolbarList;
-            toolbarList = FileLoader.loadFileAsString(toolbarFile);
-            toolbarTipStringRes = new StringResourceLoader(toolbarList);
-        } catch (FileNotFoundException e) {
-            errorFileNotFound(toolbarFile);
-        } catch (IOException | ArrayIndexOutOfBoundsException e) {
-            errorFileHasWrongFormat(toolbarFile);
+            String toolbarString = getFileLocationString("CElectionEditorToolbar");
+            File toolbarFile;
+            toolbarFile = new File(CElectionEditorStringResProvider.class.getResource(toolbarString).toURI());
+            try {
+                LinkedList<String> toolbarList;
+                toolbarList = FileLoader.loadFileAsString(toolbarFile);
+                toolbarTipStringRes = new StringResourceLoader(toolbarList);
+            } catch (IOException | ArrayIndexOutOfBoundsException e) {
+                errorFileHasWrongFormat(toolbarFile);
+            }
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(CElectionEditorStringResProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
         File menuFile;
         menuFile = new File(getFileLocationString("CElectionEditorMenu"));
@@ -97,6 +103,7 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
         } catch (IOException | ArrayIndexOutOfBoundsException e) {
             errorFileHasWrongFormat(cErrorFile);
         }
+
     }
 
 }
