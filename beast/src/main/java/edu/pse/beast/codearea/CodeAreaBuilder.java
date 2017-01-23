@@ -14,6 +14,8 @@ import edu.pse.beast.codearea.InputToCode.OpenCloseCharList;
 import edu.pse.beast.codearea.InputToCode.ShortcutHandler;
 import edu.pse.beast.codearea.InputToCode.UserInputHandler;
 import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
+import edu.pse.beast.codearea.SyntaxHL.RegexAndColor;
+import edu.pse.beast.codearea.SyntaxHL.SyntaxHL;
 import edu.pse.beast.codearea.UserActions.CodeAreaUserActions;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import java.awt.Font;
@@ -21,6 +23,7 @@ import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
@@ -29,6 +32,7 @@ import javax.swing.JTextPane;
  * @author Holger-Desktop
  */
 public class CodeAreaBuilder {
+
     public CodeArea createCodeArea(JTextPane codeArea, JScrollPane codeAreaScroll, ObjectRefsForBuilder refs) {
                 
         OpenCloseCharList occL = new OpenCloseCharList();
@@ -47,11 +51,15 @@ public class CodeAreaBuilder {
         Actionlist actionList = new Actionlist();
         
         TextChangedActionAdder actionAdder = new TextChangedActionAdder(codeArea, actionList);
-        
-        CodeArea created = new CodeArea(codeArea, tln, userInputHandler, insertToCode, actionList, error, autocompletion);
+
+        SyntaxHL syntaxHL = new SyntaxHL(codeArea);
+
+        CodeArea created = new CodeArea(codeArea, tln, userInputHandler, insertToCode, actionList, error,
+                autocompletion, syntaxHL);
         CodeAreaUserActions userActions = new CodeAreaUserActions(created);
         created.setUserActionList(userActions);
-        
+
+
         //maybe change it up so user can change it?
         shortcutHandler.addAction(getKeyCodeFor('z'), userActions.getActionById("undo"));
         shortcutHandler.addAction(getKeyCodeFor('r'), userActions.getActionById("redo"));

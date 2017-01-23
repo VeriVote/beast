@@ -10,8 +10,11 @@ import edu.pse.beast.codearea.Autocompletion.AutocompletionController;
 import edu.pse.beast.codearea.ErrorHandling.ErrorController;
 import edu.pse.beast.codearea.InputToCode.UserInputHandler;
 import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
+import edu.pse.beast.codearea.SyntaxHL.RegexAndColor;
+import edu.pse.beast.codearea.SyntaxHL.SyntaxHL;
 import edu.pse.beast.codearea.UserActions.CodeAreaUserActions;
 import javax.swing.JTextPane;
+import java.util.ArrayList;
 
 /**
  *
@@ -27,21 +30,24 @@ public class CodeArea {
     protected ErrorController errorCtrl;
     protected AutocompletionController autoComplCtrl;
     protected CodeAreaUserActions userActionList;
-                    
+    protected SyntaxHL syntaxHL;
+
     public CodeArea(
             JTextPane pane,
-            TextLineNumber tln, 
-            UserInputHandler userInputHandler, 
+            TextLineNumber tln,
+            UserInputHandler userInputHandler,
             UserInsertToCode insertToCode,
             Actionlist actionList,
-            ErrorController errorCtrl, 
-            AutocompletionController autoComplCtrl) {
+            ErrorController errorCtrl,
+            AutocompletionController autoComplCtrl,
+            SyntaxHL syntaxHL) {
         this.tln = tln; 
         this.userInputHandler = userInputHandler;
         this.insertToCode = insertToCode;
         this.actionList = actionList;
         this.errorCtrl = errorCtrl;
         this.autoComplCtrl = autoComplCtrl;
+        this.syntaxHL = syntaxHL;
     }
 
     public CodeArea(CodeArea codeArea) {
@@ -53,6 +59,7 @@ public class CodeArea {
         this.errorCtrl = codeArea.errorCtrl;
         this.autoComplCtrl = codeArea.autoComplCtrl;
         this.userActionList = codeArea.userActionList;
+        this.syntaxHL = codeArea.syntaxHL;
     }
     
     public void setUserActionList(CodeAreaUserActions userActionList) {
@@ -70,5 +77,8 @@ public class CodeArea {
     public Actionlist getActionlist() {
         return actionList;
     }
-    
+
+    public void setSyntaxHLRegexAndColorList(ArrayList<RegexAndColor> regexAndColorList) {
+        syntaxHL.updateFilter(regexAndColorList);
+    }
 }
