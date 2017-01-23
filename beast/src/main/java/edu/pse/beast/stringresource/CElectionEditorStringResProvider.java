@@ -82,28 +82,36 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
             Logger.getLogger(CElectionEditorStringResProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        File menuFile;
-        menuFile = new File(getFileLocationString("CElectionEditorMenu"));
         try {
-            LinkedList<String> menuList;
-            menuList = FileLoader.loadFileAsString(menuFile);
-            menuStringRes = new StringResourceLoader(menuList);
-        } catch (FileNotFoundException e) {
-            errorFileNotFound(menuFile);
-        } catch (IOException | ArrayIndexOutOfBoundsException e) {
-            errorFileHasWrongFormat(menuFile);
+            String location = getFileLocationString("CElectionEditorMenu");
+            File file;
+            file = new File(CElectionEditorStringResProvider.class.getResource(location).toURI());
+            try {
+                LinkedList<String> inputList;
+                inputList = FileLoader.loadFileAsString(file);
+                menuStringRes = new StringResourceLoader(inputList);
+            } catch (IOException | ArrayIndexOutOfBoundsException e) {
+                errorFileHasWrongFormat(file);
+            }
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(CElectionEditorStringResProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
-        File cErrorFile;
-        cErrorFile = new File(getFileLocationString("CElectionEditorCError"));
+        
         try {
-            LinkedList<String> cErrorList;
-            cErrorList = FileLoader.loadFileAsString(cErrorFile);
-            cErrorStringRes = new StringResourceLoader(cErrorList);
-        } catch (FileNotFoundException e) {
-            errorFileNotFound(cErrorFile);
-        } catch (IOException | ArrayIndexOutOfBoundsException e) {
-            errorFileHasWrongFormat(cErrorFile);
+            String location = getFileLocationString("CElectionEditorCError");
+            File file;
+            file = new File(CElectionEditorStringResProvider.class.getResource(location).toURI());
+            try {
+                LinkedList<String> inputList;
+                inputList = FileLoader.loadFileAsString(file);
+                cErrorStringRes = new StringResourceLoader(inputList);
+            } catch (IOException | ArrayIndexOutOfBoundsException e) {
+                errorFileHasWrongFormat(file);
+            }
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(CElectionEditorStringResProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
 
     }
 

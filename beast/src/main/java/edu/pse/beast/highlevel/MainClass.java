@@ -29,9 +29,6 @@ public class MainClass {
      */
     public static void main(String[] args) throws URISyntaxException, IOException {
         
-        File testf = new File( MainClass.class.getResource("/stringfiles/de/Option_de.txt" ).toURI() );
-        FileLoader.loadFileAsString(testf);
-        
         OptionsInterface opt = new OptionsInterface();
         ObjectRefsForBuilder objRefsForBuilder;
         objRefsForBuilder = new ObjectRefsForBuilder(new OptionsInterface(),
