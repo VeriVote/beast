@@ -58,7 +58,7 @@ public class FileLoaderTest {
     public void testLoadFileAsString() throws Exception {
         
         File file = new File("src/test/testfiles/fileLoaderFileAsStringTest.txt");
-        LinkedList<String> expResult = new LinkedList<String>();
+        LinkedList<String> expResult = new LinkedList<>();
         expResult.add("erste Zeile");
         expResult.add("zweite Zeile");
         expResult.add("ende");
