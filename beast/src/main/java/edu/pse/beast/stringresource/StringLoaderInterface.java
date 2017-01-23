@@ -14,7 +14,7 @@ package edu.pse.beast.stringresource;
  */
 public class StringLoaderInterface {
 
-    private static final String FILELOCATION = "src/resources/stringfiles/";
+    private static final String FILELOCATION = "src/main/resources/stringfiles/";
     private String languageId;
     private final PropertyListStringResProvider propListStr;
     private final BooleanExpEditorStringResProvider booleanExpStr;

@@ -78,19 +78,6 @@
         </plugins>
         </pluginManagement>
 
-        <resources>
-            <resource>
-                <directory>src/resources/stringfiles/de/</directory>
-                <includes>
-                    <include>*.txt</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/resources/images/toolbar/</directory>
-                <includes>
-                    <include>*.png</include>
-                </includes>
-            </resource>
-        </resources>
+       
     </build>
 </project>
