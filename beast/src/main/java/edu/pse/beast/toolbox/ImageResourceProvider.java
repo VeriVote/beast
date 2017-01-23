@@ -7,6 +7,7 @@ package edu.pse.beast.toolbox;
 
 import java.awt.Image;
 import java.io.File;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 
 /**
@@ -21,8 +22,8 @@ public class ImageResourceProvider {
             String[] ids = {"new", "save", "save_as", 
                 "load", "copy", "cut", "paste", "undo", "redo",
             "start", "stop"};
-            toolbar = 
-                    new ImageResourceProvider("src/resources/images/toolbar/", 
+            toolbar =
+                    new ImageResourceProvider("/images/toolbar/",
                     ids);
         }
         return toolbar;
@@ -36,7 +37,13 @@ public class ImageResourceProvider {
         this.folder = folder;
         this.ids = ids;
         for(String s : ids) {
-            Image img = FileLoader.loadFileAsImage(new File(folder + s + ".png"));
+            String location = folder + s + ".png";
+            Image img = null;
+            try {
+                img = FileLoader.loadFileAsImage(new File(ImageResourceProvider.class.getResource(location).toURI()));
+            } catch (URISyntaxException e) {
+                e.printStackTrace();
+            }
             images.put(s, img);
         }
     }
