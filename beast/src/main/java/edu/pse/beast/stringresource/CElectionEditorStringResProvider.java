@@ -68,19 +68,20 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
     @Override
     protected final void initialize() {
         try {
-            String toolbarString = getFileLocationString("CElectionEditorToolbar");
-            File toolbarFile;
-            toolbarFile = new File(CElectionEditorStringResProvider.class.getResource(toolbarString).toURI());
+            String location = getFileLocationString("CElectionEditorToolbar");
+            File file;
+            file = new File(CElectionEditorStringResProvider.class.getResource(location).toURI());
             try {
-                LinkedList<String> toolbarList;
-                toolbarList = FileLoader.loadFileAsString(toolbarFile);
-                toolbarTipStringRes = new StringResourceLoader(toolbarList);
+                LinkedList<String> inputList;
+                inputList = FileLoader.loadFileAsString(file);
+                toolbarTipStringRes = new StringResourceLoader(inputList);
             } catch (IOException | ArrayIndexOutOfBoundsException e) {
-                errorFileHasWrongFormat(toolbarFile);
+                errorFileHasWrongFormat(file);
             }
         } catch (URISyntaxException ex) {
             Logger.getLogger(CElectionEditorStringResProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         File menuFile;
         menuFile = new File(getFileLocationString("CElectionEditorMenu"));
         try {
