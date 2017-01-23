@@ -46,6 +46,7 @@ public class PropertyListWindow extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("EigenschaftenListe");
 
         jToolBar1.setRollover(true);
 
