@@ -9,6 +9,7 @@ import static edu.pse.beast.stringresource.StringResourceProvider.errorFileHasWr
 import edu.pse.beast.toolbox.FileLoader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -49,19 +50,16 @@ public class OptionStringResProvider extends StringResourceProvider {
      */
     @Override
     protected final void initialize() {
-        try {
+        {
             String location = getFileLocationString("Option");
-            File file;
-            file = new File(CElectionEditorStringResProvider.class.getResource(location).toURI());
+            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
             try {
                 LinkedList<String> inputList;
-                inputList = FileLoader.loadFileAsString(file);
+                inputList = FileLoader.loadFileAsString(in);
                 optionStringRes = new StringResourceLoader(inputList);
-            } catch (IOException | ArrayIndexOutOfBoundsException e) {
-                errorFileHasWrongFormat(file);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(CElectionEditorStringResProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

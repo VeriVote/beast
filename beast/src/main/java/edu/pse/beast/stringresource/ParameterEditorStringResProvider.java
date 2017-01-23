@@ -9,6 +9,7 @@ import static edu.pse.beast.stringresource.StringResourceProvider.errorFileHasWr
 import edu.pse.beast.toolbox.FileLoader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.LinkedList;
 import java.util.logging.Level;
@@ -64,48 +65,39 @@ public class ParameterEditorStringResProvider extends StringResourceProvider {
      */
     @Override
     protected final void initialize() {
-        try {
+        {
             String location = getFileLocationString("ParameterEditorToolbar");
-            File file;
-            file = new File(CElectionEditorStringResProvider.class.getResource(location).toURI());
+            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
             try {
                 LinkedList<String> inputList;
-                inputList = FileLoader.loadFileAsString(file);
+                inputList = FileLoader.loadFileAsString(in);
                 toolbarTipStringRes = new StringResourceLoader(inputList);
-            } catch (IOException | ArrayIndexOutOfBoundsException e) {
-                errorFileHasWrongFormat(file);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(CElectionEditorStringResProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
+        {
             String location = getFileLocationString("ParameterEditorMenu");
-            File file;
-            file = new File(CElectionEditorStringResProvider.class.getResource(location).toURI());
+            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
             try {
                 LinkedList<String> inputList;
-                inputList = FileLoader.loadFileAsString(file);
+                inputList = FileLoader.loadFileAsString(in);
                 menuStringRes = new StringResourceLoader(inputList);
-            } catch (IOException | ArrayIndexOutOfBoundsException e) {
-                errorFileHasWrongFormat(file);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(CElectionEditorStringResProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        try {
+        {
             String location = getFileLocationString("ParameterEditorOther");
-            File file;
-            file = new File(CElectionEditorStringResProvider.class.getResource(location).toURI());
+            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
             try {
                 LinkedList<String> inputList;
-                inputList = FileLoader.loadFileAsString(file);
+                inputList = FileLoader.loadFileAsString(in);
                 otherStringRes = new StringResourceLoader(inputList);
-            } catch (IOException | ArrayIndexOutOfBoundsException e) {
-                errorFileHasWrongFormat(file);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (URISyntaxException ex) {
-            Logger.getLogger(CElectionEditorStringResProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }

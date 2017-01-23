@@ -56,7 +56,7 @@ public abstract class StringResourceProvider {
      * @return the relative fileLocation
      */
     protected final String getFileLocationString(String moduleName) {
-        return ("/stringfiles/" + languageId + "/" + moduleName + "_" + languageId + ".txt");
+        return ("stringfiles/" + languageId + "/" + moduleName + "_" + languageId + ".txt");
     }
 
     /**
