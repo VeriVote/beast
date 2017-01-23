@@ -9,7 +9,11 @@ import edu.pse.beast.toolbox.FileLoader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class that Manages all StringResources for the CElectionEditor
@@ -64,38 +68,40 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
      */
     @Override
     protected final void initialize() {
-        File toolbarFile;
-        toolbarFile = new File(getFileLocationString("CElectionEditorToolbar"));
-        try {
-            LinkedList<String> toolbarList;
-            toolbarList = FileLoader.loadFileAsString(toolbarFile);
-            toolbarTipStringRes = new StringResourceLoader(toolbarList);
-        } catch (FileNotFoundException e) {
-            errorFileNotFound(toolbarFile);
-        } catch (IOException | ArrayIndexOutOfBoundsException e) {
-            errorFileHasWrongFormat(toolbarFile);
+        {
+            String location = getFileLocationString("CElectionEditorToolbar");
+            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
+            try {
+                LinkedList<String> inputList;
+                inputList = FileLoader.loadFileAsString(in);
+                toolbarTipStringRes = new StringResourceLoader(inputList);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        File menuFile;
-        menuFile = new File(getFileLocationString("CElectionEditorMenu"));
-        try {
-            LinkedList<String> menuList;
-            menuList = FileLoader.loadFileAsString(menuFile);
-            menuStringRes = new StringResourceLoader(menuList);
-        } catch (FileNotFoundException e) {
-            errorFileNotFound(menuFile);
-        } catch (IOException | ArrayIndexOutOfBoundsException e) {
-            errorFileHasWrongFormat(menuFile);
+        
+        {
+            String location = getFileLocationString("CElectionEditorMenu");
+            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
+            try {
+                LinkedList<String> inputList;
+                inputList = FileLoader.loadFileAsString(in);
+                menuStringRes = new StringResourceLoader(inputList);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        File cErrorFile;
-        cErrorFile = new File(getFileLocationString("CElectionEditorCError"));
-        try {
-            LinkedList<String> cErrorList;
-            cErrorList = FileLoader.loadFileAsString(cErrorFile);
-            cErrorStringRes = new StringResourceLoader(cErrorList);
-        } catch (FileNotFoundException e) {
-            errorFileNotFound(cErrorFile);
-        } catch (IOException | ArrayIndexOutOfBoundsException e) {
-            errorFileHasWrongFormat(cErrorFile);
+        
+        {
+            String location = getFileLocationString("CElectionEditorCError");
+            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
+            try {
+                LinkedList<String> inputList;
+                inputList = FileLoader.loadFileAsString(in);
+                cErrorStringRes = new StringResourceLoader(inputList);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -9,6 +9,10 @@ import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import edu.pse.beast.options.OptionsInterface;
 import edu.pse.beast.propertylist.PropertyListBuilder;
 import edu.pse.beast.parametereditor.ParameterEditorWindowStarter;
+import edu.pse.beast.saverloader.FileLoader;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
 
 /**
  * The MainClass creates an AbstractBeastFactory and with it a BEASTCommunicator
@@ -23,7 +27,8 @@ public class MainClass {
      *
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws URISyntaxException, IOException {
+        
         OptionsInterface opt = new OptionsInterface();
         ObjectRefsForBuilder objRefsForBuilder;
         objRefsForBuilder = new ObjectRefsForBuilder(new OptionsInterface(),
@@ -43,6 +48,6 @@ public class MainClass {
         
         ParameterEditorWindowStarter paramsStarter = new ParameterEditorWindowStarter();
         paramsStarter.start();
-            
+          
     }
 }

@@ -9,7 +9,11 @@ import edu.pse.beast.toolbox.FileLoader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class that Manages all StringResources for the BooleanExpEditor
@@ -80,60 +84,60 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
      */
     @Override
     protected final void initialize() {
-        File toolbarFile;
-        toolbarFile = new File(getFileLocationString("BooleanExpEditorToolbar"));
-        try {
-            LinkedList<String> toolbarList;
-            toolbarList = FileLoader.loadFileAsString(toolbarFile);
-            toolbarTipStringRes = new StringResourceLoader(toolbarList);
-        } catch (FileNotFoundException e) {
-            errorFileNotFound(toolbarFile);
-        } catch (IOException | ArrayIndexOutOfBoundsException e) {
-            errorFileHasWrongFormat(toolbarFile);
+        {
+            String location = getFileLocationString("BooleanExpEditorToolbar");
+            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
+            try {
+                LinkedList<String> inputList;
+                inputList = FileLoader.loadFileAsString(in);
+                toolbarTipStringRes = new StringResourceLoader(inputList);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        File menuFile;
-        menuFile = new File(getFileLocationString("BooleanExpEditorMenu"));
-        try {
-            LinkedList<String> menuList;
-            menuList = FileLoader.loadFileAsString(menuFile);
-            menuStringRes = new StringResourceLoader(menuList);
-        } catch (FileNotFoundException e) {
-            errorFileNotFound(menuFile);
-        } catch (IOException | ArrayIndexOutOfBoundsException e) {
-            errorFileHasWrongFormat(menuFile);
+        {
+            String location = getFileLocationString("BooleanExpEditorMenu");
+            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
+            try {
+                LinkedList<String> inputList;
+                inputList = FileLoader.loadFileAsString(in);
+                menuStringRes = new StringResourceLoader(inputList);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        File expErrorFile;
-        expErrorFile = new File(getFileLocationString("BooleanExpEditorBooleanExpError"));
-        try {
-            LinkedList<String> booleanExpErrorList;
-            booleanExpErrorList = FileLoader.loadFileAsString(expErrorFile);
-            booleanExpErrorStringRes = new StringResourceLoader(booleanExpErrorList);
-        } catch (FileNotFoundException e) {
-            errorFileNotFound(expErrorFile);
-        } catch (IOException | ArrayIndexOutOfBoundsException e) {
-            errorFileHasWrongFormat(expErrorFile);
+        {
+            String location = getFileLocationString("BooleanExpEditorBooleanExpError");
+            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
+            try {
+                LinkedList<String> inputList;
+                inputList = FileLoader.loadFileAsString(in);
+                booleanExpErrorStringRes = new StringResourceLoader(inputList);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        File windowFile;
-        windowFile = new File(getFileLocationString("BooleanExpEditorWindow"));
-        try {
-            LinkedList<String> windowList;
-            windowList = FileLoader.loadFileAsString(windowFile);
-            booleanExpEditorWindow = new StringResourceLoader(windowList);
-        } catch (FileNotFoundException e) {
-            errorFileNotFound(windowFile);
-        } catch (IOException | ArrayIndexOutOfBoundsException e) {
-            errorFileHasWrongFormat(windowFile);
+        {
+            String location = getFileLocationString("BooleanExpEditorWindow");
+            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
+            try {
+                LinkedList<String> inputList;
+                inputList = FileLoader.loadFileAsString(in);
+                booleanExpEditorWindow = new StringResourceLoader(inputList);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        File symbVarFile;
-        symbVarFile = new File(getFileLocationString("BooleanExpEditorSymbVarList"));
-        try {
-            LinkedList<String> symbVarList;
-            symbVarList = FileLoader.loadFileAsString(symbVarFile);
-            booleanExpEditorSymbVarListRes = new StringResourceLoader(symbVarList);
-        } catch (FileNotFoundException e) {
-            errorFileNotFound(symbVarFile);
-        } catch (IOException | ArrayIndexOutOfBoundsException e) {
-            errorFileHasWrongFormat(symbVarFile);
+        {
+            String location = getFileLocationString("BooleanExpEditorSymbVarList");
+            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
+            try {
+                LinkedList<String> inputList;
+                inputList = FileLoader.loadFileAsString(in);
+                booleanExpEditorSymbVarListRes = new StringResourceLoader(inputList);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
