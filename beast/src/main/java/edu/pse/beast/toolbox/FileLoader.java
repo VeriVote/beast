@@ -31,10 +31,15 @@ public final class FileLoader {
      * @throws IOException throws Exception
      */
     public static LinkedList<String> loadFileAsString(File file) throws FileNotFoundException, IOException {
+        
+        
+        InputStream in = FileLoader.class.getClassLoader().getResourceAsStream(file.getName());
         LinkedList<String> stringlist;
-        try (BufferedReader br = new BufferedReader(
+        /**try (BufferedReader br = new BufferedReader(
                 new InputStreamReader(
-                        new FileInputStream(file), "UTF8"))) {
+                        new FileInputStream(file), "UTF8"))) { */
+            BufferedReader br = new BufferedReader( new InputStreamReader(
+                        in)) ;                 
             stringlist = new LinkedList<>();
             String line;
             
@@ -43,7 +48,7 @@ public final class FileLoader {
                 stringlist.add(line);
                 line = br.readLine();
             }
-        }
+        
         return stringlist;
     }
 
