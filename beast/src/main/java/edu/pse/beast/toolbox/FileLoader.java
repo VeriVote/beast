@@ -37,7 +37,7 @@ public final class FileLoader {
         /**try (BufferedReader br = new BufferedReader(
                 new InputStreamReader(
                         new FileInputStream(file), "UTF8"))) { */
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
             stringlist = new LinkedList<>();
             String line;
             
