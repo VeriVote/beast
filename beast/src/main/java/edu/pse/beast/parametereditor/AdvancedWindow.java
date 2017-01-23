@@ -28,7 +28,7 @@ public class AdvancedWindow extends javax.swing.JFrame {
         cancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Benutzerdefinierte Argumente für CBMC");
+        setTitle("Benutzerdefinierte Argumente fÃ¼r CBMC");
 
         input.setText("--unwind 6 --trace");
         input.addActionListener(new java.awt.event.ActionListener() {
