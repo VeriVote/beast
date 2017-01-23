@@ -214,17 +214,20 @@
         <Component class="javax.swing.JButton" name="newIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Jonas\Desktop\Uni\PSE\Git\PSE-Wahlverfahren-Implementierung\beast\src\resources\images\toolbar\new.png"/>
+              <Image iconType="3" name="/edu/pse/beast/parametereditor/new.png"/>
             </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="newIconActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="saveIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Jonas\Desktop\Uni\PSE\Git\PSE-Wahlverfahren-Implementierung\beast\src\resources\images\toolbar\save.png"/>
+              <Image iconType="3" name="/edu/pse/beast/parametereditor/save.png"/>
             </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -234,7 +237,7 @@
         <Component class="javax.swing.JButton" name="saveAsIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Jonas\Desktop\Uni\PSE\Git\PSE-Wahlverfahren-Implementierung\beast\src\resources\images\toolbar\save_as.png"/>
+              <Image iconType="3" name="/edu/pse/beast/parametereditor/save_as.png"/>
             </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -244,7 +247,7 @@
         <Component class="javax.swing.JButton" name="openIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Jonas\Desktop\Uni\PSE\Git\PSE-Wahlverfahren-Implementierung\beast\src\resources\images\toolbar\load.png"/>
+              <Image iconType="3" name="/edu/pse/beast/parametereditor/load.png"/>
             </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -254,7 +257,7 @@
         <Component class="javax.swing.JButton" name="startIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Jonas\Desktop\Uni\PSE\Git\PSE-Wahlverfahren-Implementierung\beast\src\resources\images\toolbar\start.png"/>
+              <Image iconType="3" name="/edu/pse/beast/parametereditor/start.png"/>
             </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
@@ -264,7 +267,7 @@
         <Component class="javax.swing.JButton" name="stopIcon">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Jonas\Desktop\Uni\PSE\Git\PSE-Wahlverfahren-Implementierung\beast\src\resources\images\toolbar\stop.png"/>
+              <Image iconType="3" name="/edu/pse/beast/parametereditor/stop.png"/>
             </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>

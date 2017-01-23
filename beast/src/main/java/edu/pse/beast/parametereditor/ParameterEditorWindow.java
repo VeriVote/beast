@@ -64,37 +64,42 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
 
         jToolBar.setRollover(true);
 
-        newIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jonas\\Desktop\\Uni\\PSE\\Git\\PSE-Wahlverfahren-Implementierung\\beast\\src\\resources\\images\\toolbar\\new.png")); // NOI18N
+        newIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/pse/beast/parametereditor/new.png"))); // NOI18N
         newIcon.setFocusable(false);
         newIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         newIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        newIcon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newIconActionPerformed(evt);
+            }
+        });
         jToolBar.add(newIcon);
 
-        saveIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jonas\\Desktop\\Uni\\PSE\\Git\\PSE-Wahlverfahren-Implementierung\\beast\\src\\resources\\images\\toolbar\\save.png")); // NOI18N
+        saveIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/pse/beast/parametereditor/save.png"))); // NOI18N
         saveIcon.setFocusable(false);
         saveIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         saveIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar.add(saveIcon);
 
-        saveAsIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jonas\\Desktop\\Uni\\PSE\\Git\\PSE-Wahlverfahren-Implementierung\\beast\\src\\resources\\images\\toolbar\\save_as.png")); // NOI18N
+        saveAsIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/pse/beast/parametereditor/save_as.png"))); // NOI18N
         saveAsIcon.setFocusable(false);
         saveAsIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         saveAsIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar.add(saveAsIcon);
 
-        openIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jonas\\Desktop\\Uni\\PSE\\Git\\PSE-Wahlverfahren-Implementierung\\beast\\src\\resources\\images\\toolbar\\load.png")); // NOI18N
+        openIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/pse/beast/parametereditor/load.png"))); // NOI18N
         openIcon.setFocusable(false);
         openIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         openIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar.add(openIcon);
 
-        startIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jonas\\Desktop\\Uni\\PSE\\Git\\PSE-Wahlverfahren-Implementierung\\beast\\src\\resources\\images\\toolbar\\start.png")); // NOI18N
+        startIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/pse/beast/parametereditor/start.png"))); // NOI18N
         startIcon.setFocusable(false);
         startIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         startIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar.add(startIcon);
 
-        stopIcon.setIcon(new javax.swing.ImageIcon("C:\\Users\\Jonas\\Desktop\\Uni\\PSE\\Git\\PSE-Wahlverfahren-Implementierung\\beast\\src\\resources\\images\\toolbar\\stop.png")); // NOI18N
+        stopIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/edu/pse/beast/parametereditor/stop.png"))); // NOI18N
         stopIcon.setFocusable(false);
         stopIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         stopIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -280,6 +285,10 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void newIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newIconActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newIconActionPerformed
 
     /**
      * @param args the command line arguments
