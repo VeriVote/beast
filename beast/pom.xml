@@ -53,9 +53,6 @@
                     <artifactId>:maven-surefire-plugin</artifactId>
                     <version>2.7</version>
                 </plugin>           
-            </plugins>
-        </pluginManagement> 
-        <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -65,7 +62,22 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>edu.pse.beast.highlevel.MainClass</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+                <version>3.0.2</version>
+            </plugin>
         </plugins>
+        </pluginManagement>
+
         <resources>
             <resource>
                 <directory>src/resources/stringfiles/de/</directory>
@@ -81,5 +93,4 @@
             </resource>
         </resources>
     </build>
-
 </project>
