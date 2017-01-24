@@ -20,6 +20,7 @@ public class ErrorController implements DocumentListener {
     
     public ErrorController(JTextPane pane) {
         this.pane = pane;
+        pane.getStyledDocument().addDocumentListener(this);
         errorFinderList = new ErrorFinderList();
         displayer = new ErrorDisplayer(pane);
     }

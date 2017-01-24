@@ -5,6 +5,8 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.JTextPane;
 import org.antlr.v4.parse.ANTLRParser;
 import org.antlr.v4.runtime.ANTLRFileStream;
@@ -38,5 +40,10 @@ public class CAntlrHandler {
     
     public CParser getParser() {
         return cParser;
+    }
+    
+    public ArrayList<String> getTypeLiterals() {
+        String[] created = {};
+        return Arrays.asList(created);
     }
 }

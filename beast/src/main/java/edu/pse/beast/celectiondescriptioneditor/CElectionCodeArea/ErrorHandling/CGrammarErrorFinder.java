@@ -28,7 +28,8 @@ public class CGrammarErrorFinder extends DefaultErrorStrategy implements ErrorFi
     }
 
     @Override
-    public ArrayList<Error> getErrors() {        
+    public ArrayList<Error> getErrors() {    
+        antlrHandler.getCParseTree();
         return errors;
     }
 
