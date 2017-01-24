@@ -26,11 +26,6 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     public CElectionDescriptionEditor(CElectionCodeArea codeArea, CCodeEditorGUI gui) {
         this.codeArea = codeArea;
         this.gui = gui;
-
-        // TEMPORARY EXAMPLE OF ADDING SYNTAXHL TO A CODEAREA
-        ArrayList<RegexAndColor> regexAndColorList = new ArrayList<RegexAndColor>();
-        regexAndColorList.add(new RegexAndColor("for|while|if|return", Color.RED));
-        codeArea.setSyntaxHLRegexAndColorList(regexAndColorList);
     }
 
     @Override

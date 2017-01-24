@@ -45,7 +45,9 @@ public class CElectionDescriptionEditorBuilder {
     public CElectionDescriptionEditor createCElectionDescriptionEditor(ObjectRefsForBuilder objRefsForBuilder) {
         CEditorWindowStarter starter = new CEditorWindowStarter();
         CCodeEditorGUI gui = starter.getGUIWindow();
-        
+
+        //TODO create an ArrayList of RegexAndColor objects and apply it to the codeareas by calling
+        //codeAreaObject.setSyntaxHLRegexAndColorList()
         CElectionCodeArea codeArea = codeAreaBuilder.createCElectionCodeArea(
                 gui.getCodeArea(), 
                 gui.getCodeAreaScrollPane(),
@@ -84,7 +86,7 @@ public class CElectionDescriptionEditorBuilder {
                         gui);
         
         starter.start();
-        
+
         return editor;
     }
     
