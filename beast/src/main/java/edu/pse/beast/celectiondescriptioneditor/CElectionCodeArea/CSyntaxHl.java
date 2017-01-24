@@ -24,7 +24,7 @@ public class CSyntaxHl {
         this.syntaxHL = syntaxHL;
         ArrayList<RegexAndColor> regexAndColorList = new ArrayList<>();
         for(String s : antlrHandler.getTypeLiterals()) {
-            regexAndColorList.add(new RegexAndColor(s, Color.RED));
+            regexAndColorList.add(new RegexAndColor(s, Color.GREEN));
         }
         for(String s : antlrHandler.getControllLiterals()) {
             regexAndColorList.add(new RegexAndColor(s, Color.BLUE));

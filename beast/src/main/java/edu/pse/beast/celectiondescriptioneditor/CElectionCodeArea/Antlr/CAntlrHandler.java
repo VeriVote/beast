@@ -53,7 +53,7 @@ public class CAntlrHandler {
     public String[] getControllLiterals() {
         String literals[] =
                 {"if", "else", "do", "while", "break", "switch", "continue",
-                    "default", "case"};
+                    "default", "case", "return"};
         return literals;
     }
 }

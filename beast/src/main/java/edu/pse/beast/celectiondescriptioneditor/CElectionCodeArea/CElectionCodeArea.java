@@ -17,6 +17,7 @@ import javax.swing.JTextPane;
 public class CElectionCodeArea extends CodeArea {
     private CAntlrHandler antlrHandler;
     private CGrammarErrorFinder grammerErrorFinder;
+    private CSyntaxHl cSyntaxHl;
     
     public CElectionCodeArea(CodeArea codeArea) {
         super(codeArea);
@@ -24,5 +25,7 @@ public class CElectionCodeArea extends CodeArea {
         grammerErrorFinder = new CGrammarErrorFinder(antlrHandler);
         
         errorCtrl.addErrorFinder(grammerErrorFinder);
+        cSyntaxHl = new CSyntaxHl(antlrHandler, syntaxHL);
+        
     }
 }

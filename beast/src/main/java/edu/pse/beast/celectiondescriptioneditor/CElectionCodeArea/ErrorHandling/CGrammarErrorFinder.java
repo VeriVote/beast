@@ -10,6 +10,9 @@ import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
 import java.util.ArrayList;
 import org.antlr.v4.runtime.ANTLRErrorStrategy;
 import org.antlr.v4.runtime.DefaultErrorStrategy;
+import org.antlr.v4.runtime.FailedPredicateException;
+import org.antlr.v4.runtime.InputMismatchException;
+import org.antlr.v4.runtime.NoViableAltException;
 import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Token;
@@ -29,13 +32,39 @@ public class CGrammarErrorFinder extends DefaultErrorStrategy implements ErrorFi
 
     @Override
     public ArrayList<Error> getErrors() {    
+        
         antlrHandler.getCParseTree();
         return errors;
     }
 
     @Override
     public void reportError(Parser recognizer, RecognitionException e) {
-        System.err.println("hello");
+        System.out.println("reportError()");
+    }
+    
+    @Override
+    protected void reportNoViableAlternative(Parser recognizer, NoViableAltException e) {
+         System.out.println("reportNoViableAlternative()");
+    }
+    
+    @Override
+    protected void reportInputMismatch(Parser recognizer, InputMismatchException e) {
+         System.out.println("reportInputMismatch()");
+    }
+    
+    @Override
+    protected void reportFailedPredicate(Parser recognizer, FailedPredicateException e) {
+        System.out.println("reportFailedPredicate()");
+    }
+    
+    @Override
+    protected void reportUnwantedToken(Parser recognizer) {
+         System.out.println("reportUnwantedToken()");
+    }
+    
+    @Override
+    protected void reportMissingToken(Parser recognizer) {
+         System.out.println("reportMissingToken()");
     }
     
 }
