@@ -11,6 +11,7 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
+import edu.pse.beast.toolbox.ErrorLogger;
 
 /**
  *
@@ -52,22 +53,31 @@ public class CBMCCodeGenerator {
         code.add("");
     }
 
+    /**
+     * adds the main method
+     * the main method declares the boolean expression. In the main method the votingmethod is called
+     */
     private void addMainMethod() {
+        code.add("int main(int argc, char *argv[]) {");
         LinkedList<SymbolicVariable> symbolicVariableList = postAndPrePropertiesDescription.getSymbolicVariableList();
-        for (SymbolicVariable symbVar : symbolicVariableList) {
+        symbolicVariableList.forEach((symbVar) -> {
             InternalTypeContainer internalType = symbVar.getInternalTypeContainer();
             String id = symbVar.getId();
-            if (internalType.isList()) {
-
+            if (!internalType.isList()) {
+                singleSymbVarInitialisation(internalType, id);
             } else {
-                internalTypeInitialisation(internalType, id);
-
+                reportUnsupportedType(id);
             }
-        }
+        });
+        
+        
+        code.add("}");
     }
+    
+    private void singleSymbVarInitialisation(InternalTypeContainer internalType, String id) {
 
-    private void internalTypeInitialisation(InternalTypeContainer internalType, String id) {
         switch (internalType.getInternalType()) {
+
             case VOTER:
                 code.add("unsigned int " + id + " = nondet_uint();");
                 // a Voter is basically an unsigned int.
@@ -88,17 +98,14 @@ public class CBMCCodeGenerator {
                 // there are S seats. From 0 to S-1
                 code.add("assume(0 <= " + id + " && " + id + " < S);");
                 break;
-            case APPROVAL:
-                break;
-            case WEIGHTEDAPPROVAL:
-                break;
-            case INTEGER:
-                code.add("int " + id + " = nondet_int();");
-                break;
             default:
-                throw new AssertionError(internalType.getInternalType().name());
+                reportUnsupportedType(id);
 
         }
+    }
+
+    private void reportUnsupportedType(String id) {
+        ErrorLogger.log("Der Typ der symbolischen Variable " + id + " wird nicht unterstützt");
     }
 
 }
