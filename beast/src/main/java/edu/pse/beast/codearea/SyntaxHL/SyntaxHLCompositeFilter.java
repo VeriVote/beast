@@ -7,11 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JTextPane;
 import javax.swing.SwingUtilities;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DocumentFilter;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyleContext;
+import javax.swing.text.*;
 
 /**
  * @author NikolaiLMS
@@ -68,7 +64,6 @@ public class SyntaxHLCompositeFilter extends DocumentFilter{
         return p;
     }
 
-
     private void updateTextStyles()
     {
         // Remove old syntax HL
@@ -78,7 +73,12 @@ public class SyntaxHLCompositeFilter extends DocumentFilter{
         for (RegexAndColor iter : regexAndColorList) {
 
             // Look for tokens and highlight them
-            Matcher matcher = buildPattern(iter.getRegEx()).matcher(textPane.getText());
+            Matcher matcher = null;
+            try {
+                matcher = buildPattern(iter.getRegEx()).matcher(textPane.getStyledDocument().getText(0, textPane.getStyledDocument().getLength()));
+            } catch (BadLocationException e) {
+                e.printStackTrace();
+            }
 
             while (matcher.find()) {
                 // Change the color of recognized tokens
