@@ -18,29 +18,42 @@ import edu.pse.beast.datatypes.internal.InternalTypeContainer;
  */
 public class CBMCCodeGenerator {
 
-    public static ArrayList<String> generateCode(ElectionDescription electionDescription, PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
-        ArrayList<String> code = new ArrayList<>();
-        code = addIncludes(code);
-        code.addAll(electionDescription.getCode());
-        code.addAll(addMainMethod(code, postAndPrePropertiesDescription));
+    private ArrayList<String> code;
+    private final ElectionDescription electionDescription;
+    private final PostAndPrePropertiesDescription postAndPrePropertiesDescription;
+
+    public CBMCCodeGenerator(ElectionDescription electionDescription, PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
+        this.electionDescription = electionDescription;
+        this.postAndPrePropertiesDescription = postAndPrePropertiesDescription;
+        code = new ArrayList<>();
+        initializeCode();
+    }
+
+    public ArrayList<String> generateCode() {
 
         return code;
     }
 
-    private static ArrayList<String> addIncludes(ArrayList<String> code) {
+    private void initializeCode() {
+        addIncludes();
+        code.addAll(electionDescription.getCode());
+        addMainMethod();
+    }
+
+    private void addIncludes() {
         code.add("#inlcude <stdlib.h>");
         code.add("#inlcude <stdint.h>");
         code.add("#inlcude <assert.h>");
         code.add("");
         code.add("int nondet_uint();");
+        code.add("int nondet_int();");
         code.add("");
         code.add("#define assert2(x, y) __CPROVER_assert(x, y)");
         code.add("#define assume(x) __CPROVER_assume(x)");
         code.add("");
-        return code;
     }
 
-    private static ArrayList<String> addMainMethod(ArrayList<String> code, PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
+    private void addMainMethod() {
         LinkedList<SymbolicVariable> symbolicVariableList = postAndPrePropertiesDescription.getSymbolicVariableList();
         for (SymbolicVariable symbVar : symbolicVariableList) {
             InternalTypeContainer internalType = symbVar.getInternalTypeContainer();
@@ -49,11 +62,11 @@ public class CBMCCodeGenerator {
 
             } else {
                 switch (internalType.getInternalType()) {
-                    case VOTER:
-                        
-                        break;
+                    case VOTER: //fallthrough
                     case CANDIDATE:
+                        code.add("unsigned int " + id + " = nondet_uint();");
                         break;
+
                     case SEAT:
                         break;
                     case APPROVAL:
@@ -61,7 +74,7 @@ public class CBMCCodeGenerator {
                     case WEIGHTEDAPPROVAL:
                         break;
                     case INTEGER:
-                        code.add("int " + id + ";");
+                        code.add("int " + id + " = nondet_int();");
                         break;
                     default:
                         throw new AssertionError(internalType.getInternalType().name());
@@ -69,7 +82,5 @@ public class CBMCCodeGenerator {
                 }
             }
         }
-
-        return code;
     }
 }
