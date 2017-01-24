@@ -23,6 +23,7 @@ public class CodeInputHandler {
     }
     
     public void handleKey(KeyEvent ke) {
+        
         try{
             if(ke.getKeyCode()== KeyEvent.VK_ENTER || ke.getKeyChar() == '\n') {
                 insertToCode.insertNewline();

@@ -46,7 +46,11 @@ public class CodeAreaBuilder {
         TextLineNumber tln = new TextLineNumber(codeArea); 
         codeAreaScroll.setRowHeaderView(tln);
         
-        ErrorController error = new ErrorController(codeArea);
+        StoppedTypingContinuouslyMessager stoppedTypingContinuouslyMessager = 
+                new StoppedTypingContinuouslyMessager(codeArea);
+        ErrorController error = new ErrorController(
+                codeArea, stoppedTypingContinuouslyMessager);
+        
         AutocompletionController autocompletion = new AutocompletionController();
         Actionlist actionList = new Actionlist();
         
@@ -55,7 +59,7 @@ public class CodeAreaBuilder {
         SyntaxHL syntaxHL = new SyntaxHL(codeArea);
 
         CodeArea created = new CodeArea(codeArea, tln, userInputHandler, insertToCode, actionList, error,
-                autocompletion, syntaxHL);
+                autocompletion, syntaxHL, stoppedTypingContinuouslyMessager);
         CodeAreaUserActions userActions = new CodeAreaUserActions(created);
         created.setUserActionList(userActions);
 

@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.pse.beast.codearea.ErrorHandling;
-
-import java.util.ArrayList;
+package edu.pse.beast.codearea;
 
 /**
  *
  * @author Holger-Desktop
  */
-public interface ErrorFinder {
-    public ArrayList<CodeError> getErrors();
+public interface StoppedTypingContinuouslyListener {
+    public void StoppedTypingContinuously();
 }

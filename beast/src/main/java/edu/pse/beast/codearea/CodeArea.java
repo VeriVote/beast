@@ -31,7 +31,8 @@ public class CodeArea {
     protected AutocompletionController autoComplCtrl;
     protected CodeAreaUserActions userActionList;
     protected SyntaxHL syntaxHL;
-
+    protected StoppedTypingContinuouslyMessager stoppedTypingContinuouslyMessager;
+    
     public CodeArea(
             JTextPane pane,
             TextLineNumber tln,
@@ -40,7 +41,8 @@ public class CodeArea {
             Actionlist actionList,
             ErrorController errorCtrl,
             AutocompletionController autoComplCtrl,
-            SyntaxHL syntaxHL) {
+            SyntaxHL syntaxHL,
+            StoppedTypingContinuouslyMessager stoppedTypingContinuouslyMessager) {
         this.pane = pane;
         this.tln = tln; 
         this.userInputHandler = userInputHandler;
@@ -49,6 +51,7 @@ public class CodeArea {
         this.errorCtrl = errorCtrl;
         this.autoComplCtrl = autoComplCtrl;
         this.syntaxHL = syntaxHL;
+        this.stoppedTypingContinuouslyMessager = stoppedTypingContinuouslyMessager;
     }
 
     public CodeArea(CodeArea codeArea) {
@@ -61,6 +64,7 @@ public class CodeArea {
         this.autoComplCtrl = codeArea.autoComplCtrl;
         this.userActionList = codeArea.userActionList;
         this.syntaxHL = codeArea.syntaxHL;
+        this.stoppedTypingContinuouslyMessager = codeArea.stoppedTypingContinuouslyMessager;
     }
     
     public void setUserActionList(CodeAreaUserActions userActionList) {

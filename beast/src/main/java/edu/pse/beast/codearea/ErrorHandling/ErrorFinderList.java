@@ -14,8 +14,8 @@ import java.util.ArrayList;
 public class ErrorFinderList {
     private ArrayList<ErrorFinder> errorFinderList = new ArrayList<>();
     
-    public ArrayList<Error>  getErrors() {
-        ArrayList<Error> created = new ArrayList<>();
+    public ArrayList<CodeError>  getErrors() {
+        ArrayList<CodeError> created = new ArrayList<>();
         for(ErrorFinder finder : errorFinderList) 
             created.addAll(finder.getErrors());
         return created;

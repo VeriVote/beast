@@ -5,6 +5,8 @@
  */
 package edu.pse.beast.codearea.ErrorHandling;
 
+import edu.pse.beast.codearea.StoppedTypingContinuouslyListener;
+import edu.pse.beast.codearea.StoppedTypingContinuouslyMessager;
 import javax.swing.JTextPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -13,14 +15,14 @@ import javax.swing.event.DocumentListener;
  *
  * @author Holger-Desktop
  */
-public class ErrorController implements DocumentListener {
+public class ErrorController implements StoppedTypingContinuouslyListener {
     private ErrorFinderList errorFinderList;
     private JTextPane pane;
     private ErrorDisplayer displayer;
     
-    public ErrorController(JTextPane pane) {
+    public ErrorController(JTextPane pane, StoppedTypingContinuouslyMessager msg) {
         this.pane = pane;
-        pane.getStyledDocument().addDocumentListener(this);
+        msg.addListener(this);
         errorFinderList = new ErrorFinderList();
         displayer = new ErrorDisplayer(pane);
     }
@@ -30,18 +32,7 @@ public class ErrorController implements DocumentListener {
     }
 
     @Override
-    public void insertUpdate(DocumentEvent de) {
-        System.out.println("searching for errors");
-        errorFinderList.getErrors();
-    }
-
-    @Override
-    public void removeUpdate(DocumentEvent de) {
-        errorFinderList.getErrors();
-    }
-
-    @Override
-    public void changedUpdate(DocumentEvent de) {
-        
+    public void StoppedTypingContinuously() {
+        displayer.showErrors(errorFinderList.getErrors());
     }
 }

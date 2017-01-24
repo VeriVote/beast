@@ -5,21 +5,12 @@
  */
 package edu.pse.beast.codearea.ErrorHandling;
 
-import java.util.ArrayList;
-import javax.swing.JTextPane;
-
 /**
  *
  * @author Holger-Desktop
  */
-public class ErrorDisplayer {
-    private JTextPane pane;
-    
-    public ErrorDisplayer(JTextPane pane) {
-        this.pane = pane;
-    }
-    
-    public void showErrors(ArrayList<CodeError> errors) {
+public class CodeError {
+    public CodeError(int line, int posInLine, String id, int errorNumber) {
         
     }
 }

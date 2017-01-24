@@ -6,8 +6,11 @@
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CAntlrHandler;
+import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
 import java.util.ArrayList;
+import java.util.BitSet;
+import org.antlr.v4.runtime.ANTLRErrorListener;
 import org.antlr.v4.runtime.ANTLRErrorStrategy;
 import org.antlr.v4.runtime.DefaultErrorStrategy;
 import org.antlr.v4.runtime.FailedPredicateException;
@@ -15,56 +18,49 @@ import org.antlr.v4.runtime.InputMismatchException;
 import org.antlr.v4.runtime.NoViableAltException;
 import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.RecognitionException;
+import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.atn.ATNConfigSet;
+import org.antlr.v4.runtime.dfa.DFA;
 
 /**
  *
  * @author Holger-Desktop
  */
-public class CGrammarErrorFinder extends DefaultErrorStrategy implements ErrorFinder {
+public class CGrammarErrorFinder implements ErrorFinder, ANTLRErrorListener {
     private CAntlrHandler antlrHandler;
-    private ArrayList<Error> errors = new ArrayList<>();
+    private ArrayList<CodeError> errors = new ArrayList<>();
     
     public CGrammarErrorFinder(CAntlrHandler antlrHandler) {
         this.antlrHandler = antlrHandler;
-        antlrHandler.getParser().setErrorHandler(this);
+        antlrHandler.getParser().removeErrorListeners();
+        antlrHandler.getParser().addErrorListener(this);
     }
 
     @Override
-    public ArrayList<Error> getErrors() {    
-        
+    public ArrayList<CodeError> getErrors() {            
         antlrHandler.getCParseTree();
         return errors;
+    }   
+
+    @Override
+    public void syntaxError(Recognizer<?, ?> rcgnzr, Object offendingSymbol, int line, int charPosInLine, String msg, RecognitionException e) {
+        CodeError err = new CodeError(line, charPosInLine, msg, 0);
     }
 
     @Override
-    public void reportError(Parser recognizer, RecognitionException e) {
-        System.out.println("reportError()");
+    public void reportAmbiguity(Parser parser, DFA dfa, int i, int i1, boolean bln, BitSet bitset, ATNConfigSet atncs) {
+        
     }
-    
+
     @Override
-    protected void reportNoViableAlternative(Parser recognizer, NoViableAltException e) {
-         System.out.println("reportNoViableAlternative()");
+    public void reportAttemptingFullContext(Parser parser, DFA dfa, int i, int i1, BitSet bitset, ATNConfigSet atncs) {
+       
     }
-    
+
     @Override
-    protected void reportInputMismatch(Parser recognizer, InputMismatchException e) {
-         System.out.println("reportInputMismatch()");
-    }
-    
-    @Override
-    protected void reportFailedPredicate(Parser recognizer, FailedPredicateException e) {
-        System.out.println("reportFailedPredicate()");
-    }
-    
-    @Override
-    protected void reportUnwantedToken(Parser recognizer) {
-         System.out.println("reportUnwantedToken()");
-    }
-    
-    @Override
-    protected void reportMissingToken(Parser recognizer) {
-         System.out.println("reportMissingToken()");
+    public void reportContextSensitivity(Parser parser, DFA dfa, int i, int i1, int i2, ATNConfigSet atncs) {
+        
     }
     
 }
