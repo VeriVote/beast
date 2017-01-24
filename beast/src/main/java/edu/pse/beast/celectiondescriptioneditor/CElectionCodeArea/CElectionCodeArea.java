@@ -5,6 +5,8 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea;
 
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CAntlrHandler;
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CGrammarErrorFinder;
 import edu.pse.beast.codearea.CodeArea;
 import javax.swing.JTextPane;
 
@@ -13,7 +15,14 @@ import javax.swing.JTextPane;
  * @author Holger-Desktop
  */
 public class CElectionCodeArea extends CodeArea {
+    private CAntlrHandler antlrHandler;
+    private CGrammarErrorFinder grammerErrorFinder;
+    
     public CElectionCodeArea(CodeArea codeArea) {
         super(codeArea);
+        antlrHandler = new CAntlrHandler(pane);
+        grammerErrorFinder = new CGrammarErrorFinder(antlrHandler);
+        
+        errorCtrl.addErrorFinder(grammerErrorFinder);
     }
 }

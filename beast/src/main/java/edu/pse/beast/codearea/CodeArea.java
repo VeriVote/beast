@@ -41,6 +41,7 @@ public class CodeArea {
             ErrorController errorCtrl,
             AutocompletionController autoComplCtrl,
             SyntaxHL syntaxHL) {
+        this.pane = pane;
         this.tln = tln; 
         this.userInputHandler = userInputHandler;
         this.insertToCode = insertToCode;

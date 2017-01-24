@@ -46,7 +46,7 @@ public class CodeAreaBuilder {
         TextLineNumber tln = new TextLineNumber(codeArea); 
         codeAreaScroll.setRowHeaderView(tln);
         
-        ErrorController error = new ErrorController();
+        ErrorController error = new ErrorController(codeArea);
         AutocompletionController autocompletion = new AutocompletionController();
         Actionlist actionList = new Actionlist();
         
