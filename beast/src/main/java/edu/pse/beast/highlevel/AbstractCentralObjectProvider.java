@@ -2,11 +2,11 @@
 package edu.pse.beast.highlevel;
 
 /**
- * The AbstractBeastFactory provides access to the interfaces for the packages used 
- * to run BEAST for the BEASTCommunicator.
+ * The AbstractCentralObjectProvider provides access to the interfaces for the packages used 
+ to run BEAST for the BEASTCommunicator.
  * @author Jonas
  */
-public interface AbstractBeastFactory {
+public interface AbstractCentralObjectProvider {
     /**
      * Provides access to the ElectionDescriptionSource
      * @return ElectionDescriptionSource

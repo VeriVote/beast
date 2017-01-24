@@ -6,14 +6,14 @@ package edu.pse.beast.highlevel;
  * @author Jonas
  */
 public class BEASTCommunicator implements CheckListener{
-    private AbstractBeastFactory factory;
+    private final AbstractCentralObjectProvider centralObjectProvider;
     /**
-     * Constructor that takes an AbstractBeastFactory that provides access to 
-     * the other important packages for the BEASTCommunicator.
-     * @param fac AbstractBeastFactory
+     * Constructor that takes an AbstractCentralObjectProvider that provides access to 
+ the other important packages for the BEASTCommunicator.
+     * @param centralObjectProvider AbstractCentralObjectProvider
      */
-    public BEASTCommunicator(AbstractBeastFactory fac) {
-        factory = fac;
+    public BEASTCommunicator(AbstractCentralObjectProvider centralObjectProvider) {
+        this.centralObjectProvider = centralObjectProvider;
     }
 
     @Override

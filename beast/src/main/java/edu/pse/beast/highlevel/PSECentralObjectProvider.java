@@ -18,15 +18,15 @@ import edu.pse.beast.toolbox.ObjectRefsForBuilder;
  *
  * @author Jonas
  */
-public class PSEBeastFactory implements AbstractBeastFactory{
+public class PSECentralObjectProvider implements AbstractCentralObjectProvider{
     
-    private ParameterEditor paramEd;
-    private PropertyList propertyList;
-    private BooleanExpEditor booleanExpEditor;
-    private CElectionDescriptionEditor cElectionEditor;
-    private ResultCheckerCommunicator checkerCommunicator;
+    private final ParameterEditor paramEd;
+    private final PropertyList propertyList;
+    private final BooleanExpEditor booleanExpEditor;
+    private final CElectionDescriptionEditor cElectionEditor;
+    private final ResultCheckerCommunicator checkerCommunicator;
     
-    public PSEBeastFactory() {
+    public PSECentralObjectProvider() {
         OptionsInterface optionsInterface = new OptionsInterface();
         StringLoaderInterface stringIf = new StringLoaderInterface("de"); //must be provided  by language options at some point
         SaverLoaderInterface saverLoaderIF = new SaverLoaderInterface();
