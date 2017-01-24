@@ -64,7 +64,7 @@ public class BooleanExpEditorBuilder{
                 ImageResourceProvider.getToolbarImages(),
                 objectRefsForBuilder.getStringIF().getBooleanExpEditorStringResProvider().getToolbarTipStringRes(),
                 createActionIdAndListenerListForToolbarHandler());
-
+        
         return new BooleanExpEditor(prePropCodeArea, postPropCodeArea, window, symbolicVarList, errorWindow,
                 menuBarHandler, toolbarHandler);
     }

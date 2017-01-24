@@ -11,13 +11,19 @@ import edu.pse.beast.propertylist.PropertyList;
 //import edu.pse.beast.highlevel.CheckStartStopNotifier;
 //import edu.pse.beast.highlevel.CheckListener;
 import edu.pse.beast.datatypes.ElectionCheckParameter;
+import edu.pse.beast.highlevel.CheckListener;
+import edu.pse.beast.highlevel.CheckStartStopNotifier;
+import java.util.ArrayList;
 
 /**
  *
  * @author Jonas
  */
-public class ParameterEditor implements ParameterSource{
+public class ParameterEditor implements ParameterSource, CheckStartStopNotifier {
     private ParameterEditorWindowStarter windowStarter;
+    private CElectionDescriptionEditor cElectionDescriptionEditor; 
+    private PropertyList propertyList;
+    private ArrayList<CheckListener> listener = new ArrayList<>();
     //private MinMaxSpinValueHandler voterHandler;
     //private MinMaxSpinValueHandler candHandler;
     //private MinMaxSpinValueHandler seatHandler;
@@ -25,7 +31,13 @@ public class ParameterEditor implements ParameterSource{
     //private SingleValueSpinnerHandler processHandler;
     //private UserArgumentHandler argumentHandler;
     //private CheckListener checkListener;
-    public ParameterEditor() {
+    public ParameterEditor(
+            CElectionDescriptionEditor cElectionDescriptionEditor, 
+            PropertyList propertyList) {
+        this.cElectionDescriptionEditor = cElectionDescriptionEditor;
+        this.propertyList = propertyList;
+        windowStarter = new ParameterEditorWindowStarter();
+        windowStarter.start();
     }
     
     /*
@@ -51,4 +63,9 @@ public class ParameterEditor implements ParameterSource{
         
     }
     */
+
+    @Override
+    public void addCheckListener(CheckListener l) {
+        listener.add(l);
+    }
 }

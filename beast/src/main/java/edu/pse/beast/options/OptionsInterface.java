@@ -22,4 +22,7 @@ public class OptionsInterface {
         return new ParametereditorOptions("id", checker, availableChecker, langOpts);
     }
 
+    public LanguageOptions getLanguageOptions() {
+        return new LanguageOptions();
+    }
 }

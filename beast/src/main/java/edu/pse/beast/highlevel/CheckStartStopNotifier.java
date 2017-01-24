@@ -11,5 +11,5 @@ public interface CheckStartStopNotifier {
      * Adds a CheckListener.
      * @param l CheckListener
      */
-    void addCheckListener(CheckListener l);
+    public void addCheckListener(CheckListener l);
 }

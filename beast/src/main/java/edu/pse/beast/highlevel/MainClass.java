@@ -29,25 +29,9 @@ public class MainClass {
      */
     public static void main(String[] args) throws URISyntaxException, IOException {
         
-        OptionsInterface opt = new OptionsInterface();
-        ObjectRefsForBuilder objRefsForBuilder;
-        objRefsForBuilder = new ObjectRefsForBuilder(new OptionsInterface(),
-                new StringLoaderInterface("de"),
-                new toBeImplemented.LanguageOptions(), new SaverLoaderInterface());
-
-        CElectionDescriptionEditorBuilder cElectionEditorBuilder = new CElectionDescriptionEditorBuilder();
-        cElectionEditorBuilder.createCElectionDescriptionEditor(objRefsForBuilder);
+        AbstractBeastFactory fac = new PSEBeastFactory();
         
-        PropertyListBuilder propertyBuilder = new PropertyListBuilder();
-        propertyBuilder.createPropertyList(objRefsForBuilder);
-        
-        BooleanExpEditorBuilder booleanBuilder = new BooleanExpEditorBuilder();
-        
-        BooleanExpEditor booleanEditor = booleanBuilder.createBooleanExpEditorObject(objRefsForBuilder);
-        booleanEditor.showWindow();
-        
-        ParameterEditorWindowStarter paramsStarter = new ParameterEditorWindowStarter();
-        paramsStarter.start();
+        BEASTCommunicator communicator = new BEASTCommunicator(fac);
           
     }
 }

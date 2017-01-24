@@ -10,34 +10,30 @@ import java.util.ArrayList;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
+import edu.pse.beast.highlevel.ResultPresenter;
+import edu.pse.beast.propertychecker.Result;
 
 /**
  *
  * @author Justin
  */
-public class PropertyList {
+public class PropertyList implements PostAndPrePropertiesDescriptionSource, ResultPresenter {
 	
 	private static PropertyList instance;
 	private ArrayList<PropertyItem> propertyDescriptions;
+        private BooleanExpEditor booleanExpEditor;
 	// private final BooleanExpEditor editor; although this wont be needed, probably
 	
-	private PropertyList() {
-		propertyDescriptions = new ArrayList<PropertyItem>();
+	public PropertyList(BooleanExpEditor booleanExpEditor) {
+		this.booleanExpEditor = booleanExpEditor;
 	}
-    
-	public static PropertyList getInstance() {
-		if (instance == null) instance = new PropertyList();	
-		return instance;
-	}
-	
-	public PropertyList getPostAndPrePropertiesSource() {
-		return PropertyList.getInstance();
-	}
-	
-	public ArrayList<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptions() {
-		ArrayList<PostAndPrePropertiesDescription> res = new ArrayList<PostAndPrePropertiesDescription>();
+        	
+	public PostAndPrePropertiesDescription getPostAndPrePropertiesDescriptions() {
+		/*ArrayList<PostAndPrePropertiesDescription> res = new ArrayList<PostAndPrePropertiesDescription>();
 		for (PropertyItem item : propertyDescriptions) res.add(item.getDescription());
-		return res;
+		return res;*/
+                return null;
 	}
 	
 	public void refillInstance(ArrayList<PropertyItem> newList) {
@@ -77,4 +73,9 @@ public class PropertyList {
 	public void changeTestedStatus(PostAndPrePropertiesDescription prop, Boolean testStatus) {
 		// TODO
 	}
+
+        @Override
+        public void presentResult(Result res) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
 }

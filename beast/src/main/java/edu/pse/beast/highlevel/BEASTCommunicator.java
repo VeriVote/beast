@@ -5,7 +5,7 @@ package edu.pse.beast.highlevel;
  * The BEASTCommunicator coordinates all the other parts of BEAST.
  * @author Jonas
  */
-public class BEASTCommunicator {
+public class BEASTCommunicator implements CheckListener{
     private AbstractBeastFactory factory;
     /**
      * Constructor that takes an AbstractBeastFactory that provides access to 
@@ -15,18 +15,15 @@ public class BEASTCommunicator {
     public BEASTCommunicator(AbstractBeastFactory fac) {
         factory = fac;
     }
-    /**
-     * Starts all actions that have to take place before checking the election
-     * for the properties.
-     */
-    protected void beforeChecking() {
-        
+
+    @Override
+    public void startCheck() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    /**
-     * Starts all actions that have to take place after checking the election
-     * for the properties.
-     */
-    protected void afterChecking() {
-        
+
+    @Override
+    public void stopCheck() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
 }

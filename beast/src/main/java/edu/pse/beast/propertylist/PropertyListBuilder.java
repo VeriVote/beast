@@ -1,5 +1,6 @@
 package edu.pse.beast.propertylist;
 
+import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -26,11 +27,11 @@ public class PropertyListBuilder {
 	
 	private String[] menuHeadingIds = { "fileMenu", "editMenu" };
 	
-	public PropertyList createPropertyList(ObjectRefsForBuilder refs) {
+	public PropertyList createPropertyList(ObjectRefsForBuilder refs, BooleanExpEditor booleanExpEditor) {
 		PropertyListWindowStarter starter = new PropertyListWindowStarter();
 		PropertyListWindow window = starter.getPropertyListWindow();
 		
-		PropertyList instance = PropertyList.getInstance();
+		PropertyList instance = new PropertyList(booleanExpEditor);
 		
 		PropertyListMenuBarHandler menuBarHandler = new PropertyListMenuBarHandler(menuHeadingIds, 
 				createActionIdAndListenerListForMenuHandler(), 
