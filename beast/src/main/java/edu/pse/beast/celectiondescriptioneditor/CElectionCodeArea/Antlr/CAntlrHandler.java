@@ -42,8 +42,19 @@ public class CAntlrHandler {
         return cParser;
     }
     
-    public ArrayList<String> getTypeLiterals() {
-        String[] created = {};
-        return Arrays.asList(created);
+    public String[] getTypeLiterals() {
+        String literals[] =
+                {"void", "char", "short", "int", "long", "float", "double",
+                    "signed", "unsigned", "_Bool", "_Complex", "__m128",
+                    "__m128d", "__m128i"};
+        return literals;
+    }
+    
+    public String[] getControllLiterals() {
+        String literals[] =
+                {"if", "else", "do", "while", "break", "switch", "continue",
+                    "default", "case"};
+        return literals;
     }
 }
+
