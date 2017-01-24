@@ -5,7 +5,6 @@
  */
 package edu.pse.beast.parametereditor;
 import edu.pse.beast.highlevel.ParameterSource;
-import edu.pse.beast.highlevel.AbstractBeastFactory;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.propertylist.PropertyList;
 //import edu.pse.beast.highlevel.CheckStartStopNotifier;
@@ -14,6 +13,7 @@ import edu.pse.beast.datatypes.ElectionCheckParameter;
 import edu.pse.beast.highlevel.CheckListener;
 import edu.pse.beast.highlevel.CheckStartStopNotifier;
 import java.util.ArrayList;
+import edu.pse.beast.highlevel.AbstractCentralObjectProvider;
 
 /**
  *
