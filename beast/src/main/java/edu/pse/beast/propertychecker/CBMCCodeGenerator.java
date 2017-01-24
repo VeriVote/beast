@@ -30,7 +30,6 @@ public class CBMCCodeGenerator {
     }
 
     public ArrayList<String> generateCode() {
-
         return code;
     }
 
@@ -61,26 +60,45 @@ public class CBMCCodeGenerator {
             if (internalType.isList()) {
 
             } else {
-                switch (internalType.getInternalType()) {
-                    case VOTER: //fallthrough
-                    case CANDIDATE:
-                        code.add("unsigned int " + id + " = nondet_uint();");
-                        break;
+                internalTypeInitialisation(internalType, id);
 
-                    case SEAT:
-                        break;
-                    case APPROVAL:
-                        break;
-                    case WEIGHTEDAPPROVAL:
-                        break;
-                    case INTEGER:
-                        code.add("int " + id + " = nondet_int();");
-                        break;
-                    default:
-                        throw new AssertionError(internalType.getInternalType().name());
-
-                }
             }
         }
     }
+
+    private void internalTypeInitialisation(InternalTypeContainer internalType, String id) {
+        switch (internalType.getInternalType()) {
+            case VOTER:
+                code.add("unsigned int " + id + " = nondet_uint();");
+                // a Voter is basically an unsigned int.
+                // The number shows which vote from votesX (the Array of all votes) belongs to the voter.
+                code.add("assume(0 <= " + id + " && " + id + " < V);");
+                // The Voter has to be in the range of possible Voters. V is the total amount of Voters.
+                break;
+            case CANDIDATE:
+                code.add("unsigned int " + id + " = nondet_uint();");
+                // a Candidate is basically an unsigned int. Candidate 1 is 1 and so on
+                code.add("assume(0 < " + id + " && " + id + " <= C);");
+                // C is the number of total Candidates. 0 is NOT a Candidate
+                break;
+            case SEAT:
+                // a Seat is a also an unsigned int. 
+                // The return of a votingmethod (an Array) gives you the elected candidate(value) of the seat(id)
+                code.add("unsigned int " + id + " = nondet_uint();");
+                // there are S seats. From 0 to S-1
+                code.add("assume(0 <= " + id + " && " + id + " < S);");
+                break;
+            case APPROVAL:
+                break;
+            case WEIGHTEDAPPROVAL:
+                break;
+            case INTEGER:
+                code.add("int " + id + " = nondet_int();");
+                break;
+            default:
+                throw new AssertionError(internalType.getInternalType().name());
+
+        }
+    }
+
 }
