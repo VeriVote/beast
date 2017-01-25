@@ -18,9 +18,10 @@ import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.toolbox.ErrorLogger;
 
 /**
- * This creates the .c file which will be used to check it with CBMC
- * It generates a mainmethod, (with the FormalProperty inside it)
- * important IncludingCode and the votingMethode (the ElectionDescription)
+ * This creates the .c file which will be used to check it with CBMC It
+ * generates a mainmethod, (with the FormalProperty inside it) important
+ * IncludingCode and the votingMethode (the ElectionDescription)
+ *
  * @author Niels
  */
 public class CBMCCodeGenerator {
@@ -134,7 +135,7 @@ public class CBMCCodeGenerator {
         ast.getBooleanExpressions().forEach((node) -> {
             node.getVisited(preVisitor);
         });
-
+        code.addAll(preVisitor.getCode());
     }
 
     /**
@@ -147,6 +148,7 @@ public class CBMCCodeGenerator {
         ast.getBooleanExpressions().forEach((node) -> {
             node.getVisited(postVisitor);
         });
+        code.addAll(postVisitor.getCode());
     }
 
     /**
