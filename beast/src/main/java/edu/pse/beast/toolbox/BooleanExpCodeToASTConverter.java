@@ -5,10 +5,15 @@
  */
 package edu.pse.beast.toolbox;
 
+import edu.pse.beast.datatypes.boolexp.BooleanListNode;
+
 /**
  *
  * @author Niels
  */
 public class BooleanExpCodeToASTConverter {
-    
+    public BooleanListNode generateAST(String code){
+        // ToDo: Implement
+        return new BooleanListNode();
+    }
 }
