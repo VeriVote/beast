@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.pse.beast.toolbox.ErrorLogger;
+
 public final class CheckerFactoryFactory {
 	private static Map<String, CheckerFactory> factories = new HashMap<String, CheckerFactory>();
 	private static boolean initialized = false;
@@ -25,12 +27,33 @@ public final class CheckerFactoryFactory {
 		return new ArrayList<String>(factories.keySet());
 	}
 	
-	private static PropertyChecker createPropertyChecker(String checkerID) {
+	public static PropertyChecker createPropertyChecker(String checkerID) {
 		if (!initialized) {
 			init();
 		}
 		
-		return new
+		if (factories.keySet().contains(checkerID)) {
+			return new PropertyChecker(checkerID);		
+		} else {
+			ErrorLogger.log("The specified checkerID wasn't found");
+			return null;
+		}
 	}
 	
+	public static CheckerFactory getCheckerFactory(String checkerID) {
+		if (!initialized) {
+			init();
+		}
+		
+		if (factories.keySet().contains(checkerID)) {
+			
+			//TODO
+
+		} else {
+			ErrorLogger.log("The specified checkerID wasn't found");
+			return null;
+		}
+		
+	}
+ 	
 }
