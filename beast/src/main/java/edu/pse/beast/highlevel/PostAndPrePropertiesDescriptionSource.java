@@ -1,5 +1,6 @@
 
 package edu.pse.beast.highlevel;
+import java.util.ArrayList;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 
 /**
@@ -13,5 +14,10 @@ public interface PostAndPrePropertiesDescriptionSource {
      * election check.
      * @return PostAndPrePropertiesDescription
      */
-    PostAndPrePropertiesDescription getPostAndPrePropertiesDescriptions(); //TODO: Return type array or not?
+    ArrayList<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptions(); //TODO: Return type array or not?
+    /**
+     * Returns true if all the PostAndPrePropertiesDescriptions are correct.
+     * @return correctness
+     */
+    boolean isCorrect();
 }

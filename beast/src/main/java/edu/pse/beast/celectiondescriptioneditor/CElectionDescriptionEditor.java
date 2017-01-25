@@ -38,4 +38,9 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     private void updateCurrentDescription() {
         
     }
+
+    @Override
+    public boolean isCorrect() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

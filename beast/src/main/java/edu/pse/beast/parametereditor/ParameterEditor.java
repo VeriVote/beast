@@ -7,23 +7,25 @@ package edu.pse.beast.parametereditor;
 import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.propertylist.PropertyList;
-//import edu.pse.beast.highlevel.CheckStartStopNotifier;
+//import edu.pse.beast.highlevel.MainNotifier;
 //import edu.pse.beast.highlevel.CheckListener;
 import edu.pse.beast.datatypes.ElectionCheckParameter;
 import edu.pse.beast.highlevel.CheckListener;
-import edu.pse.beast.highlevel.CheckStartStopNotifier;
 import java.util.ArrayList;
-import edu.pse.beast.highlevel.AbstractCentralObjectProvider;
+import edu.pse.beast.highlevel.MainNotifier;
+import java.awt.event.ActionListener;
 
 /**
  *
  * @author Jonas
  */
-public class ParameterEditor implements ParameterSource, CheckStartStopNotifier {
-    private ParameterEditorWindowStarter windowStarter;
-    private CElectionDescriptionEditor cElectionDescriptionEditor; 
-    private PropertyList propertyList;
-    private ArrayList<CheckListener> listener = new ArrayList<>();
+public class ParameterEditor implements ParameterSource, MainNotifier {
+    private final ParameterEditorWindowStarter windowStarter;
+    private final CElectionDescriptionEditor cElectionDescriptionEditor; 
+    private final PropertyList propertyList;
+    private final ArrayList<CheckListener> listener = new ArrayList<>();
+    private final ArrayList<ActionListener> closeListener = new ArrayList<>();
+    private final ArrayList<ActionListener> saveListener = new ArrayList<>();
     //private MinMaxSpinValueHandler voterHandler;
     //private MinMaxSpinValueHandler candHandler;
     //private MinMaxSpinValueHandler seatHandler;
@@ -41,7 +43,7 @@ public class ParameterEditor implements ParameterSource, CheckStartStopNotifier 
     }
     
     /*
-    * implements CheckStartStopNotifier
+    * implements MainNotifier
     @Override
     public void addCheckListener(CheckListener l) {
         this.checkListener = l;
@@ -68,4 +70,18 @@ public class ParameterEditor implements ParameterSource, CheckStartStopNotifier 
     public void addCheckListener(CheckListener l) {
         listener.add(l);
     }
+    @Override
+    public void addCloseListener(ActionListener l) {
+        closeListener.add(l);
+    }
+    @Override
+    public void addSaveListener(ActionListener l) {
+        saveListener.add(l);
+    }
+
+    @Override
+    public boolean isCorrect() {
+        return true;
+    }
+    
 }

@@ -2,11 +2,11 @@
 package edu.pse.beast.highlevel;
 
 /**
- * The AbstractCentralObjectProvider provides access to the interfaces for the packages used 
- to run BEAST for the BEASTCommunicator.
+ * The CentralObjectProvider provides access to the interfaces for the packages used 
+ * to run BEAST for the BEASTCommunicator.
  * @author Jonas
  */
-public interface AbstractCentralObjectProvider {
+public interface CentralObjectProvider {
     /**
      * Provides access to the ElectionDescriptionSource
      * @return ElectionDescriptionSource
@@ -33,8 +33,8 @@ public interface AbstractCentralObjectProvider {
      */
     ResultPresenter getResultPresenter();
     /**
-     * Provides access to the CheckStartStopNotifier
-     * @return CheckStartStopNotifier
+     * Provides access to the MainNotifier
+     * @return MainNotifier
      */
-    CheckStartStopNotifier getCheckStartStopNotifier();
+    MainNotifier getMainNotifier();
 }

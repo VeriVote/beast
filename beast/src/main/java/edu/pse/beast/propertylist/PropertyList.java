@@ -29,7 +29,7 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource, Resu
 		this.booleanExpEditor = booleanExpEditor;
 	}
         	
-	public PostAndPrePropertiesDescription getPostAndPrePropertiesDescriptions() {
+	public ArrayList<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptions() {
 		/*ArrayList<PostAndPrePropertiesDescription> res = new ArrayList<PostAndPrePropertiesDescription>();
 		for (PropertyItem item : propertyDescriptions) res.add(item.getDescription());
 		return res;*/
@@ -78,4 +78,9 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource, Resu
         public void presentResult(Result res) {
             throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         }
+
+    @Override
+    public boolean isCorrect() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

@@ -12,4 +12,9 @@ public interface ParameterSource {
      * @return ElectionCheckParameter
      */
     ElectionCheckParameter getParameter();
+    /**
+     * Returns true if the parameters are correct.
+     * @return correctness
+     */
+    boolean isCorrect();
 }

@@ -18,7 +18,7 @@ import edu.pse.beast.toolbox.ObjectRefsForBuilder;
  *
  * @author Jonas
  */
-public class PSECentralObjectProvider implements AbstractCentralObjectProvider{
+public class PSECentralObjectProvider implements CentralObjectProvider{
     
     private final ParameterEditor paramEd;
     private final PropertyList propertyList;
@@ -66,7 +66,7 @@ public class PSECentralObjectProvider implements AbstractCentralObjectProvider{
     }
 
     @Override
-    public CheckStartStopNotifier getCheckStartStopNotifier() {
+    public MainNotifier getMainNotifier() {
         return paramEd;
     }
     

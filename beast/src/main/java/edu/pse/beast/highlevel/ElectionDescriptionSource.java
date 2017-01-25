@@ -13,4 +13,10 @@ import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
  */
 public interface ElectionDescriptionSource {
     public ElectionDescription getElectionDescription();
+    /**
+     * Returns true if the ElectionDescription is correct.
+     * @return correctness
+     */
+    boolean isCorrect();
 }
+
