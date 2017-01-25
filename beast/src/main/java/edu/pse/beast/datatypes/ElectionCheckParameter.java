@@ -12,6 +12,7 @@ public class ElectionCheckParameter {
     private final List<Integer> amountCandidates;
     private final List<Integer> amountSeats;
     private final TimeOut timeOut;
+    private final String advanced;
 
     /**
      * 
@@ -21,11 +22,12 @@ public class ElectionCheckParameter {
      * @param timeOut the timeout that specifies how long the checker should run
      */
     public ElectionCheckParameter(List<Integer> amountVoters, List<Integer> amountCandidates, 
-            List<Integer> amountSeats, TimeOut timeOut) {
+            List<Integer> amountSeats, TimeOut timeOut, String advanced) {
         this.amountVoters = amountVoters;
         this.amountCandidates = amountCandidates;
         this.amountSeats = amountSeats;
         this.timeOut = timeOut;
+        this.advanced = advanced;
     }
     
     /**
@@ -58,5 +60,13 @@ public class ElectionCheckParameter {
      */
     public TimeOut getTimeout() {
         return timeOut;
+    }
+    
+    /**
+     * 
+     * @return the String that defines the advanced options 
+     */
+    public String getAdvanced() {
+        return advanced;
     }
 }
