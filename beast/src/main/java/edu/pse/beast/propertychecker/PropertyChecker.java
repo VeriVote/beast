@@ -5,6 +5,8 @@
  */
 package edu.pse.beast.propertychecker;
 
+import java.util.List;
+
 import edu.pse.beast.datatypes.ElectionCheckParameter;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
@@ -18,6 +20,7 @@ import edu.pse.beast.highlevel.ResultInterface;
 public class PropertyChecker implements ResultCheckerCommunicator {
     private FactoryController factoryController;
     private final String checkerID;
+    private final int maxTries = 5;
     
     /**
      * 
@@ -28,19 +31,16 @@ public class PropertyChecker implements ResultCheckerCommunicator {
     }
 
     @Override
-    public ResultInterface[] checkPropertiesForDescription(PostAndPrePropertiesDescription propDescr,
+    public List<ResultInterface> checkPropertiesForDescription(List<PostAndPrePropertiesDescription> propDescr,
             ElectionDescription elecDescr, ElectionCheckParameter params) {
-        
-        factoryController = new FactoryController();
-        
-        // TODO Auto-generated method stub
-        return null;
+    	
+    	this.factoryController = new FactoryController(elecDescr, propDescr, params, checkerID, maxTries);
+        return factoryController.getResults();
     }
 
     @Override
     public void abortChecking() {
-        // TODO Auto-generated method stub
-        
+    	factoryController.stopChecking();
     }
     
 }

@@ -2,6 +2,11 @@ package edu.pse.beast.datatypes;
 
 import java.util.List;
 
+/**
+ * 
+ * @author Lukas
+ *
+ */
 public class ElectionCheckParameter {
     private final List<Integer> amountVoters;
     private final List<Integer> amountCandidates;

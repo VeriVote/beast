@@ -2,6 +2,9 @@
 package edu.pse.beast.highlevel;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
+
+import java.util.List;
+
 import edu.pse.beast.datatypes.ElectionCheckParameter;
 
 /**
@@ -16,8 +19,8 @@ public interface ResultCheckerCommunicator {
      * @param params ElectionCheckParameter
      * @return array of ResultInterfaces
      */
-    ResultInterface[] checkPropertiesForDescription(
-            PostAndPrePropertiesDescription propDescr, 
+    List<ResultInterface> checkPropertiesForDescription(
+            List<PostAndPrePropertiesDescription> propDescr, 
             ElectionDescription elecDescr, ElectionCheckParameter params);
     /**
      * Stops checks.
