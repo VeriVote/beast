@@ -2,7 +2,7 @@ grammar FormalPropertyDescription;
 
 booleanExpList : (booleanExp ';')*;
 
-booleanExp : 		'(' booleanExp ')' | binaryRelationExp | quantorExp | notExp | comparisonExp;				
+booleanExp : 	binaryRelationExp | quantorExp | notExp | comparisonExp | OpenBracket booleanExp ClosedBracket;
 
 binaryRelationExp : binaryRelationExp BinaryRelationSymbol booleanExp |
 					quantorExp BinaryRelationSymbol booleanExp |
@@ -16,21 +16,32 @@ notExp : '!' booleanExp;
 
 comparisonExp : typeExp ComparisonSymbol typeExp;
 
-typeExp : symbolicVarExp | electExp | voteExp | constantExp | voteSumExp;
+typeExp : electExp | voteExp | constantExp | voteSumExp | symbolicVarExp | numberExpression;
 
-symbolicVarExp : Identifier;
+numberExpression : Integer;
 
-electExp : 'ELECT' Integer passSymbVar*;
+electExp :  Elect passSymbVar*;
 
-voteExp : 'VOTE' Integer passSymbVar*;
+voteExp : Vote passSymbVar*;
 
 constantExp : 'V' | 'C' | 'S';
 
 voteSumExp : 'VOTE_SUM_FOR_CANDIDATE(' passSymbVar;
 
-passSymbVar : '(' Identifier ')';
-						
+passSymbVar : OpenBracket symbolicVarExp ClosedBracket;
+
+symbolicVarExp : Identifier;
+
 //Lexer
+
+Vote : 'VOTES' Integer;
+
+Elect : 'ELECT' Integer;
+
+ClosedBracket : ')';
+
+OpenBracket : '(';
+
 Quantor : 	'FOR_ALL_VOTERS' | 'FOR_ALL_CANDIDATES' | 'FOR_ALL_SEATS' |
 			'EXISTS_ONE_VOTER' | 'EXISTS_ONE_CANDIDATE' | 'EXISTS_ONE_SEAT';
 
