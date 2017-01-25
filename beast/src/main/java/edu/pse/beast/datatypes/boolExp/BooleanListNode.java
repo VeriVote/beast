@@ -23,9 +23,8 @@ public class BooleanListNode {
      * @param visitor to be visited
      */
     public void getVisited(BooleanExpNodeVisitor visitor) {
-        for (Iterator iterator = boolNodes.iterator(); iterator.hasNext();) {
-            BooleanExpressionNode booleanExpressionNode = (BooleanExpressionNode) iterator.next();
+        boolNodes.forEach((booleanExpressionNode) -> {
             booleanExpressionNode.getVisited(visitor);
-        }
+        });
     }
 }

@@ -15,7 +15,7 @@ import edu.pse.beast.toolbox.BooleanExpCodeToASTConverter;
 public class FormalPropertiesDescription {
 
     private String code;
-    private BooleanExpCodeToASTConverter converter;
+    private final BooleanExpCodeToASTConverter converter;
 
     public FormalPropertiesDescription(BooleanExpCodeToASTConverter converter) {
         this.converter = converter;

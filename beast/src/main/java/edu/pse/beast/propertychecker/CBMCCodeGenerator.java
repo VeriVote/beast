@@ -18,12 +18,14 @@ import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.toolbox.ErrorLogger;
 
 /**
- *
+ * This creates the .c file which will be used to check it with CBMC
+ * It generates a mainmethod, (with the FormalProperty inside it)
+ * important IncludingCode and the votingMethode (the ElectionDescription)
  * @author Niels
  */
 public class CBMCCodeGenerator {
 
-    private ArrayList<String> code;
+    private final ArrayList<String> code;
     private final ElectionDescription electionDescription;
     private final PostAndPrePropertiesDescription postAndPrePropertiesDescription;
 
@@ -40,12 +42,13 @@ public class CBMCCodeGenerator {
 
     private void generateCode() {
         addIncludes();
-        
+
         code.addAll(electionDescription.getCode());
-        
+
         addMainMethod();
     }
 
+    // maybe add something that let's the user use imports
     private void addIncludes() {
         code.add("#inlcude <stdlib.h>");
         code.add("#inlcude <stdint.h>");
@@ -65,18 +68,23 @@ public class CBMCCodeGenerator {
      */
     private void addMainMethod() {
         code.add("int main(int argc, char *argv[]) {");
-        
+
+        // first the Variables have to be Initialized
         addSymbVarInitialisation();
-
+        // the the PreProperties must be definied
         addPreProperties();
-
+        // then the actual voting takes place
         addVotingCalls();
-
+        // now the Post Properties can be checked
         addPostProperties();
 
         code.add("}");
     }
 
+    /**
+     * this should be used to create the VarInitialisation within the main
+     * method.
+     */
     private void addSymbVarInitialisation() {
         LinkedList<SymbolicVariable> symbolicVariableList = postAndPrePropertiesDescription.getSymbolicVariableList();
         symbolicVariableList.forEach((symbVar) -> {
@@ -116,6 +124,9 @@ public class CBMCCodeGenerator {
 
     }
 
+    /**
+     * this adds the Code of the PreProperties. It uses a Visitor it creates
+     */
     private void addPreProperties() {
         FormalPropertiesDescription prePropertiesDescription = this.postAndPrePropertiesDescription.getPrePropertiesDescription();
         BooleanListNode ast = prePropertiesDescription.getAST();
@@ -126,6 +137,9 @@ public class CBMCCodeGenerator {
 
     }
 
+    /**
+     * this adds the Code of the PostProperties. It uses a Visitor it creates
+     */
     private void addPostProperties() {
         FormalPropertiesDescription postPropertiesDescription = this.postAndPrePropertiesDescription.getPostPropertiesDescription();
         BooleanListNode ast = postPropertiesDescription.getAST();
@@ -135,6 +149,11 @@ public class CBMCCodeGenerator {
         });
     }
 
+    /**
+     * this is supposed to call the voting methods. It essentially does:
+     *
+     * elect1 = voting(votes1) for all election
+     */
     private void addVotingCalls() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
