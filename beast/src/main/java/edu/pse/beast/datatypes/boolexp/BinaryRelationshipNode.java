@@ -7,15 +7,15 @@ package edu.pse.beast.datatypes.boolexp;
  */
 public abstract class BinaryRelationshipNode extends BooleanExpressionNode {
 
-    private final BinaryRelationshipNode lhsExpNode;
-    private final BinaryRelationshipNode rhsExpNode;
+    private final BooleanExpressionNode lhsExpNode;
+    private final BooleanExpressionNode rhsExpNode;
     
     /**
      * 
      * @param lhsExpNode the lhs node
      * @param rhsExpNode the rhs node
      */
-    public BinaryRelationshipNode(BinaryRelationshipNode lhsExpNode, BinaryRelationshipNode rhsExpNode) {
+    public BinaryRelationshipNode(BooleanExpressionNode lhsExpNode, BooleanExpressionNode rhsExpNode) {
         this.lhsExpNode = lhsExpNode;
         this.rhsExpNode = rhsExpNode;
     }

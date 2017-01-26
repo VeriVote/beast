@@ -1,5 +1,5 @@
 package toBeImplemented;
 
-public class InternalTypeRep {
-
+public enum InternalTypeRep {
+    VOTER, CANDIDATE, SEAT
 }

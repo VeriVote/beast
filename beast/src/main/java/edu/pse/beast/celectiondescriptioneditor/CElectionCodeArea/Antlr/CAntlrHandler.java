@@ -35,7 +35,7 @@ public class CAntlrHandler {
         lexer.setInputStream(new ANTLRInputStream(pane.getText()));
         CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
         cParser.setTokenStream(commonTokenStream);
-        return cParser.primaryExpression();
+        return cParser.compilationUnit();
     }
     
     public CParser getParser() {

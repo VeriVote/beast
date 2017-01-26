@@ -6,14 +6,18 @@ package edu.pse.beast.datatypes.boolexp;
  *
  */
 public class NotNode extends BooleanExpressionNode {
+    private BooleanExpressionNode followingNode;
+    
+    public NotNode(BooleanExpressionNode followingNode) {
+        this.followingNode = followingNode;
+    }
 
     /**
      * 
      * @return the negated expression node
      */
     public BooleanExpressionNode getNegatedExpNode() {
-        // TODO
-        return null;
+        return followingNode;
     }
 
     @Override

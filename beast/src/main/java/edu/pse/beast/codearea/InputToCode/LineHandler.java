@@ -44,4 +44,14 @@ public class LineHandler {
         }
         return caretPos;
     }
+
+    public int getLineBeginning(int line) {
+        String code = pane.getText();
+        int absPos = 0; 
+        int lineNumber = 0;
+        for(; absPos < code.length() && lineNumber < line; ++absPos) {
+            if(code.charAt(absPos) == '\n') ++lineNumber;
+        }
+        return absPos;
+    }
 }

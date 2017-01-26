@@ -6,7 +6,7 @@
 package edu.pse.beast.propertychecker;
 
 import edu.pse.beast.datatypes.boolexp.BooleanExpressionNode;
-import edu.pse.beast.datatypes.boolexp.BooleanListNode;
+import edu.pse.beast.datatypes.boolexp.BooleanExpListNode;
 import edu.pse.beast.datatypes.boolexp.CBMCCodeGenerationNodeVisitor;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
@@ -130,7 +130,7 @@ public class CBMCCodeGenerator {
      */
     private void addPreProperties() {
         FormalPropertiesDescription prePropertiesDescription = this.postAndPrePropertiesDescription.getPrePropertiesDescription();
-        BooleanListNode ast = prePropertiesDescription.getAST();
+        BooleanExpListNode ast = prePropertiesDescription.getAST();
         CBMCCodeGenerationNodeVisitor preVisitor = new CBMCCodeGenerationNodeVisitor("assume");
         ast.getBooleanExpressions().forEach((node) -> {
             node.getVisited(preVisitor);
@@ -143,7 +143,7 @@ public class CBMCCodeGenerator {
      */
     private void addPostProperties() {
         FormalPropertiesDescription postPropertiesDescription = this.postAndPrePropertiesDescription.getPostPropertiesDescription();
-        BooleanListNode ast = postPropertiesDescription.getAST();
+        BooleanExpListNode ast = postPropertiesDescription.getAST();
         CBMCCodeGenerationNodeVisitor postVisitor = new CBMCCodeGenerationNodeVisitor("assert");
         ast.getBooleanExpressions().forEach((node) -> {
             node.getVisited(postVisitor);

@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.codearea.ErrorHandling;
 
+import edu.pse.beast.codearea.InputToCode.LineHandler;
 import edu.pse.beast.codearea.StoppedTypingContinuouslyListener;
 import edu.pse.beast.codearea.StoppedTypingContinuouslyMessager;
 import javax.swing.JTextPane;
@@ -20,7 +21,8 @@ public class ErrorController implements StoppedTypingContinuouslyListener {
     private JTextPane pane;
     private ErrorDisplayer displayer;
     
-    public ErrorController(JTextPane pane, StoppedTypingContinuouslyMessager msg) {
+    public ErrorController(JTextPane pane,
+            StoppedTypingContinuouslyMessager msg) {
         this.pane = pane;
         msg.addListener(this);
         errorFinderList = new ErrorFinderList();

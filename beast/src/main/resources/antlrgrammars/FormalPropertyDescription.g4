@@ -1,6 +1,8 @@
 grammar FormalPropertyDescription;
 
-booleanExpList : (booleanExp ';')*;
+booleanExpList : booleanExpListElement*;
+
+booleanExpListElement : booleanExp ';';
 
 booleanExp : 	binaryRelationExp | quantorExp | notExp | comparisonExp | OpenBracket booleanExp ClosedBracket;
 

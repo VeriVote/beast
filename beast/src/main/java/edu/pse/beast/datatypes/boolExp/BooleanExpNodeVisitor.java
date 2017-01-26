@@ -13,7 +13,7 @@ public interface BooleanExpNodeVisitor {
      *
      * @param node the node to visit
      */
-    void visitBooleanListNode(BooleanListNode node);
+    void visitBooleanListNode(BooleanExpListNode node);
 
     /**
      *
@@ -37,7 +37,7 @@ public interface BooleanExpNodeVisitor {
      *
      * @param node the node to visit
      */
-    void visitAquivalencyNode(AquivalencyNode node);
+    void visitAquivalencyNode(EquivalencyNode node);
 
     /**
      *

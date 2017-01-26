@@ -12,7 +12,7 @@ public class ImplicationNode extends BinaryRelationshipNode {
      * @param lhsExpNode the lhs node
      * @param rhsExpNode the rhs node
      */
-    public ImplicationNode(BinaryRelationshipNode lhsExpNode, BinaryRelationshipNode rhsExpNode) {
+    public ImplicationNode(BooleanExpressionNode lhsExpNode, BooleanExpressionNode rhsExpNode) {
         super(lhsExpNode, rhsExpNode);
     }
 

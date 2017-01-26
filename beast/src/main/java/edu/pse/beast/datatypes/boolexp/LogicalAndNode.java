@@ -12,7 +12,7 @@ public class LogicalAndNode extends BinaryRelationshipNode {
      * @param lhsExpNode the lhs node
      * @param rhsExpNode the rhs node
      */
-    public LogicalAndNode(BinaryRelationshipNode lhsExpNode, BinaryRelationshipNode rhsExpNode) {
+    public LogicalAndNode(BooleanExpressionNode lhsExpNode, BooleanExpressionNode rhsExpNode) {
         super(lhsExpNode, rhsExpNode);
     }
 

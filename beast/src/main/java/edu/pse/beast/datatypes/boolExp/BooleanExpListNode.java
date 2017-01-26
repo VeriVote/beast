@@ -7,7 +7,7 @@ import java.util.List;
  * @author Lukas
  *
  */
-public class BooleanListNode {
+public class BooleanExpListNode {
     private List<BooleanExpressionNode> boolNodes;
     
     /**
@@ -26,5 +26,9 @@ public class BooleanListNode {
         boolNodes.forEach((booleanExpressionNode) -> {
             booleanExpressionNode.getVisited(visitor);
         });
+    }
+    
+    public void addNode(BooleanExpressionNode node) {
+        boolNodes.add(node);
     }
 }

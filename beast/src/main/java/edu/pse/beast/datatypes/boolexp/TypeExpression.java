@@ -1,5 +1,6 @@
 package edu.pse.beast.datatypes.boolexp;
 
+import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import toBeImplemented.InternalTypeRep;
 
 /**
@@ -9,21 +10,21 @@ import toBeImplemented.InternalTypeRep;
  */
 public abstract class TypeExpression extends BooleanExpressionNode {
 
-    private final InternalTypeRep internalTypeRep;
+    private final InternalTypeContainer container;
 
     /**
      * 
      * @param internalTypeRep the type of this quantor
      */
-    public TypeExpression(InternalTypeRep internalTypeRep) {
-        this.internalTypeRep = internalTypeRep;
+    public TypeExpression(InternalTypeContainer container) {
+        this.container = container;
     }
 
     /**
      * 
      * @return the type of this quantor
      */
-    public InternalTypeRep getInternalTypeRep() {
-        return internalTypeRep;
+    public InternalTypeContainer getInternalTypeRep() {
+        return container;
     }
 }

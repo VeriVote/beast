@@ -12,7 +12,7 @@ public class LogicalOrNode extends BinaryRelationshipNode {
      * @param lhsExpNode the lhs node
      * @param rhsExpNode the rhs node
      */
-    public LogicalOrNode(BinaryRelationshipNode lhsExpNode, BinaryRelationshipNode rhsExpNode) {
+    public LogicalOrNode(BooleanExpressionNode lhsExpNode, BooleanExpressionNode rhsExpNode) {
         super(lhsExpNode, rhsExpNode);
     }
 

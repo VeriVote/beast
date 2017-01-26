@@ -5,7 +5,7 @@
  */
 package edu.pse.beast.datatypes.propertydescription;
 
-import edu.pse.beast.datatypes.boolexp.BooleanListNode;
+import edu.pse.beast.datatypes.boolexp.BooleanExpListNode;
 import edu.pse.beast.toolbox.BooleanExpCodeToASTConverter;
 
 /**
@@ -28,7 +28,7 @@ public class FormalPropertiesDescription {
     public void setCode(String code) {
         this.code = code;
     }
-    public BooleanListNode getAST(){
+    public BooleanExpListNode getAST(){
         return converter.generateAST(code);
     }
 }

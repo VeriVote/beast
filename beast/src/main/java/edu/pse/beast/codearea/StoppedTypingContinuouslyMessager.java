@@ -34,7 +34,11 @@ public class StoppedTypingContinuouslyMessager implements KeyListener, CaretList
 
     @Override
     public void keyTyped(KeyEvent ke) {
-        
+        if( ke.getKeyCode() == ke.VK_ENTER ||
+            ke.getKeyCode() == ke.VK_DELETE ||
+            ke.getKeyCode() == ke.VK_RIGHT) {
+            msgAllListener();
+        }
     }
 
     @Override
@@ -45,6 +49,7 @@ public class StoppedTypingContinuouslyMessager implements KeyListener, CaretList
     @Override
     public void keyReleased(KeyEvent ke) {
         if( ke.getKeyCode() == ke.VK_ENTER ||
+            ke.getKeyCode() == ke.VK_DELETE ||
             ke.getKeyCode() == ke.VK_RIGHT) {
             msgAllListener();
         }

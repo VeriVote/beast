@@ -5,14 +5,14 @@ package edu.pse.beast.datatypes.boolexp;
  * @author Lukas
  *
  */
-public class AquivalencyNode extends BinaryRelationshipNode {
+public class EquivalencyNode extends BinaryRelationshipNode {
 
     /**
      * 
      * @param lhsExpNode the lhs node
      * @param rhsExpNode the rhs node
      */
-    public AquivalencyNode(BinaryRelationshipNode lhsExpNode, BinaryRelationshipNode rhsExpNode) {
+    public EquivalencyNode(BooleanExpressionNode lhsExpNode, BooleanExpressionNode rhsExpNode) {
         super(lhsExpNode, rhsExpNode);
     }
 

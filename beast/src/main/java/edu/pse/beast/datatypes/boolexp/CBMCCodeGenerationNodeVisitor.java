@@ -51,7 +51,7 @@ public class CBMCCodeGenerationNodeVisitor implements BooleanExpNodeVisitor {
     }
 
     @Override
-    public void visitBooleanListNode(BooleanListNode node) {
+    public void visitBooleanListNode(BooleanExpListNode node) {
         // TODO Auto-generated method stub
 
     }
@@ -75,7 +75,7 @@ public class CBMCCodeGenerationNodeVisitor implements BooleanExpNodeVisitor {
     }
 
     @Override
-    public void visitAquivalencyNode(AquivalencyNode node) {
+    public void visitAquivalencyNode(EquivalencyNode node) {
         // TODO Auto-generated method stub
 
     }

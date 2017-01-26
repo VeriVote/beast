@@ -46,7 +46,7 @@ public class PropertyListWindowStarterTest {
 		ObjectRefsForBuilder objRefsForBuilder = new ObjectRefsForBuilder(new OptionsInterface(),
                 new StringLoaderInterface("de"),
                 new LanguageOptions(), new SaverLoaderInterface());
-		builder.createPropertyList(objRefsForBuilder);
+		//builder.createPropertyList(objRefsForBuilder);
     }
 
 }
