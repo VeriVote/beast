@@ -1,6 +1,7 @@
 package edu.pse.beast.propertylist.View;
 
 import java.awt.BorderLayout;
+import java.awt.MenuBar;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -11,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
 import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
+import edu.pse.beast.propertylist.PropertyListMenuBarHandler;
+import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 
 /**
 *
@@ -25,6 +28,8 @@ public class PropertyListWindow extends JFrame{
 	private JPanel panel;
 	private JPanel endpanel;
 	
+	private ObjectRefsForBuilder refs;
+	
 	private ArrayList<ListItem> items;
 	private JButton addNewButton = new JButton();
 
@@ -32,9 +37,15 @@ public class PropertyListWindow extends JFrame{
 		init();
 	}
 	
+	public PropertyListWindow(ObjectRefsForBuilder refs) {
+		this.refs = refs;
+		init();
+	}
+	
 	public JToolBar getToolbar() {
     	return toolBar;
     }
+	
 	
 	public ArrayList<ListItem> getList() {
 		return items;
@@ -59,6 +70,8 @@ public class PropertyListWindow extends JFrame{
 		menuBar.add(menuFile);
 		menuBar.add(menuEdit);
 		this.setJMenuBar(menuBar);
+		
+		
 		
 		toolBar = new JToolBar();
 		toolBar.setFloatable(false);

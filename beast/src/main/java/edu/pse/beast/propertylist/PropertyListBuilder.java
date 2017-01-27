@@ -44,6 +44,8 @@ public class PropertyListBuilder {
 				refs.getStringIF().getPropertyListStringResProvider().getToolbarTipStringRes(),
 				createActionIdAndListenerListForToolbarHandler(), window.getToolbar(), window);
 		
+		window.setJMenuBar(menuBarHandler.getCreatedMenuBar());
+		
 		starter.start();
 		
 		return instance;
