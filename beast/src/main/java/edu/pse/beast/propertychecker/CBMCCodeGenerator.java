@@ -129,26 +129,26 @@ public class CBMCCodeGenerator {
      * this adds the Code of the PreProperties. It uses a Visitor it creates
      */
     private void addPreProperties() {
-        FormalPropertiesDescription prePropertiesDescription = this.postAndPrePropertiesDescription.getPrePropertiesDescription();
-        BooleanExpListNode ast = prePropertiesDescription.getAST();
-        CBMCCodeGenerationNodeVisitor preVisitor = new CBMCCodeGenerationNodeVisitor("assume");
-        ast.getBooleanExpressions().forEach((node) -> {
-            node.getVisited(preVisitor);
-        });
-        code.addAll(preVisitor.getCode());
+//        FormalPropertiesDescription prePropertiesDescription = this.postAndPrePropertiesDescription.getPrePropertiesDescription();
+//        BooleanExpListNode ast = prePropertiesDescription.getAST();
+//        CBMCCodeGenerationNodeVisitor preVisitor = new CBMCCodeGenerationNodeVisitor("assume");
+//        ast.getBooleanExpressions().forEach((node) -> {
+//            node.getVisited(preVisitor);
+//        });
+//        code.addAll(preVisitor.getCode());
     }
 
     /**
      * this adds the Code of the PostProperties. It uses a Visitor it creates
      */
     private void addPostProperties() {
-        FormalPropertiesDescription postPropertiesDescription = this.postAndPrePropertiesDescription.getPostPropertiesDescription();
-        BooleanExpListNode ast = postPropertiesDescription.getAST();
-        CBMCCodeGenerationNodeVisitor postVisitor = new CBMCCodeGenerationNodeVisitor("assert");
-        ast.getBooleanExpressions().forEach((node) -> {
-            node.getVisited(postVisitor);
-        });
-        code.addAll(postVisitor.getCode());
+//        FormalPropertiesDescription postPropertiesDescription = this.postAndPrePropertiesDescription.getPostPropertiesDescription();
+//        BooleanExpListNode ast = postPropertiesDescription.getAST();
+//        CBMCCodeGenerationNodeVisitor postVisitor = new CBMCCodeGenerationNodeVisitor("assert");
+//        ast.getBooleanExpressions().forEach((node) -> {
+//            node.getVisited(postVisitor);
+//        });
+//        code.addAll(postVisitor.getCode());
     }
 
     /**

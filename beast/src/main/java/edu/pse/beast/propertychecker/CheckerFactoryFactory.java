@@ -46,7 +46,7 @@ public final class CheckerFactoryFactory {
 		}
 		
 		if (factories.keySet().contains(checkerID)) {
-			
+			return null;
 			//TODO
 
 		} else {
