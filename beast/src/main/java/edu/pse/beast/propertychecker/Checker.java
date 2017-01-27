@@ -8,9 +8,4 @@ public abstract class Checker implements Runnable {
         
     }
 
-    public void interruptChecking() {
-        // TODO Auto-generated method stub
-        
-    }
-
 }
