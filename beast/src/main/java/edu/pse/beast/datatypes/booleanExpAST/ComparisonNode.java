@@ -12,7 +12,6 @@ public class ComparisonNode extends BooleanExpressionNode {
 
     private final ComparisonSymbol comparisonSymbol;
     
-    
     /**
      * 
      * @param lhsTypeExp the lhsExpression
@@ -56,4 +55,6 @@ public class ComparisonNode extends BooleanExpressionNode {
         visitor.visitComparisonNode(this);
     }
 
+
+    
 }

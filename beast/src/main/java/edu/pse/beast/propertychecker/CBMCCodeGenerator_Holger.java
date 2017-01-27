@@ -10,6 +10,7 @@ import edu.pse.beast.datatypes.booleanExpAST.BooleanExpressionNode;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
 import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
+import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
@@ -60,15 +61,59 @@ public class CBMCCodeGenerator_Holger {
         ElectionTypeContainer input = electionDescription.getInputType();
         ElectionTypeContainer output = electionDescription.getOutputType();
         
+        generateHeader();
+        
+        for(String s : electionDescription.getCode()) {
+            generatedCode += s + "\n";
+        }
+        
+        String funcDecl = "void NAME() {\n".replace("NAME", testFuncName);
+        
+        generatedCode += funcDecl;
+        
+        for(SymbolicVariable v : properties.getSymbolicVariableList()) {
+            String max = "";
+            if(v.getInternalTypeContainer().getInternalType() == InternalTypeRep.VOTER) {
+                max = "V";
+            } else if(v.getInternalTypeContainer().getInternalType() == InternalTypeRep.CANDIDATE) {
+                max = "C";
+            } else if(v.getInternalTypeContainer().getInternalType() == InternalTypeRep.SEAT) {
+                max = "S";
+            }
+            String varDecl = "unsigned int VAR;\n" +
+                            "assume(0 <= VAR <= MAX);\n";
+            varDecl = varDecl.replaceAll("MAX", max);
+            varDecl = varDecl.replaceAll("VAR", v.getId());
+            generatedCode += varDecl;
+        }       
+                    
+        BooleanExpListNode preast = generateAST(properties.getPrePropertiesDescription().getCode());
+        BooleanExpListNode postast = generateAST(properties.getPostPropertiesDescription().getCode());
+        
+        int maxVote = preast.getMaxVoteLevel() > postast.getMaxVoteLevel() ? preast.getMaxVoteLevel() : postast.getMaxVoteLevel();
+        maxVote = preast.getHighestElect() > maxVote ? preast.getHighestElect() : maxVote;
+        maxVote = postast.getHighestElect() > maxVote ? postast.getHighestElect() : maxVote;
+        
+        for(int i = 1; i <= maxVote; ++i) {
+            generatedCode += "unsigned int VOTES[V];\n".replace("VOTES", "votes" + i);
+        }
+        
+        for(int i = 1; i <= maxVote; ++i) {
+            String voteStr = "for(unsigned int i = 0; i < V; ++i) {\n" +
+                                "VOTES[i] = nondet_uint();\n" +
+                                    "}\n";
+            voteStr = voteStr.replaceAll("VOTES", "votes" + i);
+            generatedCode += voteStr;
+        }
+        
         visitor = new CBMCCodeGeneratioonVisitor();
         visitor.setPreProperties();
         
-        BooleanExpListNode ast = generateAST(properties.getPrePropertiesDescription().getCode());
         
-        generatedCode += visitor.generate(ast.getBooleanExpressions().get(0));
+        generatedCode += visitor.generate(preast.getBooleanExpressions().get(0));
         
         int i = 1;
-        int highestElect = ast.getHighestElect();
+        int highestElect = preast.getHighestElect();
         for(; i <= highestElect; ++i) {
             String code = "unsigned int ELECT = voting(VOTES, CANDIDATES, SEATS);\n";
             code = code.replace("ELECT", "elect" + i);
@@ -76,14 +121,13 @@ public class CBMCCodeGenerator_Holger {
             code = code.replace("CANDIDATES", "candidates");
             code = code.replace("SEATS", "seats");
             generatedCode += code;
-            ArrayList<BooleanExpressionNode> list = ast.getBooleanExpressions().get(i);
+            ArrayList<BooleanExpressionNode> list = preast.getBooleanExpressions().get(i);
             String generated = visitor.generate(list);
             generatedCode += generated;
         }
         
-        ast = generateAST(properties.getPostPropertiesDescription().getCode());
         
-        for(; i <= ast.getHighestElect(); ++i) {
+        for(; i <= postast.getHighestElect(); ++i) {
             String code = "unsigned int ELECT = voting(VOTES, CANDIDATES, SEATS);\n";
             code = code.replace("ELECT", "elect" + i);
             code = code.replace("VOTES", "votes" + i);
@@ -94,11 +138,35 @@ public class CBMCCodeGenerator_Holger {
         
         visitor.setPostProperties();
         
-        for(ArrayList<BooleanExpressionNode> list : ast.getBooleanExpressions()) {
+        for(ArrayList<BooleanExpressionNode> list : postast.getBooleanExpressions()) {
             generatedCode += visitor.generate(list);
         }
         
+        generatedCode += "}\n";
+        
+        generateMain();
+        
         return generatedCode;
+    }
+
+    private void generateHeader() {
+        String header = "#include <stdlib.h>\n#include <stdint.h>\n#include <assert.h>" +
+                            "int nondet_uint();\n" +
+                            "#define assert2(x, y) __CPROVER_assert(x, y)\n" +
+                "#define assume(x) __CPROVER_assume(x)" +
+                "#ifndef V\n#define V 3\n#endif\n\n" + 
+                "#ifndef C\n#define C 3\n #endif\n\n" +
+               "#ifndef S\n#define S 3\n #endif\n\n";       
+        generatedCode += header;
+
+    }
+
+    private void generateMain() {
+        String main = "int main() {\n" + 
+                properties.getName() + "();\n" +
+                "return 0;\n"+ 
+                "}\n";
+        generatedCode += main;
     }
 
 }
