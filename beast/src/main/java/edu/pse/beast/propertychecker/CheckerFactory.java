@@ -29,6 +29,7 @@ public abstract class CheckerFactory implements Runnable {
     private Checker currentlyRunning;
     private Thread workingThread;
     private boolean stopped = false;
+    private boolean finished = false;
 
     private CheckerFactory(FactoryController controller, ElectionDescriptionSource electionDescSrc,
             PostAndPrePropertiesDescriptionSource postAndPrepPropDescSrc, ParameterSource paramSrc, Result result) {
@@ -42,14 +43,13 @@ public abstract class CheckerFactory implements Runnable {
 
     public void run() {
 
+        workingThread = Thread.currentThread();
+
         ArrayList<String> code = new CBMCCodeGenerator(null, null).getCode();
 
-        // Get the file reference
-        Path path = Paths.get("/Beast/src/main/resources/tmp/temp.c");
+        File file = new File("/Beast/src/main/resources/tmp/" + CheckerFactoryFactory.newUniqueName());
 
-        // FileSaver.writeStringLinesToFile(text, path, fileName);
-
-        // Use try-with-resource to get auto-closeable writer instance
+        FileSaver.writeStringLinesToFile(code, file);
 
         paramSrc.getParameter().getAmountVoters();
 
@@ -69,6 +69,25 @@ public abstract class CheckerFactory implements Runnable {
                         .iterator(); seatsIterator.hasNext();) {
                     int seats = (int) seatsIterator.next();
 
+                    if (!stopped) {
+                        startProcess(file, advanced + " -D V=" + voters + " -D C=" + candidates + " -D S=" + seats);
+                    }
+                    
+                    while (!finished && !stopped) {
+                        try {
+                            //polling in 1 second steps to save cpu time
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            //keep on polling
+                        }
+                    }
+                    
+                    if (stopped) {
+                        result.
+                    }
+                    
+                    finished = false;
+                    
                 }
             }
         }
@@ -76,11 +95,17 @@ public abstract class CheckerFactory implements Runnable {
     }
 
     public void stopChecking() {
+        stopped = true;
         currentlyRunning.interruptChecking();
     }
-    
-    protected abstract void startProcess(File toCheck, String callParams, Result result);
-    
+
+    public void notifyThatFinished() {
+        finished = true;
+        workingThread.interrupt();
+    }
+
+    protected abstract void startProcess(File toCheck, String callParams);
+
     /**
      * 
      * @return the result object that belongs to the Checker produced by this
@@ -88,4 +113,3 @@ public abstract class CheckerFactory implements Runnable {
      */
     public abstract List<Result> getFittingResult(int size);
 }
-

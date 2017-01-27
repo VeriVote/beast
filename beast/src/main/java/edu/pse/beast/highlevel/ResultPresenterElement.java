@@ -27,5 +27,4 @@ public interface ResultPresenterElement {
      * @param example the example to be presented
      */
     void presentFailureExample(FailureExample example);
-    //TODO FailureExample implementieren
 }

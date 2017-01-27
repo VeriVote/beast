@@ -55,5 +55,10 @@ public final class CheckerFactoryFactory {
 		}
 		
 	}
+
+    public static String newUniqueName() {
+        // TODO Auto-generated method stub
+        return null;
+    }
  	
 }
