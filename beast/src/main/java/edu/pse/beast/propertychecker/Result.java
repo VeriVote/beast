@@ -7,6 +7,7 @@ package edu.pse.beast.propertychecker;
 
 import java.util.List;
 
+import edu.pse.beast.highlevel.FailureExample;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenterElement;
 import edu.pse.beast.toolbox.ErrorLogger;
@@ -43,8 +44,9 @@ public abstract class Result implements ResultInterface{
         }
         if (success) {
             presenter.presentSuccess();
-        } else 
-        if ()
+        } else  {
+            presenter.presentFailureExample(new FailureExample(result));
+        }
         
         
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
