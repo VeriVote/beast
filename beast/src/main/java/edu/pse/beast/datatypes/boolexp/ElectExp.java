@@ -1,12 +1,11 @@
 package edu.pse.beast.datatypes.boolexp;
 
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import toBeImplemented.InternalTypeRep;
-import toBeImplemented.SymbolicVariable;
+import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 
 /**
  * 
- * @author Lukas
+ * @author Holger
  *
  */
 public class ElectExp extends TypeExpression {
@@ -34,7 +33,7 @@ public class ElectExp extends TypeExpression {
         return count;
     }
 
-    public SymbolicVariable getAccesVar() {
+    public SymbolicVariable[] getAccesVar() {
         return accesVar;
     }
     

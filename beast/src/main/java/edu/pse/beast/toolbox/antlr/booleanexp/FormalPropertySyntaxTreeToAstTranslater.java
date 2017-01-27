@@ -10,6 +10,7 @@ import edu.pse.beast.datatypes.boolexp.BinaryRelationshipNode;
 import edu.pse.beast.datatypes.boolexp.BooleanExpListNode;
 import edu.pse.beast.datatypes.boolexp.BooleanExpressionNode;
 import edu.pse.beast.datatypes.boolexp.ComparisonNode;
+import edu.pse.beast.datatypes.boolexp.ComparisonSymbol;
 import edu.pse.beast.datatypes.boolexp.ElectExp;
 import edu.pse.beast.datatypes.boolexp.ForAllNode;
 import edu.pse.beast.datatypes.boolexp.ImplicationNode;
@@ -20,7 +21,11 @@ import edu.pse.beast.datatypes.boolexp.QuantorNode;
 import edu.pse.beast.datatypes.boolexp.ThereExistsNode;
 import edu.pse.beast.datatypes.boolexp.TypeExpression;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
+import edu.pse.beast.datatypes.internal.InternalTypeRep;
+import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.BooleanExpListContext;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 import javafx.beans.binding.BooleanExpression;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -28,14 +33,12 @@ import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import toBeImplemented.InternalTypeRep;
-import toBeImplemented.SymbolicVariable;
 
 /**
  *
  * @author Holger-Desktop
  */
-public class FormalPropertySyntaxTreeToAstTranslater implements FormalPropertyDescriptionListener {
+public class FormalPropertySyntaxTreeToAstTranslater extends FormalPropertyDescriptionBaseListener {
     
     private BooleanExpListNode generated;
     private InternalTypeContainer inputType;
@@ -43,12 +46,17 @@ public class FormalPropertySyntaxTreeToAstTranslater implements FormalPropertyDe
     private Stack<BooleanExpressionNode> nodeStack;
     private Stack<TypeExpression> expStack;
     private int maxElectExp = 0;
-    private int maxVoteExp = 0;    
+    private int maxVoteExp = 0; 
+    private int currentHighestElect = 0;
+    private Stack<SymbolicVariable> symbVarStack;
+    private ArrayList<InternalTypeContainer> symbVarTypeList;
     
     public BooleanExpListNode generateFromSyntaxTree(
             BooleanExpListContext parseTree,
             InternalTypeContainer inputType, 
             InternalTypeContainer outputType) {
+        this.inputType = inputType;
+        this.outputType = outputType;
         ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(this, parseTree);
         return generated;
@@ -57,25 +65,27 @@ public class FormalPropertySyntaxTreeToAstTranslater implements FormalPropertyDe
     @Override
     public void enterBooleanExpList(FormalPropertyDescriptionParser.BooleanExpListContext ctx) {
         generated = new BooleanExpListNode();        
-        nodeStack = new Stack<>();
-        expStack = new Stack<>();
         maxElectExp = 0;
         maxVoteExp = 0;    
+        expStack = new Stack<>();
+        nodeStack = new Stack<>();
+        symbVarStack = new Stack<>();
+        symbVarTypeList = new ArrayList<>();
     }
 
     @Override
     public void exitBooleanExpList(FormalPropertyDescriptionParser.BooleanExpListContext ctx) {
-        generated.addNode(nodeStack.pop());
+        generated.setMaxVoteLevel(maxVoteExp);
     }
 
     @Override
     public void enterBooleanExpListElement(FormalPropertyDescriptionParser.BooleanExpListElementContext ctx) {
-        
+        currentHighestElect = 0;
     }
 
     @Override
     public void exitBooleanExpListElement(FormalPropertyDescriptionParser.BooleanExpListElementContext ctx) {
-        //generated.addNode(booleanExpNodeStack.pop());
+        generated.addNode(nodeStack.pop(), currentHighestElect);
     }
 
     @Override
@@ -127,11 +137,11 @@ public class FormalPropertySyntaxTreeToAstTranslater implements FormalPropertyDe
         SymbolicVariable symbVar = null;
         
         if(quantorType.contains("VOTER")) {
-            symbVar = new SymbolicVariable(varName, InternalTypeRep.VOTER);
+            symbVar = new SymbolicVariable(varName, new InternalTypeContainer(InternalTypeRep.VOTER));
         } else if(quantorType.contains("CANDIDATE")) {
-            symbVar = new SymbolicVariable(varName, InternalTypeRep.CANDIDATE);
+            symbVar = new SymbolicVariable(varName, new InternalTypeContainer(InternalTypeRep.CANDIDATE));
         } else if(quantorType.contains("SEAT")) {
-            symbVar = new SymbolicVariable(varName, InternalTypeRep.SEAT);
+            symbVar = new SymbolicVariable(varName, new InternalTypeContainer(InternalTypeRep.SEAT));
         }
         
         if(quantorType.contains("FOR_ALL")) {
@@ -161,10 +171,12 @@ public class FormalPropertySyntaxTreeToAstTranslater implements FormalPropertyDe
 
     @Override
     public void exitComparisonExp(FormalPropertyDescriptionParser.ComparisonExpContext ctx) {
-        String comparisonSymbol = ctx.ComparisonSymbol().getText();
+        String comparisonSymbolString = ctx.ComparisonSymbol().getText();
+        ComparisonSymbol comparisonSymbol = new ComparisonSymbol(comparisonSymbolString);
         TypeExpression rhs = expStack.pop();
         TypeExpression lhs = expStack.pop();
-        ComparisonNode node = new ComparisonNode(rhs, lhs);
+        ComparisonNode node = new ComparisonNode(rhs, lhs, comparisonSymbol);       
+        nodeStack.add(node);
     }
 
     @Override
@@ -189,12 +201,26 @@ public class FormalPropertySyntaxTreeToAstTranslater implements FormalPropertyDe
 
     @Override
     public void enterElectExp(FormalPropertyDescriptionParser.ElectExpContext ctx) {
-       
+        System.out.println("enter elect");
+        InternalTypeContainer container = outputType;
+        while(container.isList()) {
+            symbVarTypeList.add(container.getListedType());
+            container = container.getListedType();
+        }
+        symbVarTypeList.add(new InternalTypeContainer(container.getInternalType()));
     }
 
     @Override
     public void exitElectExp(FormalPropertyDescriptionParser.ElectExpContext ctx) {
-        
+        System.out.println("exit elect");
+        //get number
+        String numberString = ctx.Elect().getText().substring("ELECT".length());
+        int number = Integer.valueOf(numberString);
+        if(currentHighestElect < number) currentHighestElect = number;
+        ArrayList<SymbolicVariable> accessingVars = new ArrayList<>();
+        while(!symbVarStack.empty()) accessingVars.add(symbVarStack.pop());
+        ElectExp expNode = new ElectExp(outputType, (SymbolicVariable[]) accessingVars.toArray(), number);
+        expStack.add(expNode);
     }
 
     @Override
@@ -234,7 +260,9 @@ public class FormalPropertySyntaxTreeToAstTranslater implements FormalPropertyDe
 
     @Override
     public void exitPassSymbVar(FormalPropertyDescriptionParser.PassSymbVarContext ctx) {
-
+        InternalTypeContainer type = symbVarTypeList.get(0);
+        String name = ctx.symbolicVarExp().getText();
+        symbVarStack.add(new SymbolicVariable(name, inputType));
     }
 
     @Override

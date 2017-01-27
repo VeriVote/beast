@@ -12,7 +12,7 @@ package edu.pse.beast.datatypes.internal;
 public class InternalTypeContainer {
 
     private final boolean isList;
-    private final InternalType internalType;
+    private final InternalTypeRep internalType;
     private final InternalTypeContainer listedType;
     
     /**
@@ -26,7 +26,7 @@ public class InternalTypeContainer {
      * CANDIDATE    C
      * SEAT         S
      */
-    private final InternalType accesTypeIfList;
+    private final InternalTypeRep accesTypeIfList;
 
     /**
      * Constructor for a listed TypeContainer
@@ -34,13 +34,13 @@ public class InternalTypeContainer {
      * @param internalType sets the InternalType
      * @param listedType sets the Type of the listelements
      */
-    InternalTypeContainer(InternalType internalType,
+    public InternalTypeContainer(
             InternalTypeContainer listedType,
-            InternalType accesTypeIfList) {
+            InternalTypeRep accesTypeIfList) {
         this.isList = true;
-        this.internalType = internalType;
         this.listedType = listedType;
         this.accesTypeIfList = accesTypeIfList;
+        this.internalType = null;
     }
 
     /**
@@ -48,13 +48,13 @@ public class InternalTypeContainer {
      *
      * @param internalType the type of this election
      */
-    InternalTypeContainer(InternalType internalType) {
+    public InternalTypeContainer(InternalTypeRep internalType) {
         this.isList = false;
         this.internalType = internalType;
         this.listedType = null;
         this.accesTypeIfList = null;
-    }
-
+    }    
+    
     /**
      * Returns if the TypeContainer is a list
      *
@@ -69,7 +69,7 @@ public class InternalTypeContainer {
      *
      * @return returns internalType
      */
-    public InternalType getInternalType() {
+    public InternalTypeRep getInternalType() {
         return internalType;
     }
 
@@ -84,7 +84,7 @@ public class InternalTypeContainer {
     
 
     
-    public InternalType getAccesTypeIfList() {
+    public InternalTypeRep getAccesTypeIfList() {
         return accesTypeIfList;
     }
     

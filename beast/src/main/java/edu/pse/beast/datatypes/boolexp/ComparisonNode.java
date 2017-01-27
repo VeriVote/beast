@@ -10,7 +10,7 @@ public class ComparisonNode extends BooleanExpressionNode {
     private final TypeExpression lhsTypeExp;
     private final TypeExpression rhsTypeExp;
 
-    private ComparisonSymbol comparisonSymbol;
+    private final ComparisonSymbol comparisonSymbol;
     
     
     /**
@@ -18,9 +18,13 @@ public class ComparisonNode extends BooleanExpressionNode {
      * @param lhsTypeExp the lhsExpression
      * @param rhsTypeExp the rhsExpression
      */
-    public ComparisonNode(TypeExpression lhsTypeExp, TypeExpression rhsTypeExp) {
+    public ComparisonNode(
+            TypeExpression lhsTypeExp,
+            TypeExpression rhsTypeExp,
+            ComparisonSymbol comparisonSymbol) {
         this.lhsTypeExp = lhsTypeExp;
         this.rhsTypeExp = rhsTypeExp;
+        this.comparisonSymbol = comparisonSymbol;
     }
 
     /**

@@ -1,10 +1,11 @@
 package edu.pse.beast.datatypes.boolexp;
 
-import toBeImplemented.SymbolicVariable;
+import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
+
 
 /**
  * 
- * @author Lukas
+ * @author Holger
  *
  */
 public class ThereExistsNode extends QuantorNode {

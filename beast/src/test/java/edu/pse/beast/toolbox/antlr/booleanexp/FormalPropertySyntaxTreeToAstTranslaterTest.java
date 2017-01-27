@@ -6,10 +6,13 @@
 package edu.pse.beast.toolbox.antlr.booleanexp;
 
 import edu.pse.beast.datatypes.boolexp.BooleanExpListNode;
+import edu.pse.beast.datatypes.internal.InternalTypeContainer;
+import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -45,7 +48,15 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
     
     @Test
     public void testCreateASTComparison() {
+        String exp = "ELECT1(c) == ELECT1(c)";
+        FormalPropertyDescriptionLexer lexer = new FormalPropertyDescriptionLexer(new ANTLRInputStream(exp));
+        CommonTokenStream tokenS = new CommonTokenStream(lexer);
+        FormalPropertyDescriptionParser parser = new FormalPropertyDescriptionParser(tokenS);
         
+        FormalPropertySyntaxTreeToAstTranslater translater = new FormalPropertySyntaxTreeToAstTranslater();
+        InternalTypeContainer inputType = new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
+        InternalTypeContainer output = new InternalTypeContainer(InternalTypeRep.CANDIDATE);       
+        translater.generateFromSyntaxTree(parser.booleanExpList(), inputType, output);
     }
 
     @Test

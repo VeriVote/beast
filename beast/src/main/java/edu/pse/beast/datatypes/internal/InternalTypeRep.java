@@ -10,7 +10,7 @@ package edu.pse.beast.datatypes.internal;
  *
  * @author Niels
  */
-public enum InternalType {
+public enum InternalTypeRep {
     /**
      * VoterType
      */

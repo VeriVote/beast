@@ -1,34 +1,43 @@
 package edu.pse.beast.datatypes.boolexp;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 /**
  * 
- * @author Lukas
+ * @author Lukas, Holger
  *
  */
 public class BooleanExpListNode {
-    private List<BooleanExpressionNode> boolNodes;
-    
     /**
-     * 
-     * @return the list of nodes
+     * this list stores the subnodes by the highest number of ELECT statement appearing
+     * in them. This is important for code generation. 
+     * Ex:  FOR_ALL_VOTERS(v) : VOTES4(v) ==  ELECT3; <-- would be stored in boolNodesPerElectLevel.get(3)
+     *      ELECT2 == ELECT5; <-- would be stored in boolNodesPerElectLevel.get(5) 
      */
-    public List<BooleanExpressionNode> getBooleanExpressions() {
-        return boolNodes;
+    private List<List<BooleanExpressionNode>> boolNodesPerElectLevel = new ArrayList<>();
+    private int maxVoteLevel;
+    
+    public List<List<BooleanExpressionNode>> getBooleanExpressions() {
+        return boolNodesPerElectLevel;
     }
     
-    /**
-     * 
-     * @param visitor to be visited
-     */
-    public void getVisited(BooleanExpNodeVisitor visitor) {
-        boolNodes.forEach((booleanExpressionNode) -> {
-            booleanExpressionNode.getVisited(visitor);
-        });
+    public int getHighestElect() {
+        return boolNodesPerElectLevel.size();
+    }
+
+    public void setMaxVoteLevel(int maxVoteLevel) {
+        this.maxVoteLevel = maxVoteLevel;
     }
     
-    public void addNode(BooleanExpressionNode node) {
-        boolNodes.add(node);
+    public int getMaxVoteLevel() {
+        return maxVoteLevel;
+    }
+    
+    public void addNode(BooleanExpressionNode node, int highestElectNumber) {
+        while(highestElectNumber >= boolNodesPerElectLevel.size()) {
+            boolNodesPerElectLevel.add(new ArrayList<BooleanExpressionNode>());
+        }
+        boolNodesPerElectLevel.get(highestElectNumber).add(node);
     }
 }
