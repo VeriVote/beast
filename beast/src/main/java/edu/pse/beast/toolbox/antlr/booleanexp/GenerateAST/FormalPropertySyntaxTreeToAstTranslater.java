@@ -112,7 +112,7 @@ public class FormalPropertySyntaxTreeToAstTranslater extends FormalPropertyDescr
 
     @Override
     public void enterBinaryRelationExp(FormalPropertyDescriptionParser.BinaryRelationExpContext ctx) {
-        
+        System.out.println("enterbinary " + ctx.BinaryRelationSymbol().getText());
     }
 
     @Override
@@ -132,7 +132,7 @@ public class FormalPropertySyntaxTreeToAstTranslater extends FormalPropertyDescr
         } else if(symbol.equals("<==>")) {
             node = new EquivalencyNode(lhs, rhs);
         }
-        
+        System.out.println("binary " + symbol);
         nodeStack.add(node);
     }
 
@@ -163,6 +163,7 @@ public class FormalPropertySyntaxTreeToAstTranslater extends FormalPropertyDescr
             node = new ThereExistsNode(((SymbolicVarExp) expStack.pop()).getSymbolicVar(), nodeStack.pop());
         }
         
+        System.out.println("quantor " + quantorType);
         nodeStack.add(node);
         scopeHandler.exitScope();
     }
@@ -180,7 +181,7 @@ public class FormalPropertySyntaxTreeToAstTranslater extends FormalPropertyDescr
 
     @Override
     public void enterComparisonExp(FormalPropertyDescriptionParser.ComparisonExpContext ctx) {        
-        
+        System.out.println("enter comparison " + ctx.ComparisonSymbol().getText());
     }
 
     @Override
@@ -191,6 +192,7 @@ public class FormalPropertySyntaxTreeToAstTranslater extends FormalPropertyDescr
         TypeExpression lhs = expStack.pop();
         ComparisonNode node = new ComparisonNode(rhs, lhs, comparisonSymbol);       
         nodeStack.add(node);
+        
     }
 
     @Override
@@ -293,6 +295,7 @@ public class FormalPropertySyntaxTreeToAstTranslater extends FormalPropertyDescr
         VoteSumForCandExp expNode = new VoteSumForCandExp(
                 new InternalTypeContainer(InternalTypeRep.CANDIDATE),
                 ((SymbolicVarExp) expStack.pop()).getSymbolicVar());
+        expStack.add(expNode);
     }
 
     @Override
@@ -316,6 +319,7 @@ public class FormalPropertySyntaxTreeToAstTranslater extends FormalPropertyDescr
         InternalTypeContainer type = scopeHandler.getTypeForVariable(name);
         SymbolicVarExp expNode = new SymbolicVarExp(type, new SymbolicVariable(name, inputType));
         expStack.add(expNode);
+        System.out.println("symbvar " + name);
     }
 
     @Override

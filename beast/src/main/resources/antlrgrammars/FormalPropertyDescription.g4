@@ -4,7 +4,7 @@ booleanExpList : booleanExpListElement*;
 
 booleanExpListElement : booleanExp ';';
 
-booleanExp : 	binaryRelationExp | quantorExp | notExp | comparisonExp | OpenBracket booleanExp ClosedBracket;
+booleanExp : 	binaryRelationExp | notExp | comparisonExp | quantorExp | OpenBracket booleanExp ClosedBracket;
 
 binaryRelationExp : binaryRelationExp BinaryRelationSymbol booleanExp |
 					quantorExp BinaryRelationSymbol booleanExp |
