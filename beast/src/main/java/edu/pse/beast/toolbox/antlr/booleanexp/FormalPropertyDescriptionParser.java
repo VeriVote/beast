@@ -1,6 +1,6 @@
 package edu.pse.beast.toolbox.antlr.booleanexp;
 
-// Generated from FormalPropertyDescription.g4 by ANTLR 4.5.3
+// Generated from D:\studium\PSE\Implementierung\impl rep 01_23\PSE-Wahlverfahren-Implementierung\beast\src\main\resources\antlrgrammars\FormalPropertyDescription.g4 by ANTLR 4.5.3
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -34,7 +34,7 @@ public class FormalPropertyDescriptionParser extends Parser {
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, "';'", "':'", "'!'", "'V'", "'C'", "'S'", "'VOTE_SUM_FOR_CANDIDATE('", 
+		null, "';'", "':'", "'!'", "'V'", "'C'", "'S'", "'VOTE_SUM_FOR_CANDIDATE'", 
 		null, null, "')'", "'('"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {

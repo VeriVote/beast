@@ -24,6 +24,6 @@ LineComment=20
 'V'=4
 'C'=5
 'S'=6
-'VOTE_SUM_FOR_CANDIDATE('=7
+'VOTE_SUM_FOR_CANDIDATE'=7
 ')'=10
 '('=11

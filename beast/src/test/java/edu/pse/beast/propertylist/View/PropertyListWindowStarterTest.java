@@ -37,15 +37,18 @@ public class PropertyListWindowStarterTest {
 
 	@Test
 	public void test() {
-		//not important
+		// not important
 	}
 	
 	public static void main(String[] args) {
 		
-		PropertyListBuilder builder = new PropertyListBuilder();
+		
+		
+		
+		/*PropertyListBuilder builder = new PropertyListBuilder();
 		ObjectRefsForBuilder objRefsForBuilder = new ObjectRefsForBuilder(new OptionsInterface(),
                 new StringLoaderInterface("de"),
-                new LanguageOptions(), new SaverLoaderInterface());
+                new LanguageOptions(), new SaverLoaderInterface());*/
 		//builder.createPropertyList(objRefsForBuilder);
     }
 

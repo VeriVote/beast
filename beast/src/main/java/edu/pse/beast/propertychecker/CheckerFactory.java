@@ -9,7 +9,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.FileHandler;
 
-import com.google.common.io.Files;
+//import com.google.common.io.Files;
 
 import edu.pse.beast.datatypes.ElectionCheckParameter;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
@@ -48,7 +48,7 @@ public abstract class CheckerFactory implements Runnable {
         Path path = Paths.get("/Beast/src/main/resources/tmp/temp.c");
         
         
-        FileSaver.writeStringLinesToFile(text, path, fileName);
+//        FileSaver.writeStringLinesToFile(text, path, fileName);
         
         
         //Use try-with-resource to get auto-closeable writer instance
@@ -66,12 +66,12 @@ public abstract class CheckerFactory implements Runnable {
         }
     }
 
-    public abstract void stopChecking();
+//    public abstract void stopChecking();
 
     /**
      * 
      * @return the result object that belongs to the Checker produced by this
      *         factory
      */
-    public abstract List<Result> getFittingResult(int size);
-}
+//    public abstract List<Result> getFittingResult(int size);
+

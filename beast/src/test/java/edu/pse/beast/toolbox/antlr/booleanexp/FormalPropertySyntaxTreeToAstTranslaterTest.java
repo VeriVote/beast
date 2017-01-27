@@ -5,11 +5,16 @@
  */
 package edu.pse.beast.toolbox.antlr.booleanexp;
 
-import edu.pse.beast.datatypes.boolexp.BooleanExpListNode;
+import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.FormalPropertySyntaxTreeToAstTranslater;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
+import edu.pse.beast.datatypes.internal.InternalTypeContainer;
+import edu.pse.beast.datatypes.internal.InternalTypeRep;
+import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.BooleanExpScope;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNode;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -42,15 +47,40 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
     @After
     public void tearDown() {
     }
+    
+    private FormalPropertyDescriptionParser.BooleanExpListContext createFromString(String s) {
+        FormalPropertyDescriptionLexer lexer = new FormalPropertyDescriptionLexer(new ANTLRInputStream(s));
+        CommonTokenStream tokenS = new CommonTokenStream(lexer);
+        FormalPropertyDescriptionParser parser = new FormalPropertyDescriptionParser(tokenS);
+        return parser.booleanExpList();
+    }
+    
+    @Test
+    public void testCreateASTComparison() {
+        FormalPropertySyntaxTreeToAstTranslater translater = new FormalPropertySyntaxTreeToAstTranslater();
+        InternalTypeContainer inputType = new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
+        InternalTypeContainer output = new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.CANDIDATE);  
+        
+        BooleanExpScope declaredVar = new BooleanExpScope();
+        declaredVar.addTypeForId("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
+        declaredVar.addTypeForId("v", new InternalTypeContainer(InternalTypeRep.VOTER));        
+        
+//        String exp = "ELECT2(c) == VOTES2(v);";      
+//        BooleanExpListNode created = translater.generateFromSyntaxTree(createFromString(exp), inputType, output, declaredVar);
+      
+        declaredVar = new BooleanExpScope();
+        String exp = "FOR_ALL_VOTERS(v) : EXISTS_ONE_CANDIDATE(c) : (c == VOTES2(v) && (VOTE_SUM_FOR_CANDIDATE(c)>= 3 ==> c < 2));";    
+        BooleanExpListNode created = translater.generateFromSyntaxTree(createFromString(exp), inputType, output, declaredVar);
+    }
 
-   @Test
-   public void testCreateAST() {
+    @Test
+    public void testCreateAST() {
        String exp = "FOR_ALL_VOTERS(v) : EXISTS_ONE_CANDIDATE(c) : VOTES1(v) == c && VOTES1(v) == c;";
        FormalPropertyDescriptionLexer lexer = new FormalPropertyDescriptionLexer(new ANTLRInputStream(exp));
        CommonTokenStream tokenS = new CommonTokenStream(lexer);
        FormalPropertyDescriptionParser parser = new FormalPropertyDescriptionParser(tokenS);
        FormalPropertySyntaxTreeToAstTranslater translater = new FormalPropertySyntaxTreeToAstTranslater();
-       BooleanExpListNode ast = translater.generateFromSyntaxTree(parser.booleanExpList());
-   }
+       //BooleanExpListNode ast = translater.generateFromSyntaxTree(parser.booleanExpList());
+    }
     
 }

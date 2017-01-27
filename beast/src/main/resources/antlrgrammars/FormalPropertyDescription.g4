@@ -4,7 +4,7 @@ booleanExpList : booleanExpListElement*;
 
 booleanExpListElement : booleanExp ';';
 
-booleanExp : 	binaryRelationExp | quantorExp | notExp | comparisonExp | OpenBracket booleanExp ClosedBracket;
+booleanExp : 	binaryRelationExp | notExp | comparisonExp | quantorExp | OpenBracket booleanExp ClosedBracket;
 
 binaryRelationExp : binaryRelationExp BinaryRelationSymbol booleanExp |
 					quantorExp BinaryRelationSymbol booleanExp |
@@ -28,7 +28,7 @@ voteExp : Vote passSymbVar*;
 
 constantExp : 'V' | 'C' | 'S';
 
-voteSumExp : 'VOTE_SUM_FOR_CANDIDATE(' passSymbVar;
+voteSumExp : 'VOTE_SUM_FOR_CANDIDATE' passSymbVar;
 
 passSymbVar : OpenBracket symbolicVarExp ClosedBracket;
 

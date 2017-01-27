@@ -5,9 +5,9 @@
  */
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.boolexp.BooleanExpressionNode;
-import edu.pse.beast.datatypes.boolexp.BooleanExpListNode;
-import edu.pse.beast.datatypes.boolexp.CBMCCodeGenerationNodeVisitor;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanExpressionNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
+import edu.pse.beast.datatypes.booleanExpAST.CBMCCodeGenerationNodeVisitor;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
@@ -129,26 +129,26 @@ public class CBMCCodeGenerator {
      * this adds the Code of the PreProperties. It uses a Visitor it creates
      */
     private void addPreProperties() {
-        FormalPropertiesDescription prePropertiesDescription = this.postAndPrePropertiesDescription.getPrePropertiesDescription();
-        BooleanExpListNode ast = prePropertiesDescription.getAST();
-        CBMCCodeGenerationNodeVisitor preVisitor = new CBMCCodeGenerationNodeVisitor("assume");
-        ast.getBooleanExpressions().forEach((node) -> {
-            node.getVisited(preVisitor);
-        });
-        code.addAll(preVisitor.getCode());
+//        FormalPropertiesDescription prePropertiesDescription = this.postAndPrePropertiesDescription.getPrePropertiesDescription();
+//        BooleanExpListNode ast = prePropertiesDescription.getAST();
+//        CBMCCodeGenerationNodeVisitor preVisitor = new CBMCCodeGenerationNodeVisitor("assume");
+//        ast.getBooleanExpressions().forEach((node) -> {
+//            node.getVisited(preVisitor);
+//        });
+//        code.addAll(preVisitor.getCode());
     }
 
     /**
      * this adds the Code of the PostProperties. It uses a Visitor it creates
      */
     private void addPostProperties() {
-        FormalPropertiesDescription postPropertiesDescription = this.postAndPrePropertiesDescription.getPostPropertiesDescription();
-        BooleanExpListNode ast = postPropertiesDescription.getAST();
-        CBMCCodeGenerationNodeVisitor postVisitor = new CBMCCodeGenerationNodeVisitor("assert");
-        ast.getBooleanExpressions().forEach((node) -> {
-            node.getVisited(postVisitor);
-        });
-        code.addAll(postVisitor.getCode());
+//        FormalPropertiesDescription postPropertiesDescription = this.postAndPrePropertiesDescription.getPostPropertiesDescription();
+//        BooleanExpListNode ast = postPropertiesDescription.getAST();
+//        CBMCCodeGenerationNodeVisitor postVisitor = new CBMCCodeGenerationNodeVisitor("assert");
+//        ast.getBooleanExpressions().forEach((node) -> {
+//            node.getVisited(postVisitor);
+//        });
+//        code.addAll(postVisitor.getCode());
     }
 
     /**

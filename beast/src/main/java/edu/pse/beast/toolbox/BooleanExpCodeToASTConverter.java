@@ -5,7 +5,7 @@
  */
 package edu.pse.beast.toolbox;
 
-import edu.pse.beast.datatypes.boolexp.BooleanExpListNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
 
 /**
  *

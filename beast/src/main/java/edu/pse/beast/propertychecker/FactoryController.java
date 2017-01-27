@@ -39,9 +39,9 @@ public class FactoryController implements Runnable {
 		this.parmSrc = parmSrc;
 		this.checkerID = checkerID;
 
-		this.results = CheckerFactoryFactory.
+//		this.results = CheckerFactoryFactory.
 		
-		
+		this.results = null;
 		this.concurrentChecker = 4; // TODO ask options for the amount of
 									// concurrent checkers
 
@@ -56,8 +56,9 @@ public class FactoryController implements Runnable {
 	public boolean stopChecking() {
 		for (Iterator<CheckerFactory> iterator = currentlyRunning.iterator(); iterator.hasNext();) {
 			CheckerFactory toStop = (CheckerFactory) iterator.next();
-			toStop.stopChecking();
+//			toStop.stopChecking();
 		}
+                return false;
 	}
 
 	public List<ResultInterface> getResults() {
