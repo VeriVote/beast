@@ -5,9 +5,9 @@
  */
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.boolexp.BooleanExpressionNode;
-import edu.pse.beast.datatypes.boolexp.BooleanExpListNode;
-import edu.pse.beast.datatypes.boolexp.CBMCCodeGenerationNodeVisitor;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanExpressionNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
+import edu.pse.beast.datatypes.booleanExpAST.CBMCCodeGenerationNodeVisitor;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;

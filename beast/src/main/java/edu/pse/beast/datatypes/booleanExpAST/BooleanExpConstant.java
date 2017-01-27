@@ -1,4 +1,4 @@
-package edu.pse.beast.datatypes.boolExp;
+package edu.pse.beast.datatypes.booleanExpAST;
 
 public class BooleanExpConstant {
     public static String getConstForVoterAmt() {

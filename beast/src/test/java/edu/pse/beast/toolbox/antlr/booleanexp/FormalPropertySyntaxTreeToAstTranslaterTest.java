@@ -6,7 +6,7 @@
 package edu.pse.beast.toolbox.antlr.booleanexp;
 
 import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.FormalPropertySyntaxTreeToAstTranslater;
-import edu.pse.beast.datatypes.boolexp.BooleanExpListNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.BooleanExpScope;

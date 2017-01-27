@@ -1,4 +1,4 @@
-package edu.pse.beast.datatypes.boolexp;
+package edu.pse.beast.datatypes.booleanExpAST;
 
 import java.util.List;
 
@@ -98,4 +98,6 @@ public interface BooleanExpNodeVisitor {
      * @return the generated string
      */
     List<String> getCode();
+
+    public void visitNumberExpNode(NumberExpression exp);
 }

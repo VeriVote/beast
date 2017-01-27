@@ -1,4 +1,4 @@
-package edu.pse.beast.datatypes.boolexp;
+package edu.pse.beast.datatypes.booleanExpAST;
 
 /**
  * 

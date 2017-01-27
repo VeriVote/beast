@@ -1,4 +1,4 @@
-package edu.pse.beast.datatypes.boolexp;
+package edu.pse.beast.datatypes.booleanExpAST;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,6 +137,11 @@ public class CBMCCodeGenerationNodeVisitor implements BooleanExpNodeVisitor {
     @Override
     public List<String> getCode() {
         return code;
+    }
+
+    @Override
+    public void visitNumberExpNode(NumberExpression exp) {
+       
     }
 
 }
