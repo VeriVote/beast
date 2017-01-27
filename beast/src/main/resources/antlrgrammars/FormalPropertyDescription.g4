@@ -28,7 +28,7 @@ voteExp : Vote passSymbVar*;
 
 constantExp : 'V' | 'C' | 'S';
 
-voteSumExp : 'VOTE_SUM_FOR_CANDIDATE(' passSymbVar;
+voteSumExp : 'VOTE_SUM_FOR_CANDIDATE' passSymbVar;
 
 passSymbVar : OpenBracket symbolicVarExp ClosedBracket;
 

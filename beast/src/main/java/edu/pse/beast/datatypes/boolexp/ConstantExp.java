@@ -1,24 +1,25 @@
 package edu.pse.beast.datatypes.boolexp;
 
-import toBeImplemented.BooleanExpConstant;
-import toBeImplemented.InternalTypeRep;
+import edu.pse.beast.datatypes.boolExp.BooleanExpConstant;
+import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 
 /**
  * 
- * @author Lukas
+ * @author Holger
  *
  */
 public class ConstantExp extends TypeExpression {
 
-    private final BooleanExpConstant constant;
+    private final String constant;
+    
     
     /**
      * 
      * @param internalTypeRep the type of this node
      * @param constant the constant saved in this node
      */
-    public ConstantExp(InternalTypeRep internalTypeRep, BooleanExpConstant constant) {
-        super(internalTypeRep);
+    public ConstantExp(InternalTypeContainer internalTypeContainer, String constant) {
+        super(internalTypeContainer);
         this.constant = constant;
     }
 
@@ -26,7 +27,7 @@ public class ConstantExp extends TypeExpression {
      * 
      * @return the constant saved in this node
      */
-    public BooleanExpConstant getConstant() {
+    public String getConstant() {
         return constant;
     }
 

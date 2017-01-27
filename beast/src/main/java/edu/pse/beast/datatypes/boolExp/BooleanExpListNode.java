@@ -23,7 +23,7 @@ public class BooleanExpListNode {
     }
     
     public int getHighestElect() {
-        return boolNodesPerElectLevel.size();
+        return boolNodesPerElectLevel.size() - 1;
     }
 
     public void setMaxVoteLevel(int maxVoteLevel) {

@@ -1,7 +1,7 @@
 package edu.pse.beast.datatypes.boolexp;
 
-import toBeImplemented.InternalTypeRep;
-import toBeImplemented.SymbolicVariable;
+import edu.pse.beast.datatypes.internal.InternalTypeContainer;
+import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 
 /**
  * 
@@ -14,11 +14,11 @@ public class VoteSumForCandExp extends TypeExpression {
     
     /**
      * 
-     * @param internalTypeRep the type of this node
+     * @param internalTypeContainer the type of this node
      * @param symbVar the symbolic variable of this node
      */
-    public VoteSumForCandExp(InternalTypeRep internalTypeRep, SymbolicVariable symbVar) {
-        super(internalTypeRep);
+    public VoteSumForCandExp(InternalTypeContainer internalTypeContainer, SymbolicVariable symbVar) {
+        super(internalTypeContainer);
         this.symbVar = symbVar;
     }
 

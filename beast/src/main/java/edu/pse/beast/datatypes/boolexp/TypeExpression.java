@@ -1,11 +1,10 @@
 package edu.pse.beast.datatypes.boolexp;
 
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import toBeImplemented.InternalTypeRep;
 
 /**
  * 
- * @author Lukas
+ * @author Holger Klein
  *
  */
 public abstract class TypeExpression extends BooleanExpressionNode {

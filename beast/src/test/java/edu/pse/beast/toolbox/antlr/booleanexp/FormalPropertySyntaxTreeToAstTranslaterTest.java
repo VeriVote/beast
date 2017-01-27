@@ -5,9 +5,11 @@
  */
 package edu.pse.beast.toolbox.antlr.booleanexp;
 
+import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.FormalPropertySyntaxTreeToAstTranslater;
 import edu.pse.beast.datatypes.boolexp.BooleanExpListNode;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
+import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.BooleanExpScope;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -48,15 +50,21 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
     
     @Test
     public void testCreateASTComparison() {
-        String exp = "ELECT1(c) == ELECT1(c)";
+        String exp = "ELECT2(c) == VOTES2(v)";
         FormalPropertyDescriptionLexer lexer = new FormalPropertyDescriptionLexer(new ANTLRInputStream(exp));
         CommonTokenStream tokenS = new CommonTokenStream(lexer);
         FormalPropertyDescriptionParser parser = new FormalPropertyDescriptionParser(tokenS);
         
         FormalPropertySyntaxTreeToAstTranslater translater = new FormalPropertySyntaxTreeToAstTranslater();
         InternalTypeContainer inputType = new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
-        InternalTypeContainer output = new InternalTypeContainer(InternalTypeRep.CANDIDATE);       
-        translater.generateFromSyntaxTree(parser.booleanExpList(), inputType, output);
+        InternalTypeContainer output = new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.CANDIDATE);  
+        
+        BooleanExpScope declaredVar = new BooleanExpScope();
+        declaredVar.addTypeForId("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
+        declaredVar.addTypeForId("v", new InternalTypeContainer(InternalTypeRep.VOTER));
+        
+        BooleanExpListNode created = translater.generateFromSyntaxTree(parser.booleanExpList(), inputType, output, declaredVar);
+        assertEquals(2, created.getHighestElect());
     }
 
     @Test
