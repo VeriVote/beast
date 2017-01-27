@@ -33,7 +33,7 @@ public class ElectExp extends TypeExpression {
         return count;
     }
 
-    public SymbolicVariable[] getAccesVar() {
+    public SymbolicVariable[] getAccessVar() {
         return accesVar;
     }
     

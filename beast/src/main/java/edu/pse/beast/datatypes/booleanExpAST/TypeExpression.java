@@ -23,7 +23,7 @@ public abstract class TypeExpression extends BooleanExpressionNode {
      * 
      * @return the type of this quantor
      */
-    public InternalTypeContainer getInternalTypeRep() {
+    public InternalTypeContainer getInternalTypeContainer() {
         return container;
     }
 }

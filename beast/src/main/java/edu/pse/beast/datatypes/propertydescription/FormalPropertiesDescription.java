@@ -7,20 +7,20 @@ package edu.pse.beast.datatypes.propertydescription;
 
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
 import edu.pse.beast.toolbox.BooleanExpCodeToASTConverter;
+import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.FormalPropertySyntaxTreeToAstTranslater;
 
 /**
  *
- * @author Niels
+ * @author Holger
  */
 public class FormalPropertiesDescription {
 
     private String code;
-    private final BooleanExpCodeToASTConverter converter;
-
-    public FormalPropertiesDescription(BooleanExpCodeToASTConverter converter) {
-        this.converter = converter;
+   
+    public FormalPropertiesDescription(String code) {
+        this.code = code;
     }
-
+    
     public String getCode() {
         return code;
     }
@@ -28,7 +28,7 @@ public class FormalPropertiesDescription {
     public void setCode(String code) {
         this.code = code;
     }
-    public BooleanExpListNode getAST(){
-        return converter.generateAST(code);
-    }
+//    public BooleanExpListNode getAST(){
+//        return astGenerator.generateFromSyntaxTree(code);
+//    }
 }

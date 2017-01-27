@@ -93,11 +93,6 @@ public interface BooleanExpNodeVisitor {
      */
     void visitVoteSumExp(VoteSumForCandExp exp);
     
-    /**
-     *
-     * @return the generated string
-     */
-    List<String> getCode();
 
     public void visitNumberExpNode(NumberExpression exp);
 }

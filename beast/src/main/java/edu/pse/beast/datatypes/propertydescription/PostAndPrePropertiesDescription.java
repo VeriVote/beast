@@ -5,7 +5,14 @@
  */
 package edu.pse.beast.datatypes.propertydescription;
 
+import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
+import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.BooleanExpScope;
+import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.FormalPropertySyntaxTreeToAstTranslater;
 import java.util.LinkedList;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 
 /**
  *
@@ -17,15 +24,13 @@ public class PostAndPrePropertiesDescription {
     private SymbolicVariableList symbolicVariableList;
     private FormalPropertiesDescription prePropertiesDescription;
     private FormalPropertiesDescription postPropertiesDescription;
-
     /**
      * 
      * @param name HAS to be UNIQUE in the context
      */
     public PostAndPrePropertiesDescription(String name) {
         this.name = name;
-    }
-
+    }    
     /**
      * 
      * @param name HAS to be UNIQUE in the context
@@ -38,17 +43,10 @@ public class PostAndPrePropertiesDescription {
         this.postPropertiesDescription = postDescr;
         this.prePropertiesDescription = preDescr;
     }
+
     
     public String getName() {
     	return this.name;
-    }
-
-    public FormalPropertiesDescription getPrePropertiesDescription() {
-        return prePropertiesDescription;
-    }
-
-    public FormalPropertiesDescription getPostPropertiesDescription() {
-        return postPropertiesDescription;
     }
 
     public LinkedList<SymbolicVariable> getSymbolicVariableList() {
@@ -58,4 +56,16 @@ public class PostAndPrePropertiesDescription {
     public void setSymbolicVariableList(SymbolicVariableList symbolicVariableList) {
         this.symbolicVariableList = symbolicVariableList;
     }
+
+    public FormalPropertiesDescription getPostPropertiesDescription() {
+        return postPropertiesDescription;
+    }
+
+    public FormalPropertiesDescription getPrePropertiesDescription() {
+        return prePropertiesDescription;
+    }
+    
+    
+    
+   
 }

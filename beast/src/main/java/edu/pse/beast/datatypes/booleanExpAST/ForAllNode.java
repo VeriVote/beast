@@ -18,4 +18,9 @@ public class ForAllNode extends QuantorNode {
     public ForAllNode(SymbolicVariable declSymbVar, BooleanExpressionNode followingNode) {
         super(declSymbVar, followingNode);
     }
+
+    @Override
+    public void getVisited(BooleanExpNodeVisitor visitor) {
+        visitor.visitForAllNode(this);
+    }
 }

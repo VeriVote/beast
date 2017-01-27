@@ -19,4 +19,9 @@ public class ThereExistsNode extends QuantorNode {
         super(declSymbVar, followingNode);
     }
 
+    @Override
+    public void getVisited(BooleanExpNodeVisitor visitor) {
+        visitor.visitThereExistsNode(this);
+    }
+
 }

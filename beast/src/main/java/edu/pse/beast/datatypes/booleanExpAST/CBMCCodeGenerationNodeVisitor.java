@@ -135,11 +135,6 @@ public class CBMCCodeGenerationNodeVisitor implements BooleanExpNodeVisitor {
     }
 
     @Override
-    public List<String> getCode() {
-        return code;
-    }
-
-    @Override
     public void visitNumberExpNode(NumberExpression exp) {
        
     }

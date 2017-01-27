@@ -15,10 +15,10 @@ public class BooleanExpListNode {
      * Ex:  FOR_ALL_VOTERS(v) : VOTES4(v) ==  ELECT3; <-- would be stored in boolNodesPerElectLevel.get(3)
      *      ELECT2 == ELECT5; <-- would be stored in boolNodesPerElectLevel.get(5) 
      */
-    private List<List<BooleanExpressionNode>> boolNodesPerElectLevel = new ArrayList<>();
+    private ArrayList<ArrayList<BooleanExpressionNode>> boolNodesPerElectLevel = new ArrayList<>();
     private int maxVoteLevel;
     
-    public List<List<BooleanExpressionNode>> getBooleanExpressions() {
+    public ArrayList<ArrayList<BooleanExpressionNode>> getBooleanExpressions() {
         return boolNodesPerElectLevel;
     }
     

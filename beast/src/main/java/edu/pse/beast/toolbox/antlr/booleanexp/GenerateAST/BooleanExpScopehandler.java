@@ -37,6 +37,7 @@ public class BooleanExpScopehandler {
         InternalTypeContainer cont = null;
         for(int i = currentScopes.size() - 1; i >= 0; --i) {
             cont = currentScopes.get(i).getTypeForId(id);
+            if(cont != null) return cont;
         }
         return cont;
     }

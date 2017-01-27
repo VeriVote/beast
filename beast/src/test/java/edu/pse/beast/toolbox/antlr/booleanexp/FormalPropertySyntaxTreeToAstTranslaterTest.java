@@ -70,7 +70,7 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
       
         declaredVar = new BooleanExpScope();
         String exp = "FOR_ALL_VOTERS(v) : EXISTS_ONE_CANDIDATE(c) : (c == VOTES2(v) && (VOTE_SUM_FOR_CANDIDATE(c)>= 3 ==> c < 2));";    
-        BooleanExpListNode created = translater.generateFromSyntaxTree(createFromString(exp), inputType, output, declaredVar);
+        
     }
 
     @Test

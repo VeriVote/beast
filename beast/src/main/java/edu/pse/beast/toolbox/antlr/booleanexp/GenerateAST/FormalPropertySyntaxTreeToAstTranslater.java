@@ -50,7 +50,7 @@ public class FormalPropertySyntaxTreeToAstTranslater extends FormalPropertyDescr
     
     private BooleanExpListNode generated;
     private InternalTypeContainer inputType;
-    private InternalTypeContainer outputType;
+    private InternalTypeContainer resType;
     private Stack<BooleanExpressionNode> nodeStack;
     private Stack<TypeExpression> expStack;
     private int maxElectExp = 0;
@@ -59,15 +59,14 @@ public class FormalPropertySyntaxTreeToAstTranslater extends FormalPropertyDescr
     private BooleanExpScopehandler scopeHandler;
     
     public BooleanExpListNode generateFromSyntaxTree(
-            BooleanExpListContext parseTree,
-            InternalTypeContainer inputType, 
-            InternalTypeContainer outputType,
+            BooleanExpListContext parseTree, 
+            InternalTypeContainer inputType,
+            InternalTypeContainer resType,
             BooleanExpScope declaredVars) {
-        this.inputType = inputType;
-        this.outputType = outputType;
         scopeHandler = new BooleanExpScopehandler();
         scopeHandler.enterNewScope(declaredVars);
-        
+        this.inputType = inputType;
+        this.resType = resType;
         ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(this, parseTree);
         return generated;
@@ -148,7 +147,8 @@ public class FormalPropertySyntaxTreeToAstTranslater extends FormalPropertyDescr
             varType = new InternalTypeContainer(InternalTypeRep.SEAT);
         }
         scopeHandler.enterNewScope();
-        scopeHandler.addVariable(ctx.passSymbVar().symbolicVarExp().getText(), varType);
+        String id = ctx.passSymbVar().symbolicVarExp().Identifier().getText();
+        scopeHandler.addVariable(id, varType);
     }
 
     @Override
@@ -219,7 +219,7 @@ public class FormalPropertySyntaxTreeToAstTranslater extends FormalPropertyDescr
 
     @Override
     public void enterElectExp(FormalPropertyDescriptionParser.ElectExpContext ctx) {
-        InternalTypeContainer container = outputType;
+        InternalTypeContainer container = resType;
         
     }
 
@@ -236,7 +236,7 @@ public class FormalPropertySyntaxTreeToAstTranslater extends FormalPropertyDescr
             accessingVars[i] = ((SymbolicVarExp) expStack.pop()).getSymbolicVar();
         }
         
-        ElectExp expNode = new ElectExp(outputType, accessingVars, number);
+        ElectExp expNode = new ElectExp(resType, accessingVars, number);
         
         System.out.println("electnode " + numberString);
         expStack.add(expNode);
@@ -317,7 +317,7 @@ public class FormalPropertySyntaxTreeToAstTranslater extends FormalPropertyDescr
     public void exitSymbolicVarExp(FormalPropertyDescriptionParser.SymbolicVarExpContext ctx) {
         String name = ctx.getText();
         InternalTypeContainer type = scopeHandler.getTypeForVariable(name);
-        SymbolicVarExp expNode = new SymbolicVarExp(type, new SymbolicVariable(name, inputType));
+        SymbolicVarExp expNode = new SymbolicVarExp(type, new SymbolicVariable(name, type));
         expStack.add(expNode);
         System.out.println("symbvar " + name);
     }

@@ -39,9 +39,4 @@ public abstract class QuantorNode extends BooleanExpressionNode {
         return followingNode;
     }
 
-    @Override
-    public void getVisited(BooleanExpNodeVisitor visitor) {
-        // TODO Auto-generated method stub
-        
-    }
 }
