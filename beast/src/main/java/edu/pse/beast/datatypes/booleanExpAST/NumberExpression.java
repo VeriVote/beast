@@ -7,7 +7,6 @@ package edu.pse.beast.datatypes.booleanExpAST;
 
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
-import edu.pse.beast.datatypes.booleanExpAST.TypeExpression;
 /**
  *
  * @author Holger-Desktop

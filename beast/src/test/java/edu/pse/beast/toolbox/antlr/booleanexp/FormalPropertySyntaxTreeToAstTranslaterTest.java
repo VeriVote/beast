@@ -48,23 +48,29 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
     public void tearDown() {
     }
     
-    @Test
-    public void testCreateASTComparison() {
-        String exp = "ELECT2(c) == VOTES2(v)";
-        FormalPropertyDescriptionLexer lexer = new FormalPropertyDescriptionLexer(new ANTLRInputStream(exp));
+    private FormalPropertyDescriptionParser.BooleanExpListContext createFromString(String s) {
+        FormalPropertyDescriptionLexer lexer = new FormalPropertyDescriptionLexer(new ANTLRInputStream(s));
         CommonTokenStream tokenS = new CommonTokenStream(lexer);
         FormalPropertyDescriptionParser parser = new FormalPropertyDescriptionParser(tokenS);
-        
+        return parser.booleanExpList();
+    }
+    
+    @Test
+    public void testCreateASTComparison() {
         FormalPropertySyntaxTreeToAstTranslater translater = new FormalPropertySyntaxTreeToAstTranslater();
         InternalTypeContainer inputType = new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
         InternalTypeContainer output = new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.CANDIDATE);  
         
         BooleanExpScope declaredVar = new BooleanExpScope();
         declaredVar.addTypeForId("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
-        declaredVar.addTypeForId("v", new InternalTypeContainer(InternalTypeRep.VOTER));
+        declaredVar.addTypeForId("v", new InternalTypeContainer(InternalTypeRep.VOTER));        
         
-        BooleanExpListNode created = translater.generateFromSyntaxTree(parser.booleanExpList(), inputType, output, declaredVar);
-        assertEquals(2, created.getHighestElect());
+        String exp = "ELECT2(c) == VOTES2(v);";      
+        BooleanExpListNode created = translater.generateFromSyntaxTree(createFromString(exp), inputType, output, declaredVar);
+        
+        declaredVar = new BooleanExpScope();
+        exp = "FOR_ALL_VOTERS(v) : EXISTS_ONE_CANDIDATE(c) : c == VOTES2(v) && VOTE_SUM_FOR_CANDIDATE(c)>= 3;";    
+        created = translater.generateFromSyntaxTree(createFromString(exp), inputType, output, declaredVar);
     }
 
     @Test
