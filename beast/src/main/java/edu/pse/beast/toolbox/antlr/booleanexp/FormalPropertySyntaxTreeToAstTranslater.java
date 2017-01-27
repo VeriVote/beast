@@ -42,6 +42,8 @@ public class FormalPropertySyntaxTreeToAstTranslater implements FormalPropertyDe
     private InternalTypeContainer outputType;
     private Stack<BooleanExpressionNode> nodeStack;
     private Stack<TypeExpression> expStack;
+    private int maxElectExp = 0;
+    private int maxVoteExp = 0;    
     
     public BooleanExpListNode generateFromSyntaxTree(
             BooleanExpListContext parseTree,
@@ -57,6 +59,8 @@ public class FormalPropertySyntaxTreeToAstTranslater implements FormalPropertyDe
         generated = new BooleanExpListNode();        
         nodeStack = new Stack<>();
         expStack = new Stack<>();
+        maxElectExp = 0;
+        maxVoteExp = 0;    
     }
 
     @Override
@@ -200,7 +204,7 @@ public class FormalPropertySyntaxTreeToAstTranslater implements FormalPropertyDe
 
     @Override
     public void exitVoteExp(FormalPropertyDescriptionParser.VoteExpContext ctx) {
-
+        
     }
 
     @Override

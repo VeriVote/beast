@@ -42,15 +42,20 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
     @After
     public void tearDown() {
     }
+    
+    @Test
+    public void testCreateASTComparison() {
+        
+    }
 
-   @Test
-   public void testCreateAST() {
+    @Test
+    public void testCreateAST() {
        String exp = "FOR_ALL_VOTERS(v) : EXISTS_ONE_CANDIDATE(c) : VOTES1(v) == c && VOTES1(v) == c;";
        FormalPropertyDescriptionLexer lexer = new FormalPropertyDescriptionLexer(new ANTLRInputStream(exp));
        CommonTokenStream tokenS = new CommonTokenStream(lexer);
        FormalPropertyDescriptionParser parser = new FormalPropertyDescriptionParser(tokenS);
        FormalPropertySyntaxTreeToAstTranslater translater = new FormalPropertySyntaxTreeToAstTranslater();
-       BooleanExpListNode ast = translater.generateFromSyntaxTree(parser.booleanExpList());
-   }
+       //BooleanExpListNode ast = translater.generateFromSyntaxTree(parser.booleanExpList());
+    }
     
 }
