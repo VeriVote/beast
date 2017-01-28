@@ -18,5 +18,13 @@ public interface ElectionDescriptionSource {
      * @return correctness
      */
     boolean isCorrect();
+    /**
+     * Stops reacting to user input to not interfere with running check.
+     */
+    void stopReacting();
+    /**
+     * Resumes reacting to user input after the check is over.
+     */
+    void resumeReacting();
 }
 
