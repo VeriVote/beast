@@ -2,7 +2,9 @@ package edu.pse.beast.toolbox;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.util.Iterator;
 import java.util.List;
 
@@ -16,8 +18,7 @@ public class FileSaver {
         try {
             writer = new PrintWriter(file);
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            ErrorLogger.log("File not found");
         }
         
         for (Iterator<String> iterator = text.iterator(); iterator.hasNext();) {
@@ -26,4 +27,14 @@ public class FileSaver {
         }
         writer.close();
     }
+    
+    public static void deleteFromRes(String toDelete) {
+        File file = new File("/Beast/src/main/resources/c_tempfiles/" + toDelete);
+        try {
+            Files.delete(file.toPath());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }

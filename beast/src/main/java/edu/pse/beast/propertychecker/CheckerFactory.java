@@ -27,9 +27,9 @@ public abstract class CheckerFactory implements Runnable {
     private final ParameterSource paramSrc;
     private final Result result;
     private Checker currentlyRunning;
-    private Thread workingThread;
     private boolean stopped = false;
     private boolean finished = false;
+    private List<String> lastResult;
 
     private CheckerFactory(FactoryController controller, ElectionDescriptionSource electionDescSrc,
             PostAndPrePropertiesDescriptionSource postAndPrepPropDescSrc, ParameterSource paramSrc, Result result) {
@@ -42,8 +42,6 @@ public abstract class CheckerFactory implements Runnable {
     }
 
     public void run() {
-
-        workingThread = Thread.currentThread();
 
         ArrayList<String> code = new CBMCCodeGenerator(null, null).getCode();
 
@@ -59,8 +57,8 @@ public abstract class CheckerFactory implements Runnable {
 
         String advanced = paramSrc.getParameter().getAdvanced();
 
-        for (Iterator<Integer> voteIterator = paramSrc.getParameter().getAmountVoters().iterator(); voteIterator
-                .hasNext();) {
+        outerLoop: for (Iterator<Integer> voteIterator = paramSrc.getParameter().getAmountVoters()
+                .iterator(); voteIterator.hasNext();) {
             int voters = (int) voteIterator.next();
             for (Iterator<Integer> candidateIterator = paramSrc.getParameter().getAmountVoters()
                     .iterator(); candidateIterator.hasNext();) {
@@ -72,36 +70,46 @@ public abstract class CheckerFactory implements Runnable {
                     if (!stopped) {
                         startProcess(file, advanced + " -D V=" + voters + " -D C=" + candidates + " -D S=" + seats);
                     }
-                    
+
                     while (!finished && !stopped) {
                         try {
-                            //polling in 1 second steps to save cpu time
+                            // polling in 1 second steps to save cpu time
                             Thread.sleep(1000);
                         } catch (InterruptedException e) {
-                            //keep on polling
+                            // keep on polling
                         }
                     }
-                    
+
                     if (stopped) {
-                        result.
+                        result.setFinished();
+                        break outerLoop;
+                    } else {
+                        // the checker finished checking for these specific
+                        // parameters;
+                        
+                        if (checkResult(lastResult)) {
+                            finished = false;                            
+                        } else {
+                            result.setResult(lastResult);
+                        }
+                        
                     }
-                    
-                    finished = false;
-                    
+
                 }
             }
         }
-
     }
+
+    protected abstract Result createCounterExample(List<String> result);
 
     public void stopChecking() {
         stopped = true;
         currentlyRunning.interruptChecking();
     }
 
-    public void notifyThatFinished() {
+    public void notifyThatFinished(List<String> lastResult) {
         finished = true;
-        workingThread.interrupt();
+        this.lastResult = lastResult;
     }
 
     protected abstract void startProcess(File toCheck, String callParams);
@@ -112,4 +120,11 @@ public abstract class CheckerFactory implements Runnable {
      *         factory
      */
     public abstract List<Result> getFittingResult(int size);
+    
+    /**
+     * checks if the result from the given checker found a counterexample or not
+     * @param toCheck the output of the checker to test
+     * @return true, if the property wasn't violated, false if that was the case
+     */
+    public abstract boolean checkResult(List<String> toCheck);
 }

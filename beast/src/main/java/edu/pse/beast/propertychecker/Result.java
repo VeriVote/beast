@@ -47,17 +47,25 @@ public abstract class Result implements ResultInterface{
         } else  {
             presenter.presentFailureExample(new FailureExample(result));
         }
-        
-        
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     public void setFinished() {
         finished = true;
     }
     
+    public void setValid() {
+        valid = true;
+    }
+    
+    public void setSuccess() {
+        success = true;
+    }
+    
     public void setTimeoutFlag() {
         timeOut = true;
     }
     
+    public void setResult(List<String> result) {
+        this.result = result;
+    }
 }
