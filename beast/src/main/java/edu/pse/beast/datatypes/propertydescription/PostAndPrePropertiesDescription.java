@@ -44,6 +44,14 @@ public class PostAndPrePropertiesDescription {
         this.prePropertiesDescription = preDescr;
     }
 
+    public PostAndPrePropertiesDescription(String name, FormalPropertiesDescription preDescr,
+                                           FormalPropertiesDescription postDescr, SymbolicVariableList symbolicVariableList) {
+        this.name = name;
+        this.postPropertiesDescription = postDescr;
+        this.prePropertiesDescription = preDescr;
+        this.symbolicVariableList = symbolicVariableList;
+    }
+
     
     public String getName() {
     	return this.name;

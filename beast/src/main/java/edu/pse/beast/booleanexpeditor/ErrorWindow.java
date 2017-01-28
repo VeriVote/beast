@@ -4,6 +4,7 @@ import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -31,8 +32,12 @@ public class ErrorWindow implements DisplaysStringsToUser{
      * Method to display ArrayList of Errors in the ErrorWindow.
      * @param errors ArrayList of Errors
      */
-    public void displayErrors(ArrayList<Error> errors) {
-        //TODO implement
+    void displayErrors(ArrayList<Error> errors) {
+        String errorString = "";
+        for (Error error : errors) {
+            errorString += error.getMessage() + "\n";
+        }
+        textPane.setText(errorString);
     }
 
     /**

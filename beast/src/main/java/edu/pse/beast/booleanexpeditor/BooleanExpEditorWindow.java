@@ -9,6 +9,10 @@ import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
 
 /**
  * The JFrame that serves as the View for the booleanexpeditor Package.
@@ -39,14 +43,17 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
         prePropScrollPane = new javax.swing.JScrollPane();
         prePropTextPane = new javax.swing.JTextPane();
         symVarScrollPane = new javax.swing.JScrollPane();
-        symVarList = new javax.swing.JList<>();
+        listModel = new DefaultListModel();
+        symVarList = new javax.swing.JList<>(listModel);
+        symVarList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        symVarList.setLayoutOrientation(JList.VERTICAL);
         postPropLabel = new javax.swing.JLabel();
         postPropScrollPane = new javax.swing.JScrollPane();
         postPropTextPane = new javax.swing.JTextPane();
         errorScrollPane = new javax.swing.JScrollPane();
         errorTextPane = new javax.swing.JTextPane();
         menubar = new javax.swing.JMenuBar();
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 
         toolbar.setRollover(true);
         toolbar.setFloatable(false);
@@ -54,7 +61,6 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
         symVarScrollPane.setViewportView(symVarList);
 
         prePropScrollPane.setViewportView(prePropTextPane);
-
 
         postPropScrollPane.setViewportView(postPropTextPane);
 
@@ -132,10 +138,20 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
                 getBooleanExpEditorWindowStringRes().getStringFromID("remove"));
         symbVarLabel.setText(stringLoaderInterface.getBooleanExpEditorStringResProvider().
                 getBooleanExpEditorWindowStringRes().getStringFromID("symbolicVariablesLabel"));
-        setTitle(stringLoaderInterface.getBooleanExpEditorStringResProvider().
-                getBooleanExpEditorWindowStringRes().getStringFromID("windowTitle"));
+        titleString = stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpEditorWindowStringRes().getStringFromID("windowTitle");
+        setTitle(titleString);
+        saveChanges = stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpEditorWindowStringRes().getStringFromID("saveChanges");
+        save = stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpEditorWindowStringRes().getStringFromID("save");
+        cancelOption = stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpEditorWindowStringRes().getStringFromID("cancelOption");
+        noOption = stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpEditorWindowStringRes().getStringFromID("noOption");
+        yesOption = stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpEditorWindowStringRes().getStringFromID("yesOption");
     }
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -154,6 +170,14 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
     private javax.swing.JTextPane errorTextPane;
     private javax.swing.JToolBar toolbar;
     private javax.swing.JTextPane prePropTextPane;
+    private JTextPane focusedTextPane;
+    private DefaultListModel listModel;
+    private String titleString;
+    private String saveChanges;
+    private String save;
+    private String yesOption;
+    private String noOption;
+    private String cancelOption;
     // End of variables declaration//GEN-END:variable
 
     /**
@@ -221,11 +245,37 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
     }
 
     /**
+     * Adds the given string to the window title, used for displaying name of currently loaded PostAndPrePropDescription
+     * @param s
+     */
+    void setWindowTitle(String s) {
+        this.setTitle(titleString + " " + s);
+    }
+
+    /**
      * Getter
      * @return toolbar the JToolBar object.
      */
     JToolBar getToolbar() {
         return toolbar;
+    }
+
+    /**
+     * Method that opens pane that asks the user whether he wants to save or not.
+     * @return the option clicked by the user
+     */
+    public int showOptionPane(String propertyName) {
+        Object[] options = {yesOption,
+                noOption,
+                cancelOption};
+        return JOptionPane.showOptionDialog(this,
+                saveChanges + propertyName + save,
+                "",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
     }
 
 }
