@@ -17,7 +17,7 @@ public class LinuxProcess extends CBMCProcess {
         // cbmc on linux already prints the trace
         
         //TODO make that fancier
-        return toSanitize.replace("--trace", "");
+        return toSanitize.replace(" --trace", "");
     }
 
 

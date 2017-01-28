@@ -26,12 +26,14 @@ public abstract class CheckerFactory implements Runnable {
     private final PostAndPrePropertiesDescriptionSource postAndPrepPropDescSrc;
     private final ParameterSource paramSrc;
     private final Result result;
+    private final long pollInterval = 1000;
+
     private Checker currentlyRunning;
     private boolean stopped = false;
     private boolean finished = false;
     private List<String> lastResult;
 
-    private CheckerFactory(FactoryController controller, ElectionDescriptionSource electionDescSrc,
+    protected CheckerFactory(FactoryController controller, ElectionDescriptionSource electionDescSrc,
             PostAndPrePropertiesDescriptionSource postAndPrepPropDescSrc, ParameterSource paramSrc, Result result) {
 
         this.controller = controller;
@@ -74,7 +76,7 @@ public abstract class CheckerFactory implements Runnable {
                     while (!finished && !stopped) {
                         try {
                             // polling in 1 second steps to save cpu time
-                            Thread.sleep(1000);
+                            Thread.sleep(pollInterval);
                         } catch (InterruptedException e) {
                             // keep on polling
                         }

@@ -6,7 +6,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -43,12 +42,11 @@ public class WindowsProcess extends CBMCProcess {
 
         String cbmcEXE = FileLoader.getFileFromRes("/cbmcWIN/cbmc.exe");
         
+        //this call starts a new VScmd isntance and lets cbmc run in it
         String cbmcCall = "\"" + vsCmd + "\"" + " & " + cbmcEXE + " " + toCheck.getAbsolutePath();
-
-        String fullCall = cbmcCall + " " + arguments;
         
-
-        ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", cbmcCall);
+        ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", cbmcCall, arguments);
+        
         try {
             // save the new process in this var
             startedProcess = prossBuild.start();
@@ -83,9 +81,7 @@ public class WindowsProcess extends CBMCProcess {
                         // sleep in 1 second intervals
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
-                        System.err.println("hier sollte kein interrupt passieren");
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                        ErrorLogger.log("There shouldn't be an interrupt here");
                     }
                 }
             } catch (IOException e) {
