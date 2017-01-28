@@ -5,11 +5,13 @@
  */
 package edu.pse.beast.codearea.ActionAdder;
 
+import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveBeforeChangeHandler;
 import edu.pse.beast.codearea.Actionlist.Actionlist;
 import edu.pse.beast.codearea.Actionlist.EmptyActionList;
 import edu.pse.beast.codearea.Actionlist.TextAction.TextAddedAction;
 import edu.pse.beast.codearea.Actionlist.TextAction.TextDelta;
 import edu.pse.beast.codearea.Actionlist.TextAction.TextRemovedAction;
+import edu.pse.beast.codearea.SaveTextBeforeRemove;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.logging.Level;
@@ -25,7 +27,7 @@ import javax.swing.text.BadLocationException;
  *
  * @author Holger-Desktop
  */
-public class TextChangedActionAdder implements ActionAdder, CaretListener, DocumentListener, KeyListener {
+public class TextChangedActionAdder implements ActionAdder, CaretListener, DocumentListener {
     private boolean listen = true;
     private JTextPane pane;
     private Actionlist actionList;
@@ -33,15 +35,14 @@ public class TextChangedActionAdder implements ActionAdder, CaretListener, Docum
     private int recordingStartPos = 0;
     private String recordingString = "";
     private StringBuilder currentAdded = new StringBuilder();
-    private String prevText; //nasty 
+    private SaveTextBeforeRemove saveBeforeRemove;
     
     public TextChangedActionAdder(JTextPane pane, Actionlist list) {
         this.pane = pane;
         this.actionList = list;
         list.addActionAdder(this);
-        prevText = pane.getText();
+        saveBeforeRemove = new SaveTextBeforeRemove(pane);
         pane.addCaretListener(this);
-        pane.addKeyListener(this);
         pane.getStyledDocument().addDocumentListener(this);
     }
 
@@ -89,9 +90,7 @@ public class TextChangedActionAdder implements ActionAdder, CaretListener, Docum
     public void removeUpdate(DocumentEvent de) {
         if(!listen) return;     
         addCurrentRecording();
-        String text = prevText.substring(
-                de.getOffset(), 
-                de.getOffset() + de.getLength());
+        String text = saveBeforeRemove.getRemoveString(de.getOffset(), de.getLength());
 
         actionList.add(new TextRemovedAction(
                 new TextDelta(de.getOffset(), text, currentCaretPosition),
@@ -100,20 +99,6 @@ public class TextChangedActionAdder implements ActionAdder, CaretListener, Docum
 
     @Override
     public void changedUpdate(DocumentEvent de) {
-    }
-
-    @Override
-    public void keyTyped(KeyEvent ke) {        
-        prevText = pane.getText();
-    }
-
-    @Override
-    public void keyPressed(KeyEvent ke) {
-        
-    }
-
-    @Override
-    public void keyReleased(KeyEvent ke) {        
     }
 
     private void addCurrentRecording() {

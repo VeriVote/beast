@@ -108,4 +108,26 @@ public class LineHandlerTest {
         abs = handler.caretPosToAbsPos(5);
         assertEquals(7, abs);
     }
+
+   
+
+    /**
+     * Test of transformToLineNumber method, of class LineHandler.
+     */
+    @Test
+    public void testTransformToLineNumber() {
+       
+    }
+
+
+    /**
+     * Test of getClosestLineBeginning method, of class LineHandler.
+     */
+    @Test
+    public void testGetClosestLineBeginning() throws BadLocationException {
+        String insert = "\n\n\nasda|sd";
+        pane.getStyledDocument().insertString(0, insert, null);
+        int closest = handler.getClosestLineBeginning(7);
+        assertEquals(2, closest);
+    }
 }

@@ -6,6 +6,7 @@
 package edu.pse.beast.codearea.InputToCode.NewlineInserter;
 
 import edu.pse.beast.codearea.InputToCode.LineBeginningTabsHandler;
+import edu.pse.beast.codearea.InputToCode.LineHandler;
 import edu.pse.beast.codearea.InputToCode.TabInserter;
 import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
 import javax.swing.JTextPane;
@@ -17,15 +18,19 @@ import javax.swing.text.StyledDocument;
  * @author Holger-Desktop
  */
 public class LockedLineNewlineInserter implements NewlineInserter {
-
+    
+    private LineHandler lineHandler;
   
     @Override
-   public void insertNewlineAtCurrentPosition(
+    public void insertNewlineAtCurrentPosition(
             JTextPane pane, TabInserter tabInserter,
             LineBeginningTabsHandler beginningTabsHandler,
             int pos) throws BadLocationException {
-       
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            if(lineHandler == null) lineHandler = new LineHandler(pane);
+            
+            int lineBeginning = lineHandler.getClosestLineBeginning(pos);
+            
+            pane.getStyledDocument().insertString(lineBeginning + 1, "\n", null);
     }
     
 }

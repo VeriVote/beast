@@ -39,6 +39,13 @@ public class OpenCloseCharList {
             openCloseChars.add(new OpenCloseChar(openChars[i], closeChars[i]));
         }
     }    
+
+    boolean isCloseChar(char c) {
+        for(int i = 0; i < openCloseChars.size(); ++i) {
+            if(openCloseChars.get(i).getClose()== c) return true;
+        }
+        return false;
+    }
     
     
 
