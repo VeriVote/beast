@@ -14,10 +14,18 @@ public interface PostAndPrePropertiesDescriptionSource {
      * election check.
      * @return PostAndPrePropertiesDescription
      */
-    ArrayList<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptions(); //TODO: Return type array or not?
+    ArrayList<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptions();
     /**
      * Returns true if all the PostAndPrePropertiesDescriptions are correct.
      * @return correctness
      */
     boolean isCorrect();
+    /**
+     * Stops reacting to user input to not interfere with running check.
+     */
+    void stopReacting();
+    /**
+     * Resumes reacting to user input after the check is over.
+     */
+    void resumeReacting();
 }

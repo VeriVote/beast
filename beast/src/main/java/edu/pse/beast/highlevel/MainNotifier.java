@@ -12,15 +12,10 @@ public interface MainNotifier {
      * Adds a CheckListener.
      * @param l CheckListener
      */
-    public void addCheckListener(CheckListener l);
+    void addCheckListener(CheckListener l);
     /**
      * Adds ActionListener for closing all windows.
      * @param l listener for closing
      */
-    public void addCloseListener(ActionListener l);
-    /**
-     * Adds ActionListener for saving the whole project.
-     * @param l listener for saving project
-     */
-    public void addSaveListener(ActionListener l);
+    void addCloseAllListener(ActionListener l);
 }
