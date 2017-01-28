@@ -51,12 +51,6 @@ public abstract class CheckerFactory implements Runnable {
 
         FileSaver.writeStringLinesToFile(code, file);
 
-        paramSrc.getParameter().getAmountVoters();
-
-        paramSrc.getParameter().getAmountCandidates();
-
-        paramSrc.getParameter().getAmountSeats();
-
         String advanced = paramSrc.getParameter().getAdvanced();
 
         outerLoop: for (Iterator<Integer> voteIterator = paramSrc.getParameter().getAmountVoters()
@@ -70,7 +64,7 @@ public abstract class CheckerFactory implements Runnable {
                     int seats = (int) seatsIterator.next();
 
                     if (!stopped) {
-                        startProcess(file, advanced + " -D V=" + voters + " -D C=" + candidates + " -D S=" + seats);
+                        startProcess(file, advanced + " -D V=" + voters + " -D C=" + candidates + " -D S=" + seats, this);
                     }
 
                     while (!finished && !stopped) {
@@ -106,7 +100,7 @@ public abstract class CheckerFactory implements Runnable {
 
     public void stopChecking() {
         stopped = true;
-        currentlyRunning.interruptChecking();
+        currentlyRunning.stopChecking();
     }
 
     public void notifyThatFinished(List<String> lastResult) {
@@ -114,7 +108,7 @@ public abstract class CheckerFactory implements Runnable {
         this.lastResult = lastResult;
     }
 
-    protected abstract void startProcess(File toCheck, String callParams);
+    protected abstract Checker startProcess(File toCheck, String arguments, CheckerFactory parent);
 
     /**
      * 
@@ -122,6 +116,9 @@ public abstract class CheckerFactory implements Runnable {
      *         factory
      */
     public abstract List<Result> getFittingResult(int size);
+    
+    public abstract CheckerFactory getNewInstance(FactoryController controller, ElectionDescriptionSource electionDescSrc,
+            PostAndPrePropertiesDescriptionSource postAndPrepPropDescSrc, ParameterSource paramSrc, Result result);
     
     /**
      * checks if the result from the given checker found a counterexample or not

@@ -36,9 +36,7 @@ public class WindowsProcess extends CBMCProcess {
 
         if (vsCmd == null) {
             ErrorLogger.log("Cant find the VScmd. Is it installed correctly?");
-        }
-        
-        
+        } 
 
         String cbmcEXE = FileLoader.getFileFromRes("/cbmcWIN/cbmc.exe");
         
