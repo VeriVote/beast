@@ -54,8 +54,10 @@ public class NewlineInserterChooser {
     
     private int absPosToLineNumber(int caretPosition) {
         int line = 0;
+        String code = pane.getText();
         for(int i = 0; i < caretPosition; ++i) {
-            if(pane.getText().charAt(i) == '\n') ++line;
+            if(code.charAt(i) == '\n') ++line;
+            else if(code.charAt(i) == '\r') ++caretPosition;
         }
         return line;
     }

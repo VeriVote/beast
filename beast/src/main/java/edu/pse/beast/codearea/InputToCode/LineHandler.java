@@ -5,7 +5,11 @@
  */
 package edu.pse.beast.codearea.InputToCode;
 
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
 /**
@@ -33,6 +37,7 @@ public class LineHandler {
         int amt = 0;
         for(int i = 0; i < absPos; ++i) {
             if(code.charAt(i) == '\n') amt++;
+            else if(code.charAt(i) == '\r') absPos++;
         }
         return amt;
     }
@@ -53,5 +58,43 @@ public class LineHandler {
             if(code.charAt(absPos) == '\n') ++lineNumber;
         }
         return absPos;
+    }
+    
+    public int getClosestLineBeginning(int abspos) {
+        try {
+            String code = pane.getStyledDocument().getText(0, abspos);
+            for(int i = abspos - 1; i >= 0; --i) {
+                if(code.charAt(i) == '\n')
+                    return i;
+            }
+        } catch (BadLocationException ex) {
+            Logger.getLogger(LineHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+
+    public int getClosestLineBeginningAfter(int absPos) {
+        String code = pane.getText().replaceAll("\r", "");
+        ++absPos;
+            for(; absPos < code.length(); ++absPos) {
+                if(code.charAt(absPos) == '\n')
+                    return absPos;
+            }
+        return absPos;
+    }
+    
+    public ArrayList<Integer> getLinesBetween(int start, int end) {
+        int startingline = transformToLineNumber(start);
+        ArrayList<Integer> lines = new ArrayList<>();
+        lines.add(startingline);
+        String code = pane.getText();
+        for(; start < end; ++start) {
+            if(code.charAt(start) == '\n') {
+                startingline++;
+                lines.add(startingline);
+            } else if(code.charAt(start) == '\r')
+                ++end;
+        }
+        return  lines;
     }
 }
