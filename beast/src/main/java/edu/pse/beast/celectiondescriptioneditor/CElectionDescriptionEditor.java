@@ -11,6 +11,7 @@ import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultStyledDocument;
 
 
 /**
@@ -21,12 +22,14 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     private CElectionCodeArea codeArea;
     private ElectionDescription currentDescription;
     private CCodeEditorGUI gui;
-    
+    private CElectionCodeAreaBuilder builder;
     public CElectionDescriptionEditor(
             CElectionCodeArea codeArea,
-            CCodeEditorGUI gui) {
+            CCodeEditorGUI gui,            
+            CElectionCodeAreaBuilder builder) {
         this.codeArea = codeArea;
         this.gui = gui;
+        this.builder = builder;
     }
 
     @Override
@@ -54,9 +57,12 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         
     }
 
-    public void letUserEditElectionDescription(ElectionDescription description) throws BadLocationException {
+    public void letUserEditElectionDescription(ElectionDescription description) throws BadLocationException {    
+        gui.setNewCodeArea();
+        codeArea = builder.createCElectionCodeArea(gui.getCodeArea(), gui.getCodeAreaScrollPane());
+        
         codeArea.letUserEditCode(description.getCode());
-        codeArea.lockLine(description.getVotingDeclLine());       
+        codeArea.lockLine(description.getVotingDeclLine());     
         codeArea.lockLine(description.getCode().size() - 1);
         this.currentDescription = description;        
     }

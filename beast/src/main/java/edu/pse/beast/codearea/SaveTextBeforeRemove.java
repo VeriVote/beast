@@ -21,7 +21,7 @@ import javax.swing.text.BadLocationException;
  */
 public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
     private JTextPane pane;
-    private String prevText;
+    private String prevText = "";
     private Actionlist actionlist;
     
     public SaveTextBeforeRemove(JTextPane pane, Actionlist actionlist) {
@@ -31,12 +31,17 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
         actionlist.addActionAdder(this);
     }
 
-    public String getPrevText() {
+    public String getPrevText() {        
         return prevText;
     }
     
     public String getRemoveString(int offset, int length) {
-        return prevText.substring(offset, offset + length);
+        try{            
+            return prevText.substring(offset, offset + length);    
+        } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
     
     @Override

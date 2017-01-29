@@ -11,6 +11,7 @@ import edu.pse.beast.codearea.CodeArea;
 import java.util.List;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultStyledDocument;
 
 /**
  *
@@ -31,13 +32,15 @@ public class CElectionCodeArea extends CodeArea {
         
     }
 
-    public void letUserEditCode(List<String> code) throws BadLocationException {
+    public void letUserEditCode(List<String> code) throws BadLocationException {        
         String s = "";
-        for(String c : code) {
-            s += c + "\n";
+        for(int i = 0; i < code.size(); ++i) {
+            s += code.get(i);
+            if(i != code.size() - 1)
+                s += "\n";
         }
-        pane.getStyledDocument().remove(0, pane.getStyledDocument().getLength());
-        pane.getStyledDocument().insertString(0, s, null);
+        
+        pane.setText(s);
         actionList.clear();
     }
 

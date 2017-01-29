@@ -106,5 +106,10 @@ public class CCodeEditorGUI extends javax.swing.JFrame {
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 
+    public void setNewCodeArea() {
+        jTextPane1 = new JTextPane();
+        jScrollPane3.setViewportView(jTextPane1);
+    }
+
     
 }

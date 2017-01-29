@@ -38,7 +38,7 @@ import javax.swing.text.BadLocationException;
 public class CElectionDescriptionEditorBuilder {
     
     private final String[] menuHeadingIds = {"file", "edit", "editor", "code"};
-    private CElectionCodeAreaBuilder codeAreaBuilder = new CElectionCodeAreaBuilder();
+    private CElectionCodeAreaBuilder codeAreaBuilder;
     
     private UserAction newAcc;
     private UserAction save;
@@ -51,15 +51,16 @@ public class CElectionDescriptionEditorBuilder {
     public CElectionDescriptionEditor createCElectionDescriptionEditor(ObjectRefsForBuilder objRefsForBuilder) {
         CEditorWindowStarter starter = new CEditorWindowStarter();
         CCodeEditorGUI gui = starter.getGUIWindow();
+        
+        codeAreaBuilder = new CElectionCodeAreaBuilder(objRefsForBuilder);
 
         //TODO create an ArrayList of RegexAndColor objects and apply it to the codeareas by calling
         //codeAreaObject.setSyntaxHLRegexAndColorList()
         CElectionCodeArea codeArea = codeAreaBuilder.createCElectionCodeArea(
                 gui.getCodeArea(), 
-                gui.getCodeAreaScrollPane(),
-                objRefsForBuilder);
+                gui.getCodeAreaScrollPane());
         
-        CElectionDescriptionEditor editor = new CElectionDescriptionEditor(codeArea, gui);        
+        CElectionDescriptionEditor editor = new CElectionDescriptionEditor(codeArea, gui, codeAreaBuilder);        
         
         CElectionEditorMenubarHandler menuBarHandler = 
                 new CElectionEditorMenubarHandler(

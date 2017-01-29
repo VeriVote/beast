@@ -130,4 +130,13 @@ public class LockedLinesHandler implements DocumentListener {
     public void addLockedLinesListener(LockedLinesListener l) {
         listeners.add(l);
     }
+
+    void unlockAll() {
+         for(int i = 0; i < lockedLines.size(); ++i) {
+            for(LockedLinesListener l : listeners) {
+                l.unlockedLine(lockedLines.get(i));
+            }  
+        }
+         lockedLines.clear();
+    }
 }

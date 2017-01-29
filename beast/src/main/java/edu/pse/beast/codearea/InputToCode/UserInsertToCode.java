@@ -50,6 +50,10 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
         setupObjects();
     }
 
+    public SaveTextBeforeRemove getSaveBeforeRemove() {
+        return saveBeforeRemove;
+    }
+    
     public void insertNewline() throws BadLocationException {  
         currentInserter.insertNewlineAtCurrentPosition(pane, tabInserter, 
                 lineBeginningTabsHandler, currentCaretPosition);               
@@ -182,5 +186,9 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
 
     public OpenCloseCharList getOccList() {
         return this.openCloseCharList;
+    }
+
+    public void unlockAll() {
+        lockedLines.unlockAll();
     }
 }

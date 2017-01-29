@@ -42,7 +42,6 @@ public class ErrorDisplayer implements CaretListener {
     
     public void showErrors(ArrayList<CodeError> errors) {
         absPosToError = new HashMap<>();
-        pane.getHighlighter().removeAllHighlights();
         for(CodeError err : errors) {
             int abs = lineHandler.getLineBeginning(err.getLine() - 1)
                     + err.getPosInLine();

@@ -73,6 +73,10 @@ public class CodeArea {
         this.openCloseCharHighlighter = codeArea.openCloseCharHighlighter;
     }
     
+    public void unlockAll() {
+        insertToCode.unlockAll();
+    }
+    
     public void lockLine(int line) {
         insertToCode.lockLine(line);
     }
