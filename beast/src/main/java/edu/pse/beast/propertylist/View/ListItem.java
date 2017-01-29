@@ -1,5 +1,7 @@
 package edu.pse.beast.propertylist.View;
 
+import java.awt.Dimension;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -41,13 +43,18 @@ public class ListItem extends JPanel{
 	}
 	
 	private void init() {
+		Dimension iconSize = new Dimension(40,40);
+		showResult.setPreferredSize(iconSize);
 		showResult.setIcon(new ImageIcon(getClass().getResource("/images/other/eye.png")));
 		this.add(showResult);
 		name.setText(descr.getDescription().getName());
 		this.add(name);
+		testStatus.setText("Check");
 		this.add(testStatus);
+		changeButton.setPreferredSize(iconSize);
 		changeButton.setIcon(new ImageIcon(getClass().getResource("/images/other/wrench.png")));
 		this.add(changeButton);
+		deleteButton.setPreferredSize(iconSize);
 		deleteButton.setIcon(new ImageIcon(getClass().getResource("/images/other/x-mark.png")));
 		this.add(deleteButton);
 	}

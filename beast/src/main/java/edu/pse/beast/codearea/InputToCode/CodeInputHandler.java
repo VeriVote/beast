@@ -40,7 +40,7 @@ public class CodeInputHandler {
                 insertToCode.removeToTheLeft();
             } else if(ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyChar() != ''){            
                 insertToCode.insertChar(ke.getKeyChar());                
-            } 
+            }
         } catch(BadLocationException ex) {
             ex.printStackTrace();
         }        

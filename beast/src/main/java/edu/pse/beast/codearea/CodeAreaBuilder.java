@@ -18,9 +18,9 @@ import edu.pse.beast.codearea.SyntaxHL.RegexAndColor;
 import edu.pse.beast.codearea.SyntaxHL.SyntaxHL;
 import edu.pse.beast.codearea.UserActions.CodeAreaUserActions;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -73,7 +73,6 @@ public class CodeAreaBuilder {
         //maybe change it up so user can change it?
         shortcutHandler.addAction(getKeyCodeFor('z'), userActions.getActionById("undo"));
         shortcutHandler.addAction(getKeyCodeFor('r'), userActions.getActionById("redo"));
-                
         return created;
     }
     

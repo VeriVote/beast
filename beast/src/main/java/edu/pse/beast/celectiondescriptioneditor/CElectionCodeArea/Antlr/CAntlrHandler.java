@@ -56,5 +56,10 @@ public class CAntlrHandler {
                     "default", "case", "return"};
         return literals;
     }
+
+    public String getStringRegex() {
+        String stringRegex = "\"([^\"^\\\\]|\\\\(.))*\"";
+        return stringRegex;
+    }
 }
 
