@@ -45,6 +45,9 @@ public class WindowsProcess extends CBMCProcess {
         
         ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", cbmcCall, arguments);
         
+        System.out.println("AUFRUF:" + String.join(" ", prossBuild.command()));
+
+        
         try {
             // save the new process in this var
             startedProcess = prossBuild.start();

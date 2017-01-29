@@ -95,12 +95,9 @@ public class CBMCProcessFactory extends CheckerFactory {
     public File createCodeFile(ElectionDescriptionSource electionDescSrc,
             PostAndPrePropertiesDescription postAndPrepPropDesc) {
         
-        System.out.println("Hier später den anderen generator wieder verwenden!");
         //CBMCCodeGenerator generator = new CBMCCodeGenerator(electionDescSrc.getElectionDescription(), postAndPrepPropDesc);
         
-        System.out.println("funktioniert");
         new CBMCCodeGenerator_Holger();
-        System.out.println("hier steht nichts");
         
         String generated = new CBMCCodeGenerator_Holger().generateCode(postAndPrepPropDesc, electionDescSrc.getElectionDescription());
         

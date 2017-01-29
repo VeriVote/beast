@@ -31,7 +31,7 @@ public class ThreadedBufferedReader extends Thread{
 			while (line != null && !isInterrupted) {
 				readLines.add(line);
 				line = reader.readLine();
-				//System.out.println(line);
+				System.out.println("ASDFASDF" + line);
 			}
 		} catch (IOException e) {
 			ErrorLogger.log("Reader was closed unexpectedly");

@@ -68,6 +68,6 @@ public final class FileLoader {
     }
     
     public static String getFileFromRes(String fileName) {
-        return new File("src/res/" + fileName).getAbsolutePath();
+        return new File("src/resources/" + fileName).getAbsolutePath();
     }    
 }
