@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
@@ -23,10 +24,8 @@ public final class CheckerFactoryFactory {
 	    factories.put("cbmc", new CBMCProcessFactory(null, null, null, null, null));
 	    
 	    
-	    //search for other classes
+	    //TODO search for other classes
 		
-	    
-	    
 	    
 	    initialized = true;
 	}
@@ -52,13 +51,13 @@ public final class CheckerFactoryFactory {
 	}
 	
 	public static CheckerFactory getCheckerFactory(String checkerID, FactoryController controller, ElectionDescriptionSource electionDescSrc,
-            PostAndPrePropertiesDescriptionSource postAndPrepPropDescSrc, ParameterSource paramSrc, Result result) {
+            PostAndPrePropertiesDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result) {
 		if (!initialized) {
 			init();
 		}
 		
 		if (factories.keySet().contains(checkerID)) {
-			return factories.get(checkerID).getNewInstance(controller, electionDescSrc, postAndPrepPropDescSrc, paramSrc, result);
+			return factories.get(checkerID).getNewInstance(controller, electionDescSrc, postAndPrepPropDesc, paramSrc, result);
 
 		} else {
 			ErrorLogger.log("The specified checkerID wasn't found");
@@ -73,6 +72,19 @@ public final class CheckerFactoryFactory {
         }
         // TODO Auto-generated method stub
         return null;
+    }
+    
+    public static List<Result> getMatchingResult(String checkerID, int amount) {
+        if (!initialized) {
+            init();
+        }
+        if (factories.keySet().contains(checkerID)) {
+            return factories.get(checkerID).getMatchingResult(amount);
+
+        } else {
+            ErrorLogger.log("The specified checkerID wasn't found");
+            return null;
+        }
     }
  	
 }

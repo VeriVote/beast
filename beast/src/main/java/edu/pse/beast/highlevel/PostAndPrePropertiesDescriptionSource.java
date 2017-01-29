@@ -1,6 +1,9 @@
 
 package edu.pse.beast.highlevel;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 
 /**
@@ -14,11 +17,13 @@ public interface PostAndPrePropertiesDescriptionSource {
      * election check.
      * @return PostAndPrePropertiesDescription
      */
-    ArrayList<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptions();
+    
+    List<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptions();
     /**
      * Returns true if all the PostAndPrePropertiesDescriptions are correct.
      * @return correctness
      */
+    
     boolean isCorrect();
     /**
      * Stops reacting to user input to not interfere with running check.
@@ -28,4 +33,5 @@ public interface PostAndPrePropertiesDescriptionSource {
      * Resumes reacting to user input after the check is over.
      */
     void resumeReacting();
+    
 }

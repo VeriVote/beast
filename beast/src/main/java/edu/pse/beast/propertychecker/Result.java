@@ -18,12 +18,20 @@ import edu.pse.beast.toolbox.ErrorLogger;
  */
 public abstract class Result implements ResultInterface {
 
-    protected boolean valid = false;
-    protected boolean finished = false;
-    protected List<String> result;
-    protected boolean timeOut = false;
-    protected boolean success = false;
+    private boolean valid = false;
+    private boolean finished = false;
+    private List<String> result;
+    private boolean timeOut = false;
+    private boolean success = false;
 
+    
+    /**
+     * Presents the result of the check.
+     * Every class that extends this class has to implement it for itself.
+     * @param presenter the presentable where it is supposed to be presented on
+     */
+    public abstract void presentTo(ResultPresenterElement presenter);
+    
     /**
      * 
      * @return if the result is in a state that it can be presented
@@ -32,13 +40,27 @@ public abstract class Result implements ResultInterface {
     public boolean readyToPresent() {
         return finished;
     }
+    
+    public boolean isValid() {
+        return valid;
+    }
 
-    /**
-     * Presents the result of the check.
-     * Every class that extends this class has to implement it for itself.
-     * @param presenter the presentable where it is supposed to be presented on
-     */
-    public abstract void presentTo(ResultPresenterElement presenter);
+    public boolean isFinished() {
+        return finished;
+    }
+
+    public List<String> getResult() {
+        return result;
+    }
+
+    public boolean isTimedOut() {
+        return timeOut;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
 
     /**
      * to be set when the checking for this result is completed
@@ -55,6 +77,9 @@ public abstract class Result implements ResultInterface {
         valid = true;
     }
 
+    /**
+     * 
+     */
     public void setSuccess() {
         success = true;
     }

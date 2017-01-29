@@ -8,18 +8,18 @@ public class CBMC_Result extends Result {
 
 	@Override
 	public void presentTo(ResultPresenterElement presenter) {
-		if (!finished) {
+		if (!isFinished()) {
 			ErrorLogger.log("Result isn't ready yet");
 			return;
-		} else if (timeOut) {
+		} else if (isTimedOut()) {
 			presenter.presentTimeOut();
-		} else if (!valid) {
+		} else if (!isValid()) {
 			presenter.presentFailure();
-		} else if (success) {
+		} else if (isSuccess()) {
 			presenter.presentSuccess();
 		} else {
-			presenter.presentFailureExample(new FailureExample(result));
+		    //TODO implement here real counterexample
+			presenter.presentFailureExample(new FailureExample(getResult()));
 		}
 	}
-
 }

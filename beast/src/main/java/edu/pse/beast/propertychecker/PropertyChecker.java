@@ -10,6 +10,9 @@ import java.util.List;
 import edu.pse.beast.datatypes.ElectionCheckParameter;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.highlevel.ElectionDescriptionSource;
+import edu.pse.beast.highlevel.ParameterSource;
+import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
 import edu.pse.beast.highlevel.ResultCheckerCommunicator;
 import edu.pse.beast.highlevel.ResultInterface;
 
@@ -31,16 +34,17 @@ public class PropertyChecker implements ResultCheckerCommunicator {
     }
 
     @Override
-    public List<ResultInterface> checkPropertiesForDescription(List<PostAndPrePropertiesDescription> propDescr,
-            ElectionDescription elecDescr, ElectionCheckParameter params) {
+    public List<ResultInterface> checkPropertiesForDescription(PostAndPrePropertiesDescriptionSource propDescrSrc,
+            ElectionDescriptionSource elecDescr, ParameterSource params) {
     	
-    	this.factoryController = new FactoryController(elecDescr, propDescr, params, checkerID, maxTries);
+        
+    	this.factoryController = new FactoryController(elecDescr, propDescrSrc, params, checkerID, maxTries);
         return factoryController.getResults();
     }
 
     @Override
     public void abortChecking() {
-    	factoryController.stopChecking();
+    	factoryController.stopChecking(false);
     }
     
 }
