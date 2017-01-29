@@ -15,6 +15,7 @@ import java.util.LinkedList;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.FormalPropertySyntaxTreeToAstTranslator;
 
 /**
  * This creates the .c file which will be used to check it with CBMC It
@@ -28,6 +29,7 @@ public class CBMCCodeGenerator {
     private final ArrayList<String> code;
     private final ElectionDescription electionDescription;
     private final PostAndPrePropertiesDescription postAndPrePropertiesDescription;
+    private FormalPropertySyntaxTreeToAstTranslator translator = new FormalPropertySyntaxTreeToAstTranslator();
 
     public CBMCCodeGenerator(ElectionDescription electionDescription, PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
         this.electionDescription = electionDescription;

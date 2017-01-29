@@ -5,7 +5,7 @@
  */
 package edu.pse.beast.toolbox.antlr.booleanexp;
 
-import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.FormalPropertySyntaxTreeToAstTranslater;
+import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.FormalPropertySyntaxTreeToAstTranslator;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
@@ -57,7 +57,7 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
     
     @Test
     public void testCreateASTComparison() {
-        FormalPropertySyntaxTreeToAstTranslater translater = new FormalPropertySyntaxTreeToAstTranslater();
+        FormalPropertySyntaxTreeToAstTranslator translater = new FormalPropertySyntaxTreeToAstTranslator();
         InternalTypeContainer inputType = new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
         InternalTypeContainer output = new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.CANDIDATE);  
         
@@ -79,7 +79,7 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
        FormalPropertyDescriptionLexer lexer = new FormalPropertyDescriptionLexer(new ANTLRInputStream(exp));
        CommonTokenStream tokenS = new CommonTokenStream(lexer);
        FormalPropertyDescriptionParser parser = new FormalPropertyDescriptionParser(tokenS);
-       FormalPropertySyntaxTreeToAstTranslater translater = new FormalPropertySyntaxTreeToAstTranslater();
+       FormalPropertySyntaxTreeToAstTranslator translater = new FormalPropertySyntaxTreeToAstTranslator();
     }
     
 }

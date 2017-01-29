@@ -42,7 +42,7 @@ import org.antlr.v4.runtime.tree.TerminalNode;
  *
  * @author Holger-Desktop
  */
-public class FormalPropertySyntaxTreeToAstTranslater extends FormalPropertyDescriptionBaseListener {
+public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescriptionBaseListener {
     
     private BooleanExpListNode generated;
     private InternalTypeContainer inputType;

@@ -16,7 +16,7 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
 import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.BooleanExpScope;
-import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.FormalPropertySyntaxTreeToAstTranslater;
+import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.FormalPropertySyntaxTreeToAstTranslator;
 import java.util.ArrayList;
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -32,7 +32,7 @@ public class CBMCCodeGenerator_Holger {
     private PostAndPrePropertiesDescription properties;
     private ElectionDescription electionDescription;
     private CBMCCodeGeneratioonVisitor visitor;
-    private FormalPropertySyntaxTreeToAstTranslater translater = new FormalPropertySyntaxTreeToAstTranslater();
+    private FormalPropertySyntaxTreeToAstTranslator translator = new FormalPropertySyntaxTreeToAstTranslator();
     
     private BooleanExpListNode generateAST(String code) {
         FormalPropertyDescriptionLexer l = new FormalPropertyDescriptionLexer(new ANTLRInputStream(code));
@@ -45,7 +45,7 @@ public class CBMCCodeGenerator_Holger {
             declaredVars.addTypeForId(v.getId(), v.getInternalTypeContainer());
         }
         
-        return  translater.generateFromSyntaxTree(
+        return  translator.generateFromSyntaxTree(
                 p.booleanExpList(),
                 electionDescription.getInputType().getType(), 
                 electionDescription.getOutputType().getType(),
