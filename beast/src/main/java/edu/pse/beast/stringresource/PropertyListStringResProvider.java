@@ -24,6 +24,7 @@ public class PropertyListStringResProvider extends StringResourceProvider {
 
     private StringResourceLoader menuStringRes;
     private StringResourceLoader toolbarTipStringRes;
+    private StringResourceLoader otherStringRes;
 
     /**
      *
@@ -50,6 +51,13 @@ public class PropertyListStringResProvider extends StringResourceProvider {
      */
     public StringResourceLoader getToolbarTipStringRes() {
         return toolbarTipStringRes;
+    }
+    /**
+     * 
+     * @return otherStringRes
+     */
+    public StringResourceLoader getOtherStringRes() {
+        return otherStringRes;
     }
 
     /**
@@ -80,6 +88,19 @@ public class PropertyListStringResProvider extends StringResourceProvider {
                 try {
                     inputList = FileLoader.loadFileAsString(in);
                     menuStringRes = new StringResourceLoader(inputList);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        {
+            String location = getFileLocationString("PropertyListOther");
+            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
+            {
+                LinkedList<String> inputList;
+                try {
+                    inputList = FileLoader.loadFileAsString(in);
+                    otherStringRes = new StringResourceLoader(inputList);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
