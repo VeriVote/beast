@@ -31,7 +31,7 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
     }
     
     private String createMsg(CodeError er) {
-        
+        return er.getId();
     }
 
     @Override

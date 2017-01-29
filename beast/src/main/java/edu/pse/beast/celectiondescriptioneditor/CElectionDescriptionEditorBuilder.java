@@ -49,16 +49,18 @@ public class CElectionDescriptionEditorBuilder {
     public CElectionDescriptionEditor createCElectionDescriptionEditor(ObjectRefsForBuilder objRefsForBuilder) {
         CEditorWindowStarter starter = new CEditorWindowStarter();
         CCodeEditorGUI gui = starter.getGUIWindow();
-        
+
+        //create new ErrorWindow
+        ErrorWindow errorWindow = new ErrorWindow(gui.getErrorPane(), objRefsForBuilder.getStringIF());
         codeAreaBuilder = new CElectionCodeAreaBuilder(objRefsForBuilder);
 
         //TODO create an ArrayList of RegexAndColor objects and apply it to the codeareas by calling
         //codeAreaObject.setSyntaxHLRegexAndColorList()
         CElectionCodeArea codeArea = codeAreaBuilder.createCElectionCodeArea(
                 gui.getCodeArea(), 
-                gui.getCodeAreaScrollPane());
+                gui.getCodeAreaScrollPane(), errorWindow);
         
-        CElectionDescriptionEditor editor = new CElectionDescriptionEditor(codeArea, gui, codeAreaBuilder);        
+        CElectionDescriptionEditor editor = new CElectionDescriptionEditor(codeArea, gui, codeAreaBuilder, errorWindow);
         
         CElectionEditorMenubarHandler menuBarHandler = 
                 new CElectionEditorMenubarHandler(

@@ -59,9 +59,9 @@ public class BooleanExpEditorBuilder{
 
         BooleanExpCodeAreaBuilder codeAreaBuilder = new BooleanExpCodeAreaBuilder();
         BooleanExpCodeArea prePropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
-                window.getPrePropTextPane(), window.getPrePropScrollPane());
+                window.getPrePropTextPane(), window.getPrePropScrollPane(), errorWindow);
         BooleanExpCodeArea postPropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
-                window.getPostPropTextPane(), window.getPostPropScrollPane());
+                window.getPostPropTextPane(), window.getPostPropScrollPane(), errorWindow);
 
         // create ChangeHandler
         ChangeHandler changeHandler = new ChangeHandler(prePropCodeArea.getPane(),

@@ -98,9 +98,9 @@ public class BooleanExpEditor {
         window.setNewTextpanes();
         changeHandler.addNewTextPanes(window.getPrePropTextPane(), window.getPostPropTextPane());
         prePropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(refs, window.getPrePropTextPane(),
-                window.getPrePropScrollPane());
+                window.getPrePropScrollPane(), errorWindow);
         postPropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(refs, window.getPostPropTextPane(),
-                window.getPostPropScrollPane());
+                window.getPostPropScrollPane(), errorWindow);
         prePropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         postPropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         codeAreaFocusListener.addNewCodeAreas(prePropCodeArea, postPropCodeArea);

@@ -9,6 +9,7 @@ import edu.pse.beast.codearea.ActionAdder.TextChangedActionAdder;
 import edu.pse.beast.codearea.Actionlist.Actionlist;
 import edu.pse.beast.codearea.Autocompletion.AutocompletionController;
 import edu.pse.beast.codearea.ErrorHandling.ErrorController;
+import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
 import edu.pse.beast.codearea.InputToCode.CodeInputHandler;
 import edu.pse.beast.codearea.InputToCode.OpenCloseCharList;
 import edu.pse.beast.codearea.InputToCode.ShortcutHandler;
@@ -17,6 +18,7 @@ import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
 import edu.pse.beast.codearea.SyntaxHL.RegexAndColor;
 import edu.pse.beast.codearea.SyntaxHL.SyntaxHL;
 import edu.pse.beast.codearea.UserActions.CodeAreaUserActions;
+import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 
 import java.awt.*;
@@ -33,7 +35,8 @@ import javax.swing.JTextPane;
  */
 public class CodeAreaBuilder {
 
-    public CodeArea createCodeArea(JTextPane codeArea, JScrollPane codeAreaScroll, ObjectRefsForBuilder refs) {
+    public CodeArea createCodeArea(JTextPane codeArea, JScrollPane codeAreaScroll, ObjectRefsForBuilder refs,
+                                   ErrorDisplayer errorDisplayer) {
                 
         OpenCloseCharList occL = new OpenCloseCharList();
         
@@ -51,11 +54,10 @@ public class CodeAreaBuilder {
         
         TextLineNumber tln = new TextLineNumber(codeArea); 
         codeAreaScroll.setRowHeaderView(tln);
-        
         StoppedTypingContinuouslyMessager stoppedTypingContinuouslyMessager = 
                 new StoppedTypingContinuouslyMessager(codeArea);
         ErrorController error = new ErrorController(
-                codeArea, stoppedTypingContinuouslyMessager);
+                codeArea, stoppedTypingContinuouslyMessager, errorDisplayer);
         
         AutocompletionController autocompletion = new AutocompletionController();
         

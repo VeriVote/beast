@@ -43,6 +43,4 @@ public class CElectionCodeArea extends CodeArea {
         pane.setText(s);
         actionList.clear();
     }
-
-  
 }

@@ -23,13 +23,16 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     private ElectionDescription currentDescription;
     private CCodeEditorGUI gui;
     private CElectionCodeAreaBuilder builder;
+    private ErrorWindow errorWindow;
+
     public CElectionDescriptionEditor(
             CElectionCodeArea codeArea,
             CCodeEditorGUI gui,            
-            CElectionCodeAreaBuilder builder) {
+            CElectionCodeAreaBuilder builder, ErrorWindow errorWindow) {
         this.codeArea = codeArea;
         this.gui = gui;
         this.builder = builder;
+        this.errorWindow = errorWindow;
     }
 
     @Override
@@ -67,7 +70,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
 
     public void letUserEditElectionDescription(ElectionDescription description) throws BadLocationException {
         gui.setNewCodeArea();
-        codeArea = builder.createCElectionCodeArea(gui.getCodeArea(), gui.getCodeAreaScrollPane());
+        codeArea = builder.createCElectionCodeArea(gui.getCodeArea(), gui.getCodeAreaScrollPane(), errorWindow);
         
         codeArea.letUserEditCode(description.getCode());
         codeArea.lockLine(description.getVotingDeclLine());     

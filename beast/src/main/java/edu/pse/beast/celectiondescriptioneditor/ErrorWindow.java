@@ -1,16 +1,15 @@
-package edu.pse.beast.booleanexpeditor;
+package edu.pse.beast.celectiondescriptioneditor;
 
 import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
-import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
-import javax.swing.JTextPane;
+
+import javax.swing.*;
 import java.util.ArrayList;
 
 /**
- * Controller of the JTextPane for displayng errors in a BooleanExpEditorWindow.
- * @author Nikolai
+ * @author NikolaiLMS
  */
-public class ErrorWindow extends ErrorDisplayer{
+public class ErrorWindow extends ErrorDisplayer {
     private final JTextPane textPane;
     private ArrayList<Error> errors;
     private String errorString;

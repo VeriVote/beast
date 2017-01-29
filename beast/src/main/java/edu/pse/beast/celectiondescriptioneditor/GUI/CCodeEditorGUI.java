@@ -11,7 +11,6 @@ import javax.swing.JTextPane;
 import javax.swing.JToolBar;
 
 /**
- *
  * @author Holger
  */
 public class CCodeEditorGUI extends javax.swing.JFrame {
@@ -21,6 +20,7 @@ public class CCodeEditorGUI extends javax.swing.JFrame {
      */
     public CCodeEditorGUI() {
         initComponents();
+        jTextPane2.setEditable(false);
     }
 
     public JTextPane getCodeArea() {
@@ -38,7 +38,11 @@ public class CCodeEditorGUI extends javax.swing.JFrame {
     public JToolBar getToolBar() {
         return jToolBar1;
     }
-    
+
+    public JTextPane getErrorPane() {
+        return jTextPane2;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

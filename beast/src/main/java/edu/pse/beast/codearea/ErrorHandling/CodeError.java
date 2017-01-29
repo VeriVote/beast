@@ -46,7 +46,10 @@ public class CodeError {
         return posInLine;
     }
 
-    
+    public String getMsg() {
+        // temporary
+        return "";
+    }
     
     
 }

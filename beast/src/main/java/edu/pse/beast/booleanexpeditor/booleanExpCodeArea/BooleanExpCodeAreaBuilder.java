@@ -5,6 +5,7 @@ import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpE
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorVariableErrorFinder;
 import edu.pse.beast.codearea.CodeArea;
 import edu.pse.beast.codearea.CodeAreaBuilder;
+import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 
 import javax.swing.*;
@@ -23,8 +24,8 @@ public class BooleanExpCodeAreaBuilder extends CodeAreaBuilder{
      * @return a BooleanExpCodeArea object
      */
     public BooleanExpCodeArea createBooleanExpCodeAreaObject(ObjectRefsForBuilder objectRefs,
-                                                                 JTextPane textPane, JScrollPane scrollPane) {
-        CodeArea tempCodeArea = super.createCodeArea(textPane, scrollPane, objectRefs);
+                                                             JTextPane textPane, JScrollPane scrollPane, ErrorDisplayer errorDisplayer) {
+        CodeArea tempCodeArea = super.createCodeArea(textPane, scrollPane, objectRefs, errorDisplayer);
         BooleanExpANTLRHandler antlrHandler = new BooleanExpANTLRHandler(textPane.getStyledDocument());
         return new BooleanExpCodeArea(tempCodeArea, antlrHandler,
                 new BooleanExpEditorVariableErrorFinder(antlrHandler),
