@@ -29,6 +29,7 @@ public class CSyntaxHl {
         for(String s : antlrHandler.getControllLiterals()) {
             regexAndColorList.add(new RegexAndColor(s, Color.BLUE));
         }
+        regexAndColorList.add(new RegexAndColor(antlrHandler.getStringRegex(), Color.RED));
         syntaxHL.updateFilter(regexAndColorList);
     }
 }

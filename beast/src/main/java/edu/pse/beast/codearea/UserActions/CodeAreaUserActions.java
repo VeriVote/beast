@@ -32,17 +32,18 @@ public class CodeAreaUserActions {
         }
         return null;
     }
-    
+
+
     private void addCopyAction() {
         actions.add(new CopyUserAction(area.getPane()));
     }
     
     private void addCutAction() {
-        actions.add(new CutUserAction());
+        actions.add(new CutUserAction(area.getPane()));
     }
     
     private void addPasteAction() {
-        actions.add(new PasteUserAction());
+        actions.add(new PasteUserAction(area.getPane()));
     }
     
     private void addRedoAction() {
