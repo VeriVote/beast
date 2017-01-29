@@ -44,6 +44,9 @@ public class PropertyItem {
 	public Boolean willBeTested() {
 		return willBeTested;
 	}
+	public void toggleTestStatus() {
+		willBeTested = !willBeTested;
+	}
 
 	@Override
 	public boolean equals (Object o) {

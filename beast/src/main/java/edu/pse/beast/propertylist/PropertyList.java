@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
+import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenter;
 import edu.pse.beast.propertychecker.Result;
 
@@ -41,6 +42,22 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource, Resu
 		propertyDescriptions = newList;
 	}*/
 	
+	private void checkForCurrentEditorContent() {
+		String currentlyInEditor = booleanExpEditor.getCurrentlyLoadedPostAndPreProp().getName();
+		
+		PropertyItem editorProp = propDescs.get(indexOfName(currentlyInEditor));
+		
+		editorProp.setDescription(booleanExpEditor.getCurrentlyLoadedPostAndPreProp());
+		
+	}
+	
+	private int indexOfName(String name) {
+		for (PropertyItem current : propDescs) {
+			if (current.getDescription().getName() == name) return propDescs.indexOf(current);
+		}
+		return -1;
+	}
+	
 	/**
 	 * @param prop
 	 * @param newName
@@ -51,9 +68,7 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource, Resu
 		int index = propDescs.indexOf(prop);
 		if (index == -1) return false;
 		
-		for (PropertyItem current : propDescs) {
-			if (current.getDescription().getName() == newName) return false;
-		}
+		if (indexOfName(newName) != -1) return false;
 		
 		PostAndPrePropertiesDescription old = propDescs.get(index).getDescription();
 		propDescs.get(index).setDescription(newName, old.getPrePropertiesDescription(),
@@ -63,52 +78,48 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource, Resu
 	}
 	
 	/**
-	 * @param prop
+	 * @param desc
 	 */
-	public void addStandardDescription(PostAndPrePropertiesDescription prop) {
-		propDescs.add(new PropertyItem(prop));
+	public void addStandardDescription(PostAndPrePropertiesDescription desc) {
+		checkForCurrentEditorContent();
+		propDescs.add(new PropertyItem(desc));
 	}
 	
 	/**
 	 * 
 	 */
-	public void newDescription() {
-		// TODO: has this class a reference to a BooleanExpEditor?
+	public void newDescription(String name) {
+		checkForCurrentEditorContent();
+		PropertyItem newItem = new PropertyItem(new PostAndPrePropertiesDescription(name), false);
+		booleanExpEditor.loadPostAndPreProperties(newItem.getDescription());
+		propDescs.add(newItem);
 	}
 	
 	/**
 	 * 
 	 */
-	public void changeDescription() {
-		// TODO: has this class a reference to a BooleanExpEditor?
+	public void changeDescription(PropertyItem prop) {
+		checkForCurrentEditorContent();
+		booleanExpEditor.loadPostAndPreProperties(prop.getDescription());
 	}
 	
 	/**
 	 * @param prop
 	 * @return
 	 */
-	public PropertyItem deleteDescription(PostAndPrePropertiesDescription prop) {
-		// TODO: does class propertyItem really make sense?
-		return null;
+	public PropertyItem deleteDescription(PropertyItem prop) {
+		int index = propDescs.indexOf(prop);
+		if (index == -1) return null;
+		return propDescs.remove(index);
 	}
 	
 	/**
 	 * @param prop
-	 * @param testStatus
 	 */
-	public void changeTestedStatus(PostAndPrePropertiesDescription prop, Boolean testStatus) {
-		// TODO
+	public void changeTestedStatus(PropertyItem prop) {
+		prop.toggleTestStatus();
 	}
 
-	
-	// Interface methods
-    /* (non-Javadoc)
-     * @see edu.pse.beast.highlevel.ResultPresenter#presentResult(edu.pse.beast.propertychecker.Result)
-     */
-    @Override
-    public void presentResult(Result res) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     /* (non-Javadoc)
      * @see edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource#isCorrect()
@@ -134,11 +145,29 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource, Resu
 		/*ArrayList<PostAndPrePropertiesDescription> res = new ArrayList<PostAndPrePropertiesDescription>();
 		for (PropertyItem item : propertyDescriptions) res.add(item.getDescription());
 		return res;*/
-		// TODO
-        return null;
+		ArrayList<PostAndPrePropertiesDescription> result = new ArrayList<PostAndPrePropertiesDescription>();
+		for (PropertyItem item : propDescs) {
+			result.add(item.getDescription());
+		}
+		return result;
 	}
 	
 	public ArrayList<PropertyItem> getDescr() {
 		return propDescs;
 	}
+
+
+	@Override
+	public void presentResult(ResultInterface res) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	// Interface methods
+    /* (non-Javadoc)
+     * @see edu.pse.beast.highlevel.ResultPresenter#presentResult(edu.pse.beast.propertychecker.Result)
+     */
+    public void presentResult(Result res) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
