@@ -26,28 +26,28 @@ import edu.pse.beast.toolbox.UserAction;
 public class PropertyListBuilder {
 	
     private PropertyList instance;
+    private PropertyListWindow window;
 	private String[] menuHeadingIds = { "fileMenu", "editMenu" };
 	
 	public PropertyList createPropertyList(ObjectRefsForBuilder refs, BooleanExpEditor booleanExpEditor) {
 		PropertyListWindowStarter starter = new PropertyListWindowStarter();
 		
-		starter.getPropertyListWindow().updateStringRes(refs.getStringIF());
+		window = starter.getPropertyListWindow();
+		
+		window.updateStringRes(refs.getStringIF());
 		
 		instance = new PropertyList(booleanExpEditor);
 		
 		PropertyListMenuBarHandler menuBarHandler = new PropertyListMenuBarHandler(menuHeadingIds, 
 				createActionIdAndListenerListForMenuHandler(), 
-				refs.getStringIF().getPropertyListStringResProvider().getMenuStringRes(), starter.getPropertyListWindow());
+				refs.getStringIF().getPropertyListStringResProvider().getMenuStringRes(), window);
 		
 		ImageResourceProvider imageRes = ImageResourceProvider.getToolbarImages();
 	
 		
 		PropertyListToolbarHandler toolbarHandler = new PropertyListToolbarHandler(imageRes, 
 				refs.getStringIF().getPropertyListStringResProvider().getToolbarTipStringRes(),
-				createActionIdAndListenerListForToolbarHandler(), starter.getPropertyListWindow().getToolbar(), 
-				starter.getPropertyListWindow());
-		
-		//window.setJMenuBar(menuBarHandler.getCreatedMenuBar());
+				createActionIdAndListenerListForToolbarHandler(), window.getToolbar(), window);
 		
 		starter.start();
 		
