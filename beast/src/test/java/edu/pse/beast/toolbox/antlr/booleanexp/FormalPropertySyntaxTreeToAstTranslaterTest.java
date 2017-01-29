@@ -80,7 +80,6 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
        CommonTokenStream tokenS = new CommonTokenStream(lexer);
        FormalPropertyDescriptionParser parser = new FormalPropertyDescriptionParser(tokenS);
        FormalPropertySyntaxTreeToAstTranslater translater = new FormalPropertySyntaxTreeToAstTranslater();
-       //BooleanExpListNode ast = translater.generateFromSyntaxTree(parser.booleanExpList());
     }
     
 }

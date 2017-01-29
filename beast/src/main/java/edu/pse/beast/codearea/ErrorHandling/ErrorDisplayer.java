@@ -7,6 +7,7 @@ package edu.pse.beast.codearea.ErrorHandling;
 
 import com.sun.org.apache.bcel.internal.classfile.Code;
 import edu.pse.beast.codearea.InputToCode.LineHandler;
+import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
@@ -26,8 +27,8 @@ import javax.swing.text.View;
  *
  * @author Holger-Desktop
  */
-public class ErrorDisplayer implements CaretListener {
-    private JTextPane pane;
+public abstract class ErrorDisplayer implements CaretListener, DisplaysStringsToUser {
+    protected JTextPane pane;
     private SquigglePainter painter;
     private LineHandler lineHandler;
     private HashMap<Integer, CodeError> absPosToError;
@@ -42,16 +43,20 @@ public class ErrorDisplayer implements CaretListener {
     
     public void showErrors(ArrayList<CodeError> errors) {
         absPosToError = new HashMap<>();
-        for(CodeError err : errors) {
-            int abs = lineHandler.getLineBeginning(err.getLine() - 1)
-                    + err.getPosInLine();
-            absPosToError.put(abs, err);
-            try {
-                pane.getHighlighter().addHighlight(abs, abs + 5, painter);
-            } catch (BadLocationException ex) {
-                Logger.getLogger(ErrorDisplayer.class.getName()).log(Level.SEVERE, null, ex);
-            }
+    }
+    
+    protected void showError(CodeError er, String msg) {
+        
+        
+        int abs = lineHandler.getLineBeginning(er.getLine() - 1)
+                + er.getPosInLine();
+        absPosToError.put(abs, er);
+        try {
+            pane.getHighlighter().addHighlight(abs, abs + 5, painter);
+        } catch (BadLocationException ex) {
+            Logger.getLogger(ErrorDisplayer.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 
     @Override

@@ -22,11 +22,12 @@ public class ErrorController implements StoppedTypingContinuouslyListener {
     private ErrorDisplayer displayer;
     
     public ErrorController(JTextPane pane,
-            StoppedTypingContinuouslyMessager msg) {
+            StoppedTypingContinuouslyMessager msg,
+            ErrorDisplayer displayer) {
         this.pane = pane;
         msg.addListener(this);
         errorFinderList = new ErrorFinderList();
-        displayer = new ErrorDisplayer(pane);
+        this.displayer = displayer;
     }
     
     public void addErrorFinder(ErrorFinder finder) {

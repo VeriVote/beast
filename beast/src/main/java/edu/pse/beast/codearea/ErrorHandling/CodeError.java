@@ -5,6 +5,8 @@
  */
 package edu.pse.beast.codearea.ErrorHandling;
 
+import java.util.HashMap;
+
 /**
  *
  * @author Holger-Desktop
@@ -14,6 +16,7 @@ public class CodeError {
     private int posInLine;
     private String id;
     private int errorNumber;
+    private HashMap<String, String> extraInfo = new HashMap<>();
     
     public CodeError(int line, int posInLine, String id, int errorNumber) {
         this.line = line;
@@ -21,10 +24,15 @@ public class CodeError {
         this.id = id;
         this.errorNumber = errorNumber;
     }
+    
+    public void setExtraInfo(String id, String extra) {
+        extraInfo.put(id, extra);
+    }
 
     public String getId() {
         return id;
-    }
+    }  
+    
 
     public int getErrorNumber() {
         return errorNumber;
@@ -37,6 +45,8 @@ public class CodeError {
     public int getPosInLine() {
         return posInLine;
     }
+
+    
     
     
 }
