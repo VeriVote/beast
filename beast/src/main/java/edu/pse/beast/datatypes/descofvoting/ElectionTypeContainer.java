@@ -11,13 +11,14 @@ public class ElectionTypeContainer {
     private final InternalTypeContainer type;
     private int lowerBound;
     private int upperBound;
-    
+    private String id;
     /**
      * Constructor
      * @param type the type of this election
      */
-    public ElectionTypeContainer(InternalTypeContainer type) {
+    public ElectionTypeContainer(InternalTypeContainer type, String id) {
         this.type = type;
+        this.id = id;
     }
     
     /**

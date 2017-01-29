@@ -8,6 +8,7 @@ package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CAntlrHandler;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CGrammarErrorFinder;
 import edu.pse.beast.codearea.CodeArea;
+import java.util.List;
 import javax.swing.JTextPane;
 
 /**
@@ -28,4 +29,10 @@ public class CElectionCodeArea extends CodeArea {
         cSyntaxHl = new CSyntaxHl(antlrHandler, syntaxHL);
         
     }
+
+    public void letUserEditCode(List<String> code) {
+        
+    }
+
+  
 }

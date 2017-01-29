@@ -41,7 +41,9 @@ public class CBMCCodeGeneratioonVisitor implements BooleanExpNodeVisitor{
     private int varCounter = 0;
     private Stack<String> expString;
     private int count;
-    private int listLevel;
+    private int lhslistLevel;
+    private int rhslistLevel;
+    private boolean lhsVisited;
     
     public String generate(ArrayList<BooleanExpressionNode> nodes) {
         generated = "";
@@ -253,41 +255,51 @@ public class CBMCCodeGeneratioonVisitor implements BooleanExpNodeVisitor{
          ++count;
         String booleanVar = "compare_" + varCounter++;
         
-        this.listLevel = 0;
+        this.lhslistLevel = 0;
+        this.rhslistLevel = 0;
         InternalTypeContainer cont = node.getLHSBooleanExpNode().getInternalTypeContainer();
         while(cont.isList()) {
-            this.listLevel++;
+            this.lhslistLevel++;
             cont = cont.getListedType();
         }
         cont = node.getRHSBooleanExpNode().getInternalTypeContainer();
         while(cont.isList()) {
-            this.listLevel++;
+            this.rhslistLevel++;
             cont = cont.getListedType();
         }
         
+        lhsVisited = false;
         node.getLHSBooleanExpNode().getVisited(this);
+        lhsVisited = true;
         node.getRHSBooleanExpNode().getVisited(this);
-        
+        int maxListLevel = lhslistLevel > rhslistLevel ? lhslistLevel : rhslistLevel;
+        cont = lhslistLevel > rhslistLevel ? node.getLHSBooleanExpNode().getInternalTypeContainer() : node.getRHSBooleanExpNode().getInternalTypeContainer();
         
         String code = "unsigned int BOOL = 1;\n";
         code = code.replace("BOOL", booleanVar);
         ArrayList<String> counter = new ArrayList<>();
         
-        for(int i = 0; i < this.listLevel; ++i) {
+        for(int i = 0; i < maxListLevel; ++i) {
             String max = "";
             String countingVar = "count_" + varCounter++;
             counter.add(countingVar);
-            if(cont.getAccesTypeIfList() == InternalTypeRep.VOTER) {
-                max = "V";
-            } else if(cont.getAccesTypeIfList() == InternalTypeRep.CANDIDATE) {
-                max = "C";
-            } else if(cont.getAccesTypeIfList() == InternalTypeRep.SEAT) {
-                max = "S";
-            }
-            String loop =  "for(unsigned int VAR = 0; VAR < MAX && BOOL; ++var) {\n";
-            loop = loop.replace("VAR", countingVar);
-            loop = loop.replace("MAX", max);
-            loop = loop.replace("BOOL", booleanVar);
+            if(null != cont.getAccesTypeIfList()) switch (cont.getAccesTypeIfList()) {
+                 case VOTER:
+                     max = "V";
+                     break;
+                 case CANDIDATE:
+                     max = "C";
+                     break;
+                 case SEAT:
+                     max = "S";
+                     break;
+                 default:
+                     break;
+             }
+            String loop =  "for(unsigned int VAR = 0; VAR < MAX && BOOL; ++VAR) {\n";
+            loop = loop.replaceAll("VAR", countingVar);
+            loop = loop.replaceAll("MAX", max);
+            loop = loop.replaceAll("BOOL", booleanVar);
             code += loop;
         }
         
@@ -296,14 +308,14 @@ public class CBMCCodeGeneratioonVisitor implements BooleanExpNodeVisitor{
         String lhs = expString.pop();
         
         code += booleanVar + " = " + rhs;
-        for(String s : counter) code += "[VAR]".replace("VAR", s);
+        for(int i = 0; i < lhslistLevel; ++i) code += "[VAR]".replace("VAR", counter.get(i));
         code += " " + node.getComparisonSymbol().getCStringRep() + " ";
         code += lhs;
-        for(String s : counter) code += "[VAR]".replace("VAR", s);
+        for(int i = 0; i < rhslistLevel; ++i) code += "[VAR]".replace("VAR", counter.get(i));
         code += ";\n";
         
         cont = node.getLHSBooleanExpNode().getInternalTypeContainer();
-        for(int i = 0; i < this.listLevel; ++i) {
+        for(int i = 0; i < maxListLevel; ++i) {
             code += "}\n";
         }
         
@@ -330,7 +342,11 @@ public class CBMCCodeGeneratioonVisitor implements BooleanExpNodeVisitor{
         SymbolicVariable[] accessVars =  exp.getAccessVar();
         for(int i = 0; i < accessVars.length; ++i) {
             code += "[VAR]".replace("VAR", accessVars[i].getId());
-            listLevel--;
+            if(lhsVisited) {
+                rhslistLevel--;
+            } else {
+                lhslistLevel--;                
+            }
         }
         expString.add(code);
     }
@@ -341,7 +357,11 @@ public class CBMCCodeGeneratioonVisitor implements BooleanExpNodeVisitor{
         SymbolicVariable[] accessVars =  exp.getAccessVar();
         for(int i = 0; i < accessVars.length; ++i) {
             code += "[VAR]".replace("VAR", accessVars[i].getId());
-            this.listLevel--;
+            if(lhsVisited) {
+                rhslistLevel--;
+            } else {
+                lhslistLevel--;                
+            }
         }
         expString.add(code);
     }

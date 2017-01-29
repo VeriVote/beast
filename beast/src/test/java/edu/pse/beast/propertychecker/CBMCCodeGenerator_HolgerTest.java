@@ -51,7 +51,7 @@ public class CBMCCodeGenerator_HolgerTest {
     @Test
     public void testGenerateCode() {
         String pre = "FOR_ALL_VOTERS(v) : EXISTS_ONE_CANDIDATE(c) : (c == VOTES2(v) && (VOTE_SUM_FOR_CANDIDATE(c)>= 3 ==> c < 2));";
-        String post = "ELECT1 == ELECT2;";
+        String post = "VOTES2 == VOTES1;";
         
         PostAndPrePropertiesDescription descr = new PostAndPrePropertiesDescription(
                 "test1",
@@ -59,6 +59,8 @@ public class CBMCCodeGenerator_HolgerTest {
                 new FormalPropertiesDescription(post));
         SymbolicVariableList list = new SymbolicVariableList();
         list.addSymbolicVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
+        list.addSymbolicVariable("v", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
+        
         descr.setSymbolicVariableList(list);
         
         InternalTypeContainer input = new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
@@ -66,8 +68,8 @@ public class CBMCCodeGenerator_HolgerTest {
         
         ElectionDescription electionDescr = new ElectionDescription(
                 "descr",
-                new ElectionTypeContainer(input), 
-                new ElectionTypeContainer(res), 0);
+                new ElectionTypeContainer(input, ""), 
+                new ElectionTypeContainer(res, ""), 0);
         
         String code = "unsigned int voting(unsigned int voters[V], unsigned int candidates[C], unsigned int seats[S]) {\n"+
                 "return 0;\n" +

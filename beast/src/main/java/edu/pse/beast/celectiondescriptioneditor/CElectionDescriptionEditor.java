@@ -41,6 +41,21 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
 
     @Override
     public boolean isCorrect() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
+    }
+
+    @Override
+    public void stopReacting() {
+        
+    }
+
+    @Override
+    public void resumeReacting() {
+        
+    }
+
+    public void letUserEditElectionDescription(ElectionDescription description) {
+        this.currentDescription = description;
+        codeArea.letUserEditCode(description.getCode());
     }
 }

@@ -98,7 +98,9 @@ public class CElectionDescriptionEditorBuilder {
         ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
         
         ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
-        newAcc = createNewElectionUserAction();
+        SaveBeforeChangeHandler saveBeforeChange = new SaveBeforeChangeHandler();
+        
+        newAcc = createNewElectionUserAction(saveBeforeChange, editor);
         save = createSaveElectionUserAction();
         saveAs = createSaveAsElectionUserAction();
         load = createLoadElectionUserAction();
@@ -136,8 +138,9 @@ public class CElectionDescriptionEditorBuilder {
     private SaveBeforeChangeHandler createSaveBeforeChangeHandler() {
         return new SaveBeforeChangeHandler();
     }
-    private NewElectionUserAction createNewElectionUserAction() {
-        return new NewElectionUserAction();
+    private NewElectionUserAction createNewElectionUserAction(
+            SaveBeforeChangeHandler saveHandler, CElectionDescriptionEditor editor) {
+        return new NewElectionUserAction(saveHandler, editor);
     } 
     private SaveElectionUserAction createSaveElectionUserAction() {
         return new SaveElectionUserAction();
@@ -157,8 +160,7 @@ public class CElectionDescriptionEditorBuilder {
     //editor
     private PresentOptionsUserAction createPresentOptionsUserAction() {
         return new PresentOptionsUserAction();
-    }
-    
+    }    
     //code
     private StaticCheckUserAction createStaticCheckUserAction() {
         return new StaticCheckUserAction();

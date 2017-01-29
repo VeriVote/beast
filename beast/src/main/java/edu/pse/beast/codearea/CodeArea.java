@@ -67,6 +67,10 @@ public class CodeArea {
         this.stoppedTypingContinuouslyMessager = codeArea.stoppedTypingContinuouslyMessager;
     }
     
+    public void lockLine(int line) {
+        insertToCode.lockLine(line);
+    }
+    
     public void setUserActionList(CodeAreaUserActions userActionList) {
         this.userActionList = userActionList;
     }
