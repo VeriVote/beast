@@ -10,14 +10,7 @@ import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeA
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
 import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
 import edu.pse.beast.celectiondescriptioneditor.GUI.CEditorWindowStarter;
-import edu.pse.beast.celectiondescriptioneditor.UserActions.ChangeElectionTypeUserAction;
-import edu.pse.beast.celectiondescriptioneditor.UserActions.LoadElectionUserAction;
-import edu.pse.beast.celectiondescriptioneditor.UserActions.NewElectionUserAction;
-import edu.pse.beast.celectiondescriptioneditor.UserActions.PresentOptionsUserAction;
-import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveAsElectionUserAction;
-import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveBeforeChangeHandler;
-import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveElectionUserAction;
-import edu.pse.beast.celectiondescriptioneditor.UserActions.StaticCheckUserAction;
+import edu.pse.beast.celectiondescriptioneditor.UserActions.*;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ActionIdAndListener;
 import edu.pse.beast.toolbox.CCodeHelper;
@@ -47,6 +40,11 @@ public class CElectionDescriptionEditorBuilder {
     private UserAction changeElec;
     private UserAction options;
     private UserAction staticCodeAnalysis;
+    private UserAction undo;
+    private UserAction redo;
+    private UserAction paste;
+    private UserAction copy;
+    private UserAction cut;
     
     public CElectionDescriptionEditor createCElectionDescriptionEditor(ObjectRefsForBuilder objRefsForBuilder) {
         CEditorWindowStarter starter = new CEditorWindowStarter();
@@ -76,11 +74,11 @@ public class CElectionDescriptionEditorBuilder {
             createFromUserAction(save),
             createFromUserAction(saveAs),
             createFromUserAction(load),
-            createFromUserAction(codeArea.getUserActionList().getActionById("undo")),
-            createFromUserAction(codeArea.getUserActionList().getActionById("redo")), 
-            createFromUserAction(codeArea.getUserActionList().getActionById("copy")),
-            createFromUserAction(codeArea.getUserActionList().getActionById("cut")),
-            createFromUserAction(codeArea.getUserActionList().getActionById("paste"))             
+            createFromUserAction(undo),
+            createFromUserAction(redo),
+            createFromUserAction(copy),
+            createFromUserAction(cut),
+            createFromUserAction(paste)
         };
         
         ImageResourceProvider imageRes = ImageResourceProvider.getToolbarImages();
@@ -124,6 +122,11 @@ public class CElectionDescriptionEditorBuilder {
         save = createSaveElectionUserAction();
         saveAs = createSaveAsElectionUserAction();
         load = createLoadElectionUserAction();
+        copy = createElectionCopyUserAction(editor);
+        cut = createElectionCutUserAction(editor);
+        paste = createElectionPasteUserAction(editor);
+        undo = createElectionUndoUserAction(editor);
+        redo = createElectionRedoUserAction(editor);
         
         fileList.add(createFromUserAction(newAcc));
         fileList.add(createFromUserAction(save));
@@ -132,13 +135,13 @@ public class CElectionDescriptionEditorBuilder {
         
         ArrayList<ActionIdAndListener> editList = new ArrayList<>();
         changeElec = createChangeElectionTypeUserAction();
-        editList.add(createFromUserAction(codeArea.getUserActionList().getActionById("copy")));
-        editList.add(createFromUserAction(codeArea.getUserActionList().getActionById("cut")));
-        editList.add(createFromUserAction(codeArea.getUserActionList().getActionById("paste")));
-        editList.add(createFromUserAction(codeArea.getUserActionList().getActionById("undo")));
-        editList.add(createFromUserAction(codeArea.getUserActionList().getActionById("redo")));
+        editList.add(createFromUserAction(copy));
+        editList.add(createFromUserAction(cut));
+        editList.add(createFromUserAction(paste));
+        editList.add(createFromUserAction(undo));
+        editList.add(createFromUserAction(redo));
         editList.add(createFromUserAction(changeElec));
-        
+
         ArrayList<ActionIdAndListener> editorList = new ArrayList<>();
         options = createPresentOptionsUserAction();
         editorList.add(createFromUserAction(options));
@@ -174,7 +177,22 @@ public class CElectionDescriptionEditorBuilder {
     private LoadElectionUserAction createLoadElectionUserAction() {
         return new LoadElectionUserAction();
     }
-    
+    private ElectionCopyUserAction createElectionCopyUserAction(CElectionDescriptionEditor editor) {
+        return new ElectionCopyUserAction(editor);
+    }
+    private ElectionCutUserAction createElectionCutUserAction(CElectionDescriptionEditor editor) {
+        return new ElectionCutUserAction(editor);
+    }
+    private ElectionPasteUserAction createElectionPasteUserAction(CElectionDescriptionEditor editor) {
+        return new ElectionPasteUserAction(editor);
+    }
+    private ElectionRedoUserAction createElectionRedoUserAction(CElectionDescriptionEditor editor) {
+        return new ElectionRedoUserAction(editor);
+    }
+    private ElectionUndoUserAction createElectionUndoUserAction(CElectionDescriptionEditor editor) {
+        return new ElectionUndoUserAction(editor);
+    }
+
     //edit
     private ChangeElectionTypeUserAction createChangeElectionTypeUserAction() {
         return new ChangeElectionTypeUserAction();
