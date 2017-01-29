@@ -25,6 +25,7 @@ import edu.pse.beast.toolbox.UserAction;
  */
 public class PropertyListBuilder {
 	
+    private PropertyList instance;
 	private String[] menuHeadingIds = { "fileMenu", "editMenu" };
 	
 	public PropertyList createPropertyList(ObjectRefsForBuilder refs, BooleanExpEditor booleanExpEditor) {
@@ -32,7 +33,7 @@ public class PropertyListBuilder {
 		
 		starter.getPropertyListWindow().updateStringRes(refs.getStringIF());
 		
-		PropertyList instance = new PropertyList(booleanExpEditor);
+		instance = new PropertyList(booleanExpEditor);
 		
 		PropertyListMenuBarHandler menuBarHandler = new PropertyListMenuBarHandler(menuHeadingIds, 
 				createActionIdAndListenerListForMenuHandler(), 
@@ -107,22 +108,22 @@ public class PropertyListBuilder {
     }
     
     private LoadPropertyList createLoadPropertyList() {
-        return new LoadPropertyList();
+        return new LoadPropertyList(instance);
     }
     private NewPropertyList createNewPropertyList() {
-    	return new NewPropertyList();
+    	return new NewPropertyList(instance);
     }
     private RedoChangesPropertyList createRedoChangesPropertyList() {
-    	return new RedoChangesPropertyList();
+    	return new RedoChangesPropertyList(instance);
     }
     private SaveAsPropertyList createSaveAsPropertyList() {
-    	return new SaveAsPropertyList();
+    	return new SaveAsPropertyList(instance);
     }
     private SavePropertyList createSavePropertyList() {
-    	return new SavePropertyList();
+    	return new SavePropertyList(instance);
     }
     private UndoChangesPropertyList createUndoChangesPropertyList() {
-    	return new UndoChangesPropertyList();
+    	return new UndoChangesPropertyList(instance);
     }
     
     private ActionIdAndListener createFromUserAction(UserAction userAc) {

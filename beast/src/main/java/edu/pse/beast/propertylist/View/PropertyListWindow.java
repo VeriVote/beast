@@ -34,7 +34,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser 
 	
 	private ObjectRefsForBuilder refs;
 	
-	private ArrayList<ListItem> items;
+	private ArrayList<ListItem> items = new ArrayList<ListItem>();
 	private JButton addNewButton = new JButton();
 
 	public PropertyListWindow() {
@@ -62,7 +62,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser 
 		
 		// setFrame(new JFrame());
 		this.setLayout(new BorderLayout());
-		setBounds(100, 100, 450, 300);
+		setBounds(600, 100, 500, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Eigenschaftenliste");
 		
@@ -85,9 +85,10 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser 
 		panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.CENTER);
 		
-		/*for (ListItem item : items) {
-			panel.add(item);
-		}*/
+		if (items.isEmpty()) items.add(new ListItem());
+		for (ListItem item : items) {
+			panel.add(item, BorderLayout.CENTER);
+		}
 		
 		endpanel = new JPanel();
 		getContentPane().add(endpanel, BorderLayout.LINE_END);

@@ -5,9 +5,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import edu.pse.beast.datatypes.Result;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.FailureExample;
+import edu.pse.beast.propertylist.PropertyItem;
 
 /**
 *
@@ -15,20 +15,22 @@ import edu.pse.beast.highlevel.FailureExample;
 */
 public class ListItem extends JPanel{
 	
-	private PostAndPrePropertiesDescription descr;
+	private PropertyItem descr;
 	
-	protected JButton showResult;
+	protected ResultButton showResult;
 	protected JTextField name;
 	protected JCheckBox testStatus;
 	protected JButton changeButton;
 	protected JButton deleteButton;
 	
 	public ListItem() {
-		showResult = new JButton();
+		showResult = new ResultButton();
 		name = new JTextField();
 		testStatus = new JCheckBox();
 		changeButton = new JButton();
 		deleteButton = new JButton();
+		
+		descr = new PropertyItem();
 		
 		init();
 	}
@@ -41,8 +43,8 @@ public class ListItem extends JPanel{
 		this.add(deleteButton);
 	}
 	
-	public void presentResultOf(Result res) {
-		//TODO
+	public void presentResultOf() {
+		//TODO eigentliches Argument: Result res
 	}
 	
 	public void presentTimeout() {

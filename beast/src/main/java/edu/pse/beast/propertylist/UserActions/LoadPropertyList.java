@@ -1,5 +1,6 @@
 package edu.pse.beast.propertylist.UserActions;
 
+import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
@@ -7,8 +8,11 @@ import edu.pse.beast.toolbox.UserAction;
  */
 public class LoadPropertyList extends UserAction {
 
-	public LoadPropertyList() {
+	private final PropertyList list;
+	
+	public LoadPropertyList(PropertyList list) {
 		super("load");
+		this.list = list;
 	}
 
 	@Override

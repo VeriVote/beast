@@ -21,7 +21,7 @@ import edu.pse.beast.propertychecker.Result;
 
 public class PropertyList implements PostAndPrePropertiesDescriptionSource, ResultPresenter {
 	
-	private static PropertyList instance;
+	// private static PropertyList instance;
 	private ArrayList<PropertyItem> propertyDescriptions;
     private BooleanExpEditor booleanExpEditor;
 	
@@ -133,5 +133,9 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource, Resu
 		return res;*/
 		// TODO
         return null;
+	}
+	
+	public ArrayList<PropertyItem> getDescr() {
+		return propertyDescriptions;
 	}
 }

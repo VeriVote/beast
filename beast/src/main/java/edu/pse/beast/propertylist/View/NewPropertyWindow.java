@@ -22,7 +22,7 @@ public class NewPropertyWindow extends JFrame {
 	
 	private void init() {
 		this.setLayout(new BorderLayout());
-		setBounds(100, 100, 450, 300);
+		setBounds(600, 100, 500, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		panel1 = new JPanel();

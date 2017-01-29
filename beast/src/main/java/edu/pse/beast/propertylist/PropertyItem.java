@@ -1,5 +1,7 @@
 package edu.pse.beast.propertylist;
 
+import java.util.UUID;
+
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 
 /**
@@ -17,6 +19,9 @@ public class PropertyItem {
 	}
 	public PropertyItem(PostAndPrePropertiesDescription descr) {
 		this(descr, true);
+	}
+	public PropertyItem() {
+		this(new PostAndPrePropertiesDescription(UUID.randomUUID().toString()), false);
 	}
 	
 	
