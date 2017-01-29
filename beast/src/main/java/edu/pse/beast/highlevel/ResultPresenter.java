@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package edu.pse.beast.highlevel;
-import edu.pse.beast.propertychecker.Result;
 
 /**
  * The ResultPresenter presents results to the user.
@@ -15,5 +14,5 @@ public interface ResultPresenter {
      * Presents a result to the user.
      * @param res result which should be presented
      */
-    void presentResult(Result res);
+    void presentResult(ResultInterface res);
 }
