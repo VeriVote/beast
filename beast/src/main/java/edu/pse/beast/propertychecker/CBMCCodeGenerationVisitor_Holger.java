@@ -33,7 +33,7 @@ import java.util.Stack;
  *
  * @author Holger-Desktop
  */
-public class CBMCCodeGeneratioonVisitor implements BooleanExpNodeVisitor{
+public class CBMCCodeGenerationVisitor_Holger implements BooleanExpNodeVisitor{
 
     private String generated;
     private String asString;

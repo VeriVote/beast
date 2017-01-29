@@ -31,7 +31,7 @@ public class CBMCCodeGenerator_Holger {
     private String generatedCode;
     private PostAndPrePropertiesDescription properties;
     private ElectionDescription electionDescription;
-    private CBMCCodeGeneratioonVisitor visitor;
+    private CBMCCodeGenerationVisitor_Holger visitor;
     private FormalPropertySyntaxTreeToAstTranslator translator = new FormalPropertySyntaxTreeToAstTranslator();
     
     private BooleanExpListNode generateAST(String code) {
@@ -111,7 +111,7 @@ public class CBMCCodeGenerator_Holger {
             generatedCode += voteStr;
         }
         
-        visitor = new CBMCCodeGeneratioonVisitor();
+        visitor = new CBMCCodeGenerationVisitor_Holger();
         visitor.setPreProperties();
         
         generatedCode += visitor.generate(preast.getBooleanExpressions().get(0));

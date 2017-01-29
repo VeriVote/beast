@@ -15,7 +15,12 @@ import java.util.LinkedList;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
+import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.BooleanExpScope;
 import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.FormalPropertySyntaxTreeToAstTranslator;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
 
 /**
  * This creates the .c file which will be used to check it with CBMC It
@@ -48,6 +53,24 @@ public class CBMCCodeGenerator {
         code.addAll(electionDescription.getCode());
 
         addMainMethod();
+    }
+    
+    private BooleanExpListNode generateAST(String code) {
+        FormalPropertyDescriptionLexer l = new FormalPropertyDescriptionLexer(new ANTLRInputStream(code));
+        CommonTokenStream ts = new CommonTokenStream(l);
+        FormalPropertyDescriptionParser p = new FormalPropertyDescriptionParser(ts);
+        
+        BooleanExpScope declaredVars = new BooleanExpScope();
+        
+        postAndPrePropertiesDescription.getSymbolicVariableList().forEach((v) -> {
+            declaredVars.addTypeForId(v.getId(), v.getInternalTypeContainer());
+        });
+        
+        return  translator.generateFromSyntaxTree(
+                p.booleanExpList(),
+                electionDescription.getInputType().getType(), 
+                electionDescription.getOutputType().getType(),
+                declaredVars);
     }
 
     // maybe add something that let's the user use imports
