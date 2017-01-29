@@ -66,7 +66,7 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource, Resu
 	 * @param prop
 	 */
 	public void addStandardDescription(PostAndPrePropertiesDescription prop) {
-		propertyDescriptions.add(new PropertyItem(prop));
+		propDescs.add(new PropertyItem(prop));
 	}
 	
 	/**
@@ -139,6 +139,6 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource, Resu
 	}
 	
 	public ArrayList<PropertyItem> getDescr() {
-		return propertyDescriptions;
+		return propDescs;
 	}
 }
