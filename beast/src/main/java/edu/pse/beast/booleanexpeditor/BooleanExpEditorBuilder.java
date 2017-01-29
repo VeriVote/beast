@@ -71,7 +71,8 @@ public class BooleanExpEditorBuilder{
         CodeAreaFocusListener codeAreaFocusListener = new CodeAreaFocusListener(prePropCodeArea, postPropCodeArea);
 
         BooleanExpEditor editor = new BooleanExpEditor(prePropCodeArea, postPropCodeArea, window, symbolicVarListController,
-                errorWindow, changeHandler, codeAreaFocusListener, emptyPostAndPrePropertiesDescription);
+                errorWindow, changeHandler, codeAreaFocusListener, emptyPostAndPrePropertiesDescription,
+                codeAreaBuilder, objectRefsForBuilder);
 
         //creation of BooleanExpEditorMenubarHandler
         BooleanExpEditorMenubarHandler menuBarHandler = new BooleanExpEditorMenubarHandler(menuHeadingIds, window,

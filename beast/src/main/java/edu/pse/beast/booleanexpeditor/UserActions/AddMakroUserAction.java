@@ -36,14 +36,5 @@ public class AddMakroUserAction extends UserAction {
         } catch (BadLocationException e) {
             e.printStackTrace();
         }
-
-    }
-
-    /**
-     * Getter
-     * @return makro
-     */
-    public BooleanExpEditorMakro getMakro() {
-        return makro;
     }
 }

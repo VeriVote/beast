@@ -6,9 +6,12 @@
 package edu.pse.beast.booleanexpeditor;
 
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeArea;
+import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeAreaBuilder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.CodeAreaFocusListener;
+import edu.pse.beast.codearea.CodeAreaBuilder;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.toolbox.MenuBarHandler;
+import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import edu.pse.beast.toolbox.ToolbarHandler;
 import java.util.ArrayList;
 
@@ -25,10 +28,12 @@ public class BooleanExpEditor {
     private final PostAndPrePropertiesDescription currentlyLoadedPostAndPreProp;
     private MenuBarHandler menuBarHandler;
     private ToolbarHandler toolBarHandler;
-    private final BooleanExpCodeArea prePropCodeArea;
-    private final BooleanExpCodeArea postPropCodeArea;
+    private BooleanExpCodeArea prePropCodeArea;
+    private BooleanExpCodeArea postPropCodeArea;
     private final ChangeHandler changeHandler;
     private final CodeAreaFocusListener codeAreaFocusListener;
+    private final BooleanExpCodeAreaBuilder codeAreaBuilder;
+    private ObjectRefsForBuilder refs;
 
     /**
      * Temporary Constructor declaration to build BooleanExpEditor for Dummy-GUI
@@ -38,14 +43,17 @@ public class BooleanExpEditor {
     BooleanExpEditor(BooleanExpCodeArea prePropCodeArea, BooleanExpCodeArea postPropCodeArea,
                      BooleanExpEditorWindow window, SymbolicVarListController symbolicVarListController, ErrorWindow errorWindow,
                      ChangeHandler changeHandler, CodeAreaFocusListener codeAreaFocusListener,
-                     PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
+                     PostAndPrePropertiesDescription postAndPrePropertiesDescription, BooleanExpCodeAreaBuilder codeAreaBuilder,
+                     ObjectRefsForBuilder refs) {
         this.window = window;
+        this.refs = refs;
         this.errorWindow = errorWindow;
         this.currentlyLoadedPostAndPreProp = postAndPrePropertiesDescription;
         this.symbolicVarListController = symbolicVarListController;
         this.prePropCodeArea = prePropCodeArea;
         this.postPropCodeArea = postPropCodeArea;
         this.changeHandler = changeHandler;
+        this.codeAreaBuilder = codeAreaBuilder;
         prePropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         postPropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         this.codeAreaFocusListener = codeAreaFocusListener;
@@ -87,6 +95,15 @@ public class BooleanExpEditor {
         // TODO implement saveBeforeChangeListener call
         System.out.println("Loading symbolic variable list");
         symbolicVarListController.setSymbVarList(postAndPrePropertiesDescription.getSymbolicVariableList());
+        window.setNewTextpanes();
+        changeHandler.addNewTextPanes(window.getPrePropTextPane(), window.getPostPropTextPane());
+        prePropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(refs, window.getPrePropTextPane(),
+                window.getPrePropScrollPane());
+        postPropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(refs, window.getPostPropTextPane(),
+                window.getPostPropScrollPane());
+        prePropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
+        postPropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
+        codeAreaFocusListener.addNewCodeAreas(prePropCodeArea, postPropCodeArea);
         System.out.println("Loading properties");
         prePropCodeArea.getPane().setText(postAndPrePropertiesDescription.getPrePropertiesDescription().getCode());
         postPropCodeArea.getPane().setText(postAndPrePropertiesDescription.getPostPropertiesDescription().getCode());

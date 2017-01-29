@@ -13,8 +13,8 @@ public class ChangeHandler {
     private LinkedList<SymbolicVariable> preSymbolicVariableList;
     private final SymbolicVariableList symbolicVariableList;
     private String preString = "";
-    private final JTextPane prePane;
-    private final JTextPane postPane;
+    private JTextPane prePane;
+    private JTextPane postPane;
 
     /**
      * Constructor
@@ -24,6 +24,12 @@ public class ChangeHandler {
      */
     ChangeHandler(JTextPane prePane, JTextPane postPane, SymbolicVariableList symbolicVariableList) {
         this.symbolicVariableList = symbolicVariableList;
+        this.prePane = prePane;
+        this.postPane = postPane;
+        updatePreValues();
+    }
+
+    public void addNewTextPanes(JTextPane prePane, JTextPane postPane) {
         this.prePane = prePane;
         this.postPane = postPane;
         updatePreValues();

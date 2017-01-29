@@ -268,7 +268,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
         Object[] options = {yesOption,
                 noOption,
                 cancelOption};
-        return JOptionPane.showOptionDialog(this,
+        return  JOptionPane.showOptionDialog(this,
                 saveChanges + propertyName + save,
                 "",
                 JOptionPane.YES_NO_CANCEL_OPTION,
@@ -276,6 +276,13 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
                 null,
                 options,
                 options[0]);
+    }
+
+    public void setNewTextpanes() {
+        prePropTextPane = new JTextPane();
+        prePropScrollPane.setViewportView(prePropTextPane);
+        postPropTextPane = new JTextPane();
+        postPropScrollPane.setViewportView(postPropTextPane);
     }
 
 }
