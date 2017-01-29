@@ -24,6 +24,7 @@ public class PostAndPrePropertiesDescription {
     private SymbolicVariableList symbolicVariableList;
     private FormalPropertiesDescription prePropertiesDescription;
     private FormalPropertiesDescription postPropertiesDescription;
+
     /**
      * 
      * @param name HAS to be UNIQUE in the context
@@ -40,15 +41,15 @@ public class PostAndPrePropertiesDescription {
     public PostAndPrePropertiesDescription(String name, FormalPropertiesDescription preDescr,
             FormalPropertiesDescription postDescr) {
         this.name = name;
-        this.postPropertiesDescription = postDescr;
         this.prePropertiesDescription = preDescr;
+        this.postPropertiesDescription = postDescr;
     }
 
     public PostAndPrePropertiesDescription(String name, FormalPropertiesDescription preDescr,
                                            FormalPropertiesDescription postDescr, SymbolicVariableList symbolicVariableList) {
         this.name = name;
-        this.postPropertiesDescription = postDescr;
         this.prePropertiesDescription = preDescr;
+        this.postPropertiesDescription = postDescr;
         this.symbolicVariableList = symbolicVariableList;
     }
 
@@ -72,8 +73,4 @@ public class PostAndPrePropertiesDescription {
     public FormalPropertiesDescription getPrePropertiesDescription() {
         return prePropertiesDescription;
     }
-    
-    
-    
-   
 }

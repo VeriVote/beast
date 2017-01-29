@@ -16,7 +16,6 @@ public class UndoBoolUserAction extends UserAction{
 
     @Override
     public void perform() {
-        UserAction undo = editor.getCodeAreaFocusListener().getLastFocused().getUserActionList().getActionById("undo");
-        undo.perform();
+        editor.getCodeAreaFocusListener().getLastFocused().getUserActionList().getActionById("undo").perform();
     }
 }

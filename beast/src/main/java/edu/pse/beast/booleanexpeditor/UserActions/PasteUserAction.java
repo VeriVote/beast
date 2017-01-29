@@ -1,17 +1,21 @@
 package edu.pse.beast.booleanexpeditor.UserActions;
 
+import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
  * @author NikolaiLMS
  */
 public class PasteUserAction extends UserAction{
-    public PasteUserAction() {
+    private BooleanExpEditor editor;
+
+    public PasteUserAction(BooleanExpEditor editor) {
         super("paste");
+        this.editor = editor;
     }
 
     @Override
     public void perform() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        editor.getCodeAreaFocusListener().getLastFocused().getUserActionList().getActionById("paste").perform();
     }
 }

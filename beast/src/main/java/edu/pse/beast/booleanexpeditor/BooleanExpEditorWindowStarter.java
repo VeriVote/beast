@@ -5,7 +5,7 @@ package edu.pse.beast.booleanexpeditor;
  * @author Nikolai
  */
 public class BooleanExpEditorWindowStarter{
-    private BooleanExpEditorWindow window;
+    private final BooleanExpEditorWindow window;
 
     /**
      * Constructor

@@ -3,6 +3,6 @@ CANDIDATE : Kandidat
 SEAT : Sitz
 newVariable : Neue Variable hinzufügen
 type : Typ
-errorString : Variablenname ist nicht gültig.
+errorString : Variablenname ist gültig.
 alreadyExistsError : Eine Variable desselben Namens existiert bereits.
-nameNotMatchingError : Der Variablenname enthält nicht erlaubte Zeichen.
+nameNotMatchingError : Der Variablenname entspricht nicht dem regulären Ausdruck '[a-zA-Z_][a-zA-Z0-9_]*'

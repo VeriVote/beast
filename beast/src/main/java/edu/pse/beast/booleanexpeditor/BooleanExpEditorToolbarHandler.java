@@ -15,7 +15,7 @@ import javax.swing.*;
  * @author NikolaiLMS
  */
 public class BooleanExpEditorToolbarHandler extends ToolbarHandler implements DisplaysStringsToUser{
-    private BooleanExpEditorWindow window;
+    private final BooleanExpEditorWindow window;
 
     /**
      * Constructor

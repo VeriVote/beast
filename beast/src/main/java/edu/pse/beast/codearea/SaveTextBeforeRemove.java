@@ -28,7 +28,7 @@ public class SaveTextBeforeRemove implements KeyListener {
     
     public String getRemoveString(int offset, int length) {
         prevText = prevText.replaceAll("\r", "");
-        return prevText.substring(offset, offset + length);
+        return prevText.substring(offset, offset + length - 1);
     }
     
     @Override

@@ -9,6 +9,6 @@ candidate : Kandidat
 seat : Sitz
 saveChanges : Änderungen an '
 save : ' speichern?
-yesOption : Ja.
-noOption : Nein.
+yesOption : Ja
+noOption : Nein
 cancelOption : Abbrechen

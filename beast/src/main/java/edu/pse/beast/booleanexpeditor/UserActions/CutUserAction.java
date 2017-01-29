@@ -1,17 +1,22 @@
 package edu.pse.beast.booleanexpeditor.UserActions;
 
+import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
+import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeArea;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
  * @author NikolaiLMS
  */
 public class CutUserAction extends UserAction{
-    public CutUserAction() {
+    private BooleanExpEditor editor;
+
+    public CutUserAction(BooleanExpEditor editor) {
         super("cut");
+        this.editor = editor;
     }
 
     @Override
     public void perform() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        editor.getCodeAreaFocusListener().getLastFocused().getUserActionList().getActionById("cut").perform();
     }
 }

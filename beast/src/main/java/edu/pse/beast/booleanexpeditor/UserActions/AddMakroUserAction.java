@@ -28,58 +28,11 @@ public class AddMakroUserAction extends UserAction {
 
     @Override
     public void perform() {
-        int lastCaretPosition = booleanExpEditor.getCodeAreaFocusListener().getLastCaretPosition();
+        int lastCaretPosition = booleanExpEditor.getCodeAreaFocusListener().getLastFocused().getPane().getCaretPosition();
         try {
             JTextPane textPane = booleanExpEditor.getCodeAreaFocusListener().getLastFocused().getPane();
-
             textPane.getStyledDocument().insertString(lastCaretPosition,
-                    makro.toString() , new AttributeSet() {
-                        @Override
-                        public int getAttributeCount() {
-                            return 0;
-                        }
-
-                        @Override
-                        public boolean isDefined(Object o) {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean isEqual(AttributeSet attributeSet) {
-                            return false;
-                        }
-
-                        @Override
-                        public AttributeSet copyAttributes() {
-                            return null;
-                        }
-
-                        @Override
-                        public Object getAttribute(Object o) {
-                            return null;
-                        }
-
-                        @Override
-                        public Enumeration<?> getAttributeNames() {
-                            return null;
-                        }
-
-                        @Override
-                        public boolean containsAttribute(Object o, Object o1) {
-                            return false;
-                        }
-
-                        @Override
-                        public boolean containsAttributes(AttributeSet attributeSet) {
-                            return false;
-                        }
-
-                        @Override
-                        public AttributeSet getResolveParent() {
-                            return null;
-                        }
-                    });
-            String temp = textPane.getStyledDocument().getText(0, textPane.getStyledDocument().getLength());
+                    makro.toString() ,null);
         } catch (BadLocationException e) {
             e.printStackTrace();
         }

@@ -10,7 +10,6 @@ import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.CodeAreaFocusListener;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.toolbox.MenuBarHandler;
 import edu.pse.beast.toolbox.ToolbarHandler;
-
 import java.util.ArrayList;
 
 /**
@@ -20,33 +19,33 @@ import java.util.ArrayList;
  */
 public class BooleanExpEditor {
     private final BooleanExpEditorWindow window;
-    private SymbolicVarList symbolicVarList;
+    private final SymbolicVarListController symbolicVarListController;
     private final BooleanExpEditorWindowStarter windowStarter;
     private final ErrorWindow errorWindow;
-    private PostAndPrePropertiesDescription currentlyLoadedPostAndPreProp;
+    private final PostAndPrePropertiesDescription currentlyLoadedPostAndPreProp;
     private MenuBarHandler menuBarHandler;
     private ToolbarHandler toolBarHandler;
     private final BooleanExpCodeArea prePropCodeArea;
     private final BooleanExpCodeArea postPropCodeArea;
-    private SaveBeforeChangeHandler saveBeforeChangeHandler;
-    private CodeAreaFocusListener codeAreaFocusListener;
+    private final ChangeHandler changeHandler;
+    private final CodeAreaFocusListener codeAreaFocusListener;
 
     /**
      * Temporary Constructor declaration to build BooleanExpEditor for Dummy-GUI
      * @param window BooleanExpEditorWindow object
-     * @param symbolicVarList SymbolicVarList object
+     * @param symbolicVarListController SymbolicVarListController object
      */
     BooleanExpEditor(BooleanExpCodeArea prePropCodeArea, BooleanExpCodeArea postPropCodeArea,
-                     BooleanExpEditorWindow window, SymbolicVarList symbolicVarList, ErrorWindow errorWindow,
-                     SaveBeforeChangeHandler saveBeforeChangeHandler, CodeAreaFocusListener codeAreaFocusListener,
+                     BooleanExpEditorWindow window, SymbolicVarListController symbolicVarListController, ErrorWindow errorWindow,
+                     ChangeHandler changeHandler, CodeAreaFocusListener codeAreaFocusListener,
                      PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
         this.window = window;
         this.errorWindow = errorWindow;
         this.currentlyLoadedPostAndPreProp = postAndPrePropertiesDescription;
-        this.symbolicVarList = symbolicVarList;
+        this.symbolicVarListController = symbolicVarListController;
         this.prePropCodeArea = prePropCodeArea;
         this.postPropCodeArea = postPropCodeArea;
-        this.saveBeforeChangeHandler = saveBeforeChangeHandler;
+        this.changeHandler = changeHandler;
         prePropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         postPropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         this.codeAreaFocusListener = codeAreaFocusListener;
@@ -86,19 +85,30 @@ public class BooleanExpEditor {
      */
     public boolean loadPostAndPreProperties(PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
         // TODO implement saveBeforeChangeListener call
-        symbolicVarList.setSymbVarList(postAndPrePropertiesDescription.getSymbolicVariableList());
+        System.out.println("Loading symbolic variable list");
+        symbolicVarListController.setSymbVarList(postAndPrePropertiesDescription.getSymbolicVariableList());
+        System.out.println("Loading properties");
         prePropCodeArea.getPane().setText(postAndPrePropertiesDescription.getPrePropertiesDescription().getCode());
         postPropCodeArea.getPane().setText(postAndPrePropertiesDescription.getPostPropertiesDescription().getCode());
+        System.out.println("Finding errors");
         this.findErrorsAndDisplayThem();
         this.window.setWindowTitle(postAndPrePropertiesDescription.getName());
-        saveBeforeChangeHandler.updatePreValues();
+        changeHandler.updatePreValues();
         return true;
     }
 
+    /**
+     * Getter
+     * @return the CodeAreaFocusListener instance of this class
+     */
     public CodeAreaFocusListener getCodeAreaFocusListener() {
         return codeAreaFocusListener;
     }
 
+    /**
+     * Getter
+     * @return the BooleanExpEditorWindow instance of this class
+     */
     public BooleanExpEditorWindow getWindow() {
         return window;
     }

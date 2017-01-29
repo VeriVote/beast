@@ -1,11 +1,10 @@
 package edu.pse.beast.booleanexpeditor.UserActions;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
-import edu.pse.beast.booleanexpeditor.SaveBeforeChangeHandler;
+import edu.pse.beast.booleanexpeditor.ChangeHandler;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
-import edu.pse.beast.toolbox.BooleanExpCodeToASTConverter;
 import edu.pse.beast.toolbox.UserAction;
 
 import javax.swing.*;
@@ -14,12 +13,12 @@ import javax.swing.*;
  * @author NikolaiLMS
  */
 public class NewPropsUserAction extends UserAction {
-    private BooleanExpEditor booleanExpEditor;
-    private SaveBeforeChangeHandler saveBeforeChangeHandler;
-    public NewPropsUserAction(BooleanExpEditor booleanExpEditor, SaveBeforeChangeHandler saveBeforeChangeHandler) {
+    private final BooleanExpEditor booleanExpEditor;
+    private final ChangeHandler changeHandler;
+    public NewPropsUserAction(BooleanExpEditor booleanExpEditor, ChangeHandler changeHandler) {
         super("new");
         this.booleanExpEditor = booleanExpEditor;
-        this.saveBeforeChangeHandler = saveBeforeChangeHandler;
+        this.changeHandler = changeHandler;
     }
 
     public static PostAndPrePropertiesDescription createEmptyPostAndPropObject() {
@@ -32,7 +31,7 @@ public class NewPropsUserAction extends UserAction {
 
     @Override
     public void perform() {
-        if (saveBeforeChangeHandler.hasChanged()) {
+        if (changeHandler.hasChanged()) {
             // TEMPORARY
             int option = booleanExpEditor.getWindow().showOptionPane(booleanExpEditor.getCurrentlyLoadedPostAndPreProp()
                     .getName());
