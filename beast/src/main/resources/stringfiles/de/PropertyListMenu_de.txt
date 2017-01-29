@@ -8,3 +8,4 @@ loadProperty : Eigenschaft wählen
 menuFile : Datei
 menuEdit : Bearbeiten
 load : Laden
+title : Eigenschaftenliste
