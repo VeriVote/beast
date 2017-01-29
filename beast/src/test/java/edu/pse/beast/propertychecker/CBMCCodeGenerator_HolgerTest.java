@@ -71,7 +71,10 @@ public class CBMCCodeGenerator_HolgerTest {
                 new ElectionTypeContainer(input, ""), 
                 new ElectionTypeContainer(res, ""), 0);
         
-        String code = "unsigned int voting(unsigned int voters[V], unsigned int candidates[C], unsigned int seats[S]) {\n"+
+        /**
+         * candidates Array has to have the lentgh C+1 because Candidate 0 indicates that there are no winners.
+         */
+        String code = "unsigned int voting(unsigned int voters[V], unsigned int candidates[C+1], unsigned int seats[S]) {\n"+
                 "return 0;\n" +
                 "}\n";
         

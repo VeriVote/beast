@@ -42,7 +42,7 @@ public class CBMCCodeGenerator {
     }
 
     private void generateCode() {
-        addIncludes();
+        addHeader();
 
         code.addAll(electionDescription.getCode());
 
@@ -50,7 +50,7 @@ public class CBMCCodeGenerator {
     }
 
     // maybe add something that let's the user use imports
-    private void addIncludes() {
+    private void addHeader() {
         code.add("#inlcude <stdlib.h>");
         code.add("#inlcude <stdint.h>");
         code.add("#inlcude <assert.h>");

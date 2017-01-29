@@ -71,6 +71,12 @@ public class CBMCCodeGenerator_Holger {
         
         generatedCode += funcDecl;
         
+        /**
+         * The next codebit is wrong
+         * For Candidates the allowed value is 0 < var <= max
+         * For voters it should be 0 <= var < max 
+         * For Seats it should be 0 <= var < max
+         */
         for(SymbolicVariable v : properties.getSymbolicVariableList()) {
             String max = "";
             if(v.getInternalTypeContainer().getInternalType() == InternalTypeRep.VOTER) {
@@ -150,13 +156,11 @@ public class CBMCCodeGenerator_Holger {
     }
 
     private void generateHeader() {
-        String header = "#include <stdlib.h>\n#include <stdint.h>\n#include <assert.h>" +
-                            "int nondet_uint();\n" +
+        String header = "#include <stdlib.h>\n#include <stdint.h>\n#include <assert.h> \n" +
+                            
                             "#define assert2(x, y) __CPROVER_assert(x, y)\n" +
-                "#define assume(x) __CPROVER_assume(x)" +
-                "#ifndef V\n#define V 3\n#endif\n\n" + 
-                "#ifndef C\n#define C 3\n #endif\n\n" +
-               "#ifndef S\n#define S 3\n #endif\n\n";       
+                "#define assume(x) __CPROVER_assume(x) \n"
+                + "int nondet_uint();\n" + "\n";       
         generatedCode += header;
 
     }
