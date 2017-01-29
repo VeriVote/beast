@@ -7,7 +7,11 @@ import javax.swing.JTextField;
 
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.FailureExample;
+<<<<<<< HEAD
 import edu.pse.beast.propertylist.PropertyItem;
+=======
+import edu.pse.beast.propertychecker.Result;
+>>>>>>> branch 'master' of https://justin-hecht@github.com/NikolaiLMS/PSE-Wahlverfahren-Implementierung.git
 
 /**
 *

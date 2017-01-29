@@ -1,7 +1,6 @@
 package edu.pse.beast.options;
 
 import toBeImplemented.CheckerList;
-import toBeImplemented.LanguageOptions;
 
 public class ParametereditorOptions extends Options {
     private final CheckerOptionElement checker;

@@ -7,7 +7,7 @@ package edu.pse.beast.toolbox;
 
 import edu.pse.beast.saverloader.SaverLoaderInterface;
 import edu.pse.beast.stringresource.StringLoaderInterface;
-import toBeImplemented.LanguageOptions;
+import edu.pse.beast.options.LanguageOptions;
 import edu.pse.beast.options.OptionsInterface;
 
 /**

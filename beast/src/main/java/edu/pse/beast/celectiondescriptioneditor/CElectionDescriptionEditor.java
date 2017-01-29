@@ -57,7 +57,15 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         
     }
 
-    public void letUserEditElectionDescription(ElectionDescription description) throws BadLocationException {    
+    /**
+     * Getter
+     * @return the CElectionCodeArea
+     */
+    public CElectionCodeArea getCodeArea() {
+        return codeArea;
+    }
+
+    public void letUserEditElectionDescription(ElectionDescription description) throws BadLocationException {
         gui.setNewCodeArea();
         codeArea = builder.createCElectionCodeArea(gui.getCodeArea(), gui.getCodeAreaScrollPane());
         

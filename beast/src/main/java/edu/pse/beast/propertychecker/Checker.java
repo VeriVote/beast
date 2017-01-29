@@ -32,7 +32,6 @@ public abstract class Checker implements Runnable {
         this.parent = parent;
 
         new Thread(this).start();
-
     }
 
     @Override

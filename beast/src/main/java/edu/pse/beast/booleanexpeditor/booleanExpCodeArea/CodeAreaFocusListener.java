@@ -19,6 +19,12 @@ public class CodeAreaFocusListener implements FocusListener {
         this.postPropCodeArea = postPropCodeArea;
     }
 
+    public void addNewCodeAreas(BooleanExpCodeArea prePropCodeArea, BooleanExpCodeArea postPropCodeArea) {
+        this.prePropCodeArea = prePropCodeArea;
+        this.postPropCodeArea = postPropCodeArea;
+        lastFocused = prePropCodeArea;
+    }
+
     @Override
     public void focusGained(FocusEvent focusEvent) {
         if ((focusEvent.getComponent()).equals(prePropCodeArea.getPane())) {
