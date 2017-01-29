@@ -1,11 +1,16 @@
 showResult : Ergebnis anzeigen
-analyseProperty : ÃœberprÃ¼fen
+analyseProperty : Überprüfen
 editProperty : Bearbeiten
-deleteProperty : LÃ¶schen
+deleteProperty : Löschen
 addProperty : Neu
 newProperty : Neue Eigenschaft erstellen
-loadProperty : Eigenschaft wÃ¤hlen
-menuFile : Datei
-menuEdit : Bearbeiten
+loadProperty : Eigenschaft wählen
+fileMenu : Datei
+editMenu : Bearbeiten
 load : Laden
 title : Eigenschaftenliste
+new : Neue Liste
+save : Speichern
+save_as : Speichern unter
+undo : Rueckgaengig
+redo : Wiederherstellen
