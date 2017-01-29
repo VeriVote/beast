@@ -1,10 +1,9 @@
 package edu.pse.beast.options;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
+import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.parametereditor.ParameterEditor;
-import toBeImplemented.CElectionEditor;
 import toBeImplemented.CheckerList;
-import toBeImplemented.LanguageOptions;
 
 public class OptionsInterface {
 
@@ -13,7 +12,7 @@ public class OptionsInterface {
         return new BooleanExpEditorOptions("id", editor, booleanExpCodeAreaOptions);
     }
 
-    public CElectionEditorOptions getCElectionEditorOptions(CElectionEditor editor,
+    public CElectionEditorOptions getCElectionEditorOptions(CElectionDescriptionEditor editor,
             CElectionCodeAreaOptions cElectionCodeAreaOptions) {
         return new CElectionEditorOptions("id", editor, cElectionCodeAreaOptions);
     }
@@ -23,6 +22,7 @@ public class OptionsInterface {
     }
 
     public LanguageOptions getLanguageOptions() {
-        return new LanguageOptions();
+        //TODO implement
+        return new LanguageOptions(null, null, null, null);
     }
 }

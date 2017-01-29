@@ -1,9 +1,9 @@
 package edu.pse.beast.options;
 
-import toBeImplemented.CElectionEditor;
+import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 
 public class CElectionEditorOptions extends Options {
-    private final CElectionEditor editor;
+    private final CElectionDescriptionEditor editor;
     private final CElectionCodeAreaOptions cElectionCodeAreaOptions;
     
     /**
@@ -12,7 +12,7 @@ public class CElectionEditorOptions extends Options {
      * @param editor the editor
      * @param cElectionCodeAreaOptions the options
      */
-    public CElectionEditorOptions(String id, CElectionEditor editor,
+    public CElectionEditorOptions(String id, CElectionDescriptionEditor editor,
             CElectionCodeAreaOptions cElectionCodeAreaOptions) {
         super(id);
         this.editor = editor;
@@ -23,7 +23,7 @@ public class CElectionEditorOptions extends Options {
      * 
      * @return the editor
      */
-    public CElectionEditor getEditor() {
+    public CElectionDescriptionEditor getEditor() {
         return editor;
     }
 
