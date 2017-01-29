@@ -87,6 +87,8 @@ public class testMain {
         
         implParameterSource parmSrc = new implParameterSource(ecp);
         
+        System.out.println(":::::::::::::::::::::::::::::::::::::::::::::");
+        
         
         propCheck.checkPropertiesForDescription(eSrc, pSrc, parmSrc);
         

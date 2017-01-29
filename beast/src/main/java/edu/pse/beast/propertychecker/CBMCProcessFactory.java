@@ -59,7 +59,11 @@ public class CBMCProcessFactory extends CheckerFactory {
 
     @Override
     public boolean checkResult(List<String> toCheck) {
-        return toCheck.get(toCheck.size() - 1).contains(successLine);
+    	if(toCheck.size() > 0) {
+    		return toCheck.get(toCheck.size() - 1).contains(successLine);
+    	} else {
+    		return false;
+    	}
     }
 
     private OperatingSystems determineOS() {

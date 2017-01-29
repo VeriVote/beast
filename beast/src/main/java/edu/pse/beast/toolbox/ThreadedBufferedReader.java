@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-public class ThreadedBufferedReader extends Thread{
+public class ThreadedBufferedReader implements Runnable {
 
 	private BufferedReader reader;
 	private List<String> readLines;
@@ -21,17 +21,19 @@ public class ThreadedBufferedReader extends Thread{
 		this.reader = reader;
 		this.readLines = readLines;
 		this.latch = latch;
+		
+		new Thread(this).start();
 	}
 	
 	@Override
 	public void run() {
 		String line = null;
+		
 		try {
 			line = reader.readLine();
 			while (line != null && !isInterrupted) {
 				readLines.add(line);
 				line = reader.readLine();
-				System.out.println("ASDFASDF" + line);
 			}
 		} catch (IOException e) {
 			ErrorLogger.log("Reader was closed unexpectedly");

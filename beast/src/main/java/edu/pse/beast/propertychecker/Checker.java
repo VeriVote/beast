@@ -12,98 +12,99 @@ import edu.pse.beast.toolbox.ThreadedBufferedReader;
 
 public abstract class Checker implements Runnable {
 
-    private final String arguments;
-    private final File toCheck;
-    private final CheckerFactory parent;
-    private final long pollInterval = 1000;
+	private final String arguments;
+	private final File toCheck;
+	private final CheckerFactory parent;
+	private final long pollInterval = 1000;
 
-    private final List<String> result = new ArrayList<String>();
-    private final List<String> errors = new ArrayList<String>();
+	private final List<String> result = new ArrayList<String>();
+	private final List<String> errors = new ArrayList<String>();
 
-    private boolean finished = false;
-    private boolean success = false;
-    private boolean interrupted = false;
+	private boolean finished = false;
+	private boolean success = false;
+	private boolean interrupted = false;
 
-    protected Process process;
-    
-    public Checker(String arguments, File toCheck, CheckerFactory parent) {
-        this.arguments = arguments;
-        this.toCheck = toCheck;
-        this.parent = parent;
+	protected Process process;
 
-        new Thread(this).start();
-    }
+	public Checker(String arguments, File toCheck, CheckerFactory parent) {
+		this.arguments = arguments;
+		this.toCheck = toCheck;
+		this.parent = parent;
 
-    @Override
-    public void run() {
+		new Thread(this).start();
+	}
 
-        process = createProcess(toCheck, arguments);
-        
-        if (process != null) {
-            CountDownLatch latch = new CountDownLatch(2);
-            ThreadedBufferedReader outReader = new ThreadedBufferedReader(
-                    new BufferedReader(new InputStreamReader(process.getInputStream())), result, latch);
-            ThreadedBufferedReader errReader = new ThreadedBufferedReader(
-                    new BufferedReader(new InputStreamReader(process.getErrorStream())), errors, latch);
+	@Override
+	public void run() {
 
-            polling: while (!interrupted || !finished) {
-                if (!process.isAlive() && !interrupted) {
-                    if (process.exitValue() == 0) {
-                        success = true;
-                    } else {
-                        ErrorLogger.log("Process finished with exitcode: " + process.exitValue());
-                    }
-                    break polling;
-                } else if (interrupted) {
-                    stopProcess();
-                    outReader.stopReading();
-                    errReader.stopReading();
-                    break polling;
-                }
-                try {
-                    Thread.sleep(pollInterval);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+		process = createProcess(toCheck, arguments);
 
-            }
-            try {
-                latch.await();
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+		if (process != null) {
+			CountDownLatch latch = new CountDownLatch(2);
+			ThreadedBufferedReader outReader = new ThreadedBufferedReader(
+					new BufferedReader(new InputStreamReader(process.getInputStream())), result, latch);
+			ThreadedBufferedReader errReader = new ThreadedBufferedReader(
+					new BufferedReader(new InputStreamReader(process.getErrorStream())), errors, latch);
 
-            finished = true;
-        } else {
-            ErrorLogger.log("Process couldn't be started");
-        }
-        parent.notifyThatFinished(result);
-    }
+			polling: while (!interrupted || !finished) {
+				if (!process.isAlive() && !interrupted) {
+					if (process.exitValue() == 0) {
+						success = true;
+					} else {
+						ErrorLogger.log("Process finished with exitcode: " + process.exitValue());
+					}
+					break polling;
+				} else if (interrupted) {
+					stopProcess();
+					outReader.stopReading();
+					errReader.stopReading();
+					break polling;
+				}
+				try {
+					Thread.sleep(pollInterval);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 
-    public List<String> getResultList() {
-        return result;
-    }
+			}
+			try {
+				latch.await();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-    public List<String> getErrorList() {
-        return errors;
-    }
+			finished = true;
+		} else {
+			ErrorLogger.log("Process couldn't be started");
+		}
 
-    public boolean isSuccess() {
-        return success;
-    }
+		parent.notifyThatFinished(result);
+	}
 
-    public boolean isFinished() {
-        return finished;
-    }
+	public List<String> getResultList() {
+		return result;
+	}
 
-    public void stopChecking() {
-        interrupted = true;
-    }
+	public List<String> getErrorList() {
+		return errors;
+	}
 
-    protected abstract String sanitizeArguments(String toSanitize);
+	public boolean isSuccess() {
+		return success;
+	}
 
-    protected abstract Process createProcess(File toCheck, String arguments);
+	public boolean isFinished() {
+		return finished;
+	}
 
-    protected abstract void stopProcess();
+	public void stopChecking() {
+		interrupted = true;
+	}
+
+	protected abstract String sanitizeArguments(String toSanitize);
+
+	protected abstract Process createProcess(File toCheck, String arguments);
+
+	protected abstract void stopProcess();
 }

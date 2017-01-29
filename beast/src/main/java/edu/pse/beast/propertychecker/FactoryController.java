@@ -22,146 +22,153 @@ import edu.pse.beast.toolbox.TimeOutNotifier;
  */
 public class FactoryController implements Runnable {
 
-    private final ElectionDescriptionSource electionDescSrc;
-    private final PostAndPrePropertiesDescriptionSource postAndPrePropDescrSrc;
-    private final ParameterSource parmSrc;
-    private final List<Result> results;
-    private final TimeOutNotifier notifier;
+	private final ElectionDescriptionSource electionDescSrc;
+	private final PostAndPrePropertiesDescriptionSource postAndPrePropDescrSrc;
+	private final ParameterSource parmSrc;
+	private final List<Result> results;
+	private final TimeOutNotifier notifier;
 
-    private final long pollingInterval = 1000;
+	private final long pollingInterval = 1000;
 
-    private List<CheckerFactory> currentlyRunning;
-    private final String checkerID;
-    private boolean stopped = false;
-    private final int concurrentChecker;
-    private int currentlyActiveChecker = 0;
+	private List<CheckerFactory> currentlyRunning;
+	private final String checkerID;
+	private boolean stopped = false;
+	private final int concurrentChecker;
+	private int currentlyActiveChecker = 0;
 
-    /**
-     * 
-     * @param electionDescSrc
-     *            the source for the election descriptions
-     * @param postAndPrePropDescrSrc
-     *            the properties to be checked
-     * @param parmSrc
-     *            the parameter
-     * @param checkerID
-     *            the ID of the checker that should be used
-     * @param concurrentChecker
-     *            the amount of concurrent checker to be used
-     */
-    public FactoryController(ElectionDescriptionSource electionDescSrc,
-            PostAndPrePropertiesDescriptionSource postAndPrePropDescrSrc, ParameterSource parmSrc, String checkerID,
-            int concurrentChecker) {
-        this.electionDescSrc = electionDescSrc;
-        this.postAndPrePropDescrSrc = postAndPrePropDescrSrc;
-        this.parmSrc = parmSrc;
-        this.checkerID = checkerID;
+	/**
+	 * 
+	 * @param electionDescSrc
+	 *            the source for the election descriptions
+	 * @param postAndPrePropDescrSrc
+	 *            the properties to be checked
+	 * @param parmSrc
+	 *            the parameter
+	 * @param checkerID
+	 *            the ID of the checker that should be used
+	 * @param concurrentChecker
+	 *            the amount of concurrent checker to be used
+	 */
+	public FactoryController(ElectionDescriptionSource electionDescSrc,
+			PostAndPrePropertiesDescriptionSource postAndPrePropDescrSrc, ParameterSource parmSrc, String checkerID,
+			int concurrentChecker) {
+		this.electionDescSrc = electionDescSrc;
+		this.postAndPrePropDescrSrc = postAndPrePropDescrSrc;
+		this.parmSrc = parmSrc;
+		this.checkerID = checkerID;
 
-        this.results = CheckerFactoryFactory.getMatchingResult(checkerID,
-                postAndPrePropDescrSrc.getPostAndPrePropertiesDescriptions().size());
+		this.results = CheckerFactoryFactory.getMatchingResult(checkerID,
+				postAndPrePropDescrSrc.getPostAndPrePropertiesDescriptions().size());
 
-        this.concurrentChecker = 1; // TODO ask options for the amount of
-                                    // concurrent checkers
+		this.concurrentChecker = 1; // TODO ask options for the amount of
+									// concurrent checkers
 
-        // start the factorycontroller
-        new Thread(this).start();
+		// start the factorycontroller
+		new Thread(this).start();
 
-        if (parmSrc.getParameter().getTimeout().isActive()) {
-            notifier = new TimeOutNotifier(this, parmSrc.getParameter().getTimeout().getDuration());
-        } else {
-            notifier = null;
-        }
-    }
+		if (parmSrc.getParameter().getTimeout().isActive()) {
+			notifier = new TimeOutNotifier(this, parmSrc.getParameter().getTimeout().getDuration());
+		} else {
+			notifier = null;
+		}
+	}
 
-    /**
-     * starts the factoryController, so it then starts the needed checker
-     */
-    @Override
-    public void run() {
+	/**
+	 * starts the factoryController, so it then starts the needed checker
+	 */
+	@Override
+	public void run() {
 
-        List<PostAndPrePropertiesDescription> properties = postAndPrePropDescrSrc.getPostAndPrePropertiesDescriptions();
+		List<PostAndPrePropertiesDescription> properties = postAndPrePropDescrSrc.getPostAndPrePropertiesDescriptions();
 
-        outerLoop: for (int i = 0; i < properties.size(); i++) {
-            innerLoop: while (!stopped) {
-                if (currentlyActiveChecker < concurrentChecker) {
-                    CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID, this, electionDescSrc,
-                            properties.get(i), parmSrc, results.get(i));
+		outerLoop: for (int i = 0; i < properties.size(); i++) {
+			innerLoop: while (!stopped) {
+				if (currentlyActiveChecker < concurrentChecker) {
+					CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID, this, electionDescSrc,
+							properties.get(i), parmSrc, results.get(i));
 
-                    // starts the factory
-                    new Thread(factory).start();
-                    break innerLoop;
-                } else {
-                    try {
-                        Thread.sleep(pollingInterval);
-                    } catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
-            }
+					// starts the factory
+					new Thread(factory).start();
 
-            if (stopped) {
-                break outerLoop;
-            }
-        }
-        if (notifier != null) {
-            // if the notifier thread is still active, we stop it.
-            notifier.disable();
-        }
-    }
+					synchronized (this) {
+						currentlyActiveChecker++;
+					}
 
-    /**
-     * tells the controller to stop checking. It stops all currently running
-     * Checkers and doesn't start new ones.
-     * 
-     * @param timeOut
-     *            if it is true, the checking was stopped because of a timeout;
-     */
-    public void stopChecking(boolean timeOut) {
+					break innerLoop;
+				} else {
+					try {
+						Thread.sleep(pollingInterval);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
 
-        if (stopped) {
-            this.stopped = true;
-            for (Iterator<CheckerFactory> iterator = currentlyRunning.iterator(); iterator.hasNext();) {
-                CheckerFactory toStop = (CheckerFactory) iterator.next();
-                toStop.stopChecking();
-            }
+			if (stopped) {
+				break outerLoop;
+			}
+		}
+		if (notifier != null) {
+			// if the notifier thread is still active, we stop it.
+			notifier.disable();
+		}
+	}
 
-            // set all not finished results to finished, to indicate that they
-            // are
-            // ready.
-            for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
-                Result result = (Result) iterator.next();
-                if (!result.isFinished()) {
-                    result.setFinished();
-                    // in case of a timeout set a timeout flag
-                    if (timeOut) {
-                        result.setTimeoutFlag();
-                    }
-                }
-            }
-        }
-    }
+	/**
+	 * tells the controller to stop checking. It stops all currently running
+	 * Checkers and doesn't start new ones.
+	 * 
+	 * @param timeOut
+	 *            if it is true, the checking was stopped because of a timeout;
+	 */
+	public void stopChecking(boolean timeOut) {
 
-    public synchronized void notifyThatFinished() {
-        if (currentlyActiveChecker == 0) {
-            ErrorLogger.log("A checker finished when no checker was active.");
-        } else {
-            currentlyActiveChecker--;
-        }
-    }
+		if (stopped) {
+			this.stopped = true;
+			for (Iterator<CheckerFactory> iterator = currentlyRunning.iterator(); iterator.hasNext();) {
+				CheckerFactory toStop = (CheckerFactory) iterator.next();
+				toStop.stopChecking();
+			}
 
-    public List<ResultInterface> getResults() {
-        if (results == null) {
+			// set all not finished results to finished, to indicate that they
+			// are
+			// ready.
+			for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
+				Result result = (Result) iterator.next();
+				if (!result.isFinished()) {
+					result.setFinished();
+					// in case of a timeout set a timeout flag
+					if (timeOut) {
+						result.setTimeoutFlag();
+					}
+				}
+			}
+		}
+	}
 
-            ErrorLogger.log("Result objects couldn't be created.");
-            return null;
+	public void notifyThatFinished() {
+		if (currentlyActiveChecker == 0) {
+			ErrorLogger.log("A checker finished when no checker was active.");
+		} else {
+			synchronized (this) {
+				currentlyActiveChecker--;
+			}
+		}
+	}
 
-        } else {
+	public List<ResultInterface> getResults() {
+		if (results == null) {
 
-            // TODO schöner machen, wenn möglich
-            List<? extends ResultInterface> toReturn = results;
+			ErrorLogger.log("Result objects couldn't be created.");
+			return null;
 
-            return (List<ResultInterface>) toReturn;
-        }
-    }
+		} else {
+
+			// TODO schöner machen, wenn möglich
+			List<? extends ResultInterface> toReturn = results;
+
+			return (List<ResultInterface>) toReturn;
+		}
+	}
 }

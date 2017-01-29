@@ -1,18 +1,9 @@
 #include <stdlib.h>
 #include <stdint.h>
-#include <assert.h>int nondet_uint();
+#include <assert.h> 
 #define assert2(x, y) __CPROVER_assert(x, y)
-#define assume(x) __CPROVER_assume(x)#ifndef V
-#define V 3
-#endif
-
-#ifndef C
-#define C 3
- #endif
-
-#ifndef S
-#define S 3
- #endif
+#define assume(x) __CPROVER_assume(x) 
+int nondet_uint();
 
 unsigned int voting(unsigned int voters[V], unsigned int candidates[C], unsigned int seats[S]) {
 return 0;

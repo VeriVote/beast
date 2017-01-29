@@ -50,15 +50,14 @@ public abstract class CheckerFactory implements Runnable {
                         .iterator(); seatsIterator.hasNext();) {
                     int seats = (int) seatsIterator.next();
                     
-                    if (!stopped) {
-                        
+                    System.out.println("should be called twice!");
+                    
+                    if (!stopped) {    
                         startProcess(electionDescSrc, postAndPrepPropDesc, advanced, voters, candidates, seats, this);
-                        System.out.println("aus dem prozess raus");
                     }
                     
                     while (!finished && !stopped) {
                         try {
-                        	System.out.println("sleeping");
                             // polling in 1 second steps to save cpu time
                             Thread.sleep(pollInterval);
                         } catch (InterruptedException e) {
