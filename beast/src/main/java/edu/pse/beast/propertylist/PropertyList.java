@@ -22,7 +22,7 @@ import edu.pse.beast.propertychecker.Result;
 public class PropertyList implements PostAndPrePropertiesDescriptionSource, ResultPresenter {
 	
 	// private static PropertyList instance;
-	private ArrayList<PropertyItem> propertyDescriptions;
+	private ArrayList<PropertyItem> propDescs;
     private BooleanExpEditor booleanExpEditor;
 	
 	/**
@@ -36,26 +36,29 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource, Resu
 	
 	/**
 	 * @param newList
-	 */
+	 
 	public void refillInstance(ArrayList<PropertyItem> newList) {
 		propertyDescriptions = newList;
-	}
+	}*/
 	
 	/**
 	 * @param prop
 	 * @param newName
 	 * @return
 	 */
-	public Boolean changeName(PostAndPrePropertiesDescription prop, String newName) {
-		PropertyItem item = new PropertyItem(prop);
-		if (!propertyDescriptions.contains(item)) return false;
+	public Boolean changeName(PropertyItem prop, String newName) {
 		
-		for (PropertyItem current : propertyDescriptions) {
+		int index = propDescs.indexOf(prop);
+		if (index == -1) return false;
+		
+		for (PropertyItem current : propDescs) {
 			if (current.getDescription().getName() == newName) return false;
 		}
 		
-		// TODO: assign new name to property item
-		item = new PropertyItem(prop);
+		PostAndPrePropertiesDescription old = propDescs.get(index).getDescription();
+		propDescs.get(index).setDescription(newName, old.getPrePropertiesDescription(),
+				old.getPostPropertiesDescription(), old.getSymVarList());
+		
 		return true;
 	}
 	

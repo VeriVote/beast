@@ -1,8 +1,12 @@
 package edu.pse.beast.propertylist;
 
+import java.util.LinkedList;
 import java.util.UUID;
 
+import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
+import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 
 /**
 *
@@ -10,7 +14,7 @@ import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescripti
 */
 public class PropertyItem {
 	
-	private final PostAndPrePropertiesDescription description;
+	private PostAndPrePropertiesDescription description;
 	private Boolean willBeTested;
 	
 	public PropertyItem(PostAndPrePropertiesDescription descr, Boolean testStatus) {
@@ -28,6 +32,14 @@ public class PropertyItem {
 	public PostAndPrePropertiesDescription getDescription() {
 		return description;
 	}
+	public void setDescription(PostAndPrePropertiesDescription descr) {
+		this.description = descr;
+	}
+	public void setDescription(String newName, FormalPropertiesDescription preProp,
+			FormalPropertiesDescription postProp, SymbolicVariableList symVars) {
+		this.description = new PostAndPrePropertiesDescription(newName, preProp, postProp, symVars);
+		
+	}
 	
 	public Boolean willBeTested() {
 		return willBeTested;
@@ -39,4 +51,5 @@ public class PropertyItem {
 		if (this.description.getName() == ((PropertyItem)o).description.getName()) return true;
 		else return false;
 	}
+	
 }

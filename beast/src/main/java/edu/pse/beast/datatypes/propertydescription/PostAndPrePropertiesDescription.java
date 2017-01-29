@@ -57,9 +57,13 @@ public class PostAndPrePropertiesDescription {
     public String getName() {
     	return this.name;
     }
+    
 
     public LinkedList<SymbolicVariable> getSymbolicVariableList() {
         return symbolicVariableList.getSymbolicVariables();
+    }
+    public SymbolicVariableList getSymVarList() {
+    	return symbolicVariableList;
     }
 
     public void setSymbolicVariableList(SymbolicVariableList symbolicVariableList) {
