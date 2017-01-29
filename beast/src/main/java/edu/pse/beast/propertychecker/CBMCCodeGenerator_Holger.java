@@ -66,7 +66,6 @@ public class CBMCCodeGenerator_Holger {
         for(String s : electionDescription.getCode()) {
             generatedCode += s + "\n";
         }
-        
         String funcDecl = "void NAME() {\n".replace("NAME", testFuncName);
         
         generatedCode += funcDecl;
@@ -114,7 +113,6 @@ public class CBMCCodeGenerator_Holger {
         
         visitor = new CBMCCodeGeneratioonVisitor();
         visitor.setPreProperties();
-        
         
         generatedCode += visitor.generate(preast.getBooleanExpressions().get(0));
         

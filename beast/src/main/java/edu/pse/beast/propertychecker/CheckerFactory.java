@@ -1,15 +1,11 @@
 package edu.pse.beast.propertychecker;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
-import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
-import edu.pse.beast.toolbox.FileSaver;
 
 /**
  * 
@@ -42,29 +38,25 @@ public abstract class CheckerFactory implements Runnable {
 
     public void run() {
 
-        ArrayList<String> code = new CBMCCodeGenerator(null, null).getCode();
-
-        File file = new File("/Beast/src/main/resources/tmp/" + CheckerFactoryFactory.newUniqueName());
-
-        FileSaver.writeStringLinesToFile(code, file);
-
         String advanced = paramSrc.getParameter().getAdvanced();
 
         outerLoop: for (Iterator<Integer> voteIterator = paramSrc.getParameter().getAmountVoters()
                 .iterator(); voteIterator.hasNext();) {
             int voters = (int) voteIterator.next();
-            for (Iterator<Integer> candidateIterator = paramSrc.getParameter().getAmountVoters()
+            for (Iterator<Integer> candidateIterator = paramSrc.getParameter().getAmountCandidates()
                     .iterator(); candidateIterator.hasNext();) {
                 int candidates = (int) candidateIterator.next();
-                for (Iterator<Integer> seatsIterator = paramSrc.getParameter().getAmountVoters()
+                for (Iterator<Integer> seatsIterator = paramSrc.getParameter().getAmountSeats()
                         .iterator(); seatsIterator.hasNext();) {
                     int seats = (int) seatsIterator.next();
-
+                    
                     if (!stopped) {
-                        startProcess(file, advanced + " -D V=" + voters + " -D C=" + candidates + " -D S=" + seats,
-                                this);
+                        
+                        startProcess(electionDescSrc, postAndPrepPropDesc, advanced, voters, candidates, seats, this);
+                        
                     }
-
+                    
+                    
                     while (!finished && !stopped) {
                         try {
                             // polling in 1 second steps to save cpu time
@@ -111,15 +103,20 @@ public abstract class CheckerFactory implements Runnable {
     }
 
     protected abstract Result createCounterExample(List<String> result);
-
+    
     /**
      * 
-     * @param toCheck
-     * @param arguments
+     * @param electionDescSrc2
+     * @param postAndPrepPropDesc2
+     * @param advanced
+     * @param voters
+     * @param candidates
+     * @param seats
      * @param parent
-     * @return
      */
-    protected abstract Checker startProcess(File toCheck, String arguments, CheckerFactory parent);
+    protected abstract void startProcess(ElectionDescriptionSource electionDescSrc,
+            PostAndPrePropertiesDescription postAndPrepPropDesc, String advanced, int voters, int candidates,
+            int seats, CheckerFactory parent);
 
     /**
      * 

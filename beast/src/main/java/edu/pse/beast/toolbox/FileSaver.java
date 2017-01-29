@@ -11,10 +11,25 @@ import java.util.List;
 public class FileSaver {
     
     
+    /**
+     * 
+     * @param text the text, in a list where each entry is a line that is to be saved
+     * @param file the file where it should be saved. WARNING: it overwrites everything that stood in it before
+     */
     public static void writeStringLinesToFile(List<String> text, File file) {        
         
+        if (!file.exists()) {
+            try {
+                System.out.println(file.getAbsolutePath());
+                file.createNewFile();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
         
         PrintWriter writer = null;
+        
         try {
             writer = new PrintWriter(file);
         } catch (FileNotFoundException e) {

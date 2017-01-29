@@ -71,7 +71,7 @@ public final class CheckerFactoryFactory {
             init();
         }
         // TODO Auto-generated method stub
-        return null;
+        return "c_temp_file";
     }
     
     public static List<Result> getMatchingResult(String checkerID, int amount) {

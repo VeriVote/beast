@@ -15,6 +15,7 @@ import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
 import edu.pse.beast.highlevel.ResultCheckerCommunicator;
 import edu.pse.beast.highlevel.ResultInterface;
+import edu.pse.beast.toolbox.ErrorLogger;
 
 /**
  *
@@ -24,27 +25,31 @@ public class PropertyChecker implements ResultCheckerCommunicator {
     private FactoryController factoryController;
     private final String checkerID;
     private final int maxTries = 5;
-    
+
     /**
      * 
-     * @param checkerID the ID for the checker to be used
+     * @param checkerID
+     *            the ID for the checker to be used
      */
     public PropertyChecker(String checkerID) {
         this.checkerID = checkerID;
     }
 
     @Override
-    public List<ResultInterface> checkPropertiesForDescription(PostAndPrePropertiesDescriptionSource propDescrSrc,
-            ElectionDescriptionSource elecDescr, ParameterSource params) {
-    	
-        
-    	this.factoryController = new FactoryController(elecDescr, propDescrSrc, params, checkerID, maxTries);
+    public List<ResultInterface> checkPropertiesForDescription(ElectionDescriptionSource elecDescr,
+            PostAndPrePropertiesDescriptionSource propDescrSrc, ParameterSource params) {
+
+        this.factoryController = new FactoryController(elecDescr, propDescrSrc, params, checkerID, maxTries);
         return factoryController.getResults();
     }
 
     @Override
     public void abortChecking() {
-    	factoryController.stopChecking(false);
+        if (factoryController != null) {
+            factoryController.stopChecking(false);
+        } else {
+            ErrorLogger.log("Tried to stop the checking before a factory controller existed!");
+        }
     }
-    
+
 }

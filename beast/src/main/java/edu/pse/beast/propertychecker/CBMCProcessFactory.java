@@ -2,13 +2,14 @@ package edu.pse.beast.propertychecker;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
-import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
 import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.toolbox.FileSaver;
 
 public class CBMCProcessFactory extends CheckerFactory {
 
@@ -17,6 +18,8 @@ public class CBMCProcessFactory extends CheckerFactory {
     // this is the last line in the cbmc output, if the verification was
     // successful
     private final String successLine = "VERIFICATION SUCCESSFUL";
+    
+    private final String pathToTempFolder = "./src/main/resources/c_tempfiles/";
 
     protected CBMCProcessFactory(FactoryController controller, ElectionDescriptionSource electionDescSrc,
             PostAndPrePropertiesDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result) {
@@ -31,21 +34,27 @@ public class CBMCProcessFactory extends CheckerFactory {
     }
 
     @Override
-    protected Checker startProcess(File toCheck, String arguments, CheckerFactory parent) {
-        Checker process = null;
+    protected void startProcess(ElectionDescriptionSource electionDescSrc,
+            PostAndPrePropertiesDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
+            CheckerFactory parent) {
+        
+        //stitch the arguments together
+        String arguments = advanced + " -D V=" + voters + " -D C=" + candidates + " -D S=" + seats;
+        
+        //create the file in which the code is saved
+        File toCheck = createCodeFile(electionDescSrc, postAndPrepPropDesc);
+        
+        
         switch (OS) {
         case Linux:
-            process = new LinuxProcess(arguments, toCheck, parent);
+            new LinuxProcess(arguments, toCheck, parent);
             break;
         case Windows:
-            process = new WindowsProcess(arguments, toCheck, parent);
+            new WindowsProcess(arguments, toCheck, parent);
             break;
         default:
-            System.err.println("Warning, your OS couldn't be determined.");
-            return null;
+            ErrorLogger.log("Warning, your OS couldn't be determined.");
         }
-
-        return process;
     }
 
     @Override
@@ -82,4 +91,29 @@ public class CBMCProcessFactory extends CheckerFactory {
         }
         return fittingResults;
     }
+
+    public File createCodeFile(ElectionDescriptionSource electionDescSrc,
+            PostAndPrePropertiesDescription postAndPrepPropDesc) {
+        
+        System.out.println("Hier später den anderen generator wieder verwenden!");
+        //CBMCCodeGenerator generator = new CBMCCodeGenerator(electionDescSrc.getElectionDescription(), postAndPrepPropDesc);
+        
+        System.out.println("funktioniert");
+        new CBMCCodeGenerator_Holger();
+        System.out.println("hier steht nichts");
+        
+        String generated = new CBMCCodeGenerator_Holger().generateCode(postAndPrepPropDesc, electionDescSrc.getElectionDescription());
+        
+        List<String> split = new ArrayList<String>(Arrays.asList(generated.split("\n")));
+        
+        
+        File file = new File(new File(pathToTempFolder), CheckerFactoryFactory.newUniqueName() + ".c");
+        
+        //File file = new File(pathToTempFolder + CheckerFactoryFactory.newUniqueName() + ".c");
+        
+        FileSaver.writeStringLinesToFile(split, file);
+        //FileSaver.writeStringLinesToFile(generator.getCode(), file);
+        return file;
+    }
+
 }

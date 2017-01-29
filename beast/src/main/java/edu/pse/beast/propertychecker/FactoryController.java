@@ -65,9 +65,9 @@ public class FactoryController implements Runnable {
 
         // start the factorycontroller
         new Thread(this).start();
-        
+
         if (parmSrc.getParameter().getTimeout().isActive()) {
-            notifier = new TimeOutNotifier(this, parmSrc.getParameter().getTimeout().getDuration());        
+            notifier = new TimeOutNotifier(this, parmSrc.getParameter().getTimeout().getDuration());
         } else {
             notifier = null;
         }
@@ -82,7 +82,6 @@ public class FactoryController implements Runnable {
         List<PostAndPrePropertiesDescription> properties = postAndPrePropDescrSrc.getPostAndPrePropertiesDescriptions();
 
         outerLoop: for (int i = 0; i < properties.size(); i++) {
-
             innerLoop: while (!stopped) {
                 if (currentlyActiveChecker < concurrentChecker) {
                     CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID, this, electionDescSrc,
@@ -105,8 +104,10 @@ public class FactoryController implements Runnable {
                 break outerLoop;
             }
         }
-        //if the notifier thread is still active, we stop it.
-        notifier.disable();
+        if (notifier != null) {
+            // if the notifier thread is still active, we stop it.
+            notifier.disable();
+        }
     }
 
     /**
@@ -117,7 +118,7 @@ public class FactoryController implements Runnable {
      *            if it is true, the checking was stopped because of a timeout;
      */
     public void stopChecking(boolean timeOut) {
-        
+
         if (stopped) {
             this.stopped = true;
             for (Iterator<CheckerFactory> iterator = currentlyRunning.iterator(); iterator.hasNext();) {
@@ -151,11 +152,13 @@ public class FactoryController implements Runnable {
 
     public List<ResultInterface> getResults() {
         if (results == null) {
+
             ErrorLogger.log("Result objects couldn't be created.");
             return null;
+
         } else {
 
-            //TODO schöner machen
+            // TODO schöner machen, wenn möglich
             List<? extends ResultInterface> toReturn = results;
 
             return (List<ResultInterface>) toReturn;
