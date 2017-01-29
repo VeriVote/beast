@@ -2,6 +2,8 @@ package edu.pse.beast.propertylist.View;
 
 import java.awt.BorderLayout;
 import java.awt.MenuBar;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -12,14 +14,16 @@ import javax.swing.JPanel;
 import javax.swing.JToolBar;
 
 import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
+import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.propertylist.PropertyListMenuBarHandler;
+import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 
 /**
 *
 * @author Justin
 */
-public class PropertyListWindow extends JFrame{
+public class PropertyListWindow extends JFrame implements DisplaysStringsToUser {
 	
 	private JMenuBar menuBar;
 	private JMenu menuFile;
@@ -89,10 +93,29 @@ public class PropertyListWindow extends JFrame{
 		getContentPane().add(endpanel, BorderLayout.LINE_END);
 		
 		addNewButton.setText("Neu");
+		addNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addNewPropertyAction(e);
+			}
+
+		});
 		endpanel.add(addNewButton);
 		
 		
 		
+	}
+	
+	private void addNewPropertyAction(ActionEvent e) {
+		new NewPropertyWindow();
+		
+	}
+
+	@Override
+	public void updateStringRes(StringLoaderInterface sli) {
+		menuFile.setText(sli.getPropertyListStringResProvider().getMenuStringRes().getStringFromID("menuFile"));
+		menuEdit.setText(sli.getPropertyListStringResProvider().getMenuStringRes().getStringFromID("menuEdit"));
+		addNewButton.setText(sli.getPropertyListStringResProvider().getToolbarTipStringRes().getStringFromID("addNew"));
+		setTitle(sli.getPropertyListStringResProvider().getMenuStringRes().getStringFromID("title"));
 	}
 	
 	

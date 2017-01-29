@@ -7,12 +7,9 @@ package edu.pse.beast.celectiondescriptioneditor;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
 import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
-import edu.pse.beast.codearea.SyntaxHL.RegexAndColor;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 
-import java.awt.*;
-import java.util.ArrayList;
 
 /**
  *  
@@ -33,8 +30,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         updateCurrentDescription();
         return currentDescription;
     }
-    
-    
+
     private void updateCurrentDescription() {
         
     }
@@ -57,5 +53,15 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     public void letUserEditElectionDescription(ElectionDescription description) {
         this.currentDescription = description;
         codeArea.letUserEditCode(description.getCode());
+    }
+
+    @Override
+    public void stopReacting() {
+
+    }
+
+    @Override
+    public void resumeReacting() {
+
     }
 }

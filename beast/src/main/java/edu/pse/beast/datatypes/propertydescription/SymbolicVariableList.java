@@ -20,6 +20,9 @@ public class SymbolicVariableList {
         symbolicVariableList = new LinkedList<>();
     }
 
+    public SymbolicVariableList(SymbolicVariableList symbolicVariableList) {
+        this.symbolicVariableList = symbolicVariableList.getSymbolicVariables();
+    }
     public void addSymbolicVariable(String id, InternalTypeContainer internalTypeContainer) {
         symbolicVariableList.add(new SymbolicVariable(id, internalTypeContainer));
     }
@@ -27,8 +30,8 @@ public class SymbolicVariableList {
     public boolean isVarIDAllowed(String id) {
         boolean varAllowed = true;
         for (SymbolicVariable var : symbolicVariableList) {
-            varAllowed = var.getId().equals(id);
-            if (!varAllowed) {
+            if (var.getId().equals(id)) {
+                varAllowed = false;
                 break;
             }
         }
@@ -49,5 +52,9 @@ public class SymbolicVariableList {
             }
         }
         return varFound;
+    }
+
+    public void removeSymbolicVariable(int index) {
+        symbolicVariableList.remove(index);
     }
 }

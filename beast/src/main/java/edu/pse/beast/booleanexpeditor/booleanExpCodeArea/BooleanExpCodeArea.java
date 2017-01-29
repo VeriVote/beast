@@ -5,11 +5,13 @@ import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpE
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorVariableErrorFinder;
 import edu.pse.beast.codearea.CodeArea;
 
+import java.util.ArrayList;
+
 /**
  * Class extending CodeArea Class of package codearea and giving it extra functionality specific to BooleanExpEditor.
  * @author Nikolai
  */
-public class BooleanExpCodeArea extends CodeArea{
+public class BooleanExpCodeArea extends CodeArea {
     private BooleanExpANTLRHandler antlrHandler;
     private BooleanExpEditorGrammarErrorFinder grammarErrorFinder;
     private BooleanExpEditorVariableErrorFinder variableErrorFinder;
@@ -33,5 +35,9 @@ public class BooleanExpCodeArea extends CodeArea{
         this.grammarErrorFinder = grammarErrorFinder;
         this.variableErrorFinder = variableErrorFinder;
         this.autoCompletionSrc = autoCompletionSrc;
+    }
+
+    public ArrayList<Error> getErrors() {
+        return new ArrayList<Error>();
     }
 }

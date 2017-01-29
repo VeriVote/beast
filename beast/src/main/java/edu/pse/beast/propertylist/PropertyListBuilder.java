@@ -29,22 +29,24 @@ public class PropertyListBuilder {
 	
 	public PropertyList createPropertyList(ObjectRefsForBuilder refs, BooleanExpEditor booleanExpEditor) {
 		PropertyListWindowStarter starter = new PropertyListWindowStarter();
-		PropertyListWindow window = starter.getPropertyListWindow();
+		
+		starter.getPropertyListWindow().updateStringRes(refs.getStringIF());
 		
 		PropertyList instance = new PropertyList(booleanExpEditor);
 		
 		PropertyListMenuBarHandler menuBarHandler = new PropertyListMenuBarHandler(menuHeadingIds, 
 				createActionIdAndListenerListForMenuHandler(), 
-				refs.getStringIF().getPropertyListStringResProvider().getMenuStringRes(), window);
+				refs.getStringIF().getPropertyListStringResProvider().getMenuStringRes(), starter.getPropertyListWindow());
 		
 		ImageResourceProvider imageRes = ImageResourceProvider.getToolbarImages();
 	
 		
 		PropertyListToolbarHandler toolbarHandler = new PropertyListToolbarHandler(imageRes, 
 				refs.getStringIF().getPropertyListStringResProvider().getToolbarTipStringRes(),
-				createActionIdAndListenerListForToolbarHandler(), window.getToolbar(), window);
+				createActionIdAndListenerListForToolbarHandler(), starter.getPropertyListWindow().getToolbar(), 
+				starter.getPropertyListWindow());
 		
-		window.setJMenuBar(menuBarHandler.getCreatedMenuBar());
+		//window.setJMenuBar(menuBarHandler.getCreatedMenuBar());
 		
 		starter.start();
 		

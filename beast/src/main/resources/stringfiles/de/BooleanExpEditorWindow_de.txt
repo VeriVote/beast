@@ -7,3 +7,8 @@ remove : Entfernen
 voter : Wähler
 candidate : Kandidat
 seat : Sitz
+saveChanges : Änderungen an '
+save : ' speichern?
+yesOption : Ja
+noOption : Nein
+cancelOption : Abbrechen

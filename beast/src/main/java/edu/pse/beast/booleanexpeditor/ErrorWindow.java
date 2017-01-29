@@ -2,8 +2,7 @@ package edu.pse.beast.booleanexpeditor;
 
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
-
-import javax.swing.*;
+import javax.swing.JTextPane;
 import java.util.ArrayList;
 
 /**
@@ -11,8 +10,7 @@ import java.util.ArrayList;
  * @author Nikolai
  */
 public class ErrorWindow implements DisplaysStringsToUser{
-    private StringLoaderInterface stringLoaderInterface;
-    private JTextPane textPane;
+    private final JTextPane textPane;
     private ArrayList<Error> errors;
     private String errorString;
     /**
@@ -21,18 +19,21 @@ public class ErrorWindow implements DisplaysStringsToUser{
      * @param stringLoaderInterface stringLoaderInterface to load needed Strings
      */
     ErrorWindow(JTextPane textPane, StringLoaderInterface stringLoaderInterface) {
-        this.stringLoaderInterface = stringLoaderInterface;
         this.textPane = textPane;
-        errorString = stringLoaderInterface.getBooleanExpEditorStringResProvider().
-                getBooleanExpErrorStringRes().getStringFromID("error");
+        updateStringRes(stringLoaderInterface);
     }
 
     /**
      * Method to display ArrayList of Errors in the ErrorWindow.
      * @param errors ArrayList of Errors
      */
-    public void displayErrors(ArrayList<Error> errors) {
-        //TODO implement
+    void displayErrors(ArrayList<Error> errors) {
+        this.errors = errors;
+        String errorsAsString = errorString + ": " + errors.size() + "\n";
+        for (Error error : this.errors) {
+            errorsAsString += error.getMessage() + "\n";
+        }
+        textPane.setText(errorsAsString);
     }
 
     /**

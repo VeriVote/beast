@@ -6,7 +6,7 @@ package edu.pse.beast.booleanexpeditor;
  * @author NikolaiLMS
  */
 public class BooleanExpEditorConst {
-    private String constant;
+    private final String constant;
 
     /**
      * String should be either "Voters", "Candidates" or "Seats"

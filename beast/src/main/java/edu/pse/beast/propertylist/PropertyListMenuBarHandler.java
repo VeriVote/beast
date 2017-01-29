@@ -17,11 +17,13 @@ public class PropertyListMenuBarHandler extends MenuBarHandler {
 			ArrayList<ArrayList<ActionIdAndListener>> actionIDAndListener, StringResourceLoader resLoader, PropertyListWindow window) {
 		super(headingIds, actionIDAndListener, resLoader);
 		this.window = window;
+		// this.window.setJMenuBar(createdMenuBar);
 	}
 
 	@Override
 	public void updateStringRes(StringLoaderInterface stringResIF) {
-		// TODO Auto-generated method stub
+		updateStringResLoader(stringResIF.getPropertyListStringResProvider().getMenuStringRes());
+		// window.setJMenuBar(createdMenuBar);
 		
 	}
 	

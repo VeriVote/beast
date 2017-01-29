@@ -1,6 +1,5 @@
 package edu.pse.beast.booleanexpeditor;
 
-import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ActionIdAndListener;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
  * @author NikolaiLMS
  */
 public class BooleanExpEditorMenubarHandler extends MenuBarHandler implements DisplaysStringsToUser{
-    private BooleanExpEditorWindow window;
+    private final BooleanExpEditorWindow window;
 
     /**
      * Constructor

@@ -113,10 +113,20 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource, Resu
     @Override
     public boolean isCorrect() { throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    /* (non-Javadoc)
-	 * @see edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource#getPostAndPrePropertiesDescriptions()
-	 */
+
+	@Override
+	public void stopReacting() {
+
+	}
+
+	@Override
+	public void resumeReacting() {
+
+	}
+
+	/* (non-Javadoc)
+     * @see edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource#getPostAndPrePropertiesDescriptions()
+     */
 	public ArrayList<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptions() {
 		/*ArrayList<PostAndPrePropertiesDescription> res = new ArrayList<PostAndPrePropertiesDescription>();
 		for (PropertyItem item : propertyDescriptions) res.add(item.getDescription());
