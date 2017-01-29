@@ -5,9 +5,9 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import edu.pse.beast.datatypes.Result;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.FailureExample;
+import edu.pse.beast.propertychecker.Result;
 
 /**
 *
