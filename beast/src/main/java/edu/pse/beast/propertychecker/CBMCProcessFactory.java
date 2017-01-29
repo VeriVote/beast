@@ -13,6 +13,9 @@ public class CBMCProcessFactory extends CheckerFactory {
 
 
     private final OperatingSystems OS;
+    
+    private final String successLine = "VERIFICATION SUCCESSFUL";
+    
 
     protected CBMCProcessFactory(FactoryController controller, ElectionDescriptionSource electionDescSrc,
             PostAndPrePropertiesDescriptionSource postAndPrepPropDescSrc, ParameterSource paramSrc, Result result) {
@@ -27,9 +30,7 @@ public class CBMCProcessFactory extends CheckerFactory {
     }
 
     @Override
-    
     protected Checker startProcess(File toCheck, String arguments, CheckerFactory parent) {
-        // TODO Auto-generated method stub
         CBMCProcess process = null;
         switch (OS) {
         case Linux:
@@ -57,8 +58,7 @@ public class CBMCProcessFactory extends CheckerFactory {
 
     @Override
     public boolean checkResult(List<String> toCheck) {
-        // TODO Auto-generated method stub
-        return false;
+        return toCheck.get(toCheck.size() - 1).contains(successLine);
     }
     
     private OperatingSystems determineOS() {
@@ -73,8 +73,7 @@ public class CBMCProcessFactory extends CheckerFactory {
         if (environment.toLowerCase().contains("mac") && OS == null) {
             determinedOS = OperatingSystems.Mac;
         } else {
-            //TODO add mac support here, if possible
-            ErrorLogger.log("Sorry, your OS is not supported");
+            ErrorLogger.log("Sorry, your OS " + environment + " is not supported");
         }
         return determinedOS;
     }

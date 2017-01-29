@@ -72,7 +72,7 @@ public abstract class CheckerFactory implements Runnable {
                             // polling in 1 second steps to save cpu time
                             Thread.sleep(pollInterval);
                         } catch (InterruptedException e) {
-                            // keep on polling
+                        	e.printStackTrace();
                         }
                     }
 
@@ -87,6 +87,7 @@ public abstract class CheckerFactory implements Runnable {
                             finished = false;                            
                         } else {
                             result.setResult(lastResult);
+                            break outerLoop;
                         }
                         
                     }
@@ -94,6 +95,11 @@ public abstract class CheckerFactory implements Runnable {
                 }
             }
         }
+        
+        if (checkResult(lastResult)) {
+        	result.setSuccess();                         
+        }
+        
     }
 
     protected abstract Result createCounterExample(List<String> result);

@@ -54,7 +54,6 @@ public abstract class Checker implements Runnable {
                     } else {
                         ErrorLogger.log("Process finished with exitcode: " + process.exitValue());
                     }
-                    // TODO stopped here for today
                     break polling;
                 } else if (interrupted) {
                     stopProcess();
@@ -65,7 +64,6 @@ public abstract class Checker implements Runnable {
                 try {
                     Thread.sleep(pollInterval);
                 } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
 
