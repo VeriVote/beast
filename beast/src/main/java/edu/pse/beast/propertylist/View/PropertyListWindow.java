@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -91,16 +92,16 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser 
 		}
 		
 		endpanel = new JPanel();
-		getContentPane().add(endpanel, BorderLayout.LINE_END);
+		getContentPane().add(endpanel, BorderLayout.SOUTH);
 		
-		addNewButton.setText("Neu");
+		addNewButton.setIcon(new ImageIcon(getClass().getResource("/images/other/add.png")));
 		addNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				addNewPropertyAction(e);
 			}
 
 		});
-		endpanel.add(addNewButton);
+		endpanel.add(addNewButton, BorderLayout.LINE_END);
 		
 		
 		

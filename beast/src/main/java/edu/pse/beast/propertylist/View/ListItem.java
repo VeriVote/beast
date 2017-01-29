@@ -1,5 +1,6 @@
 package edu.pse.beast.propertylist.View;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JPanel;
@@ -40,10 +41,14 @@ public class ListItem extends JPanel{
 	}
 	
 	private void init() {
+		showResult.setIcon(new ImageIcon(getClass().getResource("/images/other/eye.png")));
 		this.add(showResult);
+		name.setText(descr.getDescription().getName());
 		this.add(name);
 		this.add(testStatus);
+		changeButton.setIcon(new ImageIcon(getClass().getResource("/images/other/wrench.png")));
 		this.add(changeButton);
+		deleteButton.setIcon(new ImageIcon(getClass().getResource("/images/other/x-mark.png")));
 		this.add(deleteButton);
 	}
 	
