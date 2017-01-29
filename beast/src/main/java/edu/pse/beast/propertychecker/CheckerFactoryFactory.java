@@ -24,7 +24,11 @@ public final class CheckerFactoryFactory {
 	    
 	    
 	    //search for other classes
-		initialized = true;
+		
+	    
+	    
+	    
+	    initialized = true;
 	}
 	
 	public static List<String> getAvailableChekerIDs() {
