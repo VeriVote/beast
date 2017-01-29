@@ -25,6 +25,7 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
     private StringResourceLoader menuStringRes;
     private StringResourceLoader toolbarTipStringRes;
     private StringResourceLoader cErrorStringRes;
+    private StringResourceLoader electionStringRes;
 
     /**
      *
@@ -103,6 +104,21 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
                 e.printStackTrace();
             }
         }
+        
+         {
+            String location = getFileLocationString("CElectionEditorElection");
+            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
+            try {
+                LinkedList<String> inputList;
+                inputList = FileLoader.loadFileAsString(in);
+                electionStringRes = new StringResourceLoader(inputList);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
+    public StringResourceLoader getElectionStringRes() {
+        return electionStringRes;
+    }
 }

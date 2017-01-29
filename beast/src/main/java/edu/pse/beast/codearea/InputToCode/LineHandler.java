@@ -32,12 +32,19 @@ public class LineHandler {
         return pos;
     }
     
-    public int transformToLineNumber(int absPos) {
-        String code = pane.getText();
+    public int transformToLineNumber(int absPos) throws BadLocationException {
+        String code = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
         int amt = 0;
         for(int i = 0; i < absPos; ++i) {
             if(code.charAt(i) == '\n') amt++;
-            else if(code.charAt(i) == '\r') absPos++;
+        }
+        return amt;
+    }
+    
+    public int transformToLineNumber(int absPos, String code) {
+        int amt = 0;
+        for(int i = 0; i < absPos; ++i) {
+            if(code.charAt(i) == '\n') amt++;
         }
         return amt;
     }
@@ -51,11 +58,11 @@ public class LineHandler {
     }
 
     public int getLineBeginning(int line) {
-        String code = pane.getText();
+        String code = pane.getText().replaceAll("\r", "");
         int absPos = 0; 
         int lineNumber = 0;
         for(; absPos < code.length() && lineNumber < line; ++absPos) {
-            if(code.charAt(absPos) == '\n') ++lineNumber;
+            if(code.charAt(absPos) == '\n') ++lineNumber;           
         }
         return absPos;
     }
@@ -83,7 +90,7 @@ public class LineHandler {
         return absPos;
     }
     
-    public ArrayList<Integer> getLinesBetween(int start, int end) {
+    public ArrayList<Integer> getLinesBetween(int start, int end) throws BadLocationException {
         int startingline = transformToLineNumber(start);
         ArrayList<Integer> lines = new ArrayList<>();
         lines.add(startingline);

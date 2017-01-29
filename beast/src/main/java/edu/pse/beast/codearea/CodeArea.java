@@ -32,6 +32,9 @@ public class CodeArea {
     protected CodeAreaUserActions userActionList;
     protected SyntaxHL syntaxHL;
     protected StoppedTypingContinuouslyMessager stoppedTypingContinuouslyMessager;
+    protected SameWordsHighlighter sameWordsHighlighter;
+    protected OpenCloseCharHighlighter openCloseCharHighlighter;
+    
     
     public CodeArea(
             JTextPane pane,
@@ -52,6 +55,8 @@ public class CodeArea {
         this.autoComplCtrl = autoComplCtrl;
         this.syntaxHL = syntaxHL;
         this.stoppedTypingContinuouslyMessager = stoppedTypingContinuouslyMessager;
+        this.openCloseCharHighlighter = new OpenCloseCharHighlighter(insertToCode.getOccList(), pane);
+        
     }
 
     public CodeArea(CodeArea codeArea) {
@@ -65,6 +70,7 @@ public class CodeArea {
         this.userActionList = codeArea.userActionList;
         this.syntaxHL = codeArea.syntaxHL;
         this.stoppedTypingContinuouslyMessager = codeArea.stoppedTypingContinuouslyMessager;
+        this.openCloseCharHighlighter = codeArea.openCloseCharHighlighter;
     }
     
     public void lockLine(int line) {

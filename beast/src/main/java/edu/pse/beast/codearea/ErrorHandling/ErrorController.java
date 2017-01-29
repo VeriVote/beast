@@ -34,7 +34,7 @@ public class ErrorController implements StoppedTypingContinuouslyListener {
     }
 
     @Override
-    public void StoppedTypingContinuously() {
+    public void StoppedTypingContinuously(int newPos) {
         displayer.showErrors(errorFinderList.getErrors());
     }
 }

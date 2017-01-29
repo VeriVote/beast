@@ -26,4 +26,13 @@ public class ShortcutHandler {
         shortcutMap.put(keyCode, ac);
     }
 
+    public int getMappedcharFor(String id) {
+        for(int i : shortcutMap.keySet()) {
+            System.out.println("char " + i + " mapped to " + shortcutMap.get(i).getId());
+            if(shortcutMap.get(i).getId() == id) 
+                return i;
+        }
+        return 0;
+    }
+
 }

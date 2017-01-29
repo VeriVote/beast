@@ -36,10 +36,16 @@ public class CodeAreaBuilder {
     public CodeArea createCodeArea(JTextPane codeArea, JScrollPane codeAreaScroll, ObjectRefsForBuilder refs) {
                 
         OpenCloseCharList occL = new OpenCloseCharList();
-        UserInsertToCode insertToCode = new UserInsertToCode(codeArea, occL);    
+        
+        ShortcutHandler shortcutHandler = new ShortcutHandler();
+        
+        Actionlist actionList = new Actionlist();
+        
+        SaveTextBeforeRemove textBeforeRemove = new SaveTextBeforeRemove(codeArea, actionList);
+        
+        UserInsertToCode insertToCode = new UserInsertToCode(codeArea, occL, textBeforeRemove);    
         
         CodeInputHandler codeInputHandler = new CodeInputHandler(insertToCode);
-        ShortcutHandler shortcutHandler = new ShortcutHandler();
         
         UserInputHandler userInputHandler = new UserInputHandler(codeArea, codeInputHandler, shortcutHandler);
         
@@ -52,9 +58,9 @@ public class CodeAreaBuilder {
                 codeArea, stoppedTypingContinuouslyMessager);
         
         AutocompletionController autocompletion = new AutocompletionController();
-        Actionlist actionList = new Actionlist();
         
-        TextChangedActionAdder actionAdder = new TextChangedActionAdder(codeArea, actionList);
+        
+        TextChangedActionAdder actionAdder = new TextChangedActionAdder(codeArea, actionList, textBeforeRemove);
 
         SyntaxHL syntaxHL = new SyntaxHL(codeArea);
 

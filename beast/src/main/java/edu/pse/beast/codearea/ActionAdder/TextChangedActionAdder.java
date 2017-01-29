@@ -12,6 +12,8 @@ import edu.pse.beast.codearea.Actionlist.TextAction.TextAddedAction;
 import edu.pse.beast.codearea.Actionlist.TextAction.TextDelta;
 import edu.pse.beast.codearea.Actionlist.TextAction.TextRemovedAction;
 import edu.pse.beast.codearea.SaveTextBeforeRemove;
+import edu.pse.beast.codearea.StoppedTypingContinuouslyListener;
+import edu.pse.beast.codearea.StoppedTypingContinuouslyMessager;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.logging.Level;
@@ -27,87 +29,57 @@ import javax.swing.text.BadLocationException;
  *
  * @author Holger-Desktop
  */
-public class TextChangedActionAdder implements ActionAdder, CaretListener, DocumentListener {
+public class TextChangedActionAdder implements ActionlistListener, DocumentListener {
     private boolean listen = true;
     private JTextPane pane;
     private Actionlist actionList;
-    private int currentCaretPosition = 0;
-    private int recordingStartPos = 0;
     private String recordingString = "";
-    private StringBuilder currentAdded = new StringBuilder();
-    private SaveTextBeforeRemove saveBeforeRemove;
+    private SaveTextBeforeRemove saveBeforeRemove;    
     
-    public TextChangedActionAdder(JTextPane pane, Actionlist list) {
+    public TextChangedActionAdder(JTextPane pane, Actionlist list, SaveTextBeforeRemove saveBeforeRemove) {
         this.pane = pane;
         this.actionList = list;
         list.addActionAdder(this);
-        saveBeforeRemove = new SaveTextBeforeRemove(pane);
-        pane.addCaretListener(this);
+        this.saveBeforeRemove = saveBeforeRemove;
         pane.getStyledDocument().addDocumentListener(this);
     }
 
     @Override
-    public void stopListening() {
-        addCurrentRecording();
+    public void undoingAction() {
         listen = false;
     }
 
     @Override
-    public void resumeListening() {
+    public void finishedUndoingAction() {
         listen = true;
     }
 
-    @Override
-    public void caretUpdate(CaretEvent ce) {
-        if(ce.getDot() != currentCaretPosition + 1) {            
-            addCurrentRecording();
-            recordingStartPos = ce.getDot();
-        }
-        currentCaretPosition = ce.getDot();
-    }
 
     @Override
-    public void insertUpdate(DocumentEvent de) {
-        if(!listen) return;
+    public void insertUpdate(DocumentEvent de) {       
+        if(!listen) return; 
         try {
-            String text = pane.getStyledDocument().getText(de.getOffset(), de.getLength());
-            if(de.getOffset() == currentCaretPosition && de.getLength() == 1 &&
-                    !text.equals("\n")) {
-                System.out.println(text);
-                recordingString += text;            
-            } else {
-                addCurrentRecording();
-                actionList.add(new TextAddedAction(
-                        new TextDelta(de.getOffset(), text, currentCaretPosition),
-                        pane.getStyledDocument()));
-            }
-        } catch(BadLocationException ex) {
-            ex.printStackTrace();
+            String added = pane.getStyledDocument().getText(de.getOffset(), de.getLength());
+            System.out.println("adding action " + added + " at: " + de.getOffset());
+            TextAddedAction action = new TextAddedAction(
+                    new TextDelta(de.getOffset(), added),
+                    pane.getStyledDocument());
+            actionList.add(action);
+        } catch (BadLocationException ex) {
+            Logger.getLogger(TextChangedActionAdder.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
     public void removeUpdate(DocumentEvent de) {
-        if(!listen) return;     
-        addCurrentRecording();
-        String text = saveBeforeRemove.getRemoveString(de.getOffset(), de.getLength());
-
-        actionList.add(new TextRemovedAction(
-                new TextDelta(de.getOffset(), text, currentCaretPosition),
-                pane.getStyledDocument()));
+        if(!listen) return;    
+        TextRemovedAction action = new TextRemovedAction(
+                new TextDelta(de.getOffset(), saveBeforeRemove.getRemoveString(de.getOffset(), de.getLength())),
+                pane.getStyledDocument());
+        actionList.add(action);              
     }
 
     @Override
     public void changedUpdate(DocumentEvent de) {
     }
-
-    private void addCurrentRecording() {
-        if(recordingString.length() != 0) {
-            TextDelta td = new TextDelta(
-                    recordingStartPos, recordingString, currentCaretPosition);
-            actionList.add(new TextAddedAction(td, pane.getStyledDocument()));
-            recordingString = "";
-        }
-    }
-    
 }

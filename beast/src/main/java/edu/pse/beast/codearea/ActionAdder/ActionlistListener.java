@@ -9,7 +9,7 @@ package edu.pse.beast.codearea.ActionAdder;
  *
  * @author Holger-Desktop
  */
-public interface ActionAdder {
-    public void stopListening();
-    public void resumeListening();
+public interface ActionlistListener {
+    public void undoingAction();
+    public void finishedUndoingAction();
 }

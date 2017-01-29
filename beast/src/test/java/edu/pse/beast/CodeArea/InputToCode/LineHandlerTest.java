@@ -7,6 +7,7 @@ package edu.pse.beast.CodeArea.InputToCode;
 
 import edu.pse.beast.codearea.InputToCode.LineHandler;
 import edu.pse.beast.codearea.InputToCode.NewlineInserter.StandardNewlineInserter;
+import java.util.ArrayList;
 import javax.swing.JTextPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.text.BadLocationException;
@@ -129,5 +130,19 @@ public class LineHandlerTest {
         pane.getStyledDocument().insertString(0, insert, null);
         int closest = handler.getClosestLineBeginning(7);
         assertEquals(2, closest);
+    }
+
+    @Test
+    public void testGetLineNumber() throws BadLocationException {
+        String insert = "asdasd\nasdasd\nasd\n\nasd\n\n\nasdasd";
+        pane.getStyledDocument().insertString(0, insert, null);
+        int line = handler.transformToLineNumber(6);
+        assertEquals(0, line);
+        line = handler.transformToLineNumber(7);
+        assertEquals(1, line);
+        line = handler.transformToLineNumber(14);
+        assertEquals(2, line);    
+        line = handler.transformToLineNumber(18);
+        assertEquals(3, line);   
     }
 }

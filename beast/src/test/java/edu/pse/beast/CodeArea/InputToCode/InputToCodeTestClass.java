@@ -5,11 +5,13 @@
  */
 package edu.pse.beast.CodeArea.InputToCode;
 
+import edu.pse.beast.codearea.Actionlist.Actionlist;
 import edu.pse.beast.codearea.InputToCode.CodeInputHandler;
 import edu.pse.beast.codearea.InputToCode.OpenCloseCharList;
 import edu.pse.beast.codearea.InputToCode.ShortcutHandler;
 import edu.pse.beast.codearea.InputToCode.UserInputHandler;
 import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
+import edu.pse.beast.codearea.SaveTextBeforeRemove;
 import java.awt.EventQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,7 +33,8 @@ public class InputToCodeTestClass {
             JTextPaneTestFrame frame = new JTextPaneTestFrame();
             OpenCloseCharList occL = new OpenCloseCharList();
             frame.getTextPane().getStyledDocument().insertString(0, "locked", null);
-            UserInsertToCode insertToCode = new UserInsertToCode(frame.getTextPane(), occL);
+            UserInsertToCode insertToCode = new UserInsertToCode(frame.getTextPane(), occL, 
+                    new SaveTextBeforeRemove(frame.getTextPane(), new Actionlist()));
             
             insertToCode.lockLine(0);
             UserInputHandler inputHandler = new UserInputHandler(frame.getTextPane(),

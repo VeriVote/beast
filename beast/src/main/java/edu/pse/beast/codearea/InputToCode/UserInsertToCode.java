@@ -38,12 +38,15 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
     private SaveTextBeforeRemove saveBeforeRemove;
     private StoppedTypingContinuouslyMessager stoppedTypingContMsger;
     private boolean dontTypeClosingChar;
+    private LockedLinesDisplay lockedLinesDisplay;
     
-    public UserInsertToCode(JTextPane pane, OpenCloseCharList openCloseCharList) {
+    public UserInsertToCode(JTextPane pane, OpenCloseCharList openCloseCharList,
+            SaveTextBeforeRemove saveBeforeRemove) {
         this.pane = pane;
         this.pane.addCaretListener(this);
         this.styledDoc = pane.getStyledDocument(); 
-        this.openCloseCharList = openCloseCharList;       
+        this.openCloseCharList = openCloseCharList; 
+        this.saveBeforeRemove = saveBeforeRemove;
         setupObjects();
     }
 
@@ -95,11 +98,11 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
         stoppedTypingContMsger.addListener(this);
         this.lineHandler = new LineHandler(this.pane);
         this.tabInserter = new TabInserter(this.pane, lineHandler);
-        this.saveBeforeRemove = new SaveTextBeforeRemove(pane);
         this.lockedLines = new LockedLinesHandler(styledDoc, lineHandler, saveBeforeRemove);
         this.lineBeginningTabsHandler = new CurlyBracesLineBeginningTabHandler(pane, lineHandler);
         this.newlineInserterChooser = new NewlineInserterChooser(pane, lockedLines);
-        this.currentInserter = this.newlineInserterChooser.getNewlineInserter();          
+        this.currentInserter = this.newlineInserterChooser.getNewlineInserter();       
+        this.lockedLinesDisplay = new LockedLinesDisplay(pane, lineHandler, lockedLines);
     }
 
     void moveToEndOfCurrentLine() {
@@ -122,7 +125,7 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
                 }
             }
         } catch (BadLocationException ex) {
-            Logger.getLogger(UserInsertToCode.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
             
         try {
@@ -158,17 +161,26 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
     }
 
     private boolean wouldChangedLocked() {
-        int line = lineHandler.transformToLineNumber(currentCaretPosition);
-        if(lockedLines.isLineLocked(line)) return true;
-        ArrayList<Integer> lines = lineHandler.getLinesBetween(pane.getSelectionStart(), pane.getSelectionEnd());
-        for(int i : lines) {
-            if(lockedLines.isLineLocked(i)) return true;
+        try {
+            int line = lineHandler.transformToLineNumber(currentCaretPosition);
+            if(lockedLines.isLineLocked(line)) return true;
+            ArrayList<Integer> lines = lineHandler.getLinesBetween(pane.getSelectionStart(), pane.getSelectionEnd());
+            for(int i : lines) {
+                if(lockedLines.isLineLocked(i)) return true;
+            }
+            return false;
+        } catch (BadLocationException ex) {
+            Logger.getLogger(UserInsertToCode.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
 
     @Override
-    public void StoppedTypingContinuously() {
+    public void StoppedTypingContinuously(int newPos) {
         dontTypeClosingChar = false;
+    }
+
+    public OpenCloseCharList getOccList() {
+        return this.openCloseCharList;
     }
 }

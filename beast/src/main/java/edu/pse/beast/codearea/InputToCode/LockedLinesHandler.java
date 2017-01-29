@@ -25,6 +25,7 @@ public class LockedLinesHandler implements DocumentListener {
     private LineHandler lineHandler;
     private StyledDocument doc;
     private SaveTextBeforeRemove saveBeforeRemove;
+    private ArrayList<LockedLinesListener> listeners = new ArrayList<>();
     
     public LockedLinesHandler(StyledDocument doc,
             LineHandler lineHandler,
@@ -37,10 +38,18 @@ public class LockedLinesHandler implements DocumentListener {
 
     public void lockLine(int line) {
         lockedLines.add(line);
+        for(LockedLinesListener l : listeners) {
+            l.lockedLine(line);
+        }
+        System.out.println(toString());
     }
     
     public void unlockLine(int line) {
         lockedLines.remove(line);
+        for(LockedLinesListener l : listeners) {
+            l.unlockedLine(line);
+        }
+        System.out.println(toString());
     }
     
     public boolean isLineLocked(int line) {
@@ -57,7 +66,19 @@ public class LockedLinesHandler implements DocumentListener {
                     amtNewline++;
                 }
             }
-            lockedLines.addIfBigger(lineHandler.transformToLineNumber(de.getOffset()) - 1, amtNewline);
+            int firstLineAffected = lineHandler.transformToLineNumber(de.getOffset()) - 1;
+            lockedLines.addIfBigger(firstLineAffected, amtNewline, (prevNum, newNum) -> {
+                for(LockedLinesListener l : listeners) {
+                    l.unlockedLine(prevNum);
+                }
+            });
+            
+            for(int i = 0; i < lockedLines.size(); ++i) {
+                for(LockedLinesListener l : listeners) {
+                    l.lockedLine(lockedLines.get(i));
+                }
+            }
+            
         } catch (BadLocationException ex) {
             Logger.getLogger(LockedLinesHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -66,17 +87,32 @@ public class LockedLinesHandler implements DocumentListener {
     
     @Override
     public void removeUpdate(DocumentEvent de) {
-            String removed = saveBeforeRemove.getRemoveString(de.getOffset(), de.getLength());
-            
-            int amtNewline = 0;
-            for(int i = 0; i < removed.length(); ++i) {
-                if(removed.charAt(i) == '\n') {
-                    amtNewline++;
-                }
+      
+        String removed = saveBeforeRemove.getRemoveString(de.getOffset(), de.getLength());
+
+        int amtNewline = 0;
+        for(int i = 0; i < removed.length(); ++i) {
+            if(removed.charAt(i) == '\n') {
+                amtNewline++;
             }
-            lockedLines.subtractIfBigger(lineHandler.transformToLineNumber(de.getOffset()) - 1, amtNewline);
-            System.out.println(toString());
-        
+        }
+        int firstLineAffected = lineHandler.transformToLineNumber(de.getOffset() + de.getLength(), saveBeforeRemove.getPrevText());
+
+        lockedLines.subtractIfBigger(
+                firstLineAffected - 1,
+                amtNewline,
+                (prevNum, newNum) -> {
+            for(LockedLinesListener l : listeners) {
+                l.unlockedLine(prevNum);
+            }
+        });
+
+        for(int i = 0; i < lockedLines.size(); ++i) {
+            for(LockedLinesListener l : listeners) {
+                l.lockedLine(lockedLines.get(i));
+            }
+        }
+        System.out.println(toString());
     }
 
     @Override
@@ -89,5 +125,9 @@ public class LockedLinesHandler implements DocumentListener {
             s += lockedLines.get(i) + ", ";
         }
         return s;
+    }
+    
+    public void addLockedLinesListener(LockedLinesListener l) {
+        listeners.add(l);
     }
 }

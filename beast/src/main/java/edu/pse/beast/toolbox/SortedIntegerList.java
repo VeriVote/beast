@@ -130,12 +130,13 @@ public class SortedIntegerList {
      * @param subtract
      *            number to be substracted from all elements > start
      */
-    public void subtractIfBigger(int start, int subtract) {
+    public void subtractIfBigger(int start, int subtract, SortedIntegerListCalleeFunction func) {
         int i = 0;
         while (i < container.size() && container.get(i) <= start) {
             ++i;
         }
         for (; i < container.size(); ++i) {
+            if(func != null) func.changedNumber(container.get(i), container.get(i) - subtract);
             container.set(i, container.get(i) - subtract);
         }
     }
@@ -148,12 +149,13 @@ public class SortedIntegerList {
      * @param add
      *            number to be substracted from all elements > start
      */
-    public void addIfBigger(int start, int add) {
+    public void addIfBigger(int start, int add, SortedIntegerListCalleeFunction func) {
         int i = 0;
         while (i < container.size() && container.get(i) <= start) {
             ++i;
         }
         for (; i < container.size(); ++i) {
+            if(func != null) func.changedNumber(container.get(i), container.get(i) + add);            
             container.set(i, container.get(i) + add);
         }
     }

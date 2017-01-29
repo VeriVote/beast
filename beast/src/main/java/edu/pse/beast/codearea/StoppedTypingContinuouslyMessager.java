@@ -34,11 +34,12 @@ public class StoppedTypingContinuouslyMessager implements KeyListener, CaretList
 
     @Override
     public void keyTyped(KeyEvent ke) {
-        if( ke.getKeyCode() == ke.VK_ENTER ||
-            ke.getKeyCode() == ke.VK_DELETE ||
+        if( ke.getKeyCode() == ke.VK_ENTER ||            
             ke.getKeyCode() == ke.VK_RIGHT) {
-            msgAllListener();
-        }
+            msgAllListener(pane.getCaretPosition() + 1);
+        } else if(ke.getKeyCode() == ke.VK_DELETE) {
+            msgAllListener(pane.getCaretPosition());
+        } 
     }
 
     @Override
@@ -48,25 +49,21 @@ public class StoppedTypingContinuouslyMessager implements KeyListener, CaretList
 
     @Override
     public void keyReleased(KeyEvent ke) {
-        if( ke.getKeyCode() == ke.VK_ENTER ||
-            ke.getKeyCode() == ke.VK_DELETE ||
-            ke.getKeyCode() == ke.VK_RIGHT) {
-            msgAllListener();
-        }
+        
     }
 
     @Override
     public void caretUpdate(CaretEvent ce) {
         if(ce.getDot() != currentCaretPos + 1 &&
                 ce.getDot() != currentCaretPos) {
-            msgAllListener();
+            msgAllListener(ce.getDot());
         }
         currentCaretPos = ce.getDot();
     }
 
-    private void msgAllListener() {
-        System.out.println("msgAllListener()");
+    private void msgAllListener(int newCaretPos) {
+        System.out.println("stopped cont typing, newpos: " + newCaretPos);
         for(StoppedTypingContinuouslyListener l : listener)
-            l.StoppedTypingContinuously();
+            l.StoppedTypingContinuously(newCaretPos);
     }
 }

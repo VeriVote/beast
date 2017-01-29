@@ -6,9 +6,11 @@
 package edu.pse.beast.celectiondescriptioneditor;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeAreaBuilder;
 import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
+import javax.swing.text.BadLocationException;
 
 
 /**
@@ -20,7 +22,9 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     private ElectionDescription currentDescription;
     private CCodeEditorGUI gui;
     
-    public CElectionDescriptionEditor(CElectionCodeArea codeArea, CCodeEditorGUI gui) {
+    public CElectionDescriptionEditor(
+            CElectionCodeArea codeArea,
+            CCodeEditorGUI gui) {
         this.codeArea = codeArea;
         this.gui = gui;
     }
@@ -50,18 +54,11 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         
     }
 
-    public void letUserEditElectionDescription(ElectionDescription description) {
-        this.currentDescription = description;
+    public void letUserEditElectionDescription(ElectionDescription description) throws BadLocationException {
         codeArea.letUserEditCode(description.getCode());
+        codeArea.lockLine(description.getVotingDeclLine());       
+        codeArea.lockLine(description.getCode().size() - 1);
+        this.currentDescription = description;        
     }
 
-    @Override
-    public void stopReacting() {
-
-    }
-
-    @Override
-    public void resumeReacting() {
-
-    }
 }

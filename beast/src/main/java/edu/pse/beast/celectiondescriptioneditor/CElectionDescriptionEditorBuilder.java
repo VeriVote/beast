@@ -7,6 +7,7 @@ package edu.pse.beast.celectiondescriptioneditor;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeAreaBuilder;
+import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
 import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
 import edu.pse.beast.celectiondescriptioneditor.GUI.CEditorWindowStarter;
 import edu.pse.beast.celectiondescriptioneditor.UserActions.ChangeElectionTypeUserAction;
@@ -17,13 +18,18 @@ import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveAsElectionUserAc
 import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveBeforeChangeHandler;
 import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveElectionUserAction;
 import edu.pse.beast.celectiondescriptioneditor.UserActions.StaticCheckUserAction;
+import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ActionIdAndListener;
+import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.ImageResourceProvider;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import edu.pse.beast.toolbox.UserAction;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.text.BadLocationException;
 
 /**
  *
@@ -86,7 +92,20 @@ public class CElectionDescriptionEditorBuilder {
                         gui);
         
         starter.start();
+        
+        ElectionTemplateHandler templateHandler = new ElectionTemplateHandler();
 
+        try {
+            editor.letUserEditElectionDescription(new CCodeHelper().generateElectionDescription(
+                    templateHandler.getInputIds()[0],
+                    templateHandler.getInputIds()[0],
+                    "new_election",
+                    templateHandler,
+                    objRefsForBuilder.getStringIF().getCElectionEditorStringResProvider().getElectionStringRes()));
+        } catch (BadLocationException ex) {
+            Logger.getLogger(CElectionDescriptionEditorBuilder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         return editor;
     }
     
@@ -100,7 +119,7 @@ public class CElectionDescriptionEditorBuilder {
         ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
         SaveBeforeChangeHandler saveBeforeChange = new SaveBeforeChangeHandler();
         
-        newAcc = createNewElectionUserAction(saveBeforeChange, editor);
+        newAcc = createNewElectionUserAction(saveBeforeChange, editor, objRefsForBuilder.getStringIF());
         save = createSaveElectionUserAction();
         saveAs = createSaveAsElectionUserAction();
         load = createLoadElectionUserAction();
@@ -132,6 +151,7 @@ public class CElectionDescriptionEditorBuilder {
         created.add(editorList);
         created.add(codeList);
         
+        
         return created;        
     }
     //file
@@ -139,8 +159,10 @@ public class CElectionDescriptionEditorBuilder {
         return new SaveBeforeChangeHandler();
     }
     private NewElectionUserAction createNewElectionUserAction(
-            SaveBeforeChangeHandler saveHandler, CElectionDescriptionEditor editor) {
-        return new NewElectionUserAction(saveHandler, editor);
+            SaveBeforeChangeHandler saveHandler,
+            CElectionDescriptionEditor editor,
+            StringLoaderInterface stringIf) {
+        return new NewElectionUserAction(saveHandler, editor, stringIf);
     } 
     private SaveElectionUserAction createSaveElectionUserAction() {
         return new SaveElectionUserAction();

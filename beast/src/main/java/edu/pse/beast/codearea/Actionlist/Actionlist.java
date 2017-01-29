@@ -5,8 +5,8 @@
  */
 package edu.pse.beast.codearea.Actionlist;
 
-import edu.pse.beast.codearea.ActionAdder.ActionAdder;
 import java.util.ArrayList;
+import edu.pse.beast.codearea.ActionAdder.ActionlistListener;
 
 /**
  *
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class Actionlist {
     private ArrayList<Action> lastPerformed = new ArrayList<>();
     private ArrayList<Action> lastUndone = new ArrayList<>();
-    private ArrayList<ActionAdder> actionAdderList = new  ArrayList<>();
+    private ArrayList<ActionlistListener> listener = new  ArrayList<>();
     
     public Actionlist() {        
     }
@@ -26,27 +26,27 @@ public class Actionlist {
     }
     
     public void undoLast() {  
-        msgAllAdderStop();        
+        msgAllListenerStarted();        
         if(lastPerformed.isEmpty()) return;
         Action latestAcc = lastPerformed.get(lastPerformed.size() - 1);
         lastPerformed.remove(lastPerformed.size() - 1);
         latestAcc.undo();
         lastUndone.add(latestAcc);
-        msgAllAdderRes();
+        msgAllListenerEnded();
     }
     
     public void redoLast() {
-        msgAllAdderStop();        
+        msgAllListenerStarted();        
         if(lastUndone.isEmpty()) return;
         Action latestUndoneAcc = lastUndone.get(lastUndone.size() - 1);
         lastUndone.remove(lastUndone.size() - 1);
         latestUndoneAcc.redo();
         lastPerformed.add(latestUndoneAcc);
-        msgAllAdderRes();
+        msgAllListenerEnded();
     }
     
-    public void addActionAdder(ActionAdder adder) {
-        this.actionAdderList.add(adder);
+    public void addActionAdder(ActionlistListener adder) {
+        this.listener.add(adder);
     }
     
     public void clear() {
@@ -54,13 +54,13 @@ public class Actionlist {
         lastUndone.clear();
     }
     
-    private void msgAllAdderStop() {
-        for(ActionAdder ad : actionAdderList)
-            ad.stopListening();
+    private void msgAllListenerStarted() {
+        for(ActionlistListener ad : listener)
+            ad.undoingAction();
     }
     
-    private void msgAllAdderRes() {
-        for(ActionAdder ad : actionAdderList)
-            ad.resumeListening();
+    private void msgAllListenerEnded() {
+        for(ActionlistListener ad : listener)
+            ad.finishedUndoingAction();
     }
 }

@@ -10,6 +10,7 @@ import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.
 import edu.pse.beast.codearea.CodeArea;
 import java.util.List;
 import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
 
 /**
  *
@@ -30,8 +31,14 @@ public class CElectionCodeArea extends CodeArea {
         
     }
 
-    public void letUserEditCode(List<String> code) {
-        
+    public void letUserEditCode(List<String> code) throws BadLocationException {
+        String s = "";
+        for(String c : code) {
+            s += c + "\n";
+        }
+        pane.getStyledDocument().remove(0, pane.getStyledDocument().getLength());
+        pane.getStyledDocument().insertString(0, s, null);
+        actionList.clear();
     }
 
   
