@@ -24,7 +24,6 @@ import edu.pse.beast.toolbox.ErrorLogger;
 public class PropertyChecker implements ResultCheckerCommunicator {
     private FactoryController factoryController;
     private final String checkerID;
-    private final int maxTries = 5;
 
     /**
      * 
