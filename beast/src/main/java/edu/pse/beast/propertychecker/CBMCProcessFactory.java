@@ -1,6 +1,7 @@
 package edu.pse.beast.propertychecker;
 
 import java.io.File;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +10,7 @@ import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescripti
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
 
 public class CBMCProcessFactory extends CheckerFactory {
@@ -108,7 +110,7 @@ public class CBMCProcessFactory extends CheckerFactory {
         List<String> split = new ArrayList<String>(Arrays.asList(generated.split("\n")));
         
         
-        File file = new File(new File(pathToTempFolder), CheckerFactoryFactory.newUniqueName() + ".c");
+        File file = new File(new File(pathToTempFolder), FileLoader.getNewUniqueName(pathToTempFolder) + ".c");
         
         //File file = new File(pathToTempFolder + CheckerFactoryFactory.newUniqueName() + ".c");
         

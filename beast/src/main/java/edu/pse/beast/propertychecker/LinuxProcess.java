@@ -31,6 +31,9 @@ public class LinuxProcess extends CBMCProcess {
         
 
         ProcessBuilder prossBuild = new ProcessBuilder("cbmc", toCheck.getAbsolutePath(), arguments);
+        
+        System.out.println(String.join(" ", prossBuild.command()));
+        
         try {
             // save the new process in this var
             startedProcess = prossBuild.start();

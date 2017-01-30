@@ -6,10 +6,15 @@
 package edu.pse.beast.toolbox;
 
 import java.awt.image.BufferedImage;
+
+
 import java.io.*;
+import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
+
 
 /**
  *
@@ -69,5 +74,31 @@ public final class FileLoader {
     
     public static String getFileFromRes(String fileName) {
         return new File("./src/main/resources" + fileName).getAbsolutePath();
-    }    
+    }
+    
+    public synchronized static String getNewUniqueName(String pathToDir) {
+		ArrayList<String> usedNames = new ArrayList<String>();
+
+		File folder = new File(pathToDir);
+		File[] listOfFiles = folder.listFiles();
+
+		for (int i = 0; i < listOfFiles.length; i++) {
+			if (listOfFiles[i].isFile()) {
+				usedNames.add(listOfFiles[i].getName());
+			}
+		}
+		
+		int tries = 0;
+		String newName = getRandomName(10);
+		while (usedNames.contains(newName)) {
+			newName = getRandomName(10);
+		}
+
+		return newName;
+	}
+    
+    private static String getRandomName(int wordSize) {
+    	SecureRandom random = new SecureRandom();
+    	return new java.math.BigInteger(wordSize, random).toString(32);    	
+    }
 }

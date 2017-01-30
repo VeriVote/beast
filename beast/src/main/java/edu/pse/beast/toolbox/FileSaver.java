@@ -44,7 +44,7 @@ public class FileSaver {
     }
     
     public static void deleteFromRes(String toDelete) {
-        File file = new File("/Beast/src/main/resources/c_tempfiles/" + toDelete);
+        File file = new File("./src/main/resources/c_tempfiles/" + toDelete);
         try {
             Files.delete(file.toPath());
         } catch (IOException e) {
