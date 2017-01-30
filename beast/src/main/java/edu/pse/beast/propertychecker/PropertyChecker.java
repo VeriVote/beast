@@ -39,7 +39,7 @@ public class PropertyChecker implements ResultCheckerCommunicator {
     public List<ResultInterface> checkPropertiesForDescription(ElectionDescriptionSource elecDescr,
             PostAndPrePropertiesDescriptionSource propDescrSrc, ParameterSource params) {
 
-        this.factoryController = new FactoryController(elecDescr, propDescrSrc, params, checkerID, maxTries);
+        this.factoryController = new FactoryController(elecDescr, propDescrSrc, params, checkerID, params.getParameter().getProcesses());
         return factoryController.getResults();
     }
 

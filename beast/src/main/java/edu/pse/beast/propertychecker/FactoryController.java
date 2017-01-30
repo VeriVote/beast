@@ -60,8 +60,7 @@ public class FactoryController implements Runnable {
 		this.results = CheckerFactoryFactory.getMatchingResult(checkerID,
 				postAndPrePropDescrSrc.getPostAndPrePropertiesDescriptions().size());
 
-		this.concurrentChecker = 1; // TODO ask options for the amount of
-									// concurrent checkers
+		this.concurrentChecker = concurrentChecker;
 
 		// start the factorycontroller
 		new Thread(this).start();

@@ -38,7 +38,7 @@ public abstract class CheckerFactory implements Runnable {
 
     public void run() {
 
-        String advanced = paramSrc.getParameter().getAdvanced();
+        String advanced = paramSrc.getParameter().getArgument();
 
         outerLoop: for (Iterator<Integer> voteIterator = paramSrc.getParameter().getAmountVoters()
                 .iterator(); voteIterator.hasNext();) {
