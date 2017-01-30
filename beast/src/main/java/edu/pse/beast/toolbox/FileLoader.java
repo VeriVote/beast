@@ -88,10 +88,9 @@ public final class FileLoader {
 			}
 		}
 		
-		int tries = 0;
-		String newName = getRandomName(10);
+		String newName = getRandomName(100);
 		while (usedNames.contains(newName)) {
-			newName = getRandomName(10);
+			newName = getRandomName(100);
 		}
 
 		return newName;

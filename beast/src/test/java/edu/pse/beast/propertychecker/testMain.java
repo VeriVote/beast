@@ -83,7 +83,7 @@ public class testMain {
         List<Integer> amountSeats = new ArrayList<Integer>();
         amountSeats.add(5);
         
-        ElectionCheckParameter ecp = new ElectionCheckParameter(amountVoters, amountCandidates, amountSeats, new TimeOut(TimeUnit.SECONDS, 20), "--unwind 5");
+        ElectionCheckParameter ecp = new ElectionCheckParameter(amountVoters, amountCandidates, amountSeats, new TimeOut(TimeUnit.SECONDS, 20), "");
         
         implParameterSource parmSrc = new implParameterSource(ecp);
         

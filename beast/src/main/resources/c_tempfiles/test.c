@@ -65,7 +65,7 @@ void anonymity(unsigned int votes1[V], unsigned int votes2[V],
     unsigned int elect1 = voting(votes1);
     unsigned int elect2 = voting(votes2);
 
-    assert (elect1 != elect2);
+    assert (elect1 == elect2);
 }
 
 int main(int argc, char *argv[]) {
