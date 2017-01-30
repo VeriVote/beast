@@ -5,7 +5,6 @@
  */
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.booleanExpAST.BooleanExpressionNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
@@ -13,7 +12,6 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
@@ -35,6 +33,7 @@ public class CBMCCodeGenerator {
     private final ElectionDescription electionDescription;
     private final PostAndPrePropertiesDescription postAndPrePropertiesDescription;
     private FormalPropertySyntaxTreeToAstTranslator translator = new FormalPropertySyntaxTreeToAstTranslator();
+    private int numberOfTimesVoted; // this number should be the number of rounds of votes the Propertys compare.
 
     public CBMCCodeGenerator(ElectionDescription electionDescription, PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
         this.electionDescription = electionDescription;
@@ -54,21 +53,21 @@ public class CBMCCodeGenerator {
 
         addMainMethod();
     }
-    
+
     private BooleanExpListNode generateAST(String code) {
         FormalPropertyDescriptionLexer l = new FormalPropertyDescriptionLexer(new ANTLRInputStream(code));
         CommonTokenStream ts = new CommonTokenStream(l);
         FormalPropertyDescriptionParser p = new FormalPropertyDescriptionParser(ts);
-        
+
         BooleanExpScope declaredVars = new BooleanExpScope();
-        
+
         postAndPrePropertiesDescription.getSymbolicVariableList().forEach((v) -> {
             declaredVars.addTypeForId(v.getId(), v.getInternalTypeContainer());
         });
-        
-        return  translator.generateFromSyntaxTree(
+
+        return translator.generateFromSyntaxTree(
                 p.booleanExpList(),
-                electionDescription.getInputType().getType(), 
+                electionDescription.getInputType().getType(),
                 electionDescription.getOutputType().getType(),
                 declaredVars);
     }
@@ -93,9 +92,19 @@ public class CBMCCodeGenerator {
      */
     private void addMainMethod() {
         code.add("int main(int argc, char *argv[]) {");
-
+        // i is the normal loopvariable used by every loop
+        code.add("unsigned int i;");
         // first the Variables have to be Initialized
         addSymbVarInitialisation();
+
+        //generating the pre and post AbstractSyntaxTrees
+        BooleanExpListNode preAST = generateAST(postAndPrePropertiesDescription.getPrePropertiesDescription().getCode());
+        BooleanExpListNode postAST = generateAST(postAndPrePropertiesDescription.getPostPropertiesDescription().getCode());
+
+        initializeNumberOfTimesVoted(preAST, postAST);
+
+        addVotesArrayInitialisation();
+
         // the the PreProperties must be definied
         addPreProperties();
         // then the actual voting takes place
@@ -190,6 +199,30 @@ public class CBMCCodeGenerator {
 
     private void addVotingMethod() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void initializeNumberOfTimesVoted(BooleanExpListNode preAST, BooleanExpListNode postAST) {
+        numberOfTimesVoted = (preAST.getMaxVoteLevel() > postAST.getMaxVoteLevel())
+                ? preAST.getMaxVoteLevel() : postAST.getMaxVoteLevel();
+        numberOfTimesVoted = (preAST.getHighestElect() > numberOfTimesVoted)
+                ? preAST.getHighestElect() : numberOfTimesVoted;
+        numberOfTimesVoted = (postAST.getHighestElect() > numberOfTimesVoted)
+                ? postAST.getHighestElect() : numberOfTimesVoted;
+    }
+
+    private void addVotesArrayInitialisation() {
+
+        // adds a new variable votesi[V] that represents the votes of each round of votes i
+        // also initializes the arrays with noned_uint
+        for (int i = 1; i <= numberOfTimesVoted; i++) {
+            code.add("unsigned int votes" + i + "[V]");
+            code.add("for(unsigned int i = 0; i < V; ++i) {");
+            // tab here
+            code.add("votes" + i + "[i] = nondet_uint();");
+            // untab here
+            code.add("}");
+        }
+
     }
 
 }
