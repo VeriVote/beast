@@ -27,6 +27,6 @@ public class SingleValueSpinnerHandler implements ChangeListener{
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //TODO: Implement
+        setValue(getValue());
     }
 }

@@ -1,5 +1,6 @@
 package edu.pse.beast.parametereditor;
 
+import javax.swing.JSpinner;
 /**
  *
  * @author Jonas
@@ -353,4 +354,34 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
     private javax.swing.JSpinner voterMax;
     private javax.swing.JSpinner voterMin;
     // End of variables declaration//GEN-END:variables
+    protected JSpinner getVoterMin() {
+        return voterMin;
+    }
+    protected JSpinner getVoterMax() {
+        return voterMax;
+    }
+    protected JSpinner getCandMin() {
+        return candMin;
+    }
+    protected JSpinner getCandMax() {
+        return candMax;
+    }
+    protected JSpinner getSeatMin() {
+        return seatMin;
+    }
+    protected JSpinner getSeatMax() {
+        return seatMax;
+    }
+    protected JSpinner getTimeoutNum() {
+        return timeoutNum;
+    }
+    protected javax.swing.JComboBox<String> getTimeoutUnit() {
+        return timeoutUnit;
+    }
+    protected JSpinner getAmountProcessesSpinner() {
+        return amountProcessesSpinner;
+    }
+    protected AdvancedWindow getAdvancedWindow() {
+        return advWindow;
+    }
 }

@@ -14,6 +14,7 @@ import edu.pse.beast.highlevel.CheckListener;
 import edu.pse.beast.highlevel.MainNotifier;
 import edu.pse.beast.highlevel.ProjectSource;
 import java.util.ArrayList;
+import java.util.List;
 import java.awt.event.ActionListener;
 
 /**
@@ -26,13 +27,12 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
     private final PropertyList propertyList;
     private final ArrayList<CheckListener> checkListener = new ArrayList<>();
     private final ArrayList<ActionListener> closeListener = new ArrayList<>();
-    private final ArrayList<ActionListener> saveListener = new ArrayList<>();
     private MinMaxSpinValueHandler voterHandler;
     private MinMaxSpinValueHandler candHandler;
     private MinMaxSpinValueHandler seatHandler;
     private TimeoutValueHandler timeoutHandler;
     private SingleValueSpinnerHandler processHandler;
-    //private ArgumentHandler argumentHandler;
+    private ArgumentHandler argumentHandler;
     
     public ParameterEditor(
             CElectionDescriptionEditor cElectionDescriptionEditor, 
@@ -41,19 +41,36 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
         this.propertyList = propertyList;
         windowStarter = new ParameterEditorWindowStarter();
         windowStarter.start();
+        ParameterEditorWindow win = windowStarter.getParameterEditorWindow();
+        voterHandler = new MinMaxSpinValueHandler(win.getVoterMin(), win.getVoterMax());
+        win.getVoterMin().addChangeListener(voterHandler);
+        win.getVoterMax().addChangeListener(voterHandler);
+        candHandler = new MinMaxSpinValueHandler(win.getCandMin(), win.getCandMax());
+        win.getCandMin().addChangeListener(candHandler);
+        win.getCandMax().addChangeListener(candHandler);
+        seatHandler = new MinMaxSpinValueHandler(win.getSeatMin(), win.getSeatMax());
+        win.getSeatMin().addChangeListener(seatHandler);
+        win.getSeatMax().addChangeListener(seatHandler);
+        timeoutHandler = new TimeoutValueHandler(win.getTimeoutNum(), win.getTimeoutUnit());
+        win.getTimeoutNum().addChangeListener(timeoutHandler);
+        //win.getTimeoutUnit().addActionListener(timeoutHandler); //TODO:Find solution to ActionListener/ChangeListener requirements
+        processHandler = new SingleValueSpinnerHandler(win.getAmountProcessesSpinner());
+        win.getAmountProcessesSpinner().addChangeListener(processHandler);
+        argumentHandler = new ArgumentHandler(win.getAdvancedWindow().getInputField(), win.getAdvancedWindow().getOkButton());
+        //win.getAdvancedWindow().getInputField().addActionListener(argumentHandler); //TODO:Find solution to ActionListener requirements
     }
     
     
     @Override
     public ElectionCheckParameter getParameter() {
-        Integer[] voter = voterHandler.getValues();
-        Integer[] cand = candHandler.getValues();
-        Integer[] seat = seatHandler.getValues();
+        List<Integer> voter = voterHandler.getValues();
+        List<Integer> cand = candHandler.getValues();
+        List<Integer> seat = seatHandler.getValues();
         TimeOut timeout = timeoutHandler.getTimeout();
         Integer processes = processHandler.getValue();
-        //String argument = ArgumentHandler.getArgument();
-        //TODO: Combine into Param
-        return null;
+        String argument = argumentHandler.getArgument();
+        ElectionCheckParameter param = new ElectionCheckParameter(voter, cand, seat, timeout, processes, argument);
+        return param;
     }
     public void startCheck() {
         //checkListener.forEach(); //TODO: implement
@@ -88,6 +105,11 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
 
     @Override
     public Project loadProject() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void saveProject(Project toBeSaved) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

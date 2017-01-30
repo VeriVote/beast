@@ -12,4 +12,6 @@ public interface ProjectSource {
      * @return Project
      */
     Project loadProject();
+    
+    void saveProject(Project toBeSaved);
 }

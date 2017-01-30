@@ -135,4 +135,10 @@ public class AdvancedWindow extends javax.swing.JFrame {
     private javax.swing.JTextField input;
     private javax.swing.JButton ok;
     // End of variables declaration//GEN-END:variables
+    protected javax.swing.JTextField getInputField() {
+        return input;
+    }
+    protected javax.swing.JButton getOkButton() {
+        return ok;
+    }
 }

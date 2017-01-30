@@ -3,6 +3,7 @@ package edu.pse.beast.parametereditor;
 import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,10 +17,10 @@ public class MinMaxSpinValueHandler implements ChangeListener{
         this.minSpinner = minSpinner;
         this.maxSpinner = maxSpinner;
     }
-    public Integer[] getValues() {
-        Integer[] result = new Integer[2];
-        result[0] = Integer.parseInt("" + minSpinner.getValue());
-        result[1] = Integer.parseInt("" + maxSpinner.getValue());
+    public ArrayList<Integer> getValues() {
+        ArrayList<Integer> result = new ArrayList<>();
+        result.add(Integer.parseInt("" + minSpinner.getValue()));
+        result.add(Integer.parseInt("" + maxSpinner.getValue()));
         return result;
     }
     public void setMinAndMax(Integer min, Integer max) {
@@ -33,6 +34,8 @@ public class MinMaxSpinValueHandler implements ChangeListener{
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //TODO: Implement
+        Integer min = Integer.parseInt("" + minSpinner.getValue());
+        Integer max = Integer.parseInt("" + maxSpinner.getValue());
+        setMinAndMax(min, max);
     }
 }

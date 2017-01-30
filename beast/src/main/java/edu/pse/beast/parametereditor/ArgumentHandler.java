@@ -9,7 +9,7 @@ import javax.swing.event.ChangeListener;
  *
  * @author Jonas
  */
-public class ArgumentHandler implements ChangeListener{
+public class ArgumentHandler implements ChangeListener {
     private final JTextField input;
     private final JButton ok;
     
@@ -26,6 +26,6 @@ public class ArgumentHandler implements ChangeListener{
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //TODO: Implement
+        setArgument(getArgument());
     }
 }
