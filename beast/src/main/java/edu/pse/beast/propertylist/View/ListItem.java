@@ -20,21 +20,19 @@ public class ListItem extends JPanel{
 	
 	private PropertyItem descr;
 	
-	protected ResultButton showResult;
-	protected JTextField name;
-	protected JCheckBox testStatus;
-	protected JButton changeButton;
-	protected JButton deleteButton;
+	protected ResultButton showResult = new ResultButton();
+	protected JTextField name = new JTextField();
+	protected JCheckBox testStatus = new JCheckBox();
+	protected JButton changeButton = new JButton();
+	protected JButton deleteButton = new JButton();
 	
 	public ListItem() {
-		showResult = new ResultButton();
-		name = new JTextField();
-		testStatus = new JCheckBox();
-		changeButton = new JButton();
-		deleteButton = new JButton();
-		
 		descr = new PropertyItem();
-		
+		init();
+	}
+	
+	public ListItem(PropertyItem descr) {
+		this.descr = descr;
 		init();
 	}
 	
@@ -46,6 +44,7 @@ public class ListItem extends JPanel{
 		name.setText(descr.getDescription().getName());
 		this.add(name);
 		testStatus.setText("Check");
+		testStatus.setSelected(descr.willBeTested());
 		this.add(testStatus);
 		changeButton.setPreferredSize(iconSize);
 		changeButton.setIcon(new ImageIcon(getClass().getResource("/images/other/wrench.png")));

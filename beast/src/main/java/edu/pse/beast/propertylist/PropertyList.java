@@ -7,6 +7,7 @@ package edu.pse.beast.propertylist;
 
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
@@ -20,11 +21,13 @@ import edu.pse.beast.propertychecker.Result;
  * @author Justin
  */
 
-public class PropertyList implements PostAndPrePropertiesDescriptionSource, ResultPresenter {
+public class PropertyList extends Observable implements PostAndPrePropertiesDescriptionSource, ResultPresenter {
 	
 	// private static PropertyList instance;
 	private ArrayList<PropertyItem> propDescs;
     private BooleanExpEditor booleanExpEditor;
+    private boolean hasChanged;
+    //private int changedIndex;
 	
 	/**
 	 * Constructor
@@ -32,8 +35,20 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource, Resu
 	 */
 	public PropertyList(BooleanExpEditor booleanExpEditor) {
 		this.booleanExpEditor = booleanExpEditor;
+		hasChanged = false;
 	}
-        	
+     
+	/*private void change(int changedIndex) {
+		this.changedIndex = changedIndex;
+	}*/
+	@Override
+	public boolean hasChanged() {
+		return hasChanged;
+	}
+	@Override
+	protected void clearChanged() {
+		hasChanged = false;
+	}
 	
 	/**
 	 * @param newList
@@ -48,7 +63,6 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource, Resu
 		PropertyItem editorProp = propDescs.get(indexOfName(currentlyInEditor));
 		
 		editorProp.setDescription(booleanExpEditor.getCurrentlyLoadedPostAndPreProp());
-		
 	}
 	
 	private int indexOfName(String name) {

@@ -5,6 +5,8 @@ import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -16,6 +18,8 @@ import javax.swing.JToolBar;
 
 import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
+import edu.pse.beast.propertylist.PropertyItem;
+import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.propertylist.PropertyListMenuBarHandler;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
@@ -24,7 +28,7 @@ import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 *
 * @author Justin
 */
-public class PropertyListWindow extends JFrame implements DisplaysStringsToUser {
+public class PropertyListWindow extends JFrame implements DisplaysStringsToUser, Observer {
 	
 	private JMenuBar menuBar;
 	private JMenu menuFile;
@@ -34,9 +38,12 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser 
 	private JPanel endpanel;
 	
 	private ObjectRefsForBuilder refs;
+	//private PropertyList list;
 	
 	private ArrayList<ListItem> items = new ArrayList<ListItem>();
 	private JButton addNewButton = new JButton();
+	
+	private NewPropertyWindow newPropWindow;
 
 	public PropertyListWindow() {
 		init();
@@ -58,8 +65,12 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser 
 	public void setList(ArrayList<ListItem> items) {
 		this.items = items;
 	}
+	/*public void setPropertyList(PropertyList list) {
+		this.list = list;
+	}*/
 
 	private void init() {
+		newPropWindow = new NewPropertyWindow();
 		
 		// setFrame(new JFrame());
 		this.setLayout(new BorderLayout());
@@ -102,14 +113,18 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser 
 
 		});
 		endpanel.add(addNewButton, BorderLayout.LINE_END);
-		
-		
-		
+	}
+	
+	private void updateItems() {
+		panel.repaint();
+		if (items.isEmpty()) items.add(new ListItem());
+		for (ListItem item : items) {
+			panel.add(item, BorderLayout.CENTER);
+		}
 	}
 	
 	private void addNewPropertyAction(ActionEvent e) {
-		new NewPropertyWindow();
-		
+		newPropWindow.toggleVisibility();
 	}
 
 	@Override
@@ -118,6 +133,16 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser 
 		menuEdit.setText(sli.getPropertyListStringResProvider().getMenuStringRes().getStringFromID("menuEdit"));
 		addNewButton.setText(sli.getPropertyListStringResProvider().getToolbarTipStringRes().getStringFromID("addNew"));
 		setTitle(sli.getPropertyListStringResProvider().getMenuStringRes().getStringFromID("title"));
+	}
+
+	@Override
+	public void update(Observable o, Object obj) {
+		ArrayList<PropertyItem> list = ((PropertyList)o).getDescr();
+		items = new ArrayList<ListItem>();
+		for (PropertyItem item : list) {
+			items.add(new ListItem(item));
+		}
+		updateItems();
 	}
 	
 	

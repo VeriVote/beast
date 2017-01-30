@@ -1,7 +1,10 @@
 package edu.pse.beast.propertylist.View;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
@@ -17,7 +20,7 @@ public class NewPropertyWindow extends JFrame {
 	
 	public NewPropertyWindow() {
 		init();
-		this.setVisible(true);
+		this.setVisible(false);
 	}
 	
 	private void init() {
@@ -29,20 +32,30 @@ public class NewPropertyWindow extends JFrame {
 		getContentPane().add(panel1, BorderLayout.NORTH);
 		
 		addNewDescription = new JButton();
+		addNewDescription.setIcon(new ImageIcon(getClass().getResource("/images/other/add.png")));
 		addNewDescription.setText("Neu");
+		addNewDescription.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+			}
+		});
 		
 		panel1.add(addNewDescription);
-		//this.dispose();
-		
 		
 		panel2 = new JPanel();
 		getContentPane().add(panel2, BorderLayout.CENTER);
 		
 		standardDescriptions = new JList();
 		addStandardDescription = new JButton();
+		addStandardDescription.setIcon(new ImageIcon(getClass().getResource("/images/other/add.png")));
 		addStandardDescription.setText("Standard waehlen");
+		
 		
 		panel2.add(standardDescriptions);
 		panel2.add(addStandardDescription);
+	}
+	
+	protected void toggleVisibility() {
+		this.setVisible(!this.isVisible());
 	}
 }

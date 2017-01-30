@@ -30,14 +30,12 @@ public class PropertyListBuilder {
 	private String[] menuHeadingIds = { "fileMenu", "editMenu" };
 	
 	public PropertyList createPropertyList(ObjectRefsForBuilder refs, BooleanExpEditor booleanExpEditor) {
+		instance = new PropertyList(booleanExpEditor);
 		PropertyListWindowStarter starter = new PropertyListWindowStarter();
 		
 		window = starter.getPropertyListWindow();
-		
 		window.updateStringRes(refs.getStringIF());
-		
-		instance = new PropertyList(booleanExpEditor);
-		
+
 		PropertyListMenuBarHandler menuBarHandler = new PropertyListMenuBarHandler(menuHeadingIds, 
 				createActionIdAndListenerListForMenuHandler(), 
 				refs.getStringIF().getPropertyListStringResProvider().getMenuStringRes(), window);

@@ -1,6 +1,6 @@
 package edu.pse.beast.propertylist.View;
 
-import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
+import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 
 /**
@@ -12,6 +12,10 @@ public class PropertyListWindowStarter implements Runnable {
 	private PropertyListWindow window = new PropertyListWindow();
 	
 	public PropertyListWindow getPropertyListWindow() {
+		return window;
+	}
+	public PropertyListWindow getPropertyListWindow(PropertyList list) {
+		//window.setPropertyList(list);
 		return window;
 	}
 
