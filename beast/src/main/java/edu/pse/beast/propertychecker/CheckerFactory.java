@@ -52,7 +52,7 @@ public abstract class CheckerFactory implements Runnable {
                     
                     System.out.println("should be called twice!");
                     
-                    if (!stopped) {    
+                    if (!stopped) {
                         startProcess(electionDescSrc, postAndPrepPropDesc, advanced, voters, candidates, seats, this);
                     }
                     
@@ -75,6 +75,8 @@ public abstract class CheckerFactory implements Runnable {
                         if (checkResult(lastResult)) {
                             finished = false;
                         } else {
+                        	//the check was wrong, so we have to stop the check now
+                        	finished = true;
                             result.setResult(lastResult);
                             break outerLoop;
                         }
