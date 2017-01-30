@@ -32,10 +32,13 @@ public class CBMCCodeGenerator {
     private final ArrayList<String> code;
     private final ElectionDescription electionDescription;
     private final PostAndPrePropertiesDescription postAndPrePropertiesDescription;
-    private FormalPropertySyntaxTreeToAstTranslator translator = new FormalPropertySyntaxTreeToAstTranslator();
+    private final FormalPropertySyntaxTreeToAstTranslator translator;
+    private final CBMCCodeGenerationVisitor visitor;
     private int numberOfTimesVoted; // this number should be the number of rounds of votes the Propertys compare.
 
     public CBMCCodeGenerator(ElectionDescription electionDescription, PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
+        this.visitor = new CBMCCodeGenerationVisitor();
+        this.translator = new FormalPropertySyntaxTreeToAstTranslator();
         this.electionDescription = electionDescription;
         this.postAndPrePropertiesDescription = postAndPrePropertiesDescription;
         code = new ArrayList<>();
@@ -49,27 +52,9 @@ public class CBMCCodeGenerator {
     private void generateCode() {
         addHeader();
 
-        code.addAll(electionDescription.getCode());
-
         addMainMethod();
-    }
 
-    private BooleanExpListNode generateAST(String code) {
-        FormalPropertyDescriptionLexer l = new FormalPropertyDescriptionLexer(new ANTLRInputStream(code));
-        CommonTokenStream ts = new CommonTokenStream(l);
-        FormalPropertyDescriptionParser p = new FormalPropertyDescriptionParser(ts);
-
-        BooleanExpScope declaredVars = new BooleanExpScope();
-
-        postAndPrePropertiesDescription.getSymbolicVariableList().forEach((v) -> {
-            declaredVars.addTypeForId(v.getId(), v.getInternalTypeContainer());
-        });
-
-        return translator.generateFromSyntaxTree(
-                p.booleanExpList(),
-                electionDescription.getInputType().getType(),
-                electionDescription.getOutputType().getType(),
-                declaredVars);
+        code.addAll(electionDescription.getCode());
     }
 
     // maybe add something that let's the user use imports
@@ -91,7 +76,10 @@ public class CBMCCodeGenerator {
      * the main method the votingmethod is called
      */
     private void addMainMethod() {
+
         code.add("int main(int argc, char *argv[]) {");
+        //tab here
+
         // i is the normal loopvariable used by every loop
         code.add("unsigned int i;");
         // first the Variables have to be Initialized
@@ -106,12 +94,13 @@ public class CBMCCodeGenerator {
         addVotesArrayInitialisation();
 
         // the the PreProperties must be definied
-        addPreProperties();
+        addPreProperties(preAST);
         // then the actual voting takes place
         addVotingCalls();
         // now the Post Properties can be checked
-        addPostProperties();
+        addPostProperties(postAST);
 
+        // untab here
         code.add("}");
     }
 
@@ -161,27 +150,20 @@ public class CBMCCodeGenerator {
     /**
      * this adds the Code of the PreProperties. It uses a Visitor it creates
      */
-    private void addPreProperties() {
-//        FormalPropertiesDescription prePropertiesDescription = this.postAndPrePropertiesDescription.getPrePropertiesDescription();
-//        BooleanExpListNode ast = prePropertiesDescription.getAST();
-//        CBMCCodeGenerationNodeVisitor preVisitor = new CBMCCodeGenerationNodeVisitor("assume");
-//        ast.getBooleanExpressions().forEach((node) -> {
-//            node.getVisited(preVisitor);
-//        });
-//        code.addAll(preVisitor.getCode());
+    private void addPreProperties(BooleanExpListNode preAST) {
+        
+        visitor.setToPrePropertyMode();
+        //for(BooleanExp n : preAST.getBooleanExpressions()){
+        //    
+        //}
+        
     }
 
     /**
      * this adds the Code of the PostProperties. It uses a Visitor it creates
      */
-    private void addPostProperties() {
-//        FormalPropertiesDescription postPropertiesDescription = this.postAndPrePropertiesDescription.getPostPropertiesDescription();
-//        BooleanExpListNode ast = postPropertiesDescription.getAST();
-//        CBMCCodeGenerationNodeVisitor postVisitor = new CBMCCodeGenerationNodeVisitor("assert");
-//        ast.getBooleanExpressions().forEach((node) -> {
-//            node.getVisited(postVisitor);
-//        });
-//        code.addAll(postVisitor.getCode());
+    private void addPostProperties(BooleanExpListNode postAST) {
+        visitor.setToPostPropertyMode();
     }
 
     /**
@@ -195,10 +177,6 @@ public class CBMCCodeGenerator {
 
     private void reportUnsupportedType(String id) {
         ErrorLogger.log("Der Typ der symbolischen Variable " + id + " wird nicht unterstützt");
-    }
-
-    private void addVotingMethod() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     private void initializeNumberOfTimesVoted(BooleanExpListNode preAST, BooleanExpListNode postAST) {
@@ -216,7 +194,7 @@ public class CBMCCodeGenerator {
         // also initializes the arrays with noned_uint
         for (int i = 1; i <= numberOfTimesVoted; i++) {
             code.add("unsigned int votes" + i + "[V]");
-            code.add("for(unsigned int i = 0; i < V; ++i) {");
+            code.add("for(i = 0; i < V; i++) {");
             // tab here
             code.add("votes" + i + "[i] = nondet_uint();");
             // untab here
@@ -225,4 +203,21 @@ public class CBMCCodeGenerator {
 
     }
 
+    private BooleanExpListNode generateAST(String code) {
+        FormalPropertyDescriptionLexer l = new FormalPropertyDescriptionLexer(new ANTLRInputStream(code));
+        CommonTokenStream ts = new CommonTokenStream(l);
+        FormalPropertyDescriptionParser p = new FormalPropertyDescriptionParser(ts);
+
+        BooleanExpScope declaredVars = new BooleanExpScope();
+
+        postAndPrePropertiesDescription.getSymbolicVariableList().forEach((v) -> {
+            declaredVars.addTypeForId(v.getId(), v.getInternalTypeContainer());
+        });
+
+        return translator.generateFromSyntaxTree(
+                p.booleanExpList(),
+                electionDescription.getInputType().getType(),
+                electionDescription.getOutputType().getType(),
+                declaredVars);
+    }
 }

@@ -7,6 +7,7 @@ package edu.pse.beast.propertychecker;
 
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpNodeVisitor;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanExpressionNode;
 import edu.pse.beast.datatypes.booleanExpAST.ComparisonNode;
 import edu.pse.beast.datatypes.booleanExpAST.ConstantExp;
 import edu.pse.beast.datatypes.booleanExpAST.ElectExp;
@@ -47,6 +48,39 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private int voteSumExpressionCounter;
     private Stack<String> variableNames;
 
+    public CBMCCodeGenerationVisitor(){
+        andNodeCounter = 0;
+        orNodeCounter = 0;
+        implicationNodeCounter = 0;
+        aquivalencyNodeCounter = 0;
+        forAllNodeCounter = 0;
+        thereExistsNodeCounter = 0;
+        notNodeCounter = 0;
+        comparisonNodeCounter = 0;
+        symbVarExpressionCounter = 0;
+        constExpCounter = 0;
+        electExpCounter = 0;
+        voteExpCounter = 0;
+        voteSumExpressionCounter = 0;
+    }
+    public void setToPrePropertyMode(){
+        assumeOrAssert = "assume";
+    }
+    public void setToPostPropertyMode(){
+         assumeOrAssert = "assert";
+    }
+    
+    public ArrayList<String> generate(ArrayList<BooleanExpressionNode> nodes) {
+        code = new ArrayList<>();
+        variableNames = new Stack<>();
+        
+        for(BooleanExpressionNode n : nodes) {
+            variableNames.clear();
+            n.getVisited(this);
+        }
+        
+        return code;
+    }
     
     @Override
     public void visitBooleanListNode(BooleanExpListNode node) {
