@@ -15,6 +15,7 @@ import edu.pse.beast.highlevel.MainNotifier;
 import edu.pse.beast.highlevel.ProjectSource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
 import java.awt.event.ActionListener;
 
 /**
@@ -73,10 +74,16 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
         return param;
     }
     public void startCheck() {
-        //checkListener.forEach(); //TODO: implement
+        Iterator<CheckListener> iterator = checkListener.iterator();
+        while(iterator.hasNext()) {
+            iterator.next().startCheck();
+        }
     }
     public void abortCheck() {
-        //checkListener.stopCheck(); //TODO: implement
+        Iterator<CheckListener> iterator = checkListener.iterator();
+        while(iterator.hasNext()) {
+            iterator.next().stopCheck();
+        }
     }
 
     @Override
