@@ -1,6 +1,8 @@
 package edu.pse.beast.propertylist.View;
 
+import edu.pse.beast.propertylist.PLControllerInterface;
 import edu.pse.beast.propertylist.PropertyList;
+import edu.pse.beast.propertylist.Model.PLModelInterface;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 
 /**
@@ -9,7 +11,11 @@ import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 */
 public class PropertyListWindowStarter implements Runnable {
 	
-	private PropertyListWindow window = new PropertyListWindow();
+	private PropertyListWindow window;
+	
+	public PropertyListWindowStarter(PLControllerInterface controller, PLModelInterface model) {
+		window = new PropertyListWindow(controller, model);
+	}
 	
 	public PropertyListWindow getPropertyListWindow() {
 		return window;

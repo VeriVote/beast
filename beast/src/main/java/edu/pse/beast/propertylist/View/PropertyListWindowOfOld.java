@@ -163,7 +163,7 @@ public class PropertyListWindowOfOld extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PropertyListWindow().setVisible(true);
+                //new PropertyListWindow().setVisible(true);
             }
         });
     }

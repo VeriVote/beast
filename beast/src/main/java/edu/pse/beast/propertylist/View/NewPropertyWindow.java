@@ -10,15 +10,23 @@ import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPanel;
 
+import edu.pse.beast.propertylist.PLControllerInterface;
+import edu.pse.beast.propertylist.Model.PLModelInterface;
+
 public class NewPropertyWindow extends JFrame {
+	
+	PLModelInterface model;
+	PLControllerInterface controller;
 
 	private JPanel panel1;
 	private JPanel panel2;
-	private JButton addNewDescription;
+	private JButton addNewProperty;
 	private JList standardDescriptions;
-	private JButton addStandardDescription;
+	private JButton addDescription;
 	
-	public NewPropertyWindow() {
+	public NewPropertyWindow(PLControllerInterface controller, PLModelInterface model) {
+		this.model = model;
+		this.controller = controller;
 		init();
 		this.setVisible(false);
 	}
@@ -31,31 +39,37 @@ public class NewPropertyWindow extends JFrame {
 		panel1 = new JPanel();
 		getContentPane().add(panel1, BorderLayout.NORTH);
 		
-		addNewDescription = new JButton();
-		addNewDescription.setIcon(new ImageIcon(getClass().getResource("/images/other/add.png")));
-		addNewDescription.setText("Neu");
-		addNewDescription.addActionListener(new ActionListener() {
+		addNewProperty = new JButton();
+		addNewProperty.setIcon(new ImageIcon(getClass().getResource("/images/other/add.png")));
+		addNewProperty.setText("Neu");
+		addNewProperty.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// TODO
 			}
 		});
 		
-		panel1.add(addNewDescription);
+		panel1.add(addNewProperty);
 		
 		panel2 = new JPanel();
 		getContentPane().add(panel2, BorderLayout.CENTER);
 		
 		standardDescriptions = new JList();
-		addStandardDescription = new JButton();
-		addStandardDescription.setIcon(new ImageIcon(getClass().getResource("/images/other/add.png")));
-		addStandardDescription.setText("Standard waehlen");
+		addDescription = new JButton();
+		addDescription.setIcon(new ImageIcon(getClass().getResource("/images/other/add.png")));
+		addDescription.setText("Standard waehlen");
+		addDescription.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// TODO
+			}
+		});
 		
 		
 		panel2.add(standardDescriptions);
-		panel2.add(addStandardDescription);
+		panel2.add(addDescription);
 	}
 	
 	protected void toggleVisibility() {
 		this.setVisible(!this.isVisible());
 	}
+
 }

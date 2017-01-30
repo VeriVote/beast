@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import edu.pse.beast.booleanexpeditor.UserActions.LoadPropsUserAction;
+import edu.pse.beast.propertylist.Model.PLModel;
+import edu.pse.beast.propertylist.Model.PLModelInterface;
 import edu.pse.beast.propertylist.UserActions.LoadPropertyList;
 import edu.pse.beast.propertylist.UserActions.NewPropertyList;
 import edu.pse.beast.propertylist.UserActions.RedoChangesPropertyList;
@@ -25,13 +27,14 @@ import edu.pse.beast.toolbox.UserAction;
  */
 public class PropertyListBuilder {
 	
-    private PropertyList instance;
+	PLControllerInterface controller;
     private PropertyListWindow window;
 	private String[] menuHeadingIds = { "fileMenu", "editMenu" };
 	
 	public PropertyList createPropertyList(ObjectRefsForBuilder refs, BooleanExpEditor booleanExpEditor) {
-		instance = new PropertyList(booleanExpEditor);
-		PropertyListWindowStarter starter = new PropertyListWindowStarter();
+		PLModelInterface model = new PLModel();
+		controller = new PropertyList(model, booleanExpEditor);
+		PropertyListWindowStarter starter = new PropertyListWindowStarter(controller, model);
 		
 		window = starter.getPropertyListWindow();
 		window.updateStringRes(refs.getStringIF());
@@ -49,7 +52,7 @@ public class PropertyListBuilder {
 		
 		starter.start();
 		
-		return instance;
+		return (PropertyList) controller;
 	}
 	
 	private ArrayList<ArrayList<ActionIdAndListener>>
@@ -106,22 +109,22 @@ public class PropertyListBuilder {
     }
     
     private LoadPropertyList createLoadPropertyList() {
-        return new LoadPropertyList(instance);
+        return new LoadPropertyList((PropertyList) controller);
     }
     private NewPropertyList createNewPropertyList() {
-    	return new NewPropertyList(instance);
+    	return new NewPropertyList((PropertyList) controller);
     }
     private RedoChangesPropertyList createRedoChangesPropertyList() {
-    	return new RedoChangesPropertyList(instance);
+    	return new RedoChangesPropertyList((PropertyList) controller);
     }
     private SaveAsPropertyList createSaveAsPropertyList() {
-    	return new SaveAsPropertyList(instance);
+    	return new SaveAsPropertyList((PropertyList) controller);
     }
     private SavePropertyList createSavePropertyList() {
-    	return new SavePropertyList(instance);
+    	return new SavePropertyList((PropertyList) controller);
     }
     private UndoChangesPropertyList createUndoChangesPropertyList() {
-    	return new UndoChangesPropertyList(instance);
+    	return new UndoChangesPropertyList((PropertyList) controller);
     }
     
     private ActionIdAndListener createFromUserAction(UserAction userAc) {

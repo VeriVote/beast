@@ -18,26 +18,34 @@ import javax.swing.JToolBar;
 
 import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
+import edu.pse.beast.propertylist.PLControllerInterface;
 import edu.pse.beast.propertylist.PropertyItem;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.propertylist.PropertyListMenuBarHandler;
+import edu.pse.beast.propertylist.Model.PLModel;
+import edu.pse.beast.propertylist.Model.PLModelInterface;
+import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
+import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 
 /**
 *
 * @author Justin
 */
-public class PropertyListWindow extends JFrame implements DisplaysStringsToUser, Observer {
+public class PropertyListWindow extends JFrame implements DisplaysStringsToUser, Observer, ActionListener {
+	
+	PLModelInterface model;
+	PLControllerInterface controller;
 	
 	private JMenuBar menuBar;
 	private JMenu menuFile;
 	private JMenu menuEdit;
-	private JToolBar toolBar;
+	private JToolBar toolBar = new JToolBar();
 	private JPanel panel;
 	private JPanel endpanel;
 	
-	private ObjectRefsForBuilder refs;
+	//private ObjectRefsForBuilder refs;
 	//private PropertyList list;
 	
 	private ArrayList<ListItem> items = new ArrayList<ListItem>();
@@ -45,38 +53,28 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	
 	private NewPropertyWindow newPropWindow;
 
-	public PropertyListWindow() {
+	//MVC
+	public PropertyListWindow(PLControllerInterface controller, PLModelInterface model) {
+		this.controller = controller;
+		this.model = model;
+		model.addObserver(this);
 		init();
 	}
 	
-	public PropertyListWindow(ObjectRefsForBuilder refs) {
-		this.refs = refs;
+	//superfluous
+	/*public PropertyListWindow() {
 		init();
-	}
-	
-	public JToolBar getToolbar() {
-    	return toolBar;
-    }
-	
-	
-	public ArrayList<ListItem> getList() {
-		return items;
-	}
-	public void setList(ArrayList<ListItem> items) {
-		this.items = items;
-	}
-	/*public void setPropertyList(PropertyList list) {
-		this.list = list;
 	}*/
-
+	
+	//MVC
 	private void init() {
-		newPropWindow = new NewPropertyWindow();
+		newPropWindow = new NewPropertyWindow(controller, model);
 		
 		// setFrame(new JFrame());
 		this.setLayout(new BorderLayout());
 		setBounds(600, 100, 500, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("Eigenschaftenliste");
+		setTitle("Property List");
 		
 		menuBar = new JMenuBar();
 		menuFile = new JMenu();
@@ -88,8 +86,6 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		this.setJMenuBar(menuBar);
 		
 		
-		
-		toolBar = new JToolBar();
 		toolBar.setFloatable(false);
 		toolBar.setRollover(true);
 		getContentPane().add(toolBar, BorderLayout.NORTH);
@@ -97,7 +93,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.CENTER);
 		
-		if (items.isEmpty()) items.add(new ListItem());
+		if (items.isEmpty()) items.add(new ListItem(controller, model));
 		for (ListItem item : items) {
 			panel.add(item, BorderLayout.CENTER);
 		}
@@ -115,9 +111,29 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		endpanel.add(addNewButton, BorderLayout.LINE_END);
 	}
 	
+	
+	/*public PropertyListWindow(ObjectRefsForBuilder refs) {
+		this.refs = refs;
+		init();
+	}*/
+	
+	public JToolBar getToolbar() {
+    	return toolBar;
+    }
+	
+	public ArrayList<ListItem> getList() {
+		return items;
+	}
+	public void setList(ArrayList<ListItem> items) {
+		this.items = items;
+	}
+	/*public void setPropertyList(PropertyList list) {
+		this.list = list;
+	}*/
+
 	private void updateItems() {
 		panel.repaint();
-		if (items.isEmpty()) items.add(new ListItem());
+		if (items.isEmpty()) items.add(new ListItem(controller, model));
 		for (ListItem item : items) {
 			panel.add(item, BorderLayout.CENTER);
 		}
@@ -127,22 +143,38 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		newPropWindow.toggleVisibility();
 	}
 
+	
 	@Override
 	public void updateStringRes(StringLoaderInterface sli) {
-		menuFile.setText(sli.getPropertyListStringResProvider().getMenuStringRes().getStringFromID("menuFile"));
-		menuEdit.setText(sli.getPropertyListStringResProvider().getMenuStringRes().getStringFromID("menuEdit"));
-		addNewButton.setText(sli.getPropertyListStringResProvider().getToolbarTipStringRes().getStringFromID("addNew"));
-		setTitle(sli.getPropertyListStringResProvider().getMenuStringRes().getStringFromID("title"));
+		PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
+		StringResourceLoader other = provider.getOtherStringRes();
+		StringResourceLoader menu = provider.getMenuStringRes();
+		StringResourceLoader toolbarTip = provider.getToolbarTipStringRes();
+		
+		this.setTitle(other.getStringFromID("title"));
+		
+		//menuFile.setText(sli.getPropertyListStringResProvider().getMenuStringRes().getStringFromID("menuFile"));
+		//menuEdit.setText(sli.getPropertyListStringResProvider().getMenuStringRes().getStringFromID("menuEdit"));
+		//addNewButton.setText(sli.getPropertyListStringResProvider().getToolbarTipStringRes().getStringFromID("addNew"));
+		//setTitle(sli.getPropertyListStringResProvider().getMenuStringRes().getStringFromID("title"));
 	}
 
+	//MVC not yet
 	@Override
 	public void update(Observable o, Object obj) {
-		ArrayList<PropertyItem> list = ((PropertyList)o).getDescr();
+		ArrayList<PropertyItem> list = ((PLModel)o).getDescr();
 		items = new ArrayList<ListItem>();
 		for (PropertyItem item : list) {
-			items.add(new ListItem(item));
+			items.add(new ListItem(controller, model, item));
 		}
 		updateItems();
+	}
+
+	//MVC
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

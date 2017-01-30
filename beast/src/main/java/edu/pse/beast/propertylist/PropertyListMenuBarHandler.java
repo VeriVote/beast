@@ -11,7 +11,7 @@ import edu.pse.beast.toolbox.MenuBarHandler;
 
 public class PropertyListMenuBarHandler extends MenuBarHandler {
 	
-	private PropertyListWindow window = new PropertyListWindow();
+	private PropertyListWindow window;
 
 	public PropertyListMenuBarHandler(String[] headingIds,
 			ArrayList<ArrayList<ActionIdAndListener>> actionIDAndListener, StringResourceLoader resLoader, PropertyListWindow window) {

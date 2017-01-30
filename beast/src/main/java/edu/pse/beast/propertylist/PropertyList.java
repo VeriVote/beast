@@ -15,33 +15,88 @@ import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenter;
 import edu.pse.beast.propertychecker.Result;
+import edu.pse.beast.propertylist.Model.PLModelInterface;
+import edu.pse.beast.propertylist.View.PropertyListWindow;
 
 /**
  *
  * @author Justin
  */
 
-public class PropertyList extends Observable implements PostAndPrePropertiesDescriptionSource, ResultPresenter {
+public class PropertyList implements PLControllerInterface, PostAndPrePropertiesDescriptionSource, ResultPresenter {
 	
-	// private static PropertyList instance;
-	private ArrayList<PropertyItem> propDescs;
-    private BooleanExpEditor booleanExpEditor;
-    private boolean hasChanged;
-    //private int changedIndex;
+	private PLModelInterface model;
+	private PropertyListWindow view;
+	
+	private BooleanExpEditor booleanExpEditor;
 	
 	/**
 	 * Constructor
 	 * @param booleanExpEditor
 	 */
-	public PropertyList(BooleanExpEditor booleanExpEditor) {
+	public PropertyList(PLModelInterface model, BooleanExpEditor booleanExpEditor) {
+		this.model = model;
 		this.booleanExpEditor = booleanExpEditor;
-		hasChanged = false;
+		view = new PropertyListWindow(this, model);
+		model.initialize();
+		//hasChanged = false;
 	}
+	
+	@Override
+	public void toggleResult() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public boolean changeName(PropertyItem prop, String newName) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public void setTestStatus(PropertyItem prop) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void editProperty(PropertyItem prop) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public PropertyItem deleteProperty(PropertyItem prop) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public boolean addDescription(PostAndPrePropertiesDescription desc) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean addNewProperty(String name) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
+	// ------------- under MVC
+	
+	
+	
+	// private static PropertyList instance;
+	private ArrayList<PropertyItem> propDescs;
+    private boolean hasChanged;
+    //private int changedIndex;
+	
+	
      
 	/*private void change(int changedIndex) {
 		this.changedIndex = changedIndex;
 	}*/
-	@Override
+	
+    
+    /*
+    @Override
 	public boolean hasChanged() {
 		return hasChanged;
 	}
@@ -50,6 +105,12 @@ public class PropertyList extends Observable implements PostAndPrePropertiesDesc
 		hasChanged = false;
 	}
 	
+	
+	*/
+	
+	
+	
+	
 	/**
 	 * @param newList
 	 
@@ -57,82 +118,14 @@ public class PropertyList extends Observable implements PostAndPrePropertiesDesc
 		propertyDescriptions = newList;
 	}*/
 	
-	private void checkForCurrentEditorContent() {
+	/*private void checkForCurrentEditorContent() {
 		String currentlyInEditor = booleanExpEditor.getCurrentlyLoadedPostAndPreProp().getName();
 		
 		PropertyItem editorProp = propDescs.get(indexOfName(currentlyInEditor));
 		
 		editorProp.setDescription(booleanExpEditor.getCurrentlyLoadedPostAndPreProp());
-	}
+	}*/
 	
-	private int indexOfName(String name) {
-		for (PropertyItem current : propDescs) {
-			if (current.getDescription().getName() == name) return propDescs.indexOf(current);
-		}
-		return -1;
-	}
-	
-	/**
-	 * @param prop
-	 * @param newName
-	 * @return
-	 */
-	public Boolean changeName(PropertyItem prop, String newName) {
-		
-		int index = propDescs.indexOf(prop);
-		if (index == -1) return false;
-		
-		if (indexOfName(newName) != -1) return false;
-		
-		PostAndPrePropertiesDescription old = propDescs.get(index).getDescription();
-		propDescs.get(index).setDescription(newName, old.getPrePropertiesDescription(),
-				old.getPostPropertiesDescription(), old.getSymVarList());
-		
-		return true;
-	}
-	
-	/**
-	 * @param desc
-	 */
-	public void addStandardDescription(PostAndPrePropertiesDescription desc) {
-		checkForCurrentEditorContent();
-		propDescs.add(new PropertyItem(desc));
-	}
-	
-	/**
-	 * 
-	 */
-	public void newDescription(String name) {
-		checkForCurrentEditorContent();
-		PropertyItem newItem = new PropertyItem(new PostAndPrePropertiesDescription(name), false);
-		booleanExpEditor.loadPostAndPreProperties(newItem.getDescription());
-		propDescs.add(newItem);
-	}
-	
-	/**
-	 * 
-	 */
-	public void changeDescription(PropertyItem prop) {
-		checkForCurrentEditorContent();
-		booleanExpEditor.loadPostAndPreProperties(prop.getDescription());
-	}
-	
-	/**
-	 * @param prop
-	 * @return
-	 */
-	public PropertyItem deleteDescription(PropertyItem prop) {
-		int index = propDescs.indexOf(prop);
-		if (index == -1) return null;
-		return propDescs.remove(index);
-	}
-	
-	/**
-	 * @param prop
-	 */
-	public void changeTestedStatus(PropertyItem prop) {
-		prop.toggleTestStatus();
-	}
 
 
     /* (non-Javadoc)
@@ -184,4 +177,7 @@ public class PropertyList extends Observable implements PostAndPrePropertiesDesc
     public void presentResult(Result res) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+	
+	
 }

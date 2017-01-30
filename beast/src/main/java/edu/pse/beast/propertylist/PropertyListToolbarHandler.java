@@ -10,7 +10,7 @@ import edu.pse.beast.toolbox.ToolbarHandler;
 
 public class PropertyListToolbarHandler extends ToolbarHandler {
 
-	private PropertyListWindow window = new PropertyListWindow();
+	private PropertyListWindow window;
 	
 	public PropertyListToolbarHandler(ImageResourceProvider imageRes, StringResourceLoader stringRes,
 			ActionIdAndListener[] actionIdsAndListener, JToolBar toolbar, PropertyListWindow window) {

@@ -44,6 +44,9 @@ public class PropertyItem {
 	public Boolean willBeTested() {
 		return willBeTested;
 	}
+	public void setTestStatus(boolean newStatus) {
+		willBeTested = newStatus;
+	}
 	public void toggleTestStatus() {
 		willBeTested = !willBeTested;
 	}
