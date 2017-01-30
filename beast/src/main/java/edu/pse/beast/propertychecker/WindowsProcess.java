@@ -46,6 +46,7 @@ public class WindowsProcess extends CBMCProcess {
         
         //TODO this is just a debug file
         toCheck = new File("./src/main/resources/c_tempfiles/test.c");
+        ErrorLogger.log("WindowsProcess.java lien 48 has to be removed, when the code creation works");
         
         //because windows is weird the whole call that would get placed inside VScmd has to be in one giant string
         String cbmcCall = "\"" + vsCmd + "\"" + " & " + cbmcEXE + " " + "\"" + toCheck.getAbsolutePath() + "\"" + " " + arguments;

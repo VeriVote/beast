@@ -14,9 +14,8 @@ public class LinuxProcess extends CBMCProcess {
 
     @Override
     protected String sanitizeArguments(String toSanitize) {
-        // cbmc on linux already prints the trace
-        
-        //TODO make that fancier
+        //the linux version of cbmc has the trace command automatically, so we have to remove it
+    	//or else cbmc would throw an error
         return toSanitize.replace(" --trace", "");
     }
 
@@ -24,6 +23,12 @@ public class LinuxProcess extends CBMCProcess {
     @Override
     public Process createProcess(File toCheck, String arguments) {
         Process startedProcess = null;
+        
+        
+      //TODO this is just a debug file
+        toCheck = new File("./src/main/resources/c_tempfiles/test.c");
+        ErrorLogger.log("LinuxProcess.java lien 29 has to be removed, when the code creation works");
+        
 
         ProcessBuilder prossBuild = new ProcessBuilder("cbmc", toCheck.getAbsolutePath(), arguments);
         try {
