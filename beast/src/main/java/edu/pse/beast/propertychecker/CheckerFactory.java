@@ -42,6 +42,7 @@ public abstract class CheckerFactory implements Runnable {
 
         outerLoop: for (Iterator<Integer> voteIterator = paramSrc.getParameter().getAmountVoters()
                 .iterator(); voteIterator.hasNext();) {
+        	
             int voters = (int) voteIterator.next();
             for (Iterator<Integer> candidateIterator = paramSrc.getParameter().getAmountCandidates()
                     .iterator(); candidateIterator.hasNext();) {

@@ -1,93 +1,50 @@
 #include <stdlib.h>
 #include <stdint.h>
-#include <assert.h>
-
+#include <assert.h> 
+#define assert2(x, y) __CPROVER_assert(x, y)
+#define assume(x) __CPROVER_assume(x) 
 int nondet_uint();
 
-#define assert2(x, y) __CPROVER_assert(x, y)
-#define assume(x) __CPROVER_assume(x)
-
-#ifndef V
-#define V 3
-#endif
-
-#ifndef C
-#define C 3
-#endif
-
-#ifndef S
-#define S 3
-#endif
-
-
-unsigned int voting(unsigned int votes[V]) {
-    unsigned int res[C + 1];
-    unsigned int i = 0;
-
-    for (i = 0; i < V; i++) {
-        assume (0 < votes[i] && votes[i] <= C);
-    }
-
-    for (i = 0; i <= C; i++) {
-        res[i] = 0;
-    }
-    for (i = 0; i < V; i++) {
-        res[votes[i]]++;
-    }
-    unsigned int max = 0;
-    unsigned int elect = 0;
-    for (i = 1; i <= C; i++) {
-        if (max < res[i]) {
-            max = res[i];
-            elect = i;
-        } else {
-            if (max == res[i]) {
-                elect = 0;
-            }
-        }
-    }
-    return elect;
+unsigned int voting(unsigned int voters[V], unsigned int candidates[C], unsigned int seats[S]) {
+return 0;
 }
-
-void anonymity(unsigned int votes1[V], unsigned int votes2[V],
-	       unsigned int c, unsigned int d,
-	       unsigned int v, unsigned int w) {
-    assume (0 < c && c <= C);
-    assume (0 < d && d <= C);
-    assume (0 <= v && v < V);
-    assume (0 <= w && w < V);
-    unsigned int i = 0;
-
-    for (i = 0; i < V; i++) {
-        if (i != v && i != w) {
-            assume (votes1[i] == votes2[i]);
-        }
-    }
-
-    assume (votes1[v] == c && votes1[w] == d);
-    assume (votes2[v] == d && votes2[w] == c);
-
-    unsigned int elect1 = voting(votes1);
-    unsigned int elect2 = voting(votes2);
-
-    assert (elect1 != elect2);
+void test1() {
+unsigned int c;
+assume(0 <= c <= C);
+unsigned int v;
+assume(0 <= v <= C);
+unsigned int votes1[V];
+unsigned int votes2[V];
+for(unsigned int i = 0; i < V; ++i) {
+votes1[i] = nondet_uint();
 }
-
-int main(int argc, char *argv[]) {
-    unsigned int i = 0;
-    unsigned int v1[V];
-    unsigned int v2[V];
-    for (i = 0; i < V; i++) {
-        v1[i] = nondet_uint();
-	v2[i] = nondet_uint();
-    }
-
-    unsigned int candidate1 = nondet_uint();
-    unsigned int candidate2 = nondet_uint();
-    unsigned int voter1     = nondet_uint();
-    unsigned int voter2     = nondet_uint();
-
-    anonymity(v1, v2, candidate1, candidate2, voter1, voter2);
-    return 0;
+for(unsigned int i = 0; i < V; ++i) {
+votes2[i] = nondet_uint();
 }
-
+unsigned int forall_0 = 1;
+for(unsigned int v = 0; v < V && forall_0; ++v) {
+unsigned int existsOne_1 = 0;
+for(unsigned int c = 0; c < C && !existsOne_1; ++c) {
+unsigned int compare_2 = 1;
+compare_2 = c == votes2[v];
+unsigned int compare_3 = 1;
+compare_3 = calculateVoteSum(c) >= 3;
+unsigned int compare_4 = 1;
+compare_4 = c < 2;
+unsigned int impl_5 = !compare_3 || RHS;
+unsigned int and_6 = compare_2 && RHS;
+existsOne_1 = and_6;
+}
+forall_0 = existsOne_1;
+}
+assume(forall_0);
+unsigned int compare_7 = 1;
+for(unsigned int count_8 = 0; count_8 < V && compare_7; ++count_8) {
+compare_7 = votes2[count_8] == votes1[count_8];
+}
+assert(compare_7);
+}
+int main() {
+test1();
+return 0;
+}

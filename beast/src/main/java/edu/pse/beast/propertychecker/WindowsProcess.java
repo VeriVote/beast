@@ -40,10 +40,14 @@ public class WindowsProcess extends CBMCProcess {
 
         String cbmcEXE = FileLoader.getFileFromRes("/cbmcWIN/cbmc.exe");
         
-        //this call starts a new VScmd isntance and lets cbmc run in it
-        String cbmcCall = "\"" + vsCmd + "\"" + " & " + cbmcEXE + " " + toCheck.getAbsolutePath();
+        //TODO this is just a debug file
+        toCheck = new File("./src/main/resources/c_tempfiles/test.c");
         
-        ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", cbmcCall, arguments);
+        //because windows is weird the whole call that would get placed inside VScmd has to be in one giant string
+        String cbmcCall = "\"" + vsCmd + "\"" + " & " + cbmcEXE + " " + "\"" + toCheck.getAbsolutePath() + "\"" + " " + arguments;
+        
+        //this call starts a new VScmd isntance and lets cbmc run in it
+        ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", cbmcCall);
         
         System.out.println("AUFRUF:" + String.join(" ", prossBuild.command()));
 
