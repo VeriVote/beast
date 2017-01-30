@@ -25,6 +25,10 @@ public class WindowsProcess extends CBMCProcess {
 
 
     protected Process createProcess(File toCheck, String arguments) {
+    	
+    	//trace is mandatory under windows, or the counter example couldn't get generated
+    	arguments = arguments + " " + "--trace";
+    	
         String vsCmd = null;
         Process startedProcess = null;
         try {
