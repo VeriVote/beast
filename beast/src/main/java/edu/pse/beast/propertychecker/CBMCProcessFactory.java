@@ -42,9 +42,12 @@ public class CBMCProcessFactory extends CheckerFactory {
 			PostAndPrePropertiesDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
 			CheckerFactory parent) {
 
-		// stitch the arguments together
-		String arguments = advanced + " -D V=" + voters + " -D C=" + candidates + " -D S=" + seats;
-
+	    //remove all unnecessary whitespaces
+	    advanced = advanced.trim().replaceAll(" +", " ");
+	    
+	    String arguments = advanced + " -D V=" + voters + " -D C=" + candidates + " -D S=" + seats;
+		
+		
 		// create the file in which the code is saved
 
 		if (toCheck == null) {
@@ -54,10 +57,10 @@ public class CBMCProcessFactory extends CheckerFactory {
 
 		switch (OS) {
 		case Linux:
-			new LinuxProcess(arguments, toCheck, parent);
+			new LinuxProcess(voters, candidates, seats, advanced, toCheck, parent);
 			break;
 		case Windows:
-			new WindowsProcess(arguments, toCheck, parent);
+			new WindowsProcess(voters, candidates, seats, advanced, toCheck, parent);
 			break;
 		default:
 			ErrorLogger.log("Warning, your OS couldn't be determined.");

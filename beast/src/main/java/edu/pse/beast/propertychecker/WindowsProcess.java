@@ -17,20 +17,23 @@ public class WindowsProcess extends CBMCProcess {
     
     
     
-    public WindowsProcess(String arguments, File toCheck, CheckerFactory parent) {
-        super(arguments, toCheck, parent);
-        // TODO Auto-generated constructor stub
+    public WindowsProcess(int voters, int candidates, int seats, String advanced, File toCheck, CheckerFactory parent) {
+        super(voters, candidates, seats, advanced, toCheck, parent);
     }
 
 
-
-    protected Process createProcess(File toCheck, String arguments) {
+    @Override
+    protected Process createProcess(File toCheck, int voters, int candidates, int seats, String advanced) {
     	
     	//trace is mandatory under windows, or the counter example couldn't get generated
-    	arguments = arguments + " " + "--trace";
+    	advanced = advanced + " --trace";
+    	
+    	//set the values for the voters, candidates and seats
+    	String arguments = advanced + " -D V=" + voters + " -D C=" + candidates + " -D S=" + seats;
     	
         String vsCmd = null;
         Process startedProcess = null;
+        
         try {
             vsCmd = getVScmdPath();
         } catch (IOException e1) {

@@ -4,15 +4,21 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+
+import org.apache.xalan.xsltc.dom.CachedNodeListIterator;
 
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.ThreadedBufferedReader;
 
 public abstract class Checker implements Runnable {
 
-	private final String arguments;
+	private final int voters;
+	private final int candidates;
+	private final int seats;
+	private final String advanced;
 	private final File toCheck;
 	private final CheckerFactory parent;
 	private final long pollInterval = 1000;
@@ -26,8 +32,12 @@ public abstract class Checker implements Runnable {
 
 	protected Process process;
 
-	public Checker(String arguments, File toCheck, CheckerFactory parent) {
-		this.arguments = arguments;
+	public Checker(int voters, int candidates, int seats, String advanced, File toCheck, CheckerFactory parent) {
+	    this.voters = voters;
+	    this.candidates = candidates;
+	    this.seats = seats;
+	    this.advanced = advanced;
+	    
 		this.toCheck = toCheck;
 		this.parent = parent;
 
@@ -37,7 +47,7 @@ public abstract class Checker implements Runnable {
 	@Override
 	public void run() {
 
-		process = createProcess(toCheck, arguments);
+		process = createProcess(toCheck, voters, candidates, seats, advanced);
 
 		if (process != null) {
 			CountDownLatch latch = new CountDownLatch(2);
@@ -104,7 +114,7 @@ public abstract class Checker implements Runnable {
 
 	protected abstract String sanitizeArguments(String toSanitize);
 
-	protected abstract Process createProcess(File toCheck, String arguments);
+	protected abstract Process createProcess(File toCheck, int voters, int candidates, int seats, String advanced);
 
 	protected abstract void stopProcess();
 }
