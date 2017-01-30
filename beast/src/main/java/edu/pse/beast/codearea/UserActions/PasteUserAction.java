@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.codearea.UserActions;
 
+import edu.pse.beast.codearea.CodeArea;
 import edu.pse.beast.toolbox.UserAction;
 
 import javax.swing.*;
@@ -20,12 +21,12 @@ import java.io.IOException;
  * @author Holger-Desktop
  */
 public class PasteUserAction extends UserAction {
-    private JTextPane pane;
+    private CodeArea area;
     private Clipboard clipboard;
 
-    public PasteUserAction(JTextPane pane) {
+    public PasteUserAction(CodeArea area) {
         super("paste");
-        this.pane = pane;
+        this.area = area;
         this.clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
     }
 
@@ -33,19 +34,10 @@ public class PasteUserAction extends UserAction {
     public void perform() {
         try {
             String clipboardString = (String) clipboard.getData(DataFlavor.stringFlavor);
-            if (pane.getSelectedText() == null) {
-                pane.getStyledDocument().insertString(pane.getCaretPosition(), clipboardString, null);
-            } else {
-                int start = pane.getSelectionStart();
-                int end = pane.getSelectionEnd();
-                pane.getStyledDocument().remove(start, end - start);
-                pane.getStyledDocument().insertString(start, clipboardString, null);
-            }
+            area.insertString(clipboardString);
         } catch (UnsupportedFlavorException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (BadLocationException e) {
             e.printStackTrace();
         }
     }

@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.codearea.UserActions;
 
+import edu.pse.beast.codearea.CodeArea;
 import edu.pse.beast.toolbox.UserAction;
 
 import javax.swing.*;
@@ -18,25 +19,19 @@ import java.awt.datatransfer.StringSelection;
  * @author Holger-Desktop
  */
 public class CutUserAction extends UserAction  {
-    private JTextPane pane;
+    private CodeArea codeArea;
     private Clipboard clipboard;
 
-    public CutUserAction(JTextPane pane) {
+    public CutUserAction(CodeArea area) {
         super("cut");
-        this.pane = pane;
+        this.codeArea = area;
         this.clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
     }
 
     @Override
     public void perform() {
-        StringSelection stringSelection = new StringSelection(pane.getSelectedText());
+        StringSelection stringSelection = new StringSelection(codeArea.getPane().getSelectedText());
         clipboard.setContents(stringSelection, null);
-        int selectionStart = pane.getSelectionStart();
-        int selectionEnd = pane.getSelectionEnd();
-        try {
-            pane.getStyledDocument().remove(selectionStart, selectionEnd - selectionStart);
-        } catch (BadLocationException e) {
-            e.printStackTrace();
-        }
+        codeArea.insertString("");
     }
 }

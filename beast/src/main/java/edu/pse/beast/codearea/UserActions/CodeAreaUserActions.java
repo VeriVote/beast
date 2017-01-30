@@ -39,11 +39,11 @@ public class CodeAreaUserActions {
     }
     
     private void addCutAction() {
-        actions.add(new CutUserAction(area.getPane()));
+        actions.add(new CutUserAction(area));
     }
     
     private void addPasteAction() {
-        actions.add(new PasteUserAction(area.getPane()));
+        actions.add(new PasteUserAction(area));
     }
     
     private void addRedoAction() {

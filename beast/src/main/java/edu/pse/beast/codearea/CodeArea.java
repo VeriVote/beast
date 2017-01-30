@@ -100,4 +100,9 @@ public class CodeArea {
     public void setSyntaxHLRegexAndColorList(ArrayList<RegexAndColor> regexAndColorList) {
         syntaxHL.updateFilter(regexAndColorList);
     }
+
+    public void insertString(String string) {
+        insertToCode.insertString(string);
+    }
+
 }

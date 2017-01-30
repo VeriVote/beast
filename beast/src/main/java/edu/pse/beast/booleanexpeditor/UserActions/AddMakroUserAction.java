@@ -28,13 +28,7 @@ public class AddMakroUserAction extends UserAction {
 
     @Override
     public void perform() {
-        int lastCaretPosition = booleanExpEditor.getCodeAreaFocusListener().getLastFocused().getPane().getCaretPosition();
-        try {
-            JTextPane textPane = booleanExpEditor.getCodeAreaFocusListener().getLastFocused().getPane();
-            textPane.getStyledDocument().insertString(lastCaretPosition,
-                    makro.toString() ,null);
-        } catch (BadLocationException e) {
-            e.printStackTrace();
-        }
+        booleanExpEditor.getCodeAreaFocusListener().getLastFocused().
+                insertString(makro.toString());
     }
 }

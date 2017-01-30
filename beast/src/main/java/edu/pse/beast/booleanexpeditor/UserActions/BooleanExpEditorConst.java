@@ -1,4 +1,4 @@
-package edu.pse.beast.booleanexpeditor;
+package edu.pse.beast.booleanexpeditor.UserActions;
 
 /**
  * This class models constants for the BooleanExpEditor, namely the number of voters "V", the number of candidates "C".
@@ -12,11 +12,12 @@ public class BooleanExpEditorConst {
      * String should be either "Voters", "Candidates" or "Seats"
      * @param constant the String representing the constant, either "V", "C" or "S"
      */
-    BooleanExpEditorConst(String constant) {
+    public BooleanExpEditorConst(String constant) {
         this.constant = constant;
     }
 
-    public String getConstantString() {
+    @Override
+    public String toString() {
         return constant;
     }
 }

@@ -13,7 +13,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
 /**
- * Enables one to think about newlines as a single character independant of the
+ * Enables one to think about newlines as a single character independent of the
  * os
  * @author Holger-Desktop
  */
@@ -44,7 +44,7 @@ public class LineHandler {
     public int transformToLineNumber(int absPos, String code) {
         int amt = 0;
         for(int i = 0; i < absPos; ++i) {
-            if(code.charAt(i) == '\n') amt++;
+            if(code.length() != 0 && code.charAt(i) == '\n') amt++;
         }
         return amt;
     }

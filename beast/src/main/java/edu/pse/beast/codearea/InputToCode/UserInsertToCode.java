@@ -59,7 +59,30 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
                 lineBeginningTabsHandler, currentCaretPosition);               
         newlineInserterChooser.getNewlineInserter();
     }
-    
+
+    public void insertString(String string) {
+        try {
+            if (lockedLines.isLineLocked(lineHandler.transformToLineNumber(pane.getCaretPosition()))) {
+                System.out.println("Can't insert into locked lines.");
+            } else {
+                if (pane.getSelectedText() == null) {
+                    pane.getStyledDocument().insertString(pane.getCaretPosition(), string,null);
+                } else {
+                    int selectionStart = pane.getSelectionStart();
+                    int selectionEnd = pane.getSelectionEnd();
+                    try {
+                        pane.getStyledDocument().remove(selectionStart, selectionEnd - selectionStart);
+                        pane.getStyledDocument().insertString(selectionStart, string, null);
+                    } catch (BadLocationException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void insertTab() throws BadLocationException {
         if(wouldChangedLocked()) return;       
         if(lockedLines.isLineLocked(lineHandler.transformToLineNumber(currentCaretPosition))) return;        
