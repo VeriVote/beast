@@ -22,14 +22,24 @@ public class LinuxProcess extends CBMCProcess {
 
     @Override
     public Process createProcess(File toCheck, int voters, int candidates, int seats, String advanced) {
+
+        String[] argumentsToPass = new String[5 + advanced.split(";").length];
         
         
-
-        String votersString = " -D V=" + voters;
-
-        String candidatesString = " -D C=" + candidates;
-
-        String seatsString = " -D S=" + seats;
+        //cbmc on linux wants every argument in a seperate string
+        argumentsToPass[0] = "cbmc";
+        
+        argumentsToPass[1] = "toCheck.getAbsolutePath()";
+        
+        argumentsToPass[2] = "-D V=" + voters;
+        
+        argumentsToPass[3] = "-D C=" + candidates;
+        
+        argumentsToPass[4] = "-D S=" + seats;
+        
+        for (int i = 5; i < argumentsToPass.length; i++) {
+            argumentsToPass[i] = advanced.split(";")[i - 5];
+        }
 
         Process startedProcess = null;
 
@@ -37,9 +47,9 @@ public class LinuxProcess extends CBMCProcess {
         toCheck = new File("./src/main/resources/c_tempfiles/test.c");
         ErrorLogger.log("LinuxProcess.java line 29 has to be removed, when the code creation works");
 
-        ProcessBuilder prossBuild = new ProcessBuilder("cbmc", toCheck.getAbsolutePath(), votersString, candidatesString, seatsString);
+        ProcessBuilder prossBuild = new ProcessBuilder(argumentsToPass);
 
-        System.out.println(String.join(" ", prossBuild.command()));
+        System.out.println("Started a new Process with the following command: " + String.join(" ", prossBuild.command()));
 
         try {
             // save the new process in this var
