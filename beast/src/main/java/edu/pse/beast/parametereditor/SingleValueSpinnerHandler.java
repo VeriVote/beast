@@ -10,9 +10,11 @@ import javax.swing.event.ChangeListener;
  */
 public class SingleValueSpinnerHandler implements ChangeListener{
     private final JSpinner spinner;
+    private Integer valBefore;
     
     public SingleValueSpinnerHandler(JSpinner spinner) {
         this.spinner = spinner;
+        valBefore = getValue();
     }
     public Integer getValue() {
         return Integer.parseInt("" + spinner.getValue());
@@ -21,8 +23,9 @@ public class SingleValueSpinnerHandler implements ChangeListener{
         if (val <= 10000 && val >= 0) {
             spinner.setValue(val);
         } else {
-            System.err.println("Bitte wählen sie eine Zahl zwischen 0 und 100000.");
+            spinner.setValue(valBefore);
         }
+        valBefore = getValue();
     }
 
     @Override

@@ -22,6 +22,9 @@ public class TimeoutValueHandler implements ChangeListener{
     public TimeOut getTimeout() {
         Integer timeoutInt = Integer.parseInt("" + timeoutSpinner.getValue());
         TimeOut timeOut = new TimeOut();
+        if(timeoutInt < 0) {
+            timeoutInt = 0;
+        }
         if(timeoutUnit.getSelectedIndex() == 0) {
             timeOut = new TimeOut(TimeUnit.SECONDS, timeoutInt.longValue());
         } else if(timeoutUnit.getSelectedIndex() == 1) {
