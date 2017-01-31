@@ -84,10 +84,11 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.CENTER);
 		
-		if (items.isEmpty()) items.add(new ListItem(controller, model));
+	if (!items.isEmpty()) {
 		for (ListItem item : items) {
 			panel.add(item, BorderLayout.CENTER);
 		}
+	}
 		
 		endpanel = new JPanel();
 		getContentPane().add(endpanel, BorderLayout.SOUTH);
@@ -95,7 +96,8 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		addNewButton.setIcon(new ImageIcon(getClass().getResource("/images/other/add.png")));
 		addNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				addNewPropertyAction(e);
+				//addNewPropertyAction(e);
+				controller.addNewProperty();
 			}
 
 		});
@@ -116,7 +118,8 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	
 	public void addItem(PropertyItem prop) {
 		ListItem addedItem = new ListItem(controller, model, prop);
-		panel.add(addedItem, BorderLayout.CENTER);
+		panel.add(addedItem, BorderLayout.WEST);
+		panel.revalidate();
 	}
 	
 	private void updateItems() {

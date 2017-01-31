@@ -59,7 +59,9 @@ public class NewPropertyWindow extends JFrame {
 		addDescription.setText("Standard waehlen");
 		addDescription.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				controller.addNewProperty();
+				
+				// TODO 
 			}
 		});
 		
