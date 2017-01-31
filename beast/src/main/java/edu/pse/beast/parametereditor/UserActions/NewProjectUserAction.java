@@ -15,7 +15,7 @@ public class NewProjectUserAction extends UserAction{
     
     public NewProjectUserAction(PropertyList propertyList, 
             CElectionDescriptionEditor cElectionEditor, ParameterEditor paramEditor) {
-        super("saveAs");
+        super("new");
         this.propertyList = propertyList;
         this.cElectionEditor = cElectionEditor;
         this.paramEditor = paramEditor;
