@@ -19,9 +19,9 @@ import toBeImplemented.implParameterSource;
 import toBeImplemented.implPropertyDescriptionSource;
 
 public class testMain {
-    public static void main(String[] args) {
-        new testMain();
-    }
+   // public static void main(String[] args) {
+   //     new testMain();
+   // }
     
     
     public testMain() {
