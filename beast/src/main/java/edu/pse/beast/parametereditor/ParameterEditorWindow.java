@@ -66,6 +66,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
         jToolBar.setFloatable(false);
         jToolBar.setRollover(true);
 
+        newIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/new.png"))); // NOI18N
         newIcon.setFocusable(false);
         newIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         newIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -76,26 +77,31 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
         });
         jToolBar.add(newIcon);
 
+        saveIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/save.png"))); // NOI18N
         saveIcon.setFocusable(false);
         saveIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         saveIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar.add(saveIcon);
 
+        saveAsIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/save_as.png"))); // NOI18N
         saveAsIcon.setFocusable(false);
         saveAsIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         saveAsIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar.add(saveAsIcon);
 
+        openIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/load.png"))); // NOI18N
         openIcon.setFocusable(false);
         openIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         openIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar.add(openIcon);
 
+        startIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/start.png"))); // NOI18N
         startIcon.setFocusable(false);
         startIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         startIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar.add(startIcon);
 
+        stopIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/stop.png"))); // NOI18N
         stopIcon.setFocusable(false);
         stopIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         stopIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -177,7 +183,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
 
         jMenuBar2.add(jMenu5);
 
-        jMenu6.setText("Optionen");
+        jMenu6.setText("Eigenschaften");
         jMenuBar2.add(jMenu6);
 
         setJMenuBar(jMenuBar2);
