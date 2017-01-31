@@ -9,11 +9,6 @@ import java.util.List;
  */
 public interface BooleanExpNodeVisitor {
 
-    /**
-     *
-     * @param node the node to visit
-     */
-    void visitBooleanListNode(BooleanExpListNode node);
 
     /**
      *

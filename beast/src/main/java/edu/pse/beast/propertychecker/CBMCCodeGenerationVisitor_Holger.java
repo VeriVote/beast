@@ -58,10 +58,7 @@ public class CBMCCodeGenerationVisitor_Holger implements BooleanExpNodeVisitor{
         return generated;
     }
     
-    @Override
-    public void visitBooleanListNode(BooleanExpListNode node) {
-        
-    }
+
 
     @Override
     public void visitAndNode(LogicalAndNode node) {

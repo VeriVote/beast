@@ -22,6 +22,7 @@ import edu.pse.beast.datatypes.booleanExpAST.SymbolicVarExp;
 import edu.pse.beast.datatypes.booleanExpAST.ThereExistsNode;
 import edu.pse.beast.datatypes.booleanExpAST.VoteExp;
 import edu.pse.beast.datatypes.booleanExpAST.VoteSumForCandExp;
+import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -32,7 +33,6 @@ import java.util.Stack;
 public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     private String assumeOrAssert;
-    private ArrayList<String> code;
     private int andNodeCounter;
     private int orNodeCounter;
     private int implicationNodeCounter;
@@ -47,8 +47,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private int voteExpCounter;
     private int voteSumExpressionCounter;
     private Stack<String> variableNames;
+    private CodeArrayListBeautifier code;
 
-    public CBMCCodeGenerationVisitor(){
+    public CBMCCodeGenerationVisitor() {
         andNodeCounter = 0;
         orNodeCounter = 0;
         implicationNodeCounter = 0;
@@ -62,30 +63,26 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         electExpCounter = 0;
         voteExpCounter = 0;
         voteSumExpressionCounter = 0;
+        code = new CodeArrayListBeautifier();
     }
-    public void setToPrePropertyMode(){
+
+    public void setToPrePropertyMode() {
         assumeOrAssert = "assume";
     }
-    public void setToPostPropertyMode(){
-         assumeOrAssert = "assert";
+
+    public void setToPostPropertyMode() {
+        assumeOrAssert = "assert";
     }
-    
-    public ArrayList<String> generate(ArrayList<BooleanExpressionNode> nodes) {
-        code = new ArrayList<>();
+
+    public ArrayList<String> generateCode(BooleanExpressionNode node) {
+        code = new CodeArrayListBeautifier();
         variableNames = new Stack<>();
-        
-        for(BooleanExpressionNode n : nodes) {
-            variableNames.clear();
-            n.getVisited(this);
-        }
-        
-        return code;
+
+        node.getVisited(this);
+
+        return code.getCodeArrayList();
     }
-    
-    @Override
-    public void visitBooleanListNode(BooleanExpListNode node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
 
     @Override
     public void visitAndNode(LogicalAndNode node) {
