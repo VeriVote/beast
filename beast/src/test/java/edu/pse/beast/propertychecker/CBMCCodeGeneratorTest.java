@@ -13,38 +13,53 @@ import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import java.util.ArrayList;
-
+import java.util.List;
 
 /**
  *
  * @author Niels
  */
 public class CBMCCodeGeneratorTest {
-    
+
     public static void main(String args[]) {
-        InternalTypeContainer type = new InternalTypeContainer(InternalTypeRep.WEIGHTEDAPPROVAL);
+        InternalTypeContainer type = new InternalTypeContainer(InternalTypeRep.APPROVAL);
         ElectionTypeContainer inputType = new ElectionTypeContainer(type, "input");
-        type = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
+        InternalTypeContainer type2 = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
+        type = new InternalTypeContainer(type2, InternalTypeRep.CANDIDATE);
         ElectionTypeContainer outputType = new ElectionTypeContainer(type, "output");
 
-        ElectionDescription electionDescription = new ElectionDescription("", inputType, outputType, 0);
+        ElectionDescription electionDescription = new ElectionDescription("name", inputType, outputType, 0);
+        ArrayList<String> userCode = new ArrayList<>();
+        userCode.add("votingcode");
+        userCode.add("abalsdf");
+        electionDescription.setCode(userCode);
 
         SymbolicVariableList symbolicVariableList = new SymbolicVariableList();
 
         String pre = "FOR_ALL_VOTERS(v) : EXISTS_ONE_CANDIDATE(c) : (c == VOTES2(v) && (VOTE_SUM_FOR_CANDIDATE(c)>= 3 ==> c < 2));";
         String post = "VOTES2 == VOTES1;";
-        
+
         FormalPropertiesDescription preDescr = new FormalPropertiesDescription(pre);
         FormalPropertiesDescription postDescr = new FormalPropertiesDescription(post);
 
         PostAndPrePropertiesDescription postAndPrePropertiesDescription = new PostAndPrePropertiesDescription("name", preDescr, postDescr, symbolicVariableList);
 
+        SymbolicVariableList symVariableList = new SymbolicVariableList();
+        symVariableList.addSymbolicVariable("c", new InternalTypeContainer(InternalTypeRep.INTEGER));
+        symVariableList.addSymbolicVariable("s", new InternalTypeContainer(InternalTypeRep.SEAT));
+        symVariableList.addSymbolicVariable("v", new InternalTypeContainer(InternalTypeRep.VOTER));
+
+        postAndPrePropertiesDescription.setSymbolicVariableList(symVariableList);
+
         CBMCCodeGenerator generator = new CBMCCodeGenerator(electionDescription, postAndPrePropertiesDescription);
 
+        System.out.println();
+        System.out.println("-----------------hier beginnt der generierte Code-------------------");
+        System.out.println();
         ArrayList<String> code;
         code = generator.getCode();
-        for (String n : code) {
+        code.forEach((n) -> {
             System.out.println(n);
-        }
+        });
     }
 }

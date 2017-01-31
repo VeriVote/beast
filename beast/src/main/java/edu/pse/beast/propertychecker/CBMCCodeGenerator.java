@@ -62,7 +62,12 @@ public class CBMCCodeGenerator {
 
         addMainMethod();
 
-        //code.addAll(electionDescription.getCode());
+        code.add("//Code of the user");
+        ArrayList<String> electionDescriptionCode = (ArrayList<String>) electionDescription.getCode();
+        electionDescriptionCode.forEach((item) -> {
+            code.add(item);
+        });
+
     }
 
     // maybe add something that let's the user use imports
@@ -117,9 +122,11 @@ public class CBMCCodeGenerator {
      */
     private void addSymbVarInitialisation() {
         LinkedList<SymbolicVariable> symbolicVariableList = postAndPrePropertiesDescription.getSymbolicVariableList();
+        code.add("//Symbolic Variables initialisation");
         symbolicVariableList.forEach((symbVar) -> {
             InternalTypeContainer internalType = symbVar.getInternalTypeContainer();
             String id = symbVar.getId();
+
             if (!internalType.isList()) {
                 switch (internalType.getInternalType()) {
 
@@ -148,6 +155,7 @@ public class CBMCCodeGenerator {
                     case WEIGHTEDAPPROVAL:
                         break;
                     case INTEGER:
+                        code.add("unsigned int " + id + " = nondet_uint();");
                         break;
                     default:
                         reportUnsupportedType(id);
@@ -157,6 +165,7 @@ public class CBMCCodeGenerator {
                 reportUnsupportedType(id);
             }
         });
+        code.add("");
 
     }
 
@@ -194,13 +203,17 @@ public class CBMCCodeGenerator {
 
     private void addVotesArrayAndElectInitialisation() {
 
+        code.add("//voting-array and elect variable initialisation");
+
         ElectionTypeContainer inputElectionType = electionDescription.getInputType();
         InternalTypeContainer inputInternalType = inputElectionType.getType();
 
         ElectionTypeContainer outputElectionType = electionDescription.getOutputType();
         InternalTypeContainer outputInternalType = outputElectionType.getType();
 
-        if (outputInternalType.getInternalType() == InternalTypeRep.CANDIDATE) {
+        if (outputInternalType.getInternalType() == InternalTypeRep.CANDIDATE
+                || outputInternalType.isList()
+                && outputInternalType.getListedType().getInternalType() == InternalTypeRep.CANDIDATE) {
 
             switch (inputInternalType.getInternalType()) {
                 case VOTER:
@@ -235,7 +248,7 @@ public class CBMCCodeGenerator {
                         code.add("for(i" + loopVariableCounter + " = 0; i" + loopVariableCounter
                                 + " < V; i" + loopVariableCounter + "++) {");
                         code.addTab();
-                        code.add("unsigned int i" + (loopVariableCounter + 1));
+                        code.add("unsigned int i" + (loopVariableCounter + 1) + ";");
                         code.add("for(i" + (loopVariableCounter + 1) + " = 0; i" + (loopVariableCounter + 1)
                                 + " < V; i" + (loopVariableCounter + 1) + "++) {");
                         code.addTab();
@@ -266,7 +279,7 @@ public class CBMCCodeGenerator {
                         code.add("for(i" + loopVariableCounter + " = 0; i" + loopVariableCounter
                                 + " < V; i" + loopVariableCounter + "++) {");
                         code.addTab();
-                        code.add("unsigned int i" + (loopVariableCounter + 1)+";");
+                        code.add("unsigned int i" + (loopVariableCounter + 1) + ";");
                         code.add("for(i" + (loopVariableCounter + 1) + " = 0; i" + (loopVariableCounter + 1)
                                 + " < V; i" + (loopVariableCounter + 1) + "++) {");
                         code.addTab();
@@ -300,9 +313,6 @@ public class CBMCCodeGenerator {
         } else {
             ErrorLogger.log("The output Type can only be CANDIDATE");
         }
-
-        // toDo : add elect initialisation
-        // code.add("unsigned int elect"+i+" = voting(votes"+i+");"); this should work for normal returntyps
     }
 
     private BooleanExpListNode generateAST(String code) {
