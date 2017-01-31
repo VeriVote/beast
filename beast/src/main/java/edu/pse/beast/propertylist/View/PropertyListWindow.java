@@ -45,15 +45,11 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	private JPanel panel;
 	private JPanel endpanel;
 	
-	//private ObjectRefsForBuilder refs;
-	//private PropertyList list;
-	
 	private ArrayList<ListItem> items = new ArrayList<ListItem>();
 	private JButton addNewButton = new JButton();
 	
 	private NewPropertyWindow newPropWindow;
 
-	//MVC
 	public PropertyListWindow(PLControllerInterface controller, PLModelInterface model) {
 		this.controller = controller;
 		this.model = model;
@@ -61,12 +57,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		init();
 	}
 	
-	//superfluous
-	/*public PropertyListWindow() {
-		init();
-	}*/
 	
-	//MVC
 	private void init() {
 		newPropWindow = new NewPropertyWindow(controller, model);
 		
@@ -112,28 +103,24 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	}
 	
 	
-	/*public PropertyListWindow(ObjectRefsForBuilder refs) {
-		this.refs = refs;
-		init();
-	}*/
-	
 	public JToolBar getToolbar() {
     	return toolBar;
     }
-	
 	public ArrayList<ListItem> getList() {
 		return items;
 	}
 	public void setList(ArrayList<ListItem> items) {
 		this.items = items;
 	}
-	/*public void setPropertyList(PropertyList list) {
-		this.list = list;
-	}*/
 
+	
+	public void addItem(PropertyItem prop) {
+		ListItem addedItem = new ListItem(controller, model, prop);
+		panel.add(addedItem, BorderLayout.CENTER);
+	}
+	
 	private void updateItems() {
 		panel.repaint();
-		if (items.isEmpty()) items.add(new ListItem(controller, model));
 		for (ListItem item : items) {
 			panel.add(item, BorderLayout.CENTER);
 		}
@@ -153,21 +140,22 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		
 		this.setTitle(other.getStringFromID("title"));
 		
-		//menuFile.setText(sli.getPropertyListStringResProvider().getMenuStringRes().getStringFromID("menuFile"));
-		//menuEdit.setText(sli.getPropertyListStringResProvider().getMenuStringRes().getStringFromID("menuEdit"));
-		//addNewButton.setText(sli.getPropertyListStringResProvider().getToolbarTipStringRes().getStringFromID("addNew"));
-		//setTitle(sli.getPropertyListStringResProvider().getMenuStringRes().getStringFromID("title"));
 	}
 
-	//MVC not yet
+
 	@Override
 	public void update(Observable o, Object obj) {
-		ArrayList<PropertyItem> list = ((PLModel)o).getDescr();
+		ArrayList<PropertyItem> list = model.getList();
+		
+		// check if new property was added to model
+		if (list.size() > items.size()) addItem(list.get(model.getDirtyIndex()));
+		
+		/*ArrayList<PropertyItem> list = ((PLModel)o).getDescr();
 		items = new ArrayList<ListItem>();
 		for (PropertyItem item : list) {
 			items.add(new ListItem(controller, model, item));
 		}
-		updateItems();
+		updateItems();*/
 	}
 
 	//MVC

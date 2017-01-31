@@ -9,11 +9,12 @@ import edu.pse.beast.propertylist.PropertyItem;
 public class PLModel extends Observable implements PLModelInterface {
 	
 	private ArrayList<PropertyItem> propertyList;
+	private int dirtyIndex;
 
 	@Override
 	public void initialize() {
-		// TODO Auto-generated method stub
-		
+		if (propertyList == null) propertyList = new ArrayList<PropertyItem>();
+		if (propertyList.isEmpty()) propertyList.add(new PropertyItem());
 	}
 
 	@Override
@@ -38,38 +39,43 @@ public class PLModel extends Observable implements PLModelInterface {
 	}
 
 	@Override
-	public boolean newDescription(String name) {
-		PropertyItem newItem = new PropertyItem(new PostAndPrePropertiesDescription(name), false);
+	public boolean addNewProperty() {
+		String name = "Eigenschaft ";
+		PropertyItem newItem = new PropertyItem(new PostAndPrePropertiesDescription(name + propertyList.size()), false);
 		propertyList.add(newItem);
+		dirtyIndex = propertyList.indexOf(newItem);
+		updateView();
 		return true;
 	}
 
 	@Override
-	public void changeDescription(PropertyItem prop) {
+	public void editProperty(PropertyItem prop) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public PropertyItem deleteDescription(PropertyItem prop) {
+	public PropertyItem deleteProperty(PropertyItem prop) {
 		int index = propertyList.indexOf(prop);
 		if (index == -1) return null;
 		return propertyList.remove(index);
 	}
 
 	@Override
-	public void changeTestedStatus(PropertyItem prop) {
+	public void setTestStatus(PropertyItem prop) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public ArrayList<PropertyItem> getDescr() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<PropertyItem> getList() {
+		return propertyList;
 	}
 
 	
+	public int getDirtyIndex() {
+		return dirtyIndex;
+	}
 	
 	private int indexOfName(String name) {
 		for (PropertyItem current : propertyList) {
@@ -77,6 +83,13 @@ public class PLModel extends Observable implements PLModelInterface {
 		}
 		return -1;
 	}
+	
+	private void updateView() {
+		this.setChanged();
+		this.notifyObservers();
+		this.clearChanged();
+	}
+	
 
 	
 	

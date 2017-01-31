@@ -39,7 +39,6 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 		this.booleanExpEditor = booleanExpEditor;
 		view = new PropertyListWindow(this, model);
 		model.initialize();
-		//hasChanged = false;
 	}
 	
 	@Override
@@ -48,9 +47,8 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 		
 	}
 	@Override
-	public boolean changeName(PropertyItem prop, String newName) {
-		// TODO Auto-generated method stub
-		return false;
+	public void changeName(PropertyItem prop, String newName) {
+		model.changeName(prop, newName);
 	}
 	@Override
 	public void setTestStatus(PropertyItem prop) {
@@ -63,70 +61,23 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 		
 	}
 	@Override
-	public PropertyItem deleteProperty(PropertyItem prop) {
+	public void deleteProperty(PropertyItem prop) {
 		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public boolean addDescription(PostAndPrePropertiesDescription desc) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	@Override
-	public boolean addNewProperty(String name) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-	
-	
-	// ------------- under MVC
-	
-	
-	
-	// private static PropertyList instance;
-	private ArrayList<PropertyItem> propDescs;
-    private boolean hasChanged;
-    //private int changedIndex;
-	
-	
-     
-	/*private void change(int changedIndex) {
-		this.changedIndex = changedIndex;
-	}*/
-	
-    
-    /*
-    @Override
-	public boolean hasChanged() {
-		return hasChanged;
-	}
-	@Override
-	protected void clearChanged() {
-		hasChanged = false;
-	}
-	
-	
-	*/
-	
-	
-	
-	
-	/**
-	 * @param newList
-	 
-	public void refillInstance(ArrayList<PropertyItem> newList) {
-		propertyDescriptions = newList;
-	}*/
-	
-	/*private void checkForCurrentEditorContent() {
-		String currentlyInEditor = booleanExpEditor.getCurrentlyLoadedPostAndPreProp().getName();
 		
-		PropertyItem editorProp = propDescs.get(indexOfName(currentlyInEditor));
+	}
+	@Override
+	public void addDescription(PostAndPrePropertiesDescription desc) {
+		// TODO Auto-generated method stub
 		
-		editorProp.setDescription(booleanExpEditor.getCurrentlyLoadedPostAndPreProp());
-	}*/
+	}
+	@Override
+	public void addNewProperty() {
+		model.addNewProperty();
+		view.addItem(model.getList().get(model.getList().size() - 1));
+	}
 	
 
+	
 
     /* (non-Javadoc)
      * @see edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource#isCorrect()
@@ -149,19 +100,17 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
      * @see edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource#getPostAndPrePropertiesDescriptions()
      */
 	public ArrayList<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptions() {
+		return null;
 		/*ArrayList<PostAndPrePropertiesDescription> res = new ArrayList<PostAndPrePropertiesDescription>();
 		for (PropertyItem item : propertyDescriptions) res.add(item.getDescription());
-		return res;*/
+		return res;
 		ArrayList<PostAndPrePropertiesDescription> result = new ArrayList<PostAndPrePropertiesDescription>();
 		for (PropertyItem item : propDescs) {
 			result.add(item.getDescription());
 		}
-		return result;
+		return result;*/
 	}
 	
-	public ArrayList<PropertyItem> getDescr() {
-		return propDescs;
-	}
 
 
 	@Override

@@ -44,7 +44,7 @@ public class NewPropertyWindow extends JFrame {
 		addNewProperty.setText("Neu");
 		addNewProperty.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				controller.addNewProperty();
 			}
 		});
 		

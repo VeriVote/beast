@@ -11,12 +11,14 @@ public interface PLModelInterface {
 	
 	boolean changeName(PropertyItem prop, String newName);
 	boolean addDescription(PostAndPrePropertiesDescription desc);
-	boolean newDescription(String name);
-	void changeDescription(PropertyItem prop);
-	PropertyItem deleteDescription(PropertyItem prop);
-	void changeTestedStatus(PropertyItem prop);
+	boolean addNewProperty();
+	void editProperty(PropertyItem prop);
+	PropertyItem deleteProperty(PropertyItem prop);
+	void setTestStatus(PropertyItem prop);
 	
-	ArrayList<PropertyItem> getDescr();
+	ArrayList<PropertyItem> getList();
+	
+	int getDirtyIndex();
 
 	void addObserver(Observer o);
 	void deleteObserver(Observer o);
