@@ -46,6 +46,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private int electExpCounter;
     private int voteExpCounter;
     private int voteSumExpressionCounter;
+    private int loopVariable;
     private Stack<String> variableNames;
     private CodeArrayListBeautifier code;
 
@@ -63,6 +64,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         electExpCounter = 0;
         voteExpCounter = 0;
         voteSumExpressionCounter = 0;
+        loopVariable = 0;
         code = new CodeArrayListBeautifier();
     }
 
@@ -72,6 +74,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     public void setToPostPropertyMode() {
         assumeOrAssert = "assert";
+
     }
 
     public ArrayList<String> generateCode(BooleanExpressionNode node) {
@@ -83,25 +86,52 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         return code.getCodeArrayList();
     }
 
-
     @Override
     public void visitAndNode(LogicalAndNode node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        String varName = "and_" + andNodeCounter;
+        andNodeCounter++;
+        variableNames.push(varName);
+        node.getLHSBooleanExpNode().getVisited(this);
+        node.getRHSBooleanExpNode().getVisited(this);
+        code.add("unsigned int " + varName + " = ((" + variableNames.pop() + ") && (" + variableNames.pop() + "));");
+        testIfLast();
+
     }
 
     @Override
     public void visitOrNode(LogicalOrNode node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String varName = "or_" + orNodeCounter;
+        orNodeCounter++;
+        variableNames.push(varName);
+        node.getLHSBooleanExpNode().getVisited(this);
+        node.getRHSBooleanExpNode().getVisited(this);
+        code.add("unsigned int " + varName + " = ((" + variableNames.pop() + ") || (" + variableNames.pop() + "));");
+        testIfLast();
     }
 
     @Override
     public void visitImplicationNode(ImplicationNode node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String varName = "implication_" + implicationNodeCounter;
+        implicationNodeCounter++;
+        variableNames.push(varName);
+        node.getLHSBooleanExpNode().getVisited(this);
+        node.getRHSBooleanExpNode().getVisited(this);
+        code.add("unsigned int " + varName + " = (!(" + variableNames.pop() + ") || (" + variableNames.pop() + "));");
+        testIfLast();
     }
 
     @Override
     public void visitAquivalencyNode(EquivalencyNode node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String varName = "aquivalency_" + aquivalencyNodeCounter;
+        aquivalencyNodeCounter++;
+        variableNames.push(varName);
+        node.getLHSBooleanExpNode().getVisited(this);
+        node.getRHSBooleanExpNode().getVisited(this);
+        String lhs = variableNames.pop();
+        String rhs = variableNames.pop();
+        code.add("unsigned int " + varName + " = (((" + lhs + ") && (" + rhs + ")) || (!(" + lhs + ") && (!" + rhs + ")));");
+        testIfLast();
     }
 
     @Override
@@ -116,12 +146,24 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitNotNode(NotNode node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String varName = "not_" + notNodeCounter;
+        notNodeCounter++;
+        variableNames.push(varName);
+        node.getNegatedExpNode().getVisited(this);
+        code.add("unsigned int " + varName + " = !(" + variableNames.pop() + ");");
+        testIfLast();
     }
 
     @Override
     public void visitComparisonNode(ComparisonNode node) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String varName = "comparison_" + comparisonNodeCounter;
+        comparisonNodeCounter++;
+        variableNames.push(varName);
+        node.getLHSBooleanExpNode().getVisited(this);
+        node.getRHSBooleanExpNode().getVisited(this);
+        code.add("unsigned int " + varName + " = ((" + variableNames.pop() + ") "
+                + node.getComparisonSymbol() + " (" + variableNames.pop() + "));");
+        testIfLast();
     }
 
     @Override
@@ -131,7 +173,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitConstExp(ConstantExp exp) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        variableNames.push(exp.getConstant());
     }
 
     @Override
@@ -154,4 +196,10 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    private void testIfLast() {
+        if (variableNames.size() == 1) {
+            code.add(assumeOrAssert + "(" + variableNames.pop() + ")");
+            variableNames.pop();
+        }
+    }
 }

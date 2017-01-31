@@ -31,7 +31,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
  * @author Niels
  */
 public class CBMCCodeGenerator {
-
+    
     private final CodeArrayListBeautifier code;
     private final ElectionDescription electionDescription;
     private final PostAndPrePropertiesDescription postAndPrePropertiesDescription;
@@ -39,7 +39,7 @@ public class CBMCCodeGenerator {
     private final CBMCCodeGenerationVisitor visitor;
     private int numberOfTimesVoted; // this number should be the number of rounds of votes the Propertys compare.
     private int loopVariableCounter;
-
+    
     public CBMCCodeGenerator(ElectionDescription electionDescription, PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
         this.visitor = new CBMCCodeGenerationVisitor();
         this.translator = new FormalPropertySyntaxTreeToAstTranslator();
@@ -52,22 +52,22 @@ public class CBMCCodeGenerator {
         this.loopVariableCounter = 0;
         generateCode();
     }
-
+    
     public ArrayList<String> getCode() {
         return code.getCodeArrayList();
     }
-
+    
     private void generateCode() {
         addHeader();
-
+        
         addMainMethod();
-
+        
         code.add("//Code of the user");
         ArrayList<String> electionDescriptionCode = (ArrayList<String>) electionDescription.getCode();
         electionDescriptionCode.forEach((item) -> {
             code.add(item);
         });
-
+        
     }
 
     // maybe add something that let's the user use imports
@@ -89,7 +89,7 @@ public class CBMCCodeGenerator {
      * the main method the votingmethod is called
      */
     private void addMainMethod() {
-
+        
         code.add("int main(int argc, char *argv[]) {");
         code.addTab();
 
@@ -101,9 +101,9 @@ public class CBMCCodeGenerator {
                 = generateAST(postAndPrePropertiesDescription.getPrePropertiesDescription().getCode());
         BooleanExpListNode postAST
                 = generateAST(postAndPrePropertiesDescription.getPostPropertiesDescription().getCode());
-
+        
         initializeNumberOfTimesVoted(preAST, postAST);
-
+        
         addVotesArrayAndElectInitialisation();
 
         // the the PreProperties must be definied
@@ -111,7 +111,7 @@ public class CBMCCodeGenerator {
 
         // now the Post Properties can be checked
         addPostProperties(postAST);
-
+        
         code.deleteTab();
         code.add("}");
     }
@@ -126,10 +126,10 @@ public class CBMCCodeGenerator {
         symbolicVariableList.forEach((symbVar) -> {
             InternalTypeContainer internalType = symbVar.getInternalTypeContainer();
             String id = symbVar.getId();
-
+            
             if (!internalType.isList()) {
                 switch (internalType.getInternalType()) {
-
+                    
                     case VOTER:
                         code.add("unsigned int " + id + " = nondet_uint();");
                         // a Voter is basically an unsigned int.
@@ -159,26 +159,28 @@ public class CBMCCodeGenerator {
                         break;
                     default:
                         reportUnsupportedType(id);
-
+                    
                 }
             } else {
                 reportUnsupportedType(id);
             }
         });
         code.add("");
-
+        
     }
 
     /**
      * this adds the Code of the PreProperties. It uses a Visitor it creates
      */
     private void addPreProperties(BooleanExpListNode preAST) {
-
+        
         visitor.setToPrePropertyMode();
-        //for(BooleanExp n : preAST.getBooleanExpressions()){
-        //    
-        //}
-
+        preAST.getBooleanExpressions().forEach((booleanExpressionLists) -> {
+            booleanExpressionLists.forEach((booleanNode) -> {
+                code.addArrayList(visitor.generateCode(booleanNode));
+            });
+        });
+        
     }
 
     /**
@@ -187,11 +189,11 @@ public class CBMCCodeGenerator {
     private void addPostProperties(BooleanExpListNode postAST) {
         visitor.setToPostPropertyMode();
     }
-
+    
     private void reportUnsupportedType(String id) {
         ErrorLogger.log("Der Typ der symbolischen Variable " + id + " wird nicht unterstützt");
     }
-
+    
     private void initializeNumberOfTimesVoted(BooleanExpListNode preAST, BooleanExpListNode postAST) {
         numberOfTimesVoted = (preAST.getMaxVoteLevel() > postAST.getMaxVoteLevel())
                 ? preAST.getMaxVoteLevel() : postAST.getMaxVoteLevel();
@@ -200,21 +202,21 @@ public class CBMCCodeGenerator {
         numberOfTimesVoted = (postAST.getHighestElect() > numberOfTimesVoted)
                 ? postAST.getHighestElect() : numberOfTimesVoted;
     }
-
+    
     private void addVotesArrayAndElectInitialisation() {
-
+        
         code.add("//voting-array and elect variable initialisation");
-
+        
         ElectionTypeContainer inputElectionType = electionDescription.getInputType();
         InternalTypeContainer inputInternalType = inputElectionType.getType();
-
+        
         ElectionTypeContainer outputElectionType = electionDescription.getOutputType();
         InternalTypeContainer outputInternalType = outputElectionType.getType();
-
+        
         if (outputInternalType.getInternalType() == InternalTypeRep.CANDIDATE
                 || outputInternalType.isList()
                 && outputInternalType.getListedType().getInternalType() == InternalTypeRep.CANDIDATE) {
-
+            
             switch (inputInternalType.getInternalType()) {
                 case VOTER:
                     ErrorLogger.log("The input Type should not be VOTER");
@@ -236,7 +238,7 @@ public class CBMCCodeGenerator {
                             code.add("unsigned int elect" + i + " = voting(votes" + i + ");");
                         }
                     }
-
+                    
                     break;
                 case SEAT:
                     ErrorLogger.log("The input Type should not be SEAT");
@@ -308,24 +310,24 @@ public class CBMCCodeGenerator {
                     break;
                 default:
                     throw new AssertionError(inputInternalType.getInternalType().name());
-
+                
             }
         } else {
             ErrorLogger.log("The output Type can only be CANDIDATE");
         }
     }
-
+    
     private BooleanExpListNode generateAST(String code) {
         FormalPropertyDescriptionLexer l = new FormalPropertyDescriptionLexer(new ANTLRInputStream(code));
         CommonTokenStream ts = new CommonTokenStream(l);
         FormalPropertyDescriptionParser p = new FormalPropertyDescriptionParser(ts);
-
+        
         BooleanExpScope declaredVars = new BooleanExpScope();
-
+        
         postAndPrePropertiesDescription.getSymbolicVariableList().forEach((v) -> {
             declaredVars.addTypeForId(v.getId(), v.getInternalTypeContainer());
         });
-
+        
         return translator.generateFromSyntaxTree(
                 p.booleanExpList(),
                 electionDescription.getInputType().getType(),
