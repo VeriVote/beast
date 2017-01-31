@@ -45,4 +45,9 @@ public class CodeArrayListBeautifier {
     public ArrayList<String> getCodeArrayList() {
         return code;
     }
+    public void addArrayList(ArrayList<String> arrayList){
+        for (String singleItem : arrayList){
+            this.add(singleItem);
+        }
+    }
 }
