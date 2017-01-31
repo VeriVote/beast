@@ -37,6 +37,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 	public PropertyList(PLModelInterface model, BooleanExpEditor booleanExpEditor) {
 		this.model = model;
 		this.booleanExpEditor = booleanExpEditor;
+		booleanExpEditor.showWindow();
 		view = new PropertyListWindow(this, model);
 		model.initialize();
 	}
@@ -73,7 +74,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 	@Override
 	public void addNewProperty() {
 		model.addNewProperty();
-		view.addItem(model.getList().get(model.getList().size() - 1));
+		//view.addItem(model.getList().get(model.getList().size() - 1));
 	}
 	
 

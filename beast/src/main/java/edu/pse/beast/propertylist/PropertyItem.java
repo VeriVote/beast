@@ -54,7 +54,7 @@ public class PropertyItem {
 	@Override
 	public boolean equals (Object o) {
 		if (o == null || this.getClass() != o.getClass()) return false;
-		if (this.description.getName() == ((PropertyItem)o).description.getName()) return true;
+		if (this.description.getName().equals(((PropertyItem)o).description.getName())) return true;
 		else return false;
 	}
 	

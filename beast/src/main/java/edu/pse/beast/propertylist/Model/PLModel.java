@@ -41,7 +41,10 @@ public class PLModel extends Observable implements PLModelInterface {
 	@Override
 	public boolean addNewProperty() {
 		String name = "Eigenschaft ";
-		PropertyItem newItem = new PropertyItem(new PostAndPrePropertiesDescription(name + propertyList.size()), false);
+		int i = 0;
+		while (indexOfName(name + i) != -1) i++;
+		
+		PropertyItem newItem = new PropertyItem(new PostAndPrePropertiesDescription(name + i), false);
 		propertyList.add(newItem);
 		dirtyIndex = propertyList.indexOf(newItem);
 		updateView();
@@ -79,7 +82,7 @@ public class PLModel extends Observable implements PLModelInterface {
 	
 	private int indexOfName(String name) {
 		for (PropertyItem current : propertyList) {
-			if (current.getDescription().getName() == name) return propertyList.indexOf(current);
+			if (current.getDescription().getName().equals(name)) return propertyList.indexOf(current);
 		}
 		return -1;
 	}
