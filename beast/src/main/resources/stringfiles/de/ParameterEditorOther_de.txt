@@ -1,0 +1,14 @@
+title : Parametereditor
+voters : Wähler
+candidates : Kandidaten
+seats : Sitze
+duration : Dauer
+max_processes : Max. Prozesse
+to : bis
+advanced : Erweitert...
+seconds : Sekunden
+minutes : Minuten
+hours : Stunden
+days : Tage
+ok : OK
+cancel : Abbrechen
