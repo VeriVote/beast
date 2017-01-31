@@ -38,33 +38,33 @@ public class CBMCProcessFactory extends CheckerFactory {
 	}
 
 	@Override
-	protected void startProcess(ElectionDescriptionSource electionDescSrc,
+	protected Checker startProcess(ElectionDescriptionSource electionDescSrc,
 			PostAndPrePropertiesDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
 			CheckerFactory parent) {
 
 	    //remove all unnecessary whitespaces
 	    advanced = advanced.trim().replaceAll(" +", " ");
 	    
-	    String arguments = advanced + " -D V=" + voters + " -D C=" + candidates + " -D S=" + seats;
-		
-		
-		// create the file in which the code is saved
-
+		// create the file in which the code is saved if it doesn't exist already
 		if (toCheck == null) {
 			//create the file only once for one factory and reuse it then
 			toCheck = createCodeFile(electionDescSrc, postAndPrepPropDesc);
 		}
-
+		
+		Checker startedChecker = null;
+		
 		switch (OS) {
 		case Linux:
-			new LinuxProcess(voters, candidates, seats, advanced, toCheck, parent);
+			startedChecker = new LinuxProcess(voters, candidates, seats, advanced, toCheck, parent);
 			break;
 		case Windows:
-			new WindowsProcess(voters, candidates, seats, advanced, toCheck, parent);
+			startedChecker = new WindowsProcess(voters, candidates, seats, advanced, toCheck, parent);
 			break;
 		default:
 			ErrorLogger.log("Warning, your OS couldn't be determined.");
 		}
+		
+		return startedChecker;
 	}
 
 	@Override

@@ -68,10 +68,11 @@ public class LinuxProcess extends CBMCProcess {
         } else {
             process.destroyForcibly();
         }
-
+        
         if (process.isAlive()) {
-            ErrorLogger.log("Warning, the program was unable to shut down the CBMC Process");
-        }
+			ErrorLogger.log("Warning, the program was unable to shut down the CBMC Process \n"
+					+ "Please kill it manually, especially if it starts taking up a lot of ram");
+		}
     }
 
 }

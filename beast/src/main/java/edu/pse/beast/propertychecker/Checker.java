@@ -65,7 +65,9 @@ public abstract class Checker implements Runnable {
 					}
 					break polling;
 				} else if (interrupted) {
+					
 					stopProcess();
+					
 					outReader.stopReading();
 					errReader.stopReading();
 					break polling;

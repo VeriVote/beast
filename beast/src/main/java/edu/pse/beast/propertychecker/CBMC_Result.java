@@ -12,14 +12,18 @@ public class CBMC_Result extends Result {
 			ErrorLogger.log("Result isn't ready yet");
 			return;
 		} else if (isTimedOut()) {
-			presenter.presentTimeOut();
+			System.out.println("timeout");
+//			presenter.presentTimeOut();
 		} else if (!isValid()) {
-			presenter.presentFailure();
+			System.out.println("otherfailure");
+//			presenter.presentFailure();
 		} else if (isSuccess()) {
-			presenter.presentSuccess();
+			System.out.println("success");
+//			presenter.presentSuccess();
 		} else {
 		    //TODO implement here real counterexample
-			presenter.presentFailureExample(new FailureExample(getResult()));
+			System.out.println("counter exmple: ");
+//			presenter.presentFailureExample(new FailureExample(getResult()));
 		}
 	}
 }

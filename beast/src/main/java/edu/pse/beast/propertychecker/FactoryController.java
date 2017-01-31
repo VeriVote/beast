@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.propertychecker;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -34,7 +35,6 @@ public class FactoryController implements Runnable {
 	private final String checkerID;
 	private boolean stopped = false;
 	private final int concurrentChecker;
-	private int currentlyActiveChecker = 0;
 
 	/**
 	 * 
@@ -56,7 +56,8 @@ public class FactoryController implements Runnable {
 		this.postAndPrePropDescrSrc = postAndPrePropDescrSrc;
 		this.parmSrc = parmSrc;
 		this.checkerID = checkerID;
-
+		this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
+		
 		this.results = CheckerFactoryFactory.getMatchingResult(checkerID,
 				postAndPrePropDescrSrc.getPostAndPrePropertiesDescriptions().size());
 
@@ -82,23 +83,23 @@ public class FactoryController implements Runnable {
 
 		outerLoop: for (int i = 0; i < properties.size(); i++) {
 			innerLoop: while (!stopped) {
-				if (currentlyActiveChecker < concurrentChecker) {
+				if (currentlyRunning.size() < concurrentChecker) {
 					CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID, this, electionDescSrc,
 							properties.get(i), parmSrc, results.get(i));
 
-					// starts the factory
+					
+					synchronized (this) {
+						currentlyRunning.add(factory);						
+					}
+					
 					new Thread(factory).start();
 
-					synchronized (this) {
-						currentlyActiveChecker++;
-					}
 
 					break innerLoop;
 				} else {
 					try {
 						Thread.sleep(pollingInterval);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -123,7 +124,7 @@ public class FactoryController implements Runnable {
 	 */
 	public void stopChecking(boolean timeOut) {
 
-		if (stopped) {
+		if (!stopped) {
 			this.stopped = true;
 			for (Iterator<CheckerFactory> iterator = currentlyRunning.iterator(); iterator.hasNext();) {
 				CheckerFactory toStop = (CheckerFactory) iterator.next();
@@ -146,12 +147,12 @@ public class FactoryController implements Runnable {
 		}
 	}
 
-	public void notifyThatFinished() {
-		if (currentlyActiveChecker == 0) {
+	public synchronized void notifyThatFinished(CheckerFactory finishedFactory) {
+		if (currentlyRunning.size() == 0) {
 			ErrorLogger.log("A checker finished when no checker was active.");
 		} else {
 			synchronized (this) {
-				currentlyActiveChecker--;
+				currentlyRunning.remove(finishedFactory);
 			}
 		}
 	}
