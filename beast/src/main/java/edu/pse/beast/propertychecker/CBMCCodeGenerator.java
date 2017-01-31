@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
+import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
@@ -31,7 +32,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
  */
 public class CBMCCodeGenerator {
 
-    private final ArrayList<String> code;
+    private final CodeArrayListBeautifier code;
     private final ElectionDescription electionDescription;
     private final PostAndPrePropertiesDescription postAndPrePropertiesDescription;
     private final FormalPropertySyntaxTreeToAstTranslator translator;
@@ -44,7 +45,7 @@ public class CBMCCodeGenerator {
         this.translator = new FormalPropertySyntaxTreeToAstTranslator();
         this.electionDescription = electionDescription;
         this.postAndPrePropertiesDescription = postAndPrePropertiesDescription;
-        code = new ArrayList<>();
+        code = new CodeArrayListBeautifier();
         /*
         the variable loopVariableCounter is supposed to provide an index so that it is possible to have loops within loops in the generated code
          */
@@ -53,7 +54,7 @@ public class CBMCCodeGenerator {
     }
 
     public ArrayList<String> getCode() {
-        return code;
+        return code.getCodeArrayList();
     }
 
     private void generateCode() {
@@ -61,7 +62,7 @@ public class CBMCCodeGenerator {
 
         addMainMethod();
 
-        code.addAll(electionDescription.getCode());
+        //code.addAll(electionDescription.getCode());
     }
 
     // maybe add something that let's the user use imports
@@ -85,7 +86,7 @@ public class CBMCCodeGenerator {
     private void addMainMethod() {
 
         code.add("int main(int argc, char *argv[]) {");
-        //tab here
+        code.addTab();
 
         // first the Variables have to be Initialized
         addSymbVarInitialisation();
@@ -106,7 +107,7 @@ public class CBMCCodeGenerator {
         // now the Post Properties can be checked
         addPostProperties(postAST);
 
-        // untab here
+        code.deleteTab();
         code.add("}");
     }
 
@@ -207,13 +208,13 @@ public class CBMCCodeGenerator {
                     break;
                 case CANDIDATE:
                     for (int i = 1; i <= numberOfTimesVoted; i++) {
-                        code.add("unsigned int votes" + i + "[V]");
-                        code.add("unsigned int i" + loopVariableCounter);
+                        code.add("unsigned int votes" + i + "[V];");
+                        code.add("unsigned int i" + loopVariableCounter + ";");
                         code.add("for(i" + loopVariableCounter + " = 0; i" + loopVariableCounter
                                 + " < V; i" + loopVariableCounter + "++) {");
-                        // tab here
+                        code.addTab();
                         code.add("votes" + i + "[i" + loopVariableCounter + "] = nondet_uint();");
-                        // untab here
+                        code.deleteTab();
                         code.add("}");
                         loopVariableCounter++;
                         if (outputInternalType.isList()) {
@@ -229,25 +230,25 @@ public class CBMCCodeGenerator {
                     break;
                 case APPROVAL:
                     for (int i = 1; i <= numberOfTimesVoted; i++) {
-                        code.add("unsigned int votes" + i + "[V][C]");
-                        code.add("unsigned int i" + loopVariableCounter);
+                        code.add("unsigned int votes" + i + "[V][C];");
+                        code.add("unsigned int i" + loopVariableCounter + ";");
                         code.add("for(i" + loopVariableCounter + " = 0; i" + loopVariableCounter
                                 + " < V; i" + loopVariableCounter + "++) {");
-                        // tab here
+                        code.addTab();
                         code.add("unsigned int i" + (loopVariableCounter + 1));
                         code.add("for(i" + (loopVariableCounter + 1) + " = 0; i" + (loopVariableCounter + 1)
                                 + " < V; i" + (loopVariableCounter + 1) + "++) {");
-                        // tab here
+                        code.addTab();
                         code.add("votes" + i + "[i" + loopVariableCounter
                                 + "][i" + (loopVariableCounter + 1) + " = nondet_uint();");
                         // for approval the values are either 0 or 1 for every candidate
                         code.add("assume(0 <= votes" + i + "[i" + loopVariableCounter
                                 + "][i" + (loopVariableCounter + 1)
                                 + "&& + votes" + i + "[i" + loopVariableCounter
-                                + "][i" + (loopVariableCounter + 1) + " <=1)");
-                        // untab here
+                                + "][i" + (loopVariableCounter + 1) + " <=1);");
+                        code.deleteTab();
                         code.add("}");
-                        // untab here
+                        code.deleteTab();
                         code.add("}");
                         loopVariableCounter++;
                         loopVariableCounter++;
@@ -260,25 +261,25 @@ public class CBMCCodeGenerator {
                     break;
                 case WEIGHTEDAPPROVAL:
                     for (int i = 1; i <= numberOfTimesVoted; i++) {
-                        code.add("unsigned int votes" + i + "[V][C]");
-                        code.add("unsigned int i" + loopVariableCounter);
+                        code.add("unsigned int votes" + i + "[V][C];");
+                        code.add("unsigned int i" + loopVariableCounter + ";");
                         code.add("for(i" + loopVariableCounter + " = 0; i" + loopVariableCounter
                                 + " < V; i" + loopVariableCounter + "++) {");
-                        // tab here
-                        code.add("unsigned int i" + (loopVariableCounter + 1));
+                        code.addTab();
+                        code.add("unsigned int i" + (loopVariableCounter + 1)+";");
                         code.add("for(i" + (loopVariableCounter + 1) + " = 0; i" + (loopVariableCounter + 1)
                                 + " < V; i" + (loopVariableCounter + 1) + "++) {");
-                        // tab here
+                        code.addTab();
                         code.add("votes" + i + "[i" + loopVariableCounter
                                 + "][i" + (loopVariableCounter + 1) + " = nondet_uint();");
                         code.add("assume(" + inputElectionType.getLowerBound()
                                 + "<= votes" + i + "[i" + loopVariableCounter
                                 + "][i" + (loopVariableCounter + 1)
                                 + "&& + votes" + i + "[i" + loopVariableCounter
-                                + "][i" + (loopVariableCounter + 1) + " <=" + inputElectionType.getUpperBound() + ")");
-                        // untab here
+                                + "][i" + (loopVariableCounter + 1) + " <=" + inputElectionType.getUpperBound() + ");");
+                        code.deleteTab();
                         code.add("}");
-                        // untab here
+                        code.deleteTab();
                         code.add("}");
                         loopVariableCounter++;
                         loopVariableCounter++;
