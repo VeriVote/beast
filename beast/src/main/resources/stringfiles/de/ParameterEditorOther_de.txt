@@ -10,5 +10,6 @@ seconds : Sekunden
 minutes : Minuten
 hours : Stunden
 days : Tage
+title_advanced : Benutzerdefinierte Argumente für CBMC
 ok : OK
 cancel : Abbrechen
