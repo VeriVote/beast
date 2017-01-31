@@ -19,7 +19,7 @@ public class SaveProjectAsUserAction extends UserAction {
     public SaveProjectAsUserAction(PropertyList propertyList, 
             CElectionDescriptionEditor cElectionEditor, ParameterEditor paramEditor, 
             SaverLoaderInterface saverLoaderIf) {
-        super("saveAs");
+        super("save_as");
         this.propertyList = propertyList;
         this.cElectionEditor = cElectionEditor;
         this.paramEditor = paramEditor;
