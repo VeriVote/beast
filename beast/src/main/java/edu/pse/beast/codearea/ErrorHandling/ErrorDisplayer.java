@@ -5,7 +5,6 @@
  */
 package edu.pse.beast.codearea.ErrorHandling;
 
-import com.sun.org.apache.bcel.internal.classfile.Code;
 import edu.pse.beast.codearea.InputToCode.LineHandler;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import java.awt.Color;

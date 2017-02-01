@@ -8,7 +8,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-import org.apache.xalan.xsltc.dom.CachedNodeListIterator;
 
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.ThreadedBufferedReader;
