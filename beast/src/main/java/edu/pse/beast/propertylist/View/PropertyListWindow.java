@@ -66,7 +66,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		// setFrame(new JFrame());
 		this.setLayout(new BorderLayout());
 		setBounds(600, 100, 500, 500);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Property List");
 		
 		menuBar = new JMenuBar();

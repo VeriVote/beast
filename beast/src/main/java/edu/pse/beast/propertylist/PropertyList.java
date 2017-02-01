@@ -82,12 +82,16 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
      * @see edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource#isCorrect()
      */
     @Override
-    public boolean isCorrect() { throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean isCorrect() { throw new UnsupportedOperationException("Not supported yet."); 
+    //To change body of generated methods, choose Tools | Templates.
+    	/* for (PropertyItem item : model.getList()) {
+    		*/
+    	
     }
 
 	@Override
 	public void stopReacting() {
-
+		
 	}
 
 	@Override

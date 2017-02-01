@@ -31,6 +31,9 @@ public class PostAndPrePropertiesDescription {
      */
     public PostAndPrePropertiesDescription(String name) {
         this.name = name;
+        this.symbolicVariableList = new SymbolicVariableList();
+        this.prePropertiesDescription = new FormalPropertiesDescription("");
+        this.postPropertiesDescription = new FormalPropertiesDescription("");
     }    
     /**
      * 
