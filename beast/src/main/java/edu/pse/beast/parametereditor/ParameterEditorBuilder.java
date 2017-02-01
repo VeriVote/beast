@@ -32,7 +32,7 @@ public class ParameterEditorBuilder {
             PropertyList propertyList) {
         ParameterEditorWindowStarter windowStarter = new ParameterEditorWindowStarter();
         window = windowStarter.getParameterEditorWindow();
-        //window.updateStringRes(refs.getStringIF()); //TODO: Implement
+        /*window.updateStringRes(refs.getStringIF());  //TODO: Implement
         ParameterEditorMenuBarHandler menuBarHandler = new ParameterEditorMenuBarHandler(menuHeadingIds, 
             createActionIdAndListenerListForMenuHandler(cElectionDescriptionEditor, propertyList, 
                     refs.getSaverLoaderIF()), 
@@ -42,7 +42,7 @@ public class ParameterEditorBuilder {
             refs.getStringIF().getParameterEditorStringResProvider().getToolbarTipStringRes(),
             createActionIdAndListenerListForToolbarHandler(cElectionDescriptionEditor, propertyList, 
                     refs.getSaverLoaderIF()), window.getToolbar(), window);
-        
+        */
         editor = new ParameterEditor(cElectionDescriptionEditor, propertyList, window);
         windowStarter.start();
         return editor;
