@@ -34,7 +34,6 @@ public class MinMaxSpinValueHandler implements ChangeListener{
         } else {
             minSpinner.setValue(minBefore);
             maxSpinner.setValue(maxBefore);
-            System.err.println("Bitte wählen sie Zahlen zwischen 0 und 100000.");
         }
         minBefore = Integer.parseInt("" + minSpinner.getValue());
         maxBefore = Integer.parseInt("" + maxSpinner.getValue());
@@ -59,7 +58,6 @@ public class MinMaxSpinValueHandler implements ChangeListener{
         } else {
             minSpinner.setValue(minBefore);
             maxSpinner.setValue(maxBefore);
-            System.err.println("Bitte wählen sie eine Zahl zwischen 0 und 100000.");
         }
         minBefore = Integer.parseInt("" + minSpinner.getValue());
         maxBefore = Integer.parseInt("" + maxSpinner.getValue());
