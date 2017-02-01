@@ -87,22 +87,22 @@ public class PropertyListBuilder {
     }
 
     private ActionIdAndListener[] createActionIdAndListenerListForToolbarHandler() {
-        ActionIdAndListener[] created = new ActionIdAndListener[6];
+        ActionIdAndListener[] created = new ActionIdAndListener[5];
 
 
         UserAction newly = createNewPropertyList();
-        UserAction undo = createUndoChangesPropertyList();
-        UserAction redo = createRedoChangesPropertyList();
+        UserAction load = createLoadPropertyList();
+        
         UserAction save = createSavePropertyList();
         UserAction saveAs = createSaveAsPropertyList();
-        UserAction load = createLoadPropertyList();
+        UserAction undo = createUndoChangesPropertyList();
 
         created[0] = createFromUserAction(newly);
-        created[1] = createFromUserAction(undo);
-        created[2] = createFromUserAction(redo);
-        created[3] = createFromUserAction(save);
-        created[4] = createFromUserAction(saveAs);
-        created[5] = createFromUserAction(load);
+        created[1] = createFromUserAction(load);
+        
+        created[2] = createFromUserAction(save);
+        created[3] = createFromUserAction(saveAs);
+        created[4] = createFromUserAction(undo);
 
 
         return created;

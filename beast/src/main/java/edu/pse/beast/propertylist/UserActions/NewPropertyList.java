@@ -6,17 +6,16 @@ import edu.pse.beast.toolbox.UserAction;
 
 public class NewPropertyList extends UserAction {
 	
-	private final PropertyList list;
+	private final PropertyList controller;
 
-	public NewPropertyList(PropertyList list) {
+	public NewPropertyList(PropertyList controller) {
 		super("new");
-		this.list = list;
+		this.controller = controller;
 	}
 
 	@Override
 	public void perform() {
-		// TODO 
-		//new NewPropertyWindow();
+		controller.getModel().userActionNewList();
 	}
 
 }

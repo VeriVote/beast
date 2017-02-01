@@ -19,6 +19,8 @@ public interface PLModelInterface {
 	
 	ArrayList<PropertyItem> getList();
 	
+	void userActionNewList();
+	
 	int getDirtyIndex();
 	int getUpdateIndex();
 

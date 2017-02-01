@@ -15,6 +15,7 @@ import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenter;
 import edu.pse.beast.propertychecker.Result;
+import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PLModelInterface;
 import edu.pse.beast.propertylist.View.PropertyListWindow;
 
@@ -40,6 +41,10 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 		editor.showWindow();
 		view = new PropertyListWindow(this, model);
 		model.initialize();
+	}
+	
+	public PLModel getModel() {
+		return (PLModel)model;
 	}
 	
 	@Override

@@ -90,7 +90,16 @@ public class PLModel extends Observable implements PLModelInterface {
 	public ArrayList<PropertyItem> getList() {
 		return propertyList;
 	}
+	public PLModel getModel() {
+		return this;
+	}
 
+	
+	public void userActionNewList() {
+		this.propertyList.clear();
+		updateView();
+	}
+	
 	
 	public int getDirtyIndex() {
 		return dirtyIndex;
