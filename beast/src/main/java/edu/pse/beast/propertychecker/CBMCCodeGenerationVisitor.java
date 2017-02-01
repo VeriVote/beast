@@ -161,10 +161,16 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String varName = "comparison_" + comparisonNodeCounter;
         comparisonNodeCounter++;
         variableNames.push(varName);
+        if (node.getLHSBooleanExpNode() instanceof ConstantExp) { //BooleanExpConst ???
+            node.getLHSBooleanExpNode().getVisited(this);
+        }
+        if (node.getRHSBooleanExpNode() instanceof ConstantExp) {
+            node.getRHSBooleanExpNode().getVisited(this);
+        }
         node.getLHSBooleanExpNode().getVisited(this);
         node.getRHSBooleanExpNode().getVisited(this);
         code.add("unsigned int " + varName + " = ((" + variableNames.pop() + ") "
-                + node.getComparisonSymbol() + " (" + variableNames.pop() + "));");
+                + node.getComparisonSymbol().getCStringRep() + " (" + variableNames.pop() + "));");
         testIfLast();
     }
 
@@ -195,13 +201,12 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitNumberExpNode(NumberExpression exp) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        variableNames.push(String.valueOf(exp.getNumber()));
     }
 
     private void testIfLast() {
         if (variableNames.size() == 1) {
             code.add(assumeOrAssert + "(" + variableNames.pop() + ")");
-            variableNames.pop();
         }
     }
 }
