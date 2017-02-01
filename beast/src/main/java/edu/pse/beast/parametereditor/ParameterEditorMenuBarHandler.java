@@ -21,7 +21,7 @@ public class ParameterEditorMenuBarHandler extends MenuBarHandler {
     }
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
-        updateStringResLoader(stringResIF.getPropertyListStringResProvider().getMenuStringRes());
+        updateStringResLoader(stringResIF.getParameterEditorStringResProvider().getMenuStringRes());
         window.setJMenuBar(createdMenuBar);
     }
     

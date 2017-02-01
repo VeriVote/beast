@@ -2,7 +2,7 @@ title : Parametereditor
 voters : Wähler
 candidates : Kandidaten
 seats : Sitze
-duration : Dauer
+timeout : Dauer
 max_processes : Max. Prozesse
 to : bis
 advanced : Erweitert...

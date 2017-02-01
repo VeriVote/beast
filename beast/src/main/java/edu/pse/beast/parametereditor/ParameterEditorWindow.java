@@ -1,11 +1,15 @@
 package edu.pse.beast.parametereditor;
 
+import edu.pse.beast.highlevel.DisplaysStringsToUser;
+import edu.pse.beast.stringresource.ParameterEditorStringResProvider;
+import edu.pse.beast.stringresource.StringLoaderInterface;
+import edu.pse.beast.stringresource.StringResourceLoader;
 import javax.swing.JSpinner;
 /**
  *
  * @author Jonas
  */
-public class ParameterEditorWindow extends javax.swing.JFrame {
+public class ParameterEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser{
 
     private AdvancedWindow advWindow = new AdvancedWindow();
     /**
@@ -28,37 +32,37 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
         newIcon = new javax.swing.JButton();
         saveIcon = new javax.swing.JButton();
         saveAsIcon = new javax.swing.JButton();
-        openIcon = new javax.swing.JButton();
+        loadIcon = new javax.swing.JButton();
         startIcon = new javax.swing.JButton();
         stopIcon = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        voters = new javax.swing.JLabel();
         voterMin = new javax.swing.JSpinner();
-        jLabel6 = new javax.swing.JLabel();
+        voterTo = new javax.swing.JLabel();
         voterMax = new javax.swing.JSpinner();
-        jLabel3 = new javax.swing.JLabel();
+        candidates = new javax.swing.JLabel();
         candMin = new javax.swing.JSpinner();
-        jLabel7 = new javax.swing.JLabel();
+        candTo = new javax.swing.JLabel();
         candMax = new javax.swing.JSpinner();
-        jLabel4 = new javax.swing.JLabel();
+        seats = new javax.swing.JLabel();
         seatMin = new javax.swing.JSpinner();
-        jLabel8 = new javax.swing.JLabel();
+        seatTo = new javax.swing.JLabel();
         seatMax = new javax.swing.JSpinner();
-        jLabel5 = new javax.swing.JLabel();
+        timeout = new javax.swing.JLabel();
         timeoutNum = new javax.swing.JSpinner();
         timeoutUnit = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
+        processes = new javax.swing.JLabel();
         amountProcessesSpinner = new javax.swing.JSpinner();
         advancedButton = new javax.swing.JButton();
-        jMenuBar2 = new javax.swing.JMenuBar();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem8 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
-        jMenu5 = new javax.swing.JMenu();
-        jMenuItem11 = new javax.swing.JMenuItem();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenu6 = new javax.swing.JMenu();
+        menubar = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        newMenuItem = new javax.swing.JMenuItem();
+        saveMenuItem = new javax.swing.JMenuItem();
+        saveAsMenuItem = new javax.swing.JMenuItem();
+        loadMenuItem = new javax.swing.JMenuItem();
+        projectMenu = new javax.swing.JMenu();
+        startMenuItem = new javax.swing.JMenuItem();
+        stopMenuItem = new javax.swing.JMenuItem();
+        optionsMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ParameterEditor");
@@ -89,11 +93,11 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
         saveAsIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         toolbar.add(saveAsIcon);
 
-        openIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/load.png"))); // NOI18N
-        openIcon.setFocusable(false);
-        openIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        openIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        toolbar.add(openIcon);
+        loadIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/load.png"))); // NOI18N
+        loadIcon.setFocusable(false);
+        loadIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        loadIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        toolbar.add(loadIcon);
 
         startIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/start.png"))); // NOI18N
         startIcon.setFocusable(false);
@@ -107,37 +111,37 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
         stopIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         toolbar.add(stopIcon);
 
-        jLabel2.setText("Wähler");
+        voters.setText("Wähler");
 
         voterMin.setMaximumSize(new java.awt.Dimension(0, 10000));
 
-        jLabel6.setText("bis");
+        voterTo.setText("bis");
 
         voterMax.setMaximumSize(new java.awt.Dimension(0, 10000));
 
-        jLabel3.setText("Kandidaten");
+        candidates.setText("Kandidaten");
 
         candMin.setMaximumSize(new java.awt.Dimension(0, 10000));
 
-        jLabel7.setText("bis");
+        candTo.setText("bis");
 
         candMax.setMaximumSize(new java.awt.Dimension(0, 10000));
 
-        jLabel4.setText("Sitze");
+        seats.setText("Sitze");
 
         seatMin.setMaximumSize(new java.awt.Dimension(0, 10000));
 
-        jLabel8.setText("bis");
+        seatTo.setText("bis");
 
         seatMax.setMaximumSize(new java.awt.Dimension(0, 10000));
 
-        jLabel5.setText("Dauer");
+        timeout.setText("Dauer");
 
         timeoutNum.setMaximumSize(new java.awt.Dimension(0, 32767));
 
         timeoutUnit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sekunden", "Minuten", "Stunden", "Tage" }));
 
-        jLabel1.setText("Max. Prozesse");
+        processes.setText("Max. Prozesse");
 
         amountProcessesSpinner.setMaximumSize(new java.awt.Dimension(0, 50));
 
@@ -148,45 +152,45 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
             }
         });
 
-        jMenu4.setText("Datei");
+        fileMenu.setText("Datei");
 
-        jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem7.setText("Neues Projekt...");
-        jMenu4.add(jMenuItem7);
+        newMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
+        newMenuItem.setText("Neues Projekt...");
+        fileMenu.add(newMenuItem);
 
-        jMenuItem8.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem8.setText("Speichern");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+        saveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        saveMenuItem.setText("Speichern");
+        saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                saveMenuItemActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem8);
+        fileMenu.add(saveMenuItem);
 
-        jMenuItem9.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem9.setText("Speichern unter...");
-        jMenu4.add(jMenuItem9);
+        saveAsMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
+        saveAsMenuItem.setText("Speichern unter...");
+        fileMenu.add(saveAsMenuItem);
 
-        jMenuItem10.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-        jMenuItem10.setText("Öffnen...");
-        jMenu4.add(jMenuItem10);
+        loadMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        loadMenuItem.setText("Öffnen...");
+        fileMenu.add(loadMenuItem);
 
-        jMenuBar2.add(jMenu4);
+        menubar.add(fileMenu);
 
-        jMenu5.setText("Projekt");
+        projectMenu.setText("Projekt");
 
-        jMenuItem11.setText("Teste Eigenschaften");
-        jMenu5.add(jMenuItem11);
+        startMenuItem.setText("Teste Eigenschaften");
+        projectMenu.add(startMenuItem);
 
-        jMenuItem12.setText("Stoppe Test");
-        jMenu5.add(jMenuItem12);
+        stopMenuItem.setText("Stoppe Test");
+        projectMenu.add(stopMenuItem);
 
-        jMenuBar2.add(jMenu5);
+        menubar.add(projectMenu);
 
-        jMenu6.setText("Eigenschaften");
-        jMenuBar2.add(jMenu6);
+        optionsMenu.setText("Eigenschaften");
+        menubar.add(optionsMenu);
 
-        setJMenuBar(jMenuBar2);
+        setJMenuBar(menubar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -203,11 +207,11 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(seats, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(candidates, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(voters, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(timeout, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(processes, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(voterMin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
@@ -219,9 +223,9 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addComponent(voterTo, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(candTo, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(seatTo, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(voterMax, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
@@ -236,31 +240,31 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
                 .addComponent(toolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(voters)
                     .addComponent(voterMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6)
+                    .addComponent(voterTo)
                     .addComponent(voterMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
+                    .addComponent(candTo)
                     .addComponent(candMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(candMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(candidates))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(seatMin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8)
+                    .addComponent(seatTo)
                     .addComponent(seatMax, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                    .addComponent(seats))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
+                    .addComponent(timeout)
                     .addComponent(timeoutNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(timeoutUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(amountProcessesSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(processes))
                 .addGap(18, 18, 18)
                 .addComponent(advancedButton)
                 .addContainerGap(23, Short.MAX_VALUE))
@@ -275,9 +279,9 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
         advWindow.setVisible(true);
     }//GEN-LAST:event_advancedButtonActionPerformed
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
+    }//GEN-LAST:event_saveMenuItemActionPerformed
 
     private void newIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newIconActionPerformed
         // TODO add your handling code here:
@@ -323,37 +327,37 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
     private javax.swing.JSpinner amountProcessesSpinner;
     private javax.swing.JSpinner candMax;
     private javax.swing.JSpinner candMin;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
-    private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenuBar jMenuBar2;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
-    private javax.swing.JMenuItem jMenuItem12;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JLabel candTo;
+    private javax.swing.JLabel candidates;
+    private javax.swing.JMenu fileMenu;
+    private javax.swing.JButton loadIcon;
+    private javax.swing.JMenuItem loadMenuItem;
+    private javax.swing.JMenuBar menubar;
     private javax.swing.JButton newIcon;
-    private javax.swing.JButton openIcon;
+    private javax.swing.JMenuItem newMenuItem;
+    private javax.swing.JMenu optionsMenu;
+    private javax.swing.JLabel processes;
+    private javax.swing.JMenu projectMenu;
     private javax.swing.JButton saveAsIcon;
+    private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JButton saveIcon;
+    private javax.swing.JMenuItem saveMenuItem;
     private javax.swing.JSpinner seatMax;
     private javax.swing.JSpinner seatMin;
+    private javax.swing.JLabel seatTo;
+    private javax.swing.JLabel seats;
     private javax.swing.JButton startIcon;
+    private javax.swing.JMenuItem startMenuItem;
     private javax.swing.JButton stopIcon;
+    private javax.swing.JMenuItem stopMenuItem;
+    private javax.swing.JLabel timeout;
     private javax.swing.JSpinner timeoutNum;
     private javax.swing.JComboBox<String> timeoutUnit;
     private javax.swing.JToolBar toolbar;
     private javax.swing.JSpinner voterMax;
     private javax.swing.JSpinner voterMin;
+    private javax.swing.JLabel voterTo;
+    private javax.swing.JLabel voters;
     // End of variables declaration//GEN-END:variables
     protected JSpinner getVoterMin() {
         return voterMin;
@@ -387,5 +391,48 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
     }
     public javax.swing.JToolBar getToolbar() {
         return toolbar;
+    }
+
+    @Override
+    public void updateStringRes(StringLoaderInterface stringResIF) {
+        ParameterEditorStringResProvider provider = stringResIF.getParameterEditorStringResProvider();
+        
+        
+        StringResourceLoader other = provider.getOtherStringRes();
+        setTitle(other.getStringFromID("title"));
+        voters.setText(other.getStringFromID("voters"));
+        candidates.setText(other.getStringFromID("candidates"));
+        seats.setText(other.getStringFromID("seats"));
+        timeout.setText(other.getStringFromID("timeout"));
+        processes.setText(other.getStringFromID("max_processes"));
+        voterTo.setText(other.getStringFromID("to"));
+        candTo.setText(other.getStringFromID("to"));
+        seatTo.setText(other.getStringFromID("to"));
+        advancedButton.setText(other.getStringFromID("advanced"));
+        timeoutUnit.removeAllItems();
+        timeoutUnit.addItem(other.getStringFromID("seconds"));
+        timeoutUnit.addItem(other.getStringFromID("minutes"));
+        timeoutUnit.addItem(other.getStringFromID("hours"));
+        timeoutUnit.addItem(other.getStringFromID("days"));
+        //advWindow.updateStringRes(other); //TODO: Implement
+        
+        StringResourceLoader menu = provider.getMenuStringRes();
+        fileMenu.setText(menu.getStringFromID("file"));
+        projectMenu.setText(menu.getStringFromID("project"));
+        optionsMenu.setText(menu.getStringFromID("options"));
+        newMenuItem.setText(menu.getStringFromID("new"));
+        saveMenuItem.setText(menu.getStringFromID("save"));
+        saveAsMenuItem.setText(menu.getStringFromID("save_as"));
+        loadMenuItem.setText(menu.getStringFromID("load"));
+        startMenuItem.setText(menu.getStringFromID("start_test"));
+        stopMenuItem.setText(menu.getStringFromID("stop_test"));
+        
+        StringResourceLoader toolbarTip = provider.getToolbarTipStringRes();
+        newIcon.setToolTipText(toolbarTip.getStringFromID("new"));
+        saveIcon.setToolTipText(toolbarTip.getStringFromID("save"));
+        saveAsIcon.setToolTipText(toolbarTip.getStringFromID("save_as"));
+        loadIcon.setToolTipText(toolbarTip.getStringFromID("load"));
+        startIcon.setToolTipText(toolbarTip.getStringFromID("start_test"));
+        stopIcon.setToolTipText(toolbarTip.getStringFromID("stop_test"));
     }
 }

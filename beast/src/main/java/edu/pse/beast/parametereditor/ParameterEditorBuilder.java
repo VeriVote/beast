@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.pse.beast.parametereditor;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
@@ -32,19 +28,21 @@ public class ParameterEditorBuilder {
             PropertyList propertyList) {
         ParameterEditorWindowStarter windowStarter = new ParameterEditorWindowStarter();
         window = windowStarter.getParameterEditorWindow();
-        /*window.updateStringRes(refs.getStringIF());  //TODO: Implement
-        ParameterEditorMenuBarHandler menuBarHandler = new ParameterEditorMenuBarHandler(menuHeadingIds, 
+        window.updateStringRes(refs.getStringIF());
+        /*ParameterEditorMenuBarHandler menuBarHandler = new ParameterEditorMenuBarHandler(menuHeadingIds, 
             createActionIdAndListenerListForMenuHandler(cElectionDescriptionEditor, propertyList, 
                     refs.getSaverLoaderIF()), 
-            refs.getStringIF().getParameterEditorStringResProvider().getMenuStringRes(), window);
+            refs.getStringIF().getParameterEditorStringResProvider().getMenuStringRes(), window);*/
         ImageResourceProvider imageRes = ImageResourceProvider.getToolbarImages();
         ParameterEditorToolbarHandler toolbarHandler = new ParameterEditorToolbarHandler(imageRes, 
             refs.getStringIF().getParameterEditorStringResProvider().getToolbarTipStringRes(),
             createActionIdAndListenerListForToolbarHandler(cElectionDescriptionEditor, propertyList, 
                     refs.getSaverLoaderIF()), window.getToolbar(), window);
-        */
+        
         editor = new ParameterEditor(cElectionDescriptionEditor, propertyList, window);
         windowStarter.start();
+        editor.setToolbarHandler(toolbarHandler);
+        //editor.setMenuBarHandler(menuBarHandler);
         return editor;
     }
     
@@ -55,7 +53,7 @@ public class ParameterEditorBuilder {
         
         UserAction newly = createNewProjectUserAction(cElectionDescriptionEditor, propertyList);
         UserAction save = createSaveProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
-        UserAction saveAs = createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
+        UserAction save_as = createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
         UserAction load = createLoadProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
         UserAction start = createStartCheckUserAction();
         UserAction stop = createAbortCheckUserAction();
@@ -63,15 +61,18 @@ public class ParameterEditorBuilder {
         ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
         fileList.add(createFromUserAction(newly));
         fileList.add(createFromUserAction(save));
-        fileList.add(createFromUserAction(saveAs));
+        fileList.add(createFromUserAction(save_as));
         fileList.add(createFromUserAction(load));
         
         ArrayList<ActionIdAndListener> projectList = new ArrayList<>();
         projectList.add(createFromUserAction(start));
         projectList.add(createFromUserAction(stop));
         
+        ArrayList<ActionIdAndListener> optionsList = new ArrayList<>();
+        
         created.add(fileList);
         created.add(projectList);
+        created.add(optionsList);
         return created;
     }
     
@@ -81,14 +82,14 @@ public class ParameterEditorBuilder {
         
         UserAction newly = createNewProjectUserAction(cElectionDescriptionEditor, propertyList);
         UserAction save = createSaveProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
-        UserAction saveAs = createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
+        UserAction save_as = createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
         UserAction load = createLoadProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
         UserAction start = createStartCheckUserAction();
         UserAction stop = createAbortCheckUserAction();
         
         created[0] = createFromUserAction(newly);
         created[1] = createFromUserAction(save);
-        created[2] = createFromUserAction(saveAs);
+        created[2] = createFromUserAction(save_as);
         created[3] = createFromUserAction(load);
         created[4] = createFromUserAction(start);
         created[5] = createFromUserAction(stop);

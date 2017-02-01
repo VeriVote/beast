@@ -13,6 +13,8 @@ import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.highlevel.CheckListener;
 import edu.pse.beast.highlevel.MainNotifier;
 import edu.pse.beast.highlevel.ProjectSource;
+import edu.pse.beast.toolbox.ToolbarHandler;
+import edu.pse.beast.toolbox.MenuBarHandler;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
@@ -34,6 +36,8 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
     private TimeoutValueHandler timeoutHandler;
     private SingleValueSpinnerHandler processHandler;
     private ArgumentHandler argumentHandler;
+    private ToolbarHandler toolbarHandler;
+    private MenuBarHandler menuBarHandler;
     
     public ParameterEditor(
             CElectionDescriptionEditor cElectionDescriptionEditor, 
@@ -116,5 +120,12 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
     @Override
     public void saveProject(Project toBeSaved) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    void setToolbarHandler(ToolbarHandler toolbarHandler) {
+        this.toolbarHandler = toolbarHandler;
+    }
+
+    void setMenuBarHandler(MenuBarHandler menuBarHandler) {
+        this.menuBarHandler = menuBarHandler;
     }
 }
