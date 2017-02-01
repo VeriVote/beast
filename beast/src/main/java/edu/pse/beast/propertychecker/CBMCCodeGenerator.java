@@ -188,6 +188,12 @@ public class CBMCCodeGenerator {
      */
     private void addPostProperties(BooleanExpListNode postAST) {
         visitor.setToPostPropertyMode();
+        postAST.getBooleanExpressions().forEach((booleanExpressionLists) -> {
+            booleanExpressionLists.forEach((booleanNode) -> {
+                code.addArrayList(visitor.generateCode(booleanNode));
+            });
+        });
+        
     }
     
     private void reportUnsupportedType(String id) {

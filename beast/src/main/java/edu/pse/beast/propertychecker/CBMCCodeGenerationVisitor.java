@@ -137,7 +137,12 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitForAllNode(ForAllNode node) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String varName = "forAll_" + forAllNodeCounter;
+        forAllNodeCounter++;
+        variableNames.push(varName);
+
+        node.getDeclaredSymbolicVar().getInternalTypeContainer();
+        node.getFollowingExpNode();
     }
 
     @Override
@@ -161,22 +166,31 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String varName = "comparison_" + comparisonNodeCounter;
         comparisonNodeCounter++;
         variableNames.push(varName);
-        if (node.getLHSBooleanExpNode() instanceof ConstantExp) { //BooleanExpConst ???
-            node.getLHSBooleanExpNode().getVisited(this);
+        TypeExpression lhs = node.getLHSBooleanExpNode();
+        TypeExpression rhs = node.getRHSBooleanExpNode();
+        if (lhs instanceof ConstantExp || lhs instanceof NumberExpression) { //BooleanExpConst ???
+            lhs.getVisited(this);
         }
-        if (node.getRHSBooleanExpNode() instanceof ConstantExp) {
-            node.getRHSBooleanExpNode().getVisited(this);
+        
+        else if (lhs instanceof ElectExp){
+            
         }
-        node.getLHSBooleanExpNode().getVisited(this);
-        node.getRHSBooleanExpNode().getVisited(this);
+            
+        
+            
+            if (rhs instanceof ConstantExp || rhs instanceof NumberExpression) { //BooleanExpConst ???
+            rhs.getVisited(this);
+        }
+
         code.add("unsigned int " + varName + " = ((" + variableNames.pop() + ") "
                 + node.getComparisonSymbol().getCStringRep() + " (" + variableNames.pop() + "));");
         testIfLast();
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void visitSymbVarExp(SymbolicVarExp exp) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        variableNames.push(exp.getSymbolicVar().getId());
     }
 
     @Override
@@ -186,17 +200,17 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitElectExp(ElectExp exp) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void visitVoteExp(VoteExp exp) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void visitVoteSumExp(VoteSumForCandExp exp) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -206,7 +220,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     private void testIfLast() {
         if (variableNames.size() == 1) {
-            code.add(assumeOrAssert + "(" + variableNames.pop() + ")");
+            code.add(assumeOrAssert + "(" + variableNames.pop() + ");");
         }
     }
 }

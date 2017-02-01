@@ -46,7 +46,7 @@ public class CBMCCodeGeneratorTest {
         PostAndPrePropertiesDescription postAndPrePropertiesDescription = new PostAndPrePropertiesDescription("name", preDescr, postDescr, symbolicVariableList);
 
         SymbolicVariableList symVariableList = new SymbolicVariableList();
-        symVariableList.addSymbolicVariable("c", new InternalTypeContainer(InternalTypeRep.INTEGER));
+        symVariableList.addSymbolicVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
         symVariableList.addSymbolicVariable("a", new InternalTypeContainer(InternalTypeRep.VOTER));
         symVariableList.addSymbolicVariable("v", new InternalTypeContainer(InternalTypeRep.VOTER));
 
