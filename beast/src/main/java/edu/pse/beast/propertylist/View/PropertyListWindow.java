@@ -1,6 +1,7 @@
 package edu.pse.beast.propertylist.View;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
 import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
@@ -63,7 +65,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		
 		// setFrame(new JFrame());
 		this.setLayout(new BorderLayout());
-		setBounds(600, 100, 500, 300);
+		setBounds(600, 100, 500, 500);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Property List");
 		
@@ -84,11 +86,13 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		panel = new JPanel();
 		getContentPane().add(panel, BorderLayout.CENTER);
 		
-	if (!items.isEmpty()) {
-		for (ListItem item : items) {
-			panel.add(item, BorderLayout.CENTER);
+		if (!items.isEmpty()) {
+			for (ListItem item : items) {
+				panel.add(item, BorderLayout.CENTER);
+			}
 		}
-	}
+		/*JScrollPane jsp = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		this.add(jsp);*/
 		
 		endpanel = new JPanel();
 		getContentPane().add(endpanel, BorderLayout.SOUTH);
@@ -102,6 +106,8 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 
 		});
 		endpanel.add(addNewButton, BorderLayout.LINE_END);
+		
+		
 	}
 	
 	
@@ -183,7 +189,15 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	}
 	
 	public void rejectNameChange(PropertyItem prop) {
-		// TODO
+		for (ListItem li : items) {
+			if (prop.equals(li.getPropertyItem())) {
+				li.getNameField().setBackground(Color.RED);
+				
+				li.getNameField().setForeground(Color.RED);
+				
+				//li.getNameField().setBackground(Color.WHITE);
+			}
+		}
 	}
 	
 

@@ -1,5 +1,6 @@
 package edu.pse.beast.propertylist.View;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -52,12 +53,20 @@ public class ListItem extends JPanel {
 		init();
 	}
 	
+	public PropertyItem getPropertyItem() {
+		return prop;
+	}
+	public JTextField getNameField() {
+		return name;
+	}
+	
 	private void init() {
 		Dimension iconSize = new Dimension(40,40);
 		showResult.setPreferredSize(iconSize);
 		showResult.setIcon(new ImageIcon(getClass().getResource("/images/other/eye.png")));
-		this.add(showResult);
+		this.add(showResult/*, BorderLayout.LINE_START*/);
 		
+		name.setPreferredSize(new Dimension(200,30));
 		name.setText(prop.getDescription().getName());
 		name.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent e) { try {
@@ -99,7 +108,7 @@ public class ListItem extends JPanel {
 				
 			}
 		});
-		this.add(testStatus);
+		this.add(testStatus/*, BorderLayout.LINE_END*/);
 		
 		
 		changeButton.setPreferredSize(iconSize);
@@ -110,7 +119,7 @@ public class ListItem extends JPanel {
 				controller.editProperty(prop);
 			}
 		});
-		this.add(changeButton);
+		this.add(changeButton/*, BorderLayout.LINE_END*/);
 		
 		deleteButton.setPreferredSize(iconSize);
 		deleteButton.setIcon(new ImageIcon(getClass().getResource("/images/other/x-mark.png")));
@@ -120,7 +129,7 @@ public class ListItem extends JPanel {
 				controller.deleteProperty(prop);
 			}
 		});
-		this.add(deleteButton);
+		this.add(deleteButton/*, BorderLayout.LINE_END*/);
 	}
 	
 	public void presentResultOf() {

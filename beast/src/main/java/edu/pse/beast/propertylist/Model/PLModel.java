@@ -69,8 +69,8 @@ public class PLModel extends Observable implements PLModelInterface {
 		if (index == -1) return false;
 		
 		if (dirtyIndex == index) {
-			editor.loadPostAndPreProperties(propertyList.get(0).getDescription());
-			dirtyIndex = 0;
+			//editor.loadPostAndPreProperties(propertyList.get(0).getDescription());
+			//dirtyIndex = 0;
 		}
 		
 		propertyList.remove(index);
