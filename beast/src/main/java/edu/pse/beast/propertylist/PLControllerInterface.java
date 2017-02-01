@@ -7,7 +7,7 @@ public interface PLControllerInterface {
 	void toggleResult();
 	
 	void changeName(PropertyItem prop, String newName);
-	void setTestStatus(PropertyItem prop);
+	void setTestStatus(PropertyItem prop, boolean newStatus);
 	void editProperty(PropertyItem prop);
 	void deleteProperty(PropertyItem prop);
 	void addDescription(PostAndPrePropertiesDescription desc);

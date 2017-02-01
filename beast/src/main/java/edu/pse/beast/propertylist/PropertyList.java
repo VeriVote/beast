@@ -28,16 +28,16 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 	private PLModelInterface model;
 	private PropertyListWindow view;
 	
-	private BooleanExpEditor booleanExpEditor;
+	private BooleanExpEditor editor;
 	
 	/**
 	 * Constructor
-	 * @param booleanExpEditor
+	 * @param editor
 	 */
-	public PropertyList(PLModelInterface model, BooleanExpEditor booleanExpEditor) {
+	public PropertyList(PLModelInterface model, BooleanExpEditor editor) {
 		this.model = model;
-		this.booleanExpEditor = booleanExpEditor;
-		booleanExpEditor.showWindow();
+		this.editor = editor;
+		editor.showWindow();
 		view = new PropertyListWindow(this, model);
 		model.initialize();
 	}
@@ -49,22 +49,20 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 	}
 	@Override
 	public void changeName(PropertyItem prop, String newName) {
-		model.changeName(prop, newName);
+		if (!model.changeName(prop, newName)) view.rejectNameChange(prop);
 	}
 	@Override
-	public void setTestStatus(PropertyItem prop) {
-		// TODO Auto-generated method stub
-		
+	public void setTestStatus(PropertyItem prop, boolean newStatus) {
+		model.setTestStatus(prop, newStatus);
 	}
 	@Override
 	public void editProperty(PropertyItem prop) {
-		// TODO Auto-generated method stub
+		model.editProperty(prop, editor);
 		
 	}
 	@Override
 	public void deleteProperty(PropertyItem prop) {
-		// TODO Auto-generated method stub
-		
+		model.deleteProperty(prop, editor);
 	}
 	@Override
 	public void addDescription(PostAndPrePropertiesDescription desc) {
@@ -73,7 +71,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 	}
 	@Override
 	public void addNewProperty() {
-		model.addNewProperty();
+		model.addNewProperty(editor);
 		//view.addItem(model.getList().get(model.getList().size() - 1));
 	}
 	

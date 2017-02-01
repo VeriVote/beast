@@ -38,7 +38,6 @@ public class PropertyItem {
 	public void setDescription(String newName, FormalPropertiesDescription preProp,
 			FormalPropertiesDescription postProp, SymbolicVariableList symVars) {
 		this.description = new PostAndPrePropertiesDescription(newName, preProp, postProp, symVars);
-		
 	}
 	
 	public Boolean willBeTested() {

@@ -91,12 +91,10 @@ public class ListItem extends JPanel {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (e.getStateChange() == ItemEvent.SELECTED) {
-					prop.setTestStatus(true);
-					controller.setTestStatus(prop);
+					controller.setTestStatus(prop, true);
 				}
 				else {
-					prop.setTestStatus(false);
-					controller.setTestStatus(prop);
+					controller.setTestStatus(prop, false);
 				}
 				
 			}
@@ -145,4 +143,10 @@ public class ListItem extends JPanel {
 		//TODO
 	}
 
+	/* @Override
+	public boolean equals (Object o) {
+		if (o == null || this.getClass() != o.getClass()) return false;
+		if (this.prop.equals((PropertyItem)o)) return true;
+		else return false;
+	}*/
 }

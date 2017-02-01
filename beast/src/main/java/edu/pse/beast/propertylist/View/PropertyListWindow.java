@@ -33,7 +33,7 @@ import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 *
 * @author Justin
 */
-public class PropertyListWindow extends JFrame implements DisplaysStringsToUser, Observer, ActionListener {
+public class PropertyListWindow extends JFrame implements DisplaysStringsToUser, Observer {
 	
 	PLModelInterface model;
 	PLControllerInterface controller;
@@ -116,18 +116,36 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	}
 
 	
+	// shaky
 	public void addItem(PropertyItem prop) {
 		ListItem addedItem = new ListItem(controller, model, prop);
 		panel.add(addedItem, BorderLayout.WEST);
 		panel.revalidate();
+		items.add(addedItem);
+	}
+	public void delItem(int index) {
+		ListItem delItem = items.get(index);
+		panel.remove(delItem);
+		panel.revalidate();
+		items.remove(delItem);
 	}
 	
-	private void updateItems() {
-		panel.repaint();
-		for (ListItem item : items) {
-			panel.add(item, BorderLayout.CENTER);
+	
+	private void updateItems(ArrayList<PropertyItem> propertyList) {
+		items = new ArrayList<ListItem>();
+		panel.removeAll();
+		panel.revalidate();
+		this.validate();
+		
+		for (PropertyItem propertyItem : propertyList) {
+			ListItem current = new ListItem(controller, model, propertyItem);
+			items.add(current);
+			panel.add(current, BorderLayout.CENTER);
 		}
+		panel.revalidate();
+		panel.repaint();
 	}
+	
 	
 	private void addNewPropertyAction(ActionEvent e) {
 		newPropWindow.toggleVisibility();
@@ -148,10 +166,13 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 
 	@Override
 	public void update(Observable o, Object obj) {
-		ArrayList<PropertyItem> list = model.getList();
+		updateItems(model.getList());
 		
 		// check if new property was added to model
-		if (list.size() > items.size()) addItem(list.get(model.getDirtyIndex()));
+		//if (list.size() > items.size()) addItem(list.get(model.getDirtyIndex()));
+		
+		// check if property was deleted from model
+		//if (list.size() < items.size()) delItem(model.getUpdateIndex());
 		
 		/*ArrayList<PropertyItem> list = ((PLModel)o).getDescr();
 		items = new ArrayList<ListItem>();
@@ -160,13 +181,12 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		}
 		updateItems();*/
 	}
-
-	//MVC
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+	
+	public void rejectNameChange(PropertyItem prop) {
+		// TODO
 	}
+	
+
 	
 	
 	
