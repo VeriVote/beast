@@ -24,7 +24,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jToolBar = new javax.swing.JToolBar();
+        toolbar = new javax.swing.JToolBar();
         newIcon = new javax.swing.JButton();
         saveIcon = new javax.swing.JButton();
         saveAsIcon = new javax.swing.JButton();
@@ -63,8 +63,8 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ParameterEditor");
 
-        jToolBar.setFloatable(false);
-        jToolBar.setRollover(true);
+        toolbar.setFloatable(false);
+        toolbar.setRollover(true);
 
         newIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/new.png"))); // NOI18N
         newIcon.setFocusable(false);
@@ -75,37 +75,37 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
                 newIconActionPerformed(evt);
             }
         });
-        jToolBar.add(newIcon);
+        toolbar.add(newIcon);
 
         saveIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/save.png"))); // NOI18N
         saveIcon.setFocusable(false);
         saveIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         saveIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar.add(saveIcon);
+        toolbar.add(saveIcon);
 
         saveAsIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/save_as.png"))); // NOI18N
         saveAsIcon.setFocusable(false);
         saveAsIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         saveAsIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar.add(saveAsIcon);
+        toolbar.add(saveAsIcon);
 
         openIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/load.png"))); // NOI18N
         openIcon.setFocusable(false);
         openIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         openIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar.add(openIcon);
+        toolbar.add(openIcon);
 
         startIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/start.png"))); // NOI18N
         startIcon.setFocusable(false);
         startIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         startIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar.add(startIcon);
+        toolbar.add(startIcon);
 
         stopIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/stop.png"))); // NOI18N
         stopIcon.setFocusable(false);
         stopIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         stopIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToolBar.add(stopIcon);
+        toolbar.add(stopIcon);
 
         jLabel2.setText("Wähler");
 
@@ -193,7 +193,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(toolbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
@@ -233,7 +233,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(toolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -341,7 +341,6 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
-    private javax.swing.JToolBar jToolBar;
     private javax.swing.JButton newIcon;
     private javax.swing.JButton openIcon;
     private javax.swing.JButton saveAsIcon;
@@ -352,6 +351,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
     private javax.swing.JButton stopIcon;
     private javax.swing.JSpinner timeoutNum;
     private javax.swing.JComboBox<String> timeoutUnit;
+    private javax.swing.JToolBar toolbar;
     private javax.swing.JSpinner voterMax;
     private javax.swing.JSpinner voterMin;
     // End of variables declaration//GEN-END:variables
@@ -384,5 +384,8 @@ public class ParameterEditorWindow extends javax.swing.JFrame {
     }
     protected AdvancedWindow getAdvancedWindow() {
         return advWindow;
+    }
+    public javax.swing.JToolBar getToolbar() {
+        return toolbar;
     }
 }

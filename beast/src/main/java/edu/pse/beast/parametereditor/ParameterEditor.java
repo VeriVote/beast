@@ -23,7 +23,7 @@ import java.awt.event.ActionListener;
  * @author Jonas
  */
 public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSource {
-    private final ParameterEditorWindowStarter windowStarter;
+    private final ParameterEditorWindow window;
     private final CElectionDescriptionEditor cElectionDescriptionEditor; 
     private final PropertyList propertyList;
     private final ArrayList<CheckListener> checkListener = new ArrayList<>();
@@ -37,27 +37,25 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
     
     public ParameterEditor(
             CElectionDescriptionEditor cElectionDescriptionEditor, 
-            PropertyList propertyList) {
+            PropertyList propertyList, ParameterEditorWindow window) {
         this.cElectionDescriptionEditor = cElectionDescriptionEditor;
         this.propertyList = propertyList;
-        windowStarter = new ParameterEditorWindowStarter();
-        windowStarter.start();
-        ParameterEditorWindow win = windowStarter.getParameterEditorWindow();
-        voterHandler = new MinMaxSpinValueHandler(win.getVoterMin(), win.getVoterMax());
-        win.getVoterMin().addChangeListener(voterHandler);
-        win.getVoterMax().addChangeListener(voterHandler);
-        candHandler = new MinMaxSpinValueHandler(win.getCandMin(), win.getCandMax());
-        win.getCandMin().addChangeListener(candHandler);
-        win.getCandMax().addChangeListener(candHandler);
-        seatHandler = new MinMaxSpinValueHandler(win.getSeatMin(), win.getSeatMax());
-        win.getSeatMin().addChangeListener(seatHandler);
-        win.getSeatMax().addChangeListener(seatHandler);
-        timeoutHandler = new TimeoutValueHandler(win.getTimeoutNum(), win.getTimeoutUnit());
-        win.getTimeoutNum().addChangeListener(timeoutHandler);
+        this.window = window;
+        voterHandler = new MinMaxSpinValueHandler(window.getVoterMin(), window.getVoterMax());
+        window.getVoterMin().addChangeListener(voterHandler);
+        window.getVoterMax().addChangeListener(voterHandler);
+        candHandler = new MinMaxSpinValueHandler(window.getCandMin(), window.getCandMax());
+        window.getCandMin().addChangeListener(candHandler);
+        window.getCandMax().addChangeListener(candHandler);
+        seatHandler = new MinMaxSpinValueHandler(window.getSeatMin(), window.getSeatMax());
+        window.getSeatMin().addChangeListener(seatHandler);
+        window.getSeatMax().addChangeListener(seatHandler);
+        timeoutHandler = new TimeoutValueHandler(window.getTimeoutNum(), window.getTimeoutUnit());
+        window.getTimeoutNum().addChangeListener(timeoutHandler);
         //win.getTimeoutUnit().addActionListener(timeoutHandler); //TODO:Find solution to ActionListener/ChangeListener requirements
-        processHandler = new SingleValueSpinnerHandler(win.getAmountProcessesSpinner());
-        win.getAmountProcessesSpinner().addChangeListener(processHandler);
-        argumentHandler = new ArgumentHandler(win.getAdvancedWindow().getInputField(), win.getAdvancedWindow().getOkButton());
+        processHandler = new SingleValueSpinnerHandler(window.getAmountProcessesSpinner());
+        window.getAmountProcessesSpinner().addChangeListener(processHandler);
+        argumentHandler = new ArgumentHandler(window.getAdvancedWindow().getInputField(), window.getAdvancedWindow().getOkButton());
         //win.getAdvancedWindow().getInputField().addActionListener(argumentHandler); //TODO:Find solution to ActionListener requirements
     }
     
