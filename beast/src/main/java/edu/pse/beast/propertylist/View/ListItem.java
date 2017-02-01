@@ -17,16 +17,20 @@ import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.highlevel.FailureExample;
 import edu.pse.beast.propertylist.PLControllerInterface;
 import edu.pse.beast.propertylist.PropertyItem;
 import edu.pse.beast.propertylist.Model.PLModelInterface;
+import edu.pse.beast.stringresource.PropertyListStringResProvider;
+import edu.pse.beast.stringresource.StringLoaderInterface;
+import edu.pse.beast.stringresource.StringResourceLoader;
 
 /**
 *
 * @author Justin
 */
-public class ListItem extends JPanel {
+public class ListItem extends JPanel implements DisplaysStringsToUser {
 	
 	PLModelInterface model;
 	PLControllerInterface controller;
@@ -58,6 +62,9 @@ public class ListItem extends JPanel {
 	}
 	public JTextField getNameField() {
 		return name;
+	}
+	public ListItem getItem() {
+		return this;
 	}
 	
 	private void init() {
@@ -150,6 +157,16 @@ public class ListItem extends JPanel {
 	
 	public void presentFailureExample(FailureExample ex) {
 		//TODO
+	}
+	
+	@Override
+	public void updateStringRes(StringLoaderInterface sli) {
+		PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
+		StringResourceLoader other = provider.getOtherStringRes();
+		
+		this.testStatus.setText(other.getStringFromID("check"));
+		this.revalidate();
+		this.repaint();
 	}
 
 	/* @Override

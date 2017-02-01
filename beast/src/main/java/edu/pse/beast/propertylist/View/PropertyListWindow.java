@@ -166,7 +166,12 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		StringResourceLoader toolbarTip = provider.getToolbarTipStringRes();
 		
 		this.setTitle(other.getStringFromID("title"));
+		this.addNewButton.setText(other.getStringFromID("newButton"));
 		
+		for (ListItem item : items) item.updateStringRes(sli);
+		
+		this.revalidate();
+		this.repaint();
 	}
 
 
