@@ -5,7 +5,6 @@
  */
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpressionNode;
 import edu.pse.beast.datatypes.booleanExpAST.ComparisonNode;
@@ -23,6 +22,8 @@ import edu.pse.beast.datatypes.booleanExpAST.ThereExistsNode;
 import edu.pse.beast.datatypes.booleanExpAST.TypeExpression;
 import edu.pse.beast.datatypes.booleanExpAST.VoteExp;
 import edu.pse.beast.datatypes.booleanExpAST.VoteSumForCandExp;
+import edu.pse.beast.datatypes.internal.VotingMethodInput;
+import edu.pse.beast.datatypes.internal.VotingMethodOutput;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import java.util.ArrayList;
 import java.util.Stack;
@@ -43,15 +44,15 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private int notNodeCounter;
     private int comparisonNodeCounter;
     private int symbVarExpressionCounter;
-    private int constExpCounter;
     private int electExpCounter;
     private int voteExpCounter;
-    private int voteSumExpressionCounter;
     private int loopVariable;
     private Stack<String> variableNames;
     private CodeArrayListBeautifier code;
+    private VotingMethodInput inputType;
+    private VotingMethodOutput outputType;
 
-    public CBMCCodeGenerationVisitor() {
+    public CBMCCodeGenerationVisitor(VotingMethodInput inputType, VotingMethodOutput outputType) {
         andNodeCounter = 0;
         orNodeCounter = 0;
         implicationNodeCounter = 0;
@@ -61,11 +62,11 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         notNodeCounter = 0;
         comparisonNodeCounter = 0;
         symbVarExpressionCounter = 0;
-        constExpCounter = 0;
         electExpCounter = 0;
         voteExpCounter = 0;
-        voteSumExpressionCounter = 0;
         loopVariable = 0;
+        this.inputType = inputType;
+        this.outputType = outputType;
         code = new CodeArrayListBeautifier();
     }
 
@@ -147,6 +148,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitThereExistsNode(ThereExistsNode node) {
+        String varName = "thereExists_" + thereExistsNodeCounter;
+        thereExistsNodeCounter++;
+        variableNames.push(varName);
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -170,15 +174,11 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         TypeExpression rhs = node.getRHSBooleanExpNode();
         if (lhs instanceof ConstantExp || lhs instanceof NumberExpression) { //BooleanExpConst ???
             lhs.getVisited(this);
+        } else if (lhs instanceof ElectExp) {
+
         }
-        
-        else if (lhs instanceof ElectExp){
-            
-        }
-            
-        
-            
-            if (rhs instanceof ConstantExp || rhs instanceof NumberExpression) { //BooleanExpConst ???
+
+        if (rhs instanceof ConstantExp || rhs instanceof NumberExpression) { //BooleanExpConst ???
             rhs.getVisited(this);
         }
 
@@ -210,6 +210,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitVoteSumExp(VoteSumForCandExp exp) {
+        variableNames.push(exp.getSymbolicVariable().getId());
+
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

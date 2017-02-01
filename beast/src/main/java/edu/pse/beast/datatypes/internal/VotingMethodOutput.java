@@ -6,7 +6,9 @@
 package edu.pse.beast.datatypes.internal;
 
 /**
- *
+ * The following Enum is used to describe the Returnvalue of the votingmethod
+ * It affects the type of all ELECTx. x being the number of the voting round. 
+ * 
  * @author Niels
  */
 public enum VotingMethodOutput {

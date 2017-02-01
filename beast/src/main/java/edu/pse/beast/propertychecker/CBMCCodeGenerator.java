@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
+import edu.pse.beast.datatypes.internal.VotingMethodInput;
+import edu.pse.beast.datatypes.internal.VotingMethodOutput;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
@@ -37,15 +39,64 @@ public class CBMCCodeGenerator {
     private final PostAndPrePropertiesDescription postAndPrePropertiesDescription;
     private final FormalPropertySyntaxTreeToAstTranslator translator;
     private final CBMCCodeGenerationVisitor visitor;
+    private VotingMethodInput inputType;
+    private VotingMethodOutput outputType;
     private int numberOfTimesVoted; // this number should be the number of rounds of votes the Propertys compare.
     private int loopVariableCounter;
     
     public CBMCCodeGenerator(ElectionDescription electionDescription, PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
-        this.visitor = new CBMCCodeGenerationVisitor();
+        
+        
         this.translator = new FormalPropertySyntaxTreeToAstTranslator();
         this.electionDescription = electionDescription;
         this.postAndPrePropertiesDescription = postAndPrePropertiesDescription;
         code = new CodeArrayListBeautifier();
+        
+        ElectionTypeContainer inputTypeContainer = electionDescription.getInputType();
+        ElectionTypeContainer outputTypeContainer = electionDescription.getOutputType(); 
+        
+        /**
+         * this code is only here, because VotingInputType and VotingOutputType aren't used by the CElection Description yet.
+         */
+        
+        
+        
+        switch(inputTypeContainer.getType().getInternalType()) {
+            case VOTER:
+                break;
+            case CANDIDATE:
+                break;
+            case SEAT:
+                break;
+            case APPROVAL:
+                break;
+            case WEIGHTEDAPPROVAL:
+                break;
+            case INTEGER:
+                break;
+            default:
+                throw new AssertionError(inputTypeContainer.getType().getInternalType().name());
+      
+        }
+        switch(outputTypeContainer.getType().getInternalType()) {
+            case VOTER:
+                break;
+            case CANDIDATE:
+                break;
+            case SEAT:
+                break;
+            case APPROVAL:
+                break;
+            case WEIGHTEDAPPROVAL:
+                break;
+            case INTEGER:
+                break;
+            default:
+                throw new AssertionError(outputTypeContainer.getType().getInternalType().name());
+        }
+        
+        
+        this.visitor = new CBMCCodeGenerationVisitor(inputType, outputType);
         /*
         the variable loopVariableCounter is supposed to provide an index so that it is possible to have loops within loops in the generated code
          */
