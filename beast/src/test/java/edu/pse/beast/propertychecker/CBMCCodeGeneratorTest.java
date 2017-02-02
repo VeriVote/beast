@@ -15,7 +15,6 @@ import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescripti
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.toolbox.CCodeHelper;
 import java.util.ArrayList;
-import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -45,11 +44,14 @@ public class CBMCCodeGeneratorTest {
     }
 
     public static void main(String args[]) {
-        InternalTypeContainer type = new InternalTypeContainer(InternalTypeRep.APPROVAL);
-        ElectionTypeContainer inputType = new ElectionTypeContainer(type, "input");
+
+        InternalTypeContainer intype1 = new InternalTypeContainer(InternalTypeRep.APPROVAL);
+        InternalTypeContainer intype2 = new InternalTypeContainer(intype1, InternalTypeRep.CANDIDATE);
+        InternalTypeContainer intype3 = new InternalTypeContainer(intype2, InternalTypeRep.VOTER);
+        ElectionTypeContainer inputType = new ElectionTypeContainer(intype3, "input");
         InternalTypeContainer type2 = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
-        type = new InternalTypeContainer(type2, InternalTypeRep.CANDIDATE);
-        ElectionTypeContainer outputType = new ElectionTypeContainer(type, "output");
+        InternalTypeContainer outtype = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
+        ElectionTypeContainer outputType = new ElectionTypeContainer(outtype, "output");
 
         ElectionDescription electionDescription = new ElectionDescription("name", inputType, outputType, 0);
         ArrayList<String> userCode = new ArrayList<>();
@@ -59,9 +61,10 @@ public class CBMCCodeGeneratorTest {
 
         SymbolicVariableList symbolicVariableList = new SymbolicVariableList();
 
-        //String pre = "FOR_ALL_VOTERS(v) : EXISTS_ONE_CANDIDATE(c) : (c == VOTES2(v) && (VOTE_SUM_FOR_CANDIDATE(c)>= 3 ==> c < 2));";
-        String pre = "2 == 3;";
-        String post = "1 == 4;";
+        String pre = "FOR_ALL_VOTERS(i) : ((i!=u && i!=w) ==> (VOTES1(i) == VOTES2(i)));";
+
+        String post = "ELECT1 == ELECT2;";
+        // String post = "1 == 2;";
 
         FormalPropertiesDescription preDescr = new FormalPropertiesDescription(pre);
         FormalPropertiesDescription postDescr = new FormalPropertiesDescription(post);
@@ -69,9 +72,9 @@ public class CBMCCodeGeneratorTest {
         PostAndPrePropertiesDescription postAndPrePropertiesDescription = new PostAndPrePropertiesDescription("name", preDescr, postDescr, symbolicVariableList);
 
         SymbolicVariableList symVariableList = new SymbolicVariableList();
-        symVariableList.addSymbolicVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
-        symVariableList.addSymbolicVariable("a", new InternalTypeContainer(InternalTypeRep.VOTER));
-        symVariableList.addSymbolicVariable("v", new InternalTypeContainer(InternalTypeRep.VOTER));
+        symVariableList.addSymbolicVariable("u", new InternalTypeContainer(InternalTypeRep.VOTER));
+        symVariableList.addSymbolicVariable("w", new InternalTypeContainer(InternalTypeRep.VOTER));
+        // symVariableList.addSymbolicVariable("i", new InternalTypeContainer(InternalTypeRep.VOTER));
 
         postAndPrePropertiesDescription.setSymbolicVariableList(symVariableList);
 
@@ -87,67 +90,4 @@ public class CBMCCodeGeneratorTest {
         });
     }
 
-    /**
-     * Test of getCode method, of class CBMCCodeGenerator.
-     */
-    @Test
-    public void testGetCode() {
-    }
-    
-    public String generateVoteArray(ElectionTypeContainer inputElectionType) {
-        //generate vote arrays
-        CCodeHelper cCodeHelper = new CCodeHelper();
-        String[] counter = {"i", "j", "k", "l"};
-        String forTemplate = "for(unsigned int COUNTER = 0; COUNTER < MAX; ++COUNTER){\n";
-        String voteArr = "";
-        InternalTypeContainer cont = inputElectionType.getType();
-        int listDepth = 0;
-        while(cont.isList()) {
-            String currentFor = forTemplate.replaceAll("COUNTER", counter[listDepth]);
-            currentFor = currentFor.replaceAll("MAX", cCodeHelper.getListSize(cont));
-            voteArr += currentFor;
-            cont = cont.getListedType();
-            listDepth++;
-        }
-        
-        String min = cCodeHelper.getMin(inputElectionType, cont.getInternalType());
-        String max = cCodeHelper.getMax(inputElectionType, cont.getInternalType());
-        
-        String voteDecl =  "assume(MIN <= votes1".replace("MIN", min);
-        
-        for(int i = 0; i < listDepth; ++i) {
-            voteDecl += "[COUNTER]".replace("COUNTER", counter[i]);            
-        }
-        
-        voteDecl += "<= MAX);\n".replace("MAX", max);
-        voteArr += voteDecl;
-        
-        for(int i = 0; i < listDepth; ++i) {
-            voteArr += "}\n";        
-        }
-        
-        return voteArr;
-    }
-
-    /**
-     * Test of generateVoteArray method, of class CBMCCodeGenerator.
-     */
-    @Test
-    public void testGenerateVoteArray() {
-        ElectionTemplateHandler electionTemplateHandler = new ElectionTemplateHandler();
-        ElectionTypeContainer input = electionTemplateHandler.getById("list_of_yes_no_per_voter");
-        String voteDecl = generateVoteArray(input);
-        System.out.println(voteDecl);
-        input = electionTemplateHandler.getById("one_candidate_per_voter");
-        voteDecl = generateVoteArray(input);
-        System.out.println(voteDecl);
-        input = electionTemplateHandler.getById("list_of_candidates_per_voter");
-        voteDecl = generateVoteArray(input);
-        System.out.println(voteDecl);
-        input = electionTemplateHandler.getById("list_of_integer_vals_per_voter");
-        input.setLowerBound(0);
-        input.setUpperBound(100);
-        voteDecl = generateVoteArray(input);
-        System.out.println(voteDecl);
-    }
 }
