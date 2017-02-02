@@ -261,7 +261,7 @@ public class CBMCCodeGenerator {
                 voteDecl += "[COUNTER]".replace("COUNTER", counter[i]);
             }
 
-            voteDecl += " <= MAX);".replace("MAX", max);
+            voteDecl += " < MAX);".replace("MAX", max);
             code.add(voteDecl);
 
             for (int i = 0; i < listDepth; ++i) {

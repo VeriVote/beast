@@ -249,7 +249,7 @@ public class CBMCCodeGenerationVisitor_Holger implements BooleanExpNodeVisitor{
     
     @Override
     public void visitComparisonNode(ComparisonNode node) {
-         ++count;
+        ++count;
         String booleanVar = "compare_" + varCounter++;
         
         this.lhslistLevel = 0;

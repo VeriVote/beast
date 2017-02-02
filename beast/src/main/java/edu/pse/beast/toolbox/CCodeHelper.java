@@ -83,9 +83,9 @@ public class CCodeHelper {
         if (rep == InternalTypeRep.WEIGHTEDAPPROVAL) {
             return String.valueOf(inputElectionType.getLowerBound());
         } else if (rep == InternalTypeRep.INTEGER) {
-            return "1";
+            return "0";
         } else if (rep == InternalTypeRep.CANDIDATE) {
-            return "1";
+            return "0";
         } else if (rep == InternalTypeRep.APPROVAL) {
             return "0";
         }

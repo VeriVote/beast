@@ -15,7 +15,6 @@ import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescripti
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.toolbox.CCodeHelper;
 import java.util.ArrayList;
-import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -45,13 +44,14 @@ public class CBMCCodeGeneratorTest {
     }
 
     public static void main(String args[]) {
-        InternalTypeContainer intype1 = new InternalTypeContainer(InternalTypeRep.WEIGHTEDAPPROVAL);
+        
+        InternalTypeContainer intype1 = new InternalTypeContainer (InternalTypeRep.APPROVAL);
         InternalTypeContainer intype2 = new InternalTypeContainer (intype1, InternalTypeRep.CANDIDATE);
         InternalTypeContainer intype3 = new InternalTypeContainer (intype2, InternalTypeRep.VOTER);
         ElectionTypeContainer inputType = new ElectionTypeContainer(intype3, "input");
         InternalTypeContainer type2 = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
-        InternalTypeContainer outtype = new InternalTypeContainer(type2, InternalTypeRep.SEAT);
-        ElectionTypeContainer outputType = new ElectionTypeContainer(type2, "output");
+        InternalTypeContainer outtype = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
+        ElectionTypeContainer outputType = new ElectionTypeContainer(outtype, "output");
 
         ElectionDescription electionDescription = new ElectionDescription("name", inputType, outputType, 0);
         ArrayList<String> userCode = new ArrayList<>();
@@ -61,9 +61,9 @@ public class CBMCCodeGeneratorTest {
 
         SymbolicVariableList symbolicVariableList = new SymbolicVariableList();
 
-        String pre = "FOR_ALL_VOTERS(v) : EXISTS_ONE_CANDIDATE(c) : (c == VOTES2(v) && (VOTE_SUM_FOR_CANDIDATE(c)>= 3 ==> c < 2));";
-        // String pre = "2 == 3;";
-        String post = "1 == 4;";
+        // String pre = "FOR_ALL_VOTERS(v) : EXISTS_ONE_CANDIDATE(c) : (c == VOTES2(v) && (VOTE_SUM_FOR_CANDIDATE(c)>= 3 ==> c < 2));";
+        String pre = "VOTES1 == VOTES2;";
+        String post = "";
 
         FormalPropertiesDescription preDescr = new FormalPropertiesDescription(pre);
         FormalPropertiesDescription postDescr = new FormalPropertiesDescription(post);

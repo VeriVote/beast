@@ -23,6 +23,8 @@ import edu.pse.beast.datatypes.booleanExpAST.TypeExpression;
 import edu.pse.beast.datatypes.booleanExpAST.VoteExp;
 import edu.pse.beast.datatypes.booleanExpAST.VoteSumForCandExp;
 import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
+import edu.pse.beast.datatypes.internal.InternalTypeContainer;
+import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import java.util.ArrayList;
 import java.util.Stack;
@@ -67,6 +69,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         this.outputType = outputType;
         this.inputType = inputType;
         code = new CodeArrayListBeautifier();
+
     }
 
     public void setToPrePropertyMode() {
@@ -165,25 +168,95 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitComparisonNode(ComparisonNode node) {
-        // error here
         String varName = "comparison_" + comparisonNodeCounter;
         comparisonNodeCounter++;
         variableNames.push(varName);
-        TypeExpression lhs = node.getLHSBooleanExpNode();
-        TypeExpression rhs = node.getRHSBooleanExpNode();
-        if (lhs instanceof ConstantExp || lhs instanceof NumberExpression) { //BooleanExpConst ???
-            lhs.getVisited(this);
-        } else if (lhs instanceof ElectExp) {
 
+        int lhslistLevel = 0;
+        int rhslistLevel = 0;
+        InternalTypeContainer cont = node.getLHSBooleanExpNode().getInternalTypeContainer();
+        while (cont.isList()) {
+            lhslistLevel++;
+            cont = cont.getListedType();
+        }
+        cont = node.getRHSBooleanExpNode().getInternalTypeContainer();
+        while (cont.isList()) {
+            rhslistLevel++;
+            cont = cont.getListedType();
         }
 
-        if (rhs instanceof ConstantExp || rhs instanceof NumberExpression) { //BooleanExpConst ???
-            rhs.getVisited(this);
+        node.getLHSBooleanExpNode().getVisited(this);
+        node.getRHSBooleanExpNode().getVisited(this);
+
+        if (node.getLHSBooleanExpNode().getAccessVar() != null) {
+            for (int i = 0; i < node.getLHSBooleanExpNode().getAccessVar().length; i++) {
+                System.out.println(lhslistLevel);
+                lhslistLevel--;
+            }
         }
 
-        code.add("unsigned int " + varName + " = ((" + variableNames.pop() + ") "
-                + node.getComparisonSymbol().getCStringRep() + " (" + variableNames.pop() + "));");
+        if (node.getRHSBooleanExpNode().getAccessVar() != null) {
+            for (int i = 0; i < node.getRHSBooleanExpNode().getAccessVar().length; i++) {
+                rhslistLevel--;
+            }
+        }
+
+        int maxListLevel = lhslistLevel > rhslistLevel ? lhslistLevel : rhslistLevel;
+        cont = lhslistLevel > rhslistLevel ? node.getLHSBooleanExpNode().getInternalTypeContainer() : node.getRHSBooleanExpNode().getInternalTypeContainer();
+
+        String internCode = "unsigned int BOOL = 1;";
+        internCode = internCode.replace("BOOL", varName);
+        code.add(internCode);
+        ArrayList<String> counter = new ArrayList<>();
+
+        for (int i = 0; i < maxListLevel; ++i) {
+            String max = "";
+            String countingVar = "count_" + i;
+            counter.add(countingVar);
+            if (null != cont.getAccesTypeIfList()) {
+                switch (cont.getAccesTypeIfList()) {
+                    case VOTER:
+                        max = "V";
+                        break;
+                    case CANDIDATE:
+                        max = "C";
+                        break;
+                    case SEAT:
+                        max = "S";
+                        break;
+                    default:
+                        break;
+                }
+            }
+            String loop = "for(unsigned int VAR = 0; VAR < MAX && BOOL; ++VAR) {";
+            loop = loop.replaceAll("VAR", countingVar);
+            loop = loop.replaceAll("MAX", max);
+            loop = loop.replaceAll("BOOL", varName);
+            code.add(loop);
+            code.addTab();
+        }
+
+        String rhs = variableNames.pop();
+        String lhs = variableNames.pop();
+
+        internCode = varName + " = " + rhs;
+        for (int i = 0; i < lhslistLevel; ++i) {
+            internCode += "[VAR]".replace("VAR", counter.get(i));
+        }
+        internCode += " " + node.getComparisonSymbol().getCStringRep() + " ";
+        internCode += lhs;
+        for (int i = 0; i < rhslistLevel; ++i) {
+            internCode += "[VAR]".replace("VAR", counter.get(i));
+        }
+        code.add(internCode + ";");
+        cont = node.getLHSBooleanExpNode().getInternalTypeContainer();
+        for (int i = 0; i < maxListLevel; ++i) {
+            code.deleteTab();
+            code.add("}");
+        }
         testIfLast();
+
+        // code.add(internCode);
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -199,12 +272,23 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitElectExp(ElectExp exp) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        String tempCode = "electNUMBER".replace("NUMBER", String.valueOf(exp.getCount()));
+        SymbolicVariable[] accessVars = exp.getAccessVar();
+        for (int i = 0; i < accessVars.length; ++i) {
+            tempCode += "[VAR]".replace("VAR", accessVars[i].getId());
+        }
+        variableNames.push(tempCode);
     }
 
     @Override
     public void visitVoteExp(VoteExp exp) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String tempCode = "votesNUMBER".replace("NUMBER", String.valueOf(exp.getCount()));
+        SymbolicVariable[] accessVars = exp.getAccessVar();
+        for (int i = 0; i < accessVars.length; ++i) {
+            tempCode += "[VAR]".replace("VAR", accessVars[i].getId());
+        }
+        variableNames.push(tempCode);
     }
 
     @Override

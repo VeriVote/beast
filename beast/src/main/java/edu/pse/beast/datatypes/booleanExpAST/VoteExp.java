@@ -3,9 +3,8 @@ package edu.pse.beast.datatypes.booleanExpAST;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 
-
 /**
- * 
+ *
  * @author Lukas
  *
  */
@@ -13,9 +12,9 @@ public class VoteExp extends TypeExpression {
 
     private final SymbolicVariable[] accesVars;
     private final int count;
-    
+
     /**
-     * 
+     *
      * @param internalTypeRep the internal type
      * @param symbVarm the described symbolic variable
      * @param count the count of this vote
@@ -25,17 +24,18 @@ public class VoteExp extends TypeExpression {
         this.accesVars = symbVarm;
         this.count = count;
     }
-    
+
     /**
-     * 
+     *
      * @return the described symbolic variable
      */
+    @Override
     public SymbolicVariable[] getAccessVar() {
         return accesVars;
     }
 
     /**
-     * 
+     *
      * @return the count of this vote
      */
     public int getCount() {
