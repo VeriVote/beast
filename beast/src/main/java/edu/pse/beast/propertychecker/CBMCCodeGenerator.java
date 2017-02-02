@@ -52,7 +52,7 @@ public class CBMCCodeGenerator {
         inputType = electionDescription.getInputType();
         outputType = electionDescription.getOutputType();
 
-        this.visitor = new CBMCCodeGenerationVisitor(inputType, outputType);
+        this.visitor = new CBMCCodeGenerationVisitor();
         /*
         the variable loopVariableCounter is supposed to provide an index so that it is possible to have loops within loops in the generated code
          */
@@ -183,7 +183,7 @@ public class CBMCCodeGenerator {
      * this adds the Code of the PreProperties. It uses a Visitor it creates
      */
     private void addPreProperties(BooleanExpListNode preAST) {
-        
+
         code.add("");
         code.add("//preproperties ");
         code.add("");
@@ -200,7 +200,7 @@ public class CBMCCodeGenerator {
      * this adds the Code of the PostProperties. It uses a Visitor it creates
      */
     private void addPostProperties(BooleanExpListNode postAST) {
-        
+
         code.add("");
         code.add("//postproperties ");
         code.add("");
