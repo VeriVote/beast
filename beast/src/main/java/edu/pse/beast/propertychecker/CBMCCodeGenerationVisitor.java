@@ -155,7 +155,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         code.add(tempString);
         code.addTab();
         node.getFollowingExpNode().getVisited(this);
-        code.add(varName + " = " + variableNames.pop());
+        code.add(varName + " = " + variableNames.pop() + ";");
         code.deleteTab();
         code.add("}");
         testIfLast();
@@ -188,7 +188,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         code.add(tempString);
         code.addTab();
         node.getFollowingExpNode().getVisited(this);
-        code.add(varName + " = " + variableNames.pop());
+        code.add(varName + " = " + variableNames.pop() + ";");
         code.deleteTab();
         code.add("}");
         testIfLast();
@@ -329,8 +329,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitVoteSumExp(VoteSumForCandExp exp) {
-        variableNames.push(exp.getSymbolicVariable().getId());
-
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

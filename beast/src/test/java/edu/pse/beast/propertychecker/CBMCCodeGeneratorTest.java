@@ -61,9 +61,9 @@ public class CBMCCodeGeneratorTest {
 
         SymbolicVariableList symbolicVariableList = new SymbolicVariableList();
 
-        String pre = "v == v2;";
+        String pre = "FOR_ALL_VOTERS(i) : ((i!=u && i!=w) ==> (VOTES1(i) == VOTES2(i)));";
 
-        String post = "EXISTS_ONE_CANDIDATE(c) : c == ELECT1;";
+        String post = "ELECT1 == ELECT2;";
         // String post = "1 == 2;";
 
         FormalPropertiesDescription preDescr = new FormalPropertiesDescription(pre);
@@ -72,10 +72,9 @@ public class CBMCCodeGeneratorTest {
         PostAndPrePropertiesDescription postAndPrePropertiesDescription = new PostAndPrePropertiesDescription("name", preDescr, postDescr, symbolicVariableList);
 
         SymbolicVariableList symVariableList = new SymbolicVariableList();
-        symVariableList.addSymbolicVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
-        symVariableList.addSymbolicVariable("a", new InternalTypeContainer(InternalTypeRep.VOTER));
-        symVariableList.addSymbolicVariable("v", new InternalTypeContainer(InternalTypeRep.VOTER));
-        symVariableList.addSymbolicVariable("v2", new InternalTypeContainer(InternalTypeRep.VOTER));
+        symVariableList.addSymbolicVariable("u", new InternalTypeContainer(InternalTypeRep.VOTER));
+        symVariableList.addSymbolicVariable("w", new InternalTypeContainer(InternalTypeRep.VOTER));
+        // symVariableList.addSymbolicVariable("i", new InternalTypeContainer(InternalTypeRep.VOTER));
 
         postAndPrePropertiesDescription.setSymbolicVariableList(symVariableList);
 
