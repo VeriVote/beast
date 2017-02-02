@@ -16,6 +16,7 @@ import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.internal.VotingMethodInput;
 import edu.pse.beast.datatypes.internal.VotingMethodOutput;
+import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
@@ -248,6 +249,8 @@ public class CBMCCodeGenerator {
         numberOfTimesVoted = (postAST.getHighestElect() > numberOfTimesVoted)
                 ? postAST.getHighestElect() : numberOfTimesVoted;
     }
+    
+    
 
     private void addVotesArrayAndElectInitialisation() {
 
@@ -257,7 +260,8 @@ public class CBMCCodeGenerator {
         InternalTypeContainer inputInternalType = inputElectionType.getType();
 
         ElectionTypeContainer outputElectionType = electionDescription.getOutputType();
-        InternalTypeContainer outputInternalType = outputElectionType.getType();
+        InternalTypeContainer outputInternalType = outputElectionType.getType();        
+        
 
         switch (inputType) {
             case SINGLECHOICE:

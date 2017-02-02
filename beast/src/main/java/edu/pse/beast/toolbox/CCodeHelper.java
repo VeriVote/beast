@@ -66,4 +66,30 @@ public class CCodeHelper {
             description.setCode(code);
             return description;
     }
+
+    public String getMin(ElectionTypeContainer inputElectionType, InternalTypeRep rep) {
+        if(rep == InternalTypeRep.WEIGHTEDAPPROVAL) {
+            return String.valueOf(inputElectionType.getLowerBound());
+        } else if(rep == InternalTypeRep.INTEGER) {
+            return "1";
+        } else if(rep == InternalTypeRep.CANDIDATE) {
+            return "1";
+        } else if(rep == InternalTypeRep.APPROVAL) {
+            return "0";
+        }
+        return null;
+    }
+
+    public String getMax(ElectionTypeContainer inputElectionType, InternalTypeRep rep) {
+        if(rep == InternalTypeRep.WEIGHTEDAPPROVAL) {
+            return String.valueOf(inputElectionType.getUpperBound());
+        } else if(rep == InternalTypeRep.INTEGER) {
+            return "C";
+        } else if(rep == InternalTypeRep.CANDIDATE) {
+            return "C";
+        } else if(rep == InternalTypeRep.APPROVAL) {
+            return "1";
+        }
+        return null;
+    }
 }
