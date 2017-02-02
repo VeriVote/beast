@@ -129,13 +129,9 @@ public class SymbolicVarListController implements DisplaysStringsToUser {
     private void updateJlist() {
         jListModel.clear();
         for (SymbolicVariable symbolicVariable : symbolicVariableList.getSymbolicVariables()) {
-            if (symbolicVariable.getInternalTypeContainer().getInternalType().equals(InternalTypeRep.VOTER) ||
-                    symbolicVariable.getInternalTypeContainer().getInternalType().equals(InternalTypeRep.CANDIDATE) ||
-                    symbolicVariable.getInternalTypeContainer().getInternalType().equals(InternalTypeRep.SEAT)) {
                 jListModel.addElement(stringLoaderInterface.getBooleanExpEditorStringResProvider().
                         getBooleanExpEditorSymbVarListRes().getStringFromID(symbolicVariable.getInternalTypeContainer().
                         getInternalType().toString()) + " " + symbolicVariable.getId());
-            }
         }
     }
 

@@ -8,10 +8,12 @@ package edu.pse.beast.celectiondescriptioneditor;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeAreaBuilder;
 import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
+import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveBeforeChangeHandler;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
+
+import javax.swing.*;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultStyledDocument;
 
 
 /**
@@ -24,6 +26,8 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     private CCodeEditorGUI gui;
     private CElectionCodeAreaBuilder builder;
     private ErrorWindow errorWindow;
+    private SaveBeforeChangeHandler saveBeforeChangeHandler;
+
 
     public CElectionDescriptionEditor(
             CElectionCodeArea codeArea,
@@ -33,6 +37,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         this.gui = gui;
         this.builder = builder;
         this.errorWindow = errorWindow;
+        this.saveBeforeChangeHandler = new SaveBeforeChangeHandler(codeArea.getPane());
     }
 
     @Override
@@ -68,14 +73,31 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         return codeArea;
     }
 
-    public void letUserEditElectionDescription(ElectionDescription description) throws BadLocationException {
+    public boolean letUserEditElectionDescription(ElectionDescription description) throws BadLocationException {
         gui.setNewCodeArea();
         codeArea = builder.createCElectionCodeArea(gui.getCodeArea(), gui.getCodeAreaScrollPane(), errorWindow);
-        
         codeArea.letUserEditCode(description.getCode());
         codeArea.lockLine(description.getVotingDeclLine());     
         codeArea.lockLine(description.getCode().size() - 1);
-        this.currentDescription = description;        
+        this.currentDescription = description;
+        saveBeforeChangeHandler.addNewTextPane(codeArea.getPane());
+        gui.setWindowTitle(description.getName());
+        return true;
     }
 
+    /**
+     * Getter
+     * @return the CCodeEditorGUI object of this class
+     */
+    public CCodeEditorGUI getGui() {
+        return this.gui;
+    }
+
+    /**
+     * Getter
+     * @return the SaveBeforeChangeHandler object of this class
+     */
+    public SaveBeforeChangeHandler getSaveBeforeChangeHandler() {
+        return this.saveBeforeChangeHandler;
+    }
 }

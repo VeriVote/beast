@@ -15,3 +15,5 @@ one_candidate_or_zero : Kandidat oder unentschieden
 list_of_integers : Sitze pro Partei
 
 create : Erstellen
+
+emptyNameTextFieldError : Name darf nicht leer sein.

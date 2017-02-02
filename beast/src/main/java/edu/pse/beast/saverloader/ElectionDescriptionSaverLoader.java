@@ -49,7 +49,7 @@ public final class ElectionDescriptionSaverLoader {
         // save the outputType
         saveElectionTypeContainer(savedFormat, "outType", descr.getOutputType());
 
-        // save the voting decleration line
+        // save the voting declaration line
         saveBasicType(savedFormat, "votingDeclLine", "" + descr.getVotingDeclLine());
 
         savedFormat.add("<!EletionDescription>");

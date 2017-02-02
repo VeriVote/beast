@@ -5,14 +5,16 @@
  */
 package edu.pse.beast.booleanexpeditor;
 
+import edu.pse.beast.booleanexpeditor.UserActions.SaveBeforeChangeHandler;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeArea;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeAreaBuilder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.CodeAreaFocusListener;
-import edu.pse.beast.codearea.CodeAreaBuilder;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.toolbox.MenuBarHandler;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import edu.pse.beast.toolbox.ToolbarHandler;
+
+import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -30,7 +32,7 @@ public class BooleanExpEditor {
     private ToolbarHandler toolBarHandler;
     private BooleanExpCodeArea prePropCodeArea;
     private BooleanExpCodeArea postPropCodeArea;
-    private final ChangeHandler changeHandler;
+    private final SaveBeforeChangeHandler saveBeforeChangeHandler;
     private final CodeAreaFocusListener codeAreaFocusListener;
     private final BooleanExpCodeAreaBuilder codeAreaBuilder;
     private ObjectRefsForBuilder refs;
@@ -42,7 +44,7 @@ public class BooleanExpEditor {
      */
     BooleanExpEditor(BooleanExpCodeArea prePropCodeArea, BooleanExpCodeArea postPropCodeArea,
                      BooleanExpEditorWindow window, SymbolicVarListController symbolicVarListController, ErrorWindow errorWindow,
-                     ChangeHandler changeHandler, CodeAreaFocusListener codeAreaFocusListener,
+                     SaveBeforeChangeHandler saveBeforeChangeHandler, CodeAreaFocusListener codeAreaFocusListener,
                      PostAndPrePropertiesDescription postAndPrePropertiesDescription, BooleanExpCodeAreaBuilder codeAreaBuilder,
                      ObjectRefsForBuilder refs) {
         this.window = window;
@@ -52,12 +54,12 @@ public class BooleanExpEditor {
         this.symbolicVarListController = symbolicVarListController;
         this.prePropCodeArea = prePropCodeArea;
         this.postPropCodeArea = postPropCodeArea;
-        this.changeHandler = changeHandler;
+        this.saveBeforeChangeHandler = saveBeforeChangeHandler;
         this.codeAreaBuilder = codeAreaBuilder;
         prePropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         postPropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         this.codeAreaFocusListener = codeAreaFocusListener;
-        loadPostAndPreProperties(postAndPrePropertiesDescription);
+        letUserEditPostAndPreProperties(postAndPrePropertiesDescription);
         windowStarter = new BooleanExpEditorWindowStarter(window);
     }
 
@@ -91,12 +93,24 @@ public class BooleanExpEditor {
      * @param postAndPrePropertiesDescription The PostAndPrePropertiesDescription Object
      * @return a boolean stating the success of the loading
      */
-    public boolean loadPostAndPreProperties(PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
-        // TODO implement saveBeforeChangeListener call
+    public boolean letUserEditPostAndPreProperties(PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
+        if (saveBeforeChangeHandler.hasChanged()) {
+            int option = window.showOptionPane(currentlyLoadedPostAndPreProp.getName());
+            if (option == JOptionPane.YES_OPTION) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            } else if (option == JOptionPane.CANCEL_OPTION) {
+                return false;
+            }
+        }
+        loadNewProperties(postAndPrePropertiesDescription);
+        return true;
+    }
+
+    void loadNewProperties(PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
         System.out.println("Loading symbolic variable list");
         symbolicVarListController.setSymbVarList(postAndPrePropertiesDescription.getSymbolicVariableList());
         window.setNewTextpanes();
-        changeHandler.addNewTextPanes(window.getPrePropTextPane(), window.getPostPropTextPane());
+        saveBeforeChangeHandler.addNewTextPanes(window.getPrePropTextPane(), window.getPostPropTextPane());
         prePropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(refs, window.getPrePropTextPane(),
                 window.getPrePropScrollPane(), errorWindow);
         postPropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(refs, window.getPostPropTextPane(),
@@ -110,8 +124,7 @@ public class BooleanExpEditor {
         System.out.println("Finding errors");
         this.findErrorsAndDisplayThem();
         this.window.setWindowTitle(postAndPrePropertiesDescription.getName());
-        changeHandler.updatePreValues();
-        return true;
+        saveBeforeChangeHandler.updatePreValues();
     }
 
     /**
