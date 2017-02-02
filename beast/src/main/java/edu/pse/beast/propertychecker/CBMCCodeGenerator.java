@@ -13,9 +13,6 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeRep;
-import edu.pse.beast.datatypes.internal.VotingMethodInput;
-import edu.pse.beast.datatypes.internal.VotingMethodOutput;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.ErrorLogger;
@@ -40,10 +37,10 @@ public class CBMCCodeGenerator {
     private final PostAndPrePropertiesDescription postAndPrePropertiesDescription;
     private final FormalPropertySyntaxTreeToAstTranslator translator;
     private final CBMCCodeGenerationVisitor visitor;
-    private VotingMethodInput inputType;
-    private VotingMethodOutput outputType;
+    private final ElectionTypeContainer inputType;
+    private final ElectionTypeContainer outputType;
+    private final CCodeHelper cCodeHelper;
     private int numberOfTimesVoted; // this number should be the number of rounds of votes the Propertys compare.
-    private int loopVariableCounter;
 
     public CBMCCodeGenerator(ElectionDescription electionDescription, PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
 
@@ -52,46 +49,18 @@ public class CBMCCodeGenerator {
         this.postAndPrePropertiesDescription = postAndPrePropertiesDescription;
         code = new CodeArrayListBeautifier();
 
-        ElectionTypeContainer inputTypeContainer = electionDescription.getInputType();
-        ElectionTypeContainer outputTypeContainer = electionDescription.getOutputType();
-
-        /**
-         * this code is only here, because VotingInputType and VotingOutputType
-         * aren't used by the CElection Description yet.
-         */
-        switch (inputTypeContainer.getType().getInternalType()) {
-            case VOTER:
-                inputType = VotingMethodInput.PREFERENCE;
-                break;
-            case CANDIDATE:
-                inputType = VotingMethodInput.SINGLECHOICE;
-                break;
-            case SEAT:
-                break;
-            case APPROVAL:
-                inputType = VotingMethodInput.APPROVAL;
-                break;
-            case WEIGHTEDAPPROVAL:
-                inputType = VotingMethodInput.WEIGHTEDAPPROVAL;
-                break;
-            case INTEGER:
-                break;
-            default:
-                throw new AssertionError(inputTypeContainer.getType().getInternalType().name());
-
-        }
-        if (outputTypeContainer.getType().isList()) {
-            outputType = VotingMethodOutput.PARLAMENT;
-        } else {
-            outputType = VotingMethodOutput.CANDIDATE;
-        }
+        inputType = electionDescription.getInputType();
+        outputType = electionDescription.getOutputType();
 
         this.visitor = new CBMCCodeGenerationVisitor(inputType, outputType);
         /*
         the variable loopVariableCounter is supposed to provide an index so that it is possible to have loops within loops in the generated code
          */
-        this.loopVariableCounter = 0;
+
+        cCodeHelper = new CCodeHelper();
+
         generateCode();
+
     }
 
     public ArrayList<String> getCode() {
@@ -181,7 +150,7 @@ public class CBMCCodeGenerator {
                     case CANDIDATE:
                         code.add("unsigned int " + id + " = nondet_uint();");
                         // a Candidate is basically an unsigned int. Candidate 1 is 1 and so on
-                        code.add("assume(0 < " + id + " && " + id + " <= C);");
+                        code.add("assume(0 <= " + id + " && " + id + " < C);");
                         // C is the number of total Candidates. 0 is NOT a Candidate
                         break;
                     case SEAT:
@@ -214,7 +183,10 @@ public class CBMCCodeGenerator {
      * this adds the Code of the PreProperties. It uses a Visitor it creates
      */
     private void addPreProperties(BooleanExpListNode preAST) {
-
+        
+        code.add("");
+        code.add("//preproperties ");
+        code.add("");
         visitor.setToPrePropertyMode();
         preAST.getBooleanExpressions().forEach((booleanExpressionLists) -> {
             booleanExpressionLists.forEach((booleanNode) -> {
@@ -228,6 +200,10 @@ public class CBMCCodeGenerator {
      * this adds the Code of the PostProperties. It uses a Visitor it creates
      */
     private void addPostProperties(BooleanExpListNode postAST) {
+        
+        code.add("");
+        code.add("//postproperties ");
+        code.add("");
         visitor.setToPostPropertyMode();
         postAST.getBooleanExpressions().forEach((booleanExpressionLists) -> {
             booleanExpressionLists.forEach((booleanNode) -> {
@@ -249,235 +225,61 @@ public class CBMCCodeGenerator {
         numberOfTimesVoted = (postAST.getHighestElect() > numberOfTimesVoted)
                 ? postAST.getHighestElect() : numberOfTimesVoted;
     }
-    
-    
 
     private void addVotesArrayAndElectInitialisation() {
 
         code.add("//voting-array and elect variable initialisation");
 
-        ElectionTypeContainer inputElectionType = electionDescription.getInputType();
-        InternalTypeContainer inputInternalType = inputElectionType.getType();
+        for (int voteNumber = 1; voteNumber <= numberOfTimesVoted; voteNumber++) {
 
-        ElectionTypeContainer outputElectionType = electionDescription.getOutputType();
-        InternalTypeContainer outputInternalType = outputElectionType.getType();        
-        
+            String votesX = "unsigned int votes" + voteNumber;
 
-        switch (inputType) {
-            case SINGLECHOICE:
-                for (int i = 1; i <= numberOfTimesVoted; i++) {
-                    code.add("unsigned int votes" + i + "[V];");
-                    code.add("unsigned int i" + loopVariableCounter + ";");
-                    code.add("for(i" + loopVariableCounter + " = 0; i" + loopVariableCounter
-                            + " < V; i" + loopVariableCounter + "++) {");
-                    code.addTab();
-                    code.add("votes" + i + "[i" + loopVariableCounter + "] = nondet_uint();");
-                    code.deleteTab();
-                    code.add("}");
-                    loopVariableCounter++;
-                    if (outputInternalType.isList()) {
-                        code.add("unsigned int elect" + i + "[C+1] = voting(votes" + i + ");");
-                    } else {
-                        code.add("unsigned int elect" + i + " = voting(votes" + i + ");");
-                    }
-                }
+            votesX += cCodeHelper.getCArrayType(inputType.getType());
 
-                break;
-            case PREFERENCE:
-                // work in progress
-                for (int i = 1; i <= numberOfTimesVoted; i++) {
-                    code.add("unsigned int votes" + i + "[V][C+1];");
-                    code.add("unsigned int i" + loopVariableCounter + ";");
-                    code.add("for(i" + loopVariableCounter + " = 0; i" + loopVariableCounter
-                            + " < V; i" + loopVariableCounter + "++) {");
-                    code.addTab();
-                    loopVariableCounter++;
-                    code.addTab();
-                    code.add("for(i" + loopVariableCounter + " = 0; i" + loopVariableCounter
-                            + " < V; i" + loopVariableCounter + "++) {");
-                    code.addTab();
-                    code.add("votes" + i + "[i" + (loopVariableCounter - 1)  + "[i" + loopVariableCounter +"] = nondet_uint();");
-                    code.deleteTab();
-                    code.add("}");
-                    loopVariableCounter++;
-                    if (outputInternalType.isList()) {
-                        code.add("unsigned int elect" + i + "[C+1] = voting(votes" + i + ");");
-                    } else {
-                        code.add("unsigned int elect" + i + " = voting(votes" + i + ");");
-                    }
-                }
+            code.add(votesX + ";");
 
-                break;
-            case APPROVAL:
-                for (int i = 1; i <= numberOfTimesVoted; i++) {
-                    code.add("unsigned int votes" + i + "[V][C];");
-                    code.add("unsigned int i" + loopVariableCounter + ";");
-                    code.add("for(i" + loopVariableCounter + " = 0; i" + loopVariableCounter
-                            + " < V; i" + loopVariableCounter + "++) {");
-                    code.addTab();
-                    code.add("unsigned int i" + (loopVariableCounter + 1) + ";");
-                    code.add("for(i" + (loopVariableCounter + 1) + " = 0; i" + (loopVariableCounter + 1)
-                            + " < V; i" + (loopVariableCounter + 1) + "++) {");
-                    code.addTab();
-                    code.add("votes" + i + "[i" + loopVariableCounter
-                            + "][i" + (loopVariableCounter + 1) + " = nondet_uint();");
-                    // for approval the values are either 0 or 1 for every candidate
-                    code.add("assume(0 <= votes" + i + "[i" + loopVariableCounter
-                            + "][i" + (loopVariableCounter + 1)
-                            + "&& + votes" + i + "[i" + loopVariableCounter
-                            + "][i" + (loopVariableCounter + 1) + " <=1);");
-                    code.deleteTab();
-                    code.add("}");
-                    code.deleteTab();
-                    code.add("}");
-                    loopVariableCounter++;
-                    loopVariableCounter++;
-                    if (outputInternalType.isList()) {
-                        code.add("unsigned int elect" + i + "[C+1] = voting(votes" + i + ");");
-                    } else {
-                        code.add("unsigned int elect" + i + " = voting(votes" + i + ");");
-                    }
-                }
+            String[] counter = {"i", "j", "k", "l"};
 
-                break;
-            case WEIGHTEDAPPROVAL:
-                for (int i = 1; i <= numberOfTimesVoted; i++) {
-                    code.add("unsigned int votes" + i + "[V][C];");
-                    code.add("unsigned int i" + loopVariableCounter + ";");
-                    code.add("for(i" + loopVariableCounter + " = 0; i" + loopVariableCounter
-                            + " < V; i" + loopVariableCounter + "++) {");
-                    code.addTab();
-                    code.add("unsigned int i" + (loopVariableCounter + 1) + ";");
-                    code.add("for(i" + (loopVariableCounter + 1) + " = 0; i" + (loopVariableCounter + 1)
-                            + " < V; i" + (loopVariableCounter + 1) + "++) {");
-                    code.addTab();
-                    code.add("votes" + i + "[i" + loopVariableCounter
-                            + "][i" + (loopVariableCounter + 1) + " = nondet_uint();");
-                    code.add("assume(" + inputElectionType.getLowerBound()
-                            + "<= votes" + i + "[i" + loopVariableCounter
-                            + "][i" + (loopVariableCounter + 1)
-                            + "&& + votes" + i + "[i" + loopVariableCounter
-                            + "][i" + (loopVariableCounter + 1) + " <=" + inputElectionType.getUpperBound() + ");");
-                    code.deleteTab();
-                    code.add("}");
-                    code.deleteTab();
-                    code.add("}");
-                    loopVariableCounter++;
-                    loopVariableCounter++;
-                    if (outputInternalType.isList()) {
-                        code.add("unsigned int elect" + i + "[C+1] = voting(votes" + i + ");");
-                    } else {
-                        code.add("unsigned int elect" + i + " = voting(votes" + i + ");");
-                    }
-                }
-                break;
-            default:
-                throw new AssertionError(inputType.name());
+            String forTemplate = "for(unsigned int COUNTER = 0; COUNTER < MAX; ++COUNTER){";
 
+            InternalTypeContainer cont = inputType.getType();
+            int listDepth = 0;
+            while (cont.isList()) {
+                String currentFor = forTemplate.replaceAll("COUNTER", counter[listDepth]);
+                currentFor = currentFor.replaceAll("MAX", cCodeHelper.getListSize(cont));
+                code.add(currentFor);
+                code.addTab();
+                cont = cont.getListedType();
+                listDepth++;
+            }
+            String min = cCodeHelper.getMin(inputType, cont.getInternalType());
+            String max = cCodeHelper.getMax(inputType, cont.getInternalType());
+
+            String voteDecl = ("assume(MIN <= votes" + voteNumber).replace("MIN", min);
+
+            for (int i = 0; i < listDepth; ++i) {
+                voteDecl += "[COUNTER]".replace("COUNTER", counter[i]);
+            }
+
+            voteDecl += " <= MAX);".replace("MAX", max);
+            code.add(voteDecl);
+
+            for (int i = 0; i < listDepth; ++i) {
+                code.deleteTab();
+                code.add("}");
+            }
+
+            String electX = "unsigned int elect" + voteNumber;
+
+            electX += cCodeHelper.getCArrayType(outputType.getType());
+
+            code.add(electX + ";");
+
+            code.add("elect" + voteNumber + " = voting(votes" + voteNumber + ");");
+
+            //initialize elects
         }
-        /*
-        if (outputInternalType.getInternalType() == InternalTypeRep.CANDIDATE
-                || outputInternalType.isList()
-                && outputInternalType.getListedType().getInternalType() == InternalTypeRep.CANDIDATE) {
 
-            switch (inputInternalType.getInternalType()) {
-                case VOTER:
-                    ErrorLogger.log("The input Type should not be VOTER");
-                    break;
-                case CANDIDATE:
-                    for (int i = 1; i <= numberOfTimesVoted; i++) {
-                        code.add("unsigned int votes" + i + "[V];");
-                        code.add("unsigned int i" + loopVariableCounter + ";");
-                        code.add("for(i" + loopVariableCounter + " = 0; i" + loopVariableCounter
-                                + " < V; i" + loopVariableCounter + "++) {");
-                        code.addTab();
-                        code.add("votes" + i + "[i" + loopVariableCounter + "] = nondet_uint();");
-                        code.deleteTab();
-                        code.add("}");
-                        loopVariableCounter++;
-                        if (outputInternalType.isList()) {
-                            code.add("unsigned int elect" + i + "[C+1] = voting(votes" + i + ");");
-                        } else {
-                            code.add("unsigned int elect" + i + " = voting(votes" + i + ");");
-                        }
-                    }
-
-                    break;
-                case SEAT:
-                    ErrorLogger.log("The input Type should not be SEAT");
-                    break;
-                case APPROVAL:
-                    for (int i = 1; i <= numberOfTimesVoted; i++) {
-                        code.add("unsigned int votes" + i + "[V][C];");
-                        code.add("unsigned int i" + loopVariableCounter + ";");
-                        code.add("for(i" + loopVariableCounter + " = 0; i" + loopVariableCounter
-                                + " < V; i" + loopVariableCounter + "++) {");
-                        code.addTab();
-                        code.add("unsigned int i" + (loopVariableCounter + 1) + ";");
-                        code.add("for(i" + (loopVariableCounter + 1) + " = 0; i" + (loopVariableCounter + 1)
-                                + " < V; i" + (loopVariableCounter + 1) + "++) {");
-                        code.addTab();
-                        code.add("votes" + i + "[i" + loopVariableCounter
-                                + "][i" + (loopVariableCounter + 1) + " = nondet_uint();");
-                        // for approval the values are either 0 or 1 for every candidate
-                        code.add("assume(0 <= votes" + i + "[i" + loopVariableCounter
-                                + "][i" + (loopVariableCounter + 1)
-                                + "&& + votes" + i + "[i" + loopVariableCounter
-                                + "][i" + (loopVariableCounter + 1) + " <=1);");
-                        code.deleteTab();
-                        code.add("}");
-                        code.deleteTab();
-                        code.add("}");
-                        loopVariableCounter++;
-                        loopVariableCounter++;
-                        if (outputInternalType.isList()) {
-                            code.add("unsigned int elect" + i + "[C+1] = voting(votes" + i + ");");
-                        } else {
-                            code.add("unsigned int elect" + i + " = voting(votes" + i + ");");
-                        }
-                    }
-                    break;
-                case WEIGHTEDAPPROVAL:
-                    for (int i = 1; i <= numberOfTimesVoted; i++) {
-                        code.add("unsigned int votes" + i + "[V][C];");
-                        code.add("unsigned int i" + loopVariableCounter + ";");
-                        code.add("for(i" + loopVariableCounter + " = 0; i" + loopVariableCounter
-                                + " < V; i" + loopVariableCounter + "++) {");
-                        code.addTab();
-                        code.add("unsigned int i" + (loopVariableCounter + 1) + ";");
-                        code.add("for(i" + (loopVariableCounter + 1) + " = 0; i" + (loopVariableCounter + 1)
-                                + " < V; i" + (loopVariableCounter + 1) + "++) {");
-                        code.addTab();
-                        code.add("votes" + i + "[i" + loopVariableCounter
-                                + "][i" + (loopVariableCounter + 1) + " = nondet_uint();");
-                        code.add("assume(" + inputElectionType.getLowerBound()
-                                + "<= votes" + i + "[i" + loopVariableCounter
-                                + "][i" + (loopVariableCounter + 1)
-                                + "&& + votes" + i + "[i" + loopVariableCounter
-                                + "][i" + (loopVariableCounter + 1) + " <=" + inputElectionType.getUpperBound() + ");");
-                        code.deleteTab();
-                        code.add("}");
-                        code.deleteTab();
-                        code.add("}");
-                        loopVariableCounter++;
-                        loopVariableCounter++;
-                        if (outputInternalType.isList()) {
-                            code.add("unsigned int elect" + i + "[C+1] = voting(votes" + i + ");");
-                        } else {
-                            code.add("unsigned int elect" + i + " = voting(votes" + i + ");");
-                        }
-                    }
-                    break;
-                case INTEGER:
-                    ErrorLogger.log("The input Type should not be INTEGER");
-                    break;
-                default:
-                    throw new AssertionError(inputInternalType.getInternalType().name());
-
-            } 
-        } else {
-            ErrorLogger.log("The output Type can only be CANDIDATE");
-        } */
     }
 
     private BooleanExpListNode generateAST(String code) {

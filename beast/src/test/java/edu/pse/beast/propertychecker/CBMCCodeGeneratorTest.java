@@ -45,11 +45,13 @@ public class CBMCCodeGeneratorTest {
     }
 
     public static void main(String args[]) {
-        InternalTypeContainer type = new InternalTypeContainer(InternalTypeRep.APPROVAL);
-        ElectionTypeContainer inputType = new ElectionTypeContainer(type, "input");
+        InternalTypeContainer intype1 = new InternalTypeContainer(InternalTypeRep.WEIGHTEDAPPROVAL);
+        InternalTypeContainer intype2 = new InternalTypeContainer (intype1, InternalTypeRep.CANDIDATE);
+        InternalTypeContainer intype3 = new InternalTypeContainer (intype2, InternalTypeRep.VOTER);
+        ElectionTypeContainer inputType = new ElectionTypeContainer(intype3, "input");
         InternalTypeContainer type2 = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
-        type = new InternalTypeContainer(type2, InternalTypeRep.CANDIDATE);
-        ElectionTypeContainer outputType = new ElectionTypeContainer(type, "output");
+        InternalTypeContainer outtype = new InternalTypeContainer(type2, InternalTypeRep.SEAT);
+        ElectionTypeContainer outputType = new ElectionTypeContainer(type2, "output");
 
         ElectionDescription electionDescription = new ElectionDescription("name", inputType, outputType, 0);
         ArrayList<String> userCode = new ArrayList<>();
@@ -59,8 +61,8 @@ public class CBMCCodeGeneratorTest {
 
         SymbolicVariableList symbolicVariableList = new SymbolicVariableList();
 
-        //String pre = "FOR_ALL_VOTERS(v) : EXISTS_ONE_CANDIDATE(c) : (c == VOTES2(v) && (VOTE_SUM_FOR_CANDIDATE(c)>= 3 ==> c < 2));";
-        String pre = "2 == 3;";
+        String pre = "FOR_ALL_VOTERS(v) : EXISTS_ONE_CANDIDATE(c) : (c == VOTES2(v) && (VOTE_SUM_FOR_CANDIDATE(c)>= 3 ==> c < 2));";
+        // String pre = "2 == 3;";
         String post = "1 == 4;";
 
         FormalPropertiesDescription preDescr = new FormalPropertiesDescription(pre);

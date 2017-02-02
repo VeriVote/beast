@@ -22,8 +22,7 @@ import edu.pse.beast.datatypes.booleanExpAST.ThereExistsNode;
 import edu.pse.beast.datatypes.booleanExpAST.TypeExpression;
 import edu.pse.beast.datatypes.booleanExpAST.VoteExp;
 import edu.pse.beast.datatypes.booleanExpAST.VoteSumForCandExp;
-import edu.pse.beast.datatypes.internal.VotingMethodInput;
-import edu.pse.beast.datatypes.internal.VotingMethodOutput;
+import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import java.util.ArrayList;
 import java.util.Stack;
@@ -47,12 +46,12 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private int electExpCounter;
     private int voteExpCounter;
     private int loopVariable;
+    private ElectionTypeContainer inputType;
+    private ElectionTypeContainer outputType;
     private Stack<String> variableNames;
     private CodeArrayListBeautifier code;
-    private VotingMethodInput inputType;
-    private VotingMethodOutput outputType;
 
-    public CBMCCodeGenerationVisitor(VotingMethodInput inputType, VotingMethodOutput outputType) {
+    public CBMCCodeGenerationVisitor(ElectionTypeContainer inputType, ElectionTypeContainer outputType) {
         andNodeCounter = 0;
         orNodeCounter = 0;
         implicationNodeCounter = 0;
@@ -65,8 +64,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         electExpCounter = 0;
         voteExpCounter = 0;
         loopVariable = 0;
-        this.inputType = inputType;
         this.outputType = outputType;
+        this.inputType = inputType;
         code = new CodeArrayListBeautifier();
     }
 
@@ -185,7 +184,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         code.add("unsigned int " + varName + " = ((" + variableNames.pop() + ") "
                 + node.getComparisonSymbol().getCStringRep() + " (" + variableNames.pop() + "));");
         testIfLast();
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
