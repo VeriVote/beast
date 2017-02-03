@@ -2,6 +2,7 @@ package edu.pse.beast.propertylist.View;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -39,6 +41,8 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	
 	PLModelInterface model;
 	PLControllerInterface controller;
+	
+	private boolean reactsToInput = true;
 	
 	private JMenuBar menuBar;
 	private JMenu menuFile;
@@ -84,6 +88,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		getContentPane().add(toolBar, BorderLayout.NORTH);
 		
 		panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		getContentPane().add(panel, BorderLayout.CENTER);
 		
 		if (!items.isEmpty()) {
@@ -91,8 +96,8 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 				panel.add(item, BorderLayout.CENTER);
 			}
 		}
-		/*JScrollPane jsp = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		this.add(jsp);*/
+		JScrollPane jsp = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		this.add(jsp);
 		
 		endpanel = new JPanel();
 		getContentPane().add(endpanel, BorderLayout.SOUTH);
@@ -101,7 +106,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		addNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//addNewPropertyAction(e);
-				controller.addNewProperty();
+				if (reactsToInput) controller.addNewProperty();
 			}
 
 		});
@@ -179,30 +184,32 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	public void update(Observable o, Object obj) {
 		updateItems(model.getList());
 		
-		// check if new property was added to model
-		//if (list.size() > items.size()) addItem(list.get(model.getDirtyIndex()));
-		
-		// check if property was deleted from model
-		//if (list.size() < items.size()) delItem(model.getUpdateIndex());
-		
-		/*ArrayList<PropertyItem> list = ((PLModel)o).getDescr();
-		items = new ArrayList<ListItem>();
-		for (PropertyItem item : list) {
-			items.add(new ListItem(controller, model, item));
-		}
-		updateItems();*/
 	}
 	
 	public void rejectNameChange(PropertyItem prop) {
+		controller.changeName(prop, prop.getDescription().getName());
 		for (ListItem li : items) {
 			if (prop.equals(li.getPropertyItem())) {
 				li.getNameField().setBackground(Color.RED);
 				
 				li.getNameField().setForeground(Color.RED);
+				updateItems(model.getList());
 				
 				//li.getNameField().setBackground(Color.WHITE);
 			}
 		}
+		
+	}
+	
+	public void stopReacting() {
+		setReactsToInput(false);
+	}
+	public void resumeReacting() {
+		setReactsToInput(true);
+	}
+	private void setReactsToInput(boolean reacts) {
+		reactsToInput = reacts;
+		for (ListItem item : items) item.setReactsToInput(reacts);
 	}
 	
 

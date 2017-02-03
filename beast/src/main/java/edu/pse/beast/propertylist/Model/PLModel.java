@@ -23,11 +23,12 @@ public class PLModel extends Observable implements PLModelInterface {
 	public boolean changeName(PropertyItem prop, String newName) {
 		int index = propertyList.indexOf(prop);
 		if (index == -1) return false;
-		if (indexOfName(newName) != -1) return false;
+		if (indexOfName(newName) != -1 && prop.getDescription().getName() != newName) return false;
 		
 		PostAndPrePropertiesDescription old = propertyList.get(index).getDescription();
 		propertyList.get(index).setDescription(newName, old.getPrePropertiesDescription(),
 				old.getPostPropertiesDescription(), old.getSymVarList());
+		updateView();
 		//updateIndex = index;
 		return true;
 	}
@@ -48,7 +49,7 @@ public class PLModel extends Observable implements PLModelInterface {
 		
 		PropertyItem newItem = new PropertyItem(new PostAndPrePropertiesDescription(name + i), false);
 		propertyList.add(newItem);
-		//editor.loadPostAndPreProperties(new PostAndPrePropertiesDescription(name + i));
+		//editor.letUserEditPostAndPreProperties(new PostAndPrePropertiesDescription(name + i));
 		dirtyIndex = propertyList.indexOf(newItem);
 		updateView();
 		return true;
@@ -58,7 +59,7 @@ public class PLModel extends Observable implements PLModelInterface {
 	public void editProperty(PropertyItem prop, BooleanExpEditor editor) {
 		//saveDirtyItem(editor);
 		
-		editor.loadPostAndPreProperties(prop.getDescription());
+		editor.letUserEditPostAndPreProperties(prop.getDescription());
 		dirtyIndex = propertyList.indexOf(prop);
 		updateView();
 	}
@@ -69,7 +70,7 @@ public class PLModel extends Observable implements PLModelInterface {
 		if (index == -1) return false;
 		
 		if (dirtyIndex == index) {
-			//editor.loadPostAndPreProperties(propertyList.get(0).getDescription());
+			//editor.letUserEditPostAndPreProperties(propertyList.get(0).getDescription());
 			//dirtyIndex = 0;
 		}
 		
