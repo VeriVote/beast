@@ -17,7 +17,7 @@ public class LinuxProcess extends CBMCProcess {
         // the linux version of cbmc has the trace command automatically, so we
         // have to remove it
         // or else cbmc would throw an error
-        return toSanitize.replace(" --trace", "");
+        return toSanitize.replace("--trace;", "");
     }
 
     @Override
@@ -40,7 +40,7 @@ public class LinuxProcess extends CBMCProcess {
         argumentsToPass[4] = "-D S=" + seats;
         
         for (int i = 5; i < argumentsToPass.length; i++) {
-            argumentsToPass[i] = advanced.split(";")[i - 5];
+            argumentsToPass[i] = sanitizeArguments(advanced.split(";")[i - 5]);
         }
 
         Process startedProcess = null;
