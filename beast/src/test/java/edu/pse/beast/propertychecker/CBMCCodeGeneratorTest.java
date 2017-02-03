@@ -63,7 +63,7 @@ public class CBMCCodeGeneratorTest {
 
         String pre = "FOR_ALL_VOTERS(i) : ((i!=u && i!=w) ==> VOTES1(i) == VOTES2(i));";
 
-        String post = "ELECT1 < C;";
+        String post = "ELECT1 < ELECT2;";
         // String post = "1 == 2;";
 
         FormalPropertiesDescription preDescr = new FormalPropertiesDescription(pre);

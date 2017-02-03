@@ -82,9 +82,9 @@ public class CBMCCodeGenerator {
 
     // maybe add something that let's the user use imports
     private void addHeader() {
-        code.add("#inlcude <stdlib.h>");
-        code.add("#inlcude <stdint.h>");
-        code.add("#inlcude <assert.h>");
+        code.add("#include <stdlib.h>");
+        code.add("#include <stdint.h>");
+        code.add("#include <assert.h>");
         code.add("");
         code.add("int nondet_uint();");
         code.add("int nondet_int();");
