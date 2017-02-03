@@ -61,9 +61,9 @@ public class CBMCCodeGeneratorTest {
 
         SymbolicVariableList symbolicVariableList = new SymbolicVariableList();
 
-        String pre = "FOR_ALL_VOTERS(i) : EXISTS_ONE_CANDIDATE(c) : ((i!=u && i!=w) ==> (VOTES1(i) == VOTES2(i)) || c == c);";
+        String pre = "FOR_ALL_VOTERS(i) : ((i!=u && i!=w) ==> VOTES1(i) == VOTES2(i));";
 
-        String post = "ELECT1 == ELECT2;";
+        String post = "ELECT1 < C;";
         // String post = "1 == 2;";
 
         FormalPropertiesDescription preDescr = new FormalPropertiesDescription(pre);
