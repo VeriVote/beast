@@ -109,13 +109,16 @@ public class BooleanExpEditor {
     }
 
     void loadNewProperties(PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
-        System.out.println("Loading symbolic variable list");
+        System.out.println("Loading symbolic variable list");        
+        
         symbolicVarListController.setSymbVarList(postAndPrePropertiesDescription.getSymbolicVariableList());
         window.setNewTextpanes();
         saveBeforeChangeHandler.addNewTextPanes(window.getPrePropTextPane(), window.getPostPropTextPane());
         
         cEditor.removeListener(prePropCodeArea.getVariableErrorFinder());
         cEditor.removeListener(postPropCodeArea.getVariableErrorFinder());
+        
+        
         
         prePropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(refs, window.getPrePropTextPane(),
                 window.getPrePropScrollPane(), symbolicVarListController.getSymbolicVariableList());
@@ -124,8 +127,14 @@ public class BooleanExpEditor {
                 
         cEditor.addListener(prePropCodeArea.getVariableErrorFinder());
         cEditor.addListener(postPropCodeArea.getVariableErrorFinder());
-        postPropCodeArea.getVariableErrorFinder().setInput(cEditor.getElectionDescription().getInputType());
-        postPropCodeArea.getVariableErrorFinder().setOutput(cEditor.getElectionDescription().getOutputType());
+        
+        postPropCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getInputType());
+        postPropCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getOutputType());
+        
+        prePropCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getInputType());
+        prePropCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getOutputType());
+        
+        
         
         prePropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         postPropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
@@ -161,12 +170,5 @@ public class BooleanExpEditor {
 
     public BooleanExpCodeArea getPrePropCodeArea() {
         return prePropCodeArea;
-    }
-    
-    public void electionTypeChanged(ElectionTypeContainer input, ElectionTypeContainer output) {
-        prePropCodeArea.getVariableErrorFinder().setInput(input);
-        prePropCodeArea.getVariableErrorFinder().setOutput(output);
-        postPropCodeArea.getVariableErrorFinder().setInput(input);
-        postPropCodeArea.getVariableErrorFinder().setOutput(output);
     }
 }

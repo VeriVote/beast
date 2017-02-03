@@ -43,15 +43,7 @@ public class BooleanExpEditorVariableErrorFinder implements ErrorFinder, Electio
          lis.setUp(scopeHandler, input, output);        
     }
      
-     public void setInput(ElectionTypeContainer input) {
-        lis.setInput(input);
-    }
-
-    public void setOutput(ElectionTypeContainer output) {
-        lis.setOutput(output);
-    }     
-    
-    @Override
+     @Override
     public ArrayList<CodeError> getErrors() {        
         System.out.println("formal prop searching variable errors");
         
@@ -74,4 +66,5 @@ public class BooleanExpEditorVariableErrorFinder implements ErrorFinder, Electio
     public void outputChanged(ElectionTypeContainer output) {
        lis.setOutput(output);
     }
+    
 }

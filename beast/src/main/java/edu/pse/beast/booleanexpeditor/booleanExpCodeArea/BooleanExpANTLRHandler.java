@@ -34,8 +34,10 @@ public class BooleanExpANTLRHandler {
     }
     
     public FormalPropertyDescriptionParser.BooleanExpListContext getParseTree() throws BadLocationException {
-        lexer.setInputStream(new ANTLRInputStream(styledDocument.getText(0, styledDocument.getLength())));
+        String text= styledDocument.getText(0, styledDocument.getLength());
+        lexer.setInputStream(new ANTLRInputStream(text));
         CommonTokenStream ts = new CommonTokenStream(lexer);
+        parser.setTokenStream(ts);
         return parser.booleanExpList();
     }
     

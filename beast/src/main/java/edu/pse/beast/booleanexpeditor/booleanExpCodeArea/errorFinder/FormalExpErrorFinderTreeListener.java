@@ -47,6 +47,10 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
     
     public FormalExpErrorFinderTreeListener(SymbolicVariableList list) {
         list.addListener(this);
+        scopeHandler.enterNewScope();
+        for(SymbolicVariable var : list.getSymbolicVariables()) {
+            scopeHandler.addVariable(var.getId(), var.getInternalTypeContainer());
+        }
     }
     
     public void setUp(
