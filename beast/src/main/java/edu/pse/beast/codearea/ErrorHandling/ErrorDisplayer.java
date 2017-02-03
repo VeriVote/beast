@@ -83,7 +83,7 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
     public void mouseMoved(MouseEvent e) {
         Point pt = new Point(e.getX(), e.getY());
         int pos = pane.viewToModel(pt);
-        System.out.println("m abs " + pt.x + "," + pt.y + " m_pos: " + pos);
+        //System.out.println("m abs " + pt.x + "," + pt.y + " m_pos: " + pos);
         if(Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 && Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 && errorPopupMenu.isVisible()) return;
         for(int i = 0; i < absPosToMsg.size(); ++i) {
             if(absPosToMsg.get(i).x <= pos && absPosToMsg.get(i).y >= pos) {

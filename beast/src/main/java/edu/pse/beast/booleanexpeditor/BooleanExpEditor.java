@@ -133,9 +133,7 @@ public class BooleanExpEditor {
         postPropCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getOutputType());
         
         prePropCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getInputType());
-        prePropCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getOutputType());
-        
-        
+        prePropCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getOutputType());    
         
         prePropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         postPropCodeArea.getPane().addFocusListener(codeAreaFocusListener);

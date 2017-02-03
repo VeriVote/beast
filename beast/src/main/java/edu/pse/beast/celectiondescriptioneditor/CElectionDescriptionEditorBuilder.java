@@ -7,6 +7,7 @@ package edu.pse.beast.celectiondescriptioneditor;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeAreaBuilder;
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CErrorDisplayer;
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
 import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
 import edu.pse.beast.celectiondescriptioneditor.GUI.CEditorWindowStarter;
@@ -60,9 +61,10 @@ public class CElectionDescriptionEditorBuilder {
         //codeAreaObject.setSyntaxHLRegexAndColorList()
         CElectionCodeArea codeArea = codeAreaBuilder.createCElectionCodeArea(
                 gui.getCodeArea(), 
-                gui.getCodeAreaScrollPane(), errorWindow);
+                gui.getCodeAreaScrollPane(),
+                new CErrorDisplayer(gui.getCodeArea(), objRefsForBuilder.getStringIF()));
         
-        CElectionDescriptionEditor editor = new CElectionDescriptionEditor(codeArea, gui, codeAreaBuilder, errorWindow);
+        CElectionDescriptionEditor editor = new CElectionDescriptionEditor(codeArea, gui, codeAreaBuilder);
         
         CElectionEditorMenubarHandler menuBarHandler = 
                 new CElectionEditorMenubarHandler(
@@ -101,7 +103,7 @@ public class CElectionDescriptionEditorBuilder {
         try {
             editor.letUserEditElectionDescription(new CCodeHelper().generateElectionDescription(
                     templateHandler.getInputIds()[0],
-                    templateHandler.getInputIds()[0],
+                    templateHandler.getOutputIds()[0],
                     "new_election",
                     templateHandler,
                     objRefsForBuilder.getStringIF().getCElectionEditorStringResProvider().getElectionStringRes()));

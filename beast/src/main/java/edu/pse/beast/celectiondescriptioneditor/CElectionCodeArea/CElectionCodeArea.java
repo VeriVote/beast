@@ -28,8 +28,7 @@ public class CElectionCodeArea extends CodeArea {
         grammerErrorFinder = new CGrammarErrorFinder(antlrHandler);
         
         errorCtrl.addErrorFinder(grammerErrorFinder);
-        cSyntaxHl = new CSyntaxHl(antlrHandler, syntaxHL);
-        
+        cSyntaxHl = new CSyntaxHl(antlrHandler, syntaxHL);        
     }
 
     public void letUserEditCode(List<String> code) throws BadLocationException {        

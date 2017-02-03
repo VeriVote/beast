@@ -69,16 +69,16 @@ public class ElectionTemplateHandler {
         
         resTypes.add(new ElectionTypeContainer(
                 new InternalTypeContainer(
-                        new InternalTypeContainer(InternalTypeRep.INTEGER),
-                        InternalTypeRep.CANDIDATE),
-                "list_of_integers"));
+                        new InternalTypeContainer(InternalTypeRep.CANDIDATE),
+                        InternalTypeRep.SEAT),
+                "candidate_per_seat"));
     }    
     
     public String[] getInputIds() {
         return inputIds;
     }
     
-    public String[] getOutputTypes() {
+    public String[] getOutputIds() {
         return resultIds;
     }
     

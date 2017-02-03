@@ -66,8 +66,14 @@ public class LockedLinesHandler implements DocumentListener {
                     amtNewline++;
                 }
             }
-            int firstLineAffected = lineHandler.transformToLineNumber(de.getOffset()) - 1;
-            lockedLines.addIfBigger(firstLineAffected, amtNewline, (prevNum, newNum) -> {
+            int firstLineAffected = lineHandler.transformToLineNumber(de.getOffset());  
+            if(lockedLines.contains(firstLineAffected) && 
+                    doc.getText(de.getOffset() + 1, 1).equals("\n") && 
+                    !doc.getText(de.getOffset()-1, 1).equals("\n")) {
+                ++firstLineAffected;
+            }
+                
+            lockedLines.addIfBigger(firstLineAffected - 1, amtNewline, (prevNum, newNum) -> {
                 for(LockedLinesListener l : listeners) {
                     l.unlockedLine(prevNum);
                 }

@@ -52,7 +52,7 @@ public class CCodeHelper {
     }
 
     public String generateDeclString(ElectionTypeContainer input, ElectionTypeContainer res) {
-        String decl = "RESULT voting(VOTES votes, unsigned int[C] candidates, unsigned int[S] seats) {";
+        String decl = "RESULT voting(VOTES votes) {";
         decl = decl.replace("RESULT", getCType(res.getType()));
         decl = decl.replace("VOTES", getCType(input.getType()));
         return decl;

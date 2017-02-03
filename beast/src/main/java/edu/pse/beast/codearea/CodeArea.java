@@ -72,6 +72,12 @@ public class CodeArea {
         this.stoppedTypingContinuouslyMessager = codeArea.stoppedTypingContinuouslyMessager;
         this.openCloseCharHighlighter = codeArea.openCloseCharHighlighter;
     }
+
+    public ErrorController getErrorCtrl() {
+        return errorCtrl;
+    }
+    
+    
     
     public void unlockAll() {
         insertToCode.unlockAll();

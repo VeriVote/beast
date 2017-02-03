@@ -47,6 +47,12 @@ public class ErrorController implements
         changed = false;
     }
 
+    public ErrorDisplayer getDisplayer() {
+        return displayer;
+    }
+    
+    
+
     @Override
     public void insertUpdate(DocumentEvent de) {
         changed = true;
@@ -57,6 +63,7 @@ public class ErrorController implements
          changed = true;
     }
 
+    
     @Override
     public void changedUpdate(DocumentEvent de) {
     }

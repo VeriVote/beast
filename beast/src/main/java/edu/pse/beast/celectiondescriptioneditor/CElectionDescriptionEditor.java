@@ -7,6 +7,7 @@ package edu.pse.beast.celectiondescriptioneditor;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeAreaBuilder;
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CErrorDisplayer;
 import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
 import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveBeforeChangeHandler;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
@@ -35,7 +36,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     public CElectionDescriptionEditor(
             CElectionCodeArea codeArea,
             CCodeEditorGUI gui,            
-            CElectionCodeAreaBuilder builder, ErrorWindow errorWindow) {
+            CElectionCodeAreaBuilder builder) {
         this.codeArea = codeArea;
         this.gui = gui;
         this.builder = builder;
@@ -90,7 +91,9 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
 
     public boolean letUserEditElectionDescription(ElectionDescription description) throws BadLocationException {
         gui.setNewCodeArea();
-        codeArea = builder.createCElectionCodeArea(gui.getCodeArea(), gui.getCodeAreaScrollPane(), errorWindow);
+        codeArea = builder.createCElectionCodeArea(gui.getCodeArea(), 
+                gui.getCodeAreaScrollPane(), 
+                (CErrorDisplayer) codeArea.getErrorCtrl().getDisplayer());
         codeArea.letUserEditCode(description.getCode());
         codeArea.lockLine(description.getVotingDeclLine());     
         codeArea.lockLine(description.getCode().size() - 1);

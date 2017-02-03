@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea;
 
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CErrorDisplayer;
 import edu.pse.beast.codearea.CodeAreaBuilder;
 import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
@@ -23,8 +24,8 @@ public class CElectionCodeAreaBuilder extends CodeAreaBuilder {
         this.refs = refs;
     }
     
-    public CElectionCodeArea createCElectionCodeArea(JTextPane codeArea, JScrollPane codeAreaScrollPane,
-                                                     ErrorDisplayer errorDisplayer) {
-        return new CElectionCodeArea(createCodeArea(codeArea, codeAreaScrollPane, refs, errorDisplayer));
+    public CElectionCodeArea createCElectionCodeArea(JTextPane codeArea, JScrollPane codeAreaScrollPane, CErrorDisplayer displayer) {
+        return new CElectionCodeArea(createCodeArea(codeArea, codeAreaScrollPane,
+                refs, displayer));
     }
 }

@@ -115,4 +115,16 @@ public class LockedLinesHandlerTest {
         assertTrue(lockedLinesHandler.isLineLocked(1));
     }
     
+    @Test
+    public void testHandlesAddNewlineAtEndOfLine() throws BadLocationException {
+        String text = "asdasdasd\nasd";
+        pane.getStyledDocument().insertString(0, text, null);
+        lockedLinesHandler.lockLine(0);
+        lockedLinesHandler.lockLine(1);
+        pane.getStyledDocument().insertString(9, "\n", null);
+        assertTrue(lockedLinesHandler.isLineLocked(0));
+        assertFalse(lockedLinesHandler.isLineLocked(1));
+        assertTrue(lockedLinesHandler.isLineLocked(2));
+    }
+    
 }

@@ -40,6 +40,13 @@ public class NewlineInserterChooser {
     private NewlineInserter chooseNewlineInserter() {
         int lineNumber = absPosToLineNumber(pane.getCaretPosition());
         if(lockedLinesHandler.isLineLocked(lineNumber)) {
+            try {
+                if(pane.getStyledDocument().getText(pane.getCaretPosition(), 1).equals("\n")) {                    
+                    return standardInserter;
+                }
+            } catch (BadLocationException ex) {
+                Logger.getLogger(NewlineInserterChooser.class.getName()).log(Level.SEVERE, null, ex);
+            }
             return lockedInserter;
         }
         try {

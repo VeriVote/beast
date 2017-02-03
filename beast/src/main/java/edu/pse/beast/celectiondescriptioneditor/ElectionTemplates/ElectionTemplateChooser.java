@@ -54,9 +54,9 @@ public class ElectionTemplateChooser extends javax.swing.JFrame{
                 inputList.addItem(loader.getStringFromID(electionTemplateHandler.getInputIds()[i]));
         }
         
-        for(int i = 0; i < electionTemplateHandler.getOutputTypes().length; ++i) {
-                resIds.add(electionTemplateHandler.getOutputTypes()[i]);
-                resultList.addItem(loader.getStringFromID(electionTemplateHandler.getOutputTypes()[i]));
+        for(int i = 0; i < electionTemplateHandler.getOutputIds().length; ++i) {
+                resIds.add(electionTemplateHandler.getOutputIds()[i]);
+                resultList.addItem(loader.getStringFromID(electionTemplateHandler.getOutputIds()[i]));
         }
 
     }
