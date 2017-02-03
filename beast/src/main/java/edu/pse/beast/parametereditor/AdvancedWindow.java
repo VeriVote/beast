@@ -1,10 +1,14 @@
 package edu.pse.beast.parametereditor;
 
+import edu.pse.beast.highlevel.DisplaysStringsToUser;
+import edu.pse.beast.stringresource.StringLoaderInterface;
+import edu.pse.beast.stringresource.StringResourceLoader;
+
 /**
  *
  * @author Jonas
  */
-public class AdvancedWindow extends javax.swing.JFrame {
+public class AdvancedWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
     private String textAfterLastOK = "--unwind 6 --trace";
 
     /**
@@ -139,5 +143,13 @@ public class AdvancedWindow extends javax.swing.JFrame {
     }
     protected javax.swing.JButton getOkButton() {
         return ok;
+    }
+
+    @Override
+    public void updateStringRes(StringLoaderInterface stringResIF) {
+        StringResourceLoader other = stringResIF.getParameterEditorStringResProvider().getOtherStringRes();
+        setTitle(other.getStringFromID("title_advanced"));
+        ok.setText(other.getStringFromID("ok"));
+        cancel.setText(other.getStringFromID("cancel"));
     }
 }

@@ -9,7 +9,7 @@ import javax.swing.JSpinner;
  *
  * @author Jonas
  */
-public class ParameterEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser{
+public class ParameterEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
 
     private AdvancedWindow advWindow = new AdvancedWindow();
     /**
@@ -50,7 +50,8 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ParameterEditor");
-        setMinimumSize(new java.awt.Dimension(458, 327));
+        setMinimumSize(new java.awt.Dimension(475, 347));
+        setPreferredSize(new java.awt.Dimension(475, 347));
 
         toolbar.setFloatable(false);
         toolbar.setRollover(true);
@@ -279,8 +280,6 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
         ParameterEditorStringResProvider provider = stringResIF.getParameterEditorStringResProvider();
-        
-        
         StringResourceLoader other = provider.getOtherStringRes();
         setTitle(other.getStringFromID("title"));
         voters.setText(other.getStringFromID("voters"));
@@ -297,6 +296,6 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
         timeoutUnit.addItem(other.getStringFromID("minutes"));
         timeoutUnit.addItem(other.getStringFromID("hours"));
         timeoutUnit.addItem(other.getStringFromID("days"));
-        //advWindow.updateStringRes(other); //TODO: Implement
+        advWindow.updateStringRes(stringResIF);
     }
 }
