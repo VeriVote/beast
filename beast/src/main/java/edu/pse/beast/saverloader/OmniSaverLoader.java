@@ -1,8 +1,8 @@
 package edu.pse.beast.saverloader;
 
 //prototype for saving and creating a class from a save file. the loading isn't implemented yet
-//WARNING: it uses reflection, so maybe don't use for saving, but for inspiration
 
+//WARNING: it uses reflection, so maybe don't use for saving, but for inspiration
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -10,6 +10,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
+
+import edu.pse.beast.toolbox.ErrorLogger;
 
 public class OmniSaverLoader {
 
@@ -20,23 +22,25 @@ public class OmniSaverLoader {
     private final static String dataIdentfier = "@";
     private final static String typeIdentfier = "$";
 
-//    public static void main(String... args)
-//            throws NoSuchFieldException, SecurityException, InstantiationException, IllegalAccessException {
-//        
-//
-//        List<String> result = createSaveFormat(tester2);
-//
-//        
-//        
-//        for (Iterator<String> iterator = result.iterator(); iterator.hasNext();) {
-//            String line = (String) iterator.next();
-//            System.out.println(line);
-//        }
-//        
-//        System.out.println("==========================");
-//        
-//        createFromSaveFormat(result);
-//    }
+    // public static void main(String... args)
+    // throws NoSuchFieldException, SecurityException, InstantiationException,
+    // IllegalAccessException {
+    //
+    //
+    // List<String> result = createSaveFormat(tester2);
+    //
+    //
+    //
+    // for (Iterator<String> iterator = result.iterator(); iterator.hasNext();)
+    // {
+    // String line = (String) iterator.next();
+    // System.out.println(line);
+    // }
+    //
+    // System.out.println("==========================");
+    //
+    // createFromSaveFormat(result);
+    // }
 
     public static List<String> createSaveFormat(Object obj) {
 
@@ -65,7 +69,7 @@ public class OmniSaverLoader {
             return "BY";
         }
         if ((Object) obj instanceof Short) {
-            return "Sh";
+            return "SH";
         }
         if ((Object) obj instanceof Integer) {
             return "I";
@@ -164,7 +168,7 @@ public class OmniSaverLoader {
         Class<?> parent = toSave.getClass().getSuperclass();
 
         String superName = varName;
-        
+
         while (parent.getSuperclass() != null && parent.getSuperclass() != java.lang.Class.class) {
             superName = superName + "." + parent.getName();
             Field[] superFields = parent.getDeclaredFields();
@@ -206,7 +210,8 @@ public class OmniSaverLoader {
                     saveType(toAddTo, ((Object[]) toSave)[i], "");
                 }
             }
-            //if it isn't an object, we now have to check which primitive type it is
+            // if it isn't an object, we now have to check which primitive type
+            // it is
         } else if (toSave instanceof byte[]) {
             for (int i = 0; i < ((byte[]) toSave).length; i++) {
                 saveType(toAddTo, ((byte[]) toSave)[i], "");
@@ -260,6 +265,7 @@ public class OmniSaverLoader {
             saveNull(toAddTo, varName);
             return;
         } else if (!subType.equals("A") && !subType.equals("LI")) {
+            // it is a primitive object
             savePrimitive(toAddTo, toSave, varName, subType);
             return;
         } else if (subType.equals("A")) {
@@ -273,40 +279,82 @@ public class OmniSaverLoader {
 
         System.err.println("Should never be reached! ");
     }
-    
-    
+
     public static Object createFromSaveFormat(List<String> format) {
         if (!checkFormat(format)) {
             System.err.println("Format is in the wrong format and can't be read!");
             return null;
         }
-        
+
         return null;
     }
-    
-    private static Object createComplexObject(List<String> toLoad) {
-    	
+
+    private static Object createType(List<String> toLoad, int startIndex, int endIndex, boolean valid) {
+        return null;
     }
-    
-    private static Object createSimpleObject(List<String> toLoad) {
-    	
+
+    private static Object createComplexObject(List<String> toLoad, int startIndex, int endIndex, boolean valid) {
+        return null;
     }
-    
-    private static Object createArray(List<String> toLoad) {
-    	
+
+    private static Object createPrimitive(List<String> toLoad, int startIndex, int endIndex, boolean valid) {
+        // primitive types have just the two tags and the value in between
+        String type  = toLoad.get(startIndex).split("$")[1];
+        String value = toLoad.get(startIndex + 1).replace("@", " ");
+        
+        Object primitiveType = null;
+        
+        switch (type) {
+        case "NULL":
+            primitiveType = null;
+            break;
+        case "BO":
+            primitiveType = Boolean.parseBoolean(value);
+            break;
+        case "C":
+            if (value.toCharArray().length != 1) {
+                valid = false;
+            } else {
+                primitiveType = value.charAt(0);
+            }
+            break;
+        case "BY":
+            primitiveType = Byte.parseByte(value);
+            break;
+        case "SH":
+            primitiveType = Short.parseShort(value);
+            break;
+        case "I":
+            primitiveType = Integer.parseInt(value);
+            break;
+        case "L":
+            primitiveType = Long.parseLong(value);
+            break;
+        case "F":
+            primitiveType = Float.parseFloat(value);
+            break;
+        case "D":
+            primitiveType = Double.parseDouble(value);
+            break;
+        case "S":
+            primitiveType = value;
+            break;
+        default:
+            ErrorLogger.log("Du hast den primitiven typen: " + type + " vergessen");
+            valid = false;
+            break;
+        }
+        return primitiveType;
     }
-    
-    private static List<?> createList(List<String> toLoad) {
-    	
+
+    private static Object createArray(List<String> toLoad, int startIndex, int endIndex, boolean valid) {
+        return null;
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
+    private static List<?> createList(List<String> toLoad, int startIndex, int endIndex, boolean valid) {
+        return null;
+    }
+
     private static boolean checkFormat(List<String> format) {
         if (format.size() < 2) {
             /**
@@ -314,12 +362,11 @@ public class OmniSaverLoader {
              */
             return false;
         }
-        
 
         Stack<String> tags = new Stack<String>();
-        
+
         tags.push(headTag);
-        
+
         for (Iterator<String> iterator = format.iterator(); iterator.hasNext();) {
             String line = (String) iterator.next();
 
@@ -342,11 +389,10 @@ public class OmniSaverLoader {
                 }
             }
             for (int i = 0; i < tags.size(); i++) {
-           //     System.out.println(tags.get(i));
+                // System.out.println(tags.get(i));
             }
-            //System.out.println("___________________");
-            
-            
+            // System.out.println("___________________");
+
         }
 
         if (tags.size() == 1) {
@@ -355,5 +401,5 @@ public class OmniSaverLoader {
             return false;
         }
     }
-    
+
 }
