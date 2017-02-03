@@ -23,6 +23,8 @@ public class LinuxProcess extends CBMCProcess {
     @Override
     public Process createProcess(File toCheck, int voters, int candidates, int seats, String advanced) {
 
+        advanced = sanitizeArguments(advanced);
+        
         String[] argumentsToPass = new String[5 + advanced.split(";").length];
         
         

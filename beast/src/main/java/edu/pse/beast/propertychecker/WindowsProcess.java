@@ -276,6 +276,8 @@ public class WindowsProcess extends CBMCProcess {
                 toSet.setAccessible(true);
 
                 boolean savedState = toSet.getBoolean(handle);
+                
+                toSet.setBoolean(handle, false);
 
                 toSet.setAccessible(false);
 
