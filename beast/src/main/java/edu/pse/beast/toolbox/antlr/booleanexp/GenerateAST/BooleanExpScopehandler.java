@@ -41,4 +41,8 @@ public class BooleanExpScopehandler {
         }
         return cont;
     }
+    
+    public void removeFromTopScope(String id) {
+        currentScopes.get(0).remove(id);
+    }
 }

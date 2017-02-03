@@ -20,6 +20,8 @@ import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
+import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
+import edu.pse.beast.datatypes.propertydescription.VariableListListener;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionListener;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
 import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.BooleanExpScope;
@@ -35,12 +37,17 @@ import org.antlr.v4.runtime.tree.TerminalNode;
  *
  * @author Holger-Desktop
  */
-public class FormalExpErrorFinderTreeListener implements FormalPropertyDescriptionListener {
+public class FormalExpErrorFinderTreeListener implements FormalPropertyDescriptionListener,
+        VariableListListener {
     private ArrayList<CodeError> created = new ArrayList<>();
     private BooleanExpScopehandler scopeHandler = new BooleanExpScopehandler();
     private ElectionTypeContainer input;
     private ElectionTypeContainer output;
     private Stack<TypeExpression> expStack;
+    
+    public FormalExpErrorFinderTreeListener(SymbolicVariableList list) {
+        list.addListener(this);
+    }
     
     public void setUp(
             BooleanExpScopehandler scopeHandler,
@@ -50,6 +57,15 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
         this.input = input;
         this.output = output;        
     }
+
+    public void setInput(ElectionTypeContainer input) {
+        this.input = input;
+    }
+
+    public void setOutput(ElectionTypeContainer output) {
+        this.output = output;
+    }
+
     
     public ArrayList<CodeError> getErrors() {
         return created;
@@ -315,6 +331,16 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
     @Override
     public void exitEveryRule(ParserRuleContext prc) {
         
+    }
+
+    @Override
+    public void addedVar(SymbolicVariable var) {
+        scopeHandler.addVariable(var.getId(), var.getInternalTypeContainer());
+    }
+
+    @Override
+    public void removedVar(SymbolicVariable var) {
+        scopeHandler.removeFromTopScope(var.getId());
     }
     
 }

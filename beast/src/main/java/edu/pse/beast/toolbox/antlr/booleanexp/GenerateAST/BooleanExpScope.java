@@ -29,4 +29,13 @@ public class BooleanExpScope {
         } 
         return null;
     }
+    
+    public void remove(String id) {
+        for(int i = 0; i < names.size(); ++i) {
+            if(names.get(i).equals(id)) {
+                names.remove(i);
+                types.remove(i);
+            }
+        } 
+    }
 }

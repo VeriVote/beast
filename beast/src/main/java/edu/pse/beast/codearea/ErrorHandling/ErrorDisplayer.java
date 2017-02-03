@@ -48,17 +48,18 @@ public abstract class ErrorDisplayer implements CaretListener, DisplaysStringsTo
     }
     
     protected void showError(CodeError er, String msg) {
-        
-        
-        int abs = lineHandler.getLineBeginning(er.getLine() - 1)
-                + er.getPosInLine();
-        absPosToError.put(abs, er);
-        try {
-            pane.getHighlighter().addHighlight(abs, abs + 5, painter);
-        } catch (BadLocationException ex) {
-            Logger.getLogger(ErrorDisplayer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
+        System.err.println(getPosString(er) + ": " + msg);       
+    }
+    
+    private String getPosString(CodeError er) {
+        String template = "ERROR: ERRNO, LINE: LINO, CHAR: POSNO";
+        template = template.replace("ERROR", currentStringResLoader.getStringFromID("error"));
+        template = template.replace("LINE", currentStringResLoader.getStringFromID("line"));
+        template = template.replace("CHAR", currentStringResLoader.getStringFromID("char"));
+        template = template.replace("LINO", String.valueOf(er.getLine()));
+        template = template.replace("POSNO", String.valueOf(er.getPosInLine()));
+        template = template.replace("ERRNO", String.valueOf(er.getErrorNumber()));
+        return template;
     }
 
     @Override

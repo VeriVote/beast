@@ -33,8 +33,8 @@ public class PSECentralObjectProvider implements CentralObjectProvider{
         ObjectRefsForBuilder refs = new ObjectRefsForBuilder(
                 optionsInterface, stringIf, 
                 optionsInterface.getLanguageOptions(), saverLoaderIF);
-        booleanExpEditor = new BooleanExpEditorBuilder().createBooleanExpEditorObject(refs);
         cElectionEditor = new CElectionDescriptionEditorBuilder().createCElectionDescriptionEditor(refs);
+        booleanExpEditor = new BooleanExpEditorBuilder().createBooleanExpEditorObject(refs, cElectionEditor);        
         propertyList = new PropertyListBuilder().createPropertyList(refs, booleanExpEditor);
         checkerCommunicator = new PropertyChecker("cbmc"); //this must be done via the checkerfactory at some point
         paramEd = new ParameterEditorBuilder().createParameterEditor(refs, cElectionEditor, propertyList);        

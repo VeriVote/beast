@@ -10,7 +10,10 @@ import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeA
 import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
 import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveBeforeChangeHandler;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
+import edu.pse.beast.datatypes.descofvoting.ElectionDescriptionChangeListener;
+import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
@@ -27,7 +30,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     private CElectionCodeAreaBuilder builder;
     private ErrorWindow errorWindow;
     private SaveBeforeChangeHandler saveBeforeChangeHandler;
-
+    private ArrayList<ElectionDescriptionChangeListener> descriptionChangeListeners = new ArrayList<>();
 
     public CElectionDescriptionEditor(
             CElectionCodeArea codeArea,
@@ -50,6 +53,18 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         
     }
 
+    public void changeElectionDescriptionInput(ElectionTypeContainer cont) {
+        currentDescription.setInputType(cont);
+        for(ElectionDescriptionChangeListener l : descriptionChangeListeners) 
+            l.inputChanged(cont);
+    }
+    
+    public void changeElectionDescriptionOutput(ElectionTypeContainer cont) {
+        currentDescription.setOutputType(cont);
+        for(ElectionDescriptionChangeListener l : descriptionChangeListeners) 
+            l.outputChanged(cont);
+    }
+        
     @Override
     public boolean isCorrect() {
         return true;
@@ -82,6 +97,10 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         this.currentDescription = description;
         saveBeforeChangeHandler.addNewTextPane(codeArea.getPane());
         gui.setWindowTitle(description.getName());
+        for(ElectionDescriptionChangeListener l : descriptionChangeListeners) {
+            l.inputChanged(description.getInputType());
+            l.outputChanged(description.getOutputType());
+        }
         return true;
     }
 
@@ -99,5 +118,21 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
      */
     public SaveBeforeChangeHandler getSaveBeforeChangeHandler() {
         return this.saveBeforeChangeHandler;
+    }
+    
+    public void addListener(ElectionDescriptionChangeListener l) {
+        descriptionChangeListeners.add(l);
+    }
+    
+    public void removeListener(ElectionDescriptionChangeListener l) {
+        descriptionChangeListeners.remove(l);
+    }
+    
+    public boolean getIsVisible() {
+        return gui.isVisible();
+    }
+    
+    public void setVisible(boolean vis) {
+        gui.setVisible(vis);
     }
 }

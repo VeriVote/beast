@@ -8,6 +8,7 @@ package edu.pse.beast.codearea.ErrorHandling;
 import edu.pse.beast.codearea.InputToCode.LineHandler;
 import edu.pse.beast.codearea.StoppedTypingContinuouslyListener;
 import edu.pse.beast.codearea.StoppedTypingContinuouslyMessager;
+import java.util.ArrayList;
 import javax.swing.JTextPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -37,6 +38,7 @@ public class ErrorController implements StoppedTypingContinuouslyListener {
     @Override
     public void StoppedTypingContinuously(int newPos) {
         System.out.println("formalPropEditor get errors");
-        displayer.showErrors(errorFinderList.getErrors());
+        ArrayList<CodeError> foundErrors = errorFinderList.getErrors();
+        displayer.showErrors(foundErrors);
     }
 }

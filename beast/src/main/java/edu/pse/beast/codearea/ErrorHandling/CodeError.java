@@ -29,6 +29,10 @@ public class CodeError {
         this.endPos = endPos;
     }
     
+    public String getExtraInfo(String id) {
+        return extraInfo.get(id);
+    }
+    
     public void setExtraInfo(String id, String extra) {
         extraInfo.put(id, extra);
     }

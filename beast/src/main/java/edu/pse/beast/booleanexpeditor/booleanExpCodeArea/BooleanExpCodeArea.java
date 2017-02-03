@@ -3,6 +3,7 @@ package edu.pse.beast.booleanexpeditor.booleanExpCodeArea;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.autocompletion.BooleanExpAutoCompletionSrc;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorGrammarErrorFinder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorVariableErrorFinder;
+import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.codearea.CodeArea;
 
 import java.util.ArrayList;
@@ -39,7 +40,12 @@ public class BooleanExpCodeArea extends CodeArea {
         errorCtrl.addErrorFinder(variableErrorFinder);
     }
 
-    public ArrayList<Error> getErrors() {
-        return new ArrayList<Error>();
+    public BooleanExpEditorGrammarErrorFinder getGrammarErrorFinder() {
+        return grammarErrorFinder;
     }
+
+    public BooleanExpEditorVariableErrorFinder getVariableErrorFinder() {
+        return variableErrorFinder;
+    }    
+     
 }

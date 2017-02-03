@@ -9,6 +9,8 @@ import edu.pse.beast.booleanexpeditor.UserActions.SaveBeforeChangeHandler;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeArea;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeAreaBuilder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.CodeAreaFocusListener;
+import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
+import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.toolbox.MenuBarHandler;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
@@ -36,7 +38,7 @@ public class BooleanExpEditor {
     private final CodeAreaFocusListener codeAreaFocusListener;
     private final BooleanExpCodeAreaBuilder codeAreaBuilder;
     private ObjectRefsForBuilder refs;
-
+    private CElectionDescriptionEditor cEditor;
     /**
      * Temporary Constructor declaration to build BooleanExpEditor for Dummy-GUI
      * @param window BooleanExpEditorWindow object
@@ -46,7 +48,7 @@ public class BooleanExpEditor {
                      BooleanExpEditorWindow window, SymbolicVarListController symbolicVarListController, ErrorWindow errorWindow,
                      SaveBeforeChangeHandler saveBeforeChangeHandler, CodeAreaFocusListener codeAreaFocusListener,
                      PostAndPrePropertiesDescription postAndPrePropertiesDescription, BooleanExpCodeAreaBuilder codeAreaBuilder,
-                     ObjectRefsForBuilder refs) {
+                     ObjectRefsForBuilder refs, CElectionDescriptionEditor cEditor) {
         this.window = window;
         this.refs = refs;
         this.errorWindow = errorWindow;
@@ -56,11 +58,13 @@ public class BooleanExpEditor {
         this.postPropCodeArea = postPropCodeArea;
         this.saveBeforeChangeHandler = saveBeforeChangeHandler;
         this.codeAreaBuilder = codeAreaBuilder;
+        this.cEditor = cEditor;
         prePropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         postPropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         this.codeAreaFocusListener = codeAreaFocusListener;
         letUserEditPostAndPreProperties(postAndPrePropertiesDescription);
         windowStarter = new BooleanExpEditorWindowStarter(window);
+        
     }
 
     void setToolBarHandler(ToolbarHandler toolBarHandler) {
@@ -83,9 +87,7 @@ public class BooleanExpEditor {
     }
 
     public void findErrorsAndDisplayThem() {
-        ArrayList<Error> errors = prePropCodeArea.getErrors();
-        errors.addAll(postPropCodeArea.getErrors());
-        errorWindow.displayErrors(errors);
+        
     }
 
     /**
@@ -111,10 +113,20 @@ public class BooleanExpEditor {
         symbolicVarListController.setSymbVarList(postAndPrePropertiesDescription.getSymbolicVariableList());
         window.setNewTextpanes();
         saveBeforeChangeHandler.addNewTextPanes(window.getPrePropTextPane(), window.getPostPropTextPane());
+        
+        cEditor.removeListener(prePropCodeArea.getVariableErrorFinder());
+        cEditor.removeListener(postPropCodeArea.getVariableErrorFinder());
+        
         prePropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(refs, window.getPrePropTextPane(),
-                window.getPrePropScrollPane(), errorWindow);
+                window.getPrePropScrollPane(), symbolicVarListController.getSymbolicVariableList());
         postPropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(refs, window.getPostPropTextPane(),
-                window.getPostPropScrollPane(), errorWindow);
+                window.getPostPropScrollPane(), symbolicVarListController.getSymbolicVariableList());        
+                
+        cEditor.addListener(prePropCodeArea.getVariableErrorFinder());
+        cEditor.addListener(postPropCodeArea.getVariableErrorFinder());
+        postPropCodeArea.getVariableErrorFinder().setInput(cEditor.getElectionDescription().getInputType());
+        postPropCodeArea.getVariableErrorFinder().setOutput(cEditor.getElectionDescription().getOutputType());
+        
         prePropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         postPropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         codeAreaFocusListener.addNewCodeAreas(prePropCodeArea, postPropCodeArea);
@@ -149,5 +161,12 @@ public class BooleanExpEditor {
 
     public BooleanExpCodeArea getPrePropCodeArea() {
         return prePropCodeArea;
+    }
+    
+    public void electionTypeChanged(ElectionTypeContainer input, ElectionTypeContainer output) {
+        prePropCodeArea.getVariableErrorFinder().setInput(input);
+        prePropCodeArea.getVariableErrorFinder().setOutput(output);
+        postPropCodeArea.getVariableErrorFinder().setInput(input);
+        postPropCodeArea.getVariableErrorFinder().setOutput(output);
     }
 }

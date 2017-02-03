@@ -1,9 +1,10 @@
 package edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder;
 
-import com.sun.xml.internal.bind.api.ErrorListener;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpANTLRHandler;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
+import edu.pse.beast.datatypes.descofvoting.ElectionDescriptionChangeListener;
+import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.logging.Level;
@@ -66,4 +67,6 @@ public class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListener, E
     public void reportContextSensitivity(Parser parser, DFA dfa, int i, int i1, int i2, ATNConfigSet atncs) {
         
     }
+
+   
 }

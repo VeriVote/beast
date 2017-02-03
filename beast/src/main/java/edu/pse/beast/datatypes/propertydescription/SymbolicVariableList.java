@@ -6,6 +6,7 @@
 package edu.pse.beast.datatypes.propertydescription;
 
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -15,7 +16,7 @@ import java.util.LinkedList;
 public class SymbolicVariableList {
 
     private final LinkedList<SymbolicVariable> symbolicVariableList;
-
+    private ArrayList<VariableListListener> listener = new ArrayList<>();
     public SymbolicVariableList() {
         symbolicVariableList = new LinkedList<>();
     }
@@ -24,7 +25,9 @@ public class SymbolicVariableList {
         this.symbolicVariableList = symbolicVariableList.getSymbolicVariables();
     }
     public void addSymbolicVariable(String id, InternalTypeContainer internalTypeContainer) {
-        symbolicVariableList.add(new SymbolicVariable(id, internalTypeContainer));
+        SymbolicVariable var = new SymbolicVariable(id, internalTypeContainer);
+        symbolicVariableList.add(var);
+        for(VariableListListener l : listener) l.addedVar(var);
     }
 
     public boolean isVarIDAllowed(String id) {
@@ -48,6 +51,7 @@ public class SymbolicVariableList {
             varFound = var.getId().equals(id);
             if (varFound) {
                 symbolicVariableList.remove(var);
+                for(VariableListListener l : listener) l.removedVar(var);
                 break;
             }
         }
@@ -55,6 +59,16 @@ public class SymbolicVariableList {
     }
 
     public void removeSymbolicVariable(int index) {
+        SymbolicVariable var = symbolicVariableList.get(index);
+        for(VariableListListener l : listener) l.removedVar(var);
         symbolicVariableList.remove(index);
+    }
+    
+    public void addListener(VariableListListener l) {
+        this.listener.add(l);
+    }
+    
+    public void removeListener(VariableListListener l) {
+        this.listener.remove(l);
     }
 }

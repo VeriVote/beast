@@ -3,9 +3,11 @@ package edu.pse.beast.booleanexpeditor.booleanExpCodeArea;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.autocompletion.BooleanExpAutoCompletionSrc;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorGrammarErrorFinder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorVariableErrorFinder;
+import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpErrorDisplayer;
 import edu.pse.beast.codearea.CodeArea;
 import edu.pse.beast.codearea.CodeAreaBuilder;
 import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
+import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 
 import javax.swing.*;
@@ -24,13 +26,15 @@ public class BooleanExpCodeAreaBuilder extends CodeAreaBuilder{
      * @return a BooleanExpCodeArea object
      */
     public BooleanExpCodeArea createBooleanExpCodeAreaObject(ObjectRefsForBuilder objectRefs,
-                                                             JTextPane textPane, JScrollPane scrollPane, ErrorDisplayer errorDisplayer) {
+                                                             JTextPane textPane, JScrollPane scrollPane, 
+                                                             SymbolicVariableList symbolicVariableList) {
+        
+        BooleanExpErrorDisplayer errorDisplayer = new BooleanExpErrorDisplayer(textPane, objectRefs.getStringIF());
         CodeArea tempCodeArea = super.createCodeArea(textPane, scrollPane, objectRefs, errorDisplayer);
         BooleanExpANTLRHandler antlrHandler = new BooleanExpANTLRHandler(textPane.getStyledDocument());
         return new BooleanExpCodeArea(tempCodeArea, antlrHandler,
-                new BooleanExpEditorVariableErrorFinder(antlrHandler),
+                new BooleanExpEditorVariableErrorFinder(antlrHandler, symbolicVariableList),
                 new BooleanExpEditorGrammarErrorFinder(antlrHandler),
-                new BooleanExpAutoCompletionSrc());
-        
+                new BooleanExpAutoCompletionSrc());        
     }
 }

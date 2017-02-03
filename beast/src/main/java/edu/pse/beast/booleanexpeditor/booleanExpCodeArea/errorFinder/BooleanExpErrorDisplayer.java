@@ -34,9 +34,20 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
     }
     
     private String createMsg(CodeError er) {
+        if(er.getId().equals("antlr")) {
+            String template = getTemplateString("antlr");
+            return template += ": " + er.getExtraInfo("msg");
+        } else if(er.getId().equals("var_not_decl")) {
+            String template = getTemplateString("var_not_decl");
+            return template.replace("VAR", er.getExtraInfo("var_name"));
+        }
         return "";
     }
 
+    private String getTemplateString(String id) {
+        return currentStringResLoader.getStringFromID(id + "_descr");
+    }
+    
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
         this.currentStringResLoader = stringResIF.getBooleanExpEditorStringResProvider().getBooleanExpErrorStringRes();

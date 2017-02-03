@@ -4,6 +4,10 @@ import edu.pse.beast.booleanexpeditor.UserActions.*;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeArea;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeAreaBuilder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.CodeAreaFocusListener;
+import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpErrorDisplayer;
+import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
+import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
+import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.saverloader.SaverLoaderInterface;
@@ -36,7 +40,8 @@ public class BooleanExpEditorBuilder{
      * @param objectRefsForBuilder Object with references to needed interfaces to build GUI
      * @return BooleanExpEditor Object
      */
-    public BooleanExpEditor createBooleanExpEditorObject(ObjectRefsForBuilder objectRefsForBuilder) {
+    public BooleanExpEditor createBooleanExpEditorObject(ObjectRefsForBuilder objectRefsForBuilder,
+            CElectionDescriptionEditor ceditor) {
         //creation of BooleanExpEditorWindow object
         BooleanExpEditorWindow window = new BooleanExpEditorWindow();
         window.updateStringRes(objectRefsForBuilder.getStringIF());
@@ -52,16 +57,16 @@ public class BooleanExpEditorBuilder{
 
         //creation of ErrorWindow object
         ErrorWindow errorWindow = new ErrorWindow(window.getErrorTextPane(), objectRefsForBuilder.getStringIF());
-
-        //creation of BooleanExpCodeAreas objects using the JTextPanes from the BooleanExpEditorWindow instance "window"
+       //creation of BooleanExpCodeAreas objects using the JTextPanes from the BooleanExpEditorWindow instance "window"
         //TODO create an ArrayList of RegexAndColor objects and apply it to the codeareas by calling
         //codeAreaObject.setSyntaxHLRegexAndColorList()
 
+       
         BooleanExpCodeAreaBuilder codeAreaBuilder = new BooleanExpCodeAreaBuilder();
         BooleanExpCodeArea prePropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
-                window.getPrePropTextPane(), window.getPrePropScrollPane(), errorWindow);
+                window.getPrePropTextPane(), window.getPrePropScrollPane(), symbolicVariableList);
         BooleanExpCodeArea postPropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
-                window.getPostPropTextPane(), window.getPostPropScrollPane(), errorWindow);
+                window.getPostPropTextPane(), window.getPostPropScrollPane(), symbolicVariableList);
 
         // create SaveBeforeChangeHandler
         SaveBeforeChangeHandler saveBeforeChangeHandler = new SaveBeforeChangeHandler(prePropCodeArea.getPane(),
@@ -72,7 +77,7 @@ public class BooleanExpEditorBuilder{
 
         BooleanExpEditor editor = new BooleanExpEditor(prePropCodeArea, postPropCodeArea, window, symbolicVarListController,
                 errorWindow, saveBeforeChangeHandler, codeAreaFocusListener, emptyPostAndPrePropertiesDescription,
-                codeAreaBuilder, objectRefsForBuilder);
+                codeAreaBuilder, objectRefsForBuilder, ceditor);
 
         //creation of BooleanExpEditorMenubarHandler
         BooleanExpEditorMenubarHandler menuBarHandler = new BooleanExpEditorMenubarHandler(menuHeadingIds, window,

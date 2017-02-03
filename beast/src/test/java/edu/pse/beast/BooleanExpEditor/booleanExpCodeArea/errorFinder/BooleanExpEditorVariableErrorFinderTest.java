@@ -12,6 +12,7 @@ import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
+import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.stringresource.StringResourceProvider;
@@ -34,10 +35,12 @@ public class BooleanExpEditorVariableErrorFinderTest {
     private BooleanExpEditorVariableErrorFinder finder;
     private JTextPane pane;
     private StringResourceLoader stringRes;
+    private SymbolicVariableList varList;
     public BooleanExpEditorVariableErrorFinderTest() {
         pane = new JTextPane();
         aNTLRHandler = new BooleanExpANTLRHandler(pane.getStyledDocument());
-        finder = new BooleanExpEditorVariableErrorFinder(aNTLRHandler);
+        varList = new SymbolicVariableList();
+        finder = new BooleanExpEditorVariableErrorFinder(aNTLRHandler, varList);
         stringRes = new StringLoaderInterface("de").getBooleanExpEditorStringResProvider().getBooleanExpErrorStringRes();
     }
     

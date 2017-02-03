@@ -52,6 +52,10 @@ public class SymbolicVarListController implements DisplaysStringsToUser {
         removeVarButton.addActionListener(new removeVarActionListener());
     }
 
+    public SymbolicVariableList getSymbolicVariableList() {
+        return symbolicVariableList;
+    }
+    
     private class AddVarActionListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
@@ -159,4 +163,5 @@ public class SymbolicVarListController implements DisplaysStringsToUser {
                 getBooleanExpEditorSymbVarListRes().getStringFromID("alreadyExistsError");
         updateJlist();
     }
+    
 }
