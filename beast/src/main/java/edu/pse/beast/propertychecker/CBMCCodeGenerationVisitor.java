@@ -256,10 +256,16 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     /**
      * generates the code for a notNode
-     * @param node 
+     *
+     * @param node
      */
     @Override
     public void visitNotNode(NotNode node) {
+        if (node.getNegatedExpNode() instanceof NotNode) {
+            NotNode node2 = (NotNode) node.getNegatedExpNode();
+            node2.getNegatedExpNode().getVisited(this);
+            return;
+        }
         String varName = "not_" + notNodeCounter;
         notNodeCounter++;
         variableNames.push(varName);
@@ -274,7 +280,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         variableNames.push(varName);
         int lhslistLevel = 0;
         int rhslistLevel = 0;
-        
+
         for (InternalTypeContainer cont = node.getLHSBooleanExpNode().getInternalTypeContainer();
                 cont.isList(); cont = cont.getListedType()) {
             lhslistLevel++;
@@ -283,7 +289,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                 cont.isList(); cont = cont.getListedType()) {
             rhslistLevel++;
         }
-        
+
         node.getLHSBooleanExpNode().getVisited(this);
         node.getRHSBooleanExpNode().getVisited(this);
         if (node.getLHSBooleanExpNode().getAccessVar() != null) {
