@@ -31,7 +31,7 @@ public class LinuxProcess extends CBMCProcess {
         //cbmc on linux wants every argument in a seperate string
         argumentsToPass[0] = "cbmc";
         
-        argumentsToPass[1] = "toCheck.getAbsolutePath()";
+        argumentsToPass[1] = toCheck.getAbsolutePath();
         
         argumentsToPass[2] = "-D V=" + voters;
         
