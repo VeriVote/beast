@@ -5,7 +5,6 @@
  */
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
 import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
@@ -13,13 +12,11 @@ import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
-import edu.pse.beast.toolbox.CCodeHelper;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Test;
 
 /**
  *
@@ -61,18 +58,19 @@ public class CBMCCodeGeneratorTest {
 
         SymbolicVariableList symbolicVariableList = new SymbolicVariableList();
 
-        String pre = "FOR_ALL_VOTERS(i) : ((i!=u && i!=w) ==> VOTES1(i) == VOTES2(i));";
-
-        String post = "ELECT1 < ELECT2;";
+        String pre = "VOTES1 == VOTES2;";
+        String post = "(ELECT1 == ELECT2);";
         // String post = "1 == 2;";
 
         FormalPropertiesDescription preDescr = new FormalPropertiesDescription(pre);
         FormalPropertiesDescription postDescr = new FormalPropertiesDescription(post);
 
-        PostAndPrePropertiesDescription postAndPrePropertiesDescription = new PostAndPrePropertiesDescription("name", preDescr, postDescr, symbolicVariableList);
+        PostAndPrePropertiesDescription postAndPrePropertiesDescription
+                = new PostAndPrePropertiesDescription("name", preDescr, postDescr, symbolicVariableList);
 
         SymbolicVariableList symVariableList = new SymbolicVariableList();
-        symVariableList.addSymbolicVariable("u", new InternalTypeContainer(InternalTypeRep.VOTER));
+        symVariableList.addSymbolicVariable("v", new InternalTypeContainer(InternalTypeRep.VOTER));
+        symVariableList.addSymbolicVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
         symVariableList.addSymbolicVariable("w", new InternalTypeContainer(InternalTypeRep.VOTER));
         // symVariableList.addSymbolicVariable("i", new InternalTypeContainer(InternalTypeRep.VOTER));
 
