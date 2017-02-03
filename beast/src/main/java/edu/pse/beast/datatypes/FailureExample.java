@@ -10,7 +10,7 @@ import edu.pse.beast.datatypes.internal.InternalTypeContainer;
  */
 public class FailureExample {
 
-	private final InternalTypeContainer internalType;
+	private final ElectionType electionType;
 
 	private final List<int[]> votes;
 
@@ -37,10 +37,10 @@ public class FailureExample {
 	 * @param numOfSeats The number of seats that are awarded in an election.
 	 * @param numOfVoters The number of voters that voted for the candidates.
 	 */
-	public FailureExample(InternalTypeContainer internalType, List<int[]> votes, List<int[][]> voteList,
+	public FailureExample(ElectionType electionType, List<int[]> votes, List<int[][]> voteList,
 			List<Integer> elect, List<int[]> seats, int numOfCandidates, int numOfSeats, int numOfVoters) {
 		
-		this.internalType = internalType;
+		this.electionType = electionType;
 		this.votes = votes;
 		this.voteList = voteList;
 		this.elect = elect;
@@ -51,8 +51,8 @@ public class FailureExample {
 
 	}
 
-	public InternalTypeContainer getInternalType() {
-		return internalType;
+	public ElectionType getElectionType() {
+		return electionType;
 	}
 
 	public List<int[]> getVotes() {
@@ -92,5 +92,8 @@ public class FailureExample {
 		if (getElect() != null) return true;
 		return false;
 	}
+
+
+	
 
 }
