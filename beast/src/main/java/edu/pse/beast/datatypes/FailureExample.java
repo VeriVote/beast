@@ -21,9 +21,13 @@ public class FailureExample {
 	private final List<int[]> seats;
 	
 	private final int numOfCandidates;
+	
+	private final int numOfSeats;
+	
+	private final int numOfVoters;
 
 	public FailureExample(InternalTypeContainer internalType, List<int[]> votes, List<int[][]> voteList,
-			List<Integer> elect, List<int[]> seats, int numOfCandidates) {
+			List<Integer> elect, List<int[]> seats, int numOfCandidates, int numOfSeats, int numOfVoters) {
 		
 		this.internalType = internalType;
 		this.votes = votes;
@@ -31,6 +35,8 @@ public class FailureExample {
 		this.elect = elect;
 		this.seats = seats;
 		this.numOfCandidates = numOfCandidates;
+		this.numOfSeats = numOfSeats;
+		this.numOfVoters = numOfVoters;
 
 	}
 	
