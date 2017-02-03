@@ -40,6 +40,15 @@ public abstract class CheckerFactory implements Runnable {
 	public void run() {
 
 		String advanced = paramSrc.getParameter().getArgument();
+		
+		String[] toTrim = advanced.split(";");
+		
+		for (int i = 0; i < toTrim.length; i++) {
+			//remove all whitespaces so they don't interfere later
+			toTrim[i] = toTrim[i].trim();
+		}
+		
+		advanced = String.join(";", advanced.split(";"));
 
 		outerLoop: for (Iterator<Integer> voteIterator = paramSrc.getParameter().getAmountVoters()
 				.iterator(); voteIterator.hasNext();) {

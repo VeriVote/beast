@@ -39,5 +39,6 @@ $RECYCLE.BIN/
 log/
 target/
 /bin/
+/c_tempfiles/
 /beast/nbproject/
 beast/.settings/org.eclipse.jdt.core.prefs

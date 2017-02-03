@@ -29,41 +29,54 @@ public class testMain {
 	}
 
 	public void testWhole() {
-		String pre = "FOR_ALL_VOTERS(v) : EXISTS_ONE_CANDIDATE(c) : (c == VOTES2(v) && (VOTE_SUM_FOR_CANDIDATE(c)>= 3 ==> c < 2));";
-		String post = "VOTES2 == VOTES1;";
+		
+		
+		InternalTypeContainer intype1 = new InternalTypeContainer(InternalTypeRep.APPROVAL);
+        InternalTypeContainer intype2 = new InternalTypeContainer(intype1, InternalTypeRep.CANDIDATE);
+        InternalTypeContainer intype3 = new InternalTypeContainer(intype2, InternalTypeRep.VOTER);
+        ElectionTypeContainer inputType = new ElectionTypeContainer(intype3, "input");
+        InternalTypeContainer type2 = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
+        InternalTypeContainer outtype = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
+        ElectionTypeContainer outputType = new ElectionTypeContainer(outtype, "output");
 
-		PostAndPrePropertiesDescription descr = new PostAndPrePropertiesDescription("test1",
-				new FormalPropertiesDescription(pre), new FormalPropertiesDescription(post));
-		SymbolicVariableList list = new SymbolicVariableList();
-		list.addSymbolicVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
-		list.addSymbolicVariable("v", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
+        ElectionDescription electionDescription = new ElectionDescription("name", inputType, outputType, 0);
+        ArrayList<String> userCode = new ArrayList<>();
+        userCode.add("votingcode");
+        userCode.add("abalsdf");
+        electionDescription.setCode(userCode);
 
-		descr.setSymbolicVariableList(list);
+        SymbolicVariableList symbolicVariableList = new SymbolicVariableList();
 
-		InternalTypeContainer input = new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE),
-				InternalTypeRep.VOTER);
-		InternalTypeContainer res = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
+        String pre = "FOR_ALL_VOTERS(i) : (i!=u && i!=w ==> (VOTES1(i) == VOTES2(i)));";
 
-		ElectionDescription electionDescr = new ElectionDescription("descr", new ElectionTypeContainer(input, ""),
-				new ElectionTypeContainer(res, ""), 0);
+        String post = "ELECT1 == ELECT2;";
+        // String post = "1 == 2;";
 
-		String code = "unsigned int voting(unsigned int voters[V], unsigned int candidates[C], unsigned int seats[S]) {\n"
-				+ "return 0;\n" + "}\n";
+        FormalPropertiesDescription preDescr = new FormalPropertiesDescription(pre);
+        FormalPropertiesDescription postDescr = new FormalPropertiesDescription(post);
 
-		electionDescr.setCode(Arrays.asList(code.split("\n")));
+        PostAndPrePropertiesDescription postAndPrePropertiesDescription = new PostAndPrePropertiesDescription("name", preDescr, postDescr, symbolicVariableList);
+
+        SymbolicVariableList symVariableList = new SymbolicVariableList();
+        symVariableList.addSymbolicVariable("u", new InternalTypeContainer(InternalTypeRep.VOTER));
+        symVariableList.addSymbolicVariable("w", new InternalTypeContainer(InternalTypeRep.VOTER));
+        // symVariableList.addSymbolicVariable("i", new InternalTypeContainer(InternalTypeRep.VOTER));
+
+        postAndPrePropertiesDescription.setSymbolicVariableList(symVariableList);
+
+		
 
 		PropertyChecker propCheck = CheckerFactoryFactory.createPropertyChecker("cbmc");
 
-		implElectionDescriptionSource eSrc = new implElectionDescriptionSource(electionDescr);
+		implElectionDescriptionSource eSrc = new implElectionDescriptionSource(electionDescription);
 
 		List<PostAndPrePropertiesDescription> tmp = new ArrayList<PostAndPrePropertiesDescription>();
-		tmp.add(descr);
+		tmp.add(postAndPrePropertiesDescription);
 
 		implPropertyDescriptionSource pSrc = new implPropertyDescriptionSource(tmp);
 
 		List<Integer> amountVoters = new ArrayList<Integer>();
-		amountVoters.add(100);
-		amountVoters.add(100);
+		amountVoters.add(4);
 
 		List<Integer> amountCandidates = new ArrayList<Integer>();
 		amountCandidates.add(100);
@@ -72,7 +85,7 @@ public class testMain {
 		amountSeats.add(1);
 
 		ElectionCheckParameter ecp = new ElectionCheckParameter(amountVoters, amountCandidates, amountSeats,
-				new TimeOut(TimeUnit.SECONDS, 20), 4, "");
+				new TimeOut(TimeUnit.SECONDS, 20), 4, "--trace;--unwind 7");
 
 		implParameterSource parmSrc = new implParameterSource(ecp);
 
