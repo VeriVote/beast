@@ -40,6 +40,31 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
         } else if(er.getId().equals("var_not_decl")) {
             String template = getTemplateString("var_not_decl");
             return template.replace("VAR", er.getExtraInfo("var_name"));
+        } else if(er.getId().equals("too_many_vars_passed")) {
+            String template = getTemplateString("too_many_vars_passed");
+            template = template.replace("VAR", er.getExtraInfo("var_name"));
+            return template;
+        } else if(er.getId().equals("wrong_var_type_passed")) {
+            String template = getTemplateString("wrong_var_type_passed");
+            template = template.replace("VAR", er.getExtraInfo("var_name"));
+            template = template.replace("EXPECTEDTYPE", er.getExtraInfo("passed_type"));
+            template = template.replace("GIVENTYPE", er.getExtraInfo("expected_type"));
+            return template;
+        } else if(er.getId().equals("incomparable_types")) {
+            String template = getTemplateString("incomparable_types");
+            template = template.replace("LHSVAR", er.getExtraInfo("lhs_type"));
+            template = template.replace("RHSVAR", er.getExtraInfo("rhs_type"));
+            return template;
+        } else if(er.getId().equals("incomparable_list_sizes")) {
+            String template = getTemplateString("incomparable_list_sizes");
+            template = template.replace("LHSDEPTH", er.getExtraInfo("lhs_list_size"));
+            template = template.replace("RHSDEPTH", er.getExtraInfo("rhs_list_size"));
+            return template;
+        } else if(er.getId().equals("wrong_var_passed_to_votesum")) {
+            String template = getTemplateString("wrong_var_passed_to_votesum");
+            template = template.replace("VAR", er.getExtraInfo("var_name"));
+            template = template.replace("GIVENTYPE", er.getExtraInfo("var_type"));
+            return template;
         }
         return "";
     }

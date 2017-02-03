@@ -8,6 +8,7 @@ package edu.pse.beast.codearea.ErrorHandling;
 import edu.pse.beast.codearea.InputToCode.LineHandler;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringResourceLoader;
+import edu.pse.beast.toolbox.Tuple;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
@@ -31,9 +32,9 @@ public abstract class ErrorDisplayer implements CaretListener, DisplaysStringsTo
     protected JTextPane pane;
     private SquigglePainter painter;
     private LineHandler lineHandler;
-    private HashMap<Integer, CodeError> absPosToError;
+    private HashMap< Tuple<Integer,Integer>, CodeError> absPosToError;
     protected StringResourceLoader currentStringResLoader;
-    
+    private ArrayList<Object> highLights = new ArrayList<>();
     public ErrorDisplayer(JTextPane pane, StringResourceLoader currentStringResLoader) {
         absPosToError = new HashMap<>();
         this.pane = pane;
@@ -45,10 +46,20 @@ public abstract class ErrorDisplayer implements CaretListener, DisplaysStringsTo
     
     public void showErrors(ArrayList<CodeError> errors) {
         absPosToError = new HashMap<>();
+        for(Object o : highLights) pane.getHighlighter().removeHighlight(o);
     }
     
     protected void showError(CodeError er, String msg) {
-        System.err.println(getPosString(er) + ": " + msg);       
+        System.err.println(getPosString(er) + ": " + msg);   
+        int startpos = er.getStartPos();
+        int endpos = er.getEndPos();
+        if(startpos == endpos) endpos++;
+        absPosToError.put(new Tuple<>(startpos, endpos), er);
+        try {
+            highLights.add(pane.getHighlighter().addHighlight(startpos, endpos + 1, painter));
+        } catch (BadLocationException ex) {
+            Logger.getLogger(ErrorDisplayer.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     private String getPosString(CodeError er) {

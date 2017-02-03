@@ -58,6 +58,16 @@ public class CodeError {
         // temporary
         return "";
     }
+
+    public int getStartPos() {
+        return startPos;
+    }
+
+    public int getEndPos() {
+        return endPos;
+    }
+    
+    
     
     
 }

@@ -4,7 +4,7 @@ var_not_decl_descr : Variable VAR ist nicht deklariert
 too_many_vars_passed_descr : Es wurden zu viele Variablen übergeben. Die Listentiefe ist MAXDEPTH, doch es wurden AMTGIVEN übergeben
 wrong_var_type_passed_descr : Die übergebene Variable VAR hat falschen Typ. Benötigt wird Typ EXPECTEDTYPE, übergeben wurde GIVENTYPE
 incomparable_types_descr : Die Variablen LHSVAR und RHSVAR können nicht verglichen werden.
-incomparable_list_sizes_descr : Die beiden Verglichenen Ausdrücke haben unterschiedliche Listentiefen
+incomparable_list_sizes_descr : Die beiden Verglichenen Ausdrücke haben unterschiedliche Listentiefen, LHSDEPTH und RHSDEPTH.
 wrong_var_passed_to_votesum_descr : VOTE_SUM_FOR_CANDIDATE erwartet eine Variable vom Typ Wähler. Übergeben wurde GIVENTYPE.
 line : Zeile
 char : Zeichen

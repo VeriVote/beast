@@ -17,10 +17,12 @@ import javax.swing.event.DocumentListener;
  *
  * @author Holger-Desktop
  */
-public class ErrorController implements StoppedTypingContinuouslyListener {
+public class ErrorController implements 
+        StoppedTypingContinuouslyListener, DocumentListener {
     private ErrorFinderList errorFinderList;
     private JTextPane pane;
     private ErrorDisplayer displayer;
+    private boolean changed = false;
     
     public ErrorController(JTextPane pane,
             StoppedTypingContinuouslyMessager msg,
@@ -29,6 +31,7 @@ public class ErrorController implements StoppedTypingContinuouslyListener {
         msg.addListener(this);
         errorFinderList = new ErrorFinderList();
         this.displayer = displayer;
+        pane.getStyledDocument().addDocumentListener(this);
     }
     
     public void addErrorFinder(ErrorFinder finder) {
@@ -37,8 +40,24 @@ public class ErrorController implements StoppedTypingContinuouslyListener {
 
     @Override
     public void StoppedTypingContinuously(int newPos) {
+        if(!changed) return;
         System.out.println("formalPropEditor get errors");
         ArrayList<CodeError> foundErrors = errorFinderList.getErrors();
         displayer.showErrors(foundErrors);
+        changed = false;
+    }
+
+    @Override
+    public void insertUpdate(DocumentEvent de) {
+        changed = true;
+    }
+
+    @Override
+    public void removeUpdate(DocumentEvent de) {
+         changed = true;
+    }
+
+    @Override
+    public void changedUpdate(DocumentEvent de) {
     }
 }

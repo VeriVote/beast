@@ -72,7 +72,7 @@ public class BooleanExpErrorFactory {
     static CodeError createCantCompareTypes(FormalPropertyDescriptionParser.ComparisonExpContext ctx, InternalTypeContainer lhsCont, InternalTypeContainer rhsCont) {
         CodeError err = generateStandardError(ctx, "incomparable_types");
         err.setExtraInfo("lhs_type", lhsCont.getInternalType().toString());
-        err.setExtraInfo("rhs_list_size", rhsCont.getInternalType().toString());
+        err.setExtraInfo("rhs_type", rhsCont.getInternalType().toString());
         return err;
     }
     
