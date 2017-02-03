@@ -118,6 +118,9 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see edu.pse.beast.highlevel.ResultPresenter#presentResult(edu.pse.beast.highlevel.ResultInterface)
+	 */
 	@Override
 	public void presentResult(ResultInterface res) {
 		// TODO Auto-generated method stub
