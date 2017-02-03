@@ -19,16 +19,20 @@ public class FailureExample {
 	private final List<Integer> elect;
 
 	private final List<int[]> seats;
+	
+	private final int numOfCandidates;
 
 	public FailureExample(InternalTypeContainer internalType, List<int[]> votes, List<int[][]> voteList,
-			List<Integer> elect, List<int[]> seats) {
+			List<Integer> elect, List<int[]> seats, int numOfCandidates) {
 		
 		this.internalType = internalType;
 		this.votes = votes;
 		this.voteList = voteList;
 		this.elect = elect;
 		this.seats = seats;
+		this.numOfCandidates = numOfCandidates;
 
 	}
+	
 
 }
