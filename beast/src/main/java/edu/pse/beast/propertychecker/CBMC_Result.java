@@ -26,4 +26,10 @@ public class CBMC_Result extends Result {
 			//presenter.presentFailureExample(new FailureExample(null, null, null, null, null));
 		}
 	}
+	
+	public FailureExample createFailureExample() {
+	    
+	    return null;
+	   // return new FailureExample(getInternalType(), votes, voteList, elect, seats, getNumCandidates(), getNumSeats(), getNumVoters());
+	}
 }

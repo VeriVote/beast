@@ -17,7 +17,7 @@ public class ThreadedBufferedReader implements Runnable {
 
 	private BufferedReader reader;
 	private List<String> readLines;
-	private boolean isInterrupted = false;
+	private volatile boolean isInterrupted = false;
 	private CountDownLatch latch;
 
 	/**
@@ -50,7 +50,7 @@ public class ThreadedBufferedReader implements Runnable {
 				readLines.add(line);
 				line = reader.readLine();
 				
-//				System.out.println(line);
+				System.out.println(line);
 				
 			}
 		} catch (IOException e) {

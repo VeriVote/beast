@@ -7,6 +7,7 @@ package edu.pse.beast.propertychecker;
 
 import java.util.List;
 
+import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenterElement;
 
@@ -22,6 +23,10 @@ public abstract class Result implements ResultInterface {
     private List<String> error;
     private boolean timeOut = false;
     private boolean success = false;
+    private int numVoters;
+    private int numSeats;
+    private int numCandidates;
+    private InternalTypeContainer internalType;
 
     
     /**
@@ -106,7 +111,39 @@ public abstract class Result implements ResultInterface {
      * sets the result of this object, so it can be displayed later.
      * @param result the result of the check that should be stored in this result object
      */
-    public void setErrors(List<String> error) {
+    public void setError(List<String> error) {
         this.error = error;
+    }
+
+    public int getNumVoters() {
+        return numVoters;
+    }
+
+    public int getNumSeats() {
+        return numSeats;
+    }
+
+    public int getNumCandidates() {
+        return numCandidates;
+    }
+
+    public InternalTypeContainer getInternalType() {
+        return internalType;
+    }
+
+    public void setNumVoters(int numVoters) {
+        this.numVoters = numVoters;
+    }
+
+    public void setNumSeats(int numSeats) {
+        this.numSeats = numSeats;
+    }
+
+    public void setNumCandidates(int numCandidates) {
+        this.numCandidates = numCandidates;
+    }
+
+    public void setInternalType(InternalTypeContainer internalType) {
+        this.internalType = internalType;
     }
 }

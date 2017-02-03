@@ -33,8 +33,11 @@ public class FactoryController implements Runnable {
 
     private List<CheckerFactory> currentlyRunning;
     private final String checkerID;
-    private boolean stopped = false;
+    private volatile boolean stopped = false;
     private final int concurrentChecker;
+    
+    
+    protected FactoryController thisObject = this;
 
     /**
      * 
@@ -52,6 +55,11 @@ public class FactoryController implements Runnable {
     public FactoryController(ElectionDescriptionSource electionDescSrc,
             PostAndPrePropertiesDescriptionSource postAndPrePropDescrSrc, ParameterSource parmSrc, String checkerID,
             int concurrentChecker) {
+        
+        //add a shutdown hook so all the checker are stopped properly so they don't clog the host pc
+        Runtime.getRuntime().addShutdownHook(new FactoryEnder());
+        
+        
         this.electionDescSrc = electionDescSrc;
         this.postAndPrePropDescrSrc = postAndPrePropDescrSrc;
         this.parmSrc = parmSrc;
@@ -178,5 +186,13 @@ public class FactoryController implements Runnable {
 
             return (List<ResultInterface>) toReturn;
         }
+    }
+    
+    public class FactoryEnder extends Thread {
+        @Override
+        public void run() {
+            thisObject.stopChecking(false);
+        }
+        
     }
 }

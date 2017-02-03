@@ -27,7 +27,7 @@ public abstract class Checker implements Runnable {
 
 	private boolean finished = false;
 	private boolean success = false;
-	private boolean interrupted = false;
+	private volatile boolean interrupted = false;
 
 	protected Process process;
 
