@@ -62,6 +62,7 @@ public class BooleanExpEditorVariableErrorFinderTest {
      */
     @Test
     public void testGetErrors() {
+        
         ElectionTypeContainer input = new ElectionTemplateHandler().getById("list_of_candidates_per_voter");
         ElectionTypeContainer res = new ElectionTemplateHandler().getById("one_candidate_or_zero");
         
@@ -69,14 +70,14 @@ public class BooleanExpEditorVariableErrorFinderTest {
         scopehandler.enterNewScope();
         scopehandler.addVariable("cand", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
         
-        String exp = "FOR_ALL_VOTERS(v) : FOR_ALL_CANDIDATES(c) : (VOTES1(v)(c) == 0 ==> c == cand)";
+        String exp = "FOR_ALL_VOTERS(v) : FOR_ALL_CANDIDATES(c) : (VOTES1(v)(c) == 0 ==> c == cand);";
         
         pane.setText(exp);
         
         finder.setUp(scopehandler, input, res);
         assertEquals(0, finder.getErrors().size());
         
-        exp = "FOR_ALL_VOTERS(v) : FOR_ALL_CANDIDATES(c) : (VOTES1(v)(d) == 0 ==> d == cand)";
+        exp = "FOR_ALL_VOTERS(v) : FOR_ALL_CANDIDATES(c) : (VOTES1(v)(d) == 0 ==> d == cand);";
         pane.setText(exp);
         assertEquals(2, finder.getErrors().size());
         
