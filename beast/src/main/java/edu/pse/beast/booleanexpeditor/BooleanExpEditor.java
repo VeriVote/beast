@@ -118,7 +118,8 @@ public class BooleanExpEditor {
         cEditor.removeListener(prePropCodeArea.getVariableErrorFinder());
         cEditor.removeListener(postPropCodeArea.getVariableErrorFinder());
         
-        
+        symbolicVarListController.getSymbolicVariableList().removeListener(prePropCodeArea.getVariableErrorFinder().getLis());
+        symbolicVarListController.getSymbolicVariableList().removeListener(postPropCodeArea.getVariableErrorFinder().getLis());
         
         prePropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(refs, window.getPrePropTextPane(),
                 window.getPrePropScrollPane(), symbolicVarListController.getSymbolicVariableList());

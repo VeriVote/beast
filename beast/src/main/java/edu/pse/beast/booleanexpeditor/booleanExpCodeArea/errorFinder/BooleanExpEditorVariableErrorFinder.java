@@ -66,5 +66,11 @@ public class BooleanExpEditorVariableErrorFinder implements ErrorFinder, Electio
     public void outputChanged(ElectionTypeContainer output) {
        lis.setOutput(output);
     }
+
+    public FormalExpErrorFinderTreeListener getLis() {
+        return lis;
+    }
+    
+    
     
 }

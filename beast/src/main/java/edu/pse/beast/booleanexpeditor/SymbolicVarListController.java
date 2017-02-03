@@ -116,7 +116,7 @@ public class SymbolicVarListController implements DisplaysStringsToUser {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
             int selectedIndex = jList.getSelectedIndex();
-            symbolicVariableList.getSymbolicVariables().remove(selectedIndex);
+            symbolicVariableList.removeSymbolicVariable(selectedIndex);
             jListModel.remove(selectedIndex);
         }
     }
