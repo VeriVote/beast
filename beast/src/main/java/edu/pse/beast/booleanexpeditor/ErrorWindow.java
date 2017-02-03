@@ -31,8 +31,8 @@ public class ErrorWindow {
      */
     void displayErrors(ArrayList<String> errors) {
         String errorsAsString = errorString + ": " + errors.size() + "\n";
-        for (String error : errors) {
-            errorsAsString += error + "\n";
+        for (int i = 0; i < errors.size(); i++) {
+            errorsAsString += i+1 + ": " + errors.get(i) + "\n";
         }
         textPane.setText(errorsAsString);
     }

@@ -55,7 +55,12 @@
 			<artifactId>jna</artifactId>
 			<version>4.3.0</version>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>net.java.dev.jna</groupId>
+            <artifactId>platform</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<plugins>

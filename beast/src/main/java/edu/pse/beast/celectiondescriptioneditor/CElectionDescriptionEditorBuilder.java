@@ -63,8 +63,8 @@ public class CElectionDescriptionEditorBuilder {
                 gui.getCodeArea(), 
                 gui.getCodeAreaScrollPane(),
                 new CErrorDisplayer(gui.getCodeArea(), objRefsForBuilder.getStringIF()));
-        
-        CElectionDescriptionEditor editor = new CElectionDescriptionEditor(codeArea, gui, codeAreaBuilder);
+
+        CElectionDescriptionEditor editor = new CElectionDescriptionEditor(codeArea, gui, codeAreaBuilder, errorWindow);
         
         CElectionEditorMenubarHandler menuBarHandler = 
                 new CElectionEditorMenubarHandler(
@@ -153,7 +153,7 @@ public class CElectionDescriptionEditorBuilder {
         editorList.add(createFromUserAction(options));
         
         ArrayList<ActionIdAndListener> codeList = new ArrayList<>();
-        staticCodeAnalysis = createStaticCheckUserAction();
+        staticCodeAnalysis = createStaticCheckUserAction(editor);
         codeList.add(createFromUserAction(staticCodeAnalysis));
         
         created.add(fileList);
@@ -206,8 +206,8 @@ public class CElectionDescriptionEditorBuilder {
         return new PresentOptionsUserAction();
     }    
     //code
-    private StaticCheckUserAction createStaticCheckUserAction() {
-        return new StaticCheckUserAction();
+    private StaticCheckUserAction createStaticCheckUserAction(CElectionDescriptionEditor editor) {
+        return new StaticCheckUserAction(editor);
     } 
     
     private ActionIdAndListener createFromUserAction(UserAction userAc) {
