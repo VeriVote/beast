@@ -23,7 +23,7 @@ import javax.swing.text.BadLocationException;
 
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
-import edu.pse.beast.highlevel.FailureExample;
+import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.highlevel.ResultPresenterElement;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.propertylist.PLControllerInterface;

@@ -20,12 +20,12 @@ import toBeImplemented.implElectionDescriptionSource;
 import toBeImplemented.implParameterSource;
 import toBeImplemented.implPropertyDescriptionSource;
 
-public class testMain {
+public class PropertyCheckerTest {
 	public static void main(String[] args) {
-		new testMain();
+		new PropertyCheckerTest();
 	}
 
-	public testMain() {
+	public PropertyCheckerTest() {
 		testWhole();
 	}
 
