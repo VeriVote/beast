@@ -198,6 +198,9 @@ public class FormalPropertyDescriptionParser extends Parser {
 	}
 
 	public static class BooleanExpContext extends ParserRuleContext {
+		public QuantorExpContext quantorExp() {
+			return getRuleContext(QuantorExpContext.class,0);
+		}
 		public BinaryRelationExpContext binaryRelationExp() {
 			return getRuleContext(BinaryRelationExpContext.class,0);
 		}
@@ -206,9 +209,6 @@ public class FormalPropertyDescriptionParser extends Parser {
 		}
 		public ComparisonExpContext comparisonExp() {
 			return getRuleContext(ComparisonExpContext.class,0);
-		}
-		public QuantorExpContext quantorExp() {
-			return getRuleContext(QuantorExpContext.class,0);
 		}
 		public TerminalNode OpenBracket() { return getToken(FormalPropertyDescriptionParser.OpenBracket, 0); }
 		public BooleanExpContext booleanExp() {
@@ -245,28 +245,28 @@ public class FormalPropertyDescriptionParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(39);
-				binaryRelationExp(0);
+				quantorExp();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(40);
-				notExp();
+				binaryRelationExp(0);
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(41);
-				comparisonExp();
+				notExp();
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(42);
-				quantorExp();
+				comparisonExp();
 				}
 				break;
 			case 5:
@@ -1120,8 +1120,8 @@ public class FormalPropertyDescriptionParser extends Parser {
 		"\3\2\2\2\20t\3\2\2\2\22v\3\2\2\2\24x\3\2\2\2\26\177\3\2\2\2\30\u0086\3"+
 		"\2\2\2\32\u0088\3\2\2\2\34\u008b\3\2\2\2\36\u008f\3\2\2\2 \"\5\4\3\2!"+
 		" \3\2\2\2\"%\3\2\2\2#!\3\2\2\2#$\3\2\2\2$\3\3\2\2\2%#\3\2\2\2&\'\5\6\4"+
-		"\2\'(\7\3\2\2(\5\3\2\2\2)\62\5\b\5\2*\62\5\f\7\2+\62\5\16\b\2,\62\5\n"+
-		"\6\2-.\7\r\2\2./\5\6\4\2/\60\7\f\2\2\60\62\3\2\2\2\61)\3\2\2\2\61*\3\2"+
+		"\2\'(\7\3\2\2(\5\3\2\2\2)\62\5\n\6\2*\62\5\b\5\2+\62\5\f\7\2,\62\5\16"+
+		"\b\2-.\7\r\2\2./\5\6\4\2/\60\7\f\2\2\60\62\3\2\2\2\61)\3\2\2\2\61*\3\2"+
 		"\2\2\61+\3\2\2\2\61,\3\2\2\2\61-\3\2\2\2\62\7\3\2\2\2\63\64\b\5\1\2\64"+
 		"\65\5\n\6\2\65\66\7\20\2\2\66\67\5\6\4\2\67Y\3\2\2\289\5\f\7\29:\7\20"+
 		"\2\2:;\5\6\4\2;Y\3\2\2\2<=\5\16\b\2=>\7\20\2\2>?\5\6\4\2?Y\3\2\2\2@A\7"+
