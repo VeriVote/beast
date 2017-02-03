@@ -47,16 +47,6 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
         processes = new javax.swing.JLabel();
         amountProcessesSpinner = new javax.swing.JSpinner();
         advancedButton = new javax.swing.JButton();
-        menubar = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
-        newMenuItem = new javax.swing.JMenuItem();
-        saveMenuItem = new javax.swing.JMenuItem();
-        saveAsMenuItem = new javax.swing.JMenuItem();
-        loadMenuItem = new javax.swing.JMenuItem();
-        projectMenu = new javax.swing.JMenu();
-        startMenuItem = new javax.swing.JMenuItem();
-        stopMenuItem = new javax.swing.JMenuItem();
-        optionsMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ParameterEditor");
@@ -108,46 +98,6 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
                 advancedButtonActionPerformed(evt);
             }
         });
-
-        fileMenu.setText("Datei");
-
-        newMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
-        newMenuItem.setText("Neues Projekt...");
-        fileMenu.add(newMenuItem);
-
-        saveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        saveMenuItem.setText("Speichern");
-        saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveMenuItemActionPerformed(evt);
-            }
-        });
-        fileMenu.add(saveMenuItem);
-
-        saveAsMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        saveAsMenuItem.setText("Speichern unter...");
-        fileMenu.add(saveAsMenuItem);
-
-        loadMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-        loadMenuItem.setText("Öffnen...");
-        fileMenu.add(loadMenuItem);
-
-        menubar.add(fileMenu);
-
-        projectMenu.setText("Projekt");
-
-        startMenuItem.setText("Teste Eigenschaften");
-        projectMenu.add(startMenuItem);
-
-        stopMenuItem.setText("Stoppe Test");
-        projectMenu.add(stopMenuItem);
-
-        menubar.add(projectMenu);
-
-        optionsMenu.setText("Eigenschaften");
-        menubar.add(optionsMenu);
-
-        setJMenuBar(menubar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -224,7 +174,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
                     .addComponent(processes))
                 .addGap(18, 18, 18)
                 .addComponent(advancedButton)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         voterMin.getAccessibleContext().setAccessibleName("");
@@ -235,10 +185,6 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     private void advancedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_advancedButtonActionPerformed
         advWindow.setVisible(true);
     }//GEN-LAST:event_advancedButtonActionPerformed
-
-    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -282,21 +228,11 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     private javax.swing.JSpinner candMin;
     private javax.swing.JLabel candTo;
     private javax.swing.JLabel candidates;
-    private javax.swing.JMenu fileMenu;
-    private javax.swing.JMenuItem loadMenuItem;
-    private javax.swing.JMenuBar menubar;
-    private javax.swing.JMenuItem newMenuItem;
-    private javax.swing.JMenu optionsMenu;
     private javax.swing.JLabel processes;
-    private javax.swing.JMenu projectMenu;
-    private javax.swing.JMenuItem saveAsMenuItem;
-    private javax.swing.JMenuItem saveMenuItem;
     private javax.swing.JSpinner seatMax;
     private javax.swing.JSpinner seatMin;
     private javax.swing.JLabel seatTo;
     private javax.swing.JLabel seats;
-    private javax.swing.JMenuItem startMenuItem;
-    private javax.swing.JMenuItem stopMenuItem;
     private javax.swing.JLabel timeout;
     private javax.swing.JSpinner timeoutNum;
     private javax.swing.JComboBox<String> timeoutUnit;
@@ -362,24 +298,5 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
         timeoutUnit.addItem(other.getStringFromID("hours"));
         timeoutUnit.addItem(other.getStringFromID("days"));
         //advWindow.updateStringRes(other); //TODO: Implement
-        
-        /*StringResourceLoader menu = provider.getMenuStringRes();
-        fileMenu.setText(menu.getStringFromID("file"));
-        projectMenu.setText(menu.getStringFromID("project"));
-        optionsMenu.setText(menu.getStringFromID("options"));
-        newMenuItem.setText(menu.getStringFromID("new"));
-        saveMenuItem.setText(menu.getStringFromID("save"));
-        saveAsMenuItem.setText(menu.getStringFromID("save_as"));
-        loadMenuItem.setText(menu.getStringFromID("load"));
-        startMenuItem.setText(menu.getStringFromID("start"));
-        stopMenuItem.setText(menu.getStringFromID("stop"));
-        
-        StringResourceLoader toolbarTip = provider.getToolbarTipStringRes();
-        newIcon.setToolTipText(toolbarTip.getStringFromID("new"));
-        saveIcon.setToolTipText(toolbarTip.getStringFromID("save"));
-        saveAsIcon.setToolTipText(toolbarTip.getStringFromID("save_as"));
-        loadIcon.setToolTipText(toolbarTip.getStringFromID("load"));
-        startIcon.setToolTipText(toolbarTip.getStringFromID("start"));
-        stopIcon.setToolTipText(toolbarTip.getStringFromID("stop"));*/
     }
 }
