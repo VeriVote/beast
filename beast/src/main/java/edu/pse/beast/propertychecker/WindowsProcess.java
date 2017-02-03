@@ -29,8 +29,6 @@ public class WindowsProcess extends CBMCProcess {
 
     private final String vsCMDinRes = "/cbmcWIN/VsDevCmd.bat";
 
-    private boolean killedCBMCprocess = false;
-
     public WindowsProcess(int voters, int candidates, int seats, String advanced, File toCheck, CheckerFactory parent) {
         super(voters, candidates, seats, advanced, toCheck, parent);
     }
@@ -64,7 +62,7 @@ public class WindowsProcess extends CBMCProcess {
         String cbmcEXE = FileLoader.getFileFromRes("/cbmcWIN/cbmc.exe");
 
         // TODO this is just a debug file
-        toCheck = new File("./src/main/resources/c_tempfiles/c_temp_file_failure.c");
+        toCheck = new File("./src/main/resources/c_tempfiles/c_temp_file_success.c");
         ErrorLogger.log("WindowsProcess.java line 66 has to be removed, when the code creation works");
 
         // because windows is weird the whole call that would get placed inside
@@ -159,11 +157,23 @@ public class WindowsProcess extends CBMCProcess {
                 try {
                     cbmcProcess = new Win32Process(cbmcPID);
                     cbmcProcess.terminate();
-                    killedCBMCprocess = true;
                     Thread.sleep(waitingTimeForTermination);
 
                 } catch (IOException e) {
                     ErrorLogger.log("Unable to create a reference to the CBMC process!");
+                } catch (InterruptedException e) {
+
+                }
+            } else {
+                /*
+                 * if we are here, we can't find a child named cbmc. That means
+                 * that a) cbmc just stopped, so we wait some seconds to see it
+                 * the parent stopped too by then 
+                 * b) cbmc just can't be stopped this way, so the user has to do it manually
+                 */
+
+                try {
+                    Thread.sleep(waitingTimeForTermination);
                 } catch (InterruptedException e) {
 
                 }
@@ -172,15 +182,11 @@ public class WindowsProcess extends CBMCProcess {
         }
 
         if (process.isAlive()) {
-            if (killedCBMCprocess) {
-                ErrorLogger.log("There was an attempt to stop the cbmc process, but after "
-                        + (waitingTimeForTermination / 1000d) + " seconds of waiting"
-                        + " the parent root process was still alive, even though it should "
-                        + "terminate itself when cbmc stopped. Please check, that the cbmc instance was closed properly");
-            } else {
-                ErrorLogger.log("Warning, the program was unable to shut down the CBMC Process \n"
-                        + "Please kill it manually because it can take up a lot of ram and cpu");
-            }
+            ErrorLogger.log(
+                    "There was an attempt to stop the cbmc process, but after " + (waitingTimeForTermination / 1000d)
+                            + " seconds of waiting" + " the parent root process was still alive, even though it should "
+                            + "terminate itself when cbmc stopped. Please check, that the cbmc instance was "
+                            + "closed properly and if not, please close it yourself!");
         }
     }
 

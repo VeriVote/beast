@@ -15,15 +15,15 @@ public class CBMC_Result extends Result {
 			System.out.println("timeout");
 //			presenter.presentTimeOut();
 		} else if (!isValid()) {
-			System.out.println("otherfailure");
+			System.out.println("other tpye of failure");
 //			presenter.presentFailure();
 		} else if (isSuccess()) {
 			System.out.println("success");
 //			presenter.presentSuccess();
 		} else {
 		    //TODO implement here real counterexample
-			System.out.println("counter exmple is sent to the displayer here ");
-			presenter.presentFailureExample(new FailureExample(null, null, null, null, null));
+			System.out.println("counter example is sent to the displayer here ");
+			//presenter.presentFailureExample(new FailureExample(null, null, null, null, null));
 		}
 	}
 }

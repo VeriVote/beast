@@ -21,18 +21,17 @@ import toBeImplemented.implParameterSource;
 import toBeImplemented.implPropertyDescriptionSource;
 
 public class PropertyCheckerTest {
-	public static void main(String[] args) {
-		new PropertyCheckerTest();
-	}
+    public static void main(String[] args) {
+        new PropertyCheckerTest();
+    }
 
-	public PropertyCheckerTest() {
-		testWhole();
-	}
+    public PropertyCheckerTest() {
+        testWhole();
+    }
 
-	public void testWhole() {
-		
-		
-		InternalTypeContainer intype1 = new InternalTypeContainer(InternalTypeRep.APPROVAL);
+    public void testWhole() {
+
+        InternalTypeContainer intype1 = new InternalTypeContainer(InternalTypeRep.APPROVAL);
         InternalTypeContainer intype2 = new InternalTypeContainer(intype1, InternalTypeRep.CANDIDATE);
         InternalTypeContainer intype3 = new InternalTypeContainer(intype2, InternalTypeRep.VOTER);
         ElectionTypeContainer inputType = new ElectionTypeContainer(intype3, "input");
@@ -56,78 +55,551 @@ public class PropertyCheckerTest {
         FormalPropertiesDescription preDescr = new FormalPropertiesDescription(pre);
         FormalPropertiesDescription postDescr = new FormalPropertiesDescription(post);
 
-        PostAndPrePropertiesDescription postAndPrePropertiesDescription = new PostAndPrePropertiesDescription("name", preDescr, postDescr, symbolicVariableList);
+        PostAndPrePropertiesDescription postAndPrePropertiesDescription = new PostAndPrePropertiesDescription("name",
+                preDescr, postDescr, symbolicVariableList);
 
         SymbolicVariableList symVariableList = new SymbolicVariableList();
         symVariableList.addSymbolicVariable("u", new InternalTypeContainer(InternalTypeRep.VOTER));
         symVariableList.addSymbolicVariable("w", new InternalTypeContainer(InternalTypeRep.VOTER));
-        // symVariableList.addSymbolicVariable("i", new InternalTypeContainer(InternalTypeRep.VOTER));
+        // symVariableList.addSymbolicVariable("i", new
+        // InternalTypeContainer(InternalTypeRep.VOTER));
 
         postAndPrePropertiesDescription.setSymbolicVariableList(symVariableList);
 
-		
+        PropertyChecker propCheck = CheckerFactoryFactory.createPropertyChecker("cbmc");
 
-		PropertyChecker propCheck = CheckerFactoryFactory.createPropertyChecker("cbmc");
+        implElectionDescriptionSource eSrc = new implElectionDescriptionSource(electionDescription);
 
-		implElectionDescriptionSource eSrc = new implElectionDescriptionSource(electionDescription);
+        List<PostAndPrePropertiesDescription> tmp = new ArrayList<PostAndPrePropertiesDescription>();
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
 
-		List<PostAndPrePropertiesDescription> tmp = new ArrayList<PostAndPrePropertiesDescription>();
-		tmp.add(postAndPrePropertiesDescription);
-//		tmp.add(postAndPrePropertiesDescription);
-//		tmp.add(postAndPrePropertiesDescription);
-//		tmp.add(postAndPrePropertiesDescription);
-//		tmp.add(postAndPrePropertiesDescription);
-//		tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
+        tmp.add(postAndPrePropertiesDescription);
 
-		implPropertyDescriptionSource pSrc = new implPropertyDescriptionSource(tmp);
+        implPropertyDescriptionSource pSrc = new implPropertyDescriptionSource(tmp);
 
-		List<Integer> amountVoters = new ArrayList<Integer>();
-		amountVoters.add(4);
+        List<Integer> amountVoters = new ArrayList<Integer>();
+        amountVoters.add(4);
 
-		List<Integer> amountCandidates = new ArrayList<Integer>();
-		amountCandidates.add(5);
+        List<Integer> amountCandidates = new ArrayList<Integer>();
+        amountCandidates.add(5);
 
-		List<Integer> amountSeats = new ArrayList<Integer>();
-		amountSeats.add(4);
+        List<Integer> amountSeats = new ArrayList<Integer>();
+        amountSeats.add(4);
 
-		ElectionCheckParameter ecp = new ElectionCheckParameter(amountVoters, amountCandidates, amountSeats,
-				new TimeOut(TimeUnit.SECONDS, 20), 4, "--trace;--unwind 7");
+        ElectionCheckParameter ecp = new ElectionCheckParameter(amountVoters, amountCandidates, amountSeats,
+                new TimeOut(TimeUnit.MINUTES, 2), 8, "--trace;--unwind 7");
 
-		implParameterSource parmSrc = new implParameterSource(ecp);
+        implParameterSource parmSrc = new implParameterSource(ecp);
 
-		System.out.println(":::::::::::::::::::::::::::::::::::::::::::::");
+        System.out.println(":::::::::::::::::::::::::::::::::::::::::::::");
 
-		List<ResultInterface> resultate = propCheck.checkPropertiesForDescription(eSrc, pSrc, parmSrc);
+        List<ResultInterface> resultate = propCheck.checkPropertiesForDescription(eSrc, pSrc, parmSrc);
 
-		
-		boolean loop = false;
-		
-		while (!loop) {
-			loop = true;
-			for (Iterator<ResultInterface> iterator = resultate.iterator(); iterator.hasNext();) {
-				ResultInterface resultInterface = (ResultInterface) iterator.next();
-				loop = loop && resultInterface.readyToPresent();
-			}
-			
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		
-		
+        boolean loop = false;
 
-		System.out.println("______________________________________");
-		System.out.println("======================================");
-		System.out.println("______________________________________");
+        while (!loop) {
+            loop = true;
+            for (Iterator<ResultInterface> iterator = resultate.iterator(); iterator.hasNext();) {
+                ResultInterface resultInterface = (ResultInterface) iterator.next();
+                loop = loop && resultInterface.readyToPresent();
+            }
 
-		
-		for (Iterator iterator = resultate.iterator(); iterator.hasNext();) {
-			ResultInterface resultInterface = (ResultInterface) iterator.next();
-			resultInterface.presentTo(null);
-		}
-	}
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
+        System.out.println("______________________________________");
+        System.out.println("======================================");
+        System.out.println("______________________________________");
+
+        for (Iterator iterator = resultate.iterator(); iterator.hasNext();) {
+            ResultInterface resultInterface = (ResultInterface) iterator.next();
+            resultInterface.presentTo(null);
+        }
+    }
 }

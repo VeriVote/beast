@@ -68,7 +68,7 @@ public abstract class CheckerFactory implements Runnable {
 							// the process creation failed
 							stopped = true;
 						}
-
+					
 					}
 
 					while (!finished && !stopped) {
@@ -85,7 +85,7 @@ public abstract class CheckerFactory implements Runnable {
 						break outerLoop;
 					} else {
 						// the checker finished checking for these specific
-						// parameters;
+					    
 
 						currentlyRunning = null;
 
@@ -97,7 +97,9 @@ public abstract class CheckerFactory implements Runnable {
 							// the check was wrong, so we have to stop the check
 							// now
 							finished = true;
+							result.setFinished();
 							result.setResult(lastResult);
+							result.setValid();
 							break outerLoop;
 						}
 
@@ -126,7 +128,7 @@ public abstract class CheckerFactory implements Runnable {
 				}
 			}
 		}
-
+		
 		controller.notifyThatFinished(this);
 	}
 

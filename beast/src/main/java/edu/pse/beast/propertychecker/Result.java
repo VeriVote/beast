@@ -19,6 +19,7 @@ public abstract class Result implements ResultInterface {
     private boolean valid = false;
     private boolean finished = false;
     private List<String> result;
+    private List<String> error;
     private boolean timeOut = false;
     private boolean success = false;
 
