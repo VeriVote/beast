@@ -34,10 +34,14 @@ public class WindowsProcess extends CBMCProcess {
 
 	@Override
 	protected Process createProcess(File toCheck, int voters, int candidates, int seats, String advanced) {
-
-		// trace is mandatory under windows, or the counter example couldn't get
+		
+		advanced = String.join(" ", advanced.split(";"));
+		
+		// trace is mandatory under windows, or the counter example can't get
 		// generated
 		advanced = advanced + " --trace";
+		
+		
 
 		// set the values for the voters, candidates and seats
 		String arguments = advanced + " -D V=" + voters + " -D C=" + candidates + " -D S=" + seats;
@@ -60,21 +64,21 @@ public class WindowsProcess extends CBMCProcess {
 
 		// TODO this is just a debug file
 		toCheck = new File("./src/main/resources/c_tempfiles/test.c");
-		ErrorLogger.log("WindowsProcess.java lien 48 has to be removed, when the code creation works");
+		ErrorLogger.log("WindowsProcess.java line 48 has to be removed, when the code creation works");
 
 		// because windows is weird the whole call that would get placed inside
 		// VScmd has to be in one giant string
 		String cbmcCall = "\"" + vsCmd + "\"" + " & " + cbmcEXE + " " + "\"" + toCheck.getAbsolutePath() + "\"" + " "
 				+ arguments;
 
-		// this call starts a new VScmd isntance and lets cbmc run in it
+		// this call starts a new VScmd instance and lets cbmc run in it
 		ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", cbmcCall);
+		
+		System.out.println(String.join(" ", prossBuild.command()));
 
 		try {
-			// save the new process in this var
 			startedProcess = prossBuild.start();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
