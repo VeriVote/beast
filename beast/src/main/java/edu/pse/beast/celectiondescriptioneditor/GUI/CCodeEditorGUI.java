@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.GUI;
 
+import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateChooser;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 
@@ -40,6 +41,7 @@ public class CCodeEditorGUI extends javax.swing.JFrame implements DisplaysString
     public CCodeEditorGUI() {
         initComponents();
         jTextPane2.setEditable(false);
+        setDefaultCloseOperation(ElectionTemplateChooser.HIDE_ON_CLOSE);
     }
 
     public JTextPane getCodeArea() {
@@ -165,6 +167,4 @@ public class CCodeEditorGUI extends javax.swing.JFrame implements DisplaysString
         jTextPane1 = new JTextPane();
         jScrollPane3.setViewportView(jTextPane1);
     }
-
-    
 }
