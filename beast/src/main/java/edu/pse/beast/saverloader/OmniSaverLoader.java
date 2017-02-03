@@ -5,6 +5,7 @@ package edu.pse.beast.saverloader;
 //WARNING: it uses reflection, so maybe don't use for saving, but for inspiration
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -21,33 +22,14 @@ public class OmniSaverLoader {
     private final static String tagEnder = "/";
     private final static String dataIdentfier = "@";
     private final static String typeIdentfier = "$";
-
-    // public static void main(String... args)
-    // throws NoSuchFieldException, SecurityException, InstantiationException,
-    // IllegalAccessException {
-    //
-    //
-    // List<String> result = createSaveFormat(tester2);
-    //
-    //
-    //
-    // for (Iterator<String> iterator = result.iterator(); iterator.hasNext();)
-    // {
-    // String line = (String) iterator.next();
-    // System.out.println(line);
-    // }
-    //
-    // System.out.println("==========================");
-    //
-    // createFromSaveFormat(result);
-    // }
+    private final static String containerTypeIdentifier = "§";
 
     public static List<String> createSaveFormat(Object obj) {
 
         ArrayList<String> format = new ArrayList<>();
 
         if (obj == null) {
-            System.err.println("ES WURDE EIN LEERES OBJEKT ÜBERGEBEN!");
+            ErrorLogger.log("The given object was empty!");
             return null;
         } else {
             saveType(format, obj, "");
@@ -111,14 +93,21 @@ public class OmniSaverLoader {
         toAddTo.add(tagLeft + tagEnder + varName + typeIdentfier + "NULL" + typeIdentfier + tagRight);
     }
 
-    private static void saveList(List<String> toAddTo, List<?> toSave, String varName, String type) {
+    private static void saveList(List<String> toAddTo, List<?> toSave, String dataType, String varName, String type) {
+
+        if (dataType.equals("")) {
+            ErrorLogger.log(
+                    "You just tried to save an unsupported multidimensional list. Good luck implementing it, you need it!");
+        }
+
         // startTag
         if (toSave == null) {
             saveNull(toAddTo, varName);
             return;
         }
 
-        toAddTo.add(tagLeft + varName + typeIdentfier + type + typeIdentfier + tagRight);
+        toAddTo.add(tagLeft + varName + typeIdentfier + type + typeIdentfier + containerTypeIdentifier + dataType
+                + containerTypeIdentifier + tagRight);
 
         if (toSave.size() == 0) {
             // save nothing except for the tags
@@ -129,10 +118,11 @@ public class OmniSaverLoader {
             }
         }
         // endTag
-        toAddTo.add(tagLeft + tagEnder + varName + typeIdentfier + type + typeIdentfier + tagRight);
+        toAddTo.add(tagLeft + tagEnder + varName + typeIdentfier + type + typeIdentfier + containerTypeIdentifier
+                + dataType + containerTypeIdentifier + tagRight);
     }
 
-    private static void saveComplexType(List<String> toAddTo, Object toSave, String varName, String type) {
+    private static void saveArray(List<String> toAddTo, Object toSave, String dataType, String varName, String type) {
 
         if (toSave == null) {
             saveNull(toAddTo, varName);
@@ -140,67 +130,8 @@ public class OmniSaverLoader {
         }
 
         // startTag
-        toAddTo.add(tagLeft + varName + typeIdentfier + type + typeIdentfier + tagRight);
-
-        Field[] allVars = toSave.getClass().getDeclaredFields();
-
-        // the fields for this class
-        for (int i = 0; i < allVars.length; i++) {
-
-            allVars[i].setAccessible(true);
-            try {
-
-                Object subObject = (allVars[i].get(toSave));
-
-                saveType(toAddTo, subObject, allVars[i].getName());
-
-            } catch (IllegalArgumentException e) {
-                allVars[i].setAccessible(false);
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                allVars[i].setAccessible(false);
-                e.printStackTrace();
-            }
-            allVars[i].setAccessible(false);
-        }
-
-        // all fields from parent classes, that are lower than class
-        Class<?> parent = toSave.getClass().getSuperclass();
-
-        String superName = varName;
-
-        while (parent.getSuperclass() != null && parent.getSuperclass() != java.lang.Class.class) {
-            superName = superName + "." + parent.getName();
-            Field[] superFields = parent.getDeclaredFields();
-
-            for (int i = 0; i < superFields.length; i++) {
-                superFields[i].setAccessible(true);
-                String name = superName + "." + superFields[i].getName();
-
-                try {
-                    saveType(toAddTo, superFields[i].get(toSave), name);
-                } catch (IllegalArgumentException | IllegalAccessException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
-                superFields[i].setAccessible(false);
-            }
-            parent = parent.getSuperclass();
-        }
-
-        // endTag
-        toAddTo.add(tagLeft + tagEnder + varName + typeIdentfier + type + typeIdentfier + tagRight);
-    }
-
-    private static void saveArray(List<String> toAddTo, Object toSave, String varName, String type) {
-
-        if (toSave == null) {
-            saveNull(toAddTo, varName);
-            return;
-        }
-
-        // startTag
-        toAddTo.add(tagLeft + varName + typeIdentfier + type + typeIdentfier + tagRight);
+        toAddTo.add(tagLeft + varName + typeIdentfier + type + typeIdentfier + containerTypeIdentifier + dataType
+                + containerTypeIdentifier + tagRight);
 
         if (toSave instanceof Object[]) {
             for (int i = 0; i < ((Object[]) toSave).length; i++) {
@@ -253,6 +184,96 @@ public class OmniSaverLoader {
 
     }
 
+    private static void saveComplexType(List<String> toAddTo, Object toSave, String varName, String type) {
+
+        if (toSave == null) {
+            saveNull(toAddTo, varName);
+            return;
+        }
+
+        // startTag
+        toAddTo.add(tagLeft + varName + typeIdentfier + type + typeIdentfier + tagRight);
+
+        Field[] allVars = toSave.getClass().getDeclaredFields();
+
+        // the fields for this class
+        for (int i = 0; i < allVars.length; i++) {
+
+            allVars[i].setAccessible(true);
+            try {
+
+                Object subObject = (allVars[i].get(toSave));
+
+                saveType(toAddTo, subObject, allVars[i]);
+
+            } catch (IllegalArgumentException e) {
+                allVars[i].setAccessible(false);
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                allVars[i].setAccessible(false);
+                e.printStackTrace();
+            }
+            allVars[i].setAccessible(false);
+        }
+
+        // all fields from parent classes, that are lower than class
+        Class<?> parent = toSave.getClass().getSuperclass();
+
+        String superName = varName;
+
+        while (parent.getSuperclass() != null && parent.getSuperclass() != java.lang.Class.class) {
+            superName = superName + "." + parent.getName();
+            Field[] superFields = parent.getDeclaredFields();
+
+            for (int i = 0; i < superFields.length; i++) {
+                superFields[i].setAccessible(true);
+                String name = superName + "." + superFields[i].getName();
+
+                try {
+                    saveType(toAddTo, superFields[i].get(toSave), superFields[i]);
+                } catch (IllegalArgumentException | IllegalAccessException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+                superFields[i].setAccessible(false);
+            }
+            parent = parent.getSuperclass();
+        }
+
+        // endTag
+        toAddTo.add(tagLeft + tagEnder + varName + typeIdentfier + type + typeIdentfier + tagRight);
+    }
+
+    private static void saveType(List<String> toAddTo, Object toSave, Field field) {
+
+        String varName = "";
+        if (field != null) {
+            varName = field.getName();
+        }
+        String subType = getSaveableType(toSave);
+
+        if (subType == null) {
+            // it is a complex object
+            saveComplexType(toAddTo, toSave, varName, toSave.getClass().getName());
+            return;
+        } else if (subType.equals("NULL")) {
+            saveNull(toAddTo, varName);
+            return;
+        } else if (!subType.equals("A") && !subType.equals("LI")) {
+            // it is a primitive object
+            savePrimitive(toAddTo, toSave, varName, subType);
+            return;
+        } else if (subType.equals("A")) {
+            saveArray(toAddTo, toSave, field.getGenericType().toString(), varName, subType);
+            return;
+        } else if (subType.equals("LI")) {
+            saveList(toAddTo, (List<?>) toSave, field.getGenericType().toString(), varName, subType);
+            return;
+        }
+
+        System.err.println("Should never be reached! ");
+    }
+
     private static void saveType(List<String> toAddTo, Object toSave, String varName) {
 
         String subType = getSaveableType(toSave);
@@ -269,11 +290,10 @@ public class OmniSaverLoader {
             savePrimitive(toAddTo, toSave, varName, subType);
             return;
         } else if (subType.equals("A")) {
-
-            saveArray(toAddTo, toSave, varName, subType);
+            saveArray(toAddTo, toSave, "", varName, subType);
             return;
         } else if (subType.equals("LI")) {
-            saveList(toAddTo, (List<?>) toSave, varName, subType);
+            saveList(toAddTo, (List<?>) toSave, "", varName, subType);
             return;
         }
 
@@ -295,7 +315,7 @@ public class OmniSaverLoader {
         } else {
             String type = determineLoadType(toLoad, startIndex, valid);
             Object toReturn = null;
-            
+
             switch (type) {
             case "p":
                 toReturn = createPrimitive(toLoad, startIndex, valid);
@@ -310,10 +330,10 @@ public class OmniSaverLoader {
                 toReturn = createComplexObject(toLoad, startIndex, getEndIndexForTag(toLoad, startIndex, valid), valid);
                 break;
             }
-            
+
             if (!valid) {
                 return null;
-            } else {         
+            } else {
                 return toReturn;
             }
         }
@@ -327,7 +347,7 @@ public class OmniSaverLoader {
         if (!valid) {
             return null;
         }
-        
+
         // primitive types have just the two tags and the value in between.
         if (toLoad.get(startIndex).split(typeIdentfier).length != 3) {
             valid = false;
@@ -403,6 +423,9 @@ public class OmniSaverLoader {
         if (!valid) {
             return null;
         }
+        
+        
+        
         return null;
     }
 
@@ -469,7 +492,7 @@ public class OmniSaverLoader {
         if (!valid) {
             return -1;
         }
-        
+
         int endIndex = -1;
         // if it seems like a valid start tag
         if (toLoad.get(startIndex).startsWith(tagLeft) && !toLoad.get(startIndex).contains(tagEnder)) {
@@ -493,7 +516,7 @@ public class OmniSaverLoader {
         if (!valid) {
             return null;
         }
-        
+
         if (toLoad.get(index).split(typeIdentfier).length != 3) {
             valid = false;
             return null;
