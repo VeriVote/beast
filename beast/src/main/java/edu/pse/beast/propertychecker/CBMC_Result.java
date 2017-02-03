@@ -22,8 +22,8 @@ public class CBMC_Result extends Result {
 //			presenter.presentSuccess();
 		} else {
 		    //TODO implement here real counterexample
-			System.out.println("counter exmple: ");
-//			presenter.presentFailureExample(new FailureExample(getResult()));
+			System.out.println("counter exmple is sent to the displayer here ");
+			presenter.presentFailureExample(new FailureExample(getResult()));
 		}
 	}
 }
