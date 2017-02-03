@@ -19,23 +19,31 @@ import edu.pse.beast.datatypes.booleanExpAST.NotNode;
 import edu.pse.beast.datatypes.booleanExpAST.NumberExpression;
 import edu.pse.beast.datatypes.booleanExpAST.SymbolicVarExp;
 import edu.pse.beast.datatypes.booleanExpAST.ThereExistsNode;
-import edu.pse.beast.datatypes.booleanExpAST.TypeExpression;
 import edu.pse.beast.datatypes.booleanExpAST.VoteExp;
 import edu.pse.beast.datatypes.booleanExpAST.VoteSumForCandExp;
-import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.toolbox.ErrorLogger;
 import java.util.ArrayList;
 import java.util.Stack;
 
 /**
+ * This is the visitor for the codeGeneration For every assert or assume it
+ * should be called to visit the top node 1 time it will move down and generate
+ * the code. to get the generated code, you have to use the method generateCode
+ * You also have to set it either to Pre oder PostPropertyMode.
  *
  * @author Niels
  */
 public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
-    private String assumeOrAssert;
+    private String assumeOrAssert; // this String must always be "assume" or "assert". If it is not set it is null
+
+
+    /* the following attributes are the counters for the variables in the code
+    they make the variable names unique
+     */
     private int andNodeCounter;
     private int orNodeCounter;
     private int implicationNodeCounter;
@@ -45,9 +53,14 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private int notNodeCounter;
     private int comparisonNodeCounter;
 
-    private Stack<String> variableNames;
-    private CodeArrayListBeautifier code;
+    private Stack<String> variableNames; //stack of the variable names. 
+    private CodeArrayListBeautifier code; // object, that handels the generated code
 
+    /**
+     * this creates the visitor You should create 1 and only 1 visitor for every
+     * c. file you want to make you have to set it to pre- or post-property mode
+     * in order for it to function
+     */
     public CBMCCodeGenerationVisitor() {
         andNodeCounter = 0;
         orNodeCounter = 0;
@@ -62,15 +75,29 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     }
 
+    /**
+     * sets the visitor to prePropertyMode. That means the top node will be
+     * assumed in the code
+     */
     public void setToPrePropertyMode() {
         assumeOrAssert = "assume";
     }
 
+    /**
+     * sets the visitor to postPropertyMode. That means the top node will be
+     * asserted in the code
+     */
     public void setToPostPropertyMode() {
         assumeOrAssert = "assert";
 
     }
 
+    /**
+     * this generates the c-code for a propertydescription-statement
+     *
+     * @param node this should be the top node of a statement
+     * @return the generated code
+     */
     public ArrayList<String> generateCode(BooleanExpressionNode node) {
         code = new CodeArrayListBeautifier();
         variableNames = new Stack<>();
@@ -80,6 +107,11 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         return code.getCodeArrayList();
     }
 
+    /**
+     * generates the code for an logical and node
+     *
+     * @param node
+     */
     @Override
     public void visitAndNode(LogicalAndNode node) {
 
@@ -93,6 +125,11 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     }
 
+    /**
+     * generates the code for logical an or node
+     *
+     * @param node
+     */
     @Override
     public void visitOrNode(LogicalOrNode node) {
         String varName = "or_" + orNodeCounter;
@@ -104,6 +141,11 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         testIfLast();
     }
 
+    /**
+     * generates the code for the Implication Node
+     *
+     * @param node
+     */
     @Override
     public void visitImplicationNode(ImplicationNode node) {
         String varName = "implication_" + implicationNodeCounter;
@@ -115,6 +157,11 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         testIfLast();
     }
 
+    /**
+     * generates the code for an EquivalencyNode
+     *
+     * @param node
+     */
     @Override
     public void visitAquivalencyNode(EquivalencyNode node) {
         String varName = "aquivalency_" + aquivalencyNodeCounter;
@@ -124,10 +171,16 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         node.getRHSBooleanExpNode().getVisited(this);
         String lhs = variableNames.pop();
         String rhs = variableNames.pop();
-        code.add("unsigned int " + varName + " = (((" + lhs + ") && (" + rhs + ")) || (!(" + lhs + ") && (!" + rhs + ")));");
+        code.add("unsigned int " + varName + " = (((" + lhs + ") && (" + rhs
+                + ")) || (!(" + lhs + ") && (!" + rhs + ")));");
         testIfLast();
     }
 
+    /**
+     * generates the code for an ForAllNode
+     *
+     * @param node
+     */
     @Override
     public void visitForAllNode(ForAllNode node) {
         String varName = "forAll_" + forAllNodeCounter;
@@ -146,7 +199,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                 max = "S";
                 break;
             default:
-                throw new AssertionError(node.getDeclaredSymbolicVar().getInternalTypeContainer().getInternalType().name());
+                throw new AssertionError(node.getDeclaredSymbolicVar().getInternalTypeContainer()
+                        .getInternalType().name());
         }
         String tempString = "for(unsigned int SYMBVAR = 0; SYMBVAR < MAX && FORALL; SYMBVAR++) {";
         tempString = tempString.replaceAll("SYMBVAR", node.getDeclaredSymbolicVar().getId());
@@ -161,6 +215,11 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         testIfLast();
     }
 
+    /**
+     * generates the code to an ThereExistsNode
+     *
+     * @param node
+     */
     @Override
     public void visitThereExistsNode(ThereExistsNode node) {
         String varName = "thereExists_" + thereExistsNodeCounter;
@@ -179,7 +238,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                 max = "S";
                 break;
             default:
-                throw new AssertionError(node.getDeclaredSymbolicVar().getInternalTypeContainer().getInternalType().name());
+                throw new AssertionError(node.getDeclaredSymbolicVar().getInternalTypeContainer()
+                        .getInternalType().name());
         }
         String tempString = "for(unsigned int SYMBVAR = 0; SYMBVAR < MAX && !THEREEXISTS; symbVar++) {";
         tempString = tempString.replace("SYMBVAR", node.getDeclaredSymbolicVar().getId());
@@ -194,6 +254,10 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         testIfLast();
     }
 
+    /**
+     * generates the code for a notNode
+     * @param node 
+     */
     @Override
     public void visitNotNode(NotNode node) {
         String varName = "not_" + notNodeCounter;
@@ -206,48 +270,41 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitComparisonNode(ComparisonNode node) {
-        String varName = "comparison_" + comparisonNodeCounter;
-        comparisonNodeCounter++;
+        String varName = "comparison_" + comparisonNodeCounter++;
         variableNames.push(varName);
-
         int lhslistLevel = 0;
         int rhslistLevel = 0;
-        InternalTypeContainer cont = node.getLHSBooleanExpNode().getInternalTypeContainer();
-
-        while (cont.isList()) {
+        
+        for (InternalTypeContainer cont = node.getLHSBooleanExpNode().getInternalTypeContainer();
+                cont.isList(); cont = cont.getListedType()) {
             lhslistLevel++;
-            cont = cont.getListedType();
         }
-        cont = node.getRHSBooleanExpNode().getInternalTypeContainer();
-        while (cont.isList()) {
+        for (InternalTypeContainer cont = node.getRHSBooleanExpNode().getInternalTypeContainer();
+                cont.isList(); cont = cont.getListedType()) {
             rhslistLevel++;
-            cont = cont.getListedType();
         }
-
+        
         node.getLHSBooleanExpNode().getVisited(this);
         node.getRHSBooleanExpNode().getVisited(this);
-
         if (node.getLHSBooleanExpNode().getAccessVar() != null) {
-            for (int i = 0; i < node.getLHSBooleanExpNode().getAccessVar().length; i++) {
+            for (SymbolicVariable accessVar : node.getLHSBooleanExpNode().getAccessVar()) {
                 System.out.println(lhslistLevel);
                 lhslistLevel--;
             }
         }
-
         if (node.getRHSBooleanExpNode().getAccessVar() != null) {
-            for (int i = 0; i < node.getRHSBooleanExpNode().getAccessVar().length; i++) {
+            for (SymbolicVariable accessVar : node.getRHSBooleanExpNode().getAccessVar()) {
                 rhslistLevel--;
             }
         }
-
         int maxListLevel = lhslistLevel > rhslistLevel ? lhslistLevel : rhslistLevel;
-        cont = lhslistLevel > rhslistLevel ? node.getLHSBooleanExpNode().getInternalTypeContainer() : node.getRHSBooleanExpNode().getInternalTypeContainer();
-
+        InternalTypeContainer cont = lhslistLevel > rhslistLevel
+                ? node.getLHSBooleanExpNode().getInternalTypeContainer()
+                : node.getRHSBooleanExpNode().getInternalTypeContainer();
         String internCode = "unsigned int BOOL = 1;";
         internCode = internCode.replace("BOOL", varName);
         code.add(internCode);
         ArrayList<String> counter = new ArrayList<>();
-
         for (int i = 0; i < maxListLevel; ++i) {
             String max = "";
             String countingVar = "count_" + i;
@@ -274,10 +331,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             code.add(loop);
             code.addTab();
         }
-
         String rhs = variableNames.pop();
         String lhs = variableNames.pop();
-
         internCode = varName + " = " + rhs;
         for (int i = 0; i < lhslistLevel; ++i) {
             internCode += "[VAR]".replace("VAR", counter.get(i));
@@ -288,7 +343,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             internCode += "[VAR]".replace("VAR", counter.get(i));
         }
         code.add(internCode + ";");
-        cont = node.getLHSBooleanExpNode().getInternalTypeContainer();
         for (int i = 0; i < maxListLevel; ++i) {
             code.deleteTab();
             code.add("}");
@@ -329,7 +383,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitVoteSumExp(VoteSumForCandExp exp) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -339,7 +393,11 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     private void testIfLast() {
         if (variableNames.size() == 1) {
-            code.add(assumeOrAssert + "(" + variableNames.pop() + ");");
+            if (assumeOrAssert.equals("assert") || assumeOrAssert.equals("assume")) {
+                code.add(assumeOrAssert + "(" + variableNames.pop() + ");");
+            } else {
+                ErrorLogger.log("The CodeGeneration Visitor wasn't set to a proper mode");
+            }
         }
     }
 }
