@@ -13,6 +13,7 @@ public class ErrorWindow extends ErrorDisplayer {
     private final JTextPane textPane;
     private ArrayList<Error> errors;
     private String errorString;
+
     /**
      * Constructor
      * @param textPane JTextPane for ErrorWindow
@@ -31,7 +32,7 @@ public class ErrorWindow extends ErrorDisplayer {
         this.errors = errors;
         String errorsAsString = errorString + ": " + errors.size() + "\n";
         for (Error error : this.errors) {
-            errorsAsString += error.getMessage() + "\n";
+            errorsAsString += error + "\n";
         }
         textPane.setText(errorsAsString);
     }
