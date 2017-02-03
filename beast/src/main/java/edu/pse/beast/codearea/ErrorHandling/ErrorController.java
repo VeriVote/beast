@@ -10,6 +10,8 @@ import edu.pse.beast.codearea.StoppedTypingContinuouslyListener;
 import edu.pse.beast.codearea.StoppedTypingContinuouslyMessager;
 import java.util.ArrayList;
 import javax.swing.JTextPane;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
@@ -18,11 +20,12 @@ import javax.swing.event.DocumentListener;
  * @author Holger-Desktop
  */
 public class ErrorController implements 
-        StoppedTypingContinuouslyListener, DocumentListener {
+        StoppedTypingContinuouslyListener, DocumentListener, CaretListener {
     private ErrorFinderList errorFinderList;
     private JTextPane pane;
     private ErrorDisplayer displayer;
     private boolean changed = false;
+    private int currentCaretPos;
     
     public ErrorController(JTextPane pane,
             StoppedTypingContinuouslyMessager msg,
@@ -32,6 +35,7 @@ public class ErrorController implements
         errorFinderList = new ErrorFinderList();
         this.displayer = displayer;
         pane.getStyledDocument().addDocumentListener(this);
+        pane.addCaretListener(this);
     }
     
     public void addErrorFinder(ErrorFinder finder) {
@@ -66,5 +70,10 @@ public class ErrorController implements
     
     @Override
     public void changedUpdate(DocumentEvent de) {
+    }
+
+    @Override
+    public void caretUpdate(CaretEvent ce) {
+        currentCaretPos = ce.getDot();
     }
 }

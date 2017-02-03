@@ -7,7 +7,10 @@ package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
 import org.antlr.v4.parse.ANTLRParser;
 import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -32,10 +35,17 @@ public class CAntlrHandler {
     }
     
     public ParseTree getCParseTree() {
-        lexer.setInputStream(new ANTLRInputStream(pane.getText()));
-        CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
-        cParser.setTokenStream(commonTokenStream);
-        return cParser.compilationUnit();
+        try {
+            String code = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
+            lexer.setInputStream(new ANTLRInputStream(code));
+            System.out.println("C Code " + code);
+            CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
+            cParser.setTokenStream(commonTokenStream);
+            return cParser.compilationUnit();
+        } catch (BadLocationException ex) {
+            Logger.getLogger(CAntlrHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
     
     public CParser getParser() {

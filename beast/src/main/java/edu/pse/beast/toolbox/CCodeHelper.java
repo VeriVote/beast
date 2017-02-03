@@ -31,9 +31,9 @@ public class CCodeHelper {
         return "";
     }
 
-    public String getCType(InternalTypeContainer cont) {
+    public String getCType(InternalTypeContainer cont, String name) {
         InternalTypeContainer currentContainer = cont;
-        String decl = "unsigned int";
+        String decl = "unsigned int " + name;
         while (currentContainer.isList()) {
             decl += "[" + getListSize(currentContainer) + "]";
             currentContainer = currentContainer.getListedType();
@@ -52,9 +52,9 @@ public class CCodeHelper {
     }
 
     public String generateDeclString(ElectionTypeContainer input, ElectionTypeContainer res) {
-        String decl = "RESULT voting(VOTES votes) {";
-        decl = decl.replace("RESULT", getCType(res.getType()));
-        decl = decl.replace("VOTES", getCType(input.getType()));
+        String decl = "RESULT voting(VOTES) {";
+        decl = decl.replace("RESULT", getCType(res.getType(), ""));
+        decl = decl.replace("VOTES", getCType(input.getType(), "votes"));
         return decl;
     }
 

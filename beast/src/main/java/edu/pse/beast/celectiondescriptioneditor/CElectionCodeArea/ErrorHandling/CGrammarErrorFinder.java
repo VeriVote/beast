@@ -38,14 +38,15 @@ public class CGrammarErrorFinder implements ErrorFinder, ANTLRErrorListener {
     }
 
     @Override
-    public ArrayList<CodeError> getErrors() {            
+    public ArrayList<CodeError> getErrors() {     
+        errors.clear();       
         antlrHandler.getCParseTree();
         return errors;
     }   
 
     @Override
     public void syntaxError(Recognizer<?, ?> rcgnzr, Object offendingSymbol, int line, int charPosInLine, String msg, RecognitionException e) {
-        CodeError err = new CodeError(line, charPosInLine, "antlr", 0, 0, 0);
+        CodeError err = new CodeError(line, charPosInLine, "antlr", 0, ((Token) offendingSymbol).getStartIndex(), ((Token) offendingSymbol).getStopIndex());
         err.setExtraInfo("msg", msg);
         errors.add(err);
     }
