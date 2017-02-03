@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -172,7 +173,8 @@ public class ListItem extends JPanel implements DisplaysStringsToUser, ResultPre
 	}
 
 	@Override
-	public void presentFailure() {
+	public void presentFailure(List<String> error) {
+	    //TODO schow the list to the user
 		showResult.setBackground(Color.RED);
 		
 	}

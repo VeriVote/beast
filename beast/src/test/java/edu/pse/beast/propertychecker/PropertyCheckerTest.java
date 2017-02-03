@@ -560,6 +560,8 @@ public class PropertyCheckerTest {
 
         List<Integer> amountVoters = new ArrayList<Integer>();
         amountVoters.add(4);
+        amountVoters.add(5);
+        amountVoters.add(6);
 
         List<Integer> amountCandidates = new ArrayList<Integer>();
         amountCandidates.add(5);
@@ -568,7 +570,7 @@ public class PropertyCheckerTest {
         amountSeats.add(4);
 
         ElectionCheckParameter ecp = new ElectionCheckParameter(amountVoters, amountCandidates, amountSeats,
-                new TimeOut(TimeUnit.MINUTES, 2), 8, "--trace;--unwind 7");
+                new TimeOut(TimeUnit.MINUTES, 2), 8, "--trace;--unwind 10");
 
         implParameterSource parmSrc = new implParameterSource(ecp);
 

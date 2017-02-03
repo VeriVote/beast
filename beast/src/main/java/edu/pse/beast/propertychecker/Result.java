@@ -51,6 +51,10 @@ public abstract class Result implements ResultInterface {
     public List<String> getResult() {
         return result;
     }
+    
+    public List<String> getError() {
+        return error;
+    }
 
     public boolean isTimedOut() {
         return timeOut;
@@ -96,5 +100,13 @@ public abstract class Result implements ResultInterface {
      */
     public void setResult(List<String> result) {
         this.result = result;
+    }
+    
+    /**
+     * sets the result of this object, so it can be displayed later.
+     * @param result the result of the check that should be stored in this result object
+     */
+    public void setErrors(List<String> error) {
+        this.error = error;
     }
 }

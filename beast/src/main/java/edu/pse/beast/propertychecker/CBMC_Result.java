@@ -16,7 +16,7 @@ public class CBMC_Result extends Result {
 //			presenter.presentTimeOut();
 		} else if (!isValid()) {
 			System.out.println("other tpye of failure");
-//			presenter.presentFailure();
+			presenter.presentFailure(getError());
 		} else if (isSuccess()) {
 			System.out.println("success");
 //			presenter.presentSuccess();

@@ -1,5 +1,7 @@
 package edu.pse.beast.highlevel;
 
+import java.util.List;
+
 import edu.pse.beast.datatypes.FailureExample;
 
 /**
@@ -22,7 +24,7 @@ public interface ResultPresenterElement {
     /**
      * presents that the check was a failure
      */
-    void presentFailure();
+    void presentFailure(List<String> error);
     
     /**
      * presents the example that fails the property

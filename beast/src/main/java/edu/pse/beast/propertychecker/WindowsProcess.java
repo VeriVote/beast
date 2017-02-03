@@ -266,7 +266,7 @@ public class WindowsProcess extends CBMCProcess {
                 // get the handle by reflection
                 Field f = proc.getClass().getDeclaredField("handle");
                 f.setAccessible(true);
-                long handl = f.getLong(proc);
+                long handLong = f.getLong(proc);
                 Kernel32 kernel = Kernel32.INSTANCE;
 
                 WinNT.HANDLE handle = new WinNT.HANDLE();
@@ -276,17 +276,16 @@ public class WindowsProcess extends CBMCProcess {
                 toSet.setAccessible(true);
 
                 boolean savedState = toSet.getBoolean(handle);
-                
-                toSet.setBoolean(handle, false);
 
-                toSet.setAccessible(false);
-
-                System.out.println("saved: " + savedState);
-
-                handle.setPointer(Pointer.createConstant(handl));
+                handle.setPointer(Pointer.createConstant(handLong));
 
                 int pid = kernel.GetProcessId(handle);
 
+              
+                toSet.setBoolean(handle, savedState);
+                
+                toSet.setAccessible(false);
+                
                 return pid;
             } catch (Throwable e) {
                 e.printStackTrace();
