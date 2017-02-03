@@ -1,5 +1,7 @@
 package edu.pse.beast.highlevel;
 
+import edu.pse.beast.datatypes.FailureExample;
+
 /**
  * 
  * @author Lukas
