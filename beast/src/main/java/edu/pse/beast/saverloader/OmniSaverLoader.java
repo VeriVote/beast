@@ -290,68 +290,119 @@ public class OmniSaverLoader {
     }
 
     private static Object createType(List<String> toLoad, int startIndex, int endIndex, boolean valid) {
-        return null;
+        if (!valid) {
+            return null;
+        } else {
+            String type = determineLoadType(toLoad, startIndex, valid);
+            Object toReturn = null;
+            
+            switch (type) {
+            case "p":
+                toReturn = createPrimitive(toLoad, startIndex, valid);
+                break;
+            case "LI":
+                toReturn = createList(toLoad, startIndex, getEndIndexForTag(toLoad, startIndex, valid), valid);
+                break;
+            case "A":
+                toReturn = createArray(toLoad, startIndex, getEndIndexForTag(toLoad, startIndex, valid), valid);
+                break;
+            default:
+                toReturn = createComplexObject(toLoad, startIndex, getEndIndexForTag(toLoad, startIndex, valid), valid);
+                break;
+            }
+            
+            if (!valid) {
+                return null;
+            } else {         
+                return toReturn;
+            }
+        }
     }
 
     private static Object createComplexObject(List<String> toLoad, int startIndex, int endIndex, boolean valid) {
         return null;
     }
 
-    private static Object createPrimitive(List<String> toLoad, int startIndex, int endIndex, boolean valid) {
-        // primitive types have just the two tags and the value in between
-        String type  = toLoad.get(startIndex).split("$")[1];
-        String value = toLoad.get(startIndex + 1).replace("@", " ");
+    private static Object createPrimitive(List<String> toLoad, int startIndex, boolean valid) {
+        if (!valid) {
+            return null;
+        }
         
-        Object primitiveType = null;
-        
-        switch (type) {
-        case "NULL":
-            primitiveType = null;
-            break;
-        case "BO":
-            primitiveType = Boolean.parseBoolean(value);
-            break;
-        case "C":
-            if (value.toCharArray().length != 1) {
-                valid = false;
-            } else {
-                primitiveType = value.charAt(0);
-            }
-            break;
-        case "BY":
-            primitiveType = Byte.parseByte(value);
-            break;
-        case "SH":
-            primitiveType = Short.parseShort(value);
-            break;
-        case "I":
-            primitiveType = Integer.parseInt(value);
-            break;
-        case "L":
-            primitiveType = Long.parseLong(value);
-            break;
-        case "F":
-            primitiveType = Float.parseFloat(value);
-            break;
-        case "D":
-            primitiveType = Double.parseDouble(value);
-            break;
-        case "S":
-            primitiveType = value;
-            break;
-        default:
-            ErrorLogger.log("Du hast den primitiven typen: " + type + " vergessen");
+        // primitive types have just the two tags and the value in between.
+        if (toLoad.get(startIndex).split(typeIdentfier).length != 3) {
             valid = false;
-            break;
+            return null;
+        }
+        // the value has to start with an @
+        if (!toLoad.get(startIndex + 1).startsWith(dataIdentfier)) {
+            valid = false;
+            return null;
+        } else if (toLoad.get(startIndex + 1).length() < 2) {
+            valid = false;
+            return null;
+        }
+
+        String type = toLoad.get(startIndex).split(typeIdentfier)[1];
+
+        String value = toLoad.get(startIndex + 1).replace(dataIdentfier, " ");
+
+        Object primitiveType = null;
+
+        try {
+            switch (type) {
+            case "NULL":
+                primitiveType = null;
+                break;
+            case "BO":
+                primitiveType = Boolean.parseBoolean(value);
+                break;
+            case "C":
+                primitiveType = value.charAt(0);
+                break;
+            case "BY":
+                primitiveType = Byte.parseByte(value);
+                break;
+            case "SH":
+                primitiveType = Short.parseShort(value);
+                break;
+            case "I":
+                primitiveType = Integer.parseInt(value);
+                break;
+            case "L":
+                primitiveType = Long.parseLong(value);
+                break;
+            case "F":
+                primitiveType = Float.parseFloat(value);
+                break;
+            case "D":
+                primitiveType = Double.parseDouble(value);
+                break;
+            case "S":
+                primitiveType = value;
+                break;
+            default:
+                ErrorLogger.log("Du hast den primitiven typen: " + type + " vergessen");
+                valid = false;
+                break;
+            }
+        } catch (Exception e) {
+            ErrorLogger.log("Parsing failed");
+            valid = false;
         }
         return primitiveType;
     }
 
     private static Object createArray(List<String> toLoad, int startIndex, int endIndex, boolean valid) {
+        if (!valid) {
+            return null;
+        }
         return null;
     }
 
     private static List<?> createList(List<String> toLoad, int startIndex, int endIndex, boolean valid) {
+        if (!valid) {
+            return null;
+        }
         return null;
     }
 
@@ -402,4 +453,87 @@ public class OmniSaverLoader {
         }
     }
 
+    /**
+     * finds the position of the end tag that belongs to this start tag
+     * 
+     * @param toSave
+     *            the list with the input
+     * @param startIndex
+     *            the index of this startta
+     * @param valid
+     *            a boolean that, if it is set to false, invalidates the whole
+     *            loaded object
+     * @return
+     */
+    private static int getEndIndexForTag(List<String> toLoad, int startIndex, boolean valid) {
+        if (!valid) {
+            return -1;
+        }
+        
+        int endIndex = -1;
+        // if it seems like a valid start tag
+        if (toLoad.get(startIndex).startsWith(tagLeft) && !toLoad.get(startIndex).contains(tagEnder)) {
+            for (int i = startIndex + 1; i < toLoad.size(); i++) {
+                // if the new found line is an end tag
+                if (toLoad.get(i).startsWith(tagLeft + tagEnder)) {
+                    if (toLoad.get(startIndex).equals(toLoad.get(i).replace(tagEnder, ""))) {
+                        // we found the end tag
+                        endIndex = i;
+                    }
+                }
+            }
+        }
+        if (endIndex == -1) {
+            valid = false;
+        }
+        return endIndex;
+    }
+
+    private static String determineLoadType(List<String> toLoad, int index, boolean valid) {
+        if (!valid) {
+            return null;
+        }
+        
+        if (toLoad.get(index).split(typeIdentfier).length != 3) {
+            valid = false;
+            return null;
+        } else {
+            String type = toLoad.get(index).split(typeIdentfier)[1];
+
+            switch (type) {
+            case "NULL":
+                return "p";
+
+            case "BO":
+                return "p";
+
+            case "C":
+                return "p";
+
+            case "BY":
+                return "p";
+
+            case "SH":
+                return "p";
+
+            case "I":
+                return "p";
+
+            case "L":
+                return "p";
+
+            case "F":
+                return "p";
+
+            case "D":
+                return "p";
+
+            case "S":
+                return "p";
+
+            default:
+                return type;
+            }
+        }
+    }
 }
