@@ -4,13 +4,17 @@ booleanExpList : booleanExpListElement*;
 
 booleanExpListElement : booleanExp ';';
 
-booleanExp : 	binaryRelationExp | notExp | comparisonExp | quantorExp | OpenBracket booleanExp ClosedBracket;
+booleanExp : 	quantorExp | binaryRelationExp | notExp | comparisonExp | OpenBracket booleanExp ClosedBracket;
 
 binaryRelationExp : binaryRelationExp BinaryRelationSymbol booleanExp |
 					quantorExp BinaryRelationSymbol booleanExp |
 					notExp BinaryRelationSymbol booleanExp |
-					comparisonExp BinaryRelationSymbol booleanExp					
-					; 		
+					comparisonExp BinaryRelationSymbol booleanExp |	
+			
+					'(' binaryRelationExp ')' BinaryRelationSymbol booleanExp |
+					'(' quantorExp ')' BinaryRelationSymbol booleanExp |
+					'(' notExp ')' BinaryRelationSymbol booleanExp |
+					'(' comparisonExp ')' BinaryRelationSymbol booleanExp; 		
 
 quantorExp : Quantor passSymbVar ':' booleanExp; 	
 
