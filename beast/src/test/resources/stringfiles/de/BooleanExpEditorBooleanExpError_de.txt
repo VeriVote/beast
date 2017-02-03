@@ -1,0 +1,2 @@
+error : Fehler
+var_not_decl_descr : Variable VAR ist nicht deklariert

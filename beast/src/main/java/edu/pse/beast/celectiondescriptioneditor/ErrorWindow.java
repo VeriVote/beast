@@ -19,9 +19,8 @@ public class ErrorWindow extends ErrorDisplayer {
      * @param stringLoaderInterface stringLoaderInterface to load needed Strings
      */
     ErrorWindow(JTextPane textPane, StringLoaderInterface stringLoaderInterface) {
-        super(textPane);
+        super(textPane, stringLoaderInterface.getCElectionEditorStringResProvider().getCErrorStringRes());
         this.textPane = textPane;
-        updateStringRes(stringLoaderInterface);
     }
 
     /**

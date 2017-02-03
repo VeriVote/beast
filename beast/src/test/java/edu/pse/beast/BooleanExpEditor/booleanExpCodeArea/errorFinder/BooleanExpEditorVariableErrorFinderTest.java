@@ -57,35 +57,173 @@ public class BooleanExpEditorVariableErrorFinderTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of getErrors method, of class BooleanExpEditorVariableErrorFinder.
-     */
     @Test
-    public void testGetErrors() {
-        
+    public void testFindsCantCompareErrorSymbolicVars() {
         ElectionTypeContainer input = new ElectionTemplateHandler().getById("list_of_candidates_per_voter");
         ElectionTypeContainer res = new ElectionTemplateHandler().getById("one_candidate_or_zero");
         
         BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
         scopehandler.enterNewScope();
-        scopehandler.addVariable("cand", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
+        scopehandler.addVariable("v", new InternalTypeContainer(InternalTypeRep.VOTER));
+        scopehandler.addVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
         
-        String exp = "FOR_ALL_VOTERS(v) : FOR_ALL_CANDIDATES(c) : (VOTES1(v)(c) == 0 ==> c == cand);";
+        String exp = "v == c;";
+                
+        pane.setText(exp);
+        
+        finder.setUp(scopehandler, input, res);
+        ArrayList<CodeError> errs = finder.getErrors();
+        assertEquals(1, errs.size());
+        for(CodeError er : errs) {
+            assertEquals("incomparable_types", er.getId());
+        }
+    }
+    
+    @Test
+    public void testFindsCantCompareErrorDifferentLists() {
+        ElectionTypeContainer input = new ElectionTemplateHandler().getById("list_of_candidates_per_voter");
+        ElectionTypeContainer res = new ElectionTemplateHandler().getById("one_candidate_or_zero");
+        
+        BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
+        scopehandler.enterNewScope();
+        scopehandler.addVariable("v", new InternalTypeContainer(InternalTypeRep.VOTER));
+        scopehandler.addVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
+        
+        String exp = "VOTES1 == c;";
+                
+        pane.setText(exp);
+        
+        finder.setUp(scopehandler, input, res);
+        ArrayList<CodeError> errs = finder.getErrors();
+        assertEquals(1, errs.size());
+        for(CodeError er : errs) {
+            assertEquals("incomparable_list_sizes", er.getId());
+        }
+    }
+    
+    @Test
+    public void testFindsWrongVarPassedToVotesum() {
+        ElectionTypeContainer input = new ElectionTemplateHandler().getById("list_of_candidates_per_voter");
+        ElectionTypeContainer res = new ElectionTemplateHandler().getById("one_candidate_or_zero");
+        
+        BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
+        scopehandler.enterNewScope();
+        scopehandler.addVariable("v", new InternalTypeContainer(InternalTypeRep.VOTER));
+        
+        String exp = "VOTE_SUM_FOR_CANDIDATE1(v) == 3;";
+                
+        pane.setText(exp);
+        
+        finder.setUp(scopehandler, input, res);
+        ArrayList<CodeError> errs = finder.getErrors();
+        assertEquals(1, errs.size());
+        for(CodeError er : errs) {
+            assertEquals("wrong_var_passed_to_votesum", er.getId());
+        }
+    }
+    
+    
+    @Test
+    public void testGetVarNotDeclError() {
+        ElectionTypeContainer input = new ElectionTemplateHandler().getById("list_of_candidates_per_voter");
+        ElectionTypeContainer res = new ElectionTemplateHandler().getById("one_candidate_or_zero");
+        
+        BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
+        scopehandler.enterNewScope();
+        
+        String exp = "v == c;";
+                
+        pane.setText(exp);
+        
+        finder.setUp(scopehandler, input, res);
+        ArrayList<CodeError> errs = finder.getErrors();
+        assertEquals(2, errs.size());
+        for(CodeError er : errs) {
+            assertEquals("var_not_decl", er.getId());
+        }
+    }
+    
+    @Test
+    public void testTooManyVarsPassedElect() {
+        ElectionTypeContainer input = new ElectionTemplateHandler().getById("list_of_candidates_per_voter");
+        ElectionTypeContainer res = new ElectionTemplateHandler().getById("one_candidate_or_zero");
+        
+        BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
+        scopehandler.enterNewScope();
+        scopehandler.addVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
+        
+        String exp = "ELECT1(c) == c;";
         
         pane.setText(exp);
         
         finder.setUp(scopehandler, input, res);
-        assertEquals(0, finder.getErrors().size());
         
-        exp = "FOR_ALL_VOTERS(v) : FOR_ALL_CANDIDATES(c) : (VOTES1(v)(d) == 0 ==> d == cand);";
-        pane.setText(exp);
-        assertEquals(2, finder.getErrors().size());
+        ArrayList<CodeError> errs = finder.getErrors();
         
-        for(CodeError e : finder.getErrors()) {
-            System.err.println(stringRes.getStringFromID(e.getMsg()));
-        }
+        assertEquals(1, errs.size());
+        assertEquals("too_many_vars_passed", errs.get(0).getId());        
     }
-
-   
     
+    @Test
+    public void testTooManyVarsPassedVote() {
+        ElectionTypeContainer input = new ElectionTemplateHandler().getById("one_candidate_per_voter");
+        ElectionTypeContainer res = new ElectionTemplateHandler().getById("one_candidate_or_zero");
+        
+        BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
+        scopehandler.enterNewScope();
+        scopehandler.addVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
+        scopehandler.addVariable("v", new InternalTypeContainer(InternalTypeRep.VOTER));
+        scopehandler.addVariable("s", new InternalTypeContainer(InternalTypeRep.SEAT));
+        
+        String exp = "VOTES1(v)(c)(s) == c;";
+        
+        pane.setText(exp);
+        
+        finder.setUp(scopehandler, input, res);
+        
+        ArrayList<CodeError> errs = finder.getErrors();
+        
+        assertEquals(2, errs.size());
+        assertEquals("too_many_vars_passed", errs.get(0).getId());    
+        assertEquals("too_many_vars_passed", errs.get(1).getId());          
+    }
+    
+    @Test 
+    public void testWrongVarTypePassed() {
+        ElectionTypeContainer input = new ElectionTemplateHandler().getById("one_candidate_per_voter");
+        ElectionTypeContainer res = new ElectionTemplateHandler().getById("one_candidate_or_zero");
+        
+        BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
+        scopehandler.enterNewScope();
+        scopehandler.addVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
+        
+        String exp = "VOTES1(c) == c;";
+        
+        pane.setText(exp);
+        
+        finder.setUp(scopehandler, input, res);
+        
+        ArrayList<CodeError> errs = finder.getErrors();
+        
+        assertEquals(1, errs.size());
+        assertEquals("wrong_var_type_passed", errs.get(0).getId());        
+    }
+    
+    @Test 
+    public void handlesGrammerErrorsTest() {
+        ElectionTypeContainer input = new ElectionTemplateHandler().getById("one_candidate_per_voter");
+        ElectionTypeContainer res = new ElectionTemplateHandler().getById("one_candidate_or_zero");
+        
+        BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
+        scopehandler.enterNewScope();
+        scopehandler.addVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
+        
+        String exp = "VOTES1()()()()()   209435 unsdfjgkvn ::::: ()()() ==> ==> && dsjfnb daf9gu 34t8z23r (c) == asdasdasd    c";
+        
+        pane.setText(exp);
+        
+        finder.setUp(scopehandler, input, res);
+        
+        ArrayList<CodeError> errs = finder.getErrors();
+    }
 }

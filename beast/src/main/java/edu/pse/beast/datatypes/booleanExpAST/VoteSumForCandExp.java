@@ -1,6 +1,7 @@
 package edu.pse.beast.datatypes.booleanExpAST;
 
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
+import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 
 /**
@@ -11,15 +12,16 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 public class VoteSumForCandExp extends TypeExpression {
 
     private final SymbolicVariable symbVar; 
-    
+    private final int voteArrNum;
     /**
      * 
      * @param internalTypeContainer the type of this node
      * @param symbVar the symbolic variable of this node
      */
-    public VoteSumForCandExp(InternalTypeContainer internalTypeContainer, SymbolicVariable symbVar) {
-        super(internalTypeContainer);
+    public VoteSumForCandExp(int voteArrNum, SymbolicVariable symbVar) {
+        super(new InternalTypeContainer(InternalTypeRep.INTEGER));
         this.symbVar = symbVar;
+        this.voteArrNum = voteArrNum;
     }
 
     /**

@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Controller of the JTextPane for displayng errors in a BooleanExpEditorWindow.
  * @author Nikolai
  */
-public class ErrorWindow extends ErrorDisplayer{
+public class ErrorWindow {
     private final JTextPane textPane;
     private ArrayList<Error> errors;
     private String errorString;
@@ -20,7 +20,6 @@ public class ErrorWindow extends ErrorDisplayer{
      * @param stringLoaderInterface stringLoaderInterface to load needed Strings
      */
     ErrorWindow(JTextPane textPane, StringLoaderInterface stringLoaderInterface) {
-        super(textPane);
         this.textPane = textPane;
         updateStringRes(stringLoaderInterface);
     }

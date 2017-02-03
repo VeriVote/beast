@@ -34,5 +34,8 @@ public enum InternalTypeRep {
     /**
      * IntergerType
      */
-    INTEGER
+    INTEGER,
+    
+    
+    NULL    
 }

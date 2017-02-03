@@ -1,0 +1,3 @@
+title : Eigenschaftenliste
+newButton : Neu
+check : Analysieren

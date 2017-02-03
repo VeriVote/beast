@@ -88,4 +88,14 @@ public class InternalTypeContainer {
         return accesTypeIfList;
     }
     
+    public int getListLvl() {
+        InternalTypeContainer cont = this;
+        int lvl = 0;
+        while(cont.isList) {
+            cont = cont.getListedType();
+            lvl++;
+        }
+        return lvl;
+    }
+    
 }

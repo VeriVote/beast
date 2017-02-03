@@ -50,41 +50,7 @@ public class CBMCCodeGenerator_HolgerTest {
      */
     @Test
     public void testGenerateCode() {
-        String pre = "FOR_ALL_VOTERS(v) : EXISTS_ONE_CANDIDATE(c) : (c == VOTES2(v) && (VOTE_SUM_FOR_CANDIDATE(c)>= 3 ==> c < 2));";
-        String post = "VOTES2 == VOTES1;";
         
-        PostAndPrePropertiesDescription descr = new PostAndPrePropertiesDescription(
-                "test1",
-                new FormalPropertiesDescription(pre),
-                new FormalPropertiesDescription(post));
-        SymbolicVariableList list = new SymbolicVariableList();
-        list.addSymbolicVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
-        list.addSymbolicVariable("v", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
-        
-        descr.setSymbolicVariableList(list);
-        
-        InternalTypeContainer input = new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
-        InternalTypeContainer res = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
-        
-        ElectionDescription electionDescr = new ElectionDescription(
-                "descr",
-                new ElectionTypeContainer(input, ""), 
-                new ElectionTypeContainer(res, ""), 0);
-        
-        /**
-         * candidates Array has to have the lentgh C+1 because Candidate 0 indicates that there are no winners.
-         */
-        String code = "unsigned int voting(unsigned int voters[V], unsigned int candidates[C+1], unsigned int seats[S]) {\n"+
-                "return 0;\n" +
-                "}\n";
-        
-        electionDescr.setCode(Arrays.asList(code.split("\n")));
-
-        String generated = new CBMCCodeGenerator_Holger().generateCode(descr, electionDescr);
-        System.out.println("");
-        System.out.println("");
-        
-        System.out.println(generated);
     }
     
 }

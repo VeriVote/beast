@@ -1,0 +1,9 @@
+new : Neue Wahlverfahrensbeschreibung editieren
+save : Speichern
+save_as : Speichern unter
+load : Öffnen
+undo : Letzte Aktion Rückgängig machen
+redo : Letzte Aktion Wiederholen
+copy : Kopieren
+cut : Ausschneiden
+paste : Einfügen

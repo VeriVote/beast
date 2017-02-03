@@ -41,6 +41,8 @@ public class BooleanExpEditorVariableErrorFinder implements ErrorFinder {
     
     @Override
     public ArrayList<CodeError> getErrors() {
+        
+        System.out.println("formal prop searching variable errors");
         try {
             ParseTree tree = antlrHandler.getParseTree();
             ParseTreeWalker walker = new ParseTreeWalker();

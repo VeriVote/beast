@@ -35,6 +35,8 @@ public class BooleanExpCodeArea extends CodeArea {
         this.grammarErrorFinder = grammarErrorFinder;
         this.variableErrorFinder = variableErrorFinder;
         this.autoCompletionSrc = autoCompletionSrc;
+        errorCtrl.addErrorFinder(grammarErrorFinder);
+        errorCtrl.addErrorFinder(variableErrorFinder);
     }
 
     public ArrayList<Error> getErrors() {

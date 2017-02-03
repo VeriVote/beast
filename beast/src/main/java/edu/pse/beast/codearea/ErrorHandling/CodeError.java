@@ -16,13 +16,17 @@ public class CodeError {
     private int posInLine;
     private String id;
     private int errorNumber;
+    private int startPos;
+    private int endPos;
     private HashMap<String, String> extraInfo = new HashMap<>();
     
-    public CodeError(int line, int posInLine, String id, int errorNumber) {
+    public CodeError(int line, int posInLine, String id, int errorNumber, int startPos, int endPos) {
         this.line = line;
         this.posInLine = posInLine;
         this.id = id;
         this.errorNumber = errorNumber;
+        this.startPos = startPos;
+        this.endPos = endPos;
     }
     
     public void setExtraInfo(String id, String extra) {

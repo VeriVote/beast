@@ -288,8 +288,10 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 
     @Override
     public void exitVoteSumExp(FormalPropertyDescriptionParser.VoteSumExpContext ctx) {
-        VoteSumForCandExp expNode = new VoteSumForCandExp(
-                new InternalTypeContainer(InternalTypeRep.CANDIDATE),
+        String numberString = ctx.Votesum().getText().substring("VOTE_SUM_FOR_CANDIDATE".length());
+        int number = Integer.valueOf(numberString);
+        
+        VoteSumForCandExp expNode = new VoteSumForCandExp(number,
                 ((SymbolicVarExp) expStack.pop()).getSymbolicVar());
         expStack.add(expNode);
     }

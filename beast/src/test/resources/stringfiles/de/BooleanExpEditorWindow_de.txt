@@ -1,0 +1,14 @@
+windowTitle : Eigenschafteneditor
+symbolicVariablesLabel : Symbolische Variablen
+preProperties : Vorbedingungen
+postProperties : Nachbedingungen
+add : Hinzufügen
+remove : Entfernen
+voter : Wähler
+candidate : Kandidat
+seat : Sitz
+saveChanges : Änderungen an '
+save : ' speichern?
+yesOption : Ja
+noOption : Nein
+cancelOption : Abbrechen

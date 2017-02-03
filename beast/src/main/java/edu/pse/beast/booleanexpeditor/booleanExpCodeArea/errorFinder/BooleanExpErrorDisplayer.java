@@ -9,6 +9,7 @@ import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
+import edu.pse.beast.stringresource.StringResourceLoader;
 import java.util.ArrayList;
 import javax.swing.JTextPane;
 
@@ -18,8 +19,10 @@ import javax.swing.JTextPane;
  */
 public class BooleanExpErrorDisplayer extends ErrorDisplayer {
     
-    public BooleanExpErrorDisplayer(JTextPane pane) {
-        super(pane);
+    public BooleanExpErrorDisplayer(
+            JTextPane pane,
+            StringLoaderInterface stringResIF) {
+        super(pane, stringResIF.getBooleanExpEditorStringResProvider().getBooleanExpErrorStringRes());
     }
     
     @Override
@@ -31,12 +34,12 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
     }
     
     private String createMsg(CodeError er) {
-        return er.getId();
+        return "";
     }
 
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.currentStringResLoader = stringResIF.getBooleanExpEditorStringResProvider().getBooleanExpErrorStringRes();
     }
     
 }

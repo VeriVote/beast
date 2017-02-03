@@ -31,5 +31,6 @@ public class BooleanExpCodeAreaBuilder extends CodeAreaBuilder{
                 new BooleanExpEditorVariableErrorFinder(antlrHandler),
                 new BooleanExpEditorGrammarErrorFinder(antlrHandler),
                 new BooleanExpAutoCompletionSrc());
+        
     }
 }

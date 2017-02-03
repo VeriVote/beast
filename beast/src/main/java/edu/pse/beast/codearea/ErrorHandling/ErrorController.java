@@ -36,6 +36,7 @@ public class ErrorController implements StoppedTypingContinuouslyListener {
 
     @Override
     public void StoppedTypingContinuously(int newPos) {
+        System.out.println("formalPropEditor get errors");
         displayer.showErrors(errorFinderList.getErrors());
     }
 }

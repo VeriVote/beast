@@ -7,6 +7,7 @@ package edu.pse.beast.codearea.ErrorHandling;
 
 import edu.pse.beast.codearea.InputToCode.LineHandler;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
+import edu.pse.beast.stringresource.StringResourceLoader;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
@@ -31,13 +32,15 @@ public abstract class ErrorDisplayer implements CaretListener, DisplaysStringsTo
     private SquigglePainter painter;
     private LineHandler lineHandler;
     private HashMap<Integer, CodeError> absPosToError;
+    protected StringResourceLoader currentStringResLoader;
     
-    public ErrorDisplayer(JTextPane pane) {
+    public ErrorDisplayer(JTextPane pane, StringResourceLoader currentStringResLoader) {
         absPosToError = new HashMap<>();
         this.pane = pane;
         pane.addCaretListener(this);
         this.painter = new SquigglePainter(Color.red);        
         this.lineHandler = new LineHandler(pane);
+        this.currentStringResLoader = currentStringResLoader;
     }
     
     public void showErrors(ArrayList<CodeError> errors) {

@@ -1,0 +1,15 @@
+title : Parametereditor
+voters : Wähler
+candidates : Kandidaten
+seats : Sitze
+timeout : Dauer
+max_processes : Max. Prozesse
+to : bis
+advanced : Erweitert...
+seconds : Sekunden
+minutes : Minuten
+hours : Stunden
+days : Tage
+title_advanced : Benutzerdefinierte Argumente für CBMC
+ok : OK
+cancel : Abbrechen

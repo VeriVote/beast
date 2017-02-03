@@ -1,0 +1,16 @@
+file : Datei
+new : Neu
+save : Speichern
+save_as : Speichern unter
+load : Öffnen
+edit : Bearbeiten
+undo : Rückgängig
+redo : Wiederholen
+copy : Kopieren
+cut : Ausschneiden
+paste : Einfügen
+change_election_type : Wahlart ändern
+editor : Editor
+options : Eigenschaften
+code : Code
+static_analysis : Statische Codeanalyse starten
