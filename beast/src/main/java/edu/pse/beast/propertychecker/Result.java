@@ -7,10 +7,8 @@ package edu.pse.beast.propertychecker;
 
 import java.util.List;
 
-import edu.pse.beast.highlevel.FailureExample;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenterElement;
-import edu.pse.beast.toolbox.ErrorLogger;
 
 /**
  *

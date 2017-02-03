@@ -73,11 +73,11 @@ public class testMain {
 
 		List<PostAndPrePropertiesDescription> tmp = new ArrayList<PostAndPrePropertiesDescription>();
 		tmp.add(postAndPrePropertiesDescription);
-		tmp.add(postAndPrePropertiesDescription);
-		tmp.add(postAndPrePropertiesDescription);
-		tmp.add(postAndPrePropertiesDescription);
-		tmp.add(postAndPrePropertiesDescription);
-		tmp.add(postAndPrePropertiesDescription);
+//		tmp.add(postAndPrePropertiesDescription);
+//		tmp.add(postAndPrePropertiesDescription);
+//		tmp.add(postAndPrePropertiesDescription);
+//		tmp.add(postAndPrePropertiesDescription);
+//		tmp.add(postAndPrePropertiesDescription);
 
 		implPropertyDescriptionSource pSrc = new implPropertyDescriptionSource(tmp);
 

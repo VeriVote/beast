@@ -1,6 +1,6 @@
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.highlevel.FailureExample;
+import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.highlevel.ResultPresenterElement;
 import edu.pse.beast.toolbox.ErrorLogger;
 
@@ -23,7 +23,7 @@ public class CBMC_Result extends Result {
 		} else {
 		    //TODO implement here real counterexample
 			System.out.println("counter exmple is sent to the displayer here ");
-			presenter.presentFailureExample(new FailureExample(getResult()));
+			presenter.presentFailureExample(new FailureExample(null, null, null, null, null));
 		}
 	}
 }

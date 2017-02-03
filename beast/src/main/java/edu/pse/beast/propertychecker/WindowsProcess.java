@@ -63,8 +63,8 @@ public class WindowsProcess extends CBMCProcess {
 		String cbmcEXE = FileLoader.getFileFromRes("/cbmcWIN/cbmc.exe");
 
 		// TODO this is just a debug file
-		toCheck = new File("./src/main/resources/c_tempfiles/test.c");
-		ErrorLogger.log("WindowsProcess.java line 48 has to be removed, when the code creation works");
+		toCheck = new File("./src/main/resources/c_tempfiles/c_temp_file_failure.c");
+		ErrorLogger.log("WindowsProcess.java line 66 has to be removed, when the code creation works");
 
 		// because windows is weird the whole call that would get placed inside
 		// VScmd has to be in one giant string
