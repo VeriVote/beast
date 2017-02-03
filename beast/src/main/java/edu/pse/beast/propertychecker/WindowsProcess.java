@@ -1,22 +1,32 @@
 package edu.pse.beast.propertychecker;
 
-import java.io.BufferedWriter;
+import java.io.BufferedReader;
+
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import javax.swing.JOptionPane;
 
+import com.sun.jna.Pointer;
+import com.sun.jna.platform.win32.Kernel32;
+import com.sun.jna.platform.win32.WinNT;
+
+import edu.pse.beast.propertychecker.jna.Win32Process;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.FileLoader;
+import edu.pse.beast.toolbox.ThreadedBufferedReader;
 
 public class WindowsProcess extends CBMCProcess {
-	protected int maxWaits = 5;
+	private long waitingTimeForTermination = 3000;
+	private boolean killedCBMCprocess = false;
 
 	public WindowsProcess(int voters, int candidates, int seats, String advanced, File toCheck, CheckerFactory parent) {
 		super(voters, candidates, seats, advanced, toCheck, parent);
@@ -60,8 +70,6 @@ public class WindowsProcess extends CBMCProcess {
 		// this call starts a new VScmd isntance and lets cbmc run in it
 		ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", cbmcCall);
 
-		System.out.println("AUFRUF:" + String.join(" ", prossBuild.command()));
-
 		try {
 			// save the new process in this var
 			startedProcess = prossBuild.start();
@@ -75,44 +83,100 @@ public class WindowsProcess extends CBMCProcess {
 
 	@Override
 	protected void stopProcess() {
+
 		if (!process.isAlive()) {
-            ErrorLogger.log("Warning, process isn't alive anymore");
-            return;
-        } else {
-        	
-        	
-        	
-    
-        	OutputStreamWriter out = new OutputStreamWriter(process.getOutputStream());
+			ErrorLogger.log("Warning, process isn't alive anymore");
+			return;
+		} else {
 
+			int pid = getWindowsProcessId(process);
 
-        	 char ctrlBreak = (char)3;
-        	 //Different testing way to send the ctrlBreak;
-        	 try {
-				out.write(ctrlBreak);
+			
+			String cmdCall = "wmic process where (ParentProcessId=" + pid + ") get Caption,ProcessId";
+
+			List<String> children = new ArrayList<String>();
+			CountDownLatch latch = new CountDownLatch(1);
+
+			ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", cmdCall);
+
+			Process cbmcFinder = null;
+
+			int cbmcPID = -1;
+
+			try {
+				cbmcFinder = prossBuild.start();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-        	 try {
-				out.flush();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+
+			if (cbmcFinder != null) {
+				new ThreadedBufferedReader(new BufferedReader(new InputStreamReader(cbmcFinder.getInputStream())),
+						children, latch);
+
+				//because the process only takes a second of time anyways and an interrupt could prevent the sutting
+				//down of cbmc, I put the waiting in a loop
+				while (cbmcFinder.isAlive() || latch.getCount() > 0) {
+					try {
+						cbmcFinder.waitFor();
+						latch.await();
+					} catch (InterruptedException e) {
+						ErrorLogger.log("This thread has not to be interrupted while waiting for these results");
+					}
+				}
+				
+				for (Iterator<String> iterator = children.iterator(); iterator.hasNext();) {
+					String line = (String) iterator.next();
+
+					// trim it down so it only has a single space in between, so
+					// we can split there
+					line = line.trim().replaceAll(" +", " ");
+					if (line.split(" ").length == 2) { //filter out misformed lines
+						if (line.split(" ")[0].equals("cbmc.exe") || line.split(" ")[0].equals("cbmc64.exe")) {
+							if (cbmcPID == -1) {
+								//extract the PID from the line
+								cbmcPID = Integer.parseInt(line.split(" ")[1]);
+							} else {
+								ErrorLogger.log(
+										"Found multiple CBMC instances in this process tree. This is not intended, "
+												+ "" + "only one will be closed, please close the others by hand.");
+							}
+						}
+					}
+
+				}
+			} else {
+				ErrorLogger.log("Couldn't start process");
 			}
-        	
-        	
-        	
-        	
-        	
-        	
-         //   process.destroyForcibly();
-            System.out.println("destroyed " + process.isAlive());
-        }
-		
+
+			if (cbmcPID != -1) {
+
+				Win32Process cbmcProcess;
+				try {
+					cbmcProcess = new Win32Process(cbmcPID);
+					cbmcProcess.terminate();
+					killedCBMCprocess = true;
+					Thread.sleep(waitingTimeForTermination);
+
+				} catch (IOException e) {
+					ErrorLogger.log("Unable to create a reference to the CBMC process!");
+				} catch (InterruptedException e) {
+
+				}
+			}
+
+		}
+
 		if (process.isAlive()) {
-			ErrorLogger.log("Warning, the program was unable to shut down the CBMC Process \n"
-					+ "Please kill it manually, especially if it starts taking up a lot of ram");
+			if (killedCBMCprocess) {
+				ErrorLogger.log("There was an attempt to stop the cbmc process, but after "
+						+ (waitingTimeForTermination / 1000d) + " seconds of waiting"
+						+ " the parent root process was still alive, even though it should "
+						+ "terminate itself when cbmc stopped. Please check, that the cbmc instance was closed properly");
+			} else {
+				ErrorLogger.log("Warning, the program was unable to shut down the CBMC Process \n"
+						+ "Please kill it manually because it can take up a lot of ram and cpu");
+			}
 		}
 	}
 
@@ -161,4 +225,50 @@ public class WindowsProcess extends CBMCProcess {
 	protected String sanitizeArguments(String toSanitize) {
 		return toSanitize;
 	}
+
+	/**
+	 * 
+	 * @param proc the process whose processID you want to find out
+	 * @return the processID of the given process or -1 if it couldn't be determined
+	 */
+	private int getWindowsProcessId(Process proc) {
+
+		// credits for the methode to:
+		// http://cnkmym.blogspot.de/2011/10/how-to-get-process-id-in-windows.html
+
+		if (proc.getClass().getName().equals("java.lang.Win32Process")
+				|| proc.getClass().getName().equals("java.lang.ProcessImpl")) {
+
+			/* determine the pid on windows plattforms */
+			try {
+				//get the handle by reflection
+				Field f = proc.getClass().getDeclaredField("handle");
+				f.setAccessible(true);
+				long handl = f.getLong(proc);
+				Kernel32 kernel = Kernel32.INSTANCE;
+
+				WinNT.HANDLE handle = new WinNT.HANDLE();
+
+				Field toSet = handle.getClass().getDeclaredField("immutable");
+
+				toSet.setAccessible(true);
+
+				boolean savedState = toSet.getBoolean(handle);
+				
+				toSet.setAccessible(false);
+
+				System.out.println("saved: " + savedState);
+
+				handle.setPointer(Pointer.createConstant(handl));
+
+				int pid = kernel.GetProcessId(handle);
+
+				return pid;
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
+		}
+		return -1;
+	}
+
 }
