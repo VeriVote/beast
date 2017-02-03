@@ -4,6 +4,6 @@ save : Speichern
 save_as : Speichern unter...
 load : Öffnen...
 project : Projekt
-start_test : Teste Eigenschaften
-stop_test : Stoppe Test
+start : Teste Eigenschaften
+stop : Stoppe Test
 options : Eigenschaften

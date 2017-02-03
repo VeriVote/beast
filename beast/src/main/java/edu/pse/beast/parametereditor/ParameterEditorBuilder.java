@@ -81,16 +81,16 @@ public class ParameterEditorBuilder {
         ActionIdAndListener[] created = new ActionIdAndListener[6];
         
         UserAction newly = createNewProjectUserAction(cElectionDescriptionEditor, propertyList);
+        UserAction load = createLoadProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
         UserAction save = createSaveProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
         UserAction save_as = createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
-        UserAction load = createLoadProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
         UserAction start = createStartCheckUserAction();
         UserAction stop = createAbortCheckUserAction();
         
         created[0] = createFromUserAction(newly);
-        created[1] = createFromUserAction(save);
+        created[1] = createFromUserAction(load);
+        created[3] = createFromUserAction(save);
         created[2] = createFromUserAction(save_as);
-        created[3] = createFromUserAction(load);
         created[4] = createFromUserAction(start);
         created[5] = createFromUserAction(stop);
         
