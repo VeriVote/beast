@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -78,6 +79,14 @@ public class ResultPresenterWindow extends JFrame {
 		}
 		result.setStyledDocument(doc);
 	}
+	
+	private void appendLine(String text) {
+		appendPane(text + "\n");
+	}
+	
+	private void erasePane() {
+		result.setText("");
+	}
 
 	public FailureExample getExample() {
 		return example;
@@ -92,12 +101,31 @@ public class ResultPresenterWindow extends JFrame {
 	}
 	
 	public void presentFailure(List<String> error) {
-		result.setText("");
-		for (String line : error) appendPane(line + "\n");
+		erasePane();
+		for (String line : error) appendLine(line);
 	}
 
-	public void presentFailureExample(FailureExample example) {
-		
+	public void presentFailureExample(FailureExample ex) {
+		erasePane();
+		appendLine("Type: " + ex.getTypeString() + "\n");
+		for (int i = 0; i < ex.getNumOfElections(); i++) {
+			appendLine("Election " + i);
+			appendPane("Votes: ");
+			if (ex.isChooseOneCandidate()) appendPane(Arrays.toString(ex.getVotes().get(i)));
+			else {
+				int[][] arr = ex.getVoteList().get(i);
+				for (int j = 0; j < arr.length; j++) {
+					appendPane(Arrays.toString(arr[j]));
+					if (j < arr.length - 1) appendPane(", ");
+				}
+			}
+			appendLine("");
+			
+			appendPane("Elected: ");
+			if (ex.isOneSeatOnly()) appendPane(Integer.toString(ex.getElect().get(i)));
+			else appendPane(Arrays.toString(ex.getSeats().get(i)));
+			appendLine("\n");
+		}
 	}
 	
 	

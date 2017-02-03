@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.JFrame;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -42,7 +44,7 @@ public class ErrorDisplayTest {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
 		/*OptionsInterface options = new OptionsInterface();
 		ObjectRefsForBuilder refs = new ObjectRefsForBuilder(options, new StringLoaderInterface("de"), 
 				options.getLanguageOptions(), new SaverLoaderInterface());
@@ -53,6 +55,7 @@ public class ErrorDisplayTest {
 		
 		ResultPresenterWindow win = new ResultPresenterWindow();
 		win.setVisible(true);
+		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		List<String> error = Arrays.asList("Some lines to test the window.", 
 				"Big, bigger, biggest icecream will be found at the sea right off Maine and Northbridge/Upton.",
 				"Yawn");

@@ -25,6 +25,8 @@ public class FailureExample {
 	private final int numOfSeats;
 	
 	private final int numOfVoters;
+	
+	private final int numOfElections;
 
 	/**
 	 * Creates the FailureExample from the returned data of CBMC. If specific data is not given, initialize with null reference.
@@ -49,6 +51,8 @@ public class FailureExample {
 		this.numOfSeats = numOfSeats;
 		this.numOfVoters = numOfVoters;
 
+		if (isChooseOneCandidate()) this.numOfElections = votes.size();
+		else this.numOfElections = voteList.size();
 	}
 
 	public ElectionType getElectionType() {
@@ -83,6 +87,10 @@ public class FailureExample {
 		return numOfVoters;
 	}
 	
+	public int getNumOfElections() {
+		return numOfElections;
+	}
+	
 	public boolean isChooseOneCandidate() {
 		if (getVotes() != null) return true;
 		else return false;
@@ -92,8 +100,15 @@ public class FailureExample {
 		if (getElect() != null) return true;
 		return false;
 	}
-
-
 	
+	public String getTypeString() {
+		switch (electionType) {
+		case SINGLECHOICE : return "single-choice"; 
+		case APPROVAL : return "approval"; 
+		case WEIGHTEDAPPROVAL : return "weighted-approval";
+		case PREFERENCE : return "preference";
+		default : return "unknown";
+		}
+	}
 
 }
