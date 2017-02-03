@@ -2,6 +2,7 @@ package edu.pse.beast.propertychecker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -72,6 +73,11 @@ public class testMain {
 
 		List<PostAndPrePropertiesDescription> tmp = new ArrayList<PostAndPrePropertiesDescription>();
 		tmp.add(postAndPrePropertiesDescription);
+		tmp.add(postAndPrePropertiesDescription);
+		tmp.add(postAndPrePropertiesDescription);
+		tmp.add(postAndPrePropertiesDescription);
+		tmp.add(postAndPrePropertiesDescription);
+		tmp.add(postAndPrePropertiesDescription);
 
 		implPropertyDescriptionSource pSrc = new implPropertyDescriptionSource(tmp);
 
@@ -79,10 +85,10 @@ public class testMain {
 		amountVoters.add(4);
 
 		List<Integer> amountCandidates = new ArrayList<Integer>();
-		amountCandidates.add(100);
+		amountCandidates.add(5);
 
 		List<Integer> amountSeats = new ArrayList<Integer>();
-		amountSeats.add(1);
+		amountSeats.add(4);
 
 		ElectionCheckParameter ecp = new ElectionCheckParameter(amountVoters, amountCandidates, amountSeats,
 				new TimeOut(TimeUnit.SECONDS, 20), 4, "--trace;--unwind 7");
@@ -93,7 +99,16 @@ public class testMain {
 
 		List<ResultInterface> resultate = propCheck.checkPropertiesForDescription(eSrc, pSrc, parmSrc);
 
-		while (!resultate.get(0).readyToPresent()) {
+		
+		boolean loop = false;
+		
+		while (!loop) {
+			loop = true;
+			for (Iterator iterator = resultate.iterator(); iterator.hasNext();) {
+				ResultInterface resultInterface = (ResultInterface) iterator.next();
+				loop = loop && resultInterface.readyToPresent();
+			}
+			
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
@@ -106,6 +121,10 @@ public class testMain {
 		System.out.println("======================================");
 		System.out.println("______________________________________");
 
-		resultate.get(0).presentTo(null);
+		
+		for (Iterator iterator = resultate.iterator(); iterator.hasNext();) {
+			ResultInterface resultInterface = (ResultInterface) iterator.next();
+			resultInterface.presentTo(null);
+		}
 	}
 }

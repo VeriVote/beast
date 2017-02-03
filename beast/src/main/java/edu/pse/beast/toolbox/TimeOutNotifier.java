@@ -11,7 +11,7 @@ public class TimeOutNotifier implements Runnable {
     public TimeOutNotifier(FactoryController toInterrupt, long timeOut) {
         this.toInterrupt = toInterrupt;
         this.endTime = System.currentTimeMillis() + timeOut;
-        interrupterThread = new Thread(this);
+        interrupterThread = new Thread(this, "TimeOutNotifier");
         interrupterThread.start();
     }
 

@@ -5,6 +5,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
+/**
+ * this class is a BufferedReader that runs in a seperate Thread.
+ * All read lines are stored in a passed List
+ * It either stops if the stream ends, or it gets stopped from the outside.
+ * When it finished normally it also counts down a latch to notify other waiting Threads
+ * @author Lukas
+ *
+ */
 public class ThreadedBufferedReader implements Runnable {
 
 	private BufferedReader reader;
@@ -25,9 +33,13 @@ public class ThreadedBufferedReader implements Runnable {
 		this.readLines = readLines;
 		this.latch = latch;
 
-		new Thread(this).start();
+		new Thread(this, "ReaderThread").start();
 	}
 
+	/**
+	 * starts the Thread. The reader reads each line, adds it to 
+	 * the list. In the end it notifies a latch, that it is finished
+	 */
 	@Override
 	public void run() {
 		String line = null;
@@ -35,9 +47,6 @@ public class ThreadedBufferedReader implements Runnable {
 		try {
 			line = reader.readLine();
 			while (line != null && !isInterrupted) {
-
-				System.out.println("lines: " + line);
-
 				readLines.add(line);
 				line = reader.readLine();
 			}

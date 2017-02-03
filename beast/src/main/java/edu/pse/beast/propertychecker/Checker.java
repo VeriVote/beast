@@ -40,7 +40,7 @@ public abstract class Checker implements Runnable {
 		this.toCheck = toCheck;
 		this.parent = parent;
 
-		new Thread(this).start();
+		new Thread(this, "Checker").start();
 	}
 
 	@Override

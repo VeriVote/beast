@@ -64,7 +64,7 @@ public class FactoryController implements Runnable {
 		this.concurrentChecker = concurrentChecker;
 
 		// start the factorycontroller
-		new Thread(this).start();
+		new Thread(this, "FactoryController").start();
 
 		if (parmSrc.getParameter().getTimeout().isActive()) {
 			notifier = new TimeOutNotifier(this, parmSrc.getParameter().getTimeout().getDuration());
@@ -92,7 +92,7 @@ public class FactoryController implements Runnable {
 						currentlyRunning.add(factory);						
 					}
 					
-					new Thread(factory).start();
+					new Thread(factory, "CheckerFactory Property " + i).start();
 
 
 					break innerLoop;

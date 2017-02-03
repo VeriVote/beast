@@ -73,8 +73,6 @@ public class WindowsProcess extends CBMCProcess {
 
 		// this call starts a new VScmd instance and lets cbmc run in it
 		ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", cbmcCall);
-		
-		System.out.println(String.join(" ", prossBuild.command()));
 
 		try {
 			startedProcess = prossBuild.start();
