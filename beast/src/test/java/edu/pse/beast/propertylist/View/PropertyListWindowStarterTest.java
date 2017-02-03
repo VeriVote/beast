@@ -11,7 +11,11 @@ import org.junit.Test;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.booleanexpeditor.BooleanExpEditorBuilder;
+import edu.pse.beast.propertylist.PLControllerInterface;
+import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.propertylist.PropertyListBuilder;
+import edu.pse.beast.propertylist.Model.PLModel;
+import edu.pse.beast.propertylist.Model.PLModelInterface;
 import edu.pse.beast.saverloader.SaverLoaderInterface;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
@@ -41,8 +45,19 @@ public class PropertyListWindowStarterTest {
 	
 	public static void main(String[] args) {
 		
+		PLModelInterface model = new PLModel();
+		PLControllerInterface controller = new PropertyList(model);
+		
+		PropertyListWindowStarter starter = new PropertyListWindowStarter(controller, model);
+		starter.start();
 		
 		
+		/*OptionsInterface options = new OptionsInterface();
+		ObjectRefsForBuilder refs = new ObjectRefsForBuilder(options, new StringLoaderInterface("de"), 
+				options.getLanguageOptions(), new SaverLoaderInterface());
+        PropertyList propertyList = new PropertyListBuilder().createPropertyList(refs);*/
+        
+        
 		
 		/*PropertyListBuilder builder = new PropertyListBuilder();
 		ObjectRefsForBuilder objRefsForBuilder = new ObjectRefsForBuilder(new OptionsInterface(),
