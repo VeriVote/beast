@@ -43,7 +43,7 @@ public class OmniSaverLoader {
         ArrayList<String> format = new ArrayList<>();
 
         if (obj == null) {
-            System.err.println("ES WURDE EIN LEERES OBJEKT �BERGEBEN!");
+            System.err.println("ES WURDE EIN LEERES OBJEKT ÜBERGEBEN!");
             return null;
         } else {
             saveType(format, obj, "");
@@ -275,13 +275,29 @@ public class OmniSaverLoader {
     }
     
     
-    private static Object createFromSaveFormat(List<String> format) {
+    public static Object createFromSaveFormat(List<String> format) {
         if (!checkFormat(format)) {
             System.err.println("Format is in the wrong format and can't be read!");
             return null;
         }
         
         return null;
+    }
+    
+    private static Object createComplexObject(List<String> toLoad) {
+    	
+    }
+    
+    private static Object createSimpleObject(List<String> toLoad) {
+    	
+    }
+    
+    private static Object createArray(List<String> toLoad) {
+    	
+    }
+    
+    private static List<?> createList(List<String> toLoad) {
+    	
     }
     
     
@@ -294,7 +310,7 @@ public class OmniSaverLoader {
     private static boolean checkFormat(List<String> format) {
         if (format.size() < 2) {
             /**
-             * there are not at leas 1 tag of each
+             * there are not at least 1 tag of each
              */
             return false;
         }
