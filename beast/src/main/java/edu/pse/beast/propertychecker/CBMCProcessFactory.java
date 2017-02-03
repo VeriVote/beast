@@ -50,7 +50,7 @@ public class CBMCProcessFactory extends CheckerFactory {
 			//create the file only once for one factory and reuse it then
 			
 			ErrorLogger.log("(CBMCProcessFactory) to generate code again and not use the example unccoment line 52");
-			//toCheck = createCodeFile(electionDescSrc, postAndPrepPropDesc);
+//			toCheck = createCodeFile(electionDescSrc, postAndPrepPropDesc);
 		}
 		
 		Checker startedChecker = null;

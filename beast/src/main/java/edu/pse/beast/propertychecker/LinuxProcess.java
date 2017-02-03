@@ -44,8 +44,8 @@ public class LinuxProcess extends CBMCProcess {
         Process startedProcess = null;
 
         // TODO this is just a debug file
-        toCheck = new File("./src/main/resources/c_tempfiles/test.c");
-        ErrorLogger.log("LinuxProcess.java line 29 has to be removed, when the code creation works");
+        toCheck = new File("./src/main/resources/c_tempfiles/c_temp_file_success.c");
+        ErrorLogger.log("LinuxProcess.java line 47 has to be removed, when the code creation works");
 
         ProcessBuilder prossBuild = new ProcessBuilder(argumentsToPass);
 
