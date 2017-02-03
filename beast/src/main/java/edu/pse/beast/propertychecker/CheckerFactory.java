@@ -68,9 +68,9 @@ public abstract class CheckerFactory implements Runnable {
 							// the process creation failed
 							stopped = true;
 						}
-					
-					}
 
+					}
+					
 					while (!finished && !stopped) {
 						try {
 							// polling in 1 second steps to save cpu time
@@ -84,8 +84,9 @@ public abstract class CheckerFactory implements Runnable {
 						result.setFinished();
 						break outerLoop;
 					} else {
-						// the checker finished checking for these specific
 					    
+						// the checker finished checking for these specific
+						// parameters without being stopped without a failure from the outside
 
 						currentlyRunning = null;
 
