@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.UserActions;
 
+import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
@@ -12,14 +13,14 @@ import edu.pse.beast.toolbox.UserAction;
  * @author Holger-Desktop
  */
 public class StaticCheckUserAction extends UserAction {
-
-    public StaticCheckUserAction() {
+    private CElectionDescriptionEditor electionDescriptionEditor;
+    public StaticCheckUserAction(CElectionDescriptionEditor electionDescriptionEditor) {
         super("static_analysis");
+        this.electionDescriptionEditor = electionDescriptionEditor;
     }
     
     @Override
     public void perform() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        electionDescriptionEditor.findErrorsAndDisplayThem();
     }
-    
 }

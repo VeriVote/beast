@@ -104,7 +104,7 @@ public class PropertyCheckerTest {
 		
 		while (!loop) {
 			loop = true;
-			for (Iterator iterator = resultate.iterator(); iterator.hasNext();) {
+			for (Iterator<ResultInterface> iterator = resultate.iterator(); iterator.hasNext();) {
 				ResultInterface resultInterface = (ResultInterface) iterator.next();
 				loop = loop && resultInterface.readyToPresent();
 			}
@@ -116,6 +116,9 @@ public class PropertyCheckerTest {
 				e.printStackTrace();
 			}
 		}
+		
+		
+		
 
 		System.out.println("______________________________________");
 		System.out.println("======================================");

@@ -28,6 +28,6 @@ public class ANTLRTest {
         view.open();
     }
     public static void main(String[] args) {
-        showGuiTreeView("FOR_ALL_VOTERS(i) : i!=u && i!=w ==> VOTES1(i) == VOTES2(i);");
+        showGuiTreeView("FOR_ALL_VOTERS(i) : (i!=u && i!=w) ==> VOTES1(i) == VOTES2(i);");
     }
 }

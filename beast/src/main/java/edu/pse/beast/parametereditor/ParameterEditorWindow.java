@@ -9,7 +9,7 @@ import javax.swing.JSpinner;
  *
  * @author Jonas
  */
-public class ParameterEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser{
+public class ParameterEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
 
     private AdvancedWindow advWindow = new AdvancedWindow();
     /**
@@ -29,12 +29,6 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     private void initComponents() {
 
         toolbar = new javax.swing.JToolBar();
-        newIcon = new javax.swing.JButton();
-        saveIcon = new javax.swing.JButton();
-        saveAsIcon = new javax.swing.JButton();
-        loadIcon = new javax.swing.JButton();
-        startIcon = new javax.swing.JButton();
-        stopIcon = new javax.swing.JButton();
         voters = new javax.swing.JLabel();
         voterMin = new javax.swing.JSpinner();
         voterTo = new javax.swing.JLabel();
@@ -53,63 +47,17 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
         processes = new javax.swing.JLabel();
         amountProcessesSpinner = new javax.swing.JSpinner();
         advancedButton = new javax.swing.JButton();
-        menubar = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
-        newMenuItem = new javax.swing.JMenuItem();
-        saveMenuItem = new javax.swing.JMenuItem();
-        saveAsMenuItem = new javax.swing.JMenuItem();
-        loadMenuItem = new javax.swing.JMenuItem();
-        projectMenu = new javax.swing.JMenu();
-        startMenuItem = new javax.swing.JMenuItem();
-        stopMenuItem = new javax.swing.JMenuItem();
-        optionsMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ParameterEditor");
+        setMinimumSize(new java.awt.Dimension(475, 347));
+        setPreferredSize(new java.awt.Dimension(475, 347));
 
         toolbar.setFloatable(false);
         toolbar.setRollover(true);
-
-        newIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/new.png"))); // NOI18N
-        newIcon.setFocusable(false);
-        newIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        newIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        newIcon.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                newIconActionPerformed(evt);
-            }
-        });
-        toolbar.add(newIcon);
-
-        saveIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/save.png"))); // NOI18N
-        saveIcon.setFocusable(false);
-        saveIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        saveIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        toolbar.add(saveIcon);
-
-        saveAsIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/save_as.png"))); // NOI18N
-        saveAsIcon.setFocusable(false);
-        saveAsIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        saveAsIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        toolbar.add(saveAsIcon);
-
-        loadIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/load.png"))); // NOI18N
-        loadIcon.setFocusable(false);
-        loadIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        loadIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        toolbar.add(loadIcon);
-
-        startIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/start.png"))); // NOI18N
-        startIcon.setFocusable(false);
-        startIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        startIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        toolbar.add(startIcon);
-
-        stopIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/toolbar/stop.png"))); // NOI18N
-        stopIcon.setFocusable(false);
-        stopIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        stopIcon.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        toolbar.add(stopIcon);
+        toolbar.setMaximumSize(new java.awt.Dimension(458, 73));
+        toolbar.setMinimumSize(new java.awt.Dimension(458, 73));
+        toolbar.setPreferredSize(new java.awt.Dimension(458, 73));
 
         voters.setText("Wähler");
 
@@ -151,46 +99,6 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
                 advancedButtonActionPerformed(evt);
             }
         });
-
-        fileMenu.setText("Datei");
-
-        newMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_MASK));
-        newMenuItem.setText("Neues Projekt...");
-        fileMenu.add(newMenuItem);
-
-        saveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        saveMenuItem.setText("Speichern");
-        saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveMenuItemActionPerformed(evt);
-            }
-        });
-        fileMenu.add(saveMenuItem);
-
-        saveAsMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
-        saveAsMenuItem.setText("Speichern unter...");
-        fileMenu.add(saveAsMenuItem);
-
-        loadMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-        loadMenuItem.setText("Öffnen...");
-        fileMenu.add(loadMenuItem);
-
-        menubar.add(fileMenu);
-
-        projectMenu.setText("Projekt");
-
-        startMenuItem.setText("Teste Eigenschaften");
-        projectMenu.add(startMenuItem);
-
-        stopMenuItem.setText("Stoppe Test");
-        projectMenu.add(stopMenuItem);
-
-        menubar.add(projectMenu);
-
-        optionsMenu.setText("Eigenschaften");
-        menubar.add(optionsMenu);
-
-        setJMenuBar(menubar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -267,7 +175,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
                     .addComponent(processes))
                 .addGap(18, 18, 18)
                 .addComponent(advancedButton)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         voterMin.getAccessibleContext().setAccessibleName("");
@@ -278,14 +186,6 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     private void advancedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_advancedButtonActionPerformed
         advWindow.setVisible(true);
     }//GEN-LAST:event_advancedButtonActionPerformed
-
-    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveMenuItemActionPerformed
-
-    private void newIconActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newIconActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_newIconActionPerformed
 
     /**
      * @param args the command line arguments
@@ -329,27 +229,11 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     private javax.swing.JSpinner candMin;
     private javax.swing.JLabel candTo;
     private javax.swing.JLabel candidates;
-    private javax.swing.JMenu fileMenu;
-    private javax.swing.JButton loadIcon;
-    private javax.swing.JMenuItem loadMenuItem;
-    private javax.swing.JMenuBar menubar;
-    private javax.swing.JButton newIcon;
-    private javax.swing.JMenuItem newMenuItem;
-    private javax.swing.JMenu optionsMenu;
     private javax.swing.JLabel processes;
-    private javax.swing.JMenu projectMenu;
-    private javax.swing.JButton saveAsIcon;
-    private javax.swing.JMenuItem saveAsMenuItem;
-    private javax.swing.JButton saveIcon;
-    private javax.swing.JMenuItem saveMenuItem;
     private javax.swing.JSpinner seatMax;
     private javax.swing.JSpinner seatMin;
     private javax.swing.JLabel seatTo;
     private javax.swing.JLabel seats;
-    private javax.swing.JButton startIcon;
-    private javax.swing.JMenuItem startMenuItem;
-    private javax.swing.JButton stopIcon;
-    private javax.swing.JMenuItem stopMenuItem;
     private javax.swing.JLabel timeout;
     private javax.swing.JSpinner timeoutNum;
     private javax.swing.JComboBox<String> timeoutUnit;
@@ -396,8 +280,6 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
         ParameterEditorStringResProvider provider = stringResIF.getParameterEditorStringResProvider();
-        
-        
         StringResourceLoader other = provider.getOtherStringRes();
         setTitle(other.getStringFromID("title"));
         voters.setText(other.getStringFromID("voters"));
@@ -414,25 +296,6 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
         timeoutUnit.addItem(other.getStringFromID("minutes"));
         timeoutUnit.addItem(other.getStringFromID("hours"));
         timeoutUnit.addItem(other.getStringFromID("days"));
-        //advWindow.updateStringRes(other); //TODO: Implement
-        
-        StringResourceLoader menu = provider.getMenuStringRes();
-        fileMenu.setText(menu.getStringFromID("file"));
-        projectMenu.setText(menu.getStringFromID("project"));
-        optionsMenu.setText(menu.getStringFromID("options"));
-        newMenuItem.setText(menu.getStringFromID("new"));
-        saveMenuItem.setText(menu.getStringFromID("save"));
-        saveAsMenuItem.setText(menu.getStringFromID("save_as"));
-        loadMenuItem.setText(menu.getStringFromID("load"));
-        startMenuItem.setText(menu.getStringFromID("start_test"));
-        stopMenuItem.setText(menu.getStringFromID("stop_test"));
-        
-        StringResourceLoader toolbarTip = provider.getToolbarTipStringRes();
-        newIcon.setToolTipText(toolbarTip.getStringFromID("new"));
-        saveIcon.setToolTipText(toolbarTip.getStringFromID("save"));
-        saveAsIcon.setToolTipText(toolbarTip.getStringFromID("save_as"));
-        loadIcon.setToolTipText(toolbarTip.getStringFromID("load"));
-        startIcon.setToolTipText(toolbarTip.getStringFromID("start_test"));
-        stopIcon.setToolTipText(toolbarTip.getStringFromID("stop_test"));
+        advWindow.updateStringRes(stringResIF);
     }
 }

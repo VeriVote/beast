@@ -9,7 +9,9 @@ import edu.pse.beast.booleanexpeditor.UserActions.SaveBeforeChangeHandler;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeArea;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeAreaBuilder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.CodeAreaFocusListener;
+import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpErrorDisplayer;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
+import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.toolbox.MenuBarHandler;
@@ -39,6 +41,7 @@ public class BooleanExpEditor {
     private final BooleanExpCodeAreaBuilder codeAreaBuilder;
     private ObjectRefsForBuilder refs;
     private CElectionDescriptionEditor cEditor;
+
     /**
      * Temporary Constructor declaration to build BooleanExpEditor for Dummy-GUI
      * @param window BooleanExpEditorWindow object
@@ -87,7 +90,13 @@ public class BooleanExpEditor {
     }
 
     public void findErrorsAndDisplayThem() {
-        
+        ArrayList<String> errorMsgList =  new ArrayList<String>();
+        ArrayList<CodeError> errors = prePropCodeArea.getErrorCtrl().getErrorFinderList().getErrors();
+        errors.addAll(postPropCodeArea.getErrorCtrl().getErrorFinderList().getErrors());
+        for (CodeError error : errors) {
+            errorMsgList.add(((BooleanExpErrorDisplayer) prePropCodeArea.getErrorCtrl().getDisplayer()).createMsg(error));
+        }
+        errorWindow.displayErrors(errorMsgList);
     }
 
     /**
@@ -153,6 +162,17 @@ public class BooleanExpEditor {
      */
     public CodeAreaFocusListener getCodeAreaFocusListener() {
         return codeAreaFocusListener;
+    }
+
+    public boolean isCorrect() {
+        findErrorsAndDisplayThem();
+        if (prePropCodeArea.getErrorCtrl().getErrorFinderList().getErrors().size() == 0 &&
+                postPropCodeArea.getErrorCtrl().getErrorFinderList().getErrors().size() == 0){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     /**

@@ -54,8 +54,10 @@ public class ErrorController implements
     public ErrorDisplayer getDisplayer() {
         return displayer;
     }
-    
-    
+
+    public ErrorFinderList getErrorFinderList() {
+        return errorFinderList;
+    }
 
     @Override
     public void insertUpdate(DocumentEvent de) {

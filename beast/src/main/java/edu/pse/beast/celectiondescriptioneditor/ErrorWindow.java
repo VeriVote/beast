@@ -9,17 +9,19 @@ import java.util.ArrayList;
 /**
  * @author NikolaiLMS
  */
-public class ErrorWindow extends ErrorDisplayer {
+public class ErrorWindow {
     private final JTextPane textPane;
     private ArrayList<Error> errors;
     private String errorString;
+
     /**
      * Constructor
      * @param textPane JTextPane for ErrorWindow
      * @param stringLoaderInterface stringLoaderInterface to load needed Strings
      */
     ErrorWindow(JTextPane textPane, StringLoaderInterface stringLoaderInterface) {
-        super(textPane, stringLoaderInterface.getCElectionEditorStringResProvider().getCErrorStringRes());
+        errorString = stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpErrorStringRes().getStringFromID("error");
         this.textPane = textPane;
     }
 
@@ -27,11 +29,10 @@ public class ErrorWindow extends ErrorDisplayer {
      * Method to display ArrayList of Errors in the ErrorWindow.
      * @param errors ArrayList of Errors
      */
-    void displayErrors(ArrayList<Error> errors) {
-        this.errors = errors;
+    void displayErrors(ArrayList<String> errors) {
         String errorsAsString = errorString + ": " + errors.size() + "\n";
-        for (Error error : this.errors) {
-            errorsAsString += error.getMessage() + "\n";
+        for (int i = 0; i < errors.size(); i++) {
+            errorsAsString += i+1 + ": " + errors.get(i) + "\n";
         }
         textPane.setText(errorsAsString);
     }

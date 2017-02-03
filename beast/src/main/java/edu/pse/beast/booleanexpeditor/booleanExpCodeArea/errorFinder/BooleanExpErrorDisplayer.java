@@ -33,7 +33,7 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
         }
     }
     
-    private String createMsg(CodeError er) {
+    public String createMsg(CodeError er) {
         if(er.getId().equals("antlr")) {
             String template = getTemplateString("antlr");
             return template += ": " + er.getExtraInfo("msg");

@@ -5,11 +5,13 @@
  */
 package edu.pse.beast.celectiondescriptioneditor;
 
+import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpErrorDisplayer;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeAreaBuilder;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CErrorDisplayer;
 import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
 import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveBeforeChangeHandler;
+import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescriptionChangeListener;
 import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
@@ -36,7 +38,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     public CElectionDescriptionEditor(
             CElectionCodeArea codeArea,
             CCodeEditorGUI gui,            
-            CElectionCodeAreaBuilder builder) {
+            CElectionCodeAreaBuilder builder, ErrorWindow errorWindow) {
         this.codeArea = codeArea;
         this.gui = gui;
         this.builder = builder;
@@ -52,6 +54,15 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
 
     private void updateCurrentDescription() {
         
+    }
+
+    public void findErrorsAndDisplayThem() {
+        ArrayList<String> errorMsgList =  new ArrayList<String>();
+        ArrayList<CodeError> errors = codeArea.getErrorCtrl().getErrorFinderList().getErrors();
+        for (CodeError error : errors) {
+            errorMsgList.add(((BooleanExpErrorDisplayer) codeArea.getErrorCtrl().getDisplayer()).createMsg(error));
+        }
+        errorWindow.displayErrors(errorMsgList);
     }
 
     public void changeElectionDescriptionInput(ElectionTypeContainer cont) {
@@ -89,7 +100,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         return codeArea;
     }
 
-    public boolean letUserEditElectionDescription(ElectionDescription description) throws BadLocationException {
+    public void letUserEditElectionDescription(ElectionDescription description) throws BadLocationException {
         gui.setNewCodeArea();
         codeArea = builder.createCElectionCodeArea(gui.getCodeArea(), 
                 gui.getCodeAreaScrollPane(), 
@@ -104,7 +115,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
             l.inputChanged(description.getInputType());
             l.outputChanged(description.getOutputType());
         }
-        return true;
+        findErrorsAndDisplayThem();
     }
 
     /**
