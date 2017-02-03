@@ -1,24 +1,21 @@
 package edu.pse.beast.booleanexpeditor.UserActions;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
-import edu.pse.beast.booleanexpeditor.ChangeHandler;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.toolbox.UserAction;
-
-import javax.swing.*;
 
 /**
  * @author NikolaiLMS
  */
 public class NewPropsUserAction extends UserAction {
     private final BooleanExpEditor booleanExpEditor;
-    private final ChangeHandler changeHandler;
-    public NewPropsUserAction(BooleanExpEditor booleanExpEditor, ChangeHandler changeHandler) {
+    private final SaveBeforeChangeHandler saveBeforeChangeHandler;
+    public NewPropsUserAction(BooleanExpEditor booleanExpEditor, SaveBeforeChangeHandler saveBeforeChangeHandler) {
         super("new");
         this.booleanExpEditor = booleanExpEditor;
-        this.changeHandler = changeHandler;
+        this.saveBeforeChangeHandler = saveBeforeChangeHandler;
     }
 
     public static PostAndPrePropertiesDescription createEmptyPostAndPropObject() {
@@ -31,17 +28,6 @@ public class NewPropsUserAction extends UserAction {
 
     @Override
     public void perform() {
-        if (changeHandler.hasChanged()) {
-            // TEMPORARY
-            int option = booleanExpEditor.getWindow().showOptionPane(booleanExpEditor.getCurrentlyLoadedPostAndPreProp()
-                    .getName());
-            if (option == JOptionPane.NO_OPTION) {
-                booleanExpEditor.loadPostAndPreProperties(createEmptyPostAndPropObject());
-            } else if (option == JOptionPane.YES_OPTION) {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-        } else {
-            booleanExpEditor.loadPostAndPreProperties(createEmptyPostAndPropObject());
-        }
+        booleanExpEditor.letUserEditPostAndPreProperties(createEmptyPostAndPropObject());
     }
 }

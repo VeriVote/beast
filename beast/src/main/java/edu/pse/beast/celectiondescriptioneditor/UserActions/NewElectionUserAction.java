@@ -9,16 +9,15 @@ import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateChooser;
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
-import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.UserAction;
-import java.util.ArrayList;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.*;
 import javax.swing.text.BadLocationException;
 /**
  *
@@ -34,21 +33,28 @@ public class NewElectionUserAction extends UserAction implements DisplaysStrings
     private CCodeHelper cCodeHelper = new CCodeHelper();
     
     public NewElectionUserAction(
-            SaveBeforeChangeHandler saveBeforeChangeHandler,
             CElectionDescriptionEditor editor,
             StringLoaderInterface stringResIF) {
         super("new");
-        this.saveBeforeChangeHandler = saveBeforeChangeHandler;
+        this.saveBeforeChangeHandler = editor.getSaveBeforeChangeHandler();
         this.editor = editor;
         this.currentLoader = stringResIF.getCElectionEditorStringResProvider().getElectionStringRes();
     }
     
     @Override
     public void perform() {
+        if (saveBeforeChangeHandler.hasChanged()) {
+            int option = editor.getGui().showOptionPane(editor.getElectionDescription().getName());
+            if (option == JOptionPane.YES_OPTION) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            } else if (option == JOptionPane.CANCEL_OPTION) {
+                return;
+            }
+        }
         electionTemplateDialog = new ElectionTemplateChooser(
                 this,
                 templateHandler,
-                currentLoader);
+                currentLoader, currentLoader.getStringFromID("emptyNameTextFieldError"));
         electionTemplateDialog.setDefaultCloseOperation(ElectionTemplateChooser.DISPOSE_ON_CLOSE);
         electionTemplateDialog.setVisible(true);
     }
@@ -67,8 +73,4 @@ public class NewElectionUserAction extends UserAction implements DisplaysStrings
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
     }
-
-    
-
-    
 }

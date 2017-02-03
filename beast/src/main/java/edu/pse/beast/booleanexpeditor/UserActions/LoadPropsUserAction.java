@@ -1,7 +1,6 @@
 package edu.pse.beast.booleanexpeditor.UserActions;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
-import edu.pse.beast.booleanexpeditor.ChangeHandler;
 import edu.pse.beast.saverloader.SaverLoaderInterface;
 import edu.pse.beast.toolbox.UserAction;
 
@@ -11,13 +10,13 @@ import edu.pse.beast.toolbox.UserAction;
 public class LoadPropsUserAction extends UserAction {
     private BooleanExpEditor booleanExpEditor;
     private SaverLoaderInterface saverLoaderInterface;
-    private ChangeHandler changeHandler;
+    private SaveBeforeChangeHandler saveBeforeChangeHandler;
     public LoadPropsUserAction(BooleanExpEditor booleanExpEditor, SaverLoaderInterface saverLoaderInterface,
-                               ChangeHandler changeHandler) {
+                               SaveBeforeChangeHandler saveBeforeChangeHandler) {
         super("load");
         this.booleanExpEditor = booleanExpEditor;
         this.saverLoaderInterface = saverLoaderInterface;
-        this.changeHandler = changeHandler;
+        this.saveBeforeChangeHandler = saveBeforeChangeHandler;
     }
 
     @Override

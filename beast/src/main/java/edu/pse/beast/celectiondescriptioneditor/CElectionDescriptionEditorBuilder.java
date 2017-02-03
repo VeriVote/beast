@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.*;
 import javax.swing.text.BadLocationException;
 
 /**
@@ -49,6 +50,7 @@ public class CElectionDescriptionEditorBuilder {
     public CElectionDescriptionEditor createCElectionDescriptionEditor(ObjectRefsForBuilder objRefsForBuilder) {
         CEditorWindowStarter starter = new CEditorWindowStarter();
         CCodeEditorGUI gui = starter.getGUIWindow();
+        gui.updateStringRes(objRefsForBuilder.getStringIF());
 
         //create new ErrorWindow
         ErrorWindow errorWindow = new ErrorWindow(gui.getErrorPane(), objRefsForBuilder.getStringIF());
@@ -118,9 +120,9 @@ public class CElectionDescriptionEditorBuilder {
         ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
         
         ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
-        SaveBeforeChangeHandler saveBeforeChange = new SaveBeforeChangeHandler();
-        
-        newAcc = createNewElectionUserAction(saveBeforeChange, editor, objRefsForBuilder.getStringIF());
+        SaveBeforeChangeHandler saveBeforeChangeHandler = new SaveBeforeChangeHandler(codeArea.getPane());
+
+        newAcc = createNewElectionUserAction(editor, objRefsForBuilder.getStringIF());
         save = createSaveElectionUserAction();
         saveAs = createSaveAsElectionUserAction();
         load = createLoadElectionUserAction();
@@ -161,14 +163,11 @@ public class CElectionDescriptionEditorBuilder {
         return created;        
     }
     //file
-    private SaveBeforeChangeHandler createSaveBeforeChangeHandler() {
-        return new SaveBeforeChangeHandler();
-    }
+
     private NewElectionUserAction createNewElectionUserAction(
-            SaveBeforeChangeHandler saveHandler,
             CElectionDescriptionEditor editor,
             StringLoaderInterface stringIf) {
-        return new NewElectionUserAction(saveHandler, editor, stringIf);
+        return new NewElectionUserAction(editor, stringIf);
     } 
     private SaveElectionUserAction createSaveElectionUserAction() {
         return new SaveElectionUserAction();
