@@ -53,7 +53,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser, ResultPre
 	protected JButton changeButton = new JButton();
 	protected JButton deleteButton = new JButton();
 	
-	protected JFrame result = new JFrame();
+	protected ResultPresenterWindow resWindow = new ResultPresenterWindow();
 	
 	public ListItem(PLControllerInterface controller, PLModelInterface model) {
 		this.model = model;
@@ -87,13 +87,16 @@ public class ListItem extends JPanel implements DisplaysStringsToUser, ResultPre
 	private void init() {
 		this.setMaximumSize(new Dimension(500,2000));
 		Dimension iconSize = new Dimension(40,40);
-		showResult.setPreferredSize(iconSize);
+		showResult.setPreferredSize(new Dimension(80,40));
 		showResult.setIcon(new ImageIcon(getClass().getResource("/images/other/eye.png")));
 		showResult.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				Point leftupper = showResult.getLocation(); // for creating jframe
+				Point leftupper = showResult.getLocationOnScreen(); // for creating jframe
+				resWindow.setLocation(new Point((int)leftupper.getX(), (int)leftupper.getY() - 30));
+				//resWindow.setLocation(showResult.getLocationOnScreen());
+				resWindow.setVisible(true);
 			}
 		});
 		this.add(showResult, BorderLayout.LINE_START);
@@ -174,15 +177,14 @@ public class ListItem extends JPanel implements DisplaysStringsToUser, ResultPre
 
 	@Override
 	public void presentFailure(List<String> error) {
-	    //TODO schow the list to the user
 		showResult.setBackground(Color.RED);
-		
+		resWindow.presentFailure(error);
 	}
 
 	@Override
 	public void presentFailureExample(FailureExample example) {
-		// TODO Auto-generated method stub
-		
+		showResult.setBackground(Color.RED);
+		resWindow.presentFailureExample(example);
 	}
 
 

@@ -5,8 +5,8 @@ import java.util.List;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 
 /**
+ * This class provides the result presenter with the necessary data about the counterexample.
  * @author Justin & Lukas
- *
  */
 public class FailureExample {
 
