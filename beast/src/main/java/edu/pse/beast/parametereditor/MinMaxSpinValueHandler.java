@@ -18,8 +18,7 @@ public class MinMaxSpinValueHandler implements ChangeListener{
     public MinMaxSpinValueHandler(JSpinner minSpinner, JSpinner maxSpinner) {
         this.minSpinner = minSpinner;
         this.maxSpinner = maxSpinner;
-        minBefore = Integer.parseInt("" + minSpinner.getValue());
-        maxBefore = Integer.parseInt("" + maxSpinner.getValue());
+        setMinAndMax(1, 1);
     }
     public ArrayList<Integer> getValues() {
         ArrayList<Integer> result = new ArrayList<>();
@@ -28,38 +27,45 @@ public class MinMaxSpinValueHandler implements ChangeListener{
         return result;
     }
     public void setMinAndMax(Integer min, Integer max) {
-        if (min <= 10000 && min >= 0 && max <= 10000 && max >= 0) {
+        if (min <= 10000 && min >= 1 && max <= 10000 && max >= 1) {
         minSpinner.setValue(java.lang.Math.min(min, max));
         maxSpinner.setValue(java.lang.Math.max(min, max));
         } else {
             minSpinner.setValue(minBefore);
             maxSpinner.setValue(maxBefore);
         }
-        minBefore = Integer.parseInt("" + minSpinner.getValue());
-        maxBefore = Integer.parseInt("" + maxSpinner.getValue());
+        minBefore = Integer.parseInt(minSpinner.getValue().toString());
+        maxBefore = Integer.parseInt(maxSpinner.getValue().toString());
     }
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        Integer min = Integer.parseInt("" + minSpinner.getValue());
-        Integer max = Integer.parseInt("" + maxSpinner.getValue());
-        if(min <= 10000 && min >= 0 && max <= 10000 && max >= 0) {
-            if(e.getSource().equals(minSpinner)) {
-                if(min > maxBefore) {
-                    max = min;
+        String minString = (minSpinner.getValue().toString());
+        String maxString = (maxSpinner.getValue().toString());
+        if ((minString + maxString).chars().allMatch(Character::isDigit)) {
+            Integer min = Integer.parseInt(minString);
+            Integer max = Integer.parseInt(maxString);
+            if (min <= 10000 && min >= 1 && max <= 10000 && max >= 1) {
+                if (e.getSource().equals(minSpinner)) {
+                    if (min > maxBefore) {
+                        max = min;
+                    }
+                } else if (e.getSource().equals(maxSpinner)) {
+                    if (max < minBefore) {
+                        min = max;
+                    }
                 }
-            } else if(e.getSource().equals(maxSpinner)) {
-                if(max < minBefore) {
-                    min = max;
-                }
+                minSpinner.setValue(min);
+                maxSpinner.setValue(max);
+            } else {
+                minSpinner.setValue(minBefore);
+                maxSpinner.setValue(maxBefore);
             }
-            minSpinner.setValue(min);
-            maxSpinner.setValue(max);
         } else {
             minSpinner.setValue(minBefore);
             maxSpinner.setValue(maxBefore);
         }
-        minBefore = Integer.parseInt("" + minSpinner.getValue());
-        maxBefore = Integer.parseInt("" + maxSpinner.getValue());
+        minBefore = Integer.parseInt(minSpinner.getValue().toString());
+        maxBefore = Integer.parseInt(maxSpinner.getValue().toString());
     }
 }
