@@ -20,7 +20,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
  */
 public class PostAndPrePropertiesDescription {
 
-    private final String name;
+    private String name;
     private SymbolicVariableList symbolicVariableList;
     private FormalPropertiesDescription prePropertiesDescription;
     private FormalPropertiesDescription postPropertiesDescription;
@@ -79,5 +79,17 @@ public class PostAndPrePropertiesDescription {
 
     public FormalPropertiesDescription getPrePropertiesDescription() {
         return prePropertiesDescription;
+    }
+
+    public void setPostPropertiesDescription(FormalPropertiesDescription postPropertiesDescription) {
+        this.postPropertiesDescription = postPropertiesDescription;
+    }
+
+    public void setPrePropertiesDescription(FormalPropertiesDescription prePropertiesDescription) {
+        this.prePropertiesDescription = prePropertiesDescription;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

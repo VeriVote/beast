@@ -5,21 +5,33 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.UserActions;
 
+import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.toolbox.UserAction;
+
 
 /**
  *
  * @author Holger-Desktop
  */
 public class SaveElectionUserAction extends UserAction {
+    private CElectionDescriptionEditor cElectionDescriptionEditor;
+    private SaveAsElectionUserAction saveAsElectionUserAction;
 
-    public SaveElectionUserAction() {
+    public SaveElectionUserAction(CElectionDescriptionEditor cElectionDescriptionEditor,
+                                  SaveAsElectionUserAction saveAsElectionUserAction) {
         super("save");
+        this.cElectionDescriptionEditor = cElectionDescriptionEditor;
+        this.saveAsElectionUserAction = saveAsElectionUserAction;
     }
     
     @Override
     public void perform() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (cElectionDescriptionEditor.getSaveBeforeChangeHandler().hasBeenSaved()) {
+            cElectionDescriptionEditor.getSaveBeforeChangeHandler().updatePreValue();
+            // TODO implement saving file
+        } else {
+            saveAsElectionUserAction.perform();
+        }
     }
     
 }

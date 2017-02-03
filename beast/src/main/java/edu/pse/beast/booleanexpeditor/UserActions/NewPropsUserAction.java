@@ -11,11 +11,10 @@ import edu.pse.beast.toolbox.UserAction;
  */
 public class NewPropsUserAction extends UserAction {
     private final BooleanExpEditor booleanExpEditor;
-    private final SaveBeforeChangeHandler saveBeforeChangeHandler;
+
     public NewPropsUserAction(BooleanExpEditor booleanExpEditor, SaveBeforeChangeHandler saveBeforeChangeHandler) {
         super("new");
         this.booleanExpEditor = booleanExpEditor;
-        this.saveBeforeChangeHandler = saveBeforeChangeHandler;
     }
 
     public static PostAndPrePropertiesDescription createEmptyPostAndPropObject() {

@@ -5,21 +5,48 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.UserActions;
 
+import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.toolbox.UserAction;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import java.io.File;
 
 /**
  *
  * @author Holger-Desktop
  */
 public class SaveAsElectionUserAction extends UserAction {
-    
-    public SaveAsElectionUserAction() {
+    private CElectionDescriptionEditor electionDescriptionEditor;
+
+    public SaveAsElectionUserAction(CElectionDescriptionEditor electionDescriptionEditor) {
         super("save_as");
-        
+        this.electionDescriptionEditor = electionDescriptionEditor;
     }
 
     @Override
     public void perform() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+                if (file.getName().matches("(.)+(\\.)elec") || file.isDirectory()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            @Override
+            public String getDescription() {
+                return "BEASTElectionDescription (*.elec)";
+            }
+        });
+        if (fileChooser.showSaveDialog(electionDescriptionEditor.getGui()) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            // TODOsave to file
+            electionDescriptionEditor.getSaveBeforeChangeHandler().setHasBeensaved(true);
+        }
     }
+
 }

@@ -52,7 +52,7 @@ public final class ElectionDescriptionSaverLoader {
         // save the voting declaration line
         saveBasicType(savedFormat, "votingDeclLine", "" + descr.getVotingDeclLine());
 
-        savedFormat.add("<!EletionDescription>");
+        savedFormat.add("<!ElectionDescription>");
         return savedFormat;
     }
 

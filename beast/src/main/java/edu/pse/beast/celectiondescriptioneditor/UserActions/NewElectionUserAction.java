@@ -43,20 +43,14 @@ public class NewElectionUserAction extends UserAction implements DisplaysStrings
     
     @Override
     public void perform() {
-        if (saveBeforeChangeHandler.hasChanged()) {
-            int option = editor.getGui().showOptionPane(editor.getElectionDescription().getName());
-            if (option == JOptionPane.YES_OPTION) {
-                throw new UnsupportedOperationException("Not supported yet.");
-            } else if (option == JOptionPane.CANCEL_OPTION) {
-                return;
-            }
+        if (saveBeforeChangeHandler.ifHasChangedOpenDialog(editor.getElectionDescription().getName())) {
+            electionTemplateDialog = new ElectionTemplateChooser(
+                    this,
+                    templateHandler,
+                    currentLoader, currentLoader.getStringFromID("emptyNameTextFieldError"));
+            electionTemplateDialog.setDefaultCloseOperation(ElectionTemplateChooser.DISPOSE_ON_CLOSE);
+            electionTemplateDialog.setVisible(true);
         }
-        electionTemplateDialog = new ElectionTemplateChooser(
-                this,
-                templateHandler,
-                currentLoader, currentLoader.getStringFromID("emptyNameTextFieldError"));
-        electionTemplateDialog.setDefaultCloseOperation(ElectionTemplateChooser.DISPOSE_ON_CLOSE);
-        electionTemplateDialog.setVisible(true);
     }
 
     public void create(String input, String res, String name) {

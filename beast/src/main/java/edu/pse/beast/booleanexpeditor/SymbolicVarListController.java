@@ -31,6 +31,7 @@ public class SymbolicVarListController implements DisplaysStringsToUser {
     private String errorString;
     private String nameNotMatchingError;
     private String alreadyExistsError;
+    private BooleanExpEditorWindow booleanExpEditorWindow;
 
     /**
      * Constructor
@@ -40,13 +41,15 @@ public class SymbolicVarListController implements DisplaysStringsToUser {
      * @param stringLoaderInterface the interface to load needed strings
      */
     SymbolicVarListController(JList jList, JButton addVarButton, JButton removeVarButton,
-                              StringLoaderInterface stringLoaderInterface, SymbolicVariableList symbolicVariableList) {
+                              StringLoaderInterface stringLoaderInterface, SymbolicVariableList symbolicVariableList,
+                              BooleanExpEditorWindow booleanExpEditorWindow) {
         this.jList = jList;
         this.addVarButton = addVarButton;
         this.removeVarButton = removeVarButton;
         this.stringLoaderInterface = stringLoaderInterface;
         this.symbolicVariableList = symbolicVariableList;
         this.jListModel = (DefaultListModel) jList.getModel();
+        this.booleanExpEditorWindow = booleanExpEditorWindow;
         updateStringRes(stringLoaderInterface);
         addVarButton.addActionListener(new AddVarActionListener());
         removeVarButton.addActionListener(new removeVarActionListener());
@@ -75,7 +78,7 @@ public class SymbolicVarListController implements DisplaysStringsToUser {
                     "Name:", name
             };
 
-            int option = JOptionPane.showConfirmDialog(null, message, newVariableString,
+            int option = JOptionPane.showConfirmDialog(booleanExpEditorWindow, message, newVariableString,
                     JOptionPane.OK_CANCEL_OPTION);
             if (option == JOptionPane.OK_OPTION) {
                 String errorCause = "";
@@ -100,11 +103,12 @@ public class SymbolicVarListController implements DisplaysStringsToUser {
                         InternalTypeContainer intTypeCont = new InternalTypeContainer(InternalTypeRep.SEAT);
                         SymbolicVarListController.this.symbolicVariableList.addSymbolicVariable(name.getText(), intTypeCont);
                         jListModel.addElement(seatString + " " + name.getText());
+
                     }
                 } else {
                     System.out.println("Faulty variable name");
                     Object errorMessage = errorString + "\n (" + errorCause + ")";
-                    JOptionPane.showMessageDialog(null, errorMessage, "", JOptionPane.OK_OPTION);
+                    JOptionPane.showMessageDialog(booleanExpEditorWindow, errorMessage, "", JOptionPane.OK_OPTION);
                 }
             } else {
                 System.out.println("Variable adding canceled");

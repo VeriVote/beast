@@ -1,8 +1,6 @@
 package edu.pse.beast.booleanexpeditor;
 
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
-import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import javax.swing.JTextPane;
 import java.util.ArrayList;
@@ -32,7 +30,7 @@ public class ErrorWindow {
     void displayErrors(ArrayList<String> errors) {
         String errorsAsString = errorString + ": " + errors.size() + "\n";
         for (int i = 0; i < errors.size(); i++) {
-            errorsAsString += i+1 + ": " + errors.get(i) + "\n";
+            errorsAsString += i+1 + ": " + errors.get(i) +  "\n";
         }
         textPane.setText(errorsAsString);
     }

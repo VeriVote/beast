@@ -12,6 +12,7 @@ import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTempla
 import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
 import edu.pse.beast.celectiondescriptioneditor.GUI.CEditorWindowStarter;
 import edu.pse.beast.celectiondescriptioneditor.UserActions.*;
+import edu.pse.beast.saverloader.SaverLoaderInterface;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ActionIdAndListener;
 import edu.pse.beast.toolbox.CCodeHelper;
@@ -64,18 +65,21 @@ public class CElectionDescriptionEditorBuilder {
                 gui.getCodeAreaScrollPane(),
                 new CErrorDisplayer(gui.getCodeArea(), objRefsForBuilder.getStringIF()));
 
-        CElectionDescriptionEditor editor = new CElectionDescriptionEditor(codeArea, gui, codeAreaBuilder, errorWindow);
+        // create new SaveBeforeChangeHandler
+        SaveBeforeChangeHandler saveBeforeChangeHandler = new SaveBeforeChangeHandler(codeArea.getPane(), gui);
+        CElectionDescriptionEditor editor = new CElectionDescriptionEditor(codeArea, gui, codeAreaBuilder, errorWindow, saveBeforeChangeHandler);
         
         CElectionEditorMenubarHandler menuBarHandler = 
                 new CElectionEditorMenubarHandler(
                         menuHeadingIds,
                         gui,
-                        createActionIdAndListenerList(objRefsForBuilder, editor, codeArea),
+                        createActionIdAndListenerList(objRefsForBuilder, editor),
                         objRefsForBuilder.getStringIF());
         
         //toolbar: new save save_as load copy cut paste undo redo
-        
-        ActionIdAndListener[] idAndListener = {
+        saveBeforeChangeHandler.setSaveElectionUserAction((SaveElectionUserAction) save);
+
+                ActionIdAndListener[] idAndListener = {
             createFromUserAction(newAcc),
             createFromUserAction(save),
             createFromUserAction(saveAs),
@@ -101,7 +105,7 @@ public class CElectionDescriptionEditorBuilder {
         ElectionTemplateHandler templateHandler = new ElectionTemplateHandler();
 
         try {
-            editor.letUserEditElectionDescription(new CCodeHelper().generateElectionDescription(
+            editor.loadElectionDescription(new CCodeHelper().generateElectionDescription(
                     templateHandler.getInputIds()[0],
                     templateHandler.getOutputIds()[0],
                     "new_election",
@@ -117,17 +121,15 @@ public class CElectionDescriptionEditorBuilder {
     private ArrayList<ArrayList<ActionIdAndListener>> 
         createActionIdAndListenerList(
                 ObjectRefsForBuilder objRefsForBuilder,
-                CElectionDescriptionEditor editor,
-                CElectionCodeArea codeArea) {
+                CElectionDescriptionEditor editor) {
         ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
         
         ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
-        SaveBeforeChangeHandler saveBeforeChangeHandler = new SaveBeforeChangeHandler(codeArea.getPane());
 
         newAcc = createNewElectionUserAction(editor, objRefsForBuilder.getStringIF());
-        save = createSaveElectionUserAction();
-        saveAs = createSaveAsElectionUserAction();
-        load = createLoadElectionUserAction();
+        saveAs = createSaveAsElectionUserAction(editor);
+        save = createSaveElectionUserAction(editor, (SaveAsElectionUserAction) saveAs);
+        load = createLoadElectionUserAction(editor, objRefsForBuilder.getSaverLoaderIF());
         copy = createElectionCopyUserAction(editor);
         cut = createElectionCutUserAction(editor);
         paste = createElectionPasteUserAction(editor);
@@ -171,14 +173,16 @@ public class CElectionDescriptionEditorBuilder {
             StringLoaderInterface stringIf) {
         return new NewElectionUserAction(editor, stringIf);
     } 
-    private SaveElectionUserAction createSaveElectionUserAction() {
-        return new SaveElectionUserAction();
+    private SaveElectionUserAction createSaveElectionUserAction(CElectionDescriptionEditor electionDescriptionEditor,
+                                                                SaveAsElectionUserAction saveAsElectionUserAction) {
+        return new SaveElectionUserAction(electionDescriptionEditor, saveAsElectionUserAction);
     } 
-    private SaveAsElectionUserAction createSaveAsElectionUserAction() {
-        return new SaveAsElectionUserAction();
+    private SaveAsElectionUserAction createSaveAsElectionUserAction(CElectionDescriptionEditor electionDescriptionEditor) {
+        return new SaveAsElectionUserAction(electionDescriptionEditor);
     }    
-    private LoadElectionUserAction createLoadElectionUserAction() {
-        return new LoadElectionUserAction();
+    private LoadElectionUserAction createLoadElectionUserAction(CElectionDescriptionEditor cElectionDescriptionEditor,
+                                                                SaverLoaderInterface saverLoaderInterface) {
+        return new LoadElectionUserAction(cElectionDescriptionEditor, saverLoaderInterface);
     }
     private ElectionCopyUserAction createElectionCopyUserAction(CElectionDescriptionEditor editor) {
         return new ElectionCopyUserAction(editor);

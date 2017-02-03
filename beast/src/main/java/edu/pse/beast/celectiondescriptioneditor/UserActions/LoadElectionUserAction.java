@@ -5,7 +5,13 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.UserActions;
 
+import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
+import edu.pse.beast.saverloader.SaverLoaderInterface;
 import edu.pse.beast.toolbox.UserAction;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import java.io.File;
 
 /**
  *
@@ -13,13 +19,41 @@ import edu.pse.beast.toolbox.UserAction;
  */
 public class LoadElectionUserAction extends UserAction {
 
-    public LoadElectionUserAction() {
+    private CElectionDescriptionEditor cElectionDescriptionEditor;
+    private SaverLoaderInterface saverLoaderInterface;
+
+    public LoadElectionUserAction(CElectionDescriptionEditor cElectionDescriptionEditor, SaverLoaderInterface saverLoaderInterface) {
         super("load");
+        this.cElectionDescriptionEditor = cElectionDescriptionEditor;
+        this.saverLoaderInterface = saverLoaderInterface;
     }
     
     @Override
     public void perform() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (cElectionDescriptionEditor.getSaveBeforeChangeHandler().ifHasChangedOpenDialog(
+                cElectionDescriptionEditor.getElectionDescription().getName())) {
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setFileFilter(new FileFilter() {
+                @Override
+                public boolean accept(File file) {
+                    if (file.getName().matches("(.)+(\\.)c") || file.isDirectory()) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+
+                @Override
+                public String getDescription() {
+                    return "ElectionDescription (*.c)";
+                }
+            });
+            if (fileChooser.showOpenDialog(cElectionDescriptionEditor.getGui()) == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                //TODO implement OmniSaverLoader call and cElectionDescriptionEditor.loadPostAndPreProperties
+                cElectionDescriptionEditor.getSaveBeforeChangeHandler().setHasBeensaved(true);
+            }
+        }
     }
     
 }

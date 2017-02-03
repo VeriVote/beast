@@ -34,16 +34,17 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     private ErrorWindow errorWindow;
     private SaveBeforeChangeHandler saveBeforeChangeHandler;
     private ArrayList<ElectionDescriptionChangeListener> descriptionChangeListeners = new ArrayList<>();
+    private Boolean isElectionDescriptionCorrect = true;
 
     public CElectionDescriptionEditor(
             CElectionCodeArea codeArea,
             CCodeEditorGUI gui,            
-            CElectionCodeAreaBuilder builder, ErrorWindow errorWindow) {
+            CElectionCodeAreaBuilder builder, ErrorWindow errorWindow, SaveBeforeChangeHandler saveBeforeChangeHandler) {
         this.codeArea = codeArea;
         this.gui = gui;
         this.builder = builder;
         this.errorWindow = errorWindow;
-        this.saveBeforeChangeHandler = new SaveBeforeChangeHandler(codeArea.getPane());
+        this.saveBeforeChangeHandler = saveBeforeChangeHandler;
     }
 
     @Override
@@ -52,13 +53,17 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         return currentDescription;
     }
 
-    private void updateCurrentDescription() {
-        
+    public void updateCurrentDescription() {
     }
 
     public void findErrorsAndDisplayThem() {
         ArrayList<String> errorMsgList =  new ArrayList<String>();
         ArrayList<CodeError> errors = codeArea.getErrorCtrl().getErrorFinderList().getErrors();
+        if (errors.size() == 0) {
+            this.isElectionDescriptionCorrect = true;
+        } else {
+            this.isElectionDescriptionCorrect = false;
+        }
         for (CodeError error : errors) {
             errorMsgList.add(((BooleanExpErrorDisplayer) codeArea.getErrorCtrl().getDisplayer()).createMsg(error));
         }
@@ -79,7 +84,8 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         
     @Override
     public boolean isCorrect() {
-        return true;
+        findErrorsAndDisplayThem();
+        return isElectionDescriptionCorrect;
     }
 
     @Override
@@ -100,13 +106,22 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         return codeArea;
     }
 
-    public void letUserEditElectionDescription(ElectionDescription description) throws BadLocationException {
+    public boolean letUserEditElectionDescription(ElectionDescription description) throws BadLocationException {
+        if (saveBeforeChangeHandler.ifHasChangedOpenDialog(currentDescription.getName())) {
+            loadElectionDescription(description);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void loadElectionDescription(ElectionDescription description) throws BadLocationException {
         gui.setNewCodeArea();
-        codeArea = builder.createCElectionCodeArea(gui.getCodeArea(), 
-                gui.getCodeAreaScrollPane(), 
+        codeArea = builder.createCElectionCodeArea(gui.getCodeArea(),
+                gui.getCodeAreaScrollPane(),
                 (CErrorDisplayer) codeArea.getErrorCtrl().getDisplayer());
         codeArea.letUserEditCode(description.getCode());
-        codeArea.lockLine(description.getVotingDeclLine());     
+        codeArea.lockLine(description.getVotingDeclLine());
         codeArea.lockLine(description.getCode().size() - 1);
         this.currentDescription = description;
         saveBeforeChangeHandler.addNewTextPane(codeArea.getPane());
@@ -116,6 +131,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
             l.outputChanged(description.getOutputType());
         }
         findErrorsAndDisplayThem();
+        saveBeforeChangeHandler.setHasBeensaved(false);
     }
 
     /**
@@ -149,4 +165,5 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     public void setVisible(boolean vis) {
         gui.setVisible(vis);
     }
+
 }

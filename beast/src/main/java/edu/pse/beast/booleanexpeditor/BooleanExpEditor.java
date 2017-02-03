@@ -13,10 +13,12 @@ import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpE
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
+import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.toolbox.MenuBarHandler;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import edu.pse.beast.toolbox.ToolbarHandler;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionBaseListener;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ public class BooleanExpEditor {
     private final SymbolicVarListController symbolicVarListController;
     private final BooleanExpEditorWindowStarter windowStarter;
     private final ErrorWindow errorWindow;
-    private final PostAndPrePropertiesDescription currentlyLoadedPostAndPreProp;
+    private PostAndPrePropertiesDescription currentlyLoadedPostAndPreProp;
     private MenuBarHandler menuBarHandler;
     private ToolbarHandler toolBarHandler;
     private BooleanExpCodeArea prePropCodeArea;
@@ -41,6 +43,7 @@ public class BooleanExpEditor {
     private final BooleanExpCodeAreaBuilder codeAreaBuilder;
     private ObjectRefsForBuilder refs;
     private CElectionDescriptionEditor cEditor;
+    private boolean arePropertiesCorrect;
 
     /**
      * Temporary Constructor declaration to build BooleanExpEditor for Dummy-GUI
@@ -93,8 +96,15 @@ public class BooleanExpEditor {
         ArrayList<String> errorMsgList =  new ArrayList<String>();
         ArrayList<CodeError> errors = prePropCodeArea.getErrorCtrl().getErrorFinderList().getErrors();
         errors.addAll(postPropCodeArea.getErrorCtrl().getErrorFinderList().getErrors());
+        if (errors.size() == 0) {
+            arePropertiesCorrect = true;
+        } else {
+            arePropertiesCorrect = false;
+        }
         for (CodeError error : errors) {
-            errorMsgList.add(((BooleanExpErrorDisplayer) prePropCodeArea.getErrorCtrl().getDisplayer()).createMsg(error));
+            String errorMsg = ((BooleanExpErrorDisplayer) prePropCodeArea.getErrorCtrl().getDisplayer()).createMsg(error)
+                    + "(Zeile " + error.getLine() + ")";
+            errorMsgList.add(errorMsg);
         }
         errorWindow.displayErrors(errorMsgList);
     }
@@ -105,21 +115,17 @@ public class BooleanExpEditor {
      * @return a boolean stating the success of the loading
      */
     public boolean letUserEditPostAndPreProperties(PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
-        if (saveBeforeChangeHandler.hasChanged()) {
-            int option = window.showOptionPane(currentlyLoadedPostAndPreProp.getName());
-            if (option == JOptionPane.YES_OPTION) {
-                throw new UnsupportedOperationException("Not supported yet.");
-            } else if (option == JOptionPane.CANCEL_OPTION) {
-                return false;
-            }
+        if (saveBeforeChangeHandler.ifHasChangedOpenSaveDialog(currentlyLoadedPostAndPreProp.getName())) {
+            loadNewProperties(postAndPrePropertiesDescription);
+            return true;
+        } else {
+            return false;
         }
-        loadNewProperties(postAndPrePropertiesDescription);
-        return true;
     }
 
     void loadNewProperties(PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
         System.out.println("Loading symbolic variable list");        
-        
+        currentlyLoadedPostAndPreProp = postAndPrePropertiesDescription;
         symbolicVarListController.setSymbVarList(postAndPrePropertiesDescription.getSymbolicVariableList());
         window.setNewTextpanes();
         saveBeforeChangeHandler.addNewTextPanes(window.getPrePropTextPane(), window.getPostPropTextPane());
@@ -147,13 +153,16 @@ public class BooleanExpEditor {
         prePropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         postPropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         codeAreaFocusListener.addNewCodeAreas(prePropCodeArea, postPropCodeArea);
+
         System.out.println("Loading properties");
         prePropCodeArea.getPane().setText(postAndPrePropertiesDescription.getPrePropertiesDescription().getCode());
         postPropCodeArea.getPane().setText(postAndPrePropertiesDescription.getPostPropertiesDescription().getCode());
+
         System.out.println("Finding errors");
         this.findErrorsAndDisplayThem();
         this.window.setWindowTitle(postAndPrePropertiesDescription.getName());
         saveBeforeChangeHandler.updatePreValues();
+        saveBeforeChangeHandler.setHasBeensaved(false);
     }
 
     /**
@@ -166,15 +175,15 @@ public class BooleanExpEditor {
 
     public boolean isCorrect() {
         findErrorsAndDisplayThem();
-        if (prePropCodeArea.getErrorCtrl().getErrorFinderList().getErrors().size() == 0 &&
-                postPropCodeArea.getErrorCtrl().getErrorFinderList().getErrors().size() == 0){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return arePropertiesCorrect;
     }
 
+    public void updatePostAndPrePropObject() {
+        currentlyLoadedPostAndPreProp.setPrePropertiesDescription(
+                new FormalPropertiesDescription(prePropCodeArea.getPane().getText()));
+        currentlyLoadedPostAndPreProp.setPostPropertiesDescription(
+                new FormalPropertiesDescription(postPropCodeArea.getPane().getText()));
+    }
     /**
      * Getter
      * @return the BooleanExpEditorWindow instance of this class
@@ -189,5 +198,9 @@ public class BooleanExpEditor {
 
     public BooleanExpCodeArea getPrePropCodeArea() {
         return prePropCodeArea;
+    }
+
+    public SaveBeforeChangeHandler getSaveBeforeChangeHandler() {
+        return saveBeforeChangeHandler;
     }
 }

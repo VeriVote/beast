@@ -5,9 +5,7 @@
  */
 package edu.pse.beast.datatypes.propertydescription;
 
-import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
-import edu.pse.beast.toolbox.BooleanExpCodeToASTConverter;
-import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.FormalPropertySyntaxTreeToAstTranslator;
+import java.util.List;
 
 /**
  *
