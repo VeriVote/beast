@@ -79,10 +79,10 @@ public class PropertyCheckerTest {
         amountVoters.add(4);
 
         List<Integer> amountCandidates = new ArrayList<Integer>();
-        amountCandidates.add(50);
+        amountCandidates.add(5);
 
         List<Integer> amountSeats = new ArrayList<Integer>();
-        amountSeats.add(40);
+        amountSeats.add(4);
 
         ElectionCheckParameter ecp = new ElectionCheckParameter(amountVoters, amountCandidates, amountSeats,
                 new TimeOut(TimeUnit.MINUTES, 2), 8, "--trace;--unwind 1000");

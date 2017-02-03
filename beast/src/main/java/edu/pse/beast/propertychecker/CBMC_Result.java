@@ -30,6 +30,6 @@ public class CBMC_Result extends Result {
 	public FailureExample createFailureExample() {
 	    
 	    return null;
-	   // return new FailureExample(getInternalType(), votes, voteList, elect, seats, getNumCandidates(), getNumSeats(), getNumVoters());
+	    //return new FailureExample(getInternalType(), votes, voteList, elect, seats, getNumCandidates(), getNumSeats(), getNumVoters());
 	}
 }
