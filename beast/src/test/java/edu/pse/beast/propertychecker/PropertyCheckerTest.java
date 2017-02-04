@@ -108,7 +108,6 @@ public class PropertyCheckerTest {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            System.exit(0);
         }
 
         System.out.println("______________________________________");
@@ -117,7 +116,14 @@ public class PropertyCheckerTest {
 
         for (Iterator iterator = resultate.iterator(); iterator.hasNext();) {
             ResultInterface resultInterface = (ResultInterface) iterator.next();
-            resultInterface.presentTo(null);
+     //       resultInterface.presentTo(null);
         }
+        
+        System.out.println("::::::::::::::::::::::::::::::::::::::::::");
+        
+        for (Iterator iterator = ((Result)resultate.get(0)).getResult().iterator(); iterator.hasNext();) {
+            String line = (String) iterator.next();
+            System.out.println(line);
+        }      
     }
 }

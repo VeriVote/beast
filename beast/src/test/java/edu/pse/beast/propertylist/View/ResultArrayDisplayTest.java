@@ -46,12 +46,12 @@ public class ResultArrayDisplayTest {
 		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		ElectionType et = ElectionType.SINGLECHOICE;
-		List<int[][]> votes = new ArrayList<int[][]>();
-		List<int[]> elected = new ArrayList<int[]>();
-		votes.add(new int[][]{ {3,2,1}, {2,3,1}, {2,2,2} });
-		votes.add(new int[][]{ {2,2,1}, {1,1,1}, {3,3,1} });
-		elected.add(new int[]{2,1});
-		elected.add(new int[]{2,3});
+		List<Long[][]> votes = new ArrayList<Long[][]>();
+		List<Long[]> elected = new ArrayList<Long[]>();
+		votes.add(new Long[][]{ {3l,2l,1l}, {2l,3l,1l}, {2l,2l,2l} });
+		votes.add(new Long[][]{ {2l,2l,1l}, {1l,1l,1l}, {3l,3l,1l} });
+		elected.add(new Long[]{2l,1l});
+		elected.add(new Long[]{2l,3l});
 		
 		FailureExample fail = new FailureExample(et, null, votes, null, elected, 3, 1, 3);
 		

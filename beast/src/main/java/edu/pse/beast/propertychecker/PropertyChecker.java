@@ -38,8 +38,13 @@ public class PropertyChecker implements ResultCheckerCommunicator {
     public List<ResultInterface> checkPropertiesForDescription(ElectionDescriptionSource elecDescr,
             PostAndPrePropertiesDescriptionSource propDescrSrc, ParameterSource params) {
 
-        this.factoryController = new FactoryController(elecDescr, propDescrSrc, params, checkerID, params.getParameter().getProcesses());
-        return factoryController.getResults();
+        if (elecDescr == null || propDescrSrc == null || params == null) {
+            return null;
+        } else {
+            this.factoryController = new FactoryController(elecDescr, propDescrSrc, params, checkerID,
+                    params.getParameter().getProcesses());
+            return factoryController.getResults();
+        }
     }
 
     @Override
@@ -47,7 +52,7 @@ public class PropertyChecker implements ResultCheckerCommunicator {
         if (factoryController != null) {
             factoryController.stopChecking(false);
         } else {
-            ErrorLogger.log("Tried to stop the checking before a factory controller existed!");
+            ErrorLogger.log("Tried to stop the checking before a factory controller existed or after it finished!");
         }
     }
 

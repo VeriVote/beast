@@ -9,6 +9,7 @@ import java.util.List;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
+import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
@@ -111,23 +112,17 @@ public class CBMCProcessFactory extends CheckerFactory {
 	public File createCodeFile(ElectionDescriptionSource electionDescSrc,
 			PostAndPrePropertiesDescription postAndPrepPropDesc) {
 
-		// CBMCCodeGenerator generator = new
-		// CBMCCodeGenerator(electionDescSrc.getElectionDescription(),
-		// postAndPrepPropDesc);
-
-		new CBMCCodeGenerator_Holger();
-
-		String generated = new CBMCCodeGenerator_Holger().generateCode(postAndPrepPropDesc,
-				electionDescSrc.getElectionDescription());
-
-		List<String> split = new ArrayList<String>(Arrays.asList(generated.split("\n")));
-
+	    
+	    CBMCCodeGenerator generator = new CBMCCodeGenerator(electionDescSrc.getElectionDescription(), postAndPrepPropDesc);
+	    
+	    
+	    
+	    ArrayList<String> code;
+        code = generator.getCode();
+        
 		File file = new File(new File(pathToTempFolder), FileLoader.getNewUniqueName(pathToTempFolder) + ".c");
 
-		// File file = new File(pathToTempFolder +
-		// CheckerFactoryFactory.newUniqueName() + ".c");
-
-		FileSaver.writeStringLinesToFile(split, file);
+		FileSaver.writeStringLinesToFile(code, file);
 		// FileSaver.writeStringLinesToFile(generator.getCode(), file);
 		return file;
 	}
