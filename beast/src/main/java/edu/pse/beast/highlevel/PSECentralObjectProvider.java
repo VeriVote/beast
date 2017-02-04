@@ -37,7 +37,7 @@ public class PSECentralObjectProvider implements CentralObjectProvider{
         booleanExpEditor = new BooleanExpEditorBuilder().createBooleanExpEditorObject(refs, cElectionEditor);        
         propertyList = new PropertyListBuilder().createPropertyList(refs, booleanExpEditor);
         checkerCommunicator = new PropertyChecker("cbmc"); //this must be done via the checkerfactory at some point
-        paramEd = new ParameterEditorBuilder().createParameterEditor(refs, cElectionEditor, propertyList);    
+        paramEd = new ParameterEditorBuilder().createParameterEditor(refs, cElectionEditor, booleanExpEditor, propertyList);
         paramEd.addCheckListener(communicator);
     }
 

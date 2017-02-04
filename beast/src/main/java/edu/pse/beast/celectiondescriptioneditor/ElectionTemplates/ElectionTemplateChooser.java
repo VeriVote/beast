@@ -78,7 +78,7 @@ public class ElectionTemplateChooser extends javax.swing.JFrame{
         name = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 
         jLabel1.setText("Input");
 

@@ -1,5 +1,5 @@
 file : Datei
-new : Neu
+new : Neue Wahlverfahrensbeschreibung
 save : Speichern
 save_as : Speichern unter
 load : Öffnen

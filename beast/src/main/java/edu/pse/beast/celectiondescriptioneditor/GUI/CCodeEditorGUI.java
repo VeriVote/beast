@@ -41,7 +41,6 @@ public class CCodeEditorGUI extends javax.swing.JFrame implements DisplaysString
     public CCodeEditorGUI() {
         initComponents();
         jTextPane2.setEditable(false);
-        setDefaultCloseOperation(ElectionTemplateChooser.HIDE_ON_CLOSE);
     }
 
     public JTextPane getCodeArea() {
@@ -112,7 +111,7 @@ public class CCodeEditorGUI extends javax.swing.JFrame implements DisplaysString
 
         jMenuItem9.setText("jMenuItem9");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         setTitle("Wahleditor - EinfacheMehrheitswahl.c");
 
         jScrollPane3.setViewportView(jTextPane1);

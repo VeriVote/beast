@@ -1,5 +1,6 @@
 package edu.pse.beast.parametereditor;
 
+import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
@@ -8,6 +9,8 @@ import edu.pse.beast.toolbox.ImageResourceProvider;
 import edu.pse.beast.toolbox.UserAction;
 import edu.pse.beast.parametereditor.UserActions.*;
 import edu.pse.beast.saverloader.SaverLoaderInterface;
+
+import javax.swing.*;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,18 +23,19 @@ public class ParameterEditorBuilder {
 
     private ParameterEditor editor;
     private ParameterEditorWindow window;
-    private String[] menuHeadingIds = {"fileMenu", "projectMenu", "optionsMenu"};
+    private String[] menuHeadingIds = {"fileMenu", "projectMenu", "optionsMenu", "showHideWindowsMenu"};
 
     public ParameterEditor createParameterEditor(
             ObjectRefsForBuilder refs,
             CElectionDescriptionEditor cElectionDescriptionEditor,
+            BooleanExpEditor booleanExpEditor,
             PropertyList propertyList) {
         ParameterEditorWindowStarter windowStarter = new ParameterEditorWindowStarter();
         window = windowStarter.getParameterEditorWindow();
         window.updateStringRes(refs.getStringIF());
         editor = new ParameterEditor(cElectionDescriptionEditor, propertyList, window);
         ParameterEditorMenuBarHandler menuBarHandler = new ParameterEditorMenuBarHandler(menuHeadingIds,
-                createActionIdAndListenerListForMenuHandler(cElectionDescriptionEditor, propertyList,
+                createActionIdAndListenerListForMenuHandler(cElectionDescriptionEditor, booleanExpEditor, propertyList,
                         refs.getSaverLoaderIF()),
                 refs.getStringIF().getParameterEditorStringResProvider().getMenuStringRes(), window);
         ImageResourceProvider imageRes = ImageResourceProvider.getToolbarImages();
@@ -49,6 +53,7 @@ public class ParameterEditorBuilder {
 
     private ArrayList<ArrayList<ActionIdAndListener>>
             createActionIdAndListenerListForMenuHandler(CElectionDescriptionEditor cElectionDescriptionEditor,
+                                                        BooleanExpEditor booleanExpEditor,
                     PropertyList propertyList, SaverLoaderInterface saverLoaderIF) {
         ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
 
@@ -58,6 +63,9 @@ public class ParameterEditorBuilder {
         UserAction save_as = createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
         UserAction start = createStartCheckUserAction();
         UserAction stop = createAbortCheckUserAction();
+        UserAction showPropertyList = createShowPropertyListUserAction(propertyList.getView());
+        UserAction showBooleanExpEditor = createShowBooleanExpEditorUserAction(booleanExpEditor.getWindow());
+        UserAction showCElectionEditor = createShowCElectionEditorUserAction(cElectionDescriptionEditor.getGui());
 
         ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
         fileList.add(createFromUserAction(newly));
@@ -71,9 +79,15 @@ public class ParameterEditorBuilder {
 
         ArrayList<ActionIdAndListener> optionsList = new ArrayList<>();
 
+        ArrayList<ActionIdAndListener> showHideWindowsList = new ArrayList<>();
+        showHideWindowsList.add(createFromUserAction(showCElectionEditor));
+        showHideWindowsList.add(createFromUserAction(showPropertyList));
+        showHideWindowsList.add(createFromUserAction(showBooleanExpEditor));
+
         created.add(fileList);
         created.add(projectList);
         created.add(optionsList);
+        created.add(showHideWindowsList);
         return created;
     }
 
@@ -124,6 +138,18 @@ public class ParameterEditorBuilder {
 
     private UserAction createAbortCheckUserAction() {
         return new AbortCheckUserAction(editor);
+    }
+
+    private UserAction createShowPropertyListUserAction(JFrame propertyListWindow) {
+        return new ShowHidePropertyList(propertyListWindow);
+    }
+
+    private UserAction createShowBooleanExpEditorUserAction(JFrame booleanExpEditorWindow) {
+        return new ShowHideBooleanExpEditor(booleanExpEditorWindow);
+    }
+
+    private UserAction createShowCElectionEditorUserAction(JFrame cCodeEditorGUI) {
+        return new ShowHideCElectionEditor(cCodeEditorGUI);
     }
 
     private ActionIdAndListener createFromUserAction(UserAction userAc) {

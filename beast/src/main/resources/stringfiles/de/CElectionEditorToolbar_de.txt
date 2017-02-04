@@ -1,4 +1,4 @@
-new : Neue Wahlverfahrensbeschreibung editieren
+new : Neue Wahlverfahrensbeschreibung
 save : Speichern
 save_as : Speichern unter
 load : Öffnen

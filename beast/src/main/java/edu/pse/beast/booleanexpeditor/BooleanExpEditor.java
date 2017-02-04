@@ -126,7 +126,8 @@ public class BooleanExpEditor {
     }
 
     void loadNewProperties(PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
-        System.out.println("Loading symbolic variable list");        
+        System.out.println("Loading symbolic variable list");
+        updatePostAndPrePropObject();
         currentlyLoadedPostAndPreProp = postAndPrePropertiesDescription;
         symbolicVarListController.setSymbVarList(postAndPrePropertiesDescription.getSymbolicVariableList());
         window.setNewTextpanes();

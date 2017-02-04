@@ -1,5 +1,5 @@
 fileMenu : Datei
-new : Neu
+new : Neue Eigenschaft
 load : Öffnen
 save : Speichern
 save_as : Speichern unter
