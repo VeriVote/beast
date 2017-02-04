@@ -173,6 +173,11 @@ public class FactoryController implements Runnable {
         }
     }
 
+    /**
+     * 
+     * @return a NEW list with all the results objects. This list is used nowhere in the propertychecker, 
+     *          so you can remove parts out of it as you want.
+     */
     public List<ResultInterface> getResults() {
         if (results == null) {
 
@@ -180,11 +185,14 @@ public class FactoryController implements Runnable {
             return null;
 
         } else {
-
-            // TODO schöner machen, wenn möglich
-            List<? extends ResultInterface> toReturn = results;
-
-            return (List<ResultInterface>) toReturn;
+            
+            List<ResultInterface> toReturn = new ArrayList<ResultInterface>();
+            
+            for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
+                Result result = (Result) iterator.next();
+                toReturn.add(result);
+            }
+            return toReturn;
         }
     }
     
