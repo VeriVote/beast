@@ -6,6 +6,8 @@
 package edu.pse.beast.datatypes.propertydescription;
 
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
+import sun.awt.image.ImageWatched;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,7 +18,7 @@ import java.util.List;
  */
 public class SymbolicVariableList {
 
-    private final List<SymbolicVariable> symbolicVariableList;
+    private final LinkedList<SymbolicVariable> symbolicVariableList;
     private List<VariableListListener> listener = new ArrayList<>();
     public SymbolicVariableList() {
         symbolicVariableList = new LinkedList<>();
@@ -42,7 +44,11 @@ public class SymbolicVariableList {
         return varAllowed;
     }
 
-    public List<SymbolicVariable> getSymbolicVariables() {
+    public void setSymbolicVariableList(LinkedList<SymbolicVariable> symbolicVariableList) {
+        this.symbolicVariableList.clear();
+        this.symbolicVariableList.addAll(symbolicVariableList);
+    }
+    public LinkedList<SymbolicVariable> getSymbolicVariables() {
         return symbolicVariableList;
     }
 

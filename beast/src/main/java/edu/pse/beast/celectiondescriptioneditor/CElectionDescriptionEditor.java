@@ -90,12 +90,10 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
 
     @Override
     public void stopReacting() {
-        
     }
 
     @Override
     public void resumeReacting() {
-        
     }
 
     /**

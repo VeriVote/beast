@@ -58,7 +58,7 @@ public class NewElectionUserAction extends UserAction implements DisplaysStrings
             ElectionDescription description = cCodeHelper.generateElectionDescription(
                     input, res, name, 
                     templateHandler, currentLoader);
-            editor.letUserEditElectionDescription(description);
+            editor.loadElectionDescription(description);
         } catch (BadLocationException ex) {
             Logger.getLogger(NewElectionUserAction.class.getName()).log(Level.SEVERE, null, ex);
         }
