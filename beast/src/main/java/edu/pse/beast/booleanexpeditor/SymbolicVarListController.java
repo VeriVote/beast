@@ -11,6 +11,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Controller of the symbolic variable JList and its related JButtons in BooleanExpressionWindow.
@@ -128,7 +129,7 @@ public class SymbolicVarListController implements DisplaysStringsToUser {
     /**
      * Loads new
      */
-    void setSymbVarList(LinkedList<SymbolicVariable> symbVarList) {
+    void setSymbVarList(List<SymbolicVariable> symbVarList) {
         symbolicVariableList.getSymbolicVariables().clear();
         symbolicVariableList.getSymbolicVariables().addAll(symbVarList);
         updateJlist();
