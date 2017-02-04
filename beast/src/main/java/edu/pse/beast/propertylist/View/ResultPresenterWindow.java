@@ -117,7 +117,7 @@ public class ResultPresenterWindow extends JFrame {
 			appendPane("Votes: ");
 			if (ex.isChooseOneCandidate()) appendPane(Arrays.toString(ex.getVotes().get(i)));
 			else {
-				int[][] arr = ex.getVoteList().get(i);
+				Long[][] arr = ex.getVoteList().get(i);
 				for (int j = 0; j < arr.length; j++) {
 					appendPane(Arrays.toString(arr[j]));
 					if (j < arr.length - 1) appendPane(", ");
@@ -126,7 +126,7 @@ public class ResultPresenterWindow extends JFrame {
 			appendLine("");
 			
 			appendPane("Elected: ");
-			if (ex.isOneSeatOnly()) appendPane(Integer.toString(ex.getElect().get(i)));
+			if (ex.isOneSeatOnly()) appendPane(Long.toString(ex.getElect().get(i)));
 			else appendPane(Arrays.toString(ex.getSeats().get(i)));
 			appendLine("\n");
 		}

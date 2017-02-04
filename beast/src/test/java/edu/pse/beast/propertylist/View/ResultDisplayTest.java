@@ -41,23 +41,23 @@ public class ResultDisplayTest {
 	}
 
 	public static void main(String[] args) {
-		
-		ResultPresenterWindow win = new ResultPresenterWindow();
-		win.setVisible(true);
-		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		ElectionType et = ElectionType.SINGLECHOICE;
-		List<int[]> votes = new ArrayList<int[]>();
-		List<Integer> elected = new ArrayList<Integer>();
-		votes.add(new int[]{3,2,1});
-		votes.add(new int[]{2,2,1});
-		elected.add(new Integer(3));
-		elected.add(new Integer(2));
-		
-		FailureExample fail = new FailureExample(et, votes, null, elected, null, 3, 1, 3);
-		
-		win.presentFailureExample(fail);
-		
-		
+//		
+//		ResultPresenterWindow win = new ResultPresenterWindow();
+//		win.setVisible(true);
+//		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		
+//		ElectionType et = ElectionType.SINGLECHOICE;
+//		List<int[]> votes = new ArrayList<int[]>();
+//		List<Long> elected = new ArrayList<Long>();
+//		votes.add(new int[]{3,2,1});
+//		votes.add(new int[]{2,2,1});
+//		elected.add(3l);
+//		elected.add(2l);
+//		
+//		FailureExample fail = new FailureExample(et, votes, null, elected, null, 3, 1, 3);
+//		
+//		win.presentFailureExample(fail);
+//		
+//		
 	}
 }

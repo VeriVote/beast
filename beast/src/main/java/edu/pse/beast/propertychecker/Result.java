@@ -7,6 +7,7 @@ package edu.pse.beast.propertychecker;
 
 import java.util.List;
 
+import edu.pse.beast.datatypes.ElectionType;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenterElement;
@@ -26,7 +27,7 @@ public abstract class Result implements ResultInterface {
     private int numVoters;
     private int numSeats;
     private int numCandidates;
-    private InternalTypeContainer internalType;
+    private ElectionType electionType;
 
     
     /**
@@ -127,8 +128,8 @@ public abstract class Result implements ResultInterface {
         return numCandidates;
     }
 
-    public InternalTypeContainer getInternalType() {
-        return internalType;
+    public ElectionType getElectionType() {
+        return electionType;
     }
 
     public void setNumVoters(int numVoters) {
@@ -143,7 +144,7 @@ public abstract class Result implements ResultInterface {
         this.numCandidates = numCandidates;
     }
 
-    public void setInternalType(InternalTypeContainer internalType) {
-        this.internalType = internalType;
+    public void setElectionType(ElectionType electionType) {
+        this.electionType = electionType;
     }
 }

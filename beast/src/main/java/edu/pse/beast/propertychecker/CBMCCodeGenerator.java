@@ -12,6 +12,8 @@ import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescripti
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
@@ -131,7 +133,7 @@ public class CBMCCodeGenerator {
      * method.
      */
     private void addSymbVarInitialisation() {
-        LinkedList<SymbolicVariable> symbolicVariableList = postAndPrePropertiesDescription.getSymbolicVariableList();
+        List<SymbolicVariable> symbolicVariableList = postAndPrePropertiesDescription.getSymbolicVariableList();
         code.add("//Symbolic Variables initialisation");
         symbolicVariableList.forEach((symbVar) -> {
             InternalTypeContainer internalType = symbVar.getInternalTypeContainer();

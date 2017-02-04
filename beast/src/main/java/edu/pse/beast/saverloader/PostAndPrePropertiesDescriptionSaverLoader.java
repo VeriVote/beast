@@ -66,7 +66,7 @@ public class PostAndPrePropertiesDescriptionSaverLoader {
         resultList.add(tagLeft + tagEnder + varName + tagRight);
     }
 
-    private static void saveSymbolicVarList(List<String> resultList, String varName, LinkedList<SymbolicVariable> symbolicVariableList) {
+    private static void saveSymbolicVarList(List<String> resultList, String varName, List<SymbolicVariable> symbolicVariableList) {
         //signals that it is a list
         varName = varName + listIdentfier;
         // save the code
