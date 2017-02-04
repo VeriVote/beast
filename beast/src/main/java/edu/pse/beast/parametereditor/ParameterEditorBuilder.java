@@ -23,7 +23,7 @@ public class ParameterEditorBuilder {
 
     private ParameterEditor editor;
     private ParameterEditorWindow window;
-    private String[] menuHeadingIds = {"fileMenu", "projectMenu", "optionsMenu", "showHideWindowsMenu"};
+    private String[] menuHeadingIds = {"fileMenu", "projectMenu", "editorMenu", "showHideWindowsMenu"};
 
     public ParameterEditor createParameterEditor(
             ObjectRefsForBuilder refs,
@@ -63,6 +63,7 @@ public class ParameterEditorBuilder {
         UserAction save_as = createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
         UserAction start = createStartCheckUserAction();
         UserAction stop = createAbortCheckUserAction();
+        UserAction options = createOptionsUserAction(cElectionDescriptionEditor, propertyList);
         UserAction showPropertyList = createShowPropertyListUserAction(propertyList.getView());
         UserAction showBooleanExpEditor = createShowBooleanExpEditorUserAction(booleanExpEditor.getWindow());
         UserAction showCElectionEditor = createShowCElectionEditorUserAction(cElectionDescriptionEditor.getGui());
@@ -77,7 +78,8 @@ public class ParameterEditorBuilder {
         projectList.add(createFromUserAction(start));
         projectList.add(createFromUserAction(stop));
 
-        ArrayList<ActionIdAndListener> optionsList = new ArrayList<>();
+        ArrayList<ActionIdAndListener> editorList = new ArrayList<>();
+        editorList.add(createFromUserAction(options));
 
         ArrayList<ActionIdAndListener> showHideWindowsList = new ArrayList<>();
         showHideWindowsList.add(createFromUserAction(showCElectionEditor));
@@ -86,7 +88,7 @@ public class ParameterEditorBuilder {
 
         created.add(fileList);
         created.add(projectList);
-        created.add(optionsList);
+        created.add(editorList);
         created.add(showHideWindowsList);
         return created;
     }
@@ -138,6 +140,11 @@ public class ParameterEditorBuilder {
 
     private UserAction createAbortCheckUserAction() {
         return new AbortCheckUserAction(editor);
+    }
+    
+    private UserAction createOptionsUserAction(CElectionDescriptionEditor cElectionDescriptionEditor,
+            PropertyList propertyList) {
+        return new OptionsUserAction(propertyList, cElectionDescriptionEditor, editor);
     }
 
     private UserAction createShowPropertyListUserAction(JFrame propertyListWindow) {

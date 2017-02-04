@@ -18,7 +18,6 @@ import edu.pse.beast.toolbox.ToolbarHandler;
 import edu.pse.beast.toolbox.MenuBarHandler;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Iterator;
 import java.awt.event.ActionListener;
 
 /**
@@ -58,11 +57,10 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
         window.getSeatMax().addChangeListener(seatHandler);
         timeoutHandler = new TimeoutValueHandler(window.getTimeoutNum(), window.getTimeoutUnit());
         window.getTimeoutNum().addChangeListener(timeoutHandler);
-        //win.getTimeoutUnit().addActionListener(timeoutHandler); //TODO:Find solution to ActionListener/ChangeListener requirements
+        window.getTimeoutUnit().addActionListener(timeoutHandler);
         processHandler = new SingleValueSpinnerHandler(window.getAmountProcessesSpinner());
         window.getAmountProcessesSpinner().addChangeListener(processHandler);
         argumentHandler = new ArgumentHandler(window.getAdvancedWindow().getInputField(), window.getAdvancedWindow().getOkButton());
-        //win.getAdvancedWindow().getInputField().addActionListener(argumentHandler); //TODO:Find solution to ActionListener requirements
     }
 
     @Override
@@ -84,6 +82,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
     public void abortCheck() {
         checkListener.stopCheck();
     }
+    
 
     @Override
     public void addCheckListener(CheckListener checkListenerObject) {
@@ -102,12 +101,12 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
 
     @Override
     public void stopReacting() {
-        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void resumeReacting() {
-        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

@@ -6,7 +6,8 @@ load : Öffnen
 projectMenu : Projekt
 start : Teste Eigenschaften
 stop : Stoppe Test
-optionsMenu : Einstellungen
+editorMenu : Editor
+options : Einstellungen
 showHideWindowsMenu : Fenster
 showPropertyList : Eigenschaftenliste anzeigen/ausblenden
 showBooleanExpEditor : Eigenschafteneditor anzeigen/ausblenden

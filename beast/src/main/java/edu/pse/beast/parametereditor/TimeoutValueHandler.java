@@ -3,7 +3,9 @@ package edu.pse.beast.parametereditor;
 import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import javax.swing.event.ChangeListener;
+import java.awt.event.ActionListener;
 import edu.pse.beast.datatypes.TimeOut;
+import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeEvent;
 import java.util.concurrent.TimeUnit;
 
@@ -11,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Jonas
  */
-public class TimeoutValueHandler implements ChangeListener{
+public class TimeoutValueHandler implements ChangeListener, ActionListener{
     private final JSpinner timeoutSpinner;
     private final JComboBox timeoutUnit;
     
@@ -53,6 +55,11 @@ public class TimeoutValueHandler implements ChangeListener{
 
     @Override
     public void stateChanged(ChangeEvent e) {
+        setValue(getTimeout());
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
         setValue(getTimeout());
     }
 }

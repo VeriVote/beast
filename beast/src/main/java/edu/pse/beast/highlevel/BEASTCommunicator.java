@@ -2,7 +2,6 @@ package edu.pse.beast.highlevel;
 
 import java.util.List;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,10 +16,7 @@ public class BEASTCommunicator implements CheckListener {
     private List<ResultInterface> resultList;
 
     /**
-     * Constructor that takes an CentralObjectProvider that provides access to
-     * the other important packages for the BEASTCommunicator.
-     *
-     * @param centralObjectProvider CentralObjectProvider
+     * Constructor
      */
     public BEASTCommunicator() {
 
