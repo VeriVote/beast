@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  * @author Jonas
  */
 public class BEASTCommunicator implements CheckListener {
-    
+
     private CentralObjectProvider centralObjectProvider;
     private List<ResultInterface> resultList;
 
@@ -23,13 +23,13 @@ public class BEASTCommunicator implements CheckListener {
      * @param centralObjectProvider CentralObjectProvider
      */
     public BEASTCommunicator() {
-        
+
     }
-    
+
     public void setCentralObjectProvider(CentralObjectProvider centralObjectProvider) {
         this.centralObjectProvider = centralObjectProvider;
     }
-    
+
     @Override
     public void startCheck() {
         ElectionDescriptionSource electSrc = centralObjectProvider.getElectionDescriptionSource();
@@ -48,15 +48,13 @@ public class BEASTCommunicator implements CheckListener {
             System.err.println("Es bestehen noch Fehler bei den angegebenen Parametern. "
                     + "Bitte korrigieren sie diese, um fortzufahren.");
         } else {
-            
+
             resultList = centralObjectProvider.getResultCheckerCommunicator().checkPropertiesForDescription(electSrc, postAndPreSrc, paramSrc);
-            
-            if(resultList.isEmpty() ) {
+
+            if (resultList.isEmpty()) {
                 System.out.println("result List is empty");
             }
 
-            System.out.println("Now I'm done with checking");
-            
             while (resultList.size() > 0) {
                 try {
                     Thread.sleep(500);
@@ -65,30 +63,30 @@ public class BEASTCommunicator implements CheckListener {
                 }
                 //for (ResultInterface result : resultList) {
                 for (Iterator<ResultInterface> iterator = resultList.iterator(); iterator.hasNext();) {
+
                     ResultInterface result = (ResultInterface) iterator.next();
-                    
-                    ResultPresenter resultPresenter = centralObjectProvider.getResultPresenter();
-                    
-                    resultPresenter.presentResult(result);
-                    
-                    iterator.remove();
-                } 
+                    if (result.readyToPresent())  {
+                        ResultPresenter resultPresenter = centralObjectProvider.getResultPresenter();
+                        resultPresenter.presentResult(result);
+                        iterator.remove();
+                    }
+                }
             }
-            
+            System.out.println("Now I'm done with checking");
         }
     }
-    
+
     @Override
     public void stopCheck() {
         ElectionDescriptionSource electSrc = centralObjectProvider.getElectionDescriptionSource();
         PostAndPrePropertiesDescriptionSource postAndPreSrc = centralObjectProvider.getPostAndPrePropertiesSource();
         ParameterSource paramSrc = centralObjectProvider.getParameterSrc();
-        
+
         electSrc.resumeReacting();
         postAndPreSrc.resumeReacting();
         paramSrc.resumeReacting();
-        
+
         centralObjectProvider.getResultCheckerCommunicator().abortChecking();
     }
-    
+
 }
