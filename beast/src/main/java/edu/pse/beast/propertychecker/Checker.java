@@ -90,7 +90,7 @@ public abstract class Checker implements Runnable {
 			ErrorLogger.log("Process couldn't be started");
 		}
 
-		parent.notifyThatFinished(result);
+		parent.notifyThatFinished(result, errors);
 	}
 
 	public List<String> getResultList() {
