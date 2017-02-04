@@ -30,6 +30,7 @@ import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.propertylist.PLControllerInterface;
 import edu.pse.beast.propertylist.PropertyItem;
 import edu.pse.beast.propertylist.Model.PLModelInterface;
+import edu.pse.beast.propertylist.Model.ResultType;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
@@ -38,13 +39,14 @@ import edu.pse.beast.stringresource.StringResourceLoader;
 *
 * @author Justin
 */
-public class ListItem extends JPanel implements DisplaysStringsToUser, ResultPresenterElement {
+public class ListItem extends JPanel implements DisplaysStringsToUser {
 	
 	PLModelInterface model;
 	PLControllerInterface controller;
 	
 	private boolean reactsToInput;
 	
+	protected ResultPresenterWindow resWindow = new ResultPresenterWindow();
 	private PropertyItem prop;
 	
 	protected ResultButton showResult = new ResultButton();
@@ -53,13 +55,10 @@ public class ListItem extends JPanel implements DisplaysStringsToUser, ResultPre
 	protected JButton changeButton = new JButton();
 	protected JButton deleteButton = new JButton();
 	
-	protected ResultPresenterWindow resWindow = new ResultPresenterWindow();
+	
 	
 	public ListItem(PLControllerInterface controller, PLModelInterface model) {
-		this.model = model;
-		this.controller = controller;
-		prop = new PropertyItem();
-		reactsToInput = true;
+		this(controller, model, new PropertyItem());
 		init();
 	}
 	
@@ -87,15 +86,19 @@ public class ListItem extends JPanel implements DisplaysStringsToUser, ResultPre
 	private void init() {
 		this.setMaximumSize(new Dimension(500,2000));
 		Dimension iconSize = new Dimension(40,40);
+		
+		
 		showResult.setPreferredSize(new Dimension(80,40));
 		showResult.setIcon(new ImageIcon(getClass().getResource("/images/other/eye.png")));
+		present();
+		showResult.setBackground(present());
 		showResult.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				Point leftupper = showResult.getLocationOnScreen(); // for creating jframe
-				resWindow.setLocation(new Point((int)leftupper.getX(), (int)leftupper.getY() - 30));
-				//resWindow.setLocation(showResult.getLocationOnScreen());
+				Point pos = showResult.getLocationOnScreen();
+				resWindow.setLocation(new Point((int)pos.getX(), (int)pos.getY() - 30));
+				resWindow.getShowResult().setBackground(present());
+				passMessage();
 				resWindow.setVisible(true);
 			}
 		});
@@ -118,12 +121,12 @@ public class ListItem extends JPanel implements DisplaysStringsToUser, ResultPre
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				if (reactsToInput) {
-				if (e.getStateChange() == ItemEvent.SELECTED) {
-					controller.setTestStatus(prop, true);
-				}
-				else {
-					controller.setTestStatus(prop, false);
-				}
+					if (e.getStateChange() == ItemEvent.SELECTED) {
+						controller.setTestStatus(prop, true);
+					}
+					else {
+						controller.setTestStatus(prop, false);
+					}
 				}
 			}
 		});
@@ -162,8 +165,28 @@ public class ListItem extends JPanel implements DisplaysStringsToUser, ResultPre
 		this.revalidate();
 		this.repaint();
 	}
+	
+	private Color present() {
+		switch (prop.getResultType()) {
+			case SUCCESS : return Color.RED; 
+			case TIMEOUT : return Color.ORANGE; 
+			case FAILURE : return Color.MAGENTA; 
+			case FAILUREEXAMPLE : return Color.RED; 
+			default : return Color.GRAY;
+		}
+	}
+	
+	private void passMessage() {
+		switch (prop.getResultType()) {
+			case SUCCESS : resWindow.presentSuccess(); break;
+			case TIMEOUT : resWindow.presentTimeOut(); break;
+			case FAILURE : resWindow.presentFailure(prop.getError()); break;
+			case FAILUREEXAMPLE : resWindow.presentFailureExample(prop.getExample());
+			default : break;
+		}
+	}
 
-	@Override
+	/*@Override
 	public void presentTimeOut() {
 		showResult.setBackground(Color.ORANGE);
 		
@@ -172,7 +195,10 @@ public class ListItem extends JPanel implements DisplaysStringsToUser, ResultPre
 	@Override
 	public void presentSuccess() {
 		showResult.setBackground(Color.GREEN);
-		
+		prop.setResultType(ResultType.SUCCESS);
+		super.validate();
+		this.revalidate();
+		this.repaint();
 	}
 
 	@Override
@@ -186,6 +212,6 @@ public class ListItem extends JPanel implements DisplaysStringsToUser, ResultPre
 		showResult.setBackground(Color.RED);
 		resWindow.presentFailureExample(example);
 	}
-
+	*/
 
 }

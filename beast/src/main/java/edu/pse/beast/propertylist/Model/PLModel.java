@@ -5,6 +5,7 @@ import java.util.Observable;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.propertylist.PropertyItem;
 
 public class PLModel extends Observable implements PLModelInterface {
@@ -127,6 +128,18 @@ public class PLModel extends Observable implements PLModelInterface {
 		PropertyItem changed = propertyList.get(dirtyIndex);
 		changed.setDescription(editor.getCurrentlyLoadedPostAndPreProp());
 		propertyList.set(dirtyIndex, changed);
+	}
+
+	public boolean setNextToBePresented(ResultInterface res) {
+		for (PropertyItem item : propertyList) {
+			if (item.getResultType() == ResultType.UNTESTED) {
+				res.presentTo(item);
+				//item.setResultType(ResultType.TESTED);
+				updateView();
+				return true;
+			}
+		}
+		return false;
 	}
 	
 

@@ -5,6 +5,7 @@ import java.util.Observer;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.propertylist.PropertyItem;
 
 public interface PLModelInterface {
@@ -17,13 +18,15 @@ public interface PLModelInterface {
 	boolean deleteProperty(PropertyItem prop, BooleanExpEditor editor);
 	void setTestStatus(PropertyItem prop, boolean newStatus);
 	
-	ArrayList<PropertyItem> getList();
-	
 	void userActionNewList();
+	
+	ArrayList<PropertyItem> getList();
 	
 	int getDirtyIndex();
 	int getUpdateIndex();
 
 	void addObserver(Observer o);
 	void deleteObserver(Observer o);
+
+	boolean setNextToBePresented(ResultInterface res);
 }

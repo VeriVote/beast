@@ -28,6 +28,7 @@ import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.propertylist.PropertyListMenuBarHandler;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PLModelInterface;
+import edu.pse.beast.propertylist.Model.ResultType;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
@@ -52,6 +53,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	private JPanel endpanel;
 	
 	private ArrayList<ListItem> items = new ArrayList<ListItem>();
+	private ListItem nextToPresent;
 	private JButton addNewButton = new JButton();
 	
 	private NewPropertyWindow newPropWindow;
@@ -128,7 +130,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 
 	
 	// shaky
-	public void addItem(PropertyItem prop) {
+	/*public void addItem(PropertyItem prop) {
 		ListItem addedItem = new ListItem(controller, model, prop);
 		panel.add(addedItem, BorderLayout.WEST);
 		panel.revalidate();
@@ -139,7 +141,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		panel.remove(delItem);
 		panel.revalidate();
 		items.remove(delItem);
-	}
+	}*/
 	
 	
 	private void updateItems(ArrayList<PropertyItem> propertyList) {
@@ -150,10 +152,18 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		
 		for (PropertyItem propertyItem : propertyList) {
 			ListItem current = new ListItem(controller, model, propertyItem);
+			if (propertyItem.getResultType() == ResultType.TESTED) this.setNextToPresent(current);
 			items.add(current);
 			panel.add(current, BorderLayout.CENTER);
+			//propertyItem.getResultInterface().presentTo(current);
 		}
 		panel.revalidate();
+		panel.repaint();
+	}
+	
+	public void updateView() {
+		panel.revalidate();
+		this.validate();
 		panel.repaint();
 	}
 	
@@ -210,6 +220,16 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	private void setReactsToInput(boolean reacts) {
 		reactsToInput = reacts;
 		for (ListItem item : items) item.setReactsToInput(reacts);
+	}
+
+
+	public ListItem getNextToPresent() {
+		return nextToPresent;
+	}
+
+
+	public void setNextToPresent(ListItem nextToPresent) {
+		this.nextToPresent = nextToPresent;
 	}
 	
 

@@ -50,6 +50,7 @@ public class PropertyListWindowStarterTest {
 		
 		PropertyListWindowStarter starter = new PropertyListWindowStarter(controller, model);
 		starter.start();
+		controller.addNewProperty();
 		
 		
 		/*OptionsInterface options = new OptionsInterface();

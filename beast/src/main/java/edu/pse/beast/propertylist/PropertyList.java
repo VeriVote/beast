@@ -56,6 +56,9 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 	public PLModel getModel() {
 		return (PLModel)model;
 	}
+	public PropertyListWindow getView() {
+		return view;
+	}
 	
 	@Override
 	public void toggleResult() {
@@ -81,7 +84,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 	}
 	@Override
 	public void addDescription(PostAndPrePropertiesDescription desc) {
-		// TODO Auto-generated method stub
+		// TODO Only when Descriptions are already available
 		
 	}
 	@Override
@@ -133,12 +136,15 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 	 */
 	@Override
 	public void presentResult(ResultInterface res) {
-		// TODO Auto-generated method stub
+		// Auto-generated method stub
 		
 		// if (res.readyToPresent()) res.presentTo(presenter);
 		
 		// ich brauch noch das postandpreproperties dazu
 		
+		model.setNextToBePresented(res);
+		//res.presentTo(view.getNextToPresent());
+		//view.updateView();
 	}
 	
 

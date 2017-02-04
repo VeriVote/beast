@@ -19,7 +19,7 @@ import edu.pse.beast.datatypes.FailureExample;
 
 public class ResultPresenterWindow extends JFrame {
 	
-	private JButton hide;
+	private JButton showResult;
 	private JButton export;
 	
 	private JTextPane result;
@@ -31,22 +31,26 @@ public class ResultPresenterWindow extends JFrame {
 		init();
 	}
 	
+	public JButton getShowResult() {
+		return showResult;
+	}
+	
 	private void init() {
 		this.setLayout(new BorderLayout());
 		setBounds(0, 0, 300, 300);
 		
 		Dimension iconSize = new Dimension(80,40);
 		
-		hide = new JButton();
-		hide.setPreferredSize(iconSize);
-		hide.setIcon(new ImageIcon(getClass().getResource("/images/other/eye.png")));
-		hide.addActionListener(new ActionListener() {
+		showResult = new JButton();
+		showResult.setPreferredSize(iconSize);
+		showResult.setIcon(new ImageIcon(getClass().getResource("/images/other/eye.png")));
+		showResult.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				setVisible(false);
 			}
 		});
-		getContentPane().add(hide, BorderLayout.PAGE_START);
+		getContentPane().add(showResult, BorderLayout.PAGE_START);
 		
 		result = new JTextPane();
 		result.setEditable(false);
@@ -128,6 +132,12 @@ public class ResultPresenterWindow extends JFrame {
 		}
 	}
 	
+	public void presentSuccess() {
+		// TODO
+	}
+	public void presentTimeOut() {
+		// TODO
+	}
 	
 	
 }

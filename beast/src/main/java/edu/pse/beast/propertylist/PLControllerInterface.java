@@ -1,6 +1,7 @@
 package edu.pse.beast.propertylist;
 
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.highlevel.ResultInterface;
 
 public interface PLControllerInterface {
 	
@@ -13,5 +14,5 @@ public interface PLControllerInterface {
 	void addDescription(PostAndPrePropertiesDescription desc);
 	void addNewProperty();
 	
-	
+	void presentResult(ResultInterface res);
 }
