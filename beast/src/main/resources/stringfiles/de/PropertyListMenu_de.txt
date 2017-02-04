@@ -14,3 +14,5 @@ save : Speichern
 save_as : Speichern unter
 undo : Rückgängig
 redo : Wiederherstellen
+areYouSure : Sind Sie sicher?
+newList : Neue Liste

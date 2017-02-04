@@ -1,5 +1,9 @@
 package edu.pse.beast.propertylist.UserActions;
 
+import java.io.File;
+
+import javax.swing.JFileChooser;
+
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.toolbox.UserAction;
 
@@ -8,16 +12,20 @@ import edu.pse.beast.toolbox.UserAction;
  */
 public class SaveAsPropertyList extends UserAction {
 	
-	private final PropertyList list;
+	private final PropertyList controller;
 
-	public SaveAsPropertyList(PropertyList list) {
+	public SaveAsPropertyList(PropertyList controller) {
 		super("save_as");
-		this.list = list;
+		this.controller = controller;
 	}
 
 	@Override
 	public void perform() {
-		// TODO Auto-generated method stub
+		JFileChooser fc = new JFileChooser();
+		if (fc.showSaveDialog(controller.getView()) == JFileChooser.APPROVE_OPTION) {
+			File file = fc.getSelectedFile();
+			// TODO save
+		}
 		
 	}
 	

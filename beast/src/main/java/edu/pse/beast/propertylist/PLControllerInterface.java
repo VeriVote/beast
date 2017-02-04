@@ -10,7 +10,7 @@ public interface PLControllerInterface {
 	void setTestStatus(PropertyItem prop, boolean newStatus);
 	void editProperty(PropertyItem prop);
 	void deleteProperty(PropertyItem prop);
-	void addDescription(PostAndPrePropertiesDescription desc);
+	void addDescription(PropertyItem prop);
 	void addNewProperty();
 	
 	void presentResult(ResultInterface res);

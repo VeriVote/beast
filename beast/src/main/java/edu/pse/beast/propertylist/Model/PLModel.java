@@ -34,9 +34,9 @@ public class PLModel extends Observable implements PLModelInterface {
 	}
 
 	@Override
-	public boolean addDescription(PostAndPrePropertiesDescription desc) {
+	public boolean addDescription(PropertyItem prop) {
 		//propertyList.add(new PropertyItem(desc)); TODO
-		return true;
+		return false;
 	}
 
 	@Override
