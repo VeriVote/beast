@@ -69,7 +69,7 @@ public class CBMC_Result extends Result {
             List<Long[][]> votesList = new ArrayList<Long[][]>();
             
             //this pattern searches for words of the form "votes*NUMBER*" where "NUMBER" can by any positive number
-            Pattern votesExtractor = Pattern.compile("(\\bvotes[0-9]*\\b)(.*)");
+            Pattern votesExtractor = Pattern.compile("(\\bvotes[0-9]+\\[[0-9]+\\]\\[[0-9]+\\])(.*)");
 
             for (Iterator<String> iterator = getResult().iterator(); iterator.hasNext();) {
                 String line = (String) iterator.next();
