@@ -26,7 +26,7 @@ public class PSECentralObjectProvider implements CentralObjectProvider{
     private final CElectionDescriptionEditor cElectionEditor;
     private final ResultCheckerCommunicator checkerCommunicator;
     
-    public PSECentralObjectProvider() {
+    public PSECentralObjectProvider(BEASTCommunicator communicator) {
         OptionsInterface optionsInterface = new OptionsInterface();
         StringLoaderInterface stringIf = new StringLoaderInterface("de"); //must be provided  by language options at some point
         SaverLoaderInterface saverLoaderIF = new SaverLoaderInterface();
@@ -37,7 +37,8 @@ public class PSECentralObjectProvider implements CentralObjectProvider{
         booleanExpEditor = new BooleanExpEditorBuilder().createBooleanExpEditorObject(refs, cElectionEditor);        
         propertyList = new PropertyListBuilder().createPropertyList(refs, booleanExpEditor);
         checkerCommunicator = new PropertyChecker("cbmc"); //this must be done via the checkerfactory at some point
-        paramEd = new ParameterEditorBuilder().createParameterEditor(refs, cElectionEditor, propertyList);        
+        paramEd = new ParameterEditorBuilder().createParameterEditor(refs, cElectionEditor, propertyList);    
+        paramEd.addCheckListener(communicator);
     }
 
     @Override

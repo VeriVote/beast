@@ -1,21 +1,30 @@
-
 package edu.pse.beast.highlevel;
 
 import java.util.List;
 import java.util.Iterator;
+import java.util.LinkedList;
+
 /**
  * The BEASTCommunicator coordinates all the other parts of BEAST.
+ *
  * @author Jonas
  */
 public class BEASTCommunicator implements CheckListener {
-    private final CentralObjectProvider centralObjectProvider;
-    private List<ResultInterface> result;
+
+    private CentralObjectProvider centralObjectProvider;
+    private List<ResultInterface> resultList;
+
     /**
-     * Constructor that takes an CentralObjectProvider that provides access to 
- the other important packages for the BEASTCommunicator.
+     * Constructor that takes an CentralObjectProvider that provides access to
+     * the other important packages for the BEASTCommunicator.
+     *
      * @param centralObjectProvider CentralObjectProvider
      */
-    public BEASTCommunicator(CentralObjectProvider centralObjectProvider) {
+    public BEASTCommunicator() {
+
+    }
+
+    public void setCentralObjectProvider(CentralObjectProvider centralObjectProvider) {
         this.centralObjectProvider = centralObjectProvider;
     }
 
@@ -37,34 +46,33 @@ public class BEASTCommunicator implements CheckListener {
             System.err.println("Es bestehen noch Fehler bei den angegebenen Parametern. "
                     + "Bitte korrigieren sie diese, um fortzufahren.");
         } else {
-            result = centralObjectProvider.getResultCheckerCommunicator().checkPropertiesForDescription(electSrc, postAndPreSrc, paramSrc);
-            Iterator<ResultInterface> resultIterator = result.iterator();
-            boolean allReady = false;
-            while (!allReady) {
-                allReady = true;
-                while (resultIterator.hasNext()) {
-                    allReady = allReady && resultIterator.next().readyToPresent();
-                }
-                resultIterator = result.iterator();
-            }
-            while (resultIterator.hasNext()) {
-                centralObjectProvider.getResultPresenter().presentResult(resultIterator.next());
-            }
-            result = null;
+
+            resultList = centralObjectProvider.getResultCheckerCommunicator().checkPropertiesForDescription(electSrc, postAndPreSrc, paramSrc);
+            Iterator<ResultInterface> resultIterator = resultList.iterator();
+            LinkedList<Boolean> resultsReady = new LinkedList<>();
+            // for(int i=0; i< resultList.)
         }
     }
 
     @Override
     public void stopCheck() {
+        ElectionDescriptionSource electSrc = centralObjectProvider.getElectionDescriptionSource();
+        PostAndPrePropertiesDescriptionSource postAndPreSrc = centralObjectProvider.getPostAndPrePropertiesSource();
+        ParameterSource paramSrc = centralObjectProvider.getParameterSrc();
+
+        electSrc.resumeReacting();
+        postAndPreSrc.resumeReacting();
+        paramSrc.resumeReacting();
+
         centralObjectProvider.getResultCheckerCommunicator().abortChecking();
-        Iterator<ResultInterface> resultIterator = result.iterator();
+        Iterator<ResultInterface> resultIterator = resultList.iterator();
         while (resultIterator.hasNext()) {
             ResultInterface currentResult = resultIterator.next();
             if (currentResult.readyToPresent()) {
                 centralObjectProvider.getResultPresenter().presentResult(currentResult);
             }
         }
-        result = null;
+        resultList = null;
     }
-    
+
 }
