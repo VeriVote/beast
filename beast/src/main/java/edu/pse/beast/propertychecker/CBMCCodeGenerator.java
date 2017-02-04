@@ -72,13 +72,13 @@ public class CBMCCodeGenerator {
     private void generateCode() {
         addHeader();
 
-        addMainMethod();
-
         code.add("//Code of the user");
         ArrayList<String> electionDescriptionCode = (ArrayList<String>) electionDescription.getCode();
         electionDescriptionCode.forEach((item) -> {
             code.add(item);
         });
+        
+        addMainMethod();
 
     }
 
@@ -240,7 +240,7 @@ public class CBMCCodeGenerator {
 
             code.add(votesX + ";");
 
-            String[] counter = {"i", "j", "k", "l"};
+            String[] counter = {"count_i", "count_j", "count_k", "count_l"};
 
             String forTemplate = "for(unsigned int COUNTER = 0; COUNTER < MAX; ++COUNTER){";
 
@@ -257,13 +257,15 @@ public class CBMCCodeGenerator {
             String min = cCodeHelper.getMin(inputType, cont.getInternalType());
             String max = cCodeHelper.getMax(inputType, cont.getInternalType());
 
-            String voteDecl = ("assume(MIN <= votes" + voteNumber).replace("MIN", min);
+            String voteType = ("votes" + voteNumber);
+            
 
             for (int i = 0; i < listDepth; ++i) {
-                voteDecl += "[COUNTER]".replace("COUNTER", counter[i]);
+                voteType += "[COUNTER]".replace("COUNTER", counter[i]);
             }
-
+            String voteDecl = ("assume(MIN <= "+ voteType).replace("MIN", min);
             voteDecl += " < MAX);".replace("MAX", max);
+            code.add(voteType + " = nondet_int();");
             code.add(voteDecl);
 
             for (int i = 0; i < listDepth; ++i) {
