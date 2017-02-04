@@ -63,15 +63,16 @@ public class BEASTCommunicator implements CheckListener {
                 } catch (InterruptedException ex) {
                     Logger.getLogger(BEASTCommunicator.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                for (ResultInterface result : resultList) {
+                //for (ResultInterface result : resultList) {
+                for (Iterator<ResultInterface> iterator = resultList.iterator(); iterator.hasNext();) {
+                    ResultInterface result = (ResultInterface) iterator.next();
                     
-                    if (result.readyToPresent()) {
-                        ResultPresenter resultPresenter = centralObjectProvider.getResultPresenter();
-                        resultPresenter.presentResult(result);
-                        resultList.remove(result);
-                    }
-                }
-                
+                    ResultPresenter resultPresenter = centralObjectProvider.getResultPresenter();
+                    
+                    resultPresenter.presentResult(result);
+                    
+                    iterator.remove();
+                } 
             }
             
         }

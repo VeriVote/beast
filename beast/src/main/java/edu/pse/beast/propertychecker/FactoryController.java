@@ -192,6 +192,7 @@ public class FactoryController implements Runnable {
                 Result result = (Result) iterator.next();
                 toReturn.add(result);
             }
+            
             return toReturn;
         }
     }
