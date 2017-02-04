@@ -14,15 +14,12 @@ public interface PLModelInterface {
 	boolean addDescription(PropertyItem prop);
 	boolean addNewProperty(BooleanExpEditor editor);
 	void editProperty(PropertyItem prop, BooleanExpEditor editor);
-	boolean deleteProperty(PropertyItem prop, BooleanExpEditor editor);
+	boolean deleteProperty(PropertyItem prop);
 	void setTestStatus(PropertyItem prop, boolean newStatus);
 	
 	void userActionNewList();
 	
 	ArrayList<PropertyItem> getList();
-	
-	int getDirtyIndex();
-	int getUpdateIndex();
 
 	void addObserver(Observer o);
 	void deleteObserver(Observer o);

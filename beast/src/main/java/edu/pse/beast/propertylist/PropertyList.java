@@ -101,7 +101,7 @@ public class PropertyList implements 	PLControllerInterface, PostAndPrePropertie
 	}
 	@Override
 	public void deleteProperty(PropertyItem prop) {
-		model.deleteProperty(prop, editor);
+		model.deleteProperty(prop);
 	}
 	@Override
 	public void addDescription(PropertyItem prop) {

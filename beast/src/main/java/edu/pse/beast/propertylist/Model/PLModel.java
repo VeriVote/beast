@@ -1,5 +1,6 @@
 package edu.pse.beast.propertylist.Model;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -10,13 +11,14 @@ import edu.pse.beast.highlevel.ResultInterface;
 public class PLModel extends Observable implements PLModelInterface {
 	
 	private ArrayList<PropertyItem> propertyList;
-	private int dirtyIndex = -1;
-	private int updateIndex = -1;
+	
+	private File saveLocation = null;
+	private boolean changedSinceSave = false;
 
+	
 	@Override
 	public void initialize() {
 		if (propertyList == null) propertyList = new ArrayList<PropertyItem>();
-		//if (propertyList.isEmpty()) propertyList.add(new PropertyItem());
 	}
 
 	@Override
@@ -28,55 +30,46 @@ public class PLModel extends Observable implements PLModelInterface {
 		PostAndPrePropertiesDescription old = propertyList.get(index).getDescription();
 		propertyList.get(index).setDescription(newName, old.getPrePropertiesDescription(),
 				old.getPostPropertiesDescription(), old.getSymVarList());
+		
+		setChangedSinceSave(true);
 		updateView();
-		//updateIndex = index;
 		return true;
 	}
 
 	@Override
 	public boolean addDescription(PropertyItem prop) {
-		//propertyList.add(new PropertyItem(desc)); TODO
+		//propertyList.add(new PropertyItem(desc)); TODO setChangedSinceSave(true);
 		return false;
 	}
 
 	@Override
 	public boolean addNewProperty(BooleanExpEditor editor) {
-		//saveDirtyItem(editor);
-		
 		String name = "Eigenschaft ";
 		int i = 0;
 		while (indexOfName(name + i) != -1) i++;
-		
 		PropertyItem newItem = new PropertyItem(new PostAndPrePropertiesDescription(name + i), false);
 		propertyList.add(newItem);
-		//editor.letUserEditPostAndPreProperties(new PostAndPrePropertiesDescription(name + i));
-		dirtyIndex = propertyList.indexOf(newItem);
+		
+		setChangedSinceSave(true);
 		updateView();
 		return true;
 	}
 
 	@Override
 	public void editProperty(PropertyItem prop, BooleanExpEditor editor) {
-		//saveDirtyItem(editor);
-		
 		editor.letUserEditPostAndPreProperties(prop.getDescription());
-		dirtyIndex = propertyList.indexOf(prop);
+
+		setChangedSinceSave(true);
 		updateView();
 	}
 
 	@Override
-	public boolean deleteProperty(PropertyItem prop, BooleanExpEditor editor) {
+	public boolean deleteProperty(PropertyItem prop) {
 		int index = propertyList.indexOf(prop);
 		if (index == -1) return false;
-		
-		if (dirtyIndex == index) {
-			//editor.letUserEditPostAndPreProperties(propertyList.get(0).getDescription());
-			//dirtyIndex = 0;
-		}
-		
 		propertyList.remove(index);
-		if (index < dirtyIndex) dirtyIndex--;
-		updateIndex = index;
+		
+		setChangedSinceSave(true);
 		updateView();
 		return true;
 	}
@@ -84,30 +77,27 @@ public class PLModel extends Observable implements PLModelInterface {
 	@Override
 	public void setTestStatus(PropertyItem prop, boolean newStatus) {
 		prop.setTestStatus(newStatus);
-		
+		setChangedSinceSave(true);
 	}
 
-	@Override
-	public ArrayList<PropertyItem> getList() {
-		return propertyList;
-	}
-	public PLModel getModel() {
-		return this;
-	}
 
 	
 	public void userActionNewList() {
 		this.propertyList.clear();
+		setChangedSinceSave(false);
+		saveLocation = null;
 		updateView();
 	}
 	
+	public void userActionLoadList() {
+		// TODO
+	}
 	
-	public int getDirtyIndex() {
-		return dirtyIndex;
+	public void userActionSaveList() {
+		// TODO
 	}
-	public int getUpdateIndex() {
-		return updateIndex;
-	}
+	
+	
 	
 	private int indexOfName(String name) {
 		for (PropertyItem current : propertyList) {
@@ -122,12 +112,6 @@ public class PLModel extends Observable implements PLModelInterface {
 		this.clearChanged();
 	}
 	
-	private void saveDirtyItem(BooleanExpEditor editor) {
-		if (dirtyIndex == -1) return;
-		PropertyItem changed = propertyList.get(dirtyIndex);
-		changed.setDescription(editor.getCurrentlyLoadedPostAndPreProp());
-		propertyList.set(dirtyIndex, changed);
-	}
 
 	public boolean setNextToBePresented(ResultInterface res) {
 		for (PropertyItem item : propertyList) {
@@ -139,6 +123,29 @@ public class PLModel extends Observable implements PLModelInterface {
 			}
 		}
 		return false;
+	}
+
+
+	@Override
+	public ArrayList<PropertyItem> getList() {
+		return propertyList;
+	}
+	public PLModel getModel() {
+		return this;
+	}
+	
+	public File getSaveLocation() {
+		return saveLocation;
+	}
+	public void setSaveLocation(File saveLocation) {
+		this.saveLocation = saveLocation;
+	}
+	
+	public boolean isChangedSinceSave() {
+		return changedSinceSave;
+	}
+	public void setChangedSinceSave(boolean changedSinceSave) {
+		this.changedSinceSave = changedSinceSave;
 	}
 	
 
