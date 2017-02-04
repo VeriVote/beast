@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenter;
@@ -16,13 +17,16 @@ import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PLModelInterface;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.propertylist.View.PropertyListWindow;
+import edu.pse.beast.stringresource.StringLoaderInterface;
+import edu.pse.beast.stringresource.StringResourceLoader;
 
 /**
  * Class acts as controller for everything related to the property list. Returns the list of properties descriptions,
  * presents results and starts the view.
  * @author Justin
  */
-public class PropertyList implements PLControllerInterface, PostAndPrePropertiesDescriptionSource, ResultPresenter, Runnable {
+public class PropertyList implements 	PLControllerInterface, PostAndPrePropertiesDescriptionSource, 
+										ResultPresenter, Runnable, DisplaysStringsToUser {
 
 	
 	private PLModelInterface model;
@@ -30,6 +34,8 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 	private PropertyListWindow view;
 	
 	private BooleanExpEditor editor;
+	
+	private StringLoaderInterface sli;
 	
 	
 	/**
@@ -40,6 +46,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 	public PropertyList(PLModelInterface model, BooleanExpEditor editor) {
 		this.model = model;
 		this.editor = editor;
+		this.sli = new StringLoaderInterface("de");
 		editor.showWindow();
 		view = new PropertyListWindow(this, model);
 		model.initialize();
@@ -94,10 +101,10 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 	}
 	@Override
 	public void deleteProperty(PropertyItem prop) {
-		model.deleteProperty(prop, editor);
+		model.deleteProperty(prop);
 	}
 	@Override
-	public void addDescription(PostAndPrePropertiesDescription desc) {
+	public void addDescription(PropertyItem prop) {
 		// TODO Only when Descriptions are already available
 	}
 	@Override
@@ -125,6 +132,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     /* 
      * @see edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource#getPostAndPrePropertiesDescriptions()
      */
+    @Override
     public ArrayList<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptions() {
         ArrayList<PostAndPrePropertiesDescription> result = new ArrayList<PostAndPrePropertiesDescription>();
         ArrayList<PropertyItem> from = model.getList();
@@ -147,5 +155,13 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         //res.presentTo(view.getNextToPresent());
         //view.updateView();
     }
+
+	@Override
+	public void updateStringRes(StringLoaderInterface sli) {
+		this.sli = sli;
+	}
+	public StringResourceLoader getMenuStringLoader() {
+		return sli.getPropertyListStringResProvider().getMenuStringRes();
+	}
 
 }

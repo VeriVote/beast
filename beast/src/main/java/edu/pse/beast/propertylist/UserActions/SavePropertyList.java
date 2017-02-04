@@ -8,16 +8,22 @@ import edu.pse.beast.toolbox.UserAction;
  */
 public class SavePropertyList extends UserAction {
 	
-	private final PropertyList list;
+	private final PropertyList controller;
 
-	public SavePropertyList(PropertyList list) {
+	public SavePropertyList(PropertyList controller) {
 		super("save");
-		this.list = list;
+		this.controller = controller;
 	}
 
 	@Override
 	public void perform() {
-		// TODO
+		if (false) { // if it has been saved already
+			// save the file with given filename
+		}
+		else {
+			SaveAsPropertyList spl = new SaveAsPropertyList(controller);
+			spl.perform();
+		}
 		
 	}
 
