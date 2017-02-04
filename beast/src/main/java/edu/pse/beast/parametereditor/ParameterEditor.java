@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package edu.pse.beast.parametereditor;
+
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.datatypes.ElectionCheckParameter;
@@ -25,8 +26,9 @@ import java.awt.event.ActionListener;
  * @author Jonas
  */
 public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSource {
+
     private final ParameterEditorWindow window;
-    private final CElectionDescriptionEditor cElectionDescriptionEditor; 
+    private final CElectionDescriptionEditor cElectionDescriptionEditor;
     private final PropertyList propertyList;
     private final ArrayList<CheckListener> checkListener = new ArrayList<>();
     private final ArrayList<ActionListener> closeListener = new ArrayList<>();
@@ -38,9 +40,9 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
     private ArgumentHandler argumentHandler;
     private ToolbarHandler toolbarHandler;
     private MenuBarHandler menuBarHandler;
-    
+
     public ParameterEditor(
-            CElectionDescriptionEditor cElectionDescriptionEditor, 
+            CElectionDescriptionEditor cElectionDescriptionEditor,
             PropertyList propertyList, ParameterEditorWindow window) {
         this.cElectionDescriptionEditor = cElectionDescriptionEditor;
         this.propertyList = propertyList;
@@ -62,8 +64,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
         argumentHandler = new ArgumentHandler(window.getAdvancedWindow().getInputField(), window.getAdvancedWindow().getOkButton());
         //win.getAdvancedWindow().getInputField().addActionListener(argumentHandler); //TODO:Find solution to ActionListener requirements
     }
-    
-    
+
     @Override
     public ElectionCheckParameter getParameter() {
         List<Integer> voter = voterHandler.getValues();
@@ -75,23 +76,26 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
         ElectionCheckParameter param = new ElectionCheckParameter(voter, cand, seat, timeout, processes, argument);
         return param;
     }
+
     public void startCheck() {
         Iterator<CheckListener> iterator = checkListener.iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             iterator.next().startCheck();
         }
     }
+
     public void abortCheck() {
         Iterator<CheckListener> iterator = checkListener.iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             iterator.next().stopCheck();
         }
     }
 
     @Override
-    public void addCheckListener(CheckListener l) {
-        checkListener.add(l);
+    public void addCheckListener(CheckListener checkListenerObject) {
+        checkListener.add(checkListenerObject);
     }
+
     @Override
     public void addCloseAllListener(ActionListener l) {
         closeListener.add(l);
@@ -104,12 +108,12 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
 
     @Override
     public void stopReacting() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public void resumeReacting() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -121,6 +125,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
     public void saveProject(Project toBeSaved) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
     void setToolbarHandler(ToolbarHandler toolbarHandler) {
         this.toolbarHandler = toolbarHandler;
     }

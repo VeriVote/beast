@@ -1,4 +1,3 @@
-
 package edu.pse.beast.parametereditor;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
@@ -18,10 +17,11 @@ import java.awt.event.ActionListener;
  * @author Holger-Desktop
  */
 public class ParameterEditorBuilder {
+
     private ParameterEditor editor;
     private ParameterEditorWindow window;
     private String[] menuHeadingIds = {"fileMenu", "projectMenu", "optionsMenu"};
-    
+
     public ParameterEditor createParameterEditor(
             ObjectRefsForBuilder refs,
             CElectionDescriptionEditor cElectionDescriptionEditor,
@@ -29,71 +29,72 @@ public class ParameterEditorBuilder {
         ParameterEditorWindowStarter windowStarter = new ParameterEditorWindowStarter();
         window = windowStarter.getParameterEditorWindow();
         window.updateStringRes(refs.getStringIF());
-        ParameterEditorMenuBarHandler menuBarHandler = new ParameterEditorMenuBarHandler(menuHeadingIds, 
-            createActionIdAndListenerListForMenuHandler(cElectionDescriptionEditor, propertyList, 
-                    refs.getSaverLoaderIF()), 
-            refs.getStringIF().getParameterEditorStringResProvider().getMenuStringRes(), window);
-        ImageResourceProvider imageRes = ImageResourceProvider.getToolbarImages();
-        ParameterEditorToolbarHandler toolbarHandler = new ParameterEditorToolbarHandler(imageRes, 
-            refs.getStringIF().getParameterEditorStringResProvider().getToolbarTipStringRes(),
-            createActionIdAndListenerListForToolbarHandler(cElectionDescriptionEditor, propertyList, 
-                    refs.getSaverLoaderIF()), window.getToolbar(), window);
-        
         editor = new ParameterEditor(cElectionDescriptionEditor, propertyList, window);
-        windowStarter.start();
+        ParameterEditorMenuBarHandler menuBarHandler = new ParameterEditorMenuBarHandler(menuHeadingIds,
+                createActionIdAndListenerListForMenuHandler(cElectionDescriptionEditor, propertyList,
+                        refs.getSaverLoaderIF()),
+                refs.getStringIF().getParameterEditorStringResProvider().getMenuStringRes(), window);
+        ImageResourceProvider imageRes = ImageResourceProvider.getToolbarImages();
+        ParameterEditorToolbarHandler toolbarHandler = new ParameterEditorToolbarHandler(imageRes,
+                refs.getStringIF().getParameterEditorStringResProvider().getToolbarTipStringRes(),
+                createActionIdAndListenerListForToolbarHandler(cElectionDescriptionEditor, propertyList,
+                        refs.getSaverLoaderIF()), window.getToolbar(), window);
+
+        
         editor.setToolbarHandler(toolbarHandler);
         editor.setMenuBarHandler(menuBarHandler);
+        windowStarter.start();
         return editor;
     }
-    
+
     private ArrayList<ArrayList<ActionIdAndListener>>
-    createActionIdAndListenerListForMenuHandler(CElectionDescriptionEditor cElectionDescriptionEditor,
-            PropertyList propertyList, SaverLoaderInterface saverLoaderIF) {
+            createActionIdAndListenerListForMenuHandler(CElectionDescriptionEditor cElectionDescriptionEditor,
+                    PropertyList propertyList, SaverLoaderInterface saverLoaderIF) {
         ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
-        
+
         UserAction newly = createNewProjectUserAction(cElectionDescriptionEditor, propertyList);
         UserAction load = createLoadProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
         UserAction save = createSaveProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
         UserAction save_as = createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
         UserAction start = createStartCheckUserAction();
         UserAction stop = createAbortCheckUserAction();
-        
+
         ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
         fileList.add(createFromUserAction(newly));
         fileList.add(createFromUserAction(load));
         fileList.add(createFromUserAction(save));
         fileList.add(createFromUserAction(save_as));
-        
+
         ArrayList<ActionIdAndListener> projectList = new ArrayList<>();
         projectList.add(createFromUserAction(start));
         projectList.add(createFromUserAction(stop));
-        
+
         ArrayList<ActionIdAndListener> optionsList = new ArrayList<>();
-        
+
         created.add(fileList);
         created.add(projectList);
         created.add(optionsList);
         return created;
     }
-    
+
     private ActionIdAndListener[] createActionIdAndListenerListForToolbarHandler(CElectionDescriptionEditor cElectionDescriptionEditor,
             PropertyList propertyList, SaverLoaderInterface saverLoaderIF) {
         ActionIdAndListener[] created = new ActionIdAndListener[6];
-        
+
         UserAction newly = createNewProjectUserAction(cElectionDescriptionEditor, propertyList);
         UserAction load = createLoadProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
         UserAction save = createSaveProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
         UserAction save_as = createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
         UserAction start = createStartCheckUserAction();
         UserAction stop = createAbortCheckUserAction();
-        
+
         created[0] = createFromUserAction(newly);
         created[1] = createFromUserAction(load);
         created[3] = createFromUserAction(save);
         created[2] = createFromUserAction(save_as);
         created[4] = createFromUserAction(start);
         created[5] = createFromUserAction(stop);
-        
+
         return created;
     }
 
@@ -124,7 +125,7 @@ public class ParameterEditorBuilder {
     private UserAction createAbortCheckUserAction() {
         return new AbortCheckUserAction(editor);
     }
-    
+
     private ActionIdAndListener createFromUserAction(UserAction userAc) {
         return new ActionIdAndListener(userAc.getId(), new ActionListener() {
             @Override

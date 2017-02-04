@@ -134,7 +134,7 @@ public class CBMC_Result extends Result {
             
  //           List<Long[]> votesList = new ArrayList<Long[]>();
            
- //           Pattern votesExtractor = Pattern.compile("(\\bvotes[0-9]*\\b)(.*)");
+            votesExtractor = Pattern.compile("(\\bvotes[0-9]*\\b)(.*)");
 
             for (Iterator<String> iterator = getResult().iterator(); iterator.hasNext();) {
                 String line = (String) iterator.next();

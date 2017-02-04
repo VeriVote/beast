@@ -18,9 +18,11 @@ public class MainClass {
      */
     public static void main(String[] args) throws URISyntaxException, IOException {
         
-        CentralObjectProvider centralObjectProvider = new PSECentralObjectProvider();
+        BEASTCommunicator communicator = new BEASTCommunicator();
         
-        BEASTCommunicator communicator = new BEASTCommunicator(centralObjectProvider);
+        CentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
+        
+        communicator.setCentralObjectProvider(centralObjectProvider);
           
     }
 }
