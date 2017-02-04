@@ -28,7 +28,7 @@ import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.highlevel.ResultPresenterElement;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.propertylist.PLControllerInterface;
-import edu.pse.beast.propertylist.PropertyItem;
+import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.propertylist.Model.PLModelInterface;
 import edu.pse.beast.propertylist.Model.ResultType;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;

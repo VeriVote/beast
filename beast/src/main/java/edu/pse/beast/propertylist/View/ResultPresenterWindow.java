@@ -133,10 +133,12 @@ public class ResultPresenterWindow extends JFrame {
 	}
 	
 	public void presentSuccess() {
-		// TODO
+		erasePane();
+		appendPane("The election fulfills this property.");
 	}
 	public void presentTimeOut() {
-		// TODO
+		erasePane();
+		appendPane("The analysis was timed out.");
 	}
 	
 	

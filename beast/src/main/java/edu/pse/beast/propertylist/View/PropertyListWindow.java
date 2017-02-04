@@ -23,7 +23,7 @@ import javax.swing.JToolBar;
 import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.propertylist.PLControllerInterface;
-import edu.pse.beast.propertylist.PropertyItem;
+import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.propertylist.PropertyListMenuBarHandler;
 import edu.pse.beast.propertylist.Model.PLModel;

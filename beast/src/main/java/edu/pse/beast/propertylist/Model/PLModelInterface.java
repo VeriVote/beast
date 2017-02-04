@@ -6,7 +6,6 @@ import java.util.Observer;
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.ResultInterface;
-import edu.pse.beast.propertylist.PropertyItem;
 
 public interface PLModelInterface {
 	void initialize();

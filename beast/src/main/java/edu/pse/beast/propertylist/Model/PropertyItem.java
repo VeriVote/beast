@@ -1,4 +1,4 @@
-package edu.pse.beast.propertylist;
+package edu.pse.beast.propertylist.Model;
 
 import java.util.LinkedList;
 import java.util.List;
