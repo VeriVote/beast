@@ -10,7 +10,6 @@ import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PLModelInterface;
 import edu.pse.beast.propertylist.UserActions.LoadPropertyList;
 import edu.pse.beast.propertylist.UserActions.NewPropertyList;
-import edu.pse.beast.propertylist.UserActions.RedoChangesPropertyList;
 import edu.pse.beast.propertylist.UserActions.SaveAsPropertyList;
 import edu.pse.beast.propertylist.UserActions.SavePropertyList;
 import edu.pse.beast.propertylist.UserActions.UndoChangesPropertyList;
@@ -70,7 +69,6 @@ public class PropertyListBuilder {
         
         UserAction newly = createNewPropertyList();
         UserAction undo = createUndoChangesPropertyList();
-        UserAction redo = createRedoChangesPropertyList();
         UserAction save = createSavePropertyList();
         UserAction saveAs = createSaveAsPropertyList();
         UserAction load = createLoadPropertyList();
@@ -84,7 +82,6 @@ public class PropertyListBuilder {
         ArrayList<ActionIdAndListener> editList = new ArrayList<>();
         
         editList.add(createFromUserAction(undo));
-        editList.add(createFromUserAction(redo));
 
 
         created.add(fileList);
@@ -120,9 +117,6 @@ public class PropertyListBuilder {
     }
     private NewPropertyList createNewPropertyList() {
     	return new NewPropertyList((PropertyList) controller);
-    }
-    private RedoChangesPropertyList createRedoChangesPropertyList() {
-    	return new RedoChangesPropertyList((PropertyList) controller);
     }
     private SaveAsPropertyList createSaveAsPropertyList() {
     	return new SaveAsPropertyList((PropertyList) controller);
