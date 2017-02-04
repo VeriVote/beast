@@ -55,7 +55,11 @@ public class LockedLinesHandler implements DocumentListener {
     public boolean isLineLocked(int line) {
         return lockedLines.contains(line);
     }
-    
+
+    public int getFirstLockedLine() {
+        return lockedLines.get(0);
+    }
+
     @Override
     public void insertUpdate(DocumentEvent de) {   
         try {

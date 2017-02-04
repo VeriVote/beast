@@ -113,7 +113,11 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
         lockedLines.lockLine(line);        
         this.currentInserter = this.newlineInserterChooser.getNewlineInserter();        
     }
-    
+
+    public int getFirstLockedLine() {
+        return lockedLines.getFirstLockedLine();
+    }
+
     @Override
     public void caretUpdate(CaretEvent ce) {
         currentCaretPosition = ce.getDot();

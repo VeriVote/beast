@@ -26,6 +26,7 @@ public class SaveAsElectionUserAction extends UserAction {
 
     @Override
     public void perform() {
+
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new FileFilter() {
             @Override
@@ -44,6 +45,7 @@ public class SaveAsElectionUserAction extends UserAction {
         });
         if (fileChooser.showSaveDialog(electionDescriptionEditor.getGui()) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
+            electionDescriptionEditor.getElectionDescription();
             // TODOsave to file
             electionDescriptionEditor.getSaveBeforeChangeHandler().setHasBeensaved(true);
         }

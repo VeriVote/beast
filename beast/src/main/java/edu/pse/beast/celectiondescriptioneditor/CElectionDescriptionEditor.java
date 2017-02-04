@@ -17,6 +17,8 @@ import edu.pse.beast.datatypes.descofvoting.ElectionDescriptionChangeListener;
 import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
@@ -54,6 +56,16 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     }
 
     public void updateCurrentDescription() {
+        List<String> code;
+        currentDescription.setVotingDeclLine(codeArea.getFirstLockedLine());
+        System.out.println(currentDescription.getVotingDeclLine());
+        String content = codeArea.getPane().getText();
+        String lines[] = content.split("\n");
+        for (String s : lines) {
+            System.out.println(s);
+        }
+        code = Arrays.asList(lines);
+        currentDescription.setCode(code);
     }
 
     public void findErrorsAndDisplayThem() {

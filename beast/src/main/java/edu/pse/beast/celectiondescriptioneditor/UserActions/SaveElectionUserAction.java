@@ -28,6 +28,7 @@ public class SaveElectionUserAction extends UserAction {
     public void perform() {
         if (cElectionDescriptionEditor.getSaveBeforeChangeHandler().hasBeenSaved()) {
             cElectionDescriptionEditor.getSaveBeforeChangeHandler().updatePreValue();
+            cElectionDescriptionEditor.getElectionDescription();
             // TODO implement saving file
         } else {
             saveAsElectionUserAction.perform();

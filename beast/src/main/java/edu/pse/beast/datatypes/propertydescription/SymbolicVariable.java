@@ -12,6 +12,7 @@ import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 public class SymbolicVariable {
     private final String id;
     private final InternalTypeContainer internalTypeContainer;
+
     public SymbolicVariable (String id, InternalTypeContainer internalTypeRep) {
         this.id = id;
         this.internalTypeContainer = internalTypeRep;

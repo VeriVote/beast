@@ -86,6 +86,10 @@ public class CodeArea {
     public void lockLine(int line) {
         insertToCode.lockLine(line);
     }
+
+    public int getFirstLockedLine() {
+        return insertToCode.getFirstLockedLine();
+    }
     
     public void setUserActionList(CodeAreaUserActions userActionList) {
         this.userActionList = userActionList;

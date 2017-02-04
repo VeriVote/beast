@@ -1,11 +1,15 @@
 package edu.pse.beast.booleanexpeditor.UserActions;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
+import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.saverloader.OmniSaverLoader;
 import edu.pse.beast.toolbox.UserAction;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.io.File;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author NikolaiLMS
@@ -39,7 +43,15 @@ public class SaveAsPropsUserAction extends UserAction {
         });
         if (fileChooser.showSaveDialog(booleanExpEditor.getWindow()) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            // TODO save to file
+            PostAndPrePropertiesDescription currentlyLoaded = booleanExpEditor.getCurrentlyLoadedPostAndPreProp();
+            PostAndPrePropertiesDescription postAndPrePropertiesDescription = new PostAndPrePropertiesDescription(file.getName(),
+                    currentlyLoaded.getPrePropertiesDescription(), currentlyLoaded.getPostPropertiesDescription(),
+                    currentlyLoaded.getSymVarList());
+            List<String> propertyStringList = OmniSaverLoader.createSaveFormat(postAndPrePropertiesDescription);
+            for (Iterator iterator = propertyStringList.iterator(); iterator.hasNext();) {
+                String line = (String) iterator.next();
+                System.out.println(line);
+            }
             booleanExpEditor.getSaveBeforeChangeHandler().setHasBeensaved(true);
             booleanExpEditor.getSaveBeforeChangeHandler().updatePreValues();
         }

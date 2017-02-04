@@ -20,6 +20,7 @@ public class SymbolicVariableList {
 
     private final LinkedList<SymbolicVariable> symbolicVariableList;
     private List<VariableListListener> listener = new ArrayList<>();
+
     public SymbolicVariableList() {
         symbolicVariableList = new LinkedList<>();
     }
@@ -27,6 +28,7 @@ public class SymbolicVariableList {
     public SymbolicVariableList(SymbolicVariableList symbolicVariableList) {
         this.symbolicVariableList = symbolicVariableList.getSymbolicVariables();
     }
+
     public void addSymbolicVariable(String id, InternalTypeContainer internalTypeContainer) {
         SymbolicVariable var = new SymbolicVariable(id, internalTypeContainer);
         symbolicVariableList.add(var);
