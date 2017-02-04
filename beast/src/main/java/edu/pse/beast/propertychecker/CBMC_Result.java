@@ -16,7 +16,7 @@ import edu.pse.beast.toolbox.ErrorLogger;
  *
  */
 public class CBMC_Result extends Result {
-
+    
     @Override
     public void presentTo(ResultPresenterElement presenter) {
         if (!isFinished()) {
@@ -29,7 +29,26 @@ public class CBMC_Result extends Result {
         } else if (isSuccess()) {
             presenter.presentSuccess();
         } else {
-            presenter.presentFailureExample(createFailureExample());
+            
+            FailureExample exmp = createFailureExample();
+            
+            //System.out.println(exmp.getNumOfCandidates());
+            
+            for (int i = 0; i < exmp.getVotes().size(); i++) {
+                System.out.println("_________");
+               // System.out.println("voteslist " + exmp.getVotes().get(i).toString());
+                
+                Long[] test = exmp.getVotes().get(i);
+               
+                for (int j = 0; j < test.length; j++) {
+                    System.out.println(test[j]);
+                }
+                
+            }
+            
+         
+            
+      //      presenter.presentFailureExample(createFailureExample());
         }
     }
 
@@ -38,6 +57,7 @@ public class CBMC_Result extends Result {
         List<Long> elect = readLongs("elect", getResult());
 
         switch (getElectionType()) {
+        
         case APPROVAL:
 
             List<Long[][]> votesList = readTwoDimVar("votes", getResult());
@@ -87,17 +107,6 @@ public class CBMC_Result extends Result {
         }
     }
 
-    private void addToLongArrayList(List<Long[]> list, int indexToAddAt, Long[] toAdd) {
-        if (list.size() > indexToAddAt) {
-            list.set(indexToAddAt, toAdd);
-        } else {
-            for (int i = list.size(); i < indexToAddAt; i++) {
-                list.add(new Long[0]);
-            }
-            list.add(toAdd);
-        }
-    }
-
     private void addToLongOfLongArrayList(List<ArrayList<ArrayList<Long>>> list, int mainIndex, int indexOne,
             int indexTwo, long toAdd) {
         if (list.size() > mainIndex) {
@@ -117,7 +126,7 @@ public class CBMC_Result extends Result {
             for (int i = list.size(); i < indexOne; i++) {
                 list.add(new ArrayList<Long>());
             }
-            addToLongList(list.get(indexOne), indexTwo, toAdd);
+            addToLongList(list.get(indexOne - 1), indexTwo, toAdd);
         }
     }
 
@@ -173,18 +182,20 @@ public class CBMC_Result extends Result {
 
         List<Long> toReturn = new ArrayList<Long>();
 
-        Pattern electExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\b)(.*)");
+        Pattern correctChecker   = Pattern.compile("(\\b" + name + "[0-9]+=[0-9]u\\b)(.*)");
 
+        Pattern longExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\b)(.*)"); 
+        
         for (Iterator<String> iterator = getResult().iterator(); iterator.hasNext();) {
             String line = (String) iterator.next();
 
-            Matcher electMatcher = electExtractor.matcher(line);
-
-            if (electMatcher.find()) {
-                if (electMatcher.groupCount() > 0) {
-
-                    String electLine = electMatcher.group(1);
-                    String number = electLine.replaceAll(("[^-?0-9]*"), "");
+            Matcher checkerMatcher = correctChecker.matcher(line);
+            if (checkerMatcher.find()) {
+                Matcher longMatcher = longExtractor.matcher(checkerMatcher.group(0));
+                if(longMatcher.find()) {
+                    
+                    String longLine = longMatcher.group(1);
+                    String number = longLine.replaceAll(("[^-?0-9]*"), "");
                     int electIndex = Integer.parseInt(number);
 
                     // split at the "(" and ")" to extract the bit value
@@ -200,6 +211,7 @@ public class CBMC_Result extends Result {
     }
 
     private List<Long[]> readOneDimVar(String name, List<String> toExtract) {
+        System.out.println("call");
         ArrayList<ArrayList<Long>> list = new ArrayList<ArrayList<Long>>();
 
         // this pattern searches for words of the form
@@ -214,19 +226,30 @@ public class CBMC_Result extends Result {
 
             if (votesMatcher.find()) {
                 String newLine = votesMatcher.group(1);
-
+                
                 // find out the number of this votes array
                 int mainIndex = Integer.parseInt(newLine.split("\\[")[0].split(name)[1]);
-
+                
                 // get the first index for this array value
                 int index = Integer.parseInt(newLine.split("\\[")[1].split("\\]")[0]);
-
+                
                 // split at the "(" and ")" to extract the value
                 String valueAsString = line.split("\\(")[1].split("\\)")[0];
-
+                
                 addToDualArray(list, mainIndex, index, Long.parseLong(valueAsString, 2));
+                
             }
         }
+        System.out.println("davor");
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < list.get(i).size(); j++) {
+                System.out.println(list.get(i).get(j));
+            }
+            System.out.println("==============");
+        }
+        System.out.println("danach");
+        
+        
         return listsToSingleArrays(list);
     }
 
@@ -244,6 +267,7 @@ public class CBMC_Result extends Result {
             Matcher votesMatcher = votesExtractor.matcher(line);
 
             if (votesMatcher.find()) {
+                
                 String newLine = votesMatcher.group(1);
 
                 // find out the number of this votes array

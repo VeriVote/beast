@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -47,7 +46,6 @@ public abstract class Checker implements Runnable {
 	public void run() {
 
 		process = createProcess(toCheck, voters, candidates, seats, advanced);
-
 		if (process != null) {
 			CountDownLatch latch = new CountDownLatch(2);
 			ThreadedBufferedReader outReader = new ThreadedBufferedReader(
@@ -66,7 +64,6 @@ public abstract class Checker implements Runnable {
 				} else if (interrupted) {
 					
 					stopProcess();
-					
 					outReader.stopReading();
 					errReader.stopReading();
 					break polling;
