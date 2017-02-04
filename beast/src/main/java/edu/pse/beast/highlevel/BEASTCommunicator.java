@@ -50,14 +50,19 @@ public class BEASTCommunicator implements CheckListener {
         } else {
             
             resultList = centralObjectProvider.getResultCheckerCommunicator().checkPropertiesForDescription(electSrc, postAndPreSrc, paramSrc);
+            System.out.println("here results");
             
-            while (resultList.size() < 0) {
+            if(resultList == null){
+                System.out.println("resultList is null");
+            }
+            while (resultList.size() > 0) {
                 try {
                     Thread.sleep(500);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(BEASTCommunicator.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 for (ResultInterface result : resultList) {
+                    
                     if (result.readyToPresent()) {
                         ResultPresenter resultPresenter = centralObjectProvider.getResultPresenter();
                         resultPresenter.presentResult(result);
@@ -66,6 +71,7 @@ public class BEASTCommunicator implements CheckListener {
                 }
                 
             }
+            System.out.println("there are no results");
         }
     }
     
