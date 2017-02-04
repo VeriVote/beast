@@ -26,6 +26,7 @@ public abstract class CheckerFactory implements Runnable {
 	private boolean stopped = false;
 	private boolean finished = false;
 	private List<String> lastResult;
+    private List<String> lastError;
 
 	protected CheckerFactory(FactoryController controller, ElectionDescriptionSource electionDescSrc,
 			PostAndPrePropertiesDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result) {
@@ -100,6 +101,7 @@ public abstract class CheckerFactory implements Runnable {
 							finished = true;
 							result.setFinished();
 							result.setResult(lastResult);
+							result.setError(lastError);
 							result.setValid();
 							break outerLoop;
 						}
@@ -140,9 +142,10 @@ public abstract class CheckerFactory implements Runnable {
 		}
 	}
 
-	public void notifyThatFinished(List<String> lastResult) {
+	public void notifyThatFinished(List<String> lastResult, List<String> lastError) {
 		finished = true;
 		this.lastResult = lastResult;
+		this.lastError = lastError;
 	}
 
 	protected abstract Result createCounterExample(List<String> result);

@@ -125,5 +125,10 @@ public class PropertyCheckerTest {
             String line = (String) iterator.next();
             System.out.println(line);
         }      
+        
+        for (Iterator iterator = ((Result)resultate.get(0)).getError().iterator(); iterator.hasNext();) {
+            String line = (String) iterator.next();
+            System.out.println(line);
+        }      
     }
 }
