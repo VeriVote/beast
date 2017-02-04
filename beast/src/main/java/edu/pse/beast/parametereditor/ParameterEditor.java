@@ -30,7 +30,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
     private final ParameterEditorWindow window;
     private final CElectionDescriptionEditor cElectionDescriptionEditor;
     private final PropertyList propertyList;
-    private final ArrayList<CheckListener> checkListener = new ArrayList<>();
+    private CheckListener checkListener;
     private final ArrayList<ActionListener> closeListener = new ArrayList<>();
     private MinMaxSpinValueHandler voterHandler;
     private MinMaxSpinValueHandler candHandler;
@@ -78,22 +78,16 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
     }
 
     public void startCheck() {
-        Iterator<CheckListener> iterator = checkListener.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().startCheck();
-        }
+        checkListener.startCheck();
     }
 
     public void abortCheck() {
-        Iterator<CheckListener> iterator = checkListener.iterator();
-        while (iterator.hasNext()) {
-            iterator.next().stopCheck();
-        }
+        checkListener.stopCheck();
     }
 
     @Override
     public void addCheckListener(CheckListener checkListenerObject) {
-        checkListener.add(checkListenerObject);
+        this.checkListener = checkListenerObject;
     }
 
     @Override

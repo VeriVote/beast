@@ -50,11 +50,13 @@ public class BEASTCommunicator implements CheckListener {
         } else {
             
             resultList = centralObjectProvider.getResultCheckerCommunicator().checkPropertiesForDescription(electSrc, postAndPreSrc, paramSrc);
-            System.out.println("here results");
             
-            if(resultList == null){
-                System.out.println("resultList is null");
+            if(resultList.isEmpty() ) {
+                System.out.println("result List is empty");
             }
+
+            System.out.println("Now I'm done with checking");
+            
             while (resultList.size() > 0) {
                 try {
                     Thread.sleep(500);
@@ -71,7 +73,7 @@ public class BEASTCommunicator implements CheckListener {
                 }
                 
             }
-            System.out.println("there are no results");
+            
         }
     }
     
