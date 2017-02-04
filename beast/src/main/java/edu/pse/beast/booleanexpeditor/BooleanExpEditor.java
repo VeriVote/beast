@@ -82,6 +82,7 @@ public class BooleanExpEditor {
     }
 
     public PostAndPrePropertiesDescription getCurrentlyLoadedPostAndPreProp() {
+        updatePostAndPrePropObject();
         return currentlyLoadedPostAndPreProp;
     }
 
@@ -107,6 +108,7 @@ public class BooleanExpEditor {
             errorMsgList.add(errorMsg);
         }
         errorWindow.displayErrors(errorMsgList);
+        updatePostAndPrePropObject();
     }
 
     /**
@@ -183,7 +185,10 @@ public class BooleanExpEditor {
                 new FormalPropertiesDescription(prePropCodeArea.getPane().getText()));
         currentlyLoadedPostAndPreProp.setPostPropertiesDescription(
                 new FormalPropertiesDescription(postPropCodeArea.getPane().getText()));
+        currentlyLoadedPostAndPreProp.getSymVarList().setSymbolicVariableList(symbolicVarListController.getSymbolicVariableList().getSymbolicVariables());
     }
+
+
     /**
      * Getter
      * @return the BooleanExpEditorWindow instance of this class
