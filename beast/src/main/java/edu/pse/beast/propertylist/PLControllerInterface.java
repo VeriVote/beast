@@ -5,8 +5,6 @@ import edu.pse.beast.highlevel.ResultInterface;
 
 public interface PLControllerInterface {
 	
-	void toggleResult();
-	
 	void changeName(PropertyItem prop, String newName);
 	void setTestStatus(PropertyItem prop, boolean newStatus);
 	void editProperty(PropertyItem prop);

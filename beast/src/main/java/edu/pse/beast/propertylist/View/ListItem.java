@@ -168,11 +168,11 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
 	
 	private Color present() {
 		switch (prop.getResultType()) {
-			case SUCCESS : return Color.RED; 
+			case SUCCESS : return Color.GREEN; 
 			case TIMEOUT : return Color.ORANGE; 
 			case FAILURE : return Color.MAGENTA; 
 			case FAILUREEXAMPLE : return Color.RED; 
-			default : return Color.GRAY;
+			default : return deleteButton.getBackground();
 		}
 	}
 	
