@@ -73,10 +73,9 @@ public class CBMCCodeGenerator {
         addHeader();
 
         code.add("//Code of the user");
-        ArrayList<String> electionDescriptionCode = (ArrayList<String>) electionDescription.getCode();
-        electionDescriptionCode.forEach((item) -> {
-            code.add(item);
-        });
+        ArrayList<String> electionDescriptionCode = new ArrayList<>();
+        electionDescriptionCode.addAll(electionDescription.getCode());
+        code.addArrayList(electionDescriptionCode);
 
         addMainMethod();
 
