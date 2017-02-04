@@ -57,7 +57,7 @@ public class ErrorDisplayTest {
 		win.setVisible(true);
 		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		List<String> error = Arrays.asList("Some lines to test the window.", 
-				"Big, bigger, biggest icecream will be found at the sea right off Maine and Northbridge/Upton.",
+				"Big, bigger, biggest fish to fry will be found at the sea right off Maine and Northbridge/Upton.",
 				"Yawn");
 		win.presentFailure(error);
 		

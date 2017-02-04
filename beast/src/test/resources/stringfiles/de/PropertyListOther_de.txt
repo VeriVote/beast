@@ -1,3 +1,13 @@
 title : Eigenschaftenliste
 newButton : Neu
-check : Analysieren
+check : Analyse
+export : Exportieren
+electionType : Wahlverfahren
+election : Wahl
+votes : Stimmen
+elected : Gewählt
+noResultYet : Es liegt noch kein Resultat vor.
+successMessage : Das vorliegende Wahlverfahren erfüllt die gegebene Eigenschaft.
+timeoutMessage : Die Analyse wurde durch einen Timeout abgebrochen.
+failureMessage : Die Analyse konnte aufgrund eines Fehlers nicht ausgeführt werden. Es folgt die Fehlermeldung im Original.
+failureExampleMessage :  Die gegebene Eigenschaft wird nicht erfüllt. Bei diesem Wahlergebnis ist die Eigenschaft verletzt.

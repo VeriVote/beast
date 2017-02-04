@@ -46,8 +46,10 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
 	
 	private boolean reactsToInput;
 	
-	protected ResultPresenterWindow resWindow = new ResultPresenterWindow();
+	protected ResultPresenterWindow resWindow;
 	private PropertyItem prop;
+	
+	private StringLoaderInterface sli;
 	
 	protected ResultButton showResult = new ResultButton();
 	protected JTextField name = new JTextField();
@@ -67,6 +69,8 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
 		this.controller = controller;
 		this.prop = prop;
 		reactsToInput = true;
+		sli = new StringLoaderInterface("de");
+		resWindow = new ResultPresenterWindow(sli);
 		init();
 	}
 	
@@ -158,6 +162,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
 	
 	@Override
 	public void updateStringRes(StringLoaderInterface sli) {
+		this.sli = sli;
 		PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
 		StringResourceLoader other = provider.getOtherStringRes();
 		

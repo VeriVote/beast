@@ -3,7 +3,6 @@ package edu.pse.beast.propertylist.View;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -41,23 +40,23 @@ public class ResultDisplayTest {
 	}
 
 	public static void main(String[] args) {
-//		
-//		ResultPresenterWindow win = new ResultPresenterWindow();
-//		win.setVisible(true);
-//		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		
-//		ElectionType et = ElectionType.SINGLECHOICE;
-//		List<int[]> votes = new ArrayList<int[]>();
-//		List<Long> elected = new ArrayList<Long>();
-//		votes.add(new int[]{3,2,1});
-//		votes.add(new int[]{2,2,1});
-//		elected.add(3l);
-//		elected.add(2l);
-//		
-//		FailureExample fail = new FailureExample(et, votes, null, elected, null, 3, 1, 3);
-//		
-//		win.presentFailureExample(fail);
-//		
-//		
+		
+		ResultPresenterWindow win = new ResultPresenterWindow();
+		win.setVisible(true);
+		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	
+		ElectionType et = ElectionType.SINGLECHOICE;
+		List<Long[]> votes = new ArrayList<Long[]>();
+		List<Long> elected = new ArrayList<Long>();
+		votes.add(new Long[]{3l,2l,1l});
+		votes.add(new Long[]{2l,2l,1l});
+		elected.add(3l);
+		elected.add(2l);
+		
+		FailureExample fail = new FailureExample(et, votes, null, elected, null, 3, 1, 3);
+	
+		win.presentFailureExample(fail);
+		
+		
 	}
 }

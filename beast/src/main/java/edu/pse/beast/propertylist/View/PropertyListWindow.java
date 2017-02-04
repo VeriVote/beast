@@ -43,6 +43,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	PLModelInterface model;
 	PLControllerInterface controller;
 	
+	StringLoaderInterface sli = new StringLoaderInterface("de");
 	private boolean reactsToInput = true;
 	
 	private JMenuBar menuBar;
@@ -153,6 +154,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		for (PropertyItem propertyItem : propertyList) {
 			ListItem current = new ListItem(controller, model, propertyItem);
 			if (propertyItem.getResultType() == ResultType.TESTED) this.setNextToPresent(current);
+			current.updateStringRes(sli);
 			items.add(current);
 			panel.add(current, BorderLayout.CENTER);
 			//propertyItem.getResultInterface().presentTo(current);
@@ -175,6 +177,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	
 	@Override
 	public void updateStringRes(StringLoaderInterface sli) {
+		this.sli = sli;
 		PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
 		StringResourceLoader other = provider.getOtherStringRes();
 		StringResourceLoader menu = provider.getMenuStringRes();
@@ -183,7 +186,9 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		this.setTitle(other.getStringFromID("title"));
 		this.addNewButton.setText(other.getStringFromID("newButton"));
 		
-		for (ListItem item : items) item.updateStringRes(sli);
+		for (ListItem item : items) {
+			item.updateStringRes(sli);
+		}
 		
 		this.revalidate();
 		this.repaint();
@@ -193,22 +198,18 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	@Override
 	public void update(Observable o, Object obj) {
 		updateItems(model.getList());
-		
 	}
 	
 	public void rejectNameChange(PropertyItem prop) {
 		controller.changeName(prop, prop.getDescription().getName());
 		for (ListItem li : items) {
 			if (prop.equals(li.getPropertyItem())) {
-				li.getNameField().setBackground(Color.RED);
-				
-				li.getNameField().setForeground(Color.RED);
+				//li.getNameField().setBackground(Color.RED);
+				//li.getNameField().setForeground(Color.RED);
 				updateItems(model.getList());
-				
 				//li.getNameField().setBackground(Color.WHITE);
 			}
 		}
-		
 	}
 	
 	public void stopReacting() {
@@ -222,18 +223,16 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		for (ListItem item : items) item.setReactsToInput(reacts);
 	}
 
+	
+	
 
+	
 	public ListItem getNextToPresent() {
 		return nextToPresent;
 	}
-
-
 	public void setNextToPresent(ListItem nextToPresent) {
 		this.nextToPresent = nextToPresent;
 	}
-	
-
-	
 	
 	
 }
