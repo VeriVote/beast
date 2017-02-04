@@ -34,161 +34,46 @@ public class CBMC_Result extends Result {
     }
 
     public FailureExample createFailureExample() {
-        
-        List<Long> elect = new ArrayList<Long>();
-        
-        Pattern electExtractor = Pattern.compile("(\\belect[0-9]+\\b)(.*)");
-        
-        for (Iterator<String> iterator = getResult().iterator(); iterator.hasNext();) {
-            String line = (String) iterator.next();
-            
-            Matcher electMatcher = electExtractor.matcher(line);
 
-            if (electMatcher.find()) {
-                if (electMatcher.groupCount() > 0) {
-                    
-                    String electLine = electMatcher.group(1);
-                    String number = electLine.replaceAll(("[^-?0-9]*"), "");
-                    int electIndex = Integer.parseInt(number);
+        List<Long> elect = readLongs("elect", getResult());
 
-                    //split at the "(" and ")" to extract the bit value
-                    String valueAsString = line.split("\\(")[1].split("\\)")[0];
-                    //prase the binary value to a long
-                    Long value = Long.parseLong(valueAsString, 2);
-                    addToLongList(elect, electIndex, value);
-                    
-                }
-            }
-        }
-        
-        
-        
         switch (getElectionType()) {
         case APPROVAL:
-            
-            List<Long[][]> votesList = new ArrayList<Long[][]>();
-            
-            //this pattern searches for words of the form "votes*NUMBER*" where "NUMBER" can by any positive number
-            Pattern votesExtractor = Pattern.compile("(\\bvotes[0-9]+\\[[0-9]+\\]\\[[0-9]+\\])(.*)");
 
-            for (Iterator<String> iterator = getResult().iterator(); iterator.hasNext();) {
-                String line = (String) iterator.next();
+            List<Long[][]> votesList = readTwoDimVar("votes", getResult());
 
-                Matcher votesMatcher = votesExtractor.matcher(line);
+            List<Long[]> seatsList = readOneDimVar("seats", getResult());
 
-                if (votesMatcher.find()) {
-                    if (votesMatcher.groupCount() > 0) {
-                        String newLine = votesMatcher.group(1);
-                        String number = newLine.replaceAll(("[^-?0-9]*"), "");
-
-                        int votesIndex = Integer.parseInt(number);
-
-                        //split at the "(" and ")" to extract the array values
-                        String valueAsString = line.split("\\(")[1].split("\\)")[0];
-                        
-                        
-                        //the votes arrays are 2 dimensional, so we first get all of them out
-                        String valuesAsString = valueAsString.split("\\{")[1].split("\\}")[0];
-                        
-                        
-                        
-                        
-                        //remove all whitespaces
-                        valuesAsString = valuesAsString.replaceAll(" +", "");
-                        
-                        String[] valuesAsStringArray = valuesAsString.split(",");
-                        
-                        Long[] values = new Long[valuesAsStringArray.length];
-                        
-                        for (int i = 0; i < values.length; i++) {
-                            //parse the value from a binary number to a long
-                            values[i] = Long.parseLong(valuesAsStringArray[i], 2);
-                        }
-                          
-          //              addToLongOfLongArrayList(votesList, votesIndex, values);
-                        
-                    }
-                }
-            }
+            return new FailureExample(getElectionType(), null, votesList, elect, seatsList,
+                    getNumCandidates(), getNumSeats(), getNumVoters());
             
-            
-            
-            
-            
-            
-
-     //       return new FailureExample(getElectionType(), null, voteList, elect, getNumCandidates(), getNumSeats(),
-     //               getNumVoters());
-            break;
-
         case PREFERENCE:
-            for (Iterator<String> iterator = getResult().iterator(); iterator.hasNext();) {
-                String line = (String) iterator.next();
+            
+            List<Long[]> singleVotesList = readOneDimVar("votes", getResult());
 
-            }
- //           return new FailureExample(getElectionType(), null, voteList, elect, getNumCandidates(), getNumSeats(),
-  //                  getNumVoters());
-            break;
+            return new FailureExample(getElectionType(), singleVotesList, null, elect, null,
+                    getNumCandidates(), getNumSeats(), getNumVoters());
 
         case SINGLECHOICE:
-            
- //           List<Long[]> votesList = new ArrayList<Long[]>();
-           
-            votesExtractor = Pattern.compile("(\\bvotes[0-9]*\\b)(.*)");
 
-            for (Iterator<String> iterator = getResult().iterator(); iterator.hasNext();) {
-                String line = (String) iterator.next();
+            singleVotesList = readOneDimVar("votes", getResult());
 
-                Matcher votesMatcher = votesExtractor.matcher(line);
+            return new FailureExample(getElectionType(), singleVotesList, null, elect, null,
+                    getNumCandidates(), getNumSeats(), getNumVoters());
 
-                if (votesMatcher.find()) {
-                    if (votesMatcher.groupCount() > 0) {
-                        String newLine = votesMatcher.group(1);
-                        String number = newLine.replaceAll(("[^-?0-9]*"), "");
-
-                        int votesIndex = Integer.parseInt(number);
-
-                        //split at the "(" and ")" to extract the array values
-                        String valueAsString = line.split("\\(")[1].split("\\)")[0];
-                        
-                        
-                        //the votes arrays are 1 dimensional, so we just have to search between the "{" and "}"
-                        String valuesAsString = valueAsString.split("\\{")[1].split("\\}")[0];
-                        
-                        //remove all whitespaces
-                        valuesAsString = valuesAsString.replaceAll(" +", "");
-                        
-                        String[] valuesAsStringArray = valuesAsString.split(",");
-                        
-                        Long[] values = new Long[valuesAsStringArray.length];
-                        
-                        for (int i = 0; i < values.length; i++) {
-                            //parse the value from a binary number to a long
-                            values[i] = Long.parseLong(valuesAsStringArray[i], 2);
-                        }
-                          
-  //                     addToLongArrayList(votesList, votesIndex, values);
-                        
-                    }
-                }
-            }
-            
-  //          return new FailureExample(getElectionType(), votesList, null, elect, null, getNumCandidates(), getNumSeats(), getNumVoters());
-            
         case WEIGHTEDAPPROVAL:
-            for (Iterator<String> iterator = getResult().iterator(); iterator.hasNext();) {
-                String line = (String) iterator.next();
 
-            }
-    //        return new FailureExample(getElectionType(), null, voteList, elect, getNumCandidates(), getNumSeats(),
-   //                 getNumVoters());
-            break;
+            votesList = readTwoDimVar("votes", getResult());
+
+            seatsList = readOneDimVar("seats", getResult());
+
+            return new FailureExample(getElectionType(), null, votesList, elect, seatsList,
+                    getNumCandidates(), getNumSeats(), getNumVoters());
+            
         default:
             ErrorLogger.log("This votingtype hasn't been implemented yet please do so in the class CBMC_Result");
             return null;
         }
-        
-        return null;
     }
 
     private void addToLongList(List<Long> list, int indexToAddAt, long toAdd) {
@@ -201,7 +86,7 @@ public class CBMC_Result extends Result {
             list.add(toAdd);
         }
     }
-    
+
     private void addToLongArrayList(List<Long[]> list, int indexToAddAt, Long[] toAdd) {
         if (list.size() > indexToAddAt) {
             list.set(indexToAddAt, toAdd);
@@ -212,15 +97,171 @@ public class CBMC_Result extends Result {
             list.add(toAdd);
         }
     }
-    
-    private void addToLongOfLongArrayList(List<Long[][]> list, int indexToAddAt, Long[][] toAdd) {
-        if (list.size() > indexToAddAt) {
-            list.set(indexToAddAt, toAdd);
+
+    private void addToLongOfLongArrayList(List<ArrayList<ArrayList<Long>>> list, int mainIndex, int indexOne,
+            int indexTwo, long toAdd) {
+        if (list.size() > mainIndex) {
+            addToDualArray(list.get(mainIndex), indexOne, indexTwo, toAdd);
         } else {
-            for (int i = list.size(); i < indexToAddAt; i++) {
-                list.add(new Long[0][0]);
+            for (int i = list.size(); i < mainIndex; i++) {
+                list.add(new ArrayList<ArrayList<Long>>());
             }
-            list.add(toAdd);
+            addToDualArray(list.get(mainIndex), indexOne, indexTwo, toAdd);
         }
+    }
+
+    private void addToDualArray(ArrayList<ArrayList<Long>> list, int indexOne, int indexTwo, long toAdd) {
+        if (list.size() > indexOne) {
+            addToLongList(list.get(indexOne), indexTwo, toAdd);
+        } else {
+            for (int i = list.size(); i < indexOne; i++) {
+                list.add(new ArrayList<Long>());
+            }
+            addToLongList(list.get(indexOne), indexTwo, toAdd);
+        }
+    }
+
+    private List<Long[]> listsToSingleArrays(List<ArrayList<Long>> votesList) {
+        List<Long[]> toReturn = new ArrayList<Long[]>();
+
+        if (votesList != null) {
+            for (int i = 0; i < votesList.size(); i++) {
+                // here we have every array
+                if (votesList.get(i) != null) {
+
+                    Long[] toAdd = new Long[votesList.get(i).size()];
+
+                    for (int j = 0; j < votesList.get(i).size(); j++) {
+                        toAdd[j] = votesList.get(i).get(j);
+                    }
+
+                    toReturn.add(toAdd);
+                } else {
+                    toReturn.add(new Long[0]);
+                }
+            }
+        }
+        return toReturn;
+    }
+
+    private List<Long[][]> listsToDualArrays(List<ArrayList<ArrayList<Long>>> votesList) {
+        List<Long[][]> toReturn = new ArrayList<Long[][]>();
+
+        if (votesList != null) {
+            for (int i = 0; i < votesList.size(); i++) {
+                // here we have every array
+                if (votesList.get(i) != null && votesList.get(i).get(0) != null) {
+
+                    Long[][] toAdd = new Long[votesList.get(i).size()][votesList.get(i).get(0).size()];
+
+                    for (int j = 0; j < votesList.get(i).size(); j++) {
+                        for (int j2 = 0; j2 < votesList.get(i).get(j).size(); j2++) {
+                            toAdd[j][j2] = votesList.get(i).get(j).get(j2);
+                        }
+                    }
+
+                    toReturn.add(toAdd);
+                } else {
+                    toReturn.add(new Long[0][0]);
+                }
+            }
+        }
+        return toReturn;
+    }
+    
+    private List<Long> readLongs(String name, List<String> toExtract) {
+
+        List<Long> toReturn = new ArrayList<Long>();
+
+        Pattern electExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\b)(.*)");
+
+        for (Iterator<String> iterator = getResult().iterator(); iterator.hasNext();) {
+            String line = (String) iterator.next();
+
+            Matcher electMatcher = electExtractor.matcher(line);
+
+            if (electMatcher.find()) {
+                if (electMatcher.groupCount() > 0) {
+
+                    String electLine = electMatcher.group(1);
+                    String number = electLine.replaceAll(("[^-?0-9]*"), "");
+                    int electIndex = Integer.parseInt(number);
+
+                    // split at the "(" and ")" to extract the bit value
+                    String valueAsString = line.split("\\(")[1].split("\\)")[0];
+                    // prase the binary value to a long
+                    Long value = Long.parseLong(valueAsString, 2);
+                    addToLongList(toReturn, electIndex, value);
+                }
+            }
+        }
+        
+        return toReturn;
+    }
+
+    private List<Long[]> readOneDimVar(String name, List<String> toExtract) {
+        ArrayList<ArrayList<Long>> list = new ArrayList<ArrayList<Long>>();
+
+        // this pattern searches for words of the form
+        // "votesNUMBER[NUMBER][NUMBER]" where "NUMBER" can by any positive
+        // number
+        Pattern votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+\\])(.*)");
+
+        for (Iterator<String> iterator = toExtract.iterator(); iterator.hasNext();) {
+            String line = (String) iterator.next();
+
+            Matcher votesMatcher = votesExtractor.matcher(line);
+
+            if (votesMatcher.find()) {
+                String newLine = votesMatcher.group(1);
+
+                // find out the number of this votes array
+                int mainIndex = Integer.parseInt(newLine.split("\\[")[0].split(name)[1]);
+
+                // get the first index for this array value
+                int index = Integer.parseInt(newLine.split("\\[")[1].split("\\]")[0]);
+
+                // split at the "(" and ")" to extract the value
+                String valueAsString = line.split("\\(")[1].split("\\)")[0];
+
+                addToDualArray(list, mainIndex, index, Long.parseLong(valueAsString, 2));
+            }
+        }
+        return listsToSingleArrays(list);
+    }
+
+    private List<Long[][]> readTwoDimVar(String name, List<String> toExtract) {
+        List<ArrayList<ArrayList<Long>>> list = new ArrayList<ArrayList<ArrayList<Long>>>();
+
+        // this pattern searches for words of the form
+        // "votesNUMBER[NUMBER][NUMBER]" where "NUMBER" can by any positive
+        // number
+        Pattern votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+\\]\\[[0-9]+\\])(.*)");
+
+        for (Iterator<String> iterator = toExtract.iterator(); iterator.hasNext();) {
+            String line = (String) iterator.next();
+
+            Matcher votesMatcher = votesExtractor.matcher(line);
+
+            if (votesMatcher.find()) {
+                String newLine = votesMatcher.group(1);
+
+                // find out the number of this votes array
+                int mainIndex = Integer.parseInt(newLine.split("\\[")[0].split(name)[1]);
+
+                // get the first index for this array value
+                int indexOne = Integer.parseInt(newLine.split("\\[")[1].split("\\]")[0]);
+
+                // get the second index for this array value
+                int indexTwo = Integer.parseInt(newLine.split("\\[")[2].split("\\]")[0]);
+
+                // split at the "(" and ")" to extract the value
+                String valueAsString = line.split("\\(")[1].split("\\)")[0];
+
+                addToLongOfLongArrayList(list, mainIndex, indexOne, indexTwo, Long.parseLong(valueAsString, 2));
+
+            }
+        }
+        return listsToDualArrays(list);
     }
 }
