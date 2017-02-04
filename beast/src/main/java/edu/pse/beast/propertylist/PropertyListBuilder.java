@@ -27,16 +27,17 @@ import edu.pse.beast.toolbox.UserAction;
  */
 public class PropertyListBuilder {
 	
-	PLControllerInterface controller;
+	PropertyList controller;
     private PropertyListWindow window;
 	private String[] menuHeadingIds = { "fileMenu", "editMenu" };
 	
 	public PropertyList createPropertyList(ObjectRefsForBuilder refs, BooleanExpEditor booleanExpEditor) {
 		PLModelInterface model = new PLModel();
 		controller = new PropertyList(model, booleanExpEditor);
-		PropertyListWindowStarter starter = new PropertyListWindowStarter(controller, model);
+		//PropertyListWindowStarter starter = new PropertyListWindowStarter(controller, model);
 		
-		window = starter.getPropertyListWindow();
+		//window = starter.getPropertyListWindow();
+		window = controller.getView();
 		window.updateStringRes(refs.getStringIF());
 
 		PropertyListMenuBarHandler menuBarHandler = new PropertyListMenuBarHandler(menuHeadingIds, 
@@ -50,7 +51,8 @@ public class PropertyListBuilder {
 				refs.getStringIF().getPropertyListStringResProvider().getToolbarTipStringRes(),
 				createActionIdAndListenerListForToolbarHandler(), window.getToolbar(), window);
 		
-		starter.start();
+		//starter.start();
+		controller.start();
 		
 		return (PropertyList) controller;
 	}

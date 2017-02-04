@@ -90,15 +90,15 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
 		
 		showResult.setPreferredSize(new Dimension(80,40));
 		showResult.setIcon(new ImageIcon(getClass().getResource("/images/other/eye.png")));
-		present();
-		showResult.setBackground(present());
+		//present();
+		showResult.setBackground(presentColor());
 		showResult.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Point pos = showResult.getLocationOnScreen();
 				resWindow.setLocation(new Point((int)pos.getX(), (int)pos.getY() - 30));
-				resWindow.getShowResult().setBackground(present());
-				passMessage();
+				resWindow.getShowResult().setBackground(presentColor());
+				passMessageToResultWindow();
 				resWindow.setVisible(true);
 			}
 		});
@@ -166,7 +166,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
 		this.repaint();
 	}
 	
-	private Color present() {
+	private Color presentColor() {
 		switch (prop.getResultType()) {
 			case SUCCESS : return Color.GREEN; 
 			case TIMEOUT : return Color.ORANGE; 
@@ -176,7 +176,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
 		}
 	}
 	
-	private void passMessage() {
+	private void passMessageToResultWindow() {
 		switch (prop.getResultType()) {
 			case SUCCESS : resWindow.presentSuccess(); break;
 			case TIMEOUT : resWindow.presentTimeOut(); break;

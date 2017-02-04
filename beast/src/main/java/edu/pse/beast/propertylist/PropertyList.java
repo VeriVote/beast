@@ -20,7 +20,7 @@ import edu.pse.beast.propertylist.View.PropertyListWindow;
  *
  * @author Justin
  */
-public class PropertyList implements PLControllerInterface, PostAndPrePropertiesDescriptionSource, ResultPresenter {
+public class PropertyList implements PLControllerInterface, PostAndPrePropertiesDescriptionSource, ResultPresenter, Runnable {
 
 	
 	private PLModelInterface model;
@@ -63,6 +63,14 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 	public PropertyListWindow getView() {
 		return view;
 	}
+	public void start() {
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(this);
+    }
+    @Override
+    public void run() {
+        view.setVisible(true);
+    }
 		
 	@Override
 	public void changeName(PropertyItem prop, String newName) {

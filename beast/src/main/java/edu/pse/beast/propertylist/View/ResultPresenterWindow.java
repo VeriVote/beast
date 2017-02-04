@@ -101,7 +101,7 @@ public class ResultPresenterWindow extends JFrame {
 	}
 	
 	public void present(String message) {
-		
+		// what does this do
 	}
 	
 	public void presentFailure(List<String> error) {
