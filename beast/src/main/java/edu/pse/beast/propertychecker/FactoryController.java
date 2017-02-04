@@ -66,9 +66,17 @@ public class FactoryController implements Runnable {
         this.checkerID = checkerID;
         this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
 
+        System.out.println("checkerID: " + checkerID);
+        
         this.results = CheckerFactoryFactory.getMatchingResult(checkerID,
                 postAndPrePropDescrSrc.getPostAndPrePropertiesDescriptions().size());
-
+        
+        
+        for (Iterator iterator = results.iterator(); iterator.hasNext();) {
+            Result result = (Result) iterator.next();
+            System.out.println(result.readyToPresent());
+        }
+        
         this.concurrentChecker = concurrentChecker;
 
         // start the factorycontroller

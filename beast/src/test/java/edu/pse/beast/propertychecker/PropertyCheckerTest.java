@@ -85,7 +85,7 @@ public class PropertyCheckerTest {
         amountSeats.add(4);
 
         ElectionCheckParameter ecp = new ElectionCheckParameter(amountVoters, amountCandidates, amountSeats,
-                new TimeOut(TimeUnit.MINUTES, 2), 8, "--trace;--unwind 1000");
+                new TimeOut(TimeUnit.MINUTES, 2), 8, "--trace;--unwind 100");
 
         implParameterSource parmSrc = new implParameterSource(ecp);
 
@@ -116,19 +116,16 @@ public class PropertyCheckerTest {
 
         for (Iterator iterator = resultate.iterator(); iterator.hasNext();) {
             ResultInterface resultInterface = (ResultInterface) iterator.next();
-     //       resultInterface.presentTo(null);
+            resultInterface.presentTo(null);
         }
         
         System.out.println("::::::::::::::::::::::::::::::::::::::::::");
         
-        for (Iterator iterator = ((Result)resultate.get(0)).getResult().iterator(); iterator.hasNext();) {
-            String line = (String) iterator.next();
-            System.out.println(line);
-        }      
+//        for (Iterator iterator = ((Result)resultate.get(0)).getResult().iterator(); iterator.hasNext();) {
+//            String line = (String) iterator.next();
+//            System.out.println(line);
+//        }      
+
         
-        for (Iterator iterator = ((Result)resultate.get(0)).getError().iterator(); iterator.hasNext();) {
-            String line = (String) iterator.next();
-            System.out.println(line);
-        }      
     }
 }
