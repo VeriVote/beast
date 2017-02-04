@@ -113,7 +113,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
 
     @Override
     public void resumeReacting() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
