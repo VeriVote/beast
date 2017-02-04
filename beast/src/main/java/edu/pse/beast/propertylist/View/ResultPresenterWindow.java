@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
@@ -37,6 +38,7 @@ public class ResultPresenterWindow extends JFrame {
 	public ResultPresenterWindow(StringLoaderInterface sli) {
 		PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
 		srl = provider.getOtherStringRes();
+		this.setUndecorated(true);
 		this.setVisible(false);
 		init();
 	}
@@ -68,6 +70,8 @@ public class ResultPresenterWindow extends JFrame {
 		result.setText(srl.getStringFromID("noResultYet"));
 		getContentPane().add(result, BorderLayout.CENTER);
 		
+		JScrollPane jsp = new JScrollPane(result, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		this.add(jsp);
 		
 		export = new JButton();
 		export.setPreferredSize(iconSize);
@@ -81,7 +85,6 @@ public class ResultPresenterWindow extends JFrame {
 			}
 		});
 		getContentPane().add(export, BorderLayout.PAGE_END);
-		
 		
 	}
 	

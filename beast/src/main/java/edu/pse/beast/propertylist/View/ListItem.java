@@ -100,7 +100,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Point pos = showResult.getLocationOnScreen();
-				resWindow.setLocation(new Point((int)pos.getX(), (int)pos.getY() - 30));
+				resWindow.setLocation((int)pos.getX(), (int)pos.getY());
 				resWindow.getShowResult().setBackground(presentColor());
 				passMessageToResultWindow();
 				resWindow.setVisible(true);
