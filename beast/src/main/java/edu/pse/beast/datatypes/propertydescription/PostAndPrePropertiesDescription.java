@@ -11,6 +11,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
 import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.BooleanExpScope;
 import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.FormalPropertySyntaxTreeToAstTranslator;
 import java.util.LinkedList;
+import java.util.List;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -63,7 +64,9 @@ public class PostAndPrePropertiesDescription {
     
 
     public LinkedList<SymbolicVariable> getSymbolicVariableList() {
-        return symbolicVariableList.getSymbolicVariables();
+        LinkedList<SymbolicVariable> listSymb = new LinkedList<>(); 
+        listSymb.addAll(symbolicVariableList.getSymbolicVariables());
+        return listSymb;
     }
     public SymbolicVariableList getSymVarList() {
     	return symbolicVariableList;
