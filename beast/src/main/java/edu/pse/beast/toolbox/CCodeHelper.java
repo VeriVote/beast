@@ -100,7 +100,7 @@ public class CCodeHelper {
         } else if (rep == InternalTypeRep.CANDIDATE) {
             return "C";
         } else if (rep == InternalTypeRep.APPROVAL) {
-            return "1";
+            return "2";
         }
         return null;
     }
