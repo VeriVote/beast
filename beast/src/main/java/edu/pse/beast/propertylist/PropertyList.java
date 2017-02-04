@@ -18,7 +18,8 @@ import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.propertylist.View.PropertyListWindow;
 
 /**
- *
+ * Class acts as controller for everything related to the property list. Returns the list of properties descriptions,
+ * presents results and starts the view.
  * @author Justin
  */
 public class PropertyList implements PLControllerInterface, PostAndPrePropertiesDescriptionSource, ResultPresenter, Runnable {
@@ -30,9 +31,11 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 	
 	private BooleanExpEditor editor;
 	
+	
 	/**
 	 * Constructor
-	 * @param editor
+	 * @param model The data model of the property list.
+	 * @param editor The boolean expression editor that is the source of property descriptions.
 	 */
 	public PropertyList(PLModelInterface model, BooleanExpEditor editor) {
 		this.model = model;
@@ -44,7 +47,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 	
 	/**
 	 * Test constructor
-	 * @param model
+	 * @param model Only needs the model for testing purposes
 	 */
 	public PropertyList(PLModelInterface model) {
 		this.model = model;
@@ -53,19 +56,23 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 	}
 	
 	/**
-	 * @return
+	 * Returns the data model.
+	 * @return Data model of property list.
 	 */
 	public PLModel getModel() {
 		return (PLModel)model;
 	}
 	/**
-	 * @return
+	 * Provides the view of property list.
+	 * @return The PropertyListWindow
 	 */
 	public PropertyListWindow getView() {
 		return view;
 	}
+	/**
+	 * Displays the view.
+	 */
 	public void start() {
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(this);
     }
     @Override
@@ -106,21 +113,14 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     public boolean isCorrect() { throw new UnsupportedOperationException("Not supported yet."); 
         //return true;
         // TODO what exactly should be done?
-        
-
         /* for (PropertyItem item : model.getList()) {
          */
     }
 
     @Override
-    public void stopReacting() {
-        view.stopReacting();
-    }
-
+    public void stopReacting() { view.stopReacting(); }
     @Override
-    public void resumeReacting() {
-        view.resumeReacting();
-    }
+    public void resumeReacting() { view.resumeReacting(); }
 
     /* 
      * @see edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource#getPostAndPrePropertiesDescriptions()
@@ -137,15 +137,12 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         return result;
     }
 
-    /* (non-Javadoc)
+    /*
 	 * @see edu.pse.beast.highlevel.ResultPresenter#presentResult(edu.pse.beast.highlevel.ResultInterface)
      */
     @Override
     public void presentResult(ResultInterface res) {
-        // Auto-generated method stub
-
         // if (res.readyToPresent()) res.presentTo(presenter);
-        // ich brauch noch das postandpreproperties dazu
         model.setNextToBePresented(res);
         //res.presentTo(view.getNextToPresent());
         //view.updateView();

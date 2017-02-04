@@ -22,7 +22,7 @@ import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
- * 
+ * Builds the property list components and returns the controller of property list.
  * @author Justin
  */
 public class PropertyListBuilder {
@@ -31,6 +31,12 @@ public class PropertyListBuilder {
     private PropertyListWindow window;
 	private String[] menuHeadingIds = { "fileMenu", "editMenu" };
 	
+	/**
+	 * Builds all relevant components.
+	 * @param refs 
+	 * @param booleanExpEditor
+	 * @return
+	 */
 	public PropertyList createPropertyList(ObjectRefsForBuilder refs, BooleanExpEditor booleanExpEditor) {
 		PLModelInterface model = new PLModel();
 		controller = new PropertyList(model, booleanExpEditor);
@@ -45,7 +51,6 @@ public class PropertyListBuilder {
 				refs.getStringIF().getPropertyListStringResProvider().getMenuStringRes(), window);
 		
 		ImageResourceProvider imageRes = ImageResourceProvider.getToolbarImages();
-	
 		
 		PropertyListToolbarHandler toolbarHandler = new PropertyListToolbarHandler(imageRes, 
 				refs.getStringIF().getPropertyListStringResProvider().getToolbarTipStringRes(),
