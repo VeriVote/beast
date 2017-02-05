@@ -65,8 +65,6 @@ public class FactoryController implements Runnable {
         this.parmSrc = parmSrc;
         this.checkerID = checkerID;
         this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
-
-        System.out.println("checkerID: " + checkerID);
         
         this.results = CheckerFactoryFactory.getMatchingResult(checkerID,
                 postAndPrePropDescrSrc.getPostAndPrePropertiesDescriptions().size());
@@ -77,7 +75,13 @@ public class FactoryController implements Runnable {
             System.out.println(result.readyToPresent());
         }
         
-        this.concurrentChecker = concurrentChecker;
+        //if the user doesn't specify a concrete amount for concurrent checkers, we just set it to the thread amount of this pc
+        if (concurrentChecker <= 0) {
+            this.concurrentChecker = Runtime.getRuntime().availableProcessors();
+        } else {
+            this.concurrentChecker = concurrentChecker;            
+        }
+        
 
         // start the factorycontroller
         new Thread(this, "FactoryController").start();

@@ -88,6 +88,9 @@ public class CBMC_Result extends Result {
         // datermine the elect values
         List<CBMC_Result_Wrapper_long> elect = readLongs("elect", getResult());
 
+        System.out.println("asdf");
+        
+        
         // define these arrays, because switch case doesn't let me reassign the
         // same name,
         // and i am a bit worried, that they won't get created properly;
@@ -141,9 +144,9 @@ public class CBMC_Result extends Result {
 
         List<CBMC_Result_Wrapper_long> toReturn = new ArrayList<CBMC_Result_Wrapper_long>();
 
-        Pattern correctChecker = Pattern.compile("(\\b" + name + "[0-9]+=[0-9]u\\b)(.*)");
+        Pattern correctChecker = Pattern.compile("(\\b" + name + "[0-9]+=[0-9]+u)(.*)");
 
-        Pattern longExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\b)(.*)");
+        Pattern longExtractor = Pattern.compile("(\\b" + name + "[0-9]+)(.*)");
 
         for (Iterator<String> iterator = getResult().iterator(); iterator.hasNext();) {
             String line = (String) iterator.next();
