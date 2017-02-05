@@ -225,7 +225,7 @@ public abstract class CheckerFactory implements Runnable {
     
     private ElectionType getElectionTypeFromElectionDescription() {
         InternalTypeContainer inputType = electionDescSrc.getElectionDescription().getInputType().getType();
-        if (inputType.isList() && inputType.getInternalType() == InternalTypeRep.VOTER) {
+        if (inputType.isList() && inputType.getAccesTypeIfList() == InternalTypeRep.VOTER) {
             inputType = inputType.getListedType();
             if (!inputType.isList() && inputType.getInternalType() == InternalTypeRep.CANDIDATE) {
                 return ElectionType.SINGLECHOICE;
