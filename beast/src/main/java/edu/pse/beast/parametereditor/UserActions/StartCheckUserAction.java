@@ -16,6 +16,6 @@ public class StartCheckUserAction extends UserAction {
 
     @Override
     public void perform() {
-        editor.startCheck();
+        if (editor.getReacts()) editor.startCheck();
     }
 }
