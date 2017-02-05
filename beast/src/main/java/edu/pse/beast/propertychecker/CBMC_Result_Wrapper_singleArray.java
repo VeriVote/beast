@@ -3,13 +3,18 @@ package edu.pse.beast.propertychecker;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 
+ * @author Lukas
+ *
+ */
 public class CBMC_Result_Wrapper_singleArray {
-    private final int index;
+    private final int mainIndex;
     private final String name;
     private final List<Long> list = new ArrayList<Long>();
     
-    public CBMC_Result_Wrapper_singleArray(int index, String name) {
-        this.index = index;
+    public CBMC_Result_Wrapper_singleArray(int mainIndex, String name) {
+        this.mainIndex = mainIndex;
         this.name = name;
     }
     
@@ -24,8 +29,8 @@ public class CBMC_Result_Wrapper_singleArray {
         }
     }
 
-    public int getIndex() {
-        return index;
+    public int getMainIndex() {
+        return mainIndex;
     }
 
     public String getName() {

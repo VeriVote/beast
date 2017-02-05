@@ -53,9 +53,9 @@ public class ResultArrayDisplayTest {
 		elected.add(new Long[]{2l,1l});
 		elected.add(new Long[]{2l,3l});
 		
-		FailureExample fail = new FailureExample(et, null, votes, null, elected, 3, 1, 3);
+	//	FailureExample fail = new FailureExample(et, null, votes, null, elected, 3, 1, 3);
 		
-		win.presentFailureExample(fail);
+	//	win.presentFailureExample(fail);
 		
 		
 	}

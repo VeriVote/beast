@@ -2,6 +2,10 @@ package edu.pse.beast.datatypes;
 
 import java.util.List;
 
+import edu.pse.beast.propertychecker.CBMC_Result_Wrapper_long;
+import edu.pse.beast.propertychecker.CBMC_Result_Wrapper_multiArray;
+import edu.pse.beast.propertychecker.CBMC_Result_Wrapper_singleArray;
+
 /**
  * This class provides the result presenter with the necessary data about the counterexample.
  * @author Justin & Lukas
@@ -10,13 +14,13 @@ public class FailureExample {
 
 	private final ElectionType electionType;
 
-	private final List<Long[]> votes;
+	private final List<CBMC_Result_Wrapper_singleArray> votes;
 
-	private final List<Long[][]> voteList;
+	private final List<CBMC_Result_Wrapper_multiArray> voteList;
 
-	private final List<Long> elect;
+	private final List<CBMC_Result_Wrapper_long> elect;
 
-	private final List<Long[]> seats;
+	private final List<CBMC_Result_Wrapper_singleArray> seats;
 	
 	private final int numOfCandidates;
 	
@@ -37,8 +41,8 @@ public class FailureExample {
 	 * @param numOfSeats The number of seats that are awarded in an election.
 	 * @param numOfVoters The number of voters that voted for the candidates.
 	 */
-	public FailureExample(ElectionType electionType, List<Long[]> votes, List<Long[][]> voteList,
-			List<Long> elect, List<Long[]> seats, int numOfCandidates, int numOfSeats, int numOfVoters) {
+	public FailureExample(ElectionType electionType, List<CBMC_Result_Wrapper_singleArray> votes, List<CBMC_Result_Wrapper_multiArray> voteList,
+			List<CBMC_Result_Wrapper_long> elect, List<CBMC_Result_Wrapper_singleArray> seats, int numOfCandidates, int numOfSeats, int numOfVoters) {
 		
 		this.electionType = electionType;
 		this.votes = votes;
@@ -57,19 +61,19 @@ public class FailureExample {
 		return electionType;
 	}
 
-	public List<Long[]> getVotes() {
+	public List<CBMC_Result_Wrapper_singleArray> getVotes() {
 		return votes;
 	}
 
-	public List<Long[][]> getVoteList() {
+	public List<CBMC_Result_Wrapper_multiArray> getVoteList() {
 		return voteList;
 	}
 
-	public List<Long> getElect() {
+	public List<CBMC_Result_Wrapper_long> getElect() {
 		return elect;
 	}
 
-	public List<Long[]> getSeats() {
+	public List<CBMC_Result_Wrapper_singleArray> getSeats() {
 		return seats;
 	}
 

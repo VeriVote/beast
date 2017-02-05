@@ -1,12 +1,17 @@
 package edu.pse.beast.propertychecker;
 
+/**
+ * 
+ * @author Lukas
+ *
+ */
 public class CBMC_Result_Wrapper_long {
-    private final int index;
+    private final int mainIndex;
     private final String name;
     private long value = -1l;
     
-    public CBMC_Result_Wrapper_long(int index, String name) {
-        this.index = index;
+    public CBMC_Result_Wrapper_long(int mainIndex, String name) {
+        this.mainIndex = mainIndex;
         this.name = name;
     }
     
@@ -14,8 +19,8 @@ public class CBMC_Result_Wrapper_long {
         this.value = value;
     }
 
-    public int getIndex() {
-        return index;
+    public int getMainIndex() {
+        return mainIndex;
     }
 
     public String getName() {

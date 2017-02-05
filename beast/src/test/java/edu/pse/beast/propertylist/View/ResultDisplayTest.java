@@ -53,9 +53,9 @@ public class ResultDisplayTest {
 		elected.add(3l);
 		elected.add(2l);
 		
-		FailureExample fail = new FailureExample(et, votes, null, elected, null, 3, 1, 3);
+	//	FailureExample fail = new FailureExample(et, votes, null, elected, null, 3, 1, 3);
 	
-		win.presentFailureExample(fail);
+//		win.presentFailureExample(fail);
 		
 		
 	}
