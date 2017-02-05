@@ -8,6 +8,7 @@ package edu.pse.beast.propertychecker;
 import java.util.List;
 
 import edu.pse.beast.datatypes.ElectionType;
+import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenterElement;
@@ -28,6 +29,7 @@ public abstract class Result implements ResultInterface {
     private int numSeats;
     private int numCandidates;
     private ElectionType electionType;
+    private FailureExample failExample;
 
     
     /**
