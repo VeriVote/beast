@@ -1,5 +1,7 @@
 package edu.pse.beast.celectiondescriptioneditor;
 
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CErrorDisplayer;
+import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 
@@ -13,6 +15,7 @@ public class ErrorWindow {
     private final JTextPane textPane;
     private ArrayList<Error> errors;
     private String errorString;
+    private String lineString;
 
     /**
      * Constructor
@@ -20,8 +23,7 @@ public class ErrorWindow {
      * @param stringLoaderInterface stringLoaderInterface to load needed Strings
      */
     ErrorWindow(JTextPane textPane, StringLoaderInterface stringLoaderInterface) {
-        errorString = stringLoaderInterface.getBooleanExpEditorStringResProvider().
-                getBooleanExpErrorStringRes().getStringFromID("error");
+        updateStringRes(stringLoaderInterface);
         this.textPane = textPane;
     }
 
@@ -29,10 +31,11 @@ public class ErrorWindow {
      * Method to display ArrayList of Errors in the ErrorWindow.
      * @param errors ArrayList of Errors
      */
-    void displayErrors(ArrayList<String> errors) {
+    void displayErrors(ArrayList<CodeError> errors, CErrorDisplayer cErrorDisplayer) {
         String errorsAsString = errorString + ": " + errors.size() + "\n";
         for (int i = 0; i < errors.size(); i++) {
-            errorsAsString += i+1 + ": " + errors.get(i) + "\n";
+            errorsAsString += i+1 + ": " + cErrorDisplayer.createMsg(errors.get(i)) + " (" + lineString +
+                    (errors.get(i).getLine() - 1) + ")" + "\n";
         }
         textPane.setText(errorsAsString);
     }
@@ -44,5 +47,7 @@ public class ErrorWindow {
     public void updateStringRes(StringLoaderInterface stringLoaderInterface) {
         errorString = stringLoaderInterface.getBooleanExpEditorStringResProvider().
                 getBooleanExpErrorStringRes().getStringFromID("error");
+        lineString = stringLoaderInterface.getBooleanExpEditorStringResProvider().
+                getBooleanExpErrorStringRes().getStringFromID("line");
     }
 }

@@ -31,7 +31,7 @@ public class CErrorDisplayer extends ErrorDisplayer {
         }
     }
     
-    private String createMsg(CodeError er) {
+    public String createMsg(CodeError er) {
         if(er.getId().equals("antlr")) {
             return er.getExtraInfo("msg");
         }

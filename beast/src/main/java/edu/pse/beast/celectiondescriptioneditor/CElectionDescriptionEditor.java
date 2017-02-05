@@ -68,12 +68,8 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     }
 
     public void findErrorsAndDisplayThem() {
-        ArrayList<String> errorMsgList =  new ArrayList<String>();
-        ArrayList<CodeError> errors = codeArea.getErrorCtrl().getErrorFinderList().getErrors();        
-        for (CodeError error : errors) {
-            errorMsgList.add(((BooleanExpErrorDisplayer) codeArea.getErrorCtrl().getDisplayer()).createMsg(error));
-        }
-        errorWindow.displayErrors(errorMsgList);
+        ArrayList<CodeError> errors = codeArea.getErrorCtrl().getErrorFinderList().getErrors();
+        errorWindow.displayErrors(errors, (CErrorDisplayer) codeArea.getErrorCtrl().getDisplayer());
     }
 
     public void changeElectionDescriptionInput(ElectionTypeContainer cont) {

@@ -95,20 +95,11 @@ public class BooleanExpEditor {
     }
 
     public void findErrorsAndDisplayThem() {
-        ArrayList<String> errorMsgList =  new ArrayList<String>();
-        ArrayList<CodeError> errors = prePropCodeArea.getErrorCtrl().getErrorFinderList().getErrors();
-        errors.addAll(postPropCodeArea.getErrorCtrl().getErrorFinderList().getErrors());
-        if (errors.size() == 0) {
-            arePropertiesCorrect = true;
-        } else {
-            arePropertiesCorrect = false;
-        }
-        for (CodeError error : errors) {
-            String errorMsg = ((BooleanExpErrorDisplayer) prePropCodeArea.getErrorCtrl().getDisplayer()).createMsg(error)
-                    + "(Zeile " + error.getLine() + ")";
-            errorMsgList.add(errorMsg);
-        }
-        errorWindow.displayErrors(errorMsgList);
+        ArrayList<CodeError> prePropErrors = prePropCodeArea.getErrorCtrl().getErrorFinderList().getErrors();
+        ArrayList<CodeError> postPropErrors = postPropCodeArea.getErrorCtrl().getErrorFinderList().getErrors();
+
+        errorWindow.displayErrors(prePropErrors, postPropErrors,
+                ((BooleanExpErrorDisplayer) prePropCodeArea.getErrorCtrl().getDisplayer()));
         updatePostAndPrePropObject();
     }
 

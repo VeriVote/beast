@@ -8,3 +8,5 @@ incomparable_list_sizes_descr : Die beiden Verglichenen Ausdrücke haben untersc
 wrong_var_passed_to_votesum_descr : VOTE_SUM_FOR_CANDIDATE erwartet eine Variable vom Typ Wähler. Übergeben wurde VAR vom Typ GIVENTYPE.
 line : Zeile
 char : Zeichen
+preProps : Vorbedingungen
+postProps : Nachbedingungen
