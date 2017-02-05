@@ -6,12 +6,18 @@ import edu.pse.beast.toolbox.ActionIdAndListener;
 import edu.pse.beast.toolbox.MenuBarHandler;
 import java.util.ArrayList;
 /**
- *
+ * The ParameterEditorMenuBarHandler creates the menubar for the ParameterEditor.
  * @author Jonas
  */
 public class ParameterEditorMenuBarHandler extends MenuBarHandler {
-    private ParameterEditorWindow window;
-    
+    private final ParameterEditorWindow window;
+    /**
+     * Creates the menubar and applies it to the ParameterEditorWindow
+     * @param headingIds headings for the different slots on the menu
+     * @param actionIDAndListener list of ActionIdAndListeners
+     * @param resLoader loader for the resources
+     * @param window ParameterEditorWindow
+     */
     public ParameterEditorMenuBarHandler(String[] headingIds,
     ArrayList<ArrayList<ActionIdAndListener>> actionIDAndListener, 
     StringResourceLoader resLoader, ParameterEditorWindow window) {

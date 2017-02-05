@@ -5,11 +5,11 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 
 /**
- *
+ * Window that takes user input for additional arguments for CBMC
  * @author Jonas
  */
 public class AdvancedWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
-    private String textAfterLastOK = "--unwind 6 --trace";
+    private String textAfterLastOK = "";
     private boolean reacts;
 
     /**
@@ -34,7 +34,6 @@ public class AdvancedWindow extends javax.swing.JFrame implements DisplaysString
 
         setTitle("Benutzerdefinierte Argumente für CBMC");
 
-        input.setText("--unwind 6 --trace");
         input.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 inputActionPerformed(evt);
@@ -143,9 +142,17 @@ public class AdvancedWindow extends javax.swing.JFrame implements DisplaysString
     private javax.swing.JTextField input;
     private javax.swing.JButton ok;
     // End of variables declaration//GEN-END:variables
+    /**
+     * Provides access to the JTextField that contains the user input
+     * @return JTextField
+     */
     protected javax.swing.JTextField getInputField() {
         return input;
     }
+    /**
+     * Provides access to the JButton that approves of the user input being stored
+     * @return JButton
+     */
     protected javax.swing.JButton getOkButton() {
         return ok;
     }
@@ -157,7 +164,10 @@ public class AdvancedWindow extends javax.swing.JFrame implements DisplaysString
         ok.setText(other.getStringFromID("ok"));
         cancel.setText(other.getStringFromID("cancel"));
     }
-    
+    /**
+     * Toggles whether this window reacts to user input (to not interrupt checks)
+     * @param reacts whether it reacts
+     */
     protected void setReacts(boolean reacts) {
         this.reacts = reacts;
     }

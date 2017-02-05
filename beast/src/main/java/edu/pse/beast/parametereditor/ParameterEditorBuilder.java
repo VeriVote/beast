@@ -16,15 +16,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- *
+ * The ParameterEditorBuilder builds a ParameterEditor and provides the references
+ * to other parts of BEAST for it.
  * @author Holger-Desktop
  */
 public class ParameterEditorBuilder {
 
     private ParameterEditor editor;
     private ParameterEditorWindow window;
-    private String[] menuHeadingIds = {"fileMenu", "projectMenu", "editorMenu", "showHideWindowsMenu"};
-
+    private final String[] menuHeadingIds = {"fileMenu", "projectMenu", "editorMenu", "showHideWindowsMenu"};
+    /**
+     * Creates the ParameterEditor
+     * @param refs contains all important references for the builder
+     * @param cElectionDescriptionEditor editor for the election
+     * @param booleanExpEditor editor for properties
+     * @param propertyList list of properties
+     * @return ParameterEditor
+     */
     public ParameterEditor createParameterEditor(
             ObjectRefsForBuilder refs,
             CElectionDescriptionEditor cElectionDescriptionEditor,
@@ -51,7 +59,15 @@ public class ParameterEditorBuilder {
         editor.setReacts(true);
         return editor;
     }
-
+    /**
+     * Creates ActionIdAndListeners which the MenuBarHandler uses to create the
+     * MenuBar with the appropriate Strings.
+     * @param cElectionDescriptionEditor
+     * @param booleanExpEditor
+     * @param propertyList
+     * @param saverLoaderIF
+     * @return 
+     */
     private ArrayList<ArrayList<ActionIdAndListener>>
             createActionIdAndListenerListForMenuHandler(CElectionDescriptionEditor cElectionDescriptionEditor,
                                                         BooleanExpEditor booleanExpEditor,
@@ -93,8 +109,16 @@ public class ParameterEditorBuilder {
         created.add(showHideWindowsList);
         return created;
     }
-
-    private ActionIdAndListener[] createActionIdAndListenerListForToolbarHandler(CElectionDescriptionEditor cElectionDescriptionEditor,
+    /**
+     * Creates ActionIdAndListeners which the ToolbarHandler uses to create the
+     * Toolbar with the appropriate Strings.
+     * @param cElectionDescriptionEditor
+     * @param propertyList
+     * @param saverLoaderIF
+     * @return 
+     */
+    private ActionIdAndListener[] createActionIdAndListenerListForToolbarHandler(
+            CElectionDescriptionEditor cElectionDescriptionEditor,
             PropertyList propertyList, SaverLoaderInterface saverLoaderIF) {
         ActionIdAndListener[] created = new ActionIdAndListener[6];
 

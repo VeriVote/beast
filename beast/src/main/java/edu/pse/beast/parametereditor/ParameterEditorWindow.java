@@ -6,12 +6,13 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 import javax.swing.JSpinner;
 /**
- *
+ * Window which takes all the user input for the parameters used by CBMC. It
+ * is also the central window for BEAST which starts and stops checks.
  * @author Jonas
  */
 public class ParameterEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
 
-    private AdvancedWindow advWindow = new AdvancedWindow();
+    private final AdvancedWindow advWindow = new AdvancedWindow();
     private boolean reacts;
     /**
      * Creates new form ParameterEditorWindow
@@ -245,36 +246,80 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     private javax.swing.JLabel voterTo;
     private javax.swing.JLabel voters;
     // End of variables declaration//GEN-END:variables
+    /**
+     * Getter for minimum voters JSpinner
+     * @return minimum voters JSpinner
+     */
     protected JSpinner getVoterMin() {
         return voterMin;
     }
+    /**
+     * Getter for maximum voters JSpinner
+     * @return maximum voters JSpinner
+     */
     protected JSpinner getVoterMax() {
         return voterMax;
     }
+    /**
+     * Getter for minimum candidates JSpinner
+     * @return minimum candidates JSpinner
+     */
     protected JSpinner getCandMin() {
         return candMin;
     }
+    /**
+     * Getter for maximum candidates JSpinner
+     * @return maximum candidates JSpinner
+     */
     protected JSpinner getCandMax() {
         return candMax;
     }
+    /**
+     * Getter for minimum seats JSpinner
+     * @return minimum seats JSpinner
+     */
     protected JSpinner getSeatMin() {
         return seatMin;
     }
+    /**
+     * Getter for maximum seats JSpinner
+     * @return maximum seats JSpinner
+     */
     protected JSpinner getSeatMax() {
         return seatMax;
     }
+    /**
+     * Getter for timeout value JSpinner
+     * @return timeout value JSpinner
+     */
     protected JSpinner getTimeoutNum() {
         return timeoutNum;
     }
+    /**
+     * Getter for timeout unit JComboBox
+     * @return timeout unit JComboBox
+     */
     protected javax.swing.JComboBox<String> getTimeoutUnit() {
         return timeoutUnit;
     }
+    /**
+     * Getter for amount of processes JSpinner
+     * @return amount of processes JSpinner
+     */
     protected JSpinner getAmountProcessesSpinner() {
         return amountProcessesSpinner;
     }
+    /**
+     * Getter for the window for arguments for CBMC from the user
+     * @return AdvancedWindow
+     */
     protected AdvancedWindow getAdvancedWindow() {
         return advWindow;
     }
+    /**
+     * Getter for the toolbar
+     * @return toolbar
+     */
     public javax.swing.JToolBar getToolbar() {
         return toolbar;
     }
@@ -300,6 +345,11 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
         timeoutUnit.addItem(other.getStringFromID("days"));
         advWindow.updateStringRes(stringResIF);
     }
+    /**
+     * Toggles whether this window reacts to user input with the exception of
+     * stopping checks (to not interrupt checks)
+     * @param reacts whether it reacts
+     */
     protected void setReacts(boolean reacts) {
         this.reacts = reacts;
         advWindow.setReacts(reacts);

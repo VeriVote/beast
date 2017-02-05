@@ -17,7 +17,8 @@ import java.util.List;
 import java.awt.event.ActionListener;
 
 /**
- *
+ * The ParameterEditor is the central class that coordinates everything associated
+ * with the ParameterEditorWindow and the communication with high level.
  * @author Jonas
  */
 public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSource {
@@ -27,16 +28,21 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
     private final PropertyList propertyList;
     private CheckListener checkListener;
     private final ArrayList<ActionListener> closeListener = new ArrayList<>();
-    private MinMaxSpinValueHandler voterHandler;
-    private MinMaxSpinValueHandler candHandler;
-    private MinMaxSpinValueHandler seatHandler;
-    private TimeoutValueHandler timeoutHandler;
-    private SingleValueSpinnerHandler processHandler;
-    private ArgumentHandler argumentHandler;
+    private final MinMaxSpinValueHandler voterHandler;
+    private final MinMaxSpinValueHandler candHandler;
+    private final MinMaxSpinValueHandler seatHandler;
+    private final TimeoutValueHandler timeoutHandler;
+    private final SingleValueSpinnerHandler processHandler;
+    private final ArgumentHandler argumentHandler;
     private ToolbarHandler toolbarHandler;
     private MenuBarHandler menuBarHandler;
     private boolean reacts;
-
+    /**
+     * Constructor which also links the handlers to the GUI elements
+     * @param cElectionDescriptionEditor CElectionDescriptionEditor
+     * @param propertyList PropertyList
+     * @param window GUI window
+     */
     public ParameterEditor(
             CElectionDescriptionEditor cElectionDescriptionEditor,
             PropertyList propertyList, ParameterEditorWindow window) {
@@ -57,7 +63,8 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
         window.getTimeoutUnit().addActionListener(timeoutHandler);
         processHandler = new SingleValueSpinnerHandler(window.getAmountProcessesSpinner());
         window.getAmountProcessesSpinner().addChangeListener(processHandler);
-        argumentHandler = new ArgumentHandler(window.getAdvancedWindow().getInputField(), window.getAdvancedWindow().getOkButton());
+        argumentHandler = new ArgumentHandler(window.getAdvancedWindow().getInputField(),
+                window.getAdvancedWindow().getOkButton());
         setReacts(true);
     }
 
@@ -72,11 +79,15 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
         ElectionCheckParameter param = new ElectionCheckParameter(voter, cand, seat, timeout, processes, argument);
         return param;
     }
-
+    /**
+     * Starts check of the election by notifying the CheckListener
+     */
     public void startCheck() {
         checkListener.startCheck();
     }
-
+    /**
+     * Stops check of the election by notifying the CheckListener
+     */
     public void abortCheck() {
         checkListener.stopCheck();
     }
@@ -116,15 +127,25 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
     public void saveProject(Project toBeSaved) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    /**
+     * Setter for the ToolbarHandler
+     * @param toolbarHandler new ToolbarHandler
+     */
     void setToolbarHandler(ToolbarHandler toolbarHandler) {
         this.toolbarHandler = toolbarHandler;
     }
-
+    /**
+     * Setter for the MenuBarHandler
+     * @param menuBarHandler new MenuBarHandler
+     */
     void setMenuBarHandler(MenuBarHandler menuBarHandler) {
         this.menuBarHandler = menuBarHandler;
     }
-    
+    /**
+     * Toggles whether the chosen minimum and maximum react to user input
+     * (to not interrupt checks)
+     * @param reacts whether they react
+     */
     public void setReacts(boolean reacts) {
         this.reacts = reacts;
         window.setReacts(reacts);
@@ -134,7 +155,11 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
         timeoutHandler.setReacts(reacts);
         processHandler.setReacts(reacts);
     }
-    
+    /**
+     * Getter for whether the ParameterEditor reacts to user input (except to
+     * stop checks)
+     * @return whether it reacts
+     */
     public boolean getReacts() {
         return reacts;
     }

@@ -10,37 +10,57 @@ import javax.swing.event.ChangeEvent;
 import java.util.concurrent.TimeUnit;
 
 /**
- *
+ * The TimeoutValueHandler handles all user inputs on the ParameterEditor
+ * which change the timeout using one JSpinner and one JComboBox.
  * @author Jonas
  */
-public class TimeoutValueHandler implements ChangeListener, ActionListener{
+public class TimeoutValueHandler implements ChangeListener, ActionListener {
     private final JSpinner timeoutSpinner;
     private final JComboBox timeoutUnit;
     private TimeOut timeoutBefore;
     private boolean reacts;
-    
+    /**
+     * Constructor
+     * @param timeoutSpinner JSpinner for the timeout value
+     * @param timeoutUnit JComboBox for the timeout unit
+     */
     public TimeoutValueHandler(JSpinner timeoutSpinner, JComboBox timeoutUnit) {
         this.timeoutSpinner = timeoutSpinner;
         this.timeoutUnit = timeoutUnit;
         timeoutBefore = getTimeout();
     }
+    /**
+     * Getter for the timeout
+     * @return TimeOut
+     */
     public TimeOut getTimeout() {
         TimeOut timeOut = new TimeOut();
         Integer timeoutInt = Integer.parseInt(timeoutSpinner.getValue().toString());
-        if(timeoutInt < 0) {
+        if (timeoutInt < 0) {
             timeoutInt = 0;
         }
-        if(timeoutUnit.getSelectedIndex() == 0) {
-            timeOut = new TimeOut(TimeUnit.SECONDS, timeoutInt.longValue());
-        } else if(timeoutUnit.getSelectedIndex() == 1) {
-            timeOut = new TimeOut(TimeUnit.MINUTES, timeoutInt.longValue());
-        } else if(timeoutUnit.getSelectedIndex() == 2) {
-            timeOut = new TimeOut(TimeUnit.HOURS, timeoutInt.longValue());
-        } else if(timeoutUnit.getSelectedIndex() == 3) {
-            timeOut = new TimeOut(TimeUnit.DAYS, timeoutInt.longValue());
+        switch (timeoutUnit.getSelectedIndex()) {
+            case 0:
+                timeOut = new TimeOut(TimeUnit.SECONDS, timeoutInt.longValue());
+                break;
+            case 1:
+                timeOut = new TimeOut(TimeUnit.MINUTES, timeoutInt.longValue());
+                break;
+            case 2:
+                timeOut = new TimeOut(TimeUnit.HOURS, timeoutInt.longValue());
+                break;
+            case 3:
+                timeOut = new TimeOut(TimeUnit.DAYS, timeoutInt.longValue());
+                break;
+            default:
+                break;
         }
         return timeOut;
     }
+    /**
+     * Setter for the timeout
+     * @param to new TimeOut
+     */
     public void setValue(TimeOut to) {
         if (reacts || to.equals(timeoutBefore)) {
             timeoutSpinner.setValue(to.getOrigUnit().convert(to.getDuration(), TimeUnit.MILLISECONDS));
@@ -66,7 +86,11 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener{
         }
         timeoutBefore = getTimeout();
     }
-    
+    /**
+     * Toggles whether the timeout reacts to user input
+     * (to not interrupt checks)
+     * @param reacts whether it reacts
+     */
     void setReacts(boolean reacts) {
         this.reacts = reacts;
     }
