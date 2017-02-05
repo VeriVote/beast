@@ -126,7 +126,7 @@ public class CBMC_Result extends Result {
             if (checkerMatcher.find()) {
                 Matcher longMatcher = longExtractor.matcher(checkerMatcher.group(0));
                 if (longMatcher.find()) {
-
+                    
                     String longLine = longMatcher.group(1);
                     // replace all no number characters
                     String number = longLine.replaceAll(("[^-?0-9]*"), "");
@@ -226,8 +226,12 @@ public class CBMC_Result extends Result {
 
                 String newLine = votesMatcher.group(1);
 
+                System.out.println("NEWLINE: " + newLine);
+                
                 // find out the number of this votes array
                 int mainIndex = Integer.parseInt(newLine.split("\\[")[0].split(name)[1]);
+                
+                System.out.println("mainindex " + mainIndex);
 
                 // get the first index for this array value
                 int arrayIndexOne = Integer.parseInt(newLine.split("\\[")[1].split("\\]")[0]);
@@ -240,7 +244,8 @@ public class CBMC_Result extends Result {
 
                 long value = Long.parseLong(valueAsString, 2);
 
-                
+                System.out.println("value: " + value);
+                System.out.println(line);
                 boolean added = false;
 
                 for (Iterator<CBMC_Result_Wrapper_multiArray> innerIterator = list.iterator(); innerIterator

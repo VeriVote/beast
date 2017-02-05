@@ -2,6 +2,8 @@ package edu.pse.beast.propertychecker;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.pse.beast.toolbox.ErrorLogger;
 
@@ -17,30 +19,36 @@ public class LinuxProcess extends CBMCProcess {
         // the linux version of cbmc has the trace command automatically, so we
         // have to remove it
         // or else cbmc would throw an error
-        return toSanitize.replace("--trace;", "");
+        return toSanitize.replace("--trace", "");
     }
 
     @Override
     public Process createProcess(File toCheck, int voters, int candidates, int seats, String advanced) {
 
+        List<String> arguments = new ArrayList<String>();
+        
         advanced = sanitizeArguments(advanced);
         
         String[] argumentsToPass = new String[5 + advanced.split(";").length];
         
         
         //cbmc on linux wants every argument in a seperate string
-        argumentsToPass[0] = "cbmc";
+        arguments.add("cbmc");
         
-        argumentsToPass[1] = toCheck.getAbsolutePath();
+        arguments.add(toCheck.getAbsolutePath());
         
-        argumentsToPass[2] = "-D V=" + voters;
+        arguments.add("-D V=" + voters);
         
-        argumentsToPass[3] = "-D C=" + candidates;
+        arguments.add("-D C=" + candidates);
         
-        argumentsToPass[4] = "-D S=" + seats;
+        arguments.add("-D S=" + seats);
         
         for (int i = 5; i < argumentsToPass.length; i++) {
-            argumentsToPass[i] = sanitizeArguments(advanced.split(";")[i - 5]);
+            String sanitized = sanitizeArguments(advanced.split(";")[i - 5]);
+            
+            if(sanitized.trim().length() > 0) {
+                arguments.add(sanitized);
+            }
         }
 
         Process startedProcess = null;
@@ -49,7 +57,7 @@ public class LinuxProcess extends CBMCProcess {
         toCheck = new File("./src/main/resources/c_tempfiles/c_temp_file_success.c");
         ErrorLogger.log("LinuxProcess.java line 47 has to be removed, when the code creation works");
 
-        ProcessBuilder prossBuild = new ProcessBuilder(argumentsToPass);
+        ProcessBuilder prossBuild = new ProcessBuilder(arguments.toArray(new String[0]));
 
         System.out.println("Started a new Process with the following command: " + String.join(" ", prossBuild.command()));
 

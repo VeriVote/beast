@@ -19,6 +19,7 @@ public class CBMC_Result_Wrapper_multiArray {
     }
     
     public void addTo(int firstIndex, int secondIndex, long toAdd) {
+        
         if (list.size() > firstIndex) {
             addToLongList(list.get(firstIndex), secondIndex, toAdd);
         } else {
@@ -42,7 +43,7 @@ public class CBMC_Result_Wrapper_multiArray {
             list.set(indexToAddAt, toAdd);
         } else {
             for (int i = list.size(); i <= indexToAddAt; i++) {
-                list.add(-1l);
+                list.add(-2l);
             }
             list.add(toAdd);
         }
