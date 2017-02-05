@@ -34,18 +34,25 @@ public class CBMC_Result extends Result {
 
             // System.out.println(exmp.getNumOfCandidates());
 
-            for (int i = 0; i < exmp.getVotes().size(); i++) {
-                System.out.println("_________");
+            for (int i = 0; i < exmp.getVoteList().size(); i++) {
+               // System.out.println("_________");
                 // System.out.println("voteslist " +
                 // exmp.getVotes().get(i).toString());
 
-                Long[] test = exmp.getVotes().get(i).getList();
-
+                Long[][] test = exmp.getVoteList().get(i).getList();
+                System.out.println(exmp.getVotes().get(i).getName() + exmp.getVotes().get(i).getMainIndex());
+                System.out.println("========");
                 for (int j = 0; j < test.length; j++) {
-                    System.out.println(test[j]);
+                    for (int j2 = 0; j2 < test[0].length; j2++) {
+                        System.out.print(test[i][j] + " | ");
+                    }
+                    System.out.println("______________");
                 }
 
             }
+            long test2 = exmp.getElect().get(0).getValue();
+            
+          //  System.out.println(test2);
 
             // presenter.presentFailureExample(createFailureExample());
         }
@@ -154,9 +161,9 @@ public class CBMC_Result extends Result {
         List<CBMC_Result_Wrapper_singleArray> list = new ArrayList<CBMC_Result_Wrapper_singleArray>();
 
         // this pattern searches for words of the form
-        // "votesNUMBER[NUMBER][NUMBER]" where "NUMBER" can by any positive
-        // number
-        Pattern votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+\\])(.*)");
+        // "votesNUMBER[NUMBER]" where "NUMBER" can by any positive
+        // number. Also, the next character has to be an equals sign
+        Pattern votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+\\])(=.*)");
 
         for (Iterator<String> iterator = toExtract.iterator(); iterator.hasNext();) {
             String line = (String) iterator.next();
@@ -205,8 +212,8 @@ public class CBMC_Result extends Result {
 
         // this pattern searches for words of the form
         // "votesNUMBER[NUMBER][NUMBER]" where "NUMBER" can by any positive
-        // number
-        Pattern votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+\\]\\[[0-9]+\\])(.*)");
+        // number. Also, the next character has to be an equals sign
+        Pattern votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+\\]\\[[0-9]+\\])(=.*)");
 
         for (Iterator<String> iterator = toExtract.iterator(); iterator.hasNext();) {
             String line = (String) iterator.next();
