@@ -53,23 +53,24 @@ public class CAntlrHandler {
     }
     
     public String[] getTypeLiterals() {
-        String literals[] =
+        return new String []
                 {"void", "char", "short", "int", "long", "float", "double",
                     "signed", "unsigned", "_Bool", "_Complex", "__m128",
                     "__m128d", "__m128i"};
-        return literals;
     }
     
     public String[] getControllLiterals() {
-        String literals[] =
+        return new String []
                 {"if", "else", "do", "while", "break", "switch", "continue",
-                    "default", "case", "return"};
-        return literals;
+                    "default", "case", "return", "for"};
     }
 
     public String getStringRegex() {
-        String stringRegex = "\"([^\"^\\\\]|\\\\(.))*\"";
-        return stringRegex;
+        return "\"([^\"^\\\\]|\\\\(.))*\"";
+    }
+
+    public String getCommentRegex() {
+        return "(/\\*([^*]|[\\r\\n]|(\\*+([^*/]|[\\r\\n])))*\\*+/)|(//.*)";
     }
 }
 

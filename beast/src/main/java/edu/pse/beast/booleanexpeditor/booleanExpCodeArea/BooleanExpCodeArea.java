@@ -17,6 +17,7 @@ public class BooleanExpCodeArea extends CodeArea {
     private BooleanExpEditorGrammarErrorFinder grammarErrorFinder;
     private BooleanExpEditorVariableErrorFinder variableErrorFinder;
     private BooleanExpAutoCompletionSrc autoCompletionSrc;
+    private BooleanExpSyntaxHL booleanExpSyntaxHL;
 
     /**
      * Constructor
@@ -38,6 +39,7 @@ public class BooleanExpCodeArea extends CodeArea {
         this.autoCompletionSrc = autoCompletionSrc;
         errorCtrl.addErrorFinder(grammarErrorFinder);
         errorCtrl.addErrorFinder(variableErrorFinder);
+        booleanExpSyntaxHL = new BooleanExpSyntaxHL(antlrHandler, syntaxHL);
     }
 
     public BooleanExpEditorGrammarErrorFinder getGrammarErrorFinder() {

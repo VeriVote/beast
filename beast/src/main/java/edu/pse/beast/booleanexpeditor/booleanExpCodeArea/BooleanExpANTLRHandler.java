@@ -2,6 +2,8 @@ package edu.pse.beast.booleanexpeditor.booleanExpCodeArea;
 
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
+
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.text.BadLocationException;
@@ -44,5 +46,25 @@ public class BooleanExpANTLRHandler {
     public FormalPropertyDescriptionParser getParser() {
         return parser;
     }
-    
+
+    public String[] getMakroRegex() {
+        return new String[]
+                {"FOR_ALL_VOTERS\\([a-zA-Z_]*\\)", "FOR_ALL_CANDIDATES\\([a-zA-Z_]*\\)",
+                        "FOR_ALL_SEATS\\([a-zA-Z_]*\\)", "EXISTS_ONE_VOTER\\([a-zA-Z_]*\\)",
+                        "EXISTS_ONE_CANDIDATE\\([a-zA-Z_]*\\)", "EXISTS_ONE_SEAT\\([a-zA-Z_]*\\)",
+                        "VOTE_SUM_FOR_CANDIDATE[0-9]+\\([a-zA-Z_]*\\)"};
+    }
+
+    public String[] getComparisonSymbols() {
+        return new String[]
+                {"==", "!=", ">=", "<=", ">", "<"};
+    }
+
+    public String[] getLogicalOperators() {
+        return new String[]
+                {"==>", "<==>", "&&", "||"};
+    }
+    public String getConstants() {
+        return "(V|C|S)";
+    }
 }

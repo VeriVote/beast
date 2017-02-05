@@ -22,14 +22,19 @@ public class CSyntaxHl {
     public CSyntaxHl(CAntlrHandler antlrHandler, SyntaxHL syntaxHL) {
         this.antlrHandler = antlrHandler;
         this.syntaxHL = syntaxHL;
+
         ArrayList<RegexAndColor> regexAndColorList = new ArrayList<>();
         for(String s : antlrHandler.getTypeLiterals()) {
-            regexAndColorList.add(new RegexAndColor(s, Color.GREEN));
+            String regexWithWhiteSpace = "(\\s|\\n|\\A)" + s + "(\\s|\\n|\\Z)";
+            regexAndColorList.add(new RegexAndColor(regexWithWhiteSpace, Color.GREEN));
         }
         for(String s : antlrHandler.getControllLiterals()) {
-            regexAndColorList.add(new RegexAndColor(s, Color.BLUE));
+            String regexWithWhiteSpace = "(\\s|\\n)|\\A)" + s + "(\\s|\\n|\\Z)";
+            regexAndColorList.add(new RegexAndColor(regexWithWhiteSpace, Color.BLUE));
         }
+        regexAndColorList.add(new RegexAndColor(antlrHandler.getCommentRegex(), Color.BLUE));
         regexAndColorList.add(new RegexAndColor(antlrHandler.getStringRegex(), Color.RED));
+
         syntaxHL.updateFilter(regexAndColorList);
     }
 }
