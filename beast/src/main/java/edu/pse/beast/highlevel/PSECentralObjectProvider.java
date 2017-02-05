@@ -15,10 +15,11 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 
 /**
- *
+ * The PSECentralObjectProvider creates and provides access to all instances of
+ * classes that implement high level interfaces used to run BEAST.
  * @author Jonas
  */
-public class PSECentralObjectProvider implements CentralObjectProvider{
+public class PSECentralObjectProvider implements CentralObjectProvider {
     
     private final ParameterEditor paramEd;
     private final PropertyList propertyList;
@@ -26,6 +27,12 @@ public class PSECentralObjectProvider implements CentralObjectProvider{
     private final CElectionDescriptionEditor cElectionEditor;
     private final ResultCheckerCommunicator checkerCommunicator;
     
+    /**
+     * Constructor that creates instances of the classes that implement high level
+     * interfaces via their builders.
+     * @param communicator the BEASTCommunicator which needs access to these
+     * instances
+     */
     public PSECentralObjectProvider(BEASTCommunicator communicator) {
         OptionsInterface optionsInterface = new OptionsInterface();
         StringLoaderInterface stringIf = new StringLoaderInterface("de"); //must be provided  by language options at some point
@@ -37,7 +44,8 @@ public class PSECentralObjectProvider implements CentralObjectProvider{
         booleanExpEditor = new BooleanExpEditorBuilder().createBooleanExpEditorObject(refs, cElectionEditor);        
         propertyList = new PropertyListBuilder().createPropertyList(refs, booleanExpEditor);
         checkerCommunicator = new PropertyChecker("cbmc"); //this must be done via the checkerfactory at some point
-        paramEd = new ParameterEditorBuilder().createParameterEditor(refs, cElectionEditor, booleanExpEditor, propertyList);
+        paramEd = new ParameterEditorBuilder().createParameterEditor(refs, cElectionEditor,
+                booleanExpEditor, propertyList);
         paramEd.addCheckListener(communicator);
     }
 

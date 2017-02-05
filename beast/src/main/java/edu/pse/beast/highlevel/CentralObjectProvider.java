@@ -9,32 +9,32 @@ package edu.pse.beast.highlevel;
 public interface CentralObjectProvider {
     /**
      * Provides access to the ElectionDescriptionSource
-     * @return ElectionDescriptionSource
+     * @return ElectionDescriptionSource to which access is needed
      */
     ElectionDescriptionSource getElectionDescriptionSource();
     /**
      * Provides access to the PostAndPrePropertiesDescriptionSource
-     * @return PostAndPrePropertiesDescriptionSource
+     * @return PostAndPrePropertiesDescriptionSource to which access is needed
      */
     PostAndPrePropertiesDescriptionSource getPostAndPrePropertiesSource();
     /**
      * Provides access to the ResultCheckerCommunicator
-     * @return ResultCheckerCommunicator
+     * @return ResultCheckerCommunicator to which access is needed
      */
     ResultCheckerCommunicator getResultCheckerCommunicator();
     /**
      * Provides access to the ParameterSource
-     * @return ParameterSource
+     * @return ParameterSource to which access is needed
      */
     ParameterSource getParameterSrc();
     /**
      * Provides access to the ResultPresenter
-     * @return ResultPresenter
+     * @return ResultPresenter to which access is needed
      */
     ResultPresenter getResultPresenter();
     /**
      * Provides access to the MainNotifier
-     * @return MainNotifier
+     * @return MainNotifier to which access is needed
      */
     MainNotifier getMainNotifier();
 }

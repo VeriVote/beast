@@ -10,11 +10,10 @@ import java.util.List;
 public interface ResultCheckerCommunicator {
     /**
      * Starts checks.
-     * 
-     * @param propDescr
-     *            PostAndPrePropertiesDescription
      * @param elecDescr
-     *            ElectionDescription
+     *            ElectionDescriptionSource
+     * @param propDescrSrc
+     *            PostAndPrePropertiesDescription
      * @param params
      *            ElectionCheckParameter
      * @return array of ResultInterfaces

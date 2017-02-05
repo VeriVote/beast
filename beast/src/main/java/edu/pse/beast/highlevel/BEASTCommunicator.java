@@ -6,7 +6,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * The BEASTCommunicator coordinates all the other parts of BEAST.
+ * The BEASTCommunicator coordinates all the other parts of BEAST and starts and
+ * stops the test of an election for the desired properties.
  *
  * @author Jonas
  */
@@ -16,12 +17,16 @@ public class BEASTCommunicator implements CheckListener {
     private List<ResultInterface> resultList;
 
     /**
-     * Constructor
+     * Empty Constructor
      */
     public BEASTCommunicator() {
 
     }
-
+    /**
+     * Sets a new CentralObjectProvider which contains the references to the
+     * other parts of BEAST.
+     * @param centralObjectProvider New CentralObjectProvider which is to be set.
+     */
     public void setCentralObjectProvider(CentralObjectProvider centralObjectProvider) {
         this.centralObjectProvider = centralObjectProvider;
     }
@@ -45,7 +50,8 @@ public class BEASTCommunicator implements CheckListener {
                     + "Bitte korrigieren sie diese, um fortzufahren.");
         } else {
 
-            resultList = centralObjectProvider.getResultCheckerCommunicator().checkPropertiesForDescription(electSrc, postAndPreSrc, paramSrc);
+            resultList = centralObjectProvider.getResultCheckerCommunicator()
+                    .checkPropertiesForDescription(electSrc, postAndPreSrc, paramSrc);
 
             if (resultList.isEmpty()) {
                 System.out.println("result List is empty");
