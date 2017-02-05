@@ -36,8 +36,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     private ErrorWindow errorWindow;
     private SaveBeforeChangeHandler saveBeforeChangeHandler;
     private ArrayList<ElectionDescriptionChangeListener> descriptionChangeListeners = new ArrayList<>();
-    private Boolean isElectionDescriptionCorrect = true;
-
+    
     public CElectionDescriptionEditor(
             CElectionCodeArea codeArea,
             CCodeEditorGUI gui,            
@@ -70,12 +69,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
 
     public void findErrorsAndDisplayThem() {
         ArrayList<String> errorMsgList =  new ArrayList<String>();
-        ArrayList<CodeError> errors = codeArea.getErrorCtrl().getErrorFinderList().getErrors();
-        if (errors.size() == 0) {
-            this.isElectionDescriptionCorrect = true;
-        } else {
-            this.isElectionDescriptionCorrect = false;
-        }
+        ArrayList<CodeError> errors = codeArea.getErrorCtrl().getErrorFinderList().getErrors();        
         for (CodeError error : errors) {
             errorMsgList.add(((BooleanExpErrorDisplayer) codeArea.getErrorCtrl().getDisplayer()).createMsg(error));
         }
@@ -96,8 +90,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         
     @Override
     public boolean isCorrect() {
-        findErrorsAndDisplayThem();
-        return isElectionDescriptionCorrect;
+        return codeArea.getErrorCtrl().getErrorFinderList().getErrors().size() == 0;
     }
 
     @Override
