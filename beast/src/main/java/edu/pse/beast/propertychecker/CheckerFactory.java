@@ -43,6 +43,8 @@ public abstract class CheckerFactory implements Runnable {
         // because we create a new instance with all variables null, we have to
         // catch it here
         if (result != null) {
+            result.setElectionType(getElectionTypeFromElectionDescription());
+            
             // TODO find out the real type somehow
             result.setElectionType(ElectionType.APPROVAL);
         }

@@ -40,13 +40,15 @@ public class CBMC_Result extends Result {
                 // exmp.getVotes().get(i).toString());
 
                 Long[][] test = exmp.getVoteList().get(i).getList();
-                System.out.println(exmp.getVotes().get(i).getName() + exmp.getVotes().get(i).getMainIndex());
+                
+               System.out.println(exmp.getVoteList().get(i).getName() + exmp.getVoteList().get(i).getMainIndex());
                 System.out.println("========");
                 for (int j = 0; j < test.length; j++) {
                     for (int j2 = 0; j2 < test[0].length; j2++) {
-                        System.out.print(test[i][j] + " | ");
+                        System.out.print(test[j][i] + " | ");
                     }
-                    System.out.println("______________");
+                    System.out.println("");
+                    System.out.println("_______________________");
                 }
 
             }
