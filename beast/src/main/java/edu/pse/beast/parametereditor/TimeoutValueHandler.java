@@ -16,14 +16,17 @@ import java.util.concurrent.TimeUnit;
 public class TimeoutValueHandler implements ChangeListener, ActionListener{
     private final JSpinner timeoutSpinner;
     private final JComboBox timeoutUnit;
+    private TimeOut timeoutBefore;
+    private boolean reacts;
     
     public TimeoutValueHandler(JSpinner timeoutSpinner, JComboBox timeoutUnit) {
         this.timeoutSpinner = timeoutSpinner;
         this.timeoutUnit = timeoutUnit;
+        timeoutBefore = getTimeout();
     }
     public TimeOut getTimeout() {
-        Integer timeoutInt = Integer.parseInt("" + timeoutSpinner.getValue());
         TimeOut timeOut = new TimeOut();
+        Integer timeoutInt = Integer.parseInt(timeoutSpinner.getValue().toString());
         if(timeoutInt < 0) {
             timeoutInt = 0;
         }
@@ -39,18 +42,33 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener{
         return timeOut;
     }
     public void setValue(TimeOut to) {
-        timeoutSpinner.setValue(to.getOrigUnit().convert(to.getDuration(), TimeUnit.MILLISECONDS));
-        if(to.getOrigUnit().equals(TimeUnit.SECONDS)) {
-            timeoutUnit.setSelectedIndex(0);
-        } else if(to.getOrigUnit().equals(TimeUnit.MINUTES)) {
-            timeoutUnit.setSelectedIndex(1);
-        } else if(to.getOrigUnit().equals(TimeUnit.HOURS)) {
-            timeoutUnit.setSelectedIndex(2);
-        } else if(to.getOrigUnit().equals(TimeUnit.DAYS)) {
-            timeoutUnit.setSelectedIndex(3);
+        if (reacts || to.equals(timeoutBefore)) {
+            timeoutSpinner.setValue(to.getOrigUnit().convert(to.getDuration(), TimeUnit.MILLISECONDS));
         } else {
-            System.err.println("Timeout kann nicht auf diesen Wert gesetzt werden.");
+            setValue(timeoutBefore);
         }
+        switch (to.getOrigUnit()) {
+            case SECONDS:
+                timeoutUnit.setSelectedIndex(0);
+                break;
+            case MINUTES:
+                timeoutUnit.setSelectedIndex(1);
+                break;
+            case HOURS:
+                timeoutUnit.setSelectedIndex(2);
+                break;
+            case DAYS:
+                timeoutUnit.setSelectedIndex(3);
+                break;
+            default:
+                System.err.println("Timeout kann nicht auf diesen Wert gesetzt werden.");
+                break;
+        }
+        timeoutBefore = getTimeout();
+    }
+    
+    void setReacts(boolean reacts) {
+        this.reacts = reacts;
     }
 
     @Override

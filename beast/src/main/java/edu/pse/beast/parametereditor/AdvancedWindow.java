@@ -10,6 +10,7 @@ import edu.pse.beast.stringresource.StringResourceLoader;
  */
 public class AdvancedWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
     private String textAfterLastOK = "--unwind 6 --trace";
+    private boolean reacts;
 
     /**
      * Creates new form AdvancedWindow
@@ -89,7 +90,11 @@ public class AdvancedWindow extends javax.swing.JFrame implements DisplaysString
     }//GEN-LAST:event_inputActionPerformed
 
     private void okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okActionPerformed
-        textAfterLastOK = input.getText();
+        if (reacts) {
+            textAfterLastOK = input.getText();
+        } else {
+            input.setText(textAfterLastOK);
+        }
         setVisible(false);
     }//GEN-LAST:event_okActionPerformed
 
@@ -151,5 +156,9 @@ public class AdvancedWindow extends javax.swing.JFrame implements DisplaysString
         setTitle(other.getStringFromID("title_advanced"));
         ok.setText(other.getStringFromID("ok"));
         cancel.setText(other.getStringFromID("cancel"));
+    }
+    
+    protected void setReacts(boolean reacts) {
+        this.reacts = reacts;
     }
 }

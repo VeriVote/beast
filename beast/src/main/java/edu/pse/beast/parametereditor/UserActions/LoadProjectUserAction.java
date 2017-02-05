@@ -28,6 +28,6 @@ public class LoadProjectUserAction extends UserAction {
 
     @Override
     public void perform() {
-        //TODO: implement
+        if (paramEditor.getReacts()) paramEditor.loadProject();
     }
 }

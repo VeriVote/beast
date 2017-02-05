@@ -14,6 +14,7 @@ public class MinMaxSpinValueHandler implements ChangeListener{
     private final JSpinner maxSpinner;
     private Integer minBefore;
     private Integer maxBefore;
+    private boolean reacts;
     
     public MinMaxSpinValueHandler(JSpinner minSpinner, JSpinner maxSpinner) {
         this.minSpinner = minSpinner;
@@ -42,7 +43,7 @@ public class MinMaxSpinValueHandler implements ChangeListener{
     public void stateChanged(ChangeEvent e) {
         String minString = (minSpinner.getValue().toString());
         String maxString = (maxSpinner.getValue().toString());
-        if ((minString + maxString).chars().allMatch(Character::isDigit)) {
+        if ((minString + maxString).chars().allMatch(Character::isDigit) && reacts) {
             Integer min = Integer.parseInt(minString);
             Integer max = Integer.parseInt(maxString);
             if (min <= 10000 && min >= 1 && max <= 10000 && max >= 1) {
@@ -67,5 +68,8 @@ public class MinMaxSpinValueHandler implements ChangeListener{
         }
         minBefore = Integer.parseInt(minSpinner.getValue().toString());
         maxBefore = Integer.parseInt(maxSpinner.getValue().toString());
+    }
+    protected void setReacts(boolean reacts) {
+        this.reacts = reacts;
     }
 }

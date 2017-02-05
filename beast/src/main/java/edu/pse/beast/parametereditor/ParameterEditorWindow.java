@@ -12,11 +12,13 @@ import javax.swing.JSpinner;
 public class ParameterEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
 
     private AdvancedWindow advWindow = new AdvancedWindow();
+    private boolean reacts;
     /**
      * Creates new form ParameterEditorWindow
      */
     public ParameterEditorWindow() {
         initComponents();
+        setReacts(true);
     }
 
     /**
@@ -184,7 +186,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     }// </editor-fold>//GEN-END:initComponents
 
     private void advancedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_advancedButtonActionPerformed
-        advWindow.setVisible(true);
+        if (reacts) advWindow.setVisible(true);
     }//GEN-LAST:event_advancedButtonActionPerformed
 
     /**
@@ -297,5 +299,9 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
         timeoutUnit.addItem(other.getStringFromID("hours"));
         timeoutUnit.addItem(other.getStringFromID("days"));
         advWindow.updateStringRes(stringResIF);
+    }
+    protected void setReacts(boolean reacts) {
+        this.reacts = reacts;
+        advWindow.setReacts(reacts);
     }
 }

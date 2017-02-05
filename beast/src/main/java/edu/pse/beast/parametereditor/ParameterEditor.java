@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.pse.beast.parametereditor;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
@@ -39,6 +35,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
     private ArgumentHandler argumentHandler;
     private ToolbarHandler toolbarHandler;
     private MenuBarHandler menuBarHandler;
+    private boolean reacts;
 
     public ParameterEditor(
             CElectionDescriptionEditor cElectionDescriptionEditor,
@@ -101,12 +98,12 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
 
     @Override
     public void stopReacting() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        setReacts(false);
     }
 
     @Override
     public void resumeReacting() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        setReacts(true);
     }
 
     @Override
@@ -125,5 +122,19 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
 
     void setMenuBarHandler(MenuBarHandler menuBarHandler) {
         this.menuBarHandler = menuBarHandler;
+    }
+    
+    public void setReacts(boolean reacts) {
+        this.reacts = reacts;
+        window.setReacts(reacts);
+        voterHandler.setReacts(reacts);
+        candHandler.setReacts(reacts);
+        seatHandler.setReacts(reacts);
+        timeoutHandler.setReacts(reacts);
+        processHandler.setReacts(reacts);
+    }
+    
+    public boolean getReacts() {
+        return reacts;
     }
 }
