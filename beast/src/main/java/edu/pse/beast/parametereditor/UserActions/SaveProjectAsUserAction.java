@@ -7,7 +7,7 @@ import edu.pse.beast.saverloader.SaverLoaderInterface;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
- *
+ * UserAction for saving a project at a certain path
  * @author Jonas
  */
 public class SaveProjectAsUserAction extends UserAction {
@@ -15,7 +15,13 @@ public class SaveProjectAsUserAction extends UserAction {
     private final CElectionDescriptionEditor cElectionEditor;
     private final ParameterEditor paramEditor;
     private final SaverLoaderInterface saverLoaderIf;
-    
+    /**
+     * Constructor
+     * @param propertyList PropertyList
+     * @param cElectionEditor CElectionDescriptionEditor
+     * @param paramEditor ParameterEditor
+     * @param saverLoaderIf SaverLoaderInterface
+     */
     public SaveProjectAsUserAction(PropertyList propertyList, 
             CElectionDescriptionEditor cElectionEditor, ParameterEditor paramEditor, 
             SaverLoaderInterface saverLoaderIf) {

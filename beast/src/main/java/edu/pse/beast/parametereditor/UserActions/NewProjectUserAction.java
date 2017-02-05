@@ -5,14 +5,19 @@ import edu.pse.beast.parametereditor.ParameterEditor;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.toolbox.UserAction;
 /**
- *
+ * UserAction for creating a new project
  * @author Jonas
  */
-public class NewProjectUserAction extends UserAction{
+public class NewProjectUserAction extends UserAction {
     private final PropertyList propertyList;
     private final CElectionDescriptionEditor cElectionEditor;
     private final ParameterEditor paramEditor;
-    
+    /**
+     * Constructor
+     * @param propertyList PropertyList
+     * @param cElectionEditor CElectionDescriptionEditor
+     * @param paramEditor ParameterEditor
+     */
     public NewProjectUserAction(PropertyList propertyList, 
             CElectionDescriptionEditor cElectionEditor, ParameterEditor paramEditor) {
         super("new");
