@@ -124,6 +124,12 @@ public class PLModel extends Observable implements PLModelInterface {
 		}
 		return false;
 	}
+	
+	@Override
+	public void resetResults() {
+		for (PropertyItem item : propertyList)  item.setResultType(ResultType.UNTESTED);
+		updateView();
+	}
 
 
 	@Override
@@ -147,6 +153,8 @@ public class PLModel extends Observable implements PLModelInterface {
 	public void setChangedSinceSave(boolean changedSinceSave) {
 		this.changedSinceSave = changedSinceSave;
 	}
+
+	
 	
 
 	

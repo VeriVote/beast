@@ -158,6 +158,10 @@ public class PropertyList implements 	PLControllerInterface, PostAndPrePropertie
         //res.presentTo(view.getNextToPresent());
         //view.updateView();
     }
+    @Override
+	public void resetResults() {
+		model.resetResults();
+	}
 
 	@Override
 	public void updateStringRes(StringLoaderInterface sli) {
@@ -174,5 +178,7 @@ public class PropertyList implements 	PLControllerInterface, PostAndPrePropertie
 	public void setSaveBeforeChangeHandler(PLSaveBeforeChangeHandler saveHandler) {
 		this.saveBeforeChangeHandler = saveHandler;
 	}
+
+	
 
 }
