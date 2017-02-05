@@ -59,10 +59,10 @@ public class WindowsProcess extends CBMCProcess {
             ErrorLogger.log("Cant find the VScmd. Is it installed correctly?");
         }
 
-        String cbmcEXE = FileLoader.getFileFromRes("/cbmcWIN/cbmc64.exe");
+        String cbmcEXE = FileLoader.getFileFromRes("/cbmcWIN/cbmc.exe");
 
         // TODO this is just a debug file
-         toCheck = new File("./src/main/resources/c_tempfiles/multiDim_fail.c");
+    //     toCheck = new File("./src/main/resources/c_tempfiles/multiDim_fail.c");
    //     toCheck = new File("./src/main/resources/c_tempfiles/test_failure.c");
         ErrorLogger.log("WindowsProcess.java line 66 has to be removed, when the code creation works");
 
