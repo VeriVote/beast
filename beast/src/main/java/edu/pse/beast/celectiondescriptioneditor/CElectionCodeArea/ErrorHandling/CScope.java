@@ -16,4 +16,9 @@ public class CScope {
     private ArrayList<String> varTypes = new ArrayList<>();
     private ArrayList<String> funcIds = new ArrayList<>();
     private ArrayList<CFunctionType> functionTypes = new ArrayList<>();
+
+    void addVar(String id, String type) {
+        varIds.add(id);
+        varTypes.add(type);
+    }
 }

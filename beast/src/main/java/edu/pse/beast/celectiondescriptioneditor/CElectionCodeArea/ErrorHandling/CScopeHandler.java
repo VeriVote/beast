@@ -15,10 +15,14 @@ public class CScopeHandler {
     private ArrayList<CScope> scopes = new ArrayList<>();
     
     public void enterScope() {
-        
+        scopes.add(new CScope());
     }
     
     public void leaveScope() {
         
+    }
+    
+    public void addVar(String id, String type) {
+        scopes.get(scopes.size() - 1).addVar(id, type);
     }
 }

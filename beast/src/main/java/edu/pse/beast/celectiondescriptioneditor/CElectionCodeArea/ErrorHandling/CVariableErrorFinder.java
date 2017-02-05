@@ -23,7 +23,7 @@ public class CVariableErrorFinder extends CBaseListener implements ErrorFinder {
 
     private CAntlrHandler antlrHandler;
     private ArrayList<CodeError> foundErrors = new ArrayList<>();
-    
+    private CScopeHandler scopeHandler = new CScopeHandler();
     public CVariableErrorFinder(CAntlrHandler antlrHandler) {
         this.antlrHandler = antlrHandler;
     }
@@ -31,6 +31,8 @@ public class CVariableErrorFinder extends CBaseListener implements ErrorFinder {
     @Override
     public ArrayList<CodeError> getErrors() {
         foundErrors.clear();
+        scopeHandler = new CScopeHandler();
+        scopeHandler.enterScope();
         ParseTree parsetree = antlrHandler.getCParseTree();
         ParseTreeWalker walker = new ParseTreeWalker();
         walker.walk(this, parsetree);
@@ -39,7 +41,7 @@ public class CVariableErrorFinder extends CBaseListener implements ErrorFinder {
     
     @Override 
     public void enterAssignmentExpression(CParser.AssignmentExpressionContext ctx) { 
-        int i = 0;
+       
     }
     
 }

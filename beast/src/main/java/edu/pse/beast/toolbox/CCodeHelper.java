@@ -73,8 +73,8 @@ public class CCodeHelper {
         ArrayList<String> code = new ArrayList<>();
         code.add("//" + stringResourceLoader.getStringFromID(input) + ": " + stringResourceLoader.getStringFromID(input + "_exp"));
         code.add("//" + stringResourceLoader.getStringFromID(input) + ": " + stringResourceLoader.getStringFromID(res + "_exp"));
-        code.add(generateDeclString(templateHandler.getById(input), templateHandler.getById(res)));
-        code.add("}");
+        code.add(generateDeclString(templateHandler.getById(input), templateHandler.getById(res)) + " ");
+        code.add("} ");
         description.setCode(code);
         return description;
     }

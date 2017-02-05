@@ -51,7 +51,7 @@ public class LockedLinesDisplay implements LockedLinesListener {
         }
        
         try {
-            highlights.put(lineNumber, highlighter.addHighlight(lineStart, lineEnd, hPainter));
+            highlights.put(lineNumber, highlighter.addHighlight(lineStart, lineEnd - 1, hPainter));
         } catch (BadLocationException ex) {
             Logger.getLogger(LockedLinesDisplay.class.getName()).log(Level.SEVERE, null, ex);
         }

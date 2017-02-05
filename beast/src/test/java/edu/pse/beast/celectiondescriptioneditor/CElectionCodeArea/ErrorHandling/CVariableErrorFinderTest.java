@@ -53,7 +53,7 @@ public class CVariableErrorFinderTest {
      */
     @Test
     public void testGetVarNotDeclError() {
-        String code = "c = 1;";
+        String code = "void f(){c = 1;}";
         pane.setText(code);
         ArrayList<CodeError> ers = finder.getErrors();
         assertEquals(1, ers.size());
