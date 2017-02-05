@@ -136,7 +136,7 @@ public class PropertyList implements 	PLControllerInterface, PostAndPrePropertie
     public ArrayList<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptions() {
         ArrayList<PostAndPrePropertiesDescription> result = new ArrayList<PostAndPrePropertiesDescription>();
         ArrayList<PropertyItem> from = model.getList();
-
+		editor.updatePostAndPrePropObject();
         for (PropertyItem prop : from) {
             if (prop.willBeTested()) {
                 result.add(prop.getDescription());

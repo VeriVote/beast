@@ -58,7 +58,7 @@ public class PLModel extends Observable implements PLModelInterface {
 	@Override
 	public void editProperty(PropertyItem prop, BooleanExpEditor editor) {
 		editor.letUserEditPostAndPreProperties(prop.getDescription());
-
+		editor.getWindow().setVisible(true);
 		setChangedSinceSave(true);
 		updateView();
 	}
