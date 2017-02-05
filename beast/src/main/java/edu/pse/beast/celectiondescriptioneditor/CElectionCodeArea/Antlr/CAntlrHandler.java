@@ -69,6 +69,7 @@ public class CAntlrHandler {
         return "\"([^\"^\\\\]|\\\\(.))*\"";
     }
 
+    // http://blog.ostermiller.org/find-comment
     public String getCommentRegex() {
         return "(/\\*([^*]|[\\r\\n]|(\\*+([^*/]|[\\r\\n])))*\\*+/)|(//.*)";
     }

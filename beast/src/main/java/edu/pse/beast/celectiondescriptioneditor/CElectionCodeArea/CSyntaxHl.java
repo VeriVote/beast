@@ -29,7 +29,7 @@ public class CSyntaxHl {
             regexAndColorList.add(new RegexAndColor(regexWithWhiteSpace, Color.GREEN));
         }
         for(String s : antlrHandler.getControllLiterals()) {
-            String regexWithWhiteSpace = "(\\s|\\n)|\\A)" + s + "(\\s|\\n|\\Z)";
+            String regexWithWhiteSpace = "(\\s|\\n|\\A)" + s + "(\\s|\\n|\\Z)";
             regexAndColorList.add(new RegexAndColor(regexWithWhiteSpace, Color.BLUE));
         }
         regexAndColorList.add(new RegexAndColor(antlrHandler.getCommentRegex(), Color.BLUE));
