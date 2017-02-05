@@ -195,6 +195,7 @@ public class CBMC_Result extends Result {
                 if(longMatcher.find()) {
                     
                     String longLine = longMatcher.group(1);
+                    //replace all no number characters
                     String number = longLine.replaceAll(("[^-?0-9]*"), "");
                     int electIndex = Integer.parseInt(number);
 
