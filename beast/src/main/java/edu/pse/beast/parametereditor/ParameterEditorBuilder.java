@@ -48,6 +48,7 @@ public class ParameterEditorBuilder {
         editor.setToolbarHandler(toolbarHandler);
         editor.setMenuBarHandler(menuBarHandler);
         windowStarter.start();
+        editor.setReacts(true);
         return editor;
     }
 
