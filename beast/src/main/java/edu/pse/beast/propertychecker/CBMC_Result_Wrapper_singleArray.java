@@ -22,7 +22,7 @@ public class CBMC_Result_Wrapper_singleArray {
         if (list.size() > index) {
             list.set(index, toAdd);
         } else {
-            for (int i = list.size(); i < index; i++) {
+            for (int i = list.size(); i <= index; i++) {
                 list.add(-1l);
             }
             list.add(toAdd);

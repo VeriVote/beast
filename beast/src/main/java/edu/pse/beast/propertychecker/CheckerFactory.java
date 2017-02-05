@@ -44,7 +44,7 @@ public abstract class CheckerFactory implements Runnable {
         // catch it here
         if (result != null) {
             // TODO find out the real type somehow
-            result.setElectionType(ElectionType.SINGLECHOICE);
+            result.setElectionType(ElectionType.APPROVAL);
         }
     }
 

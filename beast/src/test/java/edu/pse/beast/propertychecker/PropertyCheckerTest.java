@@ -114,7 +114,7 @@ public class PropertyCheckerTest {
         System.out.println("======================================");
         System.out.println("______________________________________");
 
-        for (Iterator iterator = resultate.iterator(); iterator.hasNext();) {
+        for (Iterator<ResultInterface> iterator = resultate.iterator(); iterator.hasNext();) {
             ResultInterface resultInterface = (ResultInterface) iterator.next();
             resultInterface.presentTo(null);
         }

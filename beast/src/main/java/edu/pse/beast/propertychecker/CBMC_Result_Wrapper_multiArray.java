@@ -22,7 +22,7 @@ public class CBMC_Result_Wrapper_multiArray {
         if (list.size() > firstIndex) {
             addToLongList(list.get(firstIndex), secondIndex, toAdd);
         } else {
-            for (int i = list.size(); i < firstIndex; i++) {
+            for (int i = list.size(); i <= firstIndex; i++) {
                 list.add(new ArrayList<Long>());
             }
             addToLongList(list.get(firstIndex), secondIndex, toAdd);
@@ -35,6 +35,17 @@ public class CBMC_Result_Wrapper_multiArray {
 
     public String getName() {
         return name;
+    }
+    
+    private void addToLongList(List<Long> list, int indexToAddAt, long toAdd) {
+        if (list.size() > indexToAddAt) {
+            list.set(indexToAddAt, toAdd);
+        } else {
+            for (int i = list.size(); i <= indexToAddAt; i++) {
+                list.add(-1l);
+            }
+            list.add(toAdd);
+        }
     }
     
     public Long[][] getList() {
@@ -58,16 +69,5 @@ public class CBMC_Result_Wrapper_multiArray {
         }
        
         return toReturn;
-    }
-    
-    private void addToLongList(List<Long> list, int indexToAddAt, long toAdd) {
-        if (list.size() > indexToAddAt) {
-            list.set(indexToAddAt, toAdd);
-        } else {
-            for (int i = list.size(); i < indexToAddAt; i++) {
-                list.add(-1l);
-            }
-            list.add(toAdd);
-        }
     }
 }
