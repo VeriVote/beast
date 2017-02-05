@@ -90,7 +90,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         
     @Override
     public boolean isCorrect() {
-        return codeArea.getErrorCtrl().getErrorFinderList().getErrors().size() == 0;
+        return codeArea.getErrorCtrl().getErrorFinderList().getErrors().isEmpty();
     }
 
     @Override
