@@ -122,9 +122,9 @@ public class ResultPresenterWindow extends JFrame {
 		for (int i = 0; i < ex.getNumOfElections(); i++) {
 			appendLine(srl.getStringFromID("election") + " " + i);
 			appendPane(srl.getStringFromID("votes") + ": ");
-			if (ex.isChooseOneCandidate()) appendPane(Arrays.toString(ex.getVotes().get(i).getList()));
+			if (ex.isChooseOneCandidate()) appendPane(Arrays.toString(ex.getVotes().get(i).getArray()));
 			else {
-				Long[][] arr = ex.getVoteList().get(i).getList();
+				Long[][] arr = ex.getVoteList().get(i).getArray();
 				for (int j = 0; j < arr.length; j++) {
 					appendPane(Arrays.toString(arr[j]));
 					if (j < arr.length - 1) appendPane(", ");
@@ -134,7 +134,7 @@ public class ResultPresenterWindow extends JFrame {
 			
 			appendPane(srl.getStringFromID("elected") + ": ");
 			if (ex.isOneSeatOnly()) appendPane(Long.toString(ex.getElect().get(i).getValue()));
-			else appendPane(Arrays.toString(ex.getSeats().get(i).getList()));
+			else appendPane(Arrays.toString(ex.getSeats().get(i).getArray()));
 			appendLine("\n");
 		}
 	}
