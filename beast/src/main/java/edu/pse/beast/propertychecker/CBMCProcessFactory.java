@@ -3,7 +3,6 @@ package edu.pse.beast.propertychecker;
 import java.io.File;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
@@ -23,6 +22,10 @@ public class CBMCProcessFactory extends CheckerFactory {
 	// this is the last line in the cbmc output, if the verification was
 	// successful
 	private final String successLine = "VERIFICATION SUCCESSFUL";
+	
+	// this is the last line in the cbmc output, if the assertion 
+    // failed
+	private final String failureLine = "VERIFICATION FAILED";
 
 	private final String pathToTempFolder = "./src/main/resources/c_tempfiles/";
 
@@ -71,13 +74,23 @@ public class CBMCProcessFactory extends CheckerFactory {
 	}
 
 	@Override
-	public boolean checkResult(List<String> toCheck) {
+	public boolean checkAssertionSuccess(List<String> toCheck) {
 		if (toCheck.size() > 0) {
 			return toCheck.get(toCheck.size() - 1).contains(successLine);
 		} else {
 			return false;
 		}
 	}
+	
+
+    @Override
+    public boolean checkAssertionFailure(List<String> toCheck) {
+        if (toCheck.size() > 0) {
+            return toCheck.get(toCheck.size() - 1).contains(failureLine);
+        } else {
+            return false;
+        }
+    }
 
 	private OperatingSystems determineOS() {
 		String environment = System.getProperty("os.name");
@@ -126,5 +139,4 @@ public class CBMCProcessFactory extends CheckerFactory {
 		// FileSaver.writeStringLinesToFile(generator.getCode(), file);
 		return file;
 	}
-
 }

@@ -19,9 +19,6 @@ public class CBMC_Result_Wrapper_singleArray {
     }
     
     public void addTo(int index, long toAdd) {
-        
-        System.out.println("index: " + index);
-        
         if (list.size() > index) {
             list.set(index, toAdd);
         } else {

@@ -17,6 +17,8 @@ import edu.pse.beast.toolbox.ErrorLogger;
  */
 public class CBMC_Result extends Result {
 
+    private FailureExample failureExample = null;
+
     @Override
     public void presentTo(ResultPresenterElement presenter) {
         if (!isFinished()) {
@@ -29,48 +31,72 @@ public class CBMC_Result extends Result {
         } else if (isSuccess()) {
             presenter.presentSuccess();
         } else {
+            System.out.println("test");
+     //       presenter.presentFailureExample(failureExample);
 
-            FailureExample exmp = createFailureExample();
+            boolean debug = true;
 
-            // System.out.println(exmp.getNumOfCandidates());
+            if (debug) {
 
-            for (int i = 0; i < exmp.getVoteList().size(); i++) {
-               // System.out.println("_________");
-                // System.out.println("voteslist " +
-                // exmp.getVotes().get(i).toString());
+                long time = System.currentTimeMillis();
 
-                Long[][] test = exmp.getVoteList().get(i).getArray();
-                
-               System.out.println(exmp.getVoteList().get(i).getName() + exmp.getVoteList().get(i).getMainIndex());
-                System.out.println("========");
-                for (int j = 0; j < test.length; j++) {
-                    for (int j2 = 0; j2 < test[j].length; j2++) {
-                        System.out.print(test[j][j2] + " | ");
+                FailureExample exmp = failureExample;
+
+                // System.out.println(exmp.getNumOfCandidates());
+
+                System.out.println("get elect 1: " + exmp.getElect().get(0).getValue());
+                System.out.println("get elect 2: " + exmp.getElect().get(1).getValue());
+                for (int i = 0; i < exmp.getVoteList().size(); i++) {
+                    // System.out.println("_________");
+                    // System.out.println("voteslist " +
+                    // exmp.getVotes().get(i).toString());
+
+                    Long[][] test = exmp.getVoteList().get(i).getArray();
+
+                    System.out.println(exmp.getVoteList().get(i).getName() + exmp.getVoteList().get(i).getMainIndex());
+                    System.out.println("========");
+                    for (int j = 0; j < test.length; j++) {
+                        for (int j2 = 0; j2 < test[j].length; j2++) {
+                            System.out.print(test[j][j2] + " | ");
+                        }
+                        System.out.println("");
+                        System.out.println("_______________________");
                     }
-                    System.out.println("");
-                    System.out.println("_______________________");
+
                 }
+                long test2 = exmp.getElect().get(0).getValue();
 
+                // System.out.println(test2);
+
+                // presenter.presentFailureExample(createFailureExample());
+
+                System.out.println("total time: " + (System.currentTimeMillis() - time));
             }
-            long test2 = exmp.getElect().get(0).getValue();
-            
-          //  System.out.println(test2);
-
-            // presenter.presentFailureExample(createFailureExample());
         }
+    }
+
+    @Override
+    public void setResult(List<String> result) {
+        super.setResult(result);
+        failureExample = createFailureExample();
+        
+        System.out.println("test");
     }
 
     public FailureExample createFailureExample() {
 
-        //datermine the elect values
+        // datermine the elect values
         List<CBMC_Result_Wrapper_long> elect = readLongs("elect", getResult());
 
-        //define these arrays, because switch case doesn't let me reassign the same name, 
-        //and i am a bit worried, that they won't get created properly;
+        // define these arrays, because switch case doesn't let me reassign the
+        // same name,
+        // and i am a bit worried, that they won't get created properly;
         List<CBMC_Result_Wrapper_multiArray> votesList;
         List<CBMC_Result_Wrapper_singleArray> seatsList;
         List<CBMC_Result_Wrapper_singleArray> singleVotesList;
-        
+
+        ErrorLogger.log("(CBMC_Result):  possible optimization: try to only use one loop");
+
         switch (getElectionType()) {
 
         case APPROVAL:
@@ -126,7 +152,7 @@ public class CBMC_Result extends Result {
             if (checkerMatcher.find()) {
                 Matcher longMatcher = longExtractor.matcher(checkerMatcher.group(0));
                 if (longMatcher.find()) {
-                    
+
                     String longLine = longMatcher.group(1);
                     // replace all no number characters
                     String number = longLine.replaceAll(("[^-?0-9]*"), "");
@@ -226,12 +252,12 @@ public class CBMC_Result extends Result {
 
                 String newLine = votesMatcher.group(1);
 
-                System.out.println("NEWLINE: " + newLine);
-                
+//                System.out.println("NEWLINE: " + newLine);
+
                 // find out the number of this votes array
                 int mainIndex = Integer.parseInt(newLine.split("\\[")[0].split(name)[1]);
-                
-                System.out.println("mainindex " + mainIndex);
+
+  //              System.out.println("mainindex " + mainIndex);
 
                 // get the first index for this array value
                 int arrayIndexOne = Integer.parseInt(newLine.split("\\[")[1].split("\\]")[0]);
@@ -244,8 +270,8 @@ public class CBMC_Result extends Result {
 
                 long value = Long.parseLong(valueAsString, 2);
 
-                System.out.println("value: " + value);
-                System.out.println(line);
+    //            System.out.println("value: " + value);
+     //           System.out.println(line);
                 boolean added = false;
 
                 for (Iterator<CBMC_Result_Wrapper_multiArray> innerIterator = list.iterator(); innerIterator

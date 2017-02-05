@@ -20,10 +20,6 @@ public class CBMC_Result_Wrapper_multiArray {
     
     public void addTo(int firstIndex, int secondIndex, long toAdd) {
         
-        if (firstIndex == 0 && secondIndex == 3) {
-            System.out.println("ja");
-        }
-        
         if (list.size() > firstIndex) {
             addToLongList(list.get(firstIndex), secondIndex, toAdd);
         } else {
@@ -47,7 +43,6 @@ public class CBMC_Result_Wrapper_multiArray {
             list.set(indexToAddAt, toAdd);
         } else {
             for (int i = list.size(); i <= indexToAddAt; i++) {
-              //  System.out.println(list.get(i));
                 list.add(-2l);
             }
             list.set(indexToAddAt, toAdd);

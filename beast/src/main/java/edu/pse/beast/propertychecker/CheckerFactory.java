@@ -106,22 +106,24 @@ public abstract class CheckerFactory implements Runnable {
 
                         // if the last check was successful, we have to keep
                         // checking the other ones
-                        if (checkResult(lastResult)) {
+                        if (checkAssertionSuccess(lastResult)) {
                             finished = false;
                         } else {
-                            // the check was wrong, so we have to stop the check
-                            // now
+                            // the wasn't successfull for some reason
+                            // so stop now
                             finished = true;
-
-                            result.setNumVoters(voters);
-                            result.setNumCandidates(candidates);
-                            result.setNumSeats(seats);
-
-                            result.setResult(lastResult);
-                            result.setError(lastError);
-                            result.setValid();
+                            
+                            if (checkAssertionFailure(lastResult)) {
+                                result.setNumVoters(voters);
+                                result.setNumCandidates(candidates);
+                                result.setNumSeats(seats);                                
+                                result.setResult(lastResult);
+                                result.setValid();
+                            } else {
+                                result.setError(lastError);                                
+                            }
                             result.setFinished();
-
+                            
                             break outerLoop;
                         }
 
@@ -217,7 +219,9 @@ public abstract class CheckerFactory implements Runnable {
      *            the output of the checker to test
      * @return true, if the property wasn't violated, false if that was the case
      */
-    public abstract boolean checkResult(List<String> toCheck);
+    public abstract boolean checkAssertionSuccess(List<String> toCheck);
+    
+    public abstract boolean checkAssertionFailure(List<String> toCheck);
     
     private ElectionType getElectionTypeFromElectionDescription() {
         InternalTypeContainer inputType = electionDescSrc.getElectionDescription().getInputType().getType();
