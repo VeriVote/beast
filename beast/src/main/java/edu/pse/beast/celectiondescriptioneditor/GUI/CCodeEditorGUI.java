@@ -41,6 +41,8 @@ public class CCodeEditorGUI extends javax.swing.JFrame implements DisplaysString
     public CCodeEditorGUI() {
         initComponents();
         jTextPane2.setEditable(false);
+        setMinimumSize(new java.awt.Dimension(700, 600));
+        setPreferredSize(new java.awt.Dimension(700, 600));
     }
 
     public JTextPane getCodeArea() {

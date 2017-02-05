@@ -114,7 +114,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 
 		});
 		endpanel.add(addNewButton, BorderLayout.LINE_END);
-		
+		setResizable(false);
 		
 	}
 	

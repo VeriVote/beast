@@ -54,7 +54,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
         setTitle("ParameterEditor");
         setMinimumSize(new java.awt.Dimension(475, 347));
         setPreferredSize(new java.awt.Dimension(475, 347));
-
+        setResizable(false);
         toolbar.setFloatable(false);
         toolbar.setRollover(true);
         toolbar.setMaximumSize(new java.awt.Dimension(458, 73));

@@ -58,6 +58,9 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
         toolbar.setRollover(true);
         toolbar.setFloatable(false);
 
+        setMinimumSize(new java.awt.Dimension(700, 550));
+        setPreferredSize(new java.awt.Dimension(700, 550));
+        setResizable(false);
         symVarScrollPane.setViewportView(symVarList);
 
         prePropScrollPane.setViewportView(prePropTextPane);
