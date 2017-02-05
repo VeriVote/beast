@@ -31,10 +31,9 @@ public class CBMC_Result extends Result {
         } else if (isSuccess()) {
             presenter.presentSuccess();
         } else {
-            System.out.println("test");
-     //       presenter.presentFailureExample(failureExample);
+            presenter.presentFailureExample(failureExample);
 
-            boolean debug = true;
+            boolean debug = false;
 
             if (debug) {
 

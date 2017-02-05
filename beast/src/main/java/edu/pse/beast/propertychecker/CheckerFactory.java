@@ -102,6 +102,7 @@ public abstract class CheckerFactory implements Runnable {
                         // parameters without being stopped without a failure
                         // from the outside
 
+                        //set currentlyRunnign to null, so we can catch, if the process creation failed
                         currentlyRunning = null;
 
                         // if the last check was successful, we have to keep
