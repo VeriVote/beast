@@ -14,5 +14,7 @@ save : Speichern
 save_as : Speichern unter
 undo : Rückgängig
 redo : Wiederherstellen
-areYouSure : Sind Sie sicher?
+areYouSure : Sind Sie sicher, nicht gespeicherte Daten gehen verloren?
 newList : Neue Liste
+wantToSaveBefore : Wollen Sie die Liste vorher abspeichern?
+saveList : Liste speichern

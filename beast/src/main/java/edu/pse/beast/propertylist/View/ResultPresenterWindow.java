@@ -49,6 +49,7 @@ public class ResultPresenterWindow extends JFrame {
 	
 	private void init() {
 		this.setLayout(new BorderLayout());
+		
 		setBounds(0, 0, 400, 400);
 		
 		Dimension iconSize = new Dimension(80,40);

@@ -25,6 +25,7 @@ public class SaveAsPropertyList extends UserAction {
 		if (fc.showSaveDialog(controller.getView()) == JFileChooser.APPROVE_OPTION) {
 			File file = fc.getSelectedFile();
 			// TODO save
+			// if success con.getsavebefore.setChanged(false)
 		}
 		
 	}
