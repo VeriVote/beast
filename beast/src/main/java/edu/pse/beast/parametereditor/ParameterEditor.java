@@ -58,6 +58,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
         processHandler = new SingleValueSpinnerHandler(window.getAmountProcessesSpinner());
         window.getAmountProcessesSpinner().addChangeListener(processHandler);
         argumentHandler = new ArgumentHandler(window.getAdvancedWindow().getInputField(), window.getAdvancedWindow().getOkButton());
+        setReacts(true);
     }
 
     @Override
