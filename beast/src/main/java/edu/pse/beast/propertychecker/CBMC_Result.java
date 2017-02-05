@@ -16,8 +16,6 @@ import edu.pse.beast.toolbox.ErrorLogger;
  *
  */
 public class CBMC_Result extends Result {
-    
-    private FailureExample failureExample = null;
 
     @Override
     public void presentTo(ResultPresenterElement presenter) {
@@ -32,14 +30,10 @@ public class CBMC_Result extends Result {
             presenter.presentSuccess();
         } else {
 
-            long time = System.currentTimeMillis();
-            
-            FailureExample exmp = failureExample;
+            FailureExample exmp = createFailureExample();
 
             // System.out.println(exmp.getNumOfCandidates());
 
-            System.out.println("get elect 1: " + exmp.getElect().get(0).getValue());
-            System.out.println("get elect 2: " + exmp.getElect().get(1).getValue());
             for (int i = 0; i < exmp.getVoteList().size(); i++) {
                // System.out.println("_________");
                 // System.out.println("voteslist " +
@@ -63,19 +57,9 @@ public class CBMC_Result extends Result {
           //  System.out.println(test2);
 
             // presenter.presentFailureExample(createFailureExample());
-            
-            
-            System.out.println("total time: " + (System.currentTimeMillis() - time));
-            
         }
     }
-    
-    @Override
-    public void setResult(List<String> result) {
-        super.setResult(result);
-        failureExample = createFailureExample();
-    }
-    
+
     public FailureExample createFailureExample() {
 
         //datermine the elect values
@@ -86,8 +70,6 @@ public class CBMC_Result extends Result {
         List<CBMC_Result_Wrapper_multiArray> votesList;
         List<CBMC_Result_Wrapper_singleArray> seatsList;
         List<CBMC_Result_Wrapper_singleArray> singleVotesList;
-        
-        ErrorLogger.log("(CBMC_Result):  possible optimization: try to only use one loop") ;
         
         switch (getElectionType()) {
 

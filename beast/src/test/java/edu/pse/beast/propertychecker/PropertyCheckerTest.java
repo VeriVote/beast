@@ -76,16 +76,16 @@ public class PropertyCheckerTest {
         implPropertyDescriptionSource pSrc = new implPropertyDescriptionSource(tmp);
 
         List<Integer> amountVoters = new ArrayList<Integer>();
-        amountVoters.add(10);
+        amountVoters.add(4);
 
         List<Integer> amountCandidates = new ArrayList<Integer>();
-        amountCandidates.add(100);
+        amountCandidates.add(5);
 
         List<Integer> amountSeats = new ArrayList<Integer>();
         amountSeats.add(4);
 
         ElectionCheckParameter ecp = new ElectionCheckParameter(amountVoters, amountCandidates, amountSeats,
-                new TimeOut(TimeUnit.MINUTES, 2), 8, "--trace;--unwind 200");
+                new TimeOut(TimeUnit.MINUTES, 2), 8, "--trace;--unwind 100");
 
         implParameterSource parmSrc = new implParameterSource(ecp);
 
