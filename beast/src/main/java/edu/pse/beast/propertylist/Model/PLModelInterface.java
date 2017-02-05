@@ -25,4 +25,5 @@ public interface PLModelInterface {
 	void deleteObserver(Observer o);
 
 	boolean setNextToBePresented(ResultInterface res);
+	void resetResults();
 }

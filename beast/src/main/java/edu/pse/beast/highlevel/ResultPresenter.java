@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.pse.beast.highlevel;
 
 /**
  * The ResultPresenter presents results to the user.
- * @author Jonas
+ * @author Jonas & Justin
  */
 public interface ResultPresenter {
     /**
@@ -15,4 +11,9 @@ public interface ResultPresenter {
      * @param res result which should be presented
      */
     void presentResult(ResultInterface res);
+    
+    /**
+     * Resets all results in the result presenter.
+     */
+    void resetResults();
 }

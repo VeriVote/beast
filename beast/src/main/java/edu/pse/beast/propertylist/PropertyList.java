@@ -37,6 +37,8 @@ public class PropertyList implements 	PLControllerInterface, PostAndPrePropertie
 	
 	private StringLoaderInterface sli;
 	
+	private PLSaveBeforeChangeHandler saveBeforeChangeHandler;
+	
 	
 	/**
 	 * Constructor
@@ -49,6 +51,7 @@ public class PropertyList implements 	PLControllerInterface, PostAndPrePropertie
 		this.sli = new StringLoaderInterface("de");
 		editor.showWindow();
 		view = new PropertyListWindow(this, model);
+		setSaveBeforeChangeHandler(new PLSaveBeforeChangeHandler(model, null));
 		model.initialize();
 	}
 	
@@ -155,6 +158,10 @@ public class PropertyList implements 	PLControllerInterface, PostAndPrePropertie
         //res.presentTo(view.getNextToPresent());
         //view.updateView();
     }
+    @Override
+	public void resetResults() {
+		model.resetResults();
+	}
 
 	@Override
 	public void updateStringRes(StringLoaderInterface sli) {
@@ -163,5 +170,15 @@ public class PropertyList implements 	PLControllerInterface, PostAndPrePropertie
 	public StringResourceLoader getMenuStringLoader() {
 		return sli.getPropertyListStringResProvider().getMenuStringRes();
 	}
+
+	public PLSaveBeforeChangeHandler getSaveBeforeChangeHandler() {
+		return saveBeforeChangeHandler;
+	}
+
+	public void setSaveBeforeChangeHandler(PLSaveBeforeChangeHandler saveHandler) {
+		this.saveBeforeChangeHandler = saveHandler;
+	}
+
+	
 
 }

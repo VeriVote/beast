@@ -5,7 +5,7 @@ import java.util.List;
 import edu.pse.beast.datatypes.FailureExample;
 
 /**
- * 
+ * Element which is specifically used to display a result of a check to the user.
  * @author Lukas
  *
  */
@@ -23,6 +23,7 @@ public interface ResultPresenterElement {
     
     /**
      * presents that the check was a failure
+     * @param error what exactly went wrong
      */
     void presentFailure(List<String> error);
     
