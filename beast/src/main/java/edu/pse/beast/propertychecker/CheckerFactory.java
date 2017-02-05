@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.datatypes.ElectionType;
+import edu.pse.beast.datatypes.internal.InternalTypeContainer;
+import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
@@ -214,4 +216,30 @@ public abstract class CheckerFactory implements Runnable {
      * @return true, if the property wasn't violated, false if that was the case
      */
     public abstract boolean checkResult(List<String> toCheck);
+    
+    private ElectionType getElectionTypeFromElectionDescription() {
+        InternalTypeContainer inputType = electionDescSrc.getElectionDescription().getInputType().getType();
+        if (inputType.isList() && inputType.getInternalType() == InternalTypeRep.VOTER) {
+            inputType = inputType.getListedType();
+            if (!inputType.isList() && inputType.getInternalType() == InternalTypeRep.CANDIDATE) {
+                return ElectionType.SINGLECHOICE;
+            } else if (inputType.isList()) {
+                inputType = inputType.getListedType();
+                if (!inputType.isList()) {
+                    if (null != inputType.getInternalType()) switch (inputType.getInternalType()) {
+                        case APPROVAL:
+                            return ElectionType.APPROVAL;
+                        case WEIGHTEDAPPROVAL:
+                            return ElectionType.WEIGHTEDAPPROVAL;
+                        case INTEGER:
+                            return ElectionType.PREFERENCE;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+        ErrorLogger.log("unsupported inputType of the Election");
+        return null;
+    }
 }
