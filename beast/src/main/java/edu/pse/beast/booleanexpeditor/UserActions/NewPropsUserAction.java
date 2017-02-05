@@ -27,6 +27,6 @@ public class NewPropsUserAction extends UserAction {
 
     @Override
     public void perform() {
-        booleanExpEditor.letUserEditPostAndPreProperties(createEmptyPostAndPropObject());
+        booleanExpEditor.letUserEditPostAndPreProperties(createEmptyPostAndPropObject(), false);
     }
 }

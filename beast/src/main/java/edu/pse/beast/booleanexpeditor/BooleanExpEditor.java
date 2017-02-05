@@ -44,6 +44,7 @@ public class BooleanExpEditor {
     private ObjectRefsForBuilder refs;
     private CElectionDescriptionEditor cEditor;
     private boolean arePropertiesCorrect;
+    private boolean loadedFromPropertyList;
 
     /**
      * Temporary Constructor declaration to build BooleanExpEditor for Dummy-GUI
@@ -68,7 +69,7 @@ public class BooleanExpEditor {
         prePropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         postPropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         this.codeAreaFocusListener = codeAreaFocusListener;
-        letUserEditPostAndPreProperties(postAndPrePropertiesDescription);
+        letUserEditPostAndPreProperties(postAndPrePropertiesDescription, false);
         windowStarter = new BooleanExpEditorWindowStarter(window);
         
     }
@@ -114,14 +115,24 @@ public class BooleanExpEditor {
     /**
      * Loads and displays the given PostAndPrePropertiesDescrion Object.
      * @param postAndPrePropertiesDescription The PostAndPrePropertiesDescription Object
+     * @param loadedFromPropertyList boolean that is used to know whether the object is loaded from the propertylist,
+     *                               or from inside the editor, used for SaveBeforeChange handling
      * @return a boolean stating the success of the loading
      */
-    public boolean letUserEditPostAndPreProperties(PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
-        if (saveBeforeChangeHandler.ifHasChangedOpenSaveDialog(currentlyLoadedPostAndPreProp.getName())) {
-            loadNewProperties(postAndPrePropertiesDescription);
-            return true;
+    public boolean letUserEditPostAndPreProperties(PostAndPrePropertiesDescription postAndPrePropertiesDescription,
+                                                   boolean loadedFromPropertyList) {
+        if (!this.loadedFromPropertyList) {
+            if (saveBeforeChangeHandler.ifHasChangedOpenSaveDialog(currentlyLoadedPostAndPreProp.getName())) {
+                loadNewProperties(postAndPrePropertiesDescription);
+                this.loadedFromPropertyList = loadedFromPropertyList;
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return false;
+            loadNewProperties(postAndPrePropertiesDescription);
+            this.loadedFromPropertyList = loadedFromPropertyList;
+            return true;
         }
     }
 
