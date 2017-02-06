@@ -78,7 +78,7 @@ public class CBMC_Result extends Result {
     public void setResult(List<String> result) {
         super.setResult(result);
         failureExample = createFailureExample();
-        
+
         System.out.println("test");
     }
 
@@ -88,8 +88,7 @@ public class CBMC_Result extends Result {
         List<CBMC_Result_Wrapper_long> elect = readLongs("elect", getResult());
 
         System.out.println("asdf");
-        
-        
+
         // define these arrays, because switch case doesn't let me reassign the
         // same name,
         // and i am a bit worried, that they won't get created properly;
@@ -198,39 +197,94 @@ public class CBMC_Result extends Result {
         for (Iterator<String> iterator = toExtract.iterator(); iterator.hasNext();) {
             String line = (String) iterator.next();
 
-            Matcher votesMatcher = votesExtractor.matcher(line);
+            if (line.contains("[")) {
 
-            if (votesMatcher.find()) {
-                String newLine = votesMatcher.group(1);
+                Matcher votesMatcher = votesExtractor.matcher(line);
 
-                // find out the number of this votes array
-                int mainIndex = Integer.parseInt(newLine.split("\\[")[0].split(name)[1]);
+                if (votesMatcher.find()) {
+                    String newLine = votesMatcher.group(1);
 
-                // get the first index for this array value
-                int arrayIndex = Integer.parseInt(newLine.split("\\[")[1].split("\\]")[0]);
+                    // find out the number of this votes array
+                    int mainIndex = Integer.parseInt(newLine.split("=")[0].split(name)[1]);
 
-                // split at the "(" and ")" to extract the value
-                String valueAsString = line.split("\\(")[1].split("\\)")[0];
+                    // get the first index for this array value
+                    int arrayIndex = Integer.parseInt(newLine.split("\\[")[1].split("\\]")[0]);
 
-                long value = Long.parseLong(valueAsString, 2);
+                    // split at the "(" and ")" to extract the value
+                    String valueAsString = line.split("\\(")[1].split("\\)")[0];
 
-                boolean added = false;
+                    long value = Long.parseLong(valueAsString, 2);
 
-                for (Iterator<CBMC_Result_Wrapper_singleArray> innerIterator = list.iterator(); innerIterator
-                        .hasNext();) {
-                    CBMC_Result_Wrapper_singleArray wrapper = (CBMC_Result_Wrapper_singleArray) innerIterator.next();
+                    boolean added = false;
 
-                    if (wrapper.getMainIndex() == mainIndex) {
-                        wrapper.addTo(arrayIndex, value);
-                        added = true;
+                    for (Iterator<CBMC_Result_Wrapper_singleArray> innerIterator = list.iterator(); innerIterator
+                            .hasNext();) {
+                        CBMC_Result_Wrapper_singleArray wrapper = (CBMC_Result_Wrapper_singleArray) innerIterator
+                                .next();
+
+                        if (wrapper.getMainIndex() == mainIndex) {
+                            wrapper.addTo(arrayIndex, value);
+                            added = true;
+                        }
+                    }
+
+                    if (!added) {
+                        list.add(new CBMC_Result_Wrapper_singleArray(mainIndex, name));
+                        list.get(list.size() - 1).addTo(arrayIndex, value);
+                    }
+
+                }
+            } else if (line.contains("{")) {
+
+                
+                votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+)(=\\{.*)");
+
+                Matcher votesMatcher = votesExtractor.matcher(line);
+
+                if (votesMatcher.find()) {
+                    String newLine = votesMatcher.group(1);
+
+                    // find out the number of this votes array
+                    int mainIndex = Integer.parseInt(newLine.split("=")[0].split(name)[1]);
+
+                    String values = line.split("\\(")[1].split("\\)")[0];
+
+                    // strip away whitespaces and the double braces that
+                    // represent
+                    // the whole array
+                    // also remove all opening braces
+                    values = values.replaceAll(" +", "").replaceAll("\\{+", "").replace("}", "}");
+
+                    String[] subValueArray = values.split("\\}")[0].split(",");
+                    
+                    
+
+                    for (int i = 0; i < subValueArray.length; i++) {
+                            if (!subValueArray[i].equals("")) {
+
+                                boolean added = false;
+
+                                for (Iterator<CBMC_Result_Wrapper_singleArray> innerIterator = list
+                                        .iterator(); innerIterator.hasNext();) {
+                                    CBMC_Result_Wrapper_singleArray wrapper = (CBMC_Result_Wrapper_singleArray) innerIterator
+                                            .next();
+
+                                    if (wrapper.getMainIndex() == mainIndex) {
+                                        wrapper.addTo(i, Long.parseLong(subValueArray[i], 2));
+                                        added = true;
+                                    }
+                                }
+
+                                if (!added) {
+                                    list.add(new CBMC_Result_Wrapper_singleArray(mainIndex, name));
+                                    list.get(list.size() - 1).addTo(i, Long.parseLong(subValueArray[i], 2));;
+                                }
+                            }
                     }
                 }
-
-                if (!added) {
-                    list.add(new CBMC_Result_Wrapper_singleArray(mainIndex, name));
-                    list.get(list.size() - 1).addTo(arrayIndex, value);
-                }
-
+                
+                
+                
             }
         }
         return list;
@@ -248,47 +302,100 @@ public class CBMC_Result extends Result {
         for (Iterator<String> iterator = toExtract.iterator(); iterator.hasNext();) {
             String line = (String) iterator.next();
 
-            Matcher votesMatcher = votesExtractor.matcher(line);
+            if (line.contains("[")) {
 
-            if (votesMatcher.find()) {
+                Matcher votesMatcher = votesExtractor.matcher(line);
 
-                String newLine = votesMatcher.group(1);
+                if (votesMatcher.find()) {
 
-//                System.out.println("NEWLINE: " + newLine);
+                    String newLine = votesMatcher.group(1);
 
-                // find out the number of this votes array
-                int mainIndex = Integer.parseInt(newLine.split("\\[")[0].split(name)[1]);
+                    // System.out.println("NEWLINE: " + newLine);
 
-  //              System.out.println("mainindex " + mainIndex);
+                    // find out the number of this votes array
+                    int mainIndex = Integer.parseInt(newLine.split("=")[0].split(name)[1]);
 
-                // get the first index for this array value
-                int arrayIndexOne = Integer.parseInt(newLine.split("\\[")[1].split("\\]")[0]);
+                    // System.out.println("mainindex " + mainIndex);
 
-                // get the second index for this array value
-                int arrayIndexTwo = Integer.parseInt(newLine.split("\\[")[2].split("\\]")[0]);
+                    // get the first index for this array value
+                    int arrayIndexOne = Integer.parseInt(newLine.split("\\[")[1].split("\\]")[0]);
 
-                // split at the "(" and ")" to extract the value
-                String valueAsString = line.split("\\(")[1].split("\\)")[0];
+                    // get the second index for this array value
+                    int arrayIndexTwo = Integer.parseInt(newLine.split("\\[")[2].split("\\]")[0]);
 
-                long value = Long.parseLong(valueAsString, 2);
+                    // split at the "(" and ")" to extract the value
+                    String valueAsString = line.split("\\(")[1].split("\\)")[0];
 
-    //            System.out.println("value: " + value);
-     //           System.out.println(line);
-                boolean added = false;
+                    long value = Long.parseLong(valueAsString, 2);
 
-                for (Iterator<CBMC_Result_Wrapper_multiArray> innerIterator = list.iterator(); innerIterator
-                        .hasNext();) {
-                    CBMC_Result_Wrapper_multiArray wrapper = (CBMC_Result_Wrapper_multiArray) innerIterator.next();
+                    // System.out.println("value: " + value);
+                    // System.out.println(line);
+                    boolean added = false;
 
-                    if (wrapper.getMainIndex() == mainIndex) {
-                        wrapper.addTo(arrayIndexOne, arrayIndexTwo, value);
-                        added = true;
+                    for (Iterator<CBMC_Result_Wrapper_multiArray> innerIterator = list.iterator(); innerIterator
+                            .hasNext();) {
+                        CBMC_Result_Wrapper_multiArray wrapper = (CBMC_Result_Wrapper_multiArray) innerIterator.next();
+
+                        if (wrapper.getMainIndex() == mainIndex) {
+                            wrapper.addTo(arrayIndexOne, arrayIndexTwo, value);
+                            added = true;
+                        }
+                    }
+
+                    if (!added) {
+                        list.add(new CBMC_Result_Wrapper_multiArray(mainIndex, name));
+                        list.get(list.size() - 1).addTo(arrayIndexOne, arrayIndexTwo, value);
                     }
                 }
+            } else if (line.contains("{")) {
+                // Pattern votesExtractor = Pattern.compile("(\\b" + name +
+                // "[0-9]+])(=\\{.*)");
 
-                if (!added) {
-                    list.add(new CBMC_Result_Wrapper_multiArray(mainIndex, name));
-                    list.get(list.size() - 1).addTo(arrayIndexOne, arrayIndexTwo, value);
+                votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+)(=\\{.*)");
+
+                Matcher votesMatcher = votesExtractor.matcher(line);
+
+                if (votesMatcher.find()) {
+                    String newLine = votesMatcher.group(1);
+
+                    // find out the number of this votes array
+                    int mainIndex = Integer.parseInt(newLine.split("=")[0].split(name)[1]);
+
+                    String values = line.split("\\(")[1].split("\\)")[0];
+
+                    // strip away whitespaces and the double braces that
+                    // represent
+                    // the whole array
+                    // also remove all opening braces
+                    values = values.replaceAll(" +", "").replaceAll("\\{+", "").replace("}}", "}");
+
+                    String[] subArrys = values.split("\\}");
+
+                    for (int i = 0; i < subArrys.length; i++) {
+                        String subValues[] = subArrys[i].split(",");
+                        for (int j = 0; j < subValues.length; j++) {
+                            if (!subValues[j].equals("")) {
+
+                                boolean added = false;
+
+                                for (Iterator<CBMC_Result_Wrapper_multiArray> innerIterator = list
+                                        .iterator(); innerIterator.hasNext();) {
+                                    CBMC_Result_Wrapper_multiArray wrapper = (CBMC_Result_Wrapper_multiArray) innerIterator
+                                            .next();
+
+                                    if (wrapper.getMainIndex() == mainIndex) {
+                                        wrapper.addTo(i, j, Long.parseLong(subValues[j], 2));
+                                        added = true;
+                                    }
+                                }
+
+                                if (!added) {
+                                    list.add(new CBMC_Result_Wrapper_multiArray(mainIndex, name));
+                                    list.get(list.size() - 1).addTo(i, j, Long.parseLong(subValues[j], 2));
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
