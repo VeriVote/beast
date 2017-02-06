@@ -41,7 +41,7 @@ public class ElectionDescriptionSaverLoaderTest {
      * Test of createSaveString method, of class ElectionDescription.
      */
     @Test
-    public void testCreateSaveString() {
+    public void testCreateSaveString() throws Exception {
         ElectionTemplateHandler electionTemplateHandler = new ElectionTemplateHandler();
         ElectionTypeContainer inputType = electionTemplateHandler.getById("list_of_integer_vals_per_voter");
         ElectionTypeContainer outputType = electionTemplateHandler.getById("one_candidate_or_zero");
@@ -59,7 +59,7 @@ public class ElectionDescriptionSaverLoaderTest {
      * Test of createFromSaveString method, of class ElectionDescription.
      */
     @Test
-    public void testCreateFromSaveString() {
+    public void testCreateFromSaveString() throws Exception {
         ElectionTemplateHandler electionTemplateHandler = new ElectionTemplateHandler();
         ElectionTypeContainer inputType = electionTemplateHandler.getById("list_of_integer_vals_per_voter");
         ElectionTypeContainer outputType = electionTemplateHandler.getById("one_candidate_or_zero");
@@ -76,5 +76,7 @@ public class ElectionDescriptionSaverLoaderTest {
         System.out.println(createdElectionDescription.getCode());
         System.out.println(createdElectionDescription.getInputType().getType().getAccesTypeIfList().toString());
         System.out.println(createdElectionDescription.getOutputType().getType().getInternalType().toString());
+        long e = 4;
+        System.out.println(e);
     }
 }

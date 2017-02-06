@@ -46,7 +46,7 @@ public class PostAndPrePropertiesDescriptionSaverLoaderTest {
      * Test of createSaveString method, of class PostAndPrePropertiesDescriptionSaverLoader.
      */
     @Test
-    public void testCreateSaveString() {
+    public void testCreateSaveString() throws Exception {
         FormalPropertiesDescription pre = new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
         FormalPropertiesDescription post = new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
         SymbolicVariableList list = new SymbolicVariableList();
@@ -63,7 +63,7 @@ public class PostAndPrePropertiesDescriptionSaverLoaderTest {
      * Test of createFromSaveString method, of class PostAndPrePropertiesDescriptionSaverLoader.
      */
     @Test
-    public void testCreateFromSaveString() {
+    public void testCreateFromSaveString() throws Exception {
         FormalPropertiesDescription pre = new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
         FormalPropertiesDescription post = new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
         SymbolicVariableList list = new SymbolicVariableList();

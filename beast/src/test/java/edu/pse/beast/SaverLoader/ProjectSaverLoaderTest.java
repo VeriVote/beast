@@ -50,7 +50,7 @@ public class ProjectSaverLoaderTest {
      * Test of createSaveString method, of class Project.
      */
     @Test
-    public void testCreateSaveString() {
+    public void testCreateSaveString() throws Exception {
         ElectionTemplateHandler electionTemplateHandler = new ElectionTemplateHandler();
         ElectionTypeContainer inputType = electionTemplateHandler.getById("list_of_integer_vals_per_voter");
         ElectionTypeContainer outputType = electionTemplateHandler.getById("one_candidate_or_zero");

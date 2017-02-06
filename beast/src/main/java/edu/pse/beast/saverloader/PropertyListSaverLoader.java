@@ -6,6 +6,9 @@ import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PropertyItem;
+import jdk.nashorn.internal.runtime.ECMAException;
+
+import javax.lang.model.util.ElementScanner6;
 
 
 /**
@@ -13,14 +16,14 @@ import edu.pse.beast.propertylist.Model.PropertyItem;
  */
 public class PropertyListSaverLoader {
 
-    public static String createPropertyItemString(PropertyItem propertyItem) {
+    public static String createPropertyItemString(PropertyItem propertyItem) throws Exception {
         String postAndPreProps = "<postAndPreProps>\n" + PostAndPrePropertiesDescriptionSaverLoader.createSaveString(propertyItem.getDescription())
                 + "\n</postAndPreProps>\n";
         String testStatus = "<testStatus>\n" + propertyItem.willBeTested() + "\n</testStatus>\n";
         return postAndPreProps + testStatus;
     }
 
-    private static PropertyItem createPropertyItem(String saveString) {
+    private static PropertyItem createPropertyItem(String saveString) throws Exception{
         String [] split = saveString.split("\n</postAndPreProps>\n");
         PostAndPrePropertiesDescription postAndPrePropertiesDescription =
                 PostAndPrePropertiesDescriptionSaverLoader.createFromSaveString(split[0].replace("<postAndPreProps>\n", ""));
@@ -32,7 +35,7 @@ public class PropertyListSaverLoader {
         }
     }
 
-    public static String createSaveString(PLModel propertyList) {
+    public static String createSaveString(PLModel propertyList) throws Exception{
         String created = "";
         for(PropertyItem propertyItem : propertyList.getList()) {
             created += "<propertyItem>\n" + createPropertyItemString(propertyItem) + "\n</propertyItem>\n";

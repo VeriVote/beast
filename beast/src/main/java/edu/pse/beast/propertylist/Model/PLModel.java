@@ -113,7 +113,7 @@ public class PLModel extends Observable implements PLModelInterface {
         return -1;
     }
 
-    private void updateView() {
+    public void updateView() {
         this.setChanged();
         this.notifyObservers();
         this.clearChanged();

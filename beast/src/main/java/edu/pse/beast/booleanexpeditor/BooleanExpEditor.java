@@ -21,6 +21,7 @@ import edu.pse.beast.toolbox.ToolbarHandler;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionBaseListener;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -45,6 +46,7 @@ public class BooleanExpEditor {
     private CElectionDescriptionEditor cEditor;
     private boolean arePropertiesCorrect;
     private boolean loadedFromPropertyList;
+    private File currentlyLoadedFile;
 
     /**
      * Temporary Constructor declaration to build BooleanExpEditor for Dummy-GUI
@@ -94,13 +96,17 @@ public class BooleanExpEditor {
         windowStarter.showWindow();
     }
 
-    public void findErrorsAndDisplayThem() {
+    public boolean findErrorsAndDisplayThem() {
         ArrayList<CodeError> prePropErrors = prePropCodeArea.getErrorCtrl().getErrorFinderList().getErrors();
         ArrayList<CodeError> postPropErrors = postPropCodeArea.getErrorCtrl().getErrorFinderList().getErrors();
-
         errorWindow.displayErrors(prePropErrors, postPropErrors,
                 ((BooleanExpErrorDisplayer) prePropCodeArea.getErrorCtrl().getDisplayer()));
         updatePostAndPrePropObject();
+        if (prePropErrors.size() == 0 && postPropErrors.size() == 0){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -127,7 +133,7 @@ public class BooleanExpEditor {
         }
     }
 
-    void loadNewProperties(PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
+    public void loadNewProperties(PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
         updatePostAndPrePropObject();
         System.out.println("Loading symbolic variable list");
         currentlyLoadedPostAndPreProp = postAndPrePropertiesDescription;
@@ -179,8 +185,7 @@ public class BooleanExpEditor {
     }
 
     public boolean isCorrect() {
-        findErrorsAndDisplayThem();
-        return arePropertiesCorrect;
+        return findErrorsAndDisplayThem();
     }
 
     public void updatePostAndPrePropObject() {

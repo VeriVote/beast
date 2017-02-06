@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 */
 public class ProjectSaverLoader {
 
-    public static String createSaveString(Project project) {
+    public static String createSaveString(Project project) throws Exception{
         String electionDescription = "<electionDescription>\n" + ElectionDescriptionSaverLoader.createSaveString(project.getElecDescr())
                 + "\n</electionDescription>\n";
         String propertyList = "<propertyList>\n" + PropertyListSaverLoader.createSaveString(project.getPropList()) + "\n</propertyList>\n";

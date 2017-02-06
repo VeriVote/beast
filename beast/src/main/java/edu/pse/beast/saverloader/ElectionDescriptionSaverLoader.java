@@ -11,7 +11,7 @@ import java.util.Arrays;
  */
 public class ElectionDescriptionSaverLoader {
 
-    public static String createSaveString(ElectionDescription electionDescription) {
+    public static String createSaveString(ElectionDescription electionDescription) throws Exception{
         String created = "";
         String name = "<name>\n" + electionDescription.getName() + "\n</name>\n";
         String votingDecLine = "<votingDecLine>\n" + electionDescription.getVotingDeclLine() + "\n</votingDecLine>\n";
@@ -30,7 +30,7 @@ public class ElectionDescriptionSaverLoader {
         return created;
     }
 
-    public static ElectionDescription createFromSaveString(String s) {
+    public static ElectionDescription createFromSaveString(String s) throws Exception{
         ElectionTemplateHandler electionTemplateHandler = new ElectionTemplateHandler();
 
         String split[] = s.split("\n</name>\n");

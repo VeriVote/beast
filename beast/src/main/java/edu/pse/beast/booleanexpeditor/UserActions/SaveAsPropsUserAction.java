@@ -3,11 +3,16 @@ package edu.pse.beast.booleanexpeditor.UserActions;
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.saverloader.OmniSaverLoader;
+import edu.pse.beast.saverloader.PostAndPrePropertiesDescriptionSaverLoader;
+import edu.pse.beast.saverloader.ProjectSaverLoader;
 import edu.pse.beast.toolbox.UserAction;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -44,14 +49,26 @@ public class SaveAsPropsUserAction extends UserAction {
         if (fileChooser.showSaveDialog(booleanExpEditor.getWindow()) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             PostAndPrePropertiesDescription currentlyLoaded = booleanExpEditor.getCurrentlyLoadedPostAndPreProp();
-            PostAndPrePropertiesDescription postAndPrePropertiesDescription = new PostAndPrePropertiesDescription(file.getName(),
-                    currentlyLoaded.getPrePropertiesDescription(), currentlyLoaded.getPostPropertiesDescription(),
-                    currentlyLoaded.getSymVarList());
-            List<String> propertyStringList = OmniSaverLoader.createSaveFormat(postAndPrePropertiesDescription);
-            for (Iterator iterator = propertyStringList.iterator(); iterator.hasNext();) {
-                String line = (String) iterator.next();
-                System.out.println(line);
+            String content = null;
+            try {
+                content = PostAndPrePropertiesDescriptionSaverLoader.createSaveString(currentlyLoaded);
+            } catch (Exception e) {
+                System.out.println("Invalid file format.");
             }
+            try {
+                FileWriter fw = new FileWriter(file);
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.write(content);
+                try {
+                        bw.close();
+                        fw.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            } catch (IOException e) {
+                // TODO OPEN ERROR DIALOG
+            }
+
             booleanExpEditor.getSaveBeforeChangeHandler().setHasBeensaved(true);
             booleanExpEditor.getSaveBeforeChangeHandler().updatePreValues();
         }

@@ -21,7 +21,7 @@ public class TimeOutSaverLoader {
 
     public static TimeOut createFromSaveString(String s) {
         String [] split = s.split("\n</duration>\n");
-        Long duration = Long.parseLong(split[0].replace("<duration>\n", ""));
+        Long duration = (long) Integer.parseInt(split[0].replace("<duration>\n", ""));
         split = split[1].split("\n</timeunit>\n");
         TimeUnit timeUnit = TimeUnit.MINUTES;
         String timeunit = split[0].replace("<timeunit>\n", "");

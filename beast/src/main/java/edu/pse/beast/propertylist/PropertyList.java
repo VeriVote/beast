@@ -130,15 +130,22 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     }
 
 
-    /* 
+    /**
      * @see edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource#isCorrect()
      */
     @Override
-    public boolean isCorrect() { //throw new UnsupportedOperationException("Not supported yet."); 
+    public boolean isCorrect() {
+        for (PropertyItem item : model.getList()) {
+            if (item.willBeTested()) {
+                if (!editor.letUserEditPostAndPreProperties(item.getDescription(), true)) {
+                    return false;
+                } else if (!editor.isCorrect()) {
+                    System.out.println(item.getDescription().getName());
+                    return false;
+                }
+            }
+        }
         return true;
-        // TODO what exactly should be done?
-        /* for (PropertyItem item : model.getList()) {
-         */
     }
 
     @Override
@@ -156,6 +163,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
      */
     @Override
     public ArrayList<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptions() {
+        editor.updatePostAndPrePropObject();
         ArrayList<PostAndPrePropertiesDescription> result = new ArrayList<PostAndPrePropertiesDescription>();
         ArrayList<PropertyItem> from = model.getList();
         editor.updatePostAndPrePropObject();
@@ -203,7 +211,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 
     public void setPLModel(PLModelInterface model) {
         this.model.loadAnotherModel(model);
-        view.updateView();
+        ((PLModel) this.model).updateView();
     }
 
 }

@@ -38,7 +38,7 @@ public class PropertyListSaverLoaderTest {
      * Test of createSaveString method, of class PostAndPrePropertiesDescriptionSaverLoader.
      */
     @Test
-    public void testCreateSaveString() {
+    public void testCreateSaveString() throws Exception {
         FormalPropertiesDescription pre = new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
         FormalPropertiesDescription post = new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
         SymbolicVariableList list = new SymbolicVariableList();

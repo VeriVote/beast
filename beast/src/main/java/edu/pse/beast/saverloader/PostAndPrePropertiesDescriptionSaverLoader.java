@@ -16,7 +16,7 @@ import edu.pse.beast.saverloader.SymbolicVarListSaverLoader;
  * @author Holger-Desktop
  */
 public class PostAndPrePropertiesDescriptionSaverLoader {
-    public static String createSaveString(PostAndPrePropertiesDescription props) {
+    public static String createSaveString(PostAndPrePropertiesDescription props) throws Exception{
         String created = "";
         String name = "<name>\n" + props.getName() + "\n</name>\n";
         String preProps = "<pre>\n" + FormalPropertySaverLoader.createSaveString(props.getPrePropertiesDescription()) + "\n</pre>\n";
@@ -26,7 +26,7 @@ public class PostAndPrePropertiesDescriptionSaverLoader {
         return created;
     }
     
-    public static PostAndPrePropertiesDescription createFromSaveString(String s) {
+    public static PostAndPrePropertiesDescription createFromSaveString(String s) throws Exception{
         String split[] = s.split("\n</name>\n");
         String name = split[0].replace("<name>\n", "");
         split = split[1].split("\n</pre>\n");
