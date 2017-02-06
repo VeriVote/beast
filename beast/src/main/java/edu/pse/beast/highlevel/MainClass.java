@@ -3,6 +3,8 @@ package edu.pse.beast.highlevel;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import edu.pse.beast.toolbox.SuperFolderFinder;
+
 /**
  * The MainClass creates an CentralObjectProvider which creates all other parts
  * of the program and with it a BEASTCommunicator which coordinates them.

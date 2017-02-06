@@ -12,6 +12,7 @@ import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
+import edu.pse.beast.toolbox.SuperFolderFinder;
 
 public class CBMCProcessFactory extends CheckerFactory {
 
@@ -27,7 +28,7 @@ public class CBMCProcessFactory extends CheckerFactory {
     // failed
 	private final String failureLine = "VERIFICATION FAILED";
 
-	private final String pathToTempFolder = "./src/main/resources/c_tempfiles/";
+	private final String pathToTempFolder = "/core/c_tempfiles/";
 
 	protected CBMCProcessFactory(FactoryController controller, ElectionDescriptionSource electionDescSrc,
 			PostAndPrePropertiesDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result) {
@@ -126,14 +127,14 @@ public class CBMCProcessFactory extends CheckerFactory {
 			PostAndPrePropertiesDescription postAndPrepPropDesc) {
 
 	    
+	    //create a code generator, that creates a code file for this call only one time in this factory factory;
 	    CBMCCodeGenerator generator = new CBMCCodeGenerator(electionDescSrc.getElectionDescription(), postAndPrepPropDesc);
 	    
-	    
-	    
-	    ArrayList<String> code;
-        code = generator.getCode();
+	    ArrayList<String> code = generator.getCode();
         
-		File file = new File(new File(pathToTempFolder), FileLoader.getNewUniqueName(pathToTempFolder) + ".c");
+	    String absolutePath = SuperFolderFinder.getSuperFolder() +  pathToTempFolder;
+	    
+		File file = new File(new File(absolutePath), FileLoader.getNewUniqueName(absolutePath) + ".c");
 
 		FileSaver.writeStringLinesToFile(code, file);
 		// FileSaver.writeStringLinesToFile(generator.getCode(), file);

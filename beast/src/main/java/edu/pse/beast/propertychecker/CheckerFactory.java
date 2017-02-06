@@ -44,8 +44,6 @@ public abstract class CheckerFactory implements Runnable {
         // catch it here
         if (result != null) {
             result.setElectionType(getElectionTypeFromElectionDescription());
-            
-            System.out.println(result.getElectionType().name());
         }
     }
 

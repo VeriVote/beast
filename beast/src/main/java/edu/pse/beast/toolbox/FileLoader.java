@@ -7,14 +7,12 @@ package edu.pse.beast.toolbox;
 
 import java.awt.image.BufferedImage;
 
-
 import java.io.*;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
-
 
 /**
  *
@@ -28,38 +26,41 @@ public final class FileLoader {
 
     /**
      *
-     * @param in the inputstream
+     * @param in
+     *            the inputstream
      * @return A LinkedList of String elements which are in the same order as in
-     * the file
-     * @throws FileNotFoundException if the file is not found it throws an
-     * exception
-     * @throws IOException throws Exception
+     *         the file
+     * @throws FileNotFoundException
+     *             if the file is not found it throws an exception
+     * @throws IOException
+     *             throws Exception
      */
     public static LinkedList<String> loadFileAsString(InputStream in) throws FileNotFoundException, IOException {
-        
-        
+
         LinkedList<String> stringlist;
-        /**try (BufferedReader br = new BufferedReader(
-                new InputStreamReader(
-                        new FileInputStream(file), "UTF8"))) { */
-            BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-            stringlist = new LinkedList<>();
-            String line;
-            
+        /**
+         * try (BufferedReader br = new BufferedReader( new InputStreamReader(
+         * new FileInputStream(file), "UTF8"))) {
+         */
+        BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+        stringlist = new LinkedList<>();
+        String line;
+
+        line = br.readLine();
+        while (line != null) {
+            stringlist.add(line);
             line = br.readLine();
-            while (line != null) {
-                stringlist.add(line);
-                line = br.readLine();
-            }
-        
+        }
+
         return stringlist;
     }
 
     /**
      *
-     * @param in the file to be read as an image
+     * @param in
+     *            the file to be read as an image
      * @return the image, if it was possible to read it. In case it couldn't be
-     * read, the methode returns null
+     *         read, the methode returns null
      */
     public static BufferedImage loadFileAsImage(InputStream in) {
         BufferedImage toReturn = null;
@@ -71,33 +72,37 @@ public final class FileLoader {
 
         return toReturn;
     }
-    
+
     public static String getFileFromRes(String fileName) {
         return new File("./src/main/resources" + fileName).getAbsolutePath();
     }
-    
+
     public synchronized static String getNewUniqueName(String pathToDir) {
-		ArrayList<String> usedNames = new ArrayList<String>();
+        ArrayList<String> usedNames = new ArrayList<String>();
 
-		File folder = new File(pathToDir);
-		File[] listOfFiles = folder.listFiles();
+        System.out.println("Path to dir: " + pathToDir);
 
-		for (int i = 0; i < listOfFiles.length; i++) {
-			if (listOfFiles[i].isFile()) {
-				usedNames.add(listOfFiles[i].getName());
-			}
-		}
-		
-		String newName = getRandomName(100);
-		while (usedNames.contains(newName)) {
-			newName = getRandomName(100);
-		}
+        File folder = new File(pathToDir);
+        File[] listOfFiles = folder.listFiles();
 
-		return newName;
-	}
-    
+        if (listOfFiles != null) {
+            for (int i = 0; i < listOfFiles.length; i++) {
+                if (listOfFiles[i].isFile()) {
+                    usedNames.add(listOfFiles[i].getName());
+                }
+            }
+        }
+
+        String newName = getRandomName(100);
+        while (usedNames.contains(newName)) {
+            newName = getRandomName(100);
+        }
+
+        return newName;
+    }
+
     private static String getRandomName(int wordSize) {
-    	SecureRandom random = new SecureRandom();
-    	return new java.math.BigInteger(wordSize, random).toString(32);    	
+        SecureRandom random = new SecureRandom();
+        return new java.math.BigInteger(wordSize, random).toString(32);
     }
 }
