@@ -33,6 +33,7 @@ public class BEASTCommunicator implements CheckListener {
 
     @Override
     public void startCheck() {
+        centralObjectProvider.getResultPresenter().resetResults();
         ElectionDescriptionSource electSrc = centralObjectProvider.getElectionDescriptionSource();
         PostAndPrePropertiesDescriptionSource postAndPreSrc = centralObjectProvider.getPostAndPrePropertiesSource();
         ParameterSource paramSrc = centralObjectProvider.getParameterSrc();

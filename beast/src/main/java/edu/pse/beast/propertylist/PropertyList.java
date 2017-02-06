@@ -181,6 +181,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     @Override
     public void resetResults() {
         model.resetResults();
+        view.updateView();
     }
 
     @Override
