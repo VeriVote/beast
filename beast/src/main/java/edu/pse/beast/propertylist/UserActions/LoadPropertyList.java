@@ -41,6 +41,7 @@ public class LoadPropertyList extends UserAction {
             File file = fc.getSelectedFile();
             // TODO load the file
             // setChanged to false und setSaveLocation auf file.getFileLoc
+            controller.resetActionList();
         }
 
     }

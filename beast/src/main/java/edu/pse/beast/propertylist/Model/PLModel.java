@@ -44,6 +44,8 @@ public class PLModel extends Observable implements PLModelInterface {
     @Override
     public boolean addDescription(PropertyItem prop) {
         propertyList.add(prop);
+        setChangedSinceSave(true);
+        updateView();
         return true;
     }
 
@@ -57,6 +59,8 @@ public class PLModel extends Observable implements PLModelInterface {
         PropertyItem newItem = new PropertyItem(new PostAndPrePropertiesDescription(name + i), false);
         propertyList.add(newItem);
 
+        editor.letUserEditPostAndPreProperties(newItem.getDescription(), true);
+        editor.getWindow().setVisible(true);
         setChangedSinceSave(true);
         updateView();
         return true;
@@ -67,6 +71,7 @@ public class PLModel extends Observable implements PLModelInterface {
         editor.letUserEditPostAndPreProperties(prop.getDescription(), true);
         editor.getWindow().setVisible(true);
         setChangedSinceSave(true);
+        prop.setResultType(ResultType.UNTESTED);
         updateView();
     }
 

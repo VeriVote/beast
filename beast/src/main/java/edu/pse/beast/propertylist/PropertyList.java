@@ -6,6 +6,7 @@
 package edu.pse.beast.propertylist;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
@@ -38,6 +39,8 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     private StringLoaderInterface sli;
 
     private PLSaveBeforeChangeHandler saveBeforeChangeHandler;
+    
+    private LinkedList<DeleteDescriptionAction> actionList;
 
     /**
      * Constructor
@@ -53,6 +56,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         editor.showWindow();
         view = new PropertyListWindow(this, model);
         setSaveBeforeChangeHandler(new PLSaveBeforeChangeHandler(model, null));
+        actionList = new LinkedList<DeleteDescriptionAction>();
         model.initialize();
     }
 
@@ -116,12 +120,15 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 
     @Override
     public void deleteProperty(PropertyItem prop) {
-        model.deleteProperty(prop);
+    	DeleteDescriptionAction act = new DeleteDescriptionAction(model, prop);
+    	act.perform();
+    	actionList.add(act);
+        //model.deleteProperty(prop);
     }
 
     @Override
     public void addDescription(PropertyItem prop) {
-        // TODO Only when Descriptions are already available
+    	model.addDescription(prop);
     }
 
     @Override
@@ -180,10 +187,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
      */
     @Override
     public void presentResult(ResultInterface res) {
-        // if (res.readyToPresent()) res.presentTo(presenter);
         model.setNextToBePresented(res);
-        //res.presentTo(view.getNextToPresent());
-        //view.updateView();
     }
 
     @Override
@@ -212,6 +216,17 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     public void setPLModel(PLModelInterface model) {
         this.model.loadAnotherModel(model);
         ((PLModel) this.model).updateView();
+    }
+    
+    public DeleteDescriptionAction getLastAction() {
+    	if (actionList.isEmpty()) {
+    		return null;
+    	}
+    	return actionList.removeLast();
+    }
+    
+    public void resetActionList() {
+    	actionList = new LinkedList<DeleteDescriptionAction>();
     }
 
 }

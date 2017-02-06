@@ -1,5 +1,6 @@
 package edu.pse.beast.propertylist.UserActions;
 
+import edu.pse.beast.propertylist.DeleteDescriptionAction;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.toolbox.UserAction;
 
@@ -8,16 +9,20 @@ import edu.pse.beast.toolbox.UserAction;
  */
 public class UndoChangesPropertyList extends UserAction {
 
-    private final PropertyList list;
+    private final PropertyList controller;
 
-    public UndoChangesPropertyList(PropertyList list) {
+    public UndoChangesPropertyList(PropertyList controller) {
         super("undo");
-        this.list = list;
+        this.controller = controller;
     }
 
     @Override
     public void perform() {
-        // TODO 
+        DeleteDescriptionAction lastAct = controller.getLastAction();
+        
+        if (lastAct != null) {
+        	lastAct.undo();
+        }
 
     }
 

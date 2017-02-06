@@ -52,6 +52,7 @@ public class NewPropertyList extends UserAction {
         }
 
         controller.getSaveBeforeChangeHandler().setChangedSinceSave(false);
+        controller.resetActionList();
         controller.getModel().userActionNewList();
     }
 
