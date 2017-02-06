@@ -80,6 +80,21 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
         return param;
     }
     /**
+     * Setter for all parameters (needed for loading projects)
+     * @param param 
+     */
+    public void setParameter(ElectionCheckParameter param) {
+        voterHandler.setMinAndMax(param.getAmountVoters().get(0),
+                param.getAmountVoters().get(param.getAmountVoters().size() - 1));
+        candHandler.setMinAndMax(param.getAmountCandidates().get(0),
+                param.getAmountCandidates().get(param.getAmountCandidates().size() - 1));
+        seatHandler.setMinAndMax(param.getAmountSeats().get(0),
+                param.getAmountSeats().get(param.getAmountSeats().size() - 1));
+        timeoutHandler.setValue(param.getTimeout());
+        processHandler.setValue(param.getProcesses());
+        argumentHandler.setArgument(param.getArgument());
+    }
+    /**
      * Starts check of the election by notifying the CheckListener
      */
     public void startCheck() {

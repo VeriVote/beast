@@ -7,7 +7,7 @@ import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.saverloader.SaverLoaderInterface;
 
 /**
- *
+ * UserAction for loading a project
  * @author Jonas
  */
 public class LoadProjectUserAction extends UserAction {
@@ -15,7 +15,13 @@ public class LoadProjectUserAction extends UserAction {
     private final CElectionDescriptionEditor cElectionEditor;
     private final ParameterEditor paramEditor;
     private final SaverLoaderInterface saverLoaderIf;
-    
+    /**
+     * Constructor
+     * @param propertyList PropertyList
+     * @param cElectionEditor CElectionDescriptionEditor
+     * @param paramEditor ParameterEditor
+     * @param saverLoaderIf SaverLoaderInterface
+     */
     public LoadProjectUserAction(PropertyList propertyList, 
             CElectionDescriptionEditor cElectionEditor, ParameterEditor paramEditor, 
             SaverLoaderInterface saverLoaderIf) {

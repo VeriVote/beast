@@ -5,11 +5,15 @@ import edu.pse.beast.toolbox.UserAction;
 import javax.swing.*;
 
 /**
+ * UserAction to toggle visibility of the CElectionEditor window
  * @author NikolaiLMS
  */
-public class ShowHideCElectionEditor extends UserAction{
+public class ShowHideCElectionEditor extends UserAction {
     private JFrame cElectionEditorWindow;
-
+    /**
+     * Constructor
+     * @param cElectionEditorWindow CElectionEditor window
+     */
     public ShowHideCElectionEditor(JFrame cElectionEditorWindow) {
         super("showCElectionEditor");
         this.cElectionEditorWindow = cElectionEditorWindow;

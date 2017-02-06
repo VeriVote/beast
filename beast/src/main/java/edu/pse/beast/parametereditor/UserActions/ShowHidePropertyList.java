@@ -5,11 +5,15 @@ import edu.pse.beast.toolbox.UserAction;
 import javax.swing.*;
 
 /**
+ * UserAction to toggle visibility of the PropertyList window
  * @author NikolaiLMS
  */
 public class ShowHidePropertyList extends UserAction {
     private JFrame propertyListWindow;
-
+    /**
+     * Constructor
+     * @param propertyListWindow PropertyList window
+     */
     public ShowHidePropertyList(JFrame propertyListWindow) {
         super("showPropertyList");
         this.propertyListWindow = propertyListWindow;
