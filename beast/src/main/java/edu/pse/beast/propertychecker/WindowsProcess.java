@@ -22,17 +22,20 @@ import com.sun.jna.platform.win32.WinNT;
 import edu.pse.beast.propertychecker.jna.Win32Process;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.FileLoader;
+import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.toolbox.ThreadedBufferedReader;
 
 public class WindowsProcess extends CBMCProcess {
     private long waitingTimeForTermination = 3000;
 
-    private final String vsCMDinRes = "/cbmcWIN/VsDevCmd.bat";
-
+    private final String relativePathToVScmd = "/windows/VsDevCmd.bat";
+    private final String relativePathToCBMC  = "/windows/cbmcWIN/cbmc.exe";
+    
+    
     public WindowsProcess(int voters, int candidates, int seats, String advanced, File toCheck, CheckerFactory parent) {
         super(voters, candidates, seats, advanced, toCheck, parent);
-    }
-
+    }   
+    
     @Override
     protected Process createProcess(File toCheck, int voters, int candidates, int seats, String advanced) {
 
@@ -47,7 +50,7 @@ public class WindowsProcess extends CBMCProcess {
 
         String vsCmd = null;
         Process startedProcess = null;
-
+        
         try {
             vsCmd = getVScmdPath();
         } catch (IOException e1) {
@@ -59,13 +62,8 @@ public class WindowsProcess extends CBMCProcess {
             ErrorLogger.log("Cant find the VScmd. Is it installed correctly?");
         }
 
-        String cbmcEXE = FileLoader.getFileFromRes("/cbmcWIN/cbmc.exe");
-
-        // TODO this is just a debug file
- //        toCheck = new File("./CFilesForTesting/multiDim_fail.c");
-   //     toCheck = new File("./src/main/resources/c_tempfiles/test_failure.c");
-        ErrorLogger.log("WindowsProcess.java line 66 has to be removed, when the code creation works");
-
+        String cbmcEXE = new File(SuperFolderFinder.getSuperFolder() +  relativePathToCBMC).getPath();
+        
         // because windows is weird the whole call that would get placed inside
         // VScmd has to be in one giant string
         String cbmcCall = "\"" + vsCmd + "\"" + " & " + cbmcEXE + " " + "\"" + toCheck.getAbsolutePath() + "\"" + " "
@@ -74,6 +72,9 @@ public class WindowsProcess extends CBMCProcess {
         // this call starts a new VScmd instance and lets cbmc run in it
         ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", cbmcCall);
 
+        System.out.println(String.join(" ",prossBuild.command()));
+        
+        
         try {
             startedProcess = prossBuild.start();
         } catch (IOException e) {
@@ -197,10 +198,11 @@ public class WindowsProcess extends CBMCProcess {
      * @throws IOException
      */
     private String getVScmdPath() throws IOException {
-
-        String vsCMD = FileLoader.getFileFromRes(vsCMDinRes);
-        if (Files.isReadable(new File(vsCMD).toPath())) {
-            return vsCMD;
+        
+        File file = new File(SuperFolderFinder.getSuperFolder() +  relativePathToVScmd);
+        
+        if (Files.isExecutable(file.toPath())) {
+            return file.getPath();     
         } else { // we were unable to locate the command promp in the resources
                  // and search now for it in the common install directories
 
