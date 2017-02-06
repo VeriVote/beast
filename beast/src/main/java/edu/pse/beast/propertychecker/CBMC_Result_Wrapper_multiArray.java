@@ -43,7 +43,7 @@ public class CBMC_Result_Wrapper_multiArray {
             list.set(indexToAddAt, toAdd);
         } else {
             for (int i = list.size(); i <= indexToAddAt; i++) {
-                list.add(-2l);
+                list.add(0l);
             }
             list.set(indexToAddAt, toAdd);
         }
@@ -64,7 +64,7 @@ public class CBMC_Result_Wrapper_multiArray {
                 if (indexWorks && list.get(i).size() >= j && list.get(i).get(j) != null) {
                     toReturn[i][j] = list.get(i).get(j);
                 } else {
-                    toReturn[i][j] = -1L;
+                    toReturn[i][j] = 0L;
                 }
             }
         }

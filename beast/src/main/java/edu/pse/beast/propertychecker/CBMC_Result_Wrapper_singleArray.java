@@ -23,7 +23,7 @@ public class CBMC_Result_Wrapper_singleArray {
             list.set(index, toAdd);
         } else {
             for (int i = list.size(); i <= index; i++) {
-                list.add(-1l);
+                list.add(0l);
             }
             list.add(toAdd);
         }
@@ -49,7 +49,7 @@ public class CBMC_Result_Wrapper_singleArray {
             if (list.size() >= i && list.get(i) != null) {
                 toReturn[i] = list.get(i);
             } else {
-                toReturn[i] = -1l;
+                toReturn[i] = 0l;
             }
         }   
         return toReturn;
