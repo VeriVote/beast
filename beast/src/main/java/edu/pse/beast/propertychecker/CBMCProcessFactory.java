@@ -134,7 +134,14 @@ public class CBMCProcessFactory extends CheckerFactory {
         
 	    String absolutePath = SuperFolderFinder.getSuperFolder() +  pathToTempFolder;
 	    
-		File file = new File(new File(absolutePath), FileLoader.getNewUniqueName(absolutePath) + ".c");
+	    File file = new File(new File(absolutePath), FileLoader.getNewUniqueName(absolutePath) + ".c");
+	    
+	    if (file.getParentFile() == null) {
+	        ErrorLogger.log("Can't find a parent to your file!");
+	    } else 
+	    if (!file.getParentFile().exists()) {
+	        file.getParentFile().mkdirs();
+	    }
 
 		FileSaver.writeStringLinesToFile(code, file);
 		// FileSaver.writeStringLinesToFile(generator.getCode(), file);
