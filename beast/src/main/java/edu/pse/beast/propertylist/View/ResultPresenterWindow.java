@@ -150,6 +150,10 @@ public class ResultPresenterWindow extends JFrame {
 		//appendPane("The analysis was timed out.");
 		appendPane(srl.getStringFromID("timeoutMessage"));
 	}
+        public void resetResult()  {
+                erasePane();
+		result.setText(srl.getStringFromID("noResultYet"));
+        }
 	
 	
 }

@@ -135,6 +135,7 @@ public class PLModel extends Observable implements PLModelInterface {
     public void resetResults() {
         for (PropertyItem item : propertyList) {
             item.setResultType(ResultType.UNTESTED);
+            
         }
         updateView();
     }
