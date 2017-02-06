@@ -7,18 +7,18 @@ import edu.pse.beast.toolbox.UserAction;
  * @author Justin
  */
 public class UndoChangesPropertyList extends UserAction {
-	
-	private final PropertyList list;
 
-	public UndoChangesPropertyList(PropertyList list) {
-		super("undo");
-		this.list = list;
-	}
+    private final PropertyList list;
 
-	@Override
-	public void perform() {
-		// TODO 
-		
-	}
+    public UndoChangesPropertyList(PropertyList list) {
+        super("undo");
+        this.list = list;
+    }
+
+    @Override
+    public void perform() {
+        // TODO 
+
+    }
 
 }

@@ -5,12 +5,12 @@ package edu.pse.beast.propertylist.Model;
  *
  */
 public enum ResultType {
-	UNTESTED,
-	TESTED,
-	TIMEOUT,
-	CANCEL,
-	SUCCESS,
-	FAILURE,
-	FAILUREEXAMPLE
+    UNTESTED,
+    TESTED,
+    TIMEOUT,
+    CANCEL,
+    SUCCESS,
+    FAILURE,
+    FAILUREEXAMPLE
 
 }

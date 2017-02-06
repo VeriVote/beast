@@ -10,12 +10,12 @@ import edu.pse.beast.toolbox.ToolbarHandler;
 
 public class PropertyListToolbarHandler extends ToolbarHandler {
 
-	private PropertyListWindow window;
-	
-	public PropertyListToolbarHandler(ImageResourceProvider imageRes, StringResourceLoader stringRes,
-			ActionIdAndListener[] actionIdsAndListener, JToolBar toolbar, PropertyListWindow window) {
-		super(imageRes, stringRes, actionIdsAndListener, toolbar);
-		this.window = window;
-	}
+    private PropertyListWindow window;
+
+    public PropertyListToolbarHandler(ImageResourceProvider imageRes, StringResourceLoader stringRes,
+            ActionIdAndListener[] actionIdsAndListener, JToolBar toolbar, PropertyListWindow window) {
+        super(imageRes, stringRes, actionIdsAndListener, toolbar);
+        this.window = window;
+    }
 
 }
