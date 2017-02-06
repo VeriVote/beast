@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package toBeImplemented;
+package edu.pse.beast.SaverLoader;
 
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
+import edu.pse.beast.saverloader.SymbolicVarListSaverLoader;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

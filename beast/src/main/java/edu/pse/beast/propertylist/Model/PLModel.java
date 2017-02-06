@@ -43,8 +43,8 @@ public class PLModel extends Observable implements PLModelInterface {
 
     @Override
     public boolean addDescription(PropertyItem prop) {
-        //propertyList.add(new PropertyItem(desc)); TODO setChangedSinceSave(true);
-        return false;
+        propertyList.add(prop);
+        return true;
     }
 
     @Override

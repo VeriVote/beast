@@ -14,9 +14,9 @@ public class SaverLoaderInterface {
     private final PropertyListSaverLoader propListSL = null;
     private final ProjectSaverLoader projSL = null;
     private final ElectionDescriptionSaverLoader electionDescrSL = null;
-    private final SymbolicVariableListSaverLoader symVarListSL = null;
+    private final SymbolicVarListSaverLoader symVarListSL = null;
     private final PostAndPrePropertiesDescriptionSaverLoader propDescrSL = null;
-    private final FormalPropertiesDescriptionSaverLoader formalPropDescrSL = null;
+    private final FormalPropertySaverLoader formalPropDescrSL = null;
     private final OptionsSaverLoaderInterface optSLI = null;
 
     public PropertyListSaverLoader getPropertyListSaverLoader() {
@@ -31,7 +31,7 @@ public class SaverLoaderInterface {
         return electionDescrSL;
     }
 
-    public SymbolicVariableListSaverLoader getSymbolicVariableListSaverLoader() {
+    public SymbolicVarListSaverLoader getSymbolicVariableListSaverLoader() {
         return symVarListSL;
     }
 
@@ -39,7 +39,7 @@ public class SaverLoaderInterface {
         return propDescrSL;
     }
 
-    public FormalPropertiesDescriptionSaverLoader getFormalPropertiesDescriptionSaverLoader() {
+    public FormalPropertySaverLoader getFormalPropertiesDescriptionSaverLoader() {
         return formalPropDescrSL;
     }
 

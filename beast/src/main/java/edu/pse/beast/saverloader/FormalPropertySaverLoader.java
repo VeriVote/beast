@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package toBeImplemented;
+package edu.pse.beast.saverloader;
 
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
@@ -15,7 +15,7 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
  */
 public class FormalPropertySaverLoader {
     public static String createSaveString(FormalPropertiesDescription desc) {
-        return desc.getCode();        
+        return desc.getCode();
     }
     
     public static FormalPropertiesDescription createFromSaveString(String desc) {

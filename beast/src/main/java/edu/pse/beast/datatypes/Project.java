@@ -6,6 +6,7 @@
 package edu.pse.beast.datatypes;
 
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
+import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.PropertyList;
 
 /**
@@ -14,10 +15,10 @@ import edu.pse.beast.propertylist.PropertyList;
  */
 public class Project {
     private final ElectionCheckParameter params;
-    private final PropertyList propList;
+    private final PLModel propList;
     private final ElectionDescription elecDescr;
     
-    public Project (ElectionCheckParameter params, PropertyList propList, ElectionDescription elecDescr) {
+    public Project (ElectionCheckParameter params, PLModel propList, ElectionDescription elecDescr) {
         this.params = params;
         this.propList = propList;
         this.elecDescr = elecDescr;
@@ -25,7 +26,7 @@ public class Project {
     public ElectionDescription getElecDescr (){
         return elecDescr;
     }
-    public PropertyList getPropList() {
+    public PLModel getPropList() {
         return propList;
     }
     public ElectionCheckParameter getElectionCheckParameter() {

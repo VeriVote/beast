@@ -44,7 +44,15 @@ public class ElectionTypeContainer {
     public int getUpperBound() {
         return upperBound;
     }
-    
+
+    /**
+     *
+     * @return the id of this typecontainer
+     */
+    public String getId() {
+        return id;
+    }
+
     /**
      * 
      * @param lowerBound sets the lowerBound of this election

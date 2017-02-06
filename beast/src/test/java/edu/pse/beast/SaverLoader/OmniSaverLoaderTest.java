@@ -43,14 +43,12 @@ public class OmniSaverLoaderTest {
 
         FormalPropertiesDescription preDescr = new FormalPropertiesDescription(pre);
         FormalPropertiesDescription postDescr = new FormalPropertiesDescription(post);
+        symbolicVariableList.addSymbolicVariable("testVar", new InternalTypeContainer(InternalTypeRep.SEAT));
 
         PostAndPrePropertiesDescription postAndPrePropertiesDescription = new PostAndPrePropertiesDescription("name",
                 preDescr, postDescr, symbolicVariableList);
-		
-		
-		
-		
-		List<String> format = OmniSaverLoader.createSaveFormat(postAndPrePropertiesDescription);
+
+		List<String> format = OmniSaverLoader.createSaveFormat(electionDescription);
 		
 		for (Iterator iterator = format.iterator(); iterator.hasNext();) {
 			String line = (String) iterator.next();
