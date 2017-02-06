@@ -236,7 +236,6 @@ public class CBMC_Result extends Result {
                 }
             } else if (line.contains("{")) {
 
-                
                 votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+)(=\\{.*)");
 
                 Matcher votesMatcher = votesExtractor.matcher(line);
@@ -256,35 +255,31 @@ public class CBMC_Result extends Result {
                     values = values.replaceAll(" +", "").replaceAll("\\{+", "").replace("}", "}");
 
                     String[] subValueArray = values.split("\\}")[0].split(",");
-                    
-                    
 
                     for (int i = 0; i < subValueArray.length; i++) {
-                            if (!subValueArray[i].equals("")) {
+                        if (!subValueArray[i].equals("")) {
 
-                                boolean added = false;
+                            boolean added = false;
 
-                                for (Iterator<CBMC_Result_Wrapper_singleArray> innerIterator = list
-                                        .iterator(); innerIterator.hasNext();) {
-                                    CBMC_Result_Wrapper_singleArray wrapper = (CBMC_Result_Wrapper_singleArray) innerIterator
-                                            .next();
+                            for (Iterator<CBMC_Result_Wrapper_singleArray> innerIterator = list
+                                    .iterator(); innerIterator.hasNext();) {
+                                CBMC_Result_Wrapper_singleArray wrapper = (CBMC_Result_Wrapper_singleArray) innerIterator
+                                        .next();
 
-                                    if (wrapper.getMainIndex() == mainIndex) {
-                                        wrapper.addTo(i, Long.parseLong(subValueArray[i], 2));
-                                        added = true;
-                                    }
-                                }
-
-                                if (!added) {
-                                    list.add(new CBMC_Result_Wrapper_singleArray(mainIndex, name));
-                                    list.get(list.size() - 1).addTo(i, Long.parseLong(subValueArray[i], 2));;
+                                if (wrapper.getMainIndex() == mainIndex) {
+                                    wrapper.addTo(i, Long.parseLong(subValueArray[i], 2));
+                                    added = true;
                                 }
                             }
+
+                            if (!added) {
+                                list.add(new CBMC_Result_Wrapper_singleArray(mainIndex, name));
+                                list.get(list.size() - 1).addTo(i, Long.parseLong(subValueArray[i], 2));
+                                ;
+                            }
+                        }
                     }
                 }
-                
-                
-                
             }
         }
         return list;
