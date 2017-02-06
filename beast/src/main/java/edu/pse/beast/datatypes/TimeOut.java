@@ -21,7 +21,11 @@ public class TimeOut {
     public TimeOut(TimeUnit unit, long duration) {
         amount = unit.toMillis(duration);
         originalUnit = unit;
-        active = true;
+        if (amount != 0) {
+            active = true;
+        } else {
+            active = false;
+        }
     }
 
     /**
