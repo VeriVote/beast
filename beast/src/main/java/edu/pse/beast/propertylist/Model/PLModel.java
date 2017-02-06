@@ -164,4 +164,12 @@ public class PLModel extends Observable implements PLModelInterface {
         this.changedSinceSave = changedSinceSave;
     }
 
+    public ArrayList<PropertyItem> getItemList() {
+        return propertyList;
+    }
+
+    public void loadAnotherModel(PLModelInterface model) {
+        this.propertyList = model.getList();
+    }
+
 }

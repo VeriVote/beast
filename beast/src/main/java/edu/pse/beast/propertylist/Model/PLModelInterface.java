@@ -34,4 +34,6 @@ public interface PLModelInterface {
     boolean setNextToBePresented(ResultInterface res);
 
     void resetResults();
+
+    public void loadAnotherModel(PLModelInterface model);
 }
