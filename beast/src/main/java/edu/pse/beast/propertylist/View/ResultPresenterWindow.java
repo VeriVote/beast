@@ -119,11 +119,16 @@ public class ResultPresenterWindow extends JFrame {
 	public void presentFailureExample(FailureExample ex) {
 		erasePane();
 		appendLine(srl.getStringFromID("failureExampleMessage"));
-		appendLine(srl.getStringFromID("electionType") + ": "+ ex.getTypeString() + "\n");
+		appendLine(srl.getStringFromID("electionType") + ": " + 
+					srl.getStringFromID(ex.getTypeString()) + "\n");
 		for (int i = 0; i < ex.getNumOfElections(); i++) {
 			appendLine(srl.getStringFromID("election") + " " + i);
 			appendPane(srl.getStringFromID("votes") + ": ");
-			if (ex.isChooseOneCandidate()) appendPane(Arrays.toString(ex.getVotes().get(i).getArray()));
+			
+			// The votes part of the document
+			if (ex.isChooseOneCandidate()) {
+				appendPane(Arrays.toString(ex.getVotes().get(i).getArray()));
+			}
 			else {
 				Long[][] arr = ex.getVoteList().get(i).getArray();
 				for (int j = 0; j < arr.length; j++) {
@@ -133,6 +138,7 @@ public class ResultPresenterWindow extends JFrame {
 			}
 			appendLine("");
 			
+			// The elected part of the document
 			appendPane(srl.getStringFromID("elected") + ": ");
 			if (ex.isOneSeatOnly()) appendPane(Long.toString(ex.getElect().get(i).getValue()));
 			else appendPane(Arrays.toString(ex.getSeats().get(i).getArray()));

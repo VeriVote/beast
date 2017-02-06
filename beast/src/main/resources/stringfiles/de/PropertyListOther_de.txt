@@ -11,3 +11,8 @@ successMessage : Das vorliegende Wahlverfahren erfüllt die gegebene Eigenschaft
 timeoutMessage : Die Analyse wurde durch einen Timeout abgebrochen.
 failureMessage : Die Analyse konnte aufgrund eines Fehlers nicht ausgeführt werden. Es folgt die Fehlermeldung im Original.
 failureExampleMessage :  Die gegebene Eigenschaft wird nicht erfüllt. Bei diesem Wahlergebnis ist die Eigenschaft verletzt.
+single-choice : Einfache Wahl (Single-Choice)
+approval : Zustimmungswahl (Ja/Nein zu jedem Kandidaten)
+weighted-approval : Gewichtete Zustimmungswahl (Punktezahl für jeden Kandidaten)
+preference : Präferenzwahl (Liste der Kandidaten geordnet nach Zustimmung)
+unknown : Unbekannt

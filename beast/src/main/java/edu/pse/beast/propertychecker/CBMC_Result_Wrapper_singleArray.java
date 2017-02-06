@@ -37,6 +37,10 @@ public class CBMC_Result_Wrapper_singleArray {
         return name;
     }
     
+    public List<Long> getList() {
+    	return list;
+    }
+    
     public Long[] getArray() {
         Long[] toReturn;
         if((list != null) && (list.size() > 0)) {
