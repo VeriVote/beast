@@ -122,7 +122,7 @@ public class ProjectSaverLoaderTest {
 
         System.out.println(projec1.getElecDescr().getName());
         System.out.println(projec1.getElecDescr().getInputType().getType().getAccesTypeIfList());
-        System.out.println(projec1.getPropList().getList().get(0).getDescription().getPrePropertiesDescription().getCode());
+        System.out.println(projec1.getPropList().getPropertyList().get(0).getDescription().getPrePropertiesDescription().getCode());
 
 
     }

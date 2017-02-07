@@ -30,7 +30,7 @@ public class SaveAsPropertyList extends UserAction {
             File file = fc.getSelectedFile();
             // TODO save
             // if success con.getsavebefore.setChanged(false)
-            /*XMLEncoder encoder;
+            XMLEncoder encoder;
 			try {
 				encoder = new XMLEncoder(new FileOutputStream(file));
 				encoder.writeObject(controller.getModel());
@@ -38,7 +38,7 @@ public class SaveAsPropertyList extends UserAction {
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}*/
+			}
             
         }
 

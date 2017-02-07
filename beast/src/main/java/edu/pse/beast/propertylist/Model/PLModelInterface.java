@@ -25,7 +25,8 @@ public interface PLModelInterface {
 
     void userActionNewList();
 
-    ArrayList<PropertyItem> getList();
+    ArrayList<PropertyItem> getPropertyList();
+    void setPropertyList(ArrayList<PropertyItem> list);
 
     void addObserver(Observer o);
 

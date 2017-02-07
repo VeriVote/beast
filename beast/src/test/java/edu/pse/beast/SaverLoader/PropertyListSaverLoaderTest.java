@@ -81,24 +81,24 @@ public class PropertyListSaverLoaderTest {
         plModel.addDescription(propertyItem2);
 
         PLModel plModel1 = PropertyListSaverLoader.createFromSaveString(PropertyListSaverLoader.createSaveString(plModel));
-        plModel.getList().get(0);
+        plModel.getPropertyList().get(0);
 
-        System.out.println(plModel1.getList().get(0).getDescription().getName());
-        System.out.println(plModel1.getList().get(0).getDescription().getPostPropertiesDescription());
-        System.out.println(plModel1.getList().get(0).getDescription().getPrePropertiesDescription());
-        System.out.println(plModel1.getList().get(0).getDescription().getSymbolicVariableList().get(0));
-        System.out.println(plModel1.getList().get(0).getDescription().getSymbolicVariableList().get(1));
-        System.out.println(plModel1.getList().get(0).getDescription().getSymbolicVariableList().get(2));
-        System.out.println(plModel1.getList().get(0).getDescription().getSymbolicVariableList().get(3));
-        System.out.println(plModel1.getList().get(0).willBeTested());
-        System.out.println(plModel1.getList().get(1).getDescription().getName());
-        System.out.println(plModel1.getList().get(1).getDescription().getPostPropertiesDescription());
-        System.out.println(plModel1.getList().get(1).getDescription().getPrePropertiesDescription());
-        System.out.println(plModel1.getList().get(1).getDescription().getSymbolicVariableList().get(0));
-        System.out.println(plModel1.getList().get(1).getDescription().getSymbolicVariableList().get(1));
-        System.out.println(plModel1.getList().get(1).getDescription().getSymbolicVariableList().get(2));
-        System.out.println(plModel1.getList().get(1).getDescription().getSymbolicVariableList().get(3));
-        System.out.println(plModel1.getList().get(1).willBeTested());
+        System.out.println(plModel1.getPropertyList().get(0).getDescription().getName());
+        System.out.println(plModel1.getPropertyList().get(0).getDescription().getPostPropertiesDescription());
+        System.out.println(plModel1.getPropertyList().get(0).getDescription().getPrePropertiesDescription());
+        System.out.println(plModel1.getPropertyList().get(0).getDescription().getSymbolicVariableList().get(0));
+        System.out.println(plModel1.getPropertyList().get(0).getDescription().getSymbolicVariableList().get(1));
+        System.out.println(plModel1.getPropertyList().get(0).getDescription().getSymbolicVariableList().get(2));
+        System.out.println(plModel1.getPropertyList().get(0).getDescription().getSymbolicVariableList().get(3));
+        System.out.println(plModel1.getPropertyList().get(0).willBeTested());
+        System.out.println(plModel1.getPropertyList().get(1).getDescription().getName());
+        System.out.println(plModel1.getPropertyList().get(1).getDescription().getPostPropertiesDescription());
+        System.out.println(plModel1.getPropertyList().get(1).getDescription().getPrePropertiesDescription());
+        System.out.println(plModel1.getPropertyList().get(1).getDescription().getSymbolicVariableList().get(0));
+        System.out.println(plModel1.getPropertyList().get(1).getDescription().getSymbolicVariableList().get(1));
+        System.out.println(plModel1.getPropertyList().get(1).getDescription().getSymbolicVariableList().get(2));
+        System.out.println(plModel1.getPropertyList().get(1).getDescription().getSymbolicVariableList().get(3));
+        System.out.println(plModel1.getPropertyList().get(1).willBeTested());
 
     }
 }

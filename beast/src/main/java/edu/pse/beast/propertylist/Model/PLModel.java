@@ -146,8 +146,12 @@ public class PLModel extends Observable implements PLModelInterface {
     }
 
     @Override
-    public ArrayList<PropertyItem> getList() {
+    public ArrayList<PropertyItem> getPropertyList() {
         return propertyList;
+    }
+    @Override
+    public void setPropertyList(ArrayList<PropertyItem> propertyList) {
+        this.propertyList = propertyList;
     }
 
     public PLModel getModel() {
@@ -175,7 +179,7 @@ public class PLModel extends Observable implements PLModelInterface {
     }
 
     public void loadAnotherModel(PLModelInterface model) {
-        this.propertyList = model.getList();
+        this.propertyList = model.getPropertyList();
     }
 
 }

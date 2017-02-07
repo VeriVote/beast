@@ -17,7 +17,7 @@ public class NewPropertyList extends UserAction {
 
     @Override
     public void perform() {
-        if (controller.getModel().getList().isEmpty()) {
+        if (controller.getModel().getPropertyList().isEmpty()) {
             return;
         }
 

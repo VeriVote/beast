@@ -198,7 +198,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 
 	@Override
 	public void update(Observable o, Object obj) {
-		updateItems(model.getList());
+		updateItems(model.getPropertyList());
 	}
 	
 	public void rejectNameChange(PropertyItem prop) {
@@ -207,7 +207,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 			if (prop.equals(li.getPropertyItem())) {
 				//li.getNameField().setBackground(Color.RED);
 				//li.getNameField().setForeground(Color.RED);
-				updateItems(model.getList());
+				updateItems(model.getPropertyList());
 				//li.getNameField().setBackground(Color.WHITE);
 			}
 		}

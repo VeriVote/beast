@@ -37,7 +37,7 @@ public class PropertyListSaverLoader {
 
     public static String createSaveString(PLModel propertyList) throws Exception{
         String created = "";
-        for(PropertyItem propertyItem : propertyList.getList()) {
+        for(PropertyItem propertyItem : propertyList.getPropertyList()) {
             created += "<propertyItem>\n" + createPropertyItemString(propertyItem) + "\n</propertyItem>\n";
         }
         return created;
