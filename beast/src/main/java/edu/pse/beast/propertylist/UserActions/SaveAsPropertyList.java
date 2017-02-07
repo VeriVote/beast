@@ -1,6 +1,10 @@
 package edu.pse.beast.propertylist.UserActions;
 
+import java.beans.XMLEncoder;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 import javax.swing.JFileChooser;
 
@@ -26,6 +30,16 @@ public class SaveAsPropertyList extends UserAction {
             File file = fc.getSelectedFile();
             // TODO save
             // if success con.getsavebefore.setChanged(false)
+            /*XMLEncoder encoder;
+			try {
+				encoder = new XMLEncoder(new FileOutputStream(file));
+				encoder.writeObject(controller.getModel());
+	            encoder.close();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}*/
+            
         }
 
     }
