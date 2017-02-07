@@ -21,22 +21,26 @@ public class TimeOutSaverLoader {
 
     public static TimeOut createFromSaveString(String s) {
         String [] split = s.split("\n</duration>\n");
-        Long duration = (long) Integer.parseInt(split[0].replace("<duration>\n", ""));
+        Long duration = Long.parseLong(split[0].replace("<duration>\n", ""));
         split = split[1].split("\n</timeunit>\n");
         TimeUnit timeUnit = TimeUnit.MINUTES;
         String timeunit = split[0].replace("<timeunit>\n", "");
         switch(timeunit) {
             case "MINUTES":
                 timeUnit = TimeUnit.MINUTES;
+                duration = TimeUnit.MILLISECONDS.toMinutes(duration);
                 break;
             case "SECONDS":
                 timeUnit = TimeUnit.SECONDS;
+                duration = TimeUnit.MILLISECONDS.toSeconds(duration);
                 break;
             case "HOURS":
                 timeUnit = TimeUnit.HOURS;
+                duration = TimeUnit.MILLISECONDS.toHours(duration);
                 break;
             case "DAYS":
                 timeUnit = TimeUnit.DAYS;
+                duration = TimeUnit.MILLISECONDS.toDays(duration);
                 break;
         }
         return new TimeOut(timeUnit, duration);
