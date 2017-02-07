@@ -225,22 +225,12 @@ public class WindowsProcess extends CBMCProcess {
                 }
             }
 
-            String userInput = JOptionPane
-                    .showInputDialog("The progam was unable to find a Developer Command Prompt for Visual Studio. \n"
-                            + " Please search for it on your own and paste the path to the batch-file (without quotes) here! \n"
-                            + " Please copy the .bat also to the resources folder "
-                            + "(named \"VsDevCmd.bat\") so it can be foudn automatically.");
+            ErrorLogger.log("The progam was unable to find a Developer Command Prompt for Visual Studio. \n"
+                            + " Please install it if you haven't and search for the vsCMD.bat in it! \n"
+                            + " Please copy the .bat to the folder /windows/ in your BEST install directory"
+                            + "(named \"VsDevCmd.bat\") so it can be found automatically.");
 
-            // important that the check against null is done first, so invalid
-            // inputs are caught without causing an error
-            if (userInput != null && Files.isReadable(new File(userInput).toPath())
-                    && userInput.contains("VsDevCmd.bat")) {
-                ErrorLogger.log("The path has to be saved here, so the user doesn't have to supply it everytime");
-                return userInput;
-            } else {
-                System.err.println("The provided path did not lead to the command prompt. Shutting down now.");
-                return null;
-            }
+            return "The progam was unable to find a Developer Command Prompt for Visual Studio. Look at the error log";
         }
     }
 
