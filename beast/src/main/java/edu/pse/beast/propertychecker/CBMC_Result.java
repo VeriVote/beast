@@ -291,7 +291,6 @@ public class CBMC_Result extends Result {
                             if (!added) {
                                 list.add(new CBMC_Result_Wrapper_singleArray(mainIndex, name));
                                 list.get(list.size() - 1).addTo(i, Long.parseLong(subValueArray[i], 2));
-                                ;
                             }
                         }
                     }
@@ -315,8 +314,6 @@ public class CBMC_Result extends Result {
         Iterator<String> iterator = getResult().iterator();
         String line = mergeLinesToOne(iterator, segmentEnder);
 
-        System.out.println("davor");
-
         while ((line = mergeLinesToOne(iterator, segmentEnder)).length() > 0) {
 
             System.out.println("next line: " + line);
@@ -324,6 +321,7 @@ public class CBMC_Result extends Result {
             // iterator.hasNext();) {
             // String line = (String) iterator.next();
 
+            
             if (line.contains("[")) {
 
                 Matcher votesMatcher = votesExtractor.matcher(line);
@@ -383,9 +381,6 @@ public class CBMC_Result extends Result {
                 if (votesMatcher.find()) {
                     String newLine = votesMatcher.group(1);
 
-                    System.out.println("newline2: " + newLine);
-                    System.out.println(line);
-
                     // find out the number of this votes array
                     int mainIndex = Integer.parseInt(newLine.split("=")[0].split(name)[1]);
 
@@ -395,15 +390,18 @@ public class CBMC_Result extends Result {
                     // represent
                     // the whole array
                     // also remove all opening braces
-                    values = values.replaceAll(" +", "").replaceAll("\\{+", "").replace("}}", "}");
-
-                    String[] subArrys = values.split("\\}");
+                    values = values.replaceAll(" +", "").replaceAll("\\{+", "").replaceAll("} *}*", "");
+                    
+                    //every sub array is now seperated by these two characters
+                    String[] subArrys = values.split("\\},");
 
                     for (int i = 0; i < subArrys.length; i++) {
+                        
                         String subValues[] = subArrys[i].split(",");
                         for (int j = 0; j < subValues.length; j++) {
+                            
                             if (!subValues[j].equals("")) {
-
+                                
                                 boolean added = false;
 
                                 for (Iterator<CBMC_Result_Wrapper_multiArray> innerIterator = list

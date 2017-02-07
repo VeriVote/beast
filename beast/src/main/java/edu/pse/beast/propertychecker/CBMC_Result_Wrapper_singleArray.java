@@ -25,7 +25,7 @@ public class CBMC_Result_Wrapper_singleArray {
             for (int i = list.size(); i <= index; i++) {
                 list.add(0l);
             }
-            list.add(toAdd);
+            list.set(index, toAdd);
         }
     }
 
