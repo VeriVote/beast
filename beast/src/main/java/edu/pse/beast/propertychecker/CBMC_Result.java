@@ -78,16 +78,12 @@ public class CBMC_Result extends Result {
     public void setResult(List<String> result) {
         super.setResult(result);
         failureExample = createFailureExample();
-
-        System.out.println("test");
     }
 
     public FailureExample createFailureExample() {
 
         // datermine the elect values
         List<CBMC_Result_Wrapper_long> elect = readLongs("elect", getResult());
-
-        System.out.println("asdf");
 
         // define these arrays, because switch case doesn't let me reassign the
         // same name,
@@ -146,8 +142,18 @@ public class CBMC_Result extends Result {
 
         Pattern longExtractor = Pattern.compile("(\\b" + name + "[0-9]+)(.*)");
 
-        for (Iterator<String> iterator = getResult().iterator(); iterator.hasNext();) {
-            String line = (String) iterator.next();
+        Pattern segmentEnder = Pattern.compile("----------------------------------------------------");
+
+        Iterator<String> iterator = getResult().iterator();
+        String line = mergeLinesToOne(iterator, segmentEnder);
+
+        while ((line = mergeLinesToOne(iterator, segmentEnder)).length() > 0) {
+
+            System.out.println("next line: " + line);
+
+            // for (Iterator<String> iterator = getResult().iterator();
+            // iterator.hasNext();) {
+            // String line = (String) iterator.next();
 
             Matcher checkerMatcher = correctChecker.matcher(line);
             if (checkerMatcher.find()) {
@@ -194,8 +200,18 @@ public class CBMC_Result extends Result {
         // number. Also, the next character has to be an equals sign
         Pattern votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+\\])(=.*)");
 
-        for (Iterator<String> iterator = toExtract.iterator(); iterator.hasNext();) {
-            String line = (String) iterator.next();
+        Pattern segmentEnder = Pattern.compile("----------------------------------------------------");
+
+        Iterator<String> iterator = getResult().iterator();
+        String line = mergeLinesToOne(iterator, segmentEnder);
+
+        while ((line = mergeLinesToOne(iterator, segmentEnder)).length() > 0) {
+
+            System.out.println("next line: " + line);
+
+            // for (Iterator<String> iterator = toExtract.iterator();
+            // iterator.hasNext();) {
+            // String line = (String) iterator.next();
 
             if (line.contains("[")) {
 
@@ -294,8 +310,19 @@ public class CBMC_Result extends Result {
         // number. Also, the next character has to be an equals sign
         Pattern votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+\\]\\[[0-9]+\\])(=.*)");
 
-        for (Iterator<String> iterator = toExtract.iterator(); iterator.hasNext();) {
-            String line = (String) iterator.next();
+        Pattern segmentEnder = Pattern.compile("----------------------------------------------------");
+
+        Iterator<String> iterator = getResult().iterator();
+        String line = mergeLinesToOne(iterator, segmentEnder);
+
+        System.out.println("davor");
+
+        while ((line = mergeLinesToOne(iterator, segmentEnder)).length() > 0) {
+
+            System.out.println("next line: " + line);
+            // for (Iterator<String> iterator = toExtract.iterator();
+            // iterator.hasNext();) {
+            // String line = (String) iterator.next();
 
             if (line.contains("[")) {
 
@@ -304,6 +331,9 @@ public class CBMC_Result extends Result {
                 if (votesMatcher.find()) {
 
                     String newLine = votesMatcher.group(1);
+
+                    System.out.println("newline1: " + newLine);
+                    System.out.println(line);
 
                     // System.out.println("NEWLINE: " + newLine);
 
@@ -353,6 +383,9 @@ public class CBMC_Result extends Result {
                 if (votesMatcher.find()) {
                     String newLine = votesMatcher.group(1);
 
+                    System.out.println("newline2: " + newLine);
+                    System.out.println(line);
+
                     // find out the number of this votes array
                     int mainIndex = Integer.parseInt(newLine.split("=")[0].split(name)[1]);
 
@@ -395,5 +428,30 @@ public class CBMC_Result extends Result {
             }
         }
         return list;
+    }
+
+    private String mergeLinesToOne(Iterator<String> toMerge, Pattern regexToEndAt) {
+
+        String toReturn = "";
+        boolean notEnded = true;
+        while (notEnded) {
+            if (toMerge.hasNext()) {
+
+                String nextLine = toMerge.next();
+
+                Matcher matcher = regexToEndAt.matcher(nextLine);
+
+                if (matcher.matches()) {
+                    // we found the end of the segment
+                    notEnded = false;
+                } else {
+                    // add the next line, sepearated by a whitespace
+                    toReturn = toReturn + " " + nextLine;
+                }
+            } else {
+                return toReturn;
+            }
+        }
+        return toReturn;
     }
 }
