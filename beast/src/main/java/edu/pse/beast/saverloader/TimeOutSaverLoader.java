@@ -15,7 +15,7 @@ import java.util.Arrays;
 public class TimeOutSaverLoader {
     public static String createSaveString(TimeOut timeOut) {
         String amount = "<duration>\n" + timeOut.getDuration() + "\n</duration>\n";
-        String timeunit = "<timeunit\n>" + timeOut.getOrigUnit().name() + "\n</timeunit>\n";
+        String timeunit = "<timeunit>\n" + timeOut.getOrigUnit().name() + "\n</timeunit>\n";
         return amount + timeunit;
     }
 

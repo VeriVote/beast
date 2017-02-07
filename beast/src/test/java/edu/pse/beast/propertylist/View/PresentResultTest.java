@@ -8,16 +8,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.pse.beast.highlevel.ResultInterface;
-import edu.pse.beast.highlevel.ResultPresenterElement;
-import edu.pse.beast.propertylist.PLControllerInterface;
-import edu.pse.beast.propertylist.PropertyList;
-import edu.pse.beast.propertylist.Model.PLModel;
-import edu.pse.beast.propertylist.Model.PLModelInterface;
-import edu.pse.beast.propertylist.Model.ResultType;
+
 
 public class PresentResultTest {
-	
+	/*
 	PLModelInterface model = new PLModel();
 	PLControllerInterface controller = new PropertyList(model);
 	
@@ -69,5 +63,5 @@ public static void main(String[] args) {
 		
 		controller.presentResult(res);
     }
-
+*/
 }
