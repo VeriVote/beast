@@ -40,7 +40,8 @@ public class SymbolicVarListSaverLoader {
     }
     
     private static void createSymbVarFromSaveString(String s, SymbolicVariableList list) {
-    	if (s == null) return;
+    	if (s.length() == 0 || s == null) return;
+
         String[] data = s.split(" ");
         String id = data[2];
         String typeString = data[4];
