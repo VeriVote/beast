@@ -19,13 +19,16 @@ public class LinuxProcess extends CBMCProcess {
         // the linux version of cbmc has the trace command automatically, so we
         // have to remove it
         // or else cbmc would throw an error
-        return toSanitize.replace("--trace", "");
+    	return toSanitize;
+   //     return toSanitize.replace("--trace", "");
     }
 
     @Override
     public Process createProcess(File toCheck, int voters, int candidates, int seats, String advanced) {
 
         List<String> arguments = new ArrayList<String>();
+
+    //    advanced = advanced + " --trace";
         
         advanced = sanitizeArguments(advanced);
         

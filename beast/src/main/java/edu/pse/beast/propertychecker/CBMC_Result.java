@@ -150,7 +150,7 @@ public class CBMC_Result extends Result {
 
         while ((line = mergeLinesToOne(iterator, segmentEnder)).length() > 0) {
 
-            System.out.println("next line: " + line);
+   //         System.out.println("next line: " + line);
 
             // for (Iterator<String> iterator = getResult().iterator();
             // iterator.hasNext();) {
@@ -206,7 +206,7 @@ public class CBMC_Result extends Result {
 
         while ((line = mergeLinesToOne(iterator, segmentEnder)).length() > 0) {
 
-            System.out.println("next line: " + line);
+      //      System.out.println("next line: " + line);
 
             // for (Iterator<String> iterator = toExtract.iterator();
             // iterator.hasNext();) {
@@ -313,7 +313,7 @@ public class CBMC_Result extends Result {
 
         while ((line = mergeLinesToOne(iterator, segmentEnder)).length() > 0) {
 
-            System.out.println("next line: " + line);
+//            System.out.println("next line: " + line);
             // for (Iterator<String> iterator = toExtract.iterator();
             // iterator.hasNext();) {
             // String line = (String) iterator.next();
@@ -327,8 +327,8 @@ public class CBMC_Result extends Result {
 
                     String newLine = votesMatcher.group(1);
 
-                    System.out.println("newline1: " + newLine);
-                    System.out.println(line);
+    //                System.out.println("newline1: " + newLine);
+     //               System.out.println(line);
 
                     // System.out.println("NEWLINE: " + newLine);
 
@@ -387,7 +387,9 @@ public class CBMC_Result extends Result {
                     // represent
                     // the whole array
                     // also remove all opening braces
-                    values = values.replaceAll(" +", "").replaceAll("\\{+", "").replaceAll("} *}*", "");
+                    values = values.replaceAll(" +", "").replaceAll("\\{+", "").replaceAll("} *}+", "");
+                    
+                    System.out.println("values: " + values);
                     
                     //every sub array is now seperated by these two characters
                     String[] subArrys = values.split("\\},");
@@ -408,6 +410,9 @@ public class CBMC_Result extends Result {
 
                                     if (wrapper.getMainIndex() == mainIndex) {
                                         wrapper.addTo(i, j, Long.parseLong(subValues[j], 2));
+                                        
+                                        System.out.println("added at" + i + " | " + j);
+                                        
                                         added = true;
                                     }
                                 }
