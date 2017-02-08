@@ -1,48 +1,48 @@
-windowTitle : Eigenschafteneditor
-symbolicVariablesLabel : Symbolische Variablen
-preProperties : Vorbedingungen
-postProperties : Nachbedingungen
-add : Hinzufügen
-remove : Entfernen
-voter : Wähler
-candidate : Kandidat
-seat : Sitz
-saveChanges : Änderungen an '
-save : ' speichern?
-yesOption : Ja
-noOption : Nein
-cancelOption : Abbrechen
-openDialogTitleText : Eigenschaften Öffnen
-saveDialogTitleText : Eigenschaften Speichern
-lookInLabelText : Suchen in:
-openButtonText : Öffnen
-cancelButtonText : Abbrechen
-fileNameLabelText : Dateiname
-filesOfTypeLabelText : Dateityp
-openApproveButtonToolTipText : Öffnen
-openApproveButtonText : Öffnen
-saveApproveButtonToolTipText : Speichern
-saveApproveButtonText : Speichern
-ancelButtonToolTipText : Abbrechen
-fileNameHeaderText : Dateiname
-upFolderToolTipText : Eine Ebene höher
+windowTitle : Property editor
+symbolicVariablesLabel : Symbolic variables
+preProperties : Pre-conditions
+postProperties : Post-conditions
+add : Add
+remove : Remove
+voter : Voter
+candidate : Candidate
+seat : Seat
+saveChanges : Changes to '
+save : save '?
+yesOption : Yes
+noOption : No
+cancelOption : Cancel
+openDialogTitleText : Open properties
+saveDialogTitleText : Save properties
+lookInLabelText : Save in:
+openButtonText : Open
+cancelButtonText : Cancel
+fileNameLabelText : Filename
+filesOfTypeLabelText : File type
+openApproveButtonToolTipText : Open
+openApproveButtonText : Open
+saveApproveButtonToolTipText : Save
+saveApproveButtonText : Save
+ancelButtonToolTipText : Cancel
+fileNameHeaderText : Filename
+upFolderToolTipText : Up one level
 homeFolderToolTipText : Home
-newFolderToolTipText : Neuen Ordner erstellen
-listViewButtonToolTipText : Listen Ansicht
-newFolderButtonText : Neuen Ordner erstellen
-renameFileButtonText : Umbennen
-deleteFileButtonText : Löschen
-filterLabelText : Dateityp
+newFolderToolTipText : Create new folder
+listViewButtonToolTipText : List view
+newFolderButtonText : Create new folder
+renameFileButtonText : Rename
+deleteFileButtonText : Delete
+filterLabelText : File type
 detailsViewButtonToolTipText : Details
-fileSizeHeaderText : Größe
-fileDateHeaderText : Zuletzt modifiziert
+fileSizeHeaderText : Size
+fileDateHeaderText : Last modified
 fileApproveRegex : (.)+\.props
-fileDescription : BEAST-Eigenschaften-Datei (*.props)
-objectCouldNotBeConvertedToString : Eigenschaften konnten nicht in einen String zum speichern konvertiert werden.
-objectCouldNotBeSavedError : Eigenschaften konnten nicht gespeichert werden.
-inputOutputErrorOpen : Fehler beim einlesen der Datei (Wahrscheinlich existiert sie nicht).
-invalidFileFormatErrorMessage : Die gegebene Datei enthält kein gültiges BEAST-Eigenschaften-Format.
-wrongEncodingError : Das Projekt enthält falsch kodierte Zeichen.
-inputOutputErrorSave : Das Verzeichnis in dem gespeichert werden soll existiert nicht.
-wrongFileNameError : Der angegebene Name entspricht nicht dem regulären Ausdruck '^[^*&%\s]+$'.
+fileDescription : BEAST-Property-File (*.props)
+objectCouldNotBeConvertedToString : Was not able to convert properties into a string to save.
+objectCouldNotBeSavedError : Properties couldn't be saved.
+inputOutputErrorOpen : Error while reading the file (probably it doesn't exist).
+invalidFileFormatErrorMessage : The given file is not of a valid BEAST-Property-Format.
+wrongEncodingError : The project contains wrong encoded characters.
+inputOutputErrorSave : The folder, in which you want to save, does not exist.
+wrongFileNameError : The given name does not correspond to the regular expression '^[^*&%\s]+$'.
 fileSuffix : .props

@@ -1,12 +1,12 @@
-error : Fehler
-antlr_descr : Ein Fehler ist beim Parsen aufgetreten
-var_not_decl_descr : Variable VAR ist nicht deklariert
-too_many_vars_passed_descr : Es wurden zu viele Variablen übergeben. VAR kann nicht mehr übergeben werden.
-wrong_var_type_passed_descr : Die übergebene Variable VAR hat falschen Typ. Benötigt wird Typ EXPECTEDTYPE, übergeben wurde GIVENTYPE.
-incomparable_types_descr : Die Variablen LHSVAR und RHSVAR können nicht verglichen werden.
-incomparable_list_sizes_descr : Die beiden Verglichenen Ausdrücke haben unterschiedliche Listentiefen, LHSDEPTH und RHSDEPTH.
-wrong_var_passed_to_votesum_descr : VOTE_SUM_FOR_CANDIDATE erwartet eine Variable vom Typ Wähler. Übergeben wurde VAR vom Typ GIVENTYPE.
-line : Zeile
-char : Zeichen
-preProps : Vorbedingungen
-postProps : Nachbedingungen
+error : Error
+antlr_descr : An error occured while parsing
+var_not_decl_descr : Variable VAR was not declared
+too_many_vars_passed_descr : You passed to many variables. Wasn't able to pass VAR as well.
+wrong_var_type_passed_descr : The passed variable VAR has the wrong type. You need Type EXPECTEDTYPE, but you passed GIVENTYPE.
+incomparable_types_descr : The variables LHSVAR and RHSVAR couldn't be compared.
+incomparable_list_sizes_descr : The two compared expressions belong to different list levels, LHSDEPTH and RHSDEPTH.
+wrong_var_passed_to_votesum_descr : VOTE_SUM_FOR_CANDIDATE expects a variable of type voter. You passed VAR of type GIVENTYPE.
+line : Line
+char : Character
+preProps : Pre-conditions
+postProps : Post-conditions

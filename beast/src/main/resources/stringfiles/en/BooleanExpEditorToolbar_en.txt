@@ -1,9 +1,9 @@
-new : Neue Eigenschaft
-load : Öffnen
-save : Speichern
-save_as : Speichern unter
-undo : Rückgängig
-redo : Wiederholen
-copy : Kopieren
-cut : Ausschneiden
-paste : Einfügen
+new : New property
+load : Open
+save : Save
+save_as : Save as
+undo : Undo
+redo : Redo
+copy : Copy
+cut : Cut
+paste : Paste

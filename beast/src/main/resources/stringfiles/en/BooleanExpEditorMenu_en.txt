@@ -1,16 +1,16 @@
-fileMenu : Datei
-new : Neue Eigenschaft
-load : Öffnen
-save : Speichern
-save_as : Speichern unter
-editMenu : Bearbeiten
-undo : Rückgängig
-redo : Wiederholen
-copy : Kopieren
-cut : Ausschneiden
-paste : Einfügen
+fileMenu : File
+new : New property
+load : Open
+save : Save
+save_as : Save as
+editMenu : Edit
+undo : Undo
+redo : Redo
+copy : Copy
+cut : Cut
+paste : Paste
 editorMenu : Editor
-options : Einstellungen
+options : Options
 makroMenu : Makros
 forAllVoters : FOR_ALL_VOTERS()
 forAllCandidates : FOR_ALL_CANDIDATES()
@@ -19,9 +19,9 @@ existsOneVoter : EXISTS_ONE_VOTER()
 existsOneCandidate : EXISTS_ONE_CANDIDATE()
 existsOneSeat : EXISTS_ONE_SEAT()
 sumVotesForCandidate : SUM_VOTES_FOR_CANDIDATE()
-constantsMenu : Konstanten
-numberOfVoters : Anzahl der Wähler (V)
-numberOfCandidates : Anzahl der Kandidaten (C)
-numberOfSeats : Anzahl vorhandener Sitze (S)
+constantsMenu : Constants
+numberOfVoters : Number of voters (V)
+numberOfCandidates : Number of candidates (C)
+numberOfSeats : Number of seats (S)
 codeMenu : Code
-staticAnalysis : Statische Analyse
+staticAnalysis : Static analysis
