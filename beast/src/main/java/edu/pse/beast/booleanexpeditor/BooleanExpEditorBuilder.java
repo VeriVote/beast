@@ -128,6 +128,9 @@ public class BooleanExpEditorBuilder{
         UserAction copy = createCopyUserAction(editor);
         UserAction cut = createCutUserAction(editor);
         UserAction paste = createPasteUserAction(editor);
+        
+     
+        
         editList.add(createFromUserAction(undo));
         editList.add(createFromUserAction(redo));
         editList.add(createFromUserAction(copy));
@@ -207,6 +210,12 @@ public class BooleanExpEditorBuilder{
         created[7] = createFromUserAction(cut);
         created[8] = createFromUserAction(paste);
 
+        editor.addUserAction('n', newProps);
+        editor.addUserAction('s', save);
+        editor.addUserAction('o', load);
+        editor.addUserAction('c', copy);
+        editor.addUserAction('x', cut);
+        editor.addUserAction('v', paste);
         return created;
     }
 

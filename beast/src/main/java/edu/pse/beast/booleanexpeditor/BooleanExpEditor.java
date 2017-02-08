@@ -20,6 +20,7 @@ import edu.pse.beast.toolbox.FileChooser;
 import edu.pse.beast.toolbox.MenuBarHandler;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import edu.pse.beast.toolbox.ToolbarHandler;
+import edu.pse.beast.toolbox.UserAction;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionBaseListener;
 
 import javax.swing.*;
@@ -49,7 +50,8 @@ public class BooleanExpEditor {
     private boolean loadedFromPropertyList;
     private final FileChooser fileChooser;
     private StringLoaderInterface stringLoaderInterface;
-
+    private ArrayList<UserAction> userActions = new ArrayList<>();
+    private ArrayList<Character> userActionChars = new ArrayList<>();
     /**
      * Temporary Constructor declaration to build BooleanExpEditor for Dummy-GUI
      * @param window BooleanExpEditorWindow object
@@ -160,7 +162,14 @@ public class BooleanExpEditor {
         prePropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(refs, window.getPrePropTextPane(),
                 window.getPrePropScrollPane(), symbolicVarListController.getSymbolicVariableList());
         postPropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(refs, window.getPostPropTextPane(),
-                window.getPostPropScrollPane(), symbolicVarListController.getSymbolicVariableList());        
+                window.getPostPropScrollPane(), symbolicVarListController.getSymbolicVariableList());     
+        
+        for (int i = 0; i < userActions.size(); i++) {
+            UserAction get = userActions.get(i);
+            char c = userActionChars.get(i);
+            prePropCodeArea.linkActionToShortcut(c, get);
+            postPropCodeArea.linkActionToShortcut(c, get);
+        }
                 
         cEditor.addListener(prePropCodeArea.getVariableErrorFinder());
         cEditor.addListener(postPropCodeArea.getVariableErrorFinder());
@@ -240,5 +249,10 @@ public class BooleanExpEditor {
         symbolicVarListController.updateStringRes(stringLoaderInterface);
         menuBarHandler.updateStringRes(stringLoaderInterface);
         toolBarHandler.updateStringRes(stringLoaderInterface);
+    }
+    
+    public void addUserAction(char c, UserAction ac) {
+        userActions.add(ac);
+        userActionChars.add(c);
     }
 }
