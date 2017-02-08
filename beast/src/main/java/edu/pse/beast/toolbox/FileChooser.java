@@ -20,6 +20,8 @@ public class FileChooser {
     private SaverLoader saverLoader;
     private String lastLoadedPath;
     boolean hasBeenSaved = false;
+    String fileSuffix;
+    Object[] options = {"OK"};
 
     public FileChooser (StringResourceLoader stringResourceLoader, SaverLoader saverLoader, Component component) {
         this.fileChooser = new JFileChooser();
@@ -52,25 +54,34 @@ public class FileChooser {
         fileChooser.setApproveButtonText("openApproveButtonText");
         if (fileChooser.showDialog(component, stringResourceLoader.getStringFromID("openDialogTitleText")) == JFileChooser.APPROVE_OPTION) {
             File file  = fileChooser.getSelectedFile();
-            System.out.println(file.toString());
             String path = file.getAbsolutePath();
             String content = "";
             try {
                 content = new String(Files.readAllBytes(file.toPath()));
             } catch (IOException e) {
-                JOptionPane.showConfirmDialog(component, stringResourceLoader.getStringFromID(
-                        "inputOutputErrorOpen"), "", JOptionPane.OK_OPTION);
+                JOptionPane.showOptionDialog(null,
+                        stringResourceLoader.getStringFromID( "inputOutputErrorOpen"),"",
+                        JOptionPane.PLAIN_MESSAGE,
+                        JOptionPane.ERROR_MESSAGE,
+                        null,
+                        options,
+                        options[0]);
                 return (showOpenDialog());
             }
             try {
                 Object outputObject = saverLoader.createFromSaveString(content);
-                System.out.println(path);
                 lastLoadedPath = path;
                 hasBeenSaved = true;
                 return outputObject;
             } catch (Exception e) {
-                JOptionPane.showConfirmDialog(component, stringResourceLoader.getStringFromID(
-                        "invalidFileFormatErrorMessage"), "", JOptionPane.OK_OPTION);
+                JOptionPane.showOptionDialog(null,
+                        stringResourceLoader.getStringFromID(
+                                "invalidFileFormatErrorMessage"),"",
+                        JOptionPane.PLAIN_MESSAGE,
+                        JOptionPane.ERROR_MESSAGE,
+                        null,
+                        options,
+                        options[0]);
                 return (showOpenDialog());
             }
         } else {
@@ -79,6 +90,19 @@ public class FileChooser {
     }
 
     private boolean saveToFile(Object object, String path) {
+        if (!fileChooser.getSelectedFile().getName().matches("[_a-zA-Z0-9\\-\\.]+")) {
+            JOptionPane.showOptionDialog(null,
+                    stringResourceLoader.getStringFromID("wrongFileNameError"),"",
+                    JOptionPane.PLAIN_MESSAGE,
+                    JOptionPane.ERROR_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
+            return false;
+        } else if (!fileChooser.getSelectedFile().getName().endsWith(fileSuffix)) {
+            path += stringResourceLoader.getStringFromID(
+                    "fileSuffix");
+        }
 
         String saveString = "";
         try {
@@ -93,12 +117,24 @@ public class FileChooser {
             out = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream(file), "UTF-8"));
         } catch (UnsupportedEncodingException e) {
-            JOptionPane.showConfirmDialog(component, stringResourceLoader.getStringFromID(
-                    "wrongEncodingError"), "", JOptionPane.OK_OPTION);
+            JOptionPane.showOptionDialog(null,
+                    stringResourceLoader.getStringFromID(
+                            "wrongEncodingError"),"",
+                    JOptionPane.PLAIN_MESSAGE,
+                    JOptionPane.ERROR_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
             return false;
         } catch (FileNotFoundException e) {
-            JOptionPane.showConfirmDialog(component, stringResourceLoader.getStringFromID(
-                    "inputOutputErrorSave"), "", JOptionPane.OK_OPTION);
+            JOptionPane.showOptionDialog(null,
+                    stringResourceLoader.getStringFromID(
+                            "inputOutputErrorSave"),"",
+                    JOptionPane.PLAIN_MESSAGE,
+                    JOptionPane.ERROR_MESSAGE,
+                    null,
+                    options,
+                    options[0]);
             return false;
         }
 
@@ -106,19 +142,30 @@ public class FileChooser {
             try {
                 out.write(saveString);
             } catch (IOException e) {
-                JOptionPane.showConfirmDialog(component, stringResourceLoader.getStringFromID(
-                        "objectCouldNotBeSavedError"), "", JOptionPane.OK_OPTION);
+                JOptionPane.showOptionDialog(null,
+                        stringResourceLoader.getStringFromID(
+                                "objectCouldNotBeSavedError"),"",
+                        JOptionPane.PLAIN_MESSAGE,
+                        JOptionPane.ERROR_MESSAGE,
+                        null,
+                        options,
+                        options[0]);
                 return false;
             }
         } finally {
             try {
                 out.close();
-                System.out.println("Wrote to file: " + path);
                 lastLoadedPath = path;
                 return true;
             } catch (IOException e) {
-                JOptionPane.showConfirmDialog(component, stringResourceLoader.getStringFromID(
-                        "objectCouldNotBeSavedError"), "", JOptionPane.OK_OPTION);
+                JOptionPane.showOptionDialog(null,
+                        stringResourceLoader.getStringFromID(
+                                "objectCouldNotBeSavedError"),"",
+                        JOptionPane.PLAIN_MESSAGE,
+                        JOptionPane.ERROR_MESSAGE,
+                        null,
+                        options,
+                        options[0]);
                 return false;
             }
         }
@@ -161,6 +208,7 @@ public class FileChooser {
             }
         });
         fileChooser.setAcceptAllFileFilterUsed(false);
+        fileSuffix = stringResourceLoader.getStringFromID("fileSuffix");
     }
 
     public void setHasBeenSaved(boolean bool) {
