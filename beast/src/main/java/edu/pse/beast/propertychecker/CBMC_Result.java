@@ -309,7 +309,7 @@ public class CBMC_Result extends Result {
         // number. Also, the next character has to be an equals sign
         Pattern votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+\\]\\[[0-9]+\\])(=.*)");
 
-        Pattern segmentEnder = Pattern.compile("----------------------------------------------------");
+        Pattern segmentEnder = Pattern.compile("------------------------------------------------");
 
         Iterator<String> iterator = getResult().iterator();
         String line = mergeLinesToOne(iterator, segmentEnder);

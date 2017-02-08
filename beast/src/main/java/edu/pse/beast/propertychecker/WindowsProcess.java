@@ -29,7 +29,8 @@ public class WindowsProcess extends CBMCProcess {
     private long waitingTimeForTermination = 3000;
 
     private final String relativePathToVScmd = "/windows/VsDevCmd.bat";
-    private final String relativePathToCBMC  = "/windows/cbmcWIN/cbmc.exe";
+    private final String relativePathToCBMC32  = "/windows/cbmcWIN/cbmc.exe";
+    private final String relativePathToCBMC64  = "/windows/cbmcWIN/cbmc64.exe";
     
     
     public WindowsProcess(int voters, int candidates, int seats, String advanced, File toCheck, CheckerFactory parent) {
@@ -61,8 +62,24 @@ public class WindowsProcess extends CBMCProcess {
         if (vsCmd == null) {
             ErrorLogger.log("Cant find the VScmd. Is it installed correctly?");
         }
+        
+        //determine the os architecture
+        boolean is64bit = false;
+        if (System.getProperty("os.name").contains("Windows")) {
+        	//only 64 bit windows contains this variable
+            is64bit = (System.getenv("ProgramFiles(x86)") != null);
+        } else {
+            ErrorLogger.log("The Windows procedure to call cbmc was used, even though this operating system isn't Windows!");
+        }
+        
+        String cbmcEXE  ="";
+        
+        if (is64bit) {
+        	cbmcEXE = new File(SuperFolderFinder.getSuperFolder() +  relativePathToCBMC64).getPath();
+        } else {
+        	cbmcEXE = new File(SuperFolderFinder.getSuperFolder() +  relativePathToCBMC32).getPath();     
+        }
 
-        String cbmcEXE = new File(SuperFolderFinder.getSuperFolder() +  relativePathToCBMC).getPath();
         
         // because windows is weird the whole call that would get placed inside
         // VScmd has to be in one giant string
