@@ -304,10 +304,7 @@ public class CBMC_Result extends Result {
 
         List<CBMC_Result_Wrapper_multiArray> list = new ArrayList<CBMC_Result_Wrapper_multiArray>();
 
-        // this pattern searches for words of the form
-        // "votesNUMBER[NUMBER][NUMBER]" where "NUMBER" can by any positive
-        // number. Also, the next character has to be an equals sign
-        Pattern votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+\\]\\[[0-9]+\\])(=.*)");
+        Pattern votesExtractor = null;
 
         Iterator<String> iterator = getResult().iterator();
         String line = mergeLinesToOne(iterator, segmentEnder);
@@ -322,6 +319,11 @@ public class CBMC_Result extends Result {
             
             if (line.contains("[")) {
 
+            	// this pattern searches for words of the form
+            	// "votesNUMBER[NUMBER][NUMBER]" where "NUMBER" can by any positive
+            	// number. Also, the next character has to be an equals sign
+            	votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+\\]\\[[0-9]+\\])(=.*)");
+            	
                 Matcher votesMatcher = votesExtractor.matcher(line);
 
                 if (votesMatcher.find()) {
@@ -372,6 +374,7 @@ public class CBMC_Result extends Result {
                 // Pattern votesExtractor = Pattern.compile("(\\b" + name +
                 // "[0-9]+])(=\\{.*)");
 
+            	// votesNUMBER={....}
                 votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+)(=\\{.*)");
 
                 Matcher votesMatcher = votesExtractor.matcher(line);
@@ -384,6 +387,8 @@ public class CBMC_Result extends Result {
 
                     String values = line.split("\\(")[1].split("\\)")[0];
 
+                    
+                    
                     // strip away whitespaces and the double braces that
                     // represent
                     // the whole array
