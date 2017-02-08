@@ -1,6 +1,7 @@
 package edu.pse.beast.propertylist.View;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
@@ -8,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -38,7 +40,7 @@ public class ResultPresenterWindow extends JFrame {
 	public ResultPresenterWindow(StringLoaderInterface sli) {
 		PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
 		srl = provider.getOtherStringRes();
-		this.setUndecorated(true);
+		
 		this.setVisible(false);
 		init();
 	}
@@ -49,7 +51,9 @@ public class ResultPresenterWindow extends JFrame {
 	
 	private void init() {
 		this.setLayout(new BorderLayout());
-		
+		this.setUndecorated(true);
+		getRootPane().setBorder(BorderFactory.createMatteBorder(2,2,2,2, Color.GRAY));
+		this.setResizable(true);
 		setBounds(0, 0, 400, 400);
 		
 		Dimension iconSize = new Dimension(80,40);
@@ -71,7 +75,8 @@ public class ResultPresenterWindow extends JFrame {
 		result.setText(srl.getStringFromID("noResultYet"));
 		getContentPane().add(result, BorderLayout.CENTER);
 		
-		JScrollPane jsp = new JScrollPane(result, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		JScrollPane jsp = new JScrollPane(result, 
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.add(jsp);
 		
 		export = new JButton();
@@ -87,6 +92,7 @@ public class ResultPresenterWindow extends JFrame {
 		});
 		getContentPane().add(export, BorderLayout.PAGE_END);
 		
+		pack();
 	}
 	
 	private void appendPane(String text) {
@@ -150,16 +156,24 @@ public class ResultPresenterWindow extends JFrame {
 		erasePane();
 		//appendPane("The election fulfills this property.");
 		appendPane(srl.getStringFromID("successMessage"));
+		packFrame();
 	}
 	public void presentTimeOut() {
 		erasePane();
 		//appendPane("The analysis was timed out.");
 		appendPane(srl.getStringFromID("timeoutMessage"));
 	}
-        public void resetResult()  {
-                erasePane();
-		result.setText(srl.getStringFromID("noResultYet"));
-        }
 	
+    public void resetResult()  {
+        erasePane();
+		result.setText(srl.getStringFromID("noResultYet"));
+    }
+    
+    private void packFrame() {
+    	getRootPane().setBorder(BorderFactory.createMatteBorder(2,2,2,2, showResult.getBackground()));
+    	pack();
+    }
+	
+   
 	
 }

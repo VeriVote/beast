@@ -100,7 +100,8 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 				panel.add(item, BorderLayout.CENTER);
 			}
 		}
-		JScrollPane jsp = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		JScrollPane jsp = new JScrollPane(panel, 
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.add(jsp);
 		
 		endpanel = new JPanel();
