@@ -10,6 +10,7 @@ import edu.pse.beast.toolbox.SortedIntegerList;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTextPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
@@ -22,17 +23,16 @@ import javax.swing.text.StyledDocument;
 public class LockedLinesHandler implements DocumentListener {
     
     private SortedIntegerList lockedLines = new SortedIntegerList();
-    private LineHandler lineHandler;
     private StyledDocument doc;
+    private JTextPane pane;
     private SaveTextBeforeRemove saveBeforeRemove;
     private ArrayList<LockedLinesListener> listeners = new ArrayList<>();
     
-    public LockedLinesHandler(StyledDocument doc,
-            LineHandler lineHandler,
+    public LockedLinesHandler(JTextPane pane,
             SaveTextBeforeRemove saveBeforeRemove) {
-        this.doc = doc;
+        this.pane = pane;
+        this.doc = pane.getStyledDocument();
         doc.addDocumentListener(this);
-        this.lineHandler = lineHandler;
         this.saveBeforeRemove = saveBeforeRemove;
     }
 
@@ -70,7 +70,7 @@ public class LockedLinesHandler implements DocumentListener {
                     amtNewline++;
                 }
             }
-            int firstLineAffected = lineHandler.transformToLineNumber(de.getOffset());  
+            int firstLineAffected = JTextPaneToolbox.transformToLineNumber(pane, de.getOffset());  
             if(lockedLines.contains(firstLineAffected) && 
                     doc.getText(de.getOffset() + 1, 1).equals("\n") && 
                     !doc.getText(de.getOffset()-1, 1).equals("\n")) {
@@ -92,7 +92,6 @@ public class LockedLinesHandler implements DocumentListener {
         } catch (BadLocationException ex) {
             Logger.getLogger(LockedLinesHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println(toString());
     }
     
     @Override
@@ -106,7 +105,7 @@ public class LockedLinesHandler implements DocumentListener {
                 amtNewline++;
             }
         }
-        int firstLineAffected = lineHandler.transformToLineNumber(de.getOffset() + de.getLength(), saveBeforeRemove.getPrevText());
+        int firstLineAffected = JTextPaneToolbox.transformToLineNumber(saveBeforeRemove.getPrevText(), de.getOffset() + de.getLength());
 
         lockedLines.subtractIfBigger(
                 firstLineAffected - 1,
@@ -122,7 +121,6 @@ public class LockedLinesHandler implements DocumentListener {
                 l.lockedLine(lockedLines.get(i));
             }
         }
-        System.out.println(toString());
     }
 
     @Override
