@@ -34,9 +34,9 @@ public class CBMC_Result extends Result {
         } else if (isSuccess()) {
             presenter.presentSuccess();
         } else {
-            presenter.presentFailureExample(failureExample);
+            
 
-            boolean debug = false;
+            boolean debug = true;
 
             if (debug) {
 
@@ -73,6 +73,7 @@ public class CBMC_Result extends Result {
                 // presenter.presentFailureExample(createFailureExample());
 
                 System.out.println("total time: " + (System.currentTimeMillis() - time));
+                presenter.presentFailureExample(failureExample);
             }
         }
     }

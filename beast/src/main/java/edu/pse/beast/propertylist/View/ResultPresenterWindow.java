@@ -55,6 +55,7 @@ public class ResultPresenterWindow extends JFrame {
 		getRootPane().setBorder(BorderFactory.createMatteBorder(2,2,2,2, Color.GRAY));
 		this.setResizable(true);
 		setBounds(0, 0, 400, 400);
+		//setMaximumSize(new Dimension(100, 100));
 		
 		Dimension iconSize = new Dimension(80,40);
 		

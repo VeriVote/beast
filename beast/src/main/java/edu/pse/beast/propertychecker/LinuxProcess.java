@@ -46,7 +46,7 @@ public class LinuxProcess extends CBMCProcess {
         
         arguments.add("-D S=" + seats);
 
-        arguments.add("--trace");
+    //    arguments.add("--trace");
         
         for (int i = 5; i < argumentsToPass.length; i++) {
             String sanitized = sanitizeArguments(advanced.split(";")[i - 5]);
