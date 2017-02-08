@@ -389,7 +389,6 @@ public class CBMC_Result extends Result {
                     // also remove all opening braces
                     values = values.replaceAll(" +", "").replaceAll("\\{+", "").replaceAll("} *}+", "");
                     
-                    System.out.println("values: " + values);
                     
                     //every sub array is now seperated by these two characters
                     String[] subArrys = values.split("\\},");
@@ -410,8 +409,6 @@ public class CBMC_Result extends Result {
 
                                     if (wrapper.getMainIndex() == mainIndex) {
                                         wrapper.addTo(i, j, Long.parseLong(subValues[j], 2));
-                                        
-                                        System.out.println("added at" + i + " | " + j);
                                         
                                         added = true;
                                     }
