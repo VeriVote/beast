@@ -47,6 +47,8 @@ public class PostAndPrePropertiesDescriptionSaverLoaderTest {
      */
     @Test
     public void testCreateSaveString() throws Exception {
+        PostAndPrePropertiesDescriptionSaverLoader postAndPrePropertiesDescriptionSaverLoader =
+                new PostAndPrePropertiesDescriptionSaverLoader();
         FormalPropertiesDescription pre = new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
         FormalPropertiesDescription post = new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
         SymbolicVariableList list = new SymbolicVariableList();
@@ -55,7 +57,7 @@ public class PostAndPrePropertiesDescriptionSaverLoaderTest {
         list.addSymbolicVariable("cand", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
         list.addSymbolicVariable("s", new InternalTypeContainer(InternalTypeRep.SEAT));
         PostAndPrePropertiesDescription description = new PostAndPrePropertiesDescription("postAndPre", pre, post, list);
-        String save = PostAndPrePropertiesDescriptionSaverLoader.createSaveString(description);
+        String save = postAndPrePropertiesDescriptionSaverLoader.createSaveString(description);
         System.out.println(save);
     }
 
@@ -64,6 +66,8 @@ public class PostAndPrePropertiesDescriptionSaverLoaderTest {
      */
     @Test
     public void testCreateFromSaveString() throws Exception {
+        PostAndPrePropertiesDescriptionSaverLoader postAndPrePropertiesDescriptionSaverLoader =
+                new PostAndPrePropertiesDescriptionSaverLoader();
         FormalPropertiesDescription pre = new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
         FormalPropertiesDescription post = new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
         SymbolicVariableList list = new SymbolicVariableList();
@@ -72,8 +76,9 @@ public class PostAndPrePropertiesDescriptionSaverLoaderTest {
         list.addSymbolicVariable("cand", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
         list.addSymbolicVariable("s", new InternalTypeContainer(InternalTypeRep.SEAT));
         PostAndPrePropertiesDescription description = new PostAndPrePropertiesDescription("postAndPre", pre, post, list);
-        String save = PostAndPrePropertiesDescriptionSaverLoader.createSaveString(description);
-        PostAndPrePropertiesDescription loaded = PostAndPrePropertiesDescriptionSaverLoader.createFromSaveString(save);
+        String save = postAndPrePropertiesDescriptionSaverLoader.createSaveString(description);
+        PostAndPrePropertiesDescription loaded = (PostAndPrePropertiesDescription)
+                postAndPrePropertiesDescriptionSaverLoader.createFromSaveString(save);
         System.out.println(loaded.getName());
         System.out.println(loaded.getSymbolicVariableList().get(3).getId());
     }

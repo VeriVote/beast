@@ -16,6 +16,9 @@ import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescriptionChangeListener;
 import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
+import edu.pse.beast.stringresource.StringLoaderInterface;
+import edu.pse.beast.toolbox.FileChooser;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,16 +39,26 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     private ErrorWindow errorWindow;
     private SaveBeforeChangeHandler saveBeforeChangeHandler;
     private ArrayList<ElectionDescriptionChangeListener> descriptionChangeListeners = new ArrayList<>();
-    
+    private CElectionEditorMenubarHandler menubarHandler;
+    private CElectionEditorToolbarHandler toolbarHandler;
+    private StringLoaderInterface stringLoaderInterface;
+    private FileChooser fileChooser;
+
     public CElectionDescriptionEditor(
             CElectionCodeArea codeArea,
             CCodeEditorGUI gui,            
-            CElectionCodeAreaBuilder builder, ErrorWindow errorWindow, SaveBeforeChangeHandler saveBeforeChangeHandler) {
+            CElectionCodeAreaBuilder builder,
+            ErrorWindow errorWindow,
+            SaveBeforeChangeHandler saveBeforeChangeHandler,
+            StringLoaderInterface stringLoaderInterface,
+            FileChooser fileChooser) {
         this.codeArea = codeArea;
         this.gui = gui;
         this.builder = builder;
         this.errorWindow = errorWindow;
         this.saveBeforeChangeHandler = saveBeforeChangeHandler;
+        this.stringLoaderInterface = stringLoaderInterface;
+        this.fileChooser = fileChooser;
     }
 
     @Override
@@ -83,7 +96,23 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         for(ElectionDescriptionChangeListener l : descriptionChangeListeners) 
             l.outputChanged(cont);
     }
-        
+
+    public void setcElectionEditorMenubarHandler(CElectionEditorMenubarHandler cElectionEditorMenubarHandler) {
+        this.menubarHandler = cElectionEditorMenubarHandler;
+    }
+
+    public void setcElectionEditorToolbarHandler(CElectionEditorToolbarHandler cElectionEditorToolbarHandler) {
+        this.toolbarHandler = cElectionEditorToolbarHandler;
+    }
+
+    public CElectionEditorMenubarHandler getcElectionEditorMenubarHandler() {
+        return menubarHandler;
+    }
+
+    public CElectionEditorToolbarHandler getcElectionEditorToolbarHandler() {
+        return toolbarHandler;
+    }
+
     @Override
     public boolean isCorrect() {
         return codeArea.getErrorCtrl().getErrorFinderList().getErrors().isEmpty();
@@ -108,6 +137,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     public boolean letUserEditElectionDescription(ElectionDescription description) throws BadLocationException {
         if (saveBeforeChangeHandler.ifHasChangedOpenDialog(currentDescription.getName())) {
             loadElectionDescription(description);
+            fileChooser.setHasBeenSaved(true);
             return true;
         } else {
             return false;
@@ -115,6 +145,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     }
 
     public void loadElectionDescription(ElectionDescription description) throws BadLocationException {
+        this.currentDescription = description;
         gui.setNewCodeArea();
         codeArea = builder.createCElectionCodeArea(gui.getCodeArea(),
                 gui.getCodeAreaScrollPane(),
@@ -122,7 +153,6 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         codeArea.letUserEditCode(description.getCode());
         codeArea.lockLine(description.getVotingDeclLine());
         codeArea.lockLine(description.getCode().size() - 1);
-        this.currentDescription = description;
         saveBeforeChangeHandler.addNewTextPane(codeArea.getPane());
         gui.setWindowTitle(description.getName());
         for(ElectionDescriptionChangeListener l : descriptionChangeListeners) {
@@ -130,7 +160,6 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
             l.outputChanged(description.getOutputType());
         }
         findErrorsAndDisplayThem();
-        saveBeforeChangeHandler.setHasBeensaved(false);
     }
 
     /**
@@ -165,4 +194,18 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         gui.setVisible(vis);
     }
 
+    public FileChooser getFileChooser() {
+        return fileChooser;
+    }
+
+    public void updateStringIf(StringLoaderInterface stringLoaderInterface) {
+        this.stringLoaderInterface = stringLoaderInterface;
+        gui.updateStringRes(stringLoaderInterface);
+        menubarHandler.updateStringRes(stringLoaderInterface);
+        toolbarHandler.updateStringRes(stringLoaderInterface);
+    }
+
+    public StringLoaderInterface getStringInterface() {
+        return this.stringLoaderInterface;
+    }
 }

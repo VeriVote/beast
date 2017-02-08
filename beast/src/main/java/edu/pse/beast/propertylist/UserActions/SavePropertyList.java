@@ -17,14 +17,9 @@ public class SavePropertyList extends UserAction {
 
     @Override
     public void perform() {
-        if (controller.getSaveBeforeChangeHandler().getSaveLocation() != null) { // if it has been saved already
-            // save the file with given filename
-            // controller.getSaveBeforeChangeHandler().setSaveLocation, changedSinceSave(false)
-        } else {
-            SaveAsPropertyList spl = new SaveAsPropertyList(controller);
-            spl.perform();
+        if (controller.getFileChooser().saveObject(controller.getModel(), false)) {
+            controller.getSaveBeforeChangeHandler().setChangedSinceSave(false);
         }
-
     }
 
 }

@@ -12,4 +12,3 @@ showHideWindowsMenu : Fenster
 showPropertyList : Eigenschaftenliste anzeigen/ausblenden
 showBooleanExpEditor : Eigenschafteneditor anzeigen/ausblenden
 showCElectionEditor : C-Editor anzeigen/ausblenden
-

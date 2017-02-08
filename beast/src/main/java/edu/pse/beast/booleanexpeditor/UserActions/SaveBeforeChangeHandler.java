@@ -1,6 +1,5 @@
 package edu.pse.beast.booleanexpeditor.UserActions;
 
-import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.booleanexpeditor.BooleanExpEditorWindow;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
@@ -20,7 +19,6 @@ public class SaveBeforeChangeHandler {
     private JTextPane postPane;
     private BooleanExpEditorWindow booleanExpEditorWindow;
     private SavePropsUserAction savePropsUserAction;
-    private boolean hasBeensaved;
 
     /**
      * Constructor
@@ -77,21 +75,6 @@ public class SaveBeforeChangeHandler {
             }
         }
         return true;
-    }
-
-    /**
-     * @return true if the currently loaded PostAndPrePropertiesDescription object has already been saved
-     */
-    public boolean hasBeenSaved() {
-        return hasBeensaved;
-    }
-
-    /**
-     * Setter for hasBeensaved
-     * Changed if a loaded PostAndPreProperties object gets saved, or a new object is loaded.
-     */
-    public void setHasBeensaved(boolean newValue) {
-        hasBeensaved = newValue;
     }
 
     /**

@@ -45,6 +45,7 @@ public class ElectionDescriptionSaverLoaderTest {
         ElectionTemplateHandler electionTemplateHandler = new ElectionTemplateHandler();
         ElectionTypeContainer inputType = electionTemplateHandler.getById("list_of_integer_vals_per_voter");
         ElectionTypeContainer outputType = electionTemplateHandler.getById("one_candidate_or_zero");
+        ElectionDescriptionSaverLoader electionDescriptionSaverLoader = new ElectionDescriptionSaverLoader();
 
         ElectionDescription electionDescription = new ElectionDescription("testDescription", inputType, outputType, 2);
         ArrayList<String> code = new ArrayList<String>();
@@ -52,7 +53,7 @@ public class ElectionDescriptionSaverLoaderTest {
         code.add("sdkofgdfg\n");
         electionDescription.setCode(code);
 
-        System.out.println(ElectionDescriptionSaverLoader.createSaveString(electionDescription));
+        System.out.println(electionDescriptionSaverLoader.createSaveString(electionDescription));
     }
 
     /**
@@ -63,14 +64,16 @@ public class ElectionDescriptionSaverLoaderTest {
         ElectionTemplateHandler electionTemplateHandler = new ElectionTemplateHandler();
         ElectionTypeContainer inputType = electionTemplateHandler.getById("list_of_integer_vals_per_voter");
         ElectionTypeContainer outputType = electionTemplateHandler.getById("one_candidate_or_zero");
+        ElectionDescriptionSaverLoader electionDescriptionSaverLoader = new ElectionDescriptionSaverLoader();
 
         ElectionDescription electionDescription = new ElectionDescription("testDescription", inputType, outputType, 2);
         ArrayList<String> code = new ArrayList<String>();
         code.add("sdfgokdffg\n");
         code.add("sdkofgdfg\n");
         electionDescription.setCode(code);
-        ElectionDescription createdElectionDescription =
-                ElectionDescriptionSaverLoader.createFromSaveString(ElectionDescriptionSaverLoader.createSaveString(electionDescription));
+        ElectionDescription createdElectionDescription = (ElectionDescription)
+                electionDescriptionSaverLoader.createFromSaveString(
+                        electionDescriptionSaverLoader.createSaveString(electionDescription));
         System.out.println(electionDescription.getName());
         System.out.println(createdElectionDescription.getVotingDeclLine());
         System.out.println(createdElectionDescription.getCode());

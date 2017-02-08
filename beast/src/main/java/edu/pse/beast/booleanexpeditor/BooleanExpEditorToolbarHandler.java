@@ -33,7 +33,6 @@ public class BooleanExpEditorToolbarHandler extends ToolbarHandler implements Di
 
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
-        updateTooltips(
-                stringResIF.getBooleanExpEditorStringResProvider().getToolbarTipStringRes());
+        updateTooltips(stringResIF.getBooleanExpEditorStringResProvider().getToolbarTipStringRes());
     }
 }

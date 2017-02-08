@@ -12,22 +12,16 @@ import java.io.File;
  */
 public class SavePropsUserAction extends UserAction{
     private BooleanExpEditor booleanExpEditor;
-    private SaveAsPropsUserAction saveAsPropsUserAction;
 
-    public SavePropsUserAction(BooleanExpEditor booleanExpEditor, SaveAsPropsUserAction saveAsPropsUserAction) {
+    public SavePropsUserAction(BooleanExpEditor booleanExpEditor) {
         super("save");
         this.booleanExpEditor = booleanExpEditor;
-        this.saveAsPropsUserAction = saveAsPropsUserAction;
     }
 
     @Override
     public void perform() {
-        if (booleanExpEditor.getSaveBeforeChangeHandler().hasBeenSaved()) {
-            booleanExpEditor.updatePostAndPrePropObject();
+        if (booleanExpEditor.getFileChooser().saveObject(booleanExpEditor.getCurrentlyLoadedPostAndPreProp(), false)) {
             booleanExpEditor.getSaveBeforeChangeHandler().updatePreValues();
-            // TODO implement saving file
-        } else {
-            saveAsPropsUserAction.perform();
         }
     }
 }

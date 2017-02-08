@@ -25,23 +25,8 @@ public class SaveAsPropertyList extends UserAction {
 
     @Override
     public void perform() {
-        JFileChooser fc = new JFileChooser();
-        if (fc.showSaveDialog(controller.getView()) == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
-            // TODO save
-            // if success con.getsavebefore.setChanged(false)
-            XMLEncoder encoder;
-			try {
-				encoder = new XMLEncoder(new FileOutputStream(file));
-				encoder.writeObject(controller.getModel());
-	            encoder.close();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-            
+        if (controller.getFileChooser().saveObject(controller.getModel(), true)) {
+            controller.getSaveBeforeChangeHandler().setChangedSinceSave(false);
         }
-
     }
-
 }

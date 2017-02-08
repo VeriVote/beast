@@ -11,11 +11,11 @@ package edu.pse.beast.saverloader;
  */
 public class SaverLoaderInterface {
 
-    private final PropertyListSaverLoader propListSL = null;
-    private final ProjectSaverLoader projSL = null;
-    private final ElectionDescriptionSaverLoader electionDescrSL = null;
+    private final PropertyListSaverLoader propListSL = new PropertyListSaverLoader();
+    private final ProjectSaverLoader projSL = new ProjectSaverLoader();
+    private final ElectionDescriptionSaverLoader electionDescrSL = new ElectionDescriptionSaverLoader();
     private final SymbolicVarListSaverLoader symVarListSL = null;
-    private final PostAndPrePropertiesDescriptionSaverLoader propDescrSL = null;
+    private final PostAndPrePropertiesDescriptionSaverLoader propDescrSL = new PostAndPrePropertiesDescriptionSaverLoader();
     private final FormalPropertySaverLoader formalPropDescrSL = null;
     private final OptionsSaverLoaderInterface optSLI = null;
 
@@ -46,5 +46,4 @@ public class SaverLoaderInterface {
     public OptionsSaverLoaderInterface getOptionsSaverLoaderInterface() {
         return optSLI;
     }
-
 }

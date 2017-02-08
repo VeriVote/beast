@@ -10,8 +10,11 @@ import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.highlevel.CheckListener;
 import edu.pse.beast.highlevel.MainNotifier;
 import edu.pse.beast.highlevel.ProjectSource;
+import edu.pse.beast.toolbox.FileChooser;
 import edu.pse.beast.toolbox.ToolbarHandler;
 import edu.pse.beast.toolbox.MenuBarHandler;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionListener;
@@ -37,6 +40,9 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
     private ToolbarHandler toolbarHandler;
     private MenuBarHandler menuBarHandler;
     private boolean reacts;
+    private FileChooser fileChooser;
+    private boolean hasChanged;
+
     /**
      * Constructor which also links the handlers to the GUI elements
      * @param cElectionDescriptionEditor CElectionDescriptionEditor
@@ -45,10 +51,13 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
      */
     public ParameterEditor(
             CElectionDescriptionEditor cElectionDescriptionEditor,
-            PropertyList propertyList, ParameterEditorWindow window) {
+            PropertyList propertyList,
+            ParameterEditorWindow window,
+            FileChooser fileChooser) {
         this.cElectionDescriptionEditor = cElectionDescriptionEditor;
         this.propertyList = propertyList;
         this.window = window;
+        this.fileChooser = fileChooser;
         voterHandler = new MinMaxSpinValueHandler(window.getVoterMin(), window.getVoterMax());
         window.getVoterMin().addChangeListener(voterHandler);
         window.getVoterMax().addChangeListener(voterHandler);
@@ -93,7 +102,9 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
         timeoutHandler.setValue(param.getTimeout());
         processHandler.setValue(param.getProcesses());
         argumentHandler.setArgument(param.getArgument());
+        hasChanged = false;
     }
+
     /**
      * Starts check of the election by notifying the CheckListener
      */
@@ -138,6 +149,10 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public boolean hasChanged() {
+        return hasChanged();
+    }
+
     @Override
     public void saveProject(Project toBeSaved) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -177,5 +192,9 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
      */
     public boolean getReacts() {
         return reacts;
+    }
+
+    public FileChooser getFileChooser() {
+        return fileChooser;
     }
 }

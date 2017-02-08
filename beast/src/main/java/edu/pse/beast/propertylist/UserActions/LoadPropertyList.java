@@ -4,6 +4,8 @@ import java.io.File;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+
+import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.toolbox.UserAction;
 
@@ -35,12 +37,10 @@ public class LoadPropertyList extends UserAction {
             }
 
         }
-
-        JFileChooser fc = new JFileChooser();
-        if (fc.showOpenDialog(controller.getView()) == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
-            // TODO load the file
-            // setChanged to false und setSaveLocation auf file.getFileLoc
+        PLModel plModel = (PLModel) controller.getFileChooser().showOpenDialog();
+        if (plModel != null) {
+            controller.setPLModel(plModel);
+            controller.getSaveBeforeChangeHandler().setChangedSinceSave(false);
             controller.resetActionList();
         }
 

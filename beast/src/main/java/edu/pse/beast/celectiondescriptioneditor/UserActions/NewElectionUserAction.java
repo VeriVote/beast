@@ -23,31 +23,26 @@ import javax.swing.text.BadLocationException;
  *
  * @author Holger-Desktop
  */
-public class NewElectionUserAction extends UserAction implements DisplaysStringsToUser {
+public class NewElectionUserAction extends UserAction {
 
-    private SaveBeforeChangeHandler saveBeforeChangeHandler;
     private CElectionDescriptionEditor editor;
     private ElectionTemplateHandler templateHandler = new ElectionTemplateHandler();
-    private ElectionTemplateChooser electionTemplateDialog;
-    private StringResourceLoader currentLoader;
     private CCodeHelper cCodeHelper = new CCodeHelper();
     
     public NewElectionUserAction(
-            CElectionDescriptionEditor editor,
-            StringLoaderInterface stringResIF) {
+            CElectionDescriptionEditor editor) {
         super("new");
-        this.saveBeforeChangeHandler = editor.getSaveBeforeChangeHandler();
         this.editor = editor;
-        this.currentLoader = stringResIF.getCElectionEditorStringResProvider().getElectionStringRes();
     }
     
     @Override
     public void perform() {
-        if (saveBeforeChangeHandler.ifHasChangedOpenDialog(editor.getElectionDescription().getName())) {
-            electionTemplateDialog = new ElectionTemplateChooser(
+        if (editor.getSaveBeforeChangeHandler().ifHasChangedOpenDialog(editor.getElectionDescription().getName())) {
+            ElectionTemplateChooser electionTemplateDialog = new ElectionTemplateChooser(
                     this,
                     templateHandler,
-                    currentLoader, currentLoader.getStringFromID("emptyNameTextFieldError"));
+                    editor.getStringInterface().getCElectionEditorStringResProvider().getElectionStringRes(),
+                    editor.getStringInterface().getCElectionEditorStringResProvider().getElectionStringRes().getStringFromID("emptyNameTextFieldError"));
             electionTemplateDialog.setDefaultCloseOperation(ElectionTemplateChooser.DISPOSE_ON_CLOSE);
             electionTemplateDialog.setVisible(true);
         }
@@ -57,14 +52,11 @@ public class NewElectionUserAction extends UserAction implements DisplaysStrings
         try {
             ElectionDescription description = cCodeHelper.generateElectionDescription(
                     input, res, name, 
-                    templateHandler, currentLoader);
+                    templateHandler, editor.getStringInterface().getCElectionEditorStringResProvider().getElectionStringRes());
             editor.loadElectionDescription(description);
+            editor.getFileChooser().setHasBeenSaved(false);
         } catch (BadLocationException ex) {
             Logger.getLogger(NewElectionUserAction.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    @Override
-    public void updateStringRes(StringLoaderInterface stringResIF) {
     }
 }

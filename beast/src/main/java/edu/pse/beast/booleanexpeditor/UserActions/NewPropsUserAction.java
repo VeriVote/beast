@@ -12,7 +12,7 @@ import edu.pse.beast.toolbox.UserAction;
 public class NewPropsUserAction extends UserAction {
     private final BooleanExpEditor booleanExpEditor;
 
-    public NewPropsUserAction(BooleanExpEditor booleanExpEditor, SaveBeforeChangeHandler saveBeforeChangeHandler) {
+    public NewPropsUserAction(BooleanExpEditor booleanExpEditor) {
         super("new");
         this.booleanExpEditor = booleanExpEditor;
     }
@@ -27,6 +27,8 @@ public class NewPropsUserAction extends UserAction {
 
     @Override
     public void perform() {
-        booleanExpEditor.letUserEditPostAndPreProperties(createEmptyPostAndPropObject(), false);
+        if (booleanExpEditor.letUserEditPostAndPreProperties(createEmptyPostAndPropObject(), false)) {
+            booleanExpEditor.getFileChooser().setHasBeenSaved(false);
+        }
     }
 }

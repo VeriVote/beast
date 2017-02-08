@@ -45,8 +45,9 @@ public class ElectionCheckParameterSaverLoaderTest {
         ElectionCheckParameter electionCheckParameter = new ElectionCheckParameter(Arrays.asList(new Integer[]{1, 2}),
                 Arrays.asList(new Integer[]{1, 2}), Arrays.asList(new Integer[]{1, 2}), new TimeOut(TimeUnit.HOURS, (long) 3.2)
         ,4, "-- unwind 6");
+        ElectionCheckParameterSaverLoader electionCheckParameterSaverLoader = new ElectionCheckParameterSaverLoader();
 
-        System.out.println(ElectionCheckParameterSaverLoader.createSaveString(electionCheckParameter));
+        System.out.println(electionCheckParameterSaverLoader.createSaveString(electionCheckParameter));
     }
 
     /**
@@ -58,9 +59,11 @@ public class ElectionCheckParameterSaverLoaderTest {
                 Arrays.asList(new Integer[]{1, 2}), Arrays.asList(new Integer[]{1, 2}), new TimeOut(TimeUnit.HOURS, (long) 3.2)
                 ,4, "-- unwind 6");
         ElectionCheckParameter electionCheckParameter1;
+        ElectionCheckParameterSaverLoader electionCheckParameterSaverLoader = new ElectionCheckParameterSaverLoader();
 
-            electionCheckParameter1 =
-                    ElectionCheckParameterSaverLoader.createFromSaveString(ElectionCheckParameterSaverLoader.createSaveString(electionCheckParameter));
+        electionCheckParameter1 = (ElectionCheckParameter)
+                electionCheckParameterSaverLoader.createFromSaveString(
+                        electionCheckParameterSaverLoader.createSaveString(electionCheckParameter));
 
         System.out.println(electionCheckParameter1.getAmountCandidates());
         System.out.println(electionCheckParameter1.getAmountSeats());

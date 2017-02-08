@@ -3,10 +3,11 @@ package edu.pse.beast.parametereditor;
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.propertylist.PropertyList;
-import edu.pse.beast.toolbox.ObjectRefsForBuilder;
-import edu.pse.beast.toolbox.ActionIdAndListener;
-import edu.pse.beast.toolbox.ImageResourceProvider;
-import edu.pse.beast.toolbox.UserAction;
+import edu.pse.beast.saverloader.ProjectSaverLoader;
+import edu.pse.beast.saverloader.SaverLoader;
+import edu.pse.beast.stringresource.StringLoaderInterface;
+import edu.pse.beast.stringresource.StringResourceLoader;
+import edu.pse.beast.toolbox.*;
 import edu.pse.beast.parametereditor.UserActions.*;
 import edu.pse.beast.saverloader.SaverLoaderInterface;
 
@@ -39,18 +40,25 @@ public class ParameterEditorBuilder {
             BooleanExpEditor booleanExpEditor,
             PropertyList propertyList) {
         ParameterEditorWindowStarter windowStarter = new ParameterEditorWindowStarter();
+        SaverLoaderInterface saverLoaderInterface = new SaverLoaderInterface();
         window = windowStarter.getParameterEditorWindow();
         window.updateStringRes(refs.getStringIF());
-        editor = new ParameterEditor(cElectionDescriptionEditor, propertyList, window);
+        FileChooser fileChooser = new FileChooser(
+                refs.getStringIF().getParameterEditorStringResProvider().getOtherStringRes(),
+                new ProjectSaverLoader(),
+                null);
+        editor = new ParameterEditor(cElectionDescriptionEditor, propertyList, window, fileChooser);
         ParameterEditorMenuBarHandler menuBarHandler = new ParameterEditorMenuBarHandler(menuHeadingIds,
                 createActionIdAndListenerListForMenuHandler(cElectionDescriptionEditor, booleanExpEditor, propertyList,
-                        refs.getSaverLoaderIF()),
+                        refs.getStringIF().getParameterEditorStringResProvider().getOtherStringRes(),
+                        saverLoaderInterface.getProjectSaverLoader()),
                 refs.getStringIF().getParameterEditorStringResProvider().getMenuStringRes(), window);
         ImageResourceProvider imageRes = ImageResourceProvider.getToolbarImages();
         ParameterEditorToolbarHandler toolbarHandler = new ParameterEditorToolbarHandler(imageRes,
                 refs.getStringIF().getParameterEditorStringResProvider().getToolbarTipStringRes(),
                 createActionIdAndListenerListForToolbarHandler(cElectionDescriptionEditor, propertyList,
-                        refs.getSaverLoaderIF()), window.getToolbar(), window);
+                        refs.getStringIF().getParameterEditorStringResProvider().getOtherStringRes(),
+                        saverLoaderInterface.getProjectSaverLoader()), window.getToolbar(), window);
 
         
         editor.setToolbarHandler(toolbarHandler);
@@ -60,24 +68,25 @@ public class ParameterEditorBuilder {
         return editor;
     }
     /**
-     * Creates ActionIdAndListeners which the MenuBarHandler uses to create the
+     * Creates an Arraylist of Arraylists of ActionIdAndListeners which the MenuBarHandler uses to create the
      * MenuBar with the appropriate Strings.
      * @param cElectionDescriptionEditor
      * @param booleanExpEditor
      * @param propertyList
-     * @param saverLoaderIF
-     * @return 
+     * @param stringResourceLoader
+     * @return the ArrayList
      */
     private ArrayList<ArrayList<ActionIdAndListener>>
             createActionIdAndListenerListForMenuHandler(CElectionDescriptionEditor cElectionDescriptionEditor,
                                                         BooleanExpEditor booleanExpEditor,
-                    PropertyList propertyList, SaverLoaderInterface saverLoaderIF) {
+                    PropertyList propertyList, StringResourceLoader stringResourceLoader, SaverLoader saverLoader) {
         ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
 
         UserAction newly = createNewProjectUserAction(cElectionDescriptionEditor, propertyList);
-        UserAction load = createLoadProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
-        UserAction save = createSaveProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
-        UserAction save_as = createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
+        UserAction load = createLoadProjectUserAction(cElectionDescriptionEditor, propertyList, stringResourceLoader, saverLoader);
+        UserAction save = createSaveProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoader);
+        UserAction save_as = createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList, stringResourceLoader,
+                saverLoader);
         UserAction start = createStartCheckUserAction();
         UserAction stop = createAbortCheckUserAction();
         UserAction options = createOptionsUserAction(cElectionDescriptionEditor, propertyList);
@@ -112,20 +121,21 @@ public class ParameterEditorBuilder {
     /**
      * Creates ActionIdAndListeners which the ToolbarHandler uses to create the
      * Toolbar with the appropriate Strings.
-     * @param cElectionDescriptionEditor
-     * @param propertyList
-     * @param saverLoaderIF
-     * @return 
+     * @param cElectionDescriptionEditor the CelectionDescriptionEditor
+     * @param propertyList the PropertyList
+     * @param stringResourceLoader the StringRessourceLoader
+     * @return the Array of ActionIdAndListener objects
      */
     private ActionIdAndListener[] createActionIdAndListenerListForToolbarHandler(
             CElectionDescriptionEditor cElectionDescriptionEditor,
-            PropertyList propertyList, SaverLoaderInterface saverLoaderIF) {
+            PropertyList propertyList, StringResourceLoader stringResourceLoader, SaverLoader saverLoader) {
         ActionIdAndListener[] created = new ActionIdAndListener[6];
 
         UserAction newly = createNewProjectUserAction(cElectionDescriptionEditor, propertyList);
-        UserAction load = createLoadProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
-        UserAction save = createSaveProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
-        UserAction save_as = createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList, saverLoaderIF);
+        UserAction load = createLoadProjectUserAction(cElectionDescriptionEditor, propertyList, stringResourceLoader, saverLoader);
+        UserAction save = createSaveProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoader);
+        UserAction save_as = createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList, stringResourceLoader,
+                saverLoader);
         UserAction start = createStartCheckUserAction();
         UserAction stop = createAbortCheckUserAction();
 
@@ -145,18 +155,19 @@ public class ParameterEditorBuilder {
     }
 
     private UserAction createSaveProjectUserAction(CElectionDescriptionEditor cElectionDescriptionEditor,
-            PropertyList propertyList, SaverLoaderInterface saverLoaderIF) {
-        return new SaveProjectUserAction(propertyList, cElectionDescriptionEditor, editor, saverLoaderIF);
+            PropertyList propertyList, SaverLoader saverLoader) {
+        return new SaveProjectUserAction(propertyList, cElectionDescriptionEditor, editor);
     }
 
     private UserAction createSaveProjectAsUserAction(CElectionDescriptionEditor cElectionDescriptionEditor,
-            PropertyList propertyList, SaverLoaderInterface saverLoaderIF) {
-        return new SaveProjectAsUserAction(propertyList, cElectionDescriptionEditor, editor, saverLoaderIF);
+                                                     PropertyList propertyList, StringResourceLoader stringResourceLoader,
+                                                     SaverLoader saverLoader) {
+        return new SaveProjectAsUserAction(propertyList, cElectionDescriptionEditor, editor, stringResourceLoader);
     }
 
     private UserAction createLoadProjectUserAction(CElectionDescriptionEditor cElectionDescriptionEditor,
-            PropertyList propertyList, SaverLoaderInterface saverLoaderIF) {
-        return new LoadProjectUserAction(propertyList, cElectionDescriptionEditor, editor, saverLoaderIF);
+            PropertyList propertyList, StringResourceLoader stringResourceLoader, SaverLoader saverLoader) {
+        return new LoadProjectUserAction(propertyList, cElectionDescriptionEditor, editor, stringResourceLoader);
     }
 
     private UserAction createStartCheckUserAction() {

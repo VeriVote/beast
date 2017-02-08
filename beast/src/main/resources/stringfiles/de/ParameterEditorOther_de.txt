@@ -13,3 +13,35 @@ days : Tage
 title_advanced : Benutzerdefinierte Argumente für CBMC
 ok : OK
 cancel : Abbrechen
+openDialogTitleText : Projekt Öffnen
+saveDialogTitleText : Projekt Speichern
+lookInLabelText : Suchen in:
+openButtonText : Öffnen
+cancelButtonText : Abbrechen
+fileNameLabelText : Dateiname
+filesOfTypeLabelText : Dateityp
+openApproveButtonToolTipText : Öffnen
+openApproveButtonText : Öffnen
+saveApproveButtonToolTipText : Speichern
+saveApproveButtonText : Speichern
+ancelButtonToolTipText : Abbrechen
+fileNameHeaderText : Dateiname
+upFolderToolTipText : Eine Ebene höher
+homeFolderToolTipText : Home
+newFolderToolTipText : Neuen Ordner erstellen
+listViewButtonToolTipText : Listen Ansicht
+newFolderButtonText : Neuen Ordner erstellen
+renameFileButtonText : Umbennen
+deleteFileButtonText : Löschen
+filterLabelText : Dateityp
+detailsViewButtonToolTipText : Details
+fileSizeHeaderText : Größe
+fileDateHeaderText : Zuletzt modifiziert
+fileApproveRegex : (.)+\.beast
+fileDescription : BEAST-Projekt-Datei (*.beast)
+objectCouldNotBeConvertedToString : Projekt konnte nicht in einen String zum speichern konvertiert werden.
+objectCouldNotBeSavedError : Objekt konnte nicht gespeichert werden.
+inputOutputErrorOpen : Fehler beim einlesen der Datei.
+invalidFileFormatErrorMessage : Die gegebene Datei enthält kein gültiges BEAST-Projekt-Format.
+wrongEncodingError : Das Projekt enthält falsch kodierte Zeichen.
+inputOutputErrorSave : Das Verzeichnis in dem gespeichert werden soll existiert nicht.

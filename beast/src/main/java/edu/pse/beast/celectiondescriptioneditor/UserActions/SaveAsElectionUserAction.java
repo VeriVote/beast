@@ -6,6 +6,11 @@
 package edu.pse.beast.celectiondescriptioneditor.UserActions;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
+import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
+import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
+import edu.pse.beast.saverloader.SaverLoader;
+import edu.pse.beast.toolbox.FileChooser;
 import edu.pse.beast.toolbox.UserAction;
 
 import javax.swing.*;
@@ -26,28 +31,9 @@ public class SaveAsElectionUserAction extends UserAction {
 
     @Override
     public void perform() {
-
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setFileFilter(new FileFilter() {
-            @Override
-            public boolean accept(File file) {
-                if (file.getName().matches("(.)+(\\.)elec") || file.isDirectory()) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-
-            @Override
-            public String getDescription() {
-                return "BEASTElectionDescription (*.elec)";
-            }
-        });
-        if (fileChooser.showSaveDialog(electionDescriptionEditor.getGui()) == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            electionDescriptionEditor.getElectionDescription();
-            // TODOsave to file
-            electionDescriptionEditor.getSaveBeforeChangeHandler().setHasBeensaved(true);
+        ElectionDescription currentlyLoaded = electionDescriptionEditor.getElectionDescription();
+        if (electionDescriptionEditor.getFileChooser().saveObject(currentlyLoaded, true)) {
+            electionDescriptionEditor.getSaveBeforeChangeHandler().updatePreValue();
         }
     }
 

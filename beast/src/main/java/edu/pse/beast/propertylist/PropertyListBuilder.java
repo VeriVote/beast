@@ -3,6 +3,7 @@ package edu.pse.beast.propertylist;
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 import edu.pse.beast.booleanexpeditor.UserActions.LoadPropsUserAction;
@@ -15,10 +16,8 @@ import edu.pse.beast.propertylist.UserActions.SavePropertyList;
 import edu.pse.beast.propertylist.UserActions.UndoChangesPropertyList;
 import edu.pse.beast.propertylist.View.PropertyListWindow;
 import edu.pse.beast.propertylist.View.PropertyListWindowStarter;
-import edu.pse.beast.toolbox.ActionIdAndListener;
-import edu.pse.beast.toolbox.ImageResourceProvider;
-import edu.pse.beast.toolbox.ObjectRefsForBuilder;
-import edu.pse.beast.toolbox.UserAction;
+import edu.pse.beast.saverloader.PropertyListSaverLoader;
+import edu.pse.beast.toolbox.*;
 
 /**
  * Builds the property list components and returns the controller of property
@@ -41,7 +40,9 @@ public class PropertyListBuilder {
      */
     public PropertyList createPropertyList(ObjectRefsForBuilder refs, BooleanExpEditor booleanExpEditor) {
         PLModelInterface model = new PLModel();
-        controller = new PropertyList(model, booleanExpEditor);
+        FileChooser fileChooser = new FileChooser(refs.getStringIF().getPropertyListStringResProvider().getOtherStringRes(),
+                new PropertyListSaverLoader(), null);
+        controller = new PropertyList(model, booleanExpEditor, fileChooser);
         //PropertyListWindowStarter starter = new PropertyListWindowStarter(controller, model);
 
         //window = starter.getPropertyListWindow();

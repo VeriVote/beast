@@ -10,14 +10,14 @@ import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
 import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
+import edu.pse.beast.saverloader.PostAndPrePropertiesDescriptionSaverLoader;
+import edu.pse.beast.saverloader.SaverLoader;
 import edu.pse.beast.saverloader.SaverLoaderInterface;
-import edu.pse.beast.toolbox.ActionIdAndListener;
-import edu.pse.beast.toolbox.ImageResourceProvider;
-import edu.pse.beast.toolbox.ObjectRefsForBuilder;
-import edu.pse.beast.toolbox.UserAction;
+import edu.pse.beast.toolbox.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -76,21 +76,24 @@ public class BooleanExpEditorBuilder{
         //create CodeAreaFocusListener
         CodeAreaFocusListener codeAreaFocusListener = new CodeAreaFocusListener(prePropCodeArea, postPropCodeArea);
 
+        //create FileChooser
+        FileChooser fileChooser = new FileChooser(
+                objectRefsForBuilder.getStringIF().getBooleanExpEditorStringResProvider().getBooleanExpEditorWindowStringRes(),
+                new PostAndPrePropertiesDescriptionSaverLoader(), null);
+
         BooleanExpEditor editor = new BooleanExpEditor(prePropCodeArea, postPropCodeArea, window, symbolicVarListController,
                 errorWindow, saveBeforeChangeHandler, codeAreaFocusListener, emptyPostAndPrePropertiesDescription,
-                codeAreaBuilder, objectRefsForBuilder, ceditor);
+                codeAreaBuilder, objectRefsForBuilder, ceditor, fileChooser);
 
         //creation of BooleanExpEditorMenubarHandler
         BooleanExpEditorMenubarHandler menuBarHandler = new BooleanExpEditorMenubarHandler(menuHeadingIds, window,
-                createActionIdAndListenerListForMenuHandler(editor, saveBeforeChangeHandler,
-                        objectRefsForBuilder.getSaverLoaderIF()), objectRefsForBuilder.getStringIF());
+                createActionIdAndListenerListForMenuHandler(editor), objectRefsForBuilder.getStringIF());
 
         //creation of BooleanExpEditorToolbarHandler
         BooleanExpEditorToolbarHandler toolBarHandler = new BooleanExpEditorToolbarHandler(window,
                 ImageResourceProvider.getToolbarImages(),
                 objectRefsForBuilder.getStringIF().getBooleanExpEditorStringResProvider().getToolbarTipStringRes(),
-                createActionIdAndListenerListForToolbarHandler(editor, saveBeforeChangeHandler,
-                        objectRefsForBuilder.getSaverLoaderIF()));
+                createActionIdAndListenerListForToolbarHandler(editor));
 
         saveBeforeChangeHandler.setSavePropsUserAction(savePropsUserAction);
         editor.setToolBarHandler(toolBarHandler);
@@ -105,16 +108,14 @@ public class BooleanExpEditorBuilder{
      * @return said list, a ArrayList<ArrayList<ActionIdAndListener>> object
      */
     private ArrayList<ArrayList<ActionIdAndListener>>
-    createActionIdAndListenerListForMenuHandler(BooleanExpEditor editor,
-                                                SaveBeforeChangeHandler saveBeforeChangeHandler,
-                                                SaverLoaderInterface saverLoaderInterface) {
+    createActionIdAndListenerListForMenuHandler(BooleanExpEditor editor) {
         ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
 
         ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
-        UserAction newProps = createNewPropsUserAction(editor, saveBeforeChangeHandler);
-        UserAction load = createLoadPropsUserAction(editor, saveBeforeChangeHandler, saverLoaderInterface);
+        UserAction newProps = createNewPropsUserAction(editor);
+        UserAction load = createLoadPropsUserAction(editor);
         UserAction saveAs = createSaveAsPropsUserAction(editor);
-        UserAction save = createSavePropsUserAction(editor, (SaveAsPropsUserAction) saveAs);
+        UserAction save = createSavePropsUserAction(editor);
         savePropsUserAction = (SavePropsUserAction) save;
         fileList.add(createFromUserAction(newProps));
         fileList.add(createFromUserAction(load));
@@ -184,17 +185,15 @@ public class BooleanExpEditorBuilder{
      * a BooleanExpEditorWindow object.
      * @return said list, a ActionIdAndListener[] object
      */
-    private ActionIdAndListener[] createActionIdAndListenerListForToolbarHandler(BooleanExpEditor editor,
-                                                                     SaveBeforeChangeHandler saveBeforeChangeHandler,
-                                                                         SaverLoaderInterface saverLoaderInterface) {
+    private ActionIdAndListener[] createActionIdAndListenerListForToolbarHandler(BooleanExpEditor editor) {
         ActionIdAndListener[] created = new ActionIdAndListener[9];
 
-        UserAction newProps = createNewPropsUserAction(editor, saveBeforeChangeHandler);
+        UserAction newProps = createNewPropsUserAction(editor);
         UserAction undo = createUndoUserAction(editor);
         UserAction redo = createRedoUserAction(editor);
         UserAction saveAs = createSaveAsPropsUserAction(editor);
-        UserAction save = createSavePropsUserAction(editor, (SaveAsPropsUserAction) saveAs);
-        UserAction load = createLoadPropsUserAction(editor, saveBeforeChangeHandler, saverLoaderInterface);
+        UserAction save = createSavePropsUserAction(editor);
+        UserAction load = createLoadPropsUserAction(editor);
         UserAction copy = createCopyUserAction(editor);
         UserAction cut = createCutUserAction(editor);
         UserAction paste = createPasteUserAction(editor);
@@ -212,21 +211,17 @@ public class BooleanExpEditorBuilder{
     }
 
     //file
-    private NewPropsUserAction createNewPropsUserAction(BooleanExpEditor editor,
-                                                        SaveBeforeChangeHandler saveBeforeChangeHandler) {
-        return new NewPropsUserAction(editor, saveBeforeChangeHandler);
+    private NewPropsUserAction createNewPropsUserAction(BooleanExpEditor booleanExpEditor) {
+        return new NewPropsUserAction(booleanExpEditor);
     }
-    private SavePropsUserAction createSavePropsUserAction(BooleanExpEditor editor,
-                                                          SaveAsPropsUserAction saveAsPropsUserAction) {
-        return new SavePropsUserAction(editor, saveAsPropsUserAction);
+    private SavePropsUserAction createSavePropsUserAction(BooleanExpEditor booleanExpEditor) {
+        return new SavePropsUserAction(booleanExpEditor);
     }
     private SaveAsPropsUserAction createSaveAsPropsUserAction(BooleanExpEditor booleanExpEditor) {
         return new SaveAsPropsUserAction(booleanExpEditor);
     }
-    private LoadPropsUserAction createLoadPropsUserAction(BooleanExpEditor editor,
-                                                          SaveBeforeChangeHandler saveBeforeChangeHandler,
-                                                          SaverLoaderInterface saverLoaderInterface) {
-        return new LoadPropsUserAction(editor, saverLoaderInterface, saveBeforeChangeHandler);
+    private LoadPropsUserAction createLoadPropsUserAction(BooleanExpEditor booleanExpEditor) {
+        return new LoadPropsUserAction(booleanExpEditor);
     }
 
     //edit

@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.propertylist;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -20,6 +21,7 @@ import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.propertylist.View.PropertyListWindow;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
+import edu.pse.beast.toolbox.FileChooser;
 
 /**
  * Class acts as controller for everything related to the property list. Returns
@@ -42,14 +44,17 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     
     private LinkedList<DeleteDescriptionAction> actionList;
 
+    private FileChooser fileChooser;
+
     /**
      * Constructor
      *
      * @param model The data model of the property list.
      * @param editor The boolean expression editor that is the source of
      * property descriptions.
+     * @param fileChooser the FileChooser with which files can be loaded and saved
      */
-    public PropertyList(PLModelInterface model, BooleanExpEditor editor) {
+    public PropertyList(PLModelInterface model, BooleanExpEditor editor, FileChooser fileChooser) {
         this.model = model;
         this.editor = editor;
         this.sli = new StringLoaderInterface("de");
@@ -58,6 +63,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         setSaveBeforeChangeHandler(new PLSaveBeforeChangeHandler(model, null));
         actionList = new LinkedList<DeleteDescriptionAction>();
         model.initialize();
+        this.fileChooser = fileChooser;
     }
 
     /**
@@ -229,4 +235,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     	actionList = new LinkedList<DeleteDescriptionAction>();
     }
 
+    public FileChooser getFileChooser() {
+        return fileChooser;
+    }
 }

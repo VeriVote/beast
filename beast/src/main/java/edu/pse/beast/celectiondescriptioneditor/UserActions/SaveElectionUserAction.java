@@ -15,23 +15,16 @@ import edu.pse.beast.toolbox.UserAction;
  */
 public class SaveElectionUserAction extends UserAction {
     private CElectionDescriptionEditor cElectionDescriptionEditor;
-    private SaveAsElectionUserAction saveAsElectionUserAction;
 
-    public SaveElectionUserAction(CElectionDescriptionEditor cElectionDescriptionEditor,
-                                  SaveAsElectionUserAction saveAsElectionUserAction) {
+    public SaveElectionUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
         super("save");
         this.cElectionDescriptionEditor = cElectionDescriptionEditor;
-        this.saveAsElectionUserAction = saveAsElectionUserAction;
     }
     
     @Override
     public void perform() {
-        if (cElectionDescriptionEditor.getSaveBeforeChangeHandler().hasBeenSaved()) {
+        if (cElectionDescriptionEditor.getFileChooser().saveObject(cElectionDescriptionEditor.getElectionDescription(), false)) {
             cElectionDescriptionEditor.getSaveBeforeChangeHandler().updatePreValue();
-            cElectionDescriptionEditor.getElectionDescription();
-            // TODO implement saving file
-        } else {
-            saveAsElectionUserAction.perform();
         }
     }
     

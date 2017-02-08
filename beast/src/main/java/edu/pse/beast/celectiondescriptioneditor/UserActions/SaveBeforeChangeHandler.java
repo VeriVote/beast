@@ -17,7 +17,6 @@ import javax.swing.*;
 public class SaveBeforeChangeHandler {
     private String preString = "";
     private JTextPane codeArea;
-    private boolean hasBeensaved;
     private CCodeEditorGUI cCodeEditorGUI;
     private SaveElectionUserAction saveElectionUserAction;
 
@@ -68,22 +67,6 @@ public class SaveBeforeChangeHandler {
             }
         }
         return true;
-    }
-
-
-    /**
-     * @return true if the currently loaded PostAndPrePropertiesDescription object has already been saved
-     */
-    public boolean hasBeenSaved() {
-        return hasBeensaved;
-    }
-
-    /**
-     * Setter for hasBeensaved
-     * Changed if a loaded PostAndPreProperties object gets saved, or a new object is loaded.
-     */
-    public void setHasBeensaved(boolean newValue) {
-        hasBeensaved = newValue;
     }
 
     /**

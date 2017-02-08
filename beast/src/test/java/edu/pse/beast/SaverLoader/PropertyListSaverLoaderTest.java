@@ -55,7 +55,7 @@ public class PropertyListSaverLoaderTest {
         plModel.addDescription(propertyItem);
         plModel.addDescription(propertyItem2);
 
-        System.out.println(PropertyListSaverLoader.createSaveString(plModel));
+        System.out.println(new PropertyListSaverLoader().createSaveString(plModel));
 
     }
 
@@ -80,7 +80,8 @@ public class PropertyListSaverLoaderTest {
         plModel.addDescription(propertyItem);
         plModel.addDescription(propertyItem2);
 
-        PLModel plModel1 = PropertyListSaverLoader.createFromSaveString(PropertyListSaverLoader.createSaveString(plModel));
+        PLModel plModel1 = (PLModel) new PropertyListSaverLoader().createFromSaveString(
+                new PropertyListSaverLoader().createSaveString(plModel));
         plModel.getPropertyList().get(0);
 
         System.out.println(plModel1.getPropertyList().get(0).getDescription().getName());

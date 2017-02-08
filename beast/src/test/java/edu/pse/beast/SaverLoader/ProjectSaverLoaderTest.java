@@ -51,6 +51,7 @@ public class ProjectSaverLoaderTest {
      */
     @Test
     public void testCreateSaveString() throws Exception {
+        ProjectSaverLoader projectSaverLoader = new ProjectSaverLoader();
         ElectionTemplateHandler electionTemplateHandler = new ElectionTemplateHandler();
         ElectionTypeContainer inputType = electionTemplateHandler.getById("list_of_integer_vals_per_voter");
         ElectionTypeContainer outputType = electionTemplateHandler.getById("one_candidate_or_zero");
@@ -80,7 +81,7 @@ public class ProjectSaverLoaderTest {
                 Arrays.asList(new Integer[]{1, 2}), Arrays.asList(new Integer[]{1, 2}), new TimeOut(TimeUnit.HOURS, (long) 3.2)
                 ,4, "-- unwind 6");
         Project project = new Project(electionCheckParameter, plModel, electionDescription);
-        System.out.println(ProjectSaverLoader.createSaveString(project));
+        System.out.println(projectSaverLoader.createSaveString(project));
     }
 
     /**
@@ -88,6 +89,7 @@ public class ProjectSaverLoaderTest {
      */
     @Test
     public void testCreateFromSaveString() throws Exception {
+        ProjectSaverLoader projectSaverLoader = new ProjectSaverLoader();
         ElectionTemplateHandler electionTemplateHandler = new ElectionTemplateHandler();
         ElectionTypeContainer inputType = electionTemplateHandler.getById("list_of_integer_vals_per_voter");
         ElectionTypeContainer outputType = electionTemplateHandler.getById("one_candidate_or_zero");
@@ -118,7 +120,7 @@ public class ProjectSaverLoaderTest {
                 ,4, "-- unwind 6");
         Project project = new Project(electionCheckParameter, plModel, electionDescription);
 
-        Project projec1 = ProjectSaverLoader.createFromSaveString(ProjectSaverLoader.createSaveString(project));
+        Project projec1 = (Project) projectSaverLoader.createFromSaveString(projectSaverLoader.createSaveString(project));
 
         System.out.println(projec1.getElecDescr().getName());
         System.out.println(projec1.getElecDescr().getInputType().getType().getAccesTypeIfList());

@@ -12,13 +12,11 @@ import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTempla
 import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
 import edu.pse.beast.celectiondescriptioneditor.GUI.CEditorWindowStarter;
 import edu.pse.beast.celectiondescriptioneditor.UserActions.*;
+import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
 import edu.pse.beast.saverloader.SaverLoaderInterface;
 import edu.pse.beast.stringresource.StringLoaderInterface;
-import edu.pse.beast.toolbox.ActionIdAndListener;
-import edu.pse.beast.toolbox.CCodeHelper;
-import edu.pse.beast.toolbox.ImageResourceProvider;
-import edu.pse.beast.toolbox.ObjectRefsForBuilder;
-import edu.pse.beast.toolbox.UserAction;
+import edu.pse.beast.toolbox.*;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -58,16 +56,24 @@ public class CElectionDescriptionEditorBuilder {
         ErrorWindow errorWindow = new ErrorWindow(gui.getErrorPane(), objRefsForBuilder.getStringIF());
         codeAreaBuilder = new CElectionCodeAreaBuilder(objRefsForBuilder);
 
-        //TODO create an ArrayList of RegexAndColor objects and apply it to the codeareas by calling
         //codeAreaObject.setSyntaxHLRegexAndColorList()
         CElectionCodeArea codeArea = codeAreaBuilder.createCElectionCodeArea(
                 gui.getCodeArea(), 
                 gui.getCodeAreaScrollPane(),
                 new CErrorDisplayer(gui.getCodeArea(), objRefsForBuilder.getStringIF()));
 
+        //create FileChooser
+        FileChooser fileChooser = new FileChooser(
+                objRefsForBuilder.getStringIF().getCElectionEditorStringResProvider().getMenuStringRes(),
+                new ElectionDescriptionSaverLoader(),
+                gui);
+
         // create new SaveBeforeChangeHandler
         SaveBeforeChangeHandler saveBeforeChangeHandler = new SaveBeforeChangeHandler(codeArea.getPane(), gui);
-        CElectionDescriptionEditor editor = new CElectionDescriptionEditor(codeArea, gui, codeAreaBuilder, errorWindow, saveBeforeChangeHandler);
+
+        //create new CElectionEditor
+        CElectionDescriptionEditor editor = new CElectionDescriptionEditor(codeArea, gui, codeAreaBuilder, errorWindow, saveBeforeChangeHandler,
+                objRefsForBuilder.getStringIF(), fileChooser);
         
         CElectionEditorMenubarHandler menuBarHandler = 
                 new CElectionEditorMenubarHandler(
@@ -114,7 +120,9 @@ public class CElectionDescriptionEditorBuilder {
         } catch (BadLocationException ex) {
             Logger.getLogger(CElectionDescriptionEditorBuilder.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
+        editor.setcElectionEditorMenubarHandler(menuBarHandler);
+        editor.setcElectionEditorToolbarHandler(toolbarHandler);
         return editor;
     }
     
@@ -126,10 +134,10 @@ public class CElectionDescriptionEditorBuilder {
         
         ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
 
-        newAcc = createNewElectionUserAction(editor, objRefsForBuilder.getStringIF());
+        newAcc = createNewElectionUserAction(editor);
         saveAs = createSaveAsElectionUserAction(editor);
-        save = createSaveElectionUserAction(editor, (SaveAsElectionUserAction) saveAs);
-        load = createLoadElectionUserAction(editor, objRefsForBuilder.getSaverLoaderIF());
+        save = createSaveElectionUserAction(editor);
+        load = createLoadElectionUserAction(editor);
         copy = createElectionCopyUserAction(editor);
         cut = createElectionCutUserAction(editor);
         paste = createElectionPasteUserAction(editor);
@@ -169,35 +177,32 @@ public class CElectionDescriptionEditorBuilder {
     //file
 
     private NewElectionUserAction createNewElectionUserAction(
-            CElectionDescriptionEditor editor,
-            StringLoaderInterface stringIf) {
-        return new NewElectionUserAction(editor, stringIf);
+            CElectionDescriptionEditor editor) {
+        return new NewElectionUserAction(editor);
     } 
-    private SaveElectionUserAction createSaveElectionUserAction(CElectionDescriptionEditor electionDescriptionEditor,
-                                                                SaveAsElectionUserAction saveAsElectionUserAction) {
-        return new SaveElectionUserAction(electionDescriptionEditor, saveAsElectionUserAction);
+    private SaveElectionUserAction createSaveElectionUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
+        return new SaveElectionUserAction(cElectionDescriptionEditor);
     } 
-    private SaveAsElectionUserAction createSaveAsElectionUserAction(CElectionDescriptionEditor electionDescriptionEditor) {
-        return new SaveAsElectionUserAction(electionDescriptionEditor);
+    private SaveAsElectionUserAction createSaveAsElectionUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
+        return new SaveAsElectionUserAction(cElectionDescriptionEditor);
     }    
-    private LoadElectionUserAction createLoadElectionUserAction(CElectionDescriptionEditor cElectionDescriptionEditor,
-                                                                SaverLoaderInterface saverLoaderInterface) {
-        return new LoadElectionUserAction(cElectionDescriptionEditor, saverLoaderInterface);
+    private LoadElectionUserAction createLoadElectionUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
+        return new LoadElectionUserAction(cElectionDescriptionEditor);
     }
-    private ElectionCopyUserAction createElectionCopyUserAction(CElectionDescriptionEditor editor) {
-        return new ElectionCopyUserAction(editor);
+    private ElectionCopyUserAction createElectionCopyUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
+        return new ElectionCopyUserAction(cElectionDescriptionEditor);
     }
-    private ElectionCutUserAction createElectionCutUserAction(CElectionDescriptionEditor editor) {
-        return new ElectionCutUserAction(editor);
+    private ElectionCutUserAction createElectionCutUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
+        return new ElectionCutUserAction(cElectionDescriptionEditor);
     }
-    private ElectionPasteUserAction createElectionPasteUserAction(CElectionDescriptionEditor editor) {
-        return new ElectionPasteUserAction(editor);
+    private ElectionPasteUserAction createElectionPasteUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
+        return new ElectionPasteUserAction(cElectionDescriptionEditor);
     }
-    private ElectionRedoUserAction createElectionRedoUserAction(CElectionDescriptionEditor editor) {
-        return new ElectionRedoUserAction(editor);
+    private ElectionRedoUserAction createElectionRedoUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
+        return new ElectionRedoUserAction(cElectionDescriptionEditor);
     }
-    private ElectionUndoUserAction createElectionUndoUserAction(CElectionDescriptionEditor editor) {
-        return new ElectionUndoUserAction(editor);
+    private ElectionUndoUserAction createElectionUndoUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
+        return new ElectionUndoUserAction(cElectionDescriptionEditor);
     }
 
     //edit

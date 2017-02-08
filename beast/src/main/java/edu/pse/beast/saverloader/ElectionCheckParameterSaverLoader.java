@@ -2,35 +2,48 @@ package edu.pse.beast.saverloader;
 
 import edu.pse.beast.datatypes.ElectionCheckParameter;
 import edu.pse.beast.datatypes.TimeOut;
+import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 
 import java.util.ArrayList;
 
 /**
  * @author NikolaiLMS
  */
-public class ElectionCheckParameterSaverLoader {
+public class ElectionCheckParameterSaverLoader implements SaverLoader{
 
-    public static String createSaveString(ElectionCheckParameter electionCheckParameter) {
-        String amountVotersMin = "<amountVotersMin>\n" + electionCheckParameter.getAmountVoters().get(0) +
+    public String createSaveString(Object electionCheckParameter) {
+        String amountVotersMin = "<amountVotersMin>\n" +
+                ((ElectionCheckParameter) electionCheckParameter).getAmountVoters().get(0) +
                 "\n</amountVotersMin>\n";
-        String amountVotersMax = "<amountVotersMax>\n" + electionCheckParameter.getAmountVoters().get(electionCheckParameter.getAmountVoters().size()-1) +
+        String amountVotersMax = "<amountVotersMax>\n" +
+                ((ElectionCheckParameter) electionCheckParameter).getAmountVoters().get(
+                        ((ElectionCheckParameter) electionCheckParameter).getAmountVoters().size()-1) +
                 "\n</amountVotersMax>\n";
-        String amountCandidatesMin = "<amountCandidatesMin>\n" + electionCheckParameter.getAmountCandidates().get(0) +
+        String amountCandidatesMin = "<amountCandidatesMin>\n" +
+                ((ElectionCheckParameter) electionCheckParameter).getAmountCandidates().get(0) +
                 "\n</amountCandidatesMin>\n";
-        String amountCandidatesMax = "<amountCandidatesMax>\n" + electionCheckParameter.getAmountCandidates().get(electionCheckParameter.getAmountCandidates().size()-1) +
+        String amountCandidatesMax = "<amountCandidatesMax>\n" +
+                ((ElectionCheckParameter) electionCheckParameter).getAmountCandidates().get(
+                        ((ElectionCheckParameter) electionCheckParameter).getAmountCandidates().size()-1) +
                 "\n</amountCandidatesMax>\n";
-        String amountSeatsMin = "<amountSeatsMin>\n" + electionCheckParameter.getAmountSeats().get(0) +
+        String amountSeatsMin = "<amountSeatsMin>\n" +
+                ((ElectionCheckParameter) electionCheckParameter).getAmountSeats().get(0) +
                 "\n</amountSeatsMin>\n";
-        String amountSeatsMax = "<amountSeatsMax>\n" + electionCheckParameter.getAmountSeats().get(electionCheckParameter.getAmountSeats().size()-1) +
+        String amountSeatsMax = "<amountSeatsMax>\n" +
+                ((ElectionCheckParameter) electionCheckParameter).getAmountSeats().get(
+                        ((ElectionCheckParameter) electionCheckParameter).getAmountSeats().size()-1) +
                 "\n</amountSeatsMax>\n";
-        String timeout = "<timeout>\n" + TimeOutSaverLoader.createSaveString(electionCheckParameter.getTimeout()) + "\n</timeout>\n";
-        String processes = "<processes>\n" + electionCheckParameter.getProcesses() + "\n</processes>\n";
-        String argument = "<argument>\n" + electionCheckParameter.getArgument() + "\n</argument>\n";
+        String timeout = "<timeout>\n" + TimeOutSaverLoader.createSaveString(
+                ((ElectionCheckParameter) electionCheckParameter).getTimeout()) + "\n</timeout>\n";
+        String processes = "<processes>\n" +
+                ((ElectionCheckParameter) electionCheckParameter).getProcesses() + "\n</processes>\n";
+        String argument = "<argument>\n" +
+                ((ElectionCheckParameter) electionCheckParameter).getArgument() + "\n</argument>\n";
         return (amountVotersMin + amountVotersMax + amountCandidatesMin + amountCandidatesMax + amountSeatsMin +
                 amountSeatsMax + timeout + processes + argument);
     }
 
-    public static ElectionCheckParameter createFromSaveString(String s) throws Exception{
+    public Object createFromSaveString(String s) throws Exception{
 
         String split[] = s.split("\n</amountVotersMin>\n");
         int amountVotersMin = Integer.parseInt(split[0].replace("<amountVotersMin>\n", ""));

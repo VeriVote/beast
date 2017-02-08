@@ -15,6 +15,8 @@ import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.stringresource.StringLoaderInterface;
+import edu.pse.beast.toolbox.FileChooser;
 import edu.pse.beast.toolbox.MenuBarHandler;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import edu.pse.beast.toolbox.ToolbarHandler;
@@ -35,8 +37,8 @@ public class BooleanExpEditor {
     private final BooleanExpEditorWindowStarter windowStarter;
     private final ErrorWindow errorWindow;
     private PostAndPrePropertiesDescription currentlyLoadedPostAndPreProp;
-    private MenuBarHandler menuBarHandler;
-    private ToolbarHandler toolBarHandler;
+    private BooleanExpEditorMenubarHandler menuBarHandler;
+    private BooleanExpEditorToolbarHandler toolBarHandler;
     private BooleanExpCodeArea prePropCodeArea;
     private BooleanExpCodeArea postPropCodeArea;
     private final SaveBeforeChangeHandler saveBeforeChangeHandler;
@@ -44,20 +46,27 @@ public class BooleanExpEditor {
     private final BooleanExpCodeAreaBuilder codeAreaBuilder;
     private ObjectRefsForBuilder refs;
     private CElectionDescriptionEditor cEditor;
-    private boolean arePropertiesCorrect;
     private boolean loadedFromPropertyList;
-    private File currentlyLoadedFile;
+    private final FileChooser fileChooser;
+    private StringLoaderInterface stringLoaderInterface;
 
     /**
      * Temporary Constructor declaration to build BooleanExpEditor for Dummy-GUI
      * @param window BooleanExpEditorWindow object
      * @param symbolicVarListController SymbolicVarListController object
      */
-    BooleanExpEditor(BooleanExpCodeArea prePropCodeArea, BooleanExpCodeArea postPropCodeArea,
-                     BooleanExpEditorWindow window, SymbolicVarListController symbolicVarListController, ErrorWindow errorWindow,
-                     SaveBeforeChangeHandler saveBeforeChangeHandler, CodeAreaFocusListener codeAreaFocusListener,
-                     PostAndPrePropertiesDescription postAndPrePropertiesDescription, BooleanExpCodeAreaBuilder codeAreaBuilder,
-                     ObjectRefsForBuilder refs, CElectionDescriptionEditor cEditor) {
+    BooleanExpEditor(BooleanExpCodeArea prePropCodeArea,
+                     BooleanExpCodeArea postPropCodeArea,
+                     BooleanExpEditorWindow window,
+                     SymbolicVarListController symbolicVarListController,
+                     ErrorWindow errorWindow,
+                     SaveBeforeChangeHandler saveBeforeChangeHandler,
+                     CodeAreaFocusListener codeAreaFocusListener,
+                     PostAndPrePropertiesDescription postAndPrePropertiesDescription,
+                     BooleanExpCodeAreaBuilder codeAreaBuilder,
+                     ObjectRefsForBuilder refs,
+                     CElectionDescriptionEditor cEditor,
+                     FileChooser fileChooser) {
         this.window = window;
         this.refs = refs;
         this.errorWindow = errorWindow;
@@ -68,19 +77,20 @@ public class BooleanExpEditor {
         this.saveBeforeChangeHandler = saveBeforeChangeHandler;
         this.codeAreaBuilder = codeAreaBuilder;
         this.cEditor = cEditor;
+        this.fileChooser = fileChooser;
+        this.stringLoaderInterface = refs.getStringIF();
         prePropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         postPropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         this.codeAreaFocusListener = codeAreaFocusListener;
         letUserEditPostAndPreProperties(postAndPrePropertiesDescription, false);
         windowStarter = new BooleanExpEditorWindowStarter(window);
-        
     }
 
-    void setToolBarHandler(ToolbarHandler toolBarHandler) {
+    void setToolBarHandler(BooleanExpEditorToolbarHandler toolBarHandler) {
         this.toolBarHandler = toolBarHandler;
     }
 
-    void setMenuBarHandler(MenuBarHandler menuBarHandler) {
+    void setMenuBarHandler(BooleanExpEditorMenubarHandler menuBarHandler) {
         this.menuBarHandler = menuBarHandler;
     }
 
@@ -173,7 +183,6 @@ public class BooleanExpEditor {
         this.findErrorsAndDisplayThem();
         this.window.setWindowTitle(postAndPrePropertiesDescription.getName());
         saveBeforeChangeHandler.updatePreValues();
-        saveBeforeChangeHandler.setHasBeensaved(false);
     }
 
     /**
@@ -215,5 +224,21 @@ public class BooleanExpEditor {
 
     public SaveBeforeChangeHandler getSaveBeforeChangeHandler() {
         return saveBeforeChangeHandler;
+    }
+
+    public FileChooser getFileChooser(){
+        return fileChooser;
+    }
+
+    public StringLoaderInterface getStringInterface() {
+        return this.stringLoaderInterface;
+    }
+
+    public void updateStringIf(StringLoaderInterface stringLoaderInterface) {
+        this.stringLoaderInterface = stringLoaderInterface;
+        window.updateStringRes(stringLoaderInterface);
+        symbolicVarListController.updateStringRes(stringLoaderInterface);
+        menuBarHandler.updateStringRes(stringLoaderInterface);
+        toolBarHandler.updateStringRes(stringLoaderInterface);
     }
 }

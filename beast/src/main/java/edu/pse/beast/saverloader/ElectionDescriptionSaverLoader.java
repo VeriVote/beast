@@ -9,28 +9,28 @@ import java.util.Arrays;
 /**
  * @author NikolaiLMS
  */
-public class ElectionDescriptionSaverLoader {
+public class ElectionDescriptionSaverLoader implements SaverLoader{
 
-    public static String createSaveString(ElectionDescription electionDescription) throws Exception{
+    public String createSaveString(Object electionDescription) throws Exception{
         String created = "";
-        String name = "<name>\n" + electionDescription.getName() + "\n</name>\n";
-        String votingDecLine = "<votingDecLine>\n" + electionDescription.getVotingDeclLine() + "\n</votingDecLine>\n";
+        String name = "<name>\n" + ((ElectionDescription) electionDescription).getName() + "\n</name>\n";
+        String votingDecLine = "<votingDecLine>\n" + ((ElectionDescription) electionDescription).getVotingDeclLine() + "\n</votingDecLine>\n";
         String code = "<code>\n";
-        for (String s : electionDescription.getCode()) {
+        for (String s : ((ElectionDescription) electionDescription).getCode()) {
             code += s + "\n";
         }
         code += "\n</code>\n";
         String inputType = "<inputType>\n"
-                + electionDescription.getInputType().getId()
+                + ((ElectionDescription) electionDescription).getInputType().getId()
                 + "\n</inputType>\n";
         String outputType = "<outputType>\n"
-                + electionDescription.getOutputType().getId()
+                + ((ElectionDescription) electionDescription).getOutputType().getId()
                 + "\n</outputType>\n";
         created += name + votingDecLine + code + inputType + outputType;
         return created;
     }
 
-    public static ElectionDescription createFromSaveString(String s) throws Exception{
+    public Object createFromSaveString(String s) throws Exception{
         ElectionTemplateHandler electionTemplateHandler = new ElectionTemplateHandler();
 
         String split[] = s.split("\n</name>\n");
