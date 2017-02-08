@@ -18,6 +18,9 @@ import edu.pse.beast.toolbox.ErrorLogger;
 public class CBMC_Result extends Result {
 
     private FailureExample failureExample = null;
+    
+    private final String segmentEnder = "-----------------------------------";
+
 
     @Override
     public void presentTo(ResultPresenterElement presenter) {
@@ -142,8 +145,6 @@ public class CBMC_Result extends Result {
 
         Pattern longExtractor = Pattern.compile("(\\b" + name + "[0-9]+)(.*)");
 
-        Pattern segmentEnder = Pattern.compile("----------------------------------------------------");
-
         Iterator<String> iterator = getResult().iterator();
         String line = mergeLinesToOne(iterator, segmentEnder);
 
@@ -199,8 +200,6 @@ public class CBMC_Result extends Result {
         // "votesNUMBER[NUMBER]" where "NUMBER" can by any positive
         // number. Also, the next character has to be an equals sign
         Pattern votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+\\])(=.*)");
-
-        Pattern segmentEnder = Pattern.compile("----------------------------------------------------");
 
         Iterator<String> iterator = getResult().iterator();
         String line = mergeLinesToOne(iterator, segmentEnder);
@@ -308,8 +307,6 @@ public class CBMC_Result extends Result {
         // "votesNUMBER[NUMBER][NUMBER]" where "NUMBER" can by any positive
         // number. Also, the next character has to be an equals sign
         Pattern votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+\\]\\[[0-9]+\\])(=.*)");
-
-        Pattern segmentEnder = Pattern.compile("------------------------------------------------");
 
         Iterator<String> iterator = getResult().iterator();
         String line = mergeLinesToOne(iterator, segmentEnder);
@@ -428,7 +425,7 @@ public class CBMC_Result extends Result {
         return list;
     }
 
-    private String mergeLinesToOne(Iterator<String> toMerge, Pattern regexToEndAt) {
+    private String mergeLinesToOne(Iterator<String> toMerge, String regexToEndAt) {
 
         String toReturn = "";
         boolean notEnded = true;
@@ -437,9 +434,7 @@ public class CBMC_Result extends Result {
 
                 String nextLine = toMerge.next();
 
-                Matcher matcher = regexToEndAt.matcher(nextLine);
-
-                if (matcher.matches()) {
+                if (nextLine.contains(regexToEndAt)) {
                     // we found the end of the segment
                     notEnded = false;
                 } else {
