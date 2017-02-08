@@ -1,11 +1,11 @@
 package edu.pse.beast.propertychecker;
 
+import edu.pse.beast.toolbox.ErrorLogger;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import edu.pse.beast.toolbox.ErrorLogger;
 
 public class LinuxProcess extends CBMCProcess {
 
@@ -42,6 +42,8 @@ public class LinuxProcess extends CBMCProcess {
         arguments.add("-D C=" + candidates);
         
         arguments.add("-D S=" + seats);
+
+        arguments.add("--trace");
         
         for (int i = 5; i < argumentsToPass.length; i++) {
             String sanitized = sanitizeArguments(advanced.split(";")[i - 5]);
