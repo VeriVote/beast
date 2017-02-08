@@ -120,6 +120,7 @@ public class ResultPresenterWindow extends JFrame {
 		appendLine(srl.getStringFromID("failureMessage"));
 		appendLine("");
 		for (String line : error) appendLine(line);
+		packFrame();
 	}
 
 	public void presentFailureExample(FailureExample ex) {
@@ -150,6 +151,7 @@ public class ResultPresenterWindow extends JFrame {
 			else appendPane(Arrays.toString(ex.getSeats().get(i).getArray()));
 			appendLine("\n");
 		}
+		packFrame();
 	}
 	
 	public void presentSuccess() {
@@ -162,11 +164,13 @@ public class ResultPresenterWindow extends JFrame {
 		erasePane();
 		//appendPane("The analysis was timed out.");
 		appendPane(srl.getStringFromID("timeoutMessage"));
+		packFrame();
 	}
 	
     public void resetResult()  {
         erasePane();
 		result.setText(srl.getStringFromID("noResultYet"));
+		packFrame();
     }
     
     private void packFrame() {
