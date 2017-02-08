@@ -144,6 +144,13 @@ public class CElectionDescriptionEditorBuilder {
         undo = createElectionUndoUserAction(editor);
         redo = createElectionRedoUserAction(editor);
         
+        editor.addUserAction('n', newAcc);
+        editor.addUserAction('s', save);
+        editor.addUserAction('o', load);
+        editor.addUserAction('c', copy);
+        editor.addUserAction('x', cut);
+        editor.addUserAction('v', paste);
+        
         fileList.add(createFromUserAction(newAcc));
         fileList.add(createFromUserAction(save));
         fileList.add(createFromUserAction(saveAs));

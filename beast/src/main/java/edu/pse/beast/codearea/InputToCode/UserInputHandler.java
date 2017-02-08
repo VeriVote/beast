@@ -30,17 +30,16 @@ public class UserInputHandler implements KeyListener {
         if(letTextPaneHandleKey(ke)) {
             return;
         } else if(isShortcut(ke)) {
-            return;
+            ke.consume();
+        } else {
+            codeInputHandler.handleKey(ke);   
+            ke.consume();         
         }
-        else {
-            codeInputHandler.handleKey(ke);            
-        }
-        ke.consume();
     }
 
     @Override
     public void keyPressed(KeyEvent ke) {  
-        if(letTextPaneHandleKey(ke) || isShortcut(ke)) {
+        if(letTextPaneHandleKey(ke)) {
             return;
         } 
         ke.consume();
@@ -55,8 +54,7 @@ public class UserInputHandler implements KeyListener {
                 shortcutHandler.handleKey(ke); 
             } catch(NullPointerException ex) {
                 System.err.println("key not mapped");
-            }            
-            return;
+            }        
         } else if(ke.getKeyCode() == KeyEvent.VK_DELETE) {
             codeInputHandler.delete();
         } else {
@@ -75,6 +73,10 @@ public class UserInputHandler implements KeyListener {
                 ke.getKeyCode() == KeyEvent.VK_UP ||
                 ke.getKeyCode() == KeyEvent.VK_DOWN ||
                 ke.getKeyChar()== KeyEvent.VK_ESCAPE;                
+    }
+
+    public ShortcutHandler getShortcutHandler() {
+        return shortcutHandler;
     }
 
     

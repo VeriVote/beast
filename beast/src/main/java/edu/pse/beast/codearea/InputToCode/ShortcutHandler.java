@@ -8,6 +8,7 @@ package edu.pse.beast.codearea.InputToCode;
 import edu.pse.beast.toolbox.UserAction;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
+import javafx.scene.input.KeyCode;
 
 /**
  *
@@ -18,21 +19,43 @@ public class ShortcutHandler {
     private HashMap<Integer, UserAction> shortcutMap = new HashMap<>();
 
     public void handleKey(KeyEvent ke) {
-        System.out.println(ke.getKeyCode());        
+        System.out.println(ke.getKeyCode());  
+        
         shortcutMap.get(ke.getKeyCode()).perform();
     }
     
-    public void addAction(int keyCode, UserAction ac) {
-        shortcutMap.put(keyCode, ac);
+    public void addAction(char keyChar, UserAction ac) {
+        shortcutMap.put(getKeyCode(keyChar), ac);
     }
 
-    public int getMappedcharFor(String id) {
-        for(int i : shortcutMap.keySet()) {
-            System.out.println("char " + i + " mapped to " + shortcutMap.get(i).getId());
+    public Integer getMappedcharFor(String id) {
+        for(Integer i : shortcutMap.keySet()) {
+            System.out.println("char " + id.toString() + " mapped to " + shortcutMap.get(i).getId());
             if(shortcutMap.get(i).getId() == id) 
                 return i;
         }
-        return 0;
+        return -1;
+    } 
+
+    private Integer getKeyCode(char keyChar) {
+        switch(keyChar) {
+                case 'z':
+                    return 90;
+                case 'r':
+                    return 82;
+                case 'c':
+                    return 67;
+                case 'x':
+                    return 88;
+                case 'v':
+                    return 86;
+                case 's':
+                    return 83;                    
+                case 'o':
+                    return 79;
+                default:
+                    return -1;                            
+        }     
     }
 
 }

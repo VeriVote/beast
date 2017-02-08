@@ -8,11 +8,13 @@ package edu.pse.beast.codearea;
 import edu.pse.beast.codearea.Actionlist.Actionlist;
 import edu.pse.beast.codearea.Autocompletion.AutocompletionController;
 import edu.pse.beast.codearea.ErrorHandling.ErrorController;
+import edu.pse.beast.codearea.InputToCode.ShortcutHandler;
 import edu.pse.beast.codearea.InputToCode.UserInputHandler;
 import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
 import edu.pse.beast.codearea.SyntaxHL.RegexAndColor;
 import edu.pse.beast.codearea.SyntaxHL.SyntaxHL;
 import edu.pse.beast.codearea.UserActions.CodeAreaUserActions;
+import edu.pse.beast.toolbox.UserAction;
 import javax.swing.JTextPane;
 import java.util.ArrayList;
 
@@ -25,6 +27,7 @@ public class CodeArea {
     protected JTextPane pane;
     protected TextLineNumber tln;
     protected UserInputHandler userInputHandler;
+    protected ShortcutHandler shortcutHandler;
     protected UserInsertToCode insertToCode;
     protected Actionlist actionList;
     protected ErrorController errorCtrl;
@@ -49,6 +52,7 @@ public class CodeArea {
         this.pane = pane;
         this.tln = tln; 
         this.userInputHandler = userInputHandler;
+        this.shortcutHandler = userInputHandler.getShortcutHandler();
         this.insertToCode = insertToCode;
         this.actionList = actionList;
         this.errorCtrl = errorCtrl;
@@ -63,6 +67,7 @@ public class CodeArea {
         this.pane = codeArea.pane;
         this.tln = codeArea.tln;
         this.userInputHandler = codeArea.userInputHandler;
+        this.shortcutHandler = userInputHandler.getShortcutHandler();
         this.insertToCode = codeArea.insertToCode;
         this.actionList = codeArea.actionList;
         this.errorCtrl = codeArea.errorCtrl;
@@ -115,4 +120,9 @@ public class CodeArea {
         insertToCode.insertString(string);
     }
 
+    public void linkActionToShortcut(char c, UserAction newAcc) {
+        shortcutHandler.addAction(c, newAcc);
+    }
+    
+    
 }

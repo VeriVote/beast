@@ -73,19 +73,9 @@ public class CodeAreaBuilder {
 
 
         //maybe change it up so user can change it?
-        shortcutHandler.addAction(getKeyCodeFor('z'), userActions.getActionById("undo"));
-        shortcutHandler.addAction(getKeyCodeFor('r'), userActions.getActionById("redo"));
+        shortcutHandler.addAction('z', userActions.getActionById("undo"));
+        shortcutHandler.addAction('r', userActions.getActionById("redo"));
         return created;
     }
     
-    private int getKeyCodeFor(char c) {
-        switch(c) {
-                case 'z':
-                    return 90;
-                case 'r':
-                    return 82;
-                default:
-                    return -1;                            
-        }                    
-    }
 }

@@ -18,6 +18,7 @@ import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.FileChooser;
+import edu.pse.beast.toolbox.UserAction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,6 +44,8 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     private CElectionEditorToolbarHandler toolbarHandler;
     private StringLoaderInterface stringLoaderInterface;
     private FileChooser fileChooser;
+    private ArrayList<UserAction> userActions = new ArrayList<>();
+    private ArrayList<Character> userActionChars = new ArrayList<>();
 
     public CElectionDescriptionEditor(
             CElectionCodeArea codeArea,
@@ -67,6 +70,11 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         return currentDescription;
     }
 
+    public void addUserAction(char c, UserAction ac) {
+        userActions.add(ac);
+        userActionChars.add(c);
+    }
+    
     public void updateCurrentDescription() {
         List<String> code;
         currentDescription.setVotingDeclLine(codeArea.getFirstLockedLine());
@@ -150,6 +158,13 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         codeArea = builder.createCElectionCodeArea(gui.getCodeArea(),
                 gui.getCodeAreaScrollPane(),
                 (CErrorDisplayer) codeArea.getErrorCtrl().getDisplayer());
+        
+        for (int i = 0; i < userActions.size(); i++) {
+            UserAction get = userActions.get(i);
+            char c = userActionChars.get(i);
+            codeArea.linkActionToShortcut(c, get);
+        }
+        
         codeArea.letUserEditCode(description.getCode());
         codeArea.lockLine(description.getVotingDeclLine());
         codeArea.lockLine(description.getCode().size() - 1);

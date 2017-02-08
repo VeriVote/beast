@@ -28,4 +28,5 @@ public class CElectionCodeAreaBuilder extends CodeAreaBuilder {
         return new CElectionCodeArea(createCodeArea(codeArea, codeAreaScrollPane,
                 refs, displayer));
     }
+
 }
