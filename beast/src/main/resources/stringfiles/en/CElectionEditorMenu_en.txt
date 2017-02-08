@@ -1,50 +1,50 @@
-file : Datei
-new : Neue Wahlverfahrensbeschreibung
-save : Speichern
-save_as : Speichern unter
-load : Öffnen
-edit : Bearbeiten
-undo : Rückgängig
-redo : Wiederholen
-copy : Kopieren
-cut : Ausschneiden
-paste : Einfügen
-change_election_type : Wahlart ändern
+file : File
+new : New election description
+save : Save
+save_as : Save as
+load : Open
+edit : Edit
+undo : Undo
+redo : Redp
+copy : Copy
+cut : Cut
+paste : Paste
+change_election_type : Change election type
 editor : Editor
-options : Eigenschaften
+options : Properties
 code : Code
-static_analysis : Statische Codeanalyse starten
-openDialogTitleText : Wahlverfahren Öffnen
-saveDialogTitleText : Wahlverfahren Speichern
-lookInLabelText : Suchen in:
-openButtonText : Öffnen
-cancelButtonText : Abbrechen
-fileNameLabelText : Dateiname
-filesOfTypeLabelText : Dateityp
-openApproveButtonToolTipText : Öffnen
-openApproveButtonText : Öffnen
-saveApproveButtonToolTipText : Speichern
-saveApproveButtonText : Speichern
-ancelButtonToolTipText : Abbrechen
-fileNameHeaderText : Dateiname
-upFolderToolTipText : Eine Ebene höher
+static_analysis : Start static code analysis
+openDialogTitleText : Open election description
+saveDialogTitleText : Save election description
+lookInLabelText : Search in:
+openButtonText : Open
+cancelButtonText : Cancel
+fileNameLabelText : Filename
+filesOfTypeLabelText : File type
+openApproveButtonToolTipText : Open
+openApproveButtonText : Open
+saveApproveButtonToolTipText : Save
+saveApproveButtonText : Save
+ancelButtonToolTipText : Cancel
+fileNameHeaderText : Filename
+upFolderToolTipText : Up one level
 homeFolderToolTipText : Home
-newFolderToolTipText : Neuen Ordner erstellen
-listViewButtonToolTipText : Listen Ansicht
-newFolderButtonText : Neuen Ordner erstellen
-renameFileButtonText : Umbennen
-deleteFileButtonText : Löschen
-filterLabelText : Dateityp
+newFolderToolTipText : Create new folder
+listViewButtonToolTipText : List view
+newFolderButtonText : Create new folder
+renameFileButtonText : Rename
+deleteFileButtonText : Delete
+filterLabelText : File type 
 detailsViewButtonToolTipText : Details
-fileSizeHeaderText : Größe
-fileDateHeaderText : Zuletzt modifiziert
+fileSizeHeaderText : Size
+fileDateHeaderText : Last modified
 fileApproveRegex : (.)+\.elec
-fileDescription : BEAST-Wahlverfahren-Datei (*.elec)
-objectCouldNotBeConvertedToString : Wahlverfahren konnte nicht in einen String zum speichern konvertiert werden.
-objectCouldNotBeSavedError : Wahlverfahren konnte nicht gespeichert werden.
-inputOutputErrorOpen : Fehler beim einlesen der Datei (Wahrscheinlich existiert sie nicht).
-invalidFileFormatErrorMessage : Die gegebene Datei enthält kein gültiges BEAST-Wahlverfahren-Format.
-wrongEncodingError : Das Projekt enthält falsch kodierte Zeichen.
-inputOutputErrorSave : Das Verzeichnis in dem gespeichert werden soll existiert nicht.
-wrongFileNameError : Der angegebene Name entspricht nicht dem regulären Ausdruck '[_a-zA-Z0-9\-\.]+'.
+fileDescription : BEAST-Description-File (*.elec)
+objectCouldNotBeConvertedToString : Was not able to convert election description into a string to save.
+objectCouldNotBeSavedError : Election description couldn't be saved.
+inputOutputErrorOpen :  Error while reading the file (probably it doesn't exist).
+invalidFileFormatErrorMessage : The given file does not contain a valid BEAST-Description-Format.
+wrongEncodingError : The project contains wrong encoded characters.
+inputOutputErrorSave : The folder, in which you want to save, does not exist.
+wrongFileNameError : The name does not match the regular expression '[_a-zA-Z0-9\-\.]+'.
 fileSuffix : .elec
