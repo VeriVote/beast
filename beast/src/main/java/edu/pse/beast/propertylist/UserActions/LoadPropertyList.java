@@ -23,7 +23,6 @@ public class LoadPropertyList extends UserAction {
 
     @Override
     public void perform() {
-        // TODO make method static somewhere
 
         if (controller.getSaveBeforeChangeHandler().isChangedSinceSave()) {
             int ask = JOptionPane.showConfirmDialog(controller.getView(),

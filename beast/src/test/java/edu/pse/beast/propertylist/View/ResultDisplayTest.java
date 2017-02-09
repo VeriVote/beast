@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.electiondescription.ElectionType;
 
 public class ResultDisplayTest {
@@ -49,6 +50,9 @@ public class ResultDisplayTest {
 		votes.add(new Long[]{2l,2l,1l});
 		elected.add(3l);
 		elected.add(2l);
+		
+		
+		
 		
 	//	FailureExample fail = new FailureExample(et, votes, null, elected, null, 3, 1, 3);
 	
