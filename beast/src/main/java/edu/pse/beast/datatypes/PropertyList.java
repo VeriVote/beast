@@ -15,15 +15,17 @@ import java.util.List;
 public class PropertyList {
     private final List<PostAndPrePropertiesDescription> descr;
     private final List<Boolean> checked; 
-    
+    private String name;
+
     /**
      *
      * @param descr   
      * @param checked    
      */
-    public PropertyList(List<PostAndPrePropertiesDescription> descr, List<Boolean> checked) {
+    public PropertyList(List<PostAndPrePropertiesDescription> descr, List<Boolean> checked, String name) {
         this.descr = descr;
         this.checked = checked;
+        this.name = name;
     }
 
     /**

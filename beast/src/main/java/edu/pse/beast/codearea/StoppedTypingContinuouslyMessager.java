@@ -22,7 +22,7 @@ import javax.swing.event.CaretListener;
 public class StoppedTypingContinuouslyMessager implements KeyListener, CaretListener {
     private JTextPane pane;
     private ArrayList<StoppedTypingContinuouslyListener> listener = 
-            new ArrayList();
+            new ArrayList<>();
     private int currentCaretPos = 0;
     
     public StoppedTypingContinuouslyMessager(JTextPane pane) {

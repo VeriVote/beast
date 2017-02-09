@@ -32,10 +32,11 @@ import edu.pse.beast.stringresource.StringResourceLoader;
 */
 public class PropertyListWindow extends JFrame implements DisplaysStringsToUser, Observer {
 	
-	PLModelInterface model;
-	PLControllerInterface controller;
-	
-	StringLoaderInterface sli = new StringLoaderInterface("de");
+	private PLModelInterface model;
+	private PLControllerInterface controller;
+	private String title;
+	private String currentlyLoadedPropertyListName;
+	private StringLoaderInterface sli = new StringLoaderInterface("de");
 	private boolean reactsToInput = true;
 	
 	private JMenuBar menuBar;
@@ -176,8 +177,9 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		StringResourceLoader other = provider.getOtherStringRes();
 		StringResourceLoader menu = provider.getMenuStringRes();
 		StringResourceLoader toolbarTip = provider.getToolbarTipStringRes();
-		
-		this.setTitle(other.getStringFromID("title"));
+
+		title = other.getStringFromID("title");
+		setWindowTitle(other.getStringFromID("title"));
 		this.addNewButton.setText(other.getStringFromID("newButton"));
 		
 		for (ListItem item : items) {
@@ -208,19 +210,16 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	
 	public void stopReacting() {
 		setReactsToInput(false);
-		setVisible(false);
 	}
+
 	public void resumeReacting() {
 		setReactsToInput(true);
 	}
+
 	private void setReactsToInput(boolean reacts) {
 		reactsToInput = reacts;
 		for (ListItem item : items) item.setReactsToInput(reacts);
 	}
-
-	
-	
-
 	
 	public ListItem getNextToPresent() {
 		return nextToPresent;
@@ -228,6 +227,18 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	public void setNextToPresent(ListItem nextToPresent) {
 		this.nextToPresent = nextToPresent;
 	}
-	
-	
+
+	@Override
+	public void setTitle(String s) {
+		super.setTitle(s);
+	}
+
+	/**
+	 * Adds the given string to the window title, used for displaying name of currently loaded PropertyList object
+	 * @param propListName name of the currently loaded PropertyList object
+	 */
+	public void setWindowTitle(String propListName) {
+		this.currentlyLoadedPropertyListName = propListName;
+		this.setTitle(title + " " + propListName);
+	}
 }

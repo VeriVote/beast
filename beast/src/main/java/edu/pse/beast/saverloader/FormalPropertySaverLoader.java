@@ -15,10 +15,10 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
  */
 public class FormalPropertySaverLoader {
     public static String createSaveString(FormalPropertiesDescription desc) {
-        return desc.getCode();
+        return StringSaverLoader.createSaveString(desc.getCode());
     }
     
     public static FormalPropertiesDescription createFromSaveString(String desc) {
-        return new FormalPropertiesDescription(desc);
+        return new FormalPropertiesDescription(StringSaverLoader.createFromSaveString(desc));
     }
 }

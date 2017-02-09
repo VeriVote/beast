@@ -42,6 +42,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
     private boolean reacts;
     private final FileChooser fileChooser;
     private boolean hasChanged;
+    private Project currentlyLoadedProject;
 
     /**
      * Constructor which also links the handlers to the View elements
@@ -151,7 +152,11 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
     }
 
     public boolean hasChanged() {
-        return hasChanged();
+        return hasChanged;
+    }
+
+    public void setHasChanged(boolean hasChanged) {
+        this.hasChanged = hasChanged;
     }
 
     @Override
@@ -200,5 +205,20 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
      */
     public FileChooser getFileChooser() {
         return fileChooser;
+    }
+
+
+    public ParameterEditorWindow getView() {
+        return window;
+    }
+
+    public Project getCurrentlyLoadedProject() {
+        if (currentlyLoadedProject == null) {
+            return new Project(getParameter(), propertyList.getModel(),
+                    cElectionDescriptionEditor.getElectionDescription(), "New Project");
+        } else {
+            return new Project(getParameter(), propertyList.getModel(),
+                    cElectionDescriptionEditor.getElectionDescription(), currentlyLoadedProject.getName());
+        }
     }
 }

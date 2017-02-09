@@ -78,7 +78,7 @@ public class ProjectSaverLoaderTest {
         ElectionCheckParameter electionCheckParameter = new ElectionCheckParameter(Arrays.asList(new Integer[]{1, 2}),
                 Arrays.asList(new Integer[]{1, 2}), Arrays.asList(new Integer[]{1, 2}), new TimeOut(TimeUnit.HOURS, (long) 3.2)
                 ,4, "-- unwind 6");
-        Project project = new Project(electionCheckParameter, plModel, electionDescription);
+        Project project = new Project(electionCheckParameter, plModel, electionDescription, "TestProject");
         System.out.println(projectSaverLoader.createSaveString(project));
     }
 
@@ -116,14 +116,12 @@ public class ProjectSaverLoaderTest {
         ElectionCheckParameter electionCheckParameter = new ElectionCheckParameter(Arrays.asList(new Integer[]{1, 2}),
                 Arrays.asList(new Integer[]{1, 2}), Arrays.asList(new Integer[]{1, 2}), new TimeOut(TimeUnit.HOURS, (long) 3.2)
                 ,4, "-- unwind 6");
-        Project project = new Project(electionCheckParameter, plModel, electionDescription);
+        Project project = new Project(electionCheckParameter, plModel, electionDescription, "TestProject");
 
         Project projec1 = (Project) projectSaverLoader.createFromSaveString(projectSaverLoader.createSaveString(project));
-
+        System.out.println("PROJEC 1 NAME: " + projec1.getName());
         System.out.println(projec1.getElecDescr().getName());
         System.out.println(projec1.getElecDescr().getInputType().getType().getAccesTypeIfList());
         System.out.println(projec1.getPropList().getPropertyList().get(0).getDescription().getPrePropertiesDescription().getCode());
-
-
     }
 }

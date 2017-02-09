@@ -14,6 +14,9 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
 
     private final AdvancedWindow advWindow = new AdvancedWindow();
     private boolean reacts;
+    private String title;
+    private String currentlyLoadedProjectName;
+
     /**
      * Creates new form ParameterEditorWindow
      */
@@ -324,7 +327,8 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     public void updateStringRes(StringLoaderInterface stringResIF) {
         ParameterEditorStringResProvider provider = stringResIF.getParameterEditorStringResProvider();
         StringResourceLoader other = provider.getOtherStringRes();
-        setTitle(other.getStringFromID("title"));
+        title = other.getStringFromID("title");
+        setWindowTitle(currentlyLoadedProjectName);
         voters.setText(other.getStringFromID("voters"));
         candidates.setText(other.getStringFromID("candidates"));
         seats.setText(other.getStringFromID("seats"));
@@ -349,5 +353,14 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     public void setReacts(boolean reacts) {
         this.reacts = reacts;
         advWindow.setReacts(reacts);
+    }
+
+    /**
+     * Adds the given string to the window title, used for displaying name of currently loaded Project object
+     * @param projectName name of the currently loaded Project object
+     */
+    public void setWindowTitle(String projectName) {
+        this.currentlyLoadedProjectName = projectName;
+        this.setTitle(title + " " + projectName);
     }
 }

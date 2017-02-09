@@ -11,6 +11,7 @@ import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.
 import edu.pse.beast.celectiondescriptioneditor.View.CCodeEditorWindow;
 import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveBeforeChangeHandler;
 import edu.pse.beast.celectiondescriptioneditor.View.ErrorWindow;
+import edu.pse.beast.codearea.CodeArea;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
@@ -93,32 +94,12 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         errorWindow.displayErrors(errors, (CErrorDisplayer) codeArea.getErrorCtrl().getDisplayer());
     }
 
-    public void changeElectionDescriptionInput(ElectionTypeContainer cont) {
-        currentDescription.setInputType(cont);
-        for(ElectionDescriptionChangeListener l : descriptionChangeListeners) 
-            l.inputChanged(cont);
-    }
-    
-    public void changeElectionDescriptionOutput(ElectionTypeContainer cont) {
-        currentDescription.setOutputType(cont);
-        for(ElectionDescriptionChangeListener l : descriptionChangeListeners) 
-            l.outputChanged(cont);
-    }
-
     public void setcElectionEditorMenubarHandler(CElectionEditorMenubarHandler cElectionEditorMenubarHandler) {
         this.menubarHandler = cElectionEditorMenubarHandler;
     }
 
     public void setcElectionEditorToolbarHandler(CElectionEditorToolbarHandler cElectionEditorToolbarHandler) {
         this.toolbarHandler = cElectionEditorToolbarHandler;
-    }
-
-    public CElectionEditorMenubarHandler getcElectionEditorMenubarHandler() {
-        return menubarHandler;
-    }
-
-    public CElectionEditorToolbarHandler getcElectionEditorToolbarHandler() {
-        return toolbarHandler;
     }
 
     @Override
@@ -163,7 +144,6 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         codeArea = builder.createCElectionCodeArea(window.getCodeArea(),
                 window.getCodeAreaScrollPane(),
                 new CErrorDisplayer(window.getCodeArea(), stringLoaderInterface));
-        
         for (int i = 0; i < userActions.size(); i++) {
             UserAction get = userActions.get(i);
             char c = userActionChars.get(i);
@@ -205,11 +185,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     public void removeListener(ElectionDescriptionChangeListener l) {
         descriptionChangeListeners.remove(l);
     }
-    
-    public boolean getIsVisible() {
-        return window.isVisible();
-    }
-    
+
     public void setVisible(boolean vis) {
         window.setVisible(vis);
     }

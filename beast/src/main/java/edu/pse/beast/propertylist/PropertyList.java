@@ -152,7 +152,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     public void resumeReacting() {
         view.resumeReacting();
         if (editorWasVisible) {
-            editor.getView().setVisible(false);
+            editor.getView().setVisible(true);
         }
     }
 
@@ -215,10 +215,11 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     public PLModel getModel() {
         return (PLModel) model;
     }
-    
+
     public void setPLModel(PLModelInterface model) {
-        model.loadAnotherModel(model);
-        //((PLModel) this.model).updateView();
+        this.model.loadAnotherModel(model);
+        // ((PLModel) this.model).updateView();
+        view.setWindowTitle(((PLModel) model).getName());
     }
 
     /**

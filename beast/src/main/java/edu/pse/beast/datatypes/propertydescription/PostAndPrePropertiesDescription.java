@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.datatypes.propertydescription;
 
+import edu.pse.beast.datatypes.ChangeNameInterface;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
@@ -20,7 +21,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
  *
  * @author Niels
  */
-public class PostAndPrePropertiesDescription {
+public class PostAndPrePropertiesDescription implements ChangeNameInterface{
 
     private String name;
     private SymbolicVariableList symbolicVariableList;
@@ -93,5 +94,10 @@ public class PostAndPrePropertiesDescription {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public void setNewName(String newName) {
+        setName(newName);
     }
 }

@@ -19,7 +19,7 @@ public class PostAndPrePropertiesDescriptionSaverLoader implements SaverLoader{
 
     public String createSaveString(Object props) throws Exception{
         String created = "";
-        String name = "<name>\n" + ((PostAndPrePropertiesDescription) props).getName() + "\n</name>\n";
+        String name = "<postAndPrePropsName>\n" + ((PostAndPrePropertiesDescription) props).getName() + "\n</postAndPrePropsName>\n";
         String preProps = "<pre>\n" + FormalPropertySaverLoader.createSaveString(
                 ((PostAndPrePropertiesDescription) props).getPrePropertiesDescription()) + "\n</pre>\n";
         String postProps = "<post>\n" + FormalPropertySaverLoader.createSaveString(
@@ -31,8 +31,8 @@ public class PostAndPrePropertiesDescriptionSaverLoader implements SaverLoader{
     }
     
     public Object createFromSaveString(String s) throws Exception{
-        String split[] = s.split("\n</name>\n");
-        String name = split[0].replace("<name>\n", "");
+        String split[] = s.split("\n</postAndPrePropsName>\n");
+        String name = split[0].replace("<postAndPrePropsName>\n", "");
         split = split[1].split("\n</pre>\n");
         String preString = split[0].replace("<pre>\n", "");
         FormalPropertiesDescription pre = FormalPropertySaverLoader.createFromSaveString(preString);

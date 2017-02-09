@@ -1,5 +1,6 @@
 package edu.pse.beast.saverloader;
 
+import edu.pse.beast.datatypes.ChangeNameInterface;
 import edu.pse.beast.saverloader.SaverLoader;
 import edu.pse.beast.stringresource.StringResourceLoader;
 
@@ -99,17 +100,20 @@ public class FileChooser {
                     options[0]);
             return false;
         } else if (!fileChooser.getSelectedFile().getName().endsWith(fileSuffix)) {
-            file = new File(file.getName() + stringResourceLoader.getStringFromID(
+            file = new File(file.getAbsolutePath() + stringResourceLoader.getStringFromID(
                     "fileSuffix"));
         }
 
         String saveString;
         try {
+            ((ChangeNameInterface) object).setNewName(file.getName().split(stringResourceLoader.getStringFromID(
+                    "fileSuffix"))[0]);
             saveString = saverLoader.createSaveString(object);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
+
         Writer out;
         try {
             out = new BufferedWriter(new OutputStreamWriter(

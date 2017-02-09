@@ -43,19 +43,23 @@ public class LoadProjectUserAction extends UserAction {
     @Override
     public void perform() {
         if (paramEditor.getReacts()) {
-            // TODO SaveBeforeChangeHandler call
+            if (paramEditor.hasChanged() || cElectionEditor.getSaveBeforeChangeHandler().hasChanged() ||
+                    propertyList.getSaveBeforeChangeHandler().isChangedSinceSave()){
+                
+            }
             Project loadedProject = (Project) paramEditor.getFileChooser().loadObject();
             if (loadedProject != null) {
                 propertyList.setPLModel(loadedProject.getPropList());
                 propertyList.getView().setVisible(true);
                 paramEditor.setParameter(loadedProject.getElectionCheckParameter());
+                paramEditor.getView().setWindowTitle(loadedProject.getName());
                 try {
                     cElectionEditor.letUserEditElectionDescription(loadedProject.getElecDescr());
                     cElectionEditor.setVisible(true);
                 } catch (BadLocationException e) {
                     e.printStackTrace();
                 }
-                // TODO SaveBeforeChangeHandler call
+                paramEditor.setHasChanged(false);
             }
         }
     }

@@ -5,17 +5,20 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
+import edu.pse.beast.datatypes.ChangeNameInterface;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.ResultInterface;
 
-public class PLModel extends Observable implements PLModelInterface {
+public class PLModel extends Observable implements PLModelInterface, ChangeNameInterface {
 
     private ArrayList<PropertyItem> propertyList;
+    private String name;
 
     @Override
     public void initialize() {
         if (propertyList == null) {
             propertyList = new ArrayList<PropertyItem>();
+            name = "New PropertyList";
         }
     }
 
@@ -161,4 +164,12 @@ public class PLModel extends Observable implements PLModelInterface {
         return propertyList;
     }*/
 
+    @Override
+    public void setNewName(String newName) {
+        this.name = newName;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

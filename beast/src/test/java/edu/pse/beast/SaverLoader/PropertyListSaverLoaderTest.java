@@ -82,7 +82,6 @@ public class PropertyListSaverLoaderTest {
 
         PLModel plModel1 = (PLModel) new PropertyListSaverLoader().createFromSaveString(
                 new PropertyListSaverLoader().createSaveString(plModel));
-        plModel.getPropertyList().get(0);
 
         System.out.println(plModel1.getPropertyList().get(0).getDescription().getName());
         System.out.println(plModel1.getPropertyList().get(0).getDescription().getPostPropertiesDescription());

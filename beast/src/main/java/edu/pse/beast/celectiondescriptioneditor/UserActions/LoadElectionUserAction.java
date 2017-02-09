@@ -19,7 +19,6 @@ import javax.swing.text.BadLocationException;
 public class LoadElectionUserAction extends UserAction {
 
     private CElectionDescriptionEditor cElectionDescriptionEditor;
-    private SaverLoaderInterface saverLoaderInterface;
 
     public LoadElectionUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
         super("load");

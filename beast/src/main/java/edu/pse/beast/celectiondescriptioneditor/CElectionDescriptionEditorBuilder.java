@@ -207,11 +207,6 @@ public class CElectionDescriptionEditorBuilder {
     private ElectionUndoUserAction createElectionUndoUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
         return new ElectionUndoUserAction(cElectionDescriptionEditor);
     }
-
-    //edit
-    private ChangeElectionTypeUserAction createChangeElectionTypeUserAction() {
-        return new ChangeElectionTypeUserAction();
-    }
     
     //editor
     private PresentOptionsUserAction createPresentOptionsUserAction() {

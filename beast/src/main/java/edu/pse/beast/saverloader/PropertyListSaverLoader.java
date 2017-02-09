@@ -40,20 +40,28 @@ public class PropertyListSaverLoader implements SaverLoader{
     }
 
     public String createSaveString(Object propertyList) throws Exception{
-        String created = "";
+        String name = "<propertyListName>\n" +
+                ((PLModel) propertyList).getName()
+                + "\n</propertyListName>\n";
+        String propItems = "";
         for(PropertyItem propertyItem : ((PLModel )propertyList).getPropertyList()) {
-            created += "<propertyItem>\n" + createPropertyItemString(propertyItem) + "\n</propertyItem>\n";
+            propItems += "<propertyItem>\n" + createPropertyItemString(propertyItem) + "\n</propertyItem>\n";
         }
-        return created;
+        return name + propItems;
     }
 
     public Object createFromSaveString(String s) throws Exception {
+        String [] split = s.split("\n</propertyListName>\n");
+        String name = split[0].replace("<propertyListName>\n", "");
         PLModel plModel = new PLModel();
         plModel.initialize();
-        String[] split = s.split("\n</propertyItem>\n");
-        int numberOfItems = split.length;
-        for (int i = 0; i < numberOfItems; i++) {
-            plModel.addDescription(createPropertyItem(split[i].replace("<propertyItem>\n", "")));
+        plModel.setNewName(name);
+        if (split.length > 1) {
+            split = split[1].split("\n</propertyItem>\n");
+            int numberOfItems = split.length;
+            for (int i = 0; i < numberOfItems; i++) {
+                plModel.addDescription(createPropertyItem(split[i].replace("<propertyItem>\n", "")));
+            }
         }
         //plModel.setChangedSinceSave(false);
         return plModel;

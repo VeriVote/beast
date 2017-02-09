@@ -88,4 +88,7 @@ public class CBMCResultWrappersingleArray {
         return toReturn;
     }
 
+    public List<Long> getList() {
+        return list;
+    }
 }

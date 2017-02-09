@@ -117,4 +117,8 @@ public class CBMCResultWrapperMultiArray {
         }
         return toReturn;
     }
+
+    public List<ArrayList<Long>> getList() {
+        return list;
+    }
 }

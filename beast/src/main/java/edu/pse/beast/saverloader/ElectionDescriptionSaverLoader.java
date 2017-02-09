@@ -13,13 +13,14 @@ public class ElectionDescriptionSaverLoader implements SaverLoader{
 
     public String createSaveString(Object electionDescription) throws Exception{
         String created = "";
-        String name = "<name>\n" + ((ElectionDescription) electionDescription).getName() + "\n</name>\n";
+        String name = "<electionName>\n" + ((ElectionDescription) electionDescription).getName() + "\n</electionName>\n";
         String votingDecLine = "<votingDecLine>\n" + ((ElectionDescription) electionDescription).getVotingDeclLine() + "\n</votingDecLine>\n";
         String code = "<code>\n";
+        String codeString = "";
         for (String s : ((ElectionDescription) electionDescription).getCode()) {
-            code += s + "\n";
+            codeString += s + "\n";
         }
-        code += "\n</code>\n";
+        code += StringSaverLoader.createSaveString(codeString) + "\n</code>\n";
         String inputType = "<inputType>\n"
                 + ((ElectionDescription) electionDescription).getInputType().getId()
                 + "\n</inputType>\n";
@@ -33,13 +34,13 @@ public class ElectionDescriptionSaverLoader implements SaverLoader{
     public Object createFromSaveString(String s) throws Exception{
         ElectionTemplateHandler electionTemplateHandler = new ElectionTemplateHandler();
 
-        String split[] = s.split("\n</name>\n");
-        String name = split[0].replace("<name>\n", "");
+        String split[] = s.split("\n</electionName>\n");
+        String name = split[0].replace("<electionName>\n", "");
         split = split[1].split("\n</votingDecLine>\n");
         int votingDecLine = Integer.parseInt(split[0].replace("<votingDecLine>\n", ""));
         split = split[1].split("\n</code>\n");
         String code = split[0].replace("<code>\n", "");
-        String [] codeArray = code.split("\n");
+        String [] codeArray = StringSaverLoader.createFromSaveString(code).split("\n");
         split = split[1].split("\n</inputType>\n");
         ElectionTypeContainer inputType = electionTemplateHandler.getById(split[0].replace("<inputType>\n", ""));
         split = split[1].split("\n</outputType>\n");

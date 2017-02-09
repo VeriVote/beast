@@ -22,6 +22,7 @@ public class SavePropsUserAction extends UserAction{
     public void perform() {
         if (booleanExpEditor.getFileChooser().saveObject(booleanExpEditor.getCurrentlyLoadedPostAndPreProp(), false)) {
             booleanExpEditor.getSaveBeforeChangeHandler().updatePreValues();
+            booleanExpEditor.getView().setWindowTitle(booleanExpEditor.getCurrentlyLoadedPostAndPreProp().getName());
         }
     }
 }

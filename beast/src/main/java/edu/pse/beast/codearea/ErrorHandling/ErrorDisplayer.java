@@ -86,13 +86,11 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
             if(absPosToMsg.get(i).x <= pos && absPosToMsg.get(i).y >= pos) {
                 errorPopupMenu.getErrorItem().setText(msges.get(i));
                 errorPopupMenu.show(pane, e.getX(), e.getY());
-                System.out.println("showing err window");
                 return;
             }
         }
         if(errorPopupMenu.isVisible()) {            
             errorPopupMenu.setVisible(false);
-            System.out.println("hiding err window");
         }
     }
     

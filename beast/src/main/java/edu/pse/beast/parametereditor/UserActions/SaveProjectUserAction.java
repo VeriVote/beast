@@ -34,10 +34,10 @@ public class SaveProjectUserAction extends UserAction {
     @Override
     public void perform() {
         if(paramEditor.getReacts()) {
-            Project project = new Project(paramEditor.getParameter(), propertyList.getModel(),
-                    cElectionEditor.getElectionDescription());
-            if (cElectionEditor.getFileChooser().saveObject(project, false)) {
-                //TODO SaveBeforeChangeHandler call
+            Project project = paramEditor.getCurrentlyLoadedProject();
+            if (paramEditor.getFileChooser().saveObject(project, false)) {
+                paramEditor.getView().setWindowTitle(paramEditor.getCurrentlyLoadedProject().getName());
+                paramEditor.setHasChanged(false);
             }
         }
     }

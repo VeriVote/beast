@@ -19,7 +19,10 @@ public class ProjectSaverLoader implements SaverLoader{
         this.propertyListSaverLoader = new PropertyListSaverLoader();
         this.electionDescriptionSaverLoader = new ElectionDescriptionSaverLoader();
     }
+
     public String createSaveString(Object project) throws Exception{
+        String name = "<projectName>\n" + ((Project) project).getName()
+                + "\n</projectName>\n";
         String electionDescription = "<electionDescription>\n" + electionDescriptionSaverLoader.createSaveString(
                 ((Project) project).getElecDescr())
                 + "\n</electionDescription>\n";
@@ -28,11 +31,13 @@ public class ProjectSaverLoader implements SaverLoader{
         String electionCheckParameter = "<electionCheckParameter>\n" + electionCheckParameterSaverLoader.createSaveString(
                 ((Project) project).getElectionCheckParameter())
                 + "\n</electionCheckParameter>\n";
-        return electionDescription + propertyList + electionCheckParameter;
+        return name + electionDescription + propertyList + electionCheckParameter;
     }
 
     public Object createFromSaveString(String s) throws Exception {
-        String [] split = s.split("\n</electionDescription>\n");
+        String [] split = s.split("\n</projectName>\n");
+        String name = split[0].replace("<projectName>\n", "");
+        split = split[1].split("\n</electionDescription>\n");
         ElectionDescription electionDescription = ((ElectionDescription) electionDescriptionSaverLoader.
                 createFromSaveString(split[0].replace("<electionDescription>\n", "")));
         split = split[1].split("\n</propertyList>\n");
@@ -40,7 +45,7 @@ public class ProjectSaverLoader implements SaverLoader{
         split = split[1].split("\n</electionCheckParameter>\n");
         ElectionCheckParameter electionCheckParameter = (ElectionCheckParameter)
                 electionCheckParameterSaverLoader.createFromSaveString(split[0].replace("<electionCheckParameter>\n", ""));
-        return new Project(electionCheckParameter, propertyList, electionDescription);
+        return new Project(electionCheckParameter, propertyList, electionDescription, name);
     }
 
 }
