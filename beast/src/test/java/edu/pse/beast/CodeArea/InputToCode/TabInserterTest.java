@@ -6,7 +6,6 @@
 package edu.pse.beast.CodeArea.InputToCode;
 
 import edu.pse.beast.codearea.InputToCode.TabInserter;
-import edu.pse.beast.codearea.InputToCode.LineHandler;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import org.junit.After;
@@ -23,7 +22,6 @@ import static org.junit.Assert.*;
 public class TabInserterTest {
     
     private TabInserter ins;
-    private LineHandler lineHandler;
     private JTextPane pane;
     
     public TabInserterTest() {
@@ -40,7 +38,6 @@ public class TabInserterTest {
     @Before
     public void setUp() {
         pane = new JTextPane();
-        lineHandler = new LineHandler(pane);
         ins = new TabInserter(pane);
     }
     
@@ -74,7 +71,6 @@ public class TabInserterTest {
         assertEquals(after, code);
         
         pane = new JTextPane();
-        lineHandler = new LineHandler(pane);
         ins = new TabInserter(pane);
         
         insert = "0123";

@@ -8,7 +8,6 @@ package edu.pse.beast.CodeArea.InputToCode;
 import edu.pse.beast.codearea.Actionlist.Actionlist;
 import edu.pse.beast.codearea.InputToCode.LockedLinesHandler;
 import edu.pse.beast.codearea.InputToCode.LockedLinesListener;
-import edu.pse.beast.codearea.InputToCode.LineHandler;
 import edu.pse.beast.codearea.SaveTextBeforeRemove;
 import javax.swing.JTextPane;
 import javax.swing.event.DocumentEvent;
@@ -27,11 +26,9 @@ import static org.junit.Assert.*;
 public class LockedLinesHandlerTest {
     private LockedLinesHandler lockedLinesHandler;
     private JTextPane pane;
-    private LineHandler lineHandler; 
     private SaveTextBeforeRemove beforeRemove;
     public LockedLinesHandlerTest() {
         this.pane = new JTextPane();
-        this.lineHandler = new LineHandler(pane);
         Actionlist actionlist = new Actionlist();
         beforeRemove = new SaveTextBeforeRemove(pane, actionlist);
         

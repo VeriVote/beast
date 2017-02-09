@@ -20,7 +20,8 @@ import javax.swing.text.DefaultHighlighter;
 
 /**
  * This class highlights open/close chars as well as their counterparts 
- * in code.
+ * in code. Example: The caret is either left or right of a '{'. It will highlight
+ * the bracket as well as the corresponding '}' if it exists.
  * @author Holger-Desktop
  */
 public class OpenCloseCharHighlighter implements CaretListener {
@@ -45,11 +46,11 @@ public class OpenCloseCharHighlighter implements CaretListener {
         try {            
             surroundingChars[0] = JTextPaneToolbox.getCharToTheLeftOfCaret(pane).charAt(0);
             surroundingChars[1] = JTextPaneToolbox.getCharToTheRightOfCaret(pane).charAt(0);
-        } catch (StringIndexOutOfBoundsException ex) {
-            
+        } catch (StringIndexOutOfBoundsException ex) {            
         }
         for (int i = 0; i < surroundingChars.length; i++) {
             char c = surroundingChars[i];
+            if(c == ' ') continue;
             if(charList.isOpenChar(c)) {
                 highlightChar(ce.getDot() + i);
                 highlightCorrespondingCloseChar(ce.getDot() + i, charList.getOpenCloseChar(c));

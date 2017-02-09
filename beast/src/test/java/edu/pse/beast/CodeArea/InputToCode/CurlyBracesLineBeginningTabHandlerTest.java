@@ -6,7 +6,6 @@
 package edu.pse.beast.CodeArea.InputToCode;
 
 import edu.pse.beast.codearea.InputToCode.CurlyBracesLineBeginningTabHandler;
-import edu.pse.beast.codearea.InputToCode.LineHandler;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 import org.junit.After;
@@ -24,7 +23,6 @@ public class CurlyBracesLineBeginningTabHandlerTest {
     
     private JTextPane pane;
     private CurlyBracesLineBeginningTabHandler handler;
-    private LineHandler lineHandler;
     
     public CurlyBracesLineBeginningTabHandlerTest() {
     }
@@ -40,7 +38,6 @@ public class CurlyBracesLineBeginningTabHandlerTest {
     @Before
     public void setUp() {
         pane = new JTextPane();
-        lineHandler = new LineHandler(pane);
         handler = new CurlyBracesLineBeginningTabHandler(pane);
     }
     

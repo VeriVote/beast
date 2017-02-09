@@ -157,7 +157,7 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
 
     void removeToTheRight() {
         if(selectionIncludesLockedLines()) return;
-        if(!isCaretInEmptyLine()) {
+        if(!isCaretInEmptyLine() && isCaretAtEndOfLine()) {
             if(isTheFollowingLineLocked()) {
                 return;
             }

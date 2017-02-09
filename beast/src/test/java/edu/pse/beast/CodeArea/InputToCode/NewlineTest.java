@@ -41,9 +41,4 @@ public class NewlineTest {
         assertEquals("\r\n", pane.getText()); //dafuq????
     }
     
-    @Test
-    public void testNewlineLength() {
-        assertEquals(2, edu.pse.beast.codearea.InputToCode.TextPaneSystemInfo.getCharsPerNewline());
-    }
-    
 }

@@ -8,7 +8,6 @@ package edu.pse.beast.CodeArea.InputToCode.NewlineInserter;
 import edu.pse.beast.codearea.InputToCode.CurlyBracesLineBeginningTabHandler;
 import edu.pse.beast.codearea.InputToCode.LineBeginningTabsHandler;
 import edu.pse.beast.codearea.InputToCode.NewlineInserter.NewlineInserter;
-import edu.pse.beast.codearea.InputToCode.LineHandler;
 import edu.pse.beast.codearea.InputToCode.NewlineInserter.StandardNewlineInserter;
 import edu.pse.beast.codearea.InputToCode.TabInserter;
 import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
@@ -27,7 +26,6 @@ import static org.junit.Assert.*;
  */
 public class NewlineInserterTest {
     private JTextPane pane;
-    private LineHandler lineHandler;
     private TabInserter tabsInserter;
     private CurlyBracesLineBeginningTabHandler lineBeg;
     
@@ -45,7 +43,6 @@ public class NewlineInserterTest {
     @Before
     public void setUp() {
         pane = new JTextPane();
-        lineHandler= new LineHandler(pane);
         tabsInserter = new TabInserter(pane);
         lineBeg = new CurlyBracesLineBeginningTabHandler(pane);
     }

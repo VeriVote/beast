@@ -11,7 +11,7 @@ import javax.swing.text.*;
 /*
  *  Implements a simple highlight painter that renders a rectangle around the
  *  area to be highlighted.
- *
+ *  @author https://tips4java.wordpress.com/2008/10/28/rectangle-painter/
  */
 public class SquigglePainter extends DefaultHighlighter.DefaultHighlightPainter
 {

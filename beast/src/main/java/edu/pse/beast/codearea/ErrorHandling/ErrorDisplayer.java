@@ -5,7 +5,6 @@
  */
 package edu.pse.beast.codearea.ErrorHandling;
 
-import edu.pse.beast.codearea.InputToCode.LineHandler;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.Tuple;
@@ -31,7 +30,6 @@ import javax.swing.text.View;
 public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMotionListener {
     protected JTextPane pane;
     private SquigglePainter painter;
-    private LineHandler lineHandler;
     private ArrayList<Tuple<Integer,Integer>> absPosToMsg;
     private ArrayList<String> msges;
     protected StringResourceLoader currentStringResLoader;
@@ -43,8 +41,7 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         msges = new ArrayList<>();
         this.pane = pane;
         pane.addMouseMotionListener(this);
-        this.painter = new SquigglePainter(Color.red);        
-        this.lineHandler = new LineHandler(pane);
+        this.painter = new SquigglePainter(Color.red);  
         this.currentStringResLoader = currentStringResLoader;
     }
     

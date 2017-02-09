@@ -5,7 +5,6 @@
  */
 package edu.pse.beast.codearea.ErrorHandling;
 
-import edu.pse.beast.codearea.InputToCode.LineHandler;
 import edu.pse.beast.codearea.StoppedTypingContinuouslyListener;
 import edu.pse.beast.codearea.StoppedTypingContinuouslyMessager;
 import java.util.ArrayList;
