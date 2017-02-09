@@ -44,7 +44,9 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     private LinkedList<DeleteDescriptionAction> actionList;
 
     private FileChooser fileChooser;
+    
     private boolean editorWasVisible = false;
+    
     /**
      * Constructor
      *
@@ -77,24 +79,6 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     }
 
     /**
-     * Returns the data model.
-     *
-     * @return Data model of property list.
-     */
-    public PLModel getModel() {
-        return (PLModel) model;
-    }
-
-    /**
-     * Provides the view of property list.
-     *
-     * @return The PropertyListWindow
-     */
-    public PropertyListWindow getView() {
-        return view;
-    }
-
-    /**
      * Displays the view.
      */
     public void start() {
@@ -103,8 +87,8 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 
     @Override
     public void run() {
-        view.setVisible(true);
-        view.setVisible(false);
+        //view.setVisible(true);
+        //view.setVisible(false);
     }
 
     @Override
@@ -161,6 +145,9 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         return true;
     }
 
+    /* 
+     * @see edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource#stopReacting()
+     */
     @Override
     public void stopReacting() {
         view.stopReacting();
@@ -168,6 +155,9 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         editor.getView().setVisible(false);
     }
 
+    /*
+     * @see edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource#resumeReacting()
+     */
     @Override
     public void resumeReacting() {
         view.resumeReacting();
@@ -201,19 +191,60 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         model.setNextToBePresented(res);
     }
 
+    /* 
+     * @see edu.pse.beast.highlevel.ResultPresenter#resetResults()
+     */
     @Override
     public void resetResults() {
         model.resetResults();
         view.updateView();
     }
 
+    /* 
+     * @see edu.pse.beast.highlevel.DisplaysStringsToUser#updateStringRes(edu.pse.beast.stringresource.StringLoaderInterface)
+     */
     @Override
     public void updateStringRes(StringLoaderInterface sli) {
         this.sli = sli;
     }
 
+    /**
+     * Provides the StringResourceLoader for the menu strings of property list
+     * @return StringResourceLoader for the menu strings
+     */
     public StringResourceLoader getMenuStringLoader() {
         return sli.getPropertyListStringResProvider().getMenuStringRes();
+    }
+    
+    public DeleteDescriptionAction getLastAction() {
+    	if (actionList.isEmpty()) {
+    		return null;
+    	}
+    	return actionList.removeLast();
+    }
+    
+    public void resetActionList() {
+    	actionList = new LinkedList<DeleteDescriptionAction>();
+    }
+    
+    
+    // getter and setter follow
+    /**
+     * Returns the data model.
+     *
+     * @return Data model of property list.
+     */
+    public PLModel getModel() {
+        return (PLModel) model;
+    }
+
+    /**
+     * Provides the view of property list.
+     *
+     * @return The PropertyListWindow
+     */
+    public PropertyListWindow getView() {
+        return view;
     }
 
     public PLSaveBeforeChangeHandler getSaveBeforeChangeHandler() {
@@ -229,18 +260,8 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         ((PLModel) this.model).updateView();
     }
     
-    public DeleteDescriptionAction getLastAction() {
-    	if (actionList.isEmpty()) {
-    		return null;
-    	}
-    	return actionList.removeLast();
-    }
-    
-    public void resetActionList() {
-    	actionList = new LinkedList<DeleteDescriptionAction>();
-    }
-
     public FileChooser getFileChooser() {
         return fileChooser;
     }
+
 }
