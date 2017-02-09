@@ -13,6 +13,8 @@ import org.junit.Test;
 
 import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.electiondescription.ElectionType;
+import edu.pse.beast.propertychecker.CBMC_Result_Wrapper_long;
+import edu.pse.beast.propertychecker.CBMC_Result_Wrapper_singleArray;
 
 public class ResultDisplayTest {
 
@@ -44,19 +46,34 @@ public class ResultDisplayTest {
 		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	
 		ElectionType et = ElectionType.SINGLECHOICE;
-		List<Long[]> votes = new ArrayList<Long[]>();
+		List<Long[]> vote = new ArrayList<Long[]>();
 		List<Long> elected = new ArrayList<Long>();
-		votes.add(new Long[]{3l,2l,1l});
-		votes.add(new Long[]{2l,2l,1l});
+		vote.add(new Long[]{3l,2l,1l});
+		vote.add(new Long[]{2l,2l,1l});
 		elected.add(3l);
 		elected.add(2l);
 		
+		ArrayList<CBMC_Result_Wrapper_singleArray> votes = new ArrayList<CBMC_Result_Wrapper_singleArray>();
+		ArrayList<CBMC_Result_Wrapper_long> elect = new ArrayList<CBMC_Result_Wrapper_long>();
+		
+		votes.add(new CBMC_Result_Wrapper_singleArray(0, "wildelection"));
+		votes.get(0).addTo(0, 3l);
+		votes.get(0).addTo(1, 2l);
+		votes.get(0).addTo(2, 1l);
+		votes.add(new CBMC_Result_Wrapper_singleArray(1, "wilderelection"));
+		votes.get(1).addTo(0, 3l);
+		votes.get(1).addTo(1, 3l);
+		votes.get(1).addTo(2, 3l);
+		
+		elect.add(new CBMC_Result_Wrapper_long(0, "wildcandidate"));
+		elect.get(0).setValue(2l);
+		elect.add(new CBMC_Result_Wrapper_long(1, "wildercandidate"));
+		elect.get(1).setValue(3l);
 		
 		
-		
-	//	FailureExample fail = new FailureExample(et, votes, null, elected, null, 3, 1, 3);
+		FailureExample fail = new FailureExample(et, votes, null, elect, null, 4, 1, 3);
 	
-//		win.presentFailureExample(fail);
+		win.presentFailureExample(fail);
 		
 		
 	}

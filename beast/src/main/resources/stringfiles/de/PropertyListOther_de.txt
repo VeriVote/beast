@@ -18,7 +18,7 @@ preference : Präferenzwahl (Liste der Kandidaten geordnet nach Zustimmung)
 unknown : Unbekannt
 openDialogTitleText : Eigenschaftenliste Öffnen
 saveDialogTitleText : Eigenschaftenliste Speichern
-lookInLabelText : Suchen in:
+lookInLabelText : Suchen in
 openButtonText : Öffnen
 cancelButtonText : Abbrechen
 fileNameLabelText : Dateiname

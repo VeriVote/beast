@@ -10,6 +10,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,7 +20,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
 import edu.pse.beast.datatypes.FailureExample;
@@ -122,9 +126,21 @@ public class ResultPresenterWindow extends JFrame {
 	}
 
 	private void appendPane(String text) {
+		appendPaneStyled(text, null);
+	}
+	
+	private void appendPaneColored(String text, Color color) {
+		SimpleAttributeSet attr = new SimpleAttributeSet();
+		StyleConstants.setForeground(attr, color);
+		//StyleConstants.setBackground(attr, Color.RED);
+		StyleConstants.setBold(attr, true);
+		appendPaneStyled(text, attr);
+	}
+	
+	private void appendPaneStyled(String text, AttributeSet attr) {
 		StyledDocument doc = result.getStyledDocument();
 		try {
-			doc.insertString(doc.getLength(), text, null);
+			doc.insertString(doc.getLength(), text, attr);
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		}
@@ -160,14 +176,38 @@ public class ResultPresenterWindow extends JFrame {
 		erasePane();
 		appendLine(srl.getStringFromID("failureExampleMessage"));
 		appendLine(srl.getStringFromID("electionType") + ": " + srl.getStringFromID(ex.getTypeString()) + "\n");
+		appendLine("");
+		
 		for (int i = 0; i < ex.getNumOfElections(); i++) {
 			appendLine(srl.getStringFromID("election") + " " + i);
 			appendPane(srl.getStringFromID("votes") + ": ");
 
 			// The votes part of the document
 			if (ex.isChooseOneCandidate()) {
-				appendPane(Arrays.toString(ex.getVotes().get(i).getArray()));
-			} else {
+				//appendPane(Arrays.toString(ex.getVotes().get(i).getArray()));
+				
+				List<Long> voteList = ex.getVotes().get(i).getList();
+				// first votelist is shown without difference to earlier votings
+				if (i == 0) {
+					for (Long vote : voteList) {
+						appendPane(vote + ", ");
+					}
+				}
+				else {
+					// further lists are shown, if they did something different
+					List<Long> precedingList = ex.getVotes().get(i - 1).getList();
+					for (int j = 0; j < voteList.size(); j++) {
+						Long preceding = precedingList.get(j);
+						Long vote = voteList.get(j);
+						if (preceding == vote) appendPane(vote + ", ");
+						else {
+							appendPaneColored(vote.toString(), Color.RED);
+							appendPane(", ");
+						}
+					}
+				}
+			} 
+			else {
 				Long[][] arr = ex.getVoteList().get(i).getArray();
 				for (int j = 0; j < arr.length; j++) {
 					appendPane(Arrays.toString(arr[j]));
@@ -176,13 +216,27 @@ public class ResultPresenterWindow extends JFrame {
 				}
 			}
 			appendLine("");
-
-			// The elected part of the document
 			appendPane(srl.getStringFromID("elected") + ": ");
-			if (ex.isOneSeatOnly())
-				appendPane(Long.toString(ex.getElect().get(i).getValue()));
-			else
+			
+			// The elected part of the document
+			if (ex.isOneSeatOnly()) {
+				Long preceding;
+				Long elected = ex.getElect().get(i).getValue();
+				
+				// only show differences to preceding election when it is not the first election
+				if (i == 0) preceding = elected;
+				else preceding = ex.getElect().get(i - 1).getValue();
+				
+				if (preceding == elected) appendPane(elected.toString());
+				else {
+					appendPaneColored(elected.toString(), Color.RED);
+					appendPane(", ");
+				}
+			}
+			else {
 				appendPane(Arrays.toString(ex.getSeats().get(i).getArray()));
+			}
+			
 			appendLine("\n");
 		}
 		packFrame();
