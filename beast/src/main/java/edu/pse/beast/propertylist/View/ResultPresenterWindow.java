@@ -71,7 +71,7 @@ public class ResultPresenterWindow extends JFrame {
 		this.setUndecorated(true);
 		getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
 		this.setResizable(true);
-		setBounds(0, 0, 400, 400);
+		setBounds(0, 0, 400, 500);
 		// setMaximumSize(new Dimension(100, 100));
 
 		Dimension iconSize = new Dimension(80, 40);
@@ -236,12 +236,12 @@ public class ResultPresenterWindow extends JFrame {
 					}
 				}
 				
-				Long[][] arr = ex.getVoteList().get(i).getArray();
+				/*Long[][] arr = ex.getVoteList().get(i).getArray();
 				for (int j = 0; j < arr.length; j++) {
 					appendPane(Arrays.toString(arr[j]));
 					if (j < arr.length - 1)
 						appendPane(", ");
-				}
+				}*/
 			}
 			appendLine("");
 			appendPane(srl.getStringFromID("elected") + ": ");
@@ -269,8 +269,8 @@ public class ResultPresenterWindow extends JFrame {
 				if (i == 0) preceding = elected;
 				else preceding = ex.getSeats().get(i - 1).getArray();
 				
-				if (preceding == elected) appendPane(elected.toString());
-				else appendPaneColored(elected.toString(), Color.RED);
+				if (preceding.equals(elected)) appendPane(Arrays.toString(elected));
+				else appendPaneColored(Arrays.toString(elected), Color.RED);
 				//appendPane(Arrays.toString(ex.getSeats().get(i).getArray()));
 			}
 			

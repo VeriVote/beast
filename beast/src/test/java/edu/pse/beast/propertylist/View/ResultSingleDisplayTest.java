@@ -16,7 +16,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionType;
 import edu.pse.beast.propertychecker.CBMC_Result_Wrapper_long;
 import edu.pse.beast.propertychecker.CBMC_Result_Wrapper_singleArray;
 
-public class ResultDisplayTest {
+public class ResultSingleDisplayTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
