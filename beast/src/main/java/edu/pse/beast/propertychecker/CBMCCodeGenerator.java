@@ -238,7 +238,7 @@ public class CBMCCodeGenerator {
 
             code.add(votesX + ";");
 
-            String[] counter = {"i", "j", "k", "l"};
+            String[] counter = {"counter_0", "counter_1", "counter_2", "counter_3"};
 
             String forTemplate = "for(unsigned int COUNTER = 0; COUNTER < MAX; ++COUNTER){";
 
