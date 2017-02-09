@@ -1,5 +1,6 @@
 package edu.pse.beast.booleanexpeditor;
 
+import edu.pse.beast.booleanexpeditor.View.BooleanExpEditorWindow;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
@@ -10,7 +11,6 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.LinkedList;
 import java.util.List;
 
 /**

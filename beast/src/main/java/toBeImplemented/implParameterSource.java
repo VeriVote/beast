@@ -1,6 +1,6 @@
 package toBeImplemented;
 
-import edu.pse.beast.datatypes.ElectionCheckParameter;
+import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.highlevel.ParameterSource;
 
 public class implParameterSource implements ParameterSource {

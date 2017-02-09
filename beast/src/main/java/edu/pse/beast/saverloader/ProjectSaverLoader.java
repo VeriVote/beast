@@ -1,17 +1,9 @@
 package edu.pse.beast.saverloader;
 
-import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
-import edu.pse.beast.celectiondescriptioneditor.UserActions.ElectionCopyUserAction;
-import edu.pse.beast.datatypes.ElectionCheckParameter;
+import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.Project;
-import edu.pse.beast.datatypes.TimeOut;
-import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
-import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.propertylist.Model.PLModel;
-import edu.pse.beast.propertylist.PropertyList;
-
-import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 
 /**
 *

@@ -1,6 +1,5 @@
-package edu.pse.beast.datatypes.descofvoting;
+package edu.pse.beast.datatypes.electiondescription;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

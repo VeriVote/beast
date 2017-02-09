@@ -6,16 +6,8 @@
 package edu.pse.beast.celectiondescriptioneditor.UserActions;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
-import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
-import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
-import edu.pse.beast.saverloader.SaverLoader;
-import edu.pse.beast.toolbox.FileChooser;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.toolbox.UserAction;
-
-import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
-import java.io.File;
 
 /**
  *

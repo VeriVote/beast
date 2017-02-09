@@ -1,4 +1,4 @@
-package edu.pse.beast.parametereditor;
+package edu.pse.beast.parametereditor.View;
 
 /**
  * The ParameterEditorWindowStarter is used to open the ParameterEditorWindow.
@@ -16,7 +16,7 @@ public class ParameterEditorWindowStarter implements Runnable{
      * Getter for the corresponding ParameterEditorWindow
      * @return window
      */
-    ParameterEditorWindow getParameterEditorWindow() {
+    public ParameterEditorWindow getParameterEditorWindow() {
         
         return window;
     }

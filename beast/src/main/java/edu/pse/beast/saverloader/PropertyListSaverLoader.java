@@ -1,16 +1,8 @@
 package edu.pse.beast.saverloader;
 
-import edu.pse.beast.datatypes.ElectionCheckParameter;
-import edu.pse.beast.datatypes.Project;
-import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PropertyItem;
-import edu.pse.beast.propertylist.PropertyList;
-import edu.pse.beast.toolbox.ObjectRefsForBuilder;
-import jdk.nashorn.internal.runtime.ECMAException;
-
-import javax.lang.model.util.ElementScanner6;
 
 
 /**

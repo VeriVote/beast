@@ -1,12 +1,15 @@
 package edu.pse.beast.booleanexpeditor;
 
 import edu.pse.beast.booleanexpeditor.UserActions.*;
+import edu.pse.beast.booleanexpeditor.View.BooleanExpEditorWindow;
+import edu.pse.beast.booleanexpeditor.View.ErrorWindow;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeArea;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeAreaBuilder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.CodeAreaFocusListener;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
+import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.saverloader.PostAndPrePropertiesDescriptionSaverLoader;
 import edu.pse.beast.toolbox.*;
 
@@ -32,7 +35,7 @@ public class BooleanExpEditorBuilder{
 
     /**
      * Constructor
-     * @param objectRefsForBuilder Object with references to needed interfaces to build GUI
+     * @param objectRefsForBuilder Object with references to needed interfaces to build View
      * @return BooleanExpEditor Object
      */
     public BooleanExpEditor createBooleanExpEditorObject(ObjectRefsForBuilder objectRefsForBuilder,

@@ -1,4 +1,4 @@
-package edu.pse.beast.parametereditor;
+package edu.pse.beast.parametereditor.View;
 
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.ParameterEditorStringResProvider;
@@ -246,70 +246,70 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
      * Getter for minimum voters JSpinner
      * @return minimum voters JSpinner
      */
-    protected JSpinner getVoterMin() {
+    public JSpinner getVoterMin() {
         return voterMin;
     }
     /**
      * Getter for maximum voters JSpinner
      * @return maximum voters JSpinner
      */
-    protected JSpinner getVoterMax() {
+    public JSpinner getVoterMax() {
         return voterMax;
     }
     /**
      * Getter for minimum candidates JSpinner
      * @return minimum candidates JSpinner
      */
-    protected JSpinner getCandMin() {
+    public JSpinner getCandMin() {
         return candMin;
     }
     /**
      * Getter for maximum candidates JSpinner
      * @return maximum candidates JSpinner
      */
-    protected JSpinner getCandMax() {
+    public JSpinner getCandMax() {
         return candMax;
     }
     /**
      * Getter for minimum seats JSpinner
      * @return minimum seats JSpinner
      */
-    protected JSpinner getSeatMin() {
+    public JSpinner getSeatMin() {
         return seatMin;
     }
     /**
      * Getter for maximum seats JSpinner
      * @return maximum seats JSpinner
      */
-    protected JSpinner getSeatMax() {
+    public JSpinner getSeatMax() {
         return seatMax;
     }
     /**
      * Getter for timeout value JSpinner
      * @return timeout value JSpinner
      */
-    protected JSpinner getTimeoutNum() {
+    public JSpinner getTimeoutNum() {
         return timeoutNum;
     }
     /**
      * Getter for timeout unit JComboBox
      * @return timeout unit JComboBox
      */
-    protected javax.swing.JComboBox<String> getTimeoutUnit() {
+    public javax.swing.JComboBox<String> getTimeoutUnit() {
         return timeoutUnit;
     }
     /**
      * Getter for amount of processes JSpinner
      * @return amount of processes JSpinner
      */
-    protected JSpinner getAmountProcessesSpinner() {
+    public JSpinner getAmountProcessesSpinner() {
         return amountProcessesSpinner;
     }
     /**
      * Getter for the window for arguments for CBMC from the user
      * @return AdvancedWindow
      */
-    protected AdvancedWindow getAdvancedWindow() {
+    public AdvancedWindow getAdvancedWindow() {
         return advWindow;
     }
     /**
@@ -346,7 +346,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
      * stopping checks (to not interrupt checks)
      * @param reacts whether it reacts
      */
-    protected void setReacts(boolean reacts) {
+    public void setReacts(boolean reacts) {
         this.reacts = reacts;
         advWindow.setReacts(reacts);
     }

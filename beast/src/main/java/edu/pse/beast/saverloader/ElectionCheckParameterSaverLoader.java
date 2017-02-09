@@ -1,8 +1,7 @@
 package edu.pse.beast.saverloader;
 
-import edu.pse.beast.datatypes.ElectionCheckParameter;
-import edu.pse.beast.datatypes.TimeOut;
-import edu.pse.beast.toolbox.ObjectRefsForBuilder;
+import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
+import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 
 import java.util.ArrayList;
 

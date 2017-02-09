@@ -1,9 +1,9 @@
 package edu.pse.beast.booleanexpeditor.UserActions;
 
-import edu.pse.beast.booleanexpeditor.BooleanExpEditorWindow;
+import edu.pse.beast.booleanexpeditor.View.BooleanExpEditorWindow;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
-import edu.pse.beast.toolbox.FileChooser;
+import edu.pse.beast.saverloader.FileChooser;
 
 import javax.swing.*;
 import java.util.LinkedList;

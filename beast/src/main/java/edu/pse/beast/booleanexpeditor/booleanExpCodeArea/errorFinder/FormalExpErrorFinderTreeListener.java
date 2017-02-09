@@ -6,17 +6,13 @@
 package edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder;
 
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanExpressionNode;
 import edu.pse.beast.datatypes.booleanExpAST.ConstantExp;
 import edu.pse.beast.datatypes.booleanExpAST.ElectExp;
-import edu.pse.beast.datatypes.booleanExpAST.ForAllNode;
 import edu.pse.beast.datatypes.booleanExpAST.NumberExpression;
-import edu.pse.beast.datatypes.booleanExpAST.QuantorNode;
 import edu.pse.beast.datatypes.booleanExpAST.SymbolicVarExp;
-import edu.pse.beast.datatypes.booleanExpAST.ThereExistsNode;
 import edu.pse.beast.datatypes.booleanExpAST.TypeExpression;
 import edu.pse.beast.datatypes.booleanExpAST.VoteSumForCandExp;
-import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
@@ -24,7 +20,6 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.datatypes.propertydescription.VariableListListener;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionListener;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
-import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.BooleanExpScope;
 import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.BooleanExpScopehandler;
 import java.util.ArrayList;
 import java.util.List;

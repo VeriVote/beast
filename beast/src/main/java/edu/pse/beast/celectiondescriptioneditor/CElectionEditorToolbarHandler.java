@@ -5,13 +5,12 @@
  */
 package edu.pse.beast.celectiondescriptioneditor;
 
-import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
+import edu.pse.beast.celectiondescriptioneditor.View.CCodeEditorWindow;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ActionIdAndListener;
 import edu.pse.beast.toolbox.ImageResourceProvider;
 import edu.pse.beast.toolbox.ToolbarHandler;
-import javax.swing.JToolBar;
 
 /**
  *
@@ -19,13 +18,13 @@ import javax.swing.JToolBar;
  */
 public class CElectionEditorToolbarHandler extends ToolbarHandler
         implements DisplaysStringsToUser {
-    private CCodeEditorGUI cgui;
+    private CCodeEditorWindow cgui;
     
     public CElectionEditorToolbarHandler(
             ActionIdAndListener[] actionIdAndListener,
             ImageResourceProvider imageRes,
             StringLoaderInterface stringif,
-            CCodeEditorGUI cgui) {
+            CCodeEditorWindow cgui) {
         super(imageRes,
                 stringif.getCElectionEditorStringResProvider().getToolbarTipStringRes(),
                 actionIdAndListener, cgui.getToolBar());        

@@ -5,20 +5,11 @@
  */
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
-import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeRep;
-import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
-import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
-import java.util.Arrays;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

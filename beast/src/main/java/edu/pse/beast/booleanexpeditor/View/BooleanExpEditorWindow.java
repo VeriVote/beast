@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.pse.beast.booleanexpeditor;
+package edu.pse.beast.booleanexpeditor.View;
 
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
@@ -23,7 +23,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
     /**
      * Constructor
      */
-    BooleanExpEditorWindow() {
+    public BooleanExpEditorWindow() {
         initComponents();
     }
 
@@ -187,7 +187,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
      * Getter
      * @return The JTextPane for the precondition.
      */
-    javax.swing.JTextPane getPrePropTextPane() {
+    public javax.swing.JTextPane getPrePropTextPane() {
         return prePropTextPane;
     }
 
@@ -195,7 +195,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
      * Getter
      * @return The JScrollPane for the precondition.
      */
-    javax.swing.JScrollPane getPrePropScrollPane() {
+    public javax.swing.JScrollPane getPrePropScrollPane() {
         return prePropScrollPane;
     }
 
@@ -203,7 +203,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
      * Getter
      * @return The JTextPane for the postcondition.
      */
-    javax.swing.JTextPane getPostPropTextPane() {
+    public javax.swing.JTextPane getPostPropTextPane() {
         return postPropTextPane;
     }
 
@@ -211,7 +211,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
      * Getter
      * @return The JScrollPane for the postcondition.
      */
-    javax.swing.JScrollPane getPostPropScrollPane() {
+    public javax.swing.JScrollPane getPostPropScrollPane() {
         return postPropScrollPane;
     }
 
@@ -219,7 +219,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
      * Getter
      * @return the JTextPane for static error displaying
      */
-    javax.swing.JTextPane getErrorTextPane() {
+    public javax.swing.JTextPane getErrorTextPane() {
         return errorTextPane;
     }
 
@@ -227,7 +227,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
      * Getter
      * @return the JList that contains the user defined symbolic variables
      */
-    javax.swing.JList getSymVarList(){
+    public javax.swing.JList getSymVarList(){
         return symVarList;
     }
 
@@ -235,7 +235,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
      * Getter
      * @return the JButton to add symbolic variables
      */
-    javax.swing.JButton getAddSymVarButton(){
+    public javax.swing.JButton getAddSymVarButton(){
         return addSymVarButton;
     }
 
@@ -243,7 +243,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
      * Getter
      * @return the JButton to remove symbolic variables
      */
-    javax.swing.JButton getRemoveSymVarButton(){
+    public javax.swing.JButton getRemoveSymVarButton(){
         return removeSymVarButton;
     }
 
@@ -251,7 +251,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
      * Adds the given string to the window title, used for displaying name of currently loaded PostAndPrePropDescription
      * @param s
      */
-    void setWindowTitle(String s) {
+    public void setWindowTitle(String s) {
         this.setTitle(titleString + " " + s);
     }
 
@@ -259,7 +259,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
      * Getter
      * @return toolbar the JToolBar object.
      */
-    JToolBar getToolbar() {
+    public JToolBar getToolbar() {
         return toolbar;
     }
 

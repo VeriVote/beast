@@ -5,26 +5,25 @@
  */
 package edu.pse.beast.celectiondescriptioneditor;
 
-import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpErrorDisplayer;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeAreaBuilder;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CErrorDisplayer;
-import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
+import edu.pse.beast.celectiondescriptioneditor.View.CCodeEditorWindow;
 import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveBeforeChangeHandler;
+import edu.pse.beast.celectiondescriptioneditor.View.ErrorWindow;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
-import edu.pse.beast.datatypes.descofvoting.ElectionDescriptionChangeListener;
-import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.stringresource.StringLoaderInterface;
-import edu.pse.beast.toolbox.FileChooser;
+import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.toolbox.UserAction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.*;
 import javax.swing.text.BadLocationException;
 
 
@@ -35,7 +34,7 @@ import javax.swing.text.BadLocationException;
 public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     private CElectionCodeArea codeArea;
     private ElectionDescription currentDescription;
-    private CCodeEditorGUI gui;
+    private CCodeEditorWindow window;
     private CElectionCodeAreaBuilder builder;
     private ErrorWindow errorWindow;
     private SaveBeforeChangeHandler saveBeforeChangeHandler;
@@ -50,14 +49,14 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
 
     public CElectionDescriptionEditor(
             CElectionCodeArea codeArea,
-            CCodeEditorGUI gui,            
+            CCodeEditorWindow gui,
             CElectionCodeAreaBuilder builder,
             ErrorWindow errorWindow,
             SaveBeforeChangeHandler saveBeforeChangeHandler,
             StringLoaderInterface stringLoaderInterface,
             FileChooser fileChooser) {
         this.codeArea = codeArea;
-        this.gui = gui;
+        this.window = gui;
         this.builder = builder;
         this.errorWindow = errorWindow;
         this.saveBeforeChangeHandler = saveBeforeChangeHandler;
@@ -129,14 +128,14 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
 
     @Override
     public void stopReacting() {
-        wasVisible = gui.isVisible();
-        gui.setVisible(false);
+        wasVisible = window.isVisible();
+        window.setVisible(false);
     }
 
     @Override
     public void resumeReacting() {
         if (wasVisible) {
-            gui.setVisible(true);
+            window.setVisible(true);
         }
     }
 
@@ -160,9 +159,9 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
 
     public void loadElectionDescription(ElectionDescription description) throws BadLocationException {
         this.currentDescription = description;
-        gui.setNewCodeArea();
-        codeArea = builder.createCElectionCodeArea(gui.getCodeArea(),
-                gui.getCodeAreaScrollPane(),
+        window.setNewCodeArea();
+        codeArea = builder.createCElectionCodeArea(window.getCodeArea(),
+                window.getCodeAreaScrollPane(),
                 (CErrorDisplayer) codeArea.getErrorCtrl().getDisplayer());
         
         for (int i = 0; i < userActions.size(); i++) {
@@ -175,7 +174,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         codeArea.lockLine(description.getVotingDeclLine());
         codeArea.lockLine(description.getCode().size() - 1);
         saveBeforeChangeHandler.addNewTextPane(codeArea.getPane());
-        gui.setWindowTitle(description.getName());
+        window.setWindowTitle(description.getName());
         for(ElectionDescriptionChangeListener l : descriptionChangeListeners) {
             l.inputChanged(description.getInputType());
             l.outputChanged(description.getOutputType());
@@ -185,10 +184,10 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
 
     /**
      * Getter
-     * @return the CCodeEditorGUI object of this class
+     * @return the CCodeEditorWindow object of this class
      */
-    public CCodeEditorGUI getGui() {
-        return this.gui;
+    public CCodeEditorWindow getView() {
+        return this.window;
     }
 
     /**
@@ -208,11 +207,11 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     }
     
     public boolean getIsVisible() {
-        return gui.isVisible();
+        return window.isVisible();
     }
     
     public void setVisible(boolean vis) {
-        gui.setVisible(vis);
+        window.setVisible(vis);
     }
 
     public FileChooser getFileChooser() {
@@ -221,7 +220,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
 
     public void updateStringIf(StringLoaderInterface stringLoaderInterface) {
         this.stringLoaderInterface = stringLoaderInterface;
-        gui.updateStringRes(stringLoaderInterface);
+        window.updateStringRes(stringLoaderInterface);
         menubarHandler.updateStringRes(stringLoaderInterface);
         toolbarHandler.updateStringRes(stringLoaderInterface);
     }

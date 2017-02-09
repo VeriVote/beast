@@ -2,10 +2,12 @@ package edu.pse.beast.parametereditor;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
+import edu.pse.beast.parametereditor.View.ParameterEditorWindow;
+import edu.pse.beast.parametereditor.View.ParameterEditorWindowStarter;
 import edu.pse.beast.propertylist.PropertyList;
+import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.saverloader.ProjectSaverLoader;
 import edu.pse.beast.saverloader.SaverLoader;
-import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.*;
 import edu.pse.beast.parametereditor.UserActions.*;
@@ -91,8 +93,8 @@ public class ParameterEditorBuilder {
         UserAction stop = createAbortCheckUserAction();
         UserAction options = createOptionsUserAction(cElectionDescriptionEditor, propertyList);
         UserAction showPropertyList = createShowPropertyListUserAction(propertyList.getView());
-        UserAction showBooleanExpEditor = createShowBooleanExpEditorUserAction(booleanExpEditor.getWindow());
-        UserAction showCElectionEditor = createShowCElectionEditorUserAction(cElectionDescriptionEditor.getGui());
+        UserAction showBooleanExpEditor = createShowBooleanExpEditorUserAction(booleanExpEditor.getView());
+        UserAction showCElectionEditor = createShowCElectionEditorUserAction(cElectionDescriptionEditor.getView());
 
         ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
         fileList.add(createFromUserAction(newly));

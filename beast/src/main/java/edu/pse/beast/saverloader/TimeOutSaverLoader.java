@@ -1,13 +1,7 @@
 package edu.pse.beast.saverloader;
 import java.util.concurrent.TimeUnit;
 
-import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
-import edu.pse.beast.datatypes.Project;
-import edu.pse.beast.datatypes.TimeOut;
-import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
-import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
-
-import java.util.Arrays;
+import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 
 /**
  * @author NikolaiLMS

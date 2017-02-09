@@ -5,7 +5,6 @@
  */
 package edu.pse.beast.propertylist;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -21,7 +20,7 @@ import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.propertylist.View.PropertyListWindow;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
-import edu.pse.beast.toolbox.FileChooser;
+import edu.pse.beast.saverloader.FileChooser;
 
 /**
  * Class acts as controller for everything related to the property list. Returns
@@ -45,7 +44,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     private LinkedList<DeleteDescriptionAction> actionList;
 
     private FileChooser fileChooser;
-
+    private boolean editorWasVisible = false;
     /**
      * Constructor
      *
@@ -165,11 +164,16 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     @Override
     public void stopReacting() {
         view.stopReacting();
+        editorWasVisible = editor.getView().isVisible();
+        editor.getView().setVisible(false);
     }
 
     @Override
     public void resumeReacting() {
         view.resumeReacting();
+        if (editorWasVisible) {
+            editor.getView().setVisible(false);
+        }
     }
 
     /* 

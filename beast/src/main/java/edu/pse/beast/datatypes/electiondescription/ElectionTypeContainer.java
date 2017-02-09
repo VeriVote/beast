@@ -1,4 +1,4 @@
-package edu.pse.beast.datatypes.descofvoting;
+package edu.pse.beast.datatypes.electiondescription;
 
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 

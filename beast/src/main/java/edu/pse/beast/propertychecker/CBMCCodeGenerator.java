@@ -6,12 +6,11 @@
 package edu.pse.beast.propertychecker;
 
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
-import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
-import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
