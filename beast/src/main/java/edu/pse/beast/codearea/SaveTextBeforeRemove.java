@@ -16,7 +16,12 @@ import java.util.logging.Logger;
 import javax.swing.text.BadLocationException;
 
 /**
- *
+ * This class saves the text of a styled document before a removed event is
+ * triggered. This is needed because the remove event does not carry the information
+ * of which text was removed. This info is needed eg by the textchangedactionadder.
+ * It listens to keystrokes such as backspace which indicate that text is about to be
+ * removed from the pane. It also listens to the actionlist so it can save the 
+ * text when an action is about to be undone / redone
  * @author Holger-Desktop
  */
 public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
@@ -67,9 +72,7 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
             } catch (BadLocationException ex) {
                 Logger.getLogger(SaveTextBeforeRemove.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        
-        System.out.println("previous text: " + prevText);
+        }        
     }
 
     @Override
@@ -89,12 +92,11 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
             } catch (BadLocationException ex) {
                 Logger.getLogger(SaveTextBeforeRemove.class.getName()).log(Level.SEVERE, null, ex);
             }
-        System.out.println("previous text: " + prevText);
     }
 
     
     public void save() throws BadLocationException {
-         prevText = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
+        prevText = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
     }
     
     @Override

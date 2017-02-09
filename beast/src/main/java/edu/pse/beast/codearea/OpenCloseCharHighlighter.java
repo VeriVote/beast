@@ -19,7 +19,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
 
 /**
- *
+ * This class highlights open/close chars as well as their counterparts 
+ * in code.
  * @author Holger-Desktop
  */
 public class OpenCloseCharHighlighter implements CaretListener {

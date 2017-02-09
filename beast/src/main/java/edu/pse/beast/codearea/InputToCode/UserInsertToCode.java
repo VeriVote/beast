@@ -21,7 +21,10 @@ import javax.swing.text.StyledDocument;
 
 /**
  * This class is responsible for translating input from the user into code 
- * visible in the given JTextPane. It is used by the class CodeInputHandler. *  
+ * visible in the given JTextPane. It is used by the class CodeInputHandler.
+ * One of its main functions is to make sure locked lines dont get changed.
+ * It also uses several other classes to provide functionallity such as
+ * closing brackets and insert newlines
  * @author Holger-Desktop
  */
 public class UserInsertToCode implements CaretListener, StoppedTypingContinuouslyListener {
@@ -48,6 +51,18 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
         this.openCloseCharList = openCloseCharList; 
         this.saveBeforeRemove = saveBeforeRemove;
         setupObjects();
+    }
+    
+    
+    private void setupObjects() {
+        stoppedTypingContMsger = new StoppedTypingContinuouslyMessager(pane);
+        stoppedTypingContMsger.addListener(this);
+        this.tabInserter = new TabInserter(this.pane);
+        this.lockedLines = new LockedLinesHandler(this.pane, saveBeforeRemove);
+        this.lineBeginningTabsHandler = new CurlyBracesLineBeginningTabHandler(pane);
+        this.newlineInserterChooser = new NewlineInserterChooser(pane, lockedLines);
+        this.currentInserter = this.newlineInserterChooser.getNewlineInserter();       
+        this.lockedLinesDisplay = new LockedLinesDisplay(pane, lockedLines);
     }
 
     public SaveTextBeforeRemove getSaveBeforeRemove() {
@@ -129,16 +144,6 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
         currentInserter = newlineInserterChooser.getNewlineInserter();        
     }
     
-    private void setupObjects() {
-        stoppedTypingContMsger = new StoppedTypingContinuouslyMessager(pane);
-        stoppedTypingContMsger.addListener(this);
-        this.tabInserter = new TabInserter(this.pane);
-        this.lockedLines = new LockedLinesHandler(this.pane, saveBeforeRemove);
-        this.lineBeginningTabsHandler = new CurlyBracesLineBeginningTabHandler(pane);
-        this.newlineInserterChooser = new NewlineInserterChooser(pane, lockedLines);
-        this.currentInserter = this.newlineInserterChooser.getNewlineInserter();       
-        this.lockedLinesDisplay = new LockedLinesDisplay(pane, lockedLines);
-    }
 
     void moveToEndOfCurrentLine() {
         int end = JTextPaneToolbox.getClosestLineBeginningAfter(pane, currentCaretPosition);

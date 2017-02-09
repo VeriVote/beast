@@ -29,19 +29,30 @@ import javax.swing.text.BadLocationException;
  *
  * @author Holger-Desktop
  */
-public class TextChangedActionAdder implements ActionlistListener, DocumentListener {
+public class TextChangedActionAdder implements 
+        ActionlistListener, 
+        DocumentListener, 
+        StoppedTypingContinuouslyListener {
+    private int caretPos = 0;
     private boolean listen = true;
     private JTextPane pane;
     private Actionlist actionList;
+    private int recordingStartPos;
     private String recordingString = "";
     private SaveTextBeforeRemove saveBeforeRemove;    
+    private StoppedTypingContinuouslyMessager typingContinuouslyMessager;
     
-    public TextChangedActionAdder(JTextPane pane, Actionlist list, SaveTextBeforeRemove saveBeforeRemove) {
+    public TextChangedActionAdder(
+            JTextPane pane,
+            Actionlist list,
+            SaveTextBeforeRemove saveBeforeRemove) {
         this.pane = pane;
         this.actionList = list;
         list.addActionAdder(this);
         this.saveBeforeRemove = saveBeforeRemove;
         pane.getStyledDocument().addDocumentListener(this);
+        typingContinuouslyMessager = new StoppedTypingContinuouslyMessager(pane);
+        this.typingContinuouslyMessager.addListener(this);
     }
 
     @Override
@@ -60,7 +71,7 @@ public class TextChangedActionAdder implements ActionlistListener, DocumentListe
         if(!listen) return; 
         try {
             String added = pane.getStyledDocument().getText(de.getOffset(), de.getLength());
-            System.out.println("adding action " + added + " at: " + de.getOffset());
+                      
             TextAddedAction action = new TextAddedAction(
                     new TextDelta(de.getOffset(), added),
                     pane.getStyledDocument());
@@ -72,7 +83,7 @@ public class TextChangedActionAdder implements ActionlistListener, DocumentListe
 
     @Override
     public void removeUpdate(DocumentEvent de) {
-        if(!listen) return;    
+        if(!listen) return;            
         TextRemovedAction action = new TextRemovedAction(
                 new TextDelta(de.getOffset(), saveBeforeRemove.getRemoveString(de.getOffset(), de.getLength())),
                 pane.getStyledDocument());
@@ -82,4 +93,11 @@ public class TextChangedActionAdder implements ActionlistListener, DocumentListe
     @Override
     public void changedUpdate(DocumentEvent de) {
     }
+
+    @Override
+    public void StoppedTypingContinuously(int newPos) {   
+        recordingStartPos = newPos;
+    }
+    
+
 }

@@ -13,7 +13,10 @@ import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 
 /**
- *
+ * This class messages all its listeners whenever the user stopped typing
+ * continuously. This happens if either he pressed a directional key, typed
+ * a newline, or the caret position changed by more than + 1. It also occurs
+ * if the user deletes text
  * @author Holger-Desktop
  */
 public class StoppedTypingContinuouslyMessager implements KeyListener, CaretListener {
@@ -43,13 +46,11 @@ public class StoppedTypingContinuouslyMessager implements KeyListener, CaretList
     }
 
     @Override
-    public void keyPressed(KeyEvent ke) {
-        
+    public void keyPressed(KeyEvent ke) {        
     }
 
     @Override
-    public void keyReleased(KeyEvent ke) {
-        
+    public void keyReleased(KeyEvent ke) {        
     }
 
     @Override
@@ -62,7 +63,6 @@ public class StoppedTypingContinuouslyMessager implements KeyListener, CaretList
     }
 
     private void msgAllListener(int newCaretPos) {
-        System.out.println("stopped cont typing, newpos: " + newCaretPos);
         for(StoppedTypingContinuouslyListener l : listener)
             l.StoppedTypingContinuously(newCaretPos);
     }
