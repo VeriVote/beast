@@ -162,7 +162,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         window.setNewCodeArea();
         codeArea = builder.createCElectionCodeArea(window.getCodeArea(),
                 window.getCodeAreaScrollPane(),
-                (CErrorDisplayer) codeArea.getErrorCtrl().getDisplayer());
+                new CErrorDisplayer(window.getCodeArea(), stringLoaderInterface));
         
         for (int i = 0; i < userActions.size(); i++) {
             UserAction get = userActions.get(i);

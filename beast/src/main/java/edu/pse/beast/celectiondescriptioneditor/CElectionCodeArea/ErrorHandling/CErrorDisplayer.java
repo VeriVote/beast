@@ -7,6 +7,7 @@ package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling
 
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
+import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import java.util.ArrayList;
 import javax.swing.JTextPane;
@@ -33,6 +34,11 @@ public class CErrorDisplayer extends ErrorDisplayer {
     
     public String createMsg(CodeError er) {
         if(er.getId().equals("antlr")) {
+            int line =  er.getLine();
+            int start = JTextPaneToolbox.getLineBeginning(pane, line - 1);
+            int end = JTextPaneToolbox.getClosestLineBeginningAfter(pane, start);
+            er.setStartPos(start);
+            er.setEndPos(end);
             return er.getExtraInfo("msg");
         }
         return "";

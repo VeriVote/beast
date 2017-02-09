@@ -63,11 +63,16 @@ public class CodeError {
         return startPos;
     }
 
+    public void setStartPos(int startPos) {
+        this.startPos = startPos;
+    }   
+
     public int getEndPos() {
         return endPos;
     }
-    
-    
-    
+
+    public void setEndPos(int endPos) {
+        this.endPos = endPos;
+    }    
     
 }
