@@ -150,6 +150,15 @@ public class ResultPresenterWindow extends JFrame {
 	private void appendLine(String text) {
 		appendPane(text + "\n");
 	}
+	
+	private void eraseLastCharacters(int amount) {
+		StyledDocument doc = result.getStyledDocument();
+		try {
+			doc.remove(doc.getLength() - amount, amount);
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private void erasePane() {
 		result.setText("");
@@ -164,6 +173,7 @@ public class ResultPresenterWindow extends JFrame {
 	 */
 
 	public void presentFailure(List<String> error) {
+		if (error == null) return;
 		erasePane();
 		appendLine(srl.getStringFromID("failureMessage"));
 		appendLine("");
@@ -173,6 +183,7 @@ public class ResultPresenterWindow extends JFrame {
 	}
 
 	public void presentFailureExample(FailureExample ex) {
+		if (ex == null) return;
 		erasePane();
 		appendLine(srl.getStringFromID("failureExampleMessage"));
 		appendLine(srl.getStringFromID("electionType") + ": " + srl.getStringFromID(ex.getTypeString()) + "\n");
@@ -199,15 +210,32 @@ public class ResultPresenterWindow extends JFrame {
 					for (int j = 0; j < voteList.size(); j++) {
 						Long preceding = precedingList.get(j);
 						Long vote = voteList.get(j);
-						if (preceding == vote) appendPane(vote + ", ");
+						if (preceding.equals(vote)) appendPane(vote.toString() + ", ");
 						else {
 							appendPaneColored(vote.toString(), Color.RED);
 							appendPane(", ");
 						}
 					}
 				}
+				eraseLastCharacters(2);
 			} 
 			else {
+				List<ArrayList<Long>> precedingList;
+				List<ArrayList<Long>> voteList = ex.getVoteList().get(i).getList();
+				
+				if (i == 0) precedingList = voteList;
+				else precedingList = ex.getVoteList().get(i - 1).getList();
+				
+				for (int j = 0; j < voteList.size(); j++) {
+					ArrayList<Long> preceding = precedingList.get(j);
+					ArrayList<Long> vote = voteList.get(j);
+					if (preceding.equals(vote)) appendPane(vote.toString() + ", ");
+					else {
+						appendPaneColored(vote.toString(), Color.RED);
+						appendPane(", ");
+					}
+				}
+				
 				Long[][] arr = ex.getVoteList().get(i).getArray();
 				for (int j = 0; j < arr.length; j++) {
 					appendPane(Arrays.toString(arr[j]));
@@ -227,14 +255,23 @@ public class ResultPresenterWindow extends JFrame {
 				if (i == 0) preceding = elected;
 				else preceding = ex.getElect().get(i - 1).getValue();
 				
-				if (preceding == elected) appendPane(elected.toString());
+				if (preceding == elected) appendPane(elected.toString() + ", ");
 				else {
 					appendPaneColored(elected.toString(), Color.RED);
 					appendPane(", ");
 				}
+				eraseLastCharacters(2);
 			}
 			else {
-				appendPane(Arrays.toString(ex.getSeats().get(i).getArray()));
+				Long[] preceding;
+				Long[] elected = ex.getSeats().get(i).getArray();
+				
+				if (i == 0) preceding = elected;
+				else preceding = ex.getSeats().get(i - 1).getArray();
+				
+				if (preceding == elected) appendPane(elected.toString());
+				else appendPaneColored(elected.toString(), Color.RED);
+				//appendPane(Arrays.toString(ex.getSeats().get(i).getArray()));
 			}
 			
 			appendLine("\n");

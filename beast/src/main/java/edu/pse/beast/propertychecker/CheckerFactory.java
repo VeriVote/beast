@@ -77,6 +77,8 @@ public abstract class CheckerFactory implements Runnable {
                         if (currentlyRunning == null) {
                             // the process creation failed
                             stopped = true;
+                            result.setFinished();
+                            result.setError("Couldn't start the process, please follow the instructions you got shown on the screen before");
                         }
 
                     }
@@ -166,8 +168,6 @@ public abstract class CheckerFactory implements Runnable {
         this.lastResult = lastResult;
         this.lastError = lastError;
     }
-
-    protected abstract Result createCounterExample(List<String> result);
 
     /**
      * 

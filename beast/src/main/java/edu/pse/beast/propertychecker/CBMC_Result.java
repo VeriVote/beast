@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.highlevel.ResultPresenterElement;
+import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
 
 /**
@@ -33,12 +34,14 @@ public class CBMC_Result extends Result {
 		} else if (isSuccess()) {
 			presenter.presentSuccess();
 		} else {
-
-			long time = System.currentTimeMillis();
-
-			System.out.println("total time: " + (System.currentTimeMillis() - time));
-			
-			presenter.presentFailureExample(failureExample);
+			if (failureExample != null) {
+				presenter.presentFailureExample(failureExample);
+			} else {
+				if (getError() != null) {
+					setError(new ArrayList<String>());
+				}
+				presenter.presentFailure(getError());
+			}
 		}
 	}
 
@@ -50,8 +53,6 @@ public class CBMC_Result extends Result {
 
 	public FailureExample createFailureExample() {
 
-		long time = System.currentTimeMillis();
-		
 		// datermine the elect values
 		List<CBMC_Result_Wrapper_long> elect = readLongs("elect", getResult());
 
@@ -62,8 +63,6 @@ public class CBMC_Result extends Result {
 		List<CBMC_Result_Wrapper_singleArray> seatsList;
 		List<CBMC_Result_Wrapper_singleArray> singleVotesList;
 
-		ErrorLogger.log("(CBMC_Result):  possible optimization: try to only use one loop");
-
 		switch (getElectionType()) {
 
 		case APPROVAL:
@@ -72,8 +71,6 @@ public class CBMC_Result extends Result {
 
 			seatsList = readOneDimVar("seats", getResult());
 
-			System.out.println("total time: " + (System.currentTimeMillis() - time));
-			
 			return new FailureExample(getElectionType(), null, votesList, elect, seatsList, getNumCandidates(),
 					getNumSeats(), getNumVoters());
 
@@ -81,8 +78,6 @@ public class CBMC_Result extends Result {
 
 			singleVotesList = readOneDimVar("votes", getResult());
 
-			System.out.println("total time: " + (System.currentTimeMillis() - time));
-			
 			return new FailureExample(getElectionType(), singleVotesList, null, elect, null, getNumCandidates(),
 					getNumSeats(), getNumVoters());
 
@@ -90,8 +85,6 @@ public class CBMC_Result extends Result {
 
 			singleVotesList = readOneDimVar("votes", getResult());
 
-			System.out.println("total time: " + (System.currentTimeMillis() - time));
-			
 			return new FailureExample(getElectionType(), singleVotesList, null, elect, null, getNumCandidates(),
 					getNumSeats(), getNumVoters());
 
@@ -101,14 +94,11 @@ public class CBMC_Result extends Result {
 
 			seatsList = readOneDimVar("seats", getResult());
 
-			
-			System.out.println("total time: " + (System.currentTimeMillis() - time));
-			
 			return new FailureExample(getElectionType(), null, votesList, elect, seatsList, getNumCandidates(),
 					getNumSeats(), getNumVoters());
 
 		default:
-			ErrorLogger.log("This votingtype hasn't been implemented yet please do so in the class CBMC_Result");
+			ErrorForUserDisplayer.displayError("This votingtype you are using hasn't been implemented yet to be displaye. Please do so in the class CBMC_Result");
 			this.setError("This votingtype hasn't been implemented yet please do so in the class CBMC_Result");
 			return null;
 		}
@@ -126,12 +116,6 @@ public class CBMC_Result extends Result {
 		String line = mergeLinesToOne(iterator, segmentEnder);
 
 		while ((line = mergeLinesToOne(iterator, segmentEnder)).length() > 0) {
-
-			// System.out.println("next line: " + line);
-
-			// for (Iterator<String> iterator = getResult().iterator();
-			// iterator.hasNext();) {
-			// String line = (String) iterator.next();
 
 			Matcher checkerMatcher = correctChecker.matcher(line);
 			if (checkerMatcher.find()) {
@@ -182,12 +166,6 @@ public class CBMC_Result extends Result {
 		String line = mergeLinesToOne(iterator, segmentEnder);
 
 		while ((line = mergeLinesToOne(iterator, segmentEnder)).length() > 0) {
-
-			// System.out.println("next line: " + line);
-
-			// for (Iterator<String> iterator = toExtract.iterator();
-			// iterator.hasNext();) {
-			// String line = (String) iterator.next();
 
 			if (line.contains("[")) {
 
