@@ -39,6 +39,10 @@ public class CBMC_Result_Wrapper_multiArray {
         return name;
     }
     
+    public List<ArrayList<Long>> getList() {
+    	return list;
+    }
+    
     private void addToLongList(List<Long> list, int indexToAddAt, long toAdd) {
         if (list.size() > indexToAddAt) {
             list.set(indexToAddAt, toAdd);
