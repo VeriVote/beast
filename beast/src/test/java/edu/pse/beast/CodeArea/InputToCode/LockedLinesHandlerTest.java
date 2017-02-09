@@ -35,8 +35,8 @@ public class LockedLinesHandlerTest {
         Actionlist actionlist = new Actionlist();
         beforeRemove = new SaveTextBeforeRemove(pane, actionlist);
         
-        this.lockedLinesHandler = new LockedLinesHandler(pane.getStyledDocument(),
-                lineHandler, beforeRemove);
+        //this.lockedLinesHandler = new LockedLinesHandler(pane.getStyledDocument(),
+        //        lineHandler, beforeRemove);
     }
     
     @BeforeClass

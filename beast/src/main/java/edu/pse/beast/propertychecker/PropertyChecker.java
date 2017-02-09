@@ -7,9 +7,6 @@ package edu.pse.beast.propertychecker;
 
 import java.util.List;
 
-import edu.pse.beast.datatypes.ElectionCheckParameter;
-import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;

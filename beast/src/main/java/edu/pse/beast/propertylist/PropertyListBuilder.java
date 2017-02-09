@@ -3,10 +3,8 @@ package edu.pse.beast.propertylist;
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
 
-import edu.pse.beast.booleanexpeditor.UserActions.LoadPropsUserAction;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PLModelInterface;
 import edu.pse.beast.propertylist.UserActions.LoadPropertyList;
@@ -15,7 +13,7 @@ import edu.pse.beast.propertylist.UserActions.SaveAsPropertyList;
 import edu.pse.beast.propertylist.UserActions.SavePropertyList;
 import edu.pse.beast.propertylist.UserActions.UndoChangesPropertyList;
 import edu.pse.beast.propertylist.View.PropertyListWindow;
-import edu.pse.beast.propertylist.View.PropertyListWindowStarter;
+import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.saverloader.PropertyListSaverLoader;
 import edu.pse.beast.toolbox.*;
 

@@ -13,7 +13,7 @@ change_election_type : Change election type
 editor : Editor
 options : Properties
 code : Code
-static_analysis : Start static code analysis
+staticErrorFinding : Static error search
 openDialogTitleText : Open election description
 saveDialogTitleText : Save election description
 lookInLabelText : Search in:

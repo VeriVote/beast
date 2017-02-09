@@ -1,4 +1,4 @@
-package edu.pse.beast.celectiondescriptioneditor;
+package edu.pse.beast.celectiondescriptioneditor.View;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CErrorDisplayer;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
@@ -22,7 +22,7 @@ public class ErrorWindow {
      * @param textPane JTextPane for ErrorWindow
      * @param stringLoaderInterface stringLoaderInterface to load needed Strings
      */
-    ErrorWindow(JTextPane textPane, StringLoaderInterface stringLoaderInterface) {
+    public ErrorWindow(JTextPane textPane, StringLoaderInterface stringLoaderInterface) {
         updateStringRes(stringLoaderInterface);
         this.textPane = textPane;
     }
@@ -31,7 +31,7 @@ public class ErrorWindow {
      * Method to display ArrayList of Errors in the ErrorWindow.
      * @param errors ArrayList of Errors
      */
-    void displayErrors(ArrayList<CodeError> errors, CErrorDisplayer cErrorDisplayer) {
+    public void displayErrors(ArrayList<CodeError> errors, CErrorDisplayer cErrorDisplayer) {
         String errorsAsString = errorString + ": " + errors.size() + "\n";
         for (int i = 0; i < errors.size(); i++) {
             errorsAsString += i+1 + ": " + cErrorDisplayer.createMsg(errors.get(i)) + " (" + lineString +

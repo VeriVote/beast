@@ -34,6 +34,6 @@ public class PropertyListWindowStarter implements Runnable {
 
     @Override
     public void run() {
-        window.setVisible(true);
-    }
+		window.setVisible(false);
+	}
 }

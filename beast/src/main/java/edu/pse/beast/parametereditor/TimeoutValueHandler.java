@@ -4,7 +4,7 @@ import javax.swing.JSpinner;
 import javax.swing.JComboBox;
 import javax.swing.event.ChangeListener;
 import java.awt.event.ActionListener;
-import edu.pse.beast.datatypes.TimeOut;
+import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ChangeEvent;
 import java.util.concurrent.TimeUnit;

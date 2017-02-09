@@ -1,4 +1,4 @@
-package edu.pse.beast.datatypes;
+package edu.pse.beast.datatypes.electioncheckparameter;
 
 import java.util.concurrent.TimeUnit;
 

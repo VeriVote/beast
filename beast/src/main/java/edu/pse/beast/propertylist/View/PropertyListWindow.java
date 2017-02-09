@@ -1,9 +1,6 @@
 package edu.pse.beast.propertylist.View;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.MenuBar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -20,19 +17,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
-import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.propertylist.PLControllerInterface;
 import edu.pse.beast.propertylist.Model.PropertyItem;
-import edu.pse.beast.propertylist.PropertyList;
-import edu.pse.beast.propertylist.PropertyListMenuBarHandler;
-import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PLModelInterface;
 import edu.pse.beast.propertylist.Model.ResultType;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
-import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 
 /**
 *
@@ -216,6 +208,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	
 	public void stopReacting() {
 		setReactsToInput(false);
+		setVisible(false);
 	}
 	public void resumeReacting() {
 		setReactsToInput(true);

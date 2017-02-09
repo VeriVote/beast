@@ -1,4 +1,4 @@
-package edu.pse.beast.booleanexpeditor;
+package edu.pse.beast.booleanexpeditor.View;
 
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpErrorDisplayer;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CErrorDisplayer;
@@ -23,7 +23,7 @@ public class ErrorWindow {
      * @param textPane JTextPane for ErrorWindow
      * @param stringLoaderInterface stringLoaderInterface to load needed Strings
      */
-    ErrorWindow(JTextPane textPane, StringLoaderInterface stringLoaderInterface) {
+    public ErrorWindow(JTextPane textPane, StringLoaderInterface stringLoaderInterface) {
         this.textPane = textPane;
         updateStringRes(stringLoaderInterface);
     }
@@ -34,7 +34,7 @@ public class ErrorWindow {
      * @param postPropErrors An ArrayList<CodeError> instance with all the CodeErrors from the postProp textpane
      * @param booleanExpErrorDisplayer the ErrorDisplayer that creates the messages given CodeError objects
      */
-    void displayErrors(ArrayList<CodeError> prePropErrors, ArrayList<CodeError> postPropErrors,
+    public void displayErrors(ArrayList<CodeError> prePropErrors, ArrayList<CodeError> postPropErrors,
                        BooleanExpErrorDisplayer booleanExpErrorDisplayer) {
         int numberOfErrors = postPropErrors.size() + prePropErrors.size();
         String errorsAsString = errorString + ": " + numberOfErrors + "\n";

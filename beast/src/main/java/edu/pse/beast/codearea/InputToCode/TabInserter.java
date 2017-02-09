@@ -15,18 +15,15 @@ import javax.swing.text.BadLocationException;
  */
 public class TabInserter {
     private JTextPane pane; 
-    private LineHandler lineHandler;
     private SortedIntegerList tabPositions = new SortedIntegerList();
     private int spacesPerTab = 8;   
     
-    public TabInserter(JTextPane pane, LineHandler lineHandler) {
+    public TabInserter(JTextPane pane) {
         this.pane = pane;
-        this.lineHandler = lineHandler;
     }
     
     public void insertTabAtPos(int pos) throws BadLocationException {
-        int absPos = lineHandler.caretPosToAbsPos(pos);
-        int distToLineBeginning = lineHandler.getDistanceToLineBeginning(absPos);
+        int distToLineBeginning = JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, pos);
         
         int nextTabPos = 0;
         
@@ -41,7 +38,7 @@ public class TabInserter {
         pane.getStyledDocument().insertString(pos, spacesToInsert, null);
         System.out.println(spacesToInsert.length());   
         
-        tabPositions.add(absPos);
+        tabPositions.add(pos);
     }
     
     

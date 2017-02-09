@@ -2,7 +2,6 @@ package edu.pse.beast.propertylist;
 
 import java.util.ArrayList;
 
-import edu.pse.beast.booleanexpeditor.BooleanExpEditorWindow;
 import edu.pse.beast.propertylist.View.PropertyListWindow;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;

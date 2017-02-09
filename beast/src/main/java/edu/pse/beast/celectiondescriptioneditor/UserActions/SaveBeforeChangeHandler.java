@@ -5,8 +5,7 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.UserActions;
 
-import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
-import edu.pse.beast.celectiondescriptioneditor.GUI.CCodeEditorGUI;
+import edu.pse.beast.celectiondescriptioneditor.View.CCodeEditorWindow;
 
 import javax.swing.*;
 
@@ -17,16 +16,16 @@ import javax.swing.*;
 public class SaveBeforeChangeHandler {
     private String preString = "";
     private JTextPane codeArea;
-    private CCodeEditorGUI cCodeEditorGUI;
+    private CCodeEditorWindow cCodeEditorWindow;
     private SaveElectionUserAction saveElectionUserAction;
 
     /**
      * Constructor
      * @param codeArea JTextPane of the CElectionEditorCodeArea
      */
-    public SaveBeforeChangeHandler(JTextPane codeArea, CCodeEditorGUI cCodeEditorGUI) {
+    public SaveBeforeChangeHandler(JTextPane codeArea, CCodeEditorWindow cCodeEditorWindow) {
         this.codeArea = codeArea;
-        this.cCodeEditorGUI = cCodeEditorGUI;
+        this.cCodeEditorWindow = cCodeEditorWindow;
         updatePreValue();
     }
 
@@ -59,7 +58,7 @@ public class SaveBeforeChangeHandler {
      */
     public boolean ifHasChangedOpenDialog(String currentlyLoadedPropName) {
         if (hasChanged()) {
-            int option = cCodeEditorGUI.showOptionPane(currentlyLoadedPropName);
+            int option = cCodeEditorWindow.showOptionPane(currentlyLoadedPropName);
             if (option == JOptionPane.YES_OPTION) {
                 saveElectionUserAction.perform();
             } else if (option == JOptionPane.CANCEL_OPTION) {

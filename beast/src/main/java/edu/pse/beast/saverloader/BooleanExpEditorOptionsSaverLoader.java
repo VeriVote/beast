@@ -4,6 +4,6 @@ package edu.pse.beast.saverloader;
 *
 * @author Justin
 */
-public class BooleanExpEditorSaverLoader {
+public class BooleanExpEditorOptionsSaverLoader {
 
 }

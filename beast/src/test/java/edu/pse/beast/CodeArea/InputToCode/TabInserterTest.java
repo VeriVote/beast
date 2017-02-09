@@ -41,7 +41,7 @@ public class TabInserterTest {
     public void setUp() {
         pane = new JTextPane();
         lineHandler = new LineHandler(pane);
-        ins = new TabInserter(pane, lineHandler);
+        //ins = new TabInserter(pane, lineHandler);
     }
     
     @After
@@ -75,7 +75,7 @@ public class TabInserterTest {
         
         pane = new JTextPane();
         lineHandler = new LineHandler(pane);
-        ins = new TabInserter(pane, lineHandler);
+        //ins = new TabInserter(pane, lineHandler);
         
         insert = "0123";
         pane.getStyledDocument().insertString(0, insert, null);

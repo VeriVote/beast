@@ -41,7 +41,7 @@ public class CurlyBracesLineBeginningTabHandlerTest {
     public void setUp() {
         pane = new JTextPane();
         lineHandler = new LineHandler(pane);
-        handler = new CurlyBracesLineBeginningTabHandler(pane, lineHandler);
+        handler = new CurlyBracesLineBeginningTabHandler(pane);
     }
     
     @After
@@ -69,8 +69,7 @@ public class CurlyBracesLineBeginningTabHandlerTest {
     @Test
     public void testGetEasyCurlyTabsForLine() throws BadLocationException {
         System.out.println("getTabsForLine");
-        String insert = "{" + System.lineSeparator() + " " + System.lineSeparator() + "}";
-        pane.getStyledDocument().insertString(0, insert, null);
+       pane.setText("{\n \n}");
         
         int tabs = handler.getTabsForLine(0);
         assertEquals(0, tabs);
@@ -88,10 +87,10 @@ public class CurlyBracesLineBeginningTabHandlerTest {
     @Test
     public void testGetTabsForLineClosingCurlyAtEnd() throws BadLocationException {
         System.out.println("getTabsForLine");
-        String insert = "{" + System.lineSeparator() + " " + System.lineSeparator() + "}";
-        pane.getStyledDocument().insertString(0, insert, null);
         
-        int tabs = handler.getTabsForLine(4);
+        pane.setText("{\n\n}");
+        
+        int tabs = handler.getTabsForLine(3);
         assertEquals(0, tabs);    
     }
     
@@ -115,8 +114,7 @@ public class CurlyBracesLineBeginningTabHandlerTest {
                                 "{" + System.lineSeparator() + 
                                     " " + System.lineSeparator() + 
                                 "}";
-        pane.getStyledDocument().insertString(0, insert, null);
-        
+        pane.setText("{\n{\n{\n \n}");
         int tabs = handler.getTabsForLine(6);
         assertEquals(3, tabs);  
         tabs = handler.getTabsForLine(7);
@@ -125,5 +123,12 @@ public class CurlyBracesLineBeginningTabHandlerTest {
         assertEquals(2, tabs);  
         tabs = handler.getTabsForLine(9);
         assertEquals(2, tabs);  
+    }
+
+    /**
+     * Test of getTabsForLine method, of class CurlyBracesLineBeginningTabHandler.
+     */
+    @Test
+    public void testGetTabsForLine() {
     }
 }

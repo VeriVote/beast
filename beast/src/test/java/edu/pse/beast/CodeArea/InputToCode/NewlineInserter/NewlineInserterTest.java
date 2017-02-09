@@ -46,8 +46,8 @@ public class NewlineInserterTest {
     public void setUp() {
         pane = new JTextPane();
         lineHandler= new LineHandler(pane);
-        tabsInserter = new TabInserter(pane, lineHandler);
-        lineBeg = new CurlyBracesLineBeginningTabHandler(pane, lineHandler);
+        //tabsInserter = new TabInserter(pane, lineHandler);
+        //lineBeg = new CurlyBracesLineBeginningTabHandler(pane, lineHandler);
     }
     
     @After

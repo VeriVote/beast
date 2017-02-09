@@ -7,8 +7,7 @@ package edu.pse.beast.propertychecker;
 
 import java.util.List;
 
-import edu.pse.beast.datatypes.ElectionType;
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
+import edu.pse.beast.datatypes.electiondescription.ElectionType;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenterElement;
 

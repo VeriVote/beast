@@ -13,19 +13,16 @@ import javax.swing.JTextPane;
  */
 public class CurlyBracesLineBeginningTabHandler implements LineBeginningTabsHandler {
     private JTextPane pane;
-    private LineHandler lineHandler;
     
-    public CurlyBracesLineBeginningTabHandler(JTextPane pane, LineHandler lineHandler) {
+    public CurlyBracesLineBeginningTabHandler(JTextPane pane) {
         this.pane = pane;
-        this.lineHandler = lineHandler;
     }
 
     @Override
     public int getTabsForLine(int caretPos) {
-        int absPos = lineHandler.caretPosToAbsPos(caretPos);
         int amt = 0;
-        String code = pane.getText();
-        for(int pos = absPos - 1; pos >= 0; --pos) {
+        String code = JTextPaneToolbox.getText(pane);
+        for(int pos = caretPos - 1; pos >= 0; --pos) {
             if(code.charAt(pos) == '{') {
                 ++amt;
                 while(pos >= 0 && code.charAt(pos) != '\n') --pos;
@@ -33,7 +30,7 @@ public class CurlyBracesLineBeginningTabHandler implements LineBeginningTabsHand
             else if(code.charAt(pos) == '}') --amt;
         }
         
-        for(int pos = absPos; pos < code.length() && code.charAt(pos) == '}'; ++pos) {
+        for(int pos = caretPos; pos < code.length() && code.charAt(pos) == '}'; ++pos) {
             --amt;
             return amt;
         }

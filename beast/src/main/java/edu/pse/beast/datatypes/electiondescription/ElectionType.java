@@ -1,4 +1,4 @@
-package edu.pse.beast.datatypes;
+package edu.pse.beast.datatypes.electiondescription;
 
 /**
  * The enumeration holds information about the type of an election. That is the way a candidate is chosen.

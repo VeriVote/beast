@@ -8,16 +8,12 @@ package edu.pse.beast.celectiondescriptioneditor.UserActions;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateChooser;
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
-import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
-import edu.pse.beast.highlevel.DisplaysStringsToUser;
-import edu.pse.beast.stringresource.StringLoaderInterface;
-import edu.pse.beast.stringresource.StringResourceLoader;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.UserAction;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.*;
 import javax.swing.text.BadLocationException;
 /**
  *

@@ -1,4 +1,4 @@
-package edu.pse.beast.parametereditor;
+package edu.pse.beast.parametereditor.View;
 
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
@@ -146,14 +146,14 @@ public class AdvancedWindow extends javax.swing.JFrame implements DisplaysString
      * Provides access to the JTextField that contains the user input
      * @return JTextField
      */
-    protected javax.swing.JTextField getInputField() {
+    public javax.swing.JTextField getInputField() {
         return input;
     }
     /**
      * Provides access to the JButton that approves of the user input being stored
      * @return JButton
      */
-    protected javax.swing.JButton getOkButton() {
+    public javax.swing.JButton getOkButton() {
         return ok;
     }
 
@@ -168,7 +168,7 @@ public class AdvancedWindow extends javax.swing.JFrame implements DisplaysString
      * Toggles whether this window reacts to user input (to not interrupt checks)
      * @param reacts whether it reacts
      */
-    protected void setReacts(boolean reacts) {
+    void setReacts(boolean reacts) {
         this.reacts = reacts;
     }
 }

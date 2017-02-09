@@ -2,20 +2,11 @@ package edu.pse.beast.parametereditor.UserActions;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.datatypes.Project;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.parametereditor.ParameterEditor;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.saverloader.*;
-import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
-import edu.pse.beast.toolbox.FileChooser;
 import edu.pse.beast.toolbox.UserAction;
-
-import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
-import java.io.*;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * UserAction for saving a project at a certain path

@@ -20,7 +20,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
 /**
- *
+ * This class is responsible for translating input from the user into code 
+ * visible in the given JTextPane. It is used by the class CodeInputHandler. *  
  * @author Holger-Desktop
  */
 public class UserInsertToCode implements CaretListener, StoppedTypingContinuouslyListener {
@@ -32,7 +33,6 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
     private NewlineInserterChooser newlineInserterChooser;
     private NewlineInserter currentInserter;
     private int currentCaretPosition;
-    private LineHandler lineHandler;
     private TabInserter tabInserter;
     private LineBeginningTabsHandler lineBeginningTabsHandler;
     private SaveTextBeforeRemove saveBeforeRemove;
@@ -62,11 +62,11 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
 
     public void insertString(String string) {
         try {
-            if (lockedLines.isLineLocked(lineHandler.transformToLineNumber(pane.getCaretPosition()))) {
-                System.out.println("Can't insert into locked lines.");
+            if (isLineContainingCaretPosLocked()) {
+                return;
             } else {
                 if (pane.getSelectedText() == null) {
-                    pane.getStyledDocument().insertString(pane.getCaretPosition(), string,null);
+                    pane.getStyledDocument().insertString(pane.getCaretPosition(), string, null);
                 } else {
                     int selectionStart = pane.getSelectionStart();
                     int selectionEnd = pane.getSelectionEnd();
@@ -84,13 +84,18 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
     }
 
     public void insertTab() throws BadLocationException {
-        if(wouldChangedLocked()) return;       
-        if(lockedLines.isLineLocked(lineHandler.transformToLineNumber(currentCaretPosition))) return;        
+        if(selectionIncludesLockedLines()) return;       
+        if(isLineContainingCaretPosLocked()) return;        
         tabInserter.insertTabAtPos(currentCaretPosition);
     }
 
+    private boolean isLineContainingCaretPosLocked() {
+        return lockedLines.isLineLocked(JTextPaneToolbox.transformToLineNumber(pane, pane.getCaretPosition()));
+    }
+
     public void insertChar(char keyChar) throws BadLocationException {
-        if(wouldChangedLocked()) return;
+        if(selectionIncludesLockedLines()) return;
+        if(isLineContainingCaretPosLocked()) return;
         if(pane.getSelectedText() != null) {
             pane.getStyledDocument().remove(
                     pane.getSelectionStart(),
@@ -127,37 +132,34 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
     private void setupObjects() {
         stoppedTypingContMsger = new StoppedTypingContinuouslyMessager(pane);
         stoppedTypingContMsger.addListener(this);
-        this.lineHandler = new LineHandler(this.pane);
-        this.tabInserter = new TabInserter(this.pane, lineHandler);
-        this.lockedLines = new LockedLinesHandler(styledDoc, lineHandler, saveBeforeRemove);
-        this.lineBeginningTabsHandler = new CurlyBracesLineBeginningTabHandler(pane, lineHandler);
+        this.tabInserter = new TabInserter(this.pane);
+        this.lockedLines = new LockedLinesHandler(this.pane, saveBeforeRemove);
+        this.lineBeginningTabsHandler = new CurlyBracesLineBeginningTabHandler(pane);
         this.newlineInserterChooser = new NewlineInserterChooser(pane, lockedLines);
         this.currentInserter = this.newlineInserterChooser.getNewlineInserter();       
-        this.lockedLinesDisplay = new LockedLinesDisplay(pane, lineHandler, lockedLines);
+        this.lockedLinesDisplay = new LockedLinesDisplay(pane, lockedLines);
     }
 
     void moveToEndOfCurrentLine() {
-        int end = lineHandler.getClosestLineBeginningAfter(currentCaretPosition);
+        int end = JTextPaneToolbox.getClosestLineBeginningAfter(pane, currentCaretPosition);
         pane.setCaretPosition(end);
     }
 
     void moveToStartOfCurrentLine() {
-        int start = lineHandler.getClosestLineBeginning(currentCaretPosition);
-        pane.setCaretPosition(start + 1);
+        int dist = JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, currentCaretPosition);
+        pane.setCaretPosition(pane.getCaretPosition() - dist);
     }
 
     void removeToTheRight() {
-        if(wouldChangedLocked()) return;
-        try {
-            if(pane.getStyledDocument().getText(currentCaretPosition, 1).equals("\n") && 
-                    !pane.getStyledDocument().getText(currentCaretPosition - 1, 1).equals("\n")) {
-                if(lockedLines.isLineLocked(lineHandler.transformToLineNumber(currentCaretPosition) + 1)) {
-                    return;
-                }
+        if(selectionIncludesLockedLines()) return;
+        if(!isCaretInEmptyLine()) {
+            if(isTheFollowingLineLocked()) {
+                return;
             }
-        } catch (BadLocationException ex) {
-            
-        }
+        } 
+        if(!isCaretAtEndOfLine() && isLineContainingCaretPosLocked()) {
+            return;
+        }        
             
         try {
             if(pane.getSelectedText() != null) {
@@ -169,15 +171,32 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
             pane.getStyledDocument().remove(currentCaretPosition, 1);
         } catch (BadLocationException ex) {
             Logger.getLogger(UserInsertToCode.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            
+        }           
         
     }
 
-    void removeToTheLeft() {
-        if(wouldChangedLocked()) return;
-        if(currentCaretPosition == 0) return;
+    private boolean isCaretAtEndOfLine() {
+        return JTextPaneToolbox.getCharToTheRightOfCaret(pane).equals("\n");
+    }
+
+    private boolean isCaretInEmptyLine() {
+        return isCaretAtEndOfLine() && 
+                JTextPaneToolbox.getCharToTheLeftOfCaret(pane).equals("\n");
+    }
+
+    private boolean isTheFollowingLineLocked() {
+        return lockedLines.isLineLocked(JTextPaneToolbox.transformToLineNumber(pane, currentCaretPosition) + 1);
+    }
+
+    public void removeToTheLeft() {
+        if(selectionIncludesLockedLines()) return;
+        if(currentCaretPosition == 0) return;        
+        
         try {
+            if(isLineContainingCaretPosLocked()) {
+            if(!pane.getStyledDocument().getText(currentCaretPosition - 2, 2).equals("\n\n")) 
+                return;
+            }
             if(pane.getSelectedText() != null) {
                 pane.getStyledDocument().remove(
                         pane.getSelectionStart(),
@@ -186,16 +205,15 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
             }
             
             pane.getStyledDocument().remove(currentCaretPosition - 1, 1);
-            } catch (BadLocationException ex) {
-                Logger.getLogger(UserInsertToCode.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        } catch (BadLocationException ex) {
+            Logger.getLogger(UserInsertToCode.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    private boolean wouldChangedLocked() {
+    private boolean selectionIncludesLockedLines() {
+        if(pane.getSelectedText() == null) return false;
         try {
-            int line = lineHandler.transformToLineNumber(currentCaretPosition);
-            if(lockedLines.isLineLocked(line)) return true;
-            ArrayList<Integer> lines = lineHandler.getLinesBetween(pane.getSelectionStart(), pane.getSelectionEnd());
+            ArrayList<Integer> lines = JTextPaneToolbox.getLinesBetween(pane, pane.getSelectionStart(), pane.getSelectionEnd());
             for(int i : lines) {
                 if(lockedLines.isLineLocked(i)) return true;
             }
