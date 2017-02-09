@@ -200,7 +200,7 @@ public class CBMC_Result extends Result {
         // this pattern searches for words of the form
         // "votesNUMBER[NUMBER]" where "NUMBER" can by any positive
         // number. Also, the next character has to be an equals sign
-        Pattern votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+\\])(=.*)");
+        Pattern votesExtractor = null;
 
         Iterator<String> iterator = getResult().iterator();
         String line = mergeLinesToOne(iterator, segmentEnder);
@@ -215,16 +215,18 @@ public class CBMC_Result extends Result {
 
             if (line.contains("[")) {
 
+            	votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+[a-zA-Z]*\\])(=.*)");
+            	
                 Matcher votesMatcher = votesExtractor.matcher(line);
 
                 if (votesMatcher.find()) {
                     String newLine = votesMatcher.group(1);
 
                     // find out the number of this votes array
-                    int mainIndex = Integer.parseInt(newLine.split("=")[0].split(name)[1]);
+                    int mainIndex = Integer.parseInt(newLine.split("=")[0].split(name)[1].split("\\[")[0]);
 
                     // get the first index for this array value
-                    int arrayIndex = Integer.parseInt(newLine.split("\\[")[1].split("\\]")[0]);
+                    int arrayIndex = Integer.parseInt((newLine.split("\\[")[1].split("\\]")[0]).replaceAll("[^\\d.]", ""));
 
                     // split at the "(" and ")" to extract the value
                     String valueAsString = line.split("\\(")[1].split("\\)")[0];
@@ -322,7 +324,7 @@ public class CBMC_Result extends Result {
             	// this pattern searches for words of the form
             	// "votesNUMBER[NUMBER][NUMBER]" where "NUMBER" can by any positive
             	// number. Also, the next character has to be an equals sign
-            	votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+\\]\\[[0-9]+\\])(=.*)");
+            	votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+[a-z]*\\]\\[[0-9]+[a-zA-z]*\\])(=.*)");
             	
                 Matcher votesMatcher = votesExtractor.matcher(line);
 
@@ -330,21 +332,17 @@ public class CBMC_Result extends Result {
 
                     String newLine = votesMatcher.group(1);
 
-    //                System.out.println("newline1: " + newLine);
-     //               System.out.println(line);
-
-                    // System.out.println("NEWLINE: " + newLine);
 
                     // find out the number of this votes array
-                    int mainIndex = Integer.parseInt(newLine.split("=")[0].split(name)[1]);
+                    int mainIndex = Integer.parseInt(newLine.split("=")[0].split(name)[1].split("\\[")[0]);
 
                     // System.out.println("mainindex " + mainIndex);
 
                     // get the first index for this array value
-                    int arrayIndexOne = Integer.parseInt(newLine.split("\\[")[1].split("\\]")[0]);
+                    int arrayIndexOne = Integer.parseInt(newLine.split("\\[")[1].split("\\]")[0].replaceAll("[^\\d.]", ""));
 
                     // get the second index for this array value
-                    int arrayIndexTwo = Integer.parseInt(newLine.split("\\[")[2].split("\\]")[0]);
+                    int arrayIndexTwo = Integer.parseInt(newLine.split("\\[")[2].split("\\]")[0].replaceAll("[^\\d.]", ""));
 
                     // split at the "(" and ")" to extract the value
                     String valueAsString = line.split("\\(")[1].split("\\)")[0];
