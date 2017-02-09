@@ -27,7 +27,6 @@ public class CAntlrHandler {
     private CParser cParser;
     
     public CAntlrHandler(JTextPane pane) {
-        System.out.println(pane == null);
         this.pane = pane;
         lexer = new CLexer(new ANTLRInputStream(pane.getText()));
         CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
@@ -38,7 +37,6 @@ public class CAntlrHandler {
         try {
             String code = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
             lexer.setInputStream(new ANTLRInputStream(code));
-            System.out.println("C Code " + code);
             CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
             cParser.setTokenStream(commonTokenStream);
             return cParser.compilationUnit();

@@ -40,8 +40,12 @@ public class CVariableErrorFinder extends CBaseListener implements ErrorFinder {
     }
     
     @Override 
-    public void enterAssignmentExpression(CParser.AssignmentExpressionContext ctx) { 
+    public void exitAssignmentExpression(CParser.AssignmentExpressionContext ctx) { 
        
+    }
+    
+    public void exitDeclaration(CParser.DeclarationContext ctx) {
+        
     }
     
 }

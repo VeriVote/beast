@@ -31,6 +31,6 @@ public class ANTLRTest {
         view.open();
     }
     public static void main(String[] args) {
-        showGuiTreeView("void f() { i = 0;}");
+        showGuiTreeView("void f() { int i = 0;}");
     }
 }
