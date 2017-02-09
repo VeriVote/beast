@@ -3,7 +3,6 @@ package edu.pse.beast.propertylist.UserActions;
 import javax.swing.JOptionPane;
 
 import edu.pse.beast.propertylist.PropertyList;
-import edu.pse.beast.propertylist.View.NewPropertyWindow;
 import edu.pse.beast.toolbox.UserAction;
 
 public class NewPropertyList extends UserAction {
@@ -44,7 +43,7 @@ public class NewPropertyList extends UserAction {
                         controller.getMenuStringLoader().getStringFromID("newList"),
                         JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
                     controller.getSaveBeforeChangeHandler().setChangedSinceSave(false);
-                    controller.getModel().userActionNewList();
+                    controller.getModel().setNewList();
                 } else {
                     return;
                 }
@@ -53,7 +52,7 @@ public class NewPropertyList extends UserAction {
 
         controller.getSaveBeforeChangeHandler().setChangedSinceSave(false);
         controller.resetActionList();
-        controller.getModel().userActionNewList();
+        controller.getModel().setNewList();
     }
 
 }

@@ -8,6 +8,10 @@ import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.ActionIdAndListener;
 import edu.pse.beast.toolbox.MenuBarHandler;
 
+/**
+ * @author Justin
+ *
+ */
 public class PropertyListMenuBarHandler extends MenuBarHandler {
 
     private PropertyListWindow window;

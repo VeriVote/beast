@@ -1,5 +1,6 @@
 package edu.pse.beast.propertylist;
 
+import edu.pse.beast.propertylist.Model.PLModelInterface;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 
 /**
@@ -46,4 +47,9 @@ public interface PLControllerInterface {
      */
     void addNewProperty();
 
+    /**
+     * Sets the data model of property list.
+     * @param model The model to replace the old model
+     */
+    void setPLModel(PLModelInterface model);
 }

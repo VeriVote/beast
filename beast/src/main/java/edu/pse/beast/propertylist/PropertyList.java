@@ -126,10 +126,6 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         model.addNewProperty(editor);
     }
 
-
-    /**
-     * @see edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource#isCorrect()
-     */
     @Override
     public boolean isCorrect() {
         for (PropertyItem item : model.getPropertyList()) {
@@ -145,9 +141,6 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         return true;
     }
 
-    /* 
-     * @see edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource#stopReacting()
-     */
     @Override
     public void stopReacting() {
         view.stopReacting();
@@ -155,9 +148,6 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         editor.getView().setVisible(false);
     }
 
-    /*
-     * @see edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource#resumeReacting()
-     */
     @Override
     public void resumeReacting() {
         view.resumeReacting();
@@ -166,9 +156,6 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         }
     }
 
-    /* 
-     * @see edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource#getPostAndPrePropertiesDescriptions()
-     */
     @Override
     public ArrayList<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptions() {
         editor.updatePostAndPrePropObject();
@@ -183,26 +170,17 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         return result;
     }
 
-    /*
-	 * @see edu.pse.beast.highlevel.ResultPresenter#presentResult(edu.pse.beast.highlevel.ResultInterface)
-     */
     @Override
     public void presentResult(ResultInterface res) {
         model.setNextToBePresented(res);
     }
 
-    /* 
-     * @see edu.pse.beast.highlevel.ResultPresenter#resetResults()
-     */
     @Override
     public void resetResults() {
         model.resetResults();
         view.updateView();
     }
 
-    /* 
-     * @see edu.pse.beast.highlevel.DisplaysStringsToUser#updateStringRes(edu.pse.beast.stringresource.StringLoaderInterface)
-     */
     @Override
     public void updateStringRes(StringLoaderInterface sli) {
         this.sli = sli;
@@ -237,6 +215,11 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     public PLModel getModel() {
         return (PLModel) model;
     }
+    
+    public void setPLModel(PLModelInterface model) {
+        model.loadAnotherModel(model);
+        //((PLModel) this.model).updateView();
+    }
 
     /**
      * Provides the view of property list.
@@ -253,11 +236,6 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 
     public void setSaveBeforeChangeHandler(PLSaveBeforeChangeHandler saveHandler) {
         this.saveBeforeChangeHandler = saveHandler;
-    }
-
-    public void setPLModel(PLModelInterface model) {
-        this.model.loadAnotherModel(model);
-        ((PLModel) this.model).updateView();
     }
     
     public FileChooser getFileChooser() {

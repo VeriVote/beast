@@ -8,6 +8,10 @@ import edu.pse.beast.toolbox.ActionIdAndListener;
 import edu.pse.beast.toolbox.ImageResourceProvider;
 import edu.pse.beast.toolbox.ToolbarHandler;
 
+/**
+ * @author Justin
+ *
+ */
 public class PropertyListToolbarHandler extends ToolbarHandler {
 
     private PropertyListWindow window;

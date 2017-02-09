@@ -12,10 +12,6 @@ public class PLModel extends Observable implements PLModelInterface {
 
     private ArrayList<PropertyItem> propertyList;
 
-    //private File saveLocation = null;
-    
-    //private boolean changedSinceSave = false;
-
     @Override
     public void initialize() {
         if (propertyList == null) {
@@ -32,12 +28,9 @@ public class PLModel extends Observable implements PLModelInterface {
         if (indexOfName(newName) != -1 && prop.getDescription().getName() != newName) {
             return false;
         }
-
         PostAndPrePropertiesDescription old = propertyList.get(index).getDescription();
         propertyList.get(index).setDescription(newName, old.getPrePropertiesDescription(),
                 old.getPostPropertiesDescription(), old.getSymVarList());
-
-        //setChangedSinceSave(true);
         updateView();
         return true;
     }
@@ -45,7 +38,6 @@ public class PLModel extends Observable implements PLModelInterface {
     @Override
     public boolean addDescription(PropertyItem prop) {
         propertyList.add(prop);
-        //setChangedSinceSave(true);
         updateView();
         return true;
     }
@@ -59,10 +51,8 @@ public class PLModel extends Observable implements PLModelInterface {
         }
         PropertyItem newItem = new PropertyItem(new PostAndPrePropertiesDescription(name + i), false);
         propertyList.add(newItem);
-
         editor.letUserEditPostAndPreProperties(newItem.getDescription(), true);
         editor.getView().setVisible(true);
-        //setChangedSinceSave(true);
         updateView();
         return true;
     }
@@ -71,7 +61,6 @@ public class PLModel extends Observable implements PLModelInterface {
     public void editProperty(PropertyItem prop, BooleanExpEditor editor) {
         editor.letUserEditPostAndPreProperties(prop.getDescription(), true);
         editor.getView().setVisible(true);
-        //setChangedSinceSave(true);
         prop.setResultType(ResultType.UNTESTED);
         updateView();
     }
@@ -83,8 +72,6 @@ public class PLModel extends Observable implements PLModelInterface {
             return false;
         }
         propertyList.remove(index);
-
-        //setChangedSinceSave(true);
         updateView();
         return true;
     }
@@ -92,37 +79,11 @@ public class PLModel extends Observable implements PLModelInterface {
     @Override
     public void setTestStatus(PropertyItem prop, boolean newStatus) {
         prop.setTestStatus(newStatus);
-        //setChangedSinceSave(true);
     }
 
-    public void userActionNewList() {
+    public void setNewList() {
         this.propertyList.clear();
-        //setChangedSinceSave(false);
-        //saveLocation = null;
         updateView();
-    }
-
-    public void userActionLoadList() {
-        // TODO
-    }
-
-    public void userActionSaveList() {
-        // TODO
-    }
-
-    private int indexOfName(String name) {
-        for (PropertyItem current : propertyList) {
-            if (current.getDescription().getName().equals(name)) {
-                return propertyList.indexOf(current);
-            }
-        }
-        return -1;
-    }
-
-    public void updateView() {
-        this.setChanged();
-        this.notifyObservers();
-        this.clearChanged();
     }
 
     public boolean setNextToBePresented(ResultInterface res) {
@@ -155,8 +116,29 @@ public class PLModel extends Observable implements PLModelInterface {
         this.propertyList = propertyList;
     }
 
+    public void loadAnotherModel(PLModelInterface model) {
+        this.propertyList = model.getPropertyList();
+        updateView();
+    }
+    
     public PLModel getModel() {
         return this;
+    }
+    
+    
+    private int indexOfName(String name) {
+        for (PropertyItem current : propertyList) {
+            if (current.getDescription().getName().equals(name)) {
+                return propertyList.indexOf(current);
+            }
+        }
+        return -1;
+    }
+
+    private void updateView() {
+        this.setChanged();
+        this.notifyObservers();
+        this.clearChanged();
     }
 
     /*public File getSaveLocation() {
@@ -175,12 +157,8 @@ public class PLModel extends Observable implements PLModelInterface {
         this.changedSinceSave = changedSinceSave;
     }*/
 
-    public ArrayList<PropertyItem> getItemList() {
+    /*public ArrayList<PropertyItem> getItemList() {
         return propertyList;
-    }
-
-    public void loadAnotherModel(PLModelInterface model) {
-        this.propertyList = model.getPropertyList();
-    }
+    }*/
 
 }

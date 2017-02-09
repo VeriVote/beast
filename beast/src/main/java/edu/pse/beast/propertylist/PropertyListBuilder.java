@@ -41,9 +41,7 @@ public class PropertyListBuilder {
         FileChooser fileChooser = new FileChooser(refs.getStringIF().getPropertyListStringResProvider().getOtherStringRes(),
                 new PropertyListSaverLoader(), null);
         controller = new PropertyList(model, booleanExpEditor, fileChooser);
-        //PropertyListWindowStarter starter = new PropertyListWindowStarter(controller, model);
 
-        //window = starter.getPropertyListWindow();
         window = controller.getView();
         window.updateStringRes(refs.getStringIF());
 
@@ -57,7 +55,6 @@ public class PropertyListBuilder {
                 refs.getStringIF().getPropertyListStringResProvider().getToolbarTipStringRes(),
                 createActionIdAndListenerListForToolbarHandler(), window.getToolbar(), window);
 
-        //starter.start();
         controller.start();
 
         return (PropertyList) controller;
@@ -66,7 +63,6 @@ public class PropertyListBuilder {
     private ArrayList<ArrayList<ActionIdAndListener>>
             createActionIdAndListenerListForMenuHandler() {
         ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
-
         ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
 
         UserAction newly = createNewPropertyList();
@@ -76,7 +72,6 @@ public class PropertyListBuilder {
         UserAction load = createLoadPropertyList();
 
         fileList.add(createFromUserAction(newly));
-
         fileList.add(createFromUserAction(save));
         fileList.add(createFromUserAction(saveAs));
         fileList.add(createFromUserAction(load));
@@ -87,7 +82,6 @@ public class PropertyListBuilder {
 
         created.add(fileList);
         created.add(editList);
-
         return created;
     }
 
@@ -96,14 +90,12 @@ public class PropertyListBuilder {
 
         UserAction newly = createNewPropertyList();
         UserAction load = createLoadPropertyList();
-
         UserAction save = createSavePropertyList();
         UserAction saveAs = createSaveAsPropertyList();
         UserAction undo = createUndoChangesPropertyList();
 
         created[0] = createFromUserAction(newly);
         created[1] = createFromUserAction(load);
-
         created[2] = createFromUserAction(save);
         created[3] = createFromUserAction(saveAs);
         created[4] = createFromUserAction(undo);
