@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.propertychecker;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionType;
@@ -108,11 +109,20 @@ public abstract class Result implements ResultInterface {
     }
     
     /**
-     * sets the result of this object, so it can be displayed later.
+     * sets the error of this object, so it can be displayed later.
      * @param result the result of the check that should be stored in this result object
      */
     public void setError(List<String> error) {
         this.error = error;
+    }
+    
+    /**
+     * sets a single line as the error output
+     * @param error the error to log
+     */
+    public void setError(String errorLine) {
+    	this.error = new ArrayList<String>();
+    	this.error.add(errorLine);
     }
 
     public int getNumVoters() {
