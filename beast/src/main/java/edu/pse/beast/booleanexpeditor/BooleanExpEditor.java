@@ -157,9 +157,9 @@ public class BooleanExpEditor {
         symbolicVarListController.getSymbolicVariableList().removeListener(postPropCodeArea.getVariableErrorFinder().getLis());
         
         prePropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(refs, window.getPrePropTextPane(),
-                window.getPrePropScrollPane(), symbolicVarListController.getSymbolicVariableList());
+                window.getPrePropScrollPane(), symbolicVarListController.getSymbolicVariableList(), cEditor);
         postPropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(refs, window.getPostPropTextPane(),
-                window.getPostPropScrollPane(), symbolicVarListController.getSymbolicVariableList());     
+                window.getPostPropScrollPane(), symbolicVarListController.getSymbolicVariableList(), cEditor);     
         
         for (int i = 0; i < userActions.size(); i++) {
             UserAction get = userActions.get(i);

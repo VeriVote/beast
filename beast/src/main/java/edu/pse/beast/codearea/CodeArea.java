@@ -84,10 +84,6 @@ public class CodeArea {
     
     
     
-    public void unlockAll() {
-        insertToCode.unlockAll();
-    }
-    
     public void lockLine(int line) {
         insertToCode.lockLine(line);
     }

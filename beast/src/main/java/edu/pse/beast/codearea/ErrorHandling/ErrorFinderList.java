@@ -14,6 +14,8 @@ import java.util.ArrayList;
 public class ErrorFinderList {
     private ArrayList<ErrorFinder> errorFinderList = new ArrayList<>();
     
+    
+    
     public ArrayList<CodeError>  getErrors() {
         ArrayList<CodeError> created = new ArrayList<>();
         for(int i = 0; i < errorFinderList.size() && created.size() == 0; ++i) {

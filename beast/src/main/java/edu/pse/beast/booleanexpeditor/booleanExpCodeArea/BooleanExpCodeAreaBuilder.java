@@ -4,6 +4,7 @@ import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.autocompletion.BooleanE
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorGrammarErrorFinder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorVariableErrorFinder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpErrorDisplayer;
+import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.codearea.CodeArea;
 import edu.pse.beast.codearea.CodeAreaBuilder;
 import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
@@ -27,13 +28,14 @@ public class BooleanExpCodeAreaBuilder extends CodeAreaBuilder{
      */
     public BooleanExpCodeArea createBooleanExpCodeAreaObject(ObjectRefsForBuilder objectRefs,
                                                              JTextPane textPane, JScrollPane scrollPane, 
-                                                             SymbolicVariableList symbolicVariableList) {
+                                                             SymbolicVariableList symbolicVariableList,
+                                                             CElectionDescriptionEditor ceditor) {
         
         BooleanExpErrorDisplayer errorDisplayer = new BooleanExpErrorDisplayer(textPane, objectRefs.getStringIF());
         CodeArea tempCodeArea = super.createCodeArea(textPane, scrollPane, objectRefs, errorDisplayer);
         BooleanExpANTLRHandler antlrHandler = new BooleanExpANTLRHandler(textPane.getStyledDocument());
         return new BooleanExpCodeArea(tempCodeArea, antlrHandler,
-                new BooleanExpEditorVariableErrorFinder(antlrHandler, symbolicVariableList),
+                new BooleanExpEditorVariableErrorFinder(antlrHandler, symbolicVariableList, ceditor),
                 new BooleanExpEditorGrammarErrorFinder(antlrHandler),
                 new BooleanExpAutoCompletionSrc());        
     }

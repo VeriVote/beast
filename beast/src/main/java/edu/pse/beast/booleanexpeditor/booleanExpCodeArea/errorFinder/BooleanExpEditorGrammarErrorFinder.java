@@ -37,7 +37,6 @@ public class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListener, E
 
     @Override
     public ArrayList<CodeError> getErrors() {
-        System.out.println("formal prop searching grammar errors");
         errors.clear();
         try {
             antlrHandler.getParseTree();

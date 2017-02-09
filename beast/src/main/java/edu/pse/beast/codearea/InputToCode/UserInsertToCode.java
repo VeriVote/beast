@@ -238,7 +238,4 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
         return this.openCloseCharList;
     }
 
-    public void unlockAll() {
-        lockedLines.unlockAll();
-    }
 }

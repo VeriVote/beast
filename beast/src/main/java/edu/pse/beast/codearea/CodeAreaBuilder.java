@@ -57,7 +57,7 @@ public class CodeAreaBuilder {
         StoppedTypingContinuouslyMessager stoppedTypingContinuouslyMessager = 
                 new StoppedTypingContinuouslyMessager(codeArea);
         ErrorController error = new ErrorController(
-                codeArea, stoppedTypingContinuouslyMessager, errorDisplayer);
+                codeArea, errorDisplayer);
         
         AutocompletionController autocompletion = new AutocompletionController();
         

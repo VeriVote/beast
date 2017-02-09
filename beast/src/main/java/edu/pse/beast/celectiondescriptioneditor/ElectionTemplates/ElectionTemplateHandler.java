@@ -11,7 +11,7 @@ import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import java.util.ArrayList;
 
 /**
- *
+ * 
  * @author Holger-Desktop
  */
 public class ElectionTemplateHandler {

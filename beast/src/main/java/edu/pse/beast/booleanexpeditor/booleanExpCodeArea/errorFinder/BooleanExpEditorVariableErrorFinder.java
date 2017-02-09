@@ -1,6 +1,7 @@
 package edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder;
 
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpANTLRHandler;
+import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
@@ -30,22 +31,14 @@ public class BooleanExpEditorVariableErrorFinder implements ErrorFinder, Electio
      */
     public BooleanExpEditorVariableErrorFinder(
             BooleanExpANTLRHandler antlrHandler,
-            SymbolicVariableList list) {
+            SymbolicVariableList list, CElectionDescriptionEditor ceditor) {
         this.antlrHandler = antlrHandler;
-        lis = new FormalExpErrorFinderTreeListener(list);
+        lis = new FormalExpErrorFinderTreeListener(list, ceditor);        
     }
-
-     public void setUp(
-            BooleanExpScopehandler scopeHandler,
-            ElectionTypeContainer input,
-            ElectionTypeContainer output) {
-         lis.setUp(scopeHandler, input, output);        
-    }
+    
      
-     @Override
-    public ArrayList<CodeError> getErrors() {        
-        System.out.println("formal prop searching variable errors");
-        
+    @Override
+    public ArrayList<CodeError> getErrors() {  
         try {
             ParseTree tree = antlrHandler.getParseTree();
             ParseTreeWalker walker = new ParseTreeWalker();

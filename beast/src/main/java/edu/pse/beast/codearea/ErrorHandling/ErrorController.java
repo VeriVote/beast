@@ -18,36 +18,25 @@ import javax.swing.event.DocumentListener;
  *
  * @author Holger-Desktop
  */
-public class ErrorController implements 
-        StoppedTypingContinuouslyListener, DocumentListener, CaretListener {
+public class ErrorController {
     private ErrorFinderList errorFinderList;
     private JTextPane pane;
     private ErrorDisplayer displayer;
     private boolean changed = false;
     private int currentCaretPos;
+    private ErrorFinderThread t;
     
     public ErrorController(JTextPane pane,
-            StoppedTypingContinuouslyMessager msg,
             ErrorDisplayer displayer) {
         this.pane = pane;
-        msg.addListener(this);
         errorFinderList = new ErrorFinderList();
         this.displayer = displayer;
-        pane.getStyledDocument().addDocumentListener(this);
-        pane.addCaretListener(this);
+        t = new ErrorFinderThread(errorFinderList, pane, this);
+        int i = 0;
     }
     
     public void addErrorFinder(ErrorFinder finder) {
         errorFinderList.add(finder);
-    }
-
-    @Override
-    public void StoppedTypingContinuously(int newPos) {
-        if(!changed) return;
-        System.out.println("formalPropEditor get errors");
-        ArrayList<CodeError> foundErrors = errorFinderList.getErrors();
-        displayer.showErrors(foundErrors);
-        changed = false;
     }
 
     public ErrorDisplayer getDisplayer() {
@@ -58,23 +47,7 @@ public class ErrorController implements
         return errorFinderList;
     }
 
-    @Override
-    public void insertUpdate(DocumentEvent de) {
-        changed = true;
-    }
-
-    @Override
-    public void removeUpdate(DocumentEvent de) {
-         changed = true;
-    }
-
-    
-    @Override
-    public void changedUpdate(DocumentEvent de) {
-    }
-
-    @Override
-    public void caretUpdate(CaretEvent ce) {
-        currentCaretPos = ce.getDot();
+    void foundNewErrors(ArrayList<CodeError> lastFoundErrors) {
+        displayer.showErrors(lastFoundErrors);
     }
 }
