@@ -255,13 +255,17 @@ public class CBMCCodeGenerator {
             String min = cCodeHelper.getMin(inputType, cont.getInternalType());
             String max = cCodeHelper.getMax(inputType, cont.getInternalType());
 
+            String nondetInt = ("votes" + voteNumber);
             String voteDecl = ("assume(MIN <= votes" + voteNumber).replace("MIN", min);
 
             for (int i = 0; i < listDepth; ++i) {
                 voteDecl += "[COUNTER]".replace("COUNTER", counter[i]);
+                nondetInt += "[COUNTER]".replace("COUNTER", counter[i]);
             }
 
+            nondetInt += " = nondet_uint();";
             voteDecl += " < MAX);".replace("MAX", max);
+            code.add(nondetInt);
             code.add(voteDecl);
 
             for (int i = 0; i < listDepth; ++i) {
