@@ -55,7 +55,7 @@ public class PropertyListSaverLoader implements SaverLoader{
         for (int i = 0; i < numberOfItems; i++) {
             plModel.addDescription(createPropertyItem(split[i].replace("<propertyItem>\n", "")));
         }
-        plModel.setChangedSinceSave(false);
+        //plModel.setChangedSinceSave(false);
         return plModel;
     }
 }
