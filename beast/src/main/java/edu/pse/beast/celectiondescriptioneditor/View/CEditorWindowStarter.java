@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.pse.beast.celectiondescriptioneditor.GUI;
+package edu.pse.beast.celectiondescriptioneditor.View;
 
 /**
  *
@@ -11,9 +11,9 @@ package edu.pse.beast.celectiondescriptioneditor.GUI;
  */
 public class CEditorWindowStarter implements Runnable {
     
-    private CCodeEditorGUI window = new CCodeEditorGUI();
+    private CCodeEditorWindow window = new CCodeEditorWindow();
     
-    public CCodeEditorGUI getGUIWindow() {
+    public CCodeEditorWindow getGUIWindow() {
         return window;
     }
     
@@ -24,6 +24,6 @@ public class CEditorWindowStarter implements Runnable {
 
     @Override
     public void run() {
-        window.setVisible(true);
+        window.setVisible(false);
     }
 }

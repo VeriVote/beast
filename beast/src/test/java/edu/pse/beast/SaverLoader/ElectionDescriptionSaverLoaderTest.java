@@ -1,15 +1,9 @@
 package edu.pse.beast.SaverLoader;
 
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
-import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
-import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeRep;
-import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
-import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
-import edu.pse.beast.stringresource.StringLoaderInterface;
 import org.junit.*;
 
 import java.util.ArrayList;

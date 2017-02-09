@@ -2,6 +2,7 @@ package edu.pse.beast.datatypes;
 
 import java.util.List;
 
+import edu.pse.beast.datatypes.electiondescription.ElectionType;
 import edu.pse.beast.propertychecker.CBMC_Result_Wrapper_long;
 import edu.pse.beast.propertychecker.CBMC_Result_Wrapper_multiArray;
 import edu.pse.beast.propertychecker.CBMC_Result_Wrapper_singleArray;

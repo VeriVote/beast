@@ -1,15 +1,14 @@
 package edu.pse.beast.propertychecker;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import edu.pse.beast.datatypes.ElectionCheckParameter;
-import edu.pse.beast.datatypes.TimeOut;
-import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
-import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
+import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
+import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;

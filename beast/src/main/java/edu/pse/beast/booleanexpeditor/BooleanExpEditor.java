@@ -6,25 +6,22 @@
 package edu.pse.beast.booleanexpeditor;
 
 import edu.pse.beast.booleanexpeditor.UserActions.SaveBeforeChangeHandler;
+import edu.pse.beast.booleanexpeditor.View.BooleanExpEditorWindow;
+import edu.pse.beast.booleanexpeditor.View.BooleanExpEditorWindowStarter;
+import edu.pse.beast.booleanexpeditor.View.ErrorWindow;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeArea;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeAreaBuilder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.CodeAreaFocusListener;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpErrorDisplayer;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.stringresource.StringLoaderInterface;
-import edu.pse.beast.toolbox.FileChooser;
-import edu.pse.beast.toolbox.MenuBarHandler;
+import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
-import edu.pse.beast.toolbox.ToolbarHandler;
 import edu.pse.beast.toolbox.UserAction;
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionBaseListener;
 
-import javax.swing.*;
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -53,7 +50,7 @@ public class BooleanExpEditor {
     private ArrayList<UserAction> userActions = new ArrayList<>();
     private ArrayList<Character> userActionChars = new ArrayList<>();
     /**
-     * Temporary Constructor declaration to build BooleanExpEditor for Dummy-GUI
+     * Temporary Constructor declaration to build BooleanExpEditor for Dummy-View
      * @param window BooleanExpEditorWindow object
      * @param symbolicVarListController SymbolicVarListController object
      */
@@ -219,7 +216,7 @@ public class BooleanExpEditor {
      * Getter
      * @return the BooleanExpEditorWindow instance of this class
      */
-    public BooleanExpEditorWindow getWindow() {
+    public BooleanExpEditorWindow getView() {
         return window;
     }
 

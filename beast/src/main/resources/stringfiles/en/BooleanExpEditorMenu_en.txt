@@ -24,4 +24,4 @@ numberOfVoters : Number of voters (V)
 numberOfCandidates : Number of candidates (C)
 numberOfSeats : Number of seats (S)
 codeMenu : Code
-staticAnalysis : Static analysis
+staticErrorFinding : Static error search

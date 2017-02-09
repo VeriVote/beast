@@ -49,9 +49,6 @@ public class ThreadedBufferedReader implements Runnable {
 			while (line != null && !isInterrupted) {
 				readLines.add(line);
 				line = reader.readLine();
-				
-				System.out.println(line);
-				
 			}
 		} catch (IOException e) {
 			ErrorLogger.log("Reader was closed unexpectedly");

@@ -1,7 +1,5 @@
 package edu.pse.beast.propertylist.View;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,8 +11,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.pse.beast.datatypes.ElectionType;
 import edu.pse.beast.datatypes.FailureExample;
+import edu.pse.beast.datatypes.electiondescription.ElectionType;
 
 public class ResultArrayDisplayTest {
 

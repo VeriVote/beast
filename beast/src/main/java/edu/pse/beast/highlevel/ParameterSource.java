@@ -1,6 +1,6 @@
 
 package edu.pse.beast.highlevel;
-import edu.pse.beast.datatypes.ElectionCheckParameter;
+import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 
 /**
  * The ParameterSource provides access to the parameters for checking the election.

@@ -1,6 +1,6 @@
 package toBeImplemented;
 
-import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 
 public class implElectionDescriptionSource implements ElectionDescriptionSource{

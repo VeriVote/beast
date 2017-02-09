@@ -8,7 +8,6 @@ package edu.pse.beast.codearea.InputToCode;
 import edu.pse.beast.toolbox.UserAction;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
-import javafx.scene.input.KeyCode;
 
 /**
  *

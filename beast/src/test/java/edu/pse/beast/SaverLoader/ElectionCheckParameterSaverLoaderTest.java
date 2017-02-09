@@ -1,16 +1,10 @@
 package edu.pse.beast.SaverLoader;
 
-import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
-import edu.pse.beast.datatypes.ElectionCheckParameter;
-import edu.pse.beast.datatypes.TimeOut;
-import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
-import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
+import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
+import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 import edu.pse.beast.saverloader.ElectionCheckParameterSaverLoader;
-import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
 import org.junit.*;
 
-import java.net.Inet4Address;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 

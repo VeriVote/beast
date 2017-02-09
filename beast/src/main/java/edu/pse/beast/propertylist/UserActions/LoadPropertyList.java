@@ -23,7 +23,6 @@ public class LoadPropertyList extends UserAction {
 
     @Override
     public void perform() {
-        // TODO make method static somewhere
 
         if (controller.getSaveBeforeChangeHandler().isChangedSinceSave()) {
             int ask = JOptionPane.showConfirmDialog(controller.getView(),
@@ -37,7 +36,7 @@ public class LoadPropertyList extends UserAction {
             }
 
         }
-        PLModel plModel = (PLModel) controller.getFileChooser().showOpenDialog();
+        PLModel plModel = (PLModel) controller.getFileChooser().loadObject();
         if (plModel != null) {
             controller.setPLModel(plModel);
             controller.getSaveBeforeChangeHandler().setChangedSinceSave(false);

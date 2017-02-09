@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.pse.beast.celectiondescriptioneditor.GUI;
+package edu.pse.beast.celectiondescriptioneditor.View;
 
-import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateChooser;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 
@@ -14,7 +13,7 @@ import javax.swing.*;
 /**
  * @author Holger
  */
-public class CCodeEditorGUI extends javax.swing.JFrame implements DisplaysStringsToUser{
+public class CCodeEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser{
 
 
     /**
@@ -38,7 +37,7 @@ public class CCodeEditorGUI extends javax.swing.JFrame implements DisplaysString
     /**
      * Creates new form CCodeEditor
      */
-    public CCodeEditorGUI() {
+    public CCodeEditorWindow() {
         initComponents();
         jTextPane2.setEditable(false);
         setMinimumSize(new java.awt.Dimension(700, 600));
@@ -82,6 +81,7 @@ public class CCodeEditorGUI extends javax.swing.JFrame implements DisplaysString
                 options,
                 options[0]);
     }
+
     /**
      * Adds the given string to the window title, used for displaying name of currently loaded PostAndPrePropDescription
      * @param s
@@ -134,7 +134,7 @@ public class CCodeEditorGUI extends javax.swing.JFrame implements DisplaysString
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jToolBar1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

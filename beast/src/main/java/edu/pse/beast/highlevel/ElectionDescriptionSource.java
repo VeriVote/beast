@@ -1,7 +1,7 @@
 
 package edu.pse.beast.highlevel;
 
-import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 
 /**
  * The ElectionDescriptionSource is an interface to the package that handles

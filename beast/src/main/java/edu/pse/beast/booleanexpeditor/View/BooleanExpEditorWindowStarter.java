@@ -1,4 +1,4 @@
-package edu.pse.beast.booleanexpeditor;
+package edu.pse.beast.booleanexpeditor.View;
 
 /**
  * Starts the given BooleanExpEditorWindow Class in a new thread.
@@ -11,7 +11,7 @@ public class BooleanExpEditorWindowStarter implements Runnable{
      * Constructor
      * @param window BooleanExpEditorWindow object this class starts
      */
-    BooleanExpEditorWindowStarter(BooleanExpEditorWindow window) {
+    public BooleanExpEditorWindowStarter(BooleanExpEditorWindow window) {
         this.window = window;
     }
 
@@ -26,13 +26,12 @@ public class BooleanExpEditorWindowStarter implements Runnable{
     /**
      * Starts the BooleanExpEditorWindow instance "window" in a new thread.
      */
-    void showWindow(){
+    public void showWindow(){
         java.awt.EventQueue.invokeLater(this);
     }
 
     @Override
     public void run() {
-        window.setVisible(true);
         window.setVisible(false);
     }
 }

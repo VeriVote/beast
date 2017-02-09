@@ -12,10 +12,10 @@ import edu.pse.beast.toolbox.UserAction;
  *
  * @author Holger-Desktop
  */
-public class StaticCheckUserAction extends UserAction {
+public class StaticErrorFindingUserAction extends UserAction {
     private CElectionDescriptionEditor electionDescriptionEditor;
-    public StaticCheckUserAction(CElectionDescriptionEditor electionDescriptionEditor) {
-        super("static_analysis");
+    public StaticErrorFindingUserAction(CElectionDescriptionEditor electionDescriptionEditor) {
+        super("staticErrorFinding");
         this.electionDescriptionEditor = electionDescriptionEditor;
     }
     

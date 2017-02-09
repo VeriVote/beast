@@ -6,12 +6,11 @@
 package edu.pse.beast.propertychecker;
 
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
-import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
-import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
@@ -239,7 +238,7 @@ public class CBMCCodeGenerator {
 
             code.add(votesX + ";");
 
-            String[] counter = {"i", "j", "k", "l"};
+            String[] counter = {"counter_0", "counter_1", "counter_2", "counter_3"};
 
             String forTemplate = "for(unsigned int COUNTER = 0; COUNTER < MAX; ++COUNTER){";
 
@@ -256,13 +255,17 @@ public class CBMCCodeGenerator {
             String min = cCodeHelper.getMin(inputType, cont.getInternalType());
             String max = cCodeHelper.getMax(inputType, cont.getInternalType());
 
-            String voteDecl = ("assume(MIN <= votes" + voteNumber).replace("MIN", min);
-
+            String votesElement = "votes" + voteNumber;
             for (int i = 0; i < listDepth; ++i) {
-                voteDecl += "[COUNTER]".replace("COUNTER", counter[i]);
+                votesElement += "[COUNTER]".replace("COUNTER", counter[i]);
             }
 
-            voteDecl += " < MAX);".replace("MAX", max);
+            String nondetInt = (votesElement + " = nondet_uint();");
+            String voteDecl = ("assume((MIN <= " + votesElement + ") && (" + votesElement + " < MAX));");
+            voteDecl = voteDecl.replace("MIN", min);
+            voteDecl = voteDecl.replace("MAX", max);
+
+            code.add(nondetInt);
             code.add(voteDecl);
 
             for (int i = 0; i < listDepth; ++i) {

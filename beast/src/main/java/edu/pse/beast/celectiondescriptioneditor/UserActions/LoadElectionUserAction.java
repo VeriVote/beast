@@ -6,17 +6,11 @@
 package edu.pse.beast.celectiondescriptioneditor.UserActions;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
-import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
-import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.saverloader.SaverLoaderInterface;
-import edu.pse.beast.toolbox.FileChooser;
 import edu.pse.beast.toolbox.UserAction;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.text.BadLocationException;
-import java.io.File;
 
 /**
  *
@@ -37,7 +31,7 @@ public class LoadElectionUserAction extends UserAction {
         if (cElectionDescriptionEditor.getSaveBeforeChangeHandler().ifHasChangedOpenDialog(
                 cElectionDescriptionEditor.getElectionDescription().getName())) {
             ElectionDescription loadedElectionDescription =
-                    (ElectionDescription) cElectionDescriptionEditor.getFileChooser().showOpenDialog();
+                    (ElectionDescription) cElectionDescriptionEditor.getFileChooser().loadObject();
             if (loadedElectionDescription != null) {
                 try {
                     cElectionDescriptionEditor.loadElectionDescription(loadedElectionDescription);

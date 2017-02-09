@@ -3,8 +3,7 @@ package edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpANTLRHandler;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
-import edu.pse.beast.datatypes.descofvoting.ElectionDescriptionChangeListener;
-import edu.pse.beast.datatypes.descofvoting.ElectionTypeContainer;
+
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.logging.Level;
@@ -16,7 +15,6 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
-import org.xml.sax.SAXParseException;
 
 /**
  * Class that finds errors which conflict with the grammar in BooleanExpGrammar.g in the BooleanExpression(s) of the
