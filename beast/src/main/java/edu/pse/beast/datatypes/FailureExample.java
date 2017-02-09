@@ -3,9 +3,9 @@ package edu.pse.beast.datatypes;
 import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionType;
-import edu.pse.beast.propertychecker.CBMC_Result_Wrapper_long;
-import edu.pse.beast.propertychecker.CBMC_Result_Wrapper_multiArray;
-import edu.pse.beast.propertychecker.CBMC_Result_Wrapper_singleArray;
+import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
+import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
+import edu.pse.beast.propertychecker.CBMCResultWrappersingleArray;
 
 /**
  * This class provides the result presenter with the necessary data about the counterexample.
@@ -15,13 +15,13 @@ public class FailureExample {
 
 	private final ElectionType electionType;
 
-	private final List<CBMC_Result_Wrapper_singleArray> votes;
+	private final List<CBMCResultWrappersingleArray> votes;
 
-	private final List<CBMC_Result_Wrapper_multiArray> voteList;
+	private final List<CBMCResultWrapperMultiArray> voteList;
 
-	private final List<CBMC_Result_Wrapper_long> elect;
+	private final List<CBMCResultWrapperLong> elect;
 
-	private final List<CBMC_Result_Wrapper_singleArray> seats;
+	private final List<CBMCResultWrappersingleArray> seats;
 	
 	private final int numOfCandidates;
 	
@@ -42,8 +42,8 @@ public class FailureExample {
 	 * @param numOfSeats The number of seats that are awarded in an election.
 	 * @param numOfVoters The number of voters that voted for the candidates.
 	 */
-	public FailureExample(ElectionType electionType, List<CBMC_Result_Wrapper_singleArray> votes, List<CBMC_Result_Wrapper_multiArray> voteList,
-			List<CBMC_Result_Wrapper_long> elect, List<CBMC_Result_Wrapper_singleArray> seats, int numOfCandidates, int numOfSeats, int numOfVoters) {
+	public FailureExample(ElectionType electionType, List<CBMCResultWrappersingleArray> votes, List<CBMCResultWrapperMultiArray> voteList,
+			List<CBMCResultWrapperLong> elect, List<CBMCResultWrappersingleArray> seats, int numOfCandidates, int numOfSeats, int numOfVoters) {
 		
 		this.electionType = electionType;
 		this.votes = votes;
@@ -62,19 +62,19 @@ public class FailureExample {
 		return electionType;
 	}
 
-	public List<CBMC_Result_Wrapper_singleArray> getVotes() {
+	public List<CBMCResultWrappersingleArray> getVotes() {
 		return votes;
 	}
 
-	public List<CBMC_Result_Wrapper_multiArray> getVoteList() {
+	public List<CBMCResultWrapperMultiArray> getVoteList() {
 		return voteList;
 	}
 
-	public List<CBMC_Result_Wrapper_long> getElect() {
+	public List<CBMCResultWrapperLong> getElect() {
 		return elect;
 	}
 
-	public List<CBMC_Result_Wrapper_singleArray> getSeats() {
+	public List<CBMCResultWrappersingleArray> getSeats() {
 		return seats;
 	}
 

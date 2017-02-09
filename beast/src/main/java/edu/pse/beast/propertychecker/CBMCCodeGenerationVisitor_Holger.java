@@ -5,7 +5,6 @@
  */
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpressionNode;
 import edu.pse.beast.datatypes.booleanExpAST.ComparisonNode;
@@ -26,7 +25,6 @@ import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Stack;
 
 /**
