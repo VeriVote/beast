@@ -82,6 +82,7 @@ public class CCodeEditorGUI extends javax.swing.JFrame implements DisplaysString
                 options,
                 options[0]);
     }
+
     /**
      * Adds the given string to the window title, used for displaying name of currently loaded PostAndPrePropDescription
      * @param s
@@ -134,7 +135,7 @@ public class CCodeEditorGUI extends javax.swing.JFrame implements DisplaysString
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jToolBar1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

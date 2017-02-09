@@ -25,5 +25,6 @@ public class CEditorWindowStarter implements Runnable {
     @Override
     public void run() {
         window.setVisible(true);
+        window.setVisible(false);
     }
 }

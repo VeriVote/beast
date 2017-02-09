@@ -38,7 +38,7 @@ public class OpenCloseCharHighlighter implements CaretListener {
     }
 
     @Override
-    public void caretUpdate(CaretEvent ce) {  
+    public void caretUpdate(CaretEvent ce) {
         removeAllHighlights();
         char surroundingChars[] = new char[2];
         surroundingChars[0] = JTextPaneToolbox.getCharToTheLeftOfCaret(pane).charAt(0);
@@ -53,7 +53,7 @@ public class OpenCloseCharHighlighter implements CaretListener {
                 highlightChar(ce.getDot() + i);
                 highlightCorrespondingOpenChar(ce.getDot() + i, charList.getOpenCloseChar(c));
                 return;
-            }         
+            }
         }
     }
 

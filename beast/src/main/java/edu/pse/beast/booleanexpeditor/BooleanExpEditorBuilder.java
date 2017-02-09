@@ -4,20 +4,14 @@ import edu.pse.beast.booleanexpeditor.UserActions.*;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeArea;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeAreaBuilder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.CodeAreaFocusListener;
-import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpErrorDisplayer;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
-import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
-import edu.pse.beast.datatypes.descofvoting.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.saverloader.PostAndPrePropertiesDescriptionSaverLoader;
-import edu.pse.beast.saverloader.SaverLoader;
-import edu.pse.beast.saverloader.SaverLoaderInterface;
 import edu.pse.beast.toolbox.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -128,8 +122,6 @@ public class BooleanExpEditorBuilder{
         UserAction copy = createCopyUserAction(editor);
         UserAction cut = createCutUserAction(editor);
         UserAction paste = createPasteUserAction(editor);
-        
-     
         
         editList.add(createFromUserAction(undo));
         editList.add(createFromUserAction(redo));
@@ -266,8 +258,8 @@ public class BooleanExpEditorBuilder{
     }
 
     //code
-    private CheckErrorsUserAction createStaticCheckUserAction(BooleanExpEditor editor) {
-        return new CheckErrorsUserAction(editor);
+    private staticErrorFindingUserAction createStaticCheckUserAction(BooleanExpEditor editor) {
+        return new staticErrorFindingUserAction(editor);
     }
 
     private ActionIdAndListener createFromUserAction(UserAction userAc) {

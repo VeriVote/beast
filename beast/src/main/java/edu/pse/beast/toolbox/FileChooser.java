@@ -8,7 +8,6 @@ import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 
 /**
  * @author NikolaiLMS
@@ -18,10 +17,10 @@ public class FileChooser {
     private StringResourceLoader stringResourceLoader;
     private Component component;
     private SaverLoader saverLoader;
-    private String lastLoadedPath;
-    boolean hasBeenSaved = false;
-    String fileSuffix;
-    Object[] options = {"OK"};
+    private File lastLoadedFile;
+    private boolean hasBeenSaved = false;
+    private String fileSuffix;
+    private Object[] options = {"OK"};
 
     public FileChooser (StringResourceLoader stringResourceLoader, SaverLoader saverLoader, Component component) {
         this.fileChooser = new JFileChooser();
@@ -34,13 +33,13 @@ public class FileChooser {
     public boolean saveObject(Object object, boolean forceDialog) {
         fileChooser.setApproveButtonText("saveApproveButtonText");
         if (hasBeenSaved && !forceDialog) {
-            return saveToFile(object, lastLoadedPath);
+            return saveToFile(object, lastLoadedFile);
         } else {
             if (fileChooser.showDialog(component, stringResourceLoader.getStringFromID("saveDialogTitleText")) == JFileChooser.APPROVE_OPTION) {
-                if (!saveToFile(object, fileChooser.getSelectedFile().getAbsolutePath())) {
+                if (!saveToFile(object, fileChooser.getSelectedFile())) {
                     return saveObject(object, forceDialog);
                 } else {
-                    lastLoadedPath = fileChooser.getSelectedFile().getAbsolutePath();
+                    lastLoadedFile = fileChooser.getSelectedFile();
                     hasBeenSaved = true;
                     return true;
                 }
@@ -50,14 +49,14 @@ public class FileChooser {
         }
     }
 
-    public Object showOpenDialog() {
+    public Object loadObject() {
         fileChooser.setApproveButtonText("openApproveButtonText");
-        if (fileChooser.showDialog(component, stringResourceLoader.getStringFromID("openDialogTitleText")) == JFileChooser.APPROVE_OPTION) {
-            File file  = fileChooser.getSelectedFile();
-            String path = file.getAbsolutePath();
-            String content = "";
+        if (fileChooser.showDialog(component, stringResourceLoader.getStringFromID("openDialogTitleText"))
+                == JFileChooser.APPROVE_OPTION) {
+            File selectedFile  = fileChooser.getSelectedFile();
+            String content;
             try {
-                content = new String(Files.readAllBytes(file.toPath()));
+                content = new String(Files.readAllBytes(selectedFile.toPath()));
             } catch (IOException e) {
                 JOptionPane.showOptionDialog(null,
                         stringResourceLoader.getStringFromID( "inputOutputErrorOpen"),"",
@@ -66,11 +65,11 @@ public class FileChooser {
                         null,
                         options,
                         options[0]);
-                return (showOpenDialog());
+                return (loadObject());
             }
             try {
                 Object outputObject = saverLoader.createFromSaveString(content);
-                lastLoadedPath = path;
+                lastLoadedFile = selectedFile;
                 hasBeenSaved = true;
                 return outputObject;
             } catch (Exception e) {
@@ -82,15 +81,15 @@ public class FileChooser {
                         null,
                         options,
                         options[0]);
-                return (showOpenDialog());
+                return (loadObject());
             }
         } else {
             return null;
         }
     }
 
-    private boolean saveToFile(Object object, String path) {
-        if (!fileChooser.getSelectedFile().getName().matches("[_a-zA-Z0-9\\-\\.]+")) {
+    private boolean saveToFile(Object object, File file) {
+        if (!file.getName().matches("[_a-zA-Z0-9\\-\\.]+")) {
             JOptionPane.showOptionDialog(null,
                     stringResourceLoader.getStringFromID("wrongFileNameError"),"",
                     JOptionPane.PLAIN_MESSAGE,
@@ -100,20 +99,19 @@ public class FileChooser {
                     options[0]);
             return false;
         } else if (!fileChooser.getSelectedFile().getName().endsWith(fileSuffix)) {
-            path += stringResourceLoader.getStringFromID(
-                    "fileSuffix");
+            file = new File(file.getName() + stringResourceLoader.getStringFromID(
+                    "fileSuffix"));
         }
 
-        String saveString = "";
+        String saveString;
         try {
             saveString = saverLoader.createSaveString(object);
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
-        Writer out = null;
+        Writer out;
         try {
-            File file = new File(path);
             out = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream(file), "UTF-8"));
         } catch (UnsupportedEncodingException e) {
@@ -155,7 +153,7 @@ public class FileChooser {
         } finally {
             try {
                 out.close();
-                lastLoadedPath = path;
+                lastLoadedFile = file;
                 return true;
             } catch (IOException e) {
                 JOptionPane.showOptionDialog(null,
@@ -207,7 +205,6 @@ public class FileChooser {
                 return stringResourceLoader.getStringFromID("fileDescription");
             }
         });
-        fileChooser.setAcceptAllFileFilterUsed(false);
         fileSuffix = stringResourceLoader.getStringFromID("fileSuffix");
     }
 

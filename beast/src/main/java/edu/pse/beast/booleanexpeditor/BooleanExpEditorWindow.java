@@ -58,8 +58,8 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
         toolbar.setRollover(true);
         toolbar.setFloatable(false);
 
-        setMinimumSize(new java.awt.Dimension(700, 550));
-        setPreferredSize(new java.awt.Dimension(700, 550));
+        setMinimumSize(new java.awt.Dimension(700, 510));
+        setPreferredSize(new java.awt.Dimension(700, 510));
         setResizable(false);
         symVarScrollPane.setViewportView(symVarList);
 
@@ -103,7 +103,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(toolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(toolbar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(symbVarLabel)

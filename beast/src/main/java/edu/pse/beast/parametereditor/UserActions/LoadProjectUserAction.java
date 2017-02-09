@@ -58,12 +58,14 @@ public class LoadProjectUserAction extends UserAction {
     public void perform() {
         if (paramEditor.getReacts()) {
             // TODO SaveBeforeChangeHandler call
-            Project loadedProject = (Project) paramEditor.getFileChooser().showOpenDialog();
+            Project loadedProject = (Project) paramEditor.getFileChooser().loadObject();
             if (loadedProject != null) {
                 propertyList.setPLModel(loadedProject.getPropList());
+                propertyList.getView().setVisible(true);
                 paramEditor.setParameter(loadedProject.getElectionCheckParameter());
                 try {
                     cElectionEditor.letUserEditElectionDescription(loadedProject.getElecDescr());
+                    cElectionEditor.setVisible(true);
                 } catch (BadLocationException e) {
                     e.printStackTrace();
                 }

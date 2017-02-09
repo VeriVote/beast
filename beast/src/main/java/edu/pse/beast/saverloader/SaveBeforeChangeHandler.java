@@ -1,15 +1,14 @@
-package edu.pse.beast.booleanexpeditor.UserActions;
+package edu.pse.beast.saverloader;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditorWindow;
+import edu.pse.beast.booleanexpeditor.UserActions.SavePropsUserAction;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
-import edu.pse.beast.toolbox.FileChooser;
 
 import javax.swing.*;
 import java.util.LinkedList;
 
 /**
- * Class for checking whether the loaded PostAndPrePropertiesDescription object has been modified since it was loaded.
  * @author NikolaiLMS
  */
 public class SaveBeforeChangeHandler {
@@ -20,7 +19,6 @@ public class SaveBeforeChangeHandler {
     private JTextPane postPane;
     private BooleanExpEditorWindow booleanExpEditorWindow;
     private SavePropsUserAction savePropsUserAction;
-    private FileChooser fileChooser;
 
     /**
      * Constructor
@@ -34,23 +32,16 @@ public class SaveBeforeChangeHandler {
         this.prePane = prePane;
         this.postPane = postPane;
         this.booleanExpEditorWindow = booleanExpEditorWindow;
-        updatePreValues();
-        this.fileChooser = fileChooser;
-    }
-
-    public void addNewTextPanes(JTextPane prePane, JTextPane postPane) {
-        this.prePane = prePane;
-        this.postPane = postPane;
-        updatePreValues();
+        updateHasChanged();
     }
 
     /**
      * Updates the "pre" variables used for comparison.
      * Called after a new PostAndPrePropertiesDescription object is loaded or saved.
      */
-    public void updatePreValues() {
+    public void updateHasChanged() {
         preString = prePane.getText() + postPane.getText();
-        preSymbolicVariableList = new LinkedList<SymbolicVariable>(symbolicVariableList.getSymbolicVariables());
+        preSymbolicVariableList = new LinkedList<>(symbolicVariableList.getSymbolicVariables());
     }
 
     /**
@@ -58,7 +49,7 @@ public class SaveBeforeChangeHandler {
      * in BooleanExpEditorWindow, false otherwise
      */
     public boolean hasChanged() {
-        return !(preString.equals((String) prePane.getText() + postPane.getText()) &&
+        return !(preString.equals(prePane.getText() + postPane.getText()) &&
                 preSymbolicVariableList.equals(symbolicVariableList.getSymbolicVariables()));
     }
 

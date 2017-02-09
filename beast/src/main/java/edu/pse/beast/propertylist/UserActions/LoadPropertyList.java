@@ -37,7 +37,7 @@ public class LoadPropertyList extends UserAction {
             }
 
         }
-        PLModel plModel = (PLModel) controller.getFileChooser().showOpenDialog();
+        PLModel plModel = (PLModel) controller.getFileChooser().loadObject();
         if (plModel != null) {
             controller.setPLModel(plModel);
             controller.getSaveBeforeChangeHandler().setChangedSinceSave(false);

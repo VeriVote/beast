@@ -37,7 +37,7 @@ public class LoadElectionUserAction extends UserAction {
         if (cElectionDescriptionEditor.getSaveBeforeChangeHandler().ifHasChangedOpenDialog(
                 cElectionDescriptionEditor.getElectionDescription().getName())) {
             ElectionDescription loadedElectionDescription =
-                    (ElectionDescription) cElectionDescriptionEditor.getFileChooser().showOpenDialog();
+                    (ElectionDescription) cElectionDescriptionEditor.getFileChooser().loadObject();
             if (loadedElectionDescription != null) {
                 try {
                     cElectionDescriptionEditor.loadElectionDescription(loadedElectionDescription);

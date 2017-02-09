@@ -38,9 +38,8 @@ public class CElectionDescriptionEditorBuilder {
     private UserAction save;
     private UserAction saveAs;
     private UserAction load;
-    private UserAction changeElec;
     private UserAction options;
-    private UserAction staticCodeAnalysis;
+    private UserAction staticErrorFinding;
     private UserAction undo;
     private UserAction redo;
     private UserAction paste;
@@ -157,21 +156,19 @@ public class CElectionDescriptionEditorBuilder {
         fileList.add(createFromUserAction(load));
         
         ArrayList<ActionIdAndListener> editList = new ArrayList<>();
-        changeElec = createChangeElectionTypeUserAction();
         editList.add(createFromUserAction(copy));
         editList.add(createFromUserAction(cut));
         editList.add(createFromUserAction(paste));
         editList.add(createFromUserAction(undo));
         editList.add(createFromUserAction(redo));
-        editList.add(createFromUserAction(changeElec));
 
         ArrayList<ActionIdAndListener> editorList = new ArrayList<>();
         options = createPresentOptionsUserAction();
         editorList.add(createFromUserAction(options));
         
         ArrayList<ActionIdAndListener> codeList = new ArrayList<>();
-        staticCodeAnalysis = createStaticCheckUserAction(editor);
-        codeList.add(createFromUserAction(staticCodeAnalysis));
+        staticErrorFinding = createStaticErrorFindingUserAction(editor);
+        codeList.add(createFromUserAction(staticErrorFinding));
         
         created.add(fileList);
         created.add(editList);
@@ -222,8 +219,8 @@ public class CElectionDescriptionEditorBuilder {
         return new PresentOptionsUserAction();
     }    
     //code
-    private StaticCheckUserAction createStaticCheckUserAction(CElectionDescriptionEditor editor) {
-        return new StaticCheckUserAction(editor);
+    private StaticErrorFindingUserAction createStaticErrorFindingUserAction(CElectionDescriptionEditor editor) {
+        return new StaticErrorFindingUserAction(editor);
     } 
     
     private ActionIdAndListener createFromUserAction(UserAction userAc) {

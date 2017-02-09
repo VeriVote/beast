@@ -46,6 +46,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     private FileChooser fileChooser;
     private ArrayList<UserAction> userActions = new ArrayList<>();
     private ArrayList<Character> userActionChars = new ArrayList<>();
+    private Boolean wasVisible;
 
     public CElectionDescriptionEditor(
             CElectionCodeArea codeArea,
@@ -128,10 +129,15 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
 
     @Override
     public void stopReacting() {
+        wasVisible = gui.isVisible();
+        gui.setVisible(false);
     }
 
     @Override
     public void resumeReacting() {
+        if (wasVisible) {
+            gui.setVisible(true);
+        }
     }
 
     /**

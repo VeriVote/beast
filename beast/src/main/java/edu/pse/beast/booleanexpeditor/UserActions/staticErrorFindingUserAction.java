@@ -6,10 +6,10 @@ import edu.pse.beast.toolbox.UserAction;
 /**
  * @author NikolaiLMS
  */
-public class CheckErrorsUserAction extends UserAction{
+public class staticErrorFindingUserAction extends UserAction{
     private BooleanExpEditor booleanExpEditor;
-    public CheckErrorsUserAction(BooleanExpEditor booleanExpEditor) {
-        super("staticAnalysis");
+    public staticErrorFindingUserAction(BooleanExpEditor booleanExpEditor) {
+        super("staticErrorFinding");
         this.booleanExpEditor = booleanExpEditor;
     }
 

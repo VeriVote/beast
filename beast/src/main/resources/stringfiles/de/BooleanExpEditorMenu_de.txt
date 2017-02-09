@@ -24,4 +24,4 @@ numberOfVoters : Anzahl der Wähler (V)
 numberOfCandidates : Anzahl der Kandidaten (C)
 numberOfSeats : Anzahl vorhandener Sitze (S)
 codeMenu : Code
-staticAnalysis : Statische Analyse
+staticErrorFinding : Statische Fehlersuche

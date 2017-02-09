@@ -105,6 +105,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     @Override
     public void run() {
         view.setVisible(true);
+        view.setVisible(false);
     }
 
     @Override
@@ -153,7 +154,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
                 if (!editor.letUserEditPostAndPreProperties(item.getDescription(), true)) {
                     return false;
                 } else if (!editor.isCorrect()) {
-                    System.out.println(item.getDescription().getName());
+                    System.out.println("Property '" + item.getDescription().getName() + "' contains errors.");
                     return false;
                 }
             }

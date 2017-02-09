@@ -53,14 +53,12 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ParameterEditor");
+        setMaximumSize(new java.awt.Dimension(475, 347));
         setMinimumSize(new java.awt.Dimension(475, 347));
-        setPreferredSize(new java.awt.Dimension(475, 347));
         setResizable(false);
+
         toolbar.setFloatable(false);
         toolbar.setRollover(true);
-        toolbar.setMaximumSize(new java.awt.Dimension(458, 73));
-        toolbar.setMinimumSize(new java.awt.Dimension(458, 73));
-        toolbar.setPreferredSize(new java.awt.Dimension(458, 73));
 
         voters.setText("Wähler");
 
@@ -108,9 +106,6 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(toolbar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -142,13 +137,14 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
                                     .addComponent(voterMax, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
                                     .addComponent(candMax, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(seatMax, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(timeoutUnit, 0, 95, Short.MAX_VALUE))
+                            .addComponent(timeoutUnit, 0, 102, Short.MAX_VALUE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addComponent(toolbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(toolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(toolbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(voters)
@@ -178,7 +174,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
                     .addComponent(processes))
                 .addGap(18, 18, 18)
                 .addComponent(advancedButton)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addContainerGap(154, Short.MAX_VALUE))
         );
 
         voterMin.getAccessibleContext().setAccessibleName("");

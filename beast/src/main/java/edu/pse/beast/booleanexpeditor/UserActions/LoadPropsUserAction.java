@@ -37,7 +37,7 @@ public class LoadPropsUserAction extends UserAction {
         if (booleanExpEditor.getSaveBeforeChangeHandler().
                 ifHasChangedOpenSaveDialog(booleanExpEditor.getCurrentlyLoadedPostAndPreProp().getName())) {
             PostAndPrePropertiesDescription loadedPostAndPrePropertiesDescription =
-                    (PostAndPrePropertiesDescription) booleanExpEditor.getFileChooser().showOpenDialog();
+                    (PostAndPrePropertiesDescription) booleanExpEditor.getFileChooser().loadObject();
             if (loadedPostAndPrePropertiesDescription != null) {
                 booleanExpEditor.loadNewProperties(loadedPostAndPrePropertiesDescription);
                 booleanExpEditor.getFileChooser().setHasBeenSaved(true);
