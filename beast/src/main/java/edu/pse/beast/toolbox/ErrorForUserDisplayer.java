@@ -12,7 +12,9 @@ public final class ErrorForUserDisplayer {
 	
 	public static void displayError(String message) {
 		increment();
-		JOptionPane.showConfirmDialog(null, message);
+		
+		ErrorLogger.log("HIER SPÄTER EIN POPUP AUFBAUEN!: " + message);
+		
 		decrement();
 		
 		while (true) {
