@@ -10,7 +10,7 @@ import java.util.List;
 
 public class LinuxProcess extends CBMCProcess {
 
-	private final String relativePathToCBMC64 = "/linux/vbmcLin/cbmc.exe";
+	private final String relativePathToCBMC64 = "/linux/cbmcLin/cbmc";
 
 	public LinuxProcess(int voters, int candidates, int seats, String advanced, File toCheck, CheckerFactory parent) {
 		super(voters, candidates, seats, advanced, toCheck, parent);
