@@ -40,14 +40,15 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
     private ToolbarHandler toolbarHandler;
     private MenuBarHandler menuBarHandler;
     private boolean reacts;
-    private FileChooser fileChooser;
+    private final FileChooser fileChooser;
     private boolean hasChanged;
 
     /**
      * Constructor which also links the handlers to the View elements
      * @param cElectionDescriptionEditor CElectionDescriptionEditor
-     * @param propertyList PropertyList
+     * @param propertyList PropertyList where the PostAndPrePropertyDescriptions come from
      * @param window View window
+     * @param fileChooser FileChooser for saving/loading
      */
     public ParameterEditor(
             CElectionDescriptionEditor cElectionDescriptionEditor,
@@ -172,8 +173,8 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
         this.menuBarHandler = menuBarHandler;
     }
     /**
-     * Toggles whether the chosen minimum and maximum react to user input
-     * (to not interrupt checks)
+     * Toggles whether the ParameterEditor reacts to user input other than stopping
+     * an analysis (to not interrupt an analysis)
      * @param reacts whether they react
      */
     public void setReacts(boolean reacts) {
@@ -193,7 +194,10 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
     public boolean getReacts() {
         return reacts;
     }
-
+    /**
+     * Getter for the FileChooser
+     * @return FileChooser used by ParameterEditor
+     */
     public FileChooser getFileChooser() {
         return fileChooser;
     }

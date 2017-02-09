@@ -9,6 +9,10 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
  * @author Holger-Desktop
  */
 public interface ElectionDescriptionSource {
+    /**
+     * Getter for the ElectionDescription the user created
+     * @return description of an election as an ElectionDescription object
+     */
     public ElectionDescription getElectionDescription();
     /**
      * Returns true if the ElectionDescription is correct.
