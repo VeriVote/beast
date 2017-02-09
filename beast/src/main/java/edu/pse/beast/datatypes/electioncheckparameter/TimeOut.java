@@ -43,9 +43,6 @@ public class TimeOut {
      * @return the duration of the timeout in milliseconds
      */
     public long getDuration() {
-        if (!active) {
-            ErrorLogger.log("The timeout isn't active, so this shouldn't be called");
-        }
         return amount;
     }
 
