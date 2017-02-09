@@ -61,10 +61,6 @@ public class CBMC_Result_Wrapper_multiArray {
         } else {
             toReturn = new Long[0][0];
         }
-
-        
-        System.out.println("neue größe des arrays " + toReturn.length + "|" + toReturn[0].length);
-        
         
         for (int i = 0; i < toReturn.length; i++) {
             boolean indexWorks = list.size() >= i && list.get(i) != null;

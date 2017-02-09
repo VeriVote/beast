@@ -37,12 +37,6 @@ public class CBMCProcessFactory extends CheckerFactory {
 	}
 
 	@Override
-	protected Result createCounterExample(List<String> result) {
-		// TODO
-		return null;
-	}
-
-	@Override
 	protected Checker startProcess(ElectionDescriptionSource electionDescSrc,
 			PostAndPrePropertiesDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
 			CheckerFactory parent) {

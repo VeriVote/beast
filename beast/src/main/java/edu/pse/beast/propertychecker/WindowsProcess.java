@@ -18,287 +18,303 @@ import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinNT;
 
 import edu.pse.beast.propertychecker.jna.Win32Process;
+import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.toolbox.ThreadedBufferedReader;
 
 public class WindowsProcess extends CBMCProcess {
-    private long waitingTimeForTermination = 3000;
+	private long waitingTimeForTermination = 3000;
 
-    private final String relativePathToVScmd = "/windows/VsDevCmd.bat";
-    private final String relativePathToCBMC32  = "/windows/cbmcWIN/cbmc.exe";
-    private final String relativePathToCBMC64  = "/windows/cbmcWIN/cbmc64.exe";
-    
-    
-    public WindowsProcess(int voters, int candidates, int seats, String advanced, File toCheck, CheckerFactory parent) {
-        super(voters, candidates, seats, advanced, toCheck, parent);
-    }   
-    
-    @Override
-    protected Process createProcess(File toCheck, int voters, int candidates, int seats, String advanced) {
+	private final String relativePathToVScmd = "/windows/VsDevCmd.bat";
+	private final String relativePathToCBMC32 = "/windows/cbmcWIN/cbmc.exe";
+	private final String relativePathToCBMC64 = "/windows/cbmcWIN/cbmc64.exe";
 
-        advanced = String.join(" ", advanced.split(";"));
+	public WindowsProcess(int voters, int candidates, int seats, String advanced, File toCheck, CheckerFactory parent) {
+		super(voters, candidates, seats, advanced, toCheck, parent);
+	}
 
-        // trace is mandatory under windows, or the counter example can't get
-        // generated
-        advanced = advanced + " --trace";
+	@Override
+	protected Process createProcess(File toCheck, int voters, int candidates, int seats, String advanced) {
 
-        // set the values for the voters, candidates and seats
-        String arguments = advanced + " -D V=" + voters + " -D C=" + candidates + " -D S=" + seats;
+		advanced = String.join(" ", advanced.split(";"));
 
-        String vsCmd = null;
-        Process startedProcess = null;
-        
-        try {
-            vsCmd = getVScmdPath();
-        } catch (IOException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
+		// trace is mandatory under windows, or the counter example can't get
+		// generated
+		advanced = advanced + " --trace";
 
-        if (vsCmd == null) {
-            ErrorLogger.log("Cant find the VScmd. Is it installed correctly?");
-        }
-        
-        //determine the os architecture
-        boolean is64bit = false;
-        if (System.getProperty("os.name").contains("Windows")) {
-        	//only 64 bit windows contains this variable
-            is64bit = (System.getenv("ProgramFiles(x86)") != null);
-        } else {
-            ErrorLogger.log("The Windows procedure to call cbmc was used, even though this operating system isn't Windows!");
-        }
-        
-        String cbmcEXE  ="";
-        
-        if (is64bit) {
-        	cbmcEXE = new File(SuperFolderFinder.getSuperFolder() +  relativePathToCBMC64).getPath();
-        } else {
-        	cbmcEXE = new File(SuperFolderFinder.getSuperFolder() +  relativePathToCBMC32).getPath();     
-        }
+		// set the values for the voters, candidates and seats
+		String arguments = advanced + " -D V=" + voters + " -D C=" + candidates + " -D S=" + seats;
 
-        
-        // because windows is weird the whole call that would get placed inside
-        // VScmd has to be in one giant string
-        String cbmcCall = "\"" + vsCmd + "\"" + " & " + cbmcEXE + " " + "\"" + toCheck.getAbsolutePath() + "\"" + " "
-                + arguments;
+		String vsCmd = null;
+		Process startedProcess = null;
 
-        // this call starts a new VScmd instance and lets cbmc run in it
-        ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", cbmcCall);
+		try {
+			vsCmd = getVScmdPath();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
-        System.out.println(String.join(" ",prossBuild.command()));
-        
-        
-        try {
-            startedProcess = prossBuild.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+		if (vsCmd == null) {
+			ErrorForUserDisplayer.displayError(
+					"The program \"VsDevCmd.bat\" couldn't be found. It is required to run this program, so please supply it with it. \n"
+							+ " To do so, download the Visual Studio Community Version, install it (including the C++ pack). \n "
+							+ "Then, search for the VsDevCmd.bat in it, and copy and paste it into the foler /windows/ in the BEAST installation folder.");
+			return null;
+		} else {
 
-        return startedProcess;
-    }
+			// determine the os architecture
+			boolean is64bit = false;
+			if (System.getProperty("os.name").contains("Windows")) {
+				// only 64 bit windows contains this variable
+				is64bit = (System.getenv("ProgramFiles(x86)") != null);
+			} else {
+				ErrorLogger.log(
+						"The Windows procedure to call cbmc was used, even though this operating system isn't Windows!");
+			}
 
-    @Override
-    protected void stopProcess() {
+			String cbmcEXE = "";
 
-        if (!process.isAlive()) {
-            ErrorLogger.log("Warning, process isn't alive anymore");
-            return;
-        } else {
+			if (is64bit) {
+				cbmcEXE = new File(SuperFolderFinder.getSuperFolder() + relativePathToCBMC64).getPath();
+			} else {
+				cbmcEXE = new File(SuperFolderFinder.getSuperFolder() + relativePathToCBMC32).getPath();
+			}
 
-            int pid = getWindowsProcessId(process);
+			if (!new File(cbmcEXE).exists()) {
+				ErrorForUserDisplayer
+						.displayError("Can't find the program \"cbmc.exe\" in the subfolger \"windows/cbmcWin/\". \n "
+								+ "Please download it from the cbmc website and place it there!");
+			} else if (!new File(cbmcEXE).canExecute()) {
+				ErrorForUserDisplayer
+						.displayError("This program doesn't have the privileges to execute this program. \n "
+								+ "Please change the access rights for the program \"/windows/cbmcWin/cbmc.exe\" in the BEAST installation folder and try again.");
+			} else {
 
-            String cmdCall = "wmic process where (ParentProcessId=" + pid + ") get Caption,ProcessId";
+				// because windows is weird the whole call that would get placed
+				// inside
+				// VScmd has to be in one giant string
+				String cbmcCall = "\"" + vsCmd + "\"" + " & " + cbmcEXE + " " + "\"" + toCheck.getAbsolutePath() + "\""
+						+ " " + arguments;
 
-            List<String> children = new ArrayList<String>();
-            CountDownLatch latch = new CountDownLatch(1);
+				// this call starts a new VScmd instance and lets cbmc run in it
+				ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", cbmcCall);
 
-            ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", cmdCall);
+				System.out.println(String.join(" ", prossBuild.command()));
 
-            Process cbmcFinder = null;
+				try {
+					startedProcess = prossBuild.start();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 
-            int cbmcPID = -1;
+				return startedProcess;
+			}
+		}
+		return null;
+	}
 
-            try {
-                cbmcFinder = prossBuild.start();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+	@Override
+	protected void stopProcess() {
 
-            if (cbmcFinder != null) {
-                new ThreadedBufferedReader(new BufferedReader(new InputStreamReader(cbmcFinder.getInputStream())),
-                        children, latch);
+		if (!process.isAlive()) {
+			ErrorLogger.log("Warning, process isn't alive anymore");
+			return;
+		} else {
 
-                // because the process only takes a second of time anyways and
-                // an interrupt could prevent the sutting
-                // down of cbmc, I put the waiting in a loop
-                while (cbmcFinder.isAlive() || latch.getCount() > 0) {
-                    try {
-                        cbmcFinder.waitFor();
-                        latch.await();
-                    } catch (InterruptedException e) {
-                        ErrorLogger.log("This thread has not to be interrupted while waiting for these results");
-                    }
-                }
+			int pid = getWindowsProcessId(process);
 
-                for (Iterator<String> iterator = children.iterator(); iterator.hasNext();) {
-                    String line = (String) iterator.next();
+			String cmdCall = "wmic process where (ParentProcessId=" + pid + ") get Caption,ProcessId";
 
-                    // trim it down so it only has a single space in between, so
-                    // we can split there
-                    line = line.trim().replaceAll(" +", " ");
-                    if (line.split(" ").length == 2) { // filter out misformed
-                                                       // lines
-                        if (line.split(" ")[0].equals("cbmc.exe") || line.split(" ")[0].equals("cbmc64.exe")) {
-                            if (cbmcPID == -1) {
-                                // extract the PID from the line
-                                cbmcPID = Integer.parseInt(line.split(" ")[1]);
-                            } else {
-                                ErrorLogger
-                                        .log("Found multiple CBMC instances in this process tree. This is not intended, "
-                                                + "" + "only one will be closed, please close the others by hand.");
-                            }
-                        }
-                    }
+			List<String> children = new ArrayList<String>();
+			CountDownLatch latch = new CountDownLatch(1);
 
-                }
-            } else {
-                ErrorLogger.log("Couldn't start process");
-            }
+			ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", cmdCall);
 
-            if (cbmcPID != -1) {
+			Process cbmcFinder = null;
 
-                Win32Process cbmcProcess;
-                try {
-                    cbmcProcess = new Win32Process(cbmcPID);
-                    cbmcProcess.terminate();
-                    Thread.sleep(waitingTimeForTermination);
+			int cbmcPID = -1;
 
-                } catch (IOException e) {
-                    ErrorLogger.log("Unable to create a reference to the CBMC process!");
-                } catch (InterruptedException e) {
+			try {
+				cbmcFinder = prossBuild.start();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
-                }
-            } else {
-                /*
-                 * if we are here, we can't find a child named cbmc. That means
-                 * that a) cbmc just stopped, so we wait some seconds to see it
-                 * the parent stopped too by then 
-                 * b) cbmc just can't be stopped this way, so the user has to do it manually
-                 */
+			if (cbmcFinder != null) {
+				new ThreadedBufferedReader(new BufferedReader(new InputStreamReader(cbmcFinder.getInputStream())),
+						children, latch);
 
-                try {
-                    Thread.sleep(waitingTimeForTermination);
-                } catch (InterruptedException e) {
+				// because the process only takes a second of time anyways and
+				// an interrupt could prevent the sutting
+				// down of cbmc, I put the waiting in a loop
+				while (cbmcFinder.isAlive() || latch.getCount() > 0) {
+					try {
+						cbmcFinder.waitFor();
+						latch.await();
+					} catch (InterruptedException e) {
+						ErrorLogger.log("This thread has not to be interrupted while waiting for these results");
+					}
+				}
 
-                }
-            }
+				for (Iterator<String> iterator = children.iterator(); iterator.hasNext();) {
+					String line = (String) iterator.next();
 
-        }
+					// trim it down so it only has a single space in between, so
+					// we can split there
+					line = line.trim().replaceAll(" +", " ");
+					if (line.split(" ").length == 2) { // filter out misformed
+														// lines
+						if (line.split(" ")[0].equals("cbmc.exe") || line.split(" ")[0].equals("cbmc64.exe")) {
+							if (cbmcPID == -1) {
+								// extract the PID from the line
+								cbmcPID = Integer.parseInt(line.split(" ")[1]);
+							} else {
+								ErrorLogger.log(
+										"Found multiple CBMC instances in this process tree. This is not intended, "
+												+ "" + "only one will be closed, please close the others by hand.");
+							}
+						}
+					}
 
-        if (process.isAlive()) {
-            ErrorLogger.log(
-                    "There was an attempt to stop the cbmc process, but after " + (waitingTimeForTermination / 1000d)
-                            + " seconds of waiting" + " the parent root process was still alive, even though it should "
-                            + "terminate itself when cbmc stopped. Please check, that the cbmc instance was "
-                            + "closed properly and if not, please close it yourself!");
-        }
-    }
+				}
+			} else {
+				ErrorLogger.log("Couldn't start process");
+			}
 
-    /**
-     * 
-     * @return
-     * @throws IOException
-     */
-    private String getVScmdPath() throws IOException {
-        
-        File file = new File(SuperFolderFinder.getSuperFolder() +  relativePathToVScmd);
-        
-        if (Files.isExecutable(file.toPath())) {
-            return file.getPath();     
-        } else { // we were unable to locate the command promp in the resources
-                 // and search now for it in the common install directories
+			if (cbmcPID != -1) {
 
-            Path x86 = new File("C:/Program Files (x86)").toPath();
-            Path x64 = new File("C:/Program Files").toPath();
-            String searchTerm = "Microsoft Visual Studio";
-            String pathToBatch = "/Common7/Tools/VsDevCmd.bat";
+				Win32Process cbmcProcess;
+				try {
+					cbmcProcess = new Win32Process(cbmcPID);
+					cbmcProcess.terminate();
+					Thread.sleep(waitingTimeForTermination);
 
-            ArrayList<String> toSearch = new ArrayList<>();
-            Files.list(x86).filter(Files::isReadable).filter(path -> path.toString().contains(searchTerm))
-                    .forEach(VSPath -> toSearch.add(VSPath.toString()));
-            Files.list(x64).filter(Files::isReadable).filter(path -> path.toString().contains(searchTerm))
-                    .forEach(VSPath -> toSearch.add(VSPath.toString()));
+				} catch (IOException e) {
+					ErrorLogger.log("Unable to create a reference to the CBMC process!");
+				} catch (InterruptedException e) {
 
-            for (Iterator<String> iterator = toSearch.iterator(); iterator.hasNext();) {
-                String toCheck = ((String) iterator.next()) + pathToBatch;
+				}
+			} else {
+				/*
+				 * if we are here, we can't find a child named cbmc. That means
+				 * that a) cbmc just stopped, so we wait some seconds to see it
+				 * the parent stopped too by then b) cbmc just can't be stopped
+				 * this way, so the user has to do it manually
+				 */
 
-                if (Files.isReadable(new File(toCheck).toPath())) {
-                    return toCheck;
-                }
-            }
+				try {
+					Thread.sleep(waitingTimeForTermination);
+				} catch (InterruptedException e) {
 
-            ErrorLogger.log("The progam was unable to find a Developer Command Prompt for Visual Studio. \n"
-                            + " Please install it if you haven't and search for the vsCMD.bat in it! \n"
-                            + " Please copy the .bat to the folder /windows/ in your BEST install directory"
-                            + "(named \"VsDevCmd.bat\") so it can be found automatically.");
+				}
+			}
 
-            return "The progam was unable to find a Developer Command Prompt for Visual Studio. Look at the error log";
-        }
-    }
+		}
 
-    @Override
-    protected String sanitizeArguments(String toSanitize) {
-        return toSanitize;
-    }
+		if (process.isAlive()) {
+			ErrorLogger.log(
+					"There was an attempt to stop the cbmc process, but after " + (waitingTimeForTermination / 1000d)
+							+ " seconds of waiting" + " the parent root process was still alive, even though it should "
+							+ "terminate itself when cbmc stopped. Please check, that the cbmc instance was "
+							+ "closed properly and if not, please close it yourself!");
+		}
+	}
 
-    /**
-     * 
-     * @param proc
-     *            the process whose processID you want to find out
-     * @return the processID of the given process or -1 if it couldn't be
-     *         determined
-     */
-    private int getWindowsProcessId(Process proc) {
+	/**
+	 * 
+	 * @return
+	 * @throws IOException
+	 */
+	private String getVScmdPath() throws IOException {
 
-        // credits for the methode to:
-        // http://cnkmym.blogspot.de/2011/10/how-to-get-process-id-in-windows.html
+		File file = new File(SuperFolderFinder.getSuperFolder() + relativePathToVScmd);
 
-        if (proc.getClass().getName().equals("java.lang.Win32Process")
-                || proc.getClass().getName().equals("java.lang.ProcessImpl")) {
+		if (Files.isExecutable(file.toPath())) {
+			return file.getPath();
+		} else { // we were unable to locate the command promp in the resources
+					// and search now for it in the common install directories
 
-            /* determine the pid on windows plattforms */
-            try {
-                // get the handle by reflection
-                Field f = proc.getClass().getDeclaredField("handle");
-                f.setAccessible(true);
-                long handLong = f.getLong(proc);
-                Kernel32 kernel = Kernel32.INSTANCE;
+			Path x86 = new File("C:/Program Files (x86)").toPath();
+			Path x64 = new File("C:/Program Files").toPath();
+			String searchTerm = "Microsoft Visual Studio";
+			String pathToBatch = "/Common7/Tools/VsDevCmd.bat";
 
-                WinNT.HANDLE handle = new WinNT.HANDLE();
+			ArrayList<String> toSearch = new ArrayList<>();
+			Files.list(x86).filter(Files::isReadable).filter(path -> path.toString().contains(searchTerm))
+					.forEach(VSPath -> toSearch.add(VSPath.toString()));
+			Files.list(x64).filter(Files::isReadable).filter(path -> path.toString().contains(searchTerm))
+					.forEach(VSPath -> toSearch.add(VSPath.toString()));
 
-                Field toSet = handle.getClass().getDeclaredField("immutable");
+			for (Iterator<String> iterator = toSearch.iterator(); iterator.hasNext();) {
+				String toCheck = ((String) iterator.next()) + pathToBatch;
 
-                toSet.setAccessible(true);
+				if (Files.isReadable(new File(toCheck).toPath())) {
+					return toCheck;
+				}
+			}
 
-                boolean savedState = toSet.getBoolean(handle);
+			ErrorLogger.log("The progam was unable to find a Developer Command Prompt for Visual Studio. \n"
+					+ " Please install it if you haven't and search for the vsCMD.bat in it! \n"
+					+ " Please copy the .bat to the folder /windows/ in your BEST install directory"
+					+ "(named \"VsDevCmd.bat\") so it can be found automatically.");
 
-                handle.setPointer(Pointer.createConstant(handLong));
+			return "The progam was unable to find a Developer Command Prompt for Visual Studio. Look at the error log";
+		}
+	}
 
-                int pid = kernel.GetProcessId(handle);
+	@Override
+	protected String sanitizeArguments(String toSanitize) {
+		return toSanitize;
+	}
 
-              
-                toSet.setBoolean(handle, savedState);
-                
-                toSet.setAccessible(false);
-                
-                return pid;
-            } catch (Throwable e) {
-                e.printStackTrace();
-            }
-        }
-        return -1;
-    }
+	/**
+	 * 
+	 * @param proc
+	 *            the process whose processID you want to find out
+	 * @return the processID of the given process or -1 if it couldn't be
+	 *         determined
+	 */
+	private int getWindowsProcessId(Process proc) {
+
+		// credits for the methode to:
+		// http://cnkmym.blogspot.de/2011/10/how-to-get-process-id-in-windows.html
+
+		if (proc.getClass().getName().equals("java.lang.Win32Process")
+				|| proc.getClass().getName().equals("java.lang.ProcessImpl")) {
+
+			/* determine the pid on windows plattforms */
+			try {
+				// get the handle by reflection
+				Field f = proc.getClass().getDeclaredField("handle");
+				f.setAccessible(true);
+				long handLong = f.getLong(proc);
+				Kernel32 kernel = Kernel32.INSTANCE;
+
+				WinNT.HANDLE handle = new WinNT.HANDLE();
+
+				Field toSet = handle.getClass().getDeclaredField("immutable");
+
+				toSet.setAccessible(true);
+
+				boolean savedState = toSet.getBoolean(handle);
+
+				handle.setPointer(Pointer.createConstant(handLong));
+
+				int pid = kernel.GetProcessId(handle);
+
+				toSet.setBoolean(handle, savedState);
+
+				toSet.setAccessible(false);
+
+				return pid;
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
+		}
+		return -1;
+	}
 
 }

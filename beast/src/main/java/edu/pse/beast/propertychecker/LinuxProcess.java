@@ -1,5 +1,6 @@
 package edu.pse.beast.propertychecker;
 
+import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
@@ -29,11 +30,12 @@ public class LinuxProcess extends CBMCProcess {
 		String cbmc = new File(SuperFolderFinder.getSuperFolder() + relativePathToCBMC64).getPath();
 
 		if (!new File(cbmc).exists()) {
-			ErrorLogger.log(
+			ErrorForUserDisplayer.displayError(
 					"Can't find the cbmc program in the subfolger \"linux/cbmcLin/\", please download it from the cbmc website and place it there!");
 		} else if (!new File(cbmc).canExecute()) {
-			ErrorLogger.log(
-					"This program doesn't have the privileges to execute this program, please install BEAST into another folder where it has the rights to execute programs, or start it with elevated privileges.");
+			ErrorForUserDisplayer.displayError(
+					"This program doesn't have the privileges to execute this program. \n "
+					+ "Please change the access rights for the program \"/linux/cbmcLin/cbmc\" in the BEAST installation folder and try again");
 		} else {
 
 			arguments.add(cbmc);
