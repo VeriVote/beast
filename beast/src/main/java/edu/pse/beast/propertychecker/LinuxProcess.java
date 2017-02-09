@@ -14,7 +14,6 @@ public class LinuxProcess extends CBMCProcess {
 
 	public LinuxProcess(int voters, int candidates, int seats, String advanced, File toCheck, CheckerFactory parent) {
 		super(voters, candidates, seats, advanced, toCheck, parent);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -37,15 +36,12 @@ public class LinuxProcess extends CBMCProcess {
 					"This program doesn't have the privileges to execute this program, please install BEAST into another folder where it has the rights to execute programs, or start it with elevated privileges.");
 		} else {
 
-			advanced = sanitizeArguments(advanced);
-
-			String[] argumentsToPass = new String[6 + advanced.split(";").length];
-
 			arguments.add(cbmc);
 
 			arguments.add(toCheck.getAbsolutePath());
 
-			//here we supply this call with the correct values for the voters, candidates and seats
+			// here we supply this call with the correct values for the voters,
+			// candidates and seats
 			arguments.add("-D V=" + voters);
 
 			arguments.add("-D C=" + candidates);
@@ -55,17 +51,17 @@ public class LinuxProcess extends CBMCProcess {
 			// we need the trace command to track the output on the command line
 			arguments.add("--trace");
 
-			for (int i = 5; i < argumentsToPass.length; i++) {
-				String sanitized = sanitizeArguments(advanced.split(";")[i - 5]);
+			if (advanced != null && advanced.length() > 0) {
+				for (int i = 0; i < advanced.split(";").length; i++) {
+					String sanitized = sanitizeArguments(advanced.split(";")[i]);
 
-				if (sanitized.trim().length() > 0) {
-					arguments.add(sanitized);
+					if (sanitized.trim().length() > 0) {
+						arguments.add(sanitized);
+					}
 				}
 			}
 
 			Process startedProcess = null;
-
-			ErrorLogger.log("LinuxProcess.java line 47 has to be removed, when the code creation works");
 
 			ProcessBuilder prossBuild = new ProcessBuilder(arguments.toArray(new String[0]));
 
