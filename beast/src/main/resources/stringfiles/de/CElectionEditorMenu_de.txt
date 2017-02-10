@@ -13,6 +13,7 @@ change_election_type : Wahlart ändern
 editor : Editor
 options : Eigenschaften
 code : Code
+cancelButtonText : Abbrechen
 staticErrorFinding : Statische Fehlersuche
 openDialogTitleText : Wahlverfahren Öffnen
 saveDialogTitleText : Wahlverfahren Speichern
@@ -25,7 +26,7 @@ openApproveButtonToolTipText : Öffnen
 openApproveButtonText : Öffnen
 saveApproveButtonToolTipText : Speichern
 saveApproveButtonText : Speichern
-ancelButtonToolTipText : Abbrechen
+cancelButtonToolTipText : Abbrechen
 fileNameHeaderText : Dateiname
 upFolderToolTipText : Eine Ebene höher
 homeFolderToolTipText : Home

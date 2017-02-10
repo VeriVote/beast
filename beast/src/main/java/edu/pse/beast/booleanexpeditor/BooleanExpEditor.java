@@ -173,6 +173,7 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
                 return false;
             }
         } else {
+            fileChooser.setHasBeenSaved(false);
             loadNewProperties(postAndPrePropertiesDescription);
             this.loadedFromPropertyList = loadedFromPropertyList;
             return true;
@@ -237,6 +238,10 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
         return findErrorsAndDisplayThem();
     }
 
+    /**
+     * Updates the currentlyLoadedPostAndPreProp object (model) according to the current state of the
+     * BooleanExpEditorWindow (View).
+     */
     public void updatePostAndPrePropObject() {
         currentlyLoadedPostAndPreProp.setPrePropertiesDescription(
                 new FormalPropertiesDescription(prePropCodeArea.getPane().getText()));
@@ -280,7 +285,7 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
     }
 
     /**
-     * Updates the the PostAndPrePropertiesDescription object of this class and
+     * Updates the the PostAndPrePropertiesDescription object (model) of this class and
      * @return s it.
      */
     public PostAndPrePropertiesDescription getCurrentlyLoadedPostAndPreProp() {

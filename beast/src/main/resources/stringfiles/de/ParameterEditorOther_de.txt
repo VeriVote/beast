@@ -47,5 +47,5 @@ inputOutputErrorOpen : Fehler beim einlesen der Datei (Wahrscheinlich existiert 
 invalidFileFormatErrorMessage : Die gegebene Datei enthält kein gültiges BEAST-Projekt-Format.
 wrongEncodingError : Das Projekt enthält falsch kodierte Zeichen.
 inputOutputErrorSave : Das Verzeichnis in dem gespeichert werden soll existiert nicht.
-wrongFileNameError : Der angegebene Name entspricht nicht dem regulären Ausdruck '^[^*&%\s]+$'.
+wrongFileNameError : Der angegebene Name entspricht nicht dem regulären Ausdruck '[_a-zA-Z0-9\-\.]+.
 fileSuffix : .beast

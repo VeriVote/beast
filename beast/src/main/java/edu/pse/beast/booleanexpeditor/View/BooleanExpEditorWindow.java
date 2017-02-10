@@ -252,7 +252,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
      * @param s
      */
     public void setWindowTitle(String s) {
-        this.setTitle(titleString + " " + s);
+        this.setTitle(titleString + " " + s + " - BEAST");
     }
 
     /**

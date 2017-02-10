@@ -87,7 +87,7 @@ public class CCodeEditorWindow extends javax.swing.JFrame implements DisplaysStr
      * @param s
      */
     public void setWindowTitle(String s) {
-        this.setTitle(title + " " + s);
+        this.setTitle(title + " " + s + " - BEAST");
     }
 
     /**
