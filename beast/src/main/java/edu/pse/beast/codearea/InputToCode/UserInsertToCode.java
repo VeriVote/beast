@@ -100,8 +100,23 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
 
     public void insertTab() throws BadLocationException {
         if(selectionIncludesLockedLines()) return;       
-        if(isLineContainingCaretPosLocked()) return;        
-        tabInserter.insertTabAtPos(currentCaretPosition);
+        if(isLineContainingCaretPosLocked()) return; 
+        if(pane.getSelectedText() != null) {
+            ArrayList<Integer> selectedLines = 
+                JTextPaneToolbox.getLinesBetween(pane, pane.getSelectionStart(),
+                        pane.getSelectionEnd());
+            ArrayList<Integer> selectedLinesStartPos = new ArrayList<>();
+            for(int line : selectedLines) {
+                selectedLinesStartPos.add(JTextPaneToolbox.getLineBeginning(pane, line));
+            }
+            int amtTabsAdded = 0;
+            for(int pos : selectedLinesStartPos) {
+                tabInserter.insertTabAtPos(pos + amtTabsAdded * 8);
+                amtTabsAdded++;
+            }
+        } else {
+            tabInserter.insertTabAtPos(currentCaretPosition);            
+        }        
     }
 
     private boolean isLineContainingCaretPosLocked() {
