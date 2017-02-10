@@ -37,9 +37,9 @@ public class CElectionCodeAreaBuilder extends CodeAreaBuilder {
     
     private ArrayList<AutocompletionOption> createAutocompletionOptions() {
         ArrayList<AutocompletionOption> created = new ArrayList<>();
-        created.add(new AutocompletionOption("for", "for(unsigned int i = 0; i < V; ++i)"));
-        created.add(new AutocompletionOption("for", "for(unsigned int i = 0; i < C; ++i)"));
-        created.add(new AutocompletionOption("for", "for(unsigned int i = 0; i < S; ++i)"));        
+        created.add(new AutocompletionOption("for", "for(unsigned int i = 0; i < V; ++i) {\n"));
+        created.add(new AutocompletionOption("for", "for(unsigned int i = 0; i < C; ++i) {\n"));
+        created.add(new AutocompletionOption("for", "for(unsigned int i = 0; i < S; ++i) {\n"));        
         return created;
     }
 

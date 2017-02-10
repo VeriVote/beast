@@ -19,10 +19,16 @@ import javax.swing.text.BadLocationException;
 public class AutocompletionOption {
     private String similarString;
     private String insertString;
-    
+    private int moveCaretAfter = 0;
     public AutocompletionOption(String similarString, String insertString) {
         this.insertString = insertString;
         this.similarString = similarString;
+    }
+    
+    public AutocompletionOption(String similarString, String insertString, int moveCaretAfter) {
+        this.insertString = insertString;
+        this.similarString = similarString;
+        this.moveCaretAfter = moveCaretAfter;
     }
     
     public boolean equals(AutocompletionOption other) {
@@ -46,7 +52,15 @@ public class AutocompletionOption {
                 insertToCode.getSaveBeforeRemove().save();
                 insertToCode.removeToTheLeft();
             }
-            insertToCode.insertString(insertString);
+            for (int i = 0; i < insertString.length(); i++) {
+                if(insertString.charAt(i) == '\n') {
+                    insertToCode.insertNewline();
+                } else {                    
+                    insertToCode.insertChar(insertString.charAt(i)); 
+                }               
+            }
+            
+            pane.setCaretPosition(pane.getCaretPosition() + moveCaretAfter);
         } catch (BadLocationException ex) {
             Logger.getLogger(AutocompletionOption.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -74,9 +74,12 @@ public class AutocompletionController implements KeyListener, AncestorListener {
     }
 
     @Override
-    public void keyPressed(KeyEvent ke) {      
+    public void keyPressed(KeyEvent ke) {
         if(ke.getSource() == frame.getjList1()) {
-            if(ke.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            if(ke.getKeyCode() == KeyEvent.VK_UP ||
+                ke.getKeyCode() == KeyEvent.VK_DOWN) {                
+                return;
+            } else if(ke.getKeyCode() == KeyEvent.VK_ESCAPE) {
                 frame.setVisible(false);
             } else if(ke.getKeyCode() == KeyEvent.VK_ENTER) {
                 String s = frame.getjList1().getSelectedValue();
@@ -91,7 +94,12 @@ public class AutocompletionController implements KeyListener, AncestorListener {
     @Override
     public void keyReleased(KeyEvent ke) {
         if(ke.getSource() == frame.getjList1()) {
-             giveMenuOptions();
+            if(ke.getKeyCode() == KeyEvent.VK_UP ||
+                ke.getKeyCode() == KeyEvent.VK_DOWN ||
+                ke.getKeyChar() == KeyEvent.VK_ENTER) {                
+                return;
+            }
+            giveMenuOptions();
         }
         if(ke.isControlDown() && ke.getKeyChar()== KeyEvent.VK_SPACE) {            
             try {

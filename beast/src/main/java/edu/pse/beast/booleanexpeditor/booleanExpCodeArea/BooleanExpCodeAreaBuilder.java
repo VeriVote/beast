@@ -48,12 +48,12 @@ public class BooleanExpCodeAreaBuilder extends CodeAreaBuilder{
     
     private ArrayList<AutocompletionOption> createAutocompletionOptions() {
         ArrayList<AutocompletionOption> created = new ArrayList<>();
-        created.add(new AutocompletionOption("FOR_ALL_VOTERS", "FOR_ALL_VOTERS() :"));
-        created.add(new AutocompletionOption("FOR_ALL_CANDIDATES", "FOR_ALL_CANDIDATES() :"));
-        created.add(new AutocompletionOption("FOR_ALL_SEATS", "FOR_ALL_SEATS() :"));       
-        created.add(new AutocompletionOption("EXISTS_ONE_VOTER", "EXISTS_ONE_VOTER() :"));        
-        created.add(new AutocompletionOption("EXISTS_ONE_CANDIDATE", "EXISTS_ONE_CANDIDATE() :"));        
-        created.add(new AutocompletionOption("EXISTS_ONE_SEAT", "EXISTS_ONE_SEAT() :"));     
+        created.add(new AutocompletionOption("FOR_ALL_VOTERS", "FOR_ALL_VOTERS() :", -3));
+        created.add(new AutocompletionOption("FOR_ALL_CANDIDATES", "FOR_ALL_CANDIDATES() :", -3));
+        created.add(new AutocompletionOption("FOR_ALL_SEATS", "FOR_ALL_SEATS() :", -3));       
+        created.add(new AutocompletionOption("EXISTS_ONE_VOTER", "EXISTS_ONE_VOTER() :", -3));        
+        created.add(new AutocompletionOption("EXISTS_ONE_CANDIDATE", "EXISTS_ONE_CANDIDATE() :", -3));        
+        created.add(new AutocompletionOption("EXISTS_ONE_SEAT", "EXISTS_ONE_SEAT() :", -3));     
         created.add(new AutocompletionOption("VOTES", "VOTES"));     
         created.add(new AutocompletionOption("ELECT", "ELECT"));     
         created.add(new AutocompletionOption("==>", "==>"));     
