@@ -56,7 +56,7 @@ public class MinMaxSpinValueHandler implements ChangeListener {
         }
         Integer minAfter = Integer.parseInt(minSpinner.getValue().toString());
         Integer maxAfter = Integer.parseInt(maxSpinner.getValue().toString());
-        if (!(minBefore.equals(minAfter) && maxBefore.equals(maxAfter))) {
+        if (minBefore == null || !(minBefore.equals(minAfter) && maxBefore.equals(maxAfter))) {
             minBefore = minAfter;
             maxBefore = maxAfter;
             setHasChanged(true);
