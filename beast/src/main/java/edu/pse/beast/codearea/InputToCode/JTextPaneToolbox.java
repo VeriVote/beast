@@ -106,4 +106,13 @@ public class JTextPaneToolbox {
         }
         return absPos;
     }
+
+    public static int getWordBeginningAtCursor(JTextPane pane) {
+        String code = getText(pane);
+        for(int pos = pane.getCaretPosition() - 1; pos >= 0; pos--) {
+            if(code.charAt(pos) == ' ' || code.charAt(pos) == '\n')
+                return pos;
+        }
+        return 0;
+    }
 }

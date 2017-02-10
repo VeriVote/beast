@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.codearea.ErrorHandling;
 
+import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.Tuple;
@@ -80,6 +81,7 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
     public void mouseMoved(MouseEvent e) {
         Point pt = new Point(e.getX(), e.getY());
         int pos = pane.viewToModel(pt);
+        if(pos == JTextPaneToolbox.getText(pane).length()) 
         //System.out.println("m abs " + pt.x + "," + pt.y + " m_pos: " + pos);
         if(Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 && Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 && errorPopupMenu.isVisible()) return;
         for(int i = 0; i < absPosToMsg.size(); ++i) {

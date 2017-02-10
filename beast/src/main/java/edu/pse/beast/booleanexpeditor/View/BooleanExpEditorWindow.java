@@ -21,7 +21,7 @@ import java.awt.event.KeyEvent;
 public class BooleanExpEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser{
 
     /**
-     * Constructor
+     * Constructor, calls NetBeans generated initComponents method to initialize JFrame.
      */
     public BooleanExpEditorWindow() {
         initComponents();
@@ -281,9 +281,14 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
                 options[0]);
     }
 
+    /**
+     * Setter to create new JTextPanes.
+     */
     public void setNewTextpanes() {
+        prePropTextPane = null;
         prePropTextPane = new JTextPane();
         prePropScrollPane.setViewportView(prePropTextPane);
+        postPropTextPane = null;
         postPropTextPane = new JTextPane();
         postPropScrollPane.setViewportView(postPropTextPane);
     }

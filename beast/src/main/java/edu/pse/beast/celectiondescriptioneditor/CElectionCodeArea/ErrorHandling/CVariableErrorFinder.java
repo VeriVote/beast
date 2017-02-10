@@ -45,7 +45,18 @@ public class CVariableErrorFinder extends CBaseListener implements ErrorFinder {
     }
     
     public void exitDeclaration(CParser.DeclarationContext ctx) {
-        
+        String[] type = getDeclarationType(ctx);
     }
+    
+    public String[] getDeclarationType(CParser.DeclarationContext ctx) {
+        String type[] = new String[ctx.declarationSpecifiers().declarationSpecifier().size()];
+        int i = 0;
+        for(CParser.DeclarationSpecifierContext declSpec : ctx.declarationSpecifiers().declarationSpecifier()) {
+            type[i] = declSpec.typeSpecifier().getText();
+            ++i;
+        }
+        return type;
+    }
+
     
 }

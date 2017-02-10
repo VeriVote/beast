@@ -43,6 +43,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
     private final FileChooser fileChooser;
     private boolean hasChanged;
     private Project currentlyLoadedProject;
+    private String version = "1.23"; //TODO: Get Version from somewhere
 
     /**
      * Constructor which also links the handlers to the View elements
@@ -76,6 +77,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
         window.getAmountProcessesSpinner().addChangeListener(processHandler);
         argumentHandler = new ArgumentHandler(window.getAdvancedWindow().getInputField(),
                 window.getAdvancedWindow().getOkButton());
+        window.setVersion(version);
         setReacts(true);
         setHasChanged(false);
     }

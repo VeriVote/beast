@@ -5,11 +5,13 @@ import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpE
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorVariableErrorFinder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpErrorDisplayer;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
+import edu.pse.beast.codearea.Autocompletion.AutocompletionOption;
 import edu.pse.beast.codearea.CodeArea;
 import edu.pse.beast.codearea.CodeAreaBuilder;
 import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -34,9 +36,28 @@ public class BooleanExpCodeAreaBuilder extends CodeAreaBuilder{
         BooleanExpErrorDisplayer errorDisplayer = new BooleanExpErrorDisplayer(textPane, objectRefs.getStringIF());
         CodeArea tempCodeArea = super.createCodeArea(textPane, scrollPane, objectRefs, errorDisplayer);
         BooleanExpANTLRHandler antlrHandler = new BooleanExpANTLRHandler(textPane.getStyledDocument());
-        return new BooleanExpCodeArea(tempCodeArea, antlrHandler,
+        BooleanExpCodeArea created =  new BooleanExpCodeArea(tempCodeArea, antlrHandler,
                 new BooleanExpEditorVariableErrorFinder(antlrHandler, symbolicVariableList, ceditor),
                 new BooleanExpEditorGrammarErrorFinder(antlrHandler),
                 new BooleanExpAutoCompletionSrc());        
+        for(AutocompletionOption opt : createAutocompletionOptions()) {
+            created.getAutoComplCtrl().add(opt);
+        }
+        return created;
+    }
+    
+    private ArrayList<AutocompletionOption> createAutocompletionOptions() {
+        ArrayList<AutocompletionOption> created = new ArrayList<>();
+        created.add(new AutocompletionOption("FOR_ALL_VOTERS", "FOR_ALL_VOTERS() :", -3));
+        created.add(new AutocompletionOption("FOR_ALL_CANDIDATES", "FOR_ALL_CANDIDATES() :", -3));
+        created.add(new AutocompletionOption("FOR_ALL_SEATS", "FOR_ALL_SEATS() :", -3));       
+        created.add(new AutocompletionOption("EXISTS_ONE_VOTER", "EXISTS_ONE_VOTER() :", -3));        
+        created.add(new AutocompletionOption("EXISTS_ONE_CANDIDATE", "EXISTS_ONE_CANDIDATE() :", -3));        
+        created.add(new AutocompletionOption("EXISTS_ONE_SEAT", "EXISTS_ONE_SEAT() :", -3));     
+        created.add(new AutocompletionOption("VOTES", "VOTES"));     
+        created.add(new AutocompletionOption("ELECT", "ELECT"));     
+        created.add(new AutocompletionOption("==>", "==>"));     
+        created.add(new AutocompletionOption("<==>", "<==>"));     
+        return created;
     }
 }

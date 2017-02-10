@@ -35,6 +35,10 @@ public class ErrorController {
         int i = 0;
     }
     
+    public void stopThread() {
+        t.stop();
+    }
+    
     public void addErrorFinder(ErrorFinder finder) {
         errorFinderList.add(finder);
     }

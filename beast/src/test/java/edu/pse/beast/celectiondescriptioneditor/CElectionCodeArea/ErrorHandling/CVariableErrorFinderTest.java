@@ -14,6 +14,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CAntlrHandler;
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CParser;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 
 import static org.junit.Assert.*;
@@ -27,7 +28,6 @@ public class CVariableErrorFinderTest {
     private JTextPane pane;
     private CAntlrHandler handler;
     private CVariableErrorFinder finder;
-    
     public CVariableErrorFinderTest() {
         pane = new JTextPane();
         handler = new CAntlrHandler(pane);
@@ -59,6 +59,22 @@ public class CVariableErrorFinderTest {
         pane.setText(code);
         ArrayList<CodeError> ers = finder.getErrors();
         //assertEquals(1, ers.size());
+    }
+
+    @Test
+    public void findType() {
+        String code = "int c = 0";
+        pane.setText(code);
+        handler.updateParser();
+        String[] type = finder.getDeclarationType(handler.getParser().declaration());
+        assertEquals("int", type[0]);
+        
+        code = "unsigned int c = 0";
+        pane.setText(code);
+        handler.updateParser();
+        type = finder.getDeclarationType(handler.getParser().declaration());
+        assertEquals("unsigned", type[0]);
+        assertEquals("int", type[1]);
     }
     
 }

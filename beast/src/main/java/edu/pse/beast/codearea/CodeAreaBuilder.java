@@ -59,8 +59,7 @@ public class CodeAreaBuilder {
         ErrorController error = new ErrorController(
                 codeArea, errorDisplayer);
         
-        AutocompletionController autocompletion = new AutocompletionController();
-        
+        AutocompletionController autocompletion = new AutocompletionController(codeArea, insertToCode);        
         
         TextChangedActionAdder actionAdder = new TextChangedActionAdder(codeArea, actionList, textBeforeRemove);
 
