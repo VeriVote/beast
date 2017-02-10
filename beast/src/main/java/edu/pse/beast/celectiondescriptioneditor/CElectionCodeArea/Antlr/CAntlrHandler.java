@@ -46,6 +46,17 @@ public class CAntlrHandler {
         return null;
     }
     
+    public void updateParser() {
+        try {
+            String code = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
+            lexer.setInputStream(new ANTLRInputStream(code));
+            CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
+            cParser.setTokenStream(commonTokenStream);
+        } catch (BadLocationException ex) {
+            Logger.getLogger(CAntlrHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public CParser getParser() {
         return cParser;
     }

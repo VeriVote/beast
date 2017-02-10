@@ -25,12 +25,12 @@ public class ANTLRTest {
         final CLexer lexer = new CLexer(stream);
         final CommonTokenStream tokens = new CommonTokenStream(lexer);
         final CParser parser = new CParser(tokens);
-        final ParseTree tree = parser.compilationUnit();
+        final ParseTree tree = parser.declaration();
         final List<String> ruleNames = Arrays.asList(CParser.ruleNames);
         final TreeViewer view = new TreeViewer(ruleNames, tree);
         view.open();
     }
     public static void main(String[] args) {
-        showGuiTreeView("void f() { int i = 0;}");
+        showGuiTreeView("int i = 0;");
     }
 }

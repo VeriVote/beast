@@ -141,6 +141,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     public void loadElectionDescription(ElectionDescription description) throws BadLocationException {
         this.currentDescription = description;
         window.setNewCodeArea();
+        codeArea.getErrorCtrl().stopThread();
         codeArea = builder.createCElectionCodeArea(window.getCodeArea(),
                 window.getCodeAreaScrollPane(),
                 new CErrorDisplayer(window.getCodeArea(), stringLoaderInterface));
