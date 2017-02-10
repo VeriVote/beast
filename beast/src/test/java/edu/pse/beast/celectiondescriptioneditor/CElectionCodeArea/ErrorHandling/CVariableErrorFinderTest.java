@@ -61,20 +61,6 @@ public class CVariableErrorFinderTest {
         //assertEquals(1, ers.size());
     }
 
-    @Test
-    public void findType() {
-        String code = "int c = 0";
-        pane.setText(code);
-        handler.updateParser();
-        String[] type = finder.getDeclarationType(handler.getParser().declaration());
-        assertEquals("int", type[0]);
-        
-        code = "unsigned int c = 0";
-        pane.setText(code);
-        handler.updateParser();
-        type = finder.getDeclarationType(handler.getParser().declaration());
-        assertEquals("unsigned", type[0]);
-        assertEquals("int", type[1]);
-    }
+   
     
 }
