@@ -82,12 +82,17 @@ public class AutocompletionController implements KeyListener, AncestorListener {
                 String s = frame.getjList1().getSelectedValue();
                 if(s != null) choseCompletion(s);
                 frame.setVisible(false);
+            } else {
+                giveMenuOptions();
             }
         }
     }
 
     @Override
     public void keyReleased(KeyEvent ke) {
+        if(ke.getSource() == frame.getjList1()) {
+             giveMenuOptions();
+        }
         if(ke.isControlDown() && ke.getKeyChar()== KeyEvent.VK_SPACE) {            
             try {
                 giveMenuOptions();
@@ -106,13 +111,13 @@ public class AutocompletionController implements KeyListener, AncestorListener {
         int wordAtCursorStartPos = JTextPaneToolbox.getWordBeginningAtCursor(pane);
         String wordAtCursor = 
             pane.getStyledDocument().getText(
-                wordAtCursorStartPos + 1, pane.getCaretPosition() - wordAtCursorStartPos);
+                wordAtCursorStartPos, pane.getCaretPosition() - wordAtCursorStartPos);
         return wordAtCursor;
     }
 
     private void giveMenuOptions() {
         try {
-            String word = getWordAtCursor();
+            String word = getWordAtCursor().trim();
             completionOptions.sort(new WordsMoreEqualToComparator(word));
             String opts[] = new String[completionOptions.size()];
             for (int i = 0; i < opts.length; i++) {

@@ -23,6 +23,9 @@ public class WordsMoreEqualToComparator implements Comparator<AutocompletionOpti
         String rhsS = rhs.getSimilarString();
         int lhsScore = similarityCode(lhsS);
         int rhsScore = similarityCode(rhsS);
+        if(lhsScore == rhsScore) return Integer.compare(
+                Math.abs(lhsS.length() - compareWord.length()),
+                Math.abs(rhsS.length() - compareWord.length()));
         return Integer.compare(rhsScore, lhsScore);
     }   
     
