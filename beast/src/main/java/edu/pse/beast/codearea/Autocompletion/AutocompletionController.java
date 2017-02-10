@@ -18,13 +18,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JTextPane;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 import javax.swing.text.BadLocationException;
 
 /**
  *
  * @author Holger-Desktop
  */
-public class AutocompletionController implements KeyListener {
+public class AutocompletionController implements KeyListener, AncestorListener {
     private JTextPane pane;
     private ArrayList<AutocompletionOption> completionOptions = new ArrayList<>();
     private FindWordsConcurrently conc;
@@ -35,6 +37,7 @@ public class AutocompletionController implements KeyListener {
     
     public AutocompletionController(JTextPane pane, UserInsertToCode insertToCode) {
         this.pane = pane;
+        pane.addAncestorListener(this);
         pane.addKeyListener(this);
         conc = new FindWordsConcurrently(pane, this);
         t = new Thread(conc);
@@ -128,5 +131,20 @@ public class AutocompletionController implements KeyListener {
                 return;                
             }
         }
+    }
+
+    @Override
+    public void ancestorAdded(AncestorEvent ae) {
+        if(!ae.getAncestor().isVisible()) frame.setVisible(false);
+    }
+
+    @Override
+    public void ancestorRemoved(AncestorEvent ae) {
+        if(!ae.getAncestor().isVisible()) frame.setVisible(false);
+    }
+
+    @Override
+    public void ancestorMoved(AncestorEvent ae) {
+        if(!ae.getAncestor().isVisible()) frame.setVisible(false);
     }
 }
