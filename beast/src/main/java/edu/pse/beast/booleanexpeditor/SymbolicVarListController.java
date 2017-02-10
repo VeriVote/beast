@@ -21,8 +21,6 @@ public class SymbolicVarListController implements DisplaysStringsToUser {
     private final JList jList;
     private final DefaultListModel jListModel;
     private final SymbolicVariableList symbolicVariableList;
-    private JButton addVarButton;
-    private JButton removeVarButton;
     private StringLoaderInterface stringLoaderInterface;
     private String voterString;
     private String candidateString;
@@ -45,8 +43,6 @@ public class SymbolicVarListController implements DisplaysStringsToUser {
                               StringLoaderInterface stringLoaderInterface, SymbolicVariableList symbolicVariableList,
                               BooleanExpEditorWindow booleanExpEditorWindow) {
         this.jList = jList;
-        this.addVarButton = addVarButton;
-        this.removeVarButton = removeVarButton;
         this.stringLoaderInterface = stringLoaderInterface;
         this.symbolicVariableList = symbolicVariableList;
         this.jListModel = (DefaultListModel) jList.getModel();

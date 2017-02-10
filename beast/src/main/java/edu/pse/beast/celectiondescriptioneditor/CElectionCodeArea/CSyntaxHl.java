@@ -25,11 +25,11 @@ public class CSyntaxHl {
 
         ArrayList<RegexAndColor> regexAndColorList = new ArrayList<>();
         for(String s : antlrHandler.getTypeLiterals()) {
-            String regexWithWhiteSpace = "(\\s|\\n|\\A)" + s + "(\\s|\\n|\\Z)";
+            String regexWithWhiteSpace = "(\\(|\\s|\\A)" + s + "(\\s|\\Z|\\))";
             regexAndColorList.add(new RegexAndColor(regexWithWhiteSpace, Color.GREEN));
         }
         for(String s : antlrHandler.getControllLiterals()) {
-            String regexWithWhiteSpace = "(\\s|\\n|\\A)" + s + "(\\s|\\n|\\Z)";
+            String regexWithWhiteSpace = "(\\(|\\s|\\A)" + s + "(\\s|\\Z|\\))";
             regexAndColorList.add(new RegexAndColor(regexWithWhiteSpace, Color.BLUE));
         }
         regexAndColorList.add(new RegexAndColor(antlrHandler.getCommentRegex(), Color.ORANGE));

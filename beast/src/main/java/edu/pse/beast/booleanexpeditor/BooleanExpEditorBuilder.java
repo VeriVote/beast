@@ -24,7 +24,10 @@ import java.util.ArrayList;
 public class BooleanExpEditorBuilder{
     private SavePropsUserAction savePropsUserAction;
 
-    private String[] menuHeadingIds = {
+    /**
+     * An array of Strings encompassing the HeaderIds for the Menu.
+     */
+    private String[] menuHeaderIds = {
             "fileMenu",
             "editMenu",
             "editorMenu",
@@ -35,8 +38,8 @@ public class BooleanExpEditorBuilder{
 
     /**
      * Constructor
-     * @param objectRefsForBuilder Object with references to needed interfaces to build View
-     * @return BooleanExpEditor Object
+     * @param objectRefsForBuilder Object with references to needed interfaces to build BooleanExpEditor
+     * @return the built BooleanExpEditor Object
      */
     public BooleanExpEditor createBooleanExpEditorObject(ObjectRefsForBuilder objectRefsForBuilder,
             CElectionDescriptionEditor ceditor) {
@@ -83,7 +86,7 @@ public class BooleanExpEditorBuilder{
                 codeAreaBuilder, objectRefsForBuilder, ceditor, fileChooser);
 
         //creation of BooleanExpEditorMenubarHandler
-        BooleanExpEditorMenubarHandler menuBarHandler = new BooleanExpEditorMenubarHandler(menuHeadingIds, window,
+        BooleanExpEditorMenubarHandler menuBarHandler = new BooleanExpEditorMenubarHandler(menuHeaderIds, window,
                 createActionIdAndListenerListForMenuHandler(editor), objectRefsForBuilder.getStringIF());
 
         //creation of BooleanExpEditorToolbarHandler
@@ -102,7 +105,7 @@ public class BooleanExpEditorBuilder{
     /**
      * Method creating the ArrayList of ArrayLists of ActionIdAndListener objects, containing necessary elements
      * for building and handling the JMenuBar of a BooleanExpEditorWindow object.
-     * @return said list, a ArrayList<ArrayList<ActionIdAndListener>> object
+     * @return said list, an ArrayList<ArrayList<ActionIdAndListener>> object
      */
     private ArrayList<ArrayList<ActionIdAndListener>>
     createActionIdAndListenerListForMenuHandler(BooleanExpEditor editor) {
@@ -214,7 +217,7 @@ public class BooleanExpEditorBuilder{
         return created;
     }
 
-    //file
+    //methods for creating UserActions in "file"-Menu
     private NewPropsUserAction createNewPropsUserAction(BooleanExpEditor booleanExpEditor) {
         return new NewPropsUserAction(booleanExpEditor);
     }
@@ -228,7 +231,7 @@ public class BooleanExpEditorBuilder{
         return new LoadPropsUserAction(booleanExpEditor);
     }
 
-    //edit
+    //methods for creating UserActions in "edit"-Menu
     private UndoBoolUserAction createUndoUserAction(BooleanExpEditor editor) {
         return new UndoBoolUserAction(editor);
     }
@@ -245,31 +248,37 @@ public class BooleanExpEditorBuilder{
         return new PasteUserAction(editor);
     }
 
-    //editor
+    //methods for creating UserAction in "editor"-Menu
     private PresentOptionsBoolUserAction createPresentOptionsUserAction() {
         return new PresentOptionsBoolUserAction();
     }
 
-    //constants
+    //methods for creating UserActions in "constants"-Menu
     private AddConstUserAction createConstantUserAction(String id, String constant, BooleanExpEditor editor) {
         return new AddConstUserAction(id, new BooleanExpEditorConst(constant), editor);
     }
 
-    //makro
+    //methods for creating UserActions in "makro"-Menu
     private AddMakroUserAction createMakroUserAction(String id, String makro, BooleanExpEditor editor) {
         return new AddMakroUserAction(id, new BooleanExpEditorMakro(makro), editor);
     }
 
-    //code
+    //methods for creating UserAction in "code"-Menu
     private staticErrorFindingUserAction createStaticCheckUserAction(BooleanExpEditor editor) {
         return new staticErrorFindingUserAction(editor);
     }
 
-    private ActionIdAndListener createFromUserAction(UserAction userAc) {
-        return new ActionIdAndListener(userAc.getId(), new ActionListener() {
+    /**
+     * Method that creates a ActionIdAndListener object given just a UserAction by creating an ActionListener that
+     * calls the UserActions perform method when triggered.
+     * @param userAction the UserAction object
+     * @return the created ActionIdAndListener object
+     */
+    private ActionIdAndListener createFromUserAction(UserAction userAction) {
+        return new ActionIdAndListener(userAction.getId(), new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                userAc.perform();
+                userAction.perform();
             }
         });
     }
