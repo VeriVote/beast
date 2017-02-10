@@ -8,6 +8,7 @@ import java.util.List;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
+import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
@@ -39,10 +40,14 @@ public class CBMCProcessFactory extends CheckerFactory {
      *            the controller that controls this processfactory and that has
      *            to be reported to, if all the checking for this file has
      *            finished
-     * @param electionDescSrc the source that describes the election
-     * @param postAndPrepPropDesc the source that describes the specific property
-     * @param paramSrc the source that describes all other parameters
-     * @param result the result object that the end result should be written to
+     * @param electionDescSrc
+     *            the source that describes the election
+     * @param postAndPrepPropDesc
+     *            the source that describes the specific property
+     * @param paramSrc
+     *            the source that describes all other parameters
+     * @param result
+     *            the result object that the end result should be written to
      */
     protected CBMCProcessFactory(FactoryController controller, ElectionDescriptionSource electionDescSrc,
             PostAndPrePropertiesDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result) {
@@ -52,8 +57,8 @@ public class CBMCProcessFactory extends CheckerFactory {
 
     @Override
     protected Checker startProcess(ElectionDescriptionSource electionDescSrc,
-            PostAndPrePropertiesDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
-            CheckerFactory parent) {
+            PostAndPrePropertiesDescription postAndPrepPropDesc, String advanced, int voters, int candidates,
+            int seats, CheckerFactory parent) {
 
         String userOptions = advanced.trim().replaceAll(" +", " ");
 
@@ -62,10 +67,8 @@ public class CBMCProcessFactory extends CheckerFactory {
         // create the file in which the code is saved if it doesn't exist
         // already
         if (toCheck == null) {
-            // create the file only once for one factory and reuse it then
 
-            // ErrorLogger.log("(CBMCProcessFactory) to generate code again and
-            // not use the example unccoment line 52");
+            // create the file only once for each factory and reuse it then
             toCheck = createCodeFile(electionDescSrc, postAndPrepPropDesc);
         }
 
@@ -77,6 +80,11 @@ public class CBMCProcessFactory extends CheckerFactory {
             break;
         case Windows:
             startedChecker = new WindowsProcess(voters, candidates, seats, userOptions, toCheck, parent);
+            break;
+        case Mac:
+            ErrorForUserDisplayer.displayError(
+                    "MacOS is not supported yet, please implement the class CBMCProcess and add it then here in the "
+                            + "CBMCProcessFactory to be created");
             break;
         default:
             ErrorLogger.log("Warning, your OS couldn't be determined or is not supported yet.");
@@ -133,6 +141,14 @@ public class CBMCProcessFactory extends CheckerFactory {
         return fittingResults;
     }
 
+    /**
+     * creates a new c-Code file that then can be used by all the underlying
+     * checkers to check it with cbmc
+     * 
+     * @param electionDescSrc the source that describes the election
+     * @param postAndPrepPropDesc the property that this specific processfactory should check
+     * @return a file that contains the generated code from the two above variables
+     */
     public File createCodeFile(ElectionDescriptionSource electionDescSrc,
             PostAndPrePropertiesDescription postAndPrepPropDesc) {
 

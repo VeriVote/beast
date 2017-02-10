@@ -46,6 +46,17 @@ public class CBMCResultWrappersingleArray {
             list.set(index, toAdd);
         }
     }
+    
+    /**
+     * returns the two dimensional list that is saved here. Only use this if you
+     * really need it, because there is also and methode that creates an array
+     * from these, which makes sure that there are no empty parts in the lists
+     * 
+     * @return the list that describes this variable
+     */
+    public List<Long> getList() {
+        return list;
+    }
 
     /**
      * 
@@ -86,9 +97,5 @@ public class CBMCResultWrappersingleArray {
             }
         }
         return toReturn;
-    }
-
-    public List<Long> getList() {
-        return list;
     }
 }

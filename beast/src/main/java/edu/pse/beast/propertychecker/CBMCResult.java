@@ -51,6 +51,10 @@ public class CBMCResult extends Result {
         failureExample = createFailureExample();
     }
 
+    /**
+     * this methode creates a failure example from the given output from cbmc
+     * @return a failure example that show how the voters voted and who won then
+     */
     public FailureExample createFailureExample() {
 
         // datermine the elect values
@@ -158,6 +162,12 @@ public class CBMCResult extends Result {
         return toReturn;
     }
 
+    /**
+     * this methode is used to extract
+     * @param name the name of the saved variable
+     * @param toExtract the string list to extract the variable out of
+     * @return a list of all variables with a matching name with their index and values that occured in the give list
+     */
     private List<CBMCResultWrappersingleArray> readOneDimVar(String name, List<String> toExtract) {
 
         List<CBMCResultWrappersingleArray> list = new ArrayList<CBMCResultWrappersingleArray>();
@@ -170,7 +180,7 @@ public class CBMCResult extends Result {
         Iterator<String> iterator = getResult().iterator();
         String line = mergeLinesToOne(iterator, segmentEnder);
 
-        while ((line = mergeLinesToOne(iterator, segmentEnder)).length() > 0) {
+        while (line.length() > 0) {
 
             if (line.contains("[")) {
 
@@ -257,10 +267,17 @@ public class CBMCResult extends Result {
                     }
                 }
             }
+            line = mergeLinesToOne(iterator, segmentEnder);
         }
         return list;
     }
 
+    /**
+     * reads a two dimensional variables that match a given name from the cbmc output and puts it in a wrapper object
+     * @param name the name of the variables to search for
+     * @param toExtract the list to extract the variables out
+     * @return the finished list with all variables stored in
+     */
     private List<CBMCResultWrapperMultiArray> readTwoDimVar(String name, List<String> toExtract) {
 
         List<CBMCResultWrapperMultiArray> list = new ArrayList<CBMCResultWrapperMultiArray>();
@@ -270,7 +287,7 @@ public class CBMCResult extends Result {
         Iterator<String> iterator = getResult().iterator();
         String line = mergeLinesToOne(iterator, segmentEnder);
 
-        while ((line = mergeLinesToOne(iterator, segmentEnder)).length() > 0) {
+        while (line.length() > 0) {
 
             // System.out.println("next line: " + line);
             // for (Iterator<String> iterator = toExtract.iterator();
@@ -384,12 +401,18 @@ public class CBMCResult extends Result {
                     }
                 }
             }
+            line = mergeLinesToOne(iterator, segmentEnder);
         }
         return list;
     }
 
+    /**
+     * 
+     * @param toMerge
+     * @param regexToEndAt
+     * @return
+     */
     private String mergeLinesToOne(Iterator<String> toMerge, String regexToEndAt) {
-
         String toReturn = "";
         boolean notEnded = true;
         while (notEnded) {
