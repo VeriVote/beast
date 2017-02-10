@@ -52,7 +52,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	private JButton addNewButton = new JButton();
 	private JButton addCreatedButton = new JButton();
 
-	private NewPropertyWindow newPropWindow;
+	//private NewPropertyWindow newPropWindow;
 
 	/**
 	 * Updates the view when focus is gained in this JFrame, needed to update
@@ -74,7 +74,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	}
 
 	private void init() {
-		newPropWindow = new NewPropertyWindow(controller, model);
+		//newPropWindow = new NewPropertyWindow(controller, model);
 		// setFrame(new JFrame());
 		this.setLayout(new BorderLayout());
 		// this.setResizable(true);
@@ -175,17 +175,17 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		panel.repaint();
 	}
 
-	private void addNewPropertyAction(ActionEvent e) {
+	/*private void addNewPropertyAction(ActionEvent e) {
 		newPropWindow.toggleVisibility();
-	}
+	}*/
 
 	@Override
 	public void updateStringRes(StringLoaderInterface sli) {
 		this.sli = sli;
 		PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
 		StringResourceLoader other = provider.getOtherStringRes();
-		StringResourceLoader menu = provider.getMenuStringRes();
-		StringResourceLoader toolbarTip = provider.getToolbarTipStringRes();
+		//StringResourceLoader menu = provider.getMenuStringRes();
+		//StringResourceLoader toolbarTip = provider.getToolbarTipStringRes();
 
 		title = other.getStringFromID("title");
 		setWindowTitle(other.getStringFromID("title"));
