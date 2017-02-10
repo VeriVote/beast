@@ -181,10 +181,9 @@ public class FileChooser {
         UIManager.put("FileChooser.cancelButtonText", stringResourceLoader.getStringFromID("cancelButtonText"));
         UIManager.put("FileChooser.fileNameLabelText", stringResourceLoader.getStringFromID("fileNameLabelText"));
         UIManager.put("FileChooser.filesOfTypeLabelText", stringResourceLoader.getStringFromID("filesOfTypeLabelText"));
-        UIManager.put("FileChooser.approveButtonToolTipText", stringResourceLoader.getStringFromID(""));
-        UIManager.put("FileChooser.cancelButtonToolTipText", stringResourceLoader.getStringFromID(""));
+        UIManager.put("FileChooser.approveButtonToolTipText", "");
+        UIManager.put("FileChooser.cancelButtonToolTipText", "");
         UIManager.put("FileChooser.openButtonToolTipText", stringResourceLoader.getStringFromID("openButtonToolTipText"));
-        UIManager.put("FileChooser.cancelButtonToolTipText",stringResourceLoader.getStringFromID("cancelButtonToolTipText"));
         UIManager.put("FileChooser.fileNameHeaderText",stringResourceLoader.getStringFromID("fileNameHeaderText"));
         UIManager.put("FileChooser.upFolderToolTipText", stringResourceLoader.getStringFromID("upFolderToolTipText"));
         UIManager.put("FileChooser.homeFolderToolTipText",stringResourceLoader.getStringFromID("homeFolderToolTipText"));
@@ -210,6 +209,7 @@ public class FileChooser {
             }
         });
         fileSuffix = stringResourceLoader.getStringFromID("fileSuffix");
+        fileChooser.setAcceptAllFileFilterUsed(false);
     }
 
     public void setHasBeenSaved(boolean bool) {

@@ -32,7 +32,7 @@ public class CSyntaxHl {
             String regexWithWhiteSpace = "(\\(|\\s|\\A)" + s + "(\\s|\\Z|\\))";
             regexAndColorList.add(new RegexAndColor(regexWithWhiteSpace, Color.BLUE));
         }
-        regexAndColorList.add(new RegexAndColor(antlrHandler.getCommentRegex(), Color.ORANGE));
+        regexAndColorList.add(new RegexAndColor(antlrHandler.getCommentRegex(), Color.GRAY));
         regexAndColorList.add(new RegexAndColor(antlrHandler.getStringRegex(), Color.RED));
 
         syntaxHL.updateFilter(regexAndColorList);

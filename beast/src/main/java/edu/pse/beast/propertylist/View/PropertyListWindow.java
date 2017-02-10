@@ -1,8 +1,7 @@
 package edu.pse.beast.propertylist.View;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -18,6 +17,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JToolBar;
 
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
+import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.PLControllerInterface;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.propertylist.Model.PLModelInterface;
@@ -52,17 +52,28 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	
 	private NewPropertyWindow newPropWindow;
 
+	/**
+	 * Updates the view when focus is gained in this JFrame, needed to update naming of ListItems when Property was
+	 * saved in BooleanExpEditor.
+	 */
+	private WindowAdapter windowAdapter = new WindowAdapter() {
+		@Override
+		public void windowGainedFocus(WindowEvent windowEvent) {
+			super.windowGainedFocus(windowEvent);
+			((PLModel) model).updateView();
+		}
+	};
+
 	public PropertyListWindow(PLControllerInterface controller, PLModelInterface model) {
 		this.controller = controller;
 		this.model = model;
 		model.addObserver(this);
 		init();
 	}
-	
-	
+
+
 	private void init() {
 		newPropWindow = new NewPropertyWindow(controller, model);
-		
 		// setFrame(new JFrame());
 		this.setLayout(new BorderLayout());
 		//this.setResizable(true);
@@ -110,7 +121,8 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		});
 		endpanel.add(addNewButton, BorderLayout.LINE_END);
 		setResizable(false);
-		
+		this.addWindowListener(windowAdapter);
+		this.addWindowFocusListener(windowAdapter);
 	}
 	
 	
@@ -228,17 +240,12 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		this.nextToPresent = nextToPresent;
 	}
 
-	@Override
-	public void setTitle(String s) {
-		super.setTitle(s);
-	}
-
 	/**
 	 * Adds the given string to the window title, used for displaying name of currently loaded PropertyList object
 	 * @param propListName name of the currently loaded PropertyList object
 	 */
 	public void setWindowTitle(String propListName) {
 		this.currentlyLoadedPropertyListName = propListName;
-		this.setTitle(title + " " + propListName);
+		this.setTitle(title + " " + propListName + " - BEAST");
 	}
 }

@@ -380,7 +380,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
      */
     public void setWindowTitle(String projectName) {
         this.currentlyLoadedProjectName = projectName;
-        this.setTitle(title + " " + projectName);
+        this.setTitle(title + " " + projectName + " - BEAST");
     }
     /**
      * Setter for version of BEAST
