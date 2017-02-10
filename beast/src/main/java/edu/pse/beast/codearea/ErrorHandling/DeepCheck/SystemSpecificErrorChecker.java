@@ -27,16 +27,16 @@ public abstract class SystemSpecificErrorChecker {
         
         String absolutePath = SuperFolderFinder.getSuperFolder() + pathToTempFolder;
         
-//        File file = new File(new File(absolutePath), FileLoader.getNewUniqueName(absolutePath) + ".c");
+        File file = new File(new File(absolutePath), FileLoader.getNewUniqueName(absolutePath) + ".c");
         
-        File file = new File("./core/c_tempfiles/9neh46uhermi1ghlucrl.c");
+        File fileToTest = new File("./core/c_tempfiles/9neh46uhermi1ghlucrl.c");
         
       //  FileSaver.writeStringLinesToFile(toCheck, file);
         
         System.out.println(file.getAbsolutePath());
         
         
-        Process process = checkCodeFileForErrors(file);
+        Process process = checkCodeFileForErrors(fileToTest);
         
         if (process != null) {
             CountDownLatch latch = new CountDownLatch(2);
