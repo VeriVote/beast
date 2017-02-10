@@ -29,9 +29,12 @@ public abstract class SystemSpecificErrorChecker {
         
 //        File file = new File(new File(absolutePath), FileLoader.getNewUniqueName(absolutePath) + ".c");
         
-        File file = new File("C:/Users/lukas/Documents/GitHub/PSE-Wahlverfahren-Implementierung/beast/core/c_tempfiles/9neh46uhermi1ghlucrl.c");
+        File file = new File("./core/c_tempfiles/9neh46uhermi1ghlucrl.c");
         
       //  FileSaver.writeStringLinesToFile(toCheck, file);
+        
+        System.out.println(file.getAbsolutePath());
+        
         
         Process process = checkCodeFileForErrors(file);
         
