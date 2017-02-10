@@ -43,7 +43,8 @@ public class CBMCCodeGenerator {
     private final CCodeHelper cCodeHelper;
     private int numberOfTimesVoted; // this number should be the number of rounds of votes the Propertys compare.
 
-    public CBMCCodeGenerator(ElectionDescription electionDescription, PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
+    public CBMCCodeGenerator(ElectionDescription electionDescription,
+            PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
 
         this.translator = new FormalPropertySyntaxTreeToAstTranslator();
         this.electionDescription = electionDescription;
