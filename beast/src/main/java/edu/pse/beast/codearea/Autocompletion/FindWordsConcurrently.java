@@ -42,12 +42,14 @@ public class FindWordsConcurrently implements Runnable {
                 
             }
             String code = JTextPaneToolbox.getText(pane);
-            code = code.replaceAll("\n", " ");
-            String wordsInPane[] = code.split(" ");
-            for (int i = 0; i < wordsInPane.length; i++) {
-                if(!words.contains(wordsInPane[i])) {
-                    controller.addAutocompletionString(wordsInPane[i]);
-                    words.add(wordsInPane[i]);
+            String w = "";
+            for(int i = 0; i < code.length(); ++i) {
+                w = "";
+                for(; Character.isLetterOrDigit(code.charAt(i)); ++i) {
+                    w += code.charAt(i);
+                }
+                if(w.length() != 0) {
+                    controller.addAutocompletionString(w);
                 }
             }
         }
