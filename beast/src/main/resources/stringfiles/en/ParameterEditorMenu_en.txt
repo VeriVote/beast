@@ -4,8 +4,8 @@ save : Save
 save_as : Save as
 load : Open
 projectMenu : Project
-start : Test properties
-stop : Stop test
+start : Start check
+stop : Stop check
 editorMenu : Editor
 options : Options
 showHideWindowsMenu : Window
