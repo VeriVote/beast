@@ -51,7 +51,10 @@ public class AutocompletionController implements KeyListener, AncestorListener {
     }
     
     public void addAutocompletionString(String s) {
-        if(!completionOptions.contains(s)) completionOptions.add(new AutocompletionOption(s, s));
+        for(AutocompletionOption opt : completionOptions) {
+            if(opt.getInsertString().equals(s)) return;        
+        }
+        completionOptions.add(new AutocompletionOption(s, s));
     }
 
     @Override
