@@ -233,27 +233,24 @@ public class CBMCCodeGenerator {
         for (int voteNumber = 1; voteNumber <= numberOfTimesVoted; voteNumber++) {
 
             String votesX = "unsigned int votes" + voteNumber;
-
             votesX += cCodeHelper.getCArrayType(inputType.getType());
-
             code.add(votesX + ";");
 
             String[] counter = {"counter_0", "counter_1", "counter_2", "counter_3"};
-
             String forTemplate = "for(unsigned int COUNTER = 0; COUNTER < MAX; ++COUNTER){";
 
-            InternalTypeContainer cont = inputType.getType();
+            InternalTypeContainer inputContainer = inputType.getType();
             int listDepth = 0;
-            while (cont.isList()) {
+            while (inputContainer.isList()) {
                 String currentFor = forTemplate.replaceAll("COUNTER", counter[listDepth]);
-                currentFor = currentFor.replaceAll("MAX", cCodeHelper.getListSize(cont));
+                currentFor = currentFor.replaceAll("MAX", cCodeHelper.getListSize(inputContainer));
                 code.add(currentFor);
                 code.addTab();
-                cont = cont.getListedType();
+                inputContainer = inputContainer.getListedType();
                 listDepth++;
             }
-            String min = cCodeHelper.getMin(inputType, cont.getInternalType());
-            String max = cCodeHelper.getMax(inputType, cont.getInternalType());
+            String min = cCodeHelper.getMin(inputType, inputContainer.getInternalType());
+            String max = cCodeHelper.getMax(inputType, inputContainer.getInternalType());
 
             String votesElement = "votes" + voteNumber;
             for (int i = 0; i < listDepth; ++i) {
@@ -267,6 +264,10 @@ public class CBMCCodeGenerator {
 
             code.add(nondetInt);
             code.add(voteDecl);
+
+            if (inputType.getId().equals("list_of_candidates_per_voter")) {
+                addPreferenceVotingArrayInitialisation(voteNumber);
+            }
 
             for (int i = 0; i < listDepth; ++i) {
                 code.deleteTab();
@@ -302,5 +303,23 @@ public class CBMCCodeGenerator {
                 electionDescription.getInputType().getType(),
                 electionDescription.getOutputType().getType(),
                 declaredVars);
+    }
+
+    private void addPreferenceVotingArrayInitialisation(int voteNumber) {
+        code.add("for (unsigned int j_prime = 0; j_prime < C; j_prime++) {");
+        code.addTab();
+        code.add("if ((votes" + voteNumber + " [counter_0][counter_1] != 0) && (counter_1 != j_prime)) {");
+        code.addTab();
+        code.add("assume (votes" + voteNumber + "[counter_0][counter_1] != votes"
+                + voteNumber + "[counter_0][j_prime]);");
+        code.deleteTab();
+        code.add("}");
+        code.add("if ((votes" + voteNumber + "[counter_0][counter_1] == 0) && (counter_1 <= j_prime)) {");
+        code.addTab();
+        code.add("assume (votes" + voteNumber + "[counter_0][j_prime] == 0);");
+        code.deleteTab();
+        code.add("}");
+        code.deleteTab();
+        code.add("}");
     }
 }
