@@ -31,7 +31,7 @@ public class CVariableErrorFinderTest {
     public CVariableErrorFinderTest() {
         pane = new JTextPane();
         handler = new CAntlrHandler(pane);
-        finder = new CVariableErrorFinder(handler);
+        finder = new CVariableErrorFinder(pane);
     }
     
     @BeforeClass

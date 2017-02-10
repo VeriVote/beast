@@ -40,6 +40,16 @@ public class CCodeHelper {
         }
         return decl;
     }
+    
+    public String getCTypePointer(InternalTypeContainer cont) {
+        InternalTypeContainer currentContainer = cont;
+        String decl = "unsigned int";
+        while (currentContainer.isList()) {
+            decl += " *";
+            currentContainer = currentContainer.getListedType();
+        }
+        return decl;
+    }
 
     public String getCArrayType(InternalTypeContainer cont) {
         InternalTypeContainer currentContainer = cont;
@@ -53,7 +63,7 @@ public class CCodeHelper {
 
     public String generateDeclString(ElectionTypeContainer input, ElectionTypeContainer res) {
         String decl = "RESULT voting(VOTES) {";
-        decl = decl.replace("RESULT", getCType(res.getType(), ""));
+        decl = decl.replace("RESULT", getCTypePointer(res.getType()));
         decl = decl.replace("VOTES", getCType(input.getType(), "votes"));
         return decl;
     }

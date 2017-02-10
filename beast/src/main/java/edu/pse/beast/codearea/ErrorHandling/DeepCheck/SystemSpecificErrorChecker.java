@@ -26,6 +26,8 @@ public abstract class SystemSpecificErrorChecker {
         
         String absolutePath = SuperFolderFinder.getSuperFolder() + pathToTempFolder;
         
+        absolutePath = absolutePath.replaceAll("%20", " ");
+        
         File file = new File(new File(absolutePath), FileLoader.getNewUniqueName(absolutePath) + ".c");
 
         FileSaver.writeStringLinesToFile(toCheck, file);
