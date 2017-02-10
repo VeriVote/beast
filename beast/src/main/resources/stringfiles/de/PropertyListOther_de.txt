@@ -1,5 +1,6 @@
 title : Eigenschaftenliste
 newButton : Neu
+createdButton : Vorhandene
 check : Analyse
 export : Exportieren
 electionType : Wahlverfahren

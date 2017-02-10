@@ -1,5 +1,6 @@
 title : Property List
 newButton : New
+createdButton : Existing
 check : Analyse
 export : Export
 electionType : Election Description

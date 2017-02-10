@@ -113,7 +113,6 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     	DeleteDescriptionAction act = new DeleteDescriptionAction(model, prop);
     	act.perform();
     	actionList.add(act);
-        //model.deleteProperty(prop);
     }
 
     @Override
@@ -241,5 +240,10 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     public FileChooser getFileChooser() {
         return fileChooser;
     }
+    
+	@Override
+	public BooleanExpEditor getEditor() {
+		return editor;
+	}
 
 }
