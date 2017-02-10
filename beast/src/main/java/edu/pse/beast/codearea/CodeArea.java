@@ -119,6 +119,8 @@ public class CodeArea {
     public void linkActionToShortcut(char c, UserAction newAcc) {
         shortcutHandler.addAction(c, newAcc);
     }
-    
-    
+
+    public AutocompletionController getAutoComplCtrl() {
+        return autoComplCtrl;
+    }    
 }

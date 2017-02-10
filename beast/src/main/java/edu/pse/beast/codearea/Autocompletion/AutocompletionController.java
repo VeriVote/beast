@@ -147,4 +147,8 @@ public class AutocompletionController implements KeyListener, AncestorListener {
     public void ancestorMoved(AncestorEvent ae) {
         if(!ae.getAncestor().isVisible()) frame.setVisible(false);
     }
+
+    public void add(AutocompletionOption opt) {
+        completionOptions.add(opt);
+    }
 }
