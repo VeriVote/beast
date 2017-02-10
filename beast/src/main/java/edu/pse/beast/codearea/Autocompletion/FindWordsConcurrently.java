@@ -42,7 +42,7 @@ public class FindWordsConcurrently implements Runnable {
                 
             }
             String code = JTextPaneToolbox.getText(pane);
-            code = code.replaceAll("\n", "");
+            code = code.replaceAll("\n", " ");
             String wordsInPane[] = code.split(" ");
             for (int i = 0; i < wordsInPane.length; i++) {
                 if(!words.contains(wordsInPane[i])) {

@@ -23,14 +23,15 @@ public class WordsMoreEqualToComparator implements Comparator<AutocompletionOpti
         String rhsS = rhs.getSimilarString();
         int lhsScore = similarityCode(lhsS);
         int rhsScore = similarityCode(rhsS);
-        return Integer.compare(lhsScore, rhsScore);
+        return Integer.compare(rhsScore, lhsScore);
     }   
     
     private int similarityCode(String s) {
         int score = 0;
         for(int i = 0; i < s.length() && i <  compareWord.length(); ++i) {
+            char comp = compareWord.charAt(i);
+            char sc = s.charAt(i);
             if(compareWord.charAt(i) == s.charAt(i)) ++score;
-            else return score;
         }
         return score;
     }

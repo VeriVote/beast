@@ -103,7 +103,7 @@ public class AutocompletionController implements KeyListener {
         int wordAtCursorStartPos = JTextPaneToolbox.getWordBeginningAtCursor(pane);
         String wordAtCursor = 
             pane.getStyledDocument().getText(
-                wordAtCursorStartPos, pane.getCaretPosition() - wordAtCursorStartPos);
+                wordAtCursorStartPos + 1, pane.getCaretPosition() - wordAtCursorStartPos);
         return wordAtCursor;
     }
 
