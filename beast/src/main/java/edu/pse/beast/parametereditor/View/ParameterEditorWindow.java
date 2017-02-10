@@ -13,6 +13,7 @@ import javax.swing.JSpinner;
 public class ParameterEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
 
     private final AdvancedWindow advWindow = new AdvancedWindow();
+    private final VersionWindow versionWindow = new VersionWindow();
     private boolean reacts;
     private String title;
     private String currentlyLoadedProjectName;
@@ -53,6 +54,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
         processes = new javax.swing.JLabel();
         amountProcessesSpinner = new javax.swing.JSpinner();
         advancedButton = new javax.swing.JButton();
+        versionButton = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ParameterEditor");
@@ -104,6 +106,13 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
             }
         });
 
+        versionButton.setText("Version");
+        versionButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                versionButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -111,10 +120,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(advancedButton)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(seats, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(candidates, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -128,20 +134,25 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
                             .addComponent(candMin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(timeoutNum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(amountProcessesSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(voterTo, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(candTo, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(seatTo, javax.swing.GroupLayout.Alignment.TRAILING))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(voterMax, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-                                    .addComponent(candMax, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(seatMax, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(timeoutUnit, 0, 102, Short.MAX_VALUE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(advancedButton)
+                        .addGap(81, 81, 81)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(versionButton)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(voterTo, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(candTo, javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(seatTo, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(voterMax, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+                                .addComponent(candMax, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(seatMax, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(timeoutUnit, 0, 102, Short.MAX_VALUE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(toolbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
@@ -176,7 +187,9 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
                     .addComponent(amountProcessesSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(processes))
                 .addGap(18, 18, 18)
-                .addComponent(advancedButton)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(advancedButton)
+                    .addComponent(versionButton))
                 .addContainerGap(154, Short.MAX_VALUE))
         );
 
@@ -188,6 +201,10 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     private void advancedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_advancedButtonActionPerformed
         if (reacts) advWindow.setVisible(true);
     }//GEN-LAST:event_advancedButtonActionPerformed
+
+    private void versionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_versionButtonActionPerformed
+        if (reacts) versionWindow.setVisible(true);
+    }//GEN-LAST:event_versionButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,6 +257,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     private javax.swing.JSpinner timeoutNum;
     private javax.swing.JComboBox<String> timeoutUnit;
     private javax.swing.JToolBar toolbar;
+    private javax.swing.JToggleButton versionButton;
     private javax.swing.JSpinner voterMax;
     private javax.swing.JSpinner voterMin;
     private javax.swing.JLabel voterTo;
@@ -344,6 +362,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
         timeoutUnit.addItem(other.getStringFromID("hours"));
         timeoutUnit.addItem(other.getStringFromID("days"));
         advWindow.updateStringRes(stringResIF);
+        versionWindow.updateStringRes(stringResIF);
     }
     /**
      * Toggles whether this window reacts to user input with the exception of
@@ -362,5 +381,12 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     public void setWindowTitle(String projectName) {
         this.currentlyLoadedProjectName = projectName;
         this.setTitle(title + " " + projectName);
+    }
+    /**
+     * Setter for version of BEAST
+     * @param version of BEAST
+     */
+    public void setVersion(String version) {
+        versionWindow.setVersion(version);
     }
 }

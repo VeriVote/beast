@@ -12,6 +12,7 @@ import javax.swing.event.ChangeListener;
 public class ArgumentHandler implements ChangeListener {
     private final JTextField input;
     private final JButton ok;
+    private boolean hasChanged;
     /**
      * Constructor
      * @param input JTextField which contains the user input
@@ -20,6 +21,7 @@ public class ArgumentHandler implements ChangeListener {
     public ArgumentHandler(JTextField input, JButton ok) {
         this.input = input;
         this.ok = ok;
+        setHasChanged(false);
     }
     /**
      * Getter for the CBMC argument the user put in
@@ -34,10 +36,25 @@ public class ArgumentHandler implements ChangeListener {
      */
     public void setArgument(String arg) {
         input.setText(arg);
+        setHasChanged(true);
     }
 
     @Override
     public void stateChanged(ChangeEvent e) {
         setArgument(getArgument());
+    }
+    /**
+     * Returns whether the arguments were changed since last time saving.
+     * @return hasChanged
+     */
+    protected boolean hasChanged() {
+        return hasChanged;
+    }
+    /**
+     * Sets whether the arguments were changed since last time saving.
+     * @param hasChanged whether they changed
+     */
+    protected void setHasChanged(boolean hasChanged) {
+        this.hasChanged = hasChanged;
     }
 }

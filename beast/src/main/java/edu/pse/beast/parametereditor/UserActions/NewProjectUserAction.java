@@ -29,5 +29,6 @@ public class NewProjectUserAction extends UserAction {
     @Override
     public void perform() {
         //if (paramEditor.getReacts()) //TODO: implement
+        //paramEditor.setHasChanged(false);
     }
 }

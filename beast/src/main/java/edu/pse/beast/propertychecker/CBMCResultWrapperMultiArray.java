@@ -70,6 +70,17 @@ public class CBMCResultWrapperMultiArray {
     }
 
     /**
+     * returns the two dimensional list that is saved here. Only use this if you
+     * really need it, because there is also and methode that creates an array
+     * from these, which makes sure that there are no empty parts in the lists
+     * 
+     * @return the list that describes this variable
+     */
+    public List<ArrayList<Long>> getList() {
+        return list;
+    }
+
+    /**
      * this array consists of an array of long arrays. This methode lets you add
      * to an underlying sub "array" / list
      * 
@@ -116,9 +127,5 @@ public class CBMCResultWrapperMultiArray {
             }
         }
         return toReturn;
-    }
-
-    public List<ArrayList<Long>> getList() {
-        return list;
     }
 }

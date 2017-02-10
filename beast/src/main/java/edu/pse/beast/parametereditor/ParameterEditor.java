@@ -43,6 +43,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
     private final FileChooser fileChooser;
     private boolean hasChanged;
     private Project currentlyLoadedProject;
+    private String version = "1.23"; //TODO: Get Version from somewhere
 
     /**
      * Constructor which also links the handlers to the View elements
@@ -76,7 +77,9 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
         window.getAmountProcessesSpinner().addChangeListener(processHandler);
         argumentHandler = new ArgumentHandler(window.getAdvancedWindow().getInputField(),
                 window.getAdvancedWindow().getOkButton());
+        window.setVersion(version);
         setReacts(true);
+        setHasChanged(false);
     }
 
     @Override
@@ -150,19 +153,38 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
     public Project loadProject() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    public boolean hasChanged() {
-        return hasChanged;
-    }
-
-    public void setHasChanged(boolean hasChanged) {
-        this.hasChanged = hasChanged;
-    }
-
+    
     @Override
     public void saveProject(Project toBeSaved) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    /**
+     * Returns whether the user changed any data in the ParameterEditor since the
+     * last time saving.
+     * @return if it hasChanged
+     */
+    public boolean hasChanged() {
+        hasChanged = (hasChanged || voterHandler.hasChanged() || seatHandler.hasChanged()
+                || candHandler.hasChanged() || argumentHandler.hasChanged()
+                || timeoutHandler.hasChanged() || processHandler.hasChanged());
+        return hasChanged;
+    }
+    /**
+     * Setter for hasChanged
+     * @param hasChanged whether something has changed since the last time saving.
+     */
+    public void setHasChanged(boolean hasChanged) {
+        this.hasChanged = hasChanged;
+        if (!hasChanged) {
+            voterHandler.setHasChanged(hasChanged);
+            seatHandler.setHasChanged(hasChanged);
+            candHandler.setHasChanged(hasChanged);
+            argumentHandler.setHasChanged(hasChanged);
+            timeoutHandler.setHasChanged(hasChanged);
+            processHandler.setHasChanged(hasChanged);
+        }
+    }
+
     /**
      * Setter for the ToolbarHandler
      * @param toolbarHandler new ToolbarHandler
@@ -207,11 +229,17 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
         return fileChooser;
     }
 
-
+    /**
+     * Getter for the ParameterEditorWindow
+     * @return ParameterEditorWindow
+     */
     public ParameterEditorWindow getView() {
         return window;
     }
-
+    /**
+     * Getter for the Project which is currently worked on by the user.
+     * @return Project
+     */
     public Project getCurrentlyLoadedProject() {
         if (currentlyLoadedProject == null) {
             return new Project(getParameter(), propertyList.getModel(),

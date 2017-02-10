@@ -16,7 +16,7 @@ public class SaveProjectAsUserAction extends UserAction {
     private final PropertyList propertyList;
     private final CElectionDescriptionEditor cElectionEditor;
     private final ParameterEditor paramEditor;
-    private StringResourceLoader stringResourceLoader;
+    private final StringResourceLoader stringResourceLoader;
     private final ProjectSaverLoader saverLoader;
 
     /**
@@ -39,7 +39,7 @@ public class SaveProjectAsUserAction extends UserAction {
 
     @Override
     public void perform() {
-        if(paramEditor.getReacts()) {
+        if (paramEditor.getReacts()) {
             Project project = paramEditor.getCurrentlyLoadedProject();
             if (paramEditor.getFileChooser().saveObject(project, true)) {
                 paramEditor.getView().setWindowTitle(paramEditor.getCurrentlyLoadedProject().getName());

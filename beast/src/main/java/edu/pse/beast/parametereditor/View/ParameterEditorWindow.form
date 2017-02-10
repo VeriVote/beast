@@ -34,11 +34,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="advancedButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="seats" alignment="1" min="-2" max="-2" attributes="0"/>
                           <Component id="candidates" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -55,25 +51,32 @@
                           <Component id="amountProcessesSpinner" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="voterTo" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="candTo" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="seatTo" alignment="1" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="voterMax" alignment="0" pref="64" max="32767" attributes="0"/>
-                                  <Component id="candMax" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="seatMax" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Component id="timeoutUnit" pref="102" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="18" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="advancedButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
                   </Group>
               </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="versionButton" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="voterTo" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="candTo" alignment="1" min="-2" max="-2" attributes="0"/>
+                              <Component id="seatTo" alignment="1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="voterMax" alignment="0" pref="64" max="32767" attributes="0"/>
+                              <Component id="candMax" alignment="0" max="32767" attributes="0"/>
+                              <Component id="seatMax" alignment="0" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                      <Component id="timeoutUnit" pref="102" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace min="18" max="32767" attributes="0"/>
           </Group>
           <Component id="toolbar" alignment="0" max="32767" attributes="0"/>
       </Group>
@@ -115,7 +118,10 @@
                   <Component id="processes" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="advancedButton" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="advancedButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="versionButton" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace pref="154" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -250,6 +256,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="advancedButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JToggleButton" name="versionButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Version"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="versionButtonActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

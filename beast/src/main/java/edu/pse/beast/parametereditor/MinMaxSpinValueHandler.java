@@ -17,6 +17,7 @@ public class MinMaxSpinValueHandler implements ChangeListener {
     private Integer minBefore;
     private Integer maxBefore;
     private boolean reacts;
+    private boolean hasChanged;
     /**
      * Constructor
      * @param minSpinner JSpinner for the minimum
@@ -26,6 +27,7 @@ public class MinMaxSpinValueHandler implements ChangeListener {
         this.minSpinner = minSpinner;
         this.maxSpinner = maxSpinner;
         setMinAndMax(1, 1);
+        setHasChanged(false);
     }
     /**
      * Getter for the natural numbers between and including the minimum and the
@@ -52,8 +54,13 @@ public class MinMaxSpinValueHandler implements ChangeListener {
             minSpinner.setValue(minBefore);
             maxSpinner.setValue(maxBefore);
         }
-        minBefore = Integer.parseInt(minSpinner.getValue().toString());
-        maxBefore = Integer.parseInt(maxSpinner.getValue().toString());
+        Integer minAfter = Integer.parseInt(minSpinner.getValue().toString());
+        Integer maxAfter = Integer.parseInt(maxSpinner.getValue().toString());
+        if (!(minBefore.equals(minAfter) && maxBefore.equals(maxAfter))) {
+            minBefore = minAfter;
+            maxBefore = maxAfter;
+            setHasChanged(true);
+        }
     }
 
     @Override
@@ -75,6 +82,7 @@ public class MinMaxSpinValueHandler implements ChangeListener {
                 }
                 minSpinner.setValue(min);
                 maxSpinner.setValue(max);
+                setHasChanged(true);
             } else {
                 minSpinner.setValue(minBefore);
                 maxSpinner.setValue(maxBefore);
@@ -93,5 +101,19 @@ public class MinMaxSpinValueHandler implements ChangeListener {
      */
     protected void setReacts(boolean reacts) {
         this.reacts = reacts;
+    }
+    /**
+     * Returns whether the values of the JSpinners were changed since last time saving.
+     * @return hasChanged
+     */
+    protected boolean hasChanged() {
+        return hasChanged;
+    }
+    /**
+     * Sets whether the values of the JSpinners were changed since last time saving.
+     * @param hasChanged whether they changed
+     */
+    protected void setHasChanged(boolean hasChanged) {
+        this.hasChanged = hasChanged;
     }
 }

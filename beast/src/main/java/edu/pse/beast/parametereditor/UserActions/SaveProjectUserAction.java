@@ -33,7 +33,7 @@ public class SaveProjectUserAction extends UserAction {
 
     @Override
     public void perform() {
-        if(paramEditor.getReacts()) {
+        if (paramEditor.getReacts()) {
             Project project = paramEditor.getCurrentlyLoadedProject();
             if (paramEditor.getFileChooser().saveObject(project, false)) {
                 paramEditor.getView().setWindowTitle(paramEditor.getCurrentlyLoadedProject().getName());

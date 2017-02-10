@@ -13,6 +13,7 @@ public class SingleValueSpinnerHandler implements ChangeListener {
     private final JSpinner spinner;
     private Integer valBefore;
     private boolean reacts;
+    private boolean hasChanged;
     
     /**
      * Constructor
@@ -21,6 +22,7 @@ public class SingleValueSpinnerHandler implements ChangeListener {
     public SingleValueSpinnerHandler(JSpinner spinner) {
         this.spinner = spinner;
         valBefore = getValue();
+        setHasChanged(false);
     }
     /**
      * Getter for the value of the JSpinner
@@ -36,6 +38,7 @@ public class SingleValueSpinnerHandler implements ChangeListener {
     public void setValue(Integer val) {
         if (val <= 10000 && val >= 0) {
             spinner.setValue(val);
+            setHasChanged(true);
         } else {
             spinner.setValue(valBefore);
         }
@@ -57,5 +60,19 @@ public class SingleValueSpinnerHandler implements ChangeListener {
      */
     protected void setReacts(boolean reacts) {
         this.reacts = reacts;
+    }
+    /**
+     * Returns whether the value of the JSpinners was changed since last time saving.
+     * @return hasChanged
+     */
+    protected boolean hasChanged() {
+        return hasChanged;
+    }
+    /**
+     * Sets whether the value of the JSpinners was changed since last time saving.
+     * @param hasChanged whether it changed
+     */
+    protected void setHasChanged(boolean hasChanged) {
+        this.hasChanged = hasChanged;
     }
 }
