@@ -218,7 +218,6 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 
     public void setPLModel(PLModelInterface model) {
         this.model.loadAnotherModel(model);
-        // ((PLModel) this.model).updateView();
         view.setWindowTitle(((PLModel) model).getName());
     }
 
