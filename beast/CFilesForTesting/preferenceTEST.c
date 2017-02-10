@@ -4,7 +4,7 @@
 	//assert (0 < C);
 	//assert (0 < V);
 	unsigned int r[S]; 
-	unsigned int res = 0;
+	unsigned int res = C;
 	
 	unsigned int count[C+1];
 	unsigned int cc = C; // number of concurring candidates (C minus eliminated candidates)
@@ -13,31 +13,13 @@
 	unsigned int e = 0;
 	unsigned int i = 0;
 	unsigned int j = 0;
-	unsigned int j_prime = 0;
 	unsigned int k = 0;
 	unsigned int l = 0;
 	unsigned int t = 0;
 
 	for (i = 0; i < S; i++) {
-		r[i] = 0;
-	}
-
-	for (i = 0; i < V; i++) {
-		assume (votes[i][1] != 0);
-		for (j = 0; j < C; j++) {
-			assume (0 <= votes[i][j]);
-			assume (votes[i][j] < C);
-			for (j_prime = 0; j_prime < C; j_prime++) {
-				if ((votes[i][j] != 0) && (j != j_prime)) {
-					// for any voter and any two differing preference ranks with ranked candidates, the ranked candidates differ
-					assume (votes[i][j] != votes[i][j_prime]);
-				}
-				if ((votes[i][j] == 0) && (j <= j_prime)) {
-					// if one for one preference rank there is no candidate, the same applies for all consecutive ranks
-					assume (votes[i][j_prime] == 0);
-				}
-			}
-		}
+		r[i] = C;
+		// all Seats are ties at the start
 	}
 
 	unsigned int quota = 0;
@@ -47,23 +29,23 @@
 		quota = V / (S + 1);
 	}
 	unsigned int min = quota;
-	while (res == 0 && 0 < cc && e < S && (S - e) < cc) {
-		for (i = 0; i <= C; i++) {
+	while (res == C && 0 < cc && e < S && (S - e) < cc) {
+		for (i = 0; i < C; i++) {
 			count[i] = 0;
 		}
 		for (i = 0; i < V; i++) {
-			for (j = 1; j <= C; j++) {
+			for (j = 0; j < C; j++) {
 				if (votes[i][1] == j) {
 					count[j]++;
 				}
 			}
 		}
-		for (i = 1; i <= C && res == 0; i++) {
+		for (i = 0; i < C && res == C; i++) {
 			if (quota < count[i]) {
 				res = i;
 			}
 		}
-		if (res != 0) {
+		if (res != C) {
 			r[e] = res;
 			e++;
 			for (t = 0; t <= quota; t++) {
@@ -85,7 +67,7 @@
 					}
 				}
 			}
-			res = 0;
+			res = C;
 			cc--;
 		} else {
 			min = quota;
@@ -102,13 +84,13 @@
 			assume (0 < choose && choose <= weakest); // randomly eliminate a weakest candidate
 
 			weakest = 0;
-			for (i = 1; i <= C; i++) {
+			for (i = 0; i < C; i++) {
 				if (count[i] == min) {
 					weakest++;
 				}
 				if (count[i] == min && weakest == choose) { // eliminate candidate i
 					for (j = 0; j < V; j++) {
-						for (k = 1; k <= C; k++) {
+						for (k = 0; k < C; k++) {
 							if (votes[j][k] == i) {
 								for (l = k; l < C; l++) {
 									votes[j][l] = votes[j][l + 1];
