@@ -28,7 +28,7 @@ public class LockedLineNewlineInserter implements NewlineInserter {
             
             int lineBeginning = pos - JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, pos);
             
-            pane.getStyledDocument().insertString(lineBeginning + 1, "\n", null);
+            pane.getStyledDocument().insertString(lineBeginning, "\n", null);
     }
     
 }

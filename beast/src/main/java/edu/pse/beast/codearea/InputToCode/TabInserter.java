@@ -6,6 +6,8 @@
 package edu.pse.beast.codearea.InputToCode;
 
 import edu.pse.beast.toolbox.SortedIntegerList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 
@@ -36,7 +38,6 @@ public class TabInserter {
         
         for(int i = 0; i < distToNextTabPos; ++i) spacesToInsert += " ";
         pane.getStyledDocument().insertString(pos, spacesToInsert, null);
-        System.out.println(spacesToInsert.length());   
         
         tabPositions.add(pos);
     }
@@ -44,7 +45,18 @@ public class TabInserter {
     
     
     public void removeTabAtPos(int pos) {
-        
+        if(!onlySpacesBetweenPosAndLinesBeginning(pos)) return;
+        int distToLineBeginning = JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, pos);
+        int closestMultipleOfSpacesPerTab = 0;
+        while(closestMultipleOfSpacesPerTab + spacesPerTab < distToLineBeginning) {
+            closestMultipleOfSpacesPerTab += spacesPerTab;
+        }
+        int absPosClosestMultiple = pos - distToLineBeginning + closestMultipleOfSpacesPerTab;
+        try {
+            pane.getStyledDocument().remove(absPosClosestMultiple, pos - absPosClosestMultiple);
+        } catch (BadLocationException ex) {
+            Logger.getLogger(TabInserter.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
         
     public int getSpacesPerTab() {
@@ -53,6 +65,19 @@ public class TabInserter {
     
     public void setSpacesPerTab(int spaces) {
         spacesPerTab = spaces;
+    }
+
+    private boolean onlySpacesBetweenPosAndLinesBeginning(int pos) {
+        int distToLineBeginning = JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, pos);
+        String spaces = "";
+        for(int i = 0; i < distToLineBeginning; ++i) {
+            spaces += " ";
+        }
+        try {
+            return pane.getStyledDocument().getText(pos - distToLineBeginning, distToLineBeginning).equals(spaces);
+        } catch (BadLocationException ex) {
+            return false;
+        }
     }
     
 }

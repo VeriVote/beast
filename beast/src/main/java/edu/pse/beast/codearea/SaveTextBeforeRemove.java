@@ -26,7 +26,7 @@ import javax.swing.text.BadLocationException;
  */
 public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
     private JTextPane pane;
-    private String prevText = "";
+    private String prevText;
     private Actionlist actionlist;
     
     public SaveTextBeforeRemove(JTextPane pane, Actionlist actionlist) {
@@ -34,6 +34,11 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
         pane.addKeyListener(this);
         this.actionlist = actionlist;
         actionlist.addActionAdder(this);
+        try {
+            prevText = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
+        } catch (BadLocationException ex) {
+            Logger.getLogger(SaveTextBeforeRemove.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public String getPrevText() {        
@@ -66,7 +71,8 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
         
         if(pane.getSelectedText() != null ||  
                 ke.getKeyChar()== KeyEvent.VK_DELETE ||
-                ke.getKeyChar()== KeyEvent.VK_BACK_SPACE ) {            
+                ke.getKeyChar()== KeyEvent.VK_BACK_SPACE ||
+                (ke.isShiftDown() && ke.getKeyChar() == KeyEvent.VK_TAB)) {            
             try {
                 prevText = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
             } catch (BadLocationException ex) {

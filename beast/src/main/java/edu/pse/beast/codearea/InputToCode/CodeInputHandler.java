@@ -35,7 +35,11 @@ public class CodeInputHandler {
             if(ke.getKeyCode()== KeyEvent.VK_ENTER || ke.getKeyChar() == '\n') {
                 insertToCode.insertNewline();
             } else if(ke.getKeyCode() == KeyEvent.VK_TAB || ke.getKeyChar() == '\t') {
-                insertToCode.insertTab();
+                if(ke.isShiftDown()) {
+                    insertToCode.removeTab();
+                } else {                    
+                    insertToCode.insertTab();
+                }
             } else if(ke.getKeyCode() == KeyEvent.VK_BACK_SPACE || ke.getKeyChar() == '\b') {
                 insertToCode.removeToTheLeft();
             } else if(ke.getKeyCode() == KeyEvent.VK_SPACE || ke.getKeyChar() != ''){            
