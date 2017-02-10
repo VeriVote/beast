@@ -1,5 +1,6 @@
 package edu.pse.beast.codearea.ErrorHandling.DeepCheck;
 
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CCodeErrorFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -97,7 +98,7 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
                         }
                     }
 
-                    codeErrors.add(generateCodeError(lineNumber, -1, varName, message));
+                    codeErrors.add(CCodeErrorFactory.generateCompilterError(lineNumber, -1, varName, message));
 
                 } catch (NumberFormatException e) {
                     ErrorLogger.log("can't parse the current error line from cl.exe");

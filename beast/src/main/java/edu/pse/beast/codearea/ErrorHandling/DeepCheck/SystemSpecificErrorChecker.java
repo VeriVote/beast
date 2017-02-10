@@ -61,13 +61,6 @@ public abstract class SystemSpecificErrorChecker {
         }
     }
     
-    protected CodeError generateCodeError(int line, int posInLine, String varName, String message) {
-        CodeError toReturn = new CodeError(line, posInLine, "compilererror", -1, -1, -1);
-        toReturn.setExtraInfo("varname", varName);
-        toReturn.setExtraInfo("msg", message);
-        
-        return toReturn;
-    }
     
     protected abstract Process checkCodeFileForErrors(File toCheck);
     
