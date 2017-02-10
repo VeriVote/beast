@@ -80,8 +80,6 @@ public final class FileLoader {
     public synchronized static String getNewUniqueName(String pathToDir) {
         ArrayList<String> usedNames = new ArrayList<String>();
 
-        System.out.println("Path to dir: " + pathToDir);
-
         File folder = new File(pathToDir);
         File[] listOfFiles = folder.listFiles();
 

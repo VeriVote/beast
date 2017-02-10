@@ -24,19 +24,13 @@ public abstract class SystemSpecificErrorChecker {
         
         List<String> errors = new ArrayList<String>();
         
-        
         String absolutePath = SuperFolderFinder.getSuperFolder() + pathToTempFolder;
         
         File file = new File(new File(absolutePath), FileLoader.getNewUniqueName(absolutePath) + ".c");
+
+        FileSaver.writeStringLinesToFile(toCheck, file);
         
-        File fileToTest = new File("./core/c_tempfiles/9neh46uhermi1ghlucrl.c");
-        
-      //  FileSaver.writeStringLinesToFile(toCheck, file);
-        
-        System.out.println(file.getAbsolutePath());
-        
-        
-        Process process = checkCodeFileForErrors(fileToTest);
+        Process process = checkCodeFileForErrors(file);
         
         if (process != null) {
             CountDownLatch latch = new CountDownLatch(2);
@@ -55,8 +49,8 @@ public abstract class SystemSpecificErrorChecker {
                 e1.printStackTrace();
             }
             
-            //deletes the temporary file
-     //       file.delete();
+            //deletes the temporary file, so it doesn't clog up the filesystem
+            file.delete();
             
             return parseError(result, errors);
         } else {

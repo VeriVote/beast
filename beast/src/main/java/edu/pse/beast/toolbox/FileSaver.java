@@ -20,7 +20,6 @@ public class FileSaver {
         
         if (!file.exists()) {
             try {
-                System.out.println(file.getAbsolutePath());
                 file.createNewFile();
             } catch (IOException e) {
                 // TODO Auto-generated catch block
