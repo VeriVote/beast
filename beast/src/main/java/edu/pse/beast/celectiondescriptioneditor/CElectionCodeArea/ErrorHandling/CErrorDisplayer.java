@@ -40,6 +40,13 @@ public class CErrorDisplayer extends ErrorDisplayer {
             er.setStartPos(start);
             er.setEndPos(end);
             return er.getExtraInfo("msg");
+        } else if(er.getId().equals("compilererror")) {
+            int line =  er.getLine() - 3 * 3;
+            int start = JTextPaneToolbox.getLineBeginning(pane, line - 1);
+            int end = JTextPaneToolbox.getClosestLineBeginningAfter(pane, start);
+            er.setStartPos(start);
+            er.setEndPos(end);
+            return er.getExtraInfo("msg");
         }
         return "";
     }

@@ -22,7 +22,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
  *
  * @author Holger-Desktop
  */
-public class CVariableErrorFinder extends CBaseListener implements ErrorFinder {
+public class CVariableErrorFinder implements ErrorFinder {
     private JTextPane pane;
     private DeepErrorChecker errorchecker;
     
@@ -35,6 +35,9 @@ public class CVariableErrorFinder extends CBaseListener implements ErrorFinder {
     public ArrayList<CodeError> getErrors() {
         String code = JTextPaneToolbox.getText(pane);
         ArrayList<String> seperated = new ArrayList<>();
+        seperated.add("#ifndef V\n #define V 1\n #endif");
+        seperated.add("#ifndef C\n #define C 1\n #endif");
+        seperated.add("#ifndef S\n #define S 1\n #endif");
         String codeSep[] = code.split("\n");
         for (int i = 0; i < codeSep.length; i++) {
             seperated.add(codeSep[i]);
@@ -42,25 +45,5 @@ public class CVariableErrorFinder extends CBaseListener implements ErrorFinder {
         ArrayList<CodeError> found = new ArrayList<>(errorchecker.checkCodeForErrors(seperated));
         return found;
     }
-    
-    @Override 
-    public void exitAssignmentExpression(CParser.AssignmentExpressionContext ctx) { 
-       
-    }
-    
-    public void exitDeclaration(CParser.DeclarationContext ctx) {
-        String[] type = getDeclarationType(ctx);
-    }
-    
-    public String[] getDeclarationType(CParser.DeclarationContext ctx) {
-        String type[] = new String[ctx.declarationSpecifiers().declarationSpecifier().size()];
-        int i = 0;
-        for(CParser.DeclarationSpecifierContext declSpec : ctx.declarationSpecifiers().declarationSpecifier()) {
-            type[i] = declSpec.typeSpecifier().getText();
-            ++i;
-        }
-        return type;
-    }
-
     
 }
