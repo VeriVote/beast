@@ -98,10 +98,21 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
         }
     }
     
-    public void removeTab() {
+    public void removeTab() throws BadLocationException {
         if(selectionIncludesLockedLines()) return;       
         if(isLineContainingCaretPosLocked()) return; 
-        tabInserter.removeTabAtPos(currentCaretPosition);  
+        if(pane.getSelectedText() != null) {
+            ArrayList<Integer> selectedLines = 
+                JTextPaneToolbox.getLinesBetween(pane, pane.getSelectionStart(),
+                        pane.getSelectionEnd());
+            for(int line : selectedLines) {
+                int firstCharPos = JTextPaneToolbox.getFirstCharPosInLine(pane, line);
+                saveBeforeRemove.save();
+                tabInserter.removeTabAtPos(firstCharPos);
+            }            
+        } else {            
+            tabInserter.removeTabAtPos(currentCaretPosition);  
+        }
     }
 
     public void insertTab() throws BadLocationException {

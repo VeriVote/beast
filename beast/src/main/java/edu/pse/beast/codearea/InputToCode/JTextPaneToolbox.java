@@ -98,4 +98,12 @@ public class JTextPaneToolbox {
             return code.substring(caretPos, caretPos + 1);
         }
     }
+
+    public static int getFirstCharPosInLine(JTextPane pane, int line) {
+        String code = getText(pane);
+        int absPos = getLineBeginning(pane, line);
+        for(; absPos < code.length() && code.charAt(absPos) == ' '; ++absPos) {
+        }
+        return absPos;
+    }
 }
