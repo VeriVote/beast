@@ -19,6 +19,7 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
     private final JComboBox timeoutUnit;
     private TimeOut timeoutBefore;
     private boolean reacts;
+    private boolean hasChanged;
     /**
      * Constructor
      * @param timeoutSpinner JSpinner for the timeout value
@@ -28,6 +29,7 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
         this.timeoutSpinner = timeoutSpinner;
         this.timeoutUnit = timeoutUnit;
         timeoutBefore = getTimeout();
+        setHasChanged(false);
     }
     /**
      * Getter for the timeout
@@ -62,8 +64,9 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
      * @param to new TimeOut
      */
     public void setValue(TimeOut to) {
-        if (reacts || to.equals(timeoutBefore)) {
+        if (reacts) {
             timeoutSpinner.setValue(to.getOrigUnit().convert(to.getDuration(), TimeUnit.MILLISECONDS));
+            setHasChanged(true);
         } else {
             setValue(timeoutBefore);
         }
@@ -103,5 +106,19 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         setValue(getTimeout());
+    }
+    /**
+     * Returns whether the TimeOut was changed since last time saving.
+     * @return hasChanged
+     */
+    protected boolean hasChanged() {
+        return hasChanged;
+    }
+    /**
+     * Sets whether the TimeOut was changed since last time saving.
+     * @param hasChanged whether it changed
+     */
+    protected void setHasChanged(boolean hasChanged) {
+        this.hasChanged = hasChanged;
     }
 }

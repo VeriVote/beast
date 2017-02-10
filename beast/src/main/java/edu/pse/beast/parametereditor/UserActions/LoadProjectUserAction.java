@@ -18,7 +18,7 @@ public class LoadProjectUserAction extends UserAction {
     private final PropertyList propertyList;
     private final CElectionDescriptionEditor cElectionEditor;
     private final ParameterEditor paramEditor;
-    private StringResourceLoader stringResourceLoader;
+    private final StringResourceLoader stringResourceLoader;
     private ProjectSaverLoader projectSaverLoader;
 
     /**
@@ -43,8 +43,8 @@ public class LoadProjectUserAction extends UserAction {
     @Override
     public void perform() {
         if (paramEditor.getReacts()) {
-            if (paramEditor.hasChanged() || cElectionEditor.getSaveBeforeChangeHandler().hasChanged() ||
-                    propertyList.getSaveBeforeChangeHandler().isChangedSinceSave()){
+            if (paramEditor.hasChanged() || cElectionEditor.getSaveBeforeChangeHandler().hasChanged()
+                    || propertyList.getSaveBeforeChangeHandler().isChangedSinceSave()) {
                 
             }
             Project loadedProject = (Project) paramEditor.getFileChooser().loadObject();
