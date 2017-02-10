@@ -126,8 +126,8 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (reactsToInput) {
-					LoadPropsUserAction load = new LoadPropsUserAction(controller.getEditor());
-					load.perform();
+					LoadPropsUserAction load = new LoadPropsUserAction(controller.getEditor(), controller);
+					load.loadIntoPropertyList();
 				}
 			}
 		});
