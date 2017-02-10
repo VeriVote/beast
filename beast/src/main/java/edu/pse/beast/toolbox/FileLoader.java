@@ -73,7 +73,7 @@ public final class FileLoader {
         return toReturn;
     }
 
-    public static String getFileFromRes(String fileName) {
+    public static String getFileFromResDONOTUSE(String fileName) {
         return new File("./src/main/resources" + fileName).getAbsolutePath();
     }
 

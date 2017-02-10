@@ -44,3 +44,4 @@ target/
 beast/.settings/org.eclipse.jdt.core.prefs
 beast/src/main/resources/c_tempfiles/*.c
 beast/core/c_tempfiles/*.c
+*.obj

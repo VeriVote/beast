@@ -11,89 +11,86 @@ import java.util.List;
 
 public class LinuxProcess extends CBMCProcess {
 
-	private final String relativePathToCBMC64 = "/linux/cbmcLin/cbmc";
+    private final String relativePathToCBMC64 = "/linux/cbmcLin/cbmc";
 
-	public LinuxProcess(int voters, int candidates, int seats, String advanced, File toCheck, CheckerFactory parent) {
-		super(voters, candidates, seats, advanced, toCheck, parent);
-	}
+    public LinuxProcess(int voters, int candidates, int seats, String advanced, File toCheck,
+            CheckerFactory parent) {
+        super(voters, candidates, seats, advanced, toCheck, parent);
+    }
 
-	@Override
-	protected String sanitizeArguments(String toSanitize) {
-		return toSanitize;
-	}
+    @Override
+    protected String sanitizeArguments(String toSanitize) {
+        return toSanitize;
+    }
 
-	@Override
-	public Process createProcess(File toCheck, int voters, int candidates, int seats, String advanced) {
+    @Override
+    public Process createProcess(File toCheck, int voters, int candidates, int seats, String advanced) {
 
-		List<String> arguments = new ArrayList<String>();
+        List<String> arguments = new ArrayList<String>();
 
-		String cbmc = new File(SuperFolderFinder.getSuperFolder() + relativePathToCBMC64).getPath();
+        String cbmc = new File(SuperFolderFinder.getSuperFolder() + relativePathToCBMC64).getPath();
 
-		if (!new File(cbmc).exists()) {
-			ErrorForUserDisplayer.displayError(
-					"Can't find the cbmc program in the subfolger \"linux/cbmcLin/\", please download it from the cbmc website and place it there!");
-		} else if (!new File(cbmc).canExecute()) {
-			ErrorForUserDisplayer.displayError(
-					"This program doesn't have the privileges to execute this program. \n "
-					+ "Please change the access rights for the program \"/linux/cbmcLin/cbmc\" in the BEAST installation folder and try again");
-		} else {
+        if (!new File(cbmc).exists()) {
+            ErrorForUserDisplayer.displayError(
+                    "Can't find the cbmc program in the subfolger \"linux/cbmcLin/\", please download it from the cbmc website and place it there!");
+        } else if (!new File(cbmc).canExecute()) {
+            ErrorForUserDisplayer
+                    .displayError("This program doesn't have the privileges to execute this program. \n "
+                            + "Please change the access rights for the program \"/linux/cbmcLin/cbmc\" in the BEAST installation folder and try again");
+        } else {
 
-			arguments.add(cbmc);
+            arguments.add(cbmc);
 
-			arguments.add(toCheck.getAbsolutePath());
+            arguments.add(toCheck.getAbsolutePath());
 
-			// here we supply this call with the correct values for the voters,
-			// candidates and seats
-			arguments.add("-D V=" + voters);
+            // here we supply this call with the correct values for the voters,
+            // candidates and seats
+            arguments.add("-D V=" + voters);
 
-			arguments.add("-D C=" + candidates);
+            arguments.add("-D C=" + candidates);
 
-			arguments.add("-D S=" + seats);
+            arguments.add("-D S=" + seats);
 
-			// we need the trace command to track the output on the command line
-			arguments.add("--trace");
+            // we need the trace command to track the output on the command line
+            arguments.add("--trace");
 
-			if (advanced != null && advanced.length() > 0) {
-				for (int i = 0; i < advanced.split(";").length; i++) {
-					String sanitized = sanitizeArguments(advanced.split(";")[i]);
+            if (advanced != null && advanced.length() > 0) {
+                for (int i = 0; i < advanced.split(";").length; i++) {
+                    String sanitized = sanitizeArguments(advanced.split(";")[i]);
 
-					if (sanitized.trim().length() > 0) {
-						arguments.add(sanitized);
-					}
-				}
-			}
+                    if (sanitized.trim().length() > 0) {
+                        arguments.add(sanitized);
+                    }
+                }
+            }
 
-			Process startedProcess = null;
+            Process startedProcess = null;
 
-			ProcessBuilder prossBuild = new ProcessBuilder(arguments.toArray(new String[0]));
+            ProcessBuilder prossBuild = new ProcessBuilder(arguments.toArray(new String[0]));
 
-			System.out.println(
-					"Started a new Process with the following command: " + String.join(" ", prossBuild.command()));
+            try {
+                startedProcess = prossBuild.start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return startedProcess;
+        }
+        return null;
+    }
 
-			try {
-				startedProcess = prossBuild.start();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return startedProcess;
-		}
+    @Override
+    protected void stopProcess() {
+        if (!process.isAlive()) {
+            ErrorLogger.log("Warning, process isn't alive anymore");
+            return;
+        } else {
+            process.destroyForcibly();
+        }
 
-		return null;
-	}
-
-	@Override
-	protected void stopProcess() {
-		if (!process.isAlive()) {
-			ErrorLogger.log("Warning, process isn't alive anymore");
-			return;
-		} else {
-			process.destroyForcibly();
-		}
-
-		if (process.isAlive()) {
-			ErrorLogger.log("Warning, the program was unable to shut down the CBMC Process \n"
-					+ "Please kill it manually, especially if it starts taking up a lot of ram");
-		}
-	}
+        if (process.isAlive()) {
+            ErrorLogger.log("Warning, the program was unable to shut down the CBMC Process \n"
+                    + "Please kill it manually, especially if it starts taking up a lot of ram");
+        }
+    }
 
 }

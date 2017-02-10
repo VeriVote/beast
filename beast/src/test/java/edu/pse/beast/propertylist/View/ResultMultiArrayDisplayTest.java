@@ -13,9 +13,8 @@ import org.junit.Test;
 
 import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.electiondescription.ElectionType;
-import edu.pse.beast.propertychecker.CBMC_Result_Wrapper_long;
-import edu.pse.beast.propertychecker.CBMC_Result_Wrapper_multiArray;
-import edu.pse.beast.propertychecker.CBMC_Result_Wrapper_singleArray;
+import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
+import edu.pse.beast.propertychecker.CBMCResultWrappersingleArray;
 
 public class ResultMultiArrayDisplayTest {
 
@@ -66,10 +65,10 @@ public class ResultMultiArrayDisplayTest {
 		elected.add(3l);
 		elected.add(2l);*/
 		
-		ArrayList<CBMC_Result_Wrapper_multiArray> votes = new ArrayList<CBMC_Result_Wrapper_multiArray>();
+		ArrayList<CBMCResultWrapperMultiArray> votes = new ArrayList<CBMCResultWrapperMultiArray>();
 		
 		
-		votes.add(new CBMC_Result_Wrapper_multiArray(0, "wildelection"));
+		votes.add(new CBMCResultWrapperMultiArray(0, "wildelection"));
 		votes.get(0).addTo(0, 0, 1l);
 		votes.get(0).addTo(0, 1, 1l);
 		votes.get(0).addTo(0, 2, 1l);
@@ -100,7 +99,7 @@ public class ResultMultiArrayDisplayTest {
 		votes.get(0).addTo(4, 3, 1l);
 		votes.get(0).addTo(4, 4, 1l);
 		
-		votes.add(new CBMC_Result_Wrapper_multiArray(1, "wilderelection"));
+		votes.add(new CBMCResultWrapperMultiArray(1, "wilderelection"));
 		votes.get(1).addTo(0, 0, 1l);
 		votes.get(1).addTo(0, 1, 1l);
 		votes.get(1).addTo(0, 2, 1l);
@@ -131,12 +130,12 @@ public class ResultMultiArrayDisplayTest {
 		votes.get(1).addTo(4, 3, 1l);
 		votes.get(1).addTo(4, 4, 1l);
 		
-		ArrayList<CBMC_Result_Wrapper_singleArray> seats = new ArrayList<CBMC_Result_Wrapper_singleArray>();
+		ArrayList<CBMCResultWrappersingleArray> seats = new ArrayList<CBMCResultWrappersingleArray>();
 		
-		seats.add(new CBMC_Result_Wrapper_singleArray(0, "wildseats"));
+		seats.add(new CBMCResultWrappersingleArray(0, "wildseats"));
 		seats.get(0).addTo(0, 0l);
 		seats.get(0).addTo(1, 2l);
-		seats.add(new CBMC_Result_Wrapper_singleArray(1, "wilderseats"));
+		seats.add(new CBMCResultWrappersingleArray(1, "wilderseats"));
 		seats.get(1).addTo(0, 1l);
 		seats.get(1).addTo(1, 2l);
 		
