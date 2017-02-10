@@ -44,7 +44,8 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
     protected List<CodeError> parseError(List<String> result, List<String> errors) {
         List<CodeError> codeErrors = new ArrayList<CodeError>();
 
-        for (Iterator<String> iterator = result.iterator(); iterator.hasNext();) {
+        //gcc gives the errors out in the error stream
+        for (Iterator<String> iterator = errors.iterator(); iterator.hasNext();) {
             String line = (String) iterator.next();
 
             int lineNumber = -1;
@@ -67,8 +68,8 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
 
                         message = line.split("error:")[1];
 
-                        if (message.contains("'")) {
-                            varName = message.split("'")[1];
+                        if (message.contains("‘") && message.contains("’")) {
+                            varName = message.split("‘")[1].split("’")[0];
                         }
 
                         codeErrors.add(generateCodeError(lineNumber, linePos, varName, message));

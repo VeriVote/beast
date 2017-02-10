@@ -66,6 +66,7 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
         
         Pattern lineExtractor = Pattern.compile("((.*)(\\([0-9]*\\))(.*))");
 
+        //cl.exe prints out the results in the result list
         for (Iterator<String> iterator = result.iterator(); iterator.hasNext();) {
             String line = (String) iterator.next();
 
