@@ -15,7 +15,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
 /**
- *
+ * creates a celectioncodearea object. It uses its parent class Codeareabuilder
+ * to first create a simple codearea and use this to instantiate most
+ * fields of the celectioncodearea
  * @author Holger-Desktop
  */
 public class CElectionCodeAreaBuilder extends CodeAreaBuilder {
@@ -26,6 +28,15 @@ public class CElectionCodeAreaBuilder extends CodeAreaBuilder {
         this.refs = refs;
     }
     
+    /**
+     * creates and returns a celectioncodearea
+     * @param codeArea the JTextPane used to display text and communicate
+     * with the user
+     * @param codeAreaScrollPane the component which scrolls the pane
+     * @param displayer the specific errordisplayer which knows
+     * how to create errors created by the cerrorfinders
+     * @return the created celectioncodearea
+     */
     public CElectionCodeArea createCElectionCodeArea(JTextPane codeArea, JScrollPane codeAreaScrollPane, CErrorDisplayer displayer) {
         CElectionCodeArea created = new CElectionCodeArea(createCodeArea(codeArea, codeAreaScrollPane,
                 refs, displayer));    

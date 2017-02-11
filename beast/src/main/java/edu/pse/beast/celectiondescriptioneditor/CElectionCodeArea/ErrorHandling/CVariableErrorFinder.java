@@ -19,7 +19,8 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 /**
- *
+ * This class uses an external compiler (either gcc on linux or cl on windows)
+ * to find errors in the c code
  * @author Holger-Desktop
  */
 public class CVariableErrorFinder implements ErrorFinder {

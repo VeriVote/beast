@@ -12,7 +12,8 @@ import edu.pse.beast.toolbox.MenuBarHandler;
 import java.util.ArrayList;
 
 /**
- *
+ * creates and updates the menubar of a celectiondescriptioneditor. It
+ * also links the useractions to the menuitems
  * @author Holger-Desktop
  */
 public class CElectionEditorMenubarHandler extends MenuBarHandler {

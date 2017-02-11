@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import javax.swing.JTextPane;
 
 /**
- *
+ * This class prepares CodeErrors so its parent class Errordisplayer can display
+ * them. As such, it mainly creates error messages, depending on the codeerrors
+ * id
  * @author Holger-Desktop
  */
 public class CErrorDisplayer extends ErrorDisplayer {

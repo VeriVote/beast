@@ -16,7 +16,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 
 /**
- *
+ * This is the class which inherits from codearea to create a codearea more suited
+ * towards writing c code.  
  * @author Holger-Desktop
  */
 public class CElectionCodeArea extends CodeArea {
@@ -35,6 +36,11 @@ public class CElectionCodeArea extends CodeArea {
         cSyntaxHl = new CSyntaxHl(antlrHandler, syntaxHL);        
     }
 
+    /**
+     * displays the given code to the user in the JTextPane
+     * @param code the code to be displayed
+     * @throws BadLocationException 
+     */
     public void letUserEditCode(List<String> code) throws BadLocationException {        
         String s = "";
         for(int i = 0; i < code.size(); ++i) {

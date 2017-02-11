@@ -24,7 +24,7 @@ import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
 
 /**
- *
+ * This class uses antlr to find syntax errors in the C code
  * @author Holger-Desktop
  */
 public class CGrammarErrorFinder implements ErrorFinder, ANTLRErrorListener {

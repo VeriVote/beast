@@ -25,7 +25,8 @@ import java.util.logging.Logger;
 import javax.swing.text.BadLocationException;
 
 /**
- *
+ * This class creates a celectiondescriptioneditor object and all useractions
+ * which can be performed on this object
  * @author Holger-Desktop
  */
 public class CElectionDescriptionEditorBuilder {
@@ -45,6 +46,12 @@ public class CElectionDescriptionEditorBuilder {
     private UserAction copy;
     private UserAction cut;
     
+    /**
+     * creates a CElectionDescriptionEditor object and returns it
+     * @param objRefsForBuilder the references to interfaces needed to
+     * build objects
+     * @return the created editor
+     */
     public CElectionDescriptionEditor createCElectionDescriptionEditor(ObjectRefsForBuilder objRefsForBuilder) {
         CEditorWindowStarter starter = new CEditorWindowStarter();
         CCodeEditorWindow gui = starter.getGUIWindow();

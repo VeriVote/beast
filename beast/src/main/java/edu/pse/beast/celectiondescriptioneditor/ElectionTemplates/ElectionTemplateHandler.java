@@ -11,7 +11,7 @@ import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import java.util.ArrayList;
 
 /**
- * 
+ * This class handles all available ElectionTypeContainer for input and output.
  * @author Holger-Desktop
  */
 public class ElectionTemplateHandler {
@@ -82,6 +82,11 @@ public class ElectionTemplateHandler {
         return resultIds;
     }
     
+    /**
+     * returns the elecitontypecontainer having the supplied id
+     * @param id the id of the elecitontypecontainer to be retrieved
+     * @return the electiontypecontainer if it exists, null otherwise
+     */
     public ElectionTypeContainer getById(String id) {
         for(int i = 0; i < inputIds.length; ++i) {
             if(inputIds[i].equals(id))

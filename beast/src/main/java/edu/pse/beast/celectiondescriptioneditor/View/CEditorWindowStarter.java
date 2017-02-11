@@ -6,7 +6,7 @@
 package edu.pse.beast.celectiondescriptioneditor.View;
 
 /**
- *
+ * starts a CCodeEditorWindow
  * @author Holger-Desktop
  */
 public class CEditorWindowStarter implements Runnable {

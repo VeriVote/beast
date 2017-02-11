@@ -12,7 +12,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 /**
- *
+ * Sets the regexes to be highlighted by a syntaxhighlighter for the c
+ * programming language
  * @author Holger-Desktop
  */
 public class CSyntaxHl {
