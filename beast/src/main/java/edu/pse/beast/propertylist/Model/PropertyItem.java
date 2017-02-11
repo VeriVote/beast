@@ -22,16 +22,26 @@ public class PropertyItem implements ResultPresenterElement {
     private List<String> error;
     private FailureExample example;
 
+    /**
+     * @param descr
+     * @param testStatus
+     */
     public PropertyItem(PostAndPrePropertiesDescription descr, Boolean testStatus) {
         description = descr;
         willBeTested = testStatus;
         resultType = ResultType.UNTESTED;
     }
 
+    /**
+     * @param descr
+     */
     public PropertyItem(PostAndPrePropertiesDescription descr) {
         this(descr, true);
     }
 
+    /**
+     * 
+     */
     public PropertyItem() {
         this(new PostAndPrePropertiesDescription(UUID.randomUUID().toString()), false);
     }
@@ -49,12 +59,16 @@ public class PropertyItem implements ResultPresenterElement {
         this.description = new PostAndPrePropertiesDescription(newName, preProp, postProp, symVars);
     }
 
-    public Boolean willBeTested() {
+    /*public Boolean willBeTested() {
         return willBeTested;
-    }
+    }*/
 
     public void setTestStatus(boolean newStatus) {
         willBeTested = newStatus;
+    }
+    
+    public Boolean getTestStatus() {
+    	return willBeTested;
     }
 
     public void toggleTestStatus() {

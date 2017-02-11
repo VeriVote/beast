@@ -49,9 +49,7 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 	public boolean addNewProperty(BooleanExpEditor editor) {
 		String name = "Eigenschaft ";
 		int i = 0;
-		while (indexOfName(name + i) != -1) {
-			i++;
-		}
+		while (indexOfName(name + i) != -1) i++;
 		PropertyItem newItem = new PropertyItem(new PostAndPrePropertiesDescription(name + i), false);
 		propertyList.add(newItem);
 		editor.letUserEditPostAndPreProperties(newItem.getDescription(), true);
@@ -71,9 +69,7 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 	@Override
 	public boolean deleteProperty(PropertyItem prop) {
 		int index = propertyList.indexOf(prop);
-		if (index == -1) {
-			return false;
-		}
+		if (index == -1) return false;
 		propertyList.remove(index);
 		updateView();
 		return true;
@@ -136,6 +132,7 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 		this.name = newName;
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
@@ -150,11 +147,12 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 	}
 
 	/**
-	 * 
+	 * Is invoked when the list of properties has changed and observers (mainly the view) need to know about it.
 	 */
 	public void updateView() {
 		this.setChanged();
 		this.notifyObservers();
 		this.clearChanged();
 	}
+
 }

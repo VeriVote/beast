@@ -111,4 +111,15 @@ public interface PLModelInterface {
      * @param model The new model to replace the old one
      */
     void loadAnotherModel(PLModelInterface model);
+    
+    /**
+     * Sets the name of the property list.
+     * @param name The new name for the list
+     */
+    void setNewName(String name);
+    /**
+     * Returns the name of the property list.
+     * @return The name of the list
+     */
+    String getName();
 }

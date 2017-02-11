@@ -126,7 +126,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     @Override
     public boolean isCorrect() {
         for (PropertyItem item : model.getPropertyList()) {
-            if (item.willBeTested()) {
+            if (item.getTestStatus()) {
                 if (!editor.letUserEditPostAndPreProperties(item.getDescription(), true)) {
                     return false;
                 } else if (!editor.isCorrect()) {
@@ -160,7 +160,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         ArrayList<PropertyItem> from = model.getPropertyList();
         editor.updatePostAndPrePropObject();
         for (PropertyItem prop : from) {
-            if (prop.willBeTested()) {
+            if (prop.getTestStatus()) {
                 result.add(prop.getDescription());
             }
         }
