@@ -7,7 +7,7 @@ import edu.pse.beast.toolbox.UserAction;
  * @author NikolaiLMS
  */
 public class UndoBoolUserAction extends UserAction{
-    private BooleanExpEditor editor;
+    private final BooleanExpEditor editor;
 
     public UndoBoolUserAction(BooleanExpEditor editor) {
         super("undo");

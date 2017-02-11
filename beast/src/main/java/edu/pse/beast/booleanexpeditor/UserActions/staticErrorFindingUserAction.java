@@ -7,7 +7,7 @@ import edu.pse.beast.toolbox.UserAction;
  * @author NikolaiLMS
  */
 public class staticErrorFindingUserAction extends UserAction{
-    private BooleanExpEditor booleanExpEditor;
+    private final BooleanExpEditor booleanExpEditor;
     public staticErrorFindingUserAction(BooleanExpEditor booleanExpEditor) {
         super("staticErrorFinding");
         this.booleanExpEditor = booleanExpEditor;

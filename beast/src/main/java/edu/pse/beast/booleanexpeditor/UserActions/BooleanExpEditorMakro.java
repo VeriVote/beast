@@ -4,7 +4,9 @@ package edu.pse.beast.booleanexpeditor.UserActions;
  * @author NikolaiLMS
  */
 public class BooleanExpEditorMakro {
-    private String makro;
+
+    private final String makro;
+
     public BooleanExpEditorMakro(String makro) {
         this.makro = makro;
     }

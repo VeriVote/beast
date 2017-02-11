@@ -8,7 +8,6 @@ import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.codearea.Autocompletion.AutocompletionOption;
 import edu.pse.beast.codearea.CodeArea;
 import edu.pse.beast.codearea.CodeAreaBuilder;
-import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import java.util.ArrayList;

@@ -7,8 +7,8 @@ import edu.pse.beast.toolbox.UserAction;
  * @author NikolaiLMS
  */
 public class AddConstUserAction extends UserAction {
-    private BooleanExpEditorConst booleanExpEditorConst;
-    private BooleanExpEditor booleanExpEditor;
+    private final BooleanExpEditorConst booleanExpEditorConst;
+    private final BooleanExpEditor booleanExpEditor;
 
     /**
      * Constructor

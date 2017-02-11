@@ -22,8 +22,8 @@ import org.antlr.v4.runtime.dfa.DFA;
  * @author Nikolai
  */
 public class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListener, ErrorFinder {
-    private BooleanExpANTLRHandler antlrHandler;
-    private ArrayList<CodeError> errors = new ArrayList<>();
+    private final BooleanExpANTLRHandler antlrHandler;
+    private final ArrayList<CodeError> errors = new ArrayList<>();
 
     /**
      * Constructor

@@ -1,7 +1,5 @@
 package edu.pse.beast.booleanexpeditor;
 
-import edu.pse.beast.booleanexpeditor.UserActions.SavePropsUserAction;
-import edu.pse.beast.booleanexpeditor.View.BooleanExpEditorWindow;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.saverloader.FileChooser;
@@ -50,7 +48,7 @@ public class ChangeHandler {
     }
 
     public boolean hasChanged() {
-        return !(preString.equals((String) prePane.getText() + postPane.getText()) &&
-                preSymbolicVariableList.equals(symbolicVariableList.getSymbolicVariables()));
+        return !(preString.equals((String) prePane.getText() + postPane.getText()) 
+                && preSymbolicVariableList.equals(symbolicVariableList.getSymbolicVariables()));
     }
 }

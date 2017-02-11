@@ -8,7 +8,6 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeList
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
-import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.BooleanExpScopehandler;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,28 +16,32 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 /**
- * Class for finding type-errors in symbolic variable usage in the BooleanExpression(s) of the CodeArea
- * this class is an attribute of.
+ * Class for finding type-errors in symbolic variable usage in the
+ * BooleanExpression(s) of the CodeArea this class is an attribute of.
+ *
  * @author Nikolai
  */
 public class BooleanExpEditorVariableErrorFinder implements ErrorFinder, ElectionDescriptionChangeListener {
-    private BooleanExpANTLRHandler antlrHandler;
+
+    private final BooleanExpANTLRHandler antlrHandler;
     private PostAndPrePropertiesDescription description;
-    private FormalExpErrorFinderTreeListener lis;
+    private final FormalExpErrorFinderTreeListener lis;
+
     /**
      * Constructor
-     * @param antlrHandler BooleanExpEditorANTLRHandler object this class uses to find errors
+     *
+     * @param antlrHandler BooleanExpEditorANTLRHandler object this class uses
+     * to find errors
      */
     public BooleanExpEditorVariableErrorFinder(
             BooleanExpANTLRHandler antlrHandler,
             SymbolicVariableList list, CElectionDescriptionEditor ceditor) {
         this.antlrHandler = antlrHandler;
-        lis = new FormalExpErrorFinderTreeListener(list, ceditor);        
+        lis = new FormalExpErrorFinderTreeListener(list, ceditor);
     }
-    
-     
+
     @Override
-    public ArrayList<CodeError> getErrors() {  
+    public ArrayList<CodeError> getErrors() {
         try {
             ParseTree tree = antlrHandler.getParseTree();
             ParseTreeWalker walker = new ParseTreeWalker();
@@ -56,13 +59,11 @@ public class BooleanExpEditorVariableErrorFinder implements ErrorFinder, Electio
 
     @Override
     public void outputChanged(ElectionTypeContainer output) {
-       lis.setOutput(output);
+        lis.setOutput(output);
     }
 
     public FormalExpErrorFinderTreeListener getLis() {
         return lis;
     }
-    
-    
-    
+
 }

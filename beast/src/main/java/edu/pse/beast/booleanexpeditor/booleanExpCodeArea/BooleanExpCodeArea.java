@@ -3,21 +3,18 @@ package edu.pse.beast.booleanexpeditor.booleanExpCodeArea;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.autocompletion.BooleanExpAutoCompletionSrc;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorGrammarErrorFinder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorVariableErrorFinder;
-import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.codearea.CodeArea;
-
-import java.util.ArrayList;
 
 /**
  * Class extending CodeArea Class of package codearea and giving it extra functionality specific to BooleanExpEditor.
  * @author Nikolai
  */
 public class BooleanExpCodeArea extends CodeArea {
-    private BooleanExpANTLRHandler antlrHandler;
-    private BooleanExpEditorGrammarErrorFinder grammarErrorFinder;
-    private BooleanExpEditorVariableErrorFinder variableErrorFinder;
-    private BooleanExpAutoCompletionSrc autoCompletionSrc;
-    private BooleanExpSyntaxHL booleanExpSyntaxHL;
+    private final BooleanExpANTLRHandler antlrHandler;
+    private final BooleanExpEditorGrammarErrorFinder grammarErrorFinder;
+    private final BooleanExpEditorVariableErrorFinder variableErrorFinder;
+    private final BooleanExpAutoCompletionSrc autoCompletionSrc;
+    private final BooleanExpSyntaxHL booleanExpSyntaxHL;
 
     /**
      * Constructor

@@ -7,7 +7,7 @@ import edu.pse.beast.toolbox.UserAction;
  * @author NikolaiLMS
  */
 public class RedoBoolUserAction extends UserAction {
-    private BooleanExpEditor editor;
+    private final BooleanExpEditor editor;
     public RedoBoolUserAction(BooleanExpEditor editor) {
         super("redo");
         this.editor = editor;

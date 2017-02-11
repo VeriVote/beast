@@ -7,7 +7,8 @@ import edu.pse.beast.toolbox.UserAction;
  * @author NikolaiLMS
  */
 public class CopyUserAction extends UserAction {
-    private BooleanExpEditor editor;
+
+    private final BooleanExpEditor editor;
 
     public CopyUserAction(BooleanExpEditor editor) {
         super("copy");

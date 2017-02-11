@@ -18,7 +18,7 @@ import org.antlr.v4.runtime.ParserRuleContext;
  */
 public class BooleanExpErrorFactory {
 
-    private static String[] errorIds = 
+    private static final  String[] errorIds = 
     {"antlr", "var_not_decl", "too_many_vars_passed", "wrong_var_type_passed",
         "incomparable_types", "incomparable_list_sizes", "wrong_var_passed_to_votesum"};  
     

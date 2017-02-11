@@ -19,7 +19,7 @@ import edu.pse.beast.toolbox.ToolbarHandler;
  */
 public class CElectionEditorToolbarHandler extends ToolbarHandler
         implements DisplaysStringsToUser {
-    private CCodeEditorWindow cgui;
+    private final CCodeEditorWindow cgui;
     
     public CElectionEditorToolbarHandler(
             ActionIdAndListener[] actionIdAndListener,

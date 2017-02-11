@@ -7,7 +7,7 @@ import edu.pse.beast.toolbox.UserAction;
  * @author NikolaiLMS
  */
 public class SavePropsUserAction extends UserAction{
-    private BooleanExpEditor booleanExpEditor;
+    private final BooleanExpEditor booleanExpEditor;
 
     public SavePropsUserAction(BooleanExpEditor booleanExpEditor) {
         super("save");

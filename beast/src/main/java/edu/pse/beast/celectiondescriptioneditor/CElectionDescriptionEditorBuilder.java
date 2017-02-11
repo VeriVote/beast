@@ -16,7 +16,6 @@ import edu.pse.beast.celectiondescriptioneditor.View.ErrorWindow;
 import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
 import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.toolbox.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;

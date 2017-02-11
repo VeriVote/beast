@@ -7,7 +7,7 @@ import edu.pse.beast.toolbox.UserAction;
  * @author NikolaiLMS
  */
 public class PasteUserAction extends UserAction{
-    private BooleanExpEditor editor;
+    private final BooleanExpEditor editor;
 
     public PasteUserAction(BooleanExpEditor editor) {
         super("paste");
