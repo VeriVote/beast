@@ -31,9 +31,9 @@ public class StringResourceLoader {
         while (!stringRes.isEmpty()) {
             line = stringRes.pop();
             if (line.length() == 0) {
-                continue;
+                break;
             }
-            split = line.split(":");
+            split = line.split(":", 2);
             id = split[0].trim();
             displayedText = split[1].trim();
             idsToString.put(id, displayedText);
