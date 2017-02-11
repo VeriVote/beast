@@ -1,0 +1,20 @@
+showResult : Ergebnis anzeigen
+analyseProperty : Überprüfen
+editProperty : Bearbeiten
+deleteProperty : Löschen
+addProperty : Neu
+newProperty : Neue Eigenschaft erstellen
+loadProperty : Eigenschaft wählen
+fileMenu : Datei
+editMenu : Bearbeiten
+load : Laden
+title : Eigenschaftenliste
+new : Neue Liste
+save : Speichern
+save_as : Speichern unter
+undo : Rückgängig
+redo : Wiederherstellen
+areYouSure : Sind Sie sicher, nicht gespeicherte Daten gehen verloren?
+newList : Neue Liste
+wantToSaveBefore : Wollen Sie die Liste vorher abspeichern?
+saveList : Liste speichern

@@ -1,0 +1,14 @@
+fileMenu : File
+new : New project
+save : Save
+save_as : Save as
+load : Open
+projectMenu : Project
+start : Start check
+stop : Stop check
+editorMenu : Editor
+options : Options
+showHideWindowsMenu : Window
+showPropertyList : Show/Hide Property List
+showBooleanExpEditor : Show/Hide Property Editor
+showCElectionEditor : Show/Hide C Editor

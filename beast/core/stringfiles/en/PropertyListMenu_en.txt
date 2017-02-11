@@ -1,0 +1,20 @@
+showResult : Show result
+analyseProperty : Analyse
+editProperty : Edit
+deleteProperty : Delete
+addProperty : New
+newProperty : Create new property
+loadProperty : Choose property
+fileMenu : File
+editMenu : Edit
+load : Load
+title : Property List
+new : New list
+save : Save
+save_as : Save as
+undo : Undo
+redo : Redo
+areYouSure : Are you sure? you will lose unsaved data!
+newList : New list
+wantToSaveBefore : Do you want to save the list beforehand?
+saveList : Save list
