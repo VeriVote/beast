@@ -18,22 +18,41 @@ import java.util.List;
 public class SymbolicVariableList {
 
     private final LinkedList<SymbolicVariable> symbolicVariableList;
-    private List<VariableListListener> listener = new ArrayList<>();
+    private final List<VariableListListener> listener = new ArrayList<>();
 
+    /**
+     *
+     */
     public SymbolicVariableList() {
         symbolicVariableList = new LinkedList<>();
     }
 
+    /**
+     *
+     * @param symbolicVariableList
+     */
     public SymbolicVariableList(SymbolicVariableList symbolicVariableList) {
         this.symbolicVariableList = symbolicVariableList.getSymbolicVariables();
     }
 
+    /**
+     *
+     * @param id
+     * @param internalTypeContainer
+     */
     public void addSymbolicVariable(String id, InternalTypeContainer internalTypeContainer) {
         SymbolicVariable var = new SymbolicVariable(id, internalTypeContainer);
         symbolicVariableList.add(var);
-        for(VariableListListener l : listener) l.addedVar(var);
+        for (VariableListListener l : listener) {
+            l.addedVar(var);
+        }
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     public boolean isVarIDAllowed(String id) {
         boolean varAllowed = true;
         for (SymbolicVariable var : symbolicVariableList) {
@@ -45,38 +64,68 @@ public class SymbolicVariableList {
         return varAllowed;
     }
 
+    /**
+     *
+     * @param symbolicVariableList
+     */
     public void setSymbolicVariableList(LinkedList<SymbolicVariable> symbolicVariableList) {
         this.symbolicVariableList.clear();
         this.symbolicVariableList.addAll(symbolicVariableList);
     }
+
+    /**
+     *
+     * @return returns the linked List of SymbolicVariables
+     */
     public LinkedList<SymbolicVariable> getSymbolicVariables() {
         return symbolicVariableList;
     }
 
+    /**
+     *
+     * @param id the id of the variable, that is to be removed
+     * @return returns true if the variable was found
+     */
     public boolean removeSymbolicVariable(String id) {
         boolean varFound = false;
         for (SymbolicVariable var : symbolicVariableList) {
             varFound = var.getId().equals(id);
             if (varFound) {
                 symbolicVariableList.remove(var);
-                for(VariableListListener l : listener) l.removedVar(var);
+                listener.forEach((l) -> {
+                    l.removedVar(var);
+                });
                 break;
             }
         }
         return varFound;
     }
 
+    /**
+     *
+     * @param index the index of the variable, that is to be removed
+     */
     public void removeSymbolicVariable(int index) {
         SymbolicVariable var = symbolicVariableList.get(index);
-        for(VariableListListener l : listener) l.removedVar(var);
+        listener.forEach((l) -> {
+            l.removedVar(var);
+        });
         symbolicVariableList.remove(index);
     }
-    
-    public void addListener(VariableListListener l) {
-        this.listener.add(l);
+
+    /**
+     *
+     * @param listener the listener which is to add
+     */
+    public void addListener(VariableListListener listener) {
+        this.listener.add(listener);
     }
-    
-    public void removeListener(VariableListListener l) {
-        this.listener.remove(l);
+
+    /**
+     *
+     * @param listener the listener that will be removed
+     */
+    public void removeListener(VariableListListener listener) {
+        this.listener.remove(listener);
     }
 }

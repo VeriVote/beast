@@ -1,8 +1,6 @@
 package edu.pse.beast.datatypes.booleanExpAST;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 /**
  * 
  * @author Lukas, Holger

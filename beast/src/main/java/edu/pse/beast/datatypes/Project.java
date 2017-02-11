@@ -19,6 +19,13 @@ public class Project implements NameInterface {
     private final PLModel propList;
     private final ElectionDescription elecDescr;
 
+    /**
+     * creates the project
+     * @param params the params 
+     * @param propList the propertyList model
+     * @param elecDescr the ElectionDescription
+     * @param name The Name of the Project
+     */
     public Project(ElectionCheckParameter params, PLModel propList, ElectionDescription elecDescr, String name) {
         this.params = params;
         this.propList = propList;
@@ -26,14 +33,26 @@ public class Project implements NameInterface {
         this.name = name;
     }
 
+    /**
+     * 
+     * @return the elctionDescription
+     */
     public ElectionDescription getElecDescr() {
         return elecDescr;
     }
 
+    /**
+     * 
+     * @return propertyList 
+     */
     public PLModel getPropList() {
         return propList;
     }
 
+    /**
+     * 
+     * @return  ElectionCheckParameter
+     */
     public ElectionCheckParameter getElectionCheckParameter() {
         return params;
     }
@@ -43,6 +62,7 @@ public class Project implements NameInterface {
         this.name = newName;
     }
 
+    @Override
     public String getName() {
         return name;
     }
