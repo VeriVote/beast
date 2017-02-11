@@ -14,7 +14,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
 /**
- *
+ * Inesrts newlines into locked lines by inserting it at their beginning,
+ * thus shifting the entire line down by one
  * @author Holger-Desktop
  */
 public class LockedLineNewlineInserter implements NewlineInserter {

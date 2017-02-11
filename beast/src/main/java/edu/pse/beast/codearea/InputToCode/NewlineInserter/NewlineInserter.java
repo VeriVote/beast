@@ -11,7 +11,8 @@ import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 
 /**
- *
+ * This interface is implemented by all classes which insert linebreaks
+ * in different ways
  * @author Holger-Desktop
  */
 public interface NewlineInserter {

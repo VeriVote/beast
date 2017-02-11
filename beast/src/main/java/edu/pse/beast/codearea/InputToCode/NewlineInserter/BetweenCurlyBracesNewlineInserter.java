@@ -11,7 +11,12 @@ import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 
 /**
- *
+ * Inserts newlines between two curly braces by adding two new lines
+ * and centering the caret position between them:
+ * {|} becomes
+ * {
+ *     |
+ * }
  * @author Holger-Desktop
  */
 public class BetweenCurlyBracesNewlineInserter implements NewlineInserter {

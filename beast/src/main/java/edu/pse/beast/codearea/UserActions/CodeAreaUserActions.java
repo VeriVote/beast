@@ -10,7 +10,8 @@ import edu.pse.beast.toolbox.UserAction;
 import java.util.ArrayList;
 
 /**
- *
+ * This class creates all useractions which can be performed on a simple 
+ * codearea
  * @author Holger-Desktop
  */
 public class CodeAreaUserActions {
