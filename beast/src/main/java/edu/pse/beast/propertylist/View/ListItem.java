@@ -193,6 +193,8 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
                 return Color.GREEN;
             case TIMEOUT:
                 return Color.ORANGE;
+            case CANCEL:
+                return Color.ORANGE;
             case FAILURE:
                 return Color.MAGENTA;
             case FAILUREEXAMPLE:
@@ -211,6 +213,9 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
                 break;
             case TIMEOUT:
                 resWindow.presentTimeOut();
+                break;
+            case CANCEL:
+                resWindow.presentCancel();
                 break;
             case FAILURE:
                 resWindow.presentFailure(prop.getError());

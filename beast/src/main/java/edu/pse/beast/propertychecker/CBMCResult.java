@@ -27,8 +27,8 @@ public class CBMCResult extends Result {
         if (!isFinished()) {
             ErrorLogger.log("Result isn't ready yet");
             return;
-        } else if (isTimedOut()) {
-            presenter.presentTimeOut();
+        } else if (isFocefullyStopped()) {
+            presenter.presentCanceled(isTimedOut());
         } else if (!isValid()) {
             presenter.presentFailure(getError());
         } else if (isSuccess()) {

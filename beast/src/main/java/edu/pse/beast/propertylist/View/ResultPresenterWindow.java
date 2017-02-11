@@ -189,6 +189,13 @@ public class ResultPresenterWindow extends JFrame {
         appendPane(srl.getStringFromID("timeoutMessage"));
         packFrame();
     }
+    
+
+    public void presentCancel() {
+        erasePane();
+        appendPane(srl.getStringFromID("cancelMessage"));
+        packFrame();
+    }
 
     public void resetResult() {
         erasePane();

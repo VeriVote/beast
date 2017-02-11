@@ -28,6 +28,7 @@ public abstract class Result implements ResultInterface {
     private int numSeats;
     private int numCandidates;
     private ElectionType electionType;
+    private boolean forcefulleStopped;
 
     /**
      * Presents the result of the check. Every class that extends this class has
@@ -94,6 +95,14 @@ public abstract class Result implements ResultInterface {
      */
     public boolean isSuccess() {
         return success;
+    }
+    
+    /**
+     * 
+     * @return true, if the process was stopped by the user or a timeout, else false
+     */
+    public boolean isFocefullyStopped() {
+        return forcefulleStopped;
     }
 
     /**
@@ -225,5 +234,13 @@ public abstract class Result implements ResultInterface {
      */
     public void setElectionType(ElectionType electionType) {
         this.electionType = electionType;
+    }
+
+    /**
+     * sets the result to forcefully stop, to indicate
+     * that it was stopped by the user or a timeout
+     */
+    public void setForcefullyStopped() {
+        this.forcefulleStopped = true;
     }
 }

@@ -51,8 +51,12 @@ public class PropertyItem implements ResultPresenterElement {
     
     
     @Override
-    public void presentTimeOut() {
-        resultType = ResultType.TIMEOUT;
+    public void presentCanceled(boolean isTimeout) {
+        if (isTimeout) {
+            resultType = ResultType.TIMEOUT;
+        } else {
+            resultType = ResultType.CANCEL;
+        }
     }
 
     @Override
