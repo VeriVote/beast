@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.stringresource;
 
+import edu.pse.beast.toolbox.ErrorLogger;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -13,7 +14,7 @@ import java.util.LinkedList;
  * @author Niels
  */
 public class StringResourceLoader {
-
+    
     private final HashMap<String, String> idsToString;
 
     /**
@@ -30,11 +31,12 @@ public class StringResourceLoader {
         String displayedText;
         while (!stringRes.isEmpty()) {
             line = stringRes.pop();
-            if(line.length() == 0) continue;
-            split = line.split(":");
-            id = split[0].trim();
-            displayedText = split[1].trim();
-            idsToString.put(id, displayedText);
+            if (line.length() != 0) {
+                split = line.split(":", 2);
+                id = split[0].trim();
+                displayedText = split[1].trim();
+                idsToString.put(id, displayedText);
+            }
         }
     }
 
@@ -44,6 +46,10 @@ public class StringResourceLoader {
      * @return the String with the id
      */
     public String getStringFromID(String id) {
-        return idsToString.get(id);
+        String get = idsToString.get(id);
+        if (get == null) {
+            ErrorLogger.log("this Id was not found in a Stringfile + " + id);
+        }
+        return get;
     }
 }

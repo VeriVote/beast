@@ -110,6 +110,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	 */
 	public void stopReacting() {
 		setReactsToInput(false);
+		this.setEnabled(false);
 	}
 
 	/**
@@ -117,6 +118,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	 */
 	public void resumeReacting() {
 		setReactsToInput(true);
+		this.setEnabled(true);
 	}
 
 	
@@ -127,7 +129,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		StringResourceLoader other = provider.getOtherStringRes();
 
 		title = other.getStringFromID("title");
-		setWindowTitle(other.getStringFromID("title"));
+		setWindowTitle(title);
 		this.addNewButton.setText(other.getStringFromID("newButton"));
 		this.addCreatedButton.setText(other.getStringFromID("createdButton"));
 
@@ -148,7 +150,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	private void init() {
 		this.setLayout(new BorderLayout());
 		setBounds(600, 100, 500, 500);
-		setTitle("Property List");
+		setTitle("PropertyList");
 
 		menuBar = new JMenuBar();
 		menuFile = new JMenu();

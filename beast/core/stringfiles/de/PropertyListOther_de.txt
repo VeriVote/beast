@@ -1,6 +1,4 @@
-﻿title : Eigenschaftenliste
-newButton : Neu
-createdButton : Vorhandene
+bla : blub
 check : Analyse
 export : Exportieren
 electionType : Wahlverfahren
@@ -57,3 +55,6 @@ save : ' speichern?
 yesOption : Ja
 noOption : Nein
 cancelOption : Abbrechen
+title : Eigenschaftenliste
+newButton : Neu
+createdButton : Vorhandene
