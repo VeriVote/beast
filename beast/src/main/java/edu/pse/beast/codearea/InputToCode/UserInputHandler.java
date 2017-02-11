@@ -10,7 +10,7 @@ import java.awt.event.KeyListener;
 import javax.swing.JTextPane;
 
 /**
- *
+ *  
  * @author Holger-Desktop
  */
 public class UserInputHandler implements KeyListener {

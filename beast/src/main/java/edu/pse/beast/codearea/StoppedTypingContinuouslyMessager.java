@@ -31,6 +31,11 @@ public class StoppedTypingContinuouslyMessager implements KeyListener, CaretList
         pane.addCaretListener(this);
     }
     
+    /**
+     * adds the supplied listener so it will in future be notified if the user
+     * stops typing continuously
+     * @param l the object to be notified
+     */
     public void addListener(StoppedTypingContinuouslyListener l) {
         listener.add(l);
     }

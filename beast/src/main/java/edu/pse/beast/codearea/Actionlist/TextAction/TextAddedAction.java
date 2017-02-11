@@ -12,7 +12,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
 /**
- *
+ * This class represents the act of adding text to a Styleddocument and makes
+ * undoing this action possible
  * @author Holger-Desktop
  */
 public class TextAddedAction implements Action {

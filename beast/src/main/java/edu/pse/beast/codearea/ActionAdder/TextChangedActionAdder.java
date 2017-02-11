@@ -5,28 +5,23 @@
  */
 package edu.pse.beast.codearea.ActionAdder;
 
-import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveBeforeChangeHandler;
 import edu.pse.beast.codearea.Actionlist.Actionlist;
-import edu.pse.beast.codearea.Actionlist.EmptyActionList;
 import edu.pse.beast.codearea.Actionlist.TextAction.TextAddedAction;
 import edu.pse.beast.codearea.Actionlist.TextAction.TextDelta;
 import edu.pse.beast.codearea.Actionlist.TextAction.TextRemovedAction;
 import edu.pse.beast.codearea.SaveTextBeforeRemove;
 import edu.pse.beast.codearea.StoppedTypingContinuouslyListener;
 import edu.pse.beast.codearea.StoppedTypingContinuouslyMessager;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextPane;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 
 /**
- *
+ * This class creates TextRemoved and TextAddedActions and adds them to the
+ * supplied Actionlist
  * @author Holger-Desktop
  */
 public class TextChangedActionAdder implements 
@@ -42,13 +37,20 @@ public class TextChangedActionAdder implements
     private SaveTextBeforeRemove saveBeforeRemove;    
     private StoppedTypingContinuouslyMessager typingContinuouslyMessager;
     
+    /**
+     * creates a TextChangedActionAdder
+     * @param pane the JTextPane object used to communicate with the user. If the user
+     * changes the contents of this object, a corresponding action will be created
+     * @param list the Actionlist to which the created actions will be added
+     * @param saveBeforeRemove used to get removed Strings if the user removes text
+     */
     public TextChangedActionAdder(
             JTextPane pane,
             Actionlist list,
             SaveTextBeforeRemove saveBeforeRemove) {
         this.pane = pane;
         this.actionList = list;
-        list.addActionAdder(this);
+        list.addActionlistListener(this);
         this.saveBeforeRemove = saveBeforeRemove;
         pane.getStyledDocument().addDocumentListener(this);
         typingContinuouslyMessager = new StoppedTypingContinuouslyMessager(pane);

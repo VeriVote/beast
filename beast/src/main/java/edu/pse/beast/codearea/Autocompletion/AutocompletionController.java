@@ -50,7 +50,11 @@ public class AutocompletionController implements KeyListener, AncestorListener {
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }
     
-    public void addAutocompletionString(String s) {
+    public void stopThread() {
+        conc.stop();
+    }
+    
+     public void addAutocompletionString(String s) {
         for(AutocompletionOption opt : completionOptions) {
             if(opt.getInsertString().equals(s)) return;        
         }

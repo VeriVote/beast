@@ -12,7 +12,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
 /**
- *
+ * This class represents the act of removing text from a Styleddocument
+ * and makes it possible to undo this action
  * @author Holger-Desktop
  */
 public class TextRemovedAction implements Action {

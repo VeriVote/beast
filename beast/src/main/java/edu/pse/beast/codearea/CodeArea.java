@@ -19,26 +19,87 @@ import javax.swing.JTextPane;
 import java.util.ArrayList;
 
 /**
- *
- * @author Niels
+ * This class is the Fassade to the package of the same name - CodeArea. 
+ * It allows classes using this package to access its most commonly needed 
+ * utilities without having to know about the classes which implement these.
+ * The Package CodeArea uses a JTextPane to allow other classes to implement
+ * code editor functionality without having to reimplement commonly needed features.
+ * As such, it provides basic implementations for error finding and code completion.
+ * Child classes such as booleanexpcodearea use this to add specific error finders
+ * and autocompletion possiblitites. Thus, the code area can be specialized towards 
+ * a certain language.
+ * @author Holger Klein 
  */
 public class CodeArea {
     
+    /**
+     * the JTextpane on which the code will be presented to the user and
+     * through which the user communicates with the codearea classes
+     */
     protected JTextPane pane;
+    /**
+     * this class shows the line numbers
+     */
     protected TextLineNumber tln;
-    protected UserInputHandler userInputHandler;
+    /**
+     * handles input processing
+     */
+    protected UserInputHandler userInputHandler;   
+    /**
+     * handles mapping shortcuts to useractions
+     */
     protected ShortcutHandler shortcutHandler;
+    /**
+     * this class is used by the userinputhandler. It translates user input 
+     * into changes in the code
+     */
     protected UserInsertToCode insertToCode;
+    /**
+     * this class enables undoing and redoing actions
+     */
     protected Actionlist actionList;
+    /**
+     * this class controlls error finding and displaying
+     */
     protected ErrorController errorCtrl;
+    /**
+     * this class controlls finding and displaying autocompletion possibilities
+     */
     protected AutocompletionController autoComplCtrl;
+    /**
+     * This class provides access to and generates all useractions which can
+     * be performed on a codearea
+     */
     protected CodeAreaUserActions userActionList;
+    /**
+     * This class implements syntax highliting
+     */
     protected SyntaxHL syntaxHL;
+    /**
+     * This class messages other classes once the user has stopped typing 
+     * continuously
+     */
     protected StoppedTypingContinuouslyMessager stoppedTypingContinuouslyMessager;
-    protected SameWordsHighlighter sameWordsHighlighter;
+    /**
+     * this class highlight corresponding open/close chars
+     */
     protected OpenCloseCharHighlighter openCloseCharHighlighter;
     
-    
+    /**
+     * The constructor simply sets all member variables to the supplied classes
+     * @param pane the JTextpane on which the code will be presented to the user and
+     * through which the user communicates with the codearea classes
+     * @param tln shows the line numbers
+     * @param userInputHandler handles input processing
+     * @param insertToCode used by the userinputhandler. It translates user input 
+     * into changes in the code
+     * @param actionList enables undoing and redoing actions
+     * @param errorCtrl controlls error finding and displaying
+     * @param autoComplCtrl controlls finding and displaying autocompletion possibilities
+     * @param syntaxHL implements syntax highliting
+     * @param stoppedTypingContinuouslyMessager messages other classes once the user has stopped typing 
+     * continuously
+     */
     public CodeArea(
             JTextPane pane,
             TextLineNumber tln,
@@ -63,6 +124,12 @@ public class CodeArea {
         
     }
 
+    /**
+     * This constructor initialises all the fields with the fields of the 
+     * given codearea. Used to construct classes which inherit from codearea
+     * @param codeArea the fields of this codeare are taken to initialize the fields
+     * of the new codearea
+     */
     public CodeArea(CodeArea codeArea) {
         this.pane = codeArea.pane;
         this.tln = codeArea.tln;
@@ -77,29 +144,36 @@ public class CodeArea {
         this.stoppedTypingContinuouslyMessager = codeArea.stoppedTypingContinuouslyMessager;
         this.openCloseCharHighlighter = codeArea.openCloseCharHighlighter;
     }
-
+    
     public ErrorController getErrorCtrl() {
         return errorCtrl;
     }
     
-    
-    
+    /**
+     * locks the given line so the user cant edit it
+     * @param line the line to be locked, starting at 0
+     */
     public void lockLine(int line) {
         insertToCode.lockLine(line);
     }
 
+    /**
+     * return the first line of the code which is locked. Throws an exception
+     * indexoutofbounds exception if no line is locked
+     * @return the first locked line
+     */
     public int getFirstLockedLine() {
         return insertToCode.getFirstLockedLine();
-    }
-    
-    public void setUserActionList(CodeAreaUserActions userActionList) {
-        this.userActionList = userActionList;
     }
     
     public CodeAreaUserActions getUserActionList() {
         return userActionList;
     }
 
+    public void setUserActionList(CodeAreaUserActions userActionList) {
+        this.userActionList = userActionList;
+    }    
+    
     public JTextPane getPane() {
         return this.pane;
     }
@@ -112,10 +186,20 @@ public class CodeArea {
         syntaxHL.updateFilter(regexAndColorList);
     }
 
+    /**
+     * inserts the supplied string at the position of the caret.
+     * @param string the string to be inserted
+     */
     public void insertString(String string) {
         insertToCode.insertString(string);
     }
 
+    /**
+     * links the supplied action to the given char. If the user presses strg + char,
+     * the action will be performed
+     * @param c the char of the shortcut
+     * @param newAcc the action to be performed
+     */
     public void linkActionToShortcut(char c, UserAction newAcc) {
         shortcutHandler.addAction(c, newAcc);
     }

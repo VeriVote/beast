@@ -29,22 +29,36 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
     private String prevText;
     private Actionlist actionlist;
     
+    /**
+     * @param pane The JTextPane of whose StyledDocument the text should be saved
+     * before remove commands
+     * @param actionlist the actionlist which performs redo and undo action in the
+     * pane. This is needed to save before the actionlist redos or undoes actions
+     * which remove text from the pane
+     */
     public SaveTextBeforeRemove(JTextPane pane, Actionlist actionlist) {
         this.pane = pane;
         pane.addKeyListener(this);
         this.actionlist = actionlist;
-        actionlist.addActionAdder(this);
+        actionlist.addActionlistListener(this);
         try {
             prevText = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
         } catch (BadLocationException ex) {
             Logger.getLogger(SaveTextBeforeRemove.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     public String getPrevText() {        
         return prevText;
     }
     
+    /**
+     * returns the String starting at offset of length length before the last 
+     * textRemovedEvent
+     * @param offset the offset of the first character of the removed string
+     * @param length the lengt of the removed string
+     * @return the removed string
+     */
     public String getRemoveString(int offset, int length) {
         if (prevText.length() >= length) {
             try{
@@ -100,13 +114,15 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
             }
     }
 
-    
+    /**
+     * saves the current text of the given jtextpane
+     * @throws BadLocationException should never be thrown
+     */
     public void save() throws BadLocationException {
         prevText = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
     }
     
     @Override
-    public void finishedUndoingAction() {
-        
+    public void finishedUndoingAction() {        
     }
 }

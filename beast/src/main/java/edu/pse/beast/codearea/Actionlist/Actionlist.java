@@ -9,22 +9,31 @@ import java.util.ArrayList;
 import edu.pse.beast.codearea.ActionAdder.ActionlistListener;
 
 /**
- *
+ * This class saves actions which can be undone and redone. It provides
+ * functionallity to undo and redo these actions in the right order
  * @author Holger-Desktop
  */
 public class Actionlist {
-    private ArrayList<Action> lastPerformed = new ArrayList<>();
-    private ArrayList<Action> lastUndone = new ArrayList<>();
-    private ArrayList<ActionlistListener> listener = new  ArrayList<>();
+    private final ArrayList<Action> lastPerformed = new ArrayList<>();
+    private final ArrayList<Action> lastUndone = new ArrayList<>();
+    private final ArrayList<ActionlistListener> listener = new  ArrayList<>();
     
     public Actionlist() {        
     }
     
+    /**
+     * adds the supplied action to the list so if the user calls undoLast 
+     * immediatly, this action will be undone
+     * @param acc the action to be added to the list
+     */
     public void add(Action acc) {
         lastPerformed.add(acc);
         lastUndone.clear();
     }
     
+    /**
+     * calls undo of the last performed action
+     */
     public void undoLast() {  
         msgAllListenerStarted();        
         if(lastPerformed.isEmpty()) return;
@@ -35,6 +44,9 @@ public class Actionlist {
         msgAllListenerEnded();
     }
     
+    /**
+     * calls redo on the last undone action
+     */
     public void redoLast() {
         msgAllListenerStarted();        
         if(lastUndone.isEmpty()) return;
@@ -45,10 +57,18 @@ public class Actionlist {
         msgAllListenerEnded();
     }
     
-    public void addActionAdder(ActionlistListener adder) {
-        this.listener.add(adder);
+    /**
+     * the supplied Actionlistlistener will be notified when the list starts 
+     * and finishes undoing or redoing actions
+     * @param listener the object to be notified in the future
+     */
+    public void addActionlistListener(ActionlistListener listener) {
+        this.listener.add(listener);
     }
     
+    /**
+     * removes all actions
+     */
     public void clear() {
         lastPerformed.clear();
         lastUndone.clear();

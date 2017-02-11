@@ -51,8 +51,7 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
         this.openCloseCharList = openCloseCharList; 
         this.saveBeforeRemove = saveBeforeRemove;
         setupObjects();
-    }
-    
+    }    
     
     private void setupObjects() {
         stoppedTypingContMsger = new StoppedTypingContinuouslyMessager(pane);
@@ -69,12 +68,28 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
         return saveBeforeRemove;
     }
     
+    /**
+     * inserts a linebreak at the current caret position. Depending on the
+     * position, this can have different effects. Between two curly braces,
+     * it will add two linebreaks:
+     * {|} <-- before, the | represents the caret
+     * {
+     *     | <---after
+     * }
+     * @throws BadLocationException should never happen since the linebreak
+     * gets added at the caretposition which should be valid
+     */
     public void insertNewline() throws BadLocationException {  
         currentInserter.insertNewlineAtCurrentPosition(pane, tabInserter, 
                 lineBeginningTabsHandler, currentCaretPosition);               
         newlineInserterChooser.getNewlineInserter();
     }
 
+    /**
+     * inserts the given string at the current caret position unless it is in 
+     * a locked line
+     * @param string the string to be inserted 
+     */
     public void insertString(String string) {
         try {
             if (isLineContainingCaretPosLocked()) {
@@ -98,6 +113,11 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
         }
     }
     
+    /**
+     * removes a tab at the current caret position of the line isnt locked and
+     * there are only spaces left of the caret position in the line
+     * @throws BadLocationException 
+     */
     public void removeTab() throws BadLocationException {
         if(selectionIncludesLockedLines()) return;       
         if(isLineContainingCaretPosLocked()) return; 
@@ -115,6 +135,10 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
         }
     }
 
+    /**
+     * inserts a tab at the current position of the line isnt locked
+     * @throws BadLocationException 
+     */
     public void insertTab() throws BadLocationException {
         if(selectionIncludesLockedLines()) return;       
         if(isLineContainingCaretPosLocked()) return; 
@@ -130,11 +154,19 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
         }        
     }
 
+    
     private boolean isLineContainingCaretPosLocked() {
         return lockedLines.isLineLocked(JTextPaneToolbox.transformToLineNumber(pane, pane.getCaretPosition()));
     }
 
-    public void insertChar(char keyChar) throws BadLocationException {
+    /**
+     * inserts the given char at the current caret position if the line isnt locked.
+     * if the char has a corresponding closing char, such as { having }, the
+     * corresponding closing char is also inserted
+     * @param insertChar the char to be inserted
+     * @throws BadLocationException 
+     */
+    public void insertChar(char insertChar) throws BadLocationException {
         if(selectionIncludesLockedLines()) return;
         if(isLineContainingCaretPosLocked()) return;
         if(pane.getSelectedText() != null) {
@@ -142,24 +174,33 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
                     pane.getSelectionStart(),
                     pane.getSelectionEnd() - pane.getSelectionStart());
         }
-        if(openCloseCharList.isOpenChar(keyChar)) {
-            OpenCloseChar occ = openCloseCharList.getOpenCloseChar(keyChar);dontTypeClosingChar = true;
+        if(openCloseCharList.isOpenChar(insertChar)) {
+            OpenCloseChar occ = openCloseCharList.getOpenCloseChar(insertChar);dontTypeClosingChar = true;
             occ.insertIntoDocument(pane, currentCaretPosition);
             dontTypeClosingChar = true;                        
-        } else if(dontTypeClosingChar && openCloseCharList.isCloseChar(keyChar)) {
+        } else if(dontTypeClosingChar && openCloseCharList.isCloseChar(insertChar)) {
             dontTypeClosingChar = false;
             pane.setCaretPosition(currentCaretPosition + 1);
             return;
         } else {
-            styledDoc.insertString(currentCaretPosition, Character.toString(keyChar), null);
+            styledDoc.insertString(currentCaretPosition, Character.toString(insertChar), null);
         }
     }
     
+    /**
+     * lock the supplied line from editing
+     * @param line the line to be locked, starting at 0
+     */
     public void lockLine(int line) {
         lockedLines.lockLine(line);        
         this.currentInserter = this.newlineInserterChooser.getNewlineInserter();        
     }
 
+    /**
+     * returns the first locked lines number. If no line is locked, an exception is
+     * thrown
+     * @return The first line which is locked
+     */
     public int getFirstLockedLine() {
         return lockedLines.getFirstLockedLine();
     }
@@ -170,18 +211,30 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
         currentInserter = newlineInserterChooser.getNewlineInserter();        
     }
     
-
-    void moveToEndOfCurrentLine() {
+    /**
+     * changes the current caret position so it is at the end of the line it is currently
+     * one
+     */
+    public void moveToEndOfCurrentLine() {
         int end = JTextPaneToolbox.getClosestLineBeginningAfter(pane, currentCaretPosition);
         pane.setCaretPosition(end);
     }
 
-    void moveToStartOfCurrentLine() {
+     /**
+     * changes the current caret position so it is at the beginning of the line it is currently
+     * one
+     */
+    public void moveToStartOfCurrentLine() {
         int dist = JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, currentCaretPosition);
         pane.setCaretPosition(pane.getCaretPosition() - dist);
     }
 
-    void removeToTheRight() {
+    /**
+     * removes one char to the right of the current caret position if it doesnt
+     * change a locked line. If more text is selected, all the selecte text gets
+     * removed instead
+     */
+    public void removeToTheRight() {
         if(selectionIncludesLockedLines()) return;
         if(!isCaretInEmptyLine() && isCaretAtEndOfLine()) {
             if(isTheFollowingLineLocked()) {
@@ -218,7 +271,12 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
     private boolean isTheFollowingLineLocked() {
         return lockedLines.isLineLocked(JTextPaneToolbox.transformToLineNumber(pane, currentCaretPosition) + 1);
     }
-
+    
+    /**
+     * removes one char to the left of the current caret position if it doesnt
+     * change a locked line. If more text is selected, all the selecte text gets
+     * removed instead
+     */
     public void removeToTheLeft() {
         if(selectionIncludesLockedLines()) return;
         if(currentCaretPosition == 0) return;        

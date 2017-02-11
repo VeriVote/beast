@@ -30,14 +30,23 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
 /**
- *
+ *  This class builds a codearea and inititalizes all the classes needed by the
+ *  codearea. 
  * @author Holger-Desktop
  */
 public class CodeAreaBuilder {
 
+    /**
+     * creates a codearea object
+     * @param codeArea the JTextPane used to display code
+     * @param codeAreaScroll The Scrollpane used to scroll in the jtextpane
+     * @param refs The references to interfaces needed to build objects
+     * @param errorDisplayer The specific errordisplayer to be used by the errorcontroller
+     * @return The created codearea object
+     */
     public CodeArea createCodeArea(JTextPane codeArea, JScrollPane codeAreaScroll, ObjectRefsForBuilder refs,
                                    ErrorDisplayer errorDisplayer) {
-                
+        //simply create all necessary objects        
         OpenCloseCharList occL = new OpenCloseCharList();
         
         ShortcutHandler shortcutHandler = new ShortcutHandler();
@@ -69,9 +78,7 @@ public class CodeAreaBuilder {
                 autocompletion, syntaxHL, stoppedTypingContinuouslyMessager);
         CodeAreaUserActions userActions = new CodeAreaUserActions(created);
         created.setUserActionList(userActions);
-
-
-        //maybe change it up so user can change it?
+        
         shortcutHandler.addAction('z', userActions.getActionById("undo"));
         shortcutHandler.addAction('r', userActions.getActionById("redo"));
         return created;

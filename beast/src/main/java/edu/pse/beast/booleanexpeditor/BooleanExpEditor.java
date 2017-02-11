@@ -201,6 +201,9 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
         prePropCodeArea.getErrorCtrl().stopThread();
         postPropCodeArea.getErrorCtrl().stopThread();
 
+        prePropCodeArea.getAutoComplCtrl().stopThread();
+        postPropCodeArea.getAutoComplCtrl().stopThread();
+        
         prePropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder, window.getPrePropTextPane(),
                 window.getPrePropScrollPane(), symbolicVarListController.getSymbolicVariableList(), cEditor);
         postPropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder, window.getPostPropTextPane(),
