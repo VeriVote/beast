@@ -30,7 +30,9 @@ public class StringResourceLoader {
         String displayedText;
         while (!stringRes.isEmpty()) {
             line = stringRes.pop();
-            if(line.length() == 0) continue;
+            if (line.length() == 0) {
+                continue;
+            }
             split = line.split(":");
             id = split[0].trim();
             displayedText = split[1].trim();
@@ -44,6 +46,8 @@ public class StringResourceLoader {
      * @return the String with the id
      */
     public String getStringFromID(String id) {
-        return idsToString.get(id);
+        String get = idsToString.get(id);
+        get.isEmpty();
+        return get;
     }
 }
