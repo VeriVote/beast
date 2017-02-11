@@ -36,22 +36,17 @@ public final class FileLoader {
     public static LinkedList<String> loadFileAsString(File file) throws FileNotFoundException, IOException {
 
         LinkedList<String> stringlist;
-        /**
-         * try (BufferedReader br = new BufferedReader( new InputStreamReader(
-         * new FileInputStream(file), "UTF8"))) {
-         */
-        InputStream inputStream = new FileInputStream(file);
-        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-        stringlist = new LinkedList<>();
-        String line;
+        try (InputStream inputStream = new FileInputStream(file);
+                BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"))) {
+            stringlist = new LinkedList<>();
+            String line;
 
-        line = br.readLine();
-        while (line != null) {
-            stringlist.add(line);
             line = br.readLine();
+            while (line != null) {
+                stringlist.add(line);
+                line = br.readLine();
+            }
         }
-        br.close();
-        inputStream.close();
         return stringlist;
     }
 

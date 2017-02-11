@@ -53,9 +53,8 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
     }
 
     /**
-     * Initializes all attributes Loads all StringResourceLoaders with the files
-     * It uses the super classes methods errorFileHasWrongFormat,
-     * errorFileNotFound and getFileLocationString
+     * Initializes all attributes. Loads all StringResourceLoaders with the
+     * filenames. The superclass provides the functions for this process
      */
     @Override
     protected final void initialize() {
@@ -65,6 +64,10 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
         electionStringRes = this.getStringResourceLoaderFromModuleName("CElectionEditorElection");
     }
 
+    /**
+     *
+     * @return the Election String res
+     */
     public StringResourceLoader getElectionStringRes() {
         return electionStringRes;
     }
