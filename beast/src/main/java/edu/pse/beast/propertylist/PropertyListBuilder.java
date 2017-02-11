@@ -39,6 +39,7 @@ public class PropertyListBuilder {
         FileChooser fileChooser = new FileChooser(refs.getStringIF().getPropertyListStringResProvider().getOtherStringRes(),
                 new PropertyListSaverLoader(), null);
         controller = new PropertyList(model, booleanExpEditor, fileChooser);
+        booleanExpEditor.setPropertyListController(controller);
 
         window = controller.getView();
         window.updateStringRes(refs.getStringIF());

@@ -36,6 +36,7 @@ public class LoadPropsUserAction extends UserAction {
                 = (PostAndPrePropertiesDescription) booleanExpEditor.getFileChooser().loadObject();
         if (loadedPostAndPrePropertiesDescription != null) {
             booleanExpEditor.loadNewProperties(loadedPostAndPrePropertiesDescription);
+            booleanExpEditor.getPropertyListController().addDescription(new PropertyItem(loadedPostAndPrePropertiesDescription));
         }
     }
 

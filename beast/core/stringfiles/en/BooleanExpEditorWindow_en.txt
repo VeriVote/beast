@@ -7,8 +7,8 @@ remove : Remove
 voter : Voter
 candidate : Candidate
 seat : Seat
-saveChanges : Changes to '
-save : save '?
+saveChanges : Save changes to '
+save : '?
 yesOption : Yes
 noOption : No
 cancelOption : Cancel
