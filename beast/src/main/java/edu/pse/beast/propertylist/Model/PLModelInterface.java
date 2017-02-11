@@ -106,6 +106,7 @@ public interface PLModelInterface {
      * @return Returns the property list model
      */
     PLModel getModel();
+    
     /**
      * Setter for the data model.
      * @param model The new model to replace the old one
@@ -117,6 +118,7 @@ public interface PLModelInterface {
      * @param name The new name for the list
      */
     void setNewName(String name);
+    
     /**
      * Returns the name of the property list.
      * @return The name of the list

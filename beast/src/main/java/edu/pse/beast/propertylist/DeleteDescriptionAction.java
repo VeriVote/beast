@@ -22,6 +22,7 @@ public class DeleteDescriptionAction {
 		this.item = item;
 	}
 
+	
 	/**
 	 * Deletes the property.
 	 */

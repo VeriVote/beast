@@ -10,7 +10,6 @@ import edu.pse.beast.propertylist.Model.PLModelInterface;
  *
  */
 public class PLChangeHandler implements Observer {
-
     private boolean hasChanged = false;
 
     /**
@@ -21,11 +20,13 @@ public class PLChangeHandler implements Observer {
         model.addObserver(this);
     }
 
+    
     @Override
     public void update(Observable o, Object arg) {
         this.setChangedSinceSave(true);
     }
 
+    
     // getter and setter
     public boolean hasChanged() {
         return hasChanged;

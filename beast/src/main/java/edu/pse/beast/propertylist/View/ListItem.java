@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -22,34 +23,55 @@ import edu.pse.beast.propertylist.Model.PLModelInterface;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
+import edu.pse.beast.toolbox.SuperFolderFinder;
 
 /**
- *
+ * Represents the view for a PropertyItem.
  * @author Justin
  */
+@SuppressWarnings("serial")
 public class ListItem extends JPanel implements DisplaysStringsToUser {
 
     PLModelInterface model;
     PLControllerInterface controller;
 
     private boolean reactsToInput;
+    private StringLoaderInterface sli;
 
     protected ResultPresenterWindow resWindow;
     private PropertyItem prop;
 
-    private StringLoaderInterface sli;
-
-    protected ResultButton showResult = new ResultButton();
+    protected JButton showResult = new JButton();
     protected JTextField name = new JTextField();
     protected JCheckBox testStatus = new JCheckBox();
     protected JButton changeButton = new JButton();
     protected JButton deleteButton = new JButton();
+    
+    private final String pathToEye = "/core/images/other/eye.png";
+    private final ImageIcon eyeIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToEye);
+    
+    private final String pathToWrench = "/core/images/other/eye.png";
+    private final ImageIcon wrenchIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToWrench);
+    
+    private final String pathToXMark = "/core/images/other/x-mark.png";
+    private final Icon xMarkIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToXMark);
 
+    /**
+     * Constructor with an empty property (empty except for the name).
+     * @param controller The controller of PropertyList
+     * @param model The model of PropertyList
+     */
     public ListItem(PLControllerInterface controller, PLModelInterface model) {
         this(controller, model, new PropertyItem());
         init();
     }
 
+    /**
+     * Constructor
+     * @param controller The controller of PropertyList
+     * @param model The model of PropertyList
+     * @param prop The PropertyItem to be viewed
+     */
     public ListItem(PLControllerInterface controller, PLModelInterface model, PropertyItem prop) {
         this.model = model;
         this.controller = controller;
@@ -59,7 +81,21 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
         resWindow = new ResultPresenterWindow(sli);
         init();
     }
+    
+    
+    @Override
+    public void updateStringRes(StringLoaderInterface sli) {
+        this.sli = sli;
+        PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
+        StringResourceLoader other = provider.getOtherStringRes();
 
+        this.testStatus.setText(other.getStringFromID("check"));
+        this.revalidate();
+        this.repaint();
+    }
+
+    
+    // getter and setter
     public PropertyItem getPropertyItem() {
         return prop;
     }
@@ -75,13 +111,14 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
     public void setReactsToInput(boolean reactsToInput) {
         this.reactsToInput = reactsToInput;
     }
-
+    
+    // private methods
     private void init() {
         this.setMaximumSize(new Dimension(500, 2000));
         Dimension iconSize = new Dimension(40, 40);
 
         showResult.setPreferredSize(new Dimension(80, 40));
-        showResult.setIcon(new ImageIcon(getClass().getResource("/images/other/eye.png")));
+        showResult.setIcon(eyeIcon);
         //present();
         showResult.setBackground(presentColor());
         showResult.addActionListener(new ActionListener() {
@@ -125,7 +162,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
         this.add(testStatus, BorderLayout.LINE_START);
 
         changeButton.setPreferredSize(iconSize);
-        changeButton.setIcon(new ImageIcon(getClass().getResource("/images/other/wrench.png")));
+        changeButton.setIcon(wrenchIcon);
         changeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -137,7 +174,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
         this.add(changeButton, BorderLayout.LINE_START);
 
         deleteButton.setPreferredSize(iconSize);
-        deleteButton.setIcon(new ImageIcon(getClass().getResource("/images/other/x-mark.png")));
+        deleteButton.setIcon(xMarkIcon);
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -148,17 +185,6 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
         });
         this.add(deleteButton, BorderLayout.LINE_START);
 
-    }
-
-    @Override
-    public void updateStringRes(StringLoaderInterface sli) {
-        this.sli = sli;
-        PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
-        StringResourceLoader other = provider.getOtherStringRes();
-
-        this.testStatus.setText(other.getStringFromID("check"));
-        this.revalidate();
-        this.repaint();
     }
 
     private Color presentColor() {
@@ -200,31 +226,4 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
         }
     }
 
-    /*@Override
-	public void presentTimeOut() {
-		showResult.setBackground(Color.ORANGE);
-		
-	}
-
-	@Override
-	public void presentSuccess() {
-		showResult.setBackground(Color.GREEN);
-		prop.setResultType(ResultType.SUCCESS);
-		super.validate();
-		this.revalidate();
-		this.repaint();
-	}
-
-	@Override
-	public void presentFailure(List<String> error) {
-		showResult.setBackground(Color.RED);
-		resWindow.presentFailure(error);
-	}
-
-	@Override
-	public void presentFailureExample(FailureExample example) {
-		showResult.setBackground(Color.RED);
-		resWindow.presentFailureExample(example);
-	}
-     */
 }
