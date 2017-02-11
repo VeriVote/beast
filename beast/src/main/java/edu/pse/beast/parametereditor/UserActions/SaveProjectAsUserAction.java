@@ -42,8 +42,10 @@ public class SaveProjectAsUserAction extends UserAction {
         if (paramEditor.getReacts()) {
             Project project = paramEditor.getCurrentlyLoadedProject();
             if (paramEditor.getFileChooser().saveObject(project, true)) {
-                paramEditor.getView().setWindowTitle(paramEditor.getCurrentlyLoadedProject().getName());
                 paramEditor.setHasChanged(false);
+                cElectionEditor.getChangeHandler().updatePreValue();
+                propertyList.getChangeHandler().setChangedSinceSave(false);
+                paramEditor.setCurrentlyLoadedProject(project);
             }
         }
     }

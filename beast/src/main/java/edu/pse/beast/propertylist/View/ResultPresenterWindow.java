@@ -63,7 +63,7 @@ public class ResultPresenterWindow extends JFrame {
         init();
     }
     
-    public void makeUnvisible() {
+    public void makeInvisible() {
         this.setVisible(false);
     }
 

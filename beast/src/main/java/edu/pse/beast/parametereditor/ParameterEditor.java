@@ -151,6 +151,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier {
     }
 
     public void loadProject(Project project) {
+        setCurrentlyLoadedProject(project);
         propertyList.setPLModel(project.getPropList());
         propertyList.getView().setVisible(true);
         setParameter(project.getElectionCheckParameter());
@@ -253,5 +254,10 @@ public class ParameterEditor implements ParameterSource, MainNotifier {
             return new Project(getParameter(), propertyList.getModel(),
                     cElectionDescriptionEditor.getElectionDescription(), currentlyLoadedProject.getName());
         }
+    }
+
+    public void setCurrentlyLoadedProject(Project project) {
+        currentlyLoadedProject = project;
+        getView().setWindowTitle(project.getName());
     }
 }
