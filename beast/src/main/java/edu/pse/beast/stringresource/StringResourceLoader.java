@@ -30,13 +30,12 @@ public class StringResourceLoader {
         String displayedText;
         while (!stringRes.isEmpty()) {
             line = stringRes.pop();
-            if (line.length() == 0) {
-                break;
+            if (line.length() != 0) {
+                split = line.split(":", 2);
+                id = split[0].trim();
+                displayedText = split[1].trim();
+                idsToString.put(id, displayedText);
             }
-            split = line.split(":", 2);
-            id = split[0].trim();
-            displayedText = split[1].trim();
-            idsToString.put(id, displayedText);
         }
     }
 
