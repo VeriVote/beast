@@ -82,7 +82,6 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     private void updateCurrentDescription() {
         List<String> code;
         currentDescription.setVotingDeclLine(codeArea.getFirstLockedLine());
-        System.out.println(currentDescription.getVotingDeclLine());
         String content = codeArea.getPane().getText();
         String lines[] = content.split("\n");
         for (String s : lines) {

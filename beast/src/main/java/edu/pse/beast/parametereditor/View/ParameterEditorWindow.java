@@ -21,8 +21,8 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     private final AdvancedWindow advWindow = new AdvancedWindow();
     private final VersionWindow versionWindow = new VersionWindow();
     private boolean reacts;
-    private String title;
-    private String currentlyLoadedProjectName;
+    private String title = "";
+    private String currentlyLoadedProjectName = "New Project";
     private ImageIcon loading;
     private JLabel imageLabel;
     private StringLoaderInterface stringResIF;
