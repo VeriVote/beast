@@ -38,6 +38,11 @@ public class ErrorFinderThread implements Runnable {
     
     @Override
     public void run() {
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ErrorFinderThread.class.getName()).log(Level.SEVERE, null, ex);
+        }
         while(keepRunning) {
             try {
                 Thread.sleep(2000);

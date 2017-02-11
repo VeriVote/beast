@@ -46,7 +46,10 @@ public class CErrorDisplayer extends ErrorDisplayer {
             int end = JTextPaneToolbox.getClosestLineBeginningAfter(pane, start);
             er.setStartPos(start);
             er.setEndPos(end);
-            return er.getExtraInfo("msg");
+            String msg = er.getExtraInfo("msg");
+            String var = er.getExtraInfo("var");
+            if(!msg.contains(var)) msg = var + ": " + msg; 
+            return msg;
         }
         return "";
     }

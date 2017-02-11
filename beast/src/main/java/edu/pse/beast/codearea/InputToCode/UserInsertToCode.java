@@ -231,7 +231,7 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
 
     /**
      * removes one char to the right of the current caret position if it doesnt
-     * change a locked line. If more text is selected, all the selecte text gets
+     * change a locked line. If more text is selected, all the selected text gets
      * removed instead
      */
     public void removeToTheRight() {

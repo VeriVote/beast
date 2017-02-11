@@ -55,7 +55,7 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
             // inside
             // VScmd has to be in one giant string. Put the created file in the output directory, so
             // it can be deleted afterwards
-            String clExeCall = "\"" + vsCmd + "\"" + " & " + compilerString + " " + (toCheck.getAbsolutePath()) 
+            String clExeCall = "\"" + vsCmd + "\"" + " & " + compilerString + " " + ("\"" + toCheck.getAbsolutePath() + "\"") 
                     + (" /Fo" + toCheck.getParent() + "\\");
             
             System.out.println(clExeCall);
@@ -100,8 +100,8 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
                     lineNumber = Integer.parseInt(linesMatcher.group(1).split("\\(")[1].split("\\)")[0]);
 
                     //get the error message here by splitting at a common identifier
-                    String[] varAndMessage = line.split("(error C[0-9]*:)");
-
+                    String[] varAndMessage = line.split("(C[0-9]*:)");
+                    String msg = line.substring(line.lastIndexOf(":"));
                     //to prevent exceptions
                     if (varAndMessage.length > 1) {
                         String toSplit = varAndMessage[1];

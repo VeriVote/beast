@@ -38,7 +38,7 @@ public abstract class SystemSpecificErrorChecker {
         String absolutePath = SuperFolderFinder.getSuperFolder() + pathToTempFolder;
         
         String pathToNewFile = absolutePath + FileLoader.getNewUniqueName(absolutePath);
-        
+        //pathToNewFile = pathToNewFile.replaceAll("%20", " ");
         //create two links to files, so in case an object file gets created we can delete it afterwards too
         File cFile = new File(pathToNewFile + ".c");
 
