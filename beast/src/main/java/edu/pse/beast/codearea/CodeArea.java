@@ -15,8 +15,12 @@ import edu.pse.beast.codearea.SyntaxHL.RegexAndColor;
 import edu.pse.beast.codearea.SyntaxHL.SyntaxHL;
 import edu.pse.beast.codearea.UserActions.CodeAreaUserActions;
 import edu.pse.beast.toolbox.UserAction;
+import java.awt.event.HierarchyEvent;
+import java.awt.event.HierarchyListener;
 import javax.swing.JTextPane;
 import java.util.ArrayList;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 
 /**
  * This class is the Fassade to the package of the same name - CodeArea. 
@@ -30,7 +34,7 @@ import java.util.ArrayList;
  * a certain language.
  * @author Holger Klein 
  */
-public class CodeArea {
+public class CodeArea implements AncestorListener {
     
     /**
      * the JTextpane on which the code will be presented to the user and
@@ -121,7 +125,7 @@ public class CodeArea {
         this.syntaxHL = syntaxHL;
         this.stoppedTypingContinuouslyMessager = stoppedTypingContinuouslyMessager;
         this.openCloseCharHighlighter = new OpenCloseCharHighlighter(insertToCode.getOccList(), pane);
-        
+        pane.addAncestorListener(this);
     }
 
     /**
@@ -143,6 +147,7 @@ public class CodeArea {
         this.syntaxHL = codeArea.syntaxHL;
         this.stoppedTypingContinuouslyMessager = codeArea.stoppedTypingContinuouslyMessager;
         this.openCloseCharHighlighter = codeArea.openCloseCharHighlighter;
+        pane.addAncestorListener(this);
     }
     
     public ErrorController getErrorCtrl() {
@@ -207,4 +212,18 @@ public class CodeArea {
     public AutocompletionController getAutoComplCtrl() {
         return autoComplCtrl;
     }    
+
+    @Override
+    public void ancestorAdded(AncestorEvent ae) {
+    }
+
+    @Override
+    public void ancestorRemoved(AncestorEvent ae) {
+    }
+
+    @Override
+    public void ancestorMoved(AncestorEvent ae) {
+        pane.repaint();
+    }
+
 }

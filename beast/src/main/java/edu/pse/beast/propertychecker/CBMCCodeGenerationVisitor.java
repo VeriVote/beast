@@ -153,7 +153,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         variableNames.push(varName);
         node.getLHSBooleanExpNode().getVisited(this);
         node.getRHSBooleanExpNode().getVisited(this);
-        code.add("unsigned int " + varName + " = (!(" + variableNames.pop() + ") || (" + variableNames.pop() + "));");
+        String rhsName = variableNames.pop();
+        String lhsName = variableNames.pop();
+        code.add("unsigned int " + varName + " = (!(" + lhsName + ") || (" + rhsName + "));");
         testIfLast();
     }
 
@@ -169,8 +171,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         variableNames.push(varName);
         node.getLHSBooleanExpNode().getVisited(this);
         node.getRHSBooleanExpNode().getVisited(this);
-        String lhs = variableNames.pop();
         String rhs = variableNames.pop();
+        String lhs = variableNames.pop();
         code.add("unsigned int " + varName + " = (((" + lhs + ") && (" + rhs
                 + ")) || (!(" + lhs + ") && (!" + rhs + ")));");
         testIfLast();

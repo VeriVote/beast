@@ -64,7 +64,6 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
     }
     
     protected void showError(CodeError er, String msg) {
-        System.err.println(getPosString(er) + ": " + msg);   
         int startpos = er.getStartPos();
         int endpos = er.getEndPos();
         if(startpos == endpos) endpos++;
@@ -75,6 +74,7 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         } catch (BadLocationException ex) {
             Logger.getLogger(ErrorDisplayer.class.getName()).log(Level.SEVERE, null, ex);
         }
+        pane.repaint();
     }
     
     private String getPosString(CodeError er) {
@@ -87,12 +87,14 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         template = template.replace("ERRNO", String.valueOf(er.getErrorNumber()));
         return template;
     }
+    
     @Override
     public void mouseMoved(MouseEvent e) {
         Point pt = new Point(e.getX(), e.getY());
         int pos = pane.viewToModel(pt);
         if(pos == JTextPaneToolbox.getText(pane).length()) 
-        if(Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 && Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 && errorPopupMenu.isVisible()) return;
+        if(Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 && 
+                Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 && errorPopupMenu.isVisible()) return;
         for(int i = 0; i < absPosToMsg.size(); ++i) {
             if(absPosToMsg.get(i).x <= pos && absPosToMsg.get(i).y >= pos) {
                 errorPopupMenu.getErrorItem().setText(msges.get(i));
