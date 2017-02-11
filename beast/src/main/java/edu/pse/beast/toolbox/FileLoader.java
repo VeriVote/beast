@@ -56,12 +56,12 @@ public final class FileLoader {
      * @return the image, if it was possible to read it. In case it couldn't be
      * read, the methode returns null
      */
-    public static BufferedImage loadFileAsImage(InputStream in) {
+    public static BufferedImage loadFileAsImage(File toRead) {
         BufferedImage toReturn = null;
         try {
-            toReturn = ImageIO.read(in);
+            toReturn = ImageIO.read(toRead);
         } catch (IOException e) {
-            ErrorLogger.log("The specified file: " + in.toString() + " couldn't be loaded");
+            ErrorLogger.log("The specified file: " + toRead.getAbsolutePath() + " couldn't be loaded");
         }
 
         return toReturn;

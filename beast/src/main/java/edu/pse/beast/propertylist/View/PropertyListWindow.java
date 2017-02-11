@@ -26,6 +26,7 @@ import edu.pse.beast.propertylist.Model.ResultType;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
+import edu.pse.beast.toolbox.SuperFolderFinder;
 
 /**
  *
@@ -51,6 +52,10 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	private ListItem nextToPresent;
 	private JButton addNewButton = new JButton();
 	private JButton addCreatedButton = new JButton();
+	
+	private final String pathToAdd = "/core/images/other/add.png";
+	private final ImageIcon addIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToAdd);
+	
 
 	//private NewPropertyWindow newPropWindow;
 
@@ -111,7 +116,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		endpanel = new JPanel();
 		getContentPane().add(endpanel, BorderLayout.SOUTH);
 
-		addNewButton.setIcon(new ImageIcon(getClass().getResource("/images/other/add.png")));
+		addNewButton.setIcon(addIcon);
 		addNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (reactsToInput)
@@ -121,7 +126,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		});
 		endpanel.add(addNewButton, BorderLayout.LINE_END);
 		
-		addCreatedButton.setIcon(new ImageIcon(getClass().getResource("/images/other/add.png")));
+		addCreatedButton.setIcon(addIcon);
 		addCreatedButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

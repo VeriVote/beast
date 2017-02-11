@@ -22,9 +22,9 @@ public class ImageResourceProvider {
         if(toolbar == null) {
             String[] ids = {"new", "save", "save_as", 
                 "load", "copy", "cut", "paste", "undo", "redo",
-            "start", "stop"};
+            "start", "stop", "add"};
             toolbar =
-                    new ImageResourceProvider("images/toolbar/",
+                    new ImageResourceProvider("/core/images/toolbar/",
                     ids);
         }
         return toolbar;
@@ -38,9 +38,13 @@ public class ImageResourceProvider {
         this.folder = folder;
         this.ids = ids;
         for(String s : ids) {
-            String location = folder + s + ".png";
+            
+            File toRead = new File(SuperFolderFinder.getSuperFolder() + folder + s + ".png");
+            
+    //        String location = folder + s + ".png";
             Image img = null;
-            img = FileLoader.loadFileAsImage(getClass().getClassLoader().getResourceAsStream(location));
+     //       img = FileLoader.loadFileAsImage(getClass().getClassLoader().getResourceAsStream(location));
+            img = FileLoader.loadFileAsImage(toRead);
             images.put(s, img);
         }
     }
