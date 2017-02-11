@@ -48,8 +48,8 @@ public class PropertyListWindowStarterTest {
 		PLModelInterface model = new PLModel();
 		PLControllerInterface controller = new PropertyList(model);
 		
-		PropertyListWindowStarter starter = new PropertyListWindowStarter(controller, model);
-		starter.start();
+	//	PropertyListWindowStarter starter = new PropertyListWindowStarter(controller, model);
+	//	starter.start();
 		controller.addNewProperty();
 		
 		
