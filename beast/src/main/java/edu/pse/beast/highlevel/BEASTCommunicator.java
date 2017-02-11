@@ -1,10 +1,5 @@
 package edu.pse.beast.highlevel;
 
-import edu.pse.beast.parametereditor.ParameterEditor;
-import edu.pse.beast.toolbox.SuperFolderFinder;
-
-import javax.swing.*;
-import java.awt.*;
 import java.util.List;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -44,52 +39,56 @@ public class BEASTCommunicator implements CheckListener {
         checkStatusDisplayer.displayText("searchingForErrors", true, "");
         if (!electSrc.isCorrect()) {
             checkStatusDisplayer.displayText("electionDescriptionErrors", false, "");
-            return;
+            paramSrc.resumeReacting();
+            postAndPreSrc.resumeReacting();
         } else if (!postAndPreSrc.isCorrect()) {
             checkStatusDisplayer.displayText("propertyErrors", false, "");
-            return;
+            electSrc.resumeReacting();
+            paramSrc.resumeReacting();
         } else if (!paramSrc.isCorrect()) {
             checkStatusDisplayer.displayText("parameterErrors", false, "");
-            return;
+            electSrc.resumeReacting();
+            paramSrc.resumeReacting();
+            postAndPreSrc.resumeReacting();
         } else {
+            resultList = centralObjectProvider.getResultCheckerCommunicator()
+                    .checkPropertiesForDescription(electSrc, postAndPreSrc, paramSrc);
 
-        resultList = centralObjectProvider.getResultCheckerCommunicator()
-                .checkPropertiesForDescription(electSrc, postAndPreSrc, paramSrc);
+            checkStatusDisplayer.displayText("startingCheck", true, "");
 
-        checkStatusDisplayer.displayText("startingCheck", true, "");
-
-        Thread waitForResultsThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int numberOfPresentedResults = 0;
-                while (numberOfPresentedResults < postAndPreSrc.getPostAndPrePropertiesDescriptions().size()) {
-                    checkStatusDisplayer.displayText("waitingForPropertyResult", true,
-                            postAndPreSrc.getPostAndPrePropertiesDescriptions().get(numberOfPresentedResults).getName()
-                     + "'");
-                    ;
-                    try {
-                        Thread.sleep(50);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(BEASTCommunicator.class.getName()).log(Level.SEVERE, null, ex);
-                    } if (resultList.size() > 0) {
-                        for (Iterator<ResultInterface> iterator = resultList.iterator(); iterator.hasNext();) {
-                            ResultInterface result = (ResultInterface) iterator.next();
-                            if (result.readyToPresent()) {
-                                ResultPresenter resultPresenter = centralObjectProvider.getResultPresenter();
-                                resultPresenter.presentResult(result);
-                                iterator.remove();
-                                numberOfPresentedResults++;
+            Thread waitForResultsThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int numberOfPresentedResults = 0;
+                    while (numberOfPresentedResults < postAndPreSrc.getPostAndPrePropertiesDescriptions().size()) {
+                        checkStatusDisplayer.displayText("waitingForPropertyResult", true,
+                                postAndPreSrc.getPostAndPrePropertiesDescriptions().
+                                        get(numberOfPresentedResults).getName() + "'");
+                        ;
+                        try {
+                            Thread.sleep(50);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(BEASTCommunicator.class.getName()).log(Level.SEVERE, null, ex);
+                        } if (resultList.size() > 0) {
+                            for (Iterator<ResultInterface> iterator = resultList.iterator(); iterator.hasNext();) {
+                                ResultInterface result = (ResultInterface) iterator.next();
+                                if (result.readyToPresent()) {
+                                    ResultPresenter resultPresenter = centralObjectProvider.getResultPresenter();
+                                    resultPresenter.presentResult(result);
+                                    iterator.remove();
+                                    numberOfPresentedResults++;
+                                }
                             }
                         }
                     }
+                    electSrc.resumeReacting();
+                    postAndPreSrc.resumeReacting();
+                    paramSrc.resumeReacting();
+                    checkStatusDisplayer.displayText("", false, "");
                 }
-                electSrc.resumeReacting();
-                postAndPreSrc.resumeReacting();
-                paramSrc.resumeReacting();
-                checkStatusDisplayer.displayText("", false, "");
-            }
-        });
-        waitForResultsThread.start();
+            });
+            waitForResultsThread.start();
+
         }
     }
 

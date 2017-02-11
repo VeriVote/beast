@@ -12,7 +12,7 @@ ApprovalVoting.beast
 //Zustimmungswahl: Wähler bewertet jeden Kandidaten mit Ja/Nein
 //Zustimmungswahl: Ein gewählter Kandidat oder unentschieden
 unsigned int  voting(unsigned int votes[V][C]) { 
-        unsigned int res[C];
+    unsigned int res[C];
     unsigned int i = 0;
     unsigned int j = 0;
  
