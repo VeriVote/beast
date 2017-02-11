@@ -13,7 +13,10 @@ import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 
 /**
- *
+ * This class represents an autocompletion option. Once the user chooses
+ * a specific option, this class will insert its insertstring into 
+ * the given JTextPane. It also provides functionality to move the cartet
+ * position afterwards
  * @author Holger-Desktop
  */
 public class AutocompletionOption {
@@ -43,6 +46,15 @@ public class AutocompletionOption {
         return similarString;
     }
 
+    /**
+     * inserts the given string, char by char, into the inserttocode thus
+     * ensuring that all chars are entered correctly
+     * @param pane the pane in which the string will be inserted
+     * @param caretPosition the caretposition at which the string
+     * should be inserted
+     * @param insertToCode the insertToCode which controlls translateing input
+     * into code
+     */
     void insertInto(JTextPane pane, int caretPosition, UserInsertToCode insertToCode) {
         try {
             int wordBeginning = JTextPaneToolbox.getWordBeginningAtCursor(pane);

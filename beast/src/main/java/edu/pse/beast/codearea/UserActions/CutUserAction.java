@@ -15,7 +15,9 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 
 /**
- *
+ * This useraction takes the selected text in a given codearea and copies it
+ * to the clipboard and aks the codearea to replace the selection by the
+ * empty string
  * @author Holger-Desktop
  */
 public class CutUserAction extends UserAction  {

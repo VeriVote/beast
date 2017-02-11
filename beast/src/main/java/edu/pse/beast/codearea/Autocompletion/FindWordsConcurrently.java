@@ -12,7 +12,10 @@ import java.util.logging.Logger;
 import javax.swing.JTextPane;
 
 /**
- *
+ *This class implements the runnable interface to continuously scan the given
+ * JTExtPane for words the user wrote in it and supplying these words to 
+ * the given autocompletioncontroller so the controller can present these
+ * options to the user
  * @author Holger-Desktop
  */
 public class FindWordsConcurrently implements Runnable {

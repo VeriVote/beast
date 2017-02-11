@@ -11,7 +11,10 @@ import java.util.logging.Logger;
 import javax.swing.JTextPane;
 
 /**
- *
+ * This class implements the runnable intrerface and continuously asks the
+ * supplied errorfinderlist to find all errors in the code. If it finds errors,
+ * it notifies the given ErrorController of this fact. It will run until another
+ * thread calls the stop method.
  * @author Holger-Desktop
  */
 public class ErrorFinderThread implements Runnable {
@@ -48,8 +51,8 @@ public class ErrorFinderThread implements Runnable {
                 Thread.sleep(2000);
             } catch (InterruptedException ex) {
             }            
-                lastFoundErrors = l.getErrors();
-                c.foundNewErrors(lastFoundErrors);
+            lastFoundErrors = l.getErrors();
+            c.foundNewErrors(lastFoundErrors);
         }
     }
     

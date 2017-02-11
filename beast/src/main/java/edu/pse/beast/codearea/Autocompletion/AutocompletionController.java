@@ -21,7 +21,15 @@ import javax.swing.event.AncestorListener;
 import javax.swing.text.BadLocationException;
 
 /**
- *
+ * This class communicates user input with the autcompletion functionallity.
+ * If the user presse ctrl + space, it asks the AutocompletionFrame
+ * to display the given autocompletion positibillities. It also continues
+ * to route keyevents from the frame to all keylisteners of the given JTextPane
+ * so that the user can continue typing code while autocompletion is displayed.
+ * It uses the FindWordsConcurrently class to concurrently search the code
+ * for words not yet contained in the autocompletion possibillities. The reasoning
+ * is that the user, expecially when writing code, might wanna retype the
+ * same thing many times
  * @author Holger-Desktop
  */
 public class AutocompletionController implements KeyListener, AncestorListener {
@@ -30,8 +38,7 @@ public class AutocompletionController implements KeyListener, AncestorListener {
     private FindWordsConcurrently conc;
     private Thread t;
     private AutocompletionFrame frame;
-    private UserInsertToCode insertToCode;
-    
+    private UserInsertToCode insertToCode;    
     
     public AutocompletionController(JTextPane pane, UserInsertToCode insertToCode) {
         this.pane = pane;
@@ -142,7 +149,7 @@ public class AutocompletionController implements KeyListener, AncestorListener {
         }
     }
 
-    void choseCompletion(String chosen) {
+     public void choseCompletion(String chosen) {
         for(AutocompletionOption opt : completionOptions) {
             if(opt.getInsertString().equals(chosen)) {   
                 opt.insertInto(pane, pane.getCaretPosition(), insertToCode);                

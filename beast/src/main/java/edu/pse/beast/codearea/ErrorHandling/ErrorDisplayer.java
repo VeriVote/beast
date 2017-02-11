@@ -27,7 +27,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.View;
 
 /**
- *
+ * This abstract class implements error displaying functionallity common to
+ * all specialized error display subclasses
  * @author Holger-Desktop
  */
 public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMotionListener, KeyListener {
@@ -49,6 +50,12 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         errorPopupMenu.addKeyListener(this);
     }
     
+    /**
+     * removes all previously shown errors and thus gets
+     * ready to show the newly found ones. This method
+     * must be overwritten by subclasses to do anything useful
+     * @param errors the errors to be presented
+     */
     public void showErrors(ArrayList<CodeError> errors) {
         absPosToMsg = new ArrayList<>();
         msges = new ArrayList<>();

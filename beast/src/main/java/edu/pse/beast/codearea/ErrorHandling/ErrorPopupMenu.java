@@ -10,7 +10,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 /**
- *
+ * This class is a simple popupmenu which displays an error message
  * @author Holger-Desktop
  */
 public class ErrorPopupMenu extends JPopupMenu {

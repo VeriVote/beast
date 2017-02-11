@@ -17,7 +17,8 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
 /**
- *
+ * this useraction asks the given codearea to insert the currently copied string
+ * at the current position
  * @author Holger-Desktop
  */
 public class PasteUserAction extends UserAction {

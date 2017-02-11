@@ -8,7 +8,9 @@ package edu.pse.beast.codearea.Autocompletion;
 import java.util.Comparator;
 
 /**
- *
+ * This comparator is used by the autocompletioncontroller to sort all
+ * autocompletionoptions by how similar they are to the beginning of the
+ * word the user already typed
  * @author Holger-Desktop
  */
 public class WordsMoreEqualToComparator implements Comparator<AutocompletionOption>{

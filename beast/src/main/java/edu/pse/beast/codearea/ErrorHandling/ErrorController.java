@@ -15,7 +15,10 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 /**
- *
+ * This class facillitates communication between the various error finders
+ * and error displays. Whenever the concurrently running error finder find 
+ * a new error, it receives a message. It then asks the injected error
+ * displayer to display the codeerror on the pane.
  * @author Holger-Desktop
  */
 public class ErrorController {
@@ -35,6 +38,9 @@ public class ErrorController {
         int i = 0;
     }
     
+    /**
+     * stops the concurrently running errorfinder
+     */
     public void stopThread() {
         t.stop();
     }
@@ -51,6 +57,10 @@ public class ErrorController {
         return errorFinderList;
     }
 
+    /**
+     * this function is called by error finder classes if they find new errors
+     * @param lastFoundErrors the list of newly found errors
+     */
     void foundNewErrors(ArrayList<CodeError> lastFoundErrors) {
         displayer.showErrors(lastFoundErrors);
     }
