@@ -23,13 +23,6 @@ public class BEASTCommunicator implements CheckListener {
     private List<ResultInterface> resultList;
 
     /**
-     * Empty Constructor
-     */
-    public BEASTCommunicator() {
-
-    }
-
-    /**
      * Sets a new CentralObjectProvider which contains the references to the
      * other parts of BEAST.
      * @param centralObjectProvider New CentralObjectProvider which is to be set.
@@ -60,15 +53,10 @@ public class BEASTCommunicator implements CheckListener {
             return;
         } else {
 
-        Thread checkerThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                resultList = centralObjectProvider.getResultCheckerCommunicator()
-                        .checkPropertiesForDescription(electSrc, postAndPreSrc, paramSrc);
-            }
-        });
+        resultList = centralObjectProvider.getResultCheckerCommunicator()
+                .checkPropertiesForDescription(electSrc, postAndPreSrc, paramSrc);
+
         checkStatusDisplayer.displayText("startingCheck", true, "");
-        checkerThread.start();
 
         Thread waitForResultsThread = new Thread(new Runnable() {
             @Override

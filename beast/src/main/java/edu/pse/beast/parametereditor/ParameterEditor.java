@@ -150,6 +150,10 @@ public class ParameterEditor implements ParameterSource, MainNotifier {
         setReacts(true);
     }
 
+    /**
+     * Updates the Project instance of this class and loads its content into the editors.
+     * @param project
+     */
     public void loadProject(Project project) {
         setCurrentlyLoadedProject(project);
         propertyList.setPLModel(project.getPropList());
@@ -163,6 +167,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier {
             e.printStackTrace();
         }
         setHasChanged(false);
+        window.displayText("", false, "");
     }
     /**
      * Returns whether the user changed any data in the ParameterEditor since the

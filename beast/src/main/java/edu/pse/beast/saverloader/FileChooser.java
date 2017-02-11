@@ -2,6 +2,7 @@ package edu.pse.beast.saverloader;
 
 import edu.pse.beast.datatypes.NameInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
+import edu.pse.beast.toolbox.SuperFolderFinder;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -19,7 +20,6 @@ public class FileChooser {
     private SaverLoader saverLoader;
     private File lastLoadedFile;
     private boolean hasBeenSaved = false;
-    private String fileSuffix;
     private Object[] options = {"OK"};
     private String saveChanges;
     private String save;
@@ -265,7 +265,7 @@ public class FileChooser {
                 return stringResourceLoader.getStringFromID("fileDescription");
             }
         });
-        fileSuffix = stringResourceLoader.getStringFromID("fileSuffix");
+        fileChooser.setSelectedFile(new File(SuperFolderFinder.getSuperFolder() + "/SampleFiles/ "));
         fileChooser.setAcceptAllFileFilterUsed(false);
     }
 

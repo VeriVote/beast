@@ -20,6 +20,7 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
     private TimeOut timeoutBefore;
     private boolean reacts;
     private boolean hasChanged;
+
     /**
      * Constructor
      * @param timeoutSpinner JSpinner for the timeout value
@@ -85,8 +86,9 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
                     break;
             }
             timeoutBefore = getTimeout();
-        }
+        } else {
 
+        }
     }
     /**
      * Toggles whether the timeout reacts to user input
