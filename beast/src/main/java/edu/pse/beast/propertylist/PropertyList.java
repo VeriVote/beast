@@ -140,9 +140,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     @Override
     public void resumeReacting() {
         view.resumeReacting();
-        if (editorWasVisible) {
-            editor.getView().setVisible(true);
-        }
+        editor.getView().setVisible(editorWasVisible);
     }
 
     @Override

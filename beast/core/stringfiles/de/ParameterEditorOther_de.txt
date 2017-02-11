@@ -54,3 +54,9 @@ save : ' speichern?
 yesOption : Ja
 noOption : Nein
 cancelOption : Abbrechen
+searchingForErrors : Suche nach Fehlern
+electionDescriptionErrors : Es bestehen noch Fehler im Wahlverfahren.
+propertyErrors : Es bestehen noch Fehler in den zu prüfenden Eigenschaften.
+parameterErrors : Es bestehen noch Fehler in den Parametern.
+startingCheck : Analyse wird gestartet
+waitingForPropertyResult : Warte auf Ergebnis der Eigenschaft '

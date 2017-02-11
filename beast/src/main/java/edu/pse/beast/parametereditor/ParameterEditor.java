@@ -150,7 +150,12 @@ public class ParameterEditor implements ParameterSource, MainNotifier {
         setReacts(true);
     }
 
+    /**
+     * Updates the Project instance of this class and loads its content into the editors.
+     * @param project
+     */
     public void loadProject(Project project) {
+        setCurrentlyLoadedProject(project);
         propertyList.setPLModel(project.getPropList());
         propertyList.getView().setVisible(true);
         setParameter(project.getElectionCheckParameter());
@@ -162,6 +167,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier {
             e.printStackTrace();
         }
         setHasChanged(false);
+        window.displayText("", false, "");
     }
     /**
      * Returns whether the user changed any data in the ParameterEditor since the
@@ -253,5 +259,10 @@ public class ParameterEditor implements ParameterSource, MainNotifier {
             return new Project(getParameter(), propertyList.getModel(),
                     cElectionDescriptionEditor.getElectionDescription(), currentlyLoadedProject.getName());
         }
+    }
+
+    public void setCurrentlyLoadedProject(Project project) {
+        currentlyLoadedProject = project;
+        getView().setWindowTitle(project.getName());
     }
 }

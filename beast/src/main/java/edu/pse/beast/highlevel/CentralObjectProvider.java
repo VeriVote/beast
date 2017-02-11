@@ -37,4 +37,9 @@ public interface CentralObjectProvider {
      * @return MainNotifier to which access is needed
      */
     MainNotifier getMainNotifier();
+    /**
+     * Provides access to the CheckStatusDisplay
+     * @return CheckStatusDisplay to which access is needed
+     */
+    CheckStatusDisplay getCheckStatusDisplay();
 }

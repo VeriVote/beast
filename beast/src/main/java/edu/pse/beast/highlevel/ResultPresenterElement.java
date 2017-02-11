@@ -13,8 +13,9 @@ public interface ResultPresenterElement {
     
     /**
      * presents that a timeOut stopped the checking
+     * @param isTimeout true, if it was a timeout, false if it was by the user
      */
-    void presentTimeOut();
+    void presentCanceled(boolean isTimeout);
     
     /**
      * presents that the check was successfull

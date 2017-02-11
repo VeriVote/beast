@@ -10,6 +10,7 @@ elected : Elected
 noResultYet : We don't have a result yet.
 successMessage : The given election description does fulfill the given property.
 timeoutMessage : The analysis was timed out.
+cancelMessage : The analysis was stopped by the user.
 failureMessage : The analysis couldn't be done because there was an error. Following the original error message.
 failureExampleMessage : The given property is not fulfilled. The failure occurred with this election result.
 single-choice : Single-Choice

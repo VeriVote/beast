@@ -20,6 +20,7 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
     private TimeOut timeoutBefore;
     private boolean reacts;
     private boolean hasChanged;
+
     /**
      * Constructor
      * @param timeoutSpinner JSpinner for the timeout value
@@ -67,27 +68,27 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
         if (reacts) {
             timeoutSpinner.setValue(to.getOrigUnit().convert(to.getDuration(), TimeUnit.MILLISECONDS));
             setHasChanged(true);
+            switch (to.getOrigUnit()) {
+                case SECONDS:
+                    timeoutUnit.setSelectedIndex(0);
+                    break;
+                case MINUTES:
+                    timeoutUnit.setSelectedIndex(1);
+                    break;
+                case HOURS:
+                    timeoutUnit.setSelectedIndex(2);
+                    break;
+                case DAYS:
+                    timeoutUnit.setSelectedIndex(3);
+                    break;
+                default:
+                    System.err.println("Timeout kann nicht auf diesen Wert gesetzt werden.");
+                    break;
+            }
+            timeoutBefore = getTimeout();
         } else {
-            setValue(timeoutBefore);
+
         }
-        switch (to.getOrigUnit()) {
-            case SECONDS:
-                timeoutUnit.setSelectedIndex(0);
-                break;
-            case MINUTES:
-                timeoutUnit.setSelectedIndex(1);
-                break;
-            case HOURS:
-                timeoutUnit.setSelectedIndex(2);
-                break;
-            case DAYS:
-                timeoutUnit.setSelectedIndex(3);
-                break;
-            default:
-                System.err.println("Timeout kann nicht auf diesen Wert gesetzt werden.");
-                break;
-        }
-        timeoutBefore = getTimeout();
     }
     /**
      * Toggles whether the timeout reacts to user input

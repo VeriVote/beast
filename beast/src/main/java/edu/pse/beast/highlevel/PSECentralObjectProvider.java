@@ -78,5 +78,10 @@ public class PSECentralObjectProvider implements CentralObjectProvider {
     public MainNotifier getMainNotifier() {
         return paramEd;
     }
-    
+
+    @Override
+    public CheckStatusDisplay getCheckStatusDisplay() {
+        return paramEd.getView();
+    }
+
 }

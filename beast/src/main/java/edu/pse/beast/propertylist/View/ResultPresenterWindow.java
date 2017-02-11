@@ -63,7 +63,7 @@ public class ResultPresenterWindow extends JFrame {
         init();
     }
     
-    public void makeUnvisible() {
+    public void makeInvisible() {
         this.setVisible(false);
     }
 
@@ -187,6 +187,13 @@ public class ResultPresenterWindow extends JFrame {
     public void presentTimeOut() {
         erasePane();
         appendPane(srl.getStringFromID("timeoutMessage"));
+        packFrame();
+    }
+    
+
+    public void presentCancel() {
+        erasePane();
+        appendPane(srl.getStringFromID("cancelMessage"));
         packFrame();
     }
 

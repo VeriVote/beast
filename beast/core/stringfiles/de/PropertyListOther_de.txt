@@ -1,4 +1,4 @@
-title : Eigenschaftenliste
+﻿title : Eigenschaftenliste
 newButton : Neu
 createdButton : Vorhandene
 check : Analyse
@@ -10,6 +10,7 @@ elected : Gewählt
 noResultYet : Es liegt noch kein Resultat vor.
 successMessage : Das vorliegende Wahlverfahren erfüllt die gegebene Eigenschaft.
 timeoutMessage : Die Analyse wurde durch einen Timeout abgebrochen.
+cancelMessage : Die Analyse wurde vom Benutzer abgebrochen.
 failureMessage : Die Analyse konnte aufgrund eines Fehlers nicht ausgeführt werden. Es folgt die Fehlermeldung im Original.
 failureExampleMessage :  Die gegebene Eigenschaft wird nicht erfüllt. Bei diesem Wahlergebnis ist die Eigenschaft verletzt.
 single-choice : Einfache Wahl (Single-Choice)

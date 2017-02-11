@@ -13,6 +13,9 @@ public class LinuxProcess extends CBMCProcess {
 
     private final String relativePathToCBMC64 = "/linux/cbmcLin/cbmc";
 
+    //the time in milliseconds to wait for the termination of the process on linux
+    private final long waitingTime = 3000;
+    
     /**
      * creates a new CBMC Checker for the windows OS
      * 
@@ -105,10 +108,15 @@ public class LinuxProcess extends CBMCProcess {
         } else {
             process.destroyForcibly();
         }
+        
+        try {
+            Thread.sleep(waitingTime);
+        } catch (InterruptedException e) {
+        }
 
         if (process.isAlive()) {
-            ErrorLogger.log("Warning, the program was unable to shut down the CBMC Process \n"
-                    + "Please kill it manually, especially if it starts taking up a lot of ram");
+            ErrorLogger.log("Warning, the program was still alive after trying to stop it \n"
+                    + "Please kill it manually if it is still alive, especially if it starts taking up a lot of ram");
         }
     }
 

@@ -1,22 +1,31 @@
 package edu.pse.beast.parametereditor.View;
 
+import edu.pse.beast.highlevel.CheckStatusDisplay;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.ParameterEditorStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
+import edu.pse.beast.toolbox.SuperFolderFinder;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JSpinner;
+import java.awt.*;
+
 /**
  * Window which takes all the user input for the parameters used by CBMC. It
  * is also the central window for BEAST which starts and stops checks.
  * @author Jonas
  */
-public class ParameterEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
-
+public class ParameterEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser, CheckStatusDisplay {
     private final AdvancedWindow advWindow = new AdvancedWindow();
     private final VersionWindow versionWindow = new VersionWindow();
     private boolean reacts;
     private String title;
     private String currentlyLoadedProjectName;
+    private ImageIcon loading;
+    private JLabel imageLabel;
+    private StringLoaderInterface stringResIF;
 
     /**
      * Creates new form ParameterEditorWindow
@@ -24,6 +33,12 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     public ParameterEditorWindow() {
         initComponents();
         setReacts(true);
+        userFeedbackPanel.setLayout(new BorderLayout());
+        loading = new ImageIcon(SuperFolderFinder.getSuperFolder() + "/core/images/other/loader.gif");
+        imageLabel = new JLabel(loading);
+        imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        userFeedbackPanel.add(imageLabel);
+        imageLabel.setVisible(false);
     }
 
     /**
@@ -55,6 +70,8 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
         amountProcessesSpinner = new javax.swing.JSpinner();
         advancedButton = new javax.swing.JButton();
         versionButton = new javax.swing.JToggleButton();
+        userFeedbackPanel = new java.awt.Panel();
+        statusLabel = new java.awt.Label();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ParameterEditor");
@@ -113,14 +130,30 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
             }
         });
 
+        userFeedbackPanel.setPreferredSize(new java.awt.Dimension(50, 40));
+
+        javax.swing.GroupLayout userFeedbackPanelLayout = new javax.swing.GroupLayout(userFeedbackPanel);
+        userFeedbackPanel.setLayout(userFeedbackPanelLayout);
+        userFeedbackPanelLayout.setHorizontalGroup(
+            userFeedbackPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50, Short.MAX_VALUE)
+        );
+        userFeedbackPanelLayout.setVerticalGroup(
+            userFeedbackPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        statusLabel.setMinimumSize(new java.awt.Dimension(400, 10));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addComponent(toolbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(seats, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(candidates, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -133,11 +166,11 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
                             .addComponent(seatMin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(candMin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(timeoutNum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(amountProcessesSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(amountProcessesSpinner, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(advancedButton)
-                        .addGap(81, 81, 81)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(versionButton)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -152,8 +185,11 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
                                 .addComponent(candMax, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(seatMax, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addComponent(timeoutUnit, 0, 102, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(toolbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(151, 151, 151))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(userFeedbackPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2)
+                .addComponent(statusLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,10 +226,14 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(advancedButton)
                     .addComponent(versionButton))
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(userFeedbackPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         voterMin.getAccessibleContext().setAccessibleName("");
+        statusLabel.getAccessibleContext().setAccessibleName("statusLabel");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -253,10 +293,12 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     private javax.swing.JSpinner seatMin;
     private javax.swing.JLabel seatTo;
     private javax.swing.JLabel seats;
+    private java.awt.Label statusLabel;
     private javax.swing.JLabel timeout;
     private javax.swing.JSpinner timeoutNum;
     private javax.swing.JComboBox<String> timeoutUnit;
     private javax.swing.JToolBar toolbar;
+    private java.awt.Panel userFeedbackPanel;
     private javax.swing.JToggleButton versionButton;
     private javax.swing.JSpinner voterMax;
     private javax.swing.JSpinner voterMin;
@@ -343,6 +385,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
 
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
+        this.stringResIF = stringResIF;
         ParameterEditorStringResProvider provider = stringResIF.getParameterEditorStringResProvider();
         StringResourceLoader other = provider.getOtherStringRes();
         title = other.getStringFromID("title");
@@ -363,6 +406,11 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
         timeoutUnit.addItem(other.getStringFromID("days"));
         advWindow.updateStringRes(stringResIF);
         versionWindow.updateStringRes(stringResIF);
+        timeout.setText(other.getStringFromID("timeout"));
+        processes.setText(other.getStringFromID("max_processes"));
+        voterTo.setText(other.getStringFromID("to"));
+        candTo.setText(other.getStringFromID("to"));
+        seatTo.setText(other.getStringFromID("to"));
     }
     /**
      * Toggles whether this window reacts to user input with the exception of
@@ -388,5 +436,17 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
      */
     public void setVersion(String version) {
         versionWindow.setVersion(version);
+    }
+
+
+    @Override
+    public void displayText(String stringIdForResources, boolean showLoader, String additionalText) {
+        imageLabel.setVisible(showLoader);
+        if (stringIdForResources != "" ){
+            statusLabel.setText(stringResIF.getParameterEditorStringResProvider().getOtherStringRes().
+                    getStringFromID(stringIdForResources) + additionalText);
+        } else {
+            statusLabel.setText("");
+        }
     }
 }

@@ -39,7 +39,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	private PLControllerInterface controller;
 	private String title;
 	private String currentlyLoadedPropertyListName;
-	private StringLoaderInterface sli = new StringLoaderInterface("de");
+	private StringLoaderInterface sli;
 	private boolean reactsToInput = true;
 
 	private JMenuBar menuBar;

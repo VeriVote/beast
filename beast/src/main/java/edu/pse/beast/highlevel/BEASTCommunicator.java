@@ -1,5 +1,10 @@
 package edu.pse.beast.highlevel;
 
+import edu.pse.beast.parametereditor.ParameterEditor;
+import edu.pse.beast.toolbox.SuperFolderFinder;
+
+import javax.swing.*;
+import java.awt.*;
 import java.util.List;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -12,16 +17,11 @@ import java.util.logging.Logger;
  * @author Jonas
  */
 public class BEASTCommunicator implements CheckListener {
+    private Object[] options = {"OK"};
 
     private CentralObjectProvider centralObjectProvider;
     private List<ResultInterface> resultList;
 
-    /**
-     * Empty Constructor
-     */
-    public BEASTCommunicator() {
-
-    }
     /**
      * Sets a new CentralObjectProvider which contains the references to the
      * other parts of BEAST.
@@ -37,47 +37,59 @@ public class BEASTCommunicator implements CheckListener {
         ElectionDescriptionSource electSrc = centralObjectProvider.getElectionDescriptionSource();
         PostAndPrePropertiesDescriptionSource postAndPreSrc = centralObjectProvider.getPostAndPrePropertiesSource();
         ParameterSource paramSrc = centralObjectProvider.getParameterSrc();
+        CheckStatusDisplay checkStatusDisplayer = centralObjectProvider.getCheckStatusDisplay();
         electSrc.stopReacting();
         postAndPreSrc.stopReacting();
         paramSrc.stopReacting();
+        checkStatusDisplayer.displayText("searchingForErrors", true, "");
         if (!electSrc.isCorrect()) {
-            System.err.println("Es bestehen noch Fehler in der Beschreibung des Wahlverfahrens. "
-                    + "Bitte korrigieren sie diese, um fortzufahren.");
+            checkStatusDisplayer.displayText("electionDescriptionErrors", false, "");
+            return;
         } else if (!postAndPreSrc.isCorrect()) {
-            System.err.println("Es bestehen noch Fehler in der Beschreibung der zu prüfenden Eigenschaften. "
-                    + "Bitte korrigieren sie diese, um fortzufahren.");
+            checkStatusDisplayer.displayText("propertyErrors", false, "");
+            return;
         } else if (!paramSrc.isCorrect()) {
-            System.err.println("Es bestehen noch Fehler bei den angegebenen Parametern. "
-                    + "Bitte korrigieren sie diese, um fortzufahren.");
+            checkStatusDisplayer.displayText("parameterErrors", false, "");
+            return;
         } else {
 
-            resultList = centralObjectProvider.getResultCheckerCommunicator()
-                    .checkPropertiesForDescription(electSrc, postAndPreSrc, paramSrc);
+        resultList = centralObjectProvider.getResultCheckerCommunicator()
+                .checkPropertiesForDescription(electSrc, postAndPreSrc, paramSrc);
 
-            if (resultList.isEmpty()) {
-                System.out.println("result List is empty");
-            }
+        checkStatusDisplayer.displayText("startingCheck", true, "");
 
-            while (resultList.size() > 0) {
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(BEASTCommunicator.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                //for (ResultInterface result : resultList) {
-                for (Iterator<ResultInterface> iterator = resultList.iterator(); iterator.hasNext();) {
-
-                    ResultInterface result = (ResultInterface) iterator.next();
-                    if (result.readyToPresent()) {
-                        ResultPresenter resultPresenter = centralObjectProvider.getResultPresenter();
-                        resultPresenter.presentResult(result);
-                        iterator.remove();
+        Thread waitForResultsThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int numberOfPresentedResults = 0;
+                while (numberOfPresentedResults < postAndPreSrc.getPostAndPrePropertiesDescriptions().size()) {
+                    checkStatusDisplayer.displayText("waitingForPropertyResult", true,
+                            postAndPreSrc.getPostAndPrePropertiesDescriptions().get(numberOfPresentedResults).getName()
+                     + "'");
+                    ;
+                    try {
+                        Thread.sleep(50);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(BEASTCommunicator.class.getName()).log(Level.SEVERE, null, ex);
+                    } if (resultList.size() > 0) {
+                        for (Iterator<ResultInterface> iterator = resultList.iterator(); iterator.hasNext();) {
+                            ResultInterface result = (ResultInterface) iterator.next();
+                            if (result.readyToPresent()) {
+                                ResultPresenter resultPresenter = centralObjectProvider.getResultPresenter();
+                                resultPresenter.presentResult(result);
+                                iterator.remove();
+                                numberOfPresentedResults++;
+                            }
+                        }
                     }
                 }
+                electSrc.resumeReacting();
+                postAndPreSrc.resumeReacting();
+                paramSrc.resumeReacting();
+                checkStatusDisplayer.displayText("", false, "");
             }
-            electSrc.resumeReacting();
-            postAndPreSrc.resumeReacting();
-            paramSrc.resumeReacting();
+        });
+        waitForResultsThread.start();
         }
     }
 

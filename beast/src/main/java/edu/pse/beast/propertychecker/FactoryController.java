@@ -168,6 +168,7 @@ public class FactoryController implements Runnable {
                 if (!result.isFinished()) {
                     result.setFinished();
                     // in case of a timeout set a timeout flag
+                    result.setForcefullyStopped();
                     if (timeOut) {
                         result.setTimeoutFlag();
                     }

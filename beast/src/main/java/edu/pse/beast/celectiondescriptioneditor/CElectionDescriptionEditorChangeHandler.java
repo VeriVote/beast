@@ -46,7 +46,7 @@ public class CElectionDescriptionEditorChangeHandler {
      * in CElectionEditorWindow, false otherwise
      */
     public boolean hasChanged() {
-        return !(preString.equals((String) codeArea.getText()));
+        return !(preString.equals(codeArea.getText()));
     }
 }
 
