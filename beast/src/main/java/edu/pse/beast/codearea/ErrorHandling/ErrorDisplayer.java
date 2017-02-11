@@ -61,6 +61,7 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         msges = new ArrayList<>();
         
         for(Object o : highLights) pane.getHighlighter().removeHighlight(o);
+        pane.repaint();
     }
     
     protected void showError(CodeError er, String msg) {
@@ -74,7 +75,6 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         } catch (BadLocationException ex) {
             Logger.getLogger(ErrorDisplayer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        pane.repaint();
     }
     
     private String getPosString(CodeError er) {

@@ -5,10 +5,12 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.View;
 
+import edu.pse.beast.toolbox.RepaintThread;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 
 import javax.swing.*;
+import sun.audio.AudioPlayer;
 
 /**
  * @author Holger
@@ -42,6 +44,8 @@ public class CCodeEditorWindow extends javax.swing.JFrame implements DisplaysStr
         jTextPane2.setEditable(false);
         setMinimumSize(new java.awt.Dimension(700, 600));
         setPreferredSize(new java.awt.Dimension(700, 600));
+        Thread t = new Thread(new RepaintThread(this));
+        t.start();        
     }
 
     public JTextPane getCodeArea() {

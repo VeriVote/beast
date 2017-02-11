@@ -7,6 +7,7 @@ package edu.pse.beast.booleanexpeditor.View;
 
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
+import edu.pse.beast.toolbox.RepaintThread;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +26,8 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
      */
     public BooleanExpEditorWindow() {
         initComponents();
+        Thread t = new Thread(new RepaintThread(this));
+        t.start();
     }
 
     /**
@@ -147,7 +150,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
     }
 
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JButton addSymVarButton;
     private javax.swing.JButton removeSymVarButton;
     private javax.swing.JLabel symbVarLabel;
@@ -166,7 +169,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
     private JTextPane focusedTextPane;
     private DefaultListModel listModel;
     private String titleString;
-    // End of variables declaration//GEN-END:variable
+    // End of variables declaration                  
 
     /**
      * Getter
