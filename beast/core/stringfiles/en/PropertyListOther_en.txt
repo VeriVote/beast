@@ -52,3 +52,8 @@ wrongEncodingError : The property list contains wrong encoded characters.
 inputOutputErrorSave : The folder, in which you want to save, does not exist or you don't have the necessary rights.
 wrongFileNameError : The given name does not correspond to the regular expression '[_a-zA-Z0-9\-\.\s]+'.
 fileSuffix : .list
+saveChanges : Save changes to '
+save : '?
+yesOption : Yes
+noOption : No
+cancelOption : Cancel
