@@ -2,7 +2,6 @@ package edu.pse.beast.propertylist.View;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +15,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -31,10 +29,6 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
-import de.erichseifert.gral.data.DataTable;
-import de.erichseifert.gral.plots.PiePlot;
-import de.erichseifert.gral.ui.DrawablePanel;
-import de.erichseifert.gral.ui.InteractivePanel;
 import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.electiondescription.ElectionType;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
@@ -94,21 +88,11 @@ public class ResultPresenterWindow extends JFrame {
             }
         });
         getContentPane().add(showResult, BorderLayout.PAGE_START);
-        /*showResult.setMinimumSize(iconSize);
-        showResult.setAlignmentX(Component.LEFT_ALIGNMENT);
-        getContentPane().add(showResult);*/
-        
-        /*panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        getContentPane().add(panel, BorderLayout.CENTER);*/
         
         result = new JTextPane();
         result.setEditable(false);
         result.setText(srl.getStringFromID("noResultYet"));
         getContentPane().add(result, BorderLayout.CENTER);
-        /*result.setAlignmentX(CENTER_ALIGNMENT);
-        getContentPane().add(result);*/
-        //panel.add(result);
         
         JScrollPane jsp = new JScrollPane(result, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -140,8 +124,6 @@ public class ResultPresenterWindow extends JFrame {
             }
         });
         getContentPane().add(export, BorderLayout.PAGE_END);
-        /*export.setAlignmentX(Component.RIGHT_ALIGNMENT);
-        getContentPane().add(export);*/
 
         this.addWindowFocusListener(new WindowFocusListener() {
 
@@ -410,23 +392,5 @@ public class ResultPresenterWindow extends JFrame {
     public void setExample(FailureExample example) {
         this.example = example;
     }
-
-    /*public void showPlot(InteractivePanel panel) {
-    	getContentPane().add(panel, BorderLayout.PAGE_START, 0);
-    	panel.revalidate();
-    	this.validate();
-    	panel.repaint();
-    	
-    }*/
-    
-    // unused right now
-    /*public void showPlot(PiePlot plot) {
-        InteractivePanel graph = new InteractivePanel(new PiePlot(new DataTable(Integer.class)));
-        getContentPane().add(graph, BorderLayout.PAGE_END);
-        graph = new InteractivePanel(plot);
-        this.revalidate();
-        this.repaint();
-        //packFrame();
-    }*/
 
 }
