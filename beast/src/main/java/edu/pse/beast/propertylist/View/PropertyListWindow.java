@@ -149,7 +149,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	private void init() {
 		this.setLayout(new BorderLayout());
 		setBounds(600, 100, 500, 500);
-		setTitle("Property List");
+		setTitle("PropertyList");
 
 		menuBar = new JMenuBar();
 		menuFile = new JMenu();
