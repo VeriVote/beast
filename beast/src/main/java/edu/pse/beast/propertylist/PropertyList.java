@@ -122,7 +122,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
                 if (!editor.letUserEditPostAndPreProperties(item.getDescription(), true)) {
                     return false;
                 } else if (!editor.isCorrect()) {
-                    System.out.println("Property '" + item.getDescription().getName() + "' contains errors.");
+                    editor.getView().setVisible(true);
                     return false;
                 }
             }
