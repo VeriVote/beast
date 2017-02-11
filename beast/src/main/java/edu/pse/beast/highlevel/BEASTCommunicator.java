@@ -95,14 +95,6 @@ public class BEASTCommunicator implements CheckListener {
 
     @Override
     public void stopCheck() {
-        ElectionDescriptionSource electSrc = centralObjectProvider.getElectionDescriptionSource();
-        PostAndPrePropertiesDescriptionSource postAndPreSrc = centralObjectProvider.getPostAndPrePropertiesSource();
-        ParameterSource paramSrc = centralObjectProvider.getParameterSrc();
-
-        electSrc.resumeReacting();
-        postAndPreSrc.resumeReacting();
-        paramSrc.resumeReacting();
-
         centralObjectProvider.getResultCheckerCommunicator().abortChecking();
     }
 
