@@ -5,16 +5,6 @@
  */
 package edu.pse.beast.stringresource;
 
-import edu.pse.beast.toolbox.FileLoader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * Class that Manages all StringResources for the CElectionEditor
  *
@@ -69,53 +59,10 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
      */
     @Override
     protected final void initialize() {
-        {
-            String location = getFileLocationString("CElectionEditorToolbar");
-            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
-            try {
-                LinkedList<String> inputList;
-                inputList = FileLoader.loadFileAsString(in);
-                toolbarTipStringRes = new StringResourceLoader(inputList);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        
-        {
-            String location = getFileLocationString("CElectionEditorMenu");
-            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
-            try {
-                LinkedList<String> inputList;
-                inputList = FileLoader.loadFileAsString(in);
-                menuStringRes = new StringResourceLoader(inputList);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        
-        {
-            String location = getFileLocationString("CElectionEditorCError");
-            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
-            try {
-                LinkedList<String> inputList;
-                inputList = FileLoader.loadFileAsString(in);
-                cErrorStringRes = new StringResourceLoader(inputList);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        
-         {
-            String location = getFileLocationString("CElectionEditorElection");
-            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
-            try {
-                LinkedList<String> inputList;
-                inputList = FileLoader.loadFileAsString(in);
-                electionStringRes = new StringResourceLoader(inputList);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        toolbarTipStringRes = this.getStringResourceLoaderFromModuleName("CElectionEditorToolbar");
+        menuStringRes = this.getStringResourceLoaderFromModuleName("CElectionEditorMenu");
+        cErrorStringRes = this.getStringResourceLoaderFromModuleName("CElectionEditorCError");
+        electionStringRes = this.getStringResourceLoaderFromModuleName("CElectionEditorElection");
     }
 
     public StringResourceLoader getElectionStringRes() {

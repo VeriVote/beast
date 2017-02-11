@@ -26,23 +26,22 @@ public final class FileLoader {
 
     /**
      *
-     * @param in
-     *            the inputstream
+     * @param file the file that will be read
      * @return A LinkedList of String elements which are in the same order as in
-     *         the file
-     * @throws FileNotFoundException
-     *             if the file is not found it throws an exception
-     * @throws IOException
-     *             throws Exception
+     * the file
+     * @throws FileNotFoundException if the file is not found it throws an
+     * exception
+     * @throws IOException throws Exception
      */
-    public static LinkedList<String> loadFileAsString(InputStream in) throws FileNotFoundException, IOException {
+    public static LinkedList<String> loadFileAsString(File file) throws FileNotFoundException, IOException {
 
         LinkedList<String> stringlist;
         /**
          * try (BufferedReader br = new BufferedReader( new InputStreamReader(
          * new FileInputStream(file), "UTF8"))) {
          */
-        BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+        InputStream inputStream = new FileInputStream(file);
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
         stringlist = new LinkedList<>();
         String line;
 
@@ -51,16 +50,16 @@ public final class FileLoader {
             stringlist.add(line);
             line = br.readLine();
         }
-
+        br.close();
+        inputStream.close();
         return stringlist;
     }
 
     /**
      *
-     * @param in
-     *            the file to be read as an image
+     * @param in the file to be read as an image
      * @return the image, if it was possible to read it. In case it couldn't be
-     *         read, the methode returns null
+     * read, the methode returns null
      */
     public static BufferedImage loadFileAsImage(InputStream in) {
         BufferedImage toReturn = null;

@@ -7,6 +7,12 @@ package edu.pse.beast.stringresource;
 
 import java.io.File;
 import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.toolbox.FileLoader;
+import edu.pse.beast.toolbox.SuperFolderFinder;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -56,7 +62,7 @@ public abstract class StringResourceProvider {
      * @return the relative fileLocation
      */
     protected final String getFileLocationString(String moduleName) {
-        return ("stringfiles/" + languageId + "/" + moduleName + "_" + languageId + ".txt");
+        return ("/core/stringfiles/" + languageId + "/" + moduleName + "_" + languageId + ".txt");
     }
 
     /**
@@ -64,9 +70,30 @@ public abstract class StringResourceProvider {
      *
      * @param file that has the wrongFormat
      */
-    protected static void errorFileHasWrongFormat(File file) {
+    protected final void errorFileHasWrongFormat(File file) {
         ErrorLogger.log("The file " + file.getName() + " is not correclty formated");
         ErrorLogger.log("You can find and correct the file in this directory " + file.getAbsolutePath());
+    }
+
+    protected final StringResourceLoader getStringResourceLoaderFromModuleName(String moduleName) {
+
+        String subFolderAndFilename = getFileLocationString(moduleName);
+        String superFolder = SuperFolderFinder.getSuperFolder();
+        String location = superFolder + subFolderAndFilename;
+
+        String content = null;
+        File in = new File(location); //for ex foo.txt
+        {
+            LinkedList<String> inputList;
+            try {
+                inputList = FileLoader.loadFileAsString(in);
+                return new StringResourceLoader(inputList);
+            } catch (IOException ex) {
+                Logger.getLogger(PropertyListStringResProvider.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        return null;
     }
 
 }
