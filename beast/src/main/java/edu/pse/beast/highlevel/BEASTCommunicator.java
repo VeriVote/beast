@@ -12,7 +12,6 @@ import java.util.logging.Logger;
  * @author Jonas
  */
 public class BEASTCommunicator implements CheckListener {
-    private Object[] options = {"OK"};
 
     private CentralObjectProvider centralObjectProvider;
     private List<ResultInterface> resultList;
@@ -20,7 +19,9 @@ public class BEASTCommunicator implements CheckListener {
     /**
      * Sets a new CentralObjectProvider which contains the references to the
      * other parts of BEAST.
-     * @param centralObjectProvider New CentralObjectProvider which is to be set.
+     *
+     * @param centralObjectProvider New CentralObjectProvider which is to be
+     * set.
      */
     public void setCentralObjectProvider(CentralObjectProvider centralObjectProvider) {
         this.centralObjectProvider = centralObjectProvider;
@@ -64,12 +65,12 @@ public class BEASTCommunicator implements CheckListener {
                         checkStatusDisplayer.displayText("waitingForPropertyResult", true,
                                 postAndPreSrc.getPostAndPrePropertiesDescriptions().
                                         get(numberOfPresentedResults).getName() + "'");
-                        ;
                         try {
                             Thread.sleep(50);
                         } catch (InterruptedException ex) {
                             Logger.getLogger(BEASTCommunicator.class.getName()).log(Level.SEVERE, null, ex);
-                        } if (resultList.size() > 0) {
+                        }
+                        if (resultList.size() > 0) {
                             for (Iterator<ResultInterface> iterator = resultList.iterator(); iterator.hasNext();) {
                                 ResultInterface result = (ResultInterface) iterator.next();
                                 if (result.readyToPresent()) {
