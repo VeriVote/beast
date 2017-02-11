@@ -32,6 +32,7 @@ import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
+import edu.pse.beast.toolbox.SuperFolderFinder;
 
 public class ResultPresenterWindow extends JFrame {
 
@@ -44,6 +45,9 @@ public class ResultPresenterWindow extends JFrame {
 	StringResourceLoader srl;
 
 	private FailureExample example;
+	
+	private final String pathToAdd = "/core/images/other/eye.png";
+    private final ImageIcon eyeIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToAdd);
 
 	public ResultPresenterWindow() {
 		this(new StringLoaderInterface("de"));
@@ -78,7 +82,7 @@ public class ResultPresenterWindow extends JFrame {
 
 		showResult = new JButton();
 		showResult.setPreferredSize(iconSize);
-		showResult.setIcon(new ImageIcon(getClass().getResource("/images/other/eye.png")));
+		showResult.setIcon(eyeIcon);
 		showResult.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {

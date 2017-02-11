@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -22,6 +23,7 @@ import edu.pse.beast.propertylist.Model.PLModelInterface;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
+import edu.pse.beast.toolbox.SuperFolderFinder;
 
 /**
  *
@@ -44,6 +46,15 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
     protected JCheckBox testStatus = new JCheckBox();
     protected JButton changeButton = new JButton();
     protected JButton deleteButton = new JButton();
+    
+    private final String pathToEye = "/core/images/other/eye.png";
+    private final ImageIcon eyeIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToEye);
+    
+    private final String pathToWrench = "/core/images/other/eye.png";
+    private final ImageIcon wrenchIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToWrench);
+    
+    private final String pathToXMark = "/core/images/other/x-mark.png";
+    private final Icon xMarkIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToXMark);
 
     public ListItem(PLControllerInterface controller, PLModelInterface model) {
         this(controller, model, new PropertyItem());
@@ -81,7 +92,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
         Dimension iconSize = new Dimension(40, 40);
 
         showResult.setPreferredSize(new Dimension(80, 40));
-        showResult.setIcon(new ImageIcon(getClass().getResource("/images/other/eye.png")));
+        showResult.setIcon(eyeIcon);
         //present();
         showResult.setBackground(presentColor());
         showResult.addActionListener(new ActionListener() {
@@ -125,7 +136,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
         this.add(testStatus, BorderLayout.LINE_START);
 
         changeButton.setPreferredSize(iconSize);
-        changeButton.setIcon(new ImageIcon(getClass().getResource("/images/other/wrench.png")));
+        changeButton.setIcon(wrenchIcon);
         changeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -137,7 +148,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
         this.add(changeButton, BorderLayout.LINE_START);
 
         deleteButton.setPreferredSize(iconSize);
-        deleteButton.setIcon(new ImageIcon(getClass().getResource("/images/other/x-mark.png")));
+        deleteButton.setIcon(xMarkIcon);
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
