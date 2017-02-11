@@ -92,7 +92,10 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
     public void mouseMoved(MouseEvent e) {
         Point pt = new Point(e.getX(), e.getY());
         int pos = pane.viewToModel(pt);
-        if(pos == JTextPaneToolbox.getText(pane).length()) 
+        if(pos == JTextPaneToolbox.getText(pane).length()) {
+            errorPopupMenu.setVisible(false);
+            return;
+        }
         if(Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 && 
                 Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 && errorPopupMenu.isVisible()) return;
         for(int i = 0; i < absPosToMsg.size(); ++i) {
