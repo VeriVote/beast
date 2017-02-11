@@ -20,7 +20,6 @@ import edu.pse.beast.toolbox.*;
 /**
  * Builds the property list components and returns the controller of property
  * list.
- *
  * @author Justin
  */
 public class PropertyListBuilder {
@@ -31,10 +30,9 @@ public class PropertyListBuilder {
 
     /**
      * Builds all relevant components.
-     *
-     * @param refs
-     * @param booleanExpEditor
-     * @return
+     * @param refs A reference to the objects that are important for the builder such as string loaders and the like
+     * @param booleanExpEditor A reference to the editor for boolean expressions
+     * @return Returns the controller class of PropertyList
      */
     public PropertyList createPropertyList(ObjectRefsForBuilder refs, BooleanExpEditor booleanExpEditor) {
         PLModelInterface model = new PLModel();
@@ -62,6 +60,7 @@ public class PropertyListBuilder {
         return (PropertyList) controller;
     }
 
+    
     private ArrayList<ArrayList<ActionIdAndListener>>
             createActionIdAndListenerListForMenuHandler() {
         ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();

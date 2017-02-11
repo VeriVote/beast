@@ -32,24 +32,16 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         ResultPresenter, Runnable, DisplaysStringsToUser {
 
     private PLModelInterface model;
-
     private PropertyListWindow view;
-
     private BooleanExpEditor editor;
-
     private StringLoaderInterface sli;
-
     private PLChangeHandler changeHandler;
-    
     private LinkedList<DeleteDescriptionAction> actionList;
-
     private FileChooser fileChooser;
-    
     private boolean editorWasVisible = false;
     
     /**
      * Constructor
-     *
      * @param model The data model of the property list.
      * @param editor The boolean expression editor that is the source of
      * property descriptions.
@@ -69,7 +61,6 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 
     /**
      * Test constructor
-     *
      * @param model Only needs the model for testing purposes
      */
     public PropertyList(PLModelInterface model) {
@@ -78,6 +69,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         model.initialize();
     }
 
+    
     /**
      * Displays the view.
      */
@@ -183,6 +175,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         this.sli = sli;
     }
 
+    
     /**
      * Provides the StringResourceLoader for the menu strings of property list
      * @return StringResourceLoader for the menu strings

@@ -33,22 +33,25 @@ import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 
+@SuppressWarnings("serial")
 public class ResultPresenterWindow extends JFrame {
 
 	private JButton showResult;
-	
 	private JButton export;
-
 	private JTextPane result;
-	
 	StringResourceLoader srl;
-
 	private FailureExample example;
 
+	/**
+	 * 
+	 */
 	public ResultPresenterWindow() {
 		this(new StringLoaderInterface("de"));
 	}
 
+	/**
+	 * @param sli
+	 */
 	public ResultPresenterWindow(StringLoaderInterface sli) {
 		PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
 		srl = provider.getOtherStringRes();
@@ -56,124 +59,8 @@ public class ResultPresenterWindow extends JFrame {
 		init();
 	}
 
-	public JButton getShowResult() {
-		return showResult;
-	}
 
-	public FailureExample getExample() {
-		return example;
-	}
-
-	public void setExample(FailureExample example) {
-		this.example = example;
-	}
-
-	private void init() {
-		this.setLayout(new BorderLayout());
-		this.setUndecorated(true);
-		getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
-		this.setResizable(true);
-		setBounds(0, 0, 400, 500);
-		Dimension iconSize = new Dimension(80, 40);
-
-		showResult = new JButton();
-		showResult.setPreferredSize(iconSize);
-		showResult.setIcon(new ImageIcon(getClass().getResource("/images/other/eye.png")));
-		showResult.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				setVisible(false);
-			}
-		});
-		getContentPane().add(showResult, BorderLayout.PAGE_START);
-
-		result = new JTextPane();
-		result.setEditable(false);
-		result.setText(srl.getStringFromID("noResultYet"));
-		getContentPane().add(result, BorderLayout.CENTER);
-
-		JScrollPane jsp = new JScrollPane(result, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		this.add(jsp);
-
-		export = new JButton();
-		export.setPreferredSize(iconSize);
-		export.setText(srl.getStringFromID("export"));
-		export.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				JFileChooser fc = new JFileChooser();
-				FileNameExtensionFilter filter = new FileNameExtensionFilter("Text", "txt");
-				fc.setFileFilter(filter);
-				fc.showSaveDialog(getParent());
-				try {
-					File file = fc.getSelectedFile();
-					String filename = file.toString();
-					if (!filename.endsWith(".txt"))
-						filename += ".txt";
-					FileWriter fw = new FileWriter(filename);
-					fw.write(result.getText());
-					fw.flush();
-					fw.close();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
-		});
-		getContentPane().add(export, BorderLayout.PAGE_END);
-
-		this.addWindowFocusListener(new WindowFocusListener() {
-
-			@Override
-			public void windowGainedFocus(WindowEvent e) {
-			}
-
-			@Override
-			public void windowLostFocus(WindowEvent e) {
-				setVisible(false);
-			}
-
-		});
-		pack();
-	}
-
-	private void appendPane(String text) {
-		appendPaneStyled(text, null);
-	}
-
-	private void appendPaneColored(String text, Color color) {
-		SimpleAttributeSet attr = new SimpleAttributeSet();
-		StyleConstants.setForeground(attr, color);
-		StyleConstants.setBold(attr, true);
-		appendPaneStyled(text, attr);
-	}
-
-	private void appendPaneStyled(String text, AttributeSet attr) {
-		StyledDocument doc = result.getStyledDocument();
-		try {
-			doc.insertString(doc.getLength(), text, attr);
-		} catch (BadLocationException e) {
-			e.printStackTrace();
-		}
-		result.setStyledDocument(doc);
-	}
-
-	private void appendLine(String text) {
-		appendPane(text + "\n");
-	}
-
-	private void eraseLastCharacters(int amount) {
-		StyledDocument doc = result.getStyledDocument();
-		try {
-			doc.remove(doc.getLength() - amount, amount);
-		} catch (BadLocationException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void erasePane() {
-		result.setText("");
-	}
+	
 
 	public void makeUnvisible() {
 		this.setVisible(false);
@@ -307,23 +194,141 @@ public class ResultPresenterWindow extends JFrame {
 		result.setText(srl.getStringFromID("noResultYet"));
 		packFrame();
 	}
+	
+	// private methods
+	private void init() {
+		this.setLayout(new BorderLayout());
+		this.setUndecorated(true);
+		getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
+		this.setResizable(true);
+		setBounds(0, 0, 400, 500);
+		Dimension iconSize = new Dimension(80, 40);
 
+		showResult = new JButton();
+		showResult.setPreferredSize(iconSize);
+		showResult.setIcon(new ImageIcon(getClass().getResource("/images/other/eye.png")));
+		showResult.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+			}
+		});
+		getContentPane().add(showResult, BorderLayout.PAGE_START);
+
+		result = new JTextPane();
+		result.setEditable(false);
+		result.setText(srl.getStringFromID("noResultYet"));
+		getContentPane().add(result, BorderLayout.CENTER);
+
+		JScrollPane jsp = new JScrollPane(result, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		this.add(jsp);
+
+		export = new JButton();
+		export.setPreferredSize(iconSize);
+		export.setText(srl.getStringFromID("export"));
+		export.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fc = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Text", "txt");
+				fc.setFileFilter(filter);
+				fc.showSaveDialog(getParent());
+				try {
+					File file = fc.getSelectedFile();
+					String filename = file.toString();
+					if (!filename.endsWith(".txt"))
+						filename += ".txt";
+					FileWriter fw = new FileWriter(filename);
+					fw.write(result.getText());
+					fw.flush();
+					fw.close();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		getContentPane().add(export, BorderLayout.PAGE_END);
+
+		this.addWindowFocusListener(new WindowFocusListener() {
+
+			@Override
+			public void windowGainedFocus(WindowEvent e) {
+			}
+
+			@Override
+			public void windowLostFocus(WindowEvent e) {
+				setVisible(false);
+			}
+
+		});
+		pack();
+	}
+
+	private void appendPane(String text) {
+		appendPaneStyled(text, null);
+	}
+
+	private void appendPaneColored(String text, Color color) {
+		SimpleAttributeSet attr = new SimpleAttributeSet();
+		StyleConstants.setForeground(attr, color);
+		StyleConstants.setBold(attr, true);
+		appendPaneStyled(text, attr);
+	}
+
+	private void appendPaneStyled(String text, AttributeSet attr) {
+		StyledDocument doc = result.getStyledDocument();
+		try {
+			doc.insertString(doc.getLength(), text, attr);
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
+		result.setStyledDocument(doc);
+	}
+
+	private void appendLine(String text) {
+		appendPane(text + "\n");
+	}
+
+	private void eraseLastCharacters(int amount) {
+		StyledDocument doc = result.getStyledDocument();
+		try {
+			doc.remove(doc.getLength() - amount, amount);
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void erasePane() {
+		result.setText("");
+	}
+	
 	private void packFrame() {
 		getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, showResult.getBackground()));
 		pack();
 	}
+
 	
+	// getter and setter
+	public JButton getShowResult() {
+		return showResult;
+	}
+
+	public FailureExample getExample() {
+		return example;
+	}
+
+	public void setExample(FailureExample example) {
+		this.example = example;
+	}
+
+	// unused right now
 	/*public void showPlot(PiePlot plot) {
-		
-		
-		
 		InteractivePanel graph = new InteractivePanel(new PiePlot(new DataTable(Integer.class)));
 		getContentPane().add(graph, BorderLayout.PAGE_END);
 		graph = new InteractivePanel(plot);
-		
 		this.revalidate();
 		this.repaint();
-		
 		//packFrame();
 	}*/
 
