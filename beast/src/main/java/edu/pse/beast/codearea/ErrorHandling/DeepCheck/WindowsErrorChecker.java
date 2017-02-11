@@ -47,8 +47,11 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
             // because windows is weird the whole call that will get placed
             // inside
             // VScmd has to be in one giant string
-            String clExeCall = "\"" + vsCmd + "\"" + " & " + compilerString + " " + (toCheck.getAbsolutePath());
-
+            String clExeCall = "\"" + vsCmd + "\"" + " & " + compilerString + " " + (toCheck.getAbsolutePath()) + 
+                    (" /Fo" + toCheck.getParent() + "\\");
+            
+            System.out.println(clExeCall);
+            
             // this call starts a new VScmd instance and lets cbmc run in it
             ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", clExeCall);
 
@@ -64,7 +67,7 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
     @Override
     protected List<CodeError> parseError(List<String> result, List<String> errors) {
         List<CodeError> codeErrors = new ArrayList<CodeError>();
-        
+
         Pattern lineExtractor = Pattern.compile("((.*)(\\([0-9]*\\))(.*))");
 
         //cl.exe prints out the results in the result list

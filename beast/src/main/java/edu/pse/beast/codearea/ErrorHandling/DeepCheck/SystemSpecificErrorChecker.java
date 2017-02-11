@@ -28,11 +28,16 @@ public abstract class SystemSpecificErrorChecker {
         
         absolutePath = absolutePath.replaceAll("%20", " ");
         
-        File file = new File(new File(absolutePath), FileLoader.getNewUniqueName(absolutePath) + ".c");
-
-        FileSaver.writeStringLinesToFile(toCheck, file);
+        String pathToNewFile = absolutePath + FileLoader.getNewUniqueName(absolutePath);
         
-        Process process = checkCodeFileForErrors(file);
+        File cFile = new File(pathToNewFile + ".c");
+
+        File objFile = new File(pathToNewFile + ".obj");
+        
+        FileSaver.writeStringLinesToFile(toCheck, cFile);
+        
+        
+        Process process = checkCodeFileForErrors(cFile);
         
         if (process != null) {
             CountDownLatch latch = new CountDownLatch(2);
@@ -51,10 +56,14 @@ public abstract class SystemSpecificErrorChecker {
                 e1.printStackTrace();
             }
             
-            //deletes the temporary file, so it doesn't clog up the filesystem
-            file.delete();
+            //parse the errors out of the returned lists
+            List<CodeError> toReturn = parseError(result, errors);
             
-            return parseError(result, errors);
+            //deletes the temporary file, so it doesn't clog up the filesystem
+            cFile.delete();            
+            objFile.delete();
+            
+            return toReturn;
         } else {
             ErrorLogger.log("Process couldn't be started");
             return null;
@@ -62,7 +71,7 @@ public abstract class SystemSpecificErrorChecker {
     }
     
     
-    protected abstract Process checkCodeFileForErrors(File toCheck);
+    protected abstract Process checkCodeFileForErrors(File toChecky);
     
     protected abstract List<CodeError> parseError(List<String> result, List<String> errors);
 }

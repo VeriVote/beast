@@ -27,7 +27,7 @@ public class SortedIntegerList {
     /**
      * a comparator for integers, used to sort container
      */
-    private Comparator comp = new Comparator<Integer>() {
+    private Comparator<Integer> comp = new Comparator<Integer>() {
         @Override
         public int compare(Integer lhs, Integer rhs) {
             if (lhs < rhs) {
