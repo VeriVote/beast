@@ -2,6 +2,7 @@ package edu.pse.beast.propertylist.View;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,10 +16,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -28,7 +31,12 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import de.erichseifert.gral.data.DataTable;
+import de.erichseifert.gral.plots.PiePlot;
+import de.erichseifert.gral.ui.DrawablePanel;
+import de.erichseifert.gral.ui.InteractivePanel;
 import edu.pse.beast.datatypes.FailureExample;
+import edu.pse.beast.datatypes.electiondescription.ElectionType;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
@@ -45,7 +53,9 @@ public class ResultPresenterWindow extends JFrame {
     
     private final String pathToEye = "/core/images/other/eye.png";
     private final ImageIcon eyeIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToEye);
-
+    
+    public JPanel panel;
+    
     /**
      * 
      */
@@ -62,6 +72,92 @@ public class ResultPresenterWindow extends JFrame {
         this.setVisible(false);
         init();
     }
+    
+    
+    private void init() {
+        this.setLayout(new BorderLayout());
+    	//this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+    	
+        //this.setUndecorated(true);
+        getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
+        this.setResizable(true);
+        setBounds(0, 0, 400, 500);
+        Dimension iconSize = new Dimension(120, 40);
+
+        showResult = new JButton();
+        showResult.setPreferredSize(iconSize);
+        showResult.setIcon(eyeIcon);
+        showResult.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                setVisible(false);
+            }
+        });
+        getContentPane().add(showResult, BorderLayout.PAGE_START);
+        /*showResult.setMinimumSize(iconSize);
+        showResult.setAlignmentX(Component.LEFT_ALIGNMENT);
+        getContentPane().add(showResult);*/
+        
+        /*panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        getContentPane().add(panel, BorderLayout.CENTER);*/
+        
+        result = new JTextPane();
+        result.setEditable(false);
+        result.setText(srl.getStringFromID("noResultYet"));
+        getContentPane().add(result, BorderLayout.CENTER);
+        /*result.setAlignmentX(CENTER_ALIGNMENT);
+        getContentPane().add(result);*/
+        //panel.add(result);
+        
+        JScrollPane jsp = new JScrollPane(result, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        this.add(jsp);
+
+        export = new JButton();
+        export.setPreferredSize(iconSize);
+        export.setText(srl.getStringFromID("export"));
+        export.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fc = new JFileChooser();
+                FileNameExtensionFilter filter = new FileNameExtensionFilter("Text", "txt");
+                fc.setFileFilter(filter);
+                fc.showSaveDialog(getParent());
+                if (fc.getSelectedFile() == null) return;
+                try {
+                    File file = fc.getSelectedFile();
+                    String filename = file.toString();
+                    if (!filename.endsWith(".txt"))
+                        filename += ".txt";
+                    FileWriter fw = new FileWriter(filename);
+                    fw.write(result.getText());
+                    fw.flush();
+                    fw.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+        getContentPane().add(export, BorderLayout.PAGE_END);
+        /*export.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        getContentPane().add(export);*/
+
+        this.addWindowFocusListener(new WindowFocusListener() {
+
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+            }
+
+            @Override
+            public void windowLostFocus(WindowEvent e) {
+                setVisible(false);
+            }
+
+        });
+        pack();
+    }
+
     
     public void makeInvisible() {
         this.setVisible(false);
@@ -173,6 +269,20 @@ public class ResultPresenterWindow extends JFrame {
                     appendPaneColored(Arrays.toString(elected), Color.RED);
             }
 
+            
+            // The votes points part of the document
+            appendLine("\n");
+            appendLine(srl.getStringFromID("election") + " Punkte");
+            Long[] result;
+            if (ex.isChooseOneCandidate()) {
+            	result = getVotePoints(ex.getVotes().get(i).getArray(), ex);
+            }
+            else {
+            	result = getVotePoints(ex.getVoteList().get(i).getArray(), ex.getElectionType(), ex);
+            }
+            for (int j = 0; j < result.length; j++) {
+        		appendLine("Candidate " + j + ": " + (int) (long) result[j]);
+            }
             appendLine("\n");
         }
         packFrame();
@@ -204,75 +314,46 @@ public class ResultPresenterWindow extends JFrame {
     }
     
     // private methods
-    private void init() {
-        this.setLayout(new BorderLayout());
-        this.setUndecorated(true);
-        getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
-        this.setResizable(true);
-        setBounds(0, 0, 400, 500);
-        Dimension iconSize = new Dimension(80, 40);
-
-        showResult = new JButton();
-        showResult.setPreferredSize(iconSize);
-        showResult.setIcon(eyeIcon);
-        showResult.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                setVisible(false);
-            }
-        });
-        getContentPane().add(showResult, BorderLayout.PAGE_START);
-
-        result = new JTextPane();
-        result.setEditable(false);
-        result.setText(srl.getStringFromID("noResultYet"));
-        getContentPane().add(result, BorderLayout.CENTER);
-
-        JScrollPane jsp = new JScrollPane(result, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        this.add(jsp);
-
-        export = new JButton();
-        export.setPreferredSize(iconSize);
-        export.setText(srl.getStringFromID("export"));
-        export.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser fc = new JFileChooser();
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Text", "txt");
-                fc.setFileFilter(filter);
-                fc.showSaveDialog(getParent());
-                try {
-                    File file = fc.getSelectedFile();
-                    String filename = file.toString();
-                    if (!filename.endsWith(".txt"))
-                        filename += ".txt";
-                    FileWriter fw = new FileWriter(filename);
-                    fw.write(result.getText());
-                    fw.flush();
-                    fw.close();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
-        getContentPane().add(export, BorderLayout.PAGE_END);
-
-        this.addWindowFocusListener(new WindowFocusListener() {
-
-            @Override
-            public void windowGainedFocus(WindowEvent e) {
-            }
-
-            @Override
-            public void windowLostFocus(WindowEvent e) {
-                setVisible(false);
-            }
-
-        });
-        pack();
+    private Long[] getVotePoints(Long[] votes, FailureExample ex) {
+    	Long[] result = new Long[ex.getNumOfCandidates()];
+    	Arrays.fill(result, 0l);
+    	
+    	for (int i = 0; i < ex.getNumOfVoters(); i++) {
+    		int vote = votes[i].intValue();
+    		result[vote]++;
+    	}
+		return result;
     }
-
+    
+    private Long[] getVotePoints(Long[][] votes, ElectionType type, FailureExample ex) {
+    	int candidates = ex.getNumOfCandidates();
+    	Long[] result = new Long[candidates];
+    	Arrays.fill(result, 0l);
+    	
+    	for (int i = 0; i < ex.getNumOfVoters(); i++) {
+    		Long[] vote = votes[i];
+    		switch (type) {
+        	case PREFERENCE: 
+        		for (int j = 0; j < candidates; j++) {
+        			result[(int) (long) vote[candidates - 1 - j]] += j;
+        		}
+        		break;
+        	case WEIGHTEDAPPROVAL: 
+        		for (int j = 0; j < candidates; j++) {
+        			result[j] += vote[j];
+        		}
+        		break;
+        	case APPROVAL: 
+        		for (int j = 0; j < candidates; j++) {
+        			if (vote[j] == 1l) result[j]++;
+        		}
+        		break;
+    		default: break;
+        	}
+    	}
+		return result;
+    }
+    
     private void appendPane(String text) {
         appendPaneStyled(text, null);
     }
@@ -330,6 +411,14 @@ public class ResultPresenterWindow extends JFrame {
         this.example = example;
     }
 
+    /*public void showPlot(InteractivePanel panel) {
+    	getContentPane().add(panel, BorderLayout.PAGE_START, 0);
+    	panel.revalidate();
+    	this.validate();
+    	panel.repaint();
+    	
+    }*/
+    
     // unused right now
     /*public void showPlot(PiePlot plot) {
         InteractivePanel graph = new InteractivePanel(new PiePlot(new DataTable(Integer.class)));

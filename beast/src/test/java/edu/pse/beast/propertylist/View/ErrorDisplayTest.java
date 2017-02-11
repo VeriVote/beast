@@ -1,15 +1,23 @@
 package edu.pse.beast.propertylist.View;
 
+import java.awt.BorderLayout;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
+import javax.swing.JPanel;
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import de.erichseifert.gral.data.DataTable;
+import de.erichseifert.gral.plots.PiePlot;
+import de.erichseifert.gral.ui.DrawablePanel;
+import de.erichseifert.gral.ui.InteractivePanel;
 
 
 public class ErrorDisplayTest {
@@ -49,15 +57,65 @@ public class ErrorDisplayTest {
 		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		List<String> error = Arrays.asList("Some lines to test the window.", 
 				"Big, bigger, biggest fish to fry will be found at the sea right off Maine and Northbridge/Upton.",
-				"Yawn");
+				"Yawn",
+				"Darker, darker still.",
+				"I can't get no satisfaction",
+				"but i try",
+				"and i try",
+				"and i try",
+				"yeah");
 		win.presentFailure(error);
 		
-		/*DataTable data = new DataTable(Integer.class);
+		DataTable data = new DataTable(Integer.class);
 		data.add(5);
 		data.add(6);
 		
-		PiePlot plot = new PiePlot(data);*/
+		PiePlot plot = new PiePlot(data);
 		
+		DrawablePanel graph = new DrawablePanel(plot);
+		
+		graph.setSize(400,400);
+		
+		JPanel iframe = new JPanel();
+		iframe.add(graph);
+		iframe.setSize(200, 200);
+		iframe.setVisible(true);
+		
+		//win.panel.add(iframe);
+		
+		//win.panel.revalidate();
+		//win.panel.repaint();
+		
+		graph.setSize(200,200);;
+		
+		win.getContentPane().add(graph, 2);
+		
+		DrawablePanel graph2 = new DrawablePanel(plot);
+		
+		graph2.setSize(200,200);;
+		
+		win.getContentPane().add(graph2, 3);
+		
+		//win.getContentPane().add(iframe, BorderLayout.SOUTH, 2);
+		
+		//win.getContentPane().add(iframe, 2);
+		
+		iframe.setSize(200, 200);
+		
+		win.revalidate();
+		win.repaint();
+		
+		/*JFrame res = new JFrame();
+		res.add(graph);
+		res.setSize(200, 200);
+		res.setVisible(true);*/
+		
+		/*graph.setBounds(win.getBounds());
+		
+		win.showPlot(graph);
+		win.pack();
+		win.revalidate();
+		win.repaint();*/
 		
 		//win.showPlot(plot);
 		
