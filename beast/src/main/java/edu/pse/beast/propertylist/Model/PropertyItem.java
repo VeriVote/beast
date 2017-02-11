@@ -1,15 +1,12 @@
 package edu.pse.beast.propertylist.Model;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
 import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
-import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
-import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenterElement;
 import edu.pse.beast.propertylist.Model.ResultType;
 
@@ -87,27 +84,23 @@ public class PropertyItem implements ResultPresenterElement {
     @Override
     public void presentTimeOut() {
         resultType = ResultType.TIMEOUT;
-
     }
 
     @Override
     public void presentSuccess() {
         resultType = ResultType.SUCCESS;
-
     }
 
     @Override
     public void presentFailure(List<String> error) {
         resultType = ResultType.FAILURE;
         this.setError(error);
-
     }
 
     @Override
     public void presentFailureExample(FailureExample example) {
         resultType = ResultType.FAILUREEXAMPLE;
         this.setExample(example);
-
     }
 
     public FailureExample getExample() {

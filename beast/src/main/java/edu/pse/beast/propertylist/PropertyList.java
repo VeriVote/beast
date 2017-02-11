@@ -87,8 +87,6 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 
     @Override
     public void run() {
-        //view.setVisible(true);
-        //view.setVisible(false);
     }
 
     @Override
@@ -193,6 +191,10 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         return sli.getPropertyListStringResProvider().getMenuStringRes();
     }
     
+    /**
+     * Returns the last delete action.
+     * @return The DeleteDescriptionAction that was lastly performed
+     */
     public DeleteDescriptionAction getLastAction() {
     	if (actionList.isEmpty()) {
     		return null;
@@ -200,6 +202,9 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     	return actionList.removeLast();
     }
     
+    /**
+     * Resets the delete action list (e.g. do it when a new list is loaded).
+     */
     public void resetActionList() {
     	actionList = new LinkedList<DeleteDescriptionAction>();
     }

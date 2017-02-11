@@ -5,6 +5,7 @@ import java.util.Observer;
 import edu.pse.beast.propertylist.Model.PLModelInterface;
 
 /**
+ * Handles saves before change in the property list.
  * @author Justin
  *
  */
@@ -14,6 +15,11 @@ public class PLSaveBeforeChangeHandler implements Observer {
 
     private String saveLocation;
 
+    /**
+     * Constructor
+     * @param model The property list data model to observe
+     * @param saveLocation The current location for saving files
+     */
     public PLSaveBeforeChangeHandler(PLModelInterface model, String saveLocation) {
         model.addObserver(this);
         this.saveLocation = saveLocation;
@@ -24,6 +30,7 @@ public class PLSaveBeforeChangeHandler implements Observer {
         this.setChangedSinceSave(true);
     }
 
+    // getter and setter
     public boolean isChangedSinceSave() {
         return changedSinceSave;
     }
