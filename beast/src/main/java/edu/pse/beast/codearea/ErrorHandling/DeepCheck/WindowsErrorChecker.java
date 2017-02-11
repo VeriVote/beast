@@ -100,12 +100,12 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
                     lineNumber = Integer.parseInt(linesMatcher.group(1).split("\\(")[1].split("\\)")[0]);
 
                     //get the error message here by splitting at a common identifier
-                    String[] varAndMessage = line.split("(C[0-9]*:)");
-                    String msg = line.substring(line.lastIndexOf(":"));
+                    String[] varAndMessage = line.split("(C[0-9]+:)");
+                   // String msg = line.substring(line.lastIndexOf(":"));
                     //to prevent exceptions
                     if (varAndMessage.length > 1) {
                         String toSplit = varAndMessage[1];
-
+                        
                         //the variable and compilermessage is between ":"'s, so we split there.
                         if (toSplit.contains(":")) {
                             varName = toSplit.split(":")[0].replaceAll("\"", "");
@@ -114,8 +114,9 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
                             message = toSplit;
                         }
                     }
-
+                    
                     codeErrors.add(CCodeErrorFactory.generateCompilterError(lineNumber, -1, varName, message));
+
 
                 } catch (NumberFormatException e) {
                     ErrorLogger.log("can't parse the current error line from cl.exe");
