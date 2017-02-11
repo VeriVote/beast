@@ -39,7 +39,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 
     private StringLoaderInterface sli;
 
-    private PLSaveBeforeChangeHandler saveBeforeChangeHandler;
+    private PLChangeHandler changeHandler;
     
     private LinkedList<DeleteDescriptionAction> actionList;
 
@@ -61,7 +61,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         this.sli = new StringLoaderInterface("de");
         editor.showWindow();
         view = new PropertyListWindow(this, model);
-        setSaveBeforeChangeHandler(new PLSaveBeforeChangeHandler(model, null));
+        setChangeHandler(new PLChangeHandler(model));
         actionList = new LinkedList<DeleteDescriptionAction>();
         model.initialize();
         this.fileChooser = fileChooser;
@@ -234,12 +234,12 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         return view;
     }
 
-    public PLSaveBeforeChangeHandler getSaveBeforeChangeHandler() {
-        return saveBeforeChangeHandler;
+    public PLChangeHandler getChangeHandler() {
+        return changeHandler;
     }
 
-    public void setSaveBeforeChangeHandler(PLSaveBeforeChangeHandler saveHandler) {
-        this.saveBeforeChangeHandler = saveHandler;
+    public void setChangeHandler(PLChangeHandler changeHandler) {
+        this.changeHandler = changeHandler;
     }
     
     public FileChooser getFileChooser() {

@@ -33,15 +33,13 @@ public class NewElectionUserAction extends UserAction {
     
     @Override
     public void perform() {
-        if (editor.getSaveBeforeChangeHandler().ifHasChangedOpenDialog(editor.getElectionDescription().getName())) {
-            ElectionTemplateChooser electionTemplateDialog = new ElectionTemplateChooser(
-                    this,
-                    templateHandler,
-                    editor.getStringInterface().getCElectionEditorStringResProvider().getElectionStringRes(),
-                    editor.getStringInterface().getCElectionEditorStringResProvider().getElectionStringRes().getStringFromID("emptyNameTextFieldError"));
-            electionTemplateDialog.setDefaultCloseOperation(ElectionTemplateChooser.DISPOSE_ON_CLOSE);
-            electionTemplateDialog.setVisible(true);
-        }
+        ElectionTemplateChooser electionTemplateDialog = new ElectionTemplateChooser(
+                this,
+                templateHandler,
+                editor.getStringInterface().getCElectionEditorStringResProvider().getElectionStringRes(),
+                editor.getStringInterface().getCElectionEditorStringResProvider().getElectionStringRes().getStringFromID("emptyNameTextFieldError"));
+        electionTemplateDialog.setDefaultCloseOperation(ElectionTemplateChooser.DISPOSE_ON_CLOSE);
+        electionTemplateDialog.setVisible(true);
     }
 
     public void create(String input, String res, String name) {
@@ -49,7 +47,7 @@ public class NewElectionUserAction extends UserAction {
             ElectionDescription description = cCodeHelper.generateElectionDescription(
                     input, res, name, 
                     templateHandler, editor.getStringInterface().getCElectionEditorStringResProvider().getElectionStringRes());
-            editor.loadElectionDescription(description);
+            editor.letUserEditElectionDescription(description);
             editor.getFileChooser().setHasBeenSaved(false);
         } catch (BadLocationException ex) {
             Logger.getLogger(NewElectionUserAction.class.getName()).log(Level.SEVERE, null, ex);

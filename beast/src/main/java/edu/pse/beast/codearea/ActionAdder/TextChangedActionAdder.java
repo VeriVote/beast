@@ -5,22 +5,17 @@
  */
 package edu.pse.beast.codearea.ActionAdder;
 
-import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveBeforeChangeHandler;
 import edu.pse.beast.codearea.Actionlist.Actionlist;
-import edu.pse.beast.codearea.Actionlist.EmptyActionList;
 import edu.pse.beast.codearea.Actionlist.TextAction.TextAddedAction;
 import edu.pse.beast.codearea.Actionlist.TextAction.TextDelta;
 import edu.pse.beast.codearea.Actionlist.TextAction.TextRemovedAction;
 import edu.pse.beast.codearea.SaveTextBeforeRemove;
 import edu.pse.beast.codearea.StoppedTypingContinuouslyListener;
 import edu.pse.beast.codearea.StoppedTypingContinuouslyMessager;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextPane;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;

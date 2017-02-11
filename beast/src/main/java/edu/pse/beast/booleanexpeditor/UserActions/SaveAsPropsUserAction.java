@@ -13,14 +13,11 @@ import edu.pse.beast.toolbox.UserAction;
  */
 public class SaveAsPropsUserAction extends UserAction {
     private BooleanExpEditor booleanExpEditor;
-    private SaverLoader saverLoader;
-    private StringResourceLoader stringResourceLoader;
     private FileChooser fileChooser;
 
     public SaveAsPropsUserAction(BooleanExpEditor booleanExpEditor) {
         super("save_as");
         this.booleanExpEditor = booleanExpEditor;
-        this.saverLoader = new PostAndPrePropertiesDescriptionSaverLoader();
         this.fileChooser = booleanExpEditor.getFileChooser();
     }
 
@@ -28,8 +25,9 @@ public class SaveAsPropsUserAction extends UserAction {
     public void perform() {
         PostAndPrePropertiesDescription currentlyLoaded = booleanExpEditor.getCurrentlyLoadedPostAndPreProp();
         if (fileChooser.saveObject(currentlyLoaded, true)) {
-            booleanExpEditor.getSaveBeforeChangeHandler().updatePreValues();
+            booleanExpEditor.getChangeHandler().updatePreValues();
             booleanExpEditor.getView().setWindowTitle(booleanExpEditor.getCurrentlyLoadedPostAndPreProp().getName());
+            booleanExpEditor.findErrorsAndDisplayThem();
         }
     }
 }

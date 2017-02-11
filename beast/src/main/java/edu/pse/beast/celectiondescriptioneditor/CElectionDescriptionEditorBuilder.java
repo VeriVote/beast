@@ -66,11 +66,11 @@ public class CElectionDescriptionEditorBuilder {
                 new ElectionDescriptionSaverLoader(),
                 gui);
 
-        // create new SaveBeforeChangeHandler
-        SaveBeforeChangeHandler saveBeforeChangeHandler = new SaveBeforeChangeHandler(codeArea.getPane(), gui);
+        // create new ChangeHandler
+        CElectionDescriptionEditorChangeHandler CElectionDescriptionEditorChangeHandler = new CElectionDescriptionEditorChangeHandler(codeArea.getPane());
 
         //create new CElectionEditor
-        CElectionDescriptionEditor editor = new CElectionDescriptionEditor(codeArea, gui, codeAreaBuilder, errorWindow, saveBeforeChangeHandler,
+        CElectionDescriptionEditor editor = new CElectionDescriptionEditor(codeArea, gui, codeAreaBuilder, errorWindow, CElectionDescriptionEditorChangeHandler,
                 objRefsForBuilder.getStringIF(), fileChooser);
         
         CElectionEditorMenubarHandler menuBarHandler = 
@@ -81,8 +81,6 @@ public class CElectionDescriptionEditorBuilder {
                         objRefsForBuilder.getStringIF());
         
         //toolbar: new save save_as load copy cut paste undo redo
-        saveBeforeChangeHandler.setSaveElectionUserAction((SaveElectionUserAction) save);
-
                 ActionIdAndListener[] idAndListener = {
             createFromUserAction(newAcc),
             createFromUserAction(save),

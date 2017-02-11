@@ -9,13 +9,10 @@ import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeA
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeAreaBuilder;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CErrorDisplayer;
 import edu.pse.beast.celectiondescriptioneditor.View.CCodeEditorWindow;
-import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveBeforeChangeHandler;
 import edu.pse.beast.celectiondescriptioneditor.View.ErrorWindow;
-import edu.pse.beast.codearea.CodeArea;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
-import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.saverloader.FileChooser;
@@ -38,7 +35,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     private CCodeEditorWindow window;
     private CElectionCodeAreaBuilder builder;
     private ErrorWindow errorWindow;
-    private SaveBeforeChangeHandler saveBeforeChangeHandler;
+    private CElectionDescriptionEditorChangeHandler changeHandler;
     private ArrayList<ElectionDescriptionChangeListener> descriptionChangeListeners = new ArrayList<>();
     private CElectionEditorMenubarHandler menubarHandler;
     private CElectionEditorToolbarHandler toolbarHandler;
@@ -53,14 +50,14 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
             CCodeEditorWindow gui,
             CElectionCodeAreaBuilder builder,
             ErrorWindow errorWindow,
-            SaveBeforeChangeHandler saveBeforeChangeHandler,
+            CElectionDescriptionEditorChangeHandler CElectionDescriptionEditorChangeHandler,
             StringLoaderInterface stringLoaderInterface,
             FileChooser fileChooser) {
         this.codeArea = codeArea;
         this.window = gui;
         this.builder = builder;
         this.errorWindow = errorWindow;
-        this.saveBeforeChangeHandler = saveBeforeChangeHandler;
+        this.changeHandler = CElectionDescriptionEditorChangeHandler;
         this.stringLoaderInterface = stringLoaderInterface;
         this.fileChooser = fileChooser;
     }
@@ -129,12 +126,16 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     }
 
     public boolean letUserEditElectionDescription(ElectionDescription description) throws BadLocationException {
-        if (saveBeforeChangeHandler.ifHasChangedOpenDialog(currentDescription.getName())) {
-            loadElectionDescription(description);
-            fileChooser.setHasBeenSaved(true);
-            return true;
+        if (changeHandler.hasChanged()) {
+            if (fileChooser.openSaveChangesDialog(getElectionDescription())) {
+                loadElectionDescription(description);
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return false;
+            loadElectionDescription(description);
+            return true;
         }
     }
 
@@ -154,7 +155,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         codeArea.letUserEditCode(description.getCode());
         codeArea.lockLine(description.getVotingDeclLine());
         codeArea.lockLine(description.getCode().size() - 1);
-        saveBeforeChangeHandler.addNewTextPane(codeArea.getPane());
+        changeHandler.addNewTextPane(codeArea.getPane());
         window.setWindowTitle(description.getName());
         for(ElectionDescriptionChangeListener l : descriptionChangeListeners) {
             l.inputChanged(description.getInputType());
@@ -173,10 +174,10 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
 
     /**
      * Getter
-     * @return the SaveBeforeChangeHandler object of this class
+     * @return the ChangeHandler object of this class
      */
-    public SaveBeforeChangeHandler getSaveBeforeChangeHandler() {
-        return this.saveBeforeChangeHandler;
+    public CElectionDescriptionEditorChangeHandler getChangeHandler() {
+        return this.changeHandler;
     }
     
     public void addListener(ElectionDescriptionChangeListener l) {

@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
-import edu.pse.beast.datatypes.ChangeNameInterface;
+import edu.pse.beast.datatypes.NameInterface;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.ResultInterface;
 
-public class PLModel extends Observable implements PLModelInterface, ChangeNameInterface {
+
+public class PLModel extends Observable implements PLModelInterface, NameInterface {
 
 	private ArrayList<PropertyItem> propertyList;
 	private String name;

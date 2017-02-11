@@ -69,9 +69,9 @@ public class BooleanExpEditorBuilder{
         BooleanExpCodeArea postPropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
                 window.getPostPropTextPane(), window.getPostPropScrollPane(), symbolicVariableList, ceditor);
 
-        // create SaveBeforeChangeHandler
-        SaveBeforeChangeHandler saveBeforeChangeHandler = new SaveBeforeChangeHandler(prePropCodeArea.getPane(),
-                postPropCodeArea.getPane(), symbolicVariableList, window);
+        // create ChangeHandler
+        ChangeHandler changeHandler = new ChangeHandler(prePropCodeArea.getPane(),
+                postPropCodeArea.getPane(), symbolicVariableList);
 
         //create CodeAreaFocusListener
         CodeAreaFocusListener codeAreaFocusListener = new CodeAreaFocusListener(prePropCodeArea, postPropCodeArea);
@@ -82,7 +82,7 @@ public class BooleanExpEditorBuilder{
                 new PostAndPrePropertiesDescriptionSaverLoader(), null);
 
         BooleanExpEditor editor = new BooleanExpEditor(prePropCodeArea, postPropCodeArea, window, symbolicVarListController,
-                errorWindow, saveBeforeChangeHandler, codeAreaFocusListener, emptyPostAndPrePropertiesDescription,
+                errorWindow, changeHandler, codeAreaFocusListener, emptyPostAndPrePropertiesDescription,
                 codeAreaBuilder, objectRefsForBuilder, ceditor, fileChooser);
 
         //creation of BooleanExpEditorMenubarHandler
@@ -95,7 +95,6 @@ public class BooleanExpEditorBuilder{
                 objectRefsForBuilder.getStringIF().getBooleanExpEditorStringResProvider().getToolbarTipStringRes(),
                 createActionIdAndListenerListForToolbarHandler(editor));
 
-        saveBeforeChangeHandler.setSavePropsUserAction(savePropsUserAction);
         editor.setToolBarHandler(toolBarHandler);
         editor.setMenuBarHandler(menuBarHandler);
 

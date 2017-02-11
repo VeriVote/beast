@@ -84,7 +84,6 @@ public class ParameterEditorBuilder {
                     PropertyList propertyList, StringResourceLoader stringResourceLoader, SaverLoader saverLoader) {
         ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
 
-        UserAction newly = createNewProjectUserAction(cElectionDescriptionEditor, propertyList);
         UserAction load = createLoadProjectUserAction(cElectionDescriptionEditor, propertyList, stringResourceLoader, saverLoader);
         UserAction save = createSaveProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoader);
         UserAction save_as = createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList, stringResourceLoader,
@@ -97,7 +96,6 @@ public class ParameterEditorBuilder {
         UserAction showCElectionEditor = createShowCElectionEditorUserAction(cElectionDescriptionEditor.getView());
 
         ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
-        fileList.add(createFromUserAction(newly));
         fileList.add(createFromUserAction(load));
         fileList.add(createFromUserAction(save));
         fileList.add(createFromUserAction(save_as));
@@ -131,9 +129,8 @@ public class ParameterEditorBuilder {
     private ActionIdAndListener[] createActionIdAndListenerListForToolbarHandler(
             CElectionDescriptionEditor cElectionDescriptionEditor,
             PropertyList propertyList, StringResourceLoader stringResourceLoader, SaverLoader saverLoader) {
-        ActionIdAndListener[] created = new ActionIdAndListener[6];
+        ActionIdAndListener[] created = new ActionIdAndListener[5];
 
-        UserAction newly = createNewProjectUserAction(cElectionDescriptionEditor, propertyList);
         UserAction load = createLoadProjectUserAction(cElectionDescriptionEditor, propertyList, stringResourceLoader, saverLoader);
         UserAction save = createSaveProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoader);
         UserAction save_as = createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList, stringResourceLoader,
@@ -141,19 +138,13 @@ public class ParameterEditorBuilder {
         UserAction start = createStartCheckUserAction();
         UserAction stop = createAbortCheckUserAction();
 
-        created[0] = createFromUserAction(newly);
-        created[1] = createFromUserAction(load);
-        created[3] = createFromUserAction(save);
+        created[0] = createFromUserAction(load);
+        created[1] = createFromUserAction(save);
         created[2] = createFromUserAction(save_as);
-        created[4] = createFromUserAction(start);
-        created[5] = createFromUserAction(stop);
+        created[3] = createFromUserAction(start);
+        created[4] = createFromUserAction(stop);
 
         return created;
-    }
-
-    private UserAction createNewProjectUserAction(CElectionDescriptionEditor cElectionDescriptionEditor,
-            PropertyList propertyList) {
-        return new NewProjectUserAction(propertyList, cElectionDescriptionEditor, editor);
     }
 
     private UserAction createSaveProjectUserAction(CElectionDescriptionEditor cElectionDescriptionEditor,

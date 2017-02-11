@@ -5,23 +5,15 @@
  */
 package edu.pse.beast.datatypes.propertydescription;
 
-import edu.pse.beast.datatypes.ChangeNameInterface;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
-import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.BooleanExpScope;
-import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.FormalPropertySyntaxTreeToAstTranslator;
-import java.util.LinkedList;
-import java.util.List;
+import edu.pse.beast.datatypes.NameInterface;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
+import java.util.List;
 
 /**
  *
  * @author Niels
  */
-public class PostAndPrePropertiesDescription implements ChangeNameInterface{
+public class PostAndPrePropertiesDescription implements NameInterface {
 
     private String name;
     private SymbolicVariableList symbolicVariableList;

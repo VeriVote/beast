@@ -1,10 +1,5 @@
 package edu.pse.beast.propertylist.UserActions;
 
-import java.io.File;
-
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.toolbox.UserAction;
@@ -23,26 +18,16 @@ public class LoadPropertyList extends UserAction {
 
     @Override
     public void perform() {
-
-        if (controller.getSaveBeforeChangeHandler().isChangedSinceSave()) {
-            int ask = JOptionPane.showConfirmDialog(controller.getView(),
-                    controller.getMenuStringLoader().getStringFromID("wantToSaveBefore"),
-                    controller.getMenuStringLoader().getStringFromID("saveList"),
-                    JOptionPane.OK_CANCEL_OPTION);
-
-            if (ask == JOptionPane.OK_OPTION) {
-                SaveAsPropertyList spl = new SaveAsPropertyList(controller);
-                spl.perform();
+        if (controller.getChangeHandler().hasChanged()) {
+            if (!controller.getFileChooser().openSaveChangesDialog(controller.getModel())) {
+                return;
             }
-
         }
         PLModel plModel = (PLModel) controller.getFileChooser().loadObject();
         if (plModel != null) {
             controller.setPLModel(plModel);
-            controller.getSaveBeforeChangeHandler().setChangedSinceSave(false);
+            controller.getChangeHandler().setChangedSinceSave(false);
             controller.resetActionList();
         }
-
     }
-
 }

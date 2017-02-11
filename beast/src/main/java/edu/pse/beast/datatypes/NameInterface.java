@@ -3,6 +3,7 @@ package edu.pse.beast.datatypes;
 /**
  * @author NikolaiLMS
  */
-public interface ChangeNameInterface {
+public interface NameInterface {
     void setNewName(String newName);
+    String getName();
 }

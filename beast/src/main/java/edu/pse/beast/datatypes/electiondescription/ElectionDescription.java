@@ -1,6 +1,6 @@
 package edu.pse.beast.datatypes.electiondescription;
 
-import edu.pse.beast.datatypes.ChangeNameInterface;
+import edu.pse.beast.datatypes.NameInterface;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * @author Lukas
  *
  */
-public class ElectionDescription implements ChangeNameInterface {
+public class ElectionDescription implements NameInterface {
     private String name;
     private List<String> code;
     private ElectionTypeContainer inputType;
