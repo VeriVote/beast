@@ -1,4 +1,3 @@
-title : Parametereditor
 voters : Wähler
 candidates : Kandidaten
 seats : Sitze
@@ -60,3 +59,4 @@ propertyErrors : Es bestehen noch Fehler in den zu prüfenden Eigenschaften.
 parameterErrors : Es bestehen noch Fehler in den Parametern.
 startingCheck : Analyse wird gestartet
 waitingForPropertyResult : Warte auf Ergebnis der Eigenschaft '
+title : Parametereditor
