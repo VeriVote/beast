@@ -47,7 +47,7 @@ public class FileChooser {
                     + ((NameInterface) object).getName()));
         }
 
-        fileChooser.setApproveButtonText("saveApproveButtonText");
+        fileChooser.setApproveButtonText(stringResourceLoader.getStringFromID("saveApproveButtonText"));
         if (hasBeenSaved && !forceDialog) {
             return saveToFile(object, lastLoadedFile);
         } else {
@@ -66,7 +66,7 @@ public class FileChooser {
     }
 
     public Object loadObject() {
-        fileChooser.setApproveButtonText("openApproveButtonText");
+        fileChooser.setApproveButtonText(stringResourceLoader.getStringFromID("openApproveButtonText"));
         if (fileChooser.showDialog(component, stringResourceLoader.getStringFromID("openDialogTitleText"))
                 == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();

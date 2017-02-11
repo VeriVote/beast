@@ -49,7 +49,7 @@ wrongEncodingError : Das Projekt enthält falsch kodierte Zeichen.
 inputOutputErrorSave : Das Verzeichnis in dem gespeichert werden soll existiert nicht oder Sie verfügen nicht über ausreichende Rechte.
 fileSuffix : .elec
 saveChanges : Änderungen an '
-save : ' speichern?
+saveChangesSuffix : ' speichern?
 yesOption : Ja
 noOption : Nein
 cancelOption : Abbrechen
