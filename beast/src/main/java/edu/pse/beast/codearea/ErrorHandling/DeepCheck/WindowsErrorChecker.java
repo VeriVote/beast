@@ -99,8 +99,9 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
                     //then we split at "(" and ")" to extract the number
                     lineNumber = Integer.parseInt(linesMatcher.group(1).split("\\(")[1].split("\\)")[0]);
 
-                    //get the error message here by splitting at a common identifier
-                    String[] varAndMessage = line.split("(C[0-9]+:)");
+                    //get the error message here by splitting at a common (error/warning C[ERRORNUMBER]) identifier
+                    String[] varAndMessage = line.split("([a-zA-Z]+ C[0-9]+:)");
+                    
                    // String msg = line.substring(line.lastIndexOf(":"));
                     //to prevent exceptions
                     if (varAndMessage.length > 1) {
