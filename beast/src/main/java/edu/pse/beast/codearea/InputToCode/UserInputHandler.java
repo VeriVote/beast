@@ -10,7 +10,11 @@ import java.awt.event.KeyListener;
 import javax.swing.JTextPane;
 
 /**
- *  
+ * This class takes input from the user and forwards it to either 
+ * CodeInputHandler (if it is code to insert into the pane) or Shortcuthandler 
+ * (if left ctrl is down). 
+ * If the input is best handled by the JTextPane, however, such as the arrow keys,
+ * it simply ignores it.
  * @author Holger-Desktop
  */
 public class UserInputHandler implements KeyListener {
@@ -18,7 +22,9 @@ public class UserInputHandler implements KeyListener {
     CodeInputHandler codeInputHandler;
     ShortcutHandler shortcutHandler;
     private boolean del = false;
-    public UserInputHandler(JTextPane pane, CodeInputHandler codeInputHandler, ShortcutHandler shortcutHandler) {
+    public UserInputHandler(JTextPane pane, 
+            CodeInputHandler codeInputHandler, 
+            ShortcutHandler shortcutHandler) {
         this.pane = pane;
         this.codeInputHandler = codeInputHandler;
         this.shortcutHandler = shortcutHandler;
@@ -32,7 +38,7 @@ public class UserInputHandler implements KeyListener {
         } else if(isShortcut(ke)) {
             ke.consume();
         } else {
-            codeInputHandler.handleKey(ke);   
+            codeInputHandler.handleCodeKey(ke);   
             ke.consume();         
         }
     }
@@ -53,7 +59,7 @@ public class UserInputHandler implements KeyListener {
             try {
                 shortcutHandler.handleKey(ke); 
             } catch(NullPointerException ex) {
-                System.err.println("key not mapped");
+                //key is not mapped to any action
             }        
         } else if(ke.getKeyCode() == KeyEvent.VK_DELETE) {
             codeInputHandler.delete();
@@ -78,6 +84,4 @@ public class UserInputHandler implements KeyListener {
     public ShortcutHandler getShortcutHandler() {
         return shortcutHandler;
     }
-
-    
 }

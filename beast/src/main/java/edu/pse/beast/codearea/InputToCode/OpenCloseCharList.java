@@ -8,7 +8,7 @@ package edu.pse.beast.codearea.InputToCode;
 import java.util.ArrayList;
 
 /**
- *
+ * This class creates all available chars with a corresponding open or closing char
  * @author Holger-Desktop
  */
 public class OpenCloseCharList {

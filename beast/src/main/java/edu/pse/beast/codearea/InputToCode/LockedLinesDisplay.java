@@ -15,7 +15,8 @@ import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
 
 /**
- *
+ * Highlights locked lines with a gray background. It listens to 
+ * locked and unlocked messages from the lockedlineshandler
  * @author Holger-Desktop
  */
 public class LockedLinesDisplay implements LockedLinesListener {

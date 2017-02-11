@@ -8,7 +8,9 @@ package edu.pse.beast.codearea.InputToCode;
 import javax.swing.JTextPane;
 
 /**
- *
+ * This TabHandler calculates the amount of tabs needed at the beginning of
+ * any given line by the amount of open curly braces in lines before. This
+ * is sufficient for 99% of cases
  * @author Holger-Desktop
  */
 public class CurlyBracesLineBeginningTabHandler implements LineBeginningTabsHandler {

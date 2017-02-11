@@ -17,7 +17,14 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
 
 /**
- *
+ * This class handles keeping track of the position of lines locked by
+ * the user. It listens to removed and insert updates
+ * from the styleddocument of the JTExtPane in  which the lines
+ * are locked. If a linebreak is inserted before a locked line, the line gets
+ * unlocked and the next one locked. Conversely, if a linebreak is removed in
+ * front of a locked line, said line gets unlocked and the line before it locked
+ * Every time a line gets locked/unlocked, it messages all registered LockedLinesListener
+ * of this fact
  * @author Holger-Desktop
  */
 public class LockedLinesHandler implements DocumentListener {

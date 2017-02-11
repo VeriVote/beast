@@ -11,6 +11,8 @@ import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.Tuple;
 import java.awt.Color;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -28,7 +30,7 @@ import javax.swing.text.View;
  *
  * @author Holger-Desktop
  */
-public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMotionListener {
+public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMotionListener, KeyListener {
     protected JTextPane pane;
     private SquigglePainter painter;
     private ArrayList<Tuple<Integer,Integer>> absPosToMsg;
@@ -44,6 +46,7 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         pane.addMouseMotionListener(this);
         this.painter = new SquigglePainter(Color.red);  
         this.currentStringResLoader = currentStringResLoader;
+        errorPopupMenu.addKeyListener(this);
     }
     
     public void showErrors(ArrayList<CodeError> errors) {
@@ -82,12 +85,11 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         Point pt = new Point(e.getX(), e.getY());
         int pos = pane.viewToModel(pt);
         if(pos == JTextPaneToolbox.getText(pane).length()) 
-        //System.out.println("m abs " + pt.x + "," + pt.y + " m_pos: " + pos);
         if(Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 && Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 && errorPopupMenu.isVisible()) return;
         for(int i = 0; i < absPosToMsg.size(); ++i) {
             if(absPosToMsg.get(i).x <= pos && absPosToMsg.get(i).y >= pos) {
                 errorPopupMenu.getErrorItem().setText(msges.get(i));
-                errorPopupMenu.show(pane, e.getX(), e.getY());
+                errorPopupMenu.show(pane, e.getX(), e.getY() + 20);
                 return;
             }
         }
@@ -100,6 +102,18 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
     public void mouseDragged(MouseEvent e) {
         
     }
-
+    @Override
+    public void keyTyped(KeyEvent ke) {  
+        
+    }
     
+    @Override
+    public void keyPressed(KeyEvent ke) {  
+   
+    }
+    
+    @Override
+    public void keyReleased(KeyEvent ke) {
+    
+    }
 }

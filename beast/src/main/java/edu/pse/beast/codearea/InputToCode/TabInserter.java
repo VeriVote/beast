@@ -12,7 +12,9 @@ import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 
 /**
- *
+ * Handles inserting and removing tabs in a given jtextpane. This is because
+ * the pane cannot by itself add tabs as spaces.
+ * TODO: make it so amount of spaces per tab can be changed after code generation
  * @author Holger-Desktop
  */
 public class TabInserter {
@@ -24,6 +26,12 @@ public class TabInserter {
         this.pane = pane;
     }
     
+    /**
+     * inserts the required amount of spaces to move the caret psoition
+     * to the next multiple of the amount of spaces per tab
+     * @param pos the position at which a tab should be inserted
+     * @throws BadLocationException if the position is invalid
+     */
     public void insertTabAtPos(int pos) throws BadLocationException {
         int distToLineBeginning = JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, pos);
         
@@ -42,8 +50,11 @@ public class TabInserter {
         tabPositions.add(pos);
     }
     
-    
-    
+    /**
+     * removes a tab at the position if there is nothing but spaces to the left
+     * of it
+     * @param pos the position at which a tab should be removed
+     */
     public void removeTabAtPos(int pos) {
         if(!onlySpacesBetweenPosAndLinesBeginning(pos)) return;
         int distToLineBeginning = JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, pos);
@@ -62,10 +73,11 @@ public class TabInserter {
     public int getSpacesPerTab() {
         return spacesPerTab;
     }
-    
-    public void setSpacesPerTab(int spaces) {
-        spacesPerTab = spaces;
-    }
+ 
+    //TODO: make it so changing theese rezises all tabs in the pane
+//    public void setSpacesPerTab(int spaces) {
+//        spacesPerTab = spaces;
+//    }
 
     private boolean onlySpacesBetweenPosAndLinesBeginning(int pos) {
         int distToLineBeginning = JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, pos);
