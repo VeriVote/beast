@@ -4,12 +4,17 @@ import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
+ * Lets the user save the PropertyList with the already known filename or calls SaveAsPropertyList.
  * @author Justin
  */
 public class SavePropertyList extends UserAction {
 
     private final PropertyList controller;
 
+    /**
+     * Constructor
+     * @param controller A reference to the PropertyList controller
+     */
     public SavePropertyList(PropertyList controller) {
         super("save");
         this.controller = controller;

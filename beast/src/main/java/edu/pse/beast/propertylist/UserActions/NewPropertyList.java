@@ -3,10 +3,18 @@ package edu.pse.beast.propertylist.UserActions;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.toolbox.UserAction;
 
+/**
+ * Adds new properties to PropertyList.
+ * @author Justin
+ */
 public class NewPropertyList extends UserAction {
 
     private final PropertyList controller;
 
+    /**
+     * Constructor
+     * @param controller A reference to the PropertyList controller
+     */
     public NewPropertyList(PropertyList controller) {
         super("new");
         this.controller = controller;

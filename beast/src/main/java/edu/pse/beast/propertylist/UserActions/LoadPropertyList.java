@@ -5,12 +5,17 @@ import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
+ * Loads a new property list.
  * @author Justin
  */
 public class LoadPropertyList extends UserAction {
 
     private final PropertyList controller;
 
+    /**
+     * Constructor
+     * @param controller A reference to the PropertyList controller
+     */
     public LoadPropertyList(PropertyList controller) {
         super("load");
         this.controller = controller;

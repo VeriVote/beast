@@ -29,9 +29,10 @@ import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
 /**
- *
+ * This class is the view of PropertyList.
  * @author Justin
  */
+@SuppressWarnings("serial")
 public class PropertyListWindow extends JFrame implements DisplaysStringsToUser, Observer {
 
 	private PLModelInterface model;
@@ -55,9 +56,6 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	
 	private final String pathToAdd = "/core/images/other/add.png";
 	private final ImageIcon addIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToAdd);
-	
-
-	//private NewPropertyWindow newPropWindow;
 
 	/**
 	 * Updates the view when focus is gained in this JFrame, needed to update
@@ -71,20 +69,85 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		}
 	};
 
+	
+	/**
+	 * Constructor
+	 * @param controller The PropertyList controller
+	 * @param model The model of PropertyList
+	 */
 	public PropertyListWindow(PLControllerInterface controller, PLModelInterface model) {
 		this.controller = controller;
 		this.model = model;
 		model.addObserver(this);
 		init();
 	}
+	
+	
+	/**
+	 * Updates the view so that all changes (in the model) are visible.
+	 */
+	public void updateView() {
+		panel.revalidate();
+		this.validate();
+		panel.repaint();
+	}
+	
+	/**
+	 * Resets the name attribute because the name change for a PropertyItem was rejected.
+	 * @param prop The PropertyItem that couldn't be changed
+	 */
+	public void rejectNameChange(PropertyItem prop) {
+		controller.changeName(prop, prop.getDescription().getName());
+		for (ListItem li : items) {
+			if (prop.equals(li.getPropertyItem())) {
+				updateItems(model.getPropertyList());
+			}
+		}
+	}
 
+	/**
+	 * Stops reacting to user input.
+	 */
+	public void stopReacting() {
+		setReactsToInput(false);
+	}
+
+	/**
+	 * Resumes reacting to user input.
+	 */
+	public void resumeReacting() {
+		setReactsToInput(true);
+	}
+
+	
+	@Override
+	public void updateStringRes(StringLoaderInterface sli) {
+		this.sli = sli;
+		PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
+		StringResourceLoader other = provider.getOtherStringRes();
+
+		title = other.getStringFromID("title");
+		setWindowTitle(other.getStringFromID("title"));
+		this.addNewButton.setText(other.getStringFromID("newButton"));
+		this.addCreatedButton.setText(other.getStringFromID("createdButton"));
+
+		for (ListItem item : items) {
+			item.updateStringRes(sli);
+		}
+		this.revalidate();
+		this.repaint();
+	}
+
+	@Override
+	public void update(Observable o, Object obj) {
+		updateItems(model.getPropertyList());
+	}
+
+	
+	// private methods
 	private void init() {
-		//newPropWindow = new NewPropertyWindow(controller, model);
-		// setFrame(new JFrame());
 		this.setLayout(new BorderLayout());
-		// this.setResizable(true);
 		setBounds(600, 100, 500, 500);
-		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Property List");
 
 		menuBar = new JMenuBar();
@@ -103,12 +166,12 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		getContentPane().add(panel, BorderLayout.CENTER);
-
 		if (!items.isEmpty()) {
 			for (ListItem item : items) {
 				panel.add(item, BorderLayout.CENTER);
 			}
 		}
+		
 		JScrollPane jsp = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.add(jsp);
@@ -143,18 +206,12 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		this.addWindowFocusListener(windowAdapter);
 	}
 
-	public JToolBar getToolbar() {
-		return toolBar;
+	private void setReactsToInput(boolean reacts) {
+		reactsToInput = reacts;
+		for (ListItem item : items)
+			item.setReactsToInput(reacts);
 	}
-
-	public ArrayList<ListItem> getList() {
-		return items;
-	}
-
-	public void setList(ArrayList<ListItem> items) {
-		this.items = items;
-	}
-
+	
 	private void updateItems(ArrayList<PropertyItem> propertyList) {
 		items = new ArrayList<ListItem>();
 		panel.removeAll();
@@ -174,65 +231,8 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		panel.repaint();
 	}
 
-	public void updateView() {
-		panel.revalidate();
-		this.validate();
-		panel.repaint();
-	}
-
-	/*private void addNewPropertyAction(ActionEvent e) {
-		newPropWindow.toggleVisibility();
-	}*/
-
-	@Override
-	public void updateStringRes(StringLoaderInterface sli) {
-		this.sli = sli;
-		PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
-		StringResourceLoader other = provider.getOtherStringRes();
-		//StringResourceLoader menu = provider.getMenuStringRes();
-		//StringResourceLoader toolbarTip = provider.getToolbarTipStringRes();
-
-		title = other.getStringFromID("title");
-		setWindowTitle(other.getStringFromID("title"));
-		this.addNewButton.setText(other.getStringFromID("newButton"));
-		this.addCreatedButton.setText(other.getStringFromID("createdButton"));
-
-		for (ListItem item : items) {
-			item.updateStringRes(sli);
-		}
-
-		this.revalidate();
-		this.repaint();
-	}
-
-	@Override
-	public void update(Observable o, Object obj) {
-		updateItems(model.getPropertyList());
-	}
-
-	public void rejectNameChange(PropertyItem prop) {
-		controller.changeName(prop, prop.getDescription().getName());
-		for (ListItem li : items) {
-			if (prop.equals(li.getPropertyItem())) {
-				updateItems(model.getPropertyList());
-			}
-		}
-	}
-
-	public void stopReacting() {
-		setReactsToInput(false);
-	}
-
-	public void resumeReacting() {
-		setReactsToInput(true);
-	}
-
-	private void setReactsToInput(boolean reacts) {
-		reactsToInput = reacts;
-		for (ListItem item : items)
-			item.setReactsToInput(reacts);
-	}
-
+	
+	// getter and setter
 	public ListItem getNextToPresent() {
 		return nextToPresent;
 	}
@@ -249,7 +249,27 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	 *            name of the currently loaded PropertyList object
 	 */
 	public void setWindowTitle(String propListName) {
-		this.currentlyLoadedPropertyListName = propListName;
+		this.setCurrentlyLoadedPropertyListName(propListName);
 		this.setTitle(title + " " + propListName + " - BEAST");
+	}
+
+	public String getCurrentlyLoadedPropertyListName() {
+		return currentlyLoadedPropertyListName;
+	}
+
+	public void setCurrentlyLoadedPropertyListName(String currentlyLoadedPropertyListName) {
+		this.currentlyLoadedPropertyListName = currentlyLoadedPropertyListName;
+	}
+	
+	public JToolBar getToolbar() {
+		return toolBar;
+	}
+
+	public ArrayList<ListItem> getList() {
+		return items;
+	}
+
+	public void setList(ArrayList<ListItem> items) {
+		this.items = items;
 	}
 }

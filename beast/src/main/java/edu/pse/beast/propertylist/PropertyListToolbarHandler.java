@@ -9,9 +9,8 @@ import edu.pse.beast.toolbox.ImageResourceProvider;
 import edu.pse.beast.toolbox.ToolbarHandler;
 
 /**
- * Handles toolbar events for PropertyList.
+ * Handles tool-bar events for PropertyList.
  * @author Justin
- *
  */
 public class PropertyListToolbarHandler extends ToolbarHandler {
 
@@ -19,11 +18,11 @@ public class PropertyListToolbarHandler extends ToolbarHandler {
 
     /**
      * Constructor
-     * @param imageRes
-     * @param stringRes
-     * @param actionIdsAndListener
-     * @param toolbar
-     * @param window
+     * @param imageRes The image resource provider for the tool-bar
+     * @param stringRes The string resource provider for the tool-bar
+     * @param actionIdsAndListener The action IDs and the listener for those actions
+     * @param toolbar The tool-bar of the PropertyList view
+     * @param window The view of PropertyList
      */
     public PropertyListToolbarHandler(ImageResourceProvider imageRes, StringResourceLoader stringRes,
             ActionIdAndListener[] actionIdsAndListener, JToolBar toolbar, PropertyListWindow window) {
@@ -31,6 +30,7 @@ public class PropertyListToolbarHandler extends ToolbarHandler {
         this.setWindow(window);
     }
 
+    
 	public PropertyListWindow getWindow() {
 		return window;
 	}
