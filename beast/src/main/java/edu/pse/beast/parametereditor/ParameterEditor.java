@@ -93,6 +93,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier {
         ElectionCheckParameter param = new ElectionCheckParameter(voter, cand, seat, timeout, processes, argument);
         return param;
     }
+
     /**
      * Setter for all parameters (needed for loading projects)
      * @param param 
@@ -155,7 +156,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier {
         setParameter(project.getElectionCheckParameter());
         window.setWindowTitle(project.getName());
         try {
-            cElectionDescriptionEditor.letUserEditElectionDescription(project.getElecDescr());
+            cElectionDescriptionEditor.loadElectionDescription(project.getElecDescr());
             cElectionDescriptionEditor.setVisible(true);
         } catch (BadLocationException e) {
             e.printStackTrace();
