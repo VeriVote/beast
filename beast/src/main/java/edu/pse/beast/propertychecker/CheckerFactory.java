@@ -31,6 +31,14 @@ public abstract class CheckerFactory implements Runnable {
     private List<String> lastResult;
     private List<String> lastError;
 
+    /**
+     * 
+     * @param controller the factoryController that started this factory
+     * @param electionDescSrc the electionDescription
+     * @param postAndPrepPropDesc the propertyDescription
+     * @param paramSrc the parameter
+     * @param result the result object where the result has to be put in
+     */
     protected CheckerFactory(FactoryController controller, ElectionDescriptionSource electionDescSrc,
             PostAndPrePropertiesDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result) {
 
@@ -47,6 +55,10 @@ public abstract class CheckerFactory implements Runnable {
         }
     }
 
+    /**
+     * the main working thread in this CheckerFactory. It cycles through all possible 
+     * configurations and creates sequentially a new checker for each
+     */
     public void run() {
 
         String advanced = paramSrc.getParameter().getArgument();
@@ -74,15 +86,18 @@ public abstract class CheckerFactory implements Runnable {
                         currentlyRunning = startProcess(electionDescSrc, postAndPrepPropDesc, advanced, voters,
                                 candidates, seats, this);
 
+                        //check if the creation was successfull
                         if (currentlyRunning == null) {
                             // the process creation failed
                             stopped = true;
                             result.setFinished();
-                            result.setError("Couldn't start the process, please follow the instructions you got shown on the screen before");
+                            result.setError("Couldn't start the process, please follow the instructions you "
+                                    + "got shown on the screen before");
                         }
 
                     }
 
+                    //wait until we get stopped or the checker finished
                     while (!finished && !stopped) {
                         try {
                             // polling in 1 second steps to save cpu time
@@ -133,6 +148,7 @@ public abstract class CheckerFactory implements Runnable {
             }
         }
 
+        //if the correct flags for the result object haven't been set yet, we set them
         if (!finished && !stopped) {
             finished = true;
             if (lastResult != null) {
@@ -144,7 +160,8 @@ public abstract class CheckerFactory implements Runnable {
                     result.setFinished();
                 } else {
                     ErrorLogger.log(
-                            "The Result Object indicated a finished check, even though the CheckerFactory was still running");
+                            "The Result Object indicated a finished check, even though the "
+                            + "CheckerFactory was still running");
                 }
             } else {
                 if (finished == true) {
@@ -156,6 +173,10 @@ public abstract class CheckerFactory implements Runnable {
         controller.notifyThatFinished(this);
     }
 
+    /**
+     * signals to this checkerFactory that it has to stop checking.
+     * It then also stops the currently running checker
+     */
     public void stopChecking() {
         stopped = true;
         if (currentlyRunning != null) {
@@ -163,6 +184,12 @@ public abstract class CheckerFactory implements Runnable {
         }
     }
 
+    /**
+     * when a checker finished it calls this methode to let the factory know that it can start the next
+     * one, if it still has more to start
+     * @param lastResult the last result output from the checker that finished last
+     * @param lastError the last error output from the checker that finished last
+     */
     public void notifyThatFinished(List<String> lastResult, List<String> lastError) {
         finished = true;
         this.lastResult = lastResult;
@@ -170,18 +197,20 @@ public abstract class CheckerFactory implements Runnable {
     }
 
     /**
-     * 
-     * @param electionDescSrc2
-     * @param postAndPrepPropDesc2
-     * @param advanced
-     * @param voters
-     * @param candidates
-     * @param seats
-     * @param parent
+     * starts a new Checker with the given parameters.
+     * Implementation depends on the extending class
+     * @param electionDescSrc the election description
+     * @param postAndPrepPropDesc the property description
+     * @param advanced the advanced options to be passed to the checker
+     * @param voters the amount of voters
+     * @param candidates the amount of candidates
+     * @param seats the amount of seats
+     * @param parent the parent that has to be notified when the checker finished
+     * @return the newly created Checker that is now checking the given file and other properties
      */
     protected abstract Checker startProcess(ElectionDescriptionSource electionDescSrc,
-            PostAndPrePropertiesDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
-            CheckerFactory parent);
+            PostAndPrePropertiesDescription postAndPrepPropDesc, String advanced, int voters, 
+            int candidates, int seats, CheckerFactory parent);
 
     /**
      * 
@@ -198,8 +227,8 @@ public abstract class CheckerFactory implements Runnable {
      *            the Factorycontroller that controls this checkerfactory
      * @param electionDescSrc
      *            the electiondescriptionsource
-     * @param postAndPrepPropDescSrc
-     *            the source that describes the property to be checked
+     * @param postAndPrepPropDesc
+     *            a description of the given property
      * @param paramSrc
      *            the source for the parameters
      * @param result
@@ -219,8 +248,17 @@ public abstract class CheckerFactory implements Runnable {
      */
     public abstract boolean checkAssertionSuccess(List<String> toCheck);
     
+    /**
+     * checks the given list, if it indicates a failure
+     * @param toCheck the list to be searched for clues
+     * @return true, if the property failes, false, if the propery was successfull
+     */
     public abstract boolean checkAssertionFailure(List<String> toCheck);
     
+    /**
+     * this methode extracts the electionType from the description
+     * @return the election Type that the here give ElectionDescriptionSource describes
+     */
     private ElectionType getElectionTypeFromElectionDescription() {
         InternalTypeContainer inputType = electionDescSrc.getElectionDescription().getInputType().getType();
         if (inputType.isList() && inputType.getAccesTypeIfList() == InternalTypeRep.VOTER) {

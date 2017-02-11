@@ -69,6 +69,8 @@ public class CBMCResult extends Result {
 
         switch (getElectionType()) {
 
+        //get the fitting type and extract the values out of it, because we know the format of the values
+        //for each specific type
         case APPROVAL:
 
             votesList = readTwoDimVar("votes", getResult());
@@ -80,9 +82,11 @@ public class CBMCResult extends Result {
 
         case PREFERENCE:
 
-            singleVotesList = readOneDimVar("votes", getResult());
+            votesList = readTwoDimVar("votes", getResult());
 
-            return new FailureExample(getElectionType(), singleVotesList, null, elect, null, getNumCandidates(),
+            seatsList = readOneDimVar("seats", getResult());
+
+            return new FailureExample(getElectionType(), null, votesList, elect, seatsList, getNumCandidates(),
                     getNumSeats(), getNumVoters());
 
         case SINGLECHOICE:
