@@ -26,48 +26,42 @@ public final class FileLoader {
 
     /**
      *
-     * @param in
-     *            the inputstream
+     * @param file the file that will be read
      * @return A LinkedList of String elements which are in the same order as in
-     *         the file
-     * @throws FileNotFoundException
-     *             if the file is not found it throws an exception
-     * @throws IOException
-     *             throws Exception
+     * the file
+     * @throws FileNotFoundException if the file is not found it throws an
+     * exception
+     * @throws IOException throws Exception
      */
-    public static LinkedList<String> loadFileAsString(InputStream in) throws FileNotFoundException, IOException {
+    public static LinkedList<String> loadFileAsString(File file) throws FileNotFoundException, IOException {
 
         LinkedList<String> stringlist;
-        /**
-         * try (BufferedReader br = new BufferedReader( new InputStreamReader(
-         * new FileInputStream(file), "UTF8"))) {
-         */
-        BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-        stringlist = new LinkedList<>();
-        String line;
+        try (InputStream inputStream = new FileInputStream(file);
+                BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"))) {
+            stringlist = new LinkedList<>();
+            String line;
 
-        line = br.readLine();
-        while (line != null) {
-            stringlist.add(line);
             line = br.readLine();
+            while (line != null) {
+                stringlist.add(line);
+                line = br.readLine();
+            }
         }
-
         return stringlist;
     }
 
     /**
      *
-     * @param in
-     *            the file to be read as an image
+     * @param in the file to be read as an image
      * @return the image, if it was possible to read it. In case it couldn't be
-     *         read, the methode returns null
+     * read, the methode returns null
      */
-    public static BufferedImage loadFileAsImage(InputStream in) {
+    public static BufferedImage loadFileAsImage(File toRead) {
         BufferedImage toReturn = null;
         try {
-            toReturn = ImageIO.read(in);
+            toReturn = ImageIO.read(toRead);
         } catch (IOException e) {
-            ErrorLogger.log("The specified file: " + in.toString() + " couldn't be loaded");
+            ErrorLogger.log("The specified file: " + toRead.getAbsolutePath() + " couldn't be loaded");
         }
 
         return toReturn;

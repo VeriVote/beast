@@ -1,8 +1,5 @@
 package edu.pse.beast.propertylist.View;
 
-import static org.junit.Assert.*;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,12 +11,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.pse.beast.options.OptionsInterface;
-import edu.pse.beast.propertylist.PropertyList;
-import edu.pse.beast.propertylist.PropertyListBuilder;
-import edu.pse.beast.saverloader.SaverLoaderInterface;
-import edu.pse.beast.stringresource.StringLoaderInterface;
-import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 
 public class ErrorDisplayTest {
 	
@@ -60,6 +51,43 @@ public class ErrorDisplayTest {
 				"Big, bigger, biggest fish to fry will be found at the sea right off Maine and Northbridge/Upton.",
 				"Yawn");
 		win.presentFailure(error);
+		
+		/*DataTable data = new DataTable(Integer.class);
+		data.add(5);
+		data.add(6);
+		
+		PiePlot plot = new PiePlot(data);*/
+		
+		
+		//win.showPlot(plot);
+		
+		/*plot.setLegendVisible(true);
+		
+		DrawablePanel panely = new DrawablePanel(plot);
+		
+		JFrame graph = new JFrame();
+		
+		graph.add(panely);
+		
+		graph.pack();
+		
+		graph.setVisible(true);*/
+		
+		//win.showPlot(panely);
+		
+		/*
+		
+		Plot graph
+		
+		JPanel thePanel = new JPanel();
+		
+		Graphics grap = (Graphics)plot;
+		
+		thePanel.printAll(plot);
+		
+		thePanel.add(plot);
+		
+		win.showPlot((Component)plot);*/
 		
 	}
 

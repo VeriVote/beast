@@ -1,12 +1,16 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
+ * To change this license header, choose License Headers file Project Properties.
  * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * and open the template file the editor.
  */
 package edu.pse.beast.stringresource;
 
 import java.io.File;
 import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.toolbox.FileLoader;
+import edu.pse.beast.toolbox.SuperFolderFinder;
+import java.io.IOException;
+import java.util.LinkedList;
 
 /**
  *
@@ -55,18 +59,44 @@ public abstract class StringResourceProvider {
      * @param moduleName the Name of the StringResource you want
      * @return the relative fileLocation
      */
-    protected final String getFileLocationString(String moduleName) {
-        return ("stringfiles/" + languageId + "/" + moduleName + "_" + languageId + ".txt");
+    private String getFileLocationString(String moduleName) {
+        return ("/core/stringfiles/" + languageId + "/" + moduleName + "_" + languageId + ".txt");
     }
 
     /**
-     * reports Error to the class in toolbox
+     * reports Error to the class file toolbox
      *
      * @param file that has the wrongFormat
      */
-    protected static void errorFileHasWrongFormat(File file) {
+    private void errorFileHasWrongFormat(File file) {
         ErrorLogger.log("The file " + file.getName() + " is not correclty formated");
         ErrorLogger.log("You can find and correct the file in this directory " + file.getAbsolutePath());
+    }
+
+    /**
+     * This method is used to initialize the StringResourceLoaders of the
+     * subclasses
+     *
+     * @param moduleName the Name of the txt File without the language or the
+     * path
+     * @return returns the StringResourceLoader
+     */
+    protected final StringResourceLoader getStringResourceLoaderFromModuleName(String moduleName) {
+        String subFolderAndFilename = getFileLocationString(moduleName);
+        String superFolder = SuperFolderFinder.getSuperFolder();
+        String location = superFolder + subFolderAndFilename;
+        File file = new File(location); //for ex foo.txt
+        {
+            LinkedList<String> inputList;
+            try {
+                inputList = FileLoader.loadFileAsString(file);
+                return new StringResourceLoader(inputList);
+            } catch (IOException ex) {
+                errorFileHasWrongFormat(file);
+            }
+
+        }
+        return null;
     }
 
 }

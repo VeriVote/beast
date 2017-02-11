@@ -90,27 +90,33 @@ public class CCodeHelper {
     }
 
     public String getMin(ElectionTypeContainer inputElectionType, InternalTypeRep rep) {
-        if (rep == InternalTypeRep.WEIGHTEDAPPROVAL) {
-            return String.valueOf(inputElectionType.getLowerBound());
-        } else if (rep == InternalTypeRep.INTEGER) {
-            return "0";
-        } else if (rep == InternalTypeRep.CANDIDATE) {
-            return "0";
-        } else if (rep == InternalTypeRep.APPROVAL) {
-            return "0";
+        if (null != rep) switch (rep) {
+            case WEIGHTEDAPPROVAL:
+                return String.valueOf(inputElectionType.getLowerBound());
+            case INTEGER:
+                return "0";
+            case CANDIDATE:
+                return "0";
+            case APPROVAL:
+                return "0";
+            default:
+                break;
         }
         return null;
     }
 
     public String getMax(ElectionTypeContainer inputElectionType, InternalTypeRep rep) {
-        if (rep == InternalTypeRep.WEIGHTEDAPPROVAL) {
-            return String.valueOf(inputElectionType.getUpperBound());
-        } else if (rep == InternalTypeRep.INTEGER) {
-            return "C";
-        } else if (rep == InternalTypeRep.CANDIDATE) {
-            return "C";
-        } else if (rep == InternalTypeRep.APPROVAL) {
-            return "2";
+        if (null != rep) switch (rep) {
+            case WEIGHTEDAPPROVAL:
+                return String.valueOf(inputElectionType.getUpperBound());
+            case INTEGER:
+                return "C";
+            case CANDIDATE:
+                return "C";
+            case APPROVAL:
+                return "2";
+            default:
+                break;
         }
         return null;
     }

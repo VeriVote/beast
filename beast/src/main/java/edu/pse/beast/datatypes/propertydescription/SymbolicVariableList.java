@@ -6,7 +6,6 @@
 package edu.pse.beast.datatypes.propertydescription;
 
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import sun.awt.image.ImageWatched;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

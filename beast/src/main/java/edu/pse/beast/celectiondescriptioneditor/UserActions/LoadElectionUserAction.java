@@ -7,10 +7,12 @@ package edu.pse.beast.celectiondescriptioneditor.UserActions;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.saverloader.SaverLoaderInterface;
+import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.toolbox.UserAction;
 
 import javax.swing.text.BadLocationException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -27,19 +29,22 @@ public class LoadElectionUserAction extends UserAction {
     
     @Override
     public void perform() {
-        if (cElectionDescriptionEditor.getSaveBeforeChangeHandler().ifHasChangedOpenDialog(
-                cElectionDescriptionEditor.getElectionDescription().getName())) {
-            ElectionDescription loadedElectionDescription =
-                    (ElectionDescription) cElectionDescriptionEditor.getFileChooser().loadObject();
-            if (loadedElectionDescription != null) {
-                try {
-                    cElectionDescriptionEditor.loadElectionDescription(loadedElectionDescription);
-                    cElectionDescriptionEditor.getFileChooser().setHasBeenSaved(true);
-                } catch (BadLocationException e) {
-                    e.printStackTrace();
-                }
+        if (cElectionDescriptionEditor.getChangeHandler().hasChanged()) {
+            if (!cElectionDescriptionEditor.getFileChooser().openSaveChangesDialog(cElectionDescriptionEditor.getElectionDescription())) {
+                return;
             }
         }
+        ElectionDescription loadedElectionDescription =
+                (ElectionDescription) cElectionDescriptionEditor.getFileChooser().loadObject();
+        if (loadedElectionDescription != null) {
+            try {
+                cElectionDescriptionEditor.loadElectionDescription(loadedElectionDescription);
+                cElectionDescriptionEditor.getFileChooser().setHasBeenSaved(true);
+            } catch (BadLocationException e) {
+                Logger.getLogger(NewElectionUserAction.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+
     }
     
 }

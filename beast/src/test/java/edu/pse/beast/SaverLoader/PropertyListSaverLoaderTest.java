@@ -90,7 +90,7 @@ public class PropertyListSaverLoaderTest {
         System.out.println(plModel1.getPropertyList().get(0).getDescription().getSymbolicVariableList().get(1));
         System.out.println(plModel1.getPropertyList().get(0).getDescription().getSymbolicVariableList().get(2));
         System.out.println(plModel1.getPropertyList().get(0).getDescription().getSymbolicVariableList().get(3));
-        System.out.println(plModel1.getPropertyList().get(0).willBeTested());
+        System.out.println(plModel1.getPropertyList().get(0).getTestStatus());
         System.out.println(plModel1.getPropertyList().get(1).getDescription().getName());
         System.out.println(plModel1.getPropertyList().get(1).getDescription().getPostPropertiesDescription());
         System.out.println(plModel1.getPropertyList().get(1).getDescription().getPrePropertiesDescription());
@@ -98,7 +98,7 @@ public class PropertyListSaverLoaderTest {
         System.out.println(plModel1.getPropertyList().get(1).getDescription().getSymbolicVariableList().get(1));
         System.out.println(plModel1.getPropertyList().get(1).getDescription().getSymbolicVariableList().get(2));
         System.out.println(plModel1.getPropertyList().get(1).getDescription().getSymbolicVariableList().get(3));
-        System.out.println(plModel1.getPropertyList().get(1).willBeTested());
+        System.out.println(plModel1.getPropertyList().get(1).getTestStatus());
 
     }
 }

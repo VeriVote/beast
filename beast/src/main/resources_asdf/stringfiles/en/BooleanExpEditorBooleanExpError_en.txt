@@ -1,0 +1,12 @@
+error : Error
+antlr_descr : An error occured while parsing
+var_not_decl_descr : Variable VAR was not declared
+too_many_vars_passed_descr : You passed to many variables. Wasn't able to pass VAR as well.
+wrong_var_type_passed_descr : The passed variable VAR has the wrong type. You need Type EXPECTEDTYPE, but you passed GIVENTYPE.
+incomparable_types_descr : The variables LHSVAR and RHSVAR couldn't be compared.
+incomparable_list_sizes_descr : The two compared expressions belong to different list levels, LHSDEPTH and RHSDEPTH.
+wrong_var_passed_to_votesum_descr : VOTE_SUM_FOR_CANDIDATE expects a variable of type voter. You passed VAR of type GIVENTYPE.
+line : Line
+char : Character
+preProps : Pre-conditions
+postProps : Post-conditions

@@ -8,14 +8,13 @@ package edu.pse.beast.datatypes;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.propertylist.Model.PLModel;
-import edu.pse.beast.stringresource.StringResourceLoader;
 
 /**
  *
  * @author Niels
  */
-public class Project implements ChangeNameInterface {
-    private String name;
+public class Project implements NameInterface {
+    private String name = "NewProject";
     private final ElectionCheckParameter params;
     private final PLModel propList;
     private final ElectionDescription elecDescr;

@@ -18,7 +18,8 @@ public class SavePropertyList extends UserAction {
     @Override
     public void perform() {
         if (controller.getFileChooser().saveObject(controller.getModel(), false)) {
-            controller.getSaveBeforeChangeHandler().setChangedSinceSave(false);
+            controller.getChangeHandler().setChangedSinceSave(false);
+            controller.getView().setWindowTitle(controller.getModel().getName());
         }
     }
 

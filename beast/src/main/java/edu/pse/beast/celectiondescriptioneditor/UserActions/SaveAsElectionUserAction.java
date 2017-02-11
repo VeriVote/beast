@@ -25,7 +25,7 @@ public class SaveAsElectionUserAction extends UserAction {
     public void perform() {
         ElectionDescription currentlyLoaded = electionDescriptionEditor.getElectionDescription();
         if (electionDescriptionEditor.getFileChooser().saveObject(currentlyLoaded, true)) {
-            electionDescriptionEditor.getSaveBeforeChangeHandler().updatePreValue();
+            electionDescriptionEditor.getChangeHandler().updatePreValue();
             electionDescriptionEditor.getView().setWindowTitle(electionDescriptionEditor.getElectionDescription().getName());
         }
     }

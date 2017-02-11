@@ -10,11 +10,11 @@ import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.highlevel.CheckListener;
 import edu.pse.beast.highlevel.MainNotifier;
-import edu.pse.beast.highlevel.ProjectSource;
 import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.toolbox.ToolbarHandler;
 import edu.pse.beast.toolbox.MenuBarHandler;
 
+import javax.swing.text.BadLocationException;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionListener;
@@ -24,7 +24,7 @@ import java.awt.event.ActionListener;
  * with the ParameterEditorWindow and the communication with high level.
  * @author Jonas
  */
-public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSource {
+public class ParameterEditor implements ParameterSource, MainNotifier {
 
     private final ParameterEditorWindow window;
     private final CElectionDescriptionEditor cElectionDescriptionEditor;
@@ -93,6 +93,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
         ElectionCheckParameter param = new ElectionCheckParameter(voter, cand, seat, timeout, processes, argument);
         return param;
     }
+
     /**
      * Setter for all parameters (needed for loading projects)
      * @param param 
@@ -149,14 +150,18 @@ public class ParameterEditor implements ParameterSource, MainNotifier, ProjectSo
         setReacts(true);
     }
 
-    @Override
-    public Project loadProject() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    @Override
-    public void saveProject(Project toBeSaved) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void loadProject(Project project) {
+        propertyList.setPLModel(project.getPropList());
+        propertyList.getView().setVisible(true);
+        setParameter(project.getElectionCheckParameter());
+        window.setWindowTitle(project.getName());
+        try {
+            cElectionDescriptionEditor.loadElectionDescription(project.getElecDescr());
+            cElectionDescriptionEditor.setVisible(true);
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+        }
+        setHasChanged(false);
     }
     /**
      * Returns whether the user changed any data in the ParameterEditor since the

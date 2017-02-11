@@ -5,16 +5,6 @@
  */
 package edu.pse.beast.stringresource;
 
-import edu.pse.beast.toolbox.FileLoader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * Class that Manages all StringResources for the BooleanExpEditor
  *
@@ -46,13 +36,15 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
     public StringResourceLoader getMenuStringRes() {
         return menuStringRes;
     }
+
     /**
-     * 
+     *
      * @return returns the booleanExpEditorSymbVarListRes
      */
     public StringResourceLoader getBooleanExpEditorSymbVarListRes() {
         return booleanExpEditorSymbVarListRes;
     }
+
     /**
      *
      * @return returns the ToolbarStringRes
@@ -78,67 +70,16 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
     }
 
     /**
-     * Initializes all attributes Loads all StringResourceLoaders with the files
-     * It uses the super classes methods errorFileHasWrongFormat,
-     * errorFileNotFound and getFileLocationString
+     * Initializes all attributes. Loads all StringResourceLoaders with the filenames.
+     * The superclass provides the functions for this process
      */
     @Override
     protected final void initialize() {
-        {
-            String location = getFileLocationString("BooleanExpEditorToolbar");
-            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
-            try {
-                LinkedList<String> inputList;
-                inputList = FileLoader.loadFileAsString(in);
-                toolbarTipStringRes = new StringResourceLoader(inputList);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        {
-            String location = getFileLocationString("BooleanExpEditorMenu");
-            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
-            try {
-                LinkedList<String> inputList;
-                inputList = FileLoader.loadFileAsString(in);
-                menuStringRes = new StringResourceLoader(inputList);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        {
-            String location = getFileLocationString("BooleanExpEditorBooleanExpError");
-            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
-            try {
-                LinkedList<String> inputList;
-                inputList = FileLoader.loadFileAsString(in);
-                booleanExpErrorStringRes = new StringResourceLoader(inputList);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        {
-            String location = getFileLocationString("BooleanExpEditorWindow");
-            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
-            try {
-                LinkedList<String> inputList;
-                inputList = FileLoader.loadFileAsString(in);
-                booleanExpEditorWindow = new StringResourceLoader(inputList);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        {
-            String location = getFileLocationString("BooleanExpEditorSymbVarList");
-            InputStream in = getClass().getClassLoader().getResourceAsStream(location);
-            try {
-                LinkedList<String> inputList;
-                inputList = FileLoader.loadFileAsString(in);
-                booleanExpEditorSymbVarListRes = new StringResourceLoader(inputList);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        toolbarTipStringRes = this.getStringResourceLoaderFromModuleName("BooleanExpEditorToolbar");
+        menuStringRes = this.getStringResourceLoaderFromModuleName("BooleanExpEditorMenu");
+        booleanExpErrorStringRes = this.getStringResourceLoaderFromModuleName("BooleanExpEditorBooleanExpError");
+        booleanExpEditorWindow = this.getStringResourceLoaderFromModuleName("BooleanExpEditorWindow");
+        booleanExpEditorSymbVarListRes = this.getStringResourceLoaderFromModuleName("BooleanExpEditorSymbVarList");
     }
 
 }

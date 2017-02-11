@@ -14,8 +14,16 @@ import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.WindowsOStoolbox;
 
+/**
+ * this is the windows specific implementation to check code.
+ * It uses cl.exe from the c++ pack for visual studio to 
+ * check the code for errors
+ * @author Lukas
+ *
+ */
 public class WindowsErrorChecker extends SystemSpecificErrorChecker {
 
+    //the compiler we use on windows, because it is also needed by cbmc
     private final String compilerString = "cl";
 
     @Override
@@ -29,7 +37,6 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
         try {
             vsCmd = WindowsOStoolbox.getVScmdPath();
         } catch (IOException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
 
@@ -46,10 +53,14 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
             
             // because windows is weird the whole call that will get placed
             // inside
-            // VScmd has to be in one giant string
-            String clExeCall = "\"" + vsCmd + "\"" + " & " + compilerString + " " + (toCheck.getAbsolutePath());
-
-            // this call starts a new VScmd instance and lets cbmc run in it
+            // VScmd has to be in one giant string. Put the created file in the output directory, so
+            // it can be deleted afterwards
+            String clExeCall = "\"" + vsCmd + "\"" + " & " + compilerString + " " + (toCheck.getAbsolutePath()) 
+                    + (" /Fo" + toCheck.getParent() + "\\");
+            
+            System.out.println(clExeCall);
+            
+            // this call starts a new VScmd instance and lets cl.exe (the compiler) run in it
             ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", clExeCall);
 
             try {
@@ -64,7 +75,8 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
     @Override
     protected List<CodeError> parseError(List<String> result, List<String> errors) {
         List<CodeError> codeErrors = new ArrayList<CodeError>();
-        
+
+        //errors are displayed like "(LINENUMBER)" where linenumber is a whole number
         Pattern lineExtractor = Pattern.compile("((.*)(\\([0-9]*\\))(.*))");
 
         //cl.exe prints out the results in the result list
@@ -82,16 +94,21 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
             if (linesMatcher.find()) {
                 try {
 
+                    //we want the first occurance of such a "linenumber" indentifier, so we don't have to worry
+                    //about code injection from strings or such
+                    //then we split at "(" and ")" to extract the number
                     lineNumber = Integer.parseInt(linesMatcher.group(1).split("\\(")[1].split("\\)")[0]);
 
+                    //get the error message here by splitting at a common identifier
                     String[] varAndMessage = line.split("(error C[0-9]*:)");
 
+                    //to prevent exceptions
                     if (varAndMessage.length > 1) {
                         String toSplit = varAndMessage[1];
 
+                        //the variable and compilermessage is between ":"'s, so we split there.
                         if (toSplit.contains(":")) {
                             varName = toSplit.split(":")[0].replaceAll("\"", "");
-                            ;
                             message = toSplit.split(":")[1];
                         } else {
                             message = toSplit;

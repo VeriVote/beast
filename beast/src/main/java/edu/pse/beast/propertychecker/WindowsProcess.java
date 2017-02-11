@@ -6,8 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -283,6 +281,7 @@ public class WindowsProcess extends CBMCProcess {
 
                 WinNT.HANDLE handle = new WinNT.HANDLE();
 
+                //get the immutable value and set it accessible so we don't run into errors
                 Field toSet = handle.getClass().getDeclaredField("immutable");
 
                 toSet.setAccessible(true);
@@ -293,6 +292,7 @@ public class WindowsProcess extends CBMCProcess {
 
                 int pid = kernel.GetProcessId(handle);
 
+                //set it back to the original value and make it unaccessable again
                 toSet.setBoolean(handle, savedState);
 
                 toSet.setAccessible(false);

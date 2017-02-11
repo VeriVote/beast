@@ -24,7 +24,7 @@ public class SaveElectionUserAction extends UserAction {
     @Override
     public void perform() {
         if (cElectionDescriptionEditor.getFileChooser().saveObject(cElectionDescriptionEditor.getElectionDescription(), false)) {
-            cElectionDescriptionEditor.getSaveBeforeChangeHandler().updatePreValue();
+            cElectionDescriptionEditor.getChangeHandler().updatePreValue();
             cElectionDescriptionEditor.getView().setWindowTitle(cElectionDescriptionEditor.getElectionDescription().getName());
         }
     }

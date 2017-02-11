@@ -38,6 +38,8 @@ public class SaveProjectUserAction extends UserAction {
             if (paramEditor.getFileChooser().saveObject(project, false)) {
                 paramEditor.getView().setWindowTitle(paramEditor.getCurrentlyLoadedProject().getName());
                 paramEditor.setHasChanged(false);
+                cElectionEditor.getChangeHandler().updatePreValue();
+                propertyList.getChangeHandler().setChangedSinceSave(false);
             }
         }
     }

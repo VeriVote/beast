@@ -13,6 +13,23 @@ public class LinuxProcess extends CBMCProcess {
 
     private final String relativePathToCBMC64 = "/linux/cbmcLin/cbmc";
 
+    /**
+     * creates a new CBMC Checker for the windows OS
+     * 
+     * @param voters
+     *            the amount of voters
+     * @param candidates
+     *            the amount of candidates
+     * @param seats
+     *            the amount of seats
+     * @param advanced
+     *            the string that represents the advanced options
+     * @param toCheck
+     *            the file to check with cbmc
+     * @param parent
+     *            the parent CheckerFactory, that has to be notified about
+     *            finished checking
+     */
     public LinuxProcess(int voters, int candidates, int seats, String advanced, File toCheck,
             CheckerFactory parent) {
         super(voters, candidates, seats, advanced, toCheck, parent);
@@ -32,11 +49,13 @@ public class LinuxProcess extends CBMCProcess {
 
         if (!new File(cbmc).exists()) {
             ErrorForUserDisplayer.displayError(
-                    "Can't find the cbmc program in the subfolger \"linux/cbmcLin/\", please download it from the cbmc website and place it there!");
+                    "Can't find the cbmc program in the subfolger \"linux/cbmcLin/\", please download it from "
+                    + "the cbmc website and place it there!");
         } else if (!new File(cbmc).canExecute()) {
             ErrorForUserDisplayer
                     .displayError("This program doesn't have the privileges to execute this program. \n "
-                            + "Please change the access rights for the program \"/linux/cbmcLin/cbmc\" in the BEAST installation folder and try again");
+                            + "Please change the access rights for the program \"/linux/cbmcLin/cbmc\" in the "
+                            + "BEAST installation folder and try again");
         } else {
 
             arguments.add(cbmc);

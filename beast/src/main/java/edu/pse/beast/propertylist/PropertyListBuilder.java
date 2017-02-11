@@ -45,13 +45,15 @@ public class PropertyListBuilder {
         window = controller.getView();
         window.updateStringRes(refs.getStringIF());
 
-        PropertyListMenuBarHandler menuBarHandler = new PropertyListMenuBarHandler(menuHeadingIds,
+        @SuppressWarnings("unused")
+		PropertyListMenuBarHandler menuBarHandler = new PropertyListMenuBarHandler(menuHeadingIds,
                 createActionIdAndListenerListForMenuHandler(),
                 refs.getStringIF().getPropertyListStringResProvider().getMenuStringRes(), window);
 
         ImageResourceProvider imageRes = ImageResourceProvider.getToolbarImages();
 
-        PropertyListToolbarHandler toolbarHandler = new PropertyListToolbarHandler(imageRes,
+        @SuppressWarnings("unused")
+		PropertyListToolbarHandler toolbarHandler = new PropertyListToolbarHandler(imageRes,
                 refs.getStringIF().getPropertyListStringResProvider().getToolbarTipStringRes(),
                 createActionIdAndListenerListForToolbarHandler(), window.getToolbar(), window);
 

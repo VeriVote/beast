@@ -5,7 +5,6 @@
  */
 package edu.pse.beast.booleanexpeditor;
 
-import edu.pse.beast.booleanexpeditor.UserActions.SaveBeforeChangeHandler;
 import edu.pse.beast.booleanexpeditor.View.BooleanExpEditorWindow;
 import edu.pse.beast.booleanexpeditor.View.BooleanExpEditorWindowStarter;
 import edu.pse.beast.booleanexpeditor.View.ErrorWindow;
@@ -40,7 +39,7 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
     private BooleanExpEditorToolbarHandler toolBarHandler;
     private BooleanExpCodeArea prePropCodeArea;
     private BooleanExpCodeArea postPropCodeArea;
-    private final SaveBeforeChangeHandler saveBeforeChangeHandler;
+    private final ChangeHandler changeHandler;
     private final CodeAreaFocusListener codeAreaFocusListener;
     private final BooleanExpCodeAreaBuilder codeAreaBuilder;
     private final CElectionDescriptionEditor cEditor;
@@ -76,7 +75,7 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
      * @param window the View this class forms the controller to
      * @param symbolicVarListController the controller for the SymbolicVarList displayed in window
      * @param errorWindow the controller for the TextPane displaying Errors in pre- and post-properties
-     * @param saveBeforeChangeHandler SaveBeforeChangeHandler
+     * @param changeHandler ChangeHandler
      * @param codeAreaFocusListener CodeAreaFocusListener
      * @param postAndPrePropertiesDescription the initial PostAndPrePropertiesDescription object
      * @param codeAreaBuilder the BuilderClass for building BooleanExpCodeAreas
@@ -90,7 +89,7 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
                      BooleanExpEditorWindow window,
                      SymbolicVarListController symbolicVarListController,
                      ErrorWindow errorWindow,
-                     SaveBeforeChangeHandler saveBeforeChangeHandler,
+                     ChangeHandler changeHandler,
                      CodeAreaFocusListener codeAreaFocusListener,
                      PostAndPrePropertiesDescription postAndPrePropertiesDescription,
                      BooleanExpCodeAreaBuilder codeAreaBuilder,
@@ -104,7 +103,7 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
         this.symbolicVarListController = symbolicVarListController;
         this.prePropCodeArea = prePropCodeArea;
         this.postPropCodeArea = postPropCodeArea;
-        this.saveBeforeChangeHandler = saveBeforeChangeHandler;
+        this.changeHandler = changeHandler;
         this.codeAreaBuilder = codeAreaBuilder;
         this.cEditor = cEditor;
         this.fileChooser = fileChooser;
@@ -164,8 +163,8 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
      */
     public boolean letUserEditPostAndPreProperties(PostAndPrePropertiesDescription postAndPrePropertiesDescription,
                                                    boolean loadedFromPropertyList) {
-        if (!this.loadedFromPropertyList) {
-            if (saveBeforeChangeHandler.ifHasChangedOpenSaveDialog(currentlyLoadedPostAndPreProp.getName())) {
+        if (!this.loadedFromPropertyList && changeHandler.hasChanged()) {
+            if (fileChooser.openSaveChangesDialog(getCurrentlyLoadedPostAndPreProp())) {
                 loadNewProperties(postAndPrePropertiesDescription);
                 this.loadedFromPropertyList = loadedFromPropertyList;
                 return true;
@@ -173,7 +172,6 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
                 return false;
             }
         } else {
-            fileChooser.setHasBeenSaved(false);
             loadNewProperties(postAndPrePropertiesDescription);
             this.loadedFromPropertyList = loadedFromPropertyList;
             return true;
@@ -190,7 +188,7 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
         currentlyLoadedPostAndPreProp = postAndPrePropertiesDescription;
         symbolicVarListController.setSymbVarList(postAndPrePropertiesDescription.getSymbolicVariableList());
         window.setNewTextpanes();
-        saveBeforeChangeHandler.addNewTextPanes(window.getPrePropTextPane(), window.getPostPropTextPane());
+        changeHandler.addNewTextPanes(window.getPrePropTextPane(), window.getPostPropTextPane());
 
         cEditor.removeListener(prePropCodeArea.getVariableErrorFinder());
         cEditor.removeListener(postPropCodeArea.getVariableErrorFinder());
@@ -234,7 +232,8 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
 
         this.findErrorsAndDisplayThem();
         this.window.setWindowTitle(postAndPrePropertiesDescription.getName());
-        saveBeforeChangeHandler.updatePreValues();
+        changeHandler.updatePreValues();
+        fileChooser.setHasBeenSaved(false);
     }
 
     public boolean isCorrect() {
@@ -272,10 +271,10 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
     /**
      * Getter, used by SaveProps/SaveAsProps/LoadProps and NewProps UserActions, to check whether the used wants to
      * save if changes have been made since last save/load.
-     * @return the SaveBeforeChangeHandler
+     * @return the ChangeHandler
      */
-    public SaveBeforeChangeHandler getSaveBeforeChangeHandler() {
-        return saveBeforeChangeHandler;
+    public ChangeHandler getChangeHandler() {
+        return changeHandler;
     }
 
     /**
@@ -294,5 +293,9 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
     public PostAndPrePropertiesDescription getCurrentlyLoadedPostAndPreProp() {
         updatePostAndPrePropObject();
         return currentlyLoadedPostAndPreProp;
+    }
+
+    public boolean getLoadedFromPropertyList() {
+        return loadedFromPropertyList;
     }
 }

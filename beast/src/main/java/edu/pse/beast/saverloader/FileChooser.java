@@ -1,7 +1,6 @@
 package edu.pse.beast.saverloader;
 
-import edu.pse.beast.datatypes.ChangeNameInterface;
-import edu.pse.beast.saverloader.SaverLoader;
+import edu.pse.beast.datatypes.NameInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 
 import javax.swing.*;
@@ -22,6 +21,11 @@ public class FileChooser {
     private boolean hasBeenSaved = false;
     private String fileSuffix;
     private Object[] options = {"OK"};
+    private String saveChanges;
+    private String save;
+    private String yesOption;
+    private String noOption;
+    private String cancelOption;
 
     public FileChooser (StringResourceLoader stringResourceLoader, SaverLoader saverLoader, Component component) {
         this.fileChooser = new JFileChooser();
@@ -32,6 +36,16 @@ public class FileChooser {
     }
 
     public boolean saveObject(Object object, boolean forceDialog) {
+        if (fileChooser.getSelectedFile() != null) {
+            fileChooser.setSelectedFile(new File(
+                    fileChooser.getSelectedFile().getParent() + "/" + ((NameInterface) object).getName() +
+                            stringResourceLoader.getStringFromID(
+                                    "fileSuffix")));
+        } else {
+                fileChooser.setSelectedFile(new File(System.getProperty("user.home") + "/" +
+                        ((NameInterface) object).getName()));
+        }
+
         fileChooser.setApproveButtonText("saveApproveButtonText");
         if (hasBeenSaved && !forceDialog) {
             return saveToFile(object, lastLoadedFile);
@@ -90,7 +104,7 @@ public class FileChooser {
     }
 
     private boolean saveToFile(Object object, File file) {
-        if (!file.getName().matches("[_a-zA-Z0-9\\-\\.]+")) {
+        if (!file.getName().matches("[_a-zA-Z0-9\\-\\.\\s]+")) {
             JOptionPane.showOptionDialog(null,
                     stringResourceLoader.getStringFromID("wrongFileNameError"),"",
                     JOptionPane.PLAIN_MESSAGE,
@@ -99,14 +113,16 @@ public class FileChooser {
                     options,
                     options[0]);
             return false;
-        } else if (!fileChooser.getSelectedFile().getName().endsWith(fileSuffix)) {
+        } else if (!fileChooser.getSelectedFile().getName().endsWith(stringResourceLoader.getStringFromID(
+                "fileSuffix"))) {
+            System.out.println(fileChooser.getSelectedFile().getName());
             file = new File(file.getAbsolutePath() + stringResourceLoader.getStringFromID(
                     "fileSuffix"));
         }
-
+        fileChooser.setSelectedFile(file);
         String saveString;
         try {
-            ((ChangeNameInterface) object).setNewName(file.getName().split(stringResourceLoader.getStringFromID(
+            ((NameInterface) object).setNewName(file.getName().split(stringResourceLoader.getStringFromID(
                     "fileSuffix"))[0]);
             saveString = saverLoader.createSaveString(object);
         } catch (Exception e) {
@@ -173,6 +189,42 @@ public class FileChooser {
         }
     }
 
+    /**
+    * Method that calls showSaveOptionPane and based on its return saves the given object, called when a new Object is
+    * loaded into one of the GUIs.
+     * @param object the object containing changes that might be saved, needs to implement NameInterface
+    * @return false if the user pressed "Cancel" on the dialog, thus cancelling any previous load action
+    *         true otherwise
+    **/
+    public boolean openSaveChangesDialog(Object object) {
+        int option = showSaveOptionPane(((NameInterface) object).getName());
+        if (option == JOptionPane.YES_OPTION) {
+            return saveObject(object, false);
+        } else if (option == JOptionPane.CANCEL_OPTION) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Method that opens pane that asks the user whether he wants to save his changes or not.
+     * @return the option clicked by the user
+     */
+    private int showSaveOptionPane(String propertyName) {
+        Object[] options = {yesOption,
+                noOption,
+                cancelOption};
+        return  JOptionPane.showOptionDialog(null,
+                saveChanges + propertyName + save,
+                "",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
+    }
+
     public void updateStringRessourceLoader(StringResourceLoader stringResourceLoader) {
         //sets the text and language of all the components in JFileChooser
         UIManager.put("FileChooser.openDialogTitleText", stringResourceLoader.getStringFromID("openDialogTitleText"));
@@ -196,6 +248,11 @@ public class FileChooser {
         UIManager.put("FileChooser.detailsViewButtonToolTipText", stringResourceLoader.getStringFromID("detailsViewButtonToolTipText"));
         UIManager.put("FileChooser.fileSizeHeaderText",stringResourceLoader.getStringFromID("fileSizeHeaderText"));
         UIManager.put("FileChooser.fileDateHeaderText", stringResourceLoader.getStringFromID("fileDateHeaderText"));
+        saveChanges = stringResourceLoader.getStringFromID("saveChanges");
+        save = stringResourceLoader.getStringFromID("save");
+        cancelOption = stringResourceLoader.getStringFromID("cancelOption");
+        noOption = stringResourceLoader.getStringFromID("noOption");
+        yesOption = stringResourceLoader.getStringFromID("yesOption");
         fileChooser.setFileFilter(new FileFilter() {
             @Override
             public boolean accept(File file) {

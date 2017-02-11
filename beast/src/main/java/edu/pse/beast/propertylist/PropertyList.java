@@ -39,7 +39,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 
     private StringLoaderInterface sli;
 
-    private PLSaveBeforeChangeHandler saveBeforeChangeHandler;
+    private PLChangeHandler changeHandler;
     
     private LinkedList<DeleteDescriptionAction> actionList;
 
@@ -61,7 +61,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         this.sli = new StringLoaderInterface("de");
         editor.showWindow();
         view = new PropertyListWindow(this, model);
-        setSaveBeforeChangeHandler(new PLSaveBeforeChangeHandler(model, null));
+        setChangeHandler(new PLChangeHandler(model));
         actionList = new LinkedList<DeleteDescriptionAction>();
         model.initialize();
         this.fileChooser = fileChooser;
@@ -87,8 +87,6 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 
     @Override
     public void run() {
-        //view.setVisible(true);
-        //view.setVisible(false);
     }
 
     @Override
@@ -113,7 +111,6 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     	DeleteDescriptionAction act = new DeleteDescriptionAction(model, prop);
     	act.perform();
     	actionList.add(act);
-        //model.deleteProperty(prop);
     }
 
     @Override
@@ -129,7 +126,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     @Override
     public boolean isCorrect() {
         for (PropertyItem item : model.getPropertyList()) {
-            if (item.willBeTested()) {
+            if (item.getTestStatus()) {
                 if (!editor.letUserEditPostAndPreProperties(item.getDescription(), true)) {
                     return false;
                 } else if (!editor.isCorrect()) {
@@ -163,7 +160,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         ArrayList<PropertyItem> from = model.getPropertyList();
         editor.updatePostAndPrePropObject();
         for (PropertyItem prop : from) {
-            if (prop.willBeTested()) {
+            if (prop.getTestStatus()) {
                 result.add(prop.getDescription());
             }
         }
@@ -194,6 +191,10 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         return sli.getPropertyListStringResProvider().getMenuStringRes();
     }
     
+    /**
+     * Returns the last delete action.
+     * @return The DeleteDescriptionAction that was lastly performed
+     */
     public DeleteDescriptionAction getLastAction() {
     	if (actionList.isEmpty()) {
     		return null;
@@ -201,6 +202,9 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     	return actionList.removeLast();
     }
     
+    /**
+     * Resets the delete action list (e.g. do it when a new list is loaded).
+     */
     public void resetActionList() {
     	actionList = new LinkedList<DeleteDescriptionAction>();
     }
@@ -218,7 +222,6 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 
     public void setPLModel(PLModelInterface model) {
         this.model.loadAnotherModel(model);
-        // ((PLModel) this.model).updateView();
         view.setWindowTitle(((PLModel) model).getName());
     }
 
@@ -231,16 +234,21 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         return view;
     }
 
-    public PLSaveBeforeChangeHandler getSaveBeforeChangeHandler() {
-        return saveBeforeChangeHandler;
+    public PLChangeHandler getChangeHandler() {
+        return changeHandler;
     }
 
-    public void setSaveBeforeChangeHandler(PLSaveBeforeChangeHandler saveHandler) {
-        this.saveBeforeChangeHandler = saveHandler;
+    public void setChangeHandler(PLChangeHandler changeHandler) {
+        this.changeHandler = changeHandler;
     }
     
     public FileChooser getFileChooser() {
         return fileChooser;
     }
+    
+	@Override
+	public BooleanExpEditor getEditor() {
+		return editor;
+	}
 
 }

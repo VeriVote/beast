@@ -144,16 +144,6 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
         titleString = stringLoaderInterface.getBooleanExpEditorStringResProvider().
                 getBooleanExpEditorWindowStringRes().getStringFromID("windowTitle");
         setTitle(titleString);
-        saveChanges = stringLoaderInterface.getBooleanExpEditorStringResProvider().
-                getBooleanExpEditorWindowStringRes().getStringFromID("saveChanges");
-        save = stringLoaderInterface.getBooleanExpEditorStringResProvider().
-                getBooleanExpEditorWindowStringRes().getStringFromID("save");
-        cancelOption = stringLoaderInterface.getBooleanExpEditorStringResProvider().
-                getBooleanExpEditorWindowStringRes().getStringFromID("cancelOption");
-        noOption = stringLoaderInterface.getBooleanExpEditorStringResProvider().
-                getBooleanExpEditorWindowStringRes().getStringFromID("noOption");
-        yesOption = stringLoaderInterface.getBooleanExpEditorStringResProvider().
-                getBooleanExpEditorWindowStringRes().getStringFromID("yesOption");
     }
 
 
@@ -176,11 +166,6 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
     private JTextPane focusedTextPane;
     private DefaultListModel listModel;
     private String titleString;
-    private String saveChanges;
-    private String save;
-    private String yesOption;
-    private String noOption;
-    private String cancelOption;
     // End of variables declaration//GEN-END:variable
 
     /**
@@ -261,24 +246,6 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
      */
     public JToolBar getToolbar() {
         return toolbar;
-    }
-
-    /**
-     * Method that opens pane that asks the user whether he wants to save or not.
-     * @return the option clicked by the user
-     */
-    public int showOptionPane(String propertyName) {
-        Object[] options = {yesOption,
-                noOption,
-                cancelOption};
-        return  JOptionPane.showOptionDialog(this,
-                saveChanges + propertyName + save,
-                "",
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                options,
-                options[0]);
     }
 
     /**

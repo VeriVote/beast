@@ -8,29 +8,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.List;
 
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.BadLocationException;
 
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
-import edu.pse.beast.datatypes.FailureExample;
-import edu.pse.beast.highlevel.ResultPresenterElement;
-import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.propertylist.PLControllerInterface;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.propertylist.Model.PLModelInterface;
-import edu.pse.beast.propertylist.Model.ResultType;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
@@ -121,7 +109,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
         this.add(name, BorderLayout.LINE_START);
 
         testStatus.setText("Check");
-        testStatus.setSelected(prop.willBeTested());
+        testStatus.setSelected(prop.getTestStatus());
         testStatus.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {

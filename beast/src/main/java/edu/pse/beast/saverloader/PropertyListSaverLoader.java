@@ -22,7 +22,7 @@ public class PropertyListSaverLoader implements SaverLoader{
         String postAndPreProps = "<postAndPreProps>\n" +
                 postAndPrePropertiesDescriptionSaverLoader.createSaveString(propertyItem.getDescription())
                 + "\n</postAndPreProps>\n";
-        String testStatus = "<testStatus>\n" + propertyItem.willBeTested() + "\n</testStatus>\n";
+        String testStatus = "<testStatus>\n" + propertyItem.getTestStatus() + "\n</testStatus>\n";
         return postAndPreProps + testStatus;
     }
 

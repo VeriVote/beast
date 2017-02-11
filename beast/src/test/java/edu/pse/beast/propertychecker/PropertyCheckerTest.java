@@ -15,9 +15,6 @@ import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.highlevel.ResultInterface;
-import toBeImplemented.implElectionDescriptionSource;
-import toBeImplemented.implParameterSource;
-import toBeImplemented.implPropertyDescriptionSource;
 
 public class PropertyCheckerTest {
     public static void main(String[] args) {
@@ -67,12 +64,12 @@ public class PropertyCheckerTest {
 
         PropertyChecker propCheck = CheckerFactoryFactory.createPropertyChecker("cbmc");
 
-        implElectionDescriptionSource eSrc = new implElectionDescriptionSource(electionDescription);
+  //      implElectionDescriptionSource eSrc = new implElectionDescriptionSource(electionDescription);
 
         List<PostAndPrePropertiesDescription> tmp = new ArrayList<PostAndPrePropertiesDescription>();
         tmp.add(postAndPrePropertiesDescription);
 
-        implPropertyDescriptionSource pSrc = new implPropertyDescriptionSource(tmp);
+  //      implPropertyDescriptionSource pSrc = new implPropertyDescriptionSource(tmp);
 
         List<Integer> amountVoters = new ArrayList<Integer>();
         amountVoters.add(10);
@@ -86,20 +83,20 @@ public class PropertyCheckerTest {
         ElectionCheckParameter ecp = new ElectionCheckParameter(amountVoters, amountCandidates, amountSeats,
                 new TimeOut(TimeUnit.MINUTES, 2), 8, "--trace;--unwind 105");
 
-        implParameterSource parmSrc = new implParameterSource(ecp);
+     //   implParameterSource parmSrc = new implParameterSource(ecp);
 
         System.out.println(":::::::::::::::::::::::::::::::::::::::::::::");
 
-        List<ResultInterface> resultate = propCheck.checkPropertiesForDescription(eSrc, pSrc, parmSrc);
+    //    List<ResultInterface> resultate = propCheck.checkPropertiesForDescription(eSrc, pSrc, parmSrc);
 
         boolean loop = false;
 
         while (!loop) {
             loop = true;
-            for (Iterator<ResultInterface> iterator = resultate.iterator(); iterator.hasNext();) {
-                ResultInterface resultInterface = (ResultInterface) iterator.next();
-                loop = loop && resultInterface.readyToPresent();
-            }
+    //        for (Iterator<ResultInterface> iterator = resultate.iterator(); iterator.hasNext();) {
+    //            ResultInterface resultInterface = (ResultInterface) iterator.next();
+    //            loop = loop && resultInterface.readyToPresent();
+    //        }
 
             try {
                 Thread.sleep(1000);
@@ -113,10 +110,10 @@ public class PropertyCheckerTest {
         System.out.println("======================================");
         System.out.println("______________________________________");
 
-        for (Iterator<ResultInterface> iterator = resultate.iterator(); iterator.hasNext();) {
-            ResultInterface resultInterface = (ResultInterface) iterator.next();
-            resultInterface.presentTo(null);
-        }
+  //      for (Iterator<ResultInterface> iterator = resultate.iterator(); iterator.hasNext();) {
+   //         ResultInterface resultInterface = (ResultInterface) iterator.next();
+   //         resultInterface.presentTo(null);
+    //    }
         
         System.out.println("::::::::::::::::::::::::::::::::::::::::::");
         

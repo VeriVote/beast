@@ -1,0 +1,51 @@
+title : Parameter Editor
+voters : Voters
+candidates : Candidates
+seats : Seats
+timeout : Timeout
+max_processes : Max. number of processes
+to : to
+advanced : Advanced...
+seconds : Seconds
+minutes : Minutes
+hours : Hour
+days : Days
+title_advanced : User-defined arguments for CBMC
+ok : OK
+cancel : Cancel
+title_version : Version Number
+version : Version
+openDialogTitleText : Open project
+saveDialogTitleText : Save project
+lookInLabelText : Search in:
+openButtonText : Open
+cancelButtonText : Cancel
+fileNameLabelText : Filename
+filesOfTypeLabelText : File type
+openApproveButtonToolTipText : Open
+openApproveButtonText : Open
+saveApproveButtonToolTipText : Save
+saveApproveButtonText : Save
+ancelButtonToolTipText : Cancel
+fileNameHeaderText : Filename
+upFolderToolTipText : Up one level
+homeFolderToolTipText : Home
+newFolderToolTipText : Create new folder
+listViewButtonToolTipText : List view
+newFolderButtonText : Create new folder
+renameFileButtonText : Rename
+deleteFileButtonText : Delete
+filterLabelText : File type
+detailsViewButtonToolTipText : Details
+fileSizeHeaderText : Size
+fileDateHeaderText : Last modified
+fileApproveRegex : (.)+\.beast
+fileDescription : BEAST-Project-File (*.beast)
+objectCouldNotBeConvertedToString : Couldn't convert project into a String.
+objectCouldNotBeSavedError : Was not able to save Object.
+inputOutputErrorOpen : Error while reading file (probably it doesn't exist).
+invalidFileFormatErrorMessage : The chosen file doesn't have the right BEAST-Project format.
+wrongEncodingError : The project contains false encoded characters.
+inputOutputErrorSave : The folder, in which you want to save, doesn't exist.
+wrongFileNameError : The given name doesn't match the regular expression '^[^*&%\s]+$'.
+fileSuffix : .beast
