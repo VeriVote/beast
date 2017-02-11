@@ -18,8 +18,8 @@ import javax.swing.text.StyledDocument;
  */
 public class TextAddedAction implements Action {
     
-    private TextDelta td;
-    private StyledDocument doc;
+    private final TextDelta td;
+    private final StyledDocument doc;
     
     public TextAddedAction(TextDelta td, StyledDocument doc) {
         this.doc = doc;

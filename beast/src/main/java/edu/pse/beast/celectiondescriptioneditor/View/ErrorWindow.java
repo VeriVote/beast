@@ -2,7 +2,6 @@ package edu.pse.beast.celectiondescriptioneditor.View;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CErrorDisplayer;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 
 import javax.swing.*;

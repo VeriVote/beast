@@ -7,7 +7,6 @@ package edu.pse.beast.celectiondescriptioneditor.UserActions;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.toolbox.UserAction;
 
 import javax.swing.text.BadLocationException;
@@ -20,7 +19,7 @@ import java.util.logging.Logger;
  */
 public class LoadElectionUserAction extends UserAction {
 
-    private CElectionDescriptionEditor cElectionDescriptionEditor;
+    private final CElectionDescriptionEditor cElectionDescriptionEditor;
 
     public LoadElectionUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
         super("load");

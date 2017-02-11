@@ -5,18 +5,12 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling;
 
-import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CAntlrHandler;
-import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CBaseListener;
-import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CBaseVisitor;
-import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CParser;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.codearea.ErrorHandling.DeepCheck.DeepErrorChecker;
 import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
 import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
 import java.util.ArrayList;
 import javax.swing.JTextPane;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 /**
  * This class uses an external compiler (either gcc on linux or cl on windows)
@@ -24,8 +18,8 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
  * @author Holger-Desktop
  */
 public class CVariableErrorFinder implements ErrorFinder {
-    private JTextPane pane;
-    private DeepErrorChecker errorchecker;
+    private final JTextPane pane;
+    private final DeepErrorChecker errorchecker;
     
     public CVariableErrorFinder(JTextPane pane) {
         this.pane = pane;

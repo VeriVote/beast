@@ -14,7 +14,7 @@ import edu.pse.beast.toolbox.UserAction;
  * @author Holger-Desktop
  */
 public class SaveElectionUserAction extends UserAction {
-    private CElectionDescriptionEditor cElectionDescriptionEditor;
+    private final CElectionDescriptionEditor cElectionDescriptionEditor;
 
     public SaveElectionUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
         super("save");

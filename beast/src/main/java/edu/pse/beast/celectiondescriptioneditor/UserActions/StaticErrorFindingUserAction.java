@@ -13,7 +13,7 @@ import edu.pse.beast.toolbox.UserAction;
  * @author Holger-Desktop
  */
 public class StaticErrorFindingUserAction extends UserAction {
-    private CElectionDescriptionEditor electionDescriptionEditor;
+    private final CElectionDescriptionEditor electionDescriptionEditor;
 
     public StaticErrorFindingUserAction(CElectionDescriptionEditor electionDescriptionEditor) {
         super("staticErrorFinding");

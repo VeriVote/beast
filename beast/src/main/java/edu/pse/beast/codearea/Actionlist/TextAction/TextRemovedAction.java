@@ -17,8 +17,8 @@ import javax.swing.text.StyledDocument;
  * @author Holger-Desktop
  */
 public class TextRemovedAction implements Action {
-    private TextDelta td;
-    private StyledDocument doc;
+    private final TextDelta td;
+    private final StyledDocument doc;
     
     public TextRemovedAction(TextDelta td, StyledDocument doc) {
         this.doc = doc;

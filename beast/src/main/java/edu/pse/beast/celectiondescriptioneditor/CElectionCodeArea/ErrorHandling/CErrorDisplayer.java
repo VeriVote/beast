@@ -16,49 +16,52 @@ import javax.swing.JTextPane;
  * This class prepares CodeErrors so its parent class Errordisplayer can display
  * them. As such, it mainly creates error messages, depending on the codeerrors
  * id
+ *
  * @author Holger-Desktop
  */
 public class CErrorDisplayer extends ErrorDisplayer {
-    
-      public CErrorDisplayer(
+
+    public CErrorDisplayer(
             JTextPane pane,
             StringLoaderInterface stringResIF) {
         super(pane, stringResIF.getCElectionEditorStringResProvider().getCErrorStringRes());
     }
-    
+
     @Override
     public void showErrors(ArrayList<CodeError> errors) {
         super.showErrors(errors);
-        for(CodeError er : errors) {            
+        for (CodeError er : errors) {
             showError(er, createMsg(er));
         }
     }
-    
+
     public String createMsg(CodeError er) {
-        if(er.getId().equals("antlr")) {
-            int line =  er.getLine();
+        if (er.getId().equals("antlr")) {
+            int line = er.getLine();
             int start = JTextPaneToolbox.getLineBeginning(pane, line - 1);
             int end = JTextPaneToolbox.getClosestLineBeginningAfter(pane, start);
             er.setStartPos(start);
             er.setEndPos(end);
             return er.getExtraInfo("msg");
-        } else if(er.getId().equals("compilererror")) {
-            int line =  er.getLine();
+        } else if (er.getId().equals("compilererror")) {
+            int line = er.getLine();
             int start = JTextPaneToolbox.getLineBeginning(pane, line - 1);
             int end = JTextPaneToolbox.getClosestLineBeginningAfter(pane, start);
             er.setStartPos(start);
             er.setEndPos(end);
             String msg = er.getExtraInfo("msg");
             String var = er.getExtraInfo("var");
-            if(!msg.contains(var)) msg = var + ": " + msg; 
+            if (!msg.contains(var)) {
+                msg = var + ": " + msg;
+            }
             return msg;
         }
         return "";
     }
-    
+
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
         this.currentStringResLoader = stringResIF.getCElectionEditorStringResProvider().getCErrorStringRes();
     }
-    
+
 }

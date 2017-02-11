@@ -7,13 +7,13 @@ import edu.pse.beast.toolbox.UserAction;
  * @author NikolaiLMS
  */
 public class ElectionRedoUserAction extends UserAction {
-    private CElectionDescriptionEditor electionEditor;
+
+    private final CElectionDescriptionEditor electionEditor;
 
     public ElectionRedoUserAction(CElectionDescriptionEditor electionEditor) {
         super("redo");
         this.electionEditor = electionEditor;
     }
-
 
     @Override
     public void perform() {

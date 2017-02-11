@@ -7,13 +7,13 @@ import edu.pse.beast.toolbox.UserAction;
  * @author NikolaiLMS
  */
 public class ElectionCutUserAction extends UserAction {
-    private CElectionDescriptionEditor electionEditor;
+
+    private final CElectionDescriptionEditor electionEditor;
 
     public ElectionCutUserAction(CElectionDescriptionEditor electionEditor) {
         super("cut");
         this.electionEditor = electionEditor;
     }
-
 
     @Override
     public void perform() {

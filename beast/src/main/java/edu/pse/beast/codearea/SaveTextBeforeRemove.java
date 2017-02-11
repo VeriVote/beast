@@ -6,7 +6,6 @@
 package edu.pse.beast.codearea;
 
 import edu.pse.beast.codearea.Actionlist.Actionlist;
-import edu.pse.beast.codearea.InputToCode.ShortcutHandler;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.JTextPane;

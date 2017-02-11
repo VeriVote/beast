@@ -10,7 +10,6 @@ package edu.pse.beast.codearea;
  * @author https://tips4java.wordpress.com/2009/05/23/text-component-line-number/
  */
 import java.awt.*;
-import java.awt.event.*;
 import java.beans.*;
 import java.util.HashMap;
 import javax.swing.*;

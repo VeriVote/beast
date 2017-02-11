@@ -28,14 +28,14 @@ public class TextChangedActionAdder implements
         ActionlistListener, 
         DocumentListener, 
         StoppedTypingContinuouslyListener {
-    private int caretPos = 0;
+    private final int caretPos = 0;
     private boolean listen = true;
-    private JTextPane pane;
-    private Actionlist actionList;
+    private final JTextPane pane;
+    private final Actionlist actionList;
     private int recordingStartPos;
-    private String recordingString = "";
-    private SaveTextBeforeRemove saveBeforeRemove;    
-    private StoppedTypingContinuouslyMessager typingContinuouslyMessager;
+    private final String recordingString = "";
+    private final SaveTextBeforeRemove saveBeforeRemove;    
+    private final StoppedTypingContinuouslyMessager typingContinuouslyMessager;
     
     /**
      * creates a TextChangedActionAdder

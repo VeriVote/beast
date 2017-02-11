@@ -10,16 +10,18 @@ import edu.pse.beast.codearea.ErrorHandling.CodeError;
 /**
  * This class is used by the Cerrorfinder. It generates coderrors from the given
  * information
+ *
  * @author holger
  */
 public class CCodeErrorFactory {
-    
-    private static String ids[] = {"compilererror", "antlr"};
+
+    private static final String ids[] = {"compilererror", "antlr"};
+
     public static CodeError generateCompilterError(int line, int posInLine, String varName, String message) {
-        CodeError toReturn = new CodeError(line - 3*3, posInLine, ids[0], 0, -1, -1);
+        CodeError toReturn = new CodeError(line - 3 * 3, posInLine, ids[0], 0, -1, -1);
         toReturn.setExtraInfo("var", varName);
-        toReturn.setExtraInfo("msg", message);        
+        toReturn.setExtraInfo("msg", message);
         return toReturn;
     }
-    
+
 }

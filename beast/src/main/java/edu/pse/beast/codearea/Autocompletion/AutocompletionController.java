@@ -33,12 +33,12 @@ import javax.swing.text.BadLocationException;
  * @author Holger-Desktop
  */
 public class AutocompletionController implements KeyListener, AncestorListener {
-    private JTextPane pane;
-    private ArrayList<AutocompletionOption> completionOptions = new ArrayList<>();
-    private FindWordsConcurrently conc;
-    private Thread t;
-    private AutocompletionFrame frame;
-    private UserInsertToCode insertToCode;    
+    private final JTextPane pane;
+    private final ArrayList<AutocompletionOption> completionOptions = new ArrayList<>();
+    private final FindWordsConcurrently conc;
+    private final Thread t;
+    private final AutocompletionFrame frame;
+    private final UserInsertToCode insertToCode;    
     
     public AutocompletionController(JTextPane pane, UserInsertToCode insertToCode) {
         this.pane = pane;
