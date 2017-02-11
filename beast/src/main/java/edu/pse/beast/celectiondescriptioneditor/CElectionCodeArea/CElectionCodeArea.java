@@ -31,7 +31,7 @@ public class CElectionCodeArea extends CodeArea {
         antlrHandler = new CAntlrHandler(pane);
         grammerErrorFinder = new CGrammarErrorFinder(antlrHandler);
         varErrFinder = new CVariableErrorFinder(pane);
-        errorCtrl.addErrorFinder(grammerErrorFinder);
+        //errorCtrl.addErrorFinder(grammerErrorFinder);
         errorCtrl.addErrorFinder(varErrFinder);
         cSyntaxHl = new CSyntaxHl(antlrHandler, syntaxHL);        
     }
