@@ -50,7 +50,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
     private final String pathToEye = "/core/images/other/eye.png";
     private final ImageIcon eyeIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToEye);
     
-    private final String pathToWrench = "/core/images/other/eye.png";
+    private final String pathToWrench = "/core/images/other/wrench.png";
     private final ImageIcon wrenchIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToWrench);
     
     private final String pathToXMark = "/core/images/other/x-mark.png";

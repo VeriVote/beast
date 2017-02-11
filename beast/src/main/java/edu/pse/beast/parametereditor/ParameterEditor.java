@@ -264,5 +264,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier {
     public void setCurrentlyLoadedProject(Project project) {
         currentlyLoadedProject = project;
         getView().setWindowTitle(project.getName());
+        window.displayText("", false, "");
+
     }
 }
