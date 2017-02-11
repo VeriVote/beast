@@ -42,9 +42,9 @@ fileApproveRegex : (.)+\.elec
 fileDescription : BEAST-Description-File (*.elec)
 objectCouldNotBeConvertedToString : Was not able to convert election description into a string to save.
 objectCouldNotBeSavedError : Election description couldn't be saved.
-inputOutputErrorOpen :  Error while reading the file (probably it doesn't exist).
+inputOutputErrorOpen : The File either does not exist or you don't have the necessary rights.
 invalidFileFormatErrorMessage : The given file does not contain a valid BEAST-Description-Format.
 wrongEncodingError : The project contains wrong encoded characters.
-inputOutputErrorSave : The folder, in which you want to save, does not exist.
-wrongFileNameError : The name does not match the regular expression '[_a-zA-Z0-9\-\.]+'.
+inputOutputErrorSave : The folder, in which you want to save, does not exist or you don't have the necessary rights.
+wrongFileNameError : The name does not match the regular expression '[_a-zA-Z0-9\-\.\s]+'.
 fileSuffix : .elec
