@@ -110,6 +110,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	 */
 	public void stopReacting() {
 		setReactsToInput(false);
+		this.setEnabled(false);
 	}
 
 	/**
@@ -117,6 +118,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	 */
 	public void resumeReacting() {
 		setReactsToInput(true);
+		this.setEnabled(true);
 	}
 
 	
@@ -127,7 +129,6 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		StringResourceLoader other = provider.getOtherStringRes();
 
 		title = other.getStringFromID("title");
-		setWindowTitle(other.getStringFromID("title"));
 		this.addNewButton.setText(other.getStringFromID("newButton"));
 		this.addCreatedButton.setText(other.getStringFromID("createdButton"));
 
