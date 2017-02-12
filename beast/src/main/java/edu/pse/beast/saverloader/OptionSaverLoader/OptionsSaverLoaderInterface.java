@@ -71,9 +71,10 @@ public class OptionsSaverLoaderInterface {
         LinkedList<String> created = new LinkedList<>();
         int i = 0;
         
-        for(; i < saveString.size() && saveString.get(i).contains("new_option " + id); ++i) {            
+        for(; i < saveString.size() && !saveString.get(i).contains("new_option " + id); ++i) {            
         }
-        for(; i < saveString.size() - 1 && saveString.get(i + 1).contains("new_option "); ++i) {  
+        ++i;
+        for(; i < saveString.size() && !saveString.get(i).contains("new_option "); ++i) {  
             created.add(saveString.get(i));
         } 
         return created;                
@@ -91,6 +92,7 @@ public class OptionsSaverLoaderInterface {
     }
     
     private static void saveOptRec(Options opt, ArrayList<String> saveString) {
+
         for(OptionElement elem : opt.getOptionElements()) {
             saveString.add(elem.getID() + " : " + elem.getChosenOption());
         }

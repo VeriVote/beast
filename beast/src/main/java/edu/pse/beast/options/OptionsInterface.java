@@ -20,6 +20,7 @@ public class OptionsInterface {
             try {
             booleanExpEditorOptions = OptionsSaverLoaderInterface.loadBooleanExpEditorOpts(editor);
             } catch (IOException ex) {            
+                ex.printStackTrace();
                 booleanExpEditorOptions = new BooleanExpEditorOptions(editor);
             }            
         }        
@@ -31,6 +32,7 @@ public class OptionsInterface {
             try {
                 cElectionEditorOptions = OptionsSaverLoaderInterface.loadCEditorOpts(editor);
             } catch (Exception ex) {
+                
                 cElectionEditorOptions = new CElectionEditorOptions(editor);
             }            
         }        

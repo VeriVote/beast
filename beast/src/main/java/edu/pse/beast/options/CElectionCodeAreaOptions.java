@@ -16,6 +16,7 @@ public class CElectionCodeAreaOptions extends Options {
         super("ccodearea_opts");
         this.cElecCodeArea = cElecCodeArea;
         this.codeAreaOptions = codeAreaOptions;
+        subOptions.add(codeAreaOptions);
     }
 
     CElectionCodeAreaOptions(CElectionCodeArea codeArea) {

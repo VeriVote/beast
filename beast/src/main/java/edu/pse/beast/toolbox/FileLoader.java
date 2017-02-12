@@ -36,8 +36,8 @@ public final class FileLoader {
     public static LinkedList<String> loadFileAsString(File file) throws FileNotFoundException, IOException {
 
         LinkedList<String> stringlist;
-        try (InputStream inputStream = new FileInputStream(file);
-                BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"))) {
+        InputStream inputStream = new FileInputStream(file);
+                BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
             stringlist = new LinkedList<>();
             String line;
 
@@ -46,7 +46,7 @@ public final class FileLoader {
                 stringlist.add(line);
                 line = br.readLine();
             }
-        }
+        
         return stringlist;
     }
 
