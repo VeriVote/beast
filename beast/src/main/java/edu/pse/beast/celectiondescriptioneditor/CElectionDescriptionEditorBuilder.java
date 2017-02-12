@@ -76,8 +76,12 @@ public class CElectionDescriptionEditorBuilder {
         CElectionDescriptionEditorChangeHandler CElectionDescriptionEditorChangeHandler = new CElectionDescriptionEditorChangeHandler(codeArea.getPane());
 
         //create new CElectionEditor
-        CElectionDescriptionEditor editor = new CElectionDescriptionEditor(codeArea, gui, codeAreaBuilder, errorWindow, CElectionDescriptionEditorChangeHandler,
-                objRefsForBuilder.getStringIF(), fileChooser);
+        CElectionDescriptionEditor editor = 
+                new CElectionDescriptionEditor(
+                        codeArea, gui, codeAreaBuilder, 
+                        errorWindow, CElectionDescriptionEditorChangeHandler,
+                        objRefsForBuilder.getStringIF(), fileChooser,
+                        objRefsForBuilder);
         
         CElectionEditorMenubarHandler menuBarHandler = 
                 new CElectionEditorMenubarHandler(

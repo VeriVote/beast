@@ -15,8 +15,10 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
+import edu.pse.beast.options.CElectionEditorOptions;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.saverloader.FileChooser;
+import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import edu.pse.beast.toolbox.UserAction;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -47,6 +49,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
     private final ArrayList<UserAction> userActions = new ArrayList<>();
     private final ArrayList<Character> userActionChars = new ArrayList<>();
     private Boolean wasVisible;
+    private ObjectRefsForBuilder refs;
 
     public CElectionDescriptionEditor(
             CElectionCodeArea codeArea,
@@ -55,7 +58,8 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
             ErrorWindow errorWindow,
             CElectionDescriptionEditorChangeHandler CElectionDescriptionEditorChangeHandler,
             StringLoaderInterface stringLoaderInterface,
-            FileChooser fileChooser) {
+            FileChooser fileChooser,
+            ObjectRefsForBuilder refs) {
         this.codeArea = codeArea;
         this.window = gui;
         this.builder = builder;
@@ -63,6 +67,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
         this.changeHandler = CElectionDescriptionEditorChangeHandler;
         this.stringLoaderInterface = stringLoaderInterface;
         this.fileChooser = fileChooser;
+        this.refs = refs;
     }
 
     /**
@@ -157,6 +162,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
             loadElectionDescription(description);
             return true;
         }
+        
     }
 
     /**
@@ -193,6 +199,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
             l.outputChanged(description.getOutputType());
         }
         findErrorsAndDisplayThem();
+        refs.getOptionIF().getCElectionEditorOptions(this).reapply();
     }
 
     /**

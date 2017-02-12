@@ -14,37 +14,50 @@ import toBeImplemented.CheckerList;
 
 public class OptionsInterface {    
     private OptionPresenter presenter;
+    private LanguageOptions languageOptions;
+    private BooleanExpEditorOptions booleanExpEditorOptions;
+    private CElectionEditorOptions cElectionEditorOptions;
+    private ParametereditorOptions parametereditorOptions;
     
     public BooleanExpEditorOptions getBooleanExpEditorOptions(BooleanExpEditor editor,
             ObjectRefsForBuilder refs) {
-        try {
-            BooleanExpEditorOptions opts = OptionsSaverLoaderInterface.loadBooleanExpEditorOpts(editor);
-            return opts;
-        } catch (IOException ex) {
-        }
-        return new BooleanExpEditorOptions(editor);
+        if(booleanExpEditorOptions == null) {
+            try {
+            booleanExpEditorOptions = OptionsSaverLoaderInterface.loadBooleanExpEditorOpts(editor);
+            } catch (IOException ex) {            
+                booleanExpEditorOptions = new BooleanExpEditorOptions(editor);
+            }            
+        }        
+        return booleanExpEditorOptions;
     }
 
     public CElectionEditorOptions getCElectionEditorOptions(CElectionDescriptionEditor editor) {
-        try {
-            CElectionEditorOptions opts = OptionsSaverLoaderInterface.loadCEditorOpts(editor);
-            return opts;
-        } catch (Exception ex) {
-        }
-        CElectionEditorOptions opts = new CElectionEditorOptions(editor);
-        return opts;
+        if(cElectionEditorOptions == null) {
+            try {
+                cElectionEditorOptions = OptionsSaverLoaderInterface.loadCEditorOpts(editor);
+            } catch (Exception ex) {
+                cElectionEditorOptions = new CElectionEditorOptions(editor);
+            }            
+        }        
+        return cElectionEditorOptions;
     }
 
     public ParametereditorOptions getParameterEditorOptions(LanguageOptions langOpts) {
-        return new ParametereditorOptions(langOpts);
+        if(parametereditorOptions == null) {
+            parametereditorOptions = new ParametereditorOptions(langOpts);            
+        }
+        return parametereditorOptions;
     }
 
     public LanguageOptions getLanguageOptions(StringLoaderInterface stringIf) {
-        try {
-            return OptionsSaverLoaderInterface.loadLangOpts(stringIf);
-        } catch (IOException ex) {
+        if(languageOptions == null) {
+            try {
+                languageOptions = OptionsSaverLoaderInterface.loadLangOpts(stringIf);
+            } catch (IOException ex) {
+                languageOptions = new LanguageOptions(stringIf);
+            }            
         }
-        return new LanguageOptions(stringIf);
+        return languageOptions;
     }
 
     public OptionPresenter getOptionPresenter(ObjectRefsForBuilder refs) {

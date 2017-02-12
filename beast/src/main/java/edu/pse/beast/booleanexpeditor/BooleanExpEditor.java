@@ -235,6 +235,7 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
         this.window.setWindowTitle(postAndPrePropertiesDescription.getName());
         changeHandler.updatePreValues();
         fileChooser.setHasBeenSaved(false);
+        objectRefsForBuilder.getOptionIF().getBooleanExpEditorOptions(this, objectRefsForBuilder).reapply();
     }
 
     public boolean isCorrect() {
