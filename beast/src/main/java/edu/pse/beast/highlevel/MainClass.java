@@ -18,12 +18,10 @@ public class MainClass {
      * @param args not used
      */
     public static void main(String[] args) {
-        try {
-            BEASTCommunicator communicator = new BEASTCommunicator();
-            CentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
-            communicator.setCentralObjectProvider(centralObjectProvider);
-        } catch (IOException ex) {
-            Logger.getLogger(MainClass.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
+        BEASTCommunicator communicator = new BEASTCommunicator();
+        CentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
+        communicator.setCentralObjectProvider(centralObjectProvider);
+       
     }
 }

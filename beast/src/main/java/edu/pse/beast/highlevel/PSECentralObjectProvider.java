@@ -35,7 +35,7 @@ public class PSECentralObjectProvider implements CentralObjectProvider {
      * @param communicator the BEASTCommunicator which needs access to these
      * instances
      */
-    public PSECentralObjectProvider(BEASTCommunicator communicator) throws IOException {
+    public PSECentralObjectProvider(BEASTCommunicator communicator) {
         OptionsInterface optionsInterface = new OptionsInterface();
         StringLoaderInterface stringIf = new StringLoaderInterface("de"); //must be provided  by language options at some point
         SaverLoaderInterface saverLoaderIF = new SaverLoaderInterface();
