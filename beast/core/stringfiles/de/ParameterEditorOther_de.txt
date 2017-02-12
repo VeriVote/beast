@@ -60,3 +60,4 @@ parameterErrors : Es bestehen noch Fehler in den Parametern.
 startingCheck : Analyse wird gestartet
 waitingForPropertyResult : Warte auf Ergebnis der Eigenschaft '
 title : Parametereditor
+analysisSuccess : Analyse erfolgreich beendet in
