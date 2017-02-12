@@ -13,6 +13,8 @@ import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This useraction takes the selected text in a given codearea and copies it
@@ -32,6 +34,11 @@ public class CutUserAction extends UserAction  {
 
     @Override
     public void perform() {
+        try {
+            codeArea.getInsertToCode().getSaveBeforeRemove().save();
+        } catch (BadLocationException ex) {
+            Logger.getLogger(CutUserAction.class.getName()).log(Level.SEVERE, null, ex);
+        }
         StringSelection stringSelection = new StringSelection(codeArea.getPane().getSelectedText());
         clipboard.setContents(stringSelection, null);
         codeArea.insertString("");

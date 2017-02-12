@@ -15,6 +15,8 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * this useraction asks the given codearea to insert the currently copied string
@@ -22,20 +24,25 @@ import java.io.IOException;
  * @author Holger-Desktop
  */
 public class PasteUserAction extends UserAction {
-    private CodeArea area;
+    private CodeArea codeArea;
     private Clipboard clipboard;
 
     public PasteUserAction(CodeArea area) {
         super("paste");
-        this.area = area;
+        this.codeArea = area;
         this.clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
     }
 
     @Override
     public void perform() {
         try {
+            codeArea.getInsertToCode().getSaveBeforeRemove().save();
+        } catch (BadLocationException ex) {
+            Logger.getLogger(CutUserAction.class.getName()).log(Level.SEVERE, null, ex);
+        }  
+        try {
             String clipboardString = (String) clipboard.getData(DataFlavor.stringFlavor);
-            area.insertString(clipboardString);
+            codeArea.insertString(clipboardString);
         } catch (UnsupportedFlavorException e) {
             e.printStackTrace();
         } catch (IOException e) {

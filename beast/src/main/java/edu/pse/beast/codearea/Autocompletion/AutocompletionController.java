@@ -72,19 +72,22 @@ public class AutocompletionController implements KeyListener, AncestorListener, 
     }
 
     @Override
-    public void keyTyped(KeyEvent ke) {        
+    public void keyTyped(KeyEvent ke) {             
        if(ke.getSource() == frame.getjList1()) {
             if(ke.getKeyCode() == KeyEvent.VK_UP ||
                 ke.getKeyCode() == KeyEvent.VK_DOWN ||
-                ke.getKeyChar() == KeyEvent.VK_ENTER) {                
+                ke.getKeyCode() == KeyEvent.VK_ENTER ||
+                ke.getKeyCode() == KeyEvent.VK_CONTROL) {                
                 return;
             } else {
+                int selection = frame.getjList1().getSelectedIndex();
                 for(int i = 0; i < pane.getKeyListeners().length; ++i) {
                 if(pane.getKeyListeners()[i] != this) 
                         pane.getKeyListeners()[i].keyTyped(ke);
                 }
                 giveMenuOptions();
                 ke.consume();
+                frame.getjList1().setSelectedIndex(selection);
             }            
             
        }
@@ -102,9 +105,7 @@ public class AutocompletionController implements KeyListener, AncestorListener, 
                 String s = frame.getjList1().getSelectedValue();
                 if(s != null) choseCompletion(s);
                 frame.setVisible(false);
-            } else {
-                giveMenuOptions();
-            }
+            } 
         }
     }
 
@@ -113,10 +114,11 @@ public class AutocompletionController implements KeyListener, AncestorListener, 
         if(ke.getSource() == frame.getjList1()) {
             if(ke.getKeyCode() == KeyEvent.VK_UP ||
                 ke.getKeyCode() == KeyEvent.VK_DOWN ||
-                ke.getKeyChar() == KeyEvent.VK_ENTER) {                
+                ke.getKeyCode() == KeyEvent.VK_ENTER || 
+                ke.getKeyCode() == KeyEvent.VK_CONTROL || 
+                ke.getKeyCode() == KeyEvent.VK_SPACE) {                
                 return;
-            }
-            giveMenuOptions();
+            } 
         }
         if(ke.isControlDown() && ke.getKeyChar()== KeyEvent.VK_SPACE) {            
             try {
@@ -126,6 +128,7 @@ public class AutocompletionController implements KeyListener, AncestorListener, 
                         pane.modelToView(pane.getCaretPosition()).y);                  
                 frame.setLocation(pane.getLocationOnScreen().x + loc.x, pane.getLocationOnScreen().y + loc.y + 20);
                 frame.setVisible(true);
+                frame.getjList1().setSelectedIndex(0);
             } catch (BadLocationException ex) {
                 Logger.getLogger(AutocompletionController.class.getName()).log(Level.SEVERE, null, ex);
             }
