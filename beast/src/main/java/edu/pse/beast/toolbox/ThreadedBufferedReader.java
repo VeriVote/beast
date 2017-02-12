@@ -15,10 +15,10 @@ import java.util.concurrent.CountDownLatch;
  */
 public class ThreadedBufferedReader implements Runnable {
 
-	private BufferedReader reader;
-	private List<String> readLines;
+	private final BufferedReader reader;
+	private final List<String> readLines;
 	private volatile boolean isInterrupted = false;
-	private CountDownLatch latch;
+	private final CountDownLatch latch;
 
 	/**
 	 * Class for reading a stream from the program

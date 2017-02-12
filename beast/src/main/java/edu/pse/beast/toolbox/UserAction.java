@@ -11,7 +11,7 @@ package edu.pse.beast.toolbox;
  * @author Holger-Desktop
  */
 public abstract class UserAction {
-    private String id;
+    private final String id;
     
     /**
      * 

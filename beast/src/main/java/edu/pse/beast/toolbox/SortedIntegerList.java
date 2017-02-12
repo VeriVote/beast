@@ -23,11 +23,11 @@ public class SortedIntegerList {
     /**
      * this list contains all the stored integers
      */
-    private ArrayList<Integer> container = new ArrayList<Integer>();
+    private ArrayList<Integer> container = new ArrayList<>();
     /**
      * a comparator for integers, used to sort container
      */
-    private Comparator<Integer> comp = new Comparator<Integer>() {
+    private final Comparator<Integer> comp = new Comparator<Integer>() {
         @Override
         public int compare(Integer lhs, Integer rhs) {
             if (lhs < rhs) {

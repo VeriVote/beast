@@ -6,8 +6,6 @@
 package edu.pse.beast.toolbox;
 
 import edu.pse.beast.stringresource.StringResourceLoader;
-import edu.pse.beast.stringresource.StringResourceProvider;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JToolBar;
@@ -18,9 +16,9 @@ import javax.swing.JToolBar;
  */
 public abstract class ToolbarHandler {
     private StringResourceLoader stringRes;
-    private ActionIdAndListener[] actionIdsAndListener;
-    private ImageResourceProvider imageRes;
-    private JButton[] buttons;
+    private final ActionIdAndListener[] actionIdsAndListener;
+    private final ImageResourceProvider imageRes;
+    private final JButton[] buttons;
     protected JToolBar toolbar;
     
     public ToolbarHandler(

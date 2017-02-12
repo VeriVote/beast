@@ -7,8 +7,6 @@ package edu.pse.beast.toolbox;
 
 import java.awt.Image;
 import java.io.File;
-import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 
 /**
@@ -30,9 +28,9 @@ public class ImageResourceProvider {
         return toolbar;
     }
     
-    private HashMap<String, Image> images = new HashMap<>();
-    private String folder;
-    private String[] ids;
+    private final HashMap<String, Image> images = new HashMap<>();
+    private final String folder;
+    private final String[] ids;
     
     public ImageResourceProvider(String folder, String[] ids) {
         this.folder = folder;
