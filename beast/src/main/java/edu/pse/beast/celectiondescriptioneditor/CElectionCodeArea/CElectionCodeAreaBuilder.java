@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea;
 
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CAntlrHandler;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CErrorDisplayer;
 import edu.pse.beast.codearea.Autocompletion.AutocompletionOption;
 import edu.pse.beast.codearea.CodeAreaBuilder;
@@ -50,7 +51,14 @@ public class CElectionCodeAreaBuilder extends CodeAreaBuilder {
         ArrayList<AutocompletionOption> created = new ArrayList<>();
         created.add(new AutocompletionOption("for", "for(unsigned int i = 0; i < V; ++i) {\n"));
         created.add(new AutocompletionOption("for", "for(unsigned int i = 0; i < C; ++i) {\n"));
-        created.add(new AutocompletionOption("for", "for(unsigned int i = 0; i < S; ++i) {\n"));        
+        created.add(new AutocompletionOption("for", "for(unsigned int i = 0; i < S; ++i) {\n"));   
+        CAntlrHandler antlrHandler = new CAntlrHandler(new JTextPane());
+        for(String s : antlrHandler.getTypeLiterals()) {
+            created.add(new AutocompletionOption(s,s));
+        }
+        for(String s : antlrHandler.getControllLiterals()) {
+            created.add(new AutocompletionOption(s,s));
+        }
         return created;
     }
 

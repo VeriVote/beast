@@ -1,4 +1,4 @@
-﻿error : Fehler
+﻿antlr_descr : Ein Fehler ist beim Parsen aufgetreten
 antlr_descr : Ein Fehler ist beim Parsen aufgetreten
 var_not_decl_descr : Variable VAR ist nicht deklariert
 too_many_vars_passed_descr : Es wurden zu viele Variablen übergeben. VAR kann nicht mehr übergeben werden.
@@ -11,3 +11,4 @@ char : Zeichen
 preProps : Vorbedingungen
 postProps : Nachbedingungen
 number_must_be_greater_0_descr : Die übergebene Zahl muss größer als Null sein
+error : Fehler
