@@ -96,7 +96,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier {
 
     /**
      * Setter for all parameters (needed for loading projects)
-     * @param param 
+     * @param param the ElectionCheckParameters object
      */
     public void setParameter(ElectionCheckParameter param) {
         voterHandler.setMinAndMax(param.getAmountVoters().get(0),
@@ -152,7 +152,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier {
 
     /**
      * Updates the Project instance of this class and loads its content into the editors.
-     * @param project
+     * @param project the Project instance
      */
     public void loadProject(Project project) {
         setCurrentlyLoadedProject(project);

@@ -296,7 +296,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         node.getRHSBooleanExpNode().getVisited(this);
         if (node.getLHSBooleanExpNode().getAccessVar() != null) {
             for (SymbolicVariable accessVar : node.getLHSBooleanExpNode().getAccessVar()) {
-                System.out.println(lhslistLevel);
                 lhslistLevel--;
             }
         }

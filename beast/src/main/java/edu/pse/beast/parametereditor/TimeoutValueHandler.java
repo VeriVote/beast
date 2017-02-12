@@ -28,6 +28,7 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
      */
     public TimeoutValueHandler(JSpinner timeoutSpinner, JComboBox timeoutUnit) {
         this.timeoutSpinner = timeoutSpinner;
+        timeoutSpinner.setValue(1);
         this.timeoutUnit = timeoutUnit;
         timeoutBefore = getTimeout();
         setHasChanged(false);
@@ -38,9 +39,11 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
      */
     public TimeOut getTimeout() {
         TimeOut timeOut = new TimeOut();
-        Integer timeoutInt = Integer.parseInt(timeoutSpinner.getValue().toString());
-        if (timeoutInt < 0) {
+        Integer timeoutInt;
+        if (timeoutSpinner.getValue() == "∞") {
             timeoutInt = 0;
+        } else {
+            timeoutInt = Integer.parseInt(timeoutSpinner.getValue().toString());
         }
         switch (timeoutUnit.getSelectedIndex()) {
             case 0:
@@ -66,7 +69,11 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
      */
     public void setValue(TimeOut to) {
         if (reacts) {
-            timeoutSpinner.setValue(to.getOrigUnit().convert(to.getDuration(), TimeUnit.MILLISECONDS));
+            if (to.getDuration() <= 0) {
+                timeoutSpinner.setValue("&infin;");
+            } else {
+                timeoutSpinner.setValue(to.getOrigUnit().convert(to.getDuration(), TimeUnit.MILLISECONDS));
+            }
             setHasChanged(true);
             switch (to.getOrigUnit()) {
                 case SECONDS:
@@ -87,7 +94,7 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
             }
             timeoutBefore = getTimeout();
         } else {
-
+            timeoutSpinner.setValue(timeoutBefore);
         }
     }
     /**

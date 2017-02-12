@@ -107,7 +107,6 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 
     @Override
     public void enterBinaryRelationExp(FormalPropertyDescriptionParser.BinaryRelationExpContext ctx) {
-        System.out.println("enterbinary " + ctx.BinaryRelationSymbol().getText());
     }
 
     @Override
@@ -127,7 +126,6 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         } else if(symbol.equals("<==>")) {
             node = new EquivalencyNode(lhs, rhs);
         }
-        System.out.println("binary " + symbol);
         nodeStack.add(node);
     }
 
@@ -159,7 +157,6 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
             node = new ThereExistsNode(((SymbolicVarExp) expStack.pop()).getSymbolicVar(), nodeStack.pop());
         }
         
-        System.out.println("quantor " + quantorType);
         nodeStack.add(node);
         scopeHandler.exitScope();
     }
@@ -177,7 +174,6 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 
     @Override
     public void enterComparisonExp(FormalPropertyDescriptionParser.ComparisonExpContext ctx) {        
-        System.out.println("enter comparison " + ctx.ComparisonSymbol().getText());
     }
 
     @Override
@@ -234,7 +230,6 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         
         ElectExp expNode = new ElectExp(resType, accessingVars, number);
         
-        System.out.println("electnode " + numberString);
         expStack.add(expNode);
     }
 
@@ -258,7 +253,6 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         
         VoteExp expNode = new VoteExp(inputType, accessingVars, number);
         
-        System.out.println("votenode " + number);
         expStack.add(expNode);
     }
 
@@ -317,7 +311,6 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         InternalTypeContainer type = scopeHandler.getTypeForVariable(name);
         SymbolicVarExp expNode = new SymbolicVarExp(type, new SymbolicVariable(name, type));
         expStack.add(expNode);
-        System.out.println("symbvar " + name);
     }
 
     @Override

@@ -74,7 +74,6 @@ public class FactoryController implements Runnable {
 
         for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
             Result result = (Result) iterator.next();
-            System.out.println(result.readyToPresent());
         }
 
         // if the user doesn't specify a concrete amount for concurrent

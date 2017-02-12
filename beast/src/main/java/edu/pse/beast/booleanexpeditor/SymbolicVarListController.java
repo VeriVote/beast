@@ -99,12 +99,9 @@ public class SymbolicVarListController implements DisplaysStringsToUser {
 
                     }
                 } else {
-                    System.out.println("Faulty variable name");
                     Object errorMessage = errorString + "\n (" + errorCause + ")";
                     JOptionPane.showMessageDialog(booleanExpEditorWindow, errorMessage, "", JOptionPane.OK_OPTION);
                 }
-            } else {
-                System.out.println("Variable adding canceled");
             }
         }
     }
