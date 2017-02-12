@@ -54,3 +54,4 @@ save : '?
 yesOption : Yes
 noOption : No
 cancelOption : Cancel
+noProperty : No Property was selected for the analysis
