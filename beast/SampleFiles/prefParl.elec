@@ -1,0 +1,168 @@
+<electionName>
+prefParl
+</electionName>
+<votingDecLine>
+2
+</votingDecLine>
+<code>
+//Präferenzwahl: Wähler legt Ranking für alle Kandidaten fest
+//Präferenzwahl: Anzahl zugeteilter Sitze pro Partei
+unsigned int * voting(unsigned int votes[V][C]) { 
+        
+	// V x C matrix of the according candidates for each preference of the according voter (votes[i][j] = 0 if not ranked)
+	// (i.e. voter v ranks candidate c on preference rank p translates to "votes[v-1][p] == c")
+	//assert (0 < C);
+	//assert (0 < V);
+	static unsigned int r[S]; 
+	unsigned int res = 0;
+	
+	unsigned int count[C+1];
+	unsigned int cc = C; // number of concurring candidates (C minus eliminated candidates)
+	unsigned int weakest = 0;
+	unsigned int choose = 0;
+	unsigned int e = 0;
+	unsigned int i = 0;
+	unsigned int j = 0;
+	unsigned int j_prime = 0;
+	unsigned int k = 0;
+	unsigned int l = 0;
+	unsigned int t = 0;
+
+	for (i = 0; i < S; i++) {
+		r[i] = 0;
+	}
+
+	for (i = 0; i < V; i++) {
+		assume (votes[i][1] != 0);
+		for (j = 0; j < C; j++) {
+			assume (0 <= votes[i][j]);
+			assume (votes[i][j] < C);
+			for (j_prime = 0; j_prime < C; j_prime++) {
+				if ((votes[i][j] != 0) && (j != j_prime)) {
+					// for any voter and any two differing preference ranks with ranked candidates, the ranked candidates differ
+					assume (votes[i][j] != votes[i][j_prime]);
+				}
+				if ((votes[i][j] == 0) && (j <= j_prime)) {
+					// if one for one preference rank there is no candidate, the same applies for all consecutive ranks
+					assume (votes[i][j_prime] == 0);
+				}
+			}
+		}
+	}
+
+	unsigned int quota = 0;
+	if (V % 2 != 0) {
+		quota = (V - 1) / (S + 1);
+	} else {
+		quota = V / (S + 1);
+	}
+	unsigned int min = quota;
+	while (res == 0 && 0 < cc && e < S && (S - e) < cc) {
+		for (i = 0; i <= C; i++) {
+			count[i] = 0;
+		}
+		for (i = 0; i < V; i++) {
+			for (j = 1; j <= C; j++) {
+				if (votes[i][1] == j) {
+					count[j]++;
+				}
+			}
+		}
+		for (i = 1; i <= C && res == 0; i++) {
+			if (quota < count[i]) {
+				res = i;
+			}
+		}
+		if (res != 0) {
+			r[e] = res;
+			e++;
+			for (t = 0; t <= quota; t++) {
+				i = 0;
+				while (votes[i][1] != res) {
+					i++;
+				}
+				for (j = 1; j <= C; j++) {
+					votes[i][j] = 0;
+				}
+			}
+			for (j = 0; j < V; j++) {
+				for (k = 1; k <= C; k++) {
+					if (votes[j][k] == res) {
+						for (l = k; l < C; l++) {
+							votes[j][l] = votes[j][l + 1];
+						}
+						votes[j][C] = 0;
+					}
+				}
+			}
+			res = 0;
+			cc--;
+		} else {
+			min = quota;
+			weakest = 0;
+			for (i = 1; i <= C; i++) {
+				if (count[i] < min && count[i] != 0) { // count[i] != 0 makes sure that there are first preferences for i
+					min = count[i];
+					weakest = 1;
+				} else if (count[i] == min) {
+					weakest++;
+				}
+			}
+			choose = nondet_uint();
+			assume (0 < choose && choose <= weakest); // randomly eliminate a weakest candidate
+
+			weakest = 0;
+			for (i = 1; i <= C; i++) {
+				if (count[i] == min) {
+					weakest++;
+				}
+				if (count[i] == min && weakest == choose) { // eliminate candidate i
+					for (j = 0; j < V; j++) {
+						for (k = 1; k <= C; k++) {
+							if (votes[j][k] == i) {
+								for (l = k; l < C; l++) {
+									votes[j][l] = votes[j][l + 1];
+								}
+								votes[j][C] = 0;
+							}
+						}
+					}
+					cc--;
+				}
+			}
+		}
+	}
+	if (e < S - 1) {
+		for (i = e; i < S && 0 < cc; i++) {
+			res = 0;
+			for (k = 1; k <= C && res == 0; k++) {
+				for (j = 0; j < V && res == 0; j++) {
+					if (votes[j][1] == k) {
+						res = k;
+					}
+				}
+			}
+			r[i] = res;
+			for (j = 0; j < V; j++) {
+				for (k = 1; k <= C; k++) {
+					if (votes[j][k] == res) {
+						for (l = k; l < C; l++) {
+							votes[j][l] = votes[j][l + 1];
+						}
+						votes[j][C] = 0;
+					}
+				}
+			}
+			cc--;
+		}
+	}
+	return r;
+} 
+
+</code>
+<inputType>
+list_of_candidates_per_voter
+</inputType>
+<outputType>
+candidate_per_seat
+</outputType>
