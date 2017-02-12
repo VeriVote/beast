@@ -1,7 +1,6 @@
 package edu.pse.beast.saverloader.OptionSaverLoader;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
-import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeArea;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.codearea.CodeArea;
@@ -21,7 +20,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
 *
@@ -86,7 +84,7 @@ public class OptionsSaverLoaderInterface {
     }
     
     public static void saveOpt(Options opt) {
-        ArrayList<String> saveString = new ArrayList<String>();
+        ArrayList<String> saveString = new ArrayList<>();
         saveOptRec(opt, saveString);
         FileSaver.writeStringLinesToFile(saveString, new File("core/option_saves/" + opt.getId() + ".txt"));
     }
