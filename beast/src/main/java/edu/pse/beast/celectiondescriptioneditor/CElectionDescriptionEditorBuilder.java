@@ -86,8 +86,7 @@ public class CElectionDescriptionEditorBuilder {
                         createActionIdAndListenerList(objRefsForBuilder, editor),
                         objRefsForBuilder.getStringIF());
         
-        objRefsForBuilder.getLanguageOpts().addStringDisplayer(menuBarHandler);
-        
+
         //toolbar: new save save_as load copy cut paste undo redo
                 ActionIdAndListener[] idAndListener = {
             createFromUserAction(newAcc),
@@ -111,8 +110,8 @@ public class CElectionDescriptionEditorBuilder {
                         gui);
         
         starter.start();   
-        objRefsForBuilder.getLanguageOpts().addStringDisplayer(toolbarHandler);
-        
+
+        objRefsForBuilder.getLanguageOpts().addStringDisplayer(editor);
         ElectionTemplateHandler templateHandler = new ElectionTemplateHandler();
 
         

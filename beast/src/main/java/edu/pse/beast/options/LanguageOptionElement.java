@@ -5,7 +5,6 @@ import java.util.List;
 public class LanguageOptionElement extends OptionElement {
 
     /**   
-     * @param id the id
      * @param choosableOptions the choosable options
      * @param chosenLangID the chosen language ID
      */
