@@ -1,0 +1,5 @@
+new_option booleanexpcodearea_opts
+new_option codearea_opts
+fonttype : Arial Black
+fontsize : 14
+spaces_per_tab : 8
