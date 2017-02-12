@@ -34,6 +34,5 @@ public class CElectionEditorMenubarHandler extends MenuBarHandler {
     public void updateStringRes(StringLoaderInterface stringResIF) {
         updateStringResLoader(stringResIF.getCElectionEditorStringResProvider().getMenuStringRes());
         cgui.setMenuBar(createdMenuBar);
-    }
-    
+    }    
 }

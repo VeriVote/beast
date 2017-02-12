@@ -56,6 +56,10 @@ public class CCodeEditorWindow extends javax.swing.JFrame implements DisplaysStr
     
     public void setMenuBar(JMenuBar menuBar) {
         setJMenuBar(menuBar);
+        if(isVisible()) {
+            setVisible(false);
+            setVisible(true);            
+        }
     }
     
     public JToolBar getToolBar() {
