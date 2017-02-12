@@ -53,32 +53,33 @@ public class CElectionDescriptionEditorBuilder {
      */
     public CElectionDescriptionEditor createCElectionDescriptionEditor(ObjectRefsForBuilder objRefsForBuilder) {
         CEditorWindowStarter starter = new CEditorWindowStarter();
-        CCodeEditorWindow gui = starter.getGUIWindow();
-        gui.updateStringRes(objRefsForBuilder.getStringIF());
+        CCodeEditorWindow window = starter.getGUIWindow();
+        window.updateStringRes(objRefsForBuilder.getStringIF());
 
         //create new ErrorWindow
-        ErrorWindow errorWindow = new ErrorWindow(gui.getErrorPane(), objRefsForBuilder.getStringIF());
+        ErrorWindow errorWindow = new ErrorWindow(window.getErrorPane(), objRefsForBuilder.getStringIF());
         codeAreaBuilder = new CElectionCodeAreaBuilder(objRefsForBuilder);
 
         //codeAreaObject.setSyntaxHLRegexAndColorList()
         CElectionCodeArea codeArea = codeAreaBuilder.createCElectionCodeArea(
-                gui.getCodeArea(), 
-                gui.getCodeAreaScrollPane(),
-                new CErrorDisplayer(gui.getCodeArea(), objRefsForBuilder.getStringIF()));
+                window.getCodeArea(),
+                window.getCodeAreaScrollPane(),
+                new CErrorDisplayer(window.getCodeArea(), objRefsForBuilder.getStringIF()));
 
         //create FileChooser
         FileChooser fileChooser = new FileChooser(
                 objRefsForBuilder.getStringIF().getCElectionEditorStringResProvider().getMenuStringRes(),
                 new ElectionDescriptionSaverLoader(),
-                gui);
+                window);
 
         // create new ChangeHandler
-        CElectionDescriptionEditorChangeHandler CElectionDescriptionEditorChangeHandler = new CElectionDescriptionEditorChangeHandler(codeArea.getPane());
+        CElectionDescriptionEditorChangeHandler CElectionDescriptionEditorChangeHandler = new
+                CElectionDescriptionEditorChangeHandler(codeArea.getPane());
 
         //create new CElectionEditor
         CElectionDescriptionEditor editor = 
                 new CElectionDescriptionEditor(
-                        codeArea, gui, codeAreaBuilder, 
+                        codeArea, window, codeAreaBuilder,
                         errorWindow, CElectionDescriptionEditorChangeHandler,
                         objRefsForBuilder.getStringIF(), fileChooser,
                         objRefsForBuilder);
@@ -86,10 +87,9 @@ public class CElectionDescriptionEditorBuilder {
         CElectionEditorMenubarHandler menuBarHandler = 
                 new CElectionEditorMenubarHandler(
                         menuHeadingIds,
-                        gui,
+                        window,
                         createActionIdAndListenerList(objRefsForBuilder, editor),
                         objRefsForBuilder.getStringIF());
-        objRefsForBuilder.getLanguageOpts().addStringDisplayer(menuBarHandler);
 
         //toolbar: new save save_as load copy cut paste undo redo
                 ActionIdAndListener[] idAndListener = {
@@ -111,11 +111,10 @@ public class CElectionDescriptionEditorBuilder {
                         idAndListener,
                         imageRes, 
                         objRefsForBuilder.getStringIF(), 
-                        gui);
+                        window);
         
         starter.start();   
 
-        objRefsForBuilder.getLanguageOpts().addStringDisplayer(toolbarHandler);
         ElectionTemplateHandler templateHandler = new ElectionTemplateHandler();
 
         
@@ -129,7 +128,7 @@ public class CElectionDescriptionEditorBuilder {
         } catch (BadLocationException ex) {
             Logger.getLogger(CElectionDescriptionEditorBuilder.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+        objRefsForBuilder.getLanguageOpts().addStringDisplayer(editor);
 
         editor.setcElectionEditorMenubarHandler(menuBarHandler);
         editor.setcElectionEditorToolbarHandler(toolbarHandler);
@@ -185,7 +184,6 @@ public class CElectionDescriptionEditorBuilder {
         created.add(editList);
         created.add(editorList);
         created.add(codeList);
-        
         
         return created;        
     }

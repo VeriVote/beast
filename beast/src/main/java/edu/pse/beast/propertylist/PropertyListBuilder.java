@@ -44,14 +44,12 @@ public class PropertyListBuilder {
         window = controller.getView();
         window.updateStringRes(refs.getStringIF());
 
-        @SuppressWarnings("unused")
 		PropertyListMenuBarHandler menuBarHandler = new PropertyListMenuBarHandler(menuHeadingIds,
                 createActionIdAndListenerListForMenuHandler(),
                 refs.getStringIF().getPropertyListStringResProvider().getMenuStringRes(), window);
 
         ImageResourceProvider imageRes = ImageResourceProvider.getToolbarImages();
 
-        @SuppressWarnings("unused")
 		PropertyListToolbarHandler toolbarHandler = new PropertyListToolbarHandler(imageRes,
                 refs.getStringIF().getPropertyListStringResProvider().getToolbarTipStringRes(),
                 createActionIdAndListenerListForToolbarHandler(), window.getToolbar(), window);
@@ -61,8 +59,8 @@ public class PropertyListBuilder {
         refs.getLanguageOpts().addStringDisplayer(window);
         refs.getLanguageOpts().addStringDisplayer(menuBarHandler);
         refs.getLanguageOpts().addStringDisplayer(toolbarHandler);
-        //refs.getLanguageOpts().addStringDisplayer(controller);
-        return (PropertyList) controller;
+        refs.getLanguageOpts().addStringDisplayer(controller);
+        return controller;
     }
 
     

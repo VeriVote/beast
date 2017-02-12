@@ -297,6 +297,8 @@ public class FileChooser {
     }
 
     public void updateStringRessourceLoader(StringResourceLoader stringResourceLoader) {
+        this.stringResourceLoader = stringResourceLoader;
+        fileChooser = new JFileChooser();
         //sets the text and language of all the components in JFileChooser
         UIManager.put("FileChooser.openDialogTitleText", stringResourceLoader.getStringFromID("openDialogTitleText"));
         UIManager.put("FileChooser.lookInLabelText", stringResourceLoader.getStringFromID("lookInLabelText"));

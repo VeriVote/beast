@@ -49,7 +49,7 @@ inputOutputErrorSave : The folder, in which you want to save, does not exist or 
 wrongFileNameError : The name does not match the regular expression '[_a-zA-Z0-9\-\.\s]+'.
 fileSuffix : .elec
 saveChanges : Save changes to '
-save : '?
+saveChangesSuffix : '?
 yesOption : Yes
 noOption : No
 cancelOption : Cancel

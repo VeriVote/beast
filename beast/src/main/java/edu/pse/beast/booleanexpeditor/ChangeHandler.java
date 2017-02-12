@@ -2,7 +2,6 @@ package edu.pse.beast.booleanexpeditor;
 
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
-import edu.pse.beast.saverloader.FileChooser;
 
 import javax.swing.*;
 import java.util.LinkedList;

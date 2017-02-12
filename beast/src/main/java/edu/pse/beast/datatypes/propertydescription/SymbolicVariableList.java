@@ -106,11 +106,13 @@ public class SymbolicVariableList {
      * @param index the index of the variable, that is to be removed
      */
     public void removeSymbolicVariable(int index) {
-        SymbolicVariable var = symbolicVariableList.get(index);
-        listener.forEach((l) -> {
-            l.removedVar(var);
-        });
-        symbolicVariableList.remove(index);
+        if (index >= 0) {
+            SymbolicVariable var = symbolicVariableList.get(index);
+            listener.forEach((l) -> {
+                l.removedVar(var);
+            });
+            symbolicVariableList.remove(index);
+        }
     }
 
     /**

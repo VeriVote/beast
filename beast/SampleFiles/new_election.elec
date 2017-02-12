@@ -6,7 +6,7 @@ new
 </votingDecLine>
 <code>
 //Single-choice: Wähler stimmt jeweils für einen Kandidaten
-//Single-choice: Ein gewählter Kandidat oder uneööntschieden
+//Single-choice: Ein gewählter Kandidat oder unentschiedenx<yds<AFDASDASSDA
 unsigned int voting(unsigned int votes[V]) { 
 } 
 

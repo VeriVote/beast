@@ -9,10 +9,10 @@ list_of_yes_no_per_voter : Approval
 list_of_integer_vals_per_voter : Weighted-approval
 
 one_candidate_or_zero_exp : One winner or not determined
-list_of_integers_exp : Number of seats per party
+candidate_per_seat_exp : Number of seats per party
 
 one_candidate_or_zero : Candidate or not determined
-list_of_integers : Seats per party
+candidate_per_seat : Seats per party
 
 create : Create
 

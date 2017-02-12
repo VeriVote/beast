@@ -9,10 +9,10 @@ list_of_yes_no_per_voter : Zustimmungswahl
 list_of_integer_vals_per_voter : Gewichtete Wahl
 
 one_candidate_or_zero_exp : Ein gewählter Kandidat oder unentschieden
-list_of_integers_exp : Anzahl zugeteilter Sitze pro Partei
+candidate_per_seat_exp : Anzahl zugeteilter Sitze pro Partei
 
 one_candidate_or_zero : Kandidat oder unentschieden
-list_of_integers : Sitze pro Partei
+candidate_per_seat : Sitze pro Partei
 
 create : Erstellen
 
