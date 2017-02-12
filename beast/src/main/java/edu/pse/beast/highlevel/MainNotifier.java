@@ -14,9 +14,4 @@ public interface MainNotifier {
      * @param l CheckListener
      */
     void addCheckListener(CheckListener l);
-    /**
-     * Adds ActionListener for closing all windows.
-     * @param l listener for closing
-     */
-    void addCloseAllListener(ActionListener l);
 }

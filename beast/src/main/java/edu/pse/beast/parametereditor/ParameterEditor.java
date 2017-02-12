@@ -12,14 +12,11 @@ import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.highlevel.CheckListener;
 import edu.pse.beast.highlevel.MainNotifier;
 import edu.pse.beast.saverloader.FileChooser;
-import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ToolbarHandler;
 import edu.pse.beast.toolbox.MenuBarHandler;
 
 import javax.swing.text.BadLocationException;
-import java.util.ArrayList;
 import java.util.List;
-import java.awt.event.ActionListener;
 
 /**
  * The ParameterEditor is the central class that coordinates everything associated
@@ -32,7 +29,6 @@ public class ParameterEditor implements ParameterSource, MainNotifier {
     private final CElectionDescriptionEditor cElectionDescriptionEditor;
     private final PropertyList propertyList;
     private CheckListener checkListener;
-    private final ArrayList<ActionListener> closeListener = new ArrayList<>();
     private final MinMaxSpinValueHandler voterHandler;
     private final MinMaxSpinValueHandler candHandler;
     private final MinMaxSpinValueHandler seatHandler;
@@ -45,7 +41,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier {
     private final FileChooser fileChooser;
     private boolean hasChanged;
     private Project currentlyLoadedProject;
-    private String version = ParameterEditor.class.getPackage().getImplementationVersion(); //TODO: Get Version from somewhere
+    private final String version = ParameterEditor.class.getPackage().getImplementationVersion(); //TODO: Get Version from somewhere
 
     /**
      * Constructor which also links the handlers to the View elements
@@ -130,11 +126,6 @@ public class ParameterEditor implements ParameterSource, MainNotifier {
     @Override
     public void addCheckListener(CheckListener checkListenerObject) {
         this.checkListener = checkListenerObject;
-    }
-
-    @Override
-    public void addCloseAllListener(ActionListener l) {
-        closeListener.add(l);
     }
 
     @Override
