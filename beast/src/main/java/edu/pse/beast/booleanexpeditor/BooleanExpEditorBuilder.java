@@ -58,11 +58,9 @@ public class BooleanExpEditorBuilder{
 
         //creation of ErrorWindow object
         ErrorWindow errorWindow = new ErrorWindow(window.getErrorTextPane(), objectRefsForBuilder.getStringIF());
-       //creation of BooleanExpCodeAreas objects using the JTextPanes from the BooleanExpEditorWindow instance "window"
-        //TODO create an ArrayList of RegexAndColor objects and apply it to the codeareas by calling
-        //codeAreaObject.setSyntaxHLRegexAndColorList()
 
-       
+
+        //creation of BooleanExpCodeAreas objects using the JTextPanes from the BooleanExpEditorWindow instance "window"
         BooleanExpCodeAreaBuilder codeAreaBuilder = new BooleanExpCodeAreaBuilder();
         BooleanExpCodeArea prePropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
                 window.getPrePropTextPane(), window.getPrePropScrollPane(), symbolicVariableList, ceditor);

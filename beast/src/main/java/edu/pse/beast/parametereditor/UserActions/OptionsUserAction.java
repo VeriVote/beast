@@ -18,8 +18,8 @@ public class OptionsUserAction extends UserAction {
     private final OptionPresenter presenter;
     /**
      * Constructor
-     * @param propertyList PropertyList
-     * @param cElectionEditor CElectionDescriptionEditor
+     * @param opts ParametereditorOptions
+     * @param presenter OptionPresenter
      * @param paramEditor ParameterEditor
      */
     public OptionsUserAction(

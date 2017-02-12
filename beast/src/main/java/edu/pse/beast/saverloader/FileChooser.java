@@ -1,8 +1,12 @@
 package edu.pse.beast.saverloader;
 
+import com.sun.jna.platform.FileUtils;
 import edu.pse.beast.datatypes.NameInterface;
+import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
+import edu.pse.beast.toolbox.FileSaver;
 import edu.pse.beast.toolbox.SuperFolderFinder;
+import sun.misc.IOUtils;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
@@ -92,9 +96,37 @@ public class FileChooser {
         if (fileChooser.showDialog(component, stringResourceLoader.getStringFromID("openDialogTitleText"))
                 == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
-            String content;
+            String content = "";
+            BufferedReader inputReader;
             try {
-                content = new String(Files.readAllBytes(selectedFile.toPath()));
+                inputReader = new BufferedReader(
+                        new InputStreamReader(
+                                new FileInputStream(selectedFile), "UTF8"));
+            } catch (UnsupportedEncodingException e) {
+                JOptionPane.showOptionDialog(null,
+                        stringResourceLoader.getStringFromID(
+                                "wrongEncodingError"), "",
+                        JOptionPane.PLAIN_MESSAGE,
+                        JOptionPane.ERROR_MESSAGE,
+                        null,
+                        options,
+                        options[0]);
+                return (loadObject());
+            } catch (FileNotFoundException e) {
+                JOptionPane.showOptionDialog(null,
+                        stringResourceLoader.getStringFromID("inputOutputErrorOpen"), "",
+                        JOptionPane.PLAIN_MESSAGE,
+                        JOptionPane.ERROR_MESSAGE,
+                        null,
+                        options,
+                        options[0]);
+                return (loadObject());
+            }
+            String sCurrentLine;
+            try {
+                while ((sCurrentLine = inputReader.readLine()) != null) {
+                    content += (sCurrentLine + "\n");
+                }
             } catch (IOException e) {
                 JOptionPane.showOptionDialog(null,
                         stringResourceLoader.getStringFromID("inputOutputErrorOpen"), "",
@@ -105,11 +137,11 @@ public class FileChooser {
                         options[0]);
                 return (loadObject());
             }
+            Object outputObject = null;
             try {
-                Object outputObject = saverLoader.createFromSaveString(content);
+                outputObject = saverLoader.createFromSaveString(content);
                 lastLoadedFile = selectedFile;
                 hasBeenSaved = true;
-                return outputObject;
             } catch (Exception e) {
                 JOptionPane.showOptionDialog(null,
                         stringResourceLoader.getStringFromID(
@@ -120,6 +152,16 @@ public class FileChooser {
                         options,
                         options[0]);
                 return (loadObject());
+            } finally {
+                try {
+                    inputReader.close();
+                    return outputObject;
+                } catch (IOException ex) {
+
+                    ex.printStackTrace();
+                    return (loadObject());
+                }
+
             }
         } else {
             return null;
@@ -259,6 +301,8 @@ public class FileChooser {
     }
 
     public void updateStringRessourceLoader(StringResourceLoader stringResourceLoader) {
+        this.stringResourceLoader = stringResourceLoader;
+        fileChooser = new JFileChooser();
         //sets the text and language of all the components in JFileChooser
         UIManager.put("FileChooser.openDialogTitleText", stringResourceLoader.getStringFromID("openDialogTitleText"));
         UIManager.put("FileChooser.lookInLabelText", stringResourceLoader.getStringFromID("lookInLabelText"));
@@ -282,7 +326,7 @@ public class FileChooser {
         UIManager.put("FileChooser.fileSizeHeaderText", stringResourceLoader.getStringFromID("fileSizeHeaderText"));
         UIManager.put("FileChooser.fileDateHeaderText", stringResourceLoader.getStringFromID("fileDateHeaderText"));
         saveChanges = stringResourceLoader.getStringFromID("saveChanges");
-        save = stringResourceLoader.getStringFromID("save");
+        save = stringResourceLoader.getStringFromID("saveChangesSuffix");
         cancelOption = stringResourceLoader.getStringFromID("cancelOption");
         noOption = stringResourceLoader.getStringFromID("noOption");
         yesOption = stringResourceLoader.getStringFromID("yesOption");

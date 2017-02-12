@@ -191,6 +191,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		StringResourceLoader other = provider.getOtherStringRes();
 
 		title = other.getStringFromID("title");
+		setTitle(title);
 		this.addNewButton.setText(other.getStringFromID("newButton"));
 		this.addCreatedButton.setText(other.getStringFromID("createdButton"));
 

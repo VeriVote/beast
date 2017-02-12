@@ -13,11 +13,8 @@ public class LanguageOptions extends Options {
     private List<DisplaysStringsToUser> stringDisplays = new ArrayList<>();
     private LanguageOptionElement langOptElem;
     /**
-     * 
-     * @param id the id
-     * @param sli the string loader interface 
-     * @param stringDisplays the display strings
-     * @param languages the language
+     * @param sli the string loader interface
+     * @param stringResLoader StringResourceLoader
      */
     public LanguageOptions(StringLoaderInterface sli,
             StringResourceLoader stringResLoader) {

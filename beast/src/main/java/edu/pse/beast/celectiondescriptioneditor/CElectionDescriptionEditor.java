@@ -13,6 +13,7 @@ import edu.pse.beast.celectiondescriptioneditor.View.ErrorWindow;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
+import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.saverloader.FileChooser;
@@ -31,7 +32,7 @@ import javax.swing.text.BadLocationException;
  * 
  * @author Holger Klein
  */
-public class CElectionDescriptionEditor implements ElectionDescriptionSource{
+public class CElectionDescriptionEditor implements ElectionDescriptionSource, DisplaysStringsToUser{
     private CElectionCodeArea codeArea;
     private ElectionDescription currentDescription;
     private final CCodeEditorWindow window;
@@ -226,15 +227,17 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
         return fileChooser;
     }
 
-    
-    public void updateStringIf(StringLoaderInterface stringLoaderInterface) {
+
+    public StringLoaderInterface getStringInterface() {
+        return this.stringLoaderInterface;
+    }
+
+    @Override
+    public void updateStringRes(StringLoaderInterface stringResIF) {
         this.stringLoaderInterface = stringLoaderInterface;
         window.updateStringRes(stringLoaderInterface);
         menubarHandler.updateStringRes(stringLoaderInterface);
         toolbarHandler.updateStringRes(stringLoaderInterface);
-    }
-
-    public StringLoaderInterface getStringInterface() {
-        return this.stringLoaderInterface;
+        fileChooser.updateStringRessourceLoader(stringLoaderInterface.getCElectionEditorStringResProvider().getMenuStringRes());
     }
 }

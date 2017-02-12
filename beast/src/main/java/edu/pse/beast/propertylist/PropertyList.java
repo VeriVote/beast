@@ -107,6 +107,11 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 
     @Override
     public void addDescription(PropertyItem prop) {
+    	/*boolean success = model.addDescription(prop);
+    	if (!success) {
+    		prop.setDescriptionName(prop.getDescription().getName() + "x");
+    		model.addDescription(prop);
+    	}*/
     	model.addDescription(prop);
     }
 
@@ -172,6 +177,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     @Override
     public void updateStringRes(StringLoaderInterface sli) {
         this.sli = sli;
+        fileChooser.updateStringRessourceLoader(sli.getPropertyListStringResProvider().getOtherStringRes());
     }
 
     
