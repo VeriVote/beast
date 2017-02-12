@@ -322,7 +322,7 @@ public class FileChooser {
         UIManager.put("FileChooser.fileSizeHeaderText", stringResourceLoader.getStringFromID("fileSizeHeaderText"));
         UIManager.put("FileChooser.fileDateHeaderText", stringResourceLoader.getStringFromID("fileDateHeaderText"));
         saveChanges = stringResourceLoader.getStringFromID("saveChanges");
-        save = stringResourceLoader.getStringFromID("save");
+        save = stringResourceLoader.getStringFromID("saveChangesSuffix");
         cancelOption = stringResourceLoader.getStringFromID("cancelOption");
         noOption = stringResourceLoader.getStringFromID("noOption");
         yesOption = stringResourceLoader.getStringFromID("yesOption");

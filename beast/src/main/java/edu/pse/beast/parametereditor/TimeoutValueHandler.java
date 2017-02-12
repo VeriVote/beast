@@ -70,7 +70,7 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
     public void setValue(TimeOut to) {
         if (reacts) {
             if (to.getDuration() <= 0) {
-                timeoutSpinner.setValue("&infin;");
+                timeoutSpinner.setValue(0);
             } else {
                 timeoutSpinner.setValue(to.getOrigUnit().convert(to.getDuration(), TimeUnit.MILLISECONDS));
             }
@@ -94,7 +94,24 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
             }
             timeoutBefore = getTimeout();
         } else {
-            timeoutSpinner.setValue(timeoutBefore);
+            timeoutSpinner.setValue(timeoutBefore.getOrigUnit().convert(timeoutBefore.getDuration(), TimeUnit.MILLISECONDS));
+            switch (timeoutBefore.getOrigUnit()) {
+                case SECONDS:
+                    timeoutUnit.setSelectedIndex(0);
+                    break;
+                case MINUTES:
+                    timeoutUnit.setSelectedIndex(1);
+                    break;
+                case HOURS:
+                    timeoutUnit.setSelectedIndex(2);
+                    break;
+                case DAYS:
+                    timeoutUnit.setSelectedIndex(3);
+                    break;
+                default:
+                    System.err.println("Timeout kann nicht auf diesen Wert gesetzt werden.");
+                    break;
+            }
         }
     }
     /**

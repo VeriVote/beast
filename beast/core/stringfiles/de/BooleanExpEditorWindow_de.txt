@@ -8,7 +8,7 @@ voter : Wähler
 candidate : Kandidat
 seat : Sitz
 saveChanges : Änderungen an '
-save : ' speichern?
+saveChangesSuffix : ' speichern?
 yesOption : Ja
 noOption : Nein
 cancelOption : Abbrechen
