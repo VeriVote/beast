@@ -1,3 +1,5 @@
+electionpoints : Votesum
+Candidate : Candidate
 title : Property List
 newButton : New
 createdButton : Existing

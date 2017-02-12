@@ -1,4 +1,6 @@
 bla : blub
+electionpoints : Stimmenpunkte
+Candidate : Kandidat
 title : Eigenschaftenliste
 check : Analyse
 export : Exportieren
