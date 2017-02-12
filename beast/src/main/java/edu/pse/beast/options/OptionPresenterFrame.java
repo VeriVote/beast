@@ -54,13 +54,13 @@ public class OptionPresenterFrame extends javax.swing.JFrame {
                 OptionElemComboBox combobox = new OptionElemComboBox(elem);
                 DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
                 for(String s : elem.getChoosableOptions()) {
-                    if(srl.getStringFromID(s) == null) {
+                    if(!srl.containsId(s) ) {
                         model.addElement(s);
                     } else {
                         model.addElement(srl.getStringFromID(s));
                     }                     
                 }
-                if(srl.getStringFromID(elem.chosenOption) == null) {
+                if(!srl.containsId(elem.chosenOption) ) {
                     model.setSelectedItem(elem.chosenOption);
                 } else {
                     model.setSelectedItem(srl.getStringFromID(elem.chosenOption));
