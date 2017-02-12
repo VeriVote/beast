@@ -24,7 +24,7 @@ public class ElectionTemplateHandler {
     
     private final String[] resultIds = {
         "one_candidate_or_zero",
-        "list_of_integers"
+        "candidate_per_seat"
     };
     
     private final ArrayList<ElectionTypeContainer> inputTypes = new ArrayList<>();
