@@ -6,7 +6,6 @@
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling;
 
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import edu.pse.beast.codearea.ErrorHandling.DeepCheck.DeepErrorChecker;
 import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
 import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
 import java.util.ArrayList;

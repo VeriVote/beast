@@ -112,6 +112,7 @@ public class CElectionDescriptionEditorBuilder {
         
         ElectionTemplateHandler templateHandler = new ElectionTemplateHandler();
 
+        
         try {
             editor.loadElectionDescription(new CCodeHelper().generateElectionDescription(
                     templateHandler.getInputIds()[0],
@@ -122,6 +123,7 @@ public class CElectionDescriptionEditorBuilder {
         } catch (BadLocationException ex) {
             Logger.getLogger(CElectionDescriptionEditorBuilder.class.getName()).log(Level.SEVERE, null, ex);
         }
+       
 
         editor.setcElectionEditorMenubarHandler(menuBarHandler);
         editor.setcElectionEditorToolbarHandler(toolbarHandler);

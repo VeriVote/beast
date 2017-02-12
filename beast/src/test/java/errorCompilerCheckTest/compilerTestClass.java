@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import edu.pse.beast.codearea.ErrorHandling.DeepCheck.DeepErrorChecker;
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.DeepErrorChecker;
 import edu.pse.beast.toolbox.FileLoader;
 
 public class compilerTestClass {

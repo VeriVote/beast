@@ -1,4 +1,4 @@
-package edu.pse.beast.codearea.ErrorHandling.DeepCheck;
+package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling;
 
 import java.util.List;
 
