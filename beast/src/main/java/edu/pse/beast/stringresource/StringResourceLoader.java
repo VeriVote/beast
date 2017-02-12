@@ -61,4 +61,12 @@ public class StringResourceLoader {
         }
         return null;
     }
+    /**
+     * 
+     * @param id the checked id
+     * @return 
+     */
+    public boolean containsId(String id) {
+        return idsToString.containsKey(id);
+    }
 }
