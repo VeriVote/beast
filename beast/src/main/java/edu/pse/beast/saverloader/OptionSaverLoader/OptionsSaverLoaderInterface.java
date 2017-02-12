@@ -28,7 +28,9 @@ public class OptionsSaverLoaderInterface {
     }
     
     public static void saveOpt(Options opt) {
-        saveOptRec(opt, new ArrayList<String>());
+        ArrayList<String> saveString = new ArrayList<String>();
+        saveOptRec(opt, saveString);
+        FileSaver.writeStringLinesToFile(saveString, new File("core/option_saves/" + opt.getId() + ".txt"));
     }
     
     private static void saveOptRec(Options opt, ArrayList<String> saveString) {
@@ -36,8 +38,8 @@ public class OptionsSaverLoaderInterface {
             saveString.add(elem.getID() + " : " + elem.getChosenOption());
         }
         for(Options subOptions : opt.getSubOptions()) {
-            saveOptRec(opt, saveString);
+            saveString.add("new_option " + subOptions.getId());        
+            saveOptRec(subOptions, saveString);
         }
-        FileSaver.writeStringLinesToFile(saveString, new File("core/option_saves/" + opt.getId()));
     }
 }

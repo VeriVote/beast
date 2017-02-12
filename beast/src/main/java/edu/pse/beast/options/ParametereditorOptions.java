@@ -1,5 +1,6 @@
 package edu.pse.beast.options;
 
+import edu.pse.beast.saverloader.OptionSaverLoader.OptionsSaverLoaderInterface;
 import toBeImplemented.CheckerList;
 
 public class ParametereditorOptions extends Options {
@@ -21,6 +22,7 @@ public class ParametereditorOptions extends Options {
 
     @Override
     protected void reapplySpecialized() {
+        OptionsSaverLoaderInterface.saveOpt(langOpts);
     }
 
 }

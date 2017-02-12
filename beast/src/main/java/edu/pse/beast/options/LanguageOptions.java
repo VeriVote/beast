@@ -24,7 +24,7 @@ public class LanguageOptions extends Options {
         super("lang_opts");
         this.sli = sli;
         String chosenLang = stringResLoader.getStringFromID("lang");
-        String choosableLangs[] = stringResLoader.getStringFromID("choosable_lang").split(",");
+        String choosableLangs[] = {"de", "en"};
         ArrayList<String> choosableLangsList = new ArrayList<>();
         for (int i = 0; i < choosableLangs.length; i++) {
             choosableLangsList.add(choosableLangs[i]);

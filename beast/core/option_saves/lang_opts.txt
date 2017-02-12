@@ -1,2 +1,1 @@
-lang : de
-choosable_lang : de,en
+lang : en

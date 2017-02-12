@@ -71,8 +71,8 @@ public abstract class Options {
      * it is used.
      */
     public void reapply() {
-        OptionsSaverLoaderInterface.saveOpt(this);
         reapplySpecialized();
+        for(Options opt : subOptions) opt.reapply();
     }
     
     protected abstract void reapplySpecialized();

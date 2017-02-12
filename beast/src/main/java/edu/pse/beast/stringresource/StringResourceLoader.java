@@ -8,6 +8,7 @@ package edu.pse.beast.stringresource;
 import edu.pse.beast.toolbox.ErrorLogger;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  *
@@ -51,5 +52,14 @@ public class StringResourceLoader {
             ErrorLogger.log("this Id was not found in a Stringfile + " + id);
         }
         return get;
+    }
+    
+    public String getIdForString(String s) {
+        for (Map.Entry<String, String> entry : idsToString.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            if(value.equals(s)) return key;
+        }
+        return null;
     }
 }

@@ -5,7 +5,13 @@
  */
 package edu.pse.beast.options;
 
+import edu.pse.beast.saverloader.OptionSaverLoader.OptionsSaverLoaderInterface;
+import edu.pse.beast.stringresource.StringResourceLoader;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 /**
@@ -14,14 +20,60 @@ import javax.swing.JTabbedPane;
  */
 public class OptionPresenterFrame extends javax.swing.JFrame {
 
+    private StringResourceLoader srl;
+    private Options opt;
     /**
      * Creates new form OptionPresenterFrame
      */
-    public OptionPresenterFrame(String title, String okButtonText) {
+    public OptionPresenterFrame(Options opt, StringResourceLoader srl) {
         initComponents();
-        setTitle(title);
-        jButton1.setText(okButtonText);
+        this.opt = opt;
+        this.srl = srl;
+        setTitle(srl.getStringFromID(opt.getId()));
+        jButton1.setText(srl.getStringFromID("ok_button"));
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        showOptionsRec(opt);
+        jButton1.addActionListener((ae) -> {
+            opt.reapply();
+            OptionsSaverLoaderInterface.saveOpt(opt);
+            this.dispose();
+        });
+    }
+    
+    private void showOptionsRec(Options opt) {
+        for(Options subOpt : opt.getSubOptions()) {
+            JPanel panel = new JPanel();
+            
+            for(OptionElement elem : subOpt.getOptionElements()) {
+                JLabel label = new JLabel(srl.getStringFromID(elem.getID()));
+                OptionElemComboBox combobox = new OptionElemComboBox(elem);
+                DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+                for(String s : elem.getChoosableOptions()) {
+                    try {
+                        model.addElement(srl.getStringFromID(s));
+                    } catch (Exception e) {
+                        model.addElement(s);
+                    }                    
+                }
+                try {
+                    model.setSelectedItem(srl.getStringFromID(elem.getChosenOption()));
+                } catch (Exception e) {
+                    model.setSelectedItem(elem.getChosenOption());
+                } 
+                combobox.setModel(model);
+                
+                
+                combobox.addItemListener((ie) -> {
+                    ((OptionElemComboBox)ie.getSource()).getElem().handleSelection(srl.getIdForString((String)ie.getItem()));
+                });
+                
+                panel.add(label);
+                panel.add(combobox);                
+            }
+            
+            jTabbedPane1.add(srl.getStringFromID(subOpt.getId()) ,panel);
+            showOptionsRec(subOpt);            
+        }
     }
 
     /**

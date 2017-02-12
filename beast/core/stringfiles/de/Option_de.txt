@@ -1,3 +1,7 @@
 lang : Sprache
 lang_opts : Sprachoptionen
 ok_button : Anwenden
+param : ParameterEditor
+param_opts : ParameterEditor Optionen
+de : Deutsch
+en : Englisch
