@@ -1,4 +1,3 @@
-test : dasIStauchEInTest
 addNew : Neu
 new : Neue Wahlverfahrensbeschreibung editieren
 save : Speichern

@@ -1,3 +1,4 @@
+title : Parametereditor
 voters : Wähler
 candidates : Kandidaten
 seats : Sitze
@@ -25,7 +26,7 @@ openApproveButtonToolTipText : Öffnen
 openApproveButtonText : Öffnen
 saveApproveButtonToolTipText : Speichern
 saveApproveButtonText : Speichern
-ancelButtonToolTipText : Abbrechen
+cancelButtonToolTipText : Abbrechen
 fileNameHeaderText : Dateiname
 upFolderToolTipText : Eine Ebene höher
 homeFolderToolTipText : Home
@@ -59,6 +60,5 @@ propertyErrors : Es bestehen noch Fehler in den zu prüfenden Eigenschaften.
 parameterErrors : Es bestehen noch Fehler in den Parametern.
 startingCheck : Analyse wird gestartet
 waitingForPropertyResult : Warte auf Ergebnis der Eigenschaft '
-title : Parametereditor
 analysisEnded : Analyse beendet nach
 noProperty : Es wurde keine Eigenschaft zur Analyse ausgewählt.

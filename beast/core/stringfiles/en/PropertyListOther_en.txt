@@ -31,7 +31,7 @@ openApproveButtonToolTipText : Open
 openApproveButtonText : Open
 saveApproveButtonToolTipText : Save
 saveApproveButtonText : Save
-ancelButtonToolTipText : Cancel
+cancelButtonToolTipText : Cancel
 fileNameHeaderText : Filename
 upFolderToolTipText : Up one level
 homeFolderToolTipText : Home

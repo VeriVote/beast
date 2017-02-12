@@ -1,7 +1,8 @@
-bla : blub
 electionpoints : Stimmenpunkte
 Candidate : Kandidat
 title : Eigenschaftenliste
+newButton : Neu
+createdButton : Bestehende
 check : Analyse
 export : Exportieren
 electionType : Wahlverfahren
@@ -30,7 +31,7 @@ openApproveButtonToolTipText : Öffnen
 openApproveButtonText : Öffnen
 saveApproveButtonToolTipText : Speichern
 saveApproveButtonText : Speichern
-ancelButtonToolTipText : Abbrechen
+cancelButtonToolTipText : Abbrechen
 fileNameHeaderText : Dateiname
 upFolderToolTipText : Eine Ebene höher
 homeFolderToolTipText : Home

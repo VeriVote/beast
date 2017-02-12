@@ -26,7 +26,7 @@ openApproveButtonToolTipText : Open
 openApproveButtonText : Open
 saveApproveButtonToolTipText : Save
 saveApproveButtonText : Save
-ancelButtonToolTipText : Cancel
+cancelButtonToolTipText : Cancel
 fileNameHeaderText : Filename
 upFolderToolTipText : Up one level
 homeFolderToolTipText : Home
@@ -54,4 +54,11 @@ save : '?
 yesOption : Yes
 noOption : No
 cancelOption : Cancel
+searchingForErrors : Search for errors
+electionDescriptionErrors : The election description contains errors.
+propertyErrors : The properties to analyze still contain errors.
+parameterErrors : The parameters are erroneous.
+startingCheck : Analysis start-up
+waitingForPropertyResult :  Wait for the result of the property '
+analysisEnded : Analysis ended after
 noProperty : No Property was selected for the analysis
