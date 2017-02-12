@@ -67,7 +67,7 @@ public class ParameterEditorBuilder {
         refs.getLanguageOpts().addStringDisplayer(menuBarHandler);
         refs.getLanguageOpts().addStringDisplayer(toolbarHandler);
         refs.getLanguageOpts().addStringDisplayer(window);        
-        
+        refs.getLanguageOpts().addStringDisplayer(editor);
         editor.setToolbarHandler(toolbarHandler);
         editor.setMenuBarHandler(menuBarHandler);
         windowStarter.start();

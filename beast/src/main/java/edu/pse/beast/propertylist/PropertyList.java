@@ -177,6 +177,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     @Override
     public void updateStringRes(StringLoaderInterface sli) {
         this.sli = sli;
+        fileChooser.updateStringRessourceLoader(sli.getPropertyListStringResProvider().getOtherStringRes());
     }
 
     

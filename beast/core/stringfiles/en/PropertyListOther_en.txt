@@ -53,7 +53,7 @@ inputOutputErrorSave : The folder, in which you want to save, does not exist or 
 wrongFileNameError : The given name does not correspond to the regular expression '[_a-zA-Z0-9\-\.\s]+'.
 fileSuffix : .list
 saveChanges : Save changes to '
-save : '?
+saveChangesSuffix : '?
 yesOption : Yes
 noOption : No
 cancelOption : Cancel

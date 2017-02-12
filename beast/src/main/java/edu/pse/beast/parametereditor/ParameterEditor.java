@@ -2,6 +2,7 @@
 package edu.pse.beast.parametereditor;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
+import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.parametereditor.View.ParameterEditorWindow;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
@@ -11,6 +12,7 @@ import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.highlevel.CheckListener;
 import edu.pse.beast.highlevel.MainNotifier;
 import edu.pse.beast.saverloader.FileChooser;
+import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ToolbarHandler;
 import edu.pse.beast.toolbox.MenuBarHandler;
 
@@ -24,7 +26,7 @@ import java.awt.event.ActionListener;
  * with the ParameterEditorWindow and the communication with high level.
  * @author Jonas
  */
-public class ParameterEditor implements ParameterSource, MainNotifier {
+public class ParameterEditor implements ParameterSource, MainNotifier, DisplaysStringsToUser {
 
     private final ParameterEditorWindow window;
     private final CElectionDescriptionEditor cElectionDescriptionEditor;
@@ -266,5 +268,10 @@ public class ParameterEditor implements ParameterSource, MainNotifier {
         getView().setWindowTitle(project.getName());
         window.displayText("", false, "");
 
+    }
+
+    @Override
+    public void updateStringRes(StringLoaderInterface stringResIF) {
+        fileChooser.updateStringRessourceLoader(stringResIF.getParameterEditorStringResProvider().getOtherStringRes());
     }
 }
