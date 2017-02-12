@@ -1,6 +1,5 @@
 package edu.pse.beast.options.ParametereditorOptions;
 
-import edu.pse.beast.highlevel.CentralObjectProvider;
 import edu.pse.beast.highlevel.PSECentralObjectProvider;
 import edu.pse.beast.options.Options;
 import edu.pse.beast.parametereditor.ParameterEditor;
@@ -8,7 +7,6 @@ import edu.pse.beast.propertychecker.CheckerFactoryFactory;
 import edu.pse.beast.propertychecker.PropertyChecker;
 import edu.pse.beast.saverloader.OptionSaverLoader.OptionsSaverLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
-import java.util.ArrayList;
 
 public class ParametereditorOptions extends Options {
     private final LanguageOptions langOpts;

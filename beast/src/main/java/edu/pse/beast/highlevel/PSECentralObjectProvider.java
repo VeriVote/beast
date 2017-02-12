@@ -88,6 +88,10 @@ public class PSECentralObjectProvider implements CentralObjectProvider {
         return paramEd.getView();
     }
 
+    /**
+     * Setter for the CheckerCommunicator, called when other checker than cbmc is switched to.
+     * @param checkerCommunicator the new ResultCheckerCommunicator object
+     */
     public void setCheckerCommunicator(ResultCheckerCommunicator checkerCommunicator) {
         this.checkerCommunicator = checkerCommunicator;
     }
