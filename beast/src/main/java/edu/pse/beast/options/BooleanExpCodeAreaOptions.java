@@ -1,42 +1,37 @@
 package edu.pse.beast.options;
 
+import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeArea;
 
 public class BooleanExpCodeAreaOptions extends Options {
-    private final BooleanExpCodeArea booleanExpCodeArea;
+    private BooleanExpEditor editor;
     private final CodeAreaOptions codeAreaOptions;
     
-    /**
-     * 
+    /**     * 
      * @param id the id of these options
      * @param booleanExpCodeArea the codearea
      * @param codeAreaOptions the options
      */
-    public BooleanExpCodeAreaOptions(String id, BooleanExpCodeArea booleanExpCodeArea,
+    public BooleanExpCodeAreaOptions(BooleanExpEditor editor,
             CodeAreaOptions codeAreaOptions) {
-        super(id);
-        this.booleanExpCodeArea = booleanExpCodeArea;
+        super("booleanexpcodearea_opts");
+        this.editor = editor;
         this.codeAreaOptions = codeAreaOptions;
+        subOptions.add(codeAreaOptions);
     }
-    
-    /**
-     * 
-     * @return the options
-     */
-    public CodeAreaOptions getCodeAreaOptions() {
-        return codeAreaOptions;
-    }
-    
-    /**
-     * 
-     * @return the codearea
-     */
-    public BooleanExpCodeArea getBooleanExpCodeArea() {
-        return booleanExpCodeArea;
+
+    BooleanExpCodeAreaOptions(BooleanExpEditor editor) {
+        super("booleanexpcodearea_opts");
+        this.editor = editor;
+        this.codeAreaOptions = new CodeAreaOptions(editor.getPrePropCodeArea());
+        subOptions.add(codeAreaOptions);
     }
 
     @Override
     protected void reapplySpecialized() {
-        
+        codeAreaOptions.setCodeArea(editor.getPrePropCodeArea());
+        codeAreaOptions.reapply();
+        codeAreaOptions.setCodeArea(editor.getPostPropCodeArea());
+        codeAreaOptions.reapply();
     }
 }

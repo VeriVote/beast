@@ -1,3 +1,15 @@
 lang : Language
-lang_opts : Language Options
+lang_opts : Language options
 ok_button : Apply
+param : ParameterEditor 
+param_opts : ParameterEditor Options
+de : German
+en : English
+codearea_opts: Text Area Options
+ccodearea_opts : Code Options
+ceditor_opts : C-Editor Options
+fonttype: Font
+fontsize : Font Size
+spaces_per_tab : Amount Spaces Per Tab
+booleanexpeditor_opts : Formal Properties Editor Options
+booleanexpcodearea_opts : Formal Properties Editor Code Options

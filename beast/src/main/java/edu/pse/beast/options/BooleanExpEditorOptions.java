@@ -12,11 +12,19 @@ public class BooleanExpEditorOptions extends Options {
      * @param editor the editor
      * @param booleanExpCodeAreaOptions the options
      */
-    public BooleanExpEditorOptions(String id, BooleanExpEditor editor,
+    public BooleanExpEditorOptions(BooleanExpEditor editor,
             BooleanExpCodeAreaOptions booleanExpCodeAreaOptions) {
-        super(id);
+        super("booleanexpeditor_opts");
         this.editor = editor;
         this.booleanExpCodeAreaOptions = booleanExpCodeAreaOptions;
+        subOptions.add(booleanExpCodeAreaOptions);
+    }
+
+    BooleanExpEditorOptions(BooleanExpEditor editor) {
+        super("booleanexpeditor_opts");
+        this.editor = editor;
+        this.booleanExpCodeAreaOptions = new BooleanExpCodeAreaOptions(editor);
+        subOptions.add(booleanExpCodeAreaOptions);
     }
     
     /**

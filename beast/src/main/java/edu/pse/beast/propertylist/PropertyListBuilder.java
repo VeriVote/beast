@@ -58,6 +58,9 @@ public class PropertyListBuilder {
 
         controller.start();
 
+        refs.getLanguageOpts().addStringDisplayer(window);
+        refs.getLanguageOpts().addStringDisplayer(menuBarHandler);
+        refs.getLanguageOpts().addStringDisplayer(toolbarHandler);
         return (PropertyList) controller;
     }
 

@@ -1,8 +1,12 @@
 package edu.pse.beast.saverloader.OptionSaverLoader;
 
+import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
+import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeArea;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.codearea.CodeArea;
+import edu.pse.beast.options.BooleanExpCodeAreaOptions;
+import edu.pse.beast.options.BooleanExpEditorOptions;
 import edu.pse.beast.options.CElectionCodeAreaOptions;
 import edu.pse.beast.options.CElectionEditorOptions;
 import edu.pse.beast.options.CodeAreaOptions;
@@ -46,6 +50,21 @@ public class OptionsSaverLoaderInterface {
         LinkedList<String> onlySaveString = getSaveStringOnlyForOption("codearea_opts", saveString);
         StringResourceLoader loader = new StringResourceLoader(onlySaveString);
         return new CodeAreaOptions(area, loader);
+    }    
+    
+    public static BooleanExpEditorOptions loadBooleanExpEditorOpts(BooleanExpEditor editor) throws IOException {
+        LinkedList<String> saveString = loadStringResForResLoader("booleanexpeditor_ops");
+        BooleanExpCodeAreaOptions opts = loadBooleanExpCodeAreaOpts(editor, saveString);
+        BooleanExpEditorOptions created = new BooleanExpEditorOptions(editor, opts);
+        return created;
+    }
+    
+    private static BooleanExpCodeAreaOptions loadBooleanExpCodeAreaOpts(
+            BooleanExpEditor editor,
+            LinkedList<String> saveString) {
+        CodeAreaOptions codeAreaOpts = loadCodeAreaOpts(editor.getPrePropCodeArea(), saveString);
+        BooleanExpCodeAreaOptions created = new BooleanExpCodeAreaOptions(editor, codeAreaOpts);
+        return created;
     }
     
     private static LinkedList<String> getSaveStringOnlyForOption(String id, LinkedList<String> saveString) {
@@ -57,8 +76,7 @@ public class OptionsSaverLoaderInterface {
         for(; i < saveString.size() - 1 && saveString.get(i + 1).contains("new_option "); ++i) {  
             created.add(saveString.get(i));
         } 
-        return created;
-                
+        return created;                
     }
     
     private static LinkedList<String> loadStringResForResLoader(String optName) throws IOException {
@@ -82,11 +100,4 @@ public class OptionsSaverLoaderInterface {
         }
     }
 
-    private static CodeAreaOptions loadCodeAreaOpts(LinkedList<String> saveString) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    
-
-    
 }

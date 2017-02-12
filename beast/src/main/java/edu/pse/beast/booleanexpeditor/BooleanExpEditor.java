@@ -316,7 +316,16 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
      * Setter for the PropertyListController, see above for explanation.
      * @param propertyListController the PropertyListController
      */
-	public void setPropertyListController(PLControllerInterface propertyListController) {
-		this.propertyListController = propertyListController;
-	}
+    public void setPropertyListController(PLControllerInterface propertyListController) {
+            this.propertyListController = propertyListController;
+    }
+
+    public BooleanExpCodeArea getPrePropCodeArea() {
+        return prePropCodeArea;
+    }
+
+    public BooleanExpCodeArea getPostPropCodeArea() {
+        return postPropCodeArea;
+    }
+    
 }

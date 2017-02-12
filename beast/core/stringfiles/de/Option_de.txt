@@ -11,3 +11,5 @@ ceditor_opts : C-Editor Optionen
 fonttype: Font
 fontsize : Textgröße
 spaces_per_tab : Anzahl Leerzeichen per Tab
+booleanexpeditor_opts : Formale Eigenschaften-Editor Optionen
+booleanexpcodearea_opts : Formale Eigenschaften-Editor Code Optionen

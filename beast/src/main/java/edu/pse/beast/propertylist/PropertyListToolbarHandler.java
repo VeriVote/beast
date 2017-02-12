@@ -1,8 +1,10 @@
 package edu.pse.beast.propertylist;
 
+import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import javax.swing.JToolBar;
 
 import edu.pse.beast.propertylist.View.PropertyListWindow;
+import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.ActionIdAndListener;
 import edu.pse.beast.toolbox.ImageResourceProvider;
@@ -12,7 +14,8 @@ import edu.pse.beast.toolbox.ToolbarHandler;
  * Handles tool-bar events for PropertyList.
  * @author Justin
  */
-public class PropertyListToolbarHandler extends ToolbarHandler {
+public class PropertyListToolbarHandler extends ToolbarHandler 
+        implements DisplaysStringsToUser {
 
     private PropertyListWindow window;
 
@@ -31,12 +34,17 @@ public class PropertyListToolbarHandler extends ToolbarHandler {
     }
 
     
-	public PropertyListWindow getWindow() {
-		return window;
-	}
+    public PropertyListWindow getWindow() {
+            return window;
+    }
 
-	public void setWindow(PropertyListWindow window) {
-		this.window = window;
-	}
+    public void setWindow(PropertyListWindow window) {
+            this.window = window;
+    }
+
+    @Override
+    public void updateStringRes(StringLoaderInterface stringResIF) {
+        updateTooltips(stringResIF.getPropertyListStringResProvider().getToolbarTipStringRes());
+    }
 
 }

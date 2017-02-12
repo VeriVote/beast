@@ -16,8 +16,13 @@ public class OptionsInterface {
     private OptionPresenter presenter;
     
     public BooleanExpEditorOptions getBooleanExpEditorOptions(BooleanExpEditor editor,
-            BooleanExpCodeAreaOptions booleanExpCodeAreaOptions) {
-        return new BooleanExpEditorOptions("id", editor, booleanExpCodeAreaOptions);
+            ObjectRefsForBuilder refs) {
+        try {
+            BooleanExpEditorOptions opts = OptionsSaverLoaderInterface.loadBooleanExpEditorOpts(editor);
+            return opts;
+        } catch (IOException ex) {
+        }
+        return new BooleanExpEditorOptions(editor);
     }
 
     public CElectionEditorOptions getCElectionEditorOptions(CElectionDescriptionEditor editor) {
@@ -38,7 +43,6 @@ public class OptionsInterface {
         try {
             return OptionsSaverLoaderInterface.loadLangOpts(stringIf);
         } catch (IOException ex) {
-            Logger.getLogger(OptionsInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new LanguageOptions(stringIf);
     }
@@ -46,6 +50,7 @@ public class OptionsInterface {
     public OptionPresenter getOptionPresenter(ObjectRefsForBuilder refs) {
         if(presenter == null) {
             presenter = new OptionPresenter(refs.getStringIF().getOptionStringResProvider().getOptionStringRes());
+            refs.getLanguageOpts().addStringDisplayer(presenter);
         }
         return presenter;
     }

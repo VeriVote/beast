@@ -87,7 +87,7 @@ public class BooleanExpEditorBuilder{
 
         //creation of BooleanExpEditorMenubarHandler
         BooleanExpEditorMenubarHandler menuBarHandler = new BooleanExpEditorMenubarHandler(menuHeaderIds, window,
-                createActionIdAndListenerListForMenuHandler(editor), objectRefsForBuilder.getStringIF());
+                createActionIdAndListenerListForMenuHandler(editor, objectRefsForBuilder), objectRefsForBuilder.getStringIF());
 
         //creation of BooleanExpEditorToolbarHandler
         BooleanExpEditorToolbarHandler toolBarHandler = new BooleanExpEditorToolbarHandler(window,
@@ -97,6 +97,8 @@ public class BooleanExpEditorBuilder{
 
         editor.setToolBarHandler(toolBarHandler);
         editor.setMenuBarHandler(menuBarHandler);
+        
+        objectRefsForBuilder.getLanguageOpts().addStringDisplayer(editor);
 
         return editor;
     }
@@ -107,7 +109,7 @@ public class BooleanExpEditorBuilder{
      * @return said list, an ArrayList<ArrayList<ActionIdAndListener>> object
      */
     private ArrayList<ArrayList<ActionIdAndListener>>
-    createActionIdAndListenerListForMenuHandler(BooleanExpEditor editor) {
+    createActionIdAndListenerListForMenuHandler(BooleanExpEditor editor, ObjectRefsForBuilder refs) {
         ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
 
         ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
@@ -135,7 +137,7 @@ public class BooleanExpEditorBuilder{
         editList.add(createFromUserAction(paste));
 
         ArrayList<ActionIdAndListener> editorList = new ArrayList<>();
-        UserAction presentOptions = createPresentOptionsUserAction();
+        UserAction presentOptions = createPresentOptionsUserAction(editor, refs);
         editorList.add(createFromUserAction(presentOptions));
 
         ArrayList<ActionIdAndListener> makroList = new ArrayList<>();
@@ -248,8 +250,10 @@ public class BooleanExpEditorBuilder{
     }
 
     //methods for creating UserAction in "editor"-Menu
-    private PresentOptionsBoolUserAction createPresentOptionsUserAction() {
-        return new PresentOptionsBoolUserAction();
+    private PresentOptionsBoolUserAction createPresentOptionsUserAction(BooleanExpEditor editor, ObjectRefsForBuilder refs) {
+        return new PresentOptionsBoolUserAction(
+                refs.getOptionIF().getBooleanExpEditorOptions(editor, refs), 
+                refs.getOptionIF().getOptionPresenter(refs));
     }
 
     //methods for creating UserActions in "constants"-Menu
