@@ -22,7 +22,6 @@ import java.util.ArrayList;
  * @author Nikolai
  */
 public class BooleanExpEditorBuilder{
-    private SavePropsUserAction savePropsUserAction;
 
     /**
      * An array of Strings encompassing the HeaderIds for the Menu.
@@ -116,7 +115,6 @@ public class BooleanExpEditorBuilder{
         UserAction load = createLoadPropsUserAction(editor);
         UserAction saveAs = createSaveAsPropsUserAction(editor);
         UserAction save = createSavePropsUserAction(editor);
-        savePropsUserAction = (SavePropsUserAction) save;
         fileList.add(createFromUserAction(newProps));
         fileList.add(createFromUserAction(load));
         fileList.add(createFromUserAction(save));
