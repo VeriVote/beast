@@ -28,7 +28,6 @@ public class LockedLinesDisplay implements LockedLinesListener {
     
     public LockedLinesDisplay(JTextPane pane, LockedLinesHandler lockedLinesHandler) {
         this.pane = pane;
-        this.lockedLinesHandler = lockedLinesHandler;
         lockedLinesHandler.addLockedLinesListener(this);
         highlighter = (DefaultHighlighter) pane.getHighlighter();
         hPainter = new DefaultHighlightPainter(Color.GRAY);

@@ -18,10 +18,11 @@ import javax.swing.JTextPane;
  * @author Holger-Desktop
  */
 public class UserInputHandler implements KeyListener {
-    JTextPane pane;
-    CodeInputHandler codeInputHandler;
-    ShortcutHandler shortcutHandler;
+    private JTextPane pane;
+    private CodeInputHandler codeInputHandler;
+    private ShortcutHandler shortcutHandler;
     private boolean del = false;
+    
     public UserInputHandler(JTextPane pane, 
             CodeInputHandler codeInputHandler, 
             ShortcutHandler shortcutHandler) {

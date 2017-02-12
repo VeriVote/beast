@@ -134,19 +134,12 @@ public class LockedLinesHandler implements DocumentListener {
     public void changedUpdate(DocumentEvent de) {            
     }
     
-    public String toString() {
-        String s = "locked lines: ";
-        for(int i = 0; i < lockedLines.size(); ++i) {
-            s += lockedLines.get(i) + ", ";
-        }
-        return s;
-    }
     
     public void addLockedLinesListener(LockedLinesListener l) {
         listeners.add(l);
     }
 
-    void unlockAll() {
+    public void unlockAll() {
          for(int i = 0; i < lockedLines.size(); ++i) {
             for(LockedLinesListener l : listeners) {
                 l.unlockedLine(lockedLines.get(i));
