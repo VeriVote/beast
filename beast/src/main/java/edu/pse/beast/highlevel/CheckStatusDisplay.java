@@ -9,9 +9,10 @@ public interface CheckStatusDisplay {
 
     /**
      * Method that displays the given Ressources/String
-     * @param stringIdForResources the Id the main message
-     * @param showLoader
-     * @param additionalText
+     * @param stringIdForResources the Id of the main message that can be retrieved from a StringResourceLoader
+     * @param showLoader true if a loader animation should be displayed, false otherwise
+     * @param additionalText additional text to be placed after the main message that isn't loaded from a
+     *                       StringResourceLoader (e.g. elapsed time)
      */
     void displayText(String stringIdForResources, boolean showLoader, String additionalText);
 }

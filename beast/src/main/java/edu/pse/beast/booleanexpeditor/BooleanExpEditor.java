@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 /**
  * The main class of this package that serves as an interface to the outside.
- * Main "Controller" in an MVC-Pattern.
+ * Main "Controller" as part of the MVC-Pattern.
  * @author NikolaiLMS
  */
 public class BooleanExpEditor implements DisplaysStringsToUser{
@@ -296,14 +296,26 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
         return currentlyLoadedPostAndPreProp;
     }
 
+    /**
+     * Returns loadedFromPropertyList,
+     * @return true if the
+     */
     public boolean getLoadedFromPropertyList() {
         return loadedFromPropertyList;
     }
 
+    /**
+     * Getter for the PropertyListController, used when new Property is created to add it to the PropertyList.
+     * @return propertyListController
+     */
 	public PLControllerInterface getPropertyListController() {
 		return propertyListController;
 	}
 
+    /**
+     * Setter for the PropertyListController, see above for explanation.
+     * @param propertyListController the PropertyListController
+     */
 	public void setPropertyListController(PLControllerInterface propertyListController) {
 		this.propertyListController = propertyListController;
 	}

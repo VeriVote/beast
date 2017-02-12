@@ -1,7 +1,7 @@
 package edu.pse.beast.booleanexpeditor.UserActions;
 
 /**
- * This class models constants for the BooleanExpEditor, namely the number of voters "V", the number of candidates "C".
+ * This class models constants for the BooleanExpEditor, namely the number of voters "V", the number of candidates "C"
  * and the number of seats "S".
  * @author NikolaiLMS
  */

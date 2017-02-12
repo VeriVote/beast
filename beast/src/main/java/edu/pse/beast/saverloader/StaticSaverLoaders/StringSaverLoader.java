@@ -1,6 +1,9 @@
-package edu.pse.beast.saverloader;
+package edu.pse.beast.saverloader.StaticSaverLoaders;
 
 /**
+ * Implements static methods for creating saveStrings from Strings and vice versa.
+ * Replaces certain characters to ensure custom userinputs not
+ * Methods are static due to convenience.
  * @author NikolaiLMS
  */
 public class StringSaverLoader {

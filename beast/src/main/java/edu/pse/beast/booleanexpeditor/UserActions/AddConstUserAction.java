@@ -4,6 +4,8 @@ import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
+ * Responsible for adding BooleanExpEditorConst objects to the last focused BooleanExpEditorCodeArea.
+ * Subclass of UserAction.
  * @author NikolaiLMS
  */
 public class AddConstUserAction extends UserAction {

@@ -13,7 +13,7 @@ public interface ElectionDescriptionSource {
      * Getter for the ElectionDescription the user created
      * @return description of an election as an ElectionDescription object
      */
-    public ElectionDescription getElectionDescription();
+    ElectionDescription getElectionDescription();
     /**
      * Returns true if the ElectionDescription is correct.
      * @return correctness the correctness of the Electiondescription

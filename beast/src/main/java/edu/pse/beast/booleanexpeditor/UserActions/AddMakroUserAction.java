@@ -5,6 +5,8 @@ import edu.pse.beast.toolbox.UserAction;
 
 
 /**
+ * Responsible for adding BooleanExpEditorMakro objects to the last focused BooleanExpEditorCodeArea.
+ * Subclass of UserAction.
  * @author NikolaiLMS
  */
 public class AddMakroUserAction extends UserAction {

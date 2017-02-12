@@ -3,10 +3,12 @@ package edu.pse.beast.saverloader;
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
+import edu.pse.beast.saverloader.StaticSaverLoaders.StringSaverLoader;
 
 import java.util.Arrays;
 
 /**
+ * Implements SaverLoader methods for creating saveStrings from ElectionDescription objects and vice versa.
  * @author NikolaiLMS
  */
 public class ElectionDescriptionSaverLoader implements SaverLoader{

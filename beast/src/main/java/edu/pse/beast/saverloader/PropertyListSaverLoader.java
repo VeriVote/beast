@@ -6,6 +6,7 @@ import edu.pse.beast.propertylist.Model.PropertyItem;
 
 
 /**
+ * Implements SaverLoader methods for creating saveStrings from PropertyList objects and vice versa.
  * @author NikolaiLMS
  */
 public class PropertyListSaverLoader implements SaverLoader{
@@ -13,30 +14,10 @@ public class PropertyListSaverLoader implements SaverLoader{
 
     /**
      * Constructor
+     * Initializes PostAndPrePropertiesDescriptionSaverLoader object.
      */
     public PropertyListSaverLoader() {
         this.postAndPrePropertiesDescriptionSaverLoader = new PostAndPrePropertiesDescriptionSaverLoader();
-    }
-
-    public String createPropertyItemString(PropertyItem propertyItem) throws Exception {
-        String postAndPreProps = "<postAndPreProps>\n" +
-                postAndPrePropertiesDescriptionSaverLoader.createSaveString(propertyItem.getDescription())
-                + "\n</postAndPreProps>\n";
-        String testStatus = "<testStatus>\n" + propertyItem.getTestStatus() + "\n</testStatus>\n";
-        return postAndPreProps + testStatus;
-    }
-
-    private PropertyItem createPropertyItem(String saveString) throws Exception{
-        String [] split = saveString.split("\n</postAndPreProps>\n");
-        PostAndPrePropertiesDescription postAndPrePropertiesDescription =
-                ((PostAndPrePropertiesDescription) postAndPrePropertiesDescriptionSaverLoader.
-                        createFromSaveString(split[0].replace("<postAndPreProps>\n", "")));
-        split = split[1].split("\n</testStatus>\n");
-        if ((split[0].replace("<testStatus>\n", "")).equals("true")) {
-            return new PropertyItem(postAndPrePropertiesDescription, true);
-        } else {
-            return new PropertyItem(postAndPrePropertiesDescription, false);
-        }
     }
 
     public String createSaveString(Object propertyList) throws Exception{
@@ -63,7 +44,28 @@ public class PropertyListSaverLoader implements SaverLoader{
                 plModel.addDescription(createPropertyItem(split[i].replace("<propertyItem>\n", "")));
             }
         }
-        //plModel.setChangedSinceSave(false);
         return plModel;
+    }
+
+
+    private String createPropertyItemString(PropertyItem propertyItem) throws Exception {
+        String postAndPreProps = "<postAndPreProps>\n" +
+                postAndPrePropertiesDescriptionSaverLoader.createSaveString(propertyItem.getDescription())
+                + "\n</postAndPreProps>\n";
+        String testStatus = "<testStatus>\n" + propertyItem.getTestStatus() + "\n</testStatus>\n";
+        return postAndPreProps + testStatus;
+    }
+
+    private PropertyItem createPropertyItem(String saveString) throws Exception{
+        String [] split = saveString.split("\n</postAndPreProps>\n");
+        PostAndPrePropertiesDescription postAndPrePropertiesDescription =
+                ((PostAndPrePropertiesDescription) postAndPrePropertiesDescriptionSaverLoader.
+                        createFromSaveString(split[0].replace("<postAndPreProps>\n", "")));
+        split = split[1].split("\n</testStatus>\n");
+        if ((split[0].replace("<testStatus>\n", "")).equals("true")) {
+            return new PropertyItem(postAndPrePropertiesDescription, true);
+        } else {
+            return new PropertyItem(postAndPrePropertiesDescription, false);
+        }
     }
 }

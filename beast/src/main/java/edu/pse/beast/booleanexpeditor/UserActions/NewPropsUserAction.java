@@ -9,6 +9,8 @@ import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
+ * UserAction subclass responsible creating a new PostAndPrePropertiesDescription object and loading it into the editor
+ * and propertylist.
  * @author NikolaiLMS
  */
 public class NewPropsUserAction extends UserAction {
@@ -19,6 +21,10 @@ public class NewPropsUserAction extends UserAction {
         this.booleanExpEditor = booleanExpEditor;
     }
 
+    /**
+     * Method that
+     * @return s an empty PostAndPrePropertiesDescription object that can be loaded into the editor/propertylist.
+     */
     public static PostAndPrePropertiesDescription createEmptyPostAndPropObject() {
         FormalPropertiesDescription preDesc = new FormalPropertiesDescription("");
         FormalPropertiesDescription postDesc = new FormalPropertiesDescription("");

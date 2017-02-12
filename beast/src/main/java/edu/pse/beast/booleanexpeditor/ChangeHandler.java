@@ -17,7 +17,6 @@ public class ChangeHandler {
     private String preString = "";
     private JTextPane prePane;
     private JTextPane postPane;
-    private FileChooser fileChooser;
 
     /**
      * Constructor

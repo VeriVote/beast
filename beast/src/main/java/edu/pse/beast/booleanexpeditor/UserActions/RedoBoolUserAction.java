@@ -4,6 +4,7 @@ import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
+ * UserAction subclass responsible for redoing the last undone action in the last focused BooleanExpEditorCodeArea.
  * @author NikolaiLMS
  */
 public class RedoBoolUserAction extends UserAction {

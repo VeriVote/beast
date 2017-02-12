@@ -10,18 +10,17 @@ import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescripti
  * @author Jonas
  */
 public interface PostAndPrePropertiesDescriptionSource {
+
     /**
      * Provides access to the description of post and preproperties for the
      * election check.
      * @return PostAndPrePropertiesDescription
      */
-    
     List<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptions();
     /**
      * Returns true if all the PostAndPrePropertiesDescriptions are correct.
      * @return correctness
      */
-    
     boolean isCorrect();
     /**
      * Stops reacting to user input to not interfere with running check.

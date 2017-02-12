@@ -1,4 +1,4 @@
-package edu.pse.beast.saverloader;
+package edu.pse.beast.saverloader.StaticSaverLoaders;
 
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
@@ -6,44 +6,44 @@ import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 import java.util.ArrayList;
 
 /**
+ * Implements static methods for creating saveStrings from ElectionCheckParameter objects and vice versa.
  * @author NikolaiLMS
  */
-public class ElectionCheckParameterSaverLoader implements SaverLoader{
+public class ElectionCheckParameterSaverLoader {
 
-    public String createSaveString(Object electionCheckParameter) {
+    public static String createSaveString(ElectionCheckParameter electionCheckParameter) {
         String amountVotersMin = "<amountVotersMin>\n" +
-                ((ElectionCheckParameter) electionCheckParameter).getAmountVoters().get(0) +
+                electionCheckParameter.getAmountVoters().get(0) +
                 "\n</amountVotersMin>\n";
         String amountVotersMax = "<amountVotersMax>\n" +
-                ((ElectionCheckParameter) electionCheckParameter).getAmountVoters().get(
-                        ((ElectionCheckParameter) electionCheckParameter).getAmountVoters().size()-1) +
+                electionCheckParameter.getAmountVoters().get(
+                        electionCheckParameter.getAmountVoters().size()-1) +
                 "\n</amountVotersMax>\n";
         String amountCandidatesMin = "<amountCandidatesMin>\n" +
-                ((ElectionCheckParameter) electionCheckParameter).getAmountCandidates().get(0) +
+                electionCheckParameter.getAmountCandidates().get(0) +
                 "\n</amountCandidatesMin>\n";
         String amountCandidatesMax = "<amountCandidatesMax>\n" +
-                ((ElectionCheckParameter) electionCheckParameter).getAmountCandidates().get(
-                        ((ElectionCheckParameter) electionCheckParameter).getAmountCandidates().size()-1) +
+                electionCheckParameter.getAmountCandidates().get(
+                        electionCheckParameter.getAmountCandidates().size()-1) +
                 "\n</amountCandidatesMax>\n";
         String amountSeatsMin = "<amountSeatsMin>\n" +
-                ((ElectionCheckParameter) electionCheckParameter).getAmountSeats().get(0) +
+                electionCheckParameter.getAmountSeats().get(0) +
                 "\n</amountSeatsMin>\n";
         String amountSeatsMax = "<amountSeatsMax>\n" +
-                ((ElectionCheckParameter) electionCheckParameter).getAmountSeats().get(
-                        ((ElectionCheckParameter) electionCheckParameter).getAmountSeats().size()-1) +
+                electionCheckParameter.getAmountSeats().get(
+                        electionCheckParameter.getAmountSeats().size()-1) +
                 "\n</amountSeatsMax>\n";
         String timeout = "<timeout>\n" + TimeOutSaverLoader.createSaveString(
-                ((ElectionCheckParameter) electionCheckParameter).getTimeout()) + "\n</timeout>\n";
+                electionCheckParameter.getTimeout()) + "\n</timeout>\n";
         String processes = "<processes>\n" +
-                ((ElectionCheckParameter) electionCheckParameter).getProcesses() + "\n</processes>\n";
+                electionCheckParameter.getProcesses() + "\n</processes>\n";
         String argument = "<argument>\n" +
-                ((ElectionCheckParameter) electionCheckParameter).getArgument() + "\n</argument>\n";
+                electionCheckParameter.getArgument() + "\n</argument>\n";
         return (amountVotersMin + amountVotersMax + amountCandidatesMin + amountCandidatesMax + amountSeatsMin +
                 amountSeatsMax + timeout + processes + argument);
     }
 
-    public Object createFromSaveString(String s) throws Exception{
-
+    public static Object createFromSaveString(String s) throws Exception{
         String split[] = s.split("\n</amountVotersMin>\n");
         int amountVotersMin = Integer.parseInt(split[0].replace("<amountVotersMin>\n", ""));
         split = split[1].split("\n</amountVotersMax>\n");
@@ -74,9 +74,6 @@ public class ElectionCheckParameterSaverLoader implements SaverLoader{
         int processes = Integer.parseInt(split[0].replace("<processes>\n", ""));
         split = split[1].split("\n</argument>\n");
         String argument = split[0].replace("<argument>\n", "");
-
-
-
         return new ElectionCheckParameter(amountVoters, amountCandidates, amountSeats, timeout, processes, argument);
     }
 }

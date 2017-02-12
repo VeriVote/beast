@@ -7,8 +7,7 @@ import javax.swing.JTextPane;
 import java.util.ArrayList;
 
 /**
- * Controller of the JTextPane for displayng errors in a BooleanExpEditorWindow.
- *
+ * Controller of the JTextPane for displayng errors in a BooleanExpEditorWindow
  * @author Nikolai
  */
 public class ErrorWindow {
@@ -21,7 +20,6 @@ public class ErrorWindow {
 
     /**
      * Constructor
-     *
      * @param textPane JTextPane for ErrorWindow
      * @param stringLoaderInterface stringLoaderInterface to load needed Strings
      */

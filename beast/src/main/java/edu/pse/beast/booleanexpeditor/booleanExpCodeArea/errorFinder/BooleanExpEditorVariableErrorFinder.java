@@ -42,13 +42,9 @@ public class BooleanExpEditorVariableErrorFinder implements ErrorFinder, Electio
 
     @Override
     public ArrayList<CodeError> getErrors() {
-        try {
-            ParseTree tree = antlrHandler.getParseTree();
-            ParseTreeWalker walker = new ParseTreeWalker();
-            walker.walk(lis, tree);
-        } catch (BadLocationException ex) {
-            Logger.getLogger(BooleanExpEditorVariableErrorFinder.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ParseTree tree = antlrHandler.getParseTree();
+        ParseTreeWalker walker = new ParseTreeWalker();
+        walker.walk(lis, tree);
         return lis.getErrors();
     }
 

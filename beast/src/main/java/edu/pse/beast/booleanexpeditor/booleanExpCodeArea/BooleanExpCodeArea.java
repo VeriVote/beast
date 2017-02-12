@@ -39,10 +39,18 @@ public class BooleanExpCodeArea extends CodeArea {
         booleanExpSyntaxHL = new BooleanExpSyntaxHL(antlrHandler, syntaxHL);
     }
 
+    /**
+     * Getter for the BooleanExpEditorGrammarErrorFinder object
+     * @return grammarErrorFinder
+     */
     public BooleanExpEditorGrammarErrorFinder getGrammarErrorFinder() {
         return grammarErrorFinder;
     }
 
+    /**
+     * Getter for the BooleanExpEditorVariableErrorFinder object
+     * @return variableErrorFinder
+     */
     public BooleanExpEditorVariableErrorFinder getVariableErrorFinder() {
         return variableErrorFinder;
     }    

@@ -7,6 +7,8 @@ import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
+ * UserAction subclass responsible loading a PostAndPrePropertiesDescription object from the file system into the editor
+ * /propertylist.
  * @author NikolaiLMS
  */
 public class LoadPropsUserAction extends UserAction {

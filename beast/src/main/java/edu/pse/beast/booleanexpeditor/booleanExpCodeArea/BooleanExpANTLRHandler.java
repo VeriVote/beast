@@ -18,6 +18,7 @@ public class BooleanExpANTLRHandler {
     private StyledDocument styledDocument;
     private FormalPropertyDescriptionLexer lexer;
     private FormalPropertyDescriptionParser parser;
+
     /**
      * Constructor
      * @param styledDocument the StyledDocument instance to analyse
@@ -32,9 +33,20 @@ public class BooleanExpANTLRHandler {
             Logger.getLogger(BooleanExpANTLRHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public FormalPropertyDescriptionParser.BooleanExpListContext getParseTree() throws BadLocationException {
-        String text= styledDocument.getText(0, styledDocument.getLength());
+
+    /**
+     * Method that parses the current input of a BooleanExpCodeArea and returns a
+     * FormalPropertyDescriptionParser.BooleanExpListContext object which can then be used for building an AST
+     * out of the input.
+     * @return a BooleanExpListContext node from the ANTLR generated ParseTree.
+     */
+    public FormalPropertyDescriptionParser.BooleanExpListContext getParseTree() {
+        String text = null;
+        try {
+            text = styledDocument.getText(0, styledDocument.getLength());
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+        }
         lexer.setInputStream(new ANTLRInputStream(text));
         CommonTokenStream ts = new CommonTokenStream(lexer);
         parser.setTokenStream(ts);
@@ -45,6 +57,11 @@ public class BooleanExpANTLRHandler {
         return parser;
     }
 
+    /**
+     * Method that
+     * @return s a String array of regular expressions matching all possible makros.
+     * Used for SyntaxHL.
+     */
     public String[] getMakroRegex() {
         return new String[]
                 {"FOR_ALL_VOTERS\\([a-zA-Z_]*\\)", "FOR_ALL_CANDIDATES\\([a-zA-Z_]*\\)",
@@ -53,15 +70,31 @@ public class BooleanExpANTLRHandler {
                         "VOTE_SUM_FOR_CANDIDATE[0-9]+\\([a-zA-Z_]*\\)"};
     }
 
+    /**
+     * Method that
+     * @return s a String array of regular expressions matching all possible comparison symbols.
+     * Used for SyntaxHL.
+     */
     public String[] getComparisonSymbols() {
         return new String[]
                 {"==", "!=", ">=", "<=", ">", "<"};
     }
 
+    /**
+     * Method that
+     * @return s a String array of regular expressions matching all possible logical operators.
+     * Used for SyntaxHL.
+     */
     public String[] getLogicalOperators() {
         return new String[]
                 {"==>", "<==>", "&&", "||"};
     }
+
+    /**
+     * Method that
+     * @return s a String array of regular expressions matching all possible constants.
+     * Used for SyntaxHL.
+     */
     public String getConstants() {
         return "(V|C|S)";
     }
