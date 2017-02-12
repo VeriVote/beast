@@ -54,6 +54,7 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
     private int currentHighestElect = 0;
     private BooleanExpScopehandler scopeHandler;
     
+    
     public BooleanExpListNode generateFromSyntaxTree(
             BooleanExpListContext parseTree, 
             InternalTypeContainer inputType,
@@ -284,7 +285,7 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
     public void exitVoteSumExp(FormalPropertyDescriptionParser.VoteSumExpContext ctx) {
         String numberString = ctx.Votesum().getText().substring("VOTE_SUM_FOR_CANDIDATE".length());
         int number = Integer.valueOf(numberString);
-        
+        if(number > maxVoteExp) maxVoteExp = number;
         VoteSumForCandExp expNode = new VoteSumForCandExp(number,
                 ((SymbolicVarExp) expStack.pop()).getSymbolicVar());
         expStack.add(expNode);
