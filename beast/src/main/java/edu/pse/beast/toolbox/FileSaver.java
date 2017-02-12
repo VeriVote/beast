@@ -3,10 +3,9 @@ package edu.pse.beast.toolbox;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintStream;
+
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+
 import java.nio.file.Files;
 import java.util.Iterator;
 import java.util.List;
@@ -34,12 +33,10 @@ public class FileSaver {
         PrintWriter writer = null;
 
         try {
-            PrintStream stream = new PrintStream(file);
-            writer = new PrintWriter(new OutputStreamWriter(stream, "UTF-8"));
+        	writer = new PrintWriter(file);
+            
         } catch (FileNotFoundException e) {
             ErrorLogger.log("File not found");
-        } catch (UnsupportedEncodingException ex) {
-            ErrorLogger.log("Unsuported encoding");
         }
 
         for (Iterator<String> iterator = text.iterator(); iterator.hasNext();) {

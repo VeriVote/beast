@@ -2,7 +2,7 @@
 package edu.pse.beast.parametereditor;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
-import edu.pse.beast.highlevel.DisplaysStringsToUser;
+
 import edu.pse.beast.parametereditor.View.ParameterEditorWindow;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
@@ -26,7 +26,7 @@ import java.awt.event.ActionListener;
  * with the ParameterEditorWindow and the communication with high level.
  * @author Jonas
  */
-public class ParameterEditor implements ParameterSource, MainNotifier, DisplaysStringsToUser {
+public class ParameterEditor implements ParameterSource, MainNotifier {
 
     private final ParameterEditorWindow window;
     private final CElectionDescriptionEditor cElectionDescriptionEditor;
@@ -270,8 +270,4 @@ public class ParameterEditor implements ParameterSource, MainNotifier, DisplaysS
 
     }
 
-    @Override
-    public void updateStringRes(StringLoaderInterface stringResIF) {
-        fileChooser.updateStringRessourceLoader(stringResIF.getParameterEditorStringResProvider().getOtherStringRes());
-    }
 }

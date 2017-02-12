@@ -52,7 +52,7 @@ inputOutputErrorSave : Das Verzeichnis in dem gespeichert werden soll existiert 
 wrongFileNameError : Der angegebene Name entspricht nicht dem regulären Ausdruck '[_a-zA-Z0-9\-\.\s]+'.
 fileSuffix : .list
 saveChanges : Änderungen an '
-saveChangesSuffix : ' speichern?
+save : ' speichern?
 yesOption : Ja
 noOption : Nein
 cancelOption : Abbrechen

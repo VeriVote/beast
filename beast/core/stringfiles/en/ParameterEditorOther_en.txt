@@ -50,7 +50,7 @@ inputOutputErrorSave : The folder, in which you want to save, doesn't exist or y
 wrongFileNameError : The given name doesn't match the regular expression '[_a-zA-Z0-9\-\.\s]+'.
 fileSuffix : .beast
 saveChanges : Save changes to '
-saveChangesSuffix : '?
+save : '?
 yesOption : Yes
 noOption : No
 cancelOption : Cancel

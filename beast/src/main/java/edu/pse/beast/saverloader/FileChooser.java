@@ -1,7 +1,7 @@
 package edu.pse.beast.saverloader;
 
 import edu.pse.beast.datatypes.NameInterface;
-import edu.pse.beast.stringresource.StringLoaderInterface;
+
 import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
@@ -260,8 +260,7 @@ public class FileChooser {
     }
 
     public void updateStringRessourceLoader(StringResourceLoader stringResourceLoader) {
-        this.stringResourceLoader = stringResourceLoader;
-        fileChooser = new JFileChooser();
+       
         //sets the text and language of all the components in JFileChooser
         UIManager.put("FileChooser.openDialogTitleText", stringResourceLoader.getStringFromID("openDialogTitleText"));
         UIManager.put("FileChooser.lookInLabelText", stringResourceLoader.getStringFromID("lookInLabelText"));
@@ -285,7 +284,7 @@ public class FileChooser {
         UIManager.put("FileChooser.fileSizeHeaderText", stringResourceLoader.getStringFromID("fileSizeHeaderText"));
         UIManager.put("FileChooser.fileDateHeaderText", stringResourceLoader.getStringFromID("fileDateHeaderText"));
         saveChanges = stringResourceLoader.getStringFromID("saveChanges");
-        save = stringResourceLoader.getStringFromID("saveChangesSuffix");
+        save = stringResourceLoader.getStringFromID("save");
         cancelOption = stringResourceLoader.getStringFromID("cancelOption");
         noOption = stringResourceLoader.getStringFromID("noOption");
         yesOption = stringResourceLoader.getStringFromID("yesOption");
