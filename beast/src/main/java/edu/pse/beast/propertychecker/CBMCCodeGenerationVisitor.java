@@ -21,6 +21,7 @@ import edu.pse.beast.datatypes.booleanExpAST.SymbolicVarExp;
 import edu.pse.beast.datatypes.booleanExpAST.ThereExistsNode;
 import edu.pse.beast.datatypes.booleanExpAST.VoteExp;
 import edu.pse.beast.datatypes.booleanExpAST.VoteSumForCandExp;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
@@ -52,6 +53,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private int thereExistsNodeCounter;
     private int notNodeCounter;
     private int comparisonNodeCounter;
+    private int voteSumCounter;
+    private final ElectionTypeContainer inputType;
 
     private Stack<String> variableNames; //stack of the variable names. 
     private CodeArrayListBeautifier code; // object, that handels the generated code
@@ -61,7 +64,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
      * c. file you want to make you have to set it to pre- or post-property mode
      * in order for it to function
      */
-    public CBMCCodeGenerationVisitor() {
+    public CBMCCodeGenerationVisitor(ElectionTypeContainer inputType) {
+        this.inputType = inputType;
         andNodeCounter = 0;
         orNodeCounter = 0;
         implicationNodeCounter = 0;
@@ -70,6 +74,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         thereExistsNodeCounter = 0;
         notNodeCounter = 0;
         comparisonNodeCounter = 0;
+        voteSumCounter = 0;
 
         code = new CodeArrayListBeautifier();
 
@@ -161,7 +166,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     /**
      * generates the code for an EquivalencyNode
-     * 
+     *
      * @param node equivalencz node
      */
     @Override
@@ -390,7 +395,29 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitVoteSumExp(VoteSumForCandExp exp) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        String candidateVar = exp.getSymbolicVariable().getId();
+        String counter = "voteSumExp_" + voteSumCounter;
+        voteSumCounter++;
+        code.add("unsigned int " + counter + " = 0;");
+        int voteNumber = exp.getVoteNumber();
+        if (inputType.getType().getListLvl() == 1) { //singleChoice
+            code.add("for(unsigned int voteSumCount = 0; voteSumCount < V; voteSumCount++) {");
+            code.addTab();
+            code.add("if (votes" + voteNumber + "[voteSumCount] == " + candidateVar + ") {");
+            code.addTab();
+            code.add(counter + "++;");
+            code.deleteTab();
+            code.add("}");
+            code.deleteTab();
+            code.add("}");
+        } else {
+            code.add("for(unsigned int voteSumCount = 0; voteSumCount < V; voteSumCount++) {");
+            code.addTab();
+            code.add(counter + " += votes" + voteNumber + "[voteSumCount][" + candidateVar + "]; ");
+            code.deleteTab();
+            code.add("}");
+        }
+        variableNames.push(counter);
     }
 
     @Override

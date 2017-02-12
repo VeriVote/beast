@@ -12,7 +12,6 @@ import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescripti
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import java.util.ArrayList;
 import java.util.List;
-
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
@@ -62,7 +61,7 @@ public class CBMCCodeGenerator {
         code = new CodeArrayListBeautifier();
         inputType = electionDescription.getInputType();
         outputType = electionDescription.getOutputType();
-        this.visitor = new CBMCCodeGenerationVisitor();
+        this.visitor = new CBMCCodeGenerationVisitor(inputType);
         cCodeHelper = new CCodeHelper();
         generateCode();
 

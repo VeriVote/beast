@@ -5,16 +5,17 @@ import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 
 /**
- * 
+ *
  * @author Lukas
  *
  */
 public class VoteSumForCandExp extends TypeExpression {
 
-    private final SymbolicVariable symbVar; 
+    private final SymbolicVariable symbVar;
     private final int voteArrNum;
+
     /**
-     * 
+     *
      * @param voteArrNum
      * @param symbVar the symbolic variable of this node
      */
@@ -25,7 +26,7 @@ public class VoteSumForCandExp extends TypeExpression {
     }
 
     /**
-     * 
+     *
      * @return the symbolic variable of this node
      */
     public SymbolicVariable getSymbolicVariable() {
@@ -36,5 +37,9 @@ public class VoteSumForCandExp extends TypeExpression {
     public void getVisited(BooleanExpNodeVisitor visitor) {
         visitor.visitVoteSumExp(this);
     }
-    
+
+    public int getVoteNumber() {
+        return voteArrNum;
+    }
+
 }
