@@ -1,7 +1,6 @@
 package edu.pse.beast.options;
 
 import edu.pse.beast.saverloader.OptionSaverLoader.OptionsSaverLoaderInterface;
-import toBeImplemented.CheckerList;
 
 public class ParametereditorOptions extends Options {
     private final LanguageOptions langOpts;
