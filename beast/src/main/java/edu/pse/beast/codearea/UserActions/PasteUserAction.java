@@ -39,7 +39,7 @@ public class PasteUserAction extends UserAction {
             codeArea.getInsertToCode().getSaveBeforeRemove().save();
         } catch (BadLocationException ex) {
             Logger.getLogger(CutUserAction.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }  
         try {
             String clipboardString = (String) clipboard.getData(DataFlavor.stringFlavor);
             codeArea.insertString(clipboardString);
