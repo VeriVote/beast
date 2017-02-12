@@ -1,5 +1,5 @@
 new_option ccodearea_opts
 new_option codearea_opts
 fonttype : Arial
-fontsize : 19
-spaces_per_tab : 11
+fontsize : 29
+spaces_per_tab : 8
