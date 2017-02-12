@@ -251,12 +251,12 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
     private InternalTypeContainer getContainerForConstant(FormalPropertyDescriptionParser.ConstantExpContext ctx) {
         InternalTypeRep rep = InternalTypeRep.NULL;
-        if (ctx.getText() == "V") {
-            rep = InternalTypeRep.VOTER;
-        } else if (ctx.getText() == "C") {
-            rep = InternalTypeRep.CANDIDATE;
-        } else if (ctx.getText() == "S") {
-            rep = InternalTypeRep.SEAT;
+        if (ctx.getText().equals("V")) {
+            rep = InternalTypeRep.INTEGER;
+        } else if (ctx.getText().equals("C")) {
+            rep = InternalTypeRep.INTEGER;
+        } else if (ctx.getText().equals("S")) {
+            rep = InternalTypeRep.INTEGER;
         }
         return new InternalTypeContainer(rep);
     }

@@ -57,6 +57,7 @@ public class BooleanExpCodeAreaBuilder extends CodeAreaBuilder{
         created.add(new AutocompletionOption("ELECT", "ELECT"));     
         created.add(new AutocompletionOption("==>", "==>"));     
         created.add(new AutocompletionOption("<==>", "<==>"));     
+        created.add(new AutocompletionOption("VOTE_SUM_FOR_CANDIDATE", "VOTE_SUM_FOR_CANDIDATE()", -1));
         return created;
     }
 }
