@@ -62,3 +62,4 @@ startingCheck : Analyse wird gestartet
 waitingForPropertyResult : Warte auf Ergebnis der Eigenschaft '
 analysisEnded : Analyse beendet nach
 noProperty : Es wurde keine Eigenschaft zur Analyse ausgewählt.
+falseStop : Nur eine laufende Analyse kann gestoppt werden.

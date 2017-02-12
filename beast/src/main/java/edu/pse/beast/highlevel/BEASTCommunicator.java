@@ -77,26 +77,26 @@ public class BEASTCommunicator implements CheckListener {
                         elapsedTime = System.nanoTime() - startTime;
                         passedTimeSeconds = (double) elapsedTime / 1000000000.0;
                         if (passedTimeSeconds >= 86400) {
-                            int days = (int) passedTimeSeconds/86400;
+                            int days = (int) passedTimeSeconds / 86400;
                             double daysRemainder = passedTimeSeconds % 86400;
-                            int hours = (int) daysRemainder/3600;
+                            int hours = (int) daysRemainder / 3600;
                             double hoursRemainder = daysRemainder % 3600;
-                            int minutes = (int) hoursRemainder/60;
+                            int minutes = (int) hoursRemainder / 60;
                             double minutesRemainder = hoursRemainder % 60;
                             String seconds = decimalFormat.format(minutesRemainder);
-                            timeString = days + "d " + hours + "h " + minutes + "m " + seconds +"s";
+                            timeString = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
                         } else if (passedTimeSeconds >= 3600) {
-                            int hours = (int) passedTimeSeconds/3600;
+                            int hours = (int) passedTimeSeconds / 3600;
                             double hoursRemainder = passedTimeSeconds % 3600;
-                            int minutes = (int) hoursRemainder/60;
+                            int minutes = (int) hoursRemainder / 60;
                             double minutesRemainder = hoursRemainder % 60;
                             String seconds = decimalFormat.format(minutesRemainder);
-                            timeString = hours + "h " + minutes + "m " + seconds +"s";
+                            timeString = hours + "h " + minutes + "m " + seconds + "s";
                         } else if (passedTimeSeconds >= 60) {
-                            int minutes = (int) passedTimeSeconds/60;
+                            int minutes = (int) passedTimeSeconds / 60;
                             double minutesRemainder = passedTimeSeconds % 60;
                             String seconds = decimalFormat.format(minutesRemainder);
-                            timeString = minutes + "min " + seconds +"s";
+                            timeString = minutes + "min " + seconds + "s";
                         } else {
                             String seconds = decimalFormat.format(passedTimeSeconds);
                             timeString = seconds + "s";
@@ -135,7 +135,12 @@ public class BEASTCommunicator implements CheckListener {
 
     @Override
     public void stopCheck() {
-        centralObjectProvider.getResultCheckerCommunicator().abortChecking();
+        boolean stoppedAtATimeItIsAllowed;
+        stoppedAtATimeItIsAllowed = centralObjectProvider.getResultCheckerCommunicator().abortChecking();
+        if (!stoppedAtATimeItIsAllowed) {
+            CheckStatusDisplay checkStatusDisplayer = centralObjectProvider.getCheckStatusDisplay();
+            checkStatusDisplayer.displayText("falseStop", false, "");
+        }
     }
 
 }

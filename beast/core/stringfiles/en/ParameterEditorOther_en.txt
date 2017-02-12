@@ -62,3 +62,4 @@ startingCheck : Analysis start-up
 waitingForPropertyResult :  Waiting for result of property '
 analysisEnded : Analysis ended after
 noProperty : No Property was selected for the analysis.
+falseStop : Only an analysis in progress can be stopped.
