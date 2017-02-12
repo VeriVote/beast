@@ -13,7 +13,8 @@ days : Tage
 title_advanced : Benutzerdefinierte Argumente für CBMC
 ok : OK
 cancel : Abbrechen
-title_about : Versionsnummer
+title_about : About
+about : About
 version : Version
 openDialogTitleText : Projekt Öffnen
 saveDialogTitleText : Projekt Speichern

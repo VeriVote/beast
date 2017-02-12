@@ -73,7 +73,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
         processes = new javax.swing.JLabel();
         amountProcessesSpinner = new javax.swing.JSpinner();
         advancedButton = new javax.swing.JButton();
-        versionButton = new javax.swing.JToggleButton();
+        aboutButton = new javax.swing.JToggleButton();
         userFeedbackPanel = new java.awt.Panel();
         statusLabel = new java.awt.Label();
 
@@ -127,10 +127,10 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
             }
         });
 
-        versionButton.setText("Version");
-        versionButton.addActionListener(new java.awt.event.ActionListener() {
+        aboutButton.setText("About");
+        aboutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                versionButtonActionPerformed(evt);
+                aboutButtonActionPerformed(evt);
             }
         });
 
@@ -176,7 +176,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(versionButton)
+                    .addComponent(aboutButton)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -229,7 +229,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(advancedButton)
-                    .addComponent(versionButton))
+                    .addComponent(aboutButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(userFeedbackPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -246,9 +246,9 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
         if (reacts) advWindow.setVisible(true);
     }//GEN-LAST:event_advancedButtonActionPerformed
 
-    private void versionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_versionButtonActionPerformed
+    private void aboutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutButtonActionPerformed
         if (reacts) versionWindow.setVisible(true);
-    }//GEN-LAST:event_versionButtonActionPerformed
+    }//GEN-LAST:event_aboutButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,6 +286,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton aboutButton;
     private javax.swing.JButton advancedButton;
     private javax.swing.JSpinner amountProcessesSpinner;
     private javax.swing.JSpinner candMax;
@@ -303,7 +304,6 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     private javax.swing.JComboBox<String> timeoutUnit;
     private javax.swing.JToolBar toolbar;
     private java.awt.Panel userFeedbackPanel;
-    private javax.swing.JToggleButton versionButton;
     private javax.swing.JSpinner voterMax;
     private javax.swing.JSpinner voterMin;
     private javax.swing.JLabel voterTo;
@@ -404,6 +404,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
         candTo.setText(other.getStringFromID("to"));
         seatTo.setText(other.getStringFromID("to"));
         advancedButton.setText(other.getStringFromID("advanced"));
+        aboutButton.setText(other.getStringFromID("about"));
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel();
         model.addElement(other.getStringFromID("seconds"));
         model.addElement(other.getStringFromID("minutes"));
