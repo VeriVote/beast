@@ -26,6 +26,7 @@ public class OptionPresenterFrame extends javax.swing.JFrame {
 
     private StringResourceLoader srl;
     private Options opt;
+
     /**
      * Creates new form OptionPresenterFrame
      */
@@ -44,45 +45,46 @@ public class OptionPresenterFrame extends javax.swing.JFrame {
             this.dispose();
         });
     }
-    
+
     private void showOptionsRec(Options opt) {
-        
-            JPanel panel = new JPanel(new GridLayout(opt.getOptionElements().size(), 2, 5, 5));
-                        
-            for(OptionElement elem : opt.getOptionElements()) {
-                JLabel label = new JLabel(srl.getStringFromID(elem.getID()));
-                OptionElemComboBox combobox = new OptionElemComboBox(elem);
-                DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-                for(String s : elem.getChoosableOptions()) {
-                    if(srl.getStringFromID(s) == null) {
-                        model.addElement(s);
-                    } else {
-                        model.addElement(srl.getStringFromID(s));
-                    }                     
-                }
-                if(srl.getStringFromID(elem.chosenOption) == null) {
-                    model.setSelectedItem(elem.chosenOption);
+
+        JPanel panel = new JPanel(new GridLayout(opt.getOptionElements().size(), 2, 5, 5));
+
+        for (OptionElement elem : opt.getOptionElements()) {
+            JLabel label = new JLabel(srl.getStringFromID(elem.getID()));
+            OptionElemComboBox combobox = new OptionElemComboBox(elem);
+            DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+            for (String s : elem.getChoosableOptions()) {
+                if (!srl.containsId(s)) {
+                    model.addElement(s);
                 } else {
-                    model.setSelectedItem(srl.getStringFromID(elem.chosenOption));
-                }  
-                combobox.setModel(model);                
-                
-                combobox.addItemListener((ie) -> {
-                    if(srl.getIdForString((String)ie.getItem()) != null) {                        
-                        ((OptionElemComboBox)ie.getSource()).getElem().handleSelection(srl.getIdForString((String)ie.getItem()));
-                    } else {
-                        ((OptionElemComboBox)ie.getSource()).getElem().handleSelection((String)ie.getItem());
-                    }
-                });
-                panel.add(label);
-                panel.add(combobox);                
+                    model.addElement(srl.getStringFromID(s));
+                }
             }
-            if(opt.getOptionElements().size() != 0)
-                jTabbedPane1.addTab(srl.getStringFromID(opt.getId()) ,panel);
-            for(Options subOpt : opt.getSubOptions()) {                
-                showOptionsRec(subOpt);  
-            }          
-        
+            if (!srl.containsId(elem.chosenOption)) {
+                model.setSelectedItem(elem.chosenOption);
+            } else {
+                model.setSelectedItem(srl.getStringFromID(elem.chosenOption));
+            }
+            combobox.setModel(model);
+
+            combobox.addItemListener((ie) -> {
+                if (srl.getIdForString((String) ie.getItem()) != null) {
+                    ((OptionElemComboBox) ie.getSource()).getElem().handleSelection(srl.getIdForString((String) ie.getItem()));
+                } else {
+                    ((OptionElemComboBox) ie.getSource()).getElem().handleSelection((String) ie.getItem());
+                }
+            });
+            panel.add(label);
+            panel.add(combobox);
+        }
+        if (opt.getOptionElements().size() != 0) {
+            jTabbedPane1.addTab(srl.getStringFromID(opt.getId()), panel);
+        }
+        for (Options subOpt : opt.getSubOptions()) {
+            showOptionsRec(subOpt);
+        }
+
     }
 
     /**
@@ -121,7 +123,6 @@ public class OptionPresenterFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
- 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -130,11 +131,10 @@ public class OptionPresenterFrame extends javax.swing.JFrame {
 
     public JTabbedPane getjTabbedPane1() {
         return jTabbedPane1;
-    }    
+    }
 
     public JButton getjButton1() {
         return jButton1;
     }
-    
-    
+
 }
