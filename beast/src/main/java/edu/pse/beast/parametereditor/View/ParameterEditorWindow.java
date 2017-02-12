@@ -21,7 +21,7 @@ import javax.swing.DefaultComboBoxModel;
  */
 public class ParameterEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser, CheckStatusDisplay {
     private final AdvancedWindow advWindow = new AdvancedWindow();
-    private final VersionWindow versionWindow = new VersionWindow();
+    private final AboutWindow versionWindow = new AboutWindow();
     private boolean reacts;
     private String title = "";
     private String currentlyLoadedProjectName = "New Project";

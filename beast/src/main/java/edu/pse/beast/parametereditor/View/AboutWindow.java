@@ -8,12 +8,12 @@ import edu.pse.beast.stringresource.StringResourceLoader;
  *
  * @author Jonas
  */
-public class VersionWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
+public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
 
     /**
      * Creates new form VersionWindow
      */
-    public VersionWindow() {
+    public AboutWindow() {
         initComponents();
     }
 
@@ -76,20 +76,21 @@ public class VersionWindow extends javax.swing.JFrame implements DisplaysStrings
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VersionWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AboutWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VersionWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AboutWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VersionWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AboutWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VersionWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AboutWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VersionWindow().setVisible(true);
+                new AboutWindow().setVisible(true);
             }
         });
     }
@@ -110,7 +111,7 @@ public class VersionWindow extends javax.swing.JFrame implements DisplaysStrings
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
         StringResourceLoader other = stringResIF.getParameterEditorStringResProvider().getOtherStringRes();
-        setTitle(other.getStringFromID("title_version"));
+        setTitle(other.getStringFromID("title_about"));
         versionLabel.setText(other.getStringFromID("version"));
     }
 }
