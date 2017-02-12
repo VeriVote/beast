@@ -80,6 +80,9 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<mainClass>edu.pse.beast.highlevel.MainClass</mainClass>
+                                                        <addDefaultImplementationEntries>
+                                                            true
+                                                        </addDefaultImplementationEntries>
 						</manifest>
 					</archive>
 				</configuration>
