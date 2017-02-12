@@ -11,6 +11,8 @@ import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
 import java.awt.Point;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +34,7 @@ import javax.swing.text.BadLocationException;
  * same thing many times
  * @author Holger-Desktop
  */
-public class AutocompletionController implements KeyListener, AncestorListener {
+public class AutocompletionController implements KeyListener, AncestorListener, MouseListener {
     private final JTextPane pane;
     private final ArrayList<AutocompletionOption> completionOptions = new ArrayList<>();
     private final FindWordsConcurrently conc;
@@ -52,7 +54,10 @@ public class AutocompletionController implements KeyListener, AncestorListener {
         this.insertToCode = insertToCode;
         frame.setAlwaysOnTop(true);
         frame.getjList1().addKeyListener(this);
+        frame.getjList1().addMouseListener(this);
+        
         frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        
     }
     
     public void stopThread() {
@@ -175,5 +180,28 @@ public class AutocompletionController implements KeyListener, AncestorListener {
 
     public void add(AutocompletionOption opt) {
         completionOptions.add(opt);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent me) {
+        String s = frame.getjList1().getSelectedValue();
+        if(s != null) choseCompletion(s);
+        frame.setVisible(false);
+    }
+
+    @Override
+    public void mousePressed(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent me) {
     }
 }
