@@ -73,7 +73,11 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
             template = template.replace("VAR", codeError.getExtraInfo("var_name"));
             template = template.replace("GIVENTYPE", codeError.getExtraInfo("var_type"));
             return template;
-        }
+        } else if(codeError.getId().equals("number_must_be_greater_0")) {
+            String template = getTemplateString("number_must_be_greater_0");            
+            return template;
+        }                
+                
         return "";
     }
 

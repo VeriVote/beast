@@ -194,6 +194,9 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
         for (int i = 0; i < ctx.passSymbVar().size() && cont.isList(); ++i) {
             cont = cont.getListedType();
         }
+        String numberString = ctx.Elect().getText().substring("ELECT".length());
+        int number = Integer.valueOf(numberString);
+        if(number == 0) created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroElect(ctx));
         expStack.add(new ElectExp(cont, null, 0));
     }
 
@@ -209,6 +212,9 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
         for (int i = 0; i < ctx.passSymbVar().size() && cont.isList(); ++i) {
             cont = cont.getListedType();
         }
+        String numberString = ctx.Vote().getText().substring("VOTES".length());
+        int number = Integer.valueOf(numberString);
+        if(number == 0) created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroVotes(ctx));
         expStack.add(new ElectExp(cont, null, 0));
     }
 
@@ -274,6 +280,7 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
         }
         String numberString = ctx.Votesum().getText().substring("VOTE_SUM_FOR_CANDIDATE".length());
         int number = Integer.valueOf(numberString);
+        if(number == 0) created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroVotesum(ctx));
         expStack.add(new VoteSumForCandExp(number, passedVar.getSymbolicVar()));
     }
 

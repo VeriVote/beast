@@ -10,3 +10,4 @@ line : Line
 char : Character
 preProps : Pre-conditions
 postProps : Post-conditions
+number_must_be_greater_0_descr : The passed number must be greater than zero

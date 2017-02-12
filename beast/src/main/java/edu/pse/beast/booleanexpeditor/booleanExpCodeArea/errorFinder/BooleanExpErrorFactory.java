@@ -20,7 +20,8 @@ public class BooleanExpErrorFactory {
 
     private static final  String[] errorIds = 
     {"antlr", "var_not_decl", "too_many_vars_passed", "wrong_var_type_passed",
-        "incomparable_types", "incomparable_list_sizes", "wrong_var_passed_to_votesum"};  
+        "incomparable_types", "incomparable_list_sizes", "wrong_var_passed_to_votesum",
+        "number_must_be_greater_0"};  
     
     private static int getErrorNum(String id) {
         for(int i = 0; i < errorIds.length; ++i) {
@@ -83,6 +84,21 @@ public class BooleanExpErrorFactory {
         return err;
     }
     
+    static CodeError createNumberMustBeGreaterZeroVotesum(FormalPropertyDescriptionParser.VoteSumExpContext ctx) {
+        CodeError err = generateStandardError(ctx, "number_must_be_greater_0");
+        return err;
+    }
+    
+    static CodeError createNumberMustBeGreaterZeroElect(FormalPropertyDescriptionParser.ElectExpContext ctx) {
+        CodeError err = generateStandardError(ctx, "number_must_be_greater_0");
+        return err;
+    }
+    
+    static CodeError createNumberMustBeGreaterZeroVotes(FormalPropertyDescriptionParser.VoteExpContext ctx) {
+        CodeError err = generateStandardError(ctx, "number_must_be_greater_0");
+        return err;
+    }
+    
     private static CodeError generateStandardError(ParserRuleContext ctx, String id) {
         int pos = ctx.getStart().getStartIndex();
         int endPos = ctx.getStop().getStopIndex();
@@ -91,6 +107,12 @@ public class BooleanExpErrorFactory {
         CodeError err = new CodeError(line, charInLine, id, getErrorNum(id), pos, endPos);
         return err;
     }
+
+    
+
+    
+
+    
 
     
 
