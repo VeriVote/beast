@@ -43,7 +43,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier {
     private final FileChooser fileChooser;
     private boolean hasChanged;
     private Project currentlyLoadedProject;
-    private String version = "1.23"; //TODO: Get Version from somewhere
+    private String version = ParameterEditor.class.getPackage().getImplementationVersion(); //TODO: Get Version from somewhere
 
     /**
      * Constructor which also links the handlers to the View elements
