@@ -49,7 +49,7 @@ public class StringResourceLoader {
     public String getStringFromID(String id) {
         String get = idsToString.get(id);
         if (get == null) {
-            ErrorLogger.log("this Id was not found in a Stringfile + " + id);
+            ErrorLogger.log("this Id was not found in a Stringfile: " + id);
         }
         return get;
     }
