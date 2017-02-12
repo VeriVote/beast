@@ -22,6 +22,7 @@ public class UserInputHandler implements KeyListener {
     private CodeInputHandler codeInputHandler;
     private ShortcutHandler shortcutHandler;
     private boolean del = false;
+    private boolean sc = false;
     
     public UserInputHandler(JTextPane pane, 
             CodeInputHandler codeInputHandler, 
@@ -48,7 +49,14 @@ public class UserInputHandler implements KeyListener {
     public void keyPressed(KeyEvent ke) {  
         if(letTextPaneHandleKey(ke)) {
             return;
-        } 
+        } else if(isShortcut(ke)) {
+            try {
+                shortcutHandler.handleKey(ke); 
+            } catch(NullPointerException ex) {
+                //key is not mapped to any action
+            }  
+            sc = true;
+        }
         ke.consume();
     }
 
@@ -56,12 +64,8 @@ public class UserInputHandler implements KeyListener {
     public void keyReleased(KeyEvent ke) {
         if(letTextPaneHandleKey(ke)) {
             return;
-        } else if(isShortcut(ke)) {
-            try {
-                shortcutHandler.handleKey(ke); 
-            } catch(NullPointerException ex) {
-                //key is not mapped to any action
-            }        
+        }  else if(sc) {
+            sc = false;
         } else if(ke.getKeyCode() == KeyEvent.VK_DELETE) {
             codeInputHandler.delete();
         } else {

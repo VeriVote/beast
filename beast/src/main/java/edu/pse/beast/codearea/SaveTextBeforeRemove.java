@@ -94,7 +94,11 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
 
     @Override
     public void keyPressed(KeyEvent ke) {
-       
+        try {
+            prevText = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
+        } catch (BadLocationException ex) {
+            Logger.getLogger(SaveTextBeforeRemove.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
