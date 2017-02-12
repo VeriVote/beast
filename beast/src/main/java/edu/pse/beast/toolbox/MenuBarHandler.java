@@ -23,10 +23,10 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
      */
     protected JMenuBar createdMenuBar;
 
-    private String[] headingIds;
-    private ArrayList<ArrayList<ActionIdAndListener>> actionIDAndListener;
+    private final String[] headingIds;
+    private final ArrayList<ArrayList<ActionIdAndListener>> actionIDAndListener;
     private JMenu[] createdMenus;
-    private ArrayList<ArrayList<JMenuItem>> createdItems = new ArrayList<>();
+    private final ArrayList<ArrayList<JMenuItem>> createdItems = new ArrayList<>();
     private StringResourceLoader currentResourceLoader;
 
     /**

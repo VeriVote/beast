@@ -7,15 +7,13 @@ package edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST;
 
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import java.util.ArrayList;
-import java.util.HashMap;
-
 /**
  *
  * @author Holger-Desktop
  */
 public class BooleanExpScope {
-    private ArrayList<String> names = new ArrayList<>();
-    private ArrayList<InternalTypeContainer> types = new ArrayList<>();
+    private final ArrayList<String> names = new ArrayList<>();
+    private final ArrayList<InternalTypeContainer> types = new ArrayList<>();
     
     public void addTypeForId(String id, InternalTypeContainer type) {
         names.add(id);

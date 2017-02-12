@@ -14,7 +14,7 @@ import javax.swing.JFrame;
  * @author Holger-Desktop
  */
 public class RepaintThread implements Runnable {
-    private JFrame frame;
+    private final JFrame frame;
     public RepaintThread(JFrame frame) {
         this.frame = frame;
     }

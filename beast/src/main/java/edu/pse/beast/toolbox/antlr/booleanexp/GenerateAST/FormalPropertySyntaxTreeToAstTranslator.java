@@ -43,20 +43,19 @@ import org.antlr.v4.runtime.tree.TerminalNode;
  * @author Holger-Desktop
  */
 public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescriptionBaseListener {
-    
+
     private BooleanExpListNode generated;
     private InternalTypeContainer inputType;
     private InternalTypeContainer resType;
     private Stack<BooleanExpressionNode> nodeStack;
     private Stack<TypeExpression> expStack;
     private int maxElectExp = 0;
-    private int maxVoteExp = 0; 
+    private int maxVoteExp = 0;
     private int currentHighestElect = 0;
     private BooleanExpScopehandler scopeHandler;
-    
-    
+
     public BooleanExpListNode generateFromSyntaxTree(
-            BooleanExpListContext parseTree, 
+            BooleanExpListContext parseTree,
             InternalTypeContainer inputType,
             InternalTypeContainer resType,
             BooleanExpScope declaredVars) {
@@ -71,9 +70,9 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 
     @Override
     public void enterBooleanExpList(FormalPropertyDescriptionParser.BooleanExpListContext ctx) {
-        generated = new BooleanExpListNode();        
+        generated = new BooleanExpListNode();
         maxElectExp = 0;
-        maxVoteExp = 0;    
+        maxVoteExp = 0;
         expStack = new Stack<>();
         nodeStack = new Stack<>();
     }
@@ -91,19 +90,19 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
     @Override
     public void exitBooleanExpListElement(FormalPropertyDescriptionParser.BooleanExpListElementContext ctx) {
         generated.addNode(nodeStack.pop(), currentHighestElect);
-        if(currentHighestElect > maxElectExp) {
+        if (currentHighestElect > maxElectExp) {
             maxElectExp = currentHighestElect;
         }
     }
 
     @Override
     public void enterBooleanExp(FormalPropertyDescriptionParser.BooleanExpContext ctx) {
-        
+
     }
 
     @Override
     public void exitBooleanExp(FormalPropertyDescriptionParser.BooleanExpContext ctx) {
-        
+
     }
 
     @Override
@@ -115,16 +114,16 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         String symbol = ctx.BinaryRelationSymbol().getText();
         BooleanExpressionNode rhs = nodeStack.pop();
         BooleanExpressionNode lhs = nodeStack.pop();
-        
+
         BinaryRelationshipNode node = null;
-        
-        if(symbol.equals("&&")) {
+
+        if (symbol.equals("&&")) {
             node = new LogicalAndNode(lhs, rhs);
-        } else if(symbol.equals("||")) {
+        } else if (symbol.equals("||")) {
             node = new LogicalOrNode(lhs, rhs);
-        } else if(symbol.equals("==>")) {
+        } else if (symbol.equals("==>")) {
             node = new ImplicationNode(lhs, rhs);
-        } else if(symbol.equals("<==>")) {
+        } else if (symbol.equals("<==>")) {
             node = new EquivalencyNode(lhs, rhs);
         }
         nodeStack.add(node);
@@ -132,13 +131,13 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 
     @Override
     public void enterQuantorExp(FormalPropertyDescriptionParser.QuantorExpContext ctx) {
-        String quantorTypeString = ctx.Quantor().getText();      
+        String quantorTypeString = ctx.Quantor().getText();
         InternalTypeContainer varType = null;
-        if(quantorTypeString.contains("VOTER")) {
+        if (quantorTypeString.contains("VOTER")) {
             varType = new InternalTypeContainer(InternalTypeRep.VOTER);
-        } else if(quantorTypeString.contains("CANDIDATE")) {
+        } else if (quantorTypeString.contains("CANDIDATE")) {
             varType = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
-        } else if(quantorTypeString.contains("SEAT")) {
+        } else if (quantorTypeString.contains("SEAT")) {
             varType = new InternalTypeContainer(InternalTypeRep.SEAT);
         }
         scopeHandler.enterNewScope();
@@ -149,22 +148,22 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
     @Override
     public void exitQuantorExp(FormalPropertyDescriptionParser.QuantorExpContext ctx) {
         String quantorType = ctx.Quantor().getText();
-        
+
         QuantorNode node = null;
-        
-        if(quantorType.contains("FOR_ALL")) {
+
+        if (quantorType.contains("FOR_ALL")) {
             node = new ForAllNode(((SymbolicVarExp) expStack.pop()).getSymbolicVar(), nodeStack.pop());
-        } else if(quantorType.contains("EXISTS_ONE")) {
+        } else if (quantorType.contains("EXISTS_ONE")) {
             node = new ThereExistsNode(((SymbolicVarExp) expStack.pop()).getSymbolicVar(), nodeStack.pop());
         }
-        
+
         nodeStack.add(node);
         scopeHandler.exitScope();
     }
 
     @Override
     public void enterNotExp(FormalPropertyDescriptionParser.NotExpContext ctx) {
-        
+
     }
 
     @Override
@@ -174,7 +173,7 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
     }
 
     @Override
-    public void enterComparisonExp(FormalPropertyDescriptionParser.ComparisonExpContext ctx) {        
+    public void enterComparisonExp(FormalPropertyDescriptionParser.ComparisonExpContext ctx) {
     }
 
     @Override
@@ -183,24 +182,24 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         ComparisonSymbol comparisonSymbol = new ComparisonSymbol(comparisonSymbolString);
         TypeExpression rhs = expStack.pop();
         TypeExpression lhs = expStack.pop();
-        ComparisonNode node = new ComparisonNode(rhs, lhs, comparisonSymbol);       
+        ComparisonNode node = new ComparisonNode(rhs, lhs, comparisonSymbol);
         nodeStack.add(node);
-        
+
     }
 
     @Override
     public void enterTypeExp(FormalPropertyDescriptionParser.TypeExpContext ctx) {
-        
+
     }
 
     @Override
     public void exitTypeExp(FormalPropertyDescriptionParser.TypeExpContext ctx) {
-        
+
     }
 
     @Override
     public void enterNumberExpression(FormalPropertyDescriptionParser.NumberExpressionContext ctx) {
-        
+
     }
 
     @Override
@@ -213,47 +212,50 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
     @Override
     public void enterElectExp(FormalPropertyDescriptionParser.ElectExpContext ctx) {
         InternalTypeContainer container = resType;
-        
+
     }
 
     @Override
     public void exitElectExp(FormalPropertyDescriptionParser.ElectExpContext ctx) {
-         //get number
+        //get number
         String numberString = ctx.Elect().getText().substring("ELECT".length());
         int number = Integer.valueOf(numberString);
-        if(currentHighestElect < number) currentHighestElect = number;
-        
+        if (currentHighestElect < number) {
+            currentHighestElect = number;
+        }
+
         SymbolicVariable[] accessingVars = new SymbolicVariable[ctx.passSymbVar().size()];
-        
-        for(int i = 0; i < accessingVars.length; ++i) {
+
+        for (int i = 0; i < accessingVars.length; ++i) {
             accessingVars[i] = ((SymbolicVarExp) expStack.pop()).getSymbolicVar();
         }
-        
+
         ElectExp expNode = new ElectExp(resType, accessingVars, number);
-        
+
         expStack.add(expNode);
     }
 
     @Override
     public void enterVoteExp(FormalPropertyDescriptionParser.VoteExpContext ctx) {
-        
+
     }
 
     @Override
     public void exitVoteExp(FormalPropertyDescriptionParser.VoteExpContext ctx) {
-       String numberString = ctx.Vote().getText().substring("VOTES".length());
+        String numberString = ctx.Vote().getText().substring("VOTES".length());
         int number = Integer.valueOf(numberString);
-        if(maxVoteExp < number) maxVoteExp = number;
-        
-        
+        if (maxVoteExp < number) {
+            maxVoteExp = number;
+        }
+
         SymbolicVariable[] accessingVars = new SymbolicVariable[ctx.passSymbVar().size()];
-        
-        for(int i = 0; i < accessingVars.length; ++i) {
+
+        for (int i = 0; i < accessingVars.length; ++i) {
             accessingVars[i] = ((SymbolicVarExp) expStack.pop()).getSymbolicVar();
         }
-        
+
         VoteExp expNode = new VoteExp(inputType, accessingVars, number);
-        
+
         expStack.add(expNode);
     }
 
@@ -266,11 +268,11 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
     public void exitConstantExp(FormalPropertyDescriptionParser.ConstantExpContext ctx) {
         String constString = ctx.getText();
         ConstantExp expNode = null;
-        if(constString.equals(BooleanExpConstant.getConstForVoterAmt())) {
+        if (constString.equals(BooleanExpConstant.getConstForVoterAmt())) {
             expNode = new ConstantExp(new InternalTypeContainer(InternalTypeRep.VOTER), constString);
-        } else if(constString.equals(BooleanExpConstant.getConstForCandidateAmt())) {
+        } else if (constString.equals(BooleanExpConstant.getConstForCandidateAmt())) {
             expNode = new ConstantExp(new InternalTypeContainer(InternalTypeRep.CANDIDATE), constString);
-        } else if(constString.equals(BooleanExpConstant.getConstForSeatAmt())) {
+        } else if (constString.equals(BooleanExpConstant.getConstForSeatAmt())) {
             expNode = new ConstantExp(new InternalTypeContainer(InternalTypeRep.SEAT), constString);
         }
         expStack.push(expNode);
@@ -278,14 +280,16 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 
     @Override
     public void enterVoteSumExp(FormalPropertyDescriptionParser.VoteSumExpContext ctx) {
-        
+
     }
 
     @Override
     public void exitVoteSumExp(FormalPropertyDescriptionParser.VoteSumExpContext ctx) {
         String numberString = ctx.Votesum().getText().substring("VOTE_SUM_FOR_CANDIDATE".length());
         int number = Integer.valueOf(numberString);
-        if(number > maxVoteExp) maxVoteExp = number;
+        if (number > maxVoteExp) {
+            maxVoteExp = number;
+        }
         VoteSumForCandExp expNode = new VoteSumForCandExp(number,
                 ((SymbolicVarExp) expStack.pop()).getSymbolicVar());
         expStack.add(expNode);
@@ -298,12 +302,12 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 
     @Override
     public void exitPassSymbVar(FormalPropertyDescriptionParser.PassSymbVarContext ctx) {
-        
+
     }
 
     @Override
     public void enterSymbolicVarExp(FormalPropertyDescriptionParser.SymbolicVarExpContext ctx) {
-        
+
     }
 
     @Override
@@ -333,5 +337,5 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
     public void exitEveryRule(ParserRuleContext prc) {
 
     }
-    
+
 }

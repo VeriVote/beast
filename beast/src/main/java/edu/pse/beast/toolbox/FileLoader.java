@@ -6,12 +6,10 @@
 package edu.pse.beast.toolbox;
 
 import java.awt.image.BufferedImage;
-
 import java.io.*;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.LinkedList;
-
 import javax.imageio.ImageIO;
 
 /**

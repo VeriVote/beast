@@ -72,7 +72,7 @@ public abstract class StringResourceProvider {
         ErrorLogger.log("The file " + file.getName() + " is not correclty formated");
         ErrorLogger.log("You can find and correct the file in this directory " + file.getAbsolutePath());
     }
-
+    
     /**
      * This method is used to initialize the StringResourceLoaders of the
      * subclasses
