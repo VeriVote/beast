@@ -5,6 +5,7 @@ import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.ParameterEditorStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
+import edu.pse.beast.toolbox.RepaintThread;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
 import javax.swing.ImageIcon;
@@ -40,6 +41,8 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
         imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         userFeedbackPanel.add(imageLabel);
         imageLabel.setVisible(false);
+        Thread t = new Thread(new RepaintThread(this));
+        t.start();
     }
 
     /**

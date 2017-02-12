@@ -76,6 +76,9 @@ public class CodeAreaBuilder {
 
         shortcutHandler.addAction('z', userActions.getActionById("undo"));
         shortcutHandler.addAction('r', userActions.getActionById("redo"));
+        shortcutHandler.addAction('x', userActions.getActionById("cut"));
+        shortcutHandler.addAction('c', userActions.getActionById("copy"));
+        shortcutHandler.addAction('v', userActions.getActionById("paste"));
         return created;
     }
 
