@@ -26,6 +26,7 @@ import edu.pse.beast.propertylist.Model.ResultType;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
+import edu.pse.beast.toolbox.RepaintThread;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
 /**
@@ -80,6 +81,8 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		this.model = model;
 		model.addObserver(this);
 		init();
+                Thread t = new Thread(new RepaintThread(this));
+                t.start();
 	}
 	
 	

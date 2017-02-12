@@ -15,13 +15,18 @@ import javax.swing.JFrame;
  */
 public class RepaintThread implements Runnable {
     private final JFrame frame;
+    private volatile boolean run = true;
     public RepaintThread(JFrame frame) {
         this.frame = frame;
+    }
+    
+    public void stop() {
+        run = false;
     }
 
     @Override
     public void run() {
-        while(true) {
+        while(run) {
             try {
                 Thread.sleep(1000/60);
             } catch (InterruptedException ex) {

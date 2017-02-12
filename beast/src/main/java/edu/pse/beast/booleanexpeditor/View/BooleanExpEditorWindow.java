@@ -17,12 +17,14 @@ import javax.swing.*;
  */
 public class BooleanExpEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser{
 
+    RepaintThread repT;
     /**
      * Constructor, calls NetBeans generated initComponents method to initialize JFrame.
      */
     public BooleanExpEditorWindow() {
         initComponents();
-        Thread t = new Thread(new RepaintThread(this));
+        repT = new RepaintThread(this);
+        Thread t = new Thread(repT);
         t.start();
     }
 
