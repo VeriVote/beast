@@ -61,3 +61,4 @@ startingCheck : Analyse wird gestartet
 waitingForPropertyResult : Warte auf Ergebnis der Eigenschaft '
 title : Parametereditor
 analysisEnded : Analyse beendet nach
+noProperty : Es wurde keine Eigenschaft zur Analyse ausgewählt.

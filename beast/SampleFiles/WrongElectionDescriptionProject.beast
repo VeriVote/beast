@@ -1,5 +1,5 @@
 <projectName>
-SequentialTestTrueFalse
+WrongElectionDescriptionProject
 </projectName>
 <electionDescription>
 <electionName>
@@ -36,7 +36,7 @@ unsigned int  voting(unsigned int votes[V][C]) {
             }
         }
     }
-    return elect;
+    return elect
 } 
 
 </code>
@@ -55,34 +55,13 @@ New PropertyList
 <propertyItem>
 <postAndPreProps>
 <postAndPrePropsName>
-FalseProperty
+WrongProperty
 </postAndPrePropsName>
 <pre>
-FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);
+FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v)
 </pre>
 <post>
 ELECT1 != ELECT2;
-</post>
-<varlist>
-
-</varlist>
-
-</postAndPreProps>
-<testStatus>
-true
-</testStatus>
-
-</propertyItem>
-<propertyItem>
-<postAndPreProps>
-<postAndPrePropsName>
-TrueProperty
-</postAndPrePropsName>
-<pre>
-FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);
-</pre>
-<post>
-ELECT1 == ELECT2;
 </post>
 <varlist>
 
@@ -98,10 +77,10 @@ true
 </propertyList>
 <electionCheckParameter>
 <amountVotersMin>
-8
+9
 </amountVotersMin>
 <amountVotersMax>
-8
+16
 </amountVotersMax>
 <amountCandidatesMin>
 3

@@ -35,6 +35,12 @@ public class BEASTCommunicator implements CheckListener {
         PostAndPrePropertiesDescriptionSource postAndPreSrc = centralObjectProvider.getPostAndPrePropertiesSource();
         ParameterSource paramSrc = centralObjectProvider.getParameterSrc();
         CheckStatusDisplay checkStatusDisplayer = centralObjectProvider.getCheckStatusDisplay();
+
+        if (postAndPreSrc.getPostAndPrePropertiesDescriptions().size() == 0) {
+            checkStatusDisplayer.displayText("noProperty", false, "");
+            return;
+        }
+
         electSrc.stopReacting();
         postAndPreSrc.stopReacting();
         paramSrc.stopReacting();
