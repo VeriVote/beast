@@ -61,8 +61,6 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
     public String getRemoveString(int offset, int length) {
         if (prevText.length() >= length) {
             try{
-                System.out.println("offset: " + offset + ", legnth: " + length);
-                System.out.println("PREVTEXT:" + prevText);
                 return prevText.substring(offset, offset + length);
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();

@@ -1,5 +1,5 @@
 <projectName>
-SequentialTestTrueFalse
+TimeDisplayTest
 </projectName>
 <electionDescription>
 <electionName>
@@ -98,10 +98,10 @@ true
 </propertyList>
 <electionCheckParameter>
 <amountVotersMin>
-9
+1000
 </amountVotersMin>
 <amountVotersMax>
-16
+1000
 </amountVotersMax>
 <amountCandidatesMin>
 3
@@ -125,7 +125,7 @@ MINUTES
 
 </timeout>
 <processes>
-1
+8
 </processes>
 <argument>
 

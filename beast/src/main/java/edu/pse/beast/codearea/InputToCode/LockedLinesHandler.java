@@ -48,7 +48,6 @@ public class LockedLinesHandler implements DocumentListener {
         for(LockedLinesListener l : listeners) {
             l.lockedLine(line);
         }
-        System.out.println(toString());
     }
     
     public void unlockLine(int line) {
@@ -56,7 +55,6 @@ public class LockedLinesHandler implements DocumentListener {
         for(LockedLinesListener l : listeners) {
             l.unlockedLine(line);
         }
-        System.out.println(toString());
     }
     
     public boolean isLineLocked(int line) {

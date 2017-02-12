@@ -22,7 +22,6 @@ public class UndoLastUserAction extends UserAction {
 
     @Override
     public void perform() {
-        System.out.println("undo");
         list.undoLast();
     }
     

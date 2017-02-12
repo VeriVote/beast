@@ -44,10 +44,14 @@ public class FindWordsConcurrently implements Runnable {
             }
             String code = JTextPaneToolbox.getText(pane);
             String w = "";
-            for(int i = 0; i < code.length(); ++i) {
+            for(int i = 0; i < code.length(); i++) {
                 w = "";
-                for(; Character.isLetterOrDigit(code.charAt(i)); ++i) {
-                    w += code.charAt(i);
+                try {
+                    for(; Character.isLetterOrDigit(code.charAt(i)); i++) {
+                        w += code.charAt(i);
+                    }
+                } catch (StringIndexOutOfBoundsException e) {
+                    break;
                 }
                 if(w.length() != 0) {
                     controller.addAutocompletionString(w);

@@ -38,11 +38,6 @@ public class LockedLinesDisplay implements LockedLinesListener {
     public void lockedLine(int lineNumber) {
         int lineStart = JTextPaneToolbox.getLineBeginning(pane, lineNumber);
         int lineEnd = JTextPaneToolbox.getClosestLineBeginningAfter(pane, lineStart);
-        try {
-            System.out.println("locked: " + pane.getStyledDocument().getText(lineStart, lineEnd - lineStart));
-        } catch (BadLocationException ex) {
-            Logger.getLogger(LockedLinesDisplay.class.getName()).log(Level.SEVERE, null, ex);
-        }
        
         try {
             highlights.put(lineNumber, highlighter.addHighlight(lineStart, lineEnd - 1, hPainter));
@@ -55,11 +50,6 @@ public class LockedLinesDisplay implements LockedLinesListener {
     public void unlockedLine(int lineNumber) {
         int lineStart = JTextPaneToolbox.getLineBeginning(pane, lineNumber);
         int lineEnd = JTextPaneToolbox.getClosestLineBeginningAfter(pane, lineStart);
-        try {
-            System.out.println(pane.getStyledDocument().getText(lineStart, lineEnd - lineStart));
-        } catch (BadLocationException ex) {
-            Logger.getLogger(LockedLinesDisplay.class.getName()).log(Level.SEVERE, null, ex);
-        }
         highlighter.removeHighlight(highlights.get(lineNumber));
         highlights.remove(lineNumber);
     }
