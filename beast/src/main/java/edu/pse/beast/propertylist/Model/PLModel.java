@@ -40,7 +40,15 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 
 	@Override
 	public boolean addDescription(PropertyItem prop) {
-		propertyList.add(prop);
+		if (propertyList.indexOf(prop) != -1) {
+			PropertyItem updated = prop;
+			String newName = prop.getDescription().getName() + "x";
+			updated.setDescriptionName(newName);
+			propertyList.add(updated);
+		}
+		else {
+			propertyList.add(prop);
+		}
 		updateView();
 		return true;
 	}

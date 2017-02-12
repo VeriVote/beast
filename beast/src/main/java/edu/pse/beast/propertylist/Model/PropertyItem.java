@@ -101,6 +101,11 @@ public class PropertyItem implements ResultPresenterElement {
             FormalPropertiesDescription postProp, SymbolicVariableList symVars) {
         this.description = new PostAndPrePropertiesDescription(newName, preProp, postProp, symVars);
     }
+    
+    public void setDescriptionName(String newName) {
+    	this.description = new PostAndPrePropertiesDescription(newName, this.description.getPrePropertiesDescription(),
+    			this.description.getPostPropertiesDescription(), this.description.getSymVarList());
+    }
 
     public void setTestStatus(boolean newStatus) {
         willBeTested = newStatus;
