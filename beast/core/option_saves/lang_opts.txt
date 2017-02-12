@@ -1,0 +1,2 @@
+lang : de
+choosable_lang : de,en

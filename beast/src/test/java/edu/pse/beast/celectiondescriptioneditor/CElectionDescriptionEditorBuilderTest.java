@@ -41,12 +41,7 @@ public class CElectionDescriptionEditorBuilderTest {
     }
 
     public static void main(String[] args) {    
-        OptionsInterface opt = new OptionsInterface();
-        ObjectRefsForBuilder refs = new ObjectRefsForBuilder(
-                opt, new StringLoaderInterface("de"), 
-                new LanguageOptions(null, null, null, null), new SaverLoaderInterface());
-        CElectionDescriptionEditorBuilder builder = new CElectionDescriptionEditorBuilder();
-        builder.createCElectionDescriptionEditor(refs);
+        
     }
     
 }

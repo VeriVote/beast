@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.options;
 
+import edu.pse.beast.saverloader.OptionSaverLoader.OptionsSaverLoaderInterface;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +16,8 @@ import java.util.List;
 public abstract class Options {
 
     private final String id;
-    private List<Options> subOptions = new ArrayList<Options>();
-    private List<OptionElement> optElements = new ArrayList<OptionElement>();
-
+    protected List<Options> subOptions = new ArrayList<Options>();
+    protected List<OptionElement> optElements = new ArrayList<OptionElement>();
     /**
      * creates a new Options object
      * @param id the ID of this object
@@ -70,6 +70,11 @@ public abstract class Options {
      * Gets called when an option got changed and reapplies it where
      * it is used.
      */
-    public abstract void reapply();
+    public void reapply() {
+        OptionsSaverLoaderInterface.saveOpt(this);
+        reapplySpecialized();
+    }
+    
+    protected abstract void reapplySpecialized();
 
 }

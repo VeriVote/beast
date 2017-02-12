@@ -2,6 +2,7 @@ package edu.pse.beast.parametereditor;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
+import edu.pse.beast.options.OptionsInterface;
 import edu.pse.beast.parametereditor.View.ParameterEditorWindow;
 import edu.pse.beast.parametereditor.View.ParameterEditorWindowStarter;
 import edu.pse.beast.propertylist.PropertyList;
@@ -53,7 +54,7 @@ public class ParameterEditorBuilder {
         ParameterEditorMenuBarHandler menuBarHandler = new ParameterEditorMenuBarHandler(menuHeadingIds,
                 createActionIdAndListenerListForMenuHandler(cElectionDescriptionEditor, booleanExpEditor, propertyList,
                         refs.getStringIF().getParameterEditorStringResProvider().getOtherStringRes(),
-                        saverLoaderInterface.getProjectSaverLoader()),
+                        saverLoaderInterface.getProjectSaverLoader(), refs),
                 refs.getStringIF().getParameterEditorStringResProvider().getMenuStringRes(), window);
         ImageResourceProvider imageRes = ImageResourceProvider.getToolbarImages();
         ParameterEditorToolbarHandler toolbarHandler = new ParameterEditorToolbarHandler(imageRes,
@@ -62,6 +63,10 @@ public class ParameterEditorBuilder {
                         refs.getStringIF().getParameterEditorStringResProvider().getOtherStringRes(),
                         saverLoaderInterface.getProjectSaverLoader()), window.getToolbar(), window);
 
+        
+        refs.getLanguageOpts().addStringDisplayer(menuBarHandler);
+        refs.getLanguageOpts().addStringDisplayer(toolbarHandler);
+        refs.getLanguageOpts().addStringDisplayer(window);        
         
         editor.setToolbarHandler(toolbarHandler);
         editor.setMenuBarHandler(menuBarHandler);
@@ -81,7 +86,8 @@ public class ParameterEditorBuilder {
     private ArrayList<ArrayList<ActionIdAndListener>>
             createActionIdAndListenerListForMenuHandler(CElectionDescriptionEditor cElectionDescriptionEditor,
                                                         BooleanExpEditor booleanExpEditor,
-                    PropertyList propertyList, StringResourceLoader stringResourceLoader, SaverLoader saverLoader) {
+                    PropertyList propertyList, StringResourceLoader stringResourceLoader, SaverLoader saverLoader,
+                    ObjectRefsForBuilder refs) {
         ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
 
         UserAction load = createLoadProjectUserAction(cElectionDescriptionEditor, propertyList, stringResourceLoader, saverLoader);
@@ -90,7 +96,7 @@ public class ParameterEditorBuilder {
                 saverLoader);
         UserAction start = createStartCheckUserAction();
         UserAction stop = createAbortCheckUserAction();
-        UserAction options = createOptionsUserAction(cElectionDescriptionEditor, propertyList);
+        UserAction options = createOptionsUserAction(refs);
         UserAction showPropertyList = createShowPropertyListUserAction(propertyList.getView());
         UserAction showBooleanExpEditor = createShowBooleanExpEditorUserAction(booleanExpEditor.getView());
         UserAction showCElectionEditor = createShowCElectionEditorUserAction(cElectionDescriptionEditor.getView());
@@ -116,6 +122,8 @@ public class ParameterEditorBuilder {
         created.add(projectList);
         created.add(editorList);
         created.add(showHideWindowsList);
+        
+        
         return created;
     }
     /**
@@ -171,9 +179,10 @@ public class ParameterEditorBuilder {
         return new AbortCheckUserAction(editor);
     }
     
-    private UserAction createOptionsUserAction(CElectionDescriptionEditor cElectionDescriptionEditor,
-            PropertyList propertyList) {
-        return new OptionsUserAction(propertyList, cElectionDescriptionEditor, editor);
+    private UserAction createOptionsUserAction(ObjectRefsForBuilder refs) {
+        return new OptionsUserAction(                
+                refs.getOptionIF().getParameterEditorOptions(refs.getLanguageOpts()), 
+                editor, refs.getOptionIF().getOptionPresenter(refs));
     }
 
     private UserAction createShowPropertyListUserAction(JFrame propertyListWindow) {

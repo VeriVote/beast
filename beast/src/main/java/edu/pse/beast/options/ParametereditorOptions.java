@@ -3,8 +3,6 @@ package edu.pse.beast.options;
 import toBeImplemented.CheckerList;
 
 public class ParametereditorOptions extends Options {
-    private final CheckerOptionElement checker;
-    private final CheckerList availableCheckerList;
     private final LanguageOptions langOpts;
 
     /**
@@ -15,42 +13,14 @@ public class ParametereditorOptions extends Options {
      * @param checker the checkerids
      * 
      */
-    public ParametereditorOptions(String id, CheckerOptionElement checker, CheckerList availableCheckerList,
-            LanguageOptions langOpts) {
-        super(id);
-        this.checker = checker;
-        this.availableCheckerList = availableCheckerList;
+    public ParametereditorOptions(LanguageOptions langOpts) {
+        super("param_opts");
         this.langOpts = langOpts;
-    }
-
-    /**
-     * 
-     * @return the checkerids
-     */
-    public CheckerOptionElement getChecker() {
-        return checker;
-    }
-
-    /**
-     * 
-     * @return the checkerids
-     */
-    public CheckerList getAvailableCheckerList() {
-        return availableCheckerList;
-    }
-
-    /**
-     * 
-     * @return the language options
-     */
-    public LanguageOptions getLanguageOptions() {
-        return langOpts;
+        subOptions.add(langOpts);
     }
 
     @Override
-    public void reapply() {
-        // TODO Auto-generated method stub
-
+    protected void reapplySpecialized() {
     }
 
 }

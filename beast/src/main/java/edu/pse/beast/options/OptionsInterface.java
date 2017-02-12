@@ -3,10 +3,16 @@ package edu.pse.beast.options;
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.parametereditor.ParameterEditor;
+import edu.pse.beast.saverloader.OptionSaverLoader.OptionsSaverLoaderInterface;
+import edu.pse.beast.saverloader.SaverLoaderInterface;
+import edu.pse.beast.stringresource.StringLoaderInterface;
+import edu.pse.beast.toolbox.ObjectRefsForBuilder;
+import java.io.IOException;
 import toBeImplemented.CheckerList;
 
-public class OptionsInterface {
-
+public class OptionsInterface {    
+    private OptionPresenter presenter;
+    
     public BooleanExpEditorOptions getBooleanExpEditorOptions(BooleanExpEditor editor,
             BooleanExpCodeAreaOptions booleanExpCodeAreaOptions) {
         return new BooleanExpEditorOptions("id", editor, booleanExpCodeAreaOptions);
@@ -17,12 +23,18 @@ public class OptionsInterface {
         return new CElectionEditorOptions("id", editor, cElectionCodeAreaOptions);
     }
 
-    public ParametereditorOptions getParameterEditorOptions(CheckerOptionElement checker, CheckerList availableChecker, ParameterEditor editor, LanguageOptions langOpts) {
-        return new ParametereditorOptions("id", checker, availableChecker, langOpts);
+    public ParametereditorOptions getParameterEditorOptions(LanguageOptions langOpts) {
+        return new ParametereditorOptions(langOpts);
     }
 
-    public LanguageOptions getLanguageOptions() {
-        //TODO implement
-        return new LanguageOptions(null, null, null, null);
+    public LanguageOptions getLanguageOptions(StringLoaderInterface stringIf) throws IOException {
+        return OptionsSaverLoaderInterface.loadLangOpts(stringIf);
+    }
+
+    public OptionPresenter getOptionPresenter(ObjectRefsForBuilder refs) {
+        if(presenter == null) {
+            presenter = new OptionPresenter(refs.getStringIF().getOptionStringResProvider().getOptionStringRes());
+        }
+        return presenter;
     }
 }

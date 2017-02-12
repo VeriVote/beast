@@ -3,13 +3,15 @@ package edu.pse.beast.options;
 import java.util.List;
 
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
+import edu.pse.beast.saverloader.SaverLoaderInterface;
 import edu.pse.beast.stringresource.StringLoaderInterface;
+import edu.pse.beast.stringresource.StringResourceLoader;
+import java.util.ArrayList;
 
 public class LanguageOptions extends Options {
-    private final StringLoaderInterface sli;
-    private final List<DisplaysStringsToUser> stringDisplays;
-    private final LanguageOptionElement languages;
-
+    private StringLoaderInterface sli;
+    private List<DisplaysStringsToUser> stringDisplays = new ArrayList<>();
+    private LanguageOptionElement langOptElem;
     /**
      * 
      * @param id the id
@@ -17,41 +19,30 @@ public class LanguageOptions extends Options {
      * @param stringDisplays the display strings
      * @param languages the language
      */
-    public LanguageOptions(String id, StringLoaderInterface sli, List<DisplaysStringsToUser> stringDisplays,
-            LanguageOptionElement languages) {
-        super(id);
+    public LanguageOptions(StringLoaderInterface sli,
+            StringResourceLoader stringResLoader) {
+        super("lang_opts");
         this.sli = sli;
-        this.stringDisplays = stringDisplays;
-        this.languages = languages;
+        String chosenLang = stringResLoader.getStringFromID("lang");
+        String choosableLangs[] = stringResLoader.getStringFromID("choosable_lang").split(",");
+        ArrayList<String> choosableLangsList = new ArrayList<>();
+        for (int i = 0; i < choosableLangs.length; i++) {
+            choosableLangsList.add(choosableLangs[i]);
+        }
+        langOptElem = new LanguageOptionElement(choosableLangsList, chosenLang);
+        optElements.add(langOptElem);
+    }
+    
+    public void addStringDisplayer(DisplaysStringsToUser dis) {
+        stringDisplays.add(dis);
     }
 
-    /**
-     * 
-     * @return the string loader interface 
-     */
-    public StringLoaderInterface getSli() {
-        return sli;
-    }
-
-    /**
-     * 
-     * @return the display strings
-     */
-    public List<DisplaysStringsToUser> getStringDisplays() {
-        return stringDisplays;
-    }
-
-    /**
-     * 
-     * @return the language
-     */
-    public LanguageOptionElement getLanguages() {
-        return languages;
-    }
 
     @Override
-    public void reapply() {
-        // TODO Auto-generated method stub
-
+    protected void reapplySpecialized() {
+        sli.setLanguage(langOptElem.chosenOption);
+        for(DisplaysStringsToUser dis : stringDisplays) {
+            dis.updateStringRes(sli);
+        }
     }
 }

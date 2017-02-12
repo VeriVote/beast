@@ -39,6 +39,7 @@ public class CElectionCodeAreaBuilder extends CodeAreaBuilder {
     public CElectionCodeArea createCElectionCodeArea(JTextPane codeArea, JScrollPane codeAreaScrollPane, CErrorDisplayer displayer) {
         CElectionCodeArea created = new CElectionCodeArea(createCodeArea(codeArea, codeAreaScrollPane,
                 refs, displayer));    
+        refs.getLanguageOpts().addStringDisplayer(displayer);
         for(AutocompletionOption opt : createAutocompletionOptions()) {
             created.getAutoComplCtrl().add(opt);
         }

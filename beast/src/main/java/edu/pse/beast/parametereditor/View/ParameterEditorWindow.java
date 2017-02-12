@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import java.awt.*;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  * Window which takes all the user input for the parameters used by CBMC. It
@@ -385,6 +386,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
 
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
+        reacts = false;
         this.stringResIF = stringResIF;
         ParameterEditorStringResProvider provider = stringResIF.getParameterEditorStringResProvider();
         StringResourceLoader other = provider.getOtherStringRes();
@@ -399,11 +401,16 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
         candTo.setText(other.getStringFromID("to"));
         seatTo.setText(other.getStringFromID("to"));
         advancedButton.setText(other.getStringFromID("advanced"));
-        timeoutUnit.removeAllItems();
-        timeoutUnit.addItem(other.getStringFromID("seconds"));
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel();
+        model.addElement(other.getStringFromID("seconds"));
+        model.addElement(other.getStringFromID("minutes"));
+        model.addElement(other.getStringFromID("hours"));
+        model.addElement(other.getStringFromID("days"));
+        timeoutUnit.setModel(model);
+        /*timeoutUnit.addItem(other.getStringFromID("seconds"));
         timeoutUnit.addItem(other.getStringFromID("minutes"));
         timeoutUnit.addItem(other.getStringFromID("hours"));
-        timeoutUnit.addItem(other.getStringFromID("days"));
+        timeoutUnit.addItem(other.getStringFromID("days"));*/
         advWindow.updateStringRes(stringResIF);
         versionWindow.updateStringRes(stringResIF);
         timeout.setText(other.getStringFromID("timeout"));
@@ -411,6 +418,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
         voterTo.setText(other.getStringFromID("to"));
         candTo.setText(other.getStringFromID("to"));
         seatTo.setText(other.getStringFromID("to"));
+        reacts = true;
     }
     /**
      * Toggles whether this window reacts to user input with the exception of

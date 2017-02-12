@@ -1,6 +1,8 @@
 package edu.pse.beast.parametereditor;
 
+import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.parametereditor.View.ParameterEditorWindow;
+import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.ActionIdAndListener;
 import edu.pse.beast.toolbox.ImageResourceProvider;
@@ -10,7 +12,7 @@ import javax.swing.JToolBar;
  * The ParameterEditorToolbarHandler creates the toolbar for the ParameterEditor.
  * @author Jonas
  */
-public class ParameterEditorToolbarHandler extends ToolbarHandler {
+public class ParameterEditorToolbarHandler extends ToolbarHandler implements DisplaysStringsToUser {
     private final ParameterEditorWindow window;
         /**
          * Creates the toolbar and applies it to the ParameterEditorWindow
@@ -25,4 +27,9 @@ public class ParameterEditorToolbarHandler extends ToolbarHandler {
                 super(imageRes, stringRes, actionIdsAndListener, toolbar);
                 this.window = window;
         }
+
+    @Override
+    public void updateStringRes(StringLoaderInterface stringResIF) {
+        super.updateTooltips(stringResIF.getParameterEditorStringResProvider().getToolbarTipStringRes());
+    }
 }

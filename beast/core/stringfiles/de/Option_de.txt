@@ -1,0 +1,3 @@
+lang : Sprache
+lang_opts : Sprachoptionen
+ok_button : Anwenden
