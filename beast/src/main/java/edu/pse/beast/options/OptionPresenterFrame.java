@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 /**
- *
+ * A JFrame subclass in with which OptionElement objects can be presented to the user.
  * @author Holger-Desktop
  */
 public class OptionPresenterFrame extends javax.swing.JFrame {

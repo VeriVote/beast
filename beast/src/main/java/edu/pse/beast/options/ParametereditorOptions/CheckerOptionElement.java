@@ -3,14 +3,16 @@ package edu.pse.beast.options.ParametereditorOptions;
 import edu.pse.beast.options.OptionElement;
 import java.util.List;
 
+/**
+ * OptionElement subclass for the checker option.
+ */
 public class CheckerOptionElement extends OptionElement {
 
     
     /**
-     * 
-     * @param id the id
+     * Constructor
      * @param choosableOptions the choosable options
-     * @param checkerIDs the list of all available checker ids
+     * @param chosen the String for the chosen checker
      */
     public CheckerOptionElement(List<String> choosableOptions, String chosen) {
         super("checker", choosableOptions);

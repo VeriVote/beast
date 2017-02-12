@@ -11,7 +11,7 @@ unsigned int  voting(unsigned int votes[V][C]) {
         unsigned int res[C];
     unsigned int i = 0;
     unsigned int j = 0;
- 
+ gyu
     for (i = 0; i < C; i++) {
         res[i] = 0;
     }

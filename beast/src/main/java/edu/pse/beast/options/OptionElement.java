@@ -3,7 +3,7 @@ package edu.pse.beast.options;
 import java.util.List;
 
 /**
- *
+ * A parent class representing an Option.
  * @author Lukas
  */
 public abstract class OptionElement {

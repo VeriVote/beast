@@ -4,12 +4,15 @@ import edu.pse.beast.options.CodeAreaOptions.CodeAreaOptions;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
 import edu.pse.beast.options.Options;
 
+/**
+ * Options subclass for the CElectionCodeAreaOptions.
+ */
 public class CElectionCodeAreaOptions extends Options {
     private CElectionCodeArea cElecCodeArea;
     private final CodeAreaOptions codeAreaOptions;
     
     /**
-     * 
+     * Constructor
      * @param cElecCodeArea the cCodeArea
      * @param codeAreaOptions the options
      */
@@ -28,7 +31,7 @@ public class CElectionCodeAreaOptions extends Options {
         subOptions.add(codeAreaOptions);
     }
     /**
-     * 
+     * Getter
      * @return the options
      */
     public CodeAreaOptions getCodeAreaOptions() {
@@ -40,6 +43,10 @@ public class CElectionCodeAreaOptions extends Options {
         
     }
 
+    /**
+     * Setter for the new CodeArea
+     * @param codeArea new CElectionCodeArea object
+     */
     public void setCodeArea(CElectionCodeArea codeArea) {
         this.cElecCodeArea = codeArea;
         this.codeAreaOptions.setCodeArea(codeArea);

@@ -12,9 +12,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 /**
- * Sets the regexes to be highlighted by a syntaxhighlighter for the c
- * programming language
- *
+ * Sets the regular expressions to be highlighted by a syntaxhighlighter for the c
+ * programming language.
  * @author Holger-Desktop
  */
 public class CSyntaxHl {
@@ -35,8 +34,8 @@ public class CSyntaxHl {
             String regexWithWhiteSpace = "(\\(|\\s|\\A)" + s + "(\\s|\\Z|\\))";
             regexAndColorList.add(new RegexAndColor(regexWithWhiteSpace, Color.BLUE));
         }
-        regexAndColorList.add(new RegexAndColor(antlrHandler.getCommentRegex(), Color.GRAY));
         regexAndColorList.add(new RegexAndColor(antlrHandler.getStringRegex(), Color.RED));
+        regexAndColorList.add(new RegexAndColor(antlrHandler.getCommentRegex(), Color.GRAY));
 
         syntaxHL.updateFilter(regexAndColorList);
     }
