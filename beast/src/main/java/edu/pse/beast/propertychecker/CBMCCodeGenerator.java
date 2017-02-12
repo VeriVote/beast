@@ -233,8 +233,6 @@ public class CBMCCodeGenerator {
                 ? postAST.getHighestElect() : numberOfTimesVoted;
     }
 
-    
-    
     private void addVotesArrayAndElectInitialisation() {
 
         code.add("//voting-array and elect variable initialisation");
@@ -282,16 +280,17 @@ public class CBMCCodeGenerator {
                 code.deleteTab();
                 code.add("}");
             }
-
-            String electX = "unsigned int elect" + voteNumber;
-
-            electX += cCodeHelper.getCArrayType(outputType.getType());
-
-            code.add(electX + ";");
-
-            code.add("elect" + voteNumber + " = voting(votes" + voteNumber + ");");
-
             //initialize elects
+            if (outputType.getType().isList()) {
+                String electX = "unsigned int *elect" + voteNumber;
+                code.add(electX + " = voting(votes" + voteNumber + ");");
+            } else {
+                String electX = "unsigned int elect" + voteNumber;
+                electX += cCodeHelper.getCArrayType(outputType.getType());
+                code.add(electX + ";");
+                code.add("elect" + voteNumber + " = voting(votes" + voteNumber + ");");
+            }
+
         }
 
     }
