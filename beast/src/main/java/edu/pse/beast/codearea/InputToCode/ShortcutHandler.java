@@ -60,6 +60,8 @@ public class ShortcutHandler {
                     return 83;                    
                 case 'o':
                     return 79;
+                case 'n':
+                    return 78;
                 default:
                     return -1;                            
         }     

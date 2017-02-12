@@ -227,6 +227,11 @@ public class CodeArea implements AncestorListener {
     public UserInsertToCode getInsertToCode() {
         return insertToCode;
     }
+
+    public UserInputHandler getUserInputHandler() {
+        return userInputHandler;
+    }
+    
     
 
 }
