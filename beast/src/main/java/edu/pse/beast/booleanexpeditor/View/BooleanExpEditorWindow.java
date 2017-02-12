@@ -10,10 +10,6 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.RepaintThread;
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
 
 /**
  * The JFrame that serves as the View for the booleanexpeditor Package.
@@ -237,7 +233,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
 
     /**
      * Adds the given string to the window title, used for displaying name of currently loaded PostAndPrePropDescription
-     * @param s
+     * @param s name of the currently laoded PostAndPrePropertiesDescription
      */
     public void setWindowTitle(String s) {
         this.setTitle(titleString + " " + s + " - BEAST");

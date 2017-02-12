@@ -8,11 +8,11 @@ package edu.pse.beast.saverloader;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
-import edu.pse.beast.saverloader.FormalPropertySaverLoader;
-import edu.pse.beast.saverloader.SymbolicVarListSaverLoader;
+import edu.pse.beast.saverloader.StaticSaverLoaders.FormalPropertySaverLoader;
+import edu.pse.beast.saverloader.StaticSaverLoaders.SymbolicVarListSaverLoader;
 
 /**
- *
+ * Implements SaverLoader methods for creating saveStrings from PostAndPrePropertiesDescription objects and vice versa.
  * @author Holger-Desktop
  */
 public class PostAndPrePropertiesDescriptionSaverLoader implements SaverLoader{

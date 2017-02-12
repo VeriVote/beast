@@ -1,10 +1,5 @@
 package edu.pse.beast.highlevel;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-
-import edu.pse.beast.toolbox.SuperFolderFinder;
-
 /**
  * The MainClass creates an CentralObjectProvider which creates all other parts
  * of the program and with it a BEASTCommunicator which coordinates them.
@@ -16,17 +11,11 @@ public class MainClass {
     /**
      * Starts BEAST
      *
-     * @param args
-     * @throws java.net.URISyntaxException
-     * @throws java.io.IOException
+     * @param args not used
      */
-    public static void main(String[] args) throws URISyntaxException, IOException {
-        
+    public static void main(String[] args) {
         BEASTCommunicator communicator = new BEASTCommunicator();
-        
         CentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
-        
         communicator.setCentralObjectProvider(centralObjectProvider);
-          
     }
 }

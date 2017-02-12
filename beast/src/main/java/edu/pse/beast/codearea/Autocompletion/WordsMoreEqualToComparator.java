@@ -14,7 +14,7 @@ import java.util.Comparator;
  * @author Holger-Desktop
  */
 public class WordsMoreEqualToComparator implements Comparator<AutocompletionOption>{
-    private String compareWord;
+    private final String compareWord;
     public WordsMoreEqualToComparator(String compareWord) {
         this.compareWord = compareWord;
     }

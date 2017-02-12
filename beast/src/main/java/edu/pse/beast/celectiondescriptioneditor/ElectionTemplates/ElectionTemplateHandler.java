@@ -15,20 +15,20 @@ import java.util.ArrayList;
  * @author Holger-Desktop
  */
 public class ElectionTemplateHandler {
-    private String[] inputIds = {
+    private final String[] inputIds = {
         "one_candidate_per_voter",
         "list_of_candidates_per_voter", 
         "list_of_yes_no_per_voter",
         "list_of_integer_vals_per_voter"
     };
     
-    private String[] resultIds = {
+    private final String[] resultIds = {
         "one_candidate_or_zero",
         "list_of_integers"
     };
     
-    private ArrayList<ElectionTypeContainer> inputTypes = new ArrayList<>();
-    private ArrayList<ElectionTypeContainer> resTypes = new ArrayList<>();
+    private final ArrayList<ElectionTypeContainer> inputTypes = new ArrayList<>();
+    private final ArrayList<ElectionTypeContainer> resTypes = new ArrayList<>();
     
     
     public ElectionTemplateHandler() {

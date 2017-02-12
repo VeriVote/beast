@@ -4,22 +4,27 @@ import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
+ * UserAction subclass responsible for saving Properties whithout forcing a save dialog.
  * @author NikolaiLMS
  */
 public class SavePropsUserAction extends UserAction{
-    private BooleanExpEditor booleanExpEditor;
+    private final BooleanExpEditor editor;
 
-    public SavePropsUserAction(BooleanExpEditor booleanExpEditor) {
+    /**
+     * Constructor
+     * @param editor reference to the GUI controller.
+     */
+    public SavePropsUserAction(BooleanExpEditor editor) {
         super("save");
-        this.booleanExpEditor = booleanExpEditor;
+        this.editor = editor;
     }
 
     @Override
     public void perform() {
-        if (booleanExpEditor.getFileChooser().saveObject(booleanExpEditor.getCurrentlyLoadedPostAndPreProp(), false)) {
-            booleanExpEditor.getChangeHandler().updatePreValues();
-            booleanExpEditor.getView().setWindowTitle(booleanExpEditor.getCurrentlyLoadedPostAndPreProp().getName());
-            booleanExpEditor.findErrorsAndDisplayThem();
+        if (editor.getFileChooser().saveObject(editor.getCurrentlyLoadedPostAndPreProp(), false)) {
+            editor.getChangeHandler().updatePreValues();
+            editor.getView().setWindowTitle(editor.getCurrentlyLoadedPostAndPreProp().getName());
+            editor.findErrorsAndDisplayThem();
         }
     }
 }

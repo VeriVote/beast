@@ -1,15 +1,19 @@
 package edu.pse.beast.booleanexpeditor.UserActions;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
-import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeArea;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
+ * UserAction subclass responsible for cutting text in the last focused BooleanExpEditorCodeAreas.
  * @author NikolaiLMS
  */
 public class CutUserAction extends UserAction{
-    private BooleanExpEditor editor;
+    private final BooleanExpEditor editor;
 
+    /**
+     * Constructor
+     * @param editor reference to the GUI controller.
+     */
     public CutUserAction(BooleanExpEditor editor) {
         super("cut");
         this.editor = editor;

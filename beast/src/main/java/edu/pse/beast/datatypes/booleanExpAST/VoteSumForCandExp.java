@@ -15,7 +15,7 @@ public class VoteSumForCandExp extends TypeExpression {
     private final int voteArrNum;
     /**
      * 
-     * @param internalTypeContainer the type of this node
+     * @param voteArrNum
      * @param symbVar the symbolic variable of this node
      */
     public VoteSumForCandExp(int voteArrNum, SymbolicVariable symbVar) {

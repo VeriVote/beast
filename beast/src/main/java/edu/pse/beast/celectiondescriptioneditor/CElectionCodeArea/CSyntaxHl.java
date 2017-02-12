@@ -14,22 +14,24 @@ import java.util.ArrayList;
 /**
  * Sets the regexes to be highlighted by a syntaxhighlighter for the c
  * programming language
+ *
  * @author Holger-Desktop
  */
 public class CSyntaxHl {
-    private CAntlrHandler antlrHandler;
-    private SyntaxHL syntaxHL;
-    
+
+    private final CAntlrHandler antlrHandler;
+    private final SyntaxHL syntaxHL;
+
     public CSyntaxHl(CAntlrHandler antlrHandler, SyntaxHL syntaxHL) {
         this.antlrHandler = antlrHandler;
         this.syntaxHL = syntaxHL;
 
         ArrayList<RegexAndColor> regexAndColorList = new ArrayList<>();
-        for(String s : antlrHandler.getTypeLiterals()) {
+        for (String s : antlrHandler.getTypeLiterals()) {
             String regexWithWhiteSpace = "(\\(|\\s|\\A)" + s + "(\\s|\\Z|\\))";
             regexAndColorList.add(new RegexAndColor(regexWithWhiteSpace, Color.GREEN));
         }
-        for(String s : antlrHandler.getControllLiterals()) {
+        for (String s : antlrHandler.getControllLiterals()) {
             String regexWithWhiteSpace = "(\\(|\\s|\\A)" + s + "(\\s|\\Z|\\))";
             regexAndColorList.add(new RegexAndColor(regexWithWhiteSpace, Color.BLUE));
         }

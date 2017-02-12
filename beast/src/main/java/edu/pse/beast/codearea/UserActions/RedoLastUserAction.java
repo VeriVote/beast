@@ -22,7 +22,6 @@ public class RedoLastUserAction extends UserAction {
 
     @Override
     public void perform() {
-        System.out.println("redo");
         list.redoLast();
     }
     

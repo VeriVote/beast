@@ -17,6 +17,7 @@ import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
+import edu.pse.beast.propertylist.PLControllerInterface;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 
 /**
  * The main class of this package that serves as an interface to the outside.
- * Main "Controller" in an MVC-Pattern.
+ * Main "Controller" as part of the MVC-Pattern.
  * @author NikolaiLMS
  */
 public class BooleanExpEditor implements DisplaysStringsToUser{
@@ -48,6 +49,7 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
     private final ArrayList<UserAction> userActions = new ArrayList<>();
     private final ArrayList<Character> userActionChars = new ArrayList<>();
     private ObjectRefsForBuilder objectRefsForBuilder;
+    private PLControllerInterface propertyListController;
 
 
     /**
@@ -184,7 +186,6 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
      */
     public void loadNewProperties(PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
         updatePostAndPrePropObject();
-        System.out.println("Loading symbolic variable list");
         currentlyLoadedPostAndPreProp = postAndPrePropertiesDescription;
         symbolicVarListController.setSymbVarList(postAndPrePropertiesDescription.getSymbolicVariableList());
         window.setNewTextpanes();
@@ -295,7 +296,27 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
         return currentlyLoadedPostAndPreProp;
     }
 
+    /**
+     * Returns loadedFromPropertyList,
+     * @return true if the
+     */
     public boolean getLoadedFromPropertyList() {
         return loadedFromPropertyList;
     }
+
+    /**
+     * Getter for the PropertyListController, used when new Property is created to add it to the PropertyList.
+     * @return propertyListController
+     */
+	public PLControllerInterface getPropertyListController() {
+		return propertyListController;
+	}
+
+    /**
+     * Setter for the PropertyListController, see above for explanation.
+     * @param propertyListController the PropertyListController
+     */
+	public void setPropertyListController(PLControllerInterface propertyListController) {
+		this.propertyListController = propertyListController;
+	}
 }

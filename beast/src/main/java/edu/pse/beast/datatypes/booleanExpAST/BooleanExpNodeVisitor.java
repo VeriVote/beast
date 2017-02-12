@@ -1,6 +1,5 @@
 package edu.pse.beast.datatypes.booleanExpAST;
 
-import java.util.List;
 
 /**
  *

@@ -7,8 +7,6 @@ package edu.pse.beast.codearea.Autocompletion;
 
 import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JTextPane;
 
 /**
@@ -19,10 +17,10 @@ import javax.swing.JTextPane;
  * @author Holger-Desktop
  */
 public class FindWordsConcurrently implements Runnable {
-    private ArrayList<String> words = new ArrayList<>();
-    private JTextPane pane;
+    private final ArrayList<String> words = new ArrayList<>();
+    private final JTextPane pane;
     private volatile boolean run = true;
-    private AutocompletionController controller;
+    private final AutocompletionController controller;
     public FindWordsConcurrently(JTextPane pane, AutocompletionController controller) {
         this.pane = pane;
         this.controller = controller;
@@ -46,10 +44,14 @@ public class FindWordsConcurrently implements Runnable {
             }
             String code = JTextPaneToolbox.getText(pane);
             String w = "";
-            for(int i = 0; i < code.length(); ++i) {
+            for(int i = 0; i < code.length(); i++) {
                 w = "";
-                for(; Character.isLetterOrDigit(code.charAt(i)); ++i) {
-                    w += code.charAt(i);
+                try {
+                    for(; Character.isLetterOrDigit(code.charAt(i)); i++) {
+                        w += code.charAt(i);
+                    }
+                } catch (StringIndexOutOfBoundsException e) {
+                    break;
                 }
                 if(w.length() != 0) {
                     controller.addAutocompletionString(w);

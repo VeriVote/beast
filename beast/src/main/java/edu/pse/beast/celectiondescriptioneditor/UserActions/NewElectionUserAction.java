@@ -21,9 +21,9 @@ import javax.swing.text.BadLocationException;
  */
 public class NewElectionUserAction extends UserAction {
 
-    private CElectionDescriptionEditor editor;
-    private ElectionTemplateHandler templateHandler = new ElectionTemplateHandler();
-    private CCodeHelper cCodeHelper = new CCodeHelper();
+    private final CElectionDescriptionEditor editor;
+    private final ElectionTemplateHandler templateHandler = new ElectionTemplateHandler();
+    private final CCodeHelper cCodeHelper = new CCodeHelper();
     
     public NewElectionUserAction(
             CElectionDescriptionEditor editor) {

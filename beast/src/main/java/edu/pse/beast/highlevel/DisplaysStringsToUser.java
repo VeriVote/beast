@@ -13,5 +13,5 @@ public interface DisplaysStringsToUser {
      * Updates all displayed String to match the chosen StringResource.
      * @param stringResIF StringLoaderInterface with the new Strings for display
      */
-    public void updateStringRes(StringLoaderInterface stringResIF);
+    void updateStringRes(StringLoaderInterface stringResIF);
 }

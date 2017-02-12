@@ -9,7 +9,7 @@ import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
-import edu.pse.beast.saverloader.SymbolicVarListSaverLoader;
+import edu.pse.beast.saverloader.StaticSaverLoaders.SymbolicVarListSaverLoader;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

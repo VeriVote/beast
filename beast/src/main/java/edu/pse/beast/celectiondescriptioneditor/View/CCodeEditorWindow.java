@@ -8,9 +8,7 @@ package edu.pse.beast.celectiondescriptioneditor.View;
 import edu.pse.beast.toolbox.RepaintThread;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
-
 import javax.swing.*;
-import sun.audio.AudioPlayer;
 
 /**
  * @author Holger
@@ -24,16 +22,16 @@ public class CCodeEditorWindow extends javax.swing.JFrame implements DisplaysStr
      */
     public void updateStringRes(StringLoaderInterface stringLoaderInterface) {
         setTitle("C-Editor");
-        saveChanges = stringLoaderInterface.getBooleanExpEditorStringResProvider().
-                getBooleanExpEditorWindowStringRes().getStringFromID("saveChanges");
-        save = stringLoaderInterface.getBooleanExpEditorStringResProvider().
-                getBooleanExpEditorWindowStringRes().getStringFromID("save");
-        cancelOption = stringLoaderInterface.getBooleanExpEditorStringResProvider().
-                getBooleanExpEditorWindowStringRes().getStringFromID("cancelOption");
-        noOption = stringLoaderInterface.getBooleanExpEditorStringResProvider().
-                getBooleanExpEditorWindowStringRes().getStringFromID("noOption");
-        yesOption = stringLoaderInterface.getBooleanExpEditorStringResProvider().
-                getBooleanExpEditorWindowStringRes().getStringFromID("yesOption");
+        saveChanges = stringLoaderInterface.getCElectionEditorStringResProvider().
+                getMenuStringRes().getStringFromID("saveChanges");
+        save = stringLoaderInterface.getCElectionEditorStringResProvider().
+                getMenuStringRes().getStringFromID("saveChangesSuffix");
+        cancelOption = stringLoaderInterface.getCElectionEditorStringResProvider().
+                getMenuStringRes().getStringFromID("cancelOption");
+        noOption = stringLoaderInterface.getCElectionEditorStringResProvider().
+                getMenuStringRes().getStringFromID("noOption");
+        yesOption = stringLoaderInterface.getCElectionEditorStringResProvider().
+                getMenuStringRes().getStringFromID("yesOption");
     }
 
     /**

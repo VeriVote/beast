@@ -43,6 +43,16 @@ public class CBMCCodeGenerator {
     private final CCodeHelper cCodeHelper;
     private int numberOfTimesVoted; // this number should be the number of rounds of votes the Propertys compare.
 
+    /**
+     * After the build the code is fully generated and can be aquired by
+     * getCode();
+     *
+     * @param electionDescription the lectionDecription that holds the code that
+     * describes the voting method. that code will be merged with the generated
+     * code
+     * @param postAndPrePropertiesDescription the Descriptions that will be used
+     * to generate the C-Code for CBMC
+     */
     public CBMCCodeGenerator(ElectionDescription electionDescription,
             PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
 
@@ -50,21 +60,18 @@ public class CBMCCodeGenerator {
         this.electionDescription = electionDescription;
         this.postAndPrePropertiesDescription = postAndPrePropertiesDescription;
         code = new CodeArrayListBeautifier();
-
         inputType = electionDescription.getInputType();
         outputType = electionDescription.getOutputType();
-
         this.visitor = new CBMCCodeGenerationVisitor();
-        /*
-        the variable loopVariableCounter is supposed to provide an index so that it is possible to have loops within loops in the generated code
-         */
-
         cCodeHelper = new CCodeHelper();
-
         generateCode();
 
     }
 
+    /**
+     *
+     * @return returns the generated code
+     */
     public ArrayList<String> getCode() {
         return code.getCodeArrayList();
     }
@@ -156,7 +163,7 @@ public class CBMCCodeGenerator {
                         break;
                     case SEAT:
                         // a Seat is a also an unsigned int. 
-                        // The return of a votingmethod (an Array) gives you the elected candidate(value) of the seat(id)
+                        // The return of a votingmethod (an Array) gives the elected candidate(value) of the seat(id)
                         code.add("unsigned int " + id + " = nondet_uint();");
                         // there are S seats. From 0 to S-1
                         code.add("assume(0 <= " + id + " && " + id + " < S);");
@@ -227,6 +234,8 @@ public class CBMCCodeGenerator {
                 ? postAST.getHighestElect() : numberOfTimesVoted;
     }
 
+    
+    
     private void addVotesArrayAndElectInitialisation() {
 
         code.add("//voting-array and elect variable initialisation");

@@ -1,6 +1,5 @@
-﻿title : Eigenschaftenliste
-newButton : Neu
-createdButton : Vorhandene
+bla : blub
+title : Eigenschaftenliste
 check : Analyse
 export : Exportieren
 electionType : Wahlverfahren
@@ -46,10 +45,10 @@ fileApproveRegex : (.)+\.list
 fileDescription : BEAST-Eigenschaftenlisten-Datei (*.list)
 objectCouldNotBeConvertedToString : Eigenschaftenliste konnte nicht in einen String zum speichern konvertiert werden.
 objectCouldNotBeSavedError : Objekt konnte nicht gespeichert werden.
-inputOutputErrorOpen : Fehler beim einlesen der Datei (Wahrscheinlich existiert sie nicht).
+inputOutputErrorOpen : Die Datei existiert nicht oder Sie verfügen nicht über ausreichende Rechte.
 invalidFileFormatErrorMessage : Die gegebene Datei enthält kein gültiges BEAST-Eigenschaftenlisten-Format.
 wrongEncodingError : Die Eigenschaftenliste enthält falsch kodierte Zeichen.
-inputOutputErrorSave : Das Verzeichnis in dem gespeichert werden soll existiert nicht.
+inputOutputErrorSave : Das Verzeichnis in dem gespeichert werden soll existiert nicht oder Sie verfügen nicht über ausreichende Rechte.
 wrongFileNameError : Der angegebene Name entspricht nicht dem regulären Ausdruck '[_a-zA-Z0-9\-\.\s]+'.
 fileSuffix : .list
 saveChanges : Änderungen an '
@@ -57,3 +56,6 @@ save : ' speichern?
 yesOption : Ja
 noOption : Nein
 cancelOption : Abbrechen
+title : Eigenschaftenliste
+newButton : Neu
+createdButton : Vorhandene

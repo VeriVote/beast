@@ -3,18 +3,15 @@ package edu.pse.beast.booleanexpeditor.UserActions;
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.toolbox.UserAction;
 
-import javax.swing.*;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.StyledDocument;
-import java.util.Enumeration;
 
 /**
+ * Responsible for adding BooleanExpEditorMakro objects to the last focused BooleanExpEditorCodeArea.
+ * Subclass of UserAction.
  * @author NikolaiLMS
  */
 public class AddMakroUserAction extends UserAction {
-    private BooleanExpEditorMakro makro;
-    private BooleanExpEditor booleanExpEditor;
+    private final BooleanExpEditorMakro makro;
+    private final BooleanExpEditor booleanExpEditor;
 
     /**
      * Constructor

@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 public class CElectionEditorMenubarHandler extends MenuBarHandler {
     
-    CCodeEditorWindow cgui;
+    private final CCodeEditorWindow cgui;
     
     public CElectionEditorMenubarHandler(
             String[] headingIds,

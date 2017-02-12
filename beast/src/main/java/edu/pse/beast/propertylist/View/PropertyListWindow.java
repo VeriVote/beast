@@ -83,72 +83,10 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	}
 	
 	
-	/**
-	 * Updates the view so that all changes (in the model) are visible.
-	 */
-	public void updateView() {
-		panel.revalidate();
-		this.validate();
-		panel.repaint();
-	}
-	
-	/**
-	 * Resets the name attribute because the name change for a PropertyItem was rejected.
-	 * @param prop The PropertyItem that couldn't be changed
-	 */
-	public void rejectNameChange(PropertyItem prop) {
-		controller.changeName(prop, prop.getDescription().getName());
-		for (ListItem li : items) {
-			if (prop.equals(li.getPropertyItem())) {
-				updateItems(model.getPropertyList());
-			}
-		}
-	}
-
-	/**
-	 * Stops reacting to user input.
-	 */
-	public void stopReacting() {
-		setReactsToInput(false);
-	}
-
-	/**
-	 * Resumes reacting to user input.
-	 */
-	public void resumeReacting() {
-		setReactsToInput(true);
-	}
-
-	
-	@Override
-	public void updateStringRes(StringLoaderInterface sli) {
-		this.sli = sli;
-		PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
-		StringResourceLoader other = provider.getOtherStringRes();
-
-		title = other.getStringFromID("title");
-		setWindowTitle(other.getStringFromID("title"));
-		this.addNewButton.setText(other.getStringFromID("newButton"));
-		this.addCreatedButton.setText(other.getStringFromID("createdButton"));
-
-		for (ListItem item : items) {
-			item.updateStringRes(sli);
-		}
-		this.revalidate();
-		this.repaint();
-	}
-
-	@Override
-	public void update(Observable o, Object obj) {
-		updateItems(model.getPropertyList());
-	}
-
-	
-	// private methods
 	private void init() {
 		this.setLayout(new BorderLayout());
-		setBounds(600, 100, 500, 500);
-		setTitle("Property List");
+		setBounds(700, 100, 500, 500);
+		setTitle("PropertyList");
 
 		menuBar = new JMenuBar();
 		menuFile = new JMenu();
@@ -206,6 +144,70 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		this.addWindowFocusListener(windowAdapter);
 	}
 
+	
+	/**
+	 * Updates the view so that all changes (in the model) are visible.
+	 */
+	public void updateView() {
+		panel.revalidate();
+		this.validate();
+		panel.repaint();
+	}
+	
+	/**
+	 * Resets the name attribute because the name change for a PropertyItem was rejected.
+	 * @param prop The PropertyItem that couldn't be changed
+	 */
+	public void rejectNameChange(PropertyItem prop) {
+		controller.changeName(prop, prop.getDescription().getName());
+		for (ListItem li : items) {
+			if (prop.equals(li.getPropertyItem())) {
+				updateItems(model.getPropertyList());
+			}
+		}
+	}
+
+	/**
+	 * Stops reacting to user input.
+	 */
+	public void stopReacting() {
+		setReactsToInput(false);
+		this.setEnabled(false);
+	}
+
+	/**
+	 * Resumes reacting to user input.
+	 */
+	public void resumeReacting() {
+		setReactsToInput(true);
+		this.setEnabled(true);
+	}
+
+	
+	@Override
+	public void updateStringRes(StringLoaderInterface sli) {
+		this.sli = sli;
+		PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
+		StringResourceLoader other = provider.getOtherStringRes();
+
+		title = other.getStringFromID("title");
+		this.addNewButton.setText(other.getStringFromID("newButton"));
+		this.addCreatedButton.setText(other.getStringFromID("createdButton"));
+
+		for (ListItem item : items) {
+			item.updateStringRes(sli);
+		}
+		this.revalidate();
+		this.repaint();
+	}
+
+	@Override
+	public void update(Observable o, Object obj) {
+		updateItems(model.getPropertyList());
+	}
+
+	
+	// private methods
 	private void setReactsToInput(boolean reacts) {
 		reactsToInput = reacts;
 		for (ListItem item : items)

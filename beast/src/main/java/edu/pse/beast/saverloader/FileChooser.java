@@ -11,6 +11,7 @@ import java.io.*;
 import java.nio.file.Files;
 
 /**
+ * Class that allows saving and loading files.
  * @author NikolaiLMS
  */
 public class FileChooser {
@@ -27,7 +28,16 @@ public class FileChooser {
     private String noOption;
     private String cancelOption;
 
-    public FileChooser (StringResourceLoader stringResourceLoader, SaverLoader saverLoader, Component component) {
+    /**
+     * Construcotr
+     * @param stringResourceLoader the stringResourceLoader providing the Strings needed for displaying save and open
+     *                             JFileChoosers
+     * @param saverLoader a class implementing the SaverLoader interface for creating Strings from objects
+     *                    and vice versa
+     * @param component the component the JFileChoosers should be displayed in, currently not in use since components
+     *                  might be too small for JFileChoosers and cause unaesthetic window placement
+     */
+    public FileChooser(StringResourceLoader stringResourceLoader, SaverLoader saverLoader, Component component) {
         this.fileChooser = new JFileChooser();
         this.stringResourceLoader = stringResourceLoader;
         this.component = component;
@@ -35,18 +45,26 @@ public class FileChooser {
         updateStringRessourceLoader(stringResourceLoader);
     }
 
+    /**
+     * Method that obtains a file location either by JFileChooser or previously save-location and then calls
+     * saveToFile to save the given object.
+     * Calls itself recursively if saveToFile returns false.
+     * @param object the object to be saved, has to correspond to the given SaverLoader class.
+     * @param forceDialog true if a save Dialog should be forced (SaveAs UserAction), false otherwise (SaveAction)
+     * @return true if saving was successful
+     */
     public boolean saveObject(Object object, boolean forceDialog) {
         if (fileChooser.getSelectedFile() != null) {
             fileChooser.setSelectedFile(new File(
-                    fileChooser.getSelectedFile().getParent() + "/" + ((NameInterface) object).getName() +
-                            stringResourceLoader.getStringFromID(
-                                    "fileSuffix")));
+                    fileChooser.getSelectedFile().getParent() + "/" + ((NameInterface) object).getName()
+                    + stringResourceLoader.getStringFromID(
+                            "fileSuffix")));
         } else {
-                fileChooser.setSelectedFile(new File(System.getProperty("user.home") + "/" +
-                        ((NameInterface) object).getName()));
+            fileChooser.setSelectedFile(new File(System.getProperty("user.home") + "/"
+                    + ((NameInterface) object).getName()));
         }
 
-        fileChooser.setApproveButtonText("saveApproveButtonText");
+        fileChooser.setApproveButtonText(stringResourceLoader.getStringFromID("saveApproveButtonText"));
         if (hasBeenSaved && !forceDialog) {
             return saveToFile(object, lastLoadedFile);
         } else {
@@ -64,17 +82,22 @@ public class FileChooser {
         }
     }
 
+    /**
+     * Opens the JFileChooser and when a valid input based on this class' SaverLoader objects is selected, creates
+     * an object with it and returns it.
+     * @return the loaded object upon success, null otherwise
+     */
     public Object loadObject() {
-        fileChooser.setApproveButtonText("openApproveButtonText");
+        fileChooser.setApproveButtonText(stringResourceLoader.getStringFromID("openApproveButtonText"));
         if (fileChooser.showDialog(component, stringResourceLoader.getStringFromID("openDialogTitleText"))
                 == JFileChooser.APPROVE_OPTION) {
-            File selectedFile  = fileChooser.getSelectedFile();
+            File selectedFile = fileChooser.getSelectedFile();
             String content;
             try {
                 content = new String(Files.readAllBytes(selectedFile.toPath()));
             } catch (IOException e) {
                 JOptionPane.showOptionDialog(null,
-                        stringResourceLoader.getStringFromID( "inputOutputErrorOpen"),"",
+                        stringResourceLoader.getStringFromID("inputOutputErrorOpen"), "",
                         JOptionPane.PLAIN_MESSAGE,
                         JOptionPane.ERROR_MESSAGE,
                         null,
@@ -90,7 +113,7 @@ public class FileChooser {
             } catch (Exception e) {
                 JOptionPane.showOptionDialog(null,
                         stringResourceLoader.getStringFromID(
-                                "invalidFileFormatErrorMessage"),"",
+                                "invalidFileFormatErrorMessage"), "",
                         JOptionPane.PLAIN_MESSAGE,
                         JOptionPane.ERROR_MESSAGE,
                         null,
@@ -103,10 +126,16 @@ public class FileChooser {
         }
     }
 
+    /**
+     * Method that saves the given
+     * @param object to the given
+     * @param file location.
+     * @return true if saving was successful, false if not
+     */
     private boolean saveToFile(Object object, File file) {
         if (!file.getName().matches("[_a-zA-Z0-9\\-\\.\\s]+")) {
             JOptionPane.showOptionDialog(null,
-                    stringResourceLoader.getStringFromID("wrongFileNameError"),"",
+                    stringResourceLoader.getStringFromID("wrongFileNameError"), "",
                     JOptionPane.PLAIN_MESSAGE,
                     JOptionPane.ERROR_MESSAGE,
                     null,
@@ -115,7 +144,6 @@ public class FileChooser {
             return false;
         } else if (!fileChooser.getSelectedFile().getName().endsWith(stringResourceLoader.getStringFromID(
                 "fileSuffix"))) {
-            System.out.println(fileChooser.getSelectedFile().getName());
             file = new File(file.getAbsolutePath() + stringResourceLoader.getStringFromID(
                     "fileSuffix"));
         }
@@ -137,7 +165,7 @@ public class FileChooser {
         } catch (UnsupportedEncodingException e) {
             JOptionPane.showOptionDialog(null,
                     stringResourceLoader.getStringFromID(
-                            "wrongEncodingError"),"",
+                            "wrongEncodingError"), "",
                     JOptionPane.PLAIN_MESSAGE,
                     JOptionPane.ERROR_MESSAGE,
                     null,
@@ -147,7 +175,7 @@ public class FileChooser {
         } catch (FileNotFoundException e) {
             JOptionPane.showOptionDialog(null,
                     stringResourceLoader.getStringFromID(
-                            "inputOutputErrorSave"),"",
+                            "inputOutputErrorSave"), "",
                     JOptionPane.PLAIN_MESSAGE,
                     JOptionPane.ERROR_MESSAGE,
                     null,
@@ -162,7 +190,7 @@ public class FileChooser {
             } catch (IOException e) {
                 JOptionPane.showOptionDialog(null,
                         stringResourceLoader.getStringFromID(
-                                "objectCouldNotBeSavedError"),"",
+                                "objectCouldNotBeSavedError"), "",
                         JOptionPane.PLAIN_MESSAGE,
                         JOptionPane.ERROR_MESSAGE,
                         null,
@@ -178,7 +206,7 @@ public class FileChooser {
             } catch (IOException e) {
                 JOptionPane.showOptionDialog(null,
                         stringResourceLoader.getStringFromID(
-                                "objectCouldNotBeSavedError"),"",
+                                "objectCouldNotBeSavedError"), "",
                         JOptionPane.PLAIN_MESSAGE,
                         JOptionPane.ERROR_MESSAGE,
                         null,
@@ -190,12 +218,15 @@ public class FileChooser {
     }
 
     /**
-    * Method that calls showSaveOptionPane and based on its return saves the given object, called when a new Object is
-    * loaded into one of the GUIs.
-     * @param object the object containing changes that might be saved, needs to implement NameInterface
-    * @return false if the user pressed "Cancel" on the dialog, thus cancelling any previous load action
-    *         true otherwise
-    **/
+     * Method that calls showSaveOptionPane and based on its return saves the
+     * given object, called when a new Object is loaded into one of the GUIs.
+     *
+     * @param object the object containing changes that might be saved, needs to
+     * implement NameInterface
+     * @return false if the user pressed "Cancel" on the dialog, thus cancelling
+     * any previous load action true otherwise
+    *
+     */
     public boolean openSaveChangesDialog(Object object) {
         int option = showSaveOptionPane(((NameInterface) object).getName());
         if (option == JOptionPane.YES_OPTION) {
@@ -208,14 +239,16 @@ public class FileChooser {
     }
 
     /**
-     * Method that opens pane that asks the user whether he wants to save his changes or not.
+     * Method that opens pane that asks the user whether he wants to save his
+     * changes or not.
+     *
      * @return the option clicked by the user
      */
     private int showSaveOptionPane(String propertyName) {
         Object[] options = {yesOption,
-                noOption,
-                cancelOption};
-        return  JOptionPane.showOptionDialog(null,
+            noOption,
+            cancelOption};
+        return JOptionPane.showOptionDialog(null,
                 saveChanges + propertyName + save,
                 "",
                 JOptionPane.YES_NO_CANCEL_OPTION,
@@ -235,18 +268,18 @@ public class FileChooser {
         UIManager.put("FileChooser.filesOfTypeLabelText", stringResourceLoader.getStringFromID("filesOfTypeLabelText"));
         UIManager.put("FileChooser.approveButtonToolTipText", "");
         UIManager.put("FileChooser.cancelButtonToolTipText", "");
-        UIManager.put("FileChooser.openButtonToolTipText", stringResourceLoader.getStringFromID("openButtonToolTipText"));
-        UIManager.put("FileChooser.fileNameHeaderText",stringResourceLoader.getStringFromID("fileNameHeaderText"));
+        UIManager.put("FileChooser.openButtonToolTipText", stringResourceLoader.getStringFromID("openApproveButtonToolTipText"));
+        UIManager.put("FileChooser.fileNameHeaderText", stringResourceLoader.getStringFromID("fileNameHeaderText"));
         UIManager.put("FileChooser.upFolderToolTipText", stringResourceLoader.getStringFromID("upFolderToolTipText"));
-        UIManager.put("FileChooser.homeFolderToolTipText",stringResourceLoader.getStringFromID("homeFolderToolTipText"));
-        UIManager.put("FileChooser.newFolderToolTipText",stringResourceLoader.getStringFromID("newFolderToolTipText"));
-        UIManager.put("FileChooser.listViewButtonToolTipText",stringResourceLoader.getStringFromID("listViewButtonToolTipText"));
-        UIManager.put("FileChooser.newFolderButtonText",stringResourceLoader.getStringFromID("newFolderButtonText"));
+        UIManager.put("FileChooser.homeFolderToolTipText", stringResourceLoader.getStringFromID("homeFolderToolTipText"));
+        UIManager.put("FileChooser.newFolderToolTipText", stringResourceLoader.getStringFromID("newFolderToolTipText"));
+        UIManager.put("FileChooser.listViewButtonToolTipText", stringResourceLoader.getStringFromID("listViewButtonToolTipText"));
+        UIManager.put("FileChooser.newFolderButtonText", stringResourceLoader.getStringFromID("newFolderButtonText"));
         UIManager.put("FileChooser.renameFileButtonText", stringResourceLoader.getStringFromID("renameFileButtonText"));
         UIManager.put("FileChooser.deleteFileButtonText", stringResourceLoader.getStringFromID("deleteFileButtonText"));
         UIManager.put("FileChooser.filterLabelText", stringResourceLoader.getStringFromID("filterLabelText"));
         UIManager.put("FileChooser.detailsViewButtonToolTipText", stringResourceLoader.getStringFromID("detailsViewButtonToolTipText"));
-        UIManager.put("FileChooser.fileSizeHeaderText",stringResourceLoader.getStringFromID("fileSizeHeaderText"));
+        UIManager.put("FileChooser.fileSizeHeaderText", stringResourceLoader.getStringFromID("fileSizeHeaderText"));
         UIManager.put("FileChooser.fileDateHeaderText", stringResourceLoader.getStringFromID("fileDateHeaderText"));
         saveChanges = stringResourceLoader.getStringFromID("saveChanges");
         save = stringResourceLoader.getStringFromID("save");
@@ -269,6 +302,10 @@ public class FileChooser {
         fileChooser.setAcceptAllFileFilterUsed(false);
     }
 
+    /**
+     * Setter for the hasBeenSaved boolean.
+     * @param bool the new value
+     */
     public void setHasBeenSaved(boolean bool) {
         this.hasBeenSaved = bool;
     }

@@ -1,22 +1,24 @@
 package edu.pse.beast.booleanexpeditor.booleanExpCodeArea;
 
-import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CAntlrHandler;
 import edu.pse.beast.codearea.SyntaxHL.RegexAndColor;
 import edu.pse.beast.codearea.SyntaxHL.SyntaxHL;
-
 import java.awt.*;
 import java.util.ArrayList;
 
 /**
+ * Class that updates the DocumentFilter of the JTextPanes StyledDocuments in BooleanExpEditor responsible for
+ * syntax highlighting.
+ * Needs to be refactored if custom colors for syntax highlighting should be available.
  * @author NikolaiLMS
  */
 public class BooleanExpSyntaxHL {
-    private BooleanExpANTLRHandler antlrHandler;
-    private SyntaxHL syntaxHL;
 
+    /**
+     * Constructor
+     * @param antlrHandler the BooleanExpANTLRHandler, provides regular expressions StringLists.
+     * @param syntaxHL the BooleanExpEditorCodeAreas SyntaxHL class.
+     */
     public BooleanExpSyntaxHL(BooleanExpANTLRHandler antlrHandler, SyntaxHL syntaxHL) {
-        this.antlrHandler = antlrHandler;
-        this.syntaxHL = syntaxHL;
 
         ArrayList<RegexAndColor> regexAndColorList = new ArrayList<>();
         for(String s : antlrHandler.getComparisonSymbols()) {

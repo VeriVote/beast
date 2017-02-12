@@ -10,8 +10,8 @@ package edu.pse.beast.codearea.Actionlist.TextAction;
  * @author Holger-Desktop
  */
 public class TextDelta {
-    private int offset;
-    private String text;
+    private final int offset;
+    private final String text;
     
     public TextDelta(int offset, String text) {
         this.offset = offset;

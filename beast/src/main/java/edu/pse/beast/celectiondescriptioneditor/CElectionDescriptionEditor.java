@@ -17,11 +17,9 @@ import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.toolbox.UserAction;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.text.BadLocationException;
 
 
@@ -36,17 +34,17 @@ import javax.swing.text.BadLocationException;
 public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     private CElectionCodeArea codeArea;
     private ElectionDescription currentDescription;
-    private CCodeEditorWindow window;
-    private CElectionCodeAreaBuilder builder;
-    private ErrorWindow errorWindow;
-    private CElectionDescriptionEditorChangeHandler changeHandler;
-    private ArrayList<ElectionDescriptionChangeListener> descriptionChangeListeners = new ArrayList<>();
+    private final CCodeEditorWindow window;
+    private final CElectionCodeAreaBuilder builder;
+    private final ErrorWindow errorWindow;
+    private final CElectionDescriptionEditorChangeHandler changeHandler;
+    private final ArrayList<ElectionDescriptionChangeListener> descriptionChangeListeners = new ArrayList<>();
     private CElectionEditorMenubarHandler menubarHandler;
     private CElectionEditorToolbarHandler toolbarHandler;
     private StringLoaderInterface stringLoaderInterface;
-    private FileChooser fileChooser;
-    private ArrayList<UserAction> userActions = new ArrayList<>();
-    private ArrayList<Character> userActionChars = new ArrayList<>();
+    private final FileChooser fileChooser;
+    private final ArrayList<UserAction> userActions = new ArrayList<>();
+    private final ArrayList<Character> userActionChars = new ArrayList<>();
     private Boolean wasVisible;
 
     public CElectionDescriptionEditor(
@@ -84,12 +82,8 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource{
     private void updateCurrentDescription() {
         List<String> code;
         currentDescription.setVotingDeclLine(codeArea.getFirstLockedLine());
-        System.out.println(currentDescription.getVotingDeclLine());
         String content = codeArea.getPane().getText();
         String lines[] = content.split("\n");
-        for (String s : lines) {
-            System.out.println(s);
-        }
         code = Arrays.asList(lines);
         currentDescription.setCode(code);
     }

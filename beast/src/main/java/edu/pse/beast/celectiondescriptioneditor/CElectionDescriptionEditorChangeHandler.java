@@ -5,8 +5,6 @@
  */
 package edu.pse.beast.celectiondescriptioneditor;
 
-import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveElectionUserAction;
-import edu.pse.beast.celectiondescriptioneditor.View.CCodeEditorWindow;
 
 import javax.swing.*;
 

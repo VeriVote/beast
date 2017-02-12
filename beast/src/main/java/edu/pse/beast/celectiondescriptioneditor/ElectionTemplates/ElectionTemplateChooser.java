@@ -6,8 +6,6 @@
 package edu.pse.beast.celectiondescriptioneditor.ElectionTemplates;
 
 import edu.pse.beast.celectiondescriptioneditor.UserActions.NewElectionUserAction;
-import edu.pse.beast.highlevel.DisplaysStringsToUser;
-import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 
 import javax.swing.*;
@@ -17,13 +15,14 @@ import java.util.ArrayList;
  *
  * @author Holger-Desktop
  */
-public class ElectionTemplateChooser extends javax.swing.JFrame{
-    private NewElectionUserAction action;
+public class ElectionTemplateChooser extends javax.swing.JFrame {
+
+    private final NewElectionUserAction action;
     private ElectionTemplateHandler electionTemplateHandler;
-    private StringResourceLoader loader;
+    private final StringResourceLoader loader;
     private ArrayList<String> inputIds = new ArrayList<>();
     private ArrayList<String> resIds = new ArrayList<>();
-    private String emptyNameTextFieldError;
+    private final String emptyNameTextFieldError;
 
     /**
      * Creates new form ElectionTemplateChooser
@@ -36,9 +35,9 @@ public class ElectionTemplateChooser extends javax.swing.JFrame{
         initComponents();
         this.action = action;
         this.loader = loader;
-        
+
         createButton.setText(loader.getStringFromID("create"));
-        
+
         createButton.addActionListener((ae) -> {
             if (nameField.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, emptyNameTextFieldError, "", JOptionPane.OK_OPTION);
@@ -49,14 +48,14 @@ public class ElectionTemplateChooser extends javax.swing.JFrame{
                 this.dispose();
             }
         });
-            for(int i = 0; i < electionTemplateHandler.getInputIds().length; ++i) {
-                inputIds.add(electionTemplateHandler.getInputIds()[i]);
-                inputList.addItem(loader.getStringFromID(electionTemplateHandler.getInputIds()[i]));
+        for (int i = 0; i < electionTemplateHandler.getInputIds().length; ++i) {
+            inputIds.add(electionTemplateHandler.getInputIds()[i]);
+            inputList.addItem(loader.getStringFromID(electionTemplateHandler.getInputIds()[i]));
         }
-        
-        for(int i = 0; i < electionTemplateHandler.getOutputIds().length; ++i) {
-                resIds.add(electionTemplateHandler.getOutputIds()[i]);
-                resultList.addItem(loader.getStringFromID(electionTemplateHandler.getOutputIds()[i]));
+
+        for (int i = 0; i < electionTemplateHandler.getOutputIds().length; ++i) {
+            resIds.add(electionTemplateHandler.getOutputIds()[i]);
+            resultList.addItem(loader.getStringFromID(electionTemplateHandler.getOutputIds()[i]));
         }
 
     }

@@ -11,11 +11,6 @@ import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
 import java.util.ArrayList;
 import java.util.BitSet;
 import org.antlr.v4.runtime.ANTLRErrorListener;
-import org.antlr.v4.runtime.ANTLRErrorStrategy;
-import org.antlr.v4.runtime.DefaultErrorStrategy;
-import org.antlr.v4.runtime.FailedPredicateException;
-import org.antlr.v4.runtime.InputMismatchException;
-import org.antlr.v4.runtime.NoViableAltException;
 import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
@@ -28,8 +23,8 @@ import org.antlr.v4.runtime.dfa.DFA;
  * @author Holger-Desktop
  */
 public class CGrammarErrorFinder implements ErrorFinder, ANTLRErrorListener {
-    private CAntlrHandler antlrHandler;
-    private ArrayList<CodeError> errors = new ArrayList<>();
+    private final CAntlrHandler antlrHandler;
+    private final ArrayList<CodeError> errors = new ArrayList<>();
     
     public CGrammarErrorFinder(CAntlrHandler antlrHandler) {
         this.antlrHandler = antlrHandler;

@@ -2,32 +2,34 @@ package edu.pse.beast.booleanexpeditor.UserActions;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
-import edu.pse.beast.saverloader.PostAndPrePropertiesDescriptionSaverLoader;
-import edu.pse.beast.saverloader.SaverLoader;
-import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
+ * UserAction subclass responsible for saving Properties while forcing a save dialog.
  * @author NikolaiLMS
  */
 public class SaveAsPropsUserAction extends UserAction {
-    private BooleanExpEditor booleanExpEditor;
-    private FileChooser fileChooser;
+    private final BooleanExpEditor editor;
+    private final FileChooser fileChooser;
 
-    public SaveAsPropsUserAction(BooleanExpEditor booleanExpEditor) {
+    /**
+     * Constructor
+     * @param editor reference to the GUI controller.
+     */
+    public SaveAsPropsUserAction(BooleanExpEditor editor) {
         super("save_as");
-        this.booleanExpEditor = booleanExpEditor;
-        this.fileChooser = booleanExpEditor.getFileChooser();
+        this.editor = editor;
+        this.fileChooser = editor.getFileChooser();
     }
 
     @Override
     public void perform() {
-        PostAndPrePropertiesDescription currentlyLoaded = booleanExpEditor.getCurrentlyLoadedPostAndPreProp();
+        PostAndPrePropertiesDescription currentlyLoaded = editor.getCurrentlyLoadedPostAndPreProp();
         if (fileChooser.saveObject(currentlyLoaded, true)) {
-            booleanExpEditor.getChangeHandler().updatePreValues();
-            booleanExpEditor.getView().setWindowTitle(booleanExpEditor.getCurrentlyLoadedPostAndPreProp().getName());
-            booleanExpEditor.findErrorsAndDisplayThem();
+            editor.getChangeHandler().updatePreValues();
+            editor.getView().setWindowTitle(editor.getCurrentlyLoadedPostAndPreProp().getName());
+            editor.findErrorsAndDisplayThem();
         }
     }
 }

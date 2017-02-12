@@ -22,8 +22,8 @@ import org.antlr.v4.runtime.dfa.DFA;
  * @author Nikolai
  */
 public class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListener, ErrorFinder {
-    private BooleanExpANTLRHandler antlrHandler;
-    private ArrayList<CodeError> errors = new ArrayList<>();
+    private final BooleanExpANTLRHandler antlrHandler;
+    private final ArrayList<CodeError> errors = new ArrayList<>();
 
     /**
      * Constructor
@@ -38,11 +38,7 @@ public class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListener, E
     @Override
     public ArrayList<CodeError> getErrors() {
         errors.clear();
-        try {
-            antlrHandler.getParseTree();
-        } catch (BadLocationException ex) {
-            Logger.getLogger(BooleanExpEditorGrammarErrorFinder.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        antlrHandler.getParseTree();
         return errors;
     }
 

@@ -57,9 +57,7 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
             // it can be deleted afterwards
             String clExeCall = "\"" + vsCmd + "\"" + " & " + compilerString + " " + ("\"" + toCheck.getAbsolutePath() + "\"") 
                     + (" /Fo" + toCheck.getParent() + "\\");
-            
-            System.out.println(clExeCall);
-            
+
             // this call starts a new VScmd instance and lets cl.exe (the compiler) run in it
             ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", clExeCall);
 

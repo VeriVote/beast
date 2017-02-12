@@ -6,14 +6,14 @@ import edu.pse.beast.toolbox.UserAction;
 /**
  * @author NikolaiLMS
  */
-public class ElectionPasteUserAction extends UserAction{
-    private CElectionDescriptionEditor electionEditor;
+public class ElectionPasteUserAction extends UserAction {
+
+    private final CElectionDescriptionEditor electionEditor;
 
     public ElectionPasteUserAction(CElectionDescriptionEditor electionEditor) {
         super("paste");
         this.electionEditor = electionEditor;
     }
-
 
     @Override
     public void perform() {

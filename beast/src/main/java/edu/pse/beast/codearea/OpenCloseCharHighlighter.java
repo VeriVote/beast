@@ -26,11 +26,11 @@ import javax.swing.text.DefaultHighlighter;
  */
 public class OpenCloseCharHighlighter implements CaretListener {
     
-    private OpenCloseCharList charList;
-    private JTextPane pane;
-    private DefaultHighlighter highlighter;
-    private DefaultHighlighter.DefaultHighlightPainter hPainter;
-    private ArrayList<Object> addedHls = new ArrayList<>();
+    private final OpenCloseCharList charList;
+    private final JTextPane pane;
+    private final DefaultHighlighter highlighter;
+    private final DefaultHighlighter.DefaultHighlightPainter hPainter;
+    private final ArrayList<Object> addedHls = new ArrayList<>();
     
     public OpenCloseCharHighlighter(OpenCloseCharList charList, JTextPane pane) {
         this.charList = charList;

@@ -132,6 +132,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 
     @Override
     public void stopReacting() {
+        view.setVisible(true);
         view.stopReacting();
         editorWasVisible = editor.getView().isVisible();
         editor.getView().setVisible(false);

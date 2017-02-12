@@ -8,7 +8,6 @@ package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CErrorDisplayer;
 import edu.pse.beast.codearea.Autocompletion.AutocompletionOption;
 import edu.pse.beast.codearea.CodeAreaBuilder;
-import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import java.util.ArrayList;
 import javax.swing.JScrollPane;
@@ -22,10 +21,10 @@ import javax.swing.JTextPane;
  */
 public class CElectionCodeAreaBuilder extends CodeAreaBuilder {
     
-    private ObjectRefsForBuilder refs;
+    private final ObjectRefsForBuilder refs;
     
     public CElectionCodeAreaBuilder(ObjectRefsForBuilder objectRefsForBuilder) {
-        this.refs = refs;
+        this.refs = objectRefsForBuilder;
     }
     
     /**

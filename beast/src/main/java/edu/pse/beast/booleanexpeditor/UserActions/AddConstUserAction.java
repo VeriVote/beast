@@ -4,11 +4,13 @@ import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
+ * Responsible for adding BooleanExpEditorConst objects to the last focused BooleanExpEditorCodeArea.
+ * Subclass of UserAction.
  * @author NikolaiLMS
  */
 public class AddConstUserAction extends UserAction {
-    private BooleanExpEditorConst booleanExpEditorConst;
-    private BooleanExpEditor booleanExpEditor;
+    private final BooleanExpEditorConst booleanExpEditorConst;
+    private final BooleanExpEditor booleanExpEditor;
 
     /**
      * Constructor

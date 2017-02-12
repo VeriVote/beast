@@ -52,9 +52,6 @@ public class TimeOut {
      *         saving in plain text again.
      */
     public TimeUnit getOrigUnit() {
-        if (!active) {
-            ErrorLogger.log("The timeout isn't active, so this shouldn't be called");
-        }
         return originalUnit;
     }
 

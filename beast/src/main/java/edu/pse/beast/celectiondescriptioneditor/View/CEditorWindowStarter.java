@@ -11,7 +11,7 @@ package edu.pse.beast.celectiondescriptioneditor.View;
  */
 public class CEditorWindowStarter implements Runnable {
     
-    private CCodeEditorWindow window = new CCodeEditorWindow();
+    private final CCodeEditorWindow window = new CCodeEditorWindow();
     
     public CCodeEditorWindow getGUIWindow() {
         return window;

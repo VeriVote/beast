@@ -5,14 +5,10 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
-import org.antlr.v4.parse.ANTLRParser;
-import org.antlr.v4.runtime.ANTLRFileStream;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;

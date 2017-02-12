@@ -110,7 +110,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     /**
      * generates the code for an logical and node
      *
-     * @param node
+     * @param node the visited and node
      */
     @Override
     public void visitAndNode(LogicalAndNode node) {
@@ -128,7 +128,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     /**
      * generates the code for logical an or node
      *
-     * @param node
+     * @param node the visited or node
      */
     @Override
     public void visitOrNode(LogicalOrNode node) {
@@ -144,7 +144,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     /**
      * generates the code for the Implication Node
      *
-     * @param node
+     * @param node the visited implication node
      */
     @Override
     public void visitImplicationNode(ImplicationNode node) {
@@ -161,8 +161,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     /**
      * generates the code for an EquivalencyNode
-     *
-     * @param node
+     * 
+     * @param node equivalencz node
      */
     @Override
     public void visitAquivalencyNode(EquivalencyNode node) {
@@ -181,7 +181,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     /**
      * generates the code for an ForAllNode
      *
-     * @param node
+     * @param node the visited node
      */
     @Override
     public void visitForAllNode(ForAllNode node) {
@@ -220,7 +220,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     /**
      * generates the code to an ThereExistsNode
      *
-     * @param node
+     * @param node the visited node
      */
     @Override
     public void visitThereExistsNode(ThereExistsNode node) {
@@ -259,7 +259,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     /**
      * generates the code for a notNode
      *
-     * @param node
+     * @param node the visited node
      */
     @Override
     public void visitNotNode(NotNode node) {
@@ -296,7 +296,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         node.getRHSBooleanExpNode().getVisited(this);
         if (node.getLHSBooleanExpNode().getAccessVar() != null) {
             for (SymbolicVariable accessVar : node.getLHSBooleanExpNode().getAccessVar()) {
-                System.out.println(lhslistLevel);
                 lhslistLevel--;
             }
         }

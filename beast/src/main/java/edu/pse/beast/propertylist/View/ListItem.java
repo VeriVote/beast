@@ -50,7 +50,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
     private final String pathToEye = "/core/images/other/eye.png";
     private final ImageIcon eyeIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToEye);
     
-    private final String pathToWrench = "/core/images/other/eye.png";
+    private final String pathToWrench = "/core/images/other/wrench.png";
     private final ImageIcon wrenchIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToWrench);
     
     private final String pathToXMark = "/core/images/other/x-mark.png";
@@ -80,39 +80,8 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
         sli = new StringLoaderInterface("de");
         resWindow = new ResultPresenterWindow(sli);
         init();
-    }
+    } 
     
-    
-    @Override
-    public void updateStringRes(StringLoaderInterface sli) {
-        this.sli = sli;
-        PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
-        StringResourceLoader other = provider.getOtherStringRes();
-
-        this.testStatus.setText(other.getStringFromID("check"));
-        this.revalidate();
-        this.repaint();
-    }
-
-    
-    // getter and setter
-    public PropertyItem getPropertyItem() {
-        return prop;
-    }
-
-    public JTextField getNameField() {
-        return name;
-    }
-
-    public ListItem getItem() {
-        return this;
-    }
-
-    public void setReactsToInput(boolean reactsToInput) {
-        this.reactsToInput = reactsToInput;
-    }
-    
-    // private methods
     private void init() {
         this.setMaximumSize(new Dimension(500, 2000));
         Dimension iconSize = new Dimension(40, 40);
@@ -125,7 +94,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Point pos = showResult.getLocationOnScreen();
-                resWindow.setLocation((int) pos.getX(), (int) pos.getY());
+                resWindow.setLocation((int) pos.getX() - 30, (int) pos.getY() - 35);
                 resWindow.getShowResult().setBackground(presentColor());
                 passMessageToResultWindow();
                 resWindow.setVisible(true);
@@ -186,7 +155,38 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
         this.add(deleteButton, BorderLayout.LINE_START);
 
     }
+    
+    
+    @Override
+    public void updateStringRes(StringLoaderInterface sli) {
+        this.sli = sli;
+        PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
+        StringResourceLoader other = provider.getOtherStringRes();
 
+        this.testStatus.setText(other.getStringFromID("check"));
+        this.revalidate();
+        this.repaint();
+    }
+
+    
+    // getter and setter
+    public PropertyItem getPropertyItem() {
+        return prop;
+    }
+
+    public JTextField getNameField() {
+        return name;
+    }
+
+    public ListItem getItem() {
+        return this;
+    }
+
+    public void setReactsToInput(boolean reactsToInput) {
+        this.reactsToInput = reactsToInput;
+    }
+    
+    // private methods
     private Color presentColor() {
         switch (prop.getResultType()) {
             case SUCCESS:
