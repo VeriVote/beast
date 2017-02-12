@@ -6,7 +6,7 @@
 package edu.pse.beast.toolbox;
 
 /**
- *
+ * A simple generic tuple
  * @author Holger-Desktop
  */
 public class Tuple<X, Y> { 
