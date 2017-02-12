@@ -53,7 +53,7 @@ public class OptionsSaverLoaderInterface {
     }    
     
     public static BooleanExpEditorOptions loadBooleanExpEditorOpts(BooleanExpEditor editor) throws IOException {
-        LinkedList<String> saveString = loadStringResForResLoader("booleanexpeditor_ops");
+        LinkedList<String> saveString = loadStringResForResLoader("booleanexpeditor_opts");
         BooleanExpCodeAreaOptions opts = loadBooleanExpCodeAreaOpts(editor, saveString);
         BooleanExpEditorOptions created = new BooleanExpEditorOptions(editor, opts);
         return created;
