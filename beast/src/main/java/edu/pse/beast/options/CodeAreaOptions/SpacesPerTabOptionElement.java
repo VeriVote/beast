@@ -3,16 +3,17 @@ package edu.pse.beast.options.CodeAreaOptions;
 import edu.pse.beast.options.OptionElement;
 import java.util.List;
 
+/**
+ * OptionElement subclass for the spacespertabs option.
+ */
 public class SpacesPerTabOptionElement extends OptionElement {
 
     private int numberTabs;
 
     /**
-     * 
-     * @param id the id
+     * Constructor
      * @param choosableOptions the choosable options
      * @param numberTabs the number of spaces per tab
-     * @param chosenType
      */
     public SpacesPerTabOptionElement(List<String> choosableOptions, String numberTabs) {
         super("spaces_per_tab", choosableOptions);
@@ -20,8 +21,8 @@ public class SpacesPerTabOptionElement extends OptionElement {
     }
 
     /**
-     * 
-     * @return the chosen type
+     * Getter
+     * @return the chosen number of tabs
      */
     public int getNumberTabs() {
         return numberTabs;

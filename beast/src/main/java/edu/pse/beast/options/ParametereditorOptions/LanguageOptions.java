@@ -4,16 +4,19 @@ import java.util.List;
 
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.options.Options;
-import edu.pse.beast.saverloader.SaverLoaderInterface;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 import java.util.ArrayList;
 
+/**
+ * Options subclass for the language options.
+ */
 public class LanguageOptions extends Options {
     private StringLoaderInterface sli;
     private List<DisplaysStringsToUser> stringDisplays = new ArrayList<>();
     private LanguageOptionElement langOptElem;
     /**
+     * Constructor
      * @param sli the string loader interface
      * @param stringResLoader StringResourceLoader
      */
@@ -39,11 +42,14 @@ public class LanguageOptions extends Options {
         langOptElem = new LanguageOptionElement(choosableLangsList, "de");
         optElements.add(langOptElem);
     }
-    
+
+    /**
+     * Method with which Builder classes can add classes implementing DisplaysStringsToUser to the stringDisplays list.
+     * @param dis the class implementing DisplaysStringsToUser
+     */
     public void addStringDisplayer(DisplaysStringsToUser dis) {
         stringDisplays.add(dis);
     }
-
 
     @Override
     protected void reapplySpecialized() {

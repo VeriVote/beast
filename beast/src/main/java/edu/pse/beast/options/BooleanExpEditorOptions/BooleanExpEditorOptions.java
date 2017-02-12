@@ -3,13 +3,15 @@ package edu.pse.beast.options.BooleanExpEditorOptions;
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.options.Options;
 
+/**
+ * Options subclass for the BooleanExpEditorOptions.
+ */
 public class BooleanExpEditorOptions extends Options {
     private final BooleanExpEditor editor;
     private final BooleanExpCodeAreaOptions booleanExpCodeAreaOptions;
     
     /**
-     * 
-     * @param id the id of these options
+     * Constructor
      * @param editor the editor
      * @param booleanExpCodeAreaOptions the options
      */
@@ -29,7 +31,7 @@ public class BooleanExpEditorOptions extends Options {
     }
     
     /**
-     * 
+     * Getter
      * @return the options
      */
     public BooleanExpCodeAreaOptions getBooleanExpCodeAreaOptions() {
@@ -37,7 +39,7 @@ public class BooleanExpEditorOptions extends Options {
     }
     
     /**
-     * 
+     * Getter
      * @return the editor
      */
     public BooleanExpEditor getBooleanExpEditor() {

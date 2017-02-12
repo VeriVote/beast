@@ -6,7 +6,7 @@ import edu.pse.beast.stringresource.StringResourceLoader;
 
 /**
  * This class uses the OptionPresenterFrame class to present given option objects
- * to the user and thus give him the possiblity of changing settings
+ * to the user and thus give him the possiblity of changing settings.
  * @author Holger
  *
  */

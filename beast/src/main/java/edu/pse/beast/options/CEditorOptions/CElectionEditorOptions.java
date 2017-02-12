@@ -3,13 +3,15 @@ package edu.pse.beast.options.CEditorOptions;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.options.Options;
 
+/**
+ * Options subclass for the CElectionEditorOptions.
+ */
 public class CElectionEditorOptions extends Options {
     private  CElectionDescriptionEditor editor;
     private final CElectionCodeAreaOptions cElectionCodeAreaOptions;
     
     /**
-     * 
-     * @param id the id
+     * Constructor
      * @param editor the editor
      * @param cElectionCodeAreaOptions the options
      */

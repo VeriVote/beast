@@ -5,12 +5,11 @@
  */
 package edu.pse.beast.options;
 
-import edu.pse.beast.saverloader.OptionSaverLoader.OptionsSaverLoaderInterface;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * A parent class with which Options can be presented.
  * @author Lukas
  */
 public abstract class Options {
