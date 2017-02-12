@@ -147,9 +147,9 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
     }
 
     /**
-     * Adds
-     * @param c the shortcut character
-     * @param userAction
+     * Adds a shortcut to the given UserAction
+     * @param c the shortcut character, used with control to trigger the UserAction
+     * @param userAction the UserAction
      */
     void addUserAction(char c, UserAction userAction) {
         userActions.add(userAction);
