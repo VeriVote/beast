@@ -13,7 +13,7 @@ days : Days
 title_advanced : User-defined arguments for CBMC
 ok : OK
 cancel : Cancel
-title_about : About
+title_about : About BEAST
 about : About
 version : Version
 openDialogTitleText : Open project

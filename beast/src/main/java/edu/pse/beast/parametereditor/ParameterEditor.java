@@ -43,7 +43,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier, DisplaysS
     private final FileChooser fileChooser;
     private boolean hasChanged;
     private Project currentlyLoadedProject;
-    private final String version = ParameterEditor.class.getPackage().getImplementationVersion(); //TODO: Get Version from somewhere
+    private final String version = ParameterEditor.class.getPackage().getImplementationVersion();
 
     /**
      * Constructor which also links the handlers to the View elements
@@ -76,7 +76,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier, DisplaysS
         processHandler = new SingleValueSpinnerHandler(window.getAmountProcessesSpinner());
         window.getAmountProcessesSpinner().addChangeListener(processHandler);
         argumentHandler = new ArgumentHandler(window.getAdvancedWindow().getInputField(),
-                window.getAdvancedWindow().getOkButton());
+        window.getAdvancedWindow().getOkButton());
         window.setVersion(version);
         setReacts(true);
         setHasChanged(false);
