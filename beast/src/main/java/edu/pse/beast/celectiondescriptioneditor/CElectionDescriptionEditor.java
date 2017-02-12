@@ -83,6 +83,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource {
     public void addUserAction(char c, UserAction ac) {
         userActions.add(ac);
         userActionChars.add(c);
+        codeArea.getUserInputHandler().getShortcutHandler().addAction(c, ac);
     }
         
     private void updateCurrentDescription() {
