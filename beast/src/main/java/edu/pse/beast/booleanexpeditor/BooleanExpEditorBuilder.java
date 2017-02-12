@@ -67,6 +67,7 @@ public class BooleanExpEditorBuilder{
         BooleanExpCodeArea postPropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
                 window.getPostPropTextPane(), window.getPostPropScrollPane(), symbolicVariableList, ceditor);
 
+        
         // create ChangeHandler
         ChangeHandler changeHandler = new ChangeHandler(prePropCodeArea.getPane(),
                 postPropCodeArea.getPane(), symbolicVariableList);

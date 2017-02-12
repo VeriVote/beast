@@ -154,6 +154,7 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
     void addUserAction(char c, UserAction userAction) {
         userActions.add(userAction);
         userActionChars.add(c);
+        prePropCodeArea.getUserInputHandler().getShortcutHandler().addAction(c, userAction);
     }
 
     /**
