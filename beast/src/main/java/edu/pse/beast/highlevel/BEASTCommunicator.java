@@ -47,6 +47,7 @@ public class BEASTCommunicator implements CheckListener {
             checkStatusDisplayer.displayText("propertyErrors", false, "");
             electSrc.resumeReacting();
             paramSrc.resumeReacting();
+            postAndPreSrc.resumeReacting();
         } else if (!paramSrc.isCorrect()) {
             checkStatusDisplayer.displayText("parameterErrors", false, "");
             electSrc.resumeReacting();
@@ -118,7 +119,7 @@ public class BEASTCommunicator implements CheckListener {
                     postAndPreSrc.resumeReacting();
                     paramSrc.resumeReacting();
                     timeString = " " + timeString;
-                    checkStatusDisplayer.displayText("analysisSuccess", false, timeString);
+                    checkStatusDisplayer.displayText("analysisEnded", false, timeString);
                 }
             });
             waitForResultsThread.start();

@@ -1,5 +1,5 @@
 <projectName>
-SequentialTestTrueFalse
+TimeOutTest
 </projectName>
 <electionDescription>
 <electionName>
@@ -55,7 +55,7 @@ New PropertyList
 <propertyItem>
 <postAndPreProps>
 <postAndPrePropsName>
-WrongProperty
+False
 </postAndPrePropsName>
 <pre>
 FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);
@@ -117,10 +117,10 @@ true
 </amountSeatsMax>
 <timeout>
 <duration>
-600000
+3000
 </duration>
 <timeunit>
-MINUTES
+SECONDS
 </timeunit>
 
 </timeout>
