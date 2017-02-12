@@ -33,6 +33,15 @@ public class LanguageOptions extends Options {
         optElements.add(langOptElem);
     }
     
+    public LanguageOptions(StringLoaderInterface sli) {
+        super("lang_opts");
+        this.sli = sli;
+        ArrayList<String> choosableLangsList = new ArrayList<>();
+        choosableLangsList.add("de");
+        langOptElem = new LanguageOptionElement(choosableLangsList, "de");
+        optElements.add(langOptElem);
+    }
+    
     public void addStringDisplayer(DisplaysStringsToUser dis) {
         stringDisplays.add(dis);
     }

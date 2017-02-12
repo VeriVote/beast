@@ -8,6 +8,8 @@ import edu.pse.beast.saverloader.SaverLoaderInterface;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import toBeImplemented.CheckerList;
 
 public class OptionsInterface {    
@@ -18,17 +20,27 @@ public class OptionsInterface {
         return new BooleanExpEditorOptions("id", editor, booleanExpCodeAreaOptions);
     }
 
-    public CElectionEditorOptions getCElectionEditorOptions(CElectionDescriptionEditor editor,
-            CElectionCodeAreaOptions cElectionCodeAreaOptions) {
-        return new CElectionEditorOptions("id", editor, cElectionCodeAreaOptions);
+    public CElectionEditorOptions getCElectionEditorOptions(CElectionDescriptionEditor editor) {
+        try {
+            CElectionEditorOptions opts = OptionsSaverLoaderInterface.loadCEditorOpts(editor);
+            return opts;
+        } catch (Exception ex) {
+        }
+        CElectionEditorOptions opts = new CElectionEditorOptions(editor);
+        return opts;
     }
 
     public ParametereditorOptions getParameterEditorOptions(LanguageOptions langOpts) {
         return new ParametereditorOptions(langOpts);
     }
 
-    public LanguageOptions getLanguageOptions(StringLoaderInterface stringIf) throws IOException {
-        return OptionsSaverLoaderInterface.loadLangOpts(stringIf);
+    public LanguageOptions getLanguageOptions(StringLoaderInterface stringIf) {
+        try {
+            return OptionsSaverLoaderInterface.loadLangOpts(stringIf);
+        } catch (IOException ex) {
+            Logger.getLogger(OptionsInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return new LanguageOptions(stringIf);
     }
 
     public OptionPresenter getOptionPresenter(ObjectRefsForBuilder refs) {

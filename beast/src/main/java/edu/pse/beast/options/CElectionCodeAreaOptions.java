@@ -2,9 +2,9 @@ package edu.pse.beast.options;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
 
-public class CElectionCodeAreaOptions {
-    private final CElectionCodeArea cElecCodeArea;
-    private final CodeAreaOptions codeAreaOptiosn;
+public class CElectionCodeAreaOptions extends Options {
+    private CElectionCodeArea cElecCodeArea;
+    private final CodeAreaOptions codeAreaOptions;
     
     /**
      * 
@@ -13,24 +13,33 @@ public class CElectionCodeAreaOptions {
      */
     public CElectionCodeAreaOptions(CElectionCodeArea cElecCodeArea,
             CodeAreaOptions codeAreaOptions) {
+        super("ccodearea_opts");
         this.cElecCodeArea = cElecCodeArea;
-        this.codeAreaOptiosn = codeAreaOptions;
+        this.codeAreaOptions = codeAreaOptions;
     }
-    
-    /**
-     * 
-     * @return the code area
-     */
-    public CElectionCodeArea getCElecCodeArea() {
-        return cElecCodeArea;
+
+    CElectionCodeAreaOptions(CElectionCodeArea codeArea) {
+        super("ccodearea_opts");
+        this.cElecCodeArea = codeArea;
+        this.codeAreaOptions = new CodeAreaOptions(codeArea);
+        subOptions.add(codeAreaOptions);
     }
-    
     /**
      * 
      * @return the options
      */
     public CodeAreaOptions getCodeAreaOptions() {
-        return codeAreaOptiosn;
+        return codeAreaOptions;
+    }
+
+    @Override
+    protected void reapplySpecialized() {
+        
+    }
+
+    public void setCodeArea(CElectionCodeArea codeArea) {
+        this.cElecCodeArea = codeArea;
+        this.codeAreaOptions.setCodeArea(codeArea);
     }
     
 }

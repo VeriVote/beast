@@ -74,11 +74,6 @@ public class TabInserter {
         return spacesPerTab;
     }
  
-    //TODO: make it so changing theese rezises all tabs in the pane
-//    public void setSpacesPerTab(int spaces) {
-//        spacesPerTab = spaces;
-//    }
-
     private boolean onlySpacesBetweenPosAndLinesBeginning(int pos) {
         int distToLineBeginning = JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, pos);
         String spaces = "";
@@ -90,6 +85,10 @@ public class TabInserter {
         } catch (BadLocationException ex) {
             return false;
         }
+    }
+
+    public void setAmountSpacesPerTab(int numberTabs) {
+        this.spacesPerTab = numberTabs;
     }
     
 }

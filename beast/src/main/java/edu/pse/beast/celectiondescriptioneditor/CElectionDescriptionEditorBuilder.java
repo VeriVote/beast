@@ -171,7 +171,7 @@ public class CElectionDescriptionEditorBuilder {
         editList.add(createFromUserAction(redo));
 
         ArrayList<ActionIdAndListener> editorList = new ArrayList<>();
-        options = createPresentOptionsUserAction();
+        options = createPresentOptionsUserAction(objRefsForBuilder, editor);
         editorList.add(createFromUserAction(options));
         
         ArrayList<ActionIdAndListener> codeList = new ArrayList<>();
@@ -218,8 +218,10 @@ public class CElectionDescriptionEditorBuilder {
     }
     
     //editor
-    private PresentOptionsUserAction createPresentOptionsUserAction() {
-        return new PresentOptionsUserAction();
+    private PresentOptionsUserAction createPresentOptionsUserAction(ObjectRefsForBuilder refs, CElectionDescriptionEditor editor) {
+        return new PresentOptionsUserAction(
+                refs.getOptionIF().getCElectionEditorOptions(editor), 
+                refs.getOptionIF().getOptionPresenter(refs));
     }    
     //code
     private StaticErrorFindingUserAction createStaticErrorFindingUserAction(CElectionDescriptionEditor editor) {

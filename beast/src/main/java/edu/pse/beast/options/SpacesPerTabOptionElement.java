@@ -4,7 +4,7 @@ import java.util.List;
 
 public class SpacesPerTabOptionElement extends OptionElement {
 
-    private final int numberTabs;
+    private int numberTabs;
 
     /**
      * 
@@ -13,9 +13,9 @@ public class SpacesPerTabOptionElement extends OptionElement {
      * @param numberTabs the number of spaces per tab
      * @param chosenType
      */
-    public SpacesPerTabOptionElement(String id, List<String> choosableOptions, int numberTabs) {
-        super(id, choosableOptions);
-        this.numberTabs = numberTabs;
+    public SpacesPerTabOptionElement(List<String> choosableOptions, String numberTabs) {
+        super("spaces_per_tab", choosableOptions);
+        handleSelection(numberTabs);
     }
 
     /**
@@ -28,6 +28,7 @@ public class SpacesPerTabOptionElement extends OptionElement {
 
     @Override
     public void handleSelection(String selection) {
-        // TODO Auto-generated method stub
+        chosenOption = selection;
+        numberTabs = Integer.valueOf(selection);
     }
 }

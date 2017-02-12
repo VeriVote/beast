@@ -36,8 +36,7 @@ public class BooleanExpCodeAreaOptions extends Options {
     }
 
     @Override
-    public void reapply() {
-        // TODO Auto-generated method stub
+    protected void reapplySpecialized() {
         
     }
 }

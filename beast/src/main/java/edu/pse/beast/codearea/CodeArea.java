@@ -224,4 +224,9 @@ public class CodeArea implements AncestorListener {
         pane.repaint();
     }
 
+    public UserInsertToCode getInsertToCode() {
+        return insertToCode;
+    }
+    
+
 }

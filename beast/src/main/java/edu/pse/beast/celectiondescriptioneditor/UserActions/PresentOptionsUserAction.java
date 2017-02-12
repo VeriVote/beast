@@ -5,6 +5,8 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.UserActions;
 
+import edu.pse.beast.options.CElectionEditorOptions;
+import edu.pse.beast.options.OptionPresenter;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
@@ -12,13 +14,16 @@ import edu.pse.beast.toolbox.UserAction;
  * @author Holger-Desktop
  */
 public class PresentOptionsUserAction extends UserAction {
-    
-    public PresentOptionsUserAction() {
+    private CElectionEditorOptions options;
+    private OptionPresenter presenter;
+    public PresentOptionsUserAction(CElectionEditorOptions options, OptionPresenter presenter) {
         super("options");
+        this.presenter = presenter;
+        this.options = options;
     }
 
     @Override
     public void perform() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        presenter.presentOptionsToUser(options);
     }
 }

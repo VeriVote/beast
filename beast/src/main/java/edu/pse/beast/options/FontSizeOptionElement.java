@@ -3,8 +3,9 @@ package edu.pse.beast.options;
 import java.util.List;
 
 public class FontSizeOptionElement extends OptionElement {
-    private final int chosenSize;
-
+    
+    private int size;
+    
     /**
      * 
      * @param id the id
@@ -12,21 +13,19 @@ public class FontSizeOptionElement extends OptionElement {
      * @param chosenSize the chosen size
      * @param chosenType
      */
-    public FontSizeOptionElement(String id, List<String> choosableOptions, int chosenSize) {
-        super(id, choosableOptions);
-        this.chosenSize = chosenSize;
+    public FontSizeOptionElement(List<String> choosableOptions, String chosenSize) {
+        super("fontsize", choosableOptions);
+        handleSelection(chosenSize);
     }
 
-    /**
-     * 
-     * @return the chosen type
-     */
-    public int getChosenSize() {
-        return chosenSize;
+    public int getsize() {
+        return size;
     }
+     
 
     @Override
     public void handleSelection(String selection) {
-        // TODO Auto-generated method stub
+        this.chosenOption = selection;
+        this.size = Integer.valueOf(selection);
     }
 }

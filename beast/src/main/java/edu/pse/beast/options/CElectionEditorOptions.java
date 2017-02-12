@@ -3,7 +3,7 @@ package edu.pse.beast.options;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 
 public class CElectionEditorOptions extends Options {
-    private final CElectionDescriptionEditor editor;
+    private  CElectionDescriptionEditor editor;
     private final CElectionCodeAreaOptions cElectionCodeAreaOptions;
     
     /**
@@ -12,33 +12,24 @@ public class CElectionEditorOptions extends Options {
      * @param editor the editor
      * @param cElectionCodeAreaOptions the options
      */
-    public CElectionEditorOptions(String id, CElectionDescriptionEditor editor,
+    public CElectionEditorOptions(
+            CElectionDescriptionEditor editor,
             CElectionCodeAreaOptions cElectionCodeAreaOptions) {
-        super(id);
+        super("ceditor_opts");
         this.editor = editor;
         this.cElectionCodeAreaOptions = cElectionCodeAreaOptions;
+        subOptions.add(cElectionCodeAreaOptions);
     }
 
-    /**
-     * 
-     * @return the editor
-     */
-    public CElectionDescriptionEditor getEditor() {
-        return editor;
-    }
-
-    /**
-     * 
-     * @return the options
-     */
-    public CElectionCodeAreaOptions getcElectionCodeAreaOptions() {
-        return cElectionCodeAreaOptions;
-    }
-
-    @Override
-    public void reapply() {
-        // TODO Auto-generated method stub
-        
+    public CElectionEditorOptions(CElectionDescriptionEditor editor) {
+        super("ceditor_opts");
+        this.editor = editor;
+        this.cElectionCodeAreaOptions = new CElectionCodeAreaOptions(editor.getCodeArea());
+        subOptions.add(cElectionCodeAreaOptions);
     }
     
+    @Override
+    protected void reapplySpecialized() {
+        cElectionCodeAreaOptions.setCodeArea(editor.getCodeArea());
+    }    
 }

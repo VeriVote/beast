@@ -322,4 +322,8 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
         return this.openCloseCharList;
     }
 
+    public TabInserter getTabInserter() {
+        return tabInserter;
+    }
+    
 }

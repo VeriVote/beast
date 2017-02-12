@@ -7,6 +7,10 @@ package edu.pse.beast.options;
 
 import edu.pse.beast.saverloader.OptionSaverLoader.OptionsSaverLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import javax.swing.BoxLayout;
+import static javax.swing.BoxLayout.Y_AXIS;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -34,6 +38,7 @@ public class OptionPresenterFrame extends javax.swing.JFrame {
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         showOptionsRec(opt);
         jButton1.addActionListener((ae) -> {
+            this.setVisible(false);
             opt.reapply();
             OptionsSaverLoaderInterface.saveOpt(opt);
             this.dispose();
@@ -42,36 +47,38 @@ public class OptionPresenterFrame extends javax.swing.JFrame {
     
     private void showOptionsRec(Options opt) {
         for(Options subOpt : opt.getSubOptions()) {
-            JPanel panel = new JPanel();
-            
+            JPanel panel = new JPanel(new GridLayout(subOpt.getOptionElements().size(), 2, 5, 5));
+                        
             for(OptionElement elem : subOpt.getOptionElements()) {
                 JLabel label = new JLabel(srl.getStringFromID(elem.getID()));
                 OptionElemComboBox combobox = new OptionElemComboBox(elem);
                 DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
                 for(String s : elem.getChoosableOptions()) {
-                    try {
-                        model.addElement(srl.getStringFromID(s));
-                    } catch (Exception e) {
+                    if(srl.getStringFromID(s) == null) {
                         model.addElement(s);
-                    }                    
+                    } else {
+                        model.addElement(srl.getStringFromID(s));
+                    }                     
                 }
-                try {
-                    model.setSelectedItem(srl.getStringFromID(elem.getChosenOption()));
-                } catch (Exception e) {
-                    model.setSelectedItem(elem.getChosenOption());
-                } 
-                combobox.setModel(model);
-                
+                if(srl.getStringFromID(elem.chosenOption) == null) {
+                    model.setSelectedItem(elem.chosenOption);
+                } else {
+                    model.setSelectedItem(srl.getStringFromID(elem.chosenOption));
+                }  
+                combobox.setModel(model);                
                 
                 combobox.addItemListener((ie) -> {
-                    ((OptionElemComboBox)ie.getSource()).getElem().handleSelection(srl.getIdForString((String)ie.getItem()));
+                    if(srl.getIdForString((String)ie.getItem()) != null) {                        
+                        ((OptionElemComboBox)ie.getSource()).getElem().handleSelection(srl.getIdForString((String)ie.getItem()));
+                    } else {
+                        ((OptionElemComboBox)ie.getSource()).getElem().handleSelection((String)ie.getItem());
+                    }
                 });
-                
                 panel.add(label);
                 panel.add(combobox);                
             }
             
-            jTabbedPane1.add(srl.getStringFromID(subOpt.getId()) ,panel);
+            jTabbedPane1.addTab(srl.getStringFromID(subOpt.getId()) ,panel);
             showOptionsRec(subOpt);            
         }
     }
