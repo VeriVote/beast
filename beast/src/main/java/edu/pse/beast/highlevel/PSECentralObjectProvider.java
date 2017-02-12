@@ -37,7 +37,7 @@ public class PSECentralObjectProvider implements CentralObjectProvider {
      */
     public PSECentralObjectProvider(BEASTCommunicator communicator) {
         OptionsInterface optionsInterface = new OptionsInterface();
-        StringLoaderInterface stringIf = new StringLoaderInterface("de"); //must be provided  by language options at some point
+        StringLoaderInterface stringIf = new StringLoaderInterface("de"); 
         SaverLoaderInterface saverLoaderIF = new SaverLoaderInterface();
         LanguageOptions langOpts = optionsInterface.getLanguageOptions(stringIf);
         ObjectRefsForBuilder refs = new ObjectRefsForBuilder(

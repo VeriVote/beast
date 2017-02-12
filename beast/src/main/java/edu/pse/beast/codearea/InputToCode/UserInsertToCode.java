@@ -91,6 +91,7 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
      * @param string the string to be inserted 
      */
     public void insertString(String string) {
+        if(selectionIncludesLockedLines()) return;       
         try {
             if (isLineContainingCaretPosLocked()) {
                 return;
