@@ -2,15 +2,10 @@ package edu.pse.beast.options;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
-import edu.pse.beast.parametereditor.ParameterEditor;
 import edu.pse.beast.saverloader.OptionSaverLoader.OptionsSaverLoaderInterface;
-import edu.pse.beast.saverloader.SaverLoaderInterface;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import toBeImplemented.CheckerList;
 
 public class OptionsInterface {    
     private OptionPresenter presenter;

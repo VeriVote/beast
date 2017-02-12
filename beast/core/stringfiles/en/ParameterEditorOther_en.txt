@@ -26,7 +26,7 @@ openApproveButtonToolTipText : Open
 openApproveButtonText : Open
 saveApproveButtonToolTipText : Save
 saveApproveButtonText : Save
-ancelButtonToolTipText : Cancel
+cancelButtonToolTipText : Cancel
 fileNameHeaderText : Filename
 upFolderToolTipText : Up one level
 homeFolderToolTipText : Home
@@ -50,8 +50,15 @@ inputOutputErrorSave : The folder, in which you want to save, doesn't exist or y
 wrongFileNameError : The given name doesn't match the regular expression '[_a-zA-Z0-9\-\.\s]+'.
 fileSuffix : .beast
 saveChanges : Save changes to '
-saveChangesSuffix : '?
+save : '?
 yesOption : Yes
 noOption : No
 cancelOption : Cancel
-noProperty : No Property was selected for the analysis
+searchingForErrors : Searching for errors
+electionDescriptionErrors : The election description contains errors.
+propertyErrors : The properties to be analysed still contain errors.
+parameterErrors : The parameters are erroneous.
+startingCheck : Analysis start-up
+waitingForPropertyResult :  Waiting for result of property '
+analysisEnded : Analysis ended after
+noProperty : No Property was selected for the analysis.

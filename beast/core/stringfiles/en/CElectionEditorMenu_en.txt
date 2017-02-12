@@ -25,7 +25,7 @@ openApproveButtonToolTipText : Open
 openApproveButtonText : Open
 saveApproveButtonToolTipText : Save
 saveApproveButtonText : Save
-ancelButtonToolTipText : Cancel
+cancelButtonToolTipText : Cancel
 fileNameHeaderText : Filename
 upFolderToolTipText : Up one level
 homeFolderToolTipText : Home
@@ -49,7 +49,7 @@ inputOutputErrorSave : The folder, in which you want to save, does not exist or 
 wrongFileNameError : The name does not match the regular expression '[_a-zA-Z0-9\-\.\s]+'.
 fileSuffix : .elec
 saveChanges : Save changes to '
-saveChangesSuffix : '?
+save : '?
 yesOption : Yes
 noOption : No
 cancelOption : Cancel

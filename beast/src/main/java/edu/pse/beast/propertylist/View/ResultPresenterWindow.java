@@ -251,7 +251,7 @@ public class ResultPresenterWindow extends JFrame {
             
             // The votes points part of the document
             appendLine("\n");
-            appendLine(srl.getStringFromID("election") + " Punkte");
+            appendLine(srl.getStringFromID("electionpoints"));
             Long[] result;
             if (ex.isChooseOneCandidate()) {
             	result = getVotePoints(ex.getVotes().get(i).getArray(), ex);
@@ -260,7 +260,7 @@ public class ResultPresenterWindow extends JFrame {
             	result = getVotePoints(ex.getVoteList().get(i).getArray(), ex.getElectionType(), ex);
             }
             for (int j = 0; j < result.length; j++) {
-        		appendLine("Candidate " + j + ": " + (int) (long) result[j]);
+        		appendLine(srl.getStringFromID("Candidate") + " " + j + ": " + (int) (long) result[j]);
             }
             appendLine("\n");
         }

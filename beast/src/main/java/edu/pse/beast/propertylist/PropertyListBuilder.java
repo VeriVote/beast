@@ -61,7 +61,7 @@ public class PropertyListBuilder {
         refs.getLanguageOpts().addStringDisplayer(window);
         refs.getLanguageOpts().addStringDisplayer(menuBarHandler);
         refs.getLanguageOpts().addStringDisplayer(toolbarHandler);
-        refs.getLanguageOpts().addStringDisplayer(controller);
+        //refs.getLanguageOpts().addStringDisplayer(controller);
         return (PropertyList) controller;
     }
 
