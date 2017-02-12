@@ -23,6 +23,7 @@ public interface ResultCheckerCommunicator {
 
     /**
      * Stops checks.
+     * returns 0 if 
      */
-    void abortChecking();
+    boolean abortChecking();
 }

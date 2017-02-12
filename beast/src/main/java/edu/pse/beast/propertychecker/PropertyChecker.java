@@ -12,7 +12,6 @@ import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
 import edu.pse.beast.highlevel.ResultCheckerCommunicator;
 import edu.pse.beast.highlevel.ResultInterface;
-import edu.pse.beast.toolbox.ErrorLogger;
 
 /**
  *
@@ -45,11 +44,12 @@ public class PropertyChecker implements ResultCheckerCommunicator {
     }
 
     @Override
-    public void abortChecking() {
+    public boolean abortChecking() {
         if (factoryController != null) {
             factoryController.stopChecking(false);
+            return true;
         } else {
-            ErrorLogger.log("Tried to stop the checking before a factory controller existed or after it finished!");
+            return false;
         }
     }
 

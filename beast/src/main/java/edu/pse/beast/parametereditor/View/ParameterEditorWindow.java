@@ -25,8 +25,8 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     private boolean reacts;
     private String title = "";
     private String currentlyLoadedProjectName = "New Project";
-    private ImageIcon loading;
-    private JLabel imageLabel;
+    private final ImageIcon loading;
+    private final JLabel imageLabel;
     private StringLoaderInterface stringResIF;
 
     /**
@@ -410,10 +410,6 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
         model.addElement(other.getStringFromID("hours"));
         model.addElement(other.getStringFromID("days"));
         timeoutUnit.setModel(model);
-        /*timeoutUnit.addItem(other.getStringFromID("seconds"));
-        timeoutUnit.addItem(other.getStringFromID("minutes"));
-        timeoutUnit.addItem(other.getStringFromID("hours"));
-        timeoutUnit.addItem(other.getStringFromID("days"));*/
         advWindow.updateStringRes(stringResIF);
         versionWindow.updateStringRes(stringResIF);
         timeout.setText(other.getStringFromID("timeout"));
