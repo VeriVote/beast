@@ -39,12 +39,12 @@ public class CodeAreaOptions extends Options {
         
         fontSize = new FontSizeOptionElement(possibleSizes, loader.getStringFromID("fontsize"));
         
-        ArrayList<String> possibleTabSizes = new ArrayList<>();
+         ArrayList<String> possibleTabSizes = new ArrayList<>();
         for (int i = 2; i < 30; i++) {
-            possibleSizes.add(String.valueOf(i));
+            possibleTabSizes.add(String.valueOf(i));
         }
         
-        spacesPerTab = new SpacesPerTabOptionElement(possibleSizes, loader.getStringFromID("spaces_per_tab"));
+        spacesPerTab = new SpacesPerTabOptionElement(possibleTabSizes, loader.getStringFromID("spaces_per_tab"));
         
         optElements.add(fontType);
         optElements.add(fontSize);
@@ -71,10 +71,10 @@ public class CodeAreaOptions extends Options {
         
         ArrayList<String> possibleTabSizes = new ArrayList<>();
         for (int i = 2; i < 30; i++) {
-            possibleSizes.add(String.valueOf(i));
+            possibleTabSizes.add(String.valueOf(i));
         }
         
-        spacesPerTab = new SpacesPerTabOptionElement(possibleSizes, "8");        
+        spacesPerTab = new SpacesPerTabOptionElement(possibleTabSizes, "8");        
         
         optElements.add(fontType);
         optElements.add(fontSize);
