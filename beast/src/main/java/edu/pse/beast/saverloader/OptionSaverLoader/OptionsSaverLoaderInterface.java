@@ -19,6 +19,8 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
+import edu.pse.beast.toolbox.SuperFolderFinder;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -94,14 +96,14 @@ public class OptionsSaverLoaderInterface {
     }
     
     private static LinkedList<String> loadStringResForResLoader(String optName) throws IOException {
-        File f = new File("core/option_saves/" + optName + ".txt");
+        File f = new File(SuperFolderFinder.getSuperFolder() + "/core/option_saves/" + optName + ".txt");
         return FileLoader.loadFileAsString(f);
     }
     
     public static void saveOpt(Options opt) {
         ArrayList<String> saveString = new ArrayList<>();
         saveOptRec(opt, saveString);
-        FileSaver.writeStringLinesToFile(saveString, new File("core/option_saves/" + opt.getId() + ".txt"));
+        FileSaver.writeStringLinesToFile(saveString, new File(SuperFolderFinder.getSuperFolder() + "/core/option_saves/" + opt.getId() + ".txt"));
     }
     
     private static void saveOptRec(Options opt, ArrayList<String> saveString) {
