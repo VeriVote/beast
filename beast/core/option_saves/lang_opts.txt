@@ -1,1 +1,2 @@
+new_option lang_opts
 lang : de

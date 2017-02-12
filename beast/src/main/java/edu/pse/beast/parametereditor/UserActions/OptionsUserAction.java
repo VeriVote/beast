@@ -3,7 +3,7 @@ package edu.pse.beast.parametereditor.UserActions;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.options.OptionPresenter;
 import edu.pse.beast.options.OptionsInterface;
-import edu.pse.beast.options.ParametereditorOptions;
+import edu.pse.beast.options.ParametereditorOptions.ParametereditorOptions;
 import edu.pse.beast.parametereditor.ParameterEditor;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.toolbox.UserAction;

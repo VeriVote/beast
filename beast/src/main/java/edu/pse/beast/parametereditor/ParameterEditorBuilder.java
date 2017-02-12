@@ -2,6 +2,8 @@ package edu.pse.beast.parametereditor;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
+import edu.pse.beast.highlevel.CentralObjectProvider;
+import edu.pse.beast.highlevel.PSECentralObjectProvider;
 import edu.pse.beast.options.OptionsInterface;
 import edu.pse.beast.parametereditor.View.ParameterEditorWindow;
 import edu.pse.beast.parametereditor.View.ParameterEditorWindowStarter;
@@ -41,7 +43,7 @@ public class ParameterEditorBuilder {
             ObjectRefsForBuilder refs,
             CElectionDescriptionEditor cElectionDescriptionEditor,
             BooleanExpEditor booleanExpEditor,
-            PropertyList propertyList) {
+            PropertyList propertyList, PSECentralObjectProvider centralObjectProvider) {
         ParameterEditorWindowStarter windowStarter = new ParameterEditorWindowStarter();
         SaverLoaderInterface saverLoaderInterface = new SaverLoaderInterface();
         window = windowStarter.getParameterEditorWindow();
@@ -54,9 +56,11 @@ public class ParameterEditorBuilder {
         ParameterEditorMenuBarHandler menuBarHandler = new ParameterEditorMenuBarHandler(menuHeadingIds,
                 createActionIdAndListenerListForMenuHandler(cElectionDescriptionEditor, booleanExpEditor, propertyList,
                         refs.getStringIF().getParameterEditorStringResProvider().getOtherStringRes(),
-                        saverLoaderInterface.getProjectSaverLoader(), refs),
+                        saverLoaderInterface.getProjectSaverLoader(), refs, centralObjectProvider),                
                 refs.getStringIF().getParameterEditorStringResProvider().getMenuStringRes(), window);
+        
         ImageResourceProvider imageRes = ImageResourceProvider.getToolbarImages();
+        
         ParameterEditorToolbarHandler toolbarHandler = new ParameterEditorToolbarHandler(imageRes,
                 refs.getStringIF().getParameterEditorStringResProvider().getToolbarTipStringRes(),
                 createActionIdAndListenerListForToolbarHandler(cElectionDescriptionEditor, propertyList,
@@ -87,7 +91,7 @@ public class ParameterEditorBuilder {
             createActionIdAndListenerListForMenuHandler(CElectionDescriptionEditor cElectionDescriptionEditor,
                                                         BooleanExpEditor booleanExpEditor,
                     PropertyList propertyList, StringResourceLoader stringResourceLoader, SaverLoader saverLoader,
-                    ObjectRefsForBuilder refs) {
+                    ObjectRefsForBuilder refs, PSECentralObjectProvider centralObjectProvider) {
         ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
 
         UserAction load = createLoadProjectUserAction(cElectionDescriptionEditor, propertyList, stringResourceLoader, saverLoader);
@@ -96,7 +100,7 @@ public class ParameterEditorBuilder {
                 saverLoader);
         UserAction start = createStartCheckUserAction();
         UserAction stop = createAbortCheckUserAction();
-        UserAction options = createOptionsUserAction(refs);
+        UserAction options = createOptionsUserAction(refs, centralObjectProvider);
         UserAction showPropertyList = createShowPropertyListUserAction(propertyList.getView());
         UserAction showBooleanExpEditor = createShowBooleanExpEditorUserAction(booleanExpEditor.getView());
         UserAction showCElectionEditor = createShowCElectionEditorUserAction(cElectionDescriptionEditor.getView());
@@ -179,9 +183,9 @@ public class ParameterEditorBuilder {
         return new AbortCheckUserAction(editor);
     }
     
-    private UserAction createOptionsUserAction(ObjectRefsForBuilder refs) {
+    private UserAction createOptionsUserAction(ObjectRefsForBuilder refs, PSECentralObjectProvider centralObjectProvider) {
         return new OptionsUserAction(                
-                refs.getOptionIF().getParameterEditorOptions(refs.getLanguageOpts()), 
+                refs.getOptionIF().getParameterEditorOptions(refs.getLanguageOpts(), editor, centralObjectProvider), 
                 editor, refs.getOptionIF().getOptionPresenter(refs));
     }
 

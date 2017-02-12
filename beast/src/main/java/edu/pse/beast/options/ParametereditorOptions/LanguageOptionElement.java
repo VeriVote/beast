@@ -1,5 +1,6 @@
-package edu.pse.beast.options;
+package edu.pse.beast.options.ParametereditorOptions;
 
+import edu.pse.beast.options.OptionElement;
 import java.util.List;
 
 public class LanguageOptionElement extends OptionElement {

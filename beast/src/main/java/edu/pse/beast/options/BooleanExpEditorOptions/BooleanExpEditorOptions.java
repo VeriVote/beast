@@ -1,6 +1,7 @@
-package edu.pse.beast.options;
+package edu.pse.beast.options.BooleanExpEditorOptions;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
+import edu.pse.beast.options.Options;
 
 public class BooleanExpEditorOptions extends Options {
     private final BooleanExpEditor editor;
@@ -20,7 +21,7 @@ public class BooleanExpEditorOptions extends Options {
         subOptions.add(booleanExpCodeAreaOptions);
     }
 
-    BooleanExpEditorOptions(BooleanExpEditor editor) {
+    public BooleanExpEditorOptions(BooleanExpEditor editor) {
         super("booleanexpeditor_opts");
         this.editor = editor;
         this.booleanExpCodeAreaOptions = new BooleanExpCodeAreaOptions(editor);

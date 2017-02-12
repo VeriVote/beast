@@ -1,7 +1,14 @@
 package edu.pse.beast.options;
 
+import edu.pse.beast.options.BooleanExpEditorOptions.BooleanExpEditorOptions;
+import edu.pse.beast.options.ParametereditorOptions.ParametereditorOptions;
+import edu.pse.beast.options.ParametereditorOptions.LanguageOptions;
+import edu.pse.beast.options.CEditorOptions.CElectionEditorOptions;
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
+import edu.pse.beast.highlevel.CentralObjectProvider;
+import edu.pse.beast.highlevel.PSECentralObjectProvider;
+import edu.pse.beast.parametereditor.ParameterEditor;
 import edu.pse.beast.saverloader.OptionSaverLoader.OptionsSaverLoaderInterface;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
@@ -31,17 +38,25 @@ public class OptionsInterface {
         if(cElectionEditorOptions == null) {
             try {
                 cElectionEditorOptions = OptionsSaverLoaderInterface.loadCEditorOpts(editor);
-            } catch (Exception ex) {
-                
+            } catch (Exception ex) {                
                 cElectionEditorOptions = new CElectionEditorOptions(editor);
             }            
         }        
         return cElectionEditorOptions;
     }
 
-    public ParametereditorOptions getParameterEditorOptions(LanguageOptions langOpts) {
+    public ParametereditorOptions getParameterEditorOptions(
+            LanguageOptions langOpts, ParameterEditor editor, PSECentralObjectProvider centralObjectProvider) {
         if(parametereditorOptions == null) {
-            parametereditorOptions = new ParametereditorOptions(langOpts);            
+            try {
+                parametereditorOptions = OptionsSaverLoaderInterface.loadParameterEditorOpts(
+                        langOpts,                
+                        editor,
+                        centralObjectProvider);
+            } catch(Exception e) {
+                parametereditorOptions = new ParametereditorOptions(
+                    langOpts, editor, centralObjectProvider);
+            }         
         }
         return parametereditorOptions;
     }

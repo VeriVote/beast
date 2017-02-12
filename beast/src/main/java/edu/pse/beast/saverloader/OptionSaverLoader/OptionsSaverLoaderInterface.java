@@ -4,14 +4,17 @@ import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.codearea.CodeArea;
-import edu.pse.beast.options.BooleanExpCodeAreaOptions;
-import edu.pse.beast.options.BooleanExpEditorOptions;
-import edu.pse.beast.options.CElectionCodeAreaOptions;
-import edu.pse.beast.options.CElectionEditorOptions;
-import edu.pse.beast.options.CodeAreaOptions;
-import edu.pse.beast.options.LanguageOptions;
+import edu.pse.beast.highlevel.PSECentralObjectProvider;
+import edu.pse.beast.options.BooleanExpEditorOptions.BooleanExpCodeAreaOptions;
+import edu.pse.beast.options.BooleanExpEditorOptions.BooleanExpEditorOptions;
+import edu.pse.beast.options.CEditorOptions.CElectionCodeAreaOptions;
+import edu.pse.beast.options.CEditorOptions.CElectionEditorOptions;
+import edu.pse.beast.options.CodeAreaOptions.CodeAreaOptions;
+import edu.pse.beast.options.ParametereditorOptions.LanguageOptions;
 import edu.pse.beast.options.OptionElement;
 import edu.pse.beast.options.Options;
+import edu.pse.beast.options.ParametereditorOptions.ParametereditorOptions;
+import edu.pse.beast.parametereditor.ParameterEditor;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.FileLoader;
@@ -23,11 +26,13 @@ import java.util.LinkedList;
 
 /**
 *
-* @author Justin
+* @author Holger
 */
 public class OptionsSaverLoaderInterface {
     public static LanguageOptions loadLangOpts(StringLoaderInterface sli) throws IOException {
-        StringResourceLoader loader = new StringResourceLoader(loadStringResForResLoader("lang_opts"));
+        StringResourceLoader loader = new StringResourceLoader(
+                getSaveStringOnlyForOption("lang_opts",
+                loadStringResForResLoader("lang_opts")));
         return new LanguageOptions(sli, loader);
     }
     
@@ -65,6 +70,16 @@ public class OptionsSaverLoaderInterface {
         return created;
     }
     
+    
+    public static ParametereditorOptions loadParameterEditorOpts(
+            LanguageOptions langOpts, ParameterEditor editor,
+            PSECentralObjectProvider centralObjectProvider) throws IOException {
+        LinkedList<String> saveString = loadStringResForResLoader("param_opts");
+        LinkedList<String> onlySaveString = getSaveStringOnlyForOption("param_opts", saveString);
+        StringResourceLoader loader = new StringResourceLoader(onlySaveString);
+        return new ParametereditorOptions(loader, langOpts, editor, centralObjectProvider);
+    }
+    
     private static LinkedList<String> getSaveStringOnlyForOption(String id, LinkedList<String> saveString) {
         LinkedList<String> created = new LinkedList<>();
         int i = 0;
@@ -90,14 +105,14 @@ public class OptionsSaverLoaderInterface {
     }
     
     private static void saveOptRec(Options opt, ArrayList<String> saveString) {
-
+        saveString.add("new_option " + opt.getId());
         for(OptionElement elem : opt.getOptionElements()) {
             saveString.add(elem.getID() + " : " + elem.getChosenOption());
         }
-        for(Options subOptions : opt.getSubOptions()) {
-            saveString.add("new_option " + subOptions.getId());        
+        for(Options subOptions : opt.getSubOptions()) {                    
             saveOptRec(subOptions, saveString);
         }
     }
+
 
 }

@@ -30,7 +30,7 @@ public final class CheckerFactoryFactory {
 		initialized = true;
 	}
 
-	public static List<String> getAvailableChekerIDs() {
+	public static List<String> getAvailableCheckerIDs() {
 		if (!initialized) {
 			init();
 		}

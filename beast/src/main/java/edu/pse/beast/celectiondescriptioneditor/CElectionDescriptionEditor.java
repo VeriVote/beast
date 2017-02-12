@@ -15,7 +15,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
-import edu.pse.beast.options.CElectionEditorOptions;
+import edu.pse.beast.options.CEditorOptions.CElectionEditorOptions;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;

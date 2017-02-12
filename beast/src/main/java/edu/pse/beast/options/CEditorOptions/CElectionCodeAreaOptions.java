@@ -1,6 +1,8 @@
-package edu.pse.beast.options;
+package edu.pse.beast.options.CEditorOptions;
 
+import edu.pse.beast.options.CodeAreaOptions.CodeAreaOptions;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
+import edu.pse.beast.options.Options;
 
 public class CElectionCodeAreaOptions extends Options {
     private CElectionCodeArea cElecCodeArea;

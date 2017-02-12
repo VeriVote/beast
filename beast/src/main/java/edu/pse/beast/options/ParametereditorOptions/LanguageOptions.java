@@ -1,8 +1,9 @@
-package edu.pse.beast.options;
+package edu.pse.beast.options.ParametereditorOptions;
 
 import java.util.List;
 
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
+import edu.pse.beast.options.Options;
 import edu.pse.beast.saverloader.SaverLoaderInterface;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
@@ -46,7 +47,7 @@ public class LanguageOptions extends Options {
 
     @Override
     protected void reapplySpecialized() {
-        sli.setLanguage(langOptElem.chosenOption);
+        sli.setLanguage(langOptElem.getChosenOption());
         for(DisplaysStringsToUser dis : stringDisplays) {
             dis.updateStringRes(sli);
         }

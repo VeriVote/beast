@@ -1,7 +1,8 @@
-package edu.pse.beast.options;
+package edu.pse.beast.options.CodeAreaOptions;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
 import edu.pse.beast.codearea.CodeArea;
+import edu.pse.beast.options.Options;
 import edu.pse.beast.stringresource.StringResourceLoader;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
@@ -51,7 +52,7 @@ public class CodeAreaOptions extends Options {
         optElements.add(spacesPerTab);
     }  
 
-    CodeAreaOptions(CodeArea codeArea) {
+    public CodeAreaOptions(CodeArea codeArea) {
         super("codearea_opts");
         String fonts[] = 
             GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
@@ -88,7 +89,7 @@ public class CodeAreaOptions extends Options {
         codeArea.getInsertToCode().getTabInserter().setAmountSpacesPerTab(spacesPerTab.getNumberTabs());
     }
 
-    void setCodeArea(CodeArea codeArea) {
+    public void setCodeArea(CodeArea codeArea) {
         this.codeArea = codeArea;
     }
    

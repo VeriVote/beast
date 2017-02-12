@@ -1,5 +1,6 @@
-package edu.pse.beast.options;
+package edu.pse.beast.options.CodeAreaOptions;
 
+import edu.pse.beast.options.OptionElement;
 import java.util.List;
 
 public class FontSizeOptionElement extends OptionElement {

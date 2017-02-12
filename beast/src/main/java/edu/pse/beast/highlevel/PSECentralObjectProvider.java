@@ -4,7 +4,7 @@ import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.booleanexpeditor.BooleanExpEditorBuilder;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditorBuilder;
-import edu.pse.beast.options.LanguageOptions;
+import edu.pse.beast.options.ParametereditorOptions.LanguageOptions;
 import edu.pse.beast.options.OptionsInterface;
 import edu.pse.beast.parametereditor.ParameterEditor;
 import edu.pse.beast.parametereditor.ParameterEditorBuilder;
@@ -27,7 +27,7 @@ public class PSECentralObjectProvider implements CentralObjectProvider {
     private final PropertyList propertyList;
     private final BooleanExpEditor booleanExpEditor;
     private final CElectionDescriptionEditor cElectionEditor;
-    private final ResultCheckerCommunicator checkerCommunicator;
+    private ResultCheckerCommunicator checkerCommunicator;
     
     /**
      * Constructor that creates instances of the classes that implement high level
@@ -48,7 +48,7 @@ public class PSECentralObjectProvider implements CentralObjectProvider {
         propertyList = new PropertyListBuilder().createPropertyList(refs, booleanExpEditor);
         checkerCommunicator = new PropertyChecker("cbmc"); //this must be done via the checkerfactory at some point
         paramEd = new ParameterEditorBuilder().createParameterEditor(refs, cElectionEditor,
-                booleanExpEditor, propertyList);
+                booleanExpEditor, propertyList, this);
         paramEd.addCheckListener(communicator);
         langOpts.reapply();
     }
@@ -86,6 +86,10 @@ public class PSECentralObjectProvider implements CentralObjectProvider {
     @Override
     public CheckStatusDisplay getCheckStatusDisplay() {
         return paramEd.getView();
+    }
+
+    public void setCheckerCommunicator(ResultCheckerCommunicator checkerCommunicator) {
+        this.checkerCommunicator = checkerCommunicator;
     }
 
 }

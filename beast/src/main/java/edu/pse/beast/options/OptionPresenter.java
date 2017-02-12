@@ -16,8 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
- * 
- * @author Lukas
+ * This class uses the OptionPresenterFrame class to present given option objects
+ * to the user and thus give him the possiblity of changing settings
+ * @author Holger
  *
  */
 public final class OptionPresenter implements DisplaysStringsToUser {

@@ -3,6 +3,7 @@ lang_opts : Language options
 ok_button : Apply
 param : ParameterEditor 
 param_opts : ParameterEditor Options
+checker : available Checker
 de : German
 en : English
 codearea_opts: Text Area Options

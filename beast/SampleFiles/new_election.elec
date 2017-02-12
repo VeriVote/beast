@@ -1,0 +1,19 @@
+<electionName>
+new
+</electionName>
+<votingDecLine>
+2
+</votingDecLine>
+<code>
+//Single-choice: Wähler stimmt jeweils für einen Kandidaten
+//Single-choice: Ein gewählter Kandidat oder uneööntschieden
+unsigned int voting(unsigned int votes[V]) { 
+} 
+
+</code>
+<inputType>
+one_candidate_per_voter
+</inputType>
+<outputType>
+one_candidate_or_zero
+</outputType>

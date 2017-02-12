@@ -46,10 +46,10 @@ public class OptionPresenterFrame extends javax.swing.JFrame {
     }
     
     private void showOptionsRec(Options opt) {
-        for(Options subOpt : opt.getSubOptions()) {
-            JPanel panel = new JPanel(new GridLayout(subOpt.getOptionElements().size(), 2, 5, 5));
+        
+            JPanel panel = new JPanel(new GridLayout(opt.getOptionElements().size(), 2, 5, 5));
                         
-            for(OptionElement elem : subOpt.getOptionElements()) {
+            for(OptionElement elem : opt.getOptionElements()) {
                 JLabel label = new JLabel(srl.getStringFromID(elem.getID()));
                 OptionElemComboBox combobox = new OptionElemComboBox(elem);
                 DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
@@ -77,10 +77,12 @@ public class OptionPresenterFrame extends javax.swing.JFrame {
                 panel.add(label);
                 panel.add(combobox);                
             }
-            
-            jTabbedPane1.addTab(srl.getStringFromID(subOpt.getId()) ,panel);
-            showOptionsRec(subOpt);            
-        }
+            if(opt.getOptionElements().size() != 0)
+                jTabbedPane1.addTab(srl.getStringFromID(opt.getId()) ,panel);
+            for(Options subOpt : opt.getSubOptions()) {                
+                showOptionsRec(subOpt);  
+            }          
+        
     }
 
     /**

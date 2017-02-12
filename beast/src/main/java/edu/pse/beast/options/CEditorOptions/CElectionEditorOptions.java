@@ -1,6 +1,7 @@
-package edu.pse.beast.options;
+package edu.pse.beast.options.CEditorOptions;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
+import edu.pse.beast.options.Options;
 
 public class CElectionEditorOptions extends Options {
     private  CElectionDescriptionEditor editor;

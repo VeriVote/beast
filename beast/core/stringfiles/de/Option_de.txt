@@ -1,8 +1,9 @@
-lang : Sprache
+﻿lang : Sprache
 lang_opts : Sprachoptionen
 ok_button : Anwenden
 param : ParameterEditor
 param_opts : ParameterEditor Optionen
+checker : Verfügbare Checker
 de : Deutsch
 en : Englisch
 codearea_opts: Textfeld Optionen
