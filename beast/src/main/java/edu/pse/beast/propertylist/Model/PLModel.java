@@ -97,7 +97,7 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 	@Override
 	public boolean setNextToBePresented(ResultInterface res) {
 		for (PropertyItem item : propertyList) {
-			if (item.getResultType() == ResultType.UNTESTED) {
+			if (item.getResultType() == ResultType.UNTESTED && item.getTestStatus()) {
 				res.presentTo(item);
 				updateView();
 				return true;
