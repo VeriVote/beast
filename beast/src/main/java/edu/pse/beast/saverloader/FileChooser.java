@@ -1,18 +1,14 @@
 package edu.pse.beast.saverloader;
 
-import com.sun.jna.platform.FileUtils;
 import edu.pse.beast.datatypes.NameInterface;
 
 import edu.pse.beast.stringresource.StringResourceLoader;
-import edu.pse.beast.toolbox.FileSaver;
 import edu.pse.beast.toolbox.SuperFolderFinder;
-import sun.misc.IOUtils;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.io.*;
-import java.nio.file.Files;
 
 /**
  * Class that allows saving and loading files.
@@ -301,7 +297,6 @@ public class FileChooser {
     }
 
     public void updateStringRessourceLoader(StringResourceLoader stringResourceLoader) {
-       
         //sets the text and language of all the components in JFileChooser
         UIManager.put("FileChooser.openDialogTitleText", stringResourceLoader.getStringFromID("openDialogTitleText"));
         UIManager.put("FileChooser.lookInLabelText", stringResourceLoader.getStringFromID("lookInLabelText"));
