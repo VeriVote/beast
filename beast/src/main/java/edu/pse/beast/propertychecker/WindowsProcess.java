@@ -117,7 +117,7 @@ public class WindowsProcess extends CBMCProcess {
                 // because windows is weird the whole call that will get placed
                 // inside
                 // VScmd has to be in one giant string
-                String cbmcCall = "\"" + vsCmd + "\"" + " & " + cbmcEXE + " " + "\"" + toCheck.getAbsolutePath()
+                String cbmcCall = "\"" + vsCmd + "\"" + " & " + "\"" + cbmcEXE + "\"" + " " + "\"" + toCheck.getAbsolutePath()
                         + "\"" + " " + arguments;
 
                 // this call starts a new VScmd instance and lets cbmc run in it

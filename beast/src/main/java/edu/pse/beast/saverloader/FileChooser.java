@@ -338,7 +338,7 @@ public class FileChooser {
                 return stringResourceLoader.getStringFromID("fileDescription");
             }
         });
-        fileChooser.setSelectedFile(new File(SuperFolderFinder.getSuperFolder() + "/SampleFiles/ "));
+        fileChooser.setSelectedFile(new File(SuperFolderFinder.getSuperFolder() + "/projectFiles/ "));
         fileChooser.setAcceptAllFileFilterUsed(false);
     }
 
