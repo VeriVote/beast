@@ -103,7 +103,7 @@ public class BEASTCommunicator implements CheckListener {
                         }
                         checkStatusDisplayer.displayText("waitingForPropertyResult", true,
                                 postAndPreSrc.getPostAndPrePropertiesDescriptions().
-                                        get(numberOfPresentedResults).getName() + "' (" + timeString + " passed)");
+                                        get(numberOfPresentedResults).getName() + "' (" + timeString + ")");
                         try {
                             Thread.sleep(50);
                         } catch (InterruptedException ex) {
