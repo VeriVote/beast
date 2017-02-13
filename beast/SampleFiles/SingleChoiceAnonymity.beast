@@ -12,10 +12,10 @@ SingleChoice
 //Single-choice: Wähler stimmt jeweils für einen Kandidaten
 //Single-choice: Ein gewählter Kandidat oder unentschieden
 unsigned int  voting(unsigned int votes[V]) { 
-    unsigned int res[C + 1];
+    unsigned int res[C];
     unsigned int i = 0;
 
-    for (i = 0; i <= C; i++) {
+    for (i = 0; i < C; i++) {
         res[i] = 0;
     }
     for (i = 0; i < V; i++) {
@@ -56,7 +56,7 @@ Eigenschaft 1
 </postAndPrePropsName>
 <pre>
 FOR_ALL_VOTERS(i) : ((v!=i && i != w ) ==>> VOTES1(i) == VOTES2(i)) ;
-VOTES1(v) == c && VOTES2(w) == d;
+VOTES1(v) == c && VOTES1(w) == d;
 VOTES2(v) == d && VOTES2(w) == c;
 </pre>
 <post>
