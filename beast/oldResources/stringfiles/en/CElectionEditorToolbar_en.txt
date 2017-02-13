@@ -1,9 +1,0 @@
-new : New election description
-save : Save
-save_as : Save as
-load : Open
-undo : Undo last action
-redo : Redo last action
-copy : Copy
-cut : Cut
-paste : Paste
