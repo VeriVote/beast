@@ -19,6 +19,8 @@ public class ElectionTypeContainer {
     public ElectionTypeContainer(InternalTypeContainer type, String id) {
         this.type = type;
         this.id = id;
+        lowerBound = 0;
+        upperBound = 5;
     }
     
     /**

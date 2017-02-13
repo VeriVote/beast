@@ -25,16 +25,16 @@ import java.util.Arrays;
 import java.util.List;
 import javax.swing.text.BadLocationException;
 
-
 /**
  * This class is the interface/fassade class for the CElectionDescriptionEditor
- * interface. It provides access to the most important functionallity of
- * this package to other classes without having to know which particular
- * classes implement said functionality
- * 
+ * interface. It provides access to the most important functionallity of this
+ * package to other classes without having to know which particular classes
+ * implement said functionality
+ *
  * @author Holger Klein
  */
 public class CElectionDescriptionEditor implements ElectionDescriptionSource, DisplaysStringsToUser {
+
     private CElectionCodeArea codeArea;
     private ElectionDescription currentDescription;
     private final CCodeEditorWindow window;
@@ -71,8 +71,10 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
     }
 
     /**
-     * returns the electiondescription in the state currently visible to the user
-     * @return  the electiondesciprion as it is currently edited by the user
+     * returns the electiondescription in the state currently visible to the
+     * user
+     *
+     * @return the electiondesciprion as it is currently edited by the user
      */
     @Override
     public ElectionDescription getElectionDescription() {
@@ -85,7 +87,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
         userActionChars.add(c);
         codeArea.getUserInputHandler().getShortcutHandler().addAction(c, ac);
     }
-        
+
     private void updateCurrentDescription() {
         List<String> code;
         currentDescription.setVotingDeclLine(codeArea.getFirstLockedLine());
@@ -96,8 +98,8 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
     }
 
     /**
-     * finds all errors in the currently displayed c code and displays them listed
-     * in the errorwindow
+     * finds all errors in the currently displayed c code and displays them
+     * listed in the errorwindow
      */
     public void findErrorsAndDisplayThem() {
         ArrayList<CodeError> errors = codeArea.getErrorCtrl().getErrorFinderList().getErrors();
@@ -138,6 +140,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
 
     /**
      * Getter
+     *
      * @return the CElectionCodeArea
      */
     public CElectionCodeArea getCodeArea() {
@@ -147,9 +150,10 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
     /**
      * presents the given electiondescription to the user so he can edit it,
      * prompting him to save the current description before doing so
+     *
      * @param description the description to be shown to the user
      * @return true if the desciprion was updates, false otherwise
-     * @throws BadLocationException 
+     * @throws BadLocationException
      */
     public boolean letUserEditElectionDescription(ElectionDescription description) throws BadLocationException {
         if (changeHandler.hasChanged()) {
@@ -163,24 +167,25 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
             loadElectionDescription(description);
             return true;
         }
-        
+
     }
 
     /**
-     * creates a new celectiocodearea object in which to display the 
-     * given electiondescription. Does not ask the user to save the 
-     * current desciprion before doing sos
-     * @param description the description to be displayed in the 
+     * creates a new celectiocodearea object in which to display the given
+     * electiondescription. Does not ask the user to save the current desciprion
+     * before doing sos
+     *
+     * @param description the description to be displayed in the
      * celectiondesciprioncodearea
-     * @throws BadLocationException 
+     * @throws BadLocationException
      */
     public void loadElectionDescription(ElectionDescription description) throws BadLocationException {
         this.currentDescription = description;
         window.setNewCodeArea();
-        
+
         codeArea.getErrorCtrl().stopThread();
         codeArea.getAutoComplCtrl().stopThread();
-        
+
         codeArea = builder.createCElectionCodeArea(window.getCodeArea(),
                 window.getCodeAreaScrollPane(),
                 new CErrorDisplayer(window.getCodeArea(), stringLoaderInterface));
@@ -189,13 +194,13 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
             char c = userActionChars.get(i);
             codeArea.linkActionToShortcut(c, get);
         }
-        
+
         codeArea.letUserEditCode(description.getCode());
         codeArea.lockLine(description.getVotingDeclLine());
         codeArea.lockLine(description.getCode().size() - 1);
         changeHandler.addNewTextPane(codeArea.getPane());
         window.setWindowTitle(description.getName());
-        for(ElectionDescriptionChangeListener l : descriptionChangeListeners) {
+        for (ElectionDescriptionChangeListener l : descriptionChangeListeners) {
             l.inputChanged(description.getInputType());
             l.outputChanged(description.getOutputType());
         }
@@ -205,6 +210,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
 
     /**
      * Getter
+     *
      * @return the CCodeEditorWindow object of this class
      */
     public CCodeEditorWindow getView() {
@@ -213,16 +219,17 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
 
     /**
      * Getter
+     *
      * @return the ChangeHandler object of this class
      */
     public CElectionDescriptionEditorChangeHandler getChangeHandler() {
         return this.changeHandler;
     }
-    
+
     public void addListener(ElectionDescriptionChangeListener l) {
         descriptionChangeListeners.add(l);
     }
-    
+
     public void removeListener(ElectionDescriptionChangeListener l) {
         descriptionChangeListeners.remove(l);
     }
@@ -236,8 +243,8 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
     }
 
     public StringLoaderInterface getStringInterface() {
-    	        return this.stringLoaderInterface;
-    	}
+        return this.stringLoaderInterface;
+    }
 
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
