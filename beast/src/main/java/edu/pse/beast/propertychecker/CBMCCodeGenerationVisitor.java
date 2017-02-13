@@ -248,10 +248,10 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                 throw new AssertionError(node.getDeclaredSymbolicVar().getInternalTypeContainer()
                         .getInternalType().name());
         }
-        String tempString = "for(unsigned int SYMBVAR = 0; SYMBVAR < MAX && !THEREEXISTS; symbVar++) {";
-        tempString = tempString.replace("SYMBVAR", node.getDeclaredSymbolicVar().getId());
-        tempString = tempString.replace("MAX", max);
-        tempString = tempString.replace("THEREEXISTS", varName);
+        String tempString = "for(unsigned int SYMBVAR = 0; SYMBVAR < MAX && !THEREEXISTS; SYMBVAR++) {";
+        tempString = tempString.replaceAll("SYMBVAR", node.getDeclaredSymbolicVar().getId());
+        tempString = tempString.replaceAll("MAX", max);
+        tempString = tempString.replaceAll("THEREEXISTS", varName);
         code.add(tempString);
         code.addTab();
         node.getFollowingExpNode().getVisited(this);
