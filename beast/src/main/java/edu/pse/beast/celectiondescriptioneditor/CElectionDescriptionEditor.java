@@ -241,10 +241,10 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
 
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
-        this.stringLoaderInterface = stringLoaderInterface;
-        window.updateStringRes(stringLoaderInterface);
+        this.stringLoaderInterface = stringResIF;
         menubarHandler.updateStringRes(stringLoaderInterface);
         toolbarHandler.updateStringRes(stringLoaderInterface);
+        fileChooser.updateStringRessourceLoader(stringLoaderInterface.getCElectionEditorStringResProvider().getMenuStringRes());
         fileChooser.updateStringRessourceLoader(stringLoaderInterface.getCElectionEditorStringResProvider().getMenuStringRes());
     }
 }
