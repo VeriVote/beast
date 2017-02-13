@@ -347,7 +347,7 @@ public class ResultPresenterWindow extends JFrame {
             	result = getVotePoints(ex.getVoteList().get(i).getArray(), ex.getElectionType(), ex);
             }
             for (int j = 0; j < result.length; j++) {
-        		appendLine(srl.getStringFromID("Candidate") + " " + j + ": " + (int) (long) result[j]);
+        		appendLine(srl.getStringFromID("Candidate") + " " + (j + 1) + ": " + (int) (long) result[j]);
             }
             appendLine("\n");
         }
