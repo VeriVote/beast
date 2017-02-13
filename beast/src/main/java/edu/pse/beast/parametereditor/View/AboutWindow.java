@@ -30,6 +30,7 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
         versionNumber = new javax.swing.JLabel();
         BEASTLabel = new javax.swing.JLabel();
         date = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setResizable(false);
 
@@ -41,6 +42,8 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
 
         date.setText("13.02.2017");
 
+        jLabel1.setText("B.E.A.S.T.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -48,18 +51,24 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BEASTLabel)
+                    .addComponent(date)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(versionLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(versionNumber))
-                    .addComponent(date))
+                    .addComponent(jLabel1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BEASTLabel)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BEASTLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -67,7 +76,7 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
                     .addComponent(versionNumber))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(date)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -113,6 +122,7 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BEASTLabel;
     private javax.swing.JLabel date;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel versionLabel;
     private javax.swing.JLabel versionNumber;
     // End of variables declaration//GEN-END:variables
