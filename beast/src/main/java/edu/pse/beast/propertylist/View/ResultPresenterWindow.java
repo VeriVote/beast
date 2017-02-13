@@ -123,20 +123,107 @@ public class ResultPresenterWindow extends JFrame {
         getContentPane().add(export, BorderLayout.PAGE_END);
 
         this.addWindowFocusListener(new WindowFocusListener() {
-
             @Override
             public void windowGainedFocus(WindowEvent e) {
             }
-
             @Override
             public void windowLostFocus(WindowEvent e) {
                 setVisible(false);
             }
-
         });
         pack();
     }
 
+    // private methods
+    private Long[] getVotePoints(Long[] votes, FailureExample ex) {
+    	Long[] result = new Long[ex.getNumOfCandidates()];
+    	Arrays.fill(result, 0l);
+    	
+    	for (int i = 0; i < ex.getNumOfVoters(); i++) {
+    		int vote = votes[i].intValue();
+    		// assumes that vote value is not 0
+    		result[vote - 1]++;
+    	}
+		return result;
+    }
+    
+    private Long[] getVotePoints(Long[][] votes, ElectionType type, FailureExample ex) {
+    	int candidates = ex.getNumOfCandidates();
+    	Long[] result = new Long[candidates];
+    	Arrays.fill(result, 0l);
+    	
+    	for (int i = 0; i < ex.getNumOfVoters(); i++) {
+    		Long[] vote = votes[i];
+    		switch (type) {
+        	case PREFERENCE: 
+        		for (int j = 0; j < candidates; j++) {
+        			// assumes that chosenCandidate is not 0. if chosenCandidate is 0, the election is rigged
+        			int chosenCandidate = (int) (long) vote[j];
+        			if (chosenCandidate != 0) {
+        				result[chosenCandidate - 1] += candidates - j;
+        			}
+        			//result[candidate] += candidates - j;
+        		}
+        		break;
+        	case WEIGHTEDAPPROVAL: 
+        		for (int j = 0; j < candidates; j++) {
+        			result[j] += vote[j];
+        		}
+        		break;
+        	case APPROVAL: 
+        		for (int j = 0; j < candidates; j++) {
+        			if (vote[j] == 1l) result[j]++;
+        		}
+        		break;
+    		default: break;
+        	}
+    	}
+		return result;
+    }
+    
+    private void appendPane(String text) {
+        appendPaneStyled(text, null);
+    }
+
+    private void appendPaneColored(String text, Color color) {
+        SimpleAttributeSet attr = new SimpleAttributeSet();
+        StyleConstants.setForeground(attr, color);
+        StyleConstants.setBold(attr, true);
+        appendPaneStyled(text, attr);
+    }
+
+    private void appendPaneStyled(String text, AttributeSet attr) {
+        StyledDocument doc = result.getStyledDocument();
+        try {
+            doc.insertString(doc.getLength(), text, attr);
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+        }
+        result.setStyledDocument(doc);
+    }
+
+    private void appendLine(String text) {
+        appendPane(text + "\n");
+    }
+
+    private void eraseLastCharacters(int amount) {
+        StyledDocument doc = result.getStyledDocument();
+        try {
+            doc.remove(doc.getLength() - amount, amount);
+        } catch (BadLocationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void erasePane() {
+        result.setText("");
+    }
+    
+    private void packFrame() {
+        getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, showResult.getBackground()));
+        pack();
+    }
+    
     
     public void makeInvisible() {
         this.setVisible(false);
@@ -162,10 +249,10 @@ public class ResultPresenterWindow extends JFrame {
         appendLine("");
 
         for (int i = 0; i < ex.getNumOfElections(); i++) {
-            appendLine(srl.getStringFromID("election") + " " + i);
-            appendPane(srl.getStringFromID("votes") + ": ");
-
+            appendLine(srl.getStringFromID("election") + " " + (i + 1));
+            
             // The votes part of the document
+            appendPane(srl.getStringFromID("votes") + ": ");
             if (ex.isChooseOneCandidate()) {
 
                 List<Long> voteList = ex.getVotes().get(i).getList();
@@ -211,10 +298,10 @@ public class ResultPresenterWindow extends JFrame {
 
             }
             appendLine("");
-            appendPane(srl.getStringFromID("elected") + ": ");
-
+            
             
             // The elected part of the document
+            appendPane(srl.getStringFromID("elected") + ": ");
             if (ex.isOneSeatOnly()) {
                 Long preceding;
                 Long elected = ex.getElect().get(i).getValue();
@@ -290,90 +377,6 @@ public class ResultPresenterWindow extends JFrame {
         erasePane();
         result.setText(srl.getStringFromID("noResultYet"));
         packFrame();
-    }
-    
-    // private methods
-    private Long[] getVotePoints(Long[] votes, FailureExample ex) {
-    	Long[] result = new Long[ex.getNumOfCandidates()];
-    	Arrays.fill(result, 0l);
-    	
-    	for (int i = 0; i < ex.getNumOfVoters(); i++) {
-    		int vote = votes[i].intValue();
-    		result[vote]++;
-    	}
-		return result;
-    }
-    
-    private Long[] getVotePoints(Long[][] votes, ElectionType type, FailureExample ex) {
-    	int candidates = ex.getNumOfCandidates();
-    	Long[] result = new Long[candidates];
-    	Arrays.fill(result, 0l);
-    	
-    	for (int i = 0; i < ex.getNumOfVoters(); i++) {
-    		Long[] vote = votes[i];
-    		switch (type) {
-        	case PREFERENCE: 
-        		for (int j = 0; j < candidates; j++) {
-        			result[(int) (long) vote[candidates - 1 - j]] += j;
-        		}
-        		break;
-        	case WEIGHTEDAPPROVAL: 
-        		for (int j = 0; j < candidates; j++) {
-        			result[j] += vote[j];
-        		}
-        		break;
-        	case APPROVAL: 
-        		for (int j = 0; j < candidates; j++) {
-        			if (vote[j] == 1l) result[j]++;
-        		}
-        		break;
-    		default: break;
-        	}
-    	}
-		return result;
-    }
-    
-    private void appendPane(String text) {
-        appendPaneStyled(text, null);
-    }
-
-    private void appendPaneColored(String text, Color color) {
-        SimpleAttributeSet attr = new SimpleAttributeSet();
-        StyleConstants.setForeground(attr, color);
-        StyleConstants.setBold(attr, true);
-        appendPaneStyled(text, attr);
-    }
-
-    private void appendPaneStyled(String text, AttributeSet attr) {
-        StyledDocument doc = result.getStyledDocument();
-        try {
-            doc.insertString(doc.getLength(), text, attr);
-        } catch (BadLocationException e) {
-            e.printStackTrace();
-        }
-        result.setStyledDocument(doc);
-    }
-
-    private void appendLine(String text) {
-        appendPane(text + "\n");
-    }
-
-    private void eraseLastCharacters(int amount) {
-        StyledDocument doc = result.getStyledDocument();
-        try {
-            doc.remove(doc.getLength() - amount, amount);
-        } catch (BadLocationException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void erasePane() {
-        result.setText("");
-    }
-    
-    private void packFrame() {
-        getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, showResult.getBackground()));
-        pack();
     }
 
     

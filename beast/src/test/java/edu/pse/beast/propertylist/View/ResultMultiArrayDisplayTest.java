@@ -57,7 +57,7 @@ public class ResultMultiArrayDisplayTest {
 		
 	//	win.presentFailureExample(fail);
 		
-		ElectionType et = ElectionType.PREFERENCE;
+		ElectionType et = ElectionType.APPROVAL;
 		/*List<Long[]> vote = new ArrayList<Long[]>();
 		List<Long> elected = new ArrayList<Long>();
 		vote.add(new Long[]{3l,2l,1l});
