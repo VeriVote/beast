@@ -32,6 +32,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="versionNumber" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="date" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -47,7 +48,9 @@
                   <Component id="versionLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="versionNumber" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="53" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="date" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="33" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -66,6 +69,11 @@
     <Component class="javax.swing.JLabel" name="BEASTLabel">
       <Properties>
         <Property name="text" type="java.lang.String" value="Bounded Election Attribute Structuring Tool"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="date">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="13.02.2017"/>
       </Properties>
     </Component>
   </SubComponents>

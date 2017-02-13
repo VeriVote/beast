@@ -29,6 +29,7 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
         versionLabel = new javax.swing.JLabel();
         versionNumber = new javax.swing.JLabel();
         BEASTLabel = new javax.swing.JLabel();
+        date = new javax.swing.JLabel();
 
         setResizable(false);
 
@@ -37,6 +38,8 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
         versionNumber.setText("0.1");
 
         BEASTLabel.setText("Bounded Election Attribute Structuring Tool");
+
+        date.setText("13.02.2017");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -49,7 +52,8 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(versionLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(versionNumber)))
+                        .addComponent(versionNumber))
+                    .addComponent(date))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -61,7 +65,9 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(versionLabel)
                     .addComponent(versionNumber))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(date)
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         pack();
@@ -106,6 +112,7 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BEASTLabel;
+    private javax.swing.JLabel date;
     private javax.swing.JLabel versionLabel;
     private javax.swing.JLabel versionNumber;
     // End of variables declaration//GEN-END:variables
