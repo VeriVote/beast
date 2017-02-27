@@ -66,6 +66,10 @@ public class ElectionCheckParameter {
         return timeOut;
     }
     
+    /**
+     *
+     * @return the amount of processes the user wishes to run at the same time
+     */
     public Integer getProcesses() {
         return processes;
     }

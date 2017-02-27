@@ -12,10 +12,12 @@ public class FileSaver {
 
     /**
      *
-     * @param text the text, in a list where each entry is a line that is to be
-     * saved
-     * @param file the file where it should be saved. WARNING: it overwrites
-     * everything that stood in it before
+     * @param text
+     *            the text, in a list where each entry is a line that is to be
+     *            saved
+     * @param file
+     *            the file where it should be saved. WARNING: it overwrites
+     *            everything that stood in it before
      */
     public static void writeStringLinesToFile(List<String> text, File file) {
 
@@ -31,8 +33,8 @@ public class FileSaver {
         PrintWriter writer = null;
 
         try {
-        	writer = new PrintWriter(file);
-            
+            writer = new PrintWriter(file);
+
         } catch (FileNotFoundException e) {
             ErrorLogger.log("File not found");
         }
@@ -44,6 +46,12 @@ public class FileSaver {
         writer.close();
     }
 
+    /**
+     * deletes the file that was specified
+     * 
+     * @param toDelete
+     *            the file to delete
+     */
     public static void deleteFromRes(String toDelete) {
         File file = new File("./src/main/resources/c_tempfiles/" + toDelete);
         try {

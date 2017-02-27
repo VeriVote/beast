@@ -8,6 +8,11 @@ public class TimeOutNotifier implements Runnable {
     private final long endTime;
     private final Thread interrupterThread;
 
+    /**
+     * This class is used for notifying FactoryController that a set amount of time has passed
+     * @param toInterrupt the FactoryController to interrupt
+     * @param timeOut the time to wait before sending the interrupt message
+     */
     public TimeOutNotifier(FactoryController toInterrupt, long timeOut) {
         this.toInterrupt = toInterrupt;
         this.endTime = System.currentTimeMillis() + timeOut;
@@ -19,7 +24,6 @@ public class TimeOutNotifier implements Runnable {
     public void run() {
 
         while (System.currentTimeMillis() < endTime && !disabled) {
-        	
             try {
                 Thread.sleep(endTime - System.currentTimeMillis());
             } catch (InterruptedException e) {
@@ -34,6 +38,9 @@ public class TimeOutNotifier implements Runnable {
         }
     }
 
+    /**
+     * disables the notifier so it doesn't interrupt later by accident
+     */
     public void disable() {
         disabled = true;
         if (interrupterThread.isAlive()) {

@@ -9,18 +9,18 @@ import java.util.Iterator;
 
 public class WindowsOStoolbox {
 
-    private static final String relativePathToVScmd = "/windows/VsDevCmd.bat";
+    private static final String RELATIVEPATHTOVSCMD = "/windows/VsDevCmd.bat";
     
     
     /**
      * 
      * @return the String that should lead to a vsDevCMD which is required to
      *         run cbmc on windows
-     * @throws IOException
+     * @throws IOException in case the VScmd couldn't be found this gets thrown
      */
     public static String getVScmdPath() throws IOException {
 
-        File file = new File(SuperFolderFinder.getSuperFolder() + relativePathToVScmd);
+        File file = new File(SuperFolderFinder.getSuperFolder() + RELATIVEPATHTOVSCMD);
 
         if (Files.isExecutable(file.toPath())) {
             return file.getPath();

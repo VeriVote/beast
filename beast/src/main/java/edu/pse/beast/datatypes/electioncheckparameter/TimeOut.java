@@ -2,8 +2,6 @@ package edu.pse.beast.datatypes.electioncheckparameter;
 
 import java.util.concurrent.TimeUnit;
 
-import edu.pse.beast.toolbox.ErrorLogger;
-
 public class TimeOut {
     private final long amount;
     private final TimeUnit originalUnit;
