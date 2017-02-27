@@ -12,8 +12,11 @@ public class PresentOptionsBoolUserAction extends UserAction {
 
     private BooleanExpEditorOptions options;
     private OptionPresenter presenter;
+
     /**
      * Constructor
+     * @param options the BooleanExpEditorOptions object
+     * @param presenter the OptionPresenter object
      */
     public PresentOptionsBoolUserAction(BooleanExpEditorOptions options, OptionPresenter presenter) {
         super("options");

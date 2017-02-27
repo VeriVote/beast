@@ -68,7 +68,8 @@ public class FileChooser {
         if (hasBeenSaved && !forceDialog) {
             return saveToFile(object, lastLoadedFile);
         } else {
-            if (fileChooser.showDialog(component, stringResourceLoader.getStringFromID("saveDialogTitleText")) == JFileChooser.APPROVE_OPTION) {
+            if (fileChooser.showDialog(component, stringResourceLoader.getStringFromID("saveDialogTitleText"))
+                    == JFileChooser.APPROVE_OPTION) {
                 if (!saveToFile(object, fileChooser.getSelectedFile())) {
                     return saveObject(object, forceDialog);
                 } else {
@@ -182,8 +183,7 @@ public class FileChooser {
             return false;
         } else if (!fileChooser.getSelectedFile().getName().endsWith(stringResourceLoader.getStringFromID(
                 "fileSuffix"))) {
-            file = new File(file.getAbsolutePath() + stringResourceLoader.getStringFromID(
-                    "fileSuffix"));
+            file = new File(file.getAbsolutePath() + stringResourceLoader.getStringFromID("fileSuffix"));
         }
         fileChooser.setSelectedFile(file);
         String saveString;
@@ -195,7 +195,6 @@ public class FileChooser {
             e.printStackTrace();
             return false;
         }
-
         Writer out;
         try {
             out = new BufferedWriter(new OutputStreamWriter(
@@ -212,8 +211,7 @@ public class FileChooser {
             return false;
         } catch (FileNotFoundException e) {
             JOptionPane.showOptionDialog(null,
-                    stringResourceLoader.getStringFromID(
-                            "inputOutputErrorSave"), "",
+                    stringResourceLoader.getStringFromID("inputOutputErrorSave"), "",
                     JOptionPane.PLAIN_MESSAGE,
                     JOptionPane.ERROR_MESSAGE,
                     null,
@@ -221,7 +219,6 @@ public class FileChooser {
                     options[0]);
             return false;
         }
-
         try {
             try {
                 out.write(saveString);
@@ -296,31 +293,49 @@ public class FileChooser {
                 options[0]);
     }
 
+    /**
+     * Updates the StringResourceLoader and the language dependent fields of the JFileChooser.
+     * @param stringResourceLoader the new StringResourceLoader object
+     */
     public void updateStringRessourceLoader(StringResourceLoader stringResourceLoader) {
         this.stringResourceLoader = stringResourceLoader;
         fileChooser = new JFileChooser();
         //sets the text and language of all the components in JFileChooser
-        UIManager.put("FileChooser.openDialogTitleText", stringResourceLoader.getStringFromID("openDialogTitleText"));
+        UIManager.put("FileChooser.openDialogTitleText",
+                stringResourceLoader.getStringFromID("openDialogTitleText"));
         UIManager.put("FileChooser.lookInLabelText", stringResourceLoader.getStringFromID("lookInLabelText"));
         UIManager.put("FileChooser.openButtonText", stringResourceLoader.getStringFromID("openButtonText"));
         UIManager.put("FileChooser.cancelButtonText", stringResourceLoader.getStringFromID("cancelButtonText"));
         UIManager.put("FileChooser.fileNameLabelText", stringResourceLoader.getStringFromID("fileNameLabelText"));
-        UIManager.put("FileChooser.filesOfTypeLabelText", stringResourceLoader.getStringFromID("filesOfTypeLabelText"));
+        UIManager.put("FileChooser.filesOfTypeLabelText",
+                stringResourceLoader.getStringFromID("filesOfTypeLabelText"));
         UIManager.put("FileChooser.approveButtonToolTipText", "");
         UIManager.put("FileChooser.cancelButtonToolTipText", "");
-        UIManager.put("FileChooser.openButtonToolTipText", stringResourceLoader.getStringFromID("openApproveButtonToolTipText"));
-        UIManager.put("FileChooser.fileNameHeaderText", stringResourceLoader.getStringFromID("fileNameHeaderText"));
-        UIManager.put("FileChooser.upFolderToolTipText", stringResourceLoader.getStringFromID("upFolderToolTipText"));
-        UIManager.put("FileChooser.homeFolderToolTipText", stringResourceLoader.getStringFromID("homeFolderToolTipText"));
-        UIManager.put("FileChooser.newFolderToolTipText", stringResourceLoader.getStringFromID("newFolderToolTipText"));
-        UIManager.put("FileChooser.listViewButtonToolTipText", stringResourceLoader.getStringFromID("listViewButtonToolTipText"));
-        UIManager.put("FileChooser.newFolderButtonText", stringResourceLoader.getStringFromID("newFolderButtonText"));
-        UIManager.put("FileChooser.renameFileButtonText", stringResourceLoader.getStringFromID("renameFileButtonText"));
-        UIManager.put("FileChooser.deleteFileButtonText", stringResourceLoader.getStringFromID("deleteFileButtonText"));
+        UIManager.put("FileChooser.openButtonToolTipText",
+                stringResourceLoader.getStringFromID("openApproveButtonToolTipText"));
+        UIManager.put("FileChooser.fileNameHeaderText",
+                stringResourceLoader.getStringFromID("fileNameHeaderText"));
+        UIManager.put("FileChooser.upFolderToolTipText",
+                stringResourceLoader.getStringFromID("upFolderToolTipText"));
+        UIManager.put("FileChooser.homeFolderToolTipText",
+                stringResourceLoader.getStringFromID("homeFolderToolTipText"));
+        UIManager.put("FileChooser.newFolderToolTipText",
+                stringResourceLoader.getStringFromID("newFolderToolTipText"));
+        UIManager.put("FileChooser.listViewButtonToolTipText",
+                stringResourceLoader.getStringFromID("listViewButtonToolTipText"));
+        UIManager.put("FileChooser.newFolderButtonText",
+                stringResourceLoader.getStringFromID("newFolderButtonText"));
+        UIManager.put("FileChooser.renameFileButtonText",
+                stringResourceLoader.getStringFromID("renameFileButtonText"));
+        UIManager.put("FileChooser.deleteFileButtonText",
+                stringResourceLoader.getStringFromID("deleteFileButtonText"));
         UIManager.put("FileChooser.filterLabelText", stringResourceLoader.getStringFromID("filterLabelText"));
-        UIManager.put("FileChooser.detailsViewButtonToolTipText", stringResourceLoader.getStringFromID("detailsViewButtonToolTipText"));
-        UIManager.put("FileChooser.fileSizeHeaderText", stringResourceLoader.getStringFromID("fileSizeHeaderText"));
-        UIManager.put("FileChooser.fileDateHeaderText", stringResourceLoader.getStringFromID("fileDateHeaderText"));
+        UIManager.put("FileChooser.detailsViewButtonToolTipText",
+                stringResourceLoader.getStringFromID("detailsViewButtonToolTipText"));
+        UIManager.put("FileChooser.fileSizeHeaderText",
+                stringResourceLoader.getStringFromID("fileSizeHeaderText"));
+        UIManager.put("FileChooser.fileDateHeaderText",
+                stringResourceLoader.getStringFromID("fileDateHeaderText"));
         saveChanges = stringResourceLoader.getStringFromID("saveChanges");
         save = stringResourceLoader.getStringFromID("saveChangesSuffix");
         cancelOption = stringResourceLoader.getStringFromID("cancelOption");

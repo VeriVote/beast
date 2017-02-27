@@ -16,6 +16,7 @@ public class BooleanExpEditorMakro {
         this.makro = makro;
     }
 
+    @Override
     public String toString() {
         return makro;
     }

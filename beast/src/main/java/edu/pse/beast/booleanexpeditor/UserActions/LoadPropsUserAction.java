@@ -16,11 +16,20 @@ public class LoadPropsUserAction extends UserAction {
     private final BooleanExpEditor booleanExpEditor;
     private PLControllerInterface propertyList;
 
+    /**
+     * Constructor
+     * @param booleanExpEditor the BooleanExpEditor object
+     */
     public LoadPropsUserAction(BooleanExpEditor booleanExpEditor) {
         super("load");
         this.booleanExpEditor = booleanExpEditor;
     }
 
+    /**
+     * Second constructor for TODO
+     * @param booleanExpEditor the BooleanExpEditor object
+     * @param controller the PropertyList controller object
+     */
     public LoadPropsUserAction(BooleanExpEditor booleanExpEditor, PLControllerInterface controller) {
         super("load");
         this.booleanExpEditor = booleanExpEditor;
@@ -30,7 +39,8 @@ public class LoadPropsUserAction extends UserAction {
     @Override
     public void perform() {
         if (booleanExpEditor.getChangeHandler().hasChanged() && booleanExpEditor.getLoadedFromPropertyList()) {
-            if (!booleanExpEditor.getFileChooser().openSaveChangesDialog(booleanExpEditor.getCurrentlyLoadedPostAndPreProp())) {
+            if (!booleanExpEditor.getFileChooser().openSaveChangesDialog(booleanExpEditor.
+                    getCurrentlyLoadedPostAndPreProp())) {
                 return;
             }
         }
@@ -38,10 +48,14 @@ public class LoadPropsUserAction extends UserAction {
                 = (PostAndPrePropertiesDescription) booleanExpEditor.getFileChooser().loadObject();
         if (loadedPostAndPrePropertiesDescription != null) {
             booleanExpEditor.loadNewProperties(loadedPostAndPrePropertiesDescription);
-            booleanExpEditor.getPropertyListController().addDescription(new PropertyItem(loadedPostAndPrePropertiesDescription));
+            booleanExpEditor.getPropertyListController().addDescription(new PropertyItem(
+                    loadedPostAndPrePropertiesDescription));
         }
     }
 
+    /**
+     * TODO
+     */
     public void loadIntoPropertyList() {
         PostAndPrePropertiesDescription loadedPostAndPrePropertiesDescription
                 = (PostAndPrePropertiesDescription) booleanExpEditor.getFileChooser().loadObject();

@@ -49,6 +49,10 @@ public class CodeAreaFocusListener implements FocusListener {
     public void focusLost(FocusEvent focusEvent) {
     }
 
+    /**
+     * Method that
+     * @return s the last focused JTextPane.
+     */
     public BooleanExpCodeArea getLastFocused() {
         return lastFocused;
     }

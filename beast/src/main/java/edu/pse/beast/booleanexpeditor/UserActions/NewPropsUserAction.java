@@ -4,8 +4,6 @@ import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
-import edu.pse.beast.propertylist.PLControllerInterface;
-import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
@@ -16,6 +14,10 @@ import edu.pse.beast.toolbox.UserAction;
 public class NewPropsUserAction extends UserAction {
     private final BooleanExpEditor booleanExpEditor;
 
+    /**
+     * Constructor
+     * @param booleanExpEditor the BooleanExpEditor object this UserAction belongs to
+     */
     public NewPropsUserAction(BooleanExpEditor booleanExpEditor) {
         super("new");
         this.booleanExpEditor = booleanExpEditor;

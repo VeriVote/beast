@@ -24,7 +24,7 @@ public class BooleanExpErrorFactory {
         "number_must_be_greater_0"};  
     
     private static int getErrorNum(String id) {
-        for(int i = 0; i < errorIds.length; ++i) {
+        for (int i = 0; i < errorIds.length; ++i) {
             if(errorIds[i].equals(id))
                 return i;
         }

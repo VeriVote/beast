@@ -11,39 +11,51 @@ import java.util.ArrayList;
  */
 public class ElectionCheckParameterSaverLoader {
 
+    /**
+     * Creates a String from a given ElectionCheckParameter, that can then be saved to a file and later given to
+     * createFromSaveString() to retrieve the saved object.
+     * @param electionCheckParameter the ElectionCheckParameter
+     * @return the saveString
+     */
     public static String createSaveString(ElectionCheckParameter electionCheckParameter) {
-        String amountVotersMin = "<amountVotersMin>\n" +
-                electionCheckParameter.getAmountVoters().get(0) +
-                "\n</amountVotersMin>\n";
-        String amountVotersMax = "<amountVotersMax>\n" +
-                electionCheckParameter.getAmountVoters().get(
-                        electionCheckParameter.getAmountVoters().size()-1) +
-                "\n</amountVotersMax>\n";
-        String amountCandidatesMin = "<amountCandidatesMin>\n" +
-                electionCheckParameter.getAmountCandidates().get(0) +
-                "\n</amountCandidatesMin>\n";
-        String amountCandidatesMax = "<amountCandidatesMax>\n" +
-                electionCheckParameter.getAmountCandidates().get(
-                        electionCheckParameter.getAmountCandidates().size()-1) +
-                "\n</amountCandidatesMax>\n";
-        String amountSeatsMin = "<amountSeatsMin>\n" +
-                electionCheckParameter.getAmountSeats().get(0) +
-                "\n</amountSeatsMin>\n";
-        String amountSeatsMax = "<amountSeatsMax>\n" +
-                electionCheckParameter.getAmountSeats().get(
-                        electionCheckParameter.getAmountSeats().size()-1) +
-                "\n</amountSeatsMax>\n";
+        String amountVotersMin = "<amountVotersMin>\n"
+                + electionCheckParameter.getAmountVoters().get(0)
+                + "\n</amountVotersMin>\n";
+        String amountVotersMax = "<amountVotersMax>\n"
+                + electionCheckParameter.getAmountVoters().get(
+                        electionCheckParameter.getAmountVoters().size() - 1)
+                + "\n</amountVotersMax>\n";
+        String amountCandidatesMin = "<amountCandidatesMin>\n"
+                + electionCheckParameter.getAmountCandidates().get(0)
+                + "\n</amountCandidatesMin>\n";
+        String amountCandidatesMax = "<amountCandidatesMax>\n"
+                + electionCheckParameter.getAmountCandidates().get(
+                        electionCheckParameter.getAmountCandidates().size() - 1)
+                + "\n</amountCandidatesMax>\n";
+        String amountSeatsMin = "<amountSeatsMin>\n"
+                + electionCheckParameter.getAmountSeats().get(0)
+                + "\n</amountSeatsMin>\n";
+        String amountSeatsMax = "<amountSeatsMax>\n"
+                + electionCheckParameter.getAmountSeats().get(
+                        electionCheckParameter.getAmountSeats().size() - 1)
+                + "\n</amountSeatsMax>\n";
         String timeout = "<timeout>\n" + TimeOutSaverLoader.createSaveString(
                 electionCheckParameter.getTimeout()) + "\n</timeout>\n";
-        String processes = "<processes>\n" +
-                electionCheckParameter.getProcesses() + "\n</processes>\n";
-        String argument = "<argument>\n" +
-                electionCheckParameter.getArgument() + "\n</argument>\n";
-        return (amountVotersMin + amountVotersMax + amountCandidatesMin + amountCandidatesMax + amountSeatsMin +
-                amountSeatsMax + timeout + processes + argument);
+        String processes = "<processes>\n"
+                + electionCheckParameter.getProcesses() + "\n</processes>\n";
+        String argument = "<argument>\n"
+                + electionCheckParameter.getArgument() + "\n</argument>\n";
+        return (amountVotersMin + amountVotersMax + amountCandidatesMin + amountCandidatesMax + amountSeatsMin
+                + amountSeatsMax + timeout + processes + argument);
     }
 
-    public static Object createFromSaveString(String s) throws Exception{
+    /**
+     * Creates an Object from a given, by createSaveString() generated, saveString
+     * @param s the SaveString
+     * @return the Object
+     * @throws Exception if the saveString does not contain a valid format
+     */
+    public static Object createFromSaveString(String s) throws Exception {
         String split[] = s.split("\n</amountVotersMin>\n");
         int amountVotersMin = Integer.parseInt(split[0].replace("<amountVotersMin>\n", ""));
         split = split[1].split("\n</amountVotersMax>\n");

@@ -7,7 +7,7 @@ import edu.pse.beast.toolbox.UserAction;
  * UserAction subclass responsible for pasting text in BooleanExpEditorCodeAreas.
  * @author NikolaiLMS
  */
-public class PasteUserAction extends UserAction{
+public class PasteUserAction extends UserAction {
     private final BooleanExpEditor editor;
 
     /**

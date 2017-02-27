@@ -11,12 +11,15 @@ import java.util.Arrays;
  * Implements SaverLoader methods for creating saveStrings from ElectionDescription objects and vice versa.
  * @author NikolaiLMS
  */
-public class ElectionDescriptionSaverLoader implements SaverLoader{
+public class ElectionDescriptionSaverLoader implements SaverLoader {
 
-    public String createSaveString(Object electionDescription) throws Exception{
+    @Override
+    public String createSaveString(Object electionDescription) throws Exception {
         String created = "";
-        String name = "<electionName>\n" + ((ElectionDescription) electionDescription).getName() + "\n</electionName>\n";
-        String votingDecLine = "<votingDecLine>\n" + ((ElectionDescription) electionDescription).getVotingDeclLine() + "\n</votingDecLine>\n";
+        String name = "<electionName>\n" + ((ElectionDescription) electionDescription).getName()
+                + "\n</electionName>\n";
+        String votingDecLine = "<votingDecLine>\n" + ((ElectionDescription) electionDescription).getVotingDeclLine()
+                + "\n</votingDecLine>\n";
         String code = "<code>\n";
         String codeString = "";
         for (String s : ((ElectionDescription) electionDescription).getCode()) {
@@ -33,7 +36,8 @@ public class ElectionDescriptionSaverLoader implements SaverLoader{
         return created;
     }
 
-    public Object createFromSaveString(String s) throws Exception{
+    @Override
+    public Object createFromSaveString(String s) throws Exception {
         ElectionTemplateHandler electionTemplateHandler = new ElectionTemplateHandler();
 
         String split[] = s.split("\n</electionName>\n");

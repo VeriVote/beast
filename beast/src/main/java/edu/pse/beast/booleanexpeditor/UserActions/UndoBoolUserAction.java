@@ -7,7 +7,7 @@ import edu.pse.beast.toolbox.UserAction;
  * UserAction subclass responsible for redoing the last undone action in the last focused BooleanExpEditorCodeArea.
  * @author NikolaiLMS
  */
-public class UndoBoolUserAction extends UserAction{
+public class UndoBoolUserAction extends UserAction {
     private final BooleanExpEditor editor;
 
     /**

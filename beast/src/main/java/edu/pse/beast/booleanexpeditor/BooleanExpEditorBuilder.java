@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * Builder Class to create BooleanExpEditor Object.
  * @author Nikolai
  */
-public class BooleanExpEditorBuilder{
+public class BooleanExpEditorBuilder {
 
     /**
      * An array of Strings encompassing the HeaderIds for the Menu.
@@ -38,6 +38,7 @@ public class BooleanExpEditorBuilder{
     /**
      * Constructor
      * @param objectRefsForBuilder Object with references to needed interfaces to build BooleanExpEditor
+     * @param ceditor the CElectionDescriptionEditor object
      * @return the built BooleanExpEditor Object
      */
     public BooleanExpEditor createBooleanExpEditorObject(ObjectRefsForBuilder objectRefsForBuilder,
@@ -48,12 +49,13 @@ public class BooleanExpEditorBuilder{
 
         //creation of empty SymbolicVarListController object
         SymbolicVariableList symbolicVariableList = new SymbolicVariableList();
-        SymbolicVarListController symbolicVarListController = new SymbolicVarListController(window.getSymVarList(), window.getAddSymVarButton(),
-                window.getRemoveSymVarButton(), objectRefsForBuilder.getStringIF(), symbolicVariableList, window);
+        SymbolicVarListController symbolicVarListController = new SymbolicVarListController(window.getSymVarList(),
+                window.getAddSymVarButton(), window.getRemoveSymVarButton(), objectRefsForBuilder.getStringIF(),
+                symbolicVariableList, window);
 
         //creation of empty PostAndPrePropertiesDescription object
-        PostAndPrePropertiesDescription emptyPostAndPrePropertiesDescription =
-                NewPropsUserAction.createEmptyPostAndPropObject();
+        PostAndPrePropertiesDescription emptyPostAndPrePropertiesDescription
+                = NewPropsUserAction.createEmptyPostAndPropObject();
 
         //creation of ErrorWindow object
         ErrorWindow errorWindow = new ErrorWindow(window.getErrorTextPane(), objectRefsForBuilder.getStringIF());
@@ -76,16 +78,18 @@ public class BooleanExpEditorBuilder{
 
         //create FileChooser
         FileChooser fileChooser = new FileChooser(
-                objectRefsForBuilder.getStringIF().getBooleanExpEditorStringResProvider().getBooleanExpEditorWindowStringRes(),
-                new PostAndPrePropertiesDescriptionSaverLoader(), null);
+                objectRefsForBuilder.getStringIF().getBooleanExpEditorStringResProvider()
+                        .getBooleanExpEditorWindowStringRes(), new PostAndPrePropertiesDescriptionSaverLoader(),
+                null);
 
-        BooleanExpEditor editor = new BooleanExpEditor(prePropCodeArea, postPropCodeArea, window, symbolicVarListController,
-                errorWindow, changeHandler, codeAreaFocusListener, emptyPostAndPrePropertiesDescription,
-                codeAreaBuilder, objectRefsForBuilder, ceditor, fileChooser);
+        BooleanExpEditor editor = new BooleanExpEditor(prePropCodeArea, postPropCodeArea, window,
+                symbolicVarListController, errorWindow, changeHandler, codeAreaFocusListener,
+                emptyPostAndPrePropertiesDescription, codeAreaBuilder, objectRefsForBuilder, ceditor, fileChooser);
 
         //creation of BooleanExpEditorMenubarHandler
         BooleanExpEditorMenubarHandler menuBarHandler = new BooleanExpEditorMenubarHandler(menuHeaderIds, window,
-                createActionIdAndListenerListForMenuHandler(editor, objectRefsForBuilder), objectRefsForBuilder.getStringIF());
+                createActionIdAndListenerListForMenuHandler(editor, objectRefsForBuilder),
+                objectRefsForBuilder.getStringIF());
 
         //creation of BooleanExpEditorToolbarHandler
         BooleanExpEditorToolbarHandler toolBarHandler = new BooleanExpEditorToolbarHandler(window,
@@ -247,9 +251,10 @@ public class BooleanExpEditorBuilder{
     }
 
     //methods for creating UserAction in "editor"-Menu
-    private PresentOptionsBoolUserAction createPresentOptionsUserAction(BooleanExpEditor editor, ObjectRefsForBuilder refs) {
+    private PresentOptionsBoolUserAction createPresentOptionsUserAction(BooleanExpEditor editor,
+                                                                        ObjectRefsForBuilder refs) {
         return new PresentOptionsBoolUserAction(
-                refs.getOptionIF().getBooleanExpEditorOptions(editor, refs), 
+                refs.getOptionIF().getBooleanExpEditorOptions(editor, refs),
                 refs.getOptionIF().getOptionPresenter(refs));
     }
 
@@ -264,8 +269,8 @@ public class BooleanExpEditorBuilder{
     }
 
     //methods for creating UserAction in "code"-Menu
-    private staticErrorFindingUserAction createStaticCheckUserAction(BooleanExpEditor editor) {
-        return new staticErrorFindingUserAction(editor);
+    private StaticErrorFindingUserAction createStaticCheckUserAction(BooleanExpEditor editor) {
+        return new StaticErrorFindingUserAction(editor);
     }
 
     /**

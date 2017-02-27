@@ -16,9 +16,16 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
  * @author Holger-Desktop
  */
 public class SymbolicVarListSaverLoader {
+
+    /**
+     * Creates a String from a given SymbolicVariableList, that can then be saved to a file and later given to
+     * createFromSaveString() to retrieve the saved object.
+     * @param list the SymbolicVariableList
+     * @return the saveString
+     */
     public static String createSaveString(SymbolicVariableList list) {
         String created = "";
-        for(SymbolicVariable var : list.getSymbolicVariables()) {
+        for (SymbolicVariable var : list.getSymbolicVariables()) {
             created += "symbolic_variable: ";
             created += createSaveStringForVar(var) + ";\n";
         }
@@ -29,12 +36,17 @@ public class SymbolicVarListSaverLoader {
     private static String createSaveStringForVar(SymbolicVariable var) {
         return "id: " + var.getId() + " type: " + var.getInternalTypeContainer().getInternalType().toString();
     }
-    
+
+    /**
+     * Creates a SymbolicVariableList object from a given, by createSaveString() generated, saveString
+     * @param s the SaveString
+     * @return the SymbolicVariableList object
+     */
     public static SymbolicVariableList createFromSaveString(String s) {
         SymbolicVariableList created = new SymbolicVariableList();
-        s = s.replaceAll("\n", "");
-        String[] var = s.split(";");
-        for(int i = 0; i < var.length; ++i) {
+        String newString = s.replaceAll("\n", "");
+        String[] var = newString.split(";");
+        for (int i = 0; i < var.length; ++i) {
             createSymbVarFromSaveString(var[i].replace("symbolic_variable:", ""), created);
         } 
         return created;

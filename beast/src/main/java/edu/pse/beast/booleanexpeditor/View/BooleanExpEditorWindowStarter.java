@@ -4,7 +4,7 @@ package edu.pse.beast.booleanexpeditor.View;
  * Starts the given BooleanExpEditorWindow Class in a new thread.
  * @author Nikolai
  */
-public class BooleanExpEditorWindowStarter implements Runnable{
+public class BooleanExpEditorWindowStarter implements Runnable {
     private final BooleanExpEditorWindow window;
 
     /**
@@ -26,7 +26,7 @@ public class BooleanExpEditorWindowStarter implements Runnable{
     /**
      * Starts the BooleanExpEditorWindow instance "window" in a new thread.
      */
-    public void showWindow(){
+    public void showWindow() {
         java.awt.EventQueue.invokeLater(this);
     }
 

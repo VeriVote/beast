@@ -43,8 +43,8 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
      */
     public String createMsg(CodeError codeError) {
         if (codeError.getId().equals("antlr")) {
-            String template = getTemplateString("antlr");
-            return template += ": " + codeError.getExtraInfo("msg");
+            String template = getTemplateString("antlr") + ": " + codeError.getExtraInfo("msg");
+            return template;
         } else if (codeError.getId().equals("var_not_decl")) {
             String template = getTemplateString("var_not_decl");
             return template.replace("VAR", codeError.getExtraInfo("var_name"));
@@ -73,7 +73,7 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
             template = template.replace("VAR", codeError.getExtraInfo("var_name"));
             template = template.replace("GIVENTYPE", codeError.getExtraInfo("var_type"));
             return template;
-        } else if(codeError.getId().equals("number_must_be_greater_0")) {
+        } else if (codeError.getId().equals("number_must_be_greater_0")) {
             String template = getTemplateString("number_must_be_greater_0");            
             return template;
         }                

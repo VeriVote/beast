@@ -7,7 +7,7 @@ import edu.pse.beast.toolbox.UserAction;
  * UserAction subclass responsible for static error finding in the BooleanExpEditor.
  * @author NikolaiLMS
  */
-public class staticErrorFindingUserAction extends UserAction{
+public class StaticErrorFindingUserAction extends UserAction {
 
     private final BooleanExpEditor editor;
 
@@ -15,7 +15,7 @@ public class staticErrorFindingUserAction extends UserAction{
      * Constructor
      * @param editor reference to the GUI controller.
      */
-    public staticErrorFindingUserAction(BooleanExpEditor editor) {
+    public StaticErrorFindingUserAction(BooleanExpEditor editor) {
         super("staticErrorFinding");
         this.editor = editor;
     }

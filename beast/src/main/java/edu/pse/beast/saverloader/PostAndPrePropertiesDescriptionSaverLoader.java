@@ -15,11 +15,13 @@ import edu.pse.beast.saverloader.StaticSaverLoaders.SymbolicVarListSaverLoader;
  * Implements SaverLoader methods for creating saveStrings from PostAndPrePropertiesDescription objects and vice versa.
  * @author Holger-Desktop
  */
-public class PostAndPrePropertiesDescriptionSaverLoader implements SaverLoader{
+public class PostAndPrePropertiesDescriptionSaverLoader implements SaverLoader {
 
-    public String createSaveString(Object props) throws Exception{
+    @Override
+    public String createSaveString(Object props) throws Exception {
         String created = "";
-        String name = "<postAndPrePropsName>\n" + ((PostAndPrePropertiesDescription) props).getName() + "\n</postAndPrePropsName>\n";
+        String name = "<postAndPrePropsName>\n" + ((PostAndPrePropertiesDescription) props).getName()
+                + "\n</postAndPrePropsName>\n";
         String preProps = "<pre>\n" + FormalPropertySaverLoader.createSaveString(
                 ((PostAndPrePropertiesDescription) props).getPrePropertiesDescription()) + "\n</pre>\n";
         String postProps = "<post>\n" + FormalPropertySaverLoader.createSaveString(
@@ -29,8 +31,9 @@ public class PostAndPrePropertiesDescriptionSaverLoader implements SaverLoader{
         created += name + preProps + postProps + varlist;
         return created;
     }
-    
-    public Object createFromSaveString(String s) throws Exception{
+
+    @Override
+    public Object createFromSaveString(String s) throws Exception {
         String split[] = s.split("\n</postAndPrePropsName>\n");
         String name = split[0].replace("<postAndPrePropsName>\n", "");
         split = split[1].split("\n</pre>\n");

@@ -7,7 +7,7 @@ import edu.pse.beast.toolbox.UserAction;
  * UserAction subclass responsible for saving Properties whithout forcing a save dialog.
  * @author NikolaiLMS
  */
-public class SavePropsUserAction extends UserAction{
+public class SavePropsUserAction extends UserAction {
     private final BooleanExpEditor editor;
 
     /**

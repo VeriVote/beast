@@ -16,6 +16,8 @@ public class AddMakroUserAction extends UserAction {
     /**
      * Constructor
      * @param makro the BooleanExpEditorMakro object this UserAction adds
+     * @param booleanExpEditor the BooleanExpEditor object this UserAction belongs to
+     * @param id the ID of this UserAction
      */
     public AddMakroUserAction(String id, BooleanExpEditorMakro makro, BooleanExpEditor booleanExpEditor) {
         super(id);

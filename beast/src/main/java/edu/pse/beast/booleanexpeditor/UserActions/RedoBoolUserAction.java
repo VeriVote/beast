@@ -9,6 +9,11 @@ import edu.pse.beast.toolbox.UserAction;
  */
 public class RedoBoolUserAction extends UserAction {
     private final BooleanExpEditor editor;
+
+    /**
+     * Constructor
+     * @param editor the BooleanExpEditor
+     */
     public RedoBoolUserAction(BooleanExpEditor editor) {
         super("redo");
         this.editor = editor;

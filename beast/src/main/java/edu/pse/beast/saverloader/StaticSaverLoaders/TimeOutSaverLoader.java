@@ -8,12 +8,24 @@ import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
  * @author NikolaiLMS
  */
 public class TimeOutSaverLoader {
+
+    /**
+     * Creates a String from a given TimeOut, that can then be saved to a file and later given to
+     * createFromSaveString() to retrieve the saved object.
+     * @param timeOut the TimeOut
+     * @return the saveString
+     */
     public static String createSaveString(TimeOut timeOut) {
         String amount = "<duration>\n" + timeOut.getDuration() + "\n</duration>\n";
         String timeunit = "<timeunit>\n" + timeOut.getOrigUnit().name() + "\n</timeunit>\n";
         return amount + timeunit;
     }
 
+    /**
+     * Creates a TimeOut object from a given, by createSaveString() generated, saveString
+     * @param s the SaveString
+     * @return the TimeOut object
+     */
     public static TimeOut createFromSaveString(String s) {
         String [] split = s.split("\n</duration>\n");
         Long duration = Long.parseLong(split[0].replace("<duration>\n", ""));
@@ -36,6 +48,8 @@ public class TimeOutSaverLoader {
             case "DAYS":
                 timeUnit = TimeUnit.DAYS;
                 duration = TimeUnit.MILLISECONDS.toDays(duration);
+                break;
+            default:
                 break;
         }
         return new TimeOut(timeUnit, duration);

@@ -6,12 +6,8 @@ import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.text.BadLocationException;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
@@ -24,12 +20,12 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 public class BooleanExpEditorVariableErrorFinder implements ErrorFinder, ElectionDescriptionChangeListener {
 
     private final BooleanExpANTLRHandler antlrHandler;
-    private PostAndPrePropertiesDescription description;
     private final FormalExpErrorFinderTreeListener lis;
 
     /**
      * Constructor
-     *
+     * @param ceditor the CElectionDescriptionEditor object
+     * @param list the SymbolicVariableList object
      * @param antlrHandler BooleanExpEditorANTLRHandler object this class uses
      * to find errors
      */
@@ -58,6 +54,10 @@ public class BooleanExpEditorVariableErrorFinder implements ErrorFinder, Electio
         lis.setOutput(output);
     }
 
+    /**
+     * Getter
+     * @return the FormalExpErrorFinderTreeListener object
+     */
     public FormalExpErrorFinderTreeListener getLis() {
         return lis;
     }

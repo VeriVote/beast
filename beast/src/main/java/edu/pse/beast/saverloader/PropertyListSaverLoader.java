@@ -9,7 +9,7 @@ import edu.pse.beast.propertylist.Model.PropertyItem;
  * Implements SaverLoader methods for creating saveStrings from PropertyList objects and vice versa.
  * @author NikolaiLMS
  */
-public class PropertyListSaverLoader implements SaverLoader{
+public class PropertyListSaverLoader implements SaverLoader {
     private PostAndPrePropertiesDescriptionSaverLoader postAndPrePropertiesDescriptionSaverLoader;
 
     /**
@@ -20,17 +20,19 @@ public class PropertyListSaverLoader implements SaverLoader{
         this.postAndPrePropertiesDescriptionSaverLoader = new PostAndPrePropertiesDescriptionSaverLoader();
     }
 
-    public String createSaveString(Object propertyList) throws Exception{
-        String name = "<propertyListName>\n" +
-                ((PLModel) propertyList).getName()
+    @Override
+    public String createSaveString(Object propertyList) throws Exception {
+        String name = "<propertyListName>\n"
+                + ((PLModel) propertyList).getName()
                 + "\n</propertyListName>\n";
         String propItems = "";
-        for(PropertyItem propertyItem : ((PLModel )propertyList).getPropertyList()) {
+        for (PropertyItem propertyItem : ((PLModel) propertyList).getPropertyList()) {
             propItems += "<propertyItem>\n" + createPropertyItemString(propertyItem) + "\n</propertyItem>\n";
         }
         return name + propItems;
     }
 
+    @Override
     public Object createFromSaveString(String s) throws Exception {
         String [] split = s.split("\n</propertyListName>\n");
         String name = split[0].replace("<propertyListName>\n", "");
@@ -49,17 +51,17 @@ public class PropertyListSaverLoader implements SaverLoader{
 
 
     private String createPropertyItemString(PropertyItem propertyItem) throws Exception {
-        String postAndPreProps = "<postAndPreProps>\n" +
-                postAndPrePropertiesDescriptionSaverLoader.createSaveString(propertyItem.getDescription())
+        String postAndPreProps = "<postAndPreProps>\n"
+                + postAndPrePropertiesDescriptionSaverLoader.createSaveString(propertyItem.getDescription())
                 + "\n</postAndPreProps>\n";
         String testStatus = "<testStatus>\n" + propertyItem.getTestStatus() + "\n</testStatus>\n";
         return postAndPreProps + testStatus;
     }
 
-    private PropertyItem createPropertyItem(String saveString) throws Exception{
+    private PropertyItem createPropertyItem(String saveString) throws Exception {
         String [] split = saveString.split("\n</postAndPreProps>\n");
-        PostAndPrePropertiesDescription postAndPrePropertiesDescription =
-                ((PostAndPrePropertiesDescription) postAndPrePropertiesDescriptionSaverLoader.
+        PostAndPrePropertiesDescription postAndPrePropertiesDescription
+                = ((PostAndPrePropertiesDescription) postAndPrePropertiesDescriptionSaverLoader.
                         createFromSaveString(split[0].replace("<postAndPreProps>\n", "")));
         split = split[1].split("\n</testStatus>\n");
         if ((split[0].replace("<testStatus>\n", "")).equals("true")) {

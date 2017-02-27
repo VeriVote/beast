@@ -6,9 +6,6 @@ import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
 
 import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.text.BadLocationException;
 import org.antlr.v4.runtime.ANTLRErrorListener;
 import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.RecognitionException;
@@ -43,7 +40,8 @@ public class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListener, E
     }
 
     @Override
-    public void syntaxError(Recognizer<?, ?> rcgnzr, Object o, int line, int charInline, String msg, RecognitionException re) {
+    public void syntaxError(Recognizer<?, ?> rcgnzr, Object o, int line, int charInline, String msg,
+                            RecognitionException re) {
         errors.add(BooleanExpErrorFactory.createAntlrError(line, charInline, msg));
     }
 

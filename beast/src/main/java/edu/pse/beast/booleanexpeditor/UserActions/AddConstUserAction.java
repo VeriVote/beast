@@ -15,6 +15,8 @@ public class AddConstUserAction extends UserAction {
     /**
      * Constructor
      * @param booleanExpEditorConst the BooleanExpEditorConst object this UserAction adds
+     * @param booleanExpEditor the BooleanExpEditor object this UserAction belongs to
+     * @param id the ID of this UserAction
      */
     public AddConstUserAction(String id, BooleanExpEditorConst booleanExpEditorConst, BooleanExpEditor booleanExpEditor) {
         super("numberOf" + id);

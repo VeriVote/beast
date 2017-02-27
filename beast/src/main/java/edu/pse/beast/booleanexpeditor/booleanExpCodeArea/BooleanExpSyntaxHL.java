@@ -21,13 +21,13 @@ public class BooleanExpSyntaxHL {
     public BooleanExpSyntaxHL(BooleanExpANTLRHandler antlrHandler, SyntaxHL syntaxHL) {
 
         ArrayList<RegexAndColor> regexAndColorList = new ArrayList<>();
-        for(String s : antlrHandler.getComparisonSymbols()) {
+        for (String s : antlrHandler.getComparisonSymbols()) {
             regexAndColorList.add(new RegexAndColor(s, Color.RED));
         }
-        for(String s : antlrHandler.getLogicalOperators()) {
+        for (String s : antlrHandler.getLogicalOperators()) {
             regexAndColorList.add(new RegexAndColor(s, Color.RED));
         }
-        for(String s : antlrHandler.getMakroRegex()) {
+        for (String s : antlrHandler.getMakroRegex()) {
             regexAndColorList.add(new RegexAndColor(s, Color.BLUE));
         }
         regexAndColorList.add(new RegexAndColor("(ELECT[0-9]+\\([a-zA-Z_]*\\))|(VOTES[0-9]+\\([a-zA-Z_]*\\))",

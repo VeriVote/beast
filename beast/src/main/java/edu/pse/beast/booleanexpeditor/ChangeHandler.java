@@ -21,7 +21,8 @@ public class ChangeHandler {
      * Constructor
      * @param prePane JTextPane of the preProp BooleanExpCodeArea
      * @param postPane JTextPane of the postProp BooleanExpCodeArea
-     * @param symbolicVariableList SymbolicVariableList of a newly loaded or saved PostAndPrePropertiesDescription object.
+     * @param symbolicVariableList
+     *        SymbolicVariableList of a newly loaded or saved PostAndPrePropertiesDescription object.
      */
     public ChangeHandler(JTextPane prePane, JTextPane postPane, SymbolicVariableList symbolicVariableList) {
         this.symbolicVariableList = symbolicVariableList;
@@ -30,6 +31,11 @@ public class ChangeHandler {
         updatePreValues();
     }
 
+    /**
+     * Method that adds new JTextPanes to the changeHandler incase the BooleanExpEditor created new ones.
+     * @param prePane the new preProperties JTextPane
+     * @param postPane the new postProperties JTextPane
+     */
     public void addNewTextPanes(JTextPane prePane, JTextPane postPane) {
         this.prePane = prePane;
         this.postPane = postPane;
@@ -45,8 +51,12 @@ public class ChangeHandler {
         preSymbolicVariableList = new LinkedList<SymbolicVariable>(symbolicVariableList.getSymbolicVariables());
     }
 
+    /**
+     * Method to check whether the input in the BooleanExpEditor has changed.
+     * @return true if it has changed, false otherwise
+     */
     public boolean hasChanged() {
-        return !(preString.equals((String) prePane.getText() + postPane.getText()) 
+        return !(preString.equals((String) prePane.getText() + postPane.getText())
                 && preSymbolicVariableList.equals(symbolicVariableList.getSymbolicVariables()));
     }
 }

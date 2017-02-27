@@ -16,8 +16,28 @@ import javax.swing.*;
  * @author Nikolai
  */
 public class BooleanExpEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser{
+    // Variables declaration - do not modify
+    private javax.swing.JButton addSymVarButton;
+    private javax.swing.JButton removeSymVarButton;
+    private javax.swing.JLabel symbVarLabel;
+    private javax.swing.JLabel prePropLabel;
+    private javax.swing.JLabel postPropLabel;
+    private javax.swing.JList<String> symVarList;
+    private javax.swing.JMenuBar menubar;
+    private javax.swing.JScrollPane prePropScrollPane;
+    private javax.swing.JScrollPane symVarScrollPane;
+    private javax.swing.JScrollPane postPropScrollPane;
+    private javax.swing.JScrollPane errorScrollPane;
+    private javax.swing.JTextPane postPropTextPane;
+    private javax.swing.JTextPane errorTextPane;
+    private javax.swing.JToolBar toolbar;
+    private javax.swing.JTextPane prePropTextPane;
+    private JTextPane focusedTextPane;
+    private DefaultListModel listModel;
+    private String titleString;
+    // End of variables declaration
 
-    RepaintThread repT;
+    private RepaintThread repT;
     /**
      * Constructor, calls NetBeans generated initComponents method to initialize JFrame.
      */
@@ -111,21 +131,25 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
                     .addComponent(addSymVarButton)
                     .addComponent(removeSymVarButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(symVarScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(symVarScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 52,
+                        javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(prePropLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(prePropScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(prePropScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 86,
+                        javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(postPropLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(postPropScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(postPropScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 98,
+                        javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(errorScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(errorScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 93,
+                        javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    } // </editor-fold>//GEN-END:initComponents
 
     /**
      * Update the language dependent displayed Strings in this class.
@@ -146,28 +170,6 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
                 getBooleanExpEditorWindowStringRes().getStringFromID("windowTitle");
         setTitle(titleString);
     }
-
-
-    // Variables declaration - do not modify                     
-    private javax.swing.JButton addSymVarButton;
-    private javax.swing.JButton removeSymVarButton;
-    private javax.swing.JLabel symbVarLabel;
-    private javax.swing.JLabel prePropLabel;
-    private javax.swing.JLabel postPropLabel;
-    private javax.swing.JList<String> symVarList;
-    private javax.swing.JMenuBar menubar;
-    private javax.swing.JScrollPane prePropScrollPane;
-    private javax.swing.JScrollPane symVarScrollPane;
-    private javax.swing.JScrollPane postPropScrollPane;
-    private javax.swing.JScrollPane errorScrollPane;
-    private javax.swing.JTextPane postPropTextPane;
-    private javax.swing.JTextPane errorTextPane;
-    private javax.swing.JToolBar toolbar;
-    private javax.swing.JTextPane prePropTextPane;
-    private JTextPane focusedTextPane;
-    private DefaultListModel listModel;
-    private String titleString;
-    // End of variables declaration                  
 
     /**
      * Getter
@@ -213,7 +215,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
      * Getter
      * @return the JList that contains the user defined symbolic variables
      */
-    public javax.swing.JList getSymVarList(){
+    public javax.swing.JList getSymVarList() {
         return symVarList;
     }
 
@@ -221,7 +223,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
      * Getter
      * @return the JButton to add symbolic variables
      */
-    public javax.swing.JButton getAddSymVarButton(){
+    public javax.swing.JButton getAddSymVarButton() {
         return addSymVarButton;
     }
 
@@ -229,7 +231,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
      * Getter
      * @return the JButton to remove symbolic variables
      */
-    public javax.swing.JButton getRemoveSymVarButton(){
+    public javax.swing.JButton getRemoveSymVarButton()  {
         return removeSymVarButton;
     }
 

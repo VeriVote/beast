@@ -196,7 +196,7 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
         }
         String numberString = ctx.Elect().getText().substring("ELECT".length());
         int number = Integer.valueOf(numberString);
-        if(number == 0) created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroElect(ctx));
+        if (number == 0) created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroElect(ctx));
         expStack.add(new ElectExp(cont, null, 0));
     }
 
@@ -214,11 +214,12 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
         }
         String numberString = ctx.Vote().getText().substring("VOTES".length());
         int number = Integer.valueOf(numberString);
-        if(number == 0) created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroVotes(ctx));
+        if (number == 0) created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroVotes(ctx));
         expStack.add(new ElectExp(cont, null, 0));
     }
 
-    private void testIfTooManyVarsPassed(List<FormalPropertyDescriptionParser.PassSymbVarContext> ctx, InternalTypeContainer cont) {
+    private void testIfTooManyVarsPassed(List<FormalPropertyDescriptionParser.PassSymbVarContext> ctx,
+                                         InternalTypeContainer cont) {
         int amountPassedVariables = ctx.size();
         int listDepth = 0;
         for (; cont.isList(); cont = cont.getListedType()) {
@@ -229,7 +230,8 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
         }
     }
 
-    private void testIfWrongTypePassed(List<FormalPropertyDescriptionParser.PassSymbVarContext> ctx, InternalTypeContainer cont) {
+    private void testIfWrongTypePassed(List<FormalPropertyDescriptionParser.PassSymbVarContext> ctx,
+                                       InternalTypeContainer cont) {
         int amtPassed = ctx.size();
         Stack<SymbolicVarExp> passedSymbVars = new Stack<>();
         for (int i = 0; i < amtPassed; ++i) {
@@ -238,7 +240,8 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
         int i = 0;
         for (; cont.isList() && i < ctx.size(); cont = cont.getListedType()) {
             SymbolicVarExp currentVarExp = passedSymbVars.pop();
-            if (cont.getAccesTypeIfList() != currentVarExp.getSymbolicVar().getInternalTypeContainer().getInternalType()) {
+            if (cont.getAccesTypeIfList() != currentVarExp.getSymbolicVar().getInternalTypeContainer().
+                    getInternalType()) {
                 created.add(BooleanExpErrorFactory.createWrongVarTypePassed(cont, ctx.get(i), currentVarExp));
             }
             ++i;
@@ -280,7 +283,7 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
         }
         String numberString = ctx.Votesum().getText().substring("VOTE_SUM_FOR_CANDIDATE".length());
         int number = Integer.valueOf(numberString);
-        if(number == 0) created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroVotesum(ctx));
+        if (number == 0) created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroVotesum(ctx));
         expStack.add(new VoteSumForCandExp(number, passedVar.getSymbolicVar()));
     }
 

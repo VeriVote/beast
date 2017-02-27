@@ -7,7 +7,7 @@ import edu.pse.beast.toolbox.UserAction;
  * UserAction subclass responsible for cutting text in the last focused BooleanExpEditorCodeAreas.
  * @author NikolaiLMS
  */
-public class CutUserAction extends UserAction{
+public class CutUserAction extends UserAction {
     private final BooleanExpEditor editor;
 
     /**

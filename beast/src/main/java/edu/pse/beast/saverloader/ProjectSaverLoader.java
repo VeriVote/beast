@@ -10,7 +10,7 @@ import edu.pse.beast.saverloader.StaticSaverLoaders.ElectionCheckParameterSaverL
 * Implements SaverLoader methods for creating saveStrings from Project objects and vice versa.
 * @author NikolaiLMS
 */
-public class ProjectSaverLoader implements SaverLoader{
+public class ProjectSaverLoader implements SaverLoader {
     private ElectionDescriptionSaverLoader electionDescriptionSaverLoader;
     private PropertyListSaverLoader propertyListSaverLoader;
 
@@ -18,12 +18,13 @@ public class ProjectSaverLoader implements SaverLoader{
      * Constructor
      * Initializes propertyListSaverLoader and electionDescriptionSaverLoader.
      */
-    public ProjectSaverLoader () {
+    public ProjectSaverLoader() {
         this.propertyListSaverLoader = new PropertyListSaverLoader();
         this.electionDescriptionSaverLoader = new ElectionDescriptionSaverLoader();
     }
 
-    public String createSaveString(Object project) throws Exception{
+    @Override
+    public String createSaveString(Object project) throws Exception {
         String name = "<projectName>\n" + ((Project) project).getName()
                 + "\n</projectName>\n";
         String electionDescription = "<electionDescription>\n" + electionDescriptionSaverLoader.createSaveString(
@@ -31,12 +32,13 @@ public class ProjectSaverLoader implements SaverLoader{
                 + "\n</electionDescription>\n";
         String propertyList = "<propertyList>\n" + propertyListSaverLoader.createSaveString(
                 ((Project) project).getPropList()) + "\n</propertyList>\n";
-        String electionCheckParameter = "<electionCheckParameter>\n" + ElectionCheckParameterSaverLoader.createSaveString(
-                ((Project) project).getElectionCheckParameter())
+        String electionCheckParameter = "<electionCheckParameter>\n" + ElectionCheckParameterSaverLoader.
+                createSaveString(((Project) project).getElectionCheckParameter())
                 + "\n</electionCheckParameter>\n";
         return name + electionDescription + propertyList + electionCheckParameter;
     }
 
+    @Override
     public Object createFromSaveString(String s) throws Exception {
         String [] split = s.split("\n</projectName>\n");
         String name = split[0].replace("<projectName>\n", "");
@@ -44,10 +46,12 @@ public class ProjectSaverLoader implements SaverLoader{
         ElectionDescription electionDescription = ((ElectionDescription) electionDescriptionSaverLoader.
                 createFromSaveString(split[0].replace("<electionDescription>\n", "")));
         split = split[1].split("\n</propertyList>\n");
-        PLModel propertyList = ((PLModel ) propertyListSaverLoader.createFromSaveString(split[0].replace("<propertyList>\n", "")));
+        PLModel propertyList = ((PLModel) propertyListSaverLoader.createFromSaveString(
+                split[0].replace("<propertyList>\n", "")));
         split = split[1].split("\n</electionCheckParameter>\n");
         ElectionCheckParameter electionCheckParameter = (ElectionCheckParameter)
-                ElectionCheckParameterSaverLoader.createFromSaveString(split[0].replace("<electionCheckParameter>\n", ""));
+                ElectionCheckParameterSaverLoader.createFromSaveString(
+                        split[0].replace("<electionCheckParameter>\n", ""));
         return new Project(electionCheckParameter, propertyList, electionDescription, name);
     }
 

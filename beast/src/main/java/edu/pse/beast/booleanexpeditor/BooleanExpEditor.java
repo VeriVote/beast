@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * Main "Controller" as part of the MVC-Pattern.
  * @author NikolaiLMS
  */
-public class BooleanExpEditor implements DisplaysStringsToUser{
+public class BooleanExpEditor implements DisplaysStringsToUser {
     private final BooleanExpEditorWindow window;
     private final SymbolicVarListController symbolicVarListController;
     private final BooleanExpEditorWindowStarter windowStarter;
@@ -195,8 +195,10 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
         cEditor.removeListener(prePropCodeArea.getVariableErrorFinder());
         cEditor.removeListener(postPropCodeArea.getVariableErrorFinder());
 
-        symbolicVarListController.getSymbolicVariableList().removeListener(prePropCodeArea.getVariableErrorFinder().getLis());
-        symbolicVarListController.getSymbolicVariableList().removeListener(postPropCodeArea.getVariableErrorFinder().getLis());
+        symbolicVarListController.getSymbolicVariableList().removeListener(prePropCodeArea.getVariableErrorFinder().
+                getLis());
+        symbolicVarListController.getSymbolicVariableList().removeListener(postPropCodeArea.getVariableErrorFinder().
+                getLis());
 
         prePropCodeArea.getErrorCtrl().stopThread();
         postPropCodeArea.getErrorCtrl().stopThread();
@@ -204,10 +206,12 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
         prePropCodeArea.getAutoComplCtrl().stopThread();
         postPropCodeArea.getAutoComplCtrl().stopThread();
         
-        prePropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder, window.getPrePropTextPane(),
-                window.getPrePropScrollPane(), symbolicVarListController.getSymbolicVariableList(), cEditor);
-        postPropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder, window.getPostPropTextPane(),
-                window.getPostPropScrollPane(), symbolicVarListController.getSymbolicVariableList(), cEditor);
+        prePropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
+                window.getPrePropTextPane(), window.getPrePropScrollPane(),
+                symbolicVarListController.getSymbolicVariableList(), cEditor);
+        postPropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
+                window.getPostPropTextPane(), window.getPostPropScrollPane(),
+                symbolicVarListController.getSymbolicVariableList(), cEditor);
 
         for (int i = 0; i < userActions.size(); i++) {
             UserAction get = userActions.get(i);
@@ -239,6 +243,10 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
         objectRefsForBuilder.getOptionIF().getBooleanExpEditorOptions(this, objectRefsForBuilder).reapply();
     }
 
+    /**
+     * Method for checking if the currently loaded PostAndPrePropertiesDescription Object contains errors.
+     * @return true if there are no errors, false otherwise
+     */
     public boolean isCorrect() {
         return findErrorsAndDisplayThem();
     }
@@ -252,7 +260,8 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
                 new FormalPropertiesDescription(prePropCodeArea.getPane().getText()));
         currentlyLoadedPostAndPreProp.setPostPropertiesDescription(
                 new FormalPropertiesDescription(postPropCodeArea.getPane().getText()));
-        currentlyLoadedPostAndPreProp.getSymVarList().setSymbolicVariableList(symbolicVarListController.getSymbolicVariableList().getSymbolicVariables());
+        currentlyLoadedPostAndPreProp.getSymVarList().setSymbolicVariableList(
+                symbolicVarListController.getSymbolicVariableList().getSymbolicVariables());
     }
 
     /**
@@ -285,7 +294,7 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
      * PostAndPrePropertiesDescription objects.
      * @return the FileChooser
      */
-    public FileChooser getFileChooser(){
+    public FileChooser getFileChooser() {
         return fileChooser;
     }
 
@@ -322,10 +331,18 @@ public class BooleanExpEditor implements DisplaysStringsToUser{
             this.propertyListController = propertyListController;
     }
 
+    /**
+     * Getter for the current prePropCodeArea
+     * @return the current prePropCodeArea
+     */
     public BooleanExpCodeArea getPrePropCodeArea() {
         return prePropCodeArea;
     }
 
+    /**
+     * Getter for the current postPropCodeArea
+     * @return the current postPropCodeArea
+     */
     public BooleanExpCodeArea getPostPropCodeArea() {
         return postPropCodeArea;
     }

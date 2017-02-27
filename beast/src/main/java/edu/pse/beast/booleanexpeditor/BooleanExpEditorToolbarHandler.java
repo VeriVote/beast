@@ -13,7 +13,7 @@ import edu.pse.beast.toolbox.ToolbarHandler;
  * Its purpose is the handling of a BooleanExpEditorWindows toolbar.
  * @author NikolaiLMS
  */
-public class BooleanExpEditorToolbarHandler extends ToolbarHandler implements DisplaysStringsToUser{
+public class BooleanExpEditorToolbarHandler extends ToolbarHandler implements DisplaysStringsToUser {
 
     /**
      * Constructor

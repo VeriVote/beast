@@ -26,7 +26,8 @@ public class BooleanExpANTLRHandler {
     public BooleanExpANTLRHandler(StyledDocument styledDocument) {
         try {
             this.styledDocument = styledDocument;
-            lexer = new FormalPropertyDescriptionLexer(new ANTLRInputStream(styledDocument.getText(0, styledDocument.getLength())));
+            lexer = new FormalPropertyDescriptionLexer(new ANTLRInputStream(
+                    styledDocument.getText(0, styledDocument.getLength())));
             CommonTokenStream ts = new CommonTokenStream(lexer);
             parser = new FormalPropertyDescriptionParser(ts);
         } catch (BadLocationException ex) {
@@ -52,7 +53,11 @@ public class BooleanExpANTLRHandler {
         parser.setTokenStream(ts);
         return parser.booleanExpList();
     }
-    
+
+    /**
+     * Getter
+     * @return the FormalPropertyDescriptionParser object
+     */
     public FormalPropertyDescriptionParser getParser() {
         return parser;
     }
