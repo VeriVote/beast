@@ -14,9 +14,16 @@ import java.util.List;
  */
 public abstract class Options {
 
-    private final String id;
+    /**
+     * the list of suboptions that are saved by this object
+     */
     protected List<Options> subOptions = new ArrayList<Options>();
+    
+    /**
+     * the option Elements that are saved by this object
+     */
     protected List<OptionElement> optElements = new ArrayList<OptionElement>();
+    private final String id;
     /**
      * creates a new Options object
      * @param id the ID of this object
@@ -71,9 +78,12 @@ public abstract class Options {
      */
     public void reapply() {
         reapplySpecialized();
-        for(Options opt : subOptions) opt.reapply();
+        for (Options opt : subOptions) opt.reapply();
     }
     
+    /**
+     * reapplies the specialized options
+     */
     protected abstract void reapplySpecialized();
 
 }

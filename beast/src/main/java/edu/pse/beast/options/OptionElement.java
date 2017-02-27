@@ -7,9 +7,13 @@ import java.util.List;
  * @author Lukas
  */
 public abstract class OptionElement {
+    
+    /**
+     * the chosen option
+     */
+    protected String chosenOption;
     private String id;
     private List<String> choosableOptions;
-    protected String chosenOption;
     /**
      * 
      * @param id The ID of this OptionElement
@@ -42,6 +46,10 @@ public abstract class OptionElement {
      */
     public abstract void handleSelection(String selection);
 
+    /**
+     * 
+     * @return the chosen option
+     */
     public String getChosenOption() {
         return chosenOption;
     }
