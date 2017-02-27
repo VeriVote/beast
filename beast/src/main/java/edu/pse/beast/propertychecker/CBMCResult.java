@@ -188,6 +188,7 @@ public class CBMCResult extends Result {
 
             if (line.contains("[")) {
 
+                //pattern that checks for a pattern like "votesNUMBER[NUMBER(letters)] = ...." 
                 votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+[a-zA-Z]*\\])(=.*)");
 
                 Matcher votesMatcher = votesExtractor.matcher(line);
@@ -227,6 +228,7 @@ public class CBMCResult extends Result {
                 }
             } else if (line.contains("{")) {
 
+              //pattern that checks for a pattern like "votesNUMBER = {..." 
                 votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+)(=\\{.*)");
 
                 Matcher votesMatcher = votesExtractor.matcher(line);
@@ -293,16 +295,10 @@ public class CBMCResult extends Result {
 
         while (line.length() > 0) {
 
-            // System.out.println("next line: " + line);
-            // for (Iterator<String> iterator = toExtract.iterator();
-            // iterator.hasNext();) {
-            // String line = (String) iterator.next();
-
             if (line.contains("[")) {
 
                 // this pattern searches for words of the form
-                // "votesNUMBER[NUMBER][NUMBER]" where "NUMBER" can by any
-                // positive
+                // "votesNUMBER[NUMBER][NUMBER]" where "NUMBER" can by any positive
                 // number. Also, the next character has to be an equals sign
                 votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+[a-z]*\\]\\[[0-9]+[a-zA-z]*\\])(=.*)");
 
@@ -350,10 +346,8 @@ public class CBMCResult extends Result {
                     }
                 }
             } else if (line.contains("{")) {
-                // Pattern votesExtractor = Pattern.compile("(\\b" + name +
-                // "[0-9]+])(=\\{.*)");
 
-                // votesNUMBER={....}
+                // searches for votesNUMBER={....}
                 votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+)(=\\{.*)");
 
                 Matcher votesMatcher = votesExtractor.matcher(line);

@@ -117,8 +117,8 @@ public class WindowsProcess extends CBMCProcess {
                 // because windows is weird the whole call that will get placed
                 // inside
                 // VScmd has to be in one giant string
-                String cbmcCall = "\"" + vsCmd + "\"" + " & " + "\"" + cbmcEXE + "\"" + " " + "\"" + toCheck.getAbsolutePath()
-                        + "\"" + " " + arguments;
+                String cbmcCall = "\"" + vsCmd + "\"" + " & " + "\"" + cbmcEXE + "\"" + " " + "\"" 
+                        + toCheck.getAbsolutePath() + "\"" + " " + arguments;
 
                 // this call starts a new VScmd instance and lets cbmc run in it
                 ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", cbmcCall);
@@ -287,7 +287,6 @@ public class WindowsProcess extends CBMCProcess {
                 toSet.setAccessible(true);
 
                 boolean savedState = toSet.getBoolean(handle);
-
                 handle.setPointer(Pointer.createConstant(handLong));
 
                 int pid = kernel.GetProcessId(handle);
@@ -298,7 +297,18 @@ public class WindowsProcess extends CBMCProcess {
                 toSet.setAccessible(false);
 
                 return pid;
-            } catch (Exception e) {
+                
+            } catch (NoSuchFieldException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (SecurityException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IllegalArgumentException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
