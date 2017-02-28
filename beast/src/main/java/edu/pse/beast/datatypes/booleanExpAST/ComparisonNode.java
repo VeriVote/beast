@@ -16,6 +16,7 @@ public class ComparisonNode extends BooleanExpressionNode {
      * 
      * @param lhsTypeExp the lhsExpression
      * @param rhsTypeExp the rhsExpression
+     * @param comparisonSymbol the symbol that describes this comparision (for example <, >, == )
      */
     public ComparisonNode(
             TypeExpression lhsTypeExp,

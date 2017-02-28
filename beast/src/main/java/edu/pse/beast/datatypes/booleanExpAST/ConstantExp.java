@@ -14,7 +14,7 @@ public class ConstantExp extends TypeExpression {
     
     /**
      * 
-     * @param internalTypeRep the type of this node
+     * @param internalTypeContainer the type of this node
      * @param constant the constant saved in this node
      */
     public ConstantExp(InternalTypeContainer internalTypeContainer, String constant) {

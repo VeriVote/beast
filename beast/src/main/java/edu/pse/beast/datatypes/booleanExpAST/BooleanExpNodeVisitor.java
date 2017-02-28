@@ -87,6 +87,9 @@ public interface BooleanExpNodeVisitor {
      */
     void visitVoteSumExp(VoteSumForCandExp exp);
     
-
-    public void visitNumberExpNode(NumberExpression exp);
+    /**
+     * 
+     * @param exp the number expression to visit
+     */
+    void visitNumberExpNode(NumberExpression exp);
 }

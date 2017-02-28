@@ -16,7 +16,7 @@ public class VoteSumForCandExp extends TypeExpression {
 
     /**
      *
-     * @param voteArrNum
+     * @param voteArrNum the number of the vote array
      * @param symbVar the symbolic variable of this node
      */
     public VoteSumForCandExp(int voteArrNum, SymbolicVariable symbVar) {
@@ -38,6 +38,10 @@ public class VoteSumForCandExp extends TypeExpression {
         visitor.visitVoteSumExp(this);
     }
 
+    /**
+     * 
+     * @return the number of the vote array
+     */
     public int getVoteNumber() {
         return voteArrNum;
     }

@@ -8,6 +8,11 @@ public final class ErrorForUserDisplayer {
 
     }
 
+    /**
+     * displays the message on the users screen. if multiple messages are displayed
+     * the methode will only return when all messages are read.
+     * @param message the message to be displayed
+     */
     public static void displayError(String message) {
         increment();
 

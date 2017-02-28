@@ -15,7 +15,7 @@ public class VoteExp extends TypeExpression {
 
     /**
      *
-     * @param internalTypeRep the internal type
+     * @param internalTypeContainer the internal type
      * @param symbVarm the described symbolic variable
      * @param count the count of this vote
      */
