@@ -95,15 +95,24 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 	}
 
 	@Override
-	public boolean setNextToBePresented(ResultInterface res) {
-		for (PropertyItem item : propertyList) {
+	public boolean setNextToBePresented(ResultInterface res, Integer index) {
+		ArrayList<PropertyItem> testedList = getTestedPropertyList();
+		
+		res.presentTo(testedList.get(index));
+		
+		updateView();
+		
+		return true;
+		
+		
+		/*for (PropertyItem item : propertyList) {
 			if (item.getResultType() == ResultType.UNTESTED && item.getTestStatus()) {
 				res.presentTo(item);
 				updateView();
 				return true;
 			}
 		}
-		return false;
+		return false;*/
 	}
 
 	@Override
@@ -152,6 +161,14 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 			}
 		}
 		return -1;
+	}
+	
+	private ArrayList<PropertyItem> getTestedPropertyList() {
+		ArrayList<PropertyItem> result = new ArrayList<PropertyItem>();
+		for (PropertyItem item : propertyList) {
+			if (item.getTestStatus()) result.add(item);
+		}
+		return result;
 	}
 
 	/**
