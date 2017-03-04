@@ -115,6 +115,7 @@ public class BEASTCommunicator implements CheckListener {
                             if (result.readyToPresent() && !resultPresented[i]) {
                                 ResultPresenter resultPresenter = centralObjectProvider.getResultPresenter();
                                 resultPresenter.presentResult(result, i);
+                                resultPresented[i] = true;
                                 numberOfPresentedResults++;
                             }
                         }
