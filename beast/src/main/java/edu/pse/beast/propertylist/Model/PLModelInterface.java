@@ -92,9 +92,10 @@ public interface PLModelInterface {
     /**
      * Gets the next property item that gets a result presentation.
      * @param res The ResultInterface with the analysis result for the property
+     * @param index The index of the result object
      * @return Returns if there is a next item to receive a result
      */
-    boolean setNextToBePresented(ResultInterface res);
+    boolean setNextToBePresented(ResultInterface res, Integer index);
 
     /**
      * Resets all result data in the property list.

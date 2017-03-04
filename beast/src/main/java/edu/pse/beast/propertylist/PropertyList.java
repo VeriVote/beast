@@ -164,8 +164,8 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     }
 
     @Override
-    public void presentResult(ResultInterface res) {
-        model.setNextToBePresented(res);
+    public void presentResult(ResultInterface res, Integer index) {
+        model.setNextToBePresented(res, index);
     }
 
     @Override
