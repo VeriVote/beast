@@ -72,6 +72,7 @@ public class BEASTCommunicator implements CheckListener {
                     long startTime = System.nanoTime();
                     long elapsedTime;
                     double passedTimeSeconds = 0;
+                    boolean[] resultPresented = new boolean[postAndPreSrc.getPostAndPrePropertiesDescriptions().size()];
                     int numberOfPresentedResults = 0;
                     while (numberOfPresentedResults < postAndPreSrc.getPostAndPrePropertiesDescriptions().size()) {
                         elapsedTime = System.nanoTime() - startTime;
@@ -109,15 +110,12 @@ public class BEASTCommunicator implements CheckListener {
                         } catch (InterruptedException ex) {
                             Logger.getLogger(BEASTCommunicator.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        if (resultList.size() > 0) {
-                            for (Iterator<ResultInterface> iterator = resultList.iterator(); iterator.hasNext();) {
-                                ResultInterface result = (ResultInterface) iterator.next();
-                                if (result.readyToPresent()) {
-                                    ResultPresenter resultPresenter = centralObjectProvider.getResultPresenter();
-                                    resultPresenter.presentResult(result);
-                                    iterator.remove();
-                                    numberOfPresentedResults++;
-                                }
+                        for (int i = 0; i < resultPresented.length; i++) {
+                            ResultInterface result = resultList.get(i);
+                            if (result.readyToPresent() && !resultPresented[i]) {
+                                ResultPresenter resultPresenter = centralObjectProvider.getResultPresenter();
+                                resultPresenter.presentResult(result, i);
+                                numberOfPresentedResults++;
                             }
                         }
                     }
