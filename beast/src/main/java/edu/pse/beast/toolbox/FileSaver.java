@@ -45,20 +45,4 @@ public class FileSaver {
         }
         writer.close();
     }
-
-    /**
-     * deletes the file that was specified
-     * 
-     * @param toDelete
-     *            the file to delete
-     */
-    public static void deleteFromRes(String toDelete) {
-        File file = new File("./src/main/resources/c_tempfiles/" + toDelete);
-        try {
-            Files.delete(file.toPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

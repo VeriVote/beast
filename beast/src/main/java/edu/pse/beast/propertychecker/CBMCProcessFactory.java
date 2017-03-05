@@ -16,6 +16,9 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
 
 public class CBMCProcessFactory extends CheckerFactory {
 
+    private final boolean deleteTmpFiles = true;
+    
+    
     private final OperatingSystems os;
 
     // this file can be used for all checkers. So if it isn't null, it won't be
@@ -172,5 +175,12 @@ public class CBMCProcessFactory extends CheckerFactory {
         FileSaver.writeStringLinesToFile(code, file);
         // FileSaver.writeStringLinesToFile(generator.getCode(), file);
         return file;
+    }
+
+    @Override
+    protected void cleanUp() {
+        if (deleteTmpFiles && toCheck != null && toCheck.exists()) {
+            toCheck.delete();
+        }
     }
 }

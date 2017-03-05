@@ -33,11 +33,16 @@ public abstract class CheckerFactory implements Runnable {
 
     /**
      * 
-     * @param controller the factoryController that started this factory
-     * @param electionDescSrc the electionDescription
-     * @param postAndPrepPropDesc the propertyDescription
-     * @param paramSrc the parameter
-     * @param result the result object where the result has to be put in
+     * @param controller
+     *            the factoryController that started this factory
+     * @param electionDescSrc
+     *            the electionDescription
+     * @param postAndPrepPropDesc
+     *            the propertyDescription
+     * @param paramSrc
+     *            the parameter
+     * @param result
+     *            the result object where the result has to be put in
      */
     protected CheckerFactory(FactoryController controller, ElectionDescriptionSource electionDescSrc,
             PostAndPrePropertiesDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result) {
@@ -56,8 +61,8 @@ public abstract class CheckerFactory implements Runnable {
     }
 
     /**
-     * the main working thread in this CheckerFactory. It cycles through all possible 
-     * configurations and creates sequentially a new checker for each
+     * the main working thread in this CheckerFactory. It cycles through all
+     * possible configurations and creates sequentially a new checker for each
      */
     public void run() {
 
@@ -86,7 +91,7 @@ public abstract class CheckerFactory implements Runnable {
                         currentlyRunning = startProcess(electionDescSrc, postAndPrepPropDesc, advanced, voters,
                                 candidates, seats, this);
 
-                        //check if the creation was successfull
+                        // check if the creation was successfull
                         if (currentlyRunning == null) {
                             // the process creation failed
                             stopped = true;
@@ -97,7 +102,7 @@ public abstract class CheckerFactory implements Runnable {
 
                     }
 
-                    //wait until we get stopped or the checker finished
+                    // wait until we get stopped or the checker finished
                     while (!finished && !stopped) {
                         try {
                             // polling in 1 second steps to save cpu time
@@ -116,7 +121,8 @@ public abstract class CheckerFactory implements Runnable {
                         // parameters without being stopped without a failure
                         // from the outside
 
-                        //set currentlyRunnign to null, so we can catch, if the process creation failed
+                        // set currentlyRunnign to null, so we can catch, if the
+                        // process creation failed
                         currentlyRunning = null;
 
                         // if the last check was successful, we have to keep
@@ -127,18 +133,18 @@ public abstract class CheckerFactory implements Runnable {
                             // the wasn't successfull for some reason
                             // so stop now
                             finished = true;
-                            
+
                             if (checkAssertionFailure(lastResult)) {
                                 result.setNumVoters(voters);
                                 result.setNumCandidates(candidates);
-                                result.setNumSeats(seats);                                
+                                result.setNumSeats(seats);
                                 result.setResult(lastResult);
                                 result.setValid();
                             } else {
-                                result.setError(lastError);                                
+                                result.setError(lastError);
                             }
                             result.setFinished();
-                            
+
                             break outerLoop;
                         }
 
@@ -147,8 +153,9 @@ public abstract class CheckerFactory implements Runnable {
                 }
             }
         }
-
-        //if the correct flags for the result object haven't been set yet, we set them
+        
+        // if the correct flags for the result object haven't been set yet, we
+        // set them
         if (!finished && !stopped) {
             finished = true;
             if (lastResult != null) {
@@ -159,8 +166,7 @@ public abstract class CheckerFactory implements Runnable {
                     result.setValid();
                     result.setFinished();
                 } else {
-                    ErrorLogger.log(
-                            "The Result Object indicated a finished check, even though the "
+                    ErrorLogger.log("The Result Object indicated a finished check, even though the "
                             + "CheckerFactory was still running");
                 }
             } else {
@@ -169,13 +175,16 @@ public abstract class CheckerFactory implements Runnable {
                 }
             }
         }
-
+        
+        //give the implementation of this class the chance to clean up after itself
+        cleanUp();
+        
         controller.notifyThatFinished(this);
     }
 
     /**
-     * signals to this checkerFactory that it has to stop checking.
-     * It then also stops the currently running checker
+     * signals to this checkerFactory that it has to stop checking. It then also
+     * stops the currently running checker
      */
     public void stopChecking() {
         stopped = true;
@@ -185,10 +194,13 @@ public abstract class CheckerFactory implements Runnable {
     }
 
     /**
-     * when a checker finished it calls this methode to let the factory know that it can start the next
-     * one, if it still has more to start
-     * @param lastResult the last result output from the checker that finished last
-     * @param lastError the last error output from the checker that finished last
+     * when a checker finished it calls this methode to let the factory know
+     * that it can start the next one, if it still has more to start
+     * 
+     * @param lastResult
+     *            the last result output from the checker that finished last
+     * @param lastError
+     *            the last error output from the checker that finished last
      */
     public void notifyThatFinished(List<String> lastResult, List<String> lastError) {
         finished = true;
@@ -197,20 +209,35 @@ public abstract class CheckerFactory implements Runnable {
     }
 
     /**
-     * starts a new Checker with the given parameters.
-     * Implementation depends on the extending class
-     * @param electionDescSrc the election description
-     * @param postAndPrepPropDesc the property description
-     * @param advanced the advanced options to be passed to the checker
-     * @param voters the amount of voters
-     * @param candidates the amount of candidates
-     * @param seats the amount of seats
-     * @param parent the parent that has to be notified when the checker finished
-     * @return the newly created Checker that is now checking the given file and other properties
+     * starts a new Checker with the given parameters. Implementation depends on
+     * the extending class
+     * 
+     * @param electionDescSrc
+     *            the election description
+     * @param postAndPrepPropDesc
+     *            the property description
+     * @param advanced
+     *            the advanced options to be passed to the checker
+     * @param voters
+     *            the amount of voters
+     * @param candidates
+     *            the amount of candidates
+     * @param seats
+     *            the amount of seats
+     * @param parent
+     *            the parent that has to be notified when the checker finished
+     * @return the newly created Checker that is now checking the given file and
+     *         other properties
      */
     protected abstract Checker startProcess(ElectionDescriptionSource electionDescSrc,
-            PostAndPrePropertiesDescription postAndPrepPropDesc, String advanced, int voters, 
-            int candidates, int seats, CheckerFactory parent);
+            PostAndPrePropertiesDescription postAndPrepPropDesc, String advanced, int voters, int candidates,
+            int seats, CheckerFactory parent);
+
+    /**
+     * allows the underlying implementation of the checker to clean up after
+     * itself, after the
+     */
+    protected abstract void cleanUp();
 
     /**
      * 
@@ -247,17 +274,22 @@ public abstract class CheckerFactory implements Runnable {
      * @return true, if the property wasn't violated, false if that was the case
      */
     public abstract boolean checkAssertionSuccess(List<String> toCheck);
-    
+
     /**
      * checks the given list, if it indicates a failure
-     * @param toCheck the list to be searched for clues
-     * @return true, if the property failes, false, if the propery was successfull
+     * 
+     * @param toCheck
+     *            the list to be searched for clues
+     * @return true, if the property failes, false, if the propery was
+     *         successfull
      */
     public abstract boolean checkAssertionFailure(List<String> toCheck);
-    
+
     /**
      * this methode extracts the electionType from the description
-     * @return the election Type that the here give ElectionDescriptionSource describes
+     * 
+     * @return the election Type that the here give ElectionDescriptionSource
+     *         describes
      */
     private ElectionType getElectionTypeFromElectionDescription() {
         InternalTypeContainer inputType = electionDescSrc.getElectionDescription().getInputType().getType();
@@ -268,7 +300,8 @@ public abstract class CheckerFactory implements Runnable {
             } else if (inputType.isList()) {
                 inputType = inputType.getListedType();
                 if (!inputType.isList()) {
-                    if (null != inputType.getInternalType()) switch (inputType.getInternalType()) {
+                    if (null != inputType.getInternalType())
+                        switch (inputType.getInternalType()) {
                         case APPROVAL:
                             return ElectionType.APPROVAL;
                         case WEIGHTEDAPPROVAL:
@@ -277,7 +310,7 @@ public abstract class CheckerFactory implements Runnable {
                             return ElectionType.PREFERENCE;
                         default:
                             break;
-                    }
+                        }
                 }
             }
         }
