@@ -55,7 +55,7 @@ public class CBMCResult extends Result {
      * this methode creates a failure example from the given output from cbmc
      * @return a failure example that show how the voters voted and who won then
      */
-    public FailureExample createFailureExample() {
+    private FailureExample createFailureExample() {
 
         // datermine the elect values
         List<CBMCResultWrapperLong> elect = readLongs("elect", getResult());
@@ -92,7 +92,7 @@ public class CBMCResult extends Result {
         case SINGLECHOICE:
 
             singleVotesList = readOneDimVar("votes", getResult());
-
+            
             return new FailureExample(getElectionType(), singleVotesList, null, elect, null, getNumCandidates(),
                     getNumSeats(), getNumVoters());
 
@@ -195,7 +195,7 @@ public class CBMCResult extends Result {
 
                 if (votesMatcher.find()) {
                     String newLine = votesMatcher.group(1);
-
+                    
                     // find out the number of this votes array
                     int mainIndex = Integer.parseInt(newLine.split("=")[0].split(name)[1].split("\\[")[0]);
 
@@ -229,13 +229,13 @@ public class CBMCResult extends Result {
             } else if (line.contains("{")) {
 
               //pattern that checks for a pattern like "votesNUMBER = {..." 
-                votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+)(=\\{.*)");
+                votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+)=(\\{[^\\{|\\}]*\\})");
 
                 Matcher votesMatcher = votesExtractor.matcher(line);
 
                 if (votesMatcher.find()) {
                     String newLine = votesMatcher.group(1);
-
+                    
                     // find out the number of this votes array
                     int mainIndex = Integer.parseInt(newLine.split("=")[0].split(name)[1]);
 
@@ -292,7 +292,7 @@ public class CBMCResult extends Result {
 
         Iterator<String> iterator = getResult().iterator();
         String line = mergeLinesToOne(iterator, segmentEnder);
-
+        
         while (line.length() > 0) {
 
             if (line.contains("[")) {
@@ -307,11 +307,9 @@ public class CBMCResult extends Result {
                 if (votesMatcher.find()) {
 
                     String newLine = votesMatcher.group(1);
-
+                    
                     // find out the number of this votes array
                     int mainIndex = Integer.parseInt(newLine.split("=")[0].split(name)[1].split("\\[")[0]);
-
-                    // System.out.println("mainindex " + mainIndex);
 
                     // get the first index for this array value
                     int arrayIndexOne = Integer
@@ -326,8 +324,6 @@ public class CBMCResult extends Result {
 
                     long value = Long.parseLong(valueAsString, 2);
 
-                    // System.out.println("value: " + value);
-                    // System.out.println(line);
                     boolean added = false;
 
                     for (Iterator<CBMCResultWrapperMultiArray> innerIterator = list.iterator(); innerIterator
@@ -348,7 +344,7 @@ public class CBMCResult extends Result {
             } else if (line.contains("{")) {
 
                 // searches for votesNUMBER={....}
-                votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+)(=\\{.*)");
+                votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+)=(\\{\\s*((\\{(.*)\\}(,)*\\s*)*)})");
 
                 Matcher votesMatcher = votesExtractor.matcher(line);
 
@@ -418,17 +414,21 @@ public class CBMCResult extends Result {
 
                 String nextLine = toMerge.next();
 
+                // add the next line, sepearated by a whitespace
+                toReturn = toReturn + " " + nextLine;
+                
                 if (nextLine.contains(regexToEndAt)) {
                     // we found the end of the segment
                     notEnded = false;
-                } else {
-                    // add the next line, sepearated by a whitespace
-                    toReturn = toReturn + " " + nextLine;
                 }
             } else {
                 return toReturn;
             }
         }
         return toReturn;
+    }
+    
+    public FailureExample getFailureExample() {
+        return failureExample;
     }
 }
