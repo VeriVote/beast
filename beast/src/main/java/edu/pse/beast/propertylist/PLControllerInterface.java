@@ -1,5 +1,7 @@
 package edu.pse.beast.propertylist;
 
+import java.util.ArrayList;
+
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.propertylist.Model.PLModelInterface;
 import edu.pse.beast.propertylist.Model.PropertyItem;
@@ -47,6 +49,17 @@ public interface PLControllerInterface {
      * Adds a brand new property to the list.
      */
     void addNewProperty();
+    
+    /**
+     * Resets the whole list.
+     */
+    void setNewList();
+    
+    /**
+     * Returns the list of property items in the list
+     * @return An array list with the property items
+     */
+    ArrayList<PropertyItem> getList();
     
     /**
      * Returns the editor for boolean expressions.

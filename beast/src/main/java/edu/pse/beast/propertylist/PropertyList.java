@@ -119,6 +119,16 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     public void addNewProperty() {
         model.addNewProperty(editor);
     }
+    
+	@Override
+	public void setNewList() {
+		model.setNewList();
+	}
+	
+	@Override
+	public ArrayList<PropertyItem> getList() {
+		return model.getPropertyList();
+	}
 
     @Override
     public boolean isCorrect() {
@@ -248,5 +258,9 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
 	public BooleanExpEditor getEditor() {
 		return editor;
 	}
+
+
+
+
 
 }

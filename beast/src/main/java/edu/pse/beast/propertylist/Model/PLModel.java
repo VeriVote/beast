@@ -60,8 +60,10 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 		while (indexOfName(name + i) != -1) i++;
 		PropertyItem newItem = new PropertyItem(new PostAndPrePropertiesDescription(name + i), false);
 		propertyList.add(newItem);
-		editor.letUserEditPostAndPreProperties(newItem.getDescription(), true);
-		editor.getView().setVisible(true);
+		if (editor != null) {
+			editor.letUserEditPostAndPreProperties(newItem.getDescription(), true);
+			editor.getView().setVisible(true);
+		}
 		updateView();
 		return true;
 	}

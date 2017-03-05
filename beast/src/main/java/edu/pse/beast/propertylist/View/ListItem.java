@@ -151,6 +151,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
     @Override
     public void updateStringRes(StringLoaderInterface sli) {
         this.sli = sli;
+        if (sli == null) return;
         PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
         StringResourceLoader other = provider.getOtherStringRes();
 
