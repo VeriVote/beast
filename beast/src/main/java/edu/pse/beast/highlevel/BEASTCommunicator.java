@@ -105,7 +105,7 @@ public class BEASTCommunicator implements CheckListener {
     }
 
     /**
-     * Checks for errors in the current Inputs from ElectionDescriptionSource, ParameterSrc and
+     * Checks for errors in the current UserInputs from ElectionDescriptionSource, ParameterSrc and
      * PostAndPrePropertiesSource.
      * @param pseCentralObjectProvider CentralObjectProvider instance
      * @return true if errors exist, false otherwise
