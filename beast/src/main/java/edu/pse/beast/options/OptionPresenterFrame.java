@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.pse.beast.options;
 
 import edu.pse.beast.saverloader.OptionSaverLoader.OptionsSaverLoaderInterface;
@@ -17,10 +13,12 @@ import java.awt.*;
  */
 public class OptionPresenterFrame extends javax.swing.JFrame {
 
-    private StringResourceLoader srl;
-    private Options opt;
+    private final StringResourceLoader srl;
+    private final Options opt;
     /**
      * Creates new form OptionPresenterFrame
+     * @param opt Options
+     * @param srl StringResourceLoader
      */
     public OptionPresenterFrame(Options opt, StringResourceLoader srl) {
         initComponents();
@@ -40,18 +38,18 @@ public class OptionPresenterFrame extends javax.swing.JFrame {
     
     private void showOptionsRec(Options opt) {
             JPanel panel = new JPanel(new GridLayout(opt.getOptionElements().size(), 2, 5, 5));
-            for(OptionElement elem : opt.getOptionElements()) {
+            for (OptionElement elem : opt.getOptionElements()) {
                 JLabel label = new JLabel(srl.getStringFromID(elem.getID()));
                 OptionElemComboBox combobox = new OptionElemComboBox(elem);
                 DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-                for(String s : elem.getChoosableOptions()) {
-                    if(!srl.containsId(s) ) {
+                for (String s : elem.getChoosableOptions()) {
+                    if (!srl.containsId(s) ) {
                         model.addElement(s);
                     } else {
                         model.addElement(srl.getStringFromID(s));
                     }                     
                 }
-                if(!srl.containsId(elem.chosenOption) ) {
+                if (!srl.containsId(elem.chosenOption) ) {
                     model.setSelectedItem(elem.chosenOption);
                 } else {
                     model.setSelectedItem(srl.getStringFromID(elem.chosenOption));
@@ -59,18 +57,21 @@ public class OptionPresenterFrame extends javax.swing.JFrame {
                 combobox.setModel(model);                
                 
                 combobox.addItemListener((ie) -> {
-                    if(srl.getIdForString((String)ie.getItem()) != null) {                        
-                        ((OptionElemComboBox)ie.getSource()).getElem().handleSelection(srl.getIdForString((String)ie.getItem()));
+                    if (srl.getIdForString((String) ie.getItem()) != null) {                        
+                        ((OptionElemComboBox) ie.getSource()).getElem().handleSelection(
+                                srl.getIdForString((String) ie.getItem()));
                     } else {
-                        ((OptionElemComboBox)ie.getSource()).getElem().handleSelection((String)ie.getItem());
+                        ((OptionElemComboBox) ie.getSource()).getElem().handleSelection((String) ie.getItem());
                     }
                 });
                 panel.add(label);
                 panel.add(combobox);                
             }
-            if(opt.getOptionElements().size() != 0)
-                jTabbedPane1.addTab(srl.getStringFromID(opt.getId()) ,panel);
-            for(Options subOpt : opt.getSubOptions()) {                
+            JPanel northOnly = new JPanel(new BorderLayout());
+            northOnly.add(panel, BorderLayout.NORTH);
+            if (!opt.getOptionElements().isEmpty())
+                jTabbedPane1.addTab(srl.getStringFromID(opt.getId()), northOnly);
+            for (Options subOpt : opt.getSubOptions()) {                
                 showOptionsRec(subOpt);  
             }          
         
@@ -118,11 +119,17 @@ public class OptionPresenterFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
-
+    /**
+     * Getter for JTabbedPane
+     * @return JTabbedPane
+     */
     public JTabbedPane getjTabbedPane1() {
         return jTabbedPane1;
     }    
-
+    /**
+     * Getter for JButton
+     * @return JButton
+     */
     public JButton getjButton1() {
         return jButton1;
     }
