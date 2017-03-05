@@ -9,62 +9,41 @@ import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * JUnit Testclass for saverloader.StaticSaverLoaders.ElectionCheckParameterSaverLoader.
  * @author NikolaiLMS
  */
 public class ElectionCheckParameterSaverLoaderTest {
-    public ElectionCheckParameterSaverLoaderTest() {
-    }
+    private static ElectionCheckParameter electionCheckParameter;
 
     @BeforeClass
     public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
-
-    /**
-     * Test of createSaveString method, of class ElectionCheckParameter.
-     */
-    @Test
-    public void testCreateSaveString() {
-        ElectionCheckParameter electionCheckParameter = new ElectionCheckParameter(Arrays.asList(new Integer[]{1, 2}),
+        electionCheckParameter = new ElectionCheckParameter(Arrays.asList(new Integer[]{1, 2}),
                 Arrays.asList(new Integer[]{1, 2}), Arrays.asList(new Integer[]{1, 2}), new TimeOut(TimeUnit.HOURS, (long) 3.2)
-        ,4, "-- unwind 6");
-        ElectionCheckParameterSaverLoader electionCheckParameterSaverLoader = new ElectionCheckParameterSaverLoader();
-
-        System.out.println(electionCheckParameterSaverLoader.createSaveString(electionCheckParameter));
+                ,4, "-- unwind 6");
     }
 
     /**
-     * Test of createFromSaveString method, of class ElectionCheckParameter.
+     * Tests the ElectionCheckParameterSaverLoader by creating a saveString from a
+     * ElectionCheckParameter object, then recreating that object from the saveString and checking its integrity.
      */
     @Test
     public void testCreateFromSaveString() throws Exception {
-        ElectionCheckParameter electionCheckParameter = new ElectionCheckParameter(Arrays.asList(new Integer[]{1, 2}),
-                Arrays.asList(new Integer[]{1, 2}), Arrays.asList(new Integer[]{1, 2}), new TimeOut(TimeUnit.HOURS, (long) 3.2)
-                ,4, "-- unwind 6");
-        ElectionCheckParameter electionCheckParameter1;
-        ElectionCheckParameterSaverLoader electionCheckParameterSaverLoader = new ElectionCheckParameterSaverLoader();
+        String saveString = ElectionCheckParameterSaverLoader.createSaveString(electionCheckParameter);
 
-        electionCheckParameter1 = (ElectionCheckParameter)
-                electionCheckParameterSaverLoader.createFromSaveString(
-                        electionCheckParameterSaverLoader.createSaveString(electionCheckParameter));
+        ElectionCheckParameter recreatedElectionCheckParameter = (ElectionCheckParameter)
+                ElectionCheckParameterSaverLoader.createFromSaveString(saveString);
 
-        System.out.println(electionCheckParameter1.getAmountCandidates());
-        System.out.println(electionCheckParameter1.getAmountSeats());
-        System.out.println(electionCheckParameter1.getAmountVoters());
-        System.out.println(electionCheckParameter1.getArgument());
-        System.out.println(electionCheckParameter1.getProcesses());
-        System.out.println(electionCheckParameter1.getTimeout().getDuration());
-        System.out.println(electionCheckParameter1.getTimeout().getOrigUnit().toString());
+        assert (recreatedElectionCheckParameter.getAmountCandidates().get(0).equals(1));
+        assert (recreatedElectionCheckParameter.getAmountCandidates().get(1).equals(2));
+        assert (recreatedElectionCheckParameter.getAmountSeats().get(0).equals(1));
+        assert (recreatedElectionCheckParameter.getAmountSeats().get(1).equals(2));
+        assert (recreatedElectionCheckParameter.getAmountVoters().get(0).equals(1));
+        assert (recreatedElectionCheckParameter.getAmountVoters().get(1).equals(2));
+        assert (recreatedElectionCheckParameter.getArgument().equals("-- unwind 6"));
+        assert (recreatedElectionCheckParameter.getProcesses() == 4);
+
+        TimeOut recreatedTimeOut = recreatedElectionCheckParameter.getTimeout();
+        assert (recreatedTimeOut.getDuration() == 10800000);
+        assert (recreatedTimeOut.getOrigUnit().equals(TimeUnit.HOURS));
     }
 }

@@ -1,74 +1,49 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.pse.beast.SaverLoader;
 
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
-import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.saverloader.StaticSaverLoaders.SymbolicVarListSaverLoader;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- *
- * @author Holger-Desktop
+ * JUnit Testclass for saverloader.StaticSaverLoaders.SymbolicVarListSaverLoader.
+ * @author NikolaiLMS
  */
 public class SymbolicVarListSaverLoaderTest {
-    
-    public SymbolicVarListSaverLoaderTest() {
-    }
+    private static SymbolicVariableList symbolicVariableList;
     
     @BeforeClass
     public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
-    
-    @Before
-    public void setUp() {
-    }
-    
-    @After
-    public void tearDown() {
+        symbolicVariableList = new SymbolicVariableList();
+        symbolicVariableList.addSymbolicVariable("voter1", new InternalTypeContainer(InternalTypeRep.VOTER));
+        symbolicVariableList.addSymbolicVariable("voter2", new InternalTypeContainer(InternalTypeRep.VOTER));
+        symbolicVariableList.addSymbolicVariable("candidate", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
+        symbolicVariableList.addSymbolicVariable("seat", new InternalTypeContainer(InternalTypeRep.SEAT));
     }
 
     /**
-     * Test of createSaveString method, of class SymbolicVarListSaverLoader.
+     * Tests the SymbolicVarListSaverLoader by creating a saveString from a SymbolicVarList object, then recreating
+     * that object from the saveString and checking its integrity.
      */
     @Test
-    public void testCreateSaveString() {
-        SymbolicVariableList list = new SymbolicVariableList();
-        list.addSymbolicVariable("voter1", new InternalTypeContainer(InternalTypeRep.VOTER));
-        list.addSymbolicVariable("voter2", new InternalTypeContainer(InternalTypeRep.VOTER));
-        list.addSymbolicVariable("cand", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
-        list.addSymbolicVariable("s", new InternalTypeContainer(InternalTypeRep.SEAT));
-        System.out.println(SymbolicVarListSaverLoader.createSaveString(list));
-    }
+    public void testSaverLoader() {
+        String saveString = SymbolicVarListSaverLoader.createSaveString(symbolicVariableList);
+        SymbolicVariableList recreatedList = SymbolicVarListSaverLoader.createFromSaveString(saveString);
 
-    /**
-     * Test of createFromSaveString method, of class SymbolicVarListSaverLoader.
-     */
-    @Test
-    public void testCreateFromSaveString() {
-        SymbolicVariableList list = new SymbolicVariableList();
-        list.addSymbolicVariable("voter1", new InternalTypeContainer(InternalTypeRep.VOTER));
-        list.addSymbolicVariable("voter2", new InternalTypeContainer(InternalTypeRep.VOTER));
-        list.addSymbolicVariable("cand", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
-        list.addSymbolicVariable("s", new InternalTypeContainer(InternalTypeRep.SEAT));
-        String s = SymbolicVarListSaverLoader.createSaveString(list);
-        SymbolicVariableList l = SymbolicVarListSaverLoader.createFromSaveString(s);
-        for(SymbolicVariable var : l.getSymbolicVariables()) {
-            System.out.println(var.getId() + " " + var.getInternalTypeContainer().toString());
-        }
+        assert (recreatedList.getSymbolicVariables().get(0).getId().equals("voter1"));
+        assert (recreatedList.getSymbolicVariables().get(0).getInternalTypeContainer().getInternalType().
+                equals(InternalTypeRep.VOTER));
+        assert (recreatedList.getSymbolicVariables().get(1).getId().equals("voter2"));
+        assert (recreatedList.getSymbolicVariables().get(1).getInternalTypeContainer().getInternalType().
+                equals(InternalTypeRep.VOTER));
+        assert (recreatedList.getSymbolicVariables().get(2).getId().equals("candidate"));
+        assert (recreatedList.getSymbolicVariables().get(2).getInternalTypeContainer().getInternalType().
+                equals(InternalTypeRep.CANDIDATE));
+        assert (recreatedList.getSymbolicVariables().get(3).getId().equals("seat"));
+        assert (recreatedList.getSymbolicVariables().get(3).getInternalTypeContainer().getInternalType().
+                equals(InternalTypeRep.SEAT));
     }
     
 }

@@ -33,6 +33,9 @@ public class TimeOutSaverLoader {
         TimeUnit timeUnit = TimeUnit.MINUTES;
         String timeunit = split[0].replace("<timeunit>\n", "");
         switch(timeunit) {
+            case "MILLISECONDS":
+                timeUnit = TimeUnit.MILLISECONDS;
+                break;
             case "MINUTES":
                 timeUnit = TimeUnit.MINUTES;
                 duration = TimeUnit.MILLISECONDS.toMinutes(duration);
