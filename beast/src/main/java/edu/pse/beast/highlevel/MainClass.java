@@ -1,9 +1,5 @@
 package edu.pse.beast.highlevel;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * The MainClass creates an CentralObjectProvider which creates all other parts
  * of the program and with it a BEASTCommunicator which coordinates them.

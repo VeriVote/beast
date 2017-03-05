@@ -2,7 +2,6 @@ package edu.pse.beast.highlevel;
 
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,75 +35,41 @@ public class BEASTCommunicator implements CheckListener {
         ParameterSource paramSrc = centralObjectProvider.getParameterSrc();
         CheckStatusDisplay checkStatusDisplayer = centralObjectProvider.getCheckStatusDisplay();
 
+        // checks if there even are any properties selected for analysis in the PostAndPrePropertiesSource
         if (postAndPreSrc.getPostAndPrePropertiesDescriptions().size() == 0) {
             checkStatusDisplayer.displayText("noProperty", false, "");
             return;
         }
 
-        electSrc.stopReacting();
-        postAndPreSrc.stopReacting();
-        paramSrc.stopReacting();
-        checkStatusDisplayer.displayText("searchingForErrors", true, "");
-        if (!electSrc.isCorrect()) {
-            checkStatusDisplayer.displayText("electionDescriptionErrors", false, "");
-            paramSrc.resumeReacting();
-            postAndPreSrc.resumeReacting();
-        } else if (!postAndPreSrc.isCorrect()) {
-            checkStatusDisplayer.displayText("propertyErrors", false, "");
-            electSrc.resumeReacting();
-            paramSrc.resumeReacting();
-            postAndPreSrc.resumeReacting();
-        } else if (!paramSrc.isCorrect()) {
-            checkStatusDisplayer.displayText("parameterErrors", false, "");
-            electSrc.resumeReacting();
-            paramSrc.resumeReacting();
-            postAndPreSrc.resumeReacting();
-        } else {
+        if (!checkForErrors(centralObjectProvider)) {
+            // analysis gets started by CheckerCommunicator.checkPropertiesForDescription() getting called
+            checkStatusDisplayer.displayText("startingCheck", true, "");
             resultList = centralObjectProvider.getResultCheckerCommunicator()
                     .checkPropertiesForDescription(electSrc, postAndPreSrc, paramSrc);
 
-            checkStatusDisplayer.displayText("startingCheck", true, "");
+            // Thread that checks for new presentable results every 50 milliseconds
             Thread waitForResultsThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    // local variables for elapsed time displaying
                     String timeString = "";
-                    DecimalFormat decimalFormat = new DecimalFormat("#.##");
                     long startTime = System.nanoTime();
                     long elapsedTime;
                     double passedTimeSeconds = 0;
+
                     boolean[] resultPresented = new boolean[postAndPreSrc.getPostAndPrePropertiesDescriptions().size()];
+
                     int numberOfPresentedResults = 0;
+
                     while (numberOfPresentedResults < postAndPreSrc.getPostAndPrePropertiesDescriptions().size()) {
                         elapsedTime = System.nanoTime() - startTime;
                         passedTimeSeconds = (double) elapsedTime / 1000000000.0;
-                        if (passedTimeSeconds >= 86400) {
-                            int days = (int) passedTimeSeconds / 86400;
-                            double daysRemainder = passedTimeSeconds % 86400;
-                            int hours = (int) daysRemainder / 3600;
-                            double hoursRemainder = daysRemainder % 3600;
-                            int minutes = (int) hoursRemainder / 60;
-                            double minutesRemainder = hoursRemainder % 60;
-                            String seconds = decimalFormat.format(minutesRemainder);
-                            timeString = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
-                        } else if (passedTimeSeconds >= 3600) {
-                            int hours = (int) passedTimeSeconds / 3600;
-                            double hoursRemainder = passedTimeSeconds % 3600;
-                            int minutes = (int) hoursRemainder / 60;
-                            double minutesRemainder = hoursRemainder % 60;
-                            String seconds = decimalFormat.format(minutesRemainder);
-                            timeString = hours + "h " + minutes + "m " + seconds + "s";
-                        } else if (passedTimeSeconds >= 60) {
-                            int minutes = (int) passedTimeSeconds / 60;
-                            double minutesRemainder = passedTimeSeconds % 60;
-                            String seconds = decimalFormat.format(minutesRemainder);
-                            timeString = minutes + "min " + seconds + "s";
-                        } else {
-                            String seconds = decimalFormat.format(passedTimeSeconds);
-                            timeString = seconds + "s";
-                        }
+                        timeString = createTimeString(passedTimeSeconds);
+
                         checkStatusDisplayer.displayText("waitingForPropertyResult", true,
                                 postAndPreSrc.getPostAndPrePropertiesDescriptions().
                                         get(numberOfPresentedResults).getName() + "' (" + timeString + ")");
+
                         try {
                             Thread.sleep(50);
                         } catch (InterruptedException ex) {
@@ -120,15 +85,12 @@ public class BEASTCommunicator implements CheckListener {
                             }
                         }
                     }
-                    electSrc.resumeReacting();
-                    postAndPreSrc.resumeReacting();
-                    paramSrc.resumeReacting();
-                    timeString = " " + timeString;
-                    checkStatusDisplayer.displayText("analysisEnded", false, timeString);
+                    resumeReacting(centralObjectProvider);
+                    checkStatusDisplayer.displayText("analysisEnded", false,
+                            " " + timeString);
                 }
             });
             waitForResultsThread.start();
-
         }
     }
 
@@ -142,4 +104,85 @@ public class BEASTCommunicator implements CheckListener {
         }
     }
 
+    /**
+     * Checks for errors in the current Inputs from ElectionDescriptionSource, ParameterSrc and
+     * PostAndPrePropertiesSource.
+     * @param pseCentralObjectProvider CentralObjectProvider instance
+     * @return true if errors exist, false otherwise
+     */
+    private boolean checkForErrors(CentralObjectProvider pseCentralObjectProvider) {
+        stopReacting(centralObjectProvider);
+        CheckStatusDisplay checkStatusDisplayer = pseCentralObjectProvider.getCheckStatusDisplay();
+        checkStatusDisplayer.displayText("searchingForErrors", true, "");
+        if (!pseCentralObjectProvider.getElectionDescriptionSource().isCorrect()) {
+            checkStatusDisplayer.displayText("electionDescriptionErrors", false, "");
+            resumeReacting(centralObjectProvider);
+            return true;
+        } else if (!pseCentralObjectProvider.getPostAndPrePropertiesSource().isCorrect()) {
+            checkStatusDisplayer.displayText("propertyErrors", false, "");
+            resumeReacting(centralObjectProvider);
+            return true;
+        } else if (!pseCentralObjectProvider.getParameterSrc().isCorrect()) {
+            checkStatusDisplayer.displayText("parameterErrors", false, "");
+            resumeReacting(centralObjectProvider);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Makes the GUIs stop reacting.
+     * @param pseCentralObjectProvider CentralObjectProvider instance
+     */
+    private void stopReacting(CentralObjectProvider pseCentralObjectProvider) {
+        pseCentralObjectProvider.getElectionDescriptionSource().stopReacting();
+        pseCentralObjectProvider.getPostAndPrePropertiesSource().stopReacting();
+        pseCentralObjectProvider.getParameterSrc().stopReacting();
+    }
+
+    /**
+     * Makes the GUIs resume reacting.
+     * @param pseCentralObjectProvider CentralObjectProvider instance
+     */
+    private void resumeReacting(CentralObjectProvider pseCentralObjectProvider) {
+        pseCentralObjectProvider.getElectionDescriptionSource().resumeReacting();
+        pseCentralObjectProvider.getPostAndPrePropertiesSource().resumeReacting();
+        pseCentralObjectProvider.getParameterSrc().resumeReacting();
+    }
+
+    /**
+     * Creates a String that contains the given time in seconds in a readable format.
+     * @param passedTimeSeconds the passed time in seconds as a double
+     */
+    private String createTimeString(double passedTimeSeconds) {
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        String timeString = "";
+        if (passedTimeSeconds >= 86400) {
+            int days = (int) passedTimeSeconds / 86400;
+            double daysRemainder = passedTimeSeconds % 86400;
+            int hours = (int) daysRemainder / 3600;
+            double hoursRemainder = daysRemainder % 3600;
+            int minutes = (int) hoursRemainder / 60;
+            double minutesRemainder = hoursRemainder % 60;
+            String seconds = decimalFormat.format(minutesRemainder);
+            timeString = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+        } else if (passedTimeSeconds >= 3600) {
+            int hours = (int) passedTimeSeconds / 3600;
+            double hoursRemainder = passedTimeSeconds % 3600;
+            int minutes = (int) hoursRemainder / 60;
+            double minutesRemainder = hoursRemainder % 60;
+            String seconds = decimalFormat.format(minutesRemainder);
+            timeString = hours + "h " + minutes + "m " + seconds + "s";
+        } else if (passedTimeSeconds >= 60) {
+            int minutes = (int) passedTimeSeconds / 60;
+            double minutesRemainder = passedTimeSeconds % 60;
+            String seconds = decimalFormat.format(minutesRemainder);
+            timeString = minutes + "min " + seconds + "s";
+        } else {
+            String seconds = decimalFormat.format(passedTimeSeconds);
+            timeString = seconds + "s";
+        }
+        return timeString;
+    }
 }

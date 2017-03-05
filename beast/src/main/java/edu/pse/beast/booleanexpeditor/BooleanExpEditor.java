@@ -53,24 +53,6 @@ public class BooleanExpEditor implements DisplaysStringsToUser {
 
 
     /**
-     * Setter to set the ToolBarHandler object of this class, can't be passed in constructor because the toolbarHandler
-     * depends on a BooleanExpEditor.
-     * @param toolBarHandler the BooleanExpEditorToolbarHandler object to be set
-     */
-    public void setToolBarHandler(BooleanExpEditorToolbarHandler toolBarHandler) {
-        this.toolBarHandler = toolBarHandler;
-    }
-
-    /**
-     * Setter to set the MenuBarHandler object of this class, can't be passed in constructor because the menuBarHandler
-     * depends on a BooleanExpEditor.
-     * @param menuBarHandler the BooleanExpEditorMenubarHandler object to be set
-     */
-    public void setMenuBarHandler(BooleanExpEditorMenubarHandler menuBarHandler) {
-        this.menuBarHandler = menuBarHandler;
-    }
-
-    /**
      * Constructor
      * @param prePropCodeArea the initial BooleanExpCodeArea object for the preConditions
      * @param postPropCodeArea the initial BooleanExpCodeArea object for the postConditions
@@ -114,6 +96,24 @@ public class BooleanExpEditor implements DisplaysStringsToUser {
         this.codeAreaFocusListener = codeAreaFocusListener;
         letUserEditPostAndPreProperties(postAndPrePropertiesDescription, false);
         windowStarter = new BooleanExpEditorWindowStarter(window);
+    }
+
+    /**
+     * Setter to set the ToolBarHandler object of this class, can't be passed in constructor because the toolbarHandler
+     * depends on a BooleanExpEditor.
+     * @param toolBarHandler the BooleanExpEditorToolbarHandler object to be set
+     */
+    public void setToolBarHandler(BooleanExpEditorToolbarHandler toolBarHandler) {
+        this.toolBarHandler = toolBarHandler;
+    }
+
+    /**
+     * Setter to set the MenuBarHandler object of this class, can't be passed in constructor because the menuBarHandler
+     * depends on a BooleanExpEditor.
+     * @param menuBarHandler the BooleanExpEditorMenubarHandler object to be set
+     */
+    public void setMenuBarHandler(BooleanExpEditorMenubarHandler menuBarHandler) {
+        this.menuBarHandler = menuBarHandler;
     }
 
     /**
