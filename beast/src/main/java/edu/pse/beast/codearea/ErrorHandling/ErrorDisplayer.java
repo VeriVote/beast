@@ -12,6 +12,7 @@ import edu.pse.beast.toolbox.Tuple;
 
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
+import javax.swing.ToolTipManager;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -36,6 +37,8 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
     public ErrorDisplayer(JTextPane pane, StringResourceLoader currentStringResLoader) {
         absPosToMsg = new ArrayList<>();
         msges = new ArrayList<>();
+        ToolTipManager.sharedInstance().setInitialDelay(1);
+        ToolTipManager.sharedInstance().setDismissDelay(10000);
         this.pane = pane;
         pane.addMouseMotionListener(this);
         this.painter = new SquigglePainter(Color.red);  
@@ -92,21 +95,24 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         Point pt = new Point(e.getX(), e.getY());
         int pos = pane.viewToModel(pt);
         if(pos == JTextPaneToolbox.getText(pane).length()) {
-            errorPopupMenu.setVisible(false);
+            pane.setToolTipText(null);
+            //errorPopupMenu.setVisible(false);
             return;
         }
         if(Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 &&
                 Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 && errorPopupMenu.isVisible()) return;
         for(int i = 0; i < absPosToMsg.size(); ++i) {
             if(absPosToMsg.get(i).x <= pos && absPosToMsg.get(i).y >= pos) {
-                errorPopupMenu.getErrorItem().setText(msges.get(i));
-                errorPopupMenu.show(pane, e.getX(), e.getY() + 20);
+                pane.setToolTipText(msges.get(i));
+                //errorPopupMenu.getErrorItem().setText(msges.get(i));
+                //errorPopupMenu.show(pane, e.getX(), e.getY() + 20);
                 return;
             }
         }
-        if(errorPopupMenu.isVisible()) {            
+        pane.setToolTipText(null);
+        /*if(errorPopupMenu.isVisible()) {            
             errorPopupMenu.setVisible(false);
-        }
+        }*/
     }
     
     @Override
