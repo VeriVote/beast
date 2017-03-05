@@ -13,17 +13,17 @@ import edu.pse.beast.celectiondescriptioneditor.View.ErrorWindow;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
-
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
-import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.saverloader.FileChooser;
+import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import edu.pse.beast.toolbox.UserAction;
+
+import javax.swing.text.BadLocationException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import javax.swing.text.BadLocationException;
 
 /**
  * This class is the interface/fassade class for the CElectionDescriptionEditor

@@ -12,11 +12,12 @@ import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
-import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+
+import java.util.ArrayList;
 
 /**
  *

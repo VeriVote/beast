@@ -2,20 +2,19 @@
 package edu.pse.beast.parametereditor;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
-
+import edu.pse.beast.datatypes.Project;
+import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
+import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
+import edu.pse.beast.highlevel.CheckListener;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
+import edu.pse.beast.highlevel.MainNotifier;
+import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.parametereditor.View.ParameterEditorWindow;
 import edu.pse.beast.propertylist.PropertyList;
-import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
-import edu.pse.beast.datatypes.Project;
-import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
-import edu.pse.beast.highlevel.ParameterSource;
-import edu.pse.beast.highlevel.CheckListener;
-import edu.pse.beast.highlevel.MainNotifier;
 import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
-import edu.pse.beast.toolbox.ToolbarHandler;
 import edu.pse.beast.toolbox.MenuBarHandler;
+import edu.pse.beast.toolbox.ToolbarHandler;
 
 import javax.swing.text.BadLocationException;
 import java.util.List;

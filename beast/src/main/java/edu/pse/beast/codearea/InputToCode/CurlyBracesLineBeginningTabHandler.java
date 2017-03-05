@@ -5,7 +5,7 @@
  */
 package edu.pse.beast.codearea.InputToCode;
 
-import javax.swing.JTextPane;
+import javax.swing.*;
 
 /**
  * This TabHandler calculates the amount of tabs needed at the beginning of

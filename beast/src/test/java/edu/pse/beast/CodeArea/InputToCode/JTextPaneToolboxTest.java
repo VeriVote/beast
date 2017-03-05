@@ -6,14 +6,12 @@
 package edu.pse.beast.CodeArea.InputToCode;
 
 import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
+import org.junit.*;
+
+import javax.swing.*;
 import java.util.ArrayList;
-import javax.swing.JTextPane;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  *

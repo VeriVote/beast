@@ -1,12 +1,12 @@
 package edu.pse.beast.parametereditor;
 
-import javax.swing.JSpinner;
-import javax.swing.JComboBox;
-import javax.swing.event.ChangeListener;
-import java.awt.event.ActionListener;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
-import java.awt.event.ActionEvent;
+
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.concurrent.TimeUnit;
 
 /**

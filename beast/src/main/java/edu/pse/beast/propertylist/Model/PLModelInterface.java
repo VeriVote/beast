@@ -1,10 +1,10 @@
 package edu.pse.beast.propertylist.Model;
 
-import java.util.ArrayList;
-import java.util.Observer;
-
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.highlevel.ResultInterface;
+
+import java.util.ArrayList;
+import java.util.Observer;
 
 /**
  * This interface describes all methods that can performed with the data model of property list.

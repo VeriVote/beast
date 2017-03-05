@@ -7,10 +7,11 @@ package edu.pse.beast.codearea.Autocompletion;
 
 import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
 import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
+
+import javax.swing.*;
+import javax.swing.text.BadLocationException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JTextPane;
-import javax.swing.text.BadLocationException;
 
 /**
  * This class represents an autocompletion option. Once the user chooses a

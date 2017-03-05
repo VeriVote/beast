@@ -5,9 +5,10 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.View;
 
-import edu.pse.beast.toolbox.RepaintThread;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
+import edu.pse.beast.toolbox.RepaintThread;
+
 import javax.swing.*;
 
 /**

@@ -9,9 +9,9 @@ import edu.pse.beast.codearea.CodeArea;
 import edu.pse.beast.codearea.CodeAreaBuilder;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
-import java.util.ArrayList;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 /**
  * Builder class to create a BooleanExpCodeArea object.

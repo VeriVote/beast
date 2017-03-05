@@ -5,10 +5,8 @@
  */
 package edu.pse.beast.codearea.InputToCode;
 
-import javax.swing.JTextArea;
-import javax.swing.JTextPane;
+import javax.swing.*;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.StyledDocument;
 
 /**
  * This class is utilized by userinserttocode to automatically close chars

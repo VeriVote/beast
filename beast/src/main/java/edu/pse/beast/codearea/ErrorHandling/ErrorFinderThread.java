@@ -5,10 +5,10 @@
  */
 package edu.pse.beast.codearea.ErrorHandling;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JTextPane;
 
 /**
  * This class implements the runnable intrerface and continuously asks the

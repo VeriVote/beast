@@ -1,12 +1,13 @@
 package edu.pse.beast.options.ParametereditorOptions;
 
-import java.util.List;
-
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.options.Options;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Options subclass for the language options.
@@ -25,11 +26,7 @@ public class LanguageOptions extends Options {
         super("lang_opts");
         this.sli = sli;
         String chosenLang = stringResLoader.getStringFromID("lang");
-        String choosableLangs[] = {"de", "en"};
-        ArrayList<String> choosableLangsList = new ArrayList<>();
-        for (int i = 0; i < choosableLangs.length; i++) {
-            choosableLangsList.add(choosableLangs[i]);
-        }
+        List<String> choosableLangsList = Arrays.asList("de", "en");
         langOptElem = new LanguageOptionElement(choosableLangsList, chosenLang);
         optElements.add(langOptElem);
     }

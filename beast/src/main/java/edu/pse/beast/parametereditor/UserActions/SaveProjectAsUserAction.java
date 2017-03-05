@@ -4,7 +4,7 @@ import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.datatypes.Project;
 import edu.pse.beast.parametereditor.ParameterEditor;
 import edu.pse.beast.propertylist.PropertyList;
-import edu.pse.beast.saverloader.*;
+import edu.pse.beast.saverloader.ProjectSaverLoader;
 import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.UserAction;
 

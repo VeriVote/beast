@@ -5,15 +5,7 @@
  */
 package edu.pse.beast.CodeArea.InputToCode;
 
-import edu.pse.beast.codearea.InputToCode.OpenCloseChar;
-import javax.swing.JTextPane;
-import javax.swing.text.StyledDocument;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.*;
 
 /**
  *

@@ -8,7 +8,11 @@ package edu.pse.beast.codearea.Autocompletion;
 import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
 import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
 
-import java.awt.Point;
+import javax.swing.*;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+import javax.swing.text.BadLocationException;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -16,11 +20,6 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
-import javax.swing.JTextPane;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
-import javax.swing.text.BadLocationException;
 
 /**
  * This class communicates user input with the autcompletion functionallity.

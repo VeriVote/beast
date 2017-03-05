@@ -6,19 +6,14 @@
 package edu.pse.beast.CodeArea.InputToCode.NewlineInserter;
 
 import edu.pse.beast.codearea.InputToCode.CurlyBracesLineBeginningTabHandler;
-import edu.pse.beast.codearea.InputToCode.LineBeginningTabsHandler;
-import edu.pse.beast.codearea.InputToCode.NewlineInserter.NewlineInserter;
 import edu.pse.beast.codearea.InputToCode.NewlineInserter.StandardNewlineInserter;
 import edu.pse.beast.codearea.InputToCode.TabInserter;
-import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
-import javax.swing.JTextPane;
+import org.junit.*;
+
+import javax.swing.*;
 import javax.swing.text.BadLocationException;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  *

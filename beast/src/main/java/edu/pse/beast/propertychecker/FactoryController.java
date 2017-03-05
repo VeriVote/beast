@@ -5,10 +5,6 @@
  */
 package edu.pse.beast.propertychecker;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
@@ -16,6 +12,10 @@ import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.TimeOutNotifier;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  *

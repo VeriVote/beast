@@ -3,15 +3,15 @@ package edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpANTLRHandler;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
-
-import java.util.ArrayList;
-import java.util.BitSet;
 import org.antlr.v4.runtime.ANTLRErrorListener;
 import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
+
+import java.util.ArrayList;
+import java.util.BitSet;
 
 /**
  * Class that finds errors which conflict with the grammar in BooleanExpGrammar.g in the BooleanExpression(s) of the

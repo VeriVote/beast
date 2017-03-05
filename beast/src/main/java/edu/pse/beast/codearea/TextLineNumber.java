@@ -9,13 +9,21 @@ package edu.pse.beast.codearea;
  *
  * @author https://tips4java.wordpress.com/2009/05/23/text-component-line-number/
  */
-import java.awt.*;
-import java.beans.*;
-import java.util.HashMap;
+
 import javax.swing.*;
-import javax.swing.border.*;
-import javax.swing.event.*;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.*;
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.HashMap;
 
 /**
  *  This class will display line numbers for a related text component. The text

@@ -6,9 +6,8 @@
 package edu.pse.beast.toolbox;
 
 import edu.pse.beast.stringresource.StringResourceLoader;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JToolBar;
+
+import javax.swing.*;
 
 /**
  *

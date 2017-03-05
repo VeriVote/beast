@@ -8,7 +8,6 @@ package edu.pse.beast.codearea.UserActions;
 import edu.pse.beast.codearea.CodeArea;
 import edu.pse.beast.toolbox.UserAction;
 
-import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;

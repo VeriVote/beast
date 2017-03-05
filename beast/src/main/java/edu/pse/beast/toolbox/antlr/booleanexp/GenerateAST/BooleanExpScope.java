@@ -6,6 +6,7 @@
 package edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST;
 
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
+
 import java.util.ArrayList;
 /**
  *

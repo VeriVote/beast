@@ -8,15 +8,12 @@ package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CAntlrHandler;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
-import java.util.ArrayList;
-import java.util.BitSet;
-import org.antlr.v4.runtime.ANTLRErrorListener;
-import org.antlr.v4.runtime.Parser;
-import org.antlr.v4.runtime.RecognitionException;
-import org.antlr.v4.runtime.Recognizer;
-import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
+
+import java.util.ArrayList;
+import java.util.BitSet;
 
 /**
  * This class uses antlr to find syntax errors in the C code

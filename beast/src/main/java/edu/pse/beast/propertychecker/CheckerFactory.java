@@ -1,8 +1,5 @@
 package edu.pse.beast.propertychecker;
 
-import java.util.Iterator;
-import java.util.List;
-
 import edu.pse.beast.datatypes.electiondescription.ElectionType;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
@@ -10,6 +7,9 @@ import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescripti
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.toolbox.ErrorLogger;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * 

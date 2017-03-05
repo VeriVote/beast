@@ -11,6 +11,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.stringresource.StringResourceLoader;
+
 import java.util.ArrayList;
 
 /**

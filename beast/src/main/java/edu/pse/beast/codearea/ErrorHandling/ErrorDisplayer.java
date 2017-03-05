@@ -9,36 +9,29 @@ import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.Tuple;
-import java.awt.Color;
-import java.awt.Point;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+
+import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JTextPane;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.View;
 
 /**
  * This abstract class implements error displaying functionallity common to
  * all specialized error display subclasses
  * @author Holger-Desktop
  */
-public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMotionListener, KeyListener {
+public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMotionListener {
     protected JTextPane pane;
     private SquigglePainter painter;
     private ArrayList<Tuple<Integer,Integer>> absPosToMsg;
     private ArrayList<String> msges;
     protected StringResourceLoader currentStringResLoader;
     private ArrayList<Object> highLights = new ArrayList<>();    
-    private ErrorPopupMenu errorPopupMenu = new ErrorPopupMenu();
+    private ErrorPopupMenu errorPopupMenu;
     
     public ErrorDisplayer(JTextPane pane, StringResourceLoader currentStringResLoader) {
         absPosToMsg = new ArrayList<>();
@@ -47,9 +40,10 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         pane.addMouseMotionListener(this);
         this.painter = new SquigglePainter(Color.red);  
         this.currentStringResLoader = currentStringResLoader;
-        errorPopupMenu.addKeyListener(this);
+        errorPopupMenu = new ErrorPopupMenu(pane);
     }
-    
+
+
     /**
      * removes all previously shown errors and thus gets
      * ready to show the newly found ones. This method
@@ -87,7 +81,12 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         template = template.replace("ERRNO", String.valueOf(er.getErrorNumber()));
         return template;
     }
-    
+
+    /**
+     * checks if the mouse position is over a part of the code which contains an error.
+     * if so, it displays a popupmenu with the error message
+     * @param e
+     */
     @Override
     public void mouseMoved(MouseEvent e) {
         Point pt = new Point(e.getX(), e.getY());
@@ -96,7 +95,7 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
             errorPopupMenu.setVisible(false);
             return;
         }
-        if(Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 && 
+        if(Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 &&
                 Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 && errorPopupMenu.isVisible()) return;
         for(int i = 0; i < absPosToMsg.size(); ++i) {
             if(absPosToMsg.get(i).x <= pos && absPosToMsg.get(i).y >= pos) {
@@ -114,18 +113,5 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
     public void mouseDragged(MouseEvent e) {
         
     }
-    @Override
-    public void keyTyped(KeyEvent ke) {  
-        
-    }
-    
-    @Override
-    public void keyPressed(KeyEvent ke) {  
-   
-    }
-    
-    @Override
-    public void keyReleased(KeyEvent ke) {
-    
-    }
+
 }

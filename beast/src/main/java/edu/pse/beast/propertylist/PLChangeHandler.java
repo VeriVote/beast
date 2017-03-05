@@ -1,8 +1,9 @@
 package edu.pse.beast.propertylist;
 
+import edu.pse.beast.propertylist.Model.PLModelInterface;
+
 import java.util.Observable;
 import java.util.Observer;
-import edu.pse.beast.propertylist.Model.PLModelInterface;
 
 /**
  * Handles saves before change in the property list.

@@ -1,10 +1,5 @@
 package edu.pse.beast.propertychecker;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
@@ -14,7 +9,10 @@ import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
-import edu.pse.beast.highlevel.ResultInterface;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class PropertyCheckerTest {
     public static void main(String[] args) {

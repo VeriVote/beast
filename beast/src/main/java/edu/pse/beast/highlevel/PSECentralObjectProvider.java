@@ -4,8 +4,8 @@ import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.booleanexpeditor.BooleanExpEditorBuilder;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditorBuilder;
-import edu.pse.beast.options.ParametereditorOptions.LanguageOptions;
 import edu.pse.beast.options.OptionsInterface;
+import edu.pse.beast.options.ParametereditorOptions.LanguageOptions;
 import edu.pse.beast.parametereditor.ParameterEditor;
 import edu.pse.beast.parametereditor.ParameterEditorBuilder;
 import edu.pse.beast.propertychecker.PropertyChecker;
@@ -14,7 +14,6 @@ import edu.pse.beast.propertylist.PropertyListBuilder;
 import edu.pse.beast.saverloader.SaverLoaderInterface;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
-import java.io.IOException;
 
 /**
  * The PSECentralObjectProvider creates and provides access to all instances of

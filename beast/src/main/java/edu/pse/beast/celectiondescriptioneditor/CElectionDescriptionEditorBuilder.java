@@ -9,19 +9,20 @@ import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeA
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeAreaBuilder;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CErrorDisplayer;
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
+import edu.pse.beast.celectiondescriptioneditor.UserActions.*;
 import edu.pse.beast.celectiondescriptioneditor.View.CCodeEditorWindow;
 import edu.pse.beast.celectiondescriptioneditor.View.CEditorWindowStarter;
-import edu.pse.beast.celectiondescriptioneditor.UserActions.*;
 import edu.pse.beast.celectiondescriptioneditor.View.ErrorWindow;
 import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
 import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.toolbox.*;
+
+import javax.swing.text.BadLocationException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.text.BadLocationException;
 
 /**
  * This class creates a celectiondescriptioneditor object and all useractions

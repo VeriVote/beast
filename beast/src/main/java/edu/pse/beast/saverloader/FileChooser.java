@@ -1,7 +1,6 @@
 package edu.pse.beast.saverloader;
 
 import edu.pse.beast.datatypes.NameInterface;
-
 import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 

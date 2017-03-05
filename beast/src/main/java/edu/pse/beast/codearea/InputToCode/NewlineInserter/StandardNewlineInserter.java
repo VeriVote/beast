@@ -7,7 +7,8 @@ package edu.pse.beast.codearea.InputToCode.NewlineInserter;
 
 import edu.pse.beast.codearea.InputToCode.LineBeginningTabsHandler;
 import edu.pse.beast.codearea.InputToCode.TabInserter;
-import javax.swing.JTextPane;
+
+import javax.swing.*;
 import javax.swing.text.BadLocationException;
 
 /**

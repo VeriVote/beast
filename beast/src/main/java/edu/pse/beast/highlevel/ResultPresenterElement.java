@@ -1,8 +1,8 @@
 package edu.pse.beast.highlevel;
 
-import java.util.List;
-
 import edu.pse.beast.datatypes.FailureExample;
+
+import java.util.List;
 
 /**
  * Element which is specifically used to display a result of a check to the user.

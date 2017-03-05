@@ -8,15 +8,16 @@ package edu.pse.beast.codearea;
 import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
 import edu.pse.beast.codearea.InputToCode.OpenCloseChar;
 import edu.pse.beast.codearea.InputToCode.OpenCloseCharList;
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JTextPane;
+
+import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class highlights open/close chars as well as their counterparts 

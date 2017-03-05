@@ -8,11 +8,9 @@ package edu.pse.beast.propertychecker;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
+import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
-import java.util.ArrayList;
-import java.util.List;
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.ErrorLogger;
@@ -22,6 +20,9 @@ import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.BooleanExpScope;
 import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.FormalPropertySyntaxTreeToAstTranslator;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This creates the .c file which will be used to check it with CBMC It

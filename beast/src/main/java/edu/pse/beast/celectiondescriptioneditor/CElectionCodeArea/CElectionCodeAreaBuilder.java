@@ -10,9 +10,9 @@ import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.
 import edu.pse.beast.codearea.Autocompletion.AutocompletionOption;
 import edu.pse.beast.codearea.CodeAreaBuilder;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
+
+import javax.swing.*;
 import java.util.ArrayList;
-import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
 
 /**
  * creates a celectioncodearea object. It uses its parent class Codeareabuilder

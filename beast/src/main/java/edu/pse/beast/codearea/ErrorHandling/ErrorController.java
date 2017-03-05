@@ -5,14 +5,8 @@
  */
 package edu.pse.beast.codearea.ErrorHandling;
 
-import edu.pse.beast.codearea.StoppedTypingContinuouslyListener;
-import edu.pse.beast.codearea.StoppedTypingContinuouslyMessager;
+import javax.swing.*;
 import java.util.ArrayList;
-import javax.swing.JTextPane;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 /**
  * This class facillitates communication between the various error finders

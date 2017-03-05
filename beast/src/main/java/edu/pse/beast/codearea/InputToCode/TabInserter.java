@@ -6,10 +6,11 @@
 package edu.pse.beast.codearea.InputToCode;
 
 import edu.pse.beast.toolbox.SortedIntegerList;
+
+import javax.swing.*;
+import javax.swing.text.BadLocationException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JTextPane;
-import javax.swing.text.BadLocationException;
 
 /**
  * Handles inserting and removing tabs in a given jtextpane. This is because

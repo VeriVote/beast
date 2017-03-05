@@ -8,7 +8,8 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.saverloader.PropertyListSaverLoader;
-import org.junit.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * JUnit Testclass for saverloader.PropertyListSaverLoader.

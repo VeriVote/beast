@@ -1,24 +1,10 @@
 package edu.pse.beast.propertylist.View;
 
-import static org.junit.Assert.*;
-
-import edu.pse.beast.options.OptionsInterface;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
-import edu.pse.beast.booleanexpeditor.BooleanExpEditorBuilder;
-import edu.pse.beast.propertylist.PLControllerInterface;
-import edu.pse.beast.propertylist.PropertyList;
-import edu.pse.beast.propertylist.PropertyListBuilder;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PLModelInterface;
-import edu.pse.beast.saverloader.SaverLoaderInterface;
-import edu.pse.beast.stringresource.StringLoaderInterface;
-import edu.pse.beast.toolbox.ObjectRefsForBuilder;
+import edu.pse.beast.propertylist.PLControllerInterface;
+import edu.pse.beast.propertylist.PropertyList;
+import org.junit.*;
 
 public class PropertyListWindowStarterTest {
 

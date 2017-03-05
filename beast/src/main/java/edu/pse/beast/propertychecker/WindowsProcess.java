@@ -1,7 +1,12 @@
 package edu.pse.beast.propertychecker;
 
-import java.io.BufferedReader;
+import com.sun.jna.Pointer;
+import com.sun.jna.platform.win32.Kernel32;
+import com.sun.jna.platform.win32.WinNT;
+import edu.pse.beast.propertychecker.jna.Win32Process;
+import edu.pse.beast.toolbox.*;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,17 +15,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
-
-import com.sun.jna.Pointer;
-import com.sun.jna.platform.win32.Kernel32;
-import com.sun.jna.platform.win32.WinNT;
-
-import edu.pse.beast.propertychecker.jna.Win32Process;
-import edu.pse.beast.toolbox.ErrorForUserDisplayer;
-import edu.pse.beast.toolbox.ErrorLogger;
-import edu.pse.beast.toolbox.SuperFolderFinder;
-import edu.pse.beast.toolbox.ThreadedBufferedReader;
-import edu.pse.beast.toolbox.WindowsOStoolbox;
 
 public class WindowsProcess extends CBMCProcess {
     private long waitingTimeForTermination = 3000;

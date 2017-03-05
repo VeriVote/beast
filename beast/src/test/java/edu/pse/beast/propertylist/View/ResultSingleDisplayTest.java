@@ -1,20 +1,14 @@
 package edu.pse.beast.propertylist.View;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JFrame;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.electiondescription.ElectionType;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrappersingleArray;
+import org.junit.*;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ResultSingleDisplayTest {
 

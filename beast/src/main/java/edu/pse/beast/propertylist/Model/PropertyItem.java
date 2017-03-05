@@ -1,14 +1,13 @@
 package edu.pse.beast.propertylist.Model;
 
-import java.util.List;
-import java.util.UUID;
-
 import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.highlevel.ResultPresenterElement;
-import edu.pse.beast.propertylist.Model.ResultType;
+
+import java.util.List;
+import java.util.UUID;
 
 /**
  * This class wraps property descriptions of type PostAndPrePropertiesDescription. Further data is the test status and the result

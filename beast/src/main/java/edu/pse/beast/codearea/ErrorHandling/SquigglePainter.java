@@ -6,8 +6,8 @@
 package edu.pse.beast.codearea.ErrorHandling;
 
 
-import java.awt.*;
 import javax.swing.text.*;
+import java.awt.*;
 /*
  *  Implements a simple highlight painter that renders a rectangle around the
  *  area to be highlighted.

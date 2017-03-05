@@ -5,10 +5,11 @@
  */
 package edu.pse.beast.stringresource;
 
-import java.io.File;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.SuperFolderFinder;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 

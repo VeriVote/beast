@@ -8,6 +8,7 @@ package edu.pse.beast.celectiondescriptioneditor.ElectionTemplates;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
+
 import java.util.ArrayList;
 
 /**

@@ -9,8 +9,9 @@ import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
 import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
 import edu.pse.beast.stringresource.StringLoaderInterface;
+
+import javax.swing.*;
 import java.util.ArrayList;
-import javax.swing.JTextPane;
 
 /**
  * This class prepares CodeErrors so its parent class Errordisplayer can display

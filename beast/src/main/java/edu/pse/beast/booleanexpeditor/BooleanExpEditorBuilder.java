@@ -11,7 +11,10 @@ import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescripti
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.saverloader.PostAndPrePropertiesDescriptionSaverLoader;
-import edu.pse.beast.toolbox.*;
+import edu.pse.beast.toolbox.ActionIdAndListener;
+import edu.pse.beast.toolbox.ImageResourceProvider;
+import edu.pse.beast.toolbox.ObjectRefsForBuilder;
+import edu.pse.beast.toolbox.UserAction;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

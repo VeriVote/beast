@@ -1,8 +1,8 @@
 package edu.pse.beast.SaverLoader;
 
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
-import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.Project;
+import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
@@ -14,7 +14,8 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.saverloader.ProjectSaverLoader;
-import org.junit.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;

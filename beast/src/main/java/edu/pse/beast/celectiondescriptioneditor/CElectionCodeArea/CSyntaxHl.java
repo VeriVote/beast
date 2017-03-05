@@ -8,7 +8,8 @@ package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CAntlrHandler;
 import edu.pse.beast.codearea.SyntaxHL.RegexAndColor;
 import edu.pse.beast.codearea.SyntaxHL.SyntaxHL;
-import java.awt.Color;
+
+import java.awt.*;
 import java.util.ArrayList;
 
 /**

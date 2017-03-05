@@ -3,7 +3,8 @@ package edu.pse.beast.booleanexpeditor.View;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpErrorDisplayer;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.stringresource.StringLoaderInterface;
-import javax.swing.JTextPane;
+
+import javax.swing.*;
 import java.util.ArrayList;
 
 /**

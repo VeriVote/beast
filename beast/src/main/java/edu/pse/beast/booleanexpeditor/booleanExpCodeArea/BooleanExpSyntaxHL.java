@@ -2,6 +2,7 @@ package edu.pse.beast.booleanexpeditor.booleanExpCodeArea;
 
 import edu.pse.beast.codearea.SyntaxHL.RegexAndColor;
 import edu.pse.beast.codearea.SyntaxHL.SyntaxHL;
+
 import java.awt.*;
 import java.util.ArrayList;
 

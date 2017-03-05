@@ -5,27 +5,13 @@
  */
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.booleanExpAST.BooleanExpNodeVisitor;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanExpressionNode;
-import edu.pse.beast.datatypes.booleanExpAST.ComparisonNode;
-import edu.pse.beast.datatypes.booleanExpAST.ConstantExp;
-import edu.pse.beast.datatypes.booleanExpAST.ElectExp;
-import edu.pse.beast.datatypes.booleanExpAST.EquivalencyNode;
-import edu.pse.beast.datatypes.booleanExpAST.ForAllNode;
-import edu.pse.beast.datatypes.booleanExpAST.ImplicationNode;
-import edu.pse.beast.datatypes.booleanExpAST.LogicalAndNode;
-import edu.pse.beast.datatypes.booleanExpAST.LogicalOrNode;
-import edu.pse.beast.datatypes.booleanExpAST.NotNode;
-import edu.pse.beast.datatypes.booleanExpAST.NumberExpression;
-import edu.pse.beast.datatypes.booleanExpAST.SymbolicVarExp;
-import edu.pse.beast.datatypes.booleanExpAST.ThereExistsNode;
-import edu.pse.beast.datatypes.booleanExpAST.VoteExp;
-import edu.pse.beast.datatypes.booleanExpAST.VoteSumForCandExp;
+import edu.pse.beast.datatypes.booleanExpAST.*;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.ErrorLogger;
+
 import java.util.ArrayList;
 import java.util.Stack;
 

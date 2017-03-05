@@ -1,14 +1,13 @@
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling;
 
-import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CCodeErrorFactory;
+import edu.pse.beast.codearea.ErrorHandling.CodeError;
+import edu.pse.beast.toolbox.ErrorLogger;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import edu.pse.beast.toolbox.ErrorLogger;
 
 /**
  * the linux implementation for checking the code

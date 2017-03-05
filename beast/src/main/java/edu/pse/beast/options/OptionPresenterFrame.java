@@ -7,16 +7,9 @@ package edu.pse.beast.options;
 
 import edu.pse.beast.saverloader.OptionSaverLoader.OptionsSaverLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import javax.swing.BoxLayout;
-import static javax.swing.BoxLayout.Y_AXIS;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * A JFrame subclass in with which OptionElement objects can be presented to the user.
@@ -46,9 +39,7 @@ public class OptionPresenterFrame extends javax.swing.JFrame {
     }
     
     private void showOptionsRec(Options opt) {
-        
             JPanel panel = new JPanel(new GridLayout(opt.getOptionElements().size(), 2, 5, 5));
-                        
             for(OptionElement elem : opt.getOptionElements()) {
                 JLabel label = new JLabel(srl.getStringFromID(elem.getID()));
                 OptionElemComboBox combobox = new OptionElemComboBox(elem);

@@ -7,16 +7,12 @@ package edu.pse.beast.CodeArea.InputToCode;
 
 import edu.pse.beast.codearea.Actionlist.Actionlist;
 import edu.pse.beast.codearea.InputToCode.LockedLinesHandler;
-import edu.pse.beast.codearea.InputToCode.LockedLinesListener;
 import edu.pse.beast.codearea.SaveTextBeforeRemove;
-import javax.swing.JTextPane;
-import javax.swing.event.DocumentEvent;
+import org.junit.*;
+
+import javax.swing.*;
 import javax.swing.text.BadLocationException;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 /**

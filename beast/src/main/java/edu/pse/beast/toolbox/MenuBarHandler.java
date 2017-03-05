@@ -7,10 +7,9 @@ package edu.pse.beast.toolbox;
 
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringResourceLoader;
+
+import javax.swing.*;
 import java.util.ArrayList;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 
 /**
  *

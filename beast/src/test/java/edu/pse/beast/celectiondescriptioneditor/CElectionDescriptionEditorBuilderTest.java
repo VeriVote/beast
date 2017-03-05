@@ -5,11 +5,6 @@
  */
 package edu.pse.beast.celectiondescriptioneditor;
 
-import edu.pse.beast.options.ParametereditorOptions.LanguageOptions;
-import edu.pse.beast.options.OptionsInterface;
-import edu.pse.beast.saverloader.SaverLoaderInterface;
-import edu.pse.beast.stringresource.StringLoaderInterface;
-import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

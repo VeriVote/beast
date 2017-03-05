@@ -4,7 +4,8 @@ import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTempla
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
-import org.junit.*;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.util.ArrayList;
 

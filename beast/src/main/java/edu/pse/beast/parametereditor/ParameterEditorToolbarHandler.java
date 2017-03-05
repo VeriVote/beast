@@ -7,7 +7,8 @@ import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.ActionIdAndListener;
 import edu.pse.beast.toolbox.ImageResourceProvider;
 import edu.pse.beast.toolbox.ToolbarHandler;
-import javax.swing.JToolBar;
+
+import javax.swing.*;
 /**
  * The ParameterEditorToolbarHandler creates the toolbar for the ParameterEditor.
  * @author Jonas

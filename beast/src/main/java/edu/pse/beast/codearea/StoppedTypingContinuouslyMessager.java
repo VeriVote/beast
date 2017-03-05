@@ -5,12 +5,12 @@
  */
 package edu.pse.beast.codearea;
 
+import javax.swing.*;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
-import javax.swing.JTextPane;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
 
 /**
  * This class messages all its listeners whenever the user stopped typing

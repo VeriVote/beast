@@ -5,8 +5,6 @@
  */
 package edu.pse.beast.codearea.InputToCode;
 
-import javax.swing.JTextPane;
-
 /**
  *
  * @author Holger-Desktop

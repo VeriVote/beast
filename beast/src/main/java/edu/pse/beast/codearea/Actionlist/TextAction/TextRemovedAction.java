@@ -6,10 +6,11 @@
 package edu.pse.beast.codearea.Actionlist.TextAction;
 
 import edu.pse.beast.codearea.Actionlist.Action;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class represents the act of removing text from a Styleddocument

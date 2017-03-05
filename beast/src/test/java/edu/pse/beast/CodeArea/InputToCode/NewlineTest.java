@@ -5,14 +5,14 @@
  */
 package edu.pse.beast.CodeArea.InputToCode;
 
-import javax.swing.JTextPane;
-import javax.swing.text.BadLocationException;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import javax.swing.*;
+import javax.swing.text.BadLocationException;
+
+import static org.junit.Assert.assertEquals;
 /**
  *
  * @author Holger-Desktop

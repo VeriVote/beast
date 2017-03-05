@@ -1,6 +1,10 @@
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling;
 
-import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CCodeErrorFactory;
+import edu.pse.beast.codearea.ErrorHandling.CodeError;
+import edu.pse.beast.toolbox.ErrorForUserDisplayer;
+import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.toolbox.WindowsOStoolbox;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,11 +12,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import edu.pse.beast.toolbox.ErrorForUserDisplayer;
-import edu.pse.beast.toolbox.ErrorLogger;
-import edu.pse.beast.toolbox.WindowsOStoolbox;
 
 /**
  * this is the windows specific implementation to check code.

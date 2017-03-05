@@ -1,23 +1,13 @@
 package edu.pse.beast.propertylist.View;
 
-import java.awt.BorderLayout;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JPanel;
-
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import de.erichseifert.gral.data.DataTable;
 import de.erichseifert.gral.plots.PiePlot;
 import de.erichseifert.gral.ui.DrawablePanel;
-import de.erichseifert.gral.ui.InteractivePanel;
+import org.junit.*;
+
+import javax.swing.*;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class ErrorDisplayTest {

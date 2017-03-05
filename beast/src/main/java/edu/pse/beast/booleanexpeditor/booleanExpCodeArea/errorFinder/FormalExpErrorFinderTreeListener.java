@@ -7,12 +7,7 @@ package edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import edu.pse.beast.datatypes.booleanExpAST.ConstantExp;
-import edu.pse.beast.datatypes.booleanExpAST.ElectExp;
-import edu.pse.beast.datatypes.booleanExpAST.NumberExpression;
-import edu.pse.beast.datatypes.booleanExpAST.SymbolicVarExp;
-import edu.pse.beast.datatypes.booleanExpAST.TypeExpression;
-import edu.pse.beast.datatypes.booleanExpAST.VoteSumForCandExp;
+import edu.pse.beast.datatypes.booleanExpAST.*;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
@@ -23,12 +18,13 @@ import edu.pse.beast.datatypes.propertydescription.VariableListListener;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionListener;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
 import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.BooleanExpScopehandler;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
 
 /**
  *

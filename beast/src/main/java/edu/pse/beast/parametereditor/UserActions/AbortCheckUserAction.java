@@ -1,7 +1,7 @@
 package edu.pse.beast.parametereditor.UserActions;
 
-import edu.pse.beast.toolbox.UserAction;
 import edu.pse.beast.parametereditor.ParameterEditor;
+import edu.pse.beast.toolbox.UserAction;
 
 /**
  * UserAction for stopping a check

@@ -1,6 +1,5 @@
 
 package edu.pse.beast.highlevel;
-import java.awt.event.ActionListener;
 
 /**
  * The MainNotifier notifies the BEASTCommunicator when the user wants

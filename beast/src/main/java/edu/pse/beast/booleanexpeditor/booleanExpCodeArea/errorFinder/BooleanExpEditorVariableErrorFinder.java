@@ -7,9 +7,10 @@ import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
-import java.util.ArrayList;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+
+import java.util.ArrayList;
 
 /**
  * Class for finding type-errors in symbolic variable usage in the

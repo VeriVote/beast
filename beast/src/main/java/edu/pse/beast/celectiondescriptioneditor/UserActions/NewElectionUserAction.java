@@ -12,9 +12,9 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.UserAction;
 
+import javax.swing.text.BadLocationException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.text.BadLocationException;
 /**
  *
  * @author Holger-Desktop

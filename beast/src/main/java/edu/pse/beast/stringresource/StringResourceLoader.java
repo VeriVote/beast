@@ -6,6 +6,7 @@
 package edu.pse.beast.stringresource;
 
 import edu.pse.beast.toolbox.ErrorLogger;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;

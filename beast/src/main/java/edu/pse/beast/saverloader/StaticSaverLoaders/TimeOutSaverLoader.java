@@ -1,7 +1,8 @@
 package edu.pse.beast.saverloader.StaticSaverLoaders;
-import java.util.concurrent.TimeUnit;
 
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Implements static methods for creating saveStrings from TimeOut objects and vice versa.

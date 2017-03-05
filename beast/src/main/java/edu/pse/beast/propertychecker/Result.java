@@ -5,12 +5,12 @@
  */
 package edu.pse.beast.propertychecker;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import edu.pse.beast.datatypes.electiondescription.ElectionType;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenterElement;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *

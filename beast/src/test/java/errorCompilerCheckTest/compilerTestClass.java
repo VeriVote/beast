@@ -1,18 +1,11 @@
 package errorCompilerCheckTest;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.CoderMalfunctionError;
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.DeepErrorChecker;
+import edu.pse.beast.codearea.ErrorHandling.CodeError;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Scanner;
-
-import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.DeepErrorChecker;
-import edu.pse.beast.toolbox.FileLoader;
 
 public class compilerTestClass {
     

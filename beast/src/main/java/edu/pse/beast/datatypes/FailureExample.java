@@ -1,11 +1,11 @@
 package edu.pse.beast.datatypes;
 
-import java.util.List;
-
 import edu.pse.beast.datatypes.electiondescription.ElectionType;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrappersingleArray;
+
+import java.util.List;
 
 /**
  * This class provides the result presenter with the necessary data about the

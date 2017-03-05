@@ -14,10 +14,8 @@ public class MainClass {
      * @param args not used
      */
     public static void main(String[] args) {
-       
         BEASTCommunicator communicator = new BEASTCommunicator();
         CentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
         communicator.setCentralObjectProvider(centralObjectProvider);
-       
     }
 }

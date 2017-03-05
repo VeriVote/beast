@@ -15,10 +15,11 @@ import edu.pse.beast.codearea.SyntaxHL.RegexAndColor;
 import edu.pse.beast.codearea.SyntaxHL.SyntaxHL;
 import edu.pse.beast.codearea.UserActions.CodeAreaUserActions;
 import edu.pse.beast.toolbox.UserAction;
-import javax.swing.JTextPane;
-import java.util.ArrayList;
+
+import javax.swing.*;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
+import java.util.ArrayList;
 
 /**
  * This class is the Fassade to the package of the same name - CodeArea. 

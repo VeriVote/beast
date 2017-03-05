@@ -6,6 +6,7 @@
 package edu.pse.beast.datatypes;
 
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+
 import java.util.List;
 
 /**

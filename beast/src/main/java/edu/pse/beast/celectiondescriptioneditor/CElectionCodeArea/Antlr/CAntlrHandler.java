@@ -5,13 +5,14 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JTextPane;
-import javax.swing.text.BadLocationException;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
+
+import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class provides easy access to a parsetree of the currently

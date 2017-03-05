@@ -1,8 +1,9 @@
 
 package edu.pse.beast.highlevel;
-import java.util.List;
 
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+
+import java.util.List;
 
 /**
  * The PostAndPrePropertiesDescriptionSource provides access to the

@@ -1,12 +1,12 @@
 package edu.pse.beast.propertylist.Model;
 
-import java.util.ArrayList;
-import java.util.Observable;
-
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.NameInterface;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.ResultInterface;
+
+import java.util.ArrayList;
+import java.util.Observable;
 
 
 public class PLModel extends Observable implements PLModelInterface, NameInterface {

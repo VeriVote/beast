@@ -5,8 +5,9 @@
  */
 package edu.pse.beast.codearea.Actionlist;
 
-import java.util.ArrayList;
 import edu.pse.beast.codearea.ActionAdder.ActionlistListener;
+
+import java.util.ArrayList;
 
 /**
  * This class saves actions which can be undone and redone. It provides

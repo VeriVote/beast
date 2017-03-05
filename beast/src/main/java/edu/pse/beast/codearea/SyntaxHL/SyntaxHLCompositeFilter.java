@@ -1,13 +1,11 @@
 package edu.pse.beast.codearea.SyntaxHL;
 
-import java.awt.Color;
+import javax.swing.*;
+import javax.swing.text.*;
+import java.awt.*;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.JTextPane;
-import javax.swing.SwingUtilities;
-import javax.swing.text.*;
 
 /**
  * Class that creates a DocumentFilter

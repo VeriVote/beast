@@ -8,10 +8,9 @@ package edu.pse.beast.codearea.InputToCode.NewlineInserter;
 import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
 import edu.pse.beast.codearea.InputToCode.LineBeginningTabsHandler;
 import edu.pse.beast.codearea.InputToCode.TabInserter;
-import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
-import javax.swing.JTextPane;
+
+import javax.swing.*;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.StyledDocument;
 
 /**
  * Inesrts newlines into locked lines by inserting it at their beginning,

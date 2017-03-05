@@ -6,22 +6,12 @@
 package edu.pse.beast.CodeArea.InputToCode;
 
 import edu.pse.beast.codearea.Actionlist.Actionlist;
-import edu.pse.beast.codearea.InputToCode.CodeInputHandler;
-import edu.pse.beast.codearea.InputToCode.OpenCloseCharList;
-import edu.pse.beast.codearea.InputToCode.ShortcutHandler;
-import edu.pse.beast.codearea.InputToCode.UserInputHandler;
-import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
+import edu.pse.beast.codearea.InputToCode.*;
 import edu.pse.beast.codearea.SaveTextBeforeRemove;
-import java.awt.EventQueue;
+
+import javax.swing.text.BadLocationException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.text.BadLocationException;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
 /**
  *
  * @author Holger-Desktop

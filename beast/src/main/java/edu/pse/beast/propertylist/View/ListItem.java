@@ -1,29 +1,20 @@
 package edu.pse.beast.propertylist.View;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
-import edu.pse.beast.propertylist.PLControllerInterface;
-import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.propertylist.Model.PLModelInterface;
+import edu.pse.beast.propertylist.Model.PropertyItem;
+import edu.pse.beast.propertylist.PLControllerInterface;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.SuperFolderFinder;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 /**
  * Represents the view for a PropertyItem.

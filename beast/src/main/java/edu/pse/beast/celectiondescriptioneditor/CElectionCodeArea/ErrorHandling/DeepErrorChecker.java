@@ -1,11 +1,11 @@
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling;
 
-import java.util.List;
-
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.propertychecker.OperatingSystems;
 import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
+
+import java.util.List;
 
 /**
  * this class gives you access to an underlying, system specific compiler so our program

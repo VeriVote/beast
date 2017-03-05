@@ -6,10 +6,11 @@
 package edu.pse.beast.codearea.InputToCode.NewlineInserter;
 
 import edu.pse.beast.codearea.InputToCode.LockedLinesHandler;
+
+import javax.swing.*;
+import javax.swing.text.BadLocationException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JTextPane;
-import javax.swing.text.BadLocationException;
 
 /**
  * This class chooses the right newlineinserter implementation based on the chars

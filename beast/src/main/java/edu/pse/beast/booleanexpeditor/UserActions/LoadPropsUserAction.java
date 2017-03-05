@@ -2,8 +2,8 @@ package edu.pse.beast.booleanexpeditor.UserActions;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
-import edu.pse.beast.propertylist.PLControllerInterface;
 import edu.pse.beast.propertylist.Model.PropertyItem;
+import edu.pse.beast.propertylist.PLControllerInterface;
 import edu.pse.beast.toolbox.UserAction;
 
 /**

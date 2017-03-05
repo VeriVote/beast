@@ -6,14 +6,11 @@
 package edu.pse.beast.codearea.UserActions;
 
 import edu.pse.beast.toolbox.UserAction;
-import java.awt.Toolkit;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
-import javax.swing.JTextPane;
-import javax.swing.text.BadLocationException;
 
 /**
  * This useraction takes the selected string in the given textpane and

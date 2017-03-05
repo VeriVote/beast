@@ -8,11 +8,8 @@ import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.RepaintThread;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JSpinner;
+import javax.swing.*;
 import java.awt.*;
-import javax.swing.DefaultComboBoxModel;
 
 /**
  * Window which takes all the user input for the parameters used by CBMC. It

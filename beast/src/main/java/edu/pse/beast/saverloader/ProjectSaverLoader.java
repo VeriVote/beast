@@ -1,7 +1,7 @@
 package edu.pse.beast.saverloader;
 
-import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.Project;
+import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.saverloader.StaticSaverLoaders.ElectionCheckParameterSaverLoader;

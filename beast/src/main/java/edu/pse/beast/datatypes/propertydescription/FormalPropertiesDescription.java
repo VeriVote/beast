@@ -5,8 +5,6 @@
  */
 package edu.pse.beast.datatypes.propertydescription;
 
-import java.util.List;
-
 /**
  *
  * @author Holger

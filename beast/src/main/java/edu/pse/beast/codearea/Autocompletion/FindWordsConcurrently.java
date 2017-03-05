@@ -6,8 +6,9 @@
 package edu.pse.beast.codearea.Autocompletion;
 
 import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
+
+import javax.swing.*;
 import java.util.ArrayList;
-import javax.swing.JTextPane;
 
 /**
  *This class implements the runnable interface to continuously scan the given

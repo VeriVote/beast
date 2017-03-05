@@ -10,14 +10,15 @@ import edu.pse.beast.codearea.InputToCode.NewlineInserter.NewlineInserterChooser
 import edu.pse.beast.codearea.SaveTextBeforeRemove;
 import edu.pse.beast.codearea.StoppedTypingContinuouslyListener;
 import edu.pse.beast.codearea.StoppedTypingContinuouslyMessager;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JTextPane;
+
+import javax.swing.*;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class is responsible for translating input from the user into code 

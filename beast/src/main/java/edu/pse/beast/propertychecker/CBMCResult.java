@@ -1,15 +1,15 @@
 package edu.pse.beast.propertychecker;
 
+import edu.pse.beast.datatypes.FailureExample;
+import edu.pse.beast.highlevel.ResultPresenterElement;
+import edu.pse.beast.toolbox.ErrorForUserDisplayer;
+import edu.pse.beast.toolbox.ErrorLogger;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import edu.pse.beast.datatypes.FailureExample;
-import edu.pse.beast.highlevel.ResultPresenterElement;
-import edu.pse.beast.toolbox.ErrorForUserDisplayer;
-import edu.pse.beast.toolbox.ErrorLogger;
 
 /**
  * 

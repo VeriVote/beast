@@ -5,7 +5,7 @@
  */
 package edu.pse.beast.toolbox;
 
-import java.awt.Image;
+import java.awt.*;
 import java.io.File;
 import java.util.HashMap;
 

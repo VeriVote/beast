@@ -5,9 +5,6 @@
  */
 package edu.pse.beast.propertylist;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
@@ -18,9 +15,12 @@ import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PLModelInterface;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.propertylist.View.PropertyListWindow;
+import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
-import edu.pse.beast.saverloader.FileChooser;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Class acts as controller for everything related to the property list. Returns
