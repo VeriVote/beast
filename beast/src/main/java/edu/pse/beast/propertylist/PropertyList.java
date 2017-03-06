@@ -12,7 +12,6 @@ import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenter;
 import edu.pse.beast.propertylist.Model.PLModel;
-import edu.pse.beast.propertylist.Model.PLModelInterface;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.propertylist.View.PropertyListWindow;
 import edu.pse.beast.saverloader.FileChooser;
@@ -28,10 +27,10 @@ import java.util.LinkedList;
  *
  * @author Justin
  */
-public class PropertyList implements PLControllerInterface, PostAndPrePropertiesDescriptionSource,
+public class PropertyList implements PostAndPrePropertiesDescriptionSource,
         ResultPresenter, Runnable, DisplaysStringsToUser {
 
-    private PLModelInterface model;
+    private PLModel model;
     private PropertyListWindow view;
     private BooleanExpEditor editor;
     private StringLoaderInterface sli;
@@ -47,7 +46,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
      * property descriptions.
      * @param fileChooser the FileChooser with which files can be loaded and saved
      */
-    public PropertyList(PLModelInterface model, BooleanExpEditor editor, FileChooser fileChooser) {
+    public PropertyList(PLModel model, BooleanExpEditor editor, FileChooser fileChooser) {
         this.model = model;
         this.editor = editor;
         this.sli = new StringLoaderInterface("de");
@@ -63,7 +62,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
      * Test constructor
      * @param model Only needs the model for testing purposes
      */
-    public PropertyList(PLModelInterface model) {
+    public PropertyList(PLModel model) {
     	this(model, null, null);
         /*this.model = model;
         view = new PropertyListWindow(this, model);
@@ -82,31 +81,26 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     public void run() {
     }
 
-    @Override
     public void changeName(PropertyItem prop, String newName) {
         if (!model.changeName(prop, newName)) {
             view.rejectNameChange(prop);
         }
     }
 
-    @Override
     public void setTestStatus(PropertyItem prop, boolean newStatus) {
         model.setTestStatus(prop, newStatus);
     }
 
-    @Override
     public void editProperty(PropertyItem prop) {
         model.editProperty(prop, editor);
     }
 
-    @Override
     public void deleteProperty(PropertyItem prop) {
     	DeleteDescriptionAction act = new DeleteDescriptionAction(model, prop);
     	act.perform();
     	actionList.add(act);
     }
 
-    @Override
     public void addDescription(PropertyItem prop) {
     	/*boolean success = model.addDescription(prop);
     	if (!success) {
@@ -116,17 +110,14 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     	model.addDescription(prop);
     }
 
-    @Override
     public void addNewProperty() {
         model.addNewProperty(editor);
     }
     
-	@Override
 	public void setNewList() {
 		model.setNewList();
 	}
 	
-	@Override
 	public ArrayList<PropertyItem> getList() {
 		return model.getPropertyList();
 	}
@@ -229,7 +220,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         return (PLModel) model;
     }
 
-    public void setPLModel(PLModelInterface model) {
+    public void setPLModel(PLModel model) {
         this.model.loadAnotherModel(model);
         view.setWindowTitle(((PLModel) model).getName());
     }
@@ -255,7 +246,6 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         return fileChooser;
     }
     
-	@Override
 	public BooleanExpEditor getEditor() {
 		return editor;
 	}

@@ -1,6 +1,6 @@
 package edu.pse.beast.propertylist;
 
-import edu.pse.beast.propertylist.Model.PLModelInterface;
+import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 
 /**
@@ -9,7 +9,7 @@ import edu.pse.beast.propertylist.Model.PropertyItem;
  *
  */
 public class DeleteDescriptionAction {
-	PLModelInterface model;
+	PLModel model;
 	PropertyItem item;
 
 	/**
@@ -17,7 +17,7 @@ public class DeleteDescriptionAction {
 	 * @param model The data model of the property list
 	 * @param item The deleted property item
 	 */
-	public DeleteDescriptionAction(PLModelInterface model, PropertyItem item) {
+	public DeleteDescriptionAction(PLModel model, PropertyItem item) {
 		this.model = model;
 		this.item = item;
 	}

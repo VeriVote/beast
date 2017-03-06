@@ -1,9 +1,10 @@
 package edu.pse.beast.propertylist;
 
-import edu.pse.beast.propertylist.Model.PLModelInterface;
 
 import java.util.Observable;
 import java.util.Observer;
+
+import edu.pse.beast.propertylist.Model.PLModel;
 
 /**
  * Handles saves before change in the property list.
@@ -17,7 +18,7 @@ public class PLChangeHandler implements Observer {
      * Constructor
      * @param model The property list data model to observe
      */
-    public PLChangeHandler(PLModelInterface model) {
+    public PLChangeHandler(PLModel model) {
         model.addObserver(this);
     }
 

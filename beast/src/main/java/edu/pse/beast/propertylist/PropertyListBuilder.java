@@ -2,7 +2,6 @@ package edu.pse.beast.propertylist;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.propertylist.Model.PLModel;
-import edu.pse.beast.propertylist.Model.PLModelInterface;
 import edu.pse.beast.propertylist.UserActions.*;
 import edu.pse.beast.propertylist.View.PropertyListWindow;
 import edu.pse.beast.saverloader.FileChooser;
@@ -34,7 +33,7 @@ public class PropertyListBuilder {
      * @return Returns the controller class of PropertyList
      */
     public PropertyList createPropertyList(ObjectRefsForBuilder refs, BooleanExpEditor booleanExpEditor) {
-        PLModelInterface model = new PLModel();
+        PLModel model = new PLModel();
         FileChooser fileChooser = new FileChooser(refs.getStringIF().getPropertyListStringResProvider().getOtherStringRes(),
                 new PropertyListSaverLoader(), null);
         controller = new PropertyList(model, booleanExpEditor, fileChooser);

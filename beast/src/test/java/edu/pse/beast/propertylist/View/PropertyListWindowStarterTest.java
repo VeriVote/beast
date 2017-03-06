@@ -1,8 +1,6 @@
 package edu.pse.beast.propertylist.View;
 
 import edu.pse.beast.propertylist.Model.PLModel;
-import edu.pse.beast.propertylist.Model.PLModelInterface;
-import edu.pse.beast.propertylist.PLControllerInterface;
 import edu.pse.beast.propertylist.PropertyList;
 import org.junit.*;
 
@@ -31,8 +29,8 @@ public class PropertyListWindowStarterTest {
 	
 	public static void main(String[] args) {
 		
-		PLModelInterface model = new PLModel();
-		PLControllerInterface controller = new PropertyList(model);
+		PLModel model = new PLModel();
+		PropertyList controller = new PropertyList(model);
 		
 	//	PropertyListWindowStarter starter = new PropertyListWindowStarter(controller, model);
 	//	starter.start();

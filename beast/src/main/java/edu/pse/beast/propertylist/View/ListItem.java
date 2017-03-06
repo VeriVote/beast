@@ -1,9 +1,9 @@
 package edu.pse.beast.propertylist.View;
 
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
-import edu.pse.beast.propertylist.Model.PLModelInterface;
+import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PropertyItem;
-import edu.pse.beast.propertylist.PLControllerInterface;
+import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
@@ -23,8 +23,8 @@ import java.awt.event.ItemListener;
 @SuppressWarnings("serial")
 public class ListItem extends JPanel implements DisplaysStringsToUser {
 
-    PLModelInterface model;
-    PLControllerInterface controller;
+    PLModel model;
+    PropertyList controller;
 
     private boolean reactsToInput;
     private StringLoaderInterface sli;
@@ -52,7 +52,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
      * @param controller The controller of PropertyList
      * @param model The model of PropertyList
      */
-    public ListItem(PLControllerInterface controller, PLModelInterface model) {
+    public ListItem(PropertyList controller, PLModel model) {
         this(controller, model, new PropertyItem());
         init();
     }
@@ -63,7 +63,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
      * @param model The model of PropertyList
      * @param prop The PropertyItem to be viewed
      */
-    public ListItem(PLControllerInterface controller, PLModelInterface model, PropertyItem prop) {
+    public ListItem(PropertyList controller, PLModel model, PropertyItem prop) {
         this.model = model;
         this.controller = controller;
         this.prop = prop;
