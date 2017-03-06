@@ -13,8 +13,6 @@ import edu.pse.beast.parametereditor.View.ParameterEditorWindow;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
-import edu.pse.beast.toolbox.MenuBarHandler;
-import edu.pse.beast.toolbox.ToolbarHandler;
 
 import javax.swing.text.BadLocationException;
 import java.util.List;
@@ -36,8 +34,6 @@ public class ParameterEditor implements ParameterSource, MainNotifier, DisplaysS
     private final TimeoutValueHandler timeoutHandler;
     private final SingleValueSpinnerHandler processHandler;
     private final ArgumentHandler argumentHandler;
-    private ToolbarHandler toolbarHandler;
-    private MenuBarHandler menuBarHandler;
     private boolean reacts;
     private final FileChooser fileChooser;
     private boolean hasChanged;
@@ -190,20 +186,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier, DisplaysS
         }
     }
 
-    /**
-     * Setter for the ToolbarHandler
-     * @param toolbarHandler new ToolbarHandler
-     */
-    void setToolbarHandler(ToolbarHandler toolbarHandler) {
-        this.toolbarHandler = toolbarHandler;
-    }
-    /**
-     * Setter for the MenuBarHandler
-     * @param menuBarHandler new MenuBarHandler
-     */
-    void setMenuBarHandler(MenuBarHandler menuBarHandler) {
-        this.menuBarHandler = menuBarHandler;
-    }
+    
     /**
      * Toggles whether the ParameterEditor reacts to user input other than stopping
      * an analysis (to not interrupt an analysis)
@@ -238,6 +221,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier, DisplaysS
      * Getter for the ParameterEditorWindow
      * @return ParameterEditorWindow
      */
+    @Override
     public ParameterEditorWindow getView() {
         return window;
     }
@@ -255,6 +239,10 @@ public class ParameterEditor implements ParameterSource, MainNotifier, DisplaysS
         }
     }
 
+    /**
+     * Setter for the Project which is currently worked on by the user.
+     * @param project Project which is currently worked on
+     */
     public void setCurrentlyLoadedProject(Project project) {
         currentlyLoadedProject = project;
         getView().setWindowTitle(project.getName());

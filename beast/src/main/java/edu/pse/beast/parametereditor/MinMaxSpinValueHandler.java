@@ -42,7 +42,8 @@ public class MinMaxSpinValueHandler implements ChangeListener {
         return result;
     }
     /**
-     * Setter for the minimum and maximum
+     * Setter for the minimum and maximum. Only allows values 1 to 10000 and ensures that min gets
+     * the lower value.
      * @param min new minimum
      * @param max new maximum
      */
