@@ -21,7 +21,7 @@ public class PostAndPrePropertiesDescription implements NameInterface {
     private FormalPropertiesDescription postPropertiesDescription;
 
     /**
-     * 
+     *
      * @param name HAS to be UNIQUE in the context
      */
     public PostAndPrePropertiesDescription(String name) {
@@ -29,9 +29,11 @@ public class PostAndPrePropertiesDescription implements NameInterface {
         this.symbolicVariableList = new SymbolicVariableList();
         this.prePropertiesDescription = new FormalPropertiesDescription("");
         this.postPropertiesDescription = new FormalPropertiesDescription("");
-    }    
+    }
+
     /**
-     * 
+     * Creator without a SymbolicVariableList
+     *
      * @param name HAS to be UNIQUE in the context
      * @param preDescr the prePropterie Description of the Property
      * @param postDescr the postPropterie Description of the Property
@@ -43,53 +45,86 @@ public class PostAndPrePropertiesDescription implements NameInterface {
         this.postPropertiesDescription = postDescr;
     }
 
-    public PostAndPrePropertiesDescription(String name, FormalPropertiesDescription preDescr,
-                                           FormalPropertiesDescription postDescr, SymbolicVariableList symbolicVariableList) {
+    /**
+     * Creator with a SymbolicVariableList
+     *
+     * @param name name of the PostAndPrePropertiesDescription
+     * @param preDescr The prePropertyDescription
+     * @param postDescr The postPropertyDescription
+     * @param symbolicVariableList the symbolicVariableList
+     */
+    public PostAndPrePropertiesDescription(String name,
+            FormalPropertiesDescription preDescr,
+            FormalPropertiesDescription postDescr, SymbolicVariableList symbolicVariableList) {
         this.name = name;
         this.prePropertiesDescription = preDescr;
         this.postPropertiesDescription = postDescr;
         this.symbolicVariableList = symbolicVariableList;
     }
 
-    
+    @Override
     public String getName() {
-    	return this.name;
+        return this.name;
     }
-    
 
+    /**
+     *
+     * @return the SymbolicVariableList as a List
+     */
     public List<SymbolicVariable> getSymbolicVariableList() {
         return symbolicVariableList.getSymbolicVariables();
     }
+
+    /**
+     *
+     * @return the symbolicVariableList as the datatype
+     */
     public SymbolicVariableList getSymVarList() {
-    	return symbolicVariableList;
+        return symbolicVariableList;
     }
 
+    /**
+     *
+     * @param symbolicVariableList the list, which is to be setted as new
+     */
     public void setSymbolicVariableList(SymbolicVariableList symbolicVariableList) {
         this.symbolicVariableList = symbolicVariableList;
     }
 
+    /**
+     *
+     * @return the postPropertiesDescription
+     */
     public FormalPropertiesDescription getPostPropertiesDescription() {
         return postPropertiesDescription;
     }
 
+    /**
+     *
+     * @return the prePropertiesDescirption
+     */
     public FormalPropertiesDescription getPrePropertiesDescription() {
         return prePropertiesDescription;
     }
 
+    /**
+     *
+     * @param postPropertiesDescription the new postPropertiesDescription
+     */
     public void setPostPropertiesDescription(FormalPropertiesDescription postPropertiesDescription) {
         this.postPropertiesDescription = postPropertiesDescription;
     }
 
+    /**
+     *
+     * @param prePropertiesDescription the new prePropertiesDescription
+     */
     public void setPrePropertiesDescription(FormalPropertiesDescription prePropertiesDescription) {
         this.prePropertiesDescription = prePropertiesDescription;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public void setNewName(String newName) {
-        setName(newName);
+        this.name = newName;
     }
 }

@@ -49,6 +49,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
      * this creates the visitor You should create 1 and only 1 visitor for every
      * c. file you want to make you have to set it to pre- or post-property mode
      * in order for it to function
+     * @param inputType the input Type of the Election
      */
     public CBMCCodeGenerationVisitor(ElectionTypeContainer inputType) {
         this.inputType = inputType;
@@ -269,7 +270,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitComparisonNode(ComparisonNode node) {
-        String varName = "comparison_" + comparisonNodeCounter++;
+        String varName = "comparison_" + comparisonNodeCounter;
+        comparisonNodeCounter++;
         variableNames.push(varName);
         int lhslistLevel = 0;
         int rhslistLevel = 0;

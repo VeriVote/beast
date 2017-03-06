@@ -63,7 +63,7 @@ public class Project implements NameInterface {
     }
 
     @Override
-    public String getName() {
+    public String getName(){
         return name;
     }
 }

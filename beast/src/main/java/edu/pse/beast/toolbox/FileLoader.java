@@ -49,8 +49,7 @@ public final class FileLoader {
     }
 
     /**
-     *
-     * @param in the file to be read as an image
+     * @param toRead the File you want to read
      * @return the image, if it was possible to read it. In case it couldn't be
      * read, the methode returns null
      */
@@ -65,20 +64,21 @@ public final class FileLoader {
         return toReturn;
     }
 
-    public static String getFileFromResDONOTUSE(String fileName) {
-        return new File("./src/main/resources" + fileName).getAbsolutePath();
-    }
-
-    public synchronized static String getNewUniqueName(String pathToDir) {
-        ArrayList<String> usedNames = new ArrayList<String>();
+    /**
+     * gets a new Name inside a directory
+     * @param pathToDir the path of the directory you want the new unique String to be created in 
+     * @return the unique String
+     */
+    public static synchronized  String getNewUniqueName(String pathToDir) {
+        ArrayList<String> usedNames = new ArrayList<>();
 
         File folder = new File(pathToDir);
         File[] listOfFiles = folder.listFiles();
 
         if (listOfFiles != null) {
-            for (int i = 0; i < listOfFiles.length; i++) {
-                if (listOfFiles[i].isFile()) {
-                    usedNames.add(listOfFiles[i].getName());
+            for (File file : listOfFiles) {
+                if (file.isFile()) {
+                    usedNames.add(file.getName());
                 }
             }
         }
