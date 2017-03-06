@@ -106,7 +106,7 @@ public class PLModel extends Observable implements NameInterface {
 		propertyList.remove(index);
 		if (propertyList.isEmpty()) addNewProperty(editor);
 		if (editor != null) {
-			// TODO
+			editor.letUserEditPostAndPreProperties(propertyList.get(0).getDescription(), true);
 		}
 		updateView();
 		return true;

@@ -50,7 +50,6 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
         this.model = model;
         this.editor = editor;
         this.sli = new StringLoaderInterface("de");
-        //editor.showWindow();
         view = new PropertyListWindow(this, model);
         setChangeHandler(new PLChangeHandler(model));
         actionList = new LinkedList<DeleteDescriptionAction>();
@@ -64,9 +63,6 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
      */
     public PropertyList(PLModel model) {
     	this(model, null, null);
-        /*this.model = model;
-        view = new PropertyListWindow(this, model);
-        model.initialize();*/
     }
 
     
@@ -124,11 +120,6 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
      * @param prop The property to add
      */
     public void addDescription(PropertyItem prop) {
-    	/*boolean success = model.addDescription(prop);
-    	if (!success) {
-    		prop.setDescriptionName(prop.getDescription().getName() + "x");
-    		model.addDescription(prop);
-    	}*/
     	model.addDescription(prop);
     }
 
