@@ -5,34 +5,17 @@
  */
 package edu.pse.beast.toolbox;
 
+import java.util.ArrayList;
 import org.junit.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 /**
  *
  * @author Niels
  */
 public class CodeArrayListBeautifierTest {
-
-    public CodeArrayListBeautifierTest() {
-    }
-
-    @BeforeClass
-    public static void setUpClass() {
-    }
-
-    @AfterClass
-    public static void tearDownClass() {
-    }
-
-    @Before
-    public void setUp() {
-    }
-
-    @After
-    public void tearDown() {
-    }
 
     /**
      * Test of add method, of class CodeArrayListBeautifier.
@@ -44,6 +27,7 @@ public class CodeArrayListBeautifierTest {
         CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
         instance.add(e);
         assertEquals("test", (instance.getCodeArrayList().get(0)));
+        instance.add(null);
     }
 
     /**
@@ -57,7 +41,7 @@ public class CodeArrayListBeautifierTest {
         CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
         instance.addTab();
         instance.add(e);
-        assertEquals("\ttest", (instance.getCodeArrayList().get(0)));
+        assertEquals("\t" + "test", (instance.getCodeArrayList().get(0)));
     }
 
     /**
@@ -69,10 +53,21 @@ public class CodeArrayListBeautifierTest {
         String e = "test";
         CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
         instance.addTab();
-        
+
         instance.deleteTab();
         instance.add(e);
         assertEquals("test", (instance.getCodeArrayList().get(0)));
+
+        instance.deleteTab();
+        e = "test2";
+        instance.add(e);
+        assertEquals("test2", (instance.getCodeArrayList().get(1)));
+
+        e = "test3";
+        instance.addTab();
+        instance.add(e);
+        instance.deleteTab();
+        assertEquals("\t" + "test3", (instance.getCodeArrayList().get(2)));
     }
 
     /**
@@ -80,10 +75,34 @@ public class CodeArrayListBeautifierTest {
      */
     @Test
     public void testGetCodeArrayList() {
+        System.out.println("getCodeArrayList");
         String e = "test";
         CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
         instance.add(e);
         assertEquals("test", (instance.getCodeArrayList().get(0)));
     }
 
+    /**
+     * Test of addArrayList method, of class CodeArrayListBeautifier.
+     */
+    @Test
+    public void testAddArrayList() {
+        System.out.println("addArrayList");
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add("2");
+        arrayList.add("3");
+        arrayList.add("test");
+        CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
+        instance.addArrayList(arrayList);
+        ArrayList<String> resultList = instance.getCodeArrayList();
+        if (resultList.size() == arrayList.size()) {
+            for (int i = 0; i < arrayList.size(); i++) {
+                assertEquals(resultList.get(i), arrayList.get(i));
+            }
+            // TODO review the generated test code and remove the default call to fail.
+        } else {
+            fail("The ArrayLists are of a different size");
+        }
+        instance.addArrayList(null);
+    }
 }

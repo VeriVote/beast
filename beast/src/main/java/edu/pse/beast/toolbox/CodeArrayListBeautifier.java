@@ -17,7 +17,7 @@ public class CodeArrayListBeautifier {
     private final ArrayList<String> code;
 
     /**
-     * Creates a new CodeArrayListBeautifier with an empty ArrayList 
+     * Creates a new CodeArrayListBeautifier with an empty ArrayList
      */
     public CodeArrayListBeautifier() {
         super();
@@ -27,25 +27,30 @@ public class CodeArrayListBeautifier {
 
     /**
      * Adds a String to the ArrayList with the indenting
+     *
      * @param addedString the String which is added to the ArrayList
      */
     public void add(String addedString) {
-        String tabbed = "";
-        for (int i = 0; i < numberOfTabs; i++) {
-            tabbed += "\t";
+        if (addedString != null) {
+            String tabbed = "";
+            for (int i = 0; i < numberOfTabs; i++) {
+                tabbed += "\t";
+            }
+            code.add(tabbed + addedString);
         }
-        code.add(tabbed + addedString);
     }
 
     /**
-     * adds another tab to the indenting. If you add another String after this it will be indeted one more time
+     * adds another tab to the indenting. If you add another String after this
+     * it will be indeted one more time
      */
     public void addTab() {
         numberOfTabs++;
     }
 
     /**
-     * Decreases the number of tabs by one. If the Tabcount is allready 0 it will no longer decrease it.
+     * Decreases the number of tabs by one. If the Tabcount is allready 0 it
+     * will no longer decrease it.
      */
     public void deleteTab() {
         if (numberOfTabs > 0) {
@@ -56,19 +61,23 @@ public class CodeArrayListBeautifier {
     }
 
     /**
-     * 
-     * @return the ArrayList with the indenting 
+     *
+     * @return the ArrayList with the indenting
      */
     public ArrayList<String> getCodeArrayList() {
         return code;
     }
+
     /**
      * adds an ArrayList with the indenting
+     *
      * @param arrayList the added ArrayList
      */
     public void addArrayList(ArrayList<String> arrayList) {
-        arrayList.forEach((singleItem) -> {
-            this.add(singleItem);
-        });
+        if (arrayList != null) {
+            arrayList.forEach((singleItem) -> {
+                this.add(singleItem);
+            });
+        }
     }
 }
