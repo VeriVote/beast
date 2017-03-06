@@ -18,8 +18,12 @@ public class CBMCResult_Test {
 
     @Before
     public void create() {
+        //create some teststrings
         lines = new ArrayList<String>();
 
+        lines.add("begin");
+        lines.add("----------------------------------------------------");
+        
         lines.add("elect1=4u (00000000000000000000000000000100)");
         lines.add("----------------------------------------------------");
         
@@ -27,7 +31,6 @@ public class CBMCResult_Test {
 
         lines.add("path to file that is checked");
         lines.add("----------------------------------------------------");
-
         
         lines.add("votes2={ { 1u, 2u, 3u, 4u, 5u }, { 6u, 7u, 8u, 9u, 10u }, { 11u, 12u, 13u, 14u, 15u }, { 16u, 17u, 18u, 19u, 20u } } ({ { 00000000000000000000000000000001, 00000000000000000000000000000010, 00000000000000000000000000000011, 00000000000000000000000000000100, 00000000000000000000000000000101 }, { 00000000000000000000000000000110, 00000000000000000000000000000111, 00000000000000000000000000001000, 00000000000000000000000000001001, 00000000000000000000000000001010 }, { 00000000000000000000000000001011, 00000000000000000000000000001100, 00000000000000000000000000001101, 000000000000000000000000000001110, 00000000000000000000000000001111 }, { 000000000000000000000000000010000, 00000000000000000000000000010001, 00000000000000000000000000010010, 00000000000000000000000000010011, 00000000000000000000000000010100 } })");
 
@@ -82,6 +85,9 @@ public class CBMCResult_Test {
         assertNull(result.getFailureExample());
     }
 
+    /***
+     * try to extract the single dim values from the result
+     */
     public void singleDim() {
 
         result.setResult(lines);
@@ -111,6 +117,9 @@ public class CBMCResult_Test {
         assertEquals((long) (varsO[0]), 5l);
     }
 
+    /**
+     * try to extract the multi dim values from the result
+     */
     public void multiDim() {
 
         result.setResult(lines);
