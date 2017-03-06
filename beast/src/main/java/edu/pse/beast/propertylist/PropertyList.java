@@ -51,7 +51,7 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         this.model = model;
         this.editor = editor;
         this.sli = new StringLoaderInterface("de");
-        editor.showWindow();
+        //editor.showWindow();
         view = new PropertyListWindow(this, model);
         setChangeHandler(new PLChangeHandler(model));
         actionList = new LinkedList<DeleteDescriptionAction>();
@@ -64,9 +64,10 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
      * @param model Only needs the model for testing purposes
      */
     public PropertyList(PLModelInterface model) {
-        this.model = model;
+    	this(model, null, null);
+        /*this.model = model;
         view = new PropertyListWindow(this, model);
-        model.initialize();
+        model.initialize();*/
     }
 
     

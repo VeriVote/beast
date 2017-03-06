@@ -52,10 +52,27 @@ public class PropertyListControllerTest {
 		assertEquals(list.getList().get(0).getTestStatus(), !before);
 	}
 	
-	/*@Test
+	@Test
 	public void deleteItemTest() {
 		list.deleteProperty(list.getList().get(0));
 		assertEquals(list.getList().size(), 2);
-	}*/
+	}
+	
+	@Test
+	public void addDescriptionTest() {
+		PropertyItem item = new PropertyItem();
+		item.setDescriptionName("testname");
+		list.addDescription(item);
+		assertEquals(list.getList().size(), 4);
+		assertEquals(list.getList().get(3), item);
+	}
+	
+	@Test
+	public void addPropertyTest() {
+		list.addNewProperty();
+		assertEquals(list.getList().size(), 4);
+	}
+	
+	
 
 }
