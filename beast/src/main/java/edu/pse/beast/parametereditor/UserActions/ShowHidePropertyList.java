@@ -9,7 +9,7 @@ import javax.swing.*;
  * @author NikolaiLMS
  */
 public class ShowHidePropertyList extends UserAction {
-    private JFrame propertyListWindow;
+    private final JFrame propertyListWindow;
     /**
      * Constructor
      * @param propertyListWindow PropertyList window

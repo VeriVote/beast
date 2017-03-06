@@ -9,7 +9,7 @@ import javax.swing.*;
  * @author NikolaiLMS
  */
 public class ShowHideCElectionEditor extends UserAction {
-    private JFrame cElectionEditorWindow;
+    private final JFrame cElectionEditorWindow;
     /**
      * Constructor
      * @param cElectionEditorWindow CElectionEditor window

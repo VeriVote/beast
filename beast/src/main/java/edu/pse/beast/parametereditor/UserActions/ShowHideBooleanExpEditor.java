@@ -9,7 +9,7 @@ import javax.swing.*;
  * @author NikolaiLMS
  */
 public class ShowHideBooleanExpEditor extends UserAction {
-    private JFrame booleanExpEditorWindow;
+    private final JFrame booleanExpEditorWindow;
     /**
      * Constructor
      * @param booleanExpEditorWindow BooleanExpEditor window
