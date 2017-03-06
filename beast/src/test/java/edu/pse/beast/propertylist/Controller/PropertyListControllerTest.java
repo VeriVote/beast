@@ -11,7 +11,6 @@ import org.junit.Test;
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.propertylist.Model.PLModel;
-import edu.pse.beast.propertylist.Model.PLModelInterface;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 
 public class PropertyListControllerTest {

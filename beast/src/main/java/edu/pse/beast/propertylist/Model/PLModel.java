@@ -9,12 +9,11 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 
-public class PLModel extends Observable implements PLModelInterface, NameInterface {
+public class PLModel extends Observable implements NameInterface {
 
 	private ArrayList<PropertyItem> propertyList;
 	private String name;
 
-	@Override
 	public void initialize() {
 		if (propertyList == null) {
 			propertyList = new ArrayList<PropertyItem>();
@@ -22,7 +21,6 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 		}
 	}
 
-	@Override
 	public boolean changeName(PropertyItem prop, String newName) {
 		int index = propertyList.indexOf(prop);
 		if (index == -1) {
@@ -38,7 +36,6 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 		return true;
 	}
 
-	@Override
 	public boolean addDescription(PropertyItem prop) {
 		if (propertyList.indexOf(prop) != -1) {
 			PropertyItem updated = prop;
@@ -53,7 +50,6 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 		return true;
 	}
 
-	@Override
 	public boolean addNewProperty(BooleanExpEditor editor) {
 		String name = "Eigenschaft ";
 		int i = 0;
@@ -68,7 +64,6 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 		return true;
 	}
 
-	@Override
 	public void editProperty(PropertyItem prop, BooleanExpEditor editor) {
 		editor.letUserEditPostAndPreProperties(prop.getDescription(), true);
 		editor.getView().setVisible(true);
@@ -76,7 +71,6 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 		updateView();
 	}
 
-	@Override
 	public boolean deleteProperty(PropertyItem prop) {
 		int index = propertyList.indexOf(prop);
 		if (index == -1) return false;
@@ -85,18 +79,15 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 		return true;
 	}
 
-	@Override
 	public void setTestStatus(PropertyItem prop, boolean newStatus) {
 		prop.setTestStatus(newStatus);
 	}
 
-	@Override
 	public void setNewList() {
 		this.propertyList.clear();
 		updateView();
 	}
 
-	@Override
 	public boolean setNextToBePresented(ResultInterface res, Integer index) {
 		ArrayList<PropertyItem> testedList = getTestedPropertyList();
 		
@@ -117,7 +108,6 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 		return false;*/
 	}
 
-	@Override
 	public void resetResults() {
 		for (PropertyItem item : propertyList) {
 			item.setResultType(ResultType.UNTESTED);
@@ -125,23 +115,19 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 		updateView();
 	}
 
-	@Override
 	public ArrayList<PropertyItem> getPropertyList() {
 		return propertyList;
 	}
 
-	@Override
 	public void setPropertyList(ArrayList<PropertyItem> propertyList) {
 		this.propertyList = propertyList;
 	}
 
-	@Override
-	public void loadAnotherModel(PLModelInterface model) {
+	public void loadAnotherModel(PLModel model) {
 		this.propertyList = model.getPropertyList();
 		updateView();
 	}
 
-	@Override
 	public PLModel getModel() {
 		return this;
 	}
