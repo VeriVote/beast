@@ -26,7 +26,7 @@ public class LoadPropsUserAction extends UserAction {
     }
 
     /**
-     * Second constructor for TODO
+     * Second constructor used by PropertyListWindow
      * @param booleanExpEditor the BooleanExpEditor object
      * @param controller the PropertyList controller object
      */
@@ -54,7 +54,7 @@ public class LoadPropsUserAction extends UserAction {
     }
 
     /**
-     * TODO
+     * Method used by PropertyListWindow
      */
     public void loadIntoPropertyList() {
         PostAndPrePropertiesDescription loadedPostAndPrePropertiesDescription

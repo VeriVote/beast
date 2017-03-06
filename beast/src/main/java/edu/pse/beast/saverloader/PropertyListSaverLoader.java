@@ -21,7 +21,7 @@ public class PropertyListSaverLoader implements SaverLoader {
     }
 
     @Override
-    public String createSaveString(Object propertyList) throws Exception {
+    public String createSaveString(Object propertyList) {
         String name = "<propertyListName>\n"
                 + ((PLModel) propertyList).getName()
                 + "\n</propertyListName>\n";
@@ -33,7 +33,7 @@ public class PropertyListSaverLoader implements SaverLoader {
     }
 
     @Override
-    public Object createFromSaveString(String s) throws Exception {
+    public Object createFromSaveString(String s) throws ArrayIndexOutOfBoundsException {
         String [] split = s.split("\n</propertyListName>\n");
         String name = split[0].replace("<propertyListName>\n", "");
         PLModel plModel = new PLModel();
@@ -50,7 +50,7 @@ public class PropertyListSaverLoader implements SaverLoader {
     }
 
 
-    private String createPropertyItemString(PropertyItem propertyItem) throws Exception {
+    private String createPropertyItemString(PropertyItem propertyItem) {
         String postAndPreProps = "<postAndPreProps>\n"
                 + postAndPrePropertiesDescriptionSaverLoader.createSaveString(propertyItem.getDescription())
                 + "\n</postAndPreProps>\n";
@@ -58,7 +58,7 @@ public class PropertyListSaverLoader implements SaverLoader {
         return postAndPreProps + testStatus;
     }
 
-    private PropertyItem createPropertyItem(String saveString) throws Exception {
+    private PropertyItem createPropertyItem(String saveString) throws ArrayIndexOutOfBoundsException {
         String [] split = saveString.split("\n</postAndPreProps>\n");
         PostAndPrePropertiesDescription postAndPrePropertiesDescription
                 = ((PostAndPrePropertiesDescription) postAndPrePropertiesDescriptionSaverLoader.

@@ -61,8 +61,8 @@ public class ProjectSaverLoaderTest {
         plModel.addDescription(propertyItem);
         plModel.addDescription(propertyItem2);
         ElectionCheckParameter electionCheckParameter = new ElectionCheckParameter(Arrays.asList(new Integer[]{1, 2}),
-                Arrays.asList(new Integer[]{1, 2}), Arrays.asList(new Integer[]{1, 2}), new TimeOut(TimeUnit.HOURS, (long) 3.2)
-                ,4, "-- unwind 6");
+                Arrays.asList(new Integer[]{1, 2}), Arrays.asList(new Integer[]{1, 2}), new TimeOut(TimeUnit.HOURS,
+                (long) 3.2),4, "-- unwind 6");
         project = new Project(electionCheckParameter, plModel, electionDescription, "TestProject");
     }
 

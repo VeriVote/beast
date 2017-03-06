@@ -18,7 +18,7 @@ import edu.pse.beast.saverloader.StaticSaverLoaders.SymbolicVarListSaverLoader;
 public class PostAndPrePropertiesDescriptionSaverLoader implements SaverLoader {
 
     @Override
-    public String createSaveString(Object props) throws Exception {
+    public String createSaveString(Object props) {
         String created = "";
         String name = "<postAndPrePropsName>\n" + ((PostAndPrePropertiesDescription) props).getName()
                 + "\n</postAndPrePropsName>\n";
@@ -33,7 +33,7 @@ public class PostAndPrePropertiesDescriptionSaverLoader implements SaverLoader {
     }
 
     @Override
-    public Object createFromSaveString(String s) throws Exception {
+    public Object createFromSaveString(String s) throws ArrayIndexOutOfBoundsException {
         String split[] = s.split("\n</postAndPrePropsName>\n");
         String name = split[0].replace("<postAndPrePropsName>\n", "");
         split = split[1].split("\n</pre>\n");

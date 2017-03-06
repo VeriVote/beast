@@ -49,7 +49,7 @@
         <!-- Checks the number of parameters of a method or constructor. !-->
         <!-- See http://checkstyle.sf.net/config_sizes.html !-->
         <module name="com.puppycrawl.tools.checkstyle.checks.sizes.ParameterNumber">
-            <property name="max"    value="7"/>
+            <property name="max"    value="12"/>
             <property name="tokens" value="METHOD_DEF, CTOR_DEF"/>
         </module>
         

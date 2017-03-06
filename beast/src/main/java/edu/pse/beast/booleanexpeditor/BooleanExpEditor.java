@@ -319,9 +319,9 @@ public class BooleanExpEditor implements DisplaysStringsToUser {
      * Getter for the PropertyListController, used when new Property is created to add it to the PropertyList.
      * @return propertyListController
      */
-	public PropertyList getPropertyListController() {
-		return propertyListController;
-	}
+    public PropertyList getPropertyListController() {
+        return propertyListController;
+    }
 
     /**
      * Setter for the PropertyListController, see above for explanation.

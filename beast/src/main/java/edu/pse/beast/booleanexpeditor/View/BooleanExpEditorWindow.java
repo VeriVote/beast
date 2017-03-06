@@ -15,7 +15,7 @@ import javax.swing.*;
  * The JFrame that serves as the View for the booleanexpeditor Package.
  * @author Nikolai
  */
-public class BooleanExpEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser{
+public class BooleanExpEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
     // Variables declaration - do not modify
     private javax.swing.JButton addSymVarButton;
     private javax.swing.JButton removeSymVarButton;

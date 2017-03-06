@@ -24,7 +24,7 @@ public class ProjectSaverLoader implements SaverLoader {
     }
 
     @Override
-    public String createSaveString(Object project) throws Exception {
+    public String createSaveString(Object project) {
         String name = "<projectName>\n" + ((Project) project).getName()
                 + "\n</projectName>\n";
         String electionDescription = "<electionDescription>\n" + electionDescriptionSaverLoader.createSaveString(
@@ -39,7 +39,7 @@ public class ProjectSaverLoader implements SaverLoader {
     }
 
     @Override
-    public Object createFromSaveString(String s) throws Exception {
+    public Object createFromSaveString(String s) throws ArrayIndexOutOfBoundsException {
         String [] split = s.split("\n</projectName>\n");
         String name = split[0].replace("<projectName>\n", "");
         split = split[1].split("\n</electionDescription>\n");

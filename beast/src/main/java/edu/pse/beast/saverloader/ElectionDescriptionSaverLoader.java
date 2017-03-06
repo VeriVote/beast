@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class ElectionDescriptionSaverLoader implements SaverLoader {
 
     @Override
-    public String createSaveString(Object electionDescription) throws Exception {
+    public String createSaveString(Object electionDescription) {
         String created = "";
         String name = "<electionName>\n" + ((ElectionDescription) electionDescription).getName()
                 + "\n</electionName>\n";
@@ -37,7 +37,7 @@ public class ElectionDescriptionSaverLoader implements SaverLoader {
     }
 
     @Override
-    public Object createFromSaveString(String s) throws Exception {
+    public Object createFromSaveString(String s) throws ArrayIndexOutOfBoundsException {
         ElectionTemplateHandler electionTemplateHandler = new ElectionTemplateHandler();
 
         String split[] = s.split("\n</electionName>\n");
