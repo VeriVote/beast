@@ -36,7 +36,7 @@ public class BEASTCommunicator implements CheckListener {
         CheckStatusDisplay checkStatusDisplayer = centralObjectProvider.getCheckStatusDisplay();
 
         // checks if there even are any properties selected for analysis in the PostAndPrePropertiesSource
-        if (postAndPreSrc.getPostAndPrePropertiesDescriptions().size() == 0) {
+        if (postAndPreSrc.getPostAndPrePropertiesDescriptions().isEmpty()) {
             checkStatusDisplayer.displayText("noProperty", false, "");
             return;
         }

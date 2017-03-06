@@ -9,7 +9,10 @@ package edu.pse.beast.highlevel;
 public class MainClass {
 
     /**
-     * Starts BEAST
+     * Starts BEAST by creating a BEASTCommunicator and corresponding CentralObjectProvider.
+     * If you want to replace one or more implementation of high level interfaces you have to
+     * create a new implementation of CentralObjectProvider and replace PSECentralObjectProvider
+     * with it here.
      *
      * @param args not used
      */
