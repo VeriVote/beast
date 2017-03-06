@@ -1,26 +1,31 @@
 package edu.pse.beast.toolbox;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public final class ErrorForUserDisplayer {
 
     private static int currentlyDisplayedErrors = 0;
 
     private ErrorForUserDisplayer() {
-
     }
 
     /**
-     * displays the message on the users screen. if multiple messages are displayed
-     * the methode will only return when all messages are read.
+     * displays the message on the users screen. if multiple messages are
+     * displayed the methode will only return when all messages are read.
+     *
      * @param message the message to be displayed
      */
     public static void displayError(String message) {
         increment();
 
-        ErrorLogger.log("HIER SPÄTER EIN POPUP AUFBAUEN!: " + message);
-
+        JOptionPane.showMessageDialog(new JFrame(), message, "Error",
+                JOptionPane.ERROR_MESSAGE);
+        
         decrement();
 
         while (true) {
+
             if (currentlyDisplayedErrors == 0) {
                 return;
             }
@@ -39,4 +44,5 @@ public final class ErrorForUserDisplayer {
     private static synchronized void decrement() {
         currentlyDisplayedErrors--;
     }
+
 }
