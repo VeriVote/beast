@@ -80,27 +80,49 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
     @Override
     public void run() {
     }
-
+    
+    /**
+     * Changes the name of the property.
+     * @param prop The property you want to change
+     * @param newName The new name for the property
+     */
     public void changeName(PropertyItem prop, String newName) {
         if (!model.changeName(prop, newName)) {
             view.rejectNameChange(prop);
         }
     }
 
+    /**
+     * Sets whether the property will be analyzed by the checker.
+     * @param prop The property to analyze
+     * @param newStatus A boolean whether it should be analyzed
+     */
     public void setTestStatus(PropertyItem prop, boolean newStatus) {
         model.setTestStatus(prop, newStatus);
     }
 
+    /**
+     * Lets you edit a property.
+     * @param prop The property to edit
+     */
     public void editProperty(PropertyItem prop) {
         model.editProperty(prop, editor);
     }
 
+    /**
+     * Deletes a property from the list.
+     * @param prop The property to delete
+     */
     public void deleteProperty(PropertyItem prop) {
     	DeleteDescriptionAction act = new DeleteDescriptionAction(model, prop);
     	act.perform();
     	actionList.add(act);
     }
 
+    /**
+     * Adds a property to the list that has already been created.
+     * @param prop The property to add
+     */
     public void addDescription(PropertyItem prop) {
     	/*boolean success = model.addDescription(prop);
     	if (!success) {
@@ -110,14 +132,24 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
     	model.addDescription(prop);
     }
 
+    /**
+     * Adds a brand new property to the list.
+     */
     public void addNewProperty() {
         model.addNewProperty(editor);
     }
     
+    /**
+     * Resets the whole list.
+     */
 	public void setNewList() {
 		model.setNewList();
 	}
 	
+    /**
+     * Returns the list of property items in the list
+     * @return An array list with the property items
+     */
 	public ArrayList<PropertyItem> getList() {
 		return model.getPropertyList();
 	}
@@ -220,6 +252,10 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
         return (PLModel) model;
     }
 
+    /**
+     * Sets the data model of property list.
+     * @param model The model to replace the old model
+     */
     public void setPLModel(PLModel model) {
         this.model.loadAnotherModel(model);
         view.setWindowTitle(((PLModel) model).getName());
@@ -246,6 +282,10 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
         return fileChooser;
     }
     
+    /**
+     * Returns the editor for boolean expressions.
+     * @return The editor object
+     */
 	public BooleanExpEditor getEditor() {
 		return editor;
 	}
