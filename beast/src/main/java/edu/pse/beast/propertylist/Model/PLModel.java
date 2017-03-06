@@ -100,10 +100,14 @@ public class PLModel extends Observable implements NameInterface {
      * @param prop The property to remove
      * @return Returns true if the deletion was a success
      */
-	public boolean deleteProperty(PropertyItem prop) {
+	public boolean deleteProperty(PropertyItem prop, BooleanExpEditor editor) {
 		int index = propertyList.indexOf(prop);
 		if (index == -1) return false;
 		propertyList.remove(index);
+		if (propertyList.isEmpty()) addNewProperty(editor);
+		if (editor != null) {
+			// TODO
+		}
 		updateView();
 		return true;
 	}

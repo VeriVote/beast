@@ -114,7 +114,7 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
      * @param prop The property to delete
      */
     public void deleteProperty(PropertyItem prop) {
-    	DeleteDescriptionAction act = new DeleteDescriptionAction(model, prop);
+    	DeleteDescriptionAction act = new DeleteDescriptionAction(model, prop, editor);
     	act.perform();
     	actionList.add(act);
     }

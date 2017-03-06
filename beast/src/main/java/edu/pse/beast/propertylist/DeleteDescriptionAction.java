@@ -1,5 +1,6 @@
 package edu.pse.beast.propertylist;
 
+import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 
@@ -11,15 +12,17 @@ import edu.pse.beast.propertylist.Model.PropertyItem;
 public class DeleteDescriptionAction {
 	PLModel model;
 	PropertyItem item;
+	BooleanExpEditor editor;
 
 	/**
 	 * Constructor
 	 * @param model The data model of the property list
 	 * @param item The deleted property item
 	 */
-	public DeleteDescriptionAction(PLModel model, PropertyItem item) {
+	public DeleteDescriptionAction(PLModel model, PropertyItem item, BooleanExpEditor editor) {
 		this.model = model;
 		this.item = item;
+		this.editor = editor;
 	}
 
 	
@@ -27,7 +30,7 @@ public class DeleteDescriptionAction {
 	 * Deletes the property.
 	 */
 	public void perform() {
-		model.deleteProperty(item);
+		model.deleteProperty(item, editor);
 	}
 
 	/**
