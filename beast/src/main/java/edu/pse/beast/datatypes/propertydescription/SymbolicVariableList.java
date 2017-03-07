@@ -63,7 +63,7 @@ public class SymbolicVariableList {
     public void setSymbolicVariableList(LinkedList<SymbolicVariable> symbolicVariableList) {
         this.symbolicVariableList.clear();
         for (SymbolicVariable var : symbolicVariableList) {
-            symbolicVariableList.add(var);
+            this.symbolicVariableList.add(var);
             listenerList.forEach((VariableListListener listener) -> {
                 listener.addedVar(var);
             });
