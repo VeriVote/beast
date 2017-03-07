@@ -58,6 +58,7 @@ public class ElectionTemplateChooser extends javax.swing.JFrame {
             resultList.addItem(loader.getStringFromID(electionTemplateHandler.getOutputIds()[i]));
         }
 
+        getRootPane().setDefaultButton(createButton);
     }
 
     /**

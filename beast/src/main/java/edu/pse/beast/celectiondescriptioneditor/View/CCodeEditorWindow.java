@@ -57,18 +57,24 @@ public class CCodeEditorWindow extends javax.swing.JFrame implements DisplaysStr
     
     public void setMenuBar(JMenuBar menuBar) {
         setJMenuBar(menuBar);
+        this.menuBar = menuBar;
         if(isVisible()) {
             setVisible(false);
             setVisible(true);            
         }
     }
-    
+
     public JToolBar getToolBar() {
         return jToolBar1;
     }
 
     public JTextPane getErrorPane() {
         return jTextPane2;
+    }
+
+
+    public JMenuBar getMainMenuBar() {
+        return menuBar;
     }
 
     /**
@@ -163,6 +169,7 @@ public class CCodeEditorWindow extends javax.swing.JFrame implements DisplaysStr
     private javax.swing.JTextPane jTextPane2;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
+    private JMenuBar menuBar;
 
     private String title = "C-Editor";
     private String saveChanges;

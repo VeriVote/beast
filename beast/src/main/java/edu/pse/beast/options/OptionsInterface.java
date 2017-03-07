@@ -16,7 +16,7 @@ import java.io.IOException;
 
 /**
  * Class providing access to different OptionElement subclasses and an
- * OptionPresenter
+ * OptionPresenter instance.
  */
 public class OptionsInterface {
     private OptionPresenter presenter;
@@ -82,8 +82,6 @@ public class OptionsInterface {
                 parametereditorOptions = OptionsSaverLoaderInterface.loadParameterEditorOpts(langOpts, editor,
                         centralObjectProvider);
             } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
             }
         }
         return parametereditorOptions;
