@@ -13,6 +13,8 @@ import org.junit.Test;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.security.Key;
 
 /**
  * Created by holger on 07.03.17.
@@ -25,6 +27,26 @@ public class GuiTestCEditor {
     @Before
     public void setUp() throws InterruptedException {
         helper.startNewBEASTInstance();
+    }
+
+    @Test
+    public void testSaveFile() throws InterruptedException, AWTException {
+        CElectionDescriptionEditor electionDescriptionEditor = helper.getCEditorOfCurrentInstace();
+        electionDescriptionEditor.setVisible(true);
+
+        int[] keys = {
+                KeyEvent.VK_N, //name
+                KeyEvent.VK_ENTER //and save
+        };
+
+        helper.performKeystrokesConcurrently(keys, 500, 50);
+
+        helper.clickMenuItemInCEditor(0,1,50);
+
+
+        File createdfile = new File("./projectFiles/n.elec");
+        Assert.assertTrue(createdfile.exists());
+        createdfile.delete();
     }
 
     @Test

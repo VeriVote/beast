@@ -47,10 +47,28 @@ public class GuiTestHelper {
     public void clickMenuItemInCEditor(int subMenu, int item, long waittime) throws InterruptedException {
         JMenuBar menuBar = getCEditorOfCurrentInstace().getView().getMainMenuBar();
         Thread.sleep(waittime);
-        menuBar.getMenu(0).doClick();
+        menuBar.getMenu(subMenu).doClick();
         Thread.sleep(waittime);
-        menuBar.getMenu(0).getItem(0).doClick();
+        menuBar.getMenu(subMenu).getItem(item).doClick();
         Thread.sleep(waittime);
+    }
+
+    public void performKeystrokesConcurrently(int[] strokes, long timeBefore, long timeBetween) {
+        Thread t = new Thread(() -> {
+            try {
+                Thread.sleep(timeBefore);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            try {
+                performKeystrokes(strokes, timeBetween);
+            } catch (AWTException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        t.start();
     }
 
     public void performShortcut(int key, long timeoutafter) throws AWTException, InterruptedException {
