@@ -17,8 +17,8 @@ public class OptionPresenterFrame extends javax.swing.JFrame {
     private final Options opt;
     /**
      * Creates new form OptionPresenterFrame
-     * @param opt Options
-     * @param srl StringResourceLoader
+     * @param opt Options the options to be presented to the user
+     * @param srl StringResourceLoader the stringresourseloader used by the whole system
      */
     public OptionPresenterFrame(Options opt, StringResourceLoader srl) {
         initComponents();
@@ -27,7 +27,18 @@ public class OptionPresenterFrame extends javax.swing.JFrame {
         setTitle(srl.getStringFromID(opt.getId()));
         jButton1.setText(srl.getStringFromID("ok_button"));
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        initializeApplyButtonPressFunctionality(opt);
         showOptionsRec(opt);
+    }
+
+    /**
+     * if the user presses the apply button, the form closes, then saves and reapplies the given option.
+     * options.reapply() is only called for this top level function, meaning it has to recursively call it
+     * on its suboptions.
+     * @param opt this option is going to get reapplied and its settings saved if the user presses the
+     * apply button.
+     */
+    private void initializeApplyButtonPressFunctionality(Options opt) {
         jButton1.addActionListener((ae) -> {
             this.setVisible(false);
             opt.reapply();
@@ -35,46 +46,85 @@ public class OptionPresenterFrame extends javax.swing.JFrame {
             this.dispose();
         });
     }
-    
+
+    /**
+     * displays the options recursively. For every option and cntained suboptions, it creates a new
+     * panel if the option contains one or more optionitem. For each optionitem, it shows the user
+     * the string connected to the optionitems id as well as all the choosable options.
+     * Example: Codearea opions. If it has optionitem fontsize, it shows a panel containing a label saying
+     * "fontsize" in whatever language is currently chosen and has a dropdownlist next to it displaying the
+     * possible font sizes (e.g. 5 through 50)
+     * @param opt this is the top level option which is displayed. all contained suboptions are then displayed
+     * recursively.
+     */
     private void showOptionsRec(Options opt) {
             JPanel panel = new JPanel(new GridLayout(opt.getOptionElements().size(), 2, 5, 5));
             for (OptionElement elem : opt.getOptionElements()) {
                 JLabel label = new JLabel(srl.getStringFromID(elem.getID()));
-                OptionElemComboBox combobox = new OptionElemComboBox(elem);
-                DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
-                for (String s : elem.getChoosableOptions()) {
-                    if (!srl.containsId(s) ) {
-                        model.addElement(s);
-                    } else {
-                        model.addElement(srl.getStringFromID(s));
-                    }                     
-                }
-                if (!srl.containsId(elem.chosenOption) ) {
-                    model.setSelectedItem(elem.chosenOption);
-                } else {
-                    model.setSelectedItem(srl.getStringFromID(elem.chosenOption));
-                }  
-                combobox.setModel(model);                
-                
-                combobox.addItemListener((ie) -> {
-                    if (srl.getIdForString((String) ie.getItem()) != null) {                        
-                        ((OptionElemComboBox) ie.getSource()).getElem().handleSelection(
-                                srl.getIdForString((String) ie.getItem()));
-                    } else {
-                        ((OptionElemComboBox) ie.getSource()).getElem().handleSelection((String) ie.getItem());
-                    }
-                });
+                OptionElemComboBox combobox = createOptionElemComboBox(elem);
                 panel.add(label);
                 panel.add(combobox);                
             }
-            JPanel northOnly = new JPanel(new BorderLayout());
-            northOnly.add(panel, BorderLayout.NORTH);
-            if (!opt.getOptionElements().isEmpty())
-                jTabbedPane1.addTab(srl.getStringFromID(opt.getId()), northOnly);
+            JPanel containingPanel = new JPanel(new BorderLayout());
+            containingPanel.add(panel, BorderLayout.NORTH);
+            if (optionContainsOptionElements(opt))
+                jTabbedPane1.addTab(srl.getStringFromID(opt.getId()), containingPanel);
             for (Options subOpt : opt.getSubOptions()) {                
                 showOptionsRec(subOpt);  
-            }          
-        
+            }
+    }
+
+    private boolean optionContainsOptionElements(Options opt) {
+        return !opt.getOptionElements().isEmpty();
+    }
+
+    /**
+     * creates a combobox displaying all choosable options to the user
+     * @param elem the optionelement supplying the choosable option string
+     * @return a OptionelemBomboBox which displays all choosable options for
+     * this optionelement as strings
+     */
+    private OptionElemComboBox createOptionElemComboBox(OptionElement elem) {
+        OptionElemComboBox combobox = new OptionElemComboBox(elem);
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        addChoosableOptionsToCombobox(elem, model);
+        selectChosenOptionInCombobox(elem, model);
+        combobox.setModel(model);
+        addHooksMakingElemHandleNewSelection(combobox);
+        return combobox;
+    }
+
+    /**
+     * this method makes the optionelement contained in the passed combobox handle if a new item is selected
+     * @param combobox the comobox containing the optionelement which should handle a new selection
+     */
+    private void addHooksMakingElemHandleNewSelection(OptionElemComboBox combobox) {
+        combobox.addItemListener((ie) -> {
+            if (srl.getIdForString((String) ie.getItem()) != null) {
+                ((OptionElemComboBox) ie.getSource()).getElem().handleSelection(
+                        srl.getIdForString((String) ie.getItem()));
+            } else {
+                ((OptionElemComboBox) ie.getSource()).getElem().handleSelection((String) ie.getItem());
+            }
+        });
+    }
+
+    private void selectChosenOptionInCombobox(OptionElement elem, DefaultComboBoxModel<String> model) {
+        if (!srl.containsId(elem.chosenOption) ) {
+            model.setSelectedItem(elem.chosenOption);
+        } else {
+            model.setSelectedItem(srl.getStringFromID(elem.chosenOption));
+        }
+    }
+
+    private void addChoosableOptionsToCombobox(OptionElement elem, DefaultComboBoxModel<String> model) {
+        for (String s : elem.getChoosableOptions()) {
+            if (!srl.containsId(s) ) {
+                model.addElement(s);
+            } else {
+                model.addElement(srl.getStringFromID(s));
+            }
+        }
     }
 
     /**

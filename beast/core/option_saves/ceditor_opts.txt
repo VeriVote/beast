@@ -1,6 +1,6 @@
 new_option ceditor_opts
 new_option ccodearea_opts
 new_option codearea_opts
-fonttype : Accanthis ADF Std No2
-fontsize : 21
+fonttype : Gentium Basic
+fontsize : 12
 spaces_per_tab : 8
