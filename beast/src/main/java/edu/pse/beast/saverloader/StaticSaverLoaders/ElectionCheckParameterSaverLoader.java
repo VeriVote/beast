@@ -53,9 +53,9 @@ public class ElectionCheckParameterSaverLoader {
      * Creates an Object from a given, by createSaveString() generated, saveString
      * @param s the SaveString
      * @return the Object
-     * @throws Exception if the saveString does not contain a valid format
+     * @throws ArrayIndexOutOfBoundsException if the saveString does not contain a valid format
      */
-    public static Object createFromSaveString(String s) throws Exception {
+    public static Object createFromSaveString(String s) throws ArrayIndexOutOfBoundsException {
         String split[] = s.split("\n</amountVotersMin>\n");
         int amountVotersMin = Integer.parseInt(split[0].replace("<amountVotersMin>\n", ""));
         split = split[1].split("\n</amountVotersMax>\n");

@@ -12,7 +12,6 @@ import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenter;
 import edu.pse.beast.propertylist.Model.PLModel;
-import edu.pse.beast.propertylist.Model.PLModelInterface;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.propertylist.View.PropertyListWindow;
 import edu.pse.beast.saverloader.FileChooser;
@@ -28,10 +27,10 @@ import java.util.LinkedList;
  *
  * @author Justin
  */
-public class PropertyList implements PLControllerInterface, PostAndPrePropertiesDescriptionSource,
+public class PropertyList implements PostAndPrePropertiesDescriptionSource,
         ResultPresenter, Runnable, DisplaysStringsToUser {
 
-    private PLModelInterface model;
+    private PLModel model;
     private PropertyListWindow view;
     private BooleanExpEditor editor;
     private StringLoaderInterface sli;
@@ -47,11 +46,10 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
      * property descriptions.
      * @param fileChooser the FileChooser with which files can be loaded and saved
      */
-    public PropertyList(PLModelInterface model, BooleanExpEditor editor, FileChooser fileChooser) {
+    public PropertyList(PLModel model, BooleanExpEditor editor, FileChooser fileChooser) {
         this.model = model;
         this.editor = editor;
         this.sli = new StringLoaderInterface("de");
-        editor.showWindow();
         view = new PropertyListWindow(this, model);
         setChangeHandler(new PLChangeHandler(model));
         actionList = new LinkedList<DeleteDescriptionAction>();
@@ -63,10 +61,8 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
      * Test constructor
      * @param model Only needs the model for testing purposes
      */
-    public PropertyList(PLModelInterface model) {
-        this.model = model;
-        view = new PropertyListWindow(this, model);
-        model.initialize();
+    public PropertyList(PLModel model) {
+    	this(model, null, null);
     }
 
     
@@ -80,45 +76,74 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
     @Override
     public void run() {
     }
-
-    @Override
+    
+    /**
+     * Changes the name of the property.
+     * @param prop The property you want to change
+     * @param newName The new name for the property
+     */
     public void changeName(PropertyItem prop, String newName) {
         if (!model.changeName(prop, newName)) {
             view.rejectNameChange(prop);
         }
     }
 
-    @Override
+    /**
+     * Sets whether the property will be analyzed by the checker.
+     * @param prop The property to analyze
+     * @param newStatus A boolean whether it should be analyzed
+     */
     public void setTestStatus(PropertyItem prop, boolean newStatus) {
         model.setTestStatus(prop, newStatus);
     }
 
-    @Override
+    /**
+     * Lets you edit a property.
+     * @param prop The property to edit
+     */
     public void editProperty(PropertyItem prop) {
         model.editProperty(prop, editor);
     }
 
-    @Override
+    /**
+     * Deletes a property from the list.
+     * @param prop The property to delete
+     */
     public void deleteProperty(PropertyItem prop) {
-    	DeleteDescriptionAction act = new DeleteDescriptionAction(model, prop);
+    	DeleteDescriptionAction act = new DeleteDescriptionAction(model, prop, editor);
     	act.perform();
     	actionList.add(act);
     }
 
-    @Override
+    /**
+     * Adds a property to the list that has already been created.
+     * @param prop The property to add
+     */
     public void addDescription(PropertyItem prop) {
-    	/*boolean success = model.addDescription(prop);
-    	if (!success) {
-    		prop.setDescriptionName(prop.getDescription().getName() + "x");
-    		model.addDescription(prop);
-    	}*/
     	model.addDescription(prop);
     }
 
-    @Override
+    /**
+     * Adds a brand new property to the list.
+     */
     public void addNewProperty() {
         model.addNewProperty(editor);
     }
+    
+    /**
+     * Resets the whole list.
+     */
+	public void setNewList() {
+		model.setNewList();
+	}
+	
+    /**
+     * Returns the list of property items in the list
+     * @return An array list with the property items
+     */
+	public ArrayList<PropertyItem> getList() {
+		return model.getPropertyList();
+	}
 
     @Override
     public boolean isCorrect() {
@@ -218,7 +243,11 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         return (PLModel) model;
     }
 
-    public void setPLModel(PLModelInterface model) {
+    /**
+     * Sets the data model of property list.
+     * @param model The model to replace the old model
+     */
+    public void setPLModel(PLModel model) {
         this.model.loadAnotherModel(model);
         view.setWindowTitle(((PLModel) model).getName());
     }
@@ -244,9 +273,16 @@ public class PropertyList implements PLControllerInterface, PostAndPreProperties
         return fileChooser;
     }
     
-	@Override
+    /**
+     * Returns the editor for boolean expressions.
+     * @return The editor object
+     */
 	public BooleanExpEditor getEditor() {
 		return editor;
 	}
+
+
+
+
 
 }

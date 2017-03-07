@@ -2,11 +2,10 @@ package edu.pse.beast.propertylist.View;
 
 import edu.pse.beast.booleanexpeditor.UserActions.LoadPropsUserAction;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
+import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.propertylist.Model.PLModel;
-import edu.pse.beast.propertylist.Model.PLModelInterface;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.propertylist.Model.ResultType;
-import edu.pse.beast.propertylist.PLControllerInterface;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
@@ -30,8 +29,8 @@ import java.util.Observer;
 @SuppressWarnings("serial")
 public class PropertyListWindow extends JFrame implements DisplaysStringsToUser, Observer {
 
-	private PLModelInterface model;
-	private PLControllerInterface controller;
+	private PLModel model;
+	private PropertyList controller;
 	private String title;
 	private String currentlyLoadedPropertyListName;
 	private StringLoaderInterface sli;
@@ -70,7 +69,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	 * @param controller The PropertyList controller
 	 * @param model The model of PropertyList
 	 */
-	public PropertyListWindow(PLControllerInterface controller, PLModelInterface model) {
+	public PropertyListWindow(PropertyList controller, PLModel model) {
 		this.controller = controller;
 		this.model = model;
 		model.addObserver(this);

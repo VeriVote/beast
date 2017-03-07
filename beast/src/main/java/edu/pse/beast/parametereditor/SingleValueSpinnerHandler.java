@@ -32,7 +32,8 @@ public class SingleValueSpinnerHandler implements ChangeListener {
         return Integer.parseInt(spinner.getValue().toString());
     }
     /**
-     * Setter for the value of the JSpinner
+     * Setter for the value of the JSpinner. Only allows values positive integers
+     * up to 10000.
      * @param val new value
      */
     public void setValue(Integer val) {
@@ -55,7 +56,7 @@ public class SingleValueSpinnerHandler implements ChangeListener {
     }
     /**
      * Toggles whether the value stored reacts to user input
-     * (to not interrupt checks)
+     * (to not interrupt checks).
      * @param reacts whether it reacts
      */
     protected void setReacts(boolean reacts) {

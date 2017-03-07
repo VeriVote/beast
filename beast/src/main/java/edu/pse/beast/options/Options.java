@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.pse.beast.options;
 
 import java.util.ArrayList;
@@ -17,12 +13,12 @@ public abstract class Options {
     /**
      * the list of suboptions that are saved by this object
      */
-    protected List<Options> subOptions = new ArrayList<Options>();
+    protected List<Options> subOptions = new ArrayList<>();
     
     /**
-     * the option Elements that are saved by this object
+     * the option elements that are saved by this object
      */
-    protected List<OptionElement> optElements = new ArrayList<OptionElement>();
+    protected List<OptionElement> optElements = new ArrayList<>();
     private final String id;
     /**
      * creates a new Options object
@@ -33,7 +29,7 @@ public abstract class Options {
     }
 
     /**
-     * 
+     * Getter for the ID
      * @return the ID of this object
      */
     public String getId() {
@@ -41,7 +37,7 @@ public abstract class Options {
     }
 
     /**
-     * 
+     * Getter for the OptionElements
      * @return the List of OptionElements
      */
     public List<OptionElement> getOptionElements() {
@@ -49,7 +45,7 @@ public abstract class Options {
     }
 
     /**
-     * 
+     * Getter for suboptions
      * @return the list of all subOptions.
      */
     public List<Options> getSubOptions() {
@@ -57,7 +53,7 @@ public abstract class Options {
     }
     
     /**
-     * 
+     * Adds an OptionElement to the OptionElement list
      * @param elementToAdd the element to be added to the list
      */
     public void addOptionElement(OptionElement elementToAdd) {
@@ -65,7 +61,7 @@ public abstract class Options {
     }
     
     /**
-     * 
+     * Adds a set of suboptions to the suboptions list
      * @param optionToAdd the suboption to be added
      */
     public void addSubOptions(Options optionToAdd) {

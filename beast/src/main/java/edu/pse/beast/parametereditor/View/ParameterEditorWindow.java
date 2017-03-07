@@ -447,7 +447,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
     @Override
     public void displayText(String stringIdForResources, boolean showLoader, String additionalText) {
         imageLabel.setVisible(showLoader);
-        if (stringIdForResources != "" ){
+        if (!"".equals(stringIdForResources) ){
             statusLabel.setText(stringResIF.getParameterEditorStringResProvider().getOtherStringRes().
                     getStringFromID(stringIdForResources) + additionalText);
         } else {

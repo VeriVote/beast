@@ -23,6 +23,10 @@ public class BooleanExpEditorOptions extends Options {
         subOptions.add(booleanExpCodeAreaOptions);
     }
 
+    /**
+     * Secondary Constructor that only needs a BooleanExpEditor object
+     * @param editor the editor
+     */
     public BooleanExpEditorOptions(BooleanExpEditor editor) {
         super("booleanexpeditor_opts");
         this.editor = editor;

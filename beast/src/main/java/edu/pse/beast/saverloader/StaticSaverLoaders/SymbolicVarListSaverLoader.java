@@ -31,8 +31,8 @@ public class SymbolicVarListSaverLoader {
         }
         return created;
     }
-    
-    
+
+
     private static String createSaveStringForVar(SymbolicVariable var) {
         return "id: " + var.getId() + " type: " + var.getInternalTypeContainer().getInternalType().toString();
     }
@@ -48,12 +48,12 @@ public class SymbolicVarListSaverLoader {
         String[] var = newString.split(";");
         for (int i = 0; i < var.length; ++i) {
             createSymbVarFromSaveString(var[i].replace("symbolic_variable:", ""), created);
-        } 
+        }
         return created;
     }
-    
+
     private static void createSymbVarFromSaveString(String s, SymbolicVariableList list) {
-    	if (s.length() == 0 || s == null) return;
+        if (s == null || s.length() == 0) return;
 
         String[] data = s.split(" ");
         String id = data[2];

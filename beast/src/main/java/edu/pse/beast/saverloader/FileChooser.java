@@ -138,7 +138,7 @@ public class FileChooser {
                 outputObject = saverLoader.createFromSaveString(content);
                 lastLoadedFile = selectedFile;
                 hasBeenSaved = true;
-            } catch (Exception e) {
+            } catch (ArrayIndexOutOfBoundsException e) {
                 JOptionPane.showOptionDialog(null,
                         stringResourceLoader.getStringFromID(
                                 "invalidFileFormatErrorMessage"), "",
@@ -171,7 +171,8 @@ public class FileChooser {
      * @return true if saving was successful, false if not
      */
     private boolean saveToFile(Object object, File file) {
-        if (!file.getName().matches("[_a-zA-Z0-9\\-\\.\\s]+")) {
+        File localfile = file;
+        if (!localfile.getName().matches("[_a-zA-Z0-9\\-\\.\\s]+")) {
             JOptionPane.showOptionDialog(null,
                     stringResourceLoader.getStringFromID("wrongFileNameError"), "",
                     JOptionPane.PLAIN_MESSAGE,
@@ -182,22 +183,17 @@ public class FileChooser {
             return false;
         } else if (!fileChooser.getSelectedFile().getName().endsWith(stringResourceLoader.getStringFromID(
                 "fileSuffix"))) {
-            file = new File(file.getAbsolutePath() + stringResourceLoader.getStringFromID("fileSuffix"));
+            localfile = new File(localfile.getAbsolutePath() + stringResourceLoader.getStringFromID("fileSuffix"));
         }
-        fileChooser.setSelectedFile(file);
+        fileChooser.setSelectedFile(localfile);
         String saveString;
-        try {
-            ((NameInterface) object).setNewName(file.getName().split(stringResourceLoader.getStringFromID(
-                    "fileSuffix"))[0]);
-            saveString = saverLoader.createSaveString(object);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        ((NameInterface) object).setNewName(localfile.getName().split(stringResourceLoader.getStringFromID(
+                "fileSuffix"))[0]);
+        saveString = saverLoader.createSaveString(object);
         Writer out;
         try {
             out = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(file), "UTF-8"));
+                    new FileOutputStream(localfile), "UTF-8"));
         } catch (UnsupportedEncodingException e) {
             JOptionPane.showOptionDialog(null,
                     stringResourceLoader.getStringFromID(
@@ -235,7 +231,7 @@ public class FileChooser {
         } finally {
             try {
                 out.close();
-                lastLoadedFile = file;
+                lastLoadedFile = localfile;
                 return true;
             } catch (IOException e) {
                 JOptionPane.showOptionDialog(null,

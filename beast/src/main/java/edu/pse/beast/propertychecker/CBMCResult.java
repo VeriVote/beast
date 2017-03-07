@@ -53,63 +53,72 @@ public class CBMCResult extends Result {
 
     /**
      * this methode creates a failure example from the given output from cbmc
+     * 
      * @return a failure example that show how the voters voted and who won then
      */
-    public FailureExample createFailureExample() {
+    private FailureExample createFailureExample() {
 
         // datermine the elect values
-        List<CBMCResultWrapperLong> elect = readLongs("elect", getResult());
+        if (getResult() != null && getElectionType() != null) {
+            List<CBMCResultWrapperLong> elect = readLongs("elect", getResult());
 
-        // define these arrays, because switch case doesn't let me reassign the
-        // same name,
-        // and i am a bit worried, that they won't get created properly;
-        List<CBMCResultWrapperMultiArray> votesList;
-        List<CBMCResultWrappersingleArray> seatsList;
-        List<CBMCResultWrappersingleArray> singleVotesList;
+            // define these arrays, because switch case doesn't let me reassign
+            // the
+            // same name,
+            // and i am a bit worried, that they won't get created properly;
+            List<CBMCResultWrapperMultiArray> votesList;
+            List<CBMCResultWrappersingleArray> seatsList;
+            List<CBMCResultWrappersingleArray> singleVotesList;
 
-        switch (getElectionType()) {
+            switch (getElectionType()) {
 
-        //get the fitting type and extract the values out of it, because we know the format of the values
-        //for each specific type
-        case APPROVAL:
+            // get the fitting type and extract the values out of it, because we
+            // know the format of the values
+            // for each specific type
+            case APPROVAL:
 
-            votesList = readTwoDimVar("votes", getResult());
+                votesList = readTwoDimVar("votes", getResult());
 
-            seatsList = readOneDimVar("seats", getResult());
+                seatsList = readOneDimVar("seats", getResult());
 
-            return new FailureExample(getElectionType(), null, votesList, elect, seatsList, getNumCandidates(),
-                    getNumSeats(), getNumVoters());
+                return new FailureExample(getElectionType(), null, votesList, elect, seatsList, getNumCandidates(),
+                        getNumSeats(), getNumVoters());
 
-        case PREFERENCE:
+            case PREFERENCE:
 
-            votesList = readTwoDimVar("votes", getResult());
+                votesList = readTwoDimVar("votes", getResult());
 
-            seatsList = readOneDimVar("seats", getResult());
+                seatsList = readOneDimVar("seats", getResult());
 
-            return new FailureExample(getElectionType(), null, votesList, elect, seatsList, getNumCandidates(),
-                    getNumSeats(), getNumVoters());
+                return new FailureExample(getElectionType(), null, votesList, elect, seatsList, getNumCandidates(),
+                        getNumSeats(), getNumVoters());
 
-        case SINGLECHOICE:
+            case SINGLECHOICE:
 
-            singleVotesList = readOneDimVar("votes", getResult());
+                singleVotesList = readOneDimVar("votes", getResult());
 
-            return new FailureExample(getElectionType(), singleVotesList, null, elect, null, getNumCandidates(),
-                    getNumSeats(), getNumVoters());
+                return new FailureExample(getElectionType(), singleVotesList, null, elect, null,
+                        getNumCandidates(), getNumSeats(), getNumVoters());
 
-        case WEIGHTEDAPPROVAL:
+            case WEIGHTEDAPPROVAL:
 
-            votesList = readTwoDimVar("votes", getResult());
+                votesList = readTwoDimVar("votes", getResult());
 
-            seatsList = readOneDimVar("seats", getResult());
+                seatsList = readOneDimVar("seats", getResult());
 
-            return new FailureExample(getElectionType(), null, votesList, elect, seatsList, getNumCandidates(),
-                    getNumSeats(), getNumVoters());
+                return new FailureExample(getElectionType(), null, votesList, elect, seatsList, getNumCandidates(),
+                        getNumSeats(), getNumVoters());
 
-        default:
-            ErrorForUserDisplayer.displayError(
-                    "This votingtype you are using hasn't been implemented yet to be displaye. "
-                    + "Please do so in the class CBMC_Result");
-            this.setError("This votingtype hasn't been implemented yet please do so in the class CBMC_Result");
+            default:
+                ErrorForUserDisplayer
+                        .displayError("This votingtype you are using hasn't been implemented yet to be displaye. "
+                                + "Please do so in the class CBMC_Result");
+                this.setError("This votingtype hasn't been implemented yet please do so in the class CBMC_Result");
+                return null;
+            }
+        } else {
+            this.setError(
+                    "No input could be read from the Checker, please make sure that it is there and working properly");
             return null;
         }
     }
@@ -126,7 +135,7 @@ public class CBMCResult extends Result {
         String line = mergeLinesToOne(iterator, segmentEnder);
 
         line = mergeLinesToOne(iterator, segmentEnder);
-        
+
         while (line.length() > 0) {
 
             Matcher checkerMatcher = correctChecker.matcher(line);
@@ -168,9 +177,13 @@ public class CBMCResult extends Result {
 
     /**
      * this methode is used to extract
-     * @param name the name of the saved variable
-     * @param toExtract the string list to extract the variable out of
-     * @return a list of all variables with a matching name with their index and values that occured in the give list
+     * 
+     * @param name
+     *            the name of the saved variable
+     * @param toExtract
+     *            the string list to extract the variable out of
+     * @return a list of all variables with a matching name with their index and
+     *         values that occured in the give list
      */
     private List<CBMCResultWrappersingleArray> readOneDimVar(String name, List<String> toExtract) {
 
@@ -188,7 +201,8 @@ public class CBMCResult extends Result {
 
             if (line.contains("[")) {
 
-                //pattern that checks for a pattern like "votesNUMBER[NUMBER(letters)] = ...." 
+                // pattern that checks for a pattern like
+                // "votesNUMBER[NUMBER(letters)] = ...."
                 votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+[a-zA-Z]*\\])(=.*)");
 
                 Matcher votesMatcher = votesExtractor.matcher(line);
@@ -228,8 +242,8 @@ public class CBMCResult extends Result {
                 }
             } else if (line.contains("{")) {
 
-              //pattern that checks for a pattern like "votesNUMBER = {..." 
-                votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+)(=\\{.*)");
+                // pattern that checks for a pattern like "votesNUMBER = {..."
+                votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+)=(\\{[^\\{|\\}]*\\})");
 
                 Matcher votesMatcher = votesExtractor.matcher(line);
 
@@ -254,8 +268,8 @@ public class CBMCResult extends Result {
 
                             boolean added = false;
 
-                            for (Iterator<CBMCResultWrappersingleArray> innerIterator = list.iterator(); innerIterator
-                                    .hasNext();) {
+                            for (Iterator<CBMCResultWrappersingleArray> innerIterator = list
+                                    .iterator(); innerIterator.hasNext();) {
                                 CBMCResultWrappersingleArray wrapper = (CBMCResultWrappersingleArray) innerIterator
                                         .next();
 
@@ -279,9 +293,13 @@ public class CBMCResult extends Result {
     }
 
     /**
-     * reads a two dimensional variables that match a given name from the cbmc output and puts it in a wrapper object
-     * @param name the name of the variables to search for
-     * @param toExtract the list to extract the variables out
+     * reads a two dimensional variables that match a given name from the cbmc
+     * output and puts it in a wrapper object
+     * 
+     * @param name
+     *            the name of the variables to search for
+     * @param toExtract
+     *            the list to extract the variables out
      * @return the finished list with all variables stored in
      */
     private List<CBMCResultWrapperMultiArray> readTwoDimVar(String name, List<String> toExtract) {
@@ -298,9 +316,11 @@ public class CBMCResult extends Result {
             if (line.contains("[")) {
 
                 // this pattern searches for words of the form
-                // "votesNUMBER[NUMBER][NUMBER]" where "NUMBER" can by any positive
+                // "votesNUMBER[NUMBER][NUMBER]" where "NUMBER" can by any
+                // positive
                 // number. Also, the next character has to be an equals sign
-                votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+[a-z]*\\]\\[[0-9]+[a-zA-z]*\\])(=.*)");
+                votesExtractor = Pattern
+                        .compile("(\\b" + name + "[0-9]+\\[[0-9]+[a-z]*\\]\\[[0-9]+[a-zA-z]*\\])(=.*)");
 
                 Matcher votesMatcher = votesExtractor.matcher(line);
 
@@ -310,8 +330,6 @@ public class CBMCResult extends Result {
 
                     // find out the number of this votes array
                     int mainIndex = Integer.parseInt(newLine.split("=")[0].split(name)[1].split("\\[")[0]);
-
-                    // System.out.println("mainindex " + mainIndex);
 
                     // get the first index for this array value
                     int arrayIndexOne = Integer
@@ -326,8 +344,6 @@ public class CBMCResult extends Result {
 
                     long value = Long.parseLong(valueAsString, 2);
 
-                    // System.out.println("value: " + value);
-                    // System.out.println(line);
                     boolean added = false;
 
                     for (Iterator<CBMCResultWrapperMultiArray> innerIterator = list.iterator(); innerIterator
@@ -348,7 +364,7 @@ public class CBMCResult extends Result {
             } else if (line.contains("{")) {
 
                 // searches for votesNUMBER={....}
-                votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+)(=\\{.*)");
+                votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+)=(\\{\\s*((\\{(.*)\\}(,)*\\s*)*)})");
 
                 Matcher votesMatcher = votesExtractor.matcher(line);
 
@@ -418,17 +434,21 @@ public class CBMCResult extends Result {
 
                 String nextLine = toMerge.next();
 
+                // add the next line, sepearated by a whitespace
+                toReturn = toReturn + " " + nextLine;
+
                 if (nextLine.contains(regexToEndAt)) {
                     // we found the end of the segment
                     notEnded = false;
-                } else {
-                    // add the next line, sepearated by a whitespace
-                    toReturn = toReturn + " " + nextLine;
                 }
             } else {
                 return toReturn;
             }
         }
         return toReturn;
+    }
+
+    public FailureExample getFailureExample() {
+        return failureExample;
     }
 }

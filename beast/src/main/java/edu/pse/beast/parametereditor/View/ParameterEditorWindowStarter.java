@@ -5,7 +5,7 @@ package edu.pse.beast.parametereditor.View;
  * @author Jonas
  */
 public class ParameterEditorWindowStarter implements Runnable{
-    private ParameterEditorWindow window = new ParameterEditorWindow();
+    private final ParameterEditorWindow window = new ParameterEditorWindow();
     /**
      * Constructor
      */

@@ -13,13 +13,16 @@ import edu.pse.beast.stringresource.StringResourceLoader;
 public final class OptionPresenter implements DisplaysStringsToUser {
     
     private StringResourceLoader srl;
-   
+    /**
+     * Constructor
+     * @param srl StringResourceLoader
+     */
     public OptionPresenter(StringResourceLoader srl) {
         this.srl = srl;
     }
     
     /**
-     * 
+     * Presents options to the user
      * @param opt the options to be presented
      */
     public void presentOptionsToUser(Options opt) {

@@ -9,12 +9,14 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 
-public class PLModel extends Observable implements PLModelInterface, NameInterface {
+public class PLModel extends Observable implements NameInterface {
 
 	private ArrayList<PropertyItem> propertyList;
 	private String name;
 
-	@Override
+    /**
+     * Initializes the model.
+     */
 	public void initialize() {
 		if (propertyList == null) {
 			propertyList = new ArrayList<PropertyItem>();
@@ -22,7 +24,12 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 		}
 	}
 
-	@Override
+    /**
+     * Changes the name of a property.
+     * @param prop The property to be renamed
+     * @param newName The new name for the property
+     * @return true, if the name change was successful
+     */
 	public boolean changeName(PropertyItem prop, String newName) {
 		int index = propertyList.indexOf(prop);
 		if (index == -1) {
@@ -38,7 +45,11 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 		return true;
 	}
 
-	@Override
+    /**
+     * Adds a given property to the property list
+     * @param prop The property to add
+     * @return true when the addition was a success
+     */
 	public boolean addDescription(PropertyItem prop) {
 		if (propertyList.indexOf(prop) != -1) {
 			PropertyItem updated = prop;
@@ -53,20 +64,30 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 		return true;
 	}
 
-	@Override
+    /**
+     * Adds a brand new property to the property list.
+     * @param editor The BooleanExpEditor in which you can edit the property
+     * @return Returns true if the property could be added
+     */
 	public boolean addNewProperty(BooleanExpEditor editor) {
 		String name = "Eigenschaft ";
 		int i = 0;
 		while (indexOfName(name + i) != -1) i++;
 		PropertyItem newItem = new PropertyItem(new PostAndPrePropertiesDescription(name + i), false);
 		propertyList.add(newItem);
-		editor.letUserEditPostAndPreProperties(newItem.getDescription(), true);
-		editor.getView().setVisible(true);
+		if (editor != null) {
+			editor.letUserEditPostAndPreProperties(newItem.getDescription(), true);
+			editor.getView().setVisible(true);
+		}
 		updateView();
 		return true;
 	}
 
-	@Override
+    /**
+     * Edits a property in the property list.
+     * @param prop The property to edit
+     * @param editor The BooleanExpEditor object in which to edit the given property
+     */
 	public void editProperty(PropertyItem prop, BooleanExpEditor editor) {
 		editor.letUserEditPostAndPreProperties(prop.getDescription(), true);
 		editor.getView().setVisible(true);
@@ -74,27 +95,46 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 		updateView();
 	}
 
-	@Override
-	public boolean deleteProperty(PropertyItem prop) {
+    /**
+     * Deletes a property from the list
+     * @param prop The property to remove
+     * @return Returns true if the deletion was a success
+     */
+	public boolean deleteProperty(PropertyItem prop, BooleanExpEditor editor) {
 		int index = propertyList.indexOf(prop);
 		if (index == -1) return false;
 		propertyList.remove(index);
+		if (propertyList.isEmpty()) addNewProperty(editor);
+		if (editor != null) {
+			editor.letUserEditPostAndPreProperties(propertyList.get(0).getDescription(), true);
+		}
 		updateView();
 		return true;
 	}
 
-	@Override
+    /**
+     * Sets whether the property should be analyzed by the checker or not.
+     * @param prop The property to analyze
+     * @param newStatus Sets if the property will be analyzed in the next check
+     */
 	public void setTestStatus(PropertyItem prop, boolean newStatus) {
 		prop.setTestStatus(newStatus);
 	}
 
-	@Override
+    /**
+     * Clears the current list.
+     */
 	public void setNewList() {
 		this.propertyList.clear();
 		updateView();
 	}
 
-	@Override
+    /**
+     * Gets the next property item that gets a result presentation.
+     * @param res The ResultInterface with the analysis result for the property
+     * @param index The index of the result object
+     * @return Returns if there is a next item to receive a result
+     */
 	public boolean setNextToBePresented(ResultInterface res, Integer index) {
 		ArrayList<PropertyItem> testedList = getTestedPropertyList();
 		
@@ -115,7 +155,9 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 		return false;*/
 	}
 
-	@Override
+    /**
+     * Resets all result data in the property list.
+     */
 	public void resetResults() {
 		for (PropertyItem item : propertyList) {
 			item.setResultType(ResultType.UNTESTED);
@@ -123,33 +165,45 @@ public class PLModel extends Observable implements PLModelInterface, NameInterfa
 		updateView();
 	}
 
-	@Override
+    /**
+     * Returns a list of PropertyItem.
+     * @return An ArrayList with all the property items in the property list
+     */
 	public ArrayList<PropertyItem> getPropertyList() {
 		return propertyList;
 	}
 
-	@Override
+    /**
+     * Sets a new property list.
+     * @param list The new list of property items that make up the new property list.
+     */
 	public void setPropertyList(ArrayList<PropertyItem> propertyList) {
 		this.propertyList = propertyList;
 	}
 
-	@Override
-	public void loadAnotherModel(PLModelInterface model) {
+    /**
+     * Setter for the data model.
+     * @param model The new model to replace the old one
+     */
+	public void loadAnotherModel(PLModel model) {
 		this.propertyList = model.getPropertyList();
 		updateView();
 	}
 
-	@Override
+    /**
+     * Getter for the data model.
+     * @return Returns the property list model
+     */
 	public PLModel getModel() {
 		return this;
 	}
 
-	@Override
+    @Override
 	public void setNewName(String newName) {
 		this.name = newName;
 	}
 
-	@Override
+    @Override
 	public String getName() {
 		return name;
 	}

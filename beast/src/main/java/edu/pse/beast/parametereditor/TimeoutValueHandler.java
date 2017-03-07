@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * The TimeoutValueHandler handles all user inputs on the ParameterEditor
- * which change the timeout using one JSpinner and one JComboBox.
+ * which change the TimeOut using one JSpinner and one JComboBox.
  * @author Jonas
  */
 public class TimeoutValueHandler implements ChangeListener, ActionListener {

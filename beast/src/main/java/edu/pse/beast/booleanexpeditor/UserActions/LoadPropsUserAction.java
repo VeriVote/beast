@@ -2,8 +2,8 @@ package edu.pse.beast.booleanexpeditor.UserActions;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.propertylist.Model.PropertyItem;
-import edu.pse.beast.propertylist.PLControllerInterface;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
@@ -14,7 +14,7 @@ import edu.pse.beast.toolbox.UserAction;
 public class LoadPropsUserAction extends UserAction {
 
     private final BooleanExpEditor booleanExpEditor;
-    private PLControllerInterface propertyList;
+    private PropertyList propertyList;
 
     /**
      * Constructor
@@ -26,11 +26,11 @@ public class LoadPropsUserAction extends UserAction {
     }
 
     /**
-     * Second constructor for TODO
+     * Second constructor used by PropertyListWindow
      * @param booleanExpEditor the BooleanExpEditor object
      * @param controller the PropertyList controller object
      */
-    public LoadPropsUserAction(BooleanExpEditor booleanExpEditor, PLControllerInterface controller) {
+    public LoadPropsUserAction(BooleanExpEditor booleanExpEditor, PropertyList controller) {
         super("load");
         this.booleanExpEditor = booleanExpEditor;
         this.propertyList = controller;
@@ -54,7 +54,7 @@ public class LoadPropsUserAction extends UserAction {
     }
 
     /**
-     * TODO
+     * Method used by PropertyListWindow
      */
     public void loadIntoPropertyList() {
         PostAndPrePropertiesDescription loadedPostAndPrePropertiesDescription

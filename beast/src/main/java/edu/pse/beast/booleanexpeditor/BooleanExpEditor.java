@@ -17,7 +17,7 @@ import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
-import edu.pse.beast.propertylist.PLControllerInterface;
+import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
@@ -49,7 +49,7 @@ public class BooleanExpEditor implements DisplaysStringsToUser {
     private final ArrayList<UserAction> userActions = new ArrayList<>();
     private final ArrayList<Character> userActionChars = new ArrayList<>();
     private ObjectRefsForBuilder objectRefsForBuilder;
-    private PLControllerInterface propertyListController;
+    private PropertyList propertyListController;
 
 
     /**
@@ -319,15 +319,15 @@ public class BooleanExpEditor implements DisplaysStringsToUser {
      * Getter for the PropertyListController, used when new Property is created to add it to the PropertyList.
      * @return propertyListController
      */
-	public PLControllerInterface getPropertyListController() {
-		return propertyListController;
-	}
+    public PropertyList getPropertyListController() {
+        return propertyListController;
+    }
 
     /**
      * Setter for the PropertyListController, see above for explanation.
      * @param propertyListController the PropertyListController
      */
-    public void setPropertyListController(PLControllerInterface propertyListController) {
+    public void setPropertyListController(PropertyList propertyListController) {
             this.propertyListController = propertyListController;
     }
 

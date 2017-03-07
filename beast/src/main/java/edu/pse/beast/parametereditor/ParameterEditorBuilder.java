@@ -38,6 +38,7 @@ public class ParameterEditorBuilder {
      * @param cElectionDescriptionEditor editor for the election
      * @param booleanExpEditor editor for properties
      * @param propertyList list of properties
+     * @param centralObjectProvider CentralObjectProvider
      * @return ParameterEditor
      */
     public ParameterEditor createParameterEditor(
@@ -73,8 +74,6 @@ public class ParameterEditorBuilder {
         refs.getLanguageOpts().addStringDisplayer(toolbarHandler);
         refs.getLanguageOpts().addStringDisplayer(window);        
         refs.getLanguageOpts().addStringDisplayer(editor);
-        editor.setToolbarHandler(toolbarHandler);
-        editor.setMenuBarHandler(menuBarHandler);
         windowStarter.start();
         editor.setReacts(true);
         return editor;

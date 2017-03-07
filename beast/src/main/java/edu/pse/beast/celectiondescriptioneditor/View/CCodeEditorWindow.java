@@ -14,7 +14,7 @@ import javax.swing.*;
 /**
  * @author Holger
  */
-public class CCodeEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser{
+public class CCodeEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
 
 
     /**

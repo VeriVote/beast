@@ -35,6 +35,7 @@ public class PSECentralObjectProvider implements CentralObjectProvider {
      * instances
      */
     public PSECentralObjectProvider(BEASTCommunicator communicator) {
+        //All data needed to create the instances are created.
         OptionsInterface optionsInterface = new OptionsInterface();
         StringLoaderInterface stringIf = new StringLoaderInterface("de"); 
         SaverLoaderInterface saverLoaderIF = new SaverLoaderInterface();
@@ -42,6 +43,7 @@ public class PSECentralObjectProvider implements CentralObjectProvider {
         ObjectRefsForBuilder refs = new ObjectRefsForBuilder(
                 optionsInterface, stringIf, 
                 langOpts, saverLoaderIF);
+        //The instances themselves are created.
         cElectionEditor = new CElectionDescriptionEditorBuilder().createCElectionDescriptionEditor(refs);
         booleanExpEditor = new BooleanExpEditorBuilder().createBooleanExpEditorObject(refs, cElectionEditor);        
         propertyList = new PropertyListBuilder().createPropertyList(refs, booleanExpEditor);

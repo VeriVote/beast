@@ -54,11 +54,18 @@ public class StringResourceLoader {
         return get;
     }
     
+    /**
+     * 
+     * @param s the String for which you want to know the Id
+     * @return if the String is not found null is returned, otherwise the id is returned
+     */
     public String getIdForString(String s) {
         for (Map.Entry<String, String> entry : idsToString.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            if(value.equals(s)) return key;
+            if (value.equals(s)) {
+                return key;
+            }
         }
         return null;
     }
