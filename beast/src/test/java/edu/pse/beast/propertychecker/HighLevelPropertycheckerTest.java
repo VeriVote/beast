@@ -11,6 +11,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -23,6 +25,8 @@ import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.datatypes.Project;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.parametereditor.ParameterEditor;
+import edu.pse.beast.propertylist.PropertyList;
+import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.saverloader.ProjectSaverLoader;
 
 public class HighLevelPropertycheckerTest {
@@ -63,10 +67,30 @@ public class HighLevelPropertycheckerTest {
         
         ProjectSaverLoader projectSaverLoader = new ProjectSaverLoader();
         Project loadedProject = (Project) projectSaverLoader .createFromSaveString(content);
+
         parameterEditor.loadProject(loadedProject);
         
         parameterEditor.startCheck();
         
-        Thread.sleep(10000);
+        boolean running = true;
+        while(running) {
+            if (parameterEditor.getReacts()) {
+                running = false;
+            } else {
+                Thread.sleep(1000);
+            }
+            
+        }
+          
+        PropertyList propList = helper.getPropListOfCurrentInstance();
+        
+        List<PropertyItem> list = propList.getList();
+        
+        for (Iterator<PropertyItem> iterator = list.iterator(); iterator.hasNext();) {
+            PropertyItem propertyItem = (PropertyItem) iterator.next();
+            assertNull(propertyItem.getExample());
+        }
+        
+        
     }
 }
