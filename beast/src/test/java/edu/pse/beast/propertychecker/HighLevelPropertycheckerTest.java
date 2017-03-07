@@ -63,12 +63,10 @@ public class HighLevelPropertycheckerTest {
         
         ProjectSaverLoader projectSaverLoader = new ProjectSaverLoader();
         Project loadedProject = (Project) projectSaverLoader .createFromSaveString(content);
-        
-        
         parameterEditor.loadProject(loadedProject);
         
         parameterEditor.startCheck();
         
-        
+        Thread.sleep(10000);
     }
 }

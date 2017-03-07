@@ -30,6 +30,9 @@ public class BooleanExpScopehandler {
     }
 
     public void addVariable(String id, InternalTypeContainer type) {
+        if (currentScopes.size() == 0) {
+            enterNewScope();
+        }
         currentScopes.get(currentScopes.size() - 1).addTypeForId(id, type);
     }
 
