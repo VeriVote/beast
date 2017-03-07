@@ -58,20 +58,30 @@ public class OptionPresenterFrame extends javax.swing.JFrame {
      * recursively.
      */
     private void showOptionsRec(Options opt) {
-            JPanel panel = new JPanel(new GridLayout(opt.getOptionElements().size(), 2, 5, 5));
-            for (OptionElement elem : opt.getOptionElements()) {
-                JLabel label = new JLabel(srl.getStringFromID(elem.getID()));
-                OptionElemComboBox combobox = createOptionElemComboBox(elem);
-                panel.add(label);
-                panel.add(combobox);                
-            }
-            JPanel containingPanel = new JPanel(new BorderLayout());
-            containingPanel.add(panel, BorderLayout.NORTH);
-            if (optionContainsOptionElements(opt))
-                jTabbedPane1.addTab(srl.getStringFromID(opt.getId()), containingPanel);
-            for (Options subOpt : opt.getSubOptions()) {                
-                showOptionsRec(subOpt);  
-            }
+        JPanel panel = new JPanel(new GridLayout(opt.getOptionElements().size(), 2, 5, 5));
+        addAllOptionElementsToPanel(opt, panel);
+        JPanel containingPanel = new JPanel(new BorderLayout());
+        containingPanel.add(panel, BorderLayout.NORTH);
+        if (optionContainsOptionElements(opt))
+            jTabbedPane1.addTab(srl.getStringFromID(opt.getId()), containingPanel);
+        for (Options subOpt : opt.getSubOptions()) {
+            showOptionsRec(subOpt);
+        }
+    }
+
+    /**
+     * goes through every optionelement contained in the passed option parameter and adds
+     * its name and all choosable options in a combobox to the passed panel
+     * @param opt the option containing the option elements which should be added to the panel
+     * @param panel the panel onto which the option element information should be added
+     */
+    private void addAllOptionElementsToPanel(Options opt, JPanel panel) {
+        for (OptionElement elem : opt.getOptionElements()) {
+            JLabel label = new JLabel(srl.getStringFromID(elem.getID()));
+            OptionElemComboBox combobox = createOptionElemComboBox(elem);
+            panel.add(label);
+            panel.add(combobox);
+        }
     }
 
     private boolean optionContainsOptionElements(Options opt) {
