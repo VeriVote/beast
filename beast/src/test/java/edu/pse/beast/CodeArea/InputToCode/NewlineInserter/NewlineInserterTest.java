@@ -52,8 +52,8 @@ public class NewlineInserterTest {
         String insert = "{}";
         pane.getStyledDocument().insertString(0, insert, null);
         ins.insertNewlineAtCurrentPosition(pane, tabsInserter, lineBeg, 1);
-        String code = pane.getText();
-        String codeafter = "{\r\n" + 
+        String code = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
+        String codeafter = "{\n" +
                             "}";
         assertEquals(codeafter, code);
         

@@ -84,9 +84,9 @@ public class TabInserterTest {
     @Test
     public void testAddAfterNewline() throws BadLocationException {
         pane.getStyledDocument().insertString(0, "\n", null);
-        assertEquals("\r\n", pane.getText());
+        assertEquals("\n", pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength()));
         ins.insertTabAtPos(1);
-        assertEquals("\r\n" + "        ", pane.getText());
+        assertEquals("\n" + "        ", pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength()));
     }
   
     

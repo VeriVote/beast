@@ -52,7 +52,7 @@ public class CurlyBracesLineBeginningTabHandlerTest {
         String insert = "asdasd" + System.lineSeparator() + "asdasd";
         pane.getStyledDocument().insertString(0, insert, null);
         
-        assertEquals(15, pane.getText().length());
+        assertEquals(13, pane.getText().length());
         
         int tabs = handler.getTabsForLine(0);
         assertEquals(0, tabs);
