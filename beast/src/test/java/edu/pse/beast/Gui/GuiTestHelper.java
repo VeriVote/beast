@@ -8,7 +8,10 @@ import edu.pse.beast.highlevel.PSECentralObjectProvider;
 import edu.pse.beast.parametereditor.ParameterEditor;
 import edu.pse.beast.propertylist.PropertyList;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.security.Key;
 
 /**
  * Created by holger on 07.03.17.
@@ -39,6 +42,24 @@ public class GuiTestHelper {
 
     public PropertyList getPropListOfCurrentInstance() {
         return (PropertyList) (centralObjectProvider.getPostAndPrePropertiesSource());
+    }
+
+    public void clickMenuItemInCEditor(int subMenu, int item, long waittime) throws InterruptedException {
+        JMenuBar menuBar = getCEditorOfCurrentInstace().getView().getMainMenuBar();
+        Thread.sleep(waittime);
+        menuBar.getMenu(0).doClick();
+        Thread.sleep(waittime);
+        menuBar.getMenu(0).getItem(0).doClick();
+        Thread.sleep(waittime);
+    }
+
+    public void performShortcut(int key, long timeoutafter) throws AWTException, InterruptedException {
+        Robot r = new Robot();
+        r.keyPress(KeyEvent.VK_CONTROL);
+        r.keyPress(key);
+        r.keyRelease(key);
+        r.keyPress(KeyEvent.VK_CONTROL);
+        Thread.sleep(timeoutafter);
     }
 
     public void performKeystrokes(int[] keys, long waittimeBetweenStrokes) throws AWTException, InterruptedException {
