@@ -18,29 +18,24 @@ import java.awt.event.KeyEvent;
  * Created by holger on 07.03.17.
  */
 public class CreateNewFileTest {
-    private BEASTCommunicator communicator = new BEASTCommunicator();
-    private CentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
-    private final long waittime = 100;
 
+    private final long waittime = 100;
+    GuiTestHelper helper = new GuiTestHelper();
     @Before
-    public void setUp() {
-        communicator = new BEASTCommunicator();
-        centralObjectProvider = new PSECentralObjectProvider(communicator);
-        communicator.setCentralObjectProvider(centralObjectProvider);
+    public void setUp() throws InterruptedException {
+        helper.startNewBEASTInstance();
     }
 
     @Test
     public void testCreateNewfileCEditor() throws InterruptedException, AWTException {
-        ParameterEditor parameterEditor = (ParameterEditor) centralObjectProvider.getParameterSrc();
-        while(!parameterEditor.getView().isVisible()) Thread.sleep(500);
-        CElectionDescriptionEditor electionDescriptionEditor =
-                (CElectionDescriptionEditor) centralObjectProvider.getElectionDescriptionSource();
+        CElectionDescriptionEditor electionDescriptionEditor = helper.getCEditorOfCurrentInstace();
 
 
         ElectionDescription electionDescription = electionDescriptionEditor.getElectionDescription();
         Assert.assertEquals(electionDescription.getInputType().getId(), "one_candidate_per_voter");
 
         electionDescriptionEditor.setVisible(true);
+        //click on first menuitem and first submenuitem
         JMenuBar menuBar = electionDescriptionEditor.getView().getMainMenuBar();
         Thread.sleep(waittime);
         menuBar.getMenu(0).doClick();
@@ -48,23 +43,14 @@ public class CreateNewFileTest {
         menuBar.getMenu(0).getItem(0).doClick();
         Thread.sleep(waittime);
 
-        Robot robot = new Robot();
-        robot.keyPress(KeyEvent.VK_DOWN);
-        robot.keyRelease(KeyEvent.VK_DOWN);
-        robot.keyPress(KeyEvent.VK_DOWN);
-        robot.keyRelease(KeyEvent.VK_DOWN);
-        robot.keyPress(KeyEvent.VK_ENTER);
-        robot.keyRelease(KeyEvent.VK_ENTER);
-        robot.keyPress(KeyEvent.VK_TAB);
-        robot.keyRelease(KeyEvent.VK_TAB);
-        Thread.sleep(waittime);
-        robot.keyPress(KeyEvent.VK_N);
-        robot.keyRelease(KeyEvent.VK_N);
-        Thread.sleep(waittime);
-        robot.keyPress(KeyEvent.VK_ENTER);
-        robot.keyRelease(KeyEvent.VK_ENTER);
-        Thread.sleep(waittime);
-
+        int[] keys = {
+                KeyEvent.VK_DOWN, KeyEvent.VK_DOWN, KeyEvent.VK_ENTER, //choose new election input
+                KeyEvent.VK_TAB, //switch to name field
+                KeyEvent.VK_N, //type new name
+                KeyEvent.VK_ENTER //clicks apply
+        };
+        
+        helper.performKeystrokes(keys, 50);
         electionDescription = electionDescriptionEditor.getElectionDescription();
         Assert.assertEquals(electionDescription.getInputType().getId(), "list_of_candidates_per_voter");
     }
