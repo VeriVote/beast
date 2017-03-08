@@ -123,6 +123,30 @@ public class FormalPropertyDescriptionBaseListener implements FormalPropertyDesc
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBinaryNumberExp(FormalPropertyDescriptionParser.BinaryNumberExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBinaryNumberExp(FormalPropertyDescriptionParser.BinaryNumberExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterInteger(FormalPropertyDescriptionParser.IntegerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInteger(FormalPropertyDescriptionParser.IntegerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterElectExp(FormalPropertyDescriptionParser.ElectExpContext ctx) { }
 	/**
 	 * {@inheritDoc}

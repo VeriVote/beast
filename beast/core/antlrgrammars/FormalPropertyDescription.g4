@@ -22,14 +22,26 @@ notExp : '!' booleanExp;
 
 comparisonExp : typeExp ComparisonSymbol typeExp;
 
-typeExp : electExp | voteExp | constantExp | voteSumExp | symbolicVarExp | numberExpression;
+typeExp : electExp | voteExp | numberExpression | symbolicVarExp;
 
 numberExpression : 	'(' numberExpression ')' |
-			numberExpression Mult numberExpression |
-			numberExpression Add numberExpression |
-			constantExp |
 			voteSumExp |
-			Integer;
+			binaryNumberExp |
+			constantExp |
+			integer;
+
+binaryNumberExp :	'(' binaryNumberExp ')' (Mult|Add) numberExpression |
+			'(' voteSumExp ')' (Mult|Add) numberExpression |		
+			'(' constantExp ')' (Mult|Add) numberExpression |
+			'(' integer ')' (Mult|Add) numberExpression |
+
+			binaryNumberExp (Mult|Add) numberExpression |
+			voteSumExp (Mult|Add) numberExpression |		
+			constantExp (Mult|Add) numberExpression |
+			integer (Mult|Add) numberExpression;
+		
+
+integer : Integer;
 
 electExp :  Elect passSymbVar*;
 

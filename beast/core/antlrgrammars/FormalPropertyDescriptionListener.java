@@ -97,6 +97,26 @@ public interface FormalPropertyDescriptionListener extends ParseTreeListener {
 	 */
 	void exitNumberExpression(FormalPropertyDescriptionParser.NumberExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#binaryNumberExp}.
+	 * @param ctx the parse tree
+	 */
+	void enterBinaryNumberExp(FormalPropertyDescriptionParser.BinaryNumberExpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#binaryNumberExp}.
+	 * @param ctx the parse tree
+	 */
+	void exitBinaryNumberExp(FormalPropertyDescriptionParser.BinaryNumberExpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#integer}.
+	 * @param ctx the parse tree
+	 */
+	void enterInteger(FormalPropertyDescriptionParser.IntegerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#integer}.
+	 * @param ctx the parse tree
+	 */
+	void exitInteger(FormalPropertyDescriptionParser.IntegerContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#electExp}.
 	 * @param ctx the parse tree
 	 */
