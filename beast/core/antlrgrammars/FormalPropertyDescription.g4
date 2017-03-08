@@ -24,7 +24,12 @@ comparisonExp : typeExp ComparisonSymbol typeExp;
 
 typeExp : electExp | voteExp | constantExp | voteSumExp | symbolicVarExp | numberExpression;
 
-numberExpression : Integer;
+numberExpression : 	'(' numberExpression ')' |
+			numberExpression Mult numberExpression |
+			numberExpression Add numberExpression |
+			constantExp |
+			voteSumExp |
+			Integer;
 
 electExp :  Elect passSymbVar*;
 
@@ -39,6 +44,10 @@ passSymbVar : OpenBracket symbolicVarExp ClosedBracket;
 symbolicVarExp : Identifier;
 
 //Lexer
+
+Mult : '*'|'/';
+
+Add : '+'|'-';
 
 Vote : 'VOTES' Integer;
 
