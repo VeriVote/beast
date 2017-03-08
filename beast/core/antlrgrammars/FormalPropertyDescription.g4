@@ -31,22 +31,6 @@ numberExpression : 	'(' numberExpression ')' |
 			constantExp |
 			integer;
 
-/*binaryNumberExp :	'(' binaryNumberExp ')' Add numberExpression |
-			'(' binaryNumberExp ')' Mult numberExpression |
-			'(' voteSumExp ')' Add numberExpression |
-			'(' voteSumExp ')' Mult numberExpression |				
-			'(' constantExp ')' Add numberExpression |
-			'(' constantExp ')' Mult numberExpression |
-			'(' integer ')' Add numberExpression |
-			'(' integer ')' Mult numberExpression |
-			binaryNumberExp Add numberExpression |
-			binaryNumberExp Mult numberExpression |
-			voteSumExp Add numberExpression |
-			voteSumExp Mult numberExpression |				
-			constantExp Add numberExpression |
-			constantExp Mult numberExpression |
-			integer Add numberExpression |
-			integer Mult numberExpression;*/
 
 typeByPosExp : voterByPosExp | candByPosExp | seatByPosExp;
 
