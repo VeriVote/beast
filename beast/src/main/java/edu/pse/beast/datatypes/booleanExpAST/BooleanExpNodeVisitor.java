@@ -90,12 +90,6 @@ public interface BooleanExpNodeVisitor {
      * @param exp the vote sum expression to visit
      */
     void visitVoteSumExp(VoteSumForCandExp exp);
-    
-    /**
-     * 
-     * @param exp the number expression to visit
-     */
-    void visitNumberExpNode(IntegerValuedExpression exp);
 
     void visitIntegerNode(IntegerNode integerNode);
 

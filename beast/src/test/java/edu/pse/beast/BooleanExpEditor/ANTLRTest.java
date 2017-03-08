@@ -29,6 +29,6 @@ public class ANTLRTest {
     }
     public static void main(String[] args) {
         showGuiTreeView(
-                "1 != 2 - 1;");
+                "1 == 4 * 2 / (4 - 1) + 2;");
     }
 }

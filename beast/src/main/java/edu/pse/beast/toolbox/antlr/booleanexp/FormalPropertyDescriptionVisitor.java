@@ -64,11 +64,29 @@ public interface FormalPropertyDescriptionVisitor<T> extends ParseTreeVisitor<T>
 	 */
 	T visitNumberExpression(FormalPropertyDescriptionParser.NumberExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#binaryNumberExp}.
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#typeByPosExp}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBinaryNumberExp(FormalPropertyDescriptionParser.BinaryNumberExpContext ctx);
+	T visitTypeByPosExp(FormalPropertyDescriptionParser.TypeByPosExpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#voterByPosExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVoterByPosExp(FormalPropertyDescriptionParser.VoterByPosExpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#candByPosExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCandByPosExp(FormalPropertyDescriptionParser.CandByPosExpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#seatByPosExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSeatByPosExp(FormalPropertyDescriptionParser.SeatByPosExpContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#integer}.
 	 * @param ctx the parse tree
@@ -105,6 +123,12 @@ public interface FormalPropertyDescriptionVisitor<T> extends ParseTreeVisitor<T>
 	 * @return the visitor result
 	 */
 	T visitPassSymbVar(FormalPropertyDescriptionParser.PassSymbVarContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#passPosition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPassPosition(FormalPropertyDescriptionParser.PassPositionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#symbolicVarExp}.
 	 * @param ctx the parse tree

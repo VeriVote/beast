@@ -49,6 +49,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private final ElectionTypeContainer inputType;
     private Queue<String> voteSumVars = new LinkedList<>();
     private Queue<Integer> voteSumLevels = new LinkedList<>();
+    private int numberExpDepth = 0;
 
     private Stack<String> variableNames; //stack of the variable names. 
     private CodeArrayListBeautifier code; // object, that handels the generated code
@@ -413,34 +414,36 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             code.deleteTab();
             code.add("}");
         }
-        voteSumVars.add(exp.getSymbolicVariable().getId());
-        voteSumLevels.add(exp.getVoteNumber());
         variableNames.push(counter);
     }
 
     @Override
-    public void visitNumberExpNode(IntegerValuedExpression exp) {
-
+    public void visitIntegerNode(IntegerNode integerNode) {
+        String varName = getNewNumberVariableName();
+        code.add("unsigned int " + varName + " = " + integerNode.getHeldInteger());
+        variableNames.push(varName);
     }
 
-    @Override
-    public void visitIntegerNode(IntegerNode integerNode) {
-
+    private int numberVars = 0;
+    private String getNewNumberVariableName() {
+        return "integerVar_" + numberVars++;
     }
 
     @Override
     public void visitIntegerComparisonNode(IntegerComparisonNode listComparisonNode) {
         listComparisonNode.getLHSBooleanExpNode().getVisited(this);
         listComparisonNode.getRHSBooleanExpNode().getVisited(this);
-        String comparisonString = listComparisonNode.comparisonString;
+
         String varNameDecl = "integer_comp_" + comparisonNodeCounter++;
-        while(!voteSumVars.isEmpty()) {
-            String repaceStr = "VOTE_SUM_FOR_CANDIDATE" + voteSumLevels.remove()  + "(" + voteSumVars.remove() + ")";
-            comparisonString = comparisonString.replace(
-                    repaceStr,
-                    variableNames.pop());
-        }
-        code.add("unsigned int " + varNameDecl + " = " + comparisonString + ";");
+        String rhs = variableNames.pop();
+        String lhs = variableNames.pop();
+
+        String comparisonString = "unsigned int " + varNameDecl + " = "  +
+                rhs + " " +
+                listComparisonNode.getComparisonSymbol().getCStringRep() + " " +
+                lhs + ";";
+
+        code.add(comparisonString);
         variableNames.push(varNameDecl);
         testIfLast();
     }
@@ -449,6 +452,12 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     public void visitBinaryIntegerValuedNode(BinaryIntegerValuedNode binaryIntegerValuedNode) {
         binaryIntegerValuedNode.lhs.getVisited(this);
         binaryIntegerValuedNode.rhs.getVisited(this);
+        String rhs = variableNames.pop();
+        String lhs = variableNames.pop();
+        String varname = getNewNumberVariableName();
+        code.add("unsigned int " + varname + " = " + lhs +
+                " " + binaryIntegerValuedNode.getRelationSymbol() + " " + rhs);
+        variableNames.push(varname);
     }
 
     private void testIfLast() {

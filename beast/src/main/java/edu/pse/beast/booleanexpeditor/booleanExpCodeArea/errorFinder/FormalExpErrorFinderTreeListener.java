@@ -177,23 +177,58 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
     @Override
     public void exitNumberExpression(FormalPropertyDescriptionParser.NumberExpressionContext ctx) {
+        if(ctx.Mult() != null) {
+            IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
+            IntegerValuedExpression lsh = (IntegerValuedExpression) expStack.pop();
+            BinaryIntegerValuedNode expNode = new BinaryIntegerValuedNode(lsh, rhs, ctx.Mult().getText(), ctx.getText());
+            expStack.push(expNode);
+        } else if(ctx.Add() != null) {
+            IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
+            IntegerValuedExpression lsh = (IntegerValuedExpression) expStack.pop();
+            BinaryIntegerValuedNode expNode = new BinaryIntegerValuedNode(lsh, rhs, ctx.Add().getText(), ctx.getText());
+            expStack.push(expNode);
+        }
+    }
+
+
+    @Override
+    public void enterTypeByPosExp(FormalPropertyDescriptionParser.TypeByPosExpContext ctx) {
 
     }
 
     @Override
-    public void enterBinaryNumberExp(FormalPropertyDescriptionParser.BinaryNumberExpContext ctx) {
+    public void exitTypeByPosExp(FormalPropertyDescriptionParser.TypeByPosExpContext ctx) {
 
     }
 
     @Override
-    public void exitBinaryNumberExp(FormalPropertyDescriptionParser.BinaryNumberExpContext ctx) {
-        IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
-        IntegerValuedExpression lhs = (IntegerValuedExpression) expStack.pop();
+    public void enterVoterByPosExp(FormalPropertyDescriptionParser.VoterByPosExpContext ctx) {
 
-        String relationSymbol = ctx.Add() == null ? ctx.Mult().getText() : ctx.Add().getText();
+    }
 
-        BinaryIntegerValuedNode binaryIntegerValuedNode = new BinaryIntegerValuedNode(lhs, rhs, relationSymbol);
-        expStack.push(binaryIntegerValuedNode);
+    @Override
+    public void exitVoterByPosExp(FormalPropertyDescriptionParser.VoterByPosExpContext ctx) {
+
+    }
+
+    @Override
+    public void enterCandByPosExp(FormalPropertyDescriptionParser.CandByPosExpContext ctx) {
+
+    }
+
+    @Override
+    public void exitCandByPosExp(FormalPropertyDescriptionParser.CandByPosExpContext ctx) {
+
+    }
+
+    @Override
+    public void enterSeatByPosExp(FormalPropertyDescriptionParser.SeatByPosExpContext ctx) {
+
+    }
+
+    @Override
+    public void exitSeatByPosExp(FormalPropertyDescriptionParser.SeatByPosExpContext ctx) {
+
     }
 
     @Override
@@ -309,6 +344,16 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
     @Override
     public void exitPassSymbVar(FormalPropertyDescriptionParser.PassSymbVarContext ctx) {
+
+    }
+
+    @Override
+    public void enterPassPosition(FormalPropertyDescriptionParser.PassPositionContext ctx) {
+
+    }
+
+    @Override
+    public void exitPassPosition(FormalPropertyDescriptionParser.PassPositionContext ctx) {
 
     }
 

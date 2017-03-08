@@ -97,15 +97,45 @@ public interface FormalPropertyDescriptionListener extends ParseTreeListener {
 	 */
 	void exitNumberExpression(FormalPropertyDescriptionParser.NumberExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#binaryNumberExp}.
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#typeByPosExp}.
 	 * @param ctx the parse tree
 	 */
-	void enterBinaryNumberExp(FormalPropertyDescriptionParser.BinaryNumberExpContext ctx);
+	void enterTypeByPosExp(FormalPropertyDescriptionParser.TypeByPosExpContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#binaryNumberExp}.
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#typeByPosExp}.
 	 * @param ctx the parse tree
 	 */
-	void exitBinaryNumberExp(FormalPropertyDescriptionParser.BinaryNumberExpContext ctx);
+	void exitTypeByPosExp(FormalPropertyDescriptionParser.TypeByPosExpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#voterByPosExp}.
+	 * @param ctx the parse tree
+	 */
+	void enterVoterByPosExp(FormalPropertyDescriptionParser.VoterByPosExpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#voterByPosExp}.
+	 * @param ctx the parse tree
+	 */
+	void exitVoterByPosExp(FormalPropertyDescriptionParser.VoterByPosExpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#candByPosExp}.
+	 * @param ctx the parse tree
+	 */
+	void enterCandByPosExp(FormalPropertyDescriptionParser.CandByPosExpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#candByPosExp}.
+	 * @param ctx the parse tree
+	 */
+	void exitCandByPosExp(FormalPropertyDescriptionParser.CandByPosExpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#seatByPosExp}.
+	 * @param ctx the parse tree
+	 */
+	void enterSeatByPosExp(FormalPropertyDescriptionParser.SeatByPosExpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#seatByPosExp}.
+	 * @param ctx the parse tree
+	 */
+	void exitSeatByPosExp(FormalPropertyDescriptionParser.SeatByPosExpContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#integer}.
 	 * @param ctx the parse tree
@@ -166,6 +196,16 @@ public interface FormalPropertyDescriptionListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPassSymbVar(FormalPropertyDescriptionParser.PassSymbVarContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#passPosition}.
+	 * @param ctx the parse tree
+	 */
+	void enterPassPosition(FormalPropertyDescriptionParser.PassPositionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#passPosition}.
+	 * @param ctx the parse tree
+	 */
+	void exitPassPosition(FormalPropertyDescriptionParser.PassPositionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#symbolicVarExp}.
 	 * @param ctx the parse tree

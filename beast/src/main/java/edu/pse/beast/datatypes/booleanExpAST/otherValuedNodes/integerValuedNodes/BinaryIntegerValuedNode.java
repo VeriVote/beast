@@ -10,11 +10,18 @@ public class BinaryIntegerValuedNode extends IntegerValuedExpression {
     public final IntegerValuedExpression lhs;
     public final IntegerValuedExpression rhs;
     private final String relationSymbol;
+    private final String nodeExpString;
 
-    public BinaryIntegerValuedNode(IntegerValuedExpression lhs, IntegerValuedExpression rhs, String relationSymbol) {
+    public String getNodeExpString() {
+        return nodeExpString;
+    }
+
+    public BinaryIntegerValuedNode(IntegerValuedExpression lhs, IntegerValuedExpression rhs, String relationSymbol, String nodeExpString) {
         this.lhs = lhs;
         this.rhs = rhs;
         this.relationSymbol = relationSymbol;
+        this.nodeExpString = nodeExpString;
+
     }
 
     @Override

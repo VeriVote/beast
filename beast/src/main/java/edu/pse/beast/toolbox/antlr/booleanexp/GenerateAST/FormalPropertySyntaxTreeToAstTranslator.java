@@ -197,13 +197,21 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 
     @Override
     public void exitNumberExpression(FormalPropertyDescriptionParser.NumberExpressionContext ctx) {
-
+        if(ctx.Mult() != null) {
+            IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
+            IntegerValuedExpression lsh = (IntegerValuedExpression) expStack.pop();
+            BinaryIntegerValuedNode expNode = new BinaryIntegerValuedNode(lsh, rhs, ctx.Mult().getText(), ctx.getText());
+            expStack.push(expNode);
+        } else if(ctx.Add() != null) {
+            IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
+            IntegerValuedExpression lsh = (IntegerValuedExpression) expStack.pop();
+            BinaryIntegerValuedNode expNode = new BinaryIntegerValuedNode(lsh, rhs, ctx.Add().getText(), ctx.getText());
+            expStack.push(expNode);
+        }
     }
 
     @Override
     public void enterElectExp(FormalPropertyDescriptionParser.ElectExpContext ctx) {
-        InternalTypeContainer container = resType;
-
     }
 
     @Override
@@ -307,17 +315,6 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         InternalTypeContainer type = scopeHandler.getTypeForVariable(name);
         SymbolicVarExp expNode = new SymbolicVarExp(type, new SymbolicVariable(name, type));
         expStack.push(expNode);
-    }
-
-    @Override
-    public void exitBinaryNumberExp(FormalPropertyDescriptionParser.BinaryNumberExpContext ctx) {
-        IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
-        IntegerValuedExpression lhs = (IntegerValuedExpression) expStack.pop();
-
-        String relationSymbol = ctx.Add() == null ? ctx.Mult().getText() : ctx.Add().getText();
-
-        BinaryIntegerValuedNode binaryIntegerValuedNode = new BinaryIntegerValuedNode(lhs, rhs, relationSymbol);
-        expStack.push(binaryIntegerValuedNode);
     }
 
     @Override

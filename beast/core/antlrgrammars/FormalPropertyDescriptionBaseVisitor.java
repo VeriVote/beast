@@ -79,7 +79,28 @@ public class FormalPropertyDescriptionBaseVisitor<T> extends AbstractParseTreeVi
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitBinaryNumberExp(FormalPropertyDescriptionParser.BinaryNumberExpContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTypeByPosExp(FormalPropertyDescriptionParser.TypeByPosExpContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitVoterByPosExp(FormalPropertyDescriptionParser.VoterByPosExpContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitCandByPosExp(FormalPropertyDescriptionParser.CandByPosExpContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitSeatByPosExp(FormalPropertyDescriptionParser.SeatByPosExpContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -122,6 +143,13 @@ public class FormalPropertyDescriptionBaseVisitor<T> extends AbstractParseTreeVi
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitPassSymbVar(FormalPropertyDescriptionParser.PassSymbVarContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitPassPosition(FormalPropertyDescriptionParser.PassPositionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

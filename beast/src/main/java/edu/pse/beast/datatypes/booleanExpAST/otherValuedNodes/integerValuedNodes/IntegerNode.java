@@ -18,4 +18,8 @@ public class IntegerNode extends IntegerValuedExpression {
     public void getVisited(BooleanExpNodeVisitor visitor) {
         visitor.visitIntegerNode(this);
     }
+
+    public int getHeldInteger() {
+        return heldInteger;
+    }
 }

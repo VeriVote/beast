@@ -123,13 +123,49 @@ public class FormalPropertyDescriptionBaseListener implements FormalPropertyDesc
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBinaryNumberExp(FormalPropertyDescriptionParser.BinaryNumberExpContext ctx) { }
+	@Override public void enterTypeByPosExp(FormalPropertyDescriptionParser.TypeByPosExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBinaryNumberExp(FormalPropertyDescriptionParser.BinaryNumberExpContext ctx) { }
+	@Override public void exitTypeByPosExp(FormalPropertyDescriptionParser.TypeByPosExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVoterByPosExp(FormalPropertyDescriptionParser.VoterByPosExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVoterByPosExp(FormalPropertyDescriptionParser.VoterByPosExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCandByPosExp(FormalPropertyDescriptionParser.CandByPosExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCandByPosExp(FormalPropertyDescriptionParser.CandByPosExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSeatByPosExp(FormalPropertyDescriptionParser.SeatByPosExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSeatByPosExp(FormalPropertyDescriptionParser.SeatByPosExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -202,6 +238,18 @@ public class FormalPropertyDescriptionBaseListener implements FormalPropertyDesc
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitPassSymbVar(FormalPropertyDescriptionParser.PassSymbVarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPassPosition(FormalPropertyDescriptionParser.PassPositionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPassPosition(FormalPropertyDescriptionParser.PassPositionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -9,6 +9,7 @@ import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.TypeExpression;
  */
 public class IntegerComparisonNode extends ComparisonNode {
     public final String comparisonString;
+    
     /**
      * @param lhsTypeExp       the lhsExpression
      * @param rhsTypeExp       the rhsExpression

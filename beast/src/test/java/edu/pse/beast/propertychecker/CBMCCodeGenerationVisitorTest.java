@@ -23,7 +23,7 @@ public class CBMCCodeGenerationVisitorTest {
     @Test
     public void testSimpleSummationCode() {
         visitor.setToPrePropertyMode();
-        BooleanExpressionNode n = FormalPropertySyntaxTreeToAstTranslatorTest.translate("1 == 2 - 1;", new SymbolicVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE))).
+        BooleanExpressionNode n = FormalPropertySyntaxTreeToAstTranslatorTest.translate("1 == C - 1;", new SymbolicVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE))).
                 getBooleanExpressions().get(0).get(0);
 
         List<String> c = visitor.generateCode(n);
@@ -44,11 +44,10 @@ public class CBMCCodeGenerationVisitorTest {
     public void testMultipleVoteSum() {
         visitor.setToPrePropertyMode();
         BooleanExpressionNode n = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
-                "1 == VOTE_SUM_FOR_CANDIDATE1(c) * VOTE_SUM_FOR_CANDIDATE2(c) - VOTE_SUM_FOR_CANDIDATE3(c) / 5;",
+                "1 == VOTE_SUM_FOR_CANDIDATE1(c) * VOTE_SUM_FOR_CANDIDATE2(c) - VOTE_SUM_FOR_CANDIDATE3(c) / 5 + V;",
                 new SymbolicVariable(
                         "c", new InternalTypeContainer(InternalTypeRep.CANDIDATE))).
                 getBooleanExpressions().get(0).get(0);
-
         List<String> c = visitor.generateCode(n);
     }
 }

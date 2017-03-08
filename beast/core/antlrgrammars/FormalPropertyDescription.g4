@@ -22,24 +22,39 @@ notExp : '!' booleanExp;
 
 comparisonExp : typeExp ComparisonSymbol typeExp;
 
-typeExp : electExp | voteExp | numberExpression | symbolicVarExp;
+typeExp : electExp | voteExp | numberExpression | symbolicVarExp | typeByPosExp;
 
 numberExpression : 	'(' numberExpression ')' |
+			numberExpression Mult numberExpression |
+			numberExpression Add numberExpression |			
 			voteSumExp |
-			binaryNumberExp |
 			constantExp |
 			integer;
 
-binaryNumberExp :	'(' binaryNumberExp ')' (Mult|Add) numberExpression |
-			'(' voteSumExp ')' (Mult|Add) numberExpression |		
-			'(' constantExp ')' (Mult|Add) numberExpression |
-			'(' integer ')' (Mult|Add) numberExpression |
+/*binaryNumberExp :	'(' binaryNumberExp ')' Add numberExpression |
+			'(' binaryNumberExp ')' Mult numberExpression |
+			'(' voteSumExp ')' Add numberExpression |
+			'(' voteSumExp ')' Mult numberExpression |				
+			'(' constantExp ')' Add numberExpression |
+			'(' constantExp ')' Mult numberExpression |
+			'(' integer ')' Add numberExpression |
+			'(' integer ')' Mult numberExpression |
+			binaryNumberExp Add numberExpression |
+			binaryNumberExp Mult numberExpression |
+			voteSumExp Add numberExpression |
+			voteSumExp Mult numberExpression |				
+			constantExp Add numberExpression |
+			constantExp Mult numberExpression |
+			integer Add numberExpression |
+			integer Mult numberExpression;*/
 
-			binaryNumberExp (Mult|Add) numberExpression |
-			voteSumExp (Mult|Add) numberExpression |		
-			constantExp (Mult|Add) numberExpression |
-			integer (Mult|Add) numberExpression;
-		
+typeByPosExp : voterByPosExp | candByPosExp | seatByPosExp;
+
+voterByPosExp : VoterByPos passPosition;
+
+candByPosExp : CandByPos passPosition;
+
+seatByPosExp : SeatByPos passPosition;
 
 integer : Integer;
 
@@ -53,9 +68,17 @@ voteSumExp : Votesum passSymbVar;
 
 passSymbVar : OpenBracket symbolicVarExp ClosedBracket;
 
+passPosition : OpenBracket numberExpression ClosedBracket;
+
 symbolicVarExp : Identifier;
 
 //Lexer
+
+VoterByPos : 'VOTER_BY_POS' Integer;
+
+CandByPos : 'CAND_BY_POS' Integer;
+
+SeatByPos : 'SEAT_BY_POS' Integer;
 
 Mult : '*'|'/';
 
