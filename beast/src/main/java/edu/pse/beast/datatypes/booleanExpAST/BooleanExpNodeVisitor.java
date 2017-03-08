@@ -1,6 +1,10 @@
 package edu.pse.beast.datatypes.booleanExpAST;
 
 
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.*;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.*;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.*;
+
 /**
  *
  * @author Lukas
@@ -91,5 +95,11 @@ public interface BooleanExpNodeVisitor {
      * 
      * @param exp the number expression to visit
      */
-    void visitNumberExpNode(NumberExpression exp);
+    void visitNumberExpNode(IntegerValuedExpression exp);
+
+    void visitIntegerNode(IntegerNode integerNode);
+
+    void visitIntegerComparisonNode(IntegerComparisonNode listComparisonNode);
+
+    void visitBinaryIntegerValuedNode(BinaryIntegerValuedNode binaryIntegerValuedNode);
 }

@@ -281,12 +281,11 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
      */
     public void removeToTheLeft() {
         if(selectionIncludesLockedLines()) return;
-        if(currentCaretPosition == 0) return;        
-        
+
         try {
             if(isLineContainingCaretPosLocked()) {
-            if(!pane.getStyledDocument().getText(currentCaretPosition - 2, 2).equals("\n\n")) 
-                return;
+                if(!pane.getStyledDocument().getText(currentCaretPosition - 2, 2).equals("\n\n"))
+                    return;
             }
             if(pane.getSelectedText() != null) {
                 pane.getStyledDocument().remove(
@@ -294,7 +293,7 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
                         pane.getSelectionEnd() - pane.getSelectionStart());
                 return;
             }
-            
+            if(currentCaretPosition == 0) return;
             pane.getStyledDocument().remove(currentCaretPosition - 1, 1);
         } catch (BadLocationException ex) {
             Logger.getLogger(UserInsertToCode.class.getName()).log(Level.SEVERE, null, ex);

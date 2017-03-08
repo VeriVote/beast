@@ -7,7 +7,8 @@ package edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import edu.pse.beast.datatypes.booleanExpAST.*;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.*;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.*;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
@@ -140,6 +141,7 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
     @Override
     public void exitComparisonExp(FormalPropertyDescriptionParser.ComparisonExpContext ctx) {
+        String s = ctx.getText();
         TypeExpression rhs = expStack.pop();
         TypeExpression lhs = expStack.pop();
         InternalTypeContainer lhsCont = lhs.getInternalTypeContainer();
@@ -175,7 +177,36 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
     @Override
     public void exitNumberExpression(FormalPropertyDescriptionParser.NumberExpressionContext ctx) {
-        expStack.add(new NumberExpression(Integer.valueOf(ctx.getText())));
+
+    }
+
+    @Override
+    public void enterBinaryNumberExp(FormalPropertyDescriptionParser.BinaryNumberExpContext ctx) {
+
+    }
+
+    @Override
+    public void exitBinaryNumberExp(FormalPropertyDescriptionParser.BinaryNumberExpContext ctx) {
+        IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
+        IntegerValuedExpression lhs = (IntegerValuedExpression) expStack.pop();
+
+        String relationSymbol = ctx.Add() == null ? ctx.Mult().getText() : ctx.Add().getText();
+
+        BinaryIntegerValuedNode binaryIntegerValuedNode = new BinaryIntegerValuedNode(lhs, rhs, relationSymbol);
+        expStack.push(binaryIntegerValuedNode);
+    }
+
+    @Override
+    public void enterInteger(FormalPropertyDescriptionParser.IntegerContext ctx) {
+
+    }
+
+    @Override
+    public void exitInteger(FormalPropertyDescriptionParser.IntegerContext ctx) {
+        String integerString = ctx.getText();
+        int heldInteger = Integer.valueOf(integerString);
+        IntegerNode integerNode = new IntegerNode(heldInteger);
+        expStack.push(integerNode);
     }
 
     @Override
@@ -251,19 +282,7 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
     @Override
     public void exitConstantExp(FormalPropertyDescriptionParser.ConstantExpContext ctx) {
-        expStack.add(new ConstantExp(getContainerForConstant(ctx), ctx.getText()));
-    }
-
-    private InternalTypeContainer getContainerForConstant(FormalPropertyDescriptionParser.ConstantExpContext ctx) {
-        InternalTypeRep rep = InternalTypeRep.NULL;
-        if (ctx.getText().equals("V")) {
-            rep = InternalTypeRep.INTEGER;
-        } else if (ctx.getText().equals("C")) {
-            rep = InternalTypeRep.INTEGER;
-        } else if (ctx.getText().equals("S")) {
-            rep = InternalTypeRep.INTEGER;
-        }
-        return new InternalTypeContainer(rep);
+        expStack.add(new ConstantExp(ctx.getText()));
     }
 
     @Override
@@ -298,6 +317,8 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
     }
 
+
+
     @Override
     public void exitSymbolicVarExp(FormalPropertyDescriptionParser.SymbolicVarExpContext ctx) {
         String name = ctx.getText();
@@ -313,6 +334,8 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
         expStack.add(expNode);
     }
+
+
 
     @Override
     public void visitTerminal(TerminalNode tn) {

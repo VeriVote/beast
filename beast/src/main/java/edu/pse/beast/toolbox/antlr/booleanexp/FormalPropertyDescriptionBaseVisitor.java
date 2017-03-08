@@ -79,6 +79,20 @@ public class FormalPropertyDescriptionBaseVisitor<T> extends AbstractParseTreeVi
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitBinaryNumberExp(FormalPropertyDescriptionParser.BinaryNumberExpContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitInteger(FormalPropertyDescriptionParser.IntegerContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitElectExp(FormalPropertyDescriptionParser.ElectExpContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

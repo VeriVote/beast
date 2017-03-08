@@ -5,7 +5,11 @@
  */
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.booleanExpAST.*;
+
+import edu.pse.beast.datatypes.booleanExpAST.BooleanExpNodeVisitor;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.*;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.*;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.*;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
@@ -13,6 +17,8 @@ import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.ErrorLogger;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -41,6 +47,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private int comparisonNodeCounter;
     private int voteSumCounter;
     private final ElectionTypeContainer inputType;
+    private Queue<String> voteSumVars = new LinkedList<>();
+    private Queue<Integer> voteSumLevels = new LinkedList<>();
 
     private Stack<String> variableNames; //stack of the variable names. 
     private CodeArrayListBeautifier code; // object, that handels the generated code
@@ -277,11 +285,11 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         int rhslistLevel = 0;
 
         for (InternalTypeContainer cont = node.getLHSBooleanExpNode().getInternalTypeContainer();
-                cont.isList(); cont = cont.getListedType()) {
+             cont.isList(); cont = cont.getListedType()) {
             lhslistLevel++;
         }
         for (InternalTypeContainer cont = node.getRHSBooleanExpNode().getInternalTypeContainer();
-                cont.isList(); cont = cont.getListedType()) {
+             cont.isList(); cont = cont.getListedType()) {
             rhslistLevel++;
         }
 
@@ -405,12 +413,42 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             code.deleteTab();
             code.add("}");
         }
+        voteSumVars.add(exp.getSymbolicVariable().getId());
+        voteSumLevels.add(exp.getVoteNumber());
         variableNames.push(counter);
     }
 
     @Override
-    public void visitNumberExpNode(NumberExpression exp) {
-        variableNames.push(String.valueOf(exp.getNumber()));
+    public void visitNumberExpNode(IntegerValuedExpression exp) {
+
+    }
+
+    @Override
+    public void visitIntegerNode(IntegerNode integerNode) {
+
+    }
+
+    @Override
+    public void visitIntegerComparisonNode(IntegerComparisonNode listComparisonNode) {
+        listComparisonNode.getLHSBooleanExpNode().getVisited(this);
+        listComparisonNode.getRHSBooleanExpNode().getVisited(this);
+        String comparisonString = listComparisonNode.comparisonString;
+        String varNameDecl = "integer_comp_" + comparisonNodeCounter++;
+        while(!voteSumVars.isEmpty()) {
+            String repaceStr = "VOTE_SUM_FOR_CANDIDATE" + voteSumLevels.remove()  + "(" + voteSumVars.remove() + ")";
+            comparisonString = comparisonString.replace(
+                    repaceStr,
+                    variableNames.pop());
+        }
+        code.add("unsigned int " + varNameDecl + " = " + comparisonString + ";");
+        variableNames.push(varNameDecl);
+        testIfLast();
+    }
+
+    @Override
+    public void visitBinaryIntegerValuedNode(BinaryIntegerValuedNode binaryIntegerValuedNode) {
+        binaryIntegerValuedNode.lhs.getVisited(this);
+        binaryIntegerValuedNode.rhs.getVisited(this);
     }
 
     private void testIfLast() {

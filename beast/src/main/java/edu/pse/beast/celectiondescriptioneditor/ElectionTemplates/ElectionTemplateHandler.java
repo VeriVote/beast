@@ -101,4 +101,13 @@ public class ElectionTemplateHandler {
         
         return  null;
     }
+
+    public ElectionTypeContainer getStandardInput() {
+        return inputTypes.get(0);
+    }
+
+
+    public ElectionTypeContainer getStandardResult() {
+        return resTypes.get(0);
+    }
 }

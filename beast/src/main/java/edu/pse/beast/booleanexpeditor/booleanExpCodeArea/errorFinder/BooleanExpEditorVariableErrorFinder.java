@@ -41,7 +41,13 @@ public class BooleanExpEditorVariableErrorFinder implements ErrorFinder, Electio
     public ArrayList<CodeError> getErrors() {
         ParseTree tree = antlrHandler.getParseTree();
         ParseTreeWalker walker = new ParseTreeWalker();
-        walker.walk(lis, tree);
+        try {
+            walker.walk(lis, tree);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<CodeError>();
+        }
+
         return lis.getErrors();
     }
 

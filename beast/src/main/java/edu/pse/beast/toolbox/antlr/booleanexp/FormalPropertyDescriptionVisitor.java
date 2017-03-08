@@ -64,6 +64,18 @@ public interface FormalPropertyDescriptionVisitor<T> extends ParseTreeVisitor<T>
 	 */
 	T visitNumberExpression(FormalPropertyDescriptionParser.NumberExpressionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#binaryNumberExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBinaryNumberExp(FormalPropertyDescriptionParser.BinaryNumberExpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#integer}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInteger(FormalPropertyDescriptionParser.IntegerContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#electExp}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -6,7 +6,7 @@
 package edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder;
 
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import edu.pse.beast.datatypes.booleanExpAST.SymbolicVarExp;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.SymbolicVarExp;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
