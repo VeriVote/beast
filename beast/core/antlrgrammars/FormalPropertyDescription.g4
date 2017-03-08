@@ -34,17 +34,17 @@ numberExpression : 	'(' numberExpression ')' |
 
 typeByPosExp : voterByPosExp | candByPosExp | seatByPosExp;
 
-voterByPosExp : VoterByPos passPosition;
+voterByPosExp : 'VOTER_AT_POS' passPosition;
 
-candByPosExp : CandByPos passPosition;
+candByPosExp : 'CAND_AT_POS' passPosition;
 
-seatByPosExp : SeatByPos passPosition;
+seatByPosExp : 'SEAT_AT_POS' passPosition;
 
 integer : Integer;
 
-electExp :  Elect passSymbVar*;
+electExp :  Elect (passSymbVar*|passByPos*);
 
-voteExp : Vote passSymbVar*;
+voteExp : Vote (passSymbVar*|passByPos*);
 
 constantExp : 'V' | 'C' | 'S';
 
@@ -54,15 +54,11 @@ passSymbVar : OpenBracket symbolicVarExp ClosedBracket;
 
 passPosition : OpenBracket numberExpression ClosedBracket;
 
+passByPos : OpenBracket typeByPosExp ClosedBracket;
+
 symbolicVarExp : Identifier;
 
 //Lexer
-
-VoterByPos : 'VOTER_BY_POS' Integer;
-
-CandByPos : 'CAND_BY_POS' Integer;
-
-SeatByPos : 'SEAT_BY_POS' Integer;
 
 Mult : '*'|'/';
 

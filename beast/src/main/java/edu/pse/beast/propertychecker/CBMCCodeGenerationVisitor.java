@@ -460,6 +460,15 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         variableNames.push(varname);
     }
 
+    private int amtByPosVar = 0;
+    @Override
+    public void visitVoterByPosNode(VoterByPosExp voterByPosExp) {
+        voterByPosExp.getPassedPositionNode().getVisited(this);
+        String varName = "voterByPos" + amtByPosVar++;
+        code.add("unsigned int " + varName + " = " + variableNames.pop());
+        variableNames.push(varName);
+    }
+
     private void testIfLast() {
         if (variableNames.size() == 1) {
             if (assumeOrAssert.equals("assert") || assumeOrAssert.equals("assume")) {

@@ -96,4 +96,6 @@ public interface BooleanExpNodeVisitor {
     void visitIntegerComparisonNode(IntegerComparisonNode listComparisonNode);
 
     void visitBinaryIntegerValuedNode(BinaryIntegerValuedNode binaryIntegerValuedNode);
+
+    void visitVoterByPosNode(VoterByPosExp voterByPosExp);
 }

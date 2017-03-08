@@ -326,6 +326,20 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
     }
 
     @Override
+    public void exitVoterByPosExp(FormalPropertyDescriptionParser.VoterByPosExpContext ctx) {
+        expStack.push(new VoterByPosExp((IntegerValuedExpression) expStack.pop()));
+    }
+
+    @Override
+    public void exitCandByPosExp(FormalPropertyDescriptionParser.CandByPosExpContext ctx) {
+    }
+
+    @Override
+    public void exitSeatByPosExp(FormalPropertyDescriptionParser.SeatByPosExpContext ctx) {
+
+    }
+
+    @Override
     public void visitTerminal(TerminalNode tn) {
 
     }

@@ -50,4 +50,15 @@ public class CBMCCodeGenerationVisitorTest {
                 getBooleanExpressions().get(0).get(0);
         List<String> c = visitor.generateCode(n);
     }
+
+    @Test
+    public void testVoterByPos() {
+        visitor.setToPrePropertyMode();
+        BooleanExpressionNode n = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
+                "v == VOTER_AT_POS(1)",
+                new SymbolicVariable(
+                        "v", new InternalTypeContainer(InternalTypeRep.VOTER))).
+                getBooleanExpressions().get(0).get(0);
+        List<String> c = visitor.generateCode(n);
+    }
 }

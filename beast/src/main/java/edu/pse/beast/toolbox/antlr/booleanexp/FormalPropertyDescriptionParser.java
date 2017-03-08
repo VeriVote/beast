@@ -16,11 +16,10 @@ public class FormalPropertyDescriptionParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, VoterByPos=7, CandByPos=8, 
-		SeatByPos=9, Mult=10, Add=11, Vote=12, Elect=13, Votesum=14, ClosedBracket=15, 
-		OpenBracket=16, Quantor=17, ComparisonSymbol=18, BinaryRelationSymbol=19, 
-		Integer=20, Identifier=21, Whitespace=22, Newline=23, BlockComment=24, 
-		LineComment=25;
+		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
+		Mult=10, Add=11, Vote=12, Elect=13, Votesum=14, ClosedBracket=15, OpenBracket=16, 
+		Quantor=17, ComparisonSymbol=18, BinaryRelationSymbol=19, Integer=20, 
+		Identifier=21, Whitespace=22, Newline=23, BlockComment=24, LineComment=25;
 	public static final int
 		RULE_booleanExpList = 0, RULE_booleanExpListElement = 1, RULE_booleanExp = 2, 
 		RULE_binaryRelationExp = 3, RULE_quantorExp = 4, RULE_notExp = 5, RULE_comparisonExp = 6, 
@@ -37,14 +36,14 @@ public class FormalPropertyDescriptionParser extends Parser {
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, "';'", "':'", "'!'", "'V'", "'C'", "'S'", null, null, null, null, 
-		null, null, null, null, "')'", "'('"
+		null, "';'", "':'", "'!'", "'VOTER_AT_POS'", "'CAND_AT_POS'", "'SEAT_AT_POS'", 
+		"'V'", "'C'", "'S'", null, null, null, null, null, "')'", "'('"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
-		null, null, null, null, null, null, null, "VoterByPos", "CandByPos", "SeatByPos", 
-		"Mult", "Add", "Vote", "Elect", "Votesum", "ClosedBracket", "OpenBracket", 
-		"Quantor", "ComparisonSymbol", "BinaryRelationSymbol", "Integer", "Identifier", 
-		"Whitespace", "Newline", "BlockComment", "LineComment"
+		null, null, null, null, null, null, null, null, null, null, "Mult", "Add", 
+		"Vote", "Elect", "Votesum", "ClosedBracket", "OpenBracket", "Quantor", 
+		"ComparisonSymbol", "BinaryRelationSymbol", "Integer", "Identifier", "Whitespace", 
+		"Newline", "BlockComment", "LineComment"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -131,7 +130,7 @@ public class FormalPropertyDescriptionParser extends Parser {
 			setState(45);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << VoterByPos) | (1L << CandByPos) | (1L << SeatByPos) | (1L << Vote) | (1L << Elect) | (1L << Votesum) | (1L << OpenBracket) | (1L << Quantor) | (1L << Integer) | (1L << Identifier))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__7) | (1L << T__8) | (1L << Vote) | (1L << Elect) | (1L << Votesum) | (1L << OpenBracket) | (1L << Quantor) | (1L << Integer) | (1L << Identifier))) != 0)) {
 				{
 				{
 				setState(42);
@@ -681,9 +680,9 @@ public class FormalPropertyDescriptionParser extends Parser {
 				voteExp();
 				}
 				break;
-			case T__3:
-			case T__4:
-			case T__5:
+			case T__6:
+			case T__7:
+			case T__8:
 			case Votesum:
 			case OpenBracket:
 			case Integer:
@@ -700,9 +699,9 @@ public class FormalPropertyDescriptionParser extends Parser {
 				symbolicVarExp();
 				}
 				break;
-			case VoterByPos:
-			case CandByPos:
-			case SeatByPos:
+			case T__3:
+			case T__4:
+			case T__5:
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(124);
@@ -794,9 +793,9 @@ public class FormalPropertyDescriptionParser extends Parser {
 				voteSumExp();
 				}
 				break;
-			case T__3:
-			case T__4:
-			case T__5:
+			case T__6:
+			case T__7:
+			case T__8:
 				{
 				setState(133);
 				constantExp();
@@ -901,21 +900,21 @@ public class FormalPropertyDescriptionParser extends Parser {
 		try {
 			setState(151);
 			switch (_input.LA(1)) {
-			case VoterByPos:
+			case T__3:
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(148);
 				voterByPosExp();
 				}
 				break;
-			case CandByPos:
+			case T__4:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(149);
 				candByPosExp();
 				}
 				break;
-			case SeatByPos:
+			case T__5:
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(150);
@@ -938,7 +937,6 @@ public class FormalPropertyDescriptionParser extends Parser {
 	}
 
 	public static class VoterByPosExpContext extends ParserRuleContext {
-		public TerminalNode VoterByPos() { return getToken(FormalPropertyDescriptionParser.VoterByPos, 0); }
 		public PassPositionContext passPosition() {
 			return getRuleContext(PassPositionContext.class,0);
 		}
@@ -968,7 +966,7 @@ public class FormalPropertyDescriptionParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(153);
-			match(VoterByPos);
+			match(T__3);
 			setState(154);
 			passPosition();
 			}
@@ -985,7 +983,6 @@ public class FormalPropertyDescriptionParser extends Parser {
 	}
 
 	public static class CandByPosExpContext extends ParserRuleContext {
-		public TerminalNode CandByPos() { return getToken(FormalPropertyDescriptionParser.CandByPos, 0); }
 		public PassPositionContext passPosition() {
 			return getRuleContext(PassPositionContext.class,0);
 		}
@@ -1015,7 +1012,7 @@ public class FormalPropertyDescriptionParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(156);
-			match(CandByPos);
+			match(T__4);
 			setState(157);
 			passPosition();
 			}
@@ -1032,7 +1029,6 @@ public class FormalPropertyDescriptionParser extends Parser {
 	}
 
 	public static class SeatByPosExpContext extends ParserRuleContext {
-		public TerminalNode SeatByPos() { return getToken(FormalPropertyDescriptionParser.SeatByPos, 0); }
 		public PassPositionContext passPosition() {
 			return getRuleContext(PassPositionContext.class,0);
 		}
@@ -1062,7 +1058,7 @@ public class FormalPropertyDescriptionParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(159);
-			match(SeatByPos);
+			match(T__5);
 			setState(160);
 			passPosition();
 			}
@@ -1279,7 +1275,7 @@ public class FormalPropertyDescriptionParser extends Parser {
 			{
 			setState(178);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__3) | (1L << T__4) | (1L << T__5))) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__6) | (1L << T__7) | (1L << T__8))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			} else {
 				consume();
@@ -1527,7 +1523,7 @@ public class FormalPropertyDescriptionParser extends Parser {
 		"\16\3\16\3\16\3\17\3\17\3\20\3\20\7\20\u00a9\n\20\f\20\16\20\u00ac\13"+
 		"\20\3\21\3\21\7\21\u00b0\n\21\f\21\16\21\u00b3\13\21\3\22\3\22\3\23\3"+
 		"\23\3\23\3\24\3\24\3\24\3\24\3\25\3\25\3\25\3\25\3\26\3\26\3\26\2\4\b"+
-		"\22\27\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*\2\3\3\2\6\b\u00c7"+
+		"\22\27\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*\2\3\3\2\t\13\u00c7"+
 		"\2/\3\2\2\2\4\62\3\2\2\2\6=\3\2\2\2\bd\3\2\2\2\nn\3\2\2\2\fs\3\2\2\2\16"+
 		"v\3\2\2\2\20\177\3\2\2\2\22\u0089\3\2\2\2\24\u0099\3\2\2\2\26\u009b\3"+
 		"\2\2\2\30\u009e\3\2\2\2\32\u00a1\3\2\2\2\34\u00a4\3\2\2\2\36\u00a6\3\2"+
@@ -1558,8 +1554,8 @@ public class FormalPropertyDescriptionParser extends Parser {
 		"\u0091\3\2\2\2\u0093\u0094\3\2\2\2\u0094\23\3\2\2\2\u0095\u0093\3\2\2"+
 		"\2\u0096\u009a\5\26\f\2\u0097\u009a\5\30\r\2\u0098\u009a\5\32\16\2\u0099"+
 		"\u0096\3\2\2\2\u0099\u0097\3\2\2\2\u0099\u0098\3\2\2\2\u009a\25\3\2\2"+
-		"\2\u009b\u009c\7\t\2\2\u009c\u009d\5(\25\2\u009d\27\3\2\2\2\u009e\u009f"+
-		"\7\n\2\2\u009f\u00a0\5(\25\2\u00a0\31\3\2\2\2\u00a1\u00a2\7\13\2\2\u00a2"+
+		"\2\u009b\u009c\7\6\2\2\u009c\u009d\5(\25\2\u009d\27\3\2\2\2\u009e\u009f"+
+		"\7\7\2\2\u009f\u00a0\5(\25\2\u00a0\31\3\2\2\2\u00a1\u00a2\7\b\2\2\u00a2"+
 		"\u00a3\5(\25\2\u00a3\33\3\2\2\2\u00a4\u00a5\7\26\2\2\u00a5\35\3\2\2\2"+
 		"\u00a6\u00aa\7\17\2\2\u00a7\u00a9\5&\24\2\u00a8\u00a7\3\2\2\2\u00a9\u00ac"+
 		"\3\2\2\2\u00aa\u00a8\3\2\2\2\u00aa\u00ab\3\2\2\2\u00ab\37\3\2\2\2\u00ac"+
