@@ -42,9 +42,11 @@ seatByPosExp : 'SEAT_AT_POS' passPosition;
 
 integer : Integer;
 
-electExp :  Elect (passSymbVar*|passByPos*);
+electExp :  Elect passType*;
 
-voteExp : Vote (passSymbVar*|passByPos*);
+voteExp : Vote passType*;
+
+passType: passSymbVar|passByPos;
 
 constantExp : 'V' | 'C' | 'S';
 

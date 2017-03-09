@@ -220,17 +220,16 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         String numberString = ctx.Elect().getText().substring("ELECT".length());
         int number = Integer.valueOf(numberString);
         if (currentHighestElect < number) {
-            currentHighestElect = number;
+            currentHighestElect= number;
         }
+        int amtAcessingTypes = ctx.passType().size();
+        TypeExpression[] accessingVars = new TypeExpression[amtAcessingTypes];
 
-        SymbolicVariable[] accessingVars = new SymbolicVariable[ctx.passSymbVar().size()];
-
-        for (int i = 0; i < accessingVars.length; ++i) {
-            accessingVars[i] = ((SymbolicVarExp) expStack.pop()).getSymbolicVar();
+        for (int i = 0; i < amtAcessingTypes; ++i) {
+            accessingVars[amtAcessingTypes - i - 1] = expStack.pop();
         }
 
         ElectExp expNode = new ElectExp(resType, accessingVars, number);
-
         expStack.push(expNode);
     }
 
@@ -246,15 +245,14 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         if (maxVoteExp < number) {
             maxVoteExp = number;
         }
+        int amtAcessingTypes = ctx.passType().size();
+        TypeExpression[] accessingVars = new TypeExpression[amtAcessingTypes];
 
-        SymbolicVariable[] accessingVars = new SymbolicVariable[ctx.passSymbVar().size()];
-
-        for (int i = 0; i < accessingVars.length; ++i) {
-            accessingVars[i] = ((SymbolicVarExp) expStack.pop()).getSymbolicVar();
+        for (int i = 0; i < amtAcessingTypes; ++i) {
+            accessingVars[amtAcessingTypes - i - 1] = expStack.pop();
         }
 
         VoteExp expNode = new VoteExp(inputType, accessingVars, number);
-
         expStack.push(expNode);
     }
 
@@ -325,18 +323,25 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         expStack.push(integerNode);
     }
 
+    private void pushAtPosNode(InternalTypeRep rep) {
+        expStack.push(
+                new AtPosExp(new InternalTypeContainer(rep) ,
+                        (IntegerValuedExpression) expStack.pop()));
+    }
+
     @Override
     public void exitVoterByPosExp(FormalPropertyDescriptionParser.VoterByPosExpContext ctx) {
-        expStack.push(new VoterByPosExp((IntegerValuedExpression) expStack.pop()));
+        pushAtPosNode(InternalTypeRep.VOTER);
     }
 
     @Override
     public void exitCandByPosExp(FormalPropertyDescriptionParser.CandByPosExpContext ctx) {
+        pushAtPosNode(InternalTypeRep.CANDIDATE);
     }
 
     @Override
     public void exitSeatByPosExp(FormalPropertyDescriptionParser.SeatByPosExpContext ctx) {
-
+        pushAtPosNode(InternalTypeRep.SEAT);
     }
 
     @Override

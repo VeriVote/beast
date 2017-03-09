@@ -97,5 +97,5 @@ public interface BooleanExpNodeVisitor {
 
     void visitBinaryIntegerValuedNode(BinaryIntegerValuedNode binaryIntegerValuedNode);
 
-    void visitVoterByPosNode(VoterByPosExp voterByPosExp);
+    void visitAtPosNode(AtPosExp atPosExp);
 }

@@ -276,36 +276,31 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         code.add("unsigned int " + varName + " = !(" + variableNames.pop() + ");");
         testIfLast();
     }
-
+    int listlvl = 0;
     @Override
     public void visitComparisonNode(ComparisonNode node) {
         String varName = "comparison_" + comparisonNodeCounter;
         comparisonNodeCounter++;
         variableNames.push(varName);
-        int lhslistLevel = 0;
-        int rhslistLevel = 0;
+        listlvl = 0;
 
         for (InternalTypeContainer cont = node.getLHSBooleanExpNode().getInternalTypeContainer();
              cont.isList(); cont = cont.getListedType()) {
-            lhslistLevel++;
+            listlvl++;
         }
+        node.getLHSBooleanExpNode().getVisited(this);
+        int lhslistLevel = listlvl;
+
+        listlvl = 0;
+
         for (InternalTypeContainer cont = node.getRHSBooleanExpNode().getInternalTypeContainer();
              cont.isList(); cont = cont.getListedType()) {
-            rhslistLevel++;
+            listlvl++;
         }
 
-        node.getLHSBooleanExpNode().getVisited(this);
         node.getRHSBooleanExpNode().getVisited(this);
-        if (node.getLHSBooleanExpNode().getAccessVar() != null) {
-            for (SymbolicVariable accessVar : node.getLHSBooleanExpNode().getAccessVar()) {
-                lhslistLevel--;
-            }
-        }
-        if (node.getRHSBooleanExpNode().getAccessVar() != null) {
-            for (SymbolicVariable accessVar : node.getRHSBooleanExpNode().getAccessVar()) {
-                rhslistLevel--;
-            }
-        }
+        int rhslistLevel = listlvl;
+
         int maxListLevel = lhslistLevel > rhslistLevel ? lhslistLevel : rhslistLevel;
         InternalTypeContainer cont = lhslistLevel > rhslistLevel
                 ? node.getLHSBooleanExpNode().getInternalTypeContainer()
@@ -371,23 +366,34 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitElectExp(ElectExp exp) {
+        visitAcessingNodesReverseOrder(exp);
 
         String tempCode = "electNUMBER".replace("NUMBER", String.valueOf(exp.getCount()));
-        SymbolicVariable[] accessVars = exp.getAccessVar();
-        for (int i = 0; i < accessVars.length; ++i) {
-            tempCode += "[VAR]".replace("VAR", accessVars[i].getId());
+        for (int i = 0; i < exp.getAccessingVars().length; ++i) {
+            tempCode += "[VAR]".replace("VAR", variableNames.pop());
+            listlvl--;
         }
         variableNames.push(tempCode);
     }
 
+
+
     @Override
     public void visitVoteExp(VoteExp exp) {
+        visitAcessingNodesReverseOrder(exp);
+
         String tempCode = "votesNUMBER".replace("NUMBER", String.valueOf(exp.getCount()));
-        SymbolicVariable[] accessVars = exp.getAccessVar();
-        for (int i = 0; i < accessVars.length; ++i) {
-            tempCode += "[VAR]".replace("VAR", accessVars[i].getId());
+        for (int i = 0; i < exp.getAccessingVars().length; ++i) {
+            tempCode += "[VAR]".replace("VAR", variableNames.pop());
+            listlvl--;
         }
         variableNames.push(tempCode);
+    }
+
+    private void visitAcessingNodesReverseOrder(AccessValueNode exp) {
+        for (int i = exp.getAccessingVars().length - 1; i >= 0; i--) {
+            exp.getAccessingVars()[i].getVisited(this);
+        }
     }
 
     @Override
@@ -400,25 +406,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         funcCallTemplate = funcCallTemplate.replaceAll("NUM", String.valueOf(exp.getVoteNumber()));
         funcCallTemplate = funcCallTemplate.replaceAll("CAND", candidateVar);
         code.add(funcCallTemplate);
-        /*code.add("unsigned int " + counter + " = 0;");
-        int voteNumber = exp.getVoteNumber();
-        if (inputType.getType().getListLvl() == 1) { //singleChoice
-            code.add("for(unsigned int voteSumCount = 0; voteSumCount < V; voteSumCount++) {");
-            code.addTab();
-            code.add("if (votes" + voteNumber + "[voteSumCount] == " + candidateVar + ") {");
-            code.addTab();
-            code.add(counter + "++;");
-            code.deleteTab();
-            code.add("}");
-            code.deleteTab();
-            code.add("}");
-        } else {
-            code.add("for(unsigned int voteSumCount = 0; voteSumCount < V; voteSumCount++) {");
-            code.addTab();
-            code.add(counter + " += votes" + voteNumber + "[voteSumCount][" + candidateVar + "]; ");
-            code.deleteTab();
-            code.add("}");
-        }*/
         variableNames.push(counter);
     }
 
@@ -465,13 +452,21 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         variableNames.push(varname);
     }
 
-    private int amtByPosVar = 0;
     @Override
-    public void visitVoterByPosNode(VoterByPosExp voterByPosExp) {
-        voterByPosExp.getPassedPositionNode().getVisited(this);
-        String varName = "voterByPos" + amtByPosVar++;
-        code.add("unsigned int " + varName + " = " + variableNames.pop());
+    public void visitAtPosNode(AtPosExp atPosExp) {
+        atPosExp.getIntegerValuedExpression().getVisited(this);
+        String varName = getAtPosVarName(atPosExp);
+        String template = "unsigned int VAR = NUMBER;";
+        template = template.replace("VAR", varName);
+        template = template.replace("NUMBER", variableNames.pop());
+        code.add(template);
         variableNames.push(varName);
+    }
+
+    private int amtByPosVar = 0;
+    private String getAtPosVarName(AtPosExp atPosExp) {
+        return atPosExp.getInternalTypeContainer().getInternalType().toString().toLowerCase() +
+                "AtPos_" + amtByPosVar++;
     }
 
     private void testIfLast() {

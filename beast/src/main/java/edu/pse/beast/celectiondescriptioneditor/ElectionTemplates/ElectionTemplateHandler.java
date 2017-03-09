@@ -45,7 +45,7 @@ public class ElectionTemplateHandler {
                                         new InternalTypeContainer(InternalTypeRep.INTEGER),
                                         InternalTypeRep.CANDIDATE 
                                 ), InternalTypeRep.VOTER),
-                        "list_of_candidates_per_voter"));
+                        "list_of_candidate_placements_per_voter"));
         
         inputTypes.add(
                 new ElectionTypeContainer(

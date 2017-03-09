@@ -4,7 +4,7 @@ import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpANTLRHandler;
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.ComparisonNode;
-import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.VoterByPosExp;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.AtPosExp;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.BinaryIntegerValuedNode;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
@@ -49,7 +49,7 @@ public class FormalPropertySyntaxTreeToAstTranslatorTest {
                 "v == VOTER_AT_POS(1)",
                 new SymbolicVariable("v", new InternalTypeContainer(InternalTypeRep.VOTER)));
         ComparisonNode firstChild = (ComparisonNode) listNode.getBooleanExpressions().get(0).get(0);
-        VoterByPosExp voterbypos = (VoterByPosExp) firstChild.getRHSBooleanExpNode();
+        AtPosExp voterbypos = (AtPosExp) firstChild.getRHSBooleanExpNode();
     }
 
     @Test

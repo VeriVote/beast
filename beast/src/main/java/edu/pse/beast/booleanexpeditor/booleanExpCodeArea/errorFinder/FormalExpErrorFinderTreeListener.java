@@ -208,7 +208,9 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
     @Override
     public void exitVoterByPosExp(FormalPropertyDescriptionParser.VoterByPosExpContext ctx) {
-
+        expStack.push(
+                new AtPosExp(new InternalTypeContainer(InternalTypeRep.VOTER) ,
+                (IntegerValuedExpression) expStack.pop()));
     }
 
     @Override
@@ -218,7 +220,9 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
     @Override
     public void exitCandByPosExp(FormalPropertyDescriptionParser.CandByPosExpContext ctx) {
-
+        expStack.push(
+                new AtPosExp(new InternalTypeContainer(InternalTypeRep.CANDIDATE) ,
+                        (IntegerValuedExpression) expStack.pop()));
     }
 
     @Override
@@ -228,7 +232,9 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
     @Override
     public void exitSeatByPosExp(FormalPropertyDescriptionParser.SeatByPosExpContext ctx) {
-
+        expStack.push(
+                new AtPosExp(new InternalTypeContainer(InternalTypeRep.SEAT) ,
+                        (IntegerValuedExpression) expStack.pop()));
     }
 
     @Override
@@ -246,14 +252,14 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
     @Override
     public void enterElectExp(FormalPropertyDescriptionParser.ElectExpContext ctx) {
-        testIfTooManyVarsPassed(ctx.passSymbVar(), output.getType());
+        testIfTooManyVarsPassed(ctx.passType(), output.getType());
     }
 
     @Override
     public void exitElectExp(FormalPropertyDescriptionParser.ElectExpContext ctx) {
-        testIfWrongTypePassed(ctx.passSymbVar(), output.getType());
+        testIfWrongTypePassed(ctx.passType(), output.getType());
         InternalTypeContainer cont = output.getType();
-        for (int i = 0; i < ctx.passSymbVar().size() && cont.isList(); ++i) {
+        for (int i = 0; i < ctx.passType().size() && cont.isList(); ++i) {
             cont = cont.getListedType();
         }
         String numberString = ctx.Elect().getText().substring("ELECT".length());
@@ -264,14 +270,14 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
     @Override
     public void enterVoteExp(FormalPropertyDescriptionParser.VoteExpContext ctx) {
-        testIfTooManyVarsPassed(ctx.passSymbVar(), input.getType());
+        testIfTooManyVarsPassed(ctx.passType(), input.getType());
     }
 
     @Override
     public void exitVoteExp(FormalPropertyDescriptionParser.VoteExpContext ctx) {
-        testIfWrongTypePassed(ctx.passSymbVar(), input.getType());
+        testIfWrongTypePassed(ctx.passType(), input.getType());
         InternalTypeContainer cont = input.getType();
-        for (int i = 0; i < ctx.passSymbVar().size() && cont.isList(); ++i) {
+        for (int i = 0; i < ctx.passType().size() && cont.isList(); ++i) {
             cont = cont.getListedType();
         }
         String numberString = ctx.Vote().getText().substring("VOTES".length());
@@ -280,7 +286,17 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
         expStack.add(new ElectExp(cont, null, 0));
     }
 
-    private void testIfTooManyVarsPassed(List<FormalPropertyDescriptionParser.PassSymbVarContext> ctx,
+    @Override
+    public void enterPassType(FormalPropertyDescriptionParser.PassTypeContext ctx) {
+
+    }
+
+    @Override
+    public void exitPassType(FormalPropertyDescriptionParser.PassTypeContext ctx) {
+
+    }
+
+    private void testIfTooManyVarsPassed(List<FormalPropertyDescriptionParser.PassTypeContext> ctx,
                                          InternalTypeContainer cont) {
         int amountPassedVariables = ctx.size();
         int listDepth = 0;
@@ -292,17 +308,17 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
         }
     }
 
-    private void testIfWrongTypePassed(List<FormalPropertyDescriptionParser.PassSymbVarContext> ctx,
+    private void testIfWrongTypePassed(List<FormalPropertyDescriptionParser.PassTypeContext> ctx,
                                        InternalTypeContainer cont) {
         int amtPassed = ctx.size();
-        Stack<SymbolicVarExp> passedSymbVars = new Stack<>();
+        Stack<TypeExpression> passedTypes = new Stack<>();
         for (int i = 0; i < amtPassed; ++i) {
-            passedSymbVars.add((SymbolicVarExp) expStack.pop());
+            passedTypes.add(expStack.pop());
         }
         int i = 0;
         for (; cont.isList() && i < ctx.size(); cont = cont.getListedType()) {
-            SymbolicVarExp currentVarExp = passedSymbVars.pop();
-            if (cont.getAccesTypeIfList() != currentVarExp.getSymbolicVar().getInternalTypeContainer().
+            TypeExpression currentVarExp = passedTypes.pop();
+            if (cont.getAccesTypeIfList() != currentVarExp.getInternalTypeContainer().
                     getInternalType()) {
                 created.add(BooleanExpErrorFactory.createWrongVarTypePassed(cont, ctx.get(i), currentVarExp));
             }
@@ -354,6 +370,16 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
     @Override
     public void exitPassPosition(FormalPropertyDescriptionParser.PassPositionContext ctx) {
+
+    }
+
+    @Override
+    public void enterPassByPos(FormalPropertyDescriptionParser.PassByPosContext ctx) {
+
+    }
+
+    @Override
+    public void exitPassByPos(FormalPropertyDescriptionParser.PassByPosContext ctx) {
 
     }
 

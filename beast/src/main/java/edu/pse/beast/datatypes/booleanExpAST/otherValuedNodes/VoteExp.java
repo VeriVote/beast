@@ -9,39 +9,22 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
  * @author Lukas
  *
  */
-public class VoteExp extends TypeExpression {
-
-    private final SymbolicVariable[] accesVars;
-    private final int count;
+public class VoteExp extends AccessValueNode {
 
     /**
      *
      * @param internalTypeContainer the internal type
-     * @param symbVarm the described symbolic variable
+     *
      * @param count the count of this vote
      */
-    public VoteExp(InternalTypeContainer internalTypeContainer, SymbolicVariable[] symbVarm, int count) {
-        super(internalTypeContainer);
-        this.accesVars = symbVarm;
-        this.count = count;
-    }
-
-    /**
-     *
-     * @return the described symbolic variable
-     */
-    @Override
-    public SymbolicVariable[] getAccessVar() {
-        return accesVars;
+    public VoteExp(InternalTypeContainer internalTypeContainer, TypeExpression[] accessingVars, int count) {
+        super(internalTypeContainer, accessingVars, count);
     }
 
     /**
      *
      * @return the count of this vote
      */
-    public int getCount() {
-        return count;
-    }
 
     @Override
     public void getVisited(BooleanExpNodeVisitor visitor) {
