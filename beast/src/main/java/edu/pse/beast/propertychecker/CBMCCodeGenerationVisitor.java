@@ -392,10 +392,15 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitVoteSumExp(VoteSumForCandExp exp) {
+        String funcCallTemplate = "unsigned int VARNAME = voteSumForCandidate(votesNUM, CAND);";
         String candidateVar = exp.getSymbolicVariable().getId();
         String counter = "voteSumExp_" + voteSumCounter;
         voteSumCounter++;
-        code.add("unsigned int " + counter + " = 0;");
+        funcCallTemplate = funcCallTemplate.replaceAll("VARNAME", counter);
+        funcCallTemplate = funcCallTemplate.replaceAll("NUM", String.valueOf(exp.getVoteNumber()));
+        funcCallTemplate = funcCallTemplate.replaceAll("CAND", candidateVar);
+        code.add(funcCallTemplate);
+        /*code.add("unsigned int " + counter + " = 0;");
         int voteNumber = exp.getVoteNumber();
         if (inputType.getType().getListLvl() == 1) { //singleChoice
             code.add("for(unsigned int voteSumCount = 0; voteSumCount < V; voteSumCount++) {");
@@ -413,14 +418,14 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             code.add(counter + " += votes" + voteNumber + "[voteSumCount][" + candidateVar + "]; ");
             code.deleteTab();
             code.add("}");
-        }
+        }*/
         variableNames.push(counter);
     }
 
     @Override
     public void visitIntegerNode(IntegerNode integerNode) {
         String varName = getNewNumberVariableName();
-        code.add("unsigned int " + varName + " = " + integerNode.getHeldInteger());
+        code.add("unsigned int " + varName + " = " + integerNode.getHeldInteger() + ";");
         variableNames.push(varName);
     }
 
@@ -456,7 +461,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String lhs = variableNames.pop();
         String varname = getNewNumberVariableName();
         code.add("unsigned int " + varname + " = " + lhs +
-                " " + binaryIntegerValuedNode.getRelationSymbol() + " " + rhs);
+                " " + binaryIntegerValuedNode.getRelationSymbol() + " " + rhs + ";");
         variableNames.push(varname);
     }
 

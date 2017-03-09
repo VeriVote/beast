@@ -41,6 +41,11 @@ public class CBMCCodeGenerationVisitorTest {
     }
 
     @Test
+    public void testGenerateCodeForVoteSum() {
+
+    }
+
+    @Test
     public void testMultipleVoteSum() {
         visitor.setToPrePropertyMode();
         BooleanExpressionNode n = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
