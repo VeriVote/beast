@@ -79,6 +79,7 @@ public class CBMCCodeGenerator {
 
     private void generateCode() {
         addHeader();
+        addVoteSumFunc();
 
         code.add("//Code of the user");
         ArrayList<String> electionDescriptionCode = new ArrayList<>();
@@ -86,6 +87,23 @@ public class CBMCCodeGenerator {
         code.addArrayList(electionDescriptionCode);
 
         addMainMethod();
+        for (int i = 0; i < code.getCodeArrayList().size(); i++) {
+            System.out.println(i + ": " + code.getCodeArrayList().get(i));
+        }
+    }
+
+    private void addVoteSumFunc() {
+        code.add("unsigned int voteSumForCandidate(unsigned int *arr, unsigned int candidate) {");
+        code.add("\tunsigned int sum = 0;");
+        code.add("\tfor(unsigned int i = 0; i < V; ++i) {");
+        if(inputType.getType().getListLvl() == 1) {
+            code.add("\t\tif(arr[i] == candidate) sum++;");
+        } else {
+            code.add("\t\tsum += arr[i][candidate];");
+        }
+        code.add("\t}");
+        code.add("\treturn sum;");
+        code.add("}\n");
     }
 
     // maybe add something that let's the user use imports

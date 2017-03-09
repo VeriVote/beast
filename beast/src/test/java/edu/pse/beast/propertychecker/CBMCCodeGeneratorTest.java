@@ -11,6 +11,7 @@ import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -46,7 +47,7 @@ public class CBMCCodeGeneratorTest {
         InternalTypeContainer intype1 = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
         InternalTypeContainer intype2 = new InternalTypeContainer(intype1, InternalTypeRep.CANDIDATE);
         InternalTypeContainer intype3 = new InternalTypeContainer(intype2, InternalTypeRep.VOTER);
-        ElectionTypeContainer inputType = new ElectionTypeContainer(intype3, "list_of_candidates_per_voter");
+        ElectionTypeContainer inputType = new ElectionTypeContainer(intype1, "list_of_candidates_per_voter");
         InternalTypeContainer type2 = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
         InternalTypeContainer outtype = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
         ElectionTypeContainer outputType = new ElectionTypeContainer(outtype, "output");
@@ -59,8 +60,8 @@ public class CBMCCodeGeneratorTest {
 
         SymbolicVariableList symbolicVariableList = new SymbolicVariableList();
 
-        String pre = "VOTES1 == VOTES2;";
-        String post = "(ELECT1 == ELECT2);";
+        String pre = "VOTE_SUM_FOR_CANDIDATE1(c) == 1";
+        String post = "";
         // String post = "1 == 2;";
 
         FormalPropertiesDescription preDescr = new FormalPropertiesDescription(pre);
@@ -84,9 +85,7 @@ public class CBMCCodeGeneratorTest {
         System.out.println();
         ArrayList<String> code;
         code = generator.getCode();
-        code.forEach((n) -> {
-            System.out.println(n);
-        });
+        code.forEach(System.out::println);
     }
 
 }
