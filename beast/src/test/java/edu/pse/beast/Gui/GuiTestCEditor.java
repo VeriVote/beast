@@ -39,7 +39,7 @@ public class GuiTestCEditor {
                 KeyEvent.VK_ENTER //and save
         };
 
-        helper.performKeystrokesConcurrently(keys, 500, 50);
+        helper.performKeystrokesConcurrently(keys, 500, 100);
 
         helper.clickMenuItemInCEditor(0,1,50);
 
@@ -56,7 +56,7 @@ public class GuiTestCEditor {
         Assert.assertEquals(electionDescription.getInputType().getId(), "one_candidate_per_voter");
 
         electionDescriptionEditor.setVisible(true);
-        helper.clickMenuItemInCEditor(0,0,100);
+        helper.clickMenuItemInCEditor(0,0,waittime);
 
         int[] keys = {
                 KeyEvent.VK_DOWN, KeyEvent.VK_DOWN, KeyEvent.VK_ENTER, //choose new election input
