@@ -207,6 +207,18 @@ public class FormalPropertyDescriptionBaseListener implements FormalPropertyDesc
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterPassType(FormalPropertyDescriptionParser.PassTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPassType(FormalPropertyDescriptionParser.PassTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterConstantExp(FormalPropertyDescriptionParser.ConstantExpContext ctx) { }
 	/**
 	 * {@inheritDoc}

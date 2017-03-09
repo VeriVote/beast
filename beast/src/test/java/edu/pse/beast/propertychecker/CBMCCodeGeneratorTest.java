@@ -60,7 +60,7 @@ public class CBMCCodeGeneratorTest {
 
         SymbolicVariableList symbolicVariableList = new SymbolicVariableList();
 
-        String pre = "VOTE_SUM_FOR_CANDIDATE1(c) == 1";
+        String pre = "VOTES1(VOTER_AT_POS(0))(c) == 3";
         String post = "";
         // String post = "1 == 2;";
 

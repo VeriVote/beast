@@ -255,6 +255,18 @@ public class FormalPropertyDescriptionBaseListener implements FormalPropertyDesc
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterPassByPos(FormalPropertyDescriptionParser.PassByPosContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPassByPos(FormalPropertyDescriptionParser.PassByPosContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterSymbolicVarExp(FormalPropertyDescriptionParser.SymbolicVarExpContext ctx) { }
 	/**
 	 * {@inheritDoc}

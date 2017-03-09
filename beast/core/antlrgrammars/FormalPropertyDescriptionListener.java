@@ -167,6 +167,16 @@ public interface FormalPropertyDescriptionListener extends ParseTreeListener {
 	 */
 	void exitVoteExp(FormalPropertyDescriptionParser.VoteExpContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#passType}.
+	 * @param ctx the parse tree
+	 */
+	void enterPassType(FormalPropertyDescriptionParser.PassTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#passType}.
+	 * @param ctx the parse tree
+	 */
+	void exitPassType(FormalPropertyDescriptionParser.PassTypeContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#constantExp}.
 	 * @param ctx the parse tree
 	 */

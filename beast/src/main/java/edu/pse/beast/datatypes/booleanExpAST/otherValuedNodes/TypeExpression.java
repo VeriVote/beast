@@ -29,7 +29,4 @@ public abstract class TypeExpression extends BooleanExpressionNode {
         return container;
     }
 
-    public SymbolicVariable[] getAccessVar() {
-        return null;
-    }
 }

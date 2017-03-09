@@ -130,6 +130,12 @@ public interface FormalPropertyDescriptionVisitor<T> extends ParseTreeVisitor<T>
 	 */
 	T visitPassPosition(FormalPropertyDescriptionParser.PassPositionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#passByPos}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPassByPos(FormalPropertyDescriptionParser.PassByPosContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#symbolicVarExp}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

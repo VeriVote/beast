@@ -106,6 +106,12 @@ public interface FormalPropertyDescriptionVisitor<T> extends ParseTreeVisitor<T>
 	 */
 	T visitVoteExp(FormalPropertyDescriptionParser.VoteExpContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#passType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPassType(FormalPropertyDescriptionParser.PassTypeContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#constantExp}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

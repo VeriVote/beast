@@ -156,5 +156,12 @@ public class FormalPropertyDescriptionBaseVisitor<T> extends AbstractParseTreeVi
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitPassByPos(FormalPropertyDescriptionParser.PassByPosContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitSymbolicVarExp(FormalPropertyDescriptionParser.SymbolicVarExpContext ctx) { return visitChildren(ctx); }
 }

@@ -207,6 +207,16 @@ public interface FormalPropertyDescriptionListener extends ParseTreeListener {
 	 */
 	void exitPassPosition(FormalPropertyDescriptionParser.PassPositionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#passByPos}.
+	 * @param ctx the parse tree
+	 */
+	void enterPassByPos(FormalPropertyDescriptionParser.PassByPosContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#passByPos}.
+	 * @param ctx the parse tree
+	 */
+	void exitPassByPos(FormalPropertyDescriptionParser.PassByPosContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#symbolicVarExp}.
 	 * @param ctx the parse tree
 	 */
