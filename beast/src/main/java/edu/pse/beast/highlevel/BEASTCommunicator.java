@@ -183,11 +183,6 @@ public class BEASTCommunicator implements CheckListener {
             String seconds = decimalFormat.format(passedTimeSeconds);
             timeString = seconds + "s";
         }
-
-
-
-
-
         return timeString;
     }
 }

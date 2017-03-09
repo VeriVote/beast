@@ -113,7 +113,7 @@ true
 1
 </amountSeatsMin>
 <amountSeatsMax>
-1
+3
 </amountSeatsMax>
 <timeout>
 <duration>

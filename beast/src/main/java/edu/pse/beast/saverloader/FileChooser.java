@@ -28,7 +28,7 @@ public class FileChooser {
     private String cancelOption;
 
     /**
-     * Construcotr
+     * Constructor
      * @param stringResourceLoader the stringResourceLoader providing the Strings needed for displaying save and open
      *                             JFileChoosers
      * @param saverLoader a class implementing the SaverLoader interface for creating Strings from objects
@@ -88,12 +88,16 @@ public class FileChooser {
      * @return the loaded object upon success, null otherwise
      */
     public Object loadObject() {
+
         fileChooser.setApproveButtonText(stringResourceLoader.getStringFromID("openApproveButtonText"));
         if (fileChooser.showDialog(component, stringResourceLoader.getStringFromID("openDialogTitleText"))
                 == JFileChooser.APPROVE_OPTION) {
             File selectedFile = fileChooser.getSelectedFile();
             String content = "";
-            BufferedReader inputReader;
+            BufferedReader inputReader = null;
+
+            boolean caught = false;
+
             try {
                 inputReader = new BufferedReader(
                         new InputStreamReader(
@@ -107,7 +111,7 @@ public class FileChooser {
                         null,
                         options,
                         options[0]);
-                return (loadObject());
+                caught = true;
             } catch (FileNotFoundException e) {
                 JOptionPane.showOptionDialog(null,
                         stringResourceLoader.getStringFromID("inputOutputErrorOpen"), "",
@@ -116,8 +120,20 @@ public class FileChooser {
                         null,
                         options,
                         options[0]);
+
+                caught = true;
+            }
+            if (caught) {
+                if (inputReader != null) {
+                    try {
+                        inputReader.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
                 return (loadObject());
             }
+
             String sCurrentLine;
             try {
                 while ((sCurrentLine = inputReader.readLine()) != null) {
@@ -134,6 +150,7 @@ public class FileChooser {
                 return (loadObject());
             }
             Object outputObject = null;
+            boolean closed = false;
             try {
                 outputObject = saverLoader.createFromSaveString(content);
                 lastLoadedFile = selectedFile;
@@ -151,14 +168,18 @@ public class FileChooser {
             } finally {
                 try {
                     inputReader.close();
-                    return outputObject;
+                    closed = true;
                 } catch (IOException ex) {
-
                     ex.printStackTrace();
-                    return (loadObject());
+                    closed = false;
                 }
-
             }
+            if (closed) {
+                return outputObject;
+            } else {
+                return loadObject();
+            }
+
         } else {
             return null;
         }
@@ -214,6 +235,7 @@ public class FileChooser {
                     options[0]);
             return false;
         }
+        boolean closed = false;
         try {
             try {
                 out.write(saveString);
@@ -231,8 +253,7 @@ public class FileChooser {
         } finally {
             try {
                 out.close();
-                lastLoadedFile = localfile;
-                return true;
+                closed = true;
             } catch (IOException e) {
                 JOptionPane.showOptionDialog(null,
                         stringResourceLoader.getStringFromID(
@@ -242,8 +263,14 @@ public class FileChooser {
                         null,
                         options,
                         options[0]);
-                return false;
+                closed = false;
             }
+        }
+        if (closed) {
+            lastLoadedFile = localfile;
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -261,10 +288,8 @@ public class FileChooser {
         int option = showSaveOptionPane(((NameInterface) object).getName());
         if (option == JOptionPane.YES_OPTION) {
             return saveObject(object, false);
-        } else if (option == JOptionPane.CANCEL_OPTION) {
-            return false;
-        } else {
-            return true;
+        } else  {
+            return (!(option == JOptionPane.CANCEL_OPTION));
         }
     }
 
