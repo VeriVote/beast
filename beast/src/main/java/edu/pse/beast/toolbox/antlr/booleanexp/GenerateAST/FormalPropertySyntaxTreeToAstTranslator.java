@@ -222,7 +222,7 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         if (currentHighestElect < number) {
             currentHighestElect= number;
         }
-        int amtAcessingTypes = ctx.passSymbVar().size() == 0 ? ctx.passByPos().size() : ctx.passSymbVar().size();
+        int amtAcessingTypes = ctx.passType().size();
         TypeExpression[] accessingVars = new TypeExpression[amtAcessingTypes];
 
         for (int i = 0; i < amtAcessingTypes; ++i) {
@@ -245,7 +245,7 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         if (maxVoteExp < number) {
             maxVoteExp = number;
         }
-        int amtAcessingTypes = ctx.passSymbVar().size() == 0 ? ctx.passByPos().size() : ctx.passSymbVar().size();
+        int amtAcessingTypes = ctx.passType().size();
         TypeExpression[] accessingVars = new TypeExpression[amtAcessingTypes];
 
         for (int i = 0; i < amtAcessingTypes; ++i) {

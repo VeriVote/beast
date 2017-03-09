@@ -7,6 +7,7 @@ package edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder;
 
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.SymbolicVarExp;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.TypeExpression;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
@@ -44,21 +45,21 @@ public class BooleanExpErrorFactory {
         return err;
     }
 
-    public static CodeError createTooManyVarsPassedError(FormalPropertyDescriptionParser.PassSymbVarContext ctx) {
+    public static CodeError createTooManyVarsPassedError(FormalPropertyDescriptionParser.PassTypeContext ctx) {
            
         CodeError err = generateStandardError(ctx, "too_many_vars_passed");
-        err.setExtraInfo("var_name", ctx.symbolicVarExp().Identifier().getText());
+        err.setExtraInfo("var_name", ctx.getText());
         return err;
     }
 
     static CodeError createWrongVarTypePassed(InternalTypeContainer cont,
-            FormalPropertyDescriptionParser.PassSymbVarContext ctx,
-            SymbolicVarExp currentVarExp) {
+                                              FormalPropertyDescriptionParser.PassTypeContext ctx,
+                                              TypeExpression currentVarExp) {
         
         CodeError err = generateStandardError(ctx, "wrong_var_type_passed");
         
-        err.setExtraInfo("var_name", ctx.symbolicVarExp().Identifier().getText());
-        err.setExtraInfo("passed_type", currentVarExp.getSymbolicVar().getInternalTypeContainer().getInternalType().toString());
+        err.setExtraInfo("var_name", ctx.getText());
+        err.setExtraInfo("passed_type", currentVarExp.getInternalTypeContainer().getInternalType().toString());
         err.setExtraInfo("expected_type", cont.getAccesTypeIfList().toString());
         return err;
     }
