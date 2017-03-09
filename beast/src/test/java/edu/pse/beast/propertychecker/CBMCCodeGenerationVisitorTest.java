@@ -41,9 +41,18 @@ public class CBMCCodeGenerationVisitorTest {
     }
 
     @Test
-    public void testGenerateCodeForVoteSum() {
+    public void testGenerateCodeForVoterAtPos() {
+        visitor.setToPrePropertyMode();
+        BooleanExpressionNode n = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
+                "v == VOTER_AT_POS(V/2*3-C);",
+                new SymbolicVariable(
+                        "v", new InternalTypeContainer(InternalTypeRep.VOTER))).
+                getBooleanExpressions().get(0).get(0);
 
+        List<String> c = visitor.generateCode(n);
     }
+
+
 
     @Test
     public void testMultipleVoteSum() {

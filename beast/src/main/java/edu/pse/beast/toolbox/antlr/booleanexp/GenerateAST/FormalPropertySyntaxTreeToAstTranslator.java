@@ -246,16 +246,15 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         if (maxVoteExp < number) {
             maxVoteExp = number;
         }
-
-        SymbolicVariable[] accessingVars = new SymbolicVariable[ctx.passSymbVar().size()];
-
-        for (int i = 0; i < accessingVars.length; ++i) {
-            accessingVars[i] = ((SymbolicVarExp) expStack.pop()).getSymbolicVar();
+        if(ctx.passSymbVar() != null) {
+            SymbolicVariable[] accessingVars = new SymbolicVariable[ctx.passSymbVar().size()];
+            for (int i = 0; i < accessingVars.length; ++i) {
+                accessingVars[i] = ((SymbolicVarExp) expStack.pop()).getSymbolicVar();
+            }
+            VoteExp expNode = new VoteExp(inputType, accessingVars, number);
+            expStack.push(expNode);
         }
 
-        VoteExp expNode = new VoteExp(inputType, accessingVars, number);
-
-        expStack.push(expNode);
     }
 
     @Override

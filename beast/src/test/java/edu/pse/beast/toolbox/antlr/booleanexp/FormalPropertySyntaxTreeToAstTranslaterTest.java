@@ -63,6 +63,8 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
         
     }
 
+
+
     @Test
     public void testCreateAST() {
        String exp = "FOR_ALL_VOTERS(v) : EXISTS_ONE_CANDIDATE(c) : VOTES1(v) == c && VOTES1(v) == c;";

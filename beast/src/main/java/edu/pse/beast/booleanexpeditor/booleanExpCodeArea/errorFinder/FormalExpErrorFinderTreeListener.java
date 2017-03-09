@@ -208,7 +208,7 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
     @Override
     public void exitVoterByPosExp(FormalPropertyDescriptionParser.VoterByPosExpContext ctx) {
-
+        expStack.push(new VoterByPosExp((IntegerValuedExpression) expStack.pop()));
     }
 
     @Override
