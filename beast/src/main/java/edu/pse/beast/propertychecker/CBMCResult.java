@@ -67,8 +67,8 @@ public class CBMCResult extends Result {
             // same name,
             // and i am a bit worried, that they won't get created properly;
             List<CBMCResultWrapperMultiArray> votesList;
-            List<CBMCResultWrappersingleArray> seatsList;
-            List<CBMCResultWrappersingleArray> singleVotesList;
+            List<CBMCResultWrapperSingleArray> seatsList;
+            List<CBMCResultWrapperSingleArray> singleVotesList;
 
             switch (getElectionType()) {
 
@@ -185,9 +185,9 @@ public class CBMCResult extends Result {
      * @return a list of all variables with a matching name with their index and
      *         values that occured in the give list
      */
-    private List<CBMCResultWrappersingleArray> readOneDimVar(String name, List<String> toExtract) {
+    private List<CBMCResultWrapperSingleArray> readOneDimVar(String name, List<String> toExtract) {
 
-        List<CBMCResultWrappersingleArray> list = new ArrayList<CBMCResultWrappersingleArray>();
+        List<CBMCResultWrapperSingleArray> list = new ArrayList<CBMCResultWrapperSingleArray>();
 
         // this pattern searches for words of the form
         // "votesNUMBER[NUMBER]" where "NUMBER" can by any positive
@@ -224,9 +224,9 @@ public class CBMCResult extends Result {
 
                     boolean added = false;
 
-                    for (Iterator<CBMCResultWrappersingleArray> innerIterator = list.iterator(); innerIterator
+                    for (Iterator<CBMCResultWrapperSingleArray> innerIterator = list.iterator(); innerIterator
                             .hasNext();) {
-                        CBMCResultWrappersingleArray wrapper = (CBMCResultWrappersingleArray) innerIterator.next();
+                        CBMCResultWrapperSingleArray wrapper = (CBMCResultWrapperSingleArray) innerIterator.next();
 
                         if (wrapper.getMainIndex() == mainIndex) {
                             wrapper.addTo(arrayIndex, value);
@@ -235,7 +235,7 @@ public class CBMCResult extends Result {
                     }
 
                     if (!added) {
-                        list.add(new CBMCResultWrappersingleArray(mainIndex, name));
+                        list.add(new CBMCResultWrapperSingleArray(mainIndex, name));
                         list.get(list.size() - 1).addTo(arrayIndex, value);
                     }
 
@@ -268,9 +268,9 @@ public class CBMCResult extends Result {
 
                             boolean added = false;
 
-                            for (Iterator<CBMCResultWrappersingleArray> innerIterator = list
+                            for (Iterator<CBMCResultWrapperSingleArray> innerIterator = list
                                     .iterator(); innerIterator.hasNext();) {
-                                CBMCResultWrappersingleArray wrapper = (CBMCResultWrappersingleArray) innerIterator
+                                CBMCResultWrapperSingleArray wrapper = (CBMCResultWrapperSingleArray) innerIterator
                                         .next();
 
                                 if (wrapper.getMainIndex() == mainIndex) {
@@ -280,7 +280,7 @@ public class CBMCResult extends Result {
                             }
 
                             if (!added) {
-                                list.add(new CBMCResultWrappersingleArray(mainIndex, name));
+                                list.add(new CBMCResultWrapperSingleArray(mainIndex, name));
                                 list.get(list.size() - 1).addTo(i, Long.parseLong(subValueArray[i], 2));
                             }
                         }

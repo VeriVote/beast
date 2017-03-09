@@ -92,9 +92,9 @@ public class CBMCResult_Test {
 
         result.setResult(lines);
 
-        List<CBMCResultWrappersingleArray> singleDim = result.getFailureExample().getVotes();
+        List<CBMCResultWrapperSingleArray> singleDim = result.getFailureExample().getVotes();
 
-        CBMCResultWrappersingleArray zero = singleDim.get(0);
+        CBMCResultWrapperSingleArray zero = singleDim.get(0);
 
         assertEquals(zero.getName(), "votes");
 
@@ -106,7 +106,7 @@ public class CBMCResult_Test {
 
         assertEquals((long) (vars[1]), 4l);
 
-        CBMCResultWrappersingleArray one = singleDim.get(1);
+        CBMCResultWrapperSingleArray one = singleDim.get(1);
 
         assertEquals(one.getName(), "votes");
 

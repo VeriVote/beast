@@ -1,9 +1,10 @@
 package edu.pse.beast.propertylist.View;
 
 import edu.pse.beast.datatypes.FailureExample;
+
 import edu.pse.beast.datatypes.electiondescription.ElectionType;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
-import edu.pse.beast.propertychecker.CBMCResultWrappersingleArray;
+import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import org.junit.*;
 
 import javax.swing.*;
@@ -47,14 +48,14 @@ public class ResultSingleDisplayTest {
 		elected.add(3l);
 		elected.add(2l);
 		
-		ArrayList<CBMCResultWrappersingleArray> votes = new ArrayList<CBMCResultWrappersingleArray>();
+		ArrayList<CBMCResultWrapperSingleArray> votes = new ArrayList<CBMCResultWrapperSingleArray>();
 		ArrayList<CBMCResultWrapperLong> elect = new ArrayList<CBMCResultWrapperLong>();
 		
-		votes.add(new CBMCResultWrappersingleArray(0, "wildelection"));
+		votes.add(new CBMCResultWrapperSingleArray(0, "wildelection"));
 		votes.get(0).addTo(0, 3l);
 		votes.get(0).addTo(1, 2l);
 		votes.get(0).addTo(2, 1l);
-		votes.add(new CBMCResultWrappersingleArray(1, "wilderelection"));
+		votes.add(new CBMCResultWrapperSingleArray(1, "wilderelection"));
 		votes.get(1).addTo(0, 3l);
 		votes.get(1).addTo(1, 3l);
 		votes.get(1).addTo(2, 3l);

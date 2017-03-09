@@ -3,7 +3,8 @@ package edu.pse.beast.datatypes;
 import edu.pse.beast.datatypes.electiondescription.ElectionType;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
-import edu.pse.beast.propertychecker.CBMCResultWrappersingleArray;
+import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
+import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 
 import java.util.List;
 
@@ -17,13 +18,13 @@ public class FailureExample {
 
     private final ElectionType electionType;
 
-    private final List<CBMCResultWrappersingleArray> votes;
+    private final List<CBMCResultWrapperSingleArray> votes;
 
     private final List<CBMCResultWrapperMultiArray> voteList;
 
     private final List<CBMCResultWrapperLong> elect;
 
-    private final List<CBMCResultWrappersingleArray> seats;
+    private final List<CBMCResultWrapperSingleArray> seats;
 
     private final int numOfCandidates;
 
@@ -58,9 +59,9 @@ public class FailureExample {
      * @param numOfVoters
      *            The number of voters that voted for the candidates.
      */
-    public FailureExample(ElectionType electionType, List<CBMCResultWrappersingleArray> votes,
+    public FailureExample(ElectionType electionType, List<CBMCResultWrapperSingleArray> votes,
             List<CBMCResultWrapperMultiArray> voteList, List<CBMCResultWrapperLong> elect,
-            List<CBMCResultWrappersingleArray> seats, int numOfCandidates, int numOfSeats, int numOfVoters) {
+            List<CBMCResultWrapperSingleArray> seats, int numOfCandidates, int numOfSeats, int numOfVoters) {
 
         this.electionType = electionType;
         this.votes = votes;
@@ -81,7 +82,7 @@ public class FailureExample {
         return electionType;
     }
 
-    public List<CBMCResultWrappersingleArray> getVotes() {
+    public List<CBMCResultWrapperSingleArray> getVotes() {
         return votes;
     }
 
@@ -93,7 +94,7 @@ public class FailureExample {
         return elect;
     }
 
-    public List<CBMCResultWrappersingleArray> getSeats() {
+    public List<CBMCResultWrapperSingleArray> getSeats() {
         return seats;
     }
 

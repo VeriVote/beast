@@ -22,11 +22,11 @@ public class CBMCProcessFactory extends CheckerFactory {
 
     // this is the last line in the cbmc output, if the verification was
     // successful
-    private final String successLine = "VERIFICATION SUCCESSFUL";
+    private final String SUCCESSLINE = "VERIFICATION SUCCESSFUL";
 
     // this is the last line in the cbmc output, if the assertion
     // failed
-    private final String failureLine = "VERIFICATION FAILED";
+    private final String FAILURELINE = "VERIFICATION FAILED";
 
     private final String pathToTempFolder = "/core/c_tempfiles/";
 
@@ -94,7 +94,7 @@ public class CBMCProcessFactory extends CheckerFactory {
     @Override
     public boolean checkAssertionSuccess(List<String> toCheck) {
         if (toCheck.size() > 0) {
-            return toCheck.get(toCheck.size() - 1).contains(successLine);
+            return toCheck.get(toCheck.size() - 1).contains(SUCCESSLINE);
         } else {
             return false;
         }
@@ -103,7 +103,7 @@ public class CBMCProcessFactory extends CheckerFactory {
     @Override
     public boolean checkAssertionFailure(List<String> toCheck) {
         if (toCheck.size() > 0) {
-            return toCheck.get(toCheck.size() - 1).contains(failureLine);
+            return toCheck.get(toCheck.size() - 1).contains(FAILURELINE);
         } else {
             return false;
         }

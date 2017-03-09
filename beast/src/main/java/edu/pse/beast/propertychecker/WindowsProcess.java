@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 public class WindowsProcess extends CBMCProcess {
-    private long waitingTimeForTermination = 3000;
+    private long WAITINGTIMEFORTERMINATION = 3000;
 
     private final String relativePathToCBMC32 = "/windows/cbmcWIN/cbmc.exe";
     private final String relativePathToCBMC64 = "/windows/cbmcWIN/cbmc64.exe";
@@ -213,7 +213,7 @@ public class WindowsProcess extends CBMCProcess {
                 try {
                     cbmcProcess = new Win32Process(cbmcPID);
                     cbmcProcess.terminate();
-                    Thread.sleep(waitingTimeForTermination);
+                    Thread.sleep(WAITINGTIMEFORTERMINATION);
 
                 } catch (IOException e) {
                     ErrorLogger.log("Unable to create a reference to the CBMC process!");
@@ -229,7 +229,7 @@ public class WindowsProcess extends CBMCProcess {
                  */
 
                 try {
-                    Thread.sleep(waitingTimeForTermination);
+                    Thread.sleep(WAITINGTIMEFORTERMINATION);
                 } catch (InterruptedException e) {
 
                 }
@@ -238,7 +238,7 @@ public class WindowsProcess extends CBMCProcess {
 
         if (process.isAlive()) {
             ErrorForUserDisplayer.displayError("There was an attempt to stop the cbmc process, but after "
-                    + (waitingTimeForTermination / 1000d) + " seconds of waiting"
+                    + (WAITINGTIMEFORTERMINATION / 1000d) + " seconds of waiting"
                     + " the parent root process was still alive, even though it should "
                     + "terminate itself when cbmc stopped. Please check, that the cbmc instance was "
                     + "closed properly and if not, please close it yourself!");

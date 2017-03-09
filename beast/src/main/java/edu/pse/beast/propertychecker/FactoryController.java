@@ -34,7 +34,7 @@ public class FactoryController implements Runnable {
     private final List<Result> results;
     private final TimeOutNotifier notifier;
 
-    private final long pollingInterval = 1000;
+    private final long POLLINGINTERVAL = 1000;
 
     private List<CheckerFactory> currentlyRunning;
     private final String checkerID;
@@ -71,10 +71,6 @@ public class FactoryController implements Runnable {
 
         this.results = CheckerFactoryFactory.getMatchingResult(checkerID,
                 postAndPrePropDescrSrc.getPostAndPrePropertiesDescriptions().size());
-
-        for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
-            Result result = (Result) iterator.next();
-        }
 
         // if the user doesn't specify a concrete amount for concurrent
         // checkers, we just set it to the thread amount of this pc
@@ -118,7 +114,7 @@ public class FactoryController implements Runnable {
                     break innerLoop;
                 } else {
                     try {
-                        Thread.sleep(pollingInterval);
+                        Thread.sleep(POLLINGINTERVAL);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -131,7 +127,7 @@ public class FactoryController implements Runnable {
         }
         while (currentlyRunning.size() > 0) {
             try {
-                Thread.sleep(pollingInterval);
+                Thread.sleep(POLLINGINTERVAL);
             } catch (InterruptedException e) {
                 ErrorLogger.log("Was interrupted while waiting for the last processes to finish \n"
                         + "The waiting will still continue. To stop the factory properly, call \"stopChecking()\" !");
@@ -150,7 +146,7 @@ public class FactoryController implements Runnable {
      * @param timeOut
      *            if it is true, the checking was stopped because of a timeout;
      */
-    public void stopChecking(boolean timeOut) {
+    public synchronized void stopChecking(boolean timeOut) {
 
         if (!stopped) {
             this.stopped = true;

@@ -46,7 +46,7 @@ public class WindowsOStoolbox {
                 }
             }
 
-            ErrorLogger.log("The progam was unable to find a Developer Command Prompt for Visual Studio. \n"
+            ErrorForUserDisplayer.displayError("The progam was unable to find a Developer Command Prompt for Visual Studio. \n"
                     + " Please install it if you haven't and search for the vsCMD.bat in it! \n"
                     + " Please copy the .bat to the folder /windows/ in your BEST install directory"
                     + "(named \"VsDevCmd.bat\") so it can be found automatically.");

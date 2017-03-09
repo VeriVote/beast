@@ -11,10 +11,10 @@ import java.util.List;
 
 public class LinuxProcess extends CBMCProcess {
 
-    private final String relativePathToCBMC64 = "/linux/cbmcLin/cbmc";
+    private final String RELATIVEPATHTOCBMC64 = "/linux/cbmcLin/cbmc";
 
     //the time in milliseconds to wait for the termination of the process on linux
-    private final long waitingTime = 3000;
+    private final long WAITINGTIME = 3000;
     
     /**
      * creates a new CBMC Checker for the windows OS
@@ -48,7 +48,7 @@ public class LinuxProcess extends CBMCProcess {
 
         List<String> arguments = new ArrayList<String>();
 
-        String cbmc = new File(SuperFolderFinder.getSuperFolder() + relativePathToCBMC64).getPath();
+        String cbmc = new File(SuperFolderFinder.getSuperFolder() + RELATIVEPATHTOCBMC64).getPath();
 
         if (!new File(cbmc).exists()) {
             ErrorForUserDisplayer.displayError(
@@ -110,12 +110,12 @@ public class LinuxProcess extends CBMCProcess {
         }
         
         try {
-            Thread.sleep(waitingTime);
+            Thread.sleep(WAITINGTIME);
         } catch (InterruptedException e) {
         }
 
         if (process.isAlive()) {
-            ErrorLogger.log("Warning, the program was still alive after trying to stop it \n"
+            ErrorForUserDisplayer.displayError("Warning, the program was still alive after trying to stop it \n"
                     + "Please kill it manually if it is still alive, especially if it starts taking up a lot of ram");
         }
     }

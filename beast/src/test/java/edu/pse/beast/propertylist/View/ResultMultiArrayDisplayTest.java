@@ -1,9 +1,10 @@
 package edu.pse.beast.propertylist.View;
 
 import edu.pse.beast.datatypes.FailureExample;
+
 import edu.pse.beast.datatypes.electiondescription.ElectionType;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
-import edu.pse.beast.propertychecker.CBMCResultWrappersingleArray;
+import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import org.junit.*;
 
 import javax.swing.*;
@@ -124,12 +125,12 @@ public class ResultMultiArrayDisplayTest {
 		votes.get(1).addTo(4, 3, 1l);
 		votes.get(1).addTo(4, 4, 1l);
 		
-		ArrayList<CBMCResultWrappersingleArray> seats = new ArrayList<CBMCResultWrappersingleArray>();
+		ArrayList<CBMCResultWrapperSingleArray> seats = new ArrayList<CBMCResultWrapperSingleArray>();
 		
-		seats.add(new CBMCResultWrappersingleArray(0, "wildseats"));
+		seats.add(new CBMCResultWrapperSingleArray(0, "wildseats"));
 		seats.get(0).addTo(0, 0l);
 		seats.get(0).addTo(1, 2l);
-		seats.add(new CBMCResultWrappersingleArray(1, "wilderseats"));
+		seats.add(new CBMCResultWrapperSingleArray(1, "wilderseats"));
 		seats.get(1).addTo(0, 1l);
 		seats.get(1).addTo(1, 2l);
 		
