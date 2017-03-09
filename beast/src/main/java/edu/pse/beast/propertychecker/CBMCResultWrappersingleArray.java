@@ -8,7 +8,7 @@ import java.util.List;
  * @author Lukas
  *
  */
-public class CBMCResultWrappersingleArray {
+public class CBMCResultWrapperSingleArray {
     private final int mainIndex;
     private final String name;
     private final List<Long> list = new ArrayList<Long>();
@@ -23,7 +23,7 @@ public class CBMCResultWrappersingleArray {
      *            the name of this variable (for example votes1 has the name
      *            votes)
      */
-    public CBMCResultWrappersingleArray(int mainIndex, String name) {
+    public CBMCResultWrapperSingleArray(int mainIndex, String name) {
         this.mainIndex = mainIndex;
         this.name = name;
     }
