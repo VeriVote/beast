@@ -131,13 +131,15 @@ public class ResultPresenterWindow extends JFrame {
 
         for (int i = 0; i < ex.getNumOfVoters(); i++) {
             int vote = votes[i].intValue();
-            // assumes that vote value is not 0
+            result[vote]++;
+            
+            /* assumes that vote value is not 0
             if (vote < 0) {
                 result[vote - 1]++;
             }
             else{
                 result[vote]++;
-            }
+            }*/
         }
         return result;
     }
@@ -152,12 +154,14 @@ public class ResultPresenterWindow extends JFrame {
             switch (type) {
                 case PREFERENCE:
                     for (int j = 0; j < candidates; j++) {
-                        // assumes that chosenCandidate is not 0. if chosenCandidate is 0, the election is rigged
-                        int chosenCandidate = (int) (long) vote[j];
+                    	int chosenCandidate = (int) (long) vote[j];
+                    	result[chosenCandidate] += candidates - j;
+                    	
+                        /* assumes that chosenCandidate is not 0. if chosenCandidate is 0, the election is rigged
                         if (chosenCandidate != 0) {
                             result[chosenCandidate - 1] += candidates - j;
                         }
-                        //result[candidate] += candidates - j;
+                        //result[candidate] += candidates - j; */
                     }
                     break;
                 case WEIGHTEDAPPROVAL:
@@ -313,13 +317,22 @@ public class ResultPresenterWindow extends JFrame {
                 } else {
                     preceding = ex.getElect().get(i - 1).getValue();
                 }
+                
+                Color color = preceding == elected ? Color.BLACK : Color.RED;
 
-                if (preceding == elected) {
+                if (elected == ex.getNumOfCandidates()) { // no candidate wins
+                	appendPaneColored(srl.getStringFromID("draw") + ", ", color);
+                }
+                else {
+                	appendPaneColored(elected.toString() + ", ", color);
+                }
+                
+                /*if (preceding == elected) {
                     appendPane(elected.toString() + ", ");
                 } else {
                     appendPaneColored(elected.toString(), Color.RED);
                     appendPane(", ");
-                }
+                }*/
                 eraseLastCharacters(2);
             } else {
                 Long[] preceding;
@@ -330,15 +343,32 @@ public class ResultPresenterWindow extends JFrame {
                 } else {
                     preceding = ex.getSeats().get(i - 1).getArray();
                 }
+                
+                for (int j = 0; j < elected.length; j++) {
+                	Color color = preceding[j].equals(elected[j]) ? Color.BLACK : Color.RED;
+                	
+                	if (elected[j] == ex.getNumOfCandidates()) { // no candidate wins
+                		appendPaneColored(srl.getStringFromID("draw"), color);
+                	}
+                	else {
+                		appendPaneColored(elected[j].toString(), color);
+                	}
+                	appendPane(", ");
+                }
+                eraseLastCharacters(2);
+                
+                /*Color color = preceding.equals(elected) ? Color.BLACK : Color.RED;
+                
+                appendPaneColored(Arrays.toString(elected), color);
 
                 if (preceding.equals(elected)) {
                     appendPane(Arrays.toString(elected));
                 } else {
                     appendPaneColored(Arrays.toString(elected), Color.RED);
-                }
+                }*/
             }
 
-            // The votes points part of the document
+            // The vote points part of the document
             appendLine("\n");
             appendLine(srl.getStringFromID("electionpoints"));
             Long[] result;
@@ -348,7 +378,7 @@ public class ResultPresenterWindow extends JFrame {
                 result = getVotePoints(ex.getVoteList().get(i).getArray(), ex.getElectionType(), ex);
             }
             for (int j = 0; j < result.length; j++) {
-                appendLine(srl.getStringFromID("Candidate") + " " + (j + 1) + ": " + (int) (long) result[j]);
+                appendLine(srl.getStringFromID("Candidate") + " " + j + ": " + (int) (long) result[j]);
             }
             appendLine("\n");
         }

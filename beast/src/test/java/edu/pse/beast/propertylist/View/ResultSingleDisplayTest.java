@@ -63,7 +63,7 @@ public class ResultSingleDisplayTest {
 		elect.add(new CBMCResultWrapperLong(0, "wildcandidate"));
 		elect.get(0).setValue(2l);
 		elect.add(new CBMCResultWrapperLong(1, "wildercandidate"));
-		elect.get(1).setValue(3l);
+		elect.get(1).setValue(4l);
 		
 		
 		FailureExample fail = new FailureExample(et, votes, null, elect, null, 4, 1, 3);

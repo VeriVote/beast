@@ -9,6 +9,7 @@ electionType : Wahlverfahren
 election : Wahl
 votes : Stimmen
 elected : Gewählt
+draw : Unentschieden
 noResultYet : Es liegt noch kein Resultat vor.
 successMessage : Das vorliegende Wahlverfahren erfüllt die gegebene Eigenschaft.
 timeoutMessage : Die Analyse wurde durch einen Timeout abgebrochen.

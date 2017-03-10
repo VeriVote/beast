@@ -9,6 +9,7 @@ electionType : Election Description
 election : Election
 votes : Votes
 elected : Elected
+draw : Draw
 noResultYet : We don't have a result yet.
 successMessage : The given election description does fulfill the given property.
 timeoutMessage : The analysis was timed out.
