@@ -192,7 +192,7 @@ public class WindowsProcess extends CBMCProcess {
                             if (cbmcPID == -1) {
                                 // extract the PID from the line
                                 cbmcPID = Integer.parseInt(line.split(" ")[1]);
-                            } else {
+                            } else { 
                                 ErrorLogger
                                         .log("Found multiple CBMC instances in this process tree. This is not "
                                                 + "intended, only one will be closed, "

@@ -31,66 +31,114 @@ import edu.pse.beast.saverloader.ProjectSaverLoader;
 
 public class HighLevelPropertycheckerTest {
 
-    GuiTestHelper helper = new GuiTestHelper();
-    String content = "";
+	GuiTestHelper helper = new GuiTestHelper();
 
-    @Before
-    public void setUp() throws InterruptedException {
-        helper.startNewBEASTInstance();
-        
-        //create a new saveString that contains a beast-project
-        
-        File selectedFile = new File("./src/test/testfiles/SingleChoiceAnonymity.beast");
-        BufferedReader inputReader = null;
-        try {
-            inputReader = new BufferedReader(
-                    new InputStreamReader(
-                            new FileInputStream(selectedFile), "UTF8"));
-        } catch (UnsupportedEncodingException e) {
-            
-        } catch (FileNotFoundException e) {
+	@Before
+	public void setUp() throws InterruptedException {
+		helper.startNewBEASTInstance();
+	}
 
-        }
-        String sCurrentLine;
-        try {
-            while ((sCurrentLine = inputReader.readLine()) != null) {
-                content += (sCurrentLine + "\n");
-            }
-        } catch (IOException e) {
-            
-        } 
-    }
+	@Test
+	public void testCBMCCheck() throws InterruptedException, AWTException {
+		ParameterEditor parameterEditor = helper.getParamEditorOfCurrentInstace();
 
-    @Test
-    public void testCBMCCheck() throws InterruptedException, AWTException {
-        ParameterEditor parameterEditor = helper.getParamEditorOfCurrentInstace();
-        
-        ProjectSaverLoader projectSaverLoader = new ProjectSaverLoader();
-        Project loadedProject = (Project) projectSaverLoader .createFromSaveString(content);
+		String pathToProject = "./src/test/testfiles/SingleChoiceAnonymity.beast";
 
-        parameterEditor.loadProject(loadedProject);
-        
-        parameterEditor.startCheck();
-        
-        boolean running = true;
-        while(running) {
-            if (parameterEditor.getReacts()) {
-                running = false;
-            } else {
-                Thread.sleep(1000);
-            }
-            
-        }
-          
-        PropertyList propList = helper.getPropListOfCurrentInstance();
-        
-        List<PropertyItem> list = propList.getList();
-        
-        for (Iterator<PropertyItem> iterator = list.iterator(); iterator.hasNext();) {
-            PropertyItem propertyItem = (PropertyItem) iterator.next();
-            assertNull(propertyItem.getExample());
-        }
-        
-        
-    }
+		ProjectSaverLoader projectSaverLoader = new ProjectSaverLoader();
+
+		Project loadedProject = (Project) projectSaverLoader.createFromSaveString(readProject(pathToProject));
+
+		parameterEditor.loadProject(loadedProject);
+
+		parameterEditor.startCheck();
+
+		boolean running = true;
+		while (running) {
+			if (parameterEditor.getReacts()) {
+				running = false;
+			} else {
+				Thread.sleep(1000);
+			}
+
+		}
+
+		PropertyList propList = helper.getPropListOfCurrentInstance();
+
+		List<PropertyItem> list = propList.getList();
+
+		for (Iterator<PropertyItem> iterator = list.iterator(); iterator.hasNext();) {
+			PropertyItem propertyItem = (PropertyItem) iterator.next();
+			assertNull(propertyItem.getExample());
+		}
+
+	}
+
+	@Test
+	public void testCBMCCheckTimeOut() throws InterruptedException, AWTException {
+
+
+		ParameterEditor parameterEditor = helper.getParamEditorOfCurrentInstace();
+
+		String pathToProject = "./src/test/testfiles/timeoutTest.beast";
+
+		ProjectSaverLoader projectSaverLoader = new ProjectSaverLoader();
+
+		Project loadedProject = (Project) projectSaverLoader.createFromSaveString(readProject(pathToProject));
+
+		parameterEditor.loadProject(loadedProject);
+		
+
+		parameterEditor.startCheck();
+
+		boolean running = true;
+		while (running) {
+			if (parameterEditor.getReacts()) {
+				running = false;
+			} else {
+				Thread.sleep(1000);
+			}
+
+		}
+
+		PropertyList propList = helper.getPropListOfCurrentInstance();
+
+		List<PropertyItem> list = propList.getList();
+
+		for (Iterator<PropertyItem> iterator = list.iterator(); iterator.hasNext();) {
+			PropertyItem propertyItem = (PropertyItem) iterator.next();
+			assertNull(propertyItem.getExample());
+		}
+
+	}
+
+	private String readProject(String pathToProject) throws InterruptedException {
+		helper.startNewBEASTInstance();
+
+		// create a new saveString that contains a beast-project
+
+		File selectedFile = new File(pathToProject);
+		BufferedReader inputReader = null;
+
+		String toReturn = "";
+
+		try {
+			inputReader = new BufferedReader(new InputStreamReader(new FileInputStream(selectedFile), "UTF8"));
+		} catch (UnsupportedEncodingException e) {
+
+		} catch (FileNotFoundException e) {
+
+		}
+		String sCurrentLine;
+		try {
+			while ((sCurrentLine = inputReader.readLine()) != null) {
+				toReturn += (sCurrentLine + "\n");
+			}
+		} catch (IOException e) {
+
+		}
+
+		return toReturn;
+
+	}
+
 }
