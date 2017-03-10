@@ -91,7 +91,7 @@ public class PLModel extends Observable implements NameInterface {
 	public void editProperty(PropertyItem prop, BooleanExpEditor editor) {
 		editor.letUserEditPostAndPreProperties(prop.getDescription(), true);
 		editor.getView().setVisible(true);
-		prop.setResultType(ResultType.UNTESTED);
+		//prop.setResultType(ResultType.UNTESTED);
 		updateView();
 	}
 
