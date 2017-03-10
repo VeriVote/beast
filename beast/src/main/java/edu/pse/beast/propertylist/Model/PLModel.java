@@ -55,7 +55,8 @@ public class PLModel extends Observable implements NameInterface {
 			PropertyItem updated = prop;
 			String newName = prop.getDescription().getName() + "x";
 			updated.setDescriptionName(newName);
-			propertyList.add(updated);
+			//propertyList.add(updated);
+			addDescription(updated);
 		}
 		else {
 			propertyList.add(prop);
