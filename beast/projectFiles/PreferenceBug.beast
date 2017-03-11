@@ -17,7 +17,7 @@ unsigned int voting(unsigned int votes[V][C]) {
 
 </code>
 <inputType>
-list_of_candidate_placements_per_voter
+list_of_candidates_per_voter
 </inputType>
 <outputType>
 one_candidate_or_zero

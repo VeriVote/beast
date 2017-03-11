@@ -288,7 +288,7 @@ public class CBMCCodeGenerator {
             code.add(nondetInt);
             code.add(voteDecl);
 
-            if (inputType.getId().equals("list_of_candidate_placements_per_voter")) {
+            if (inputType.getId().equals("list_of_candidates_per_voter")) {
                 addPreferenceVotingArrayInitialisation(voteNumber);
             }
 

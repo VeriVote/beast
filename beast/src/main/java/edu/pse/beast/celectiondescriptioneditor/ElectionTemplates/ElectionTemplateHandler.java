@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class ElectionTemplateHandler {
     private final String[] inputIds = {
         "one_candidate_per_voter",
-        "list_of_candidates_per_voter", 
+        "list_of_candidates_per_voter",
         "list_of_yes_no_per_voter",
         "list_of_integer_vals_per_voter"
     };
@@ -45,7 +45,7 @@ public class ElectionTemplateHandler {
                                         new InternalTypeContainer(InternalTypeRep.INTEGER),
                                         InternalTypeRep.CANDIDATE 
                                 ), InternalTypeRep.VOTER),
-                        "list_of_candidate_placements_per_voter"));
+                        "list_of_candidates_per_voter"));
         
         inputTypes.add(
                 new ElectionTypeContainer(
@@ -89,6 +89,7 @@ public class ElectionTemplateHandler {
      * @return the electiontypecontainer if it exists, null otherwise
      */
     public ElectionTypeContainer getById(String id) {
+        System.out.println(id);
         for(int i = 0; i < inputIds.length; ++i) {
             if(inputIds[i].equals(id))
                 return inputTypes.get(i);
