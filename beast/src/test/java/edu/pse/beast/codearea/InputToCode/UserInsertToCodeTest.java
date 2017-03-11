@@ -1,6 +1,8 @@
-package edu.pse.beast.codearea.InputToCode;
+package edu.pse.beast.CodeArea.InputToCode;
 
 import org.junit.Test;
+
+import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
 
 import javax.swing.*;
 import javax.swing.text.BadLocationException;

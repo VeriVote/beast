@@ -86,8 +86,14 @@ public class HighLevelPropertycheckerTest {
 		
 		List<PropertyItem> list = propList.getList();
 
+		
+		
 		for (Iterator<PropertyItem> iterator = list.iterator(); iterator.hasNext();) {
+			//the first example shouldn't be zero, because there the assertion fails
 			PropertyItem propertyItem = (PropertyItem) iterator.next();
+			assertNotNull(propertyItem.getExample());
+			//the second example should lead to null, because the assetion holds
+			propertyItem = (PropertyItem) iterator.next();
 			assertNull(propertyItem.getExample());
 		}
 

@@ -93,7 +93,7 @@ public class CBMCProcessFactory extends CheckerFactory {
 
     @Override
     public boolean checkAssertionSuccess(List<String> toCheck) {
-        if (toCheck.size() > 0) {
+        if (toCheck != null && toCheck.size() > 0) {
             return toCheck.get(toCheck.size() - 1).contains(SUCCESSLINE);
         } else {
             return false;
@@ -102,7 +102,7 @@ public class CBMCProcessFactory extends CheckerFactory {
 
     @Override
     public boolean checkAssertionFailure(List<String> toCheck) {
-        if (toCheck.size() > 0) {
+        if (toCheck != null && toCheck.size() > 0) {
             return toCheck.get(toCheck.size() - 1).contains(FAILURELINE);
         } else {
             return false;
