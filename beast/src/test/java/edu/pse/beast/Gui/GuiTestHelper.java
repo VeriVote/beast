@@ -62,8 +62,6 @@ public class GuiTestHelper {
             }
             try {
                 performKeystrokes(strokes, timeBetween);
-            } catch (AWTException e) {
-                e.printStackTrace();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -71,8 +69,14 @@ public class GuiTestHelper {
         t.start();
     }
 
-    public void performShortcut(int key, long timeoutafter) throws AWTException, InterruptedException {
-        Robot r = new Robot();
+    public void performShortcut(int key, long timeoutafter) throws InterruptedException {
+        Robot r = null;
+		try {
+			r = new Robot();
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         r.keyPress(KeyEvent.VK_CONTROL);
         r.keyPress(key);
         r.keyRelease(key);
@@ -80,8 +84,14 @@ public class GuiTestHelper {
         Thread.sleep(timeoutafter);
     }
 
-    public void performKeystrokes(int[] keys, long waittimeBetweenStrokes) throws AWTException, InterruptedException {
-        Robot r = new Robot();
+    public void performKeystrokes(int[] keys, long waittimeBetweenStrokes) throws InterruptedException {
+        Robot r = null;
+		try {
+			r = new Robot();
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         for (int i = 0; i < keys.length; i++) {
             r.keyPress(keys[i]);
             r.keyRelease(keys[i]);

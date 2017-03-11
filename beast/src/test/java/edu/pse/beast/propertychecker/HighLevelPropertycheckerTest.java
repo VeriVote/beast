@@ -33,25 +33,41 @@ public class HighLevelPropertycheckerTest {
 
 	GuiTestHelper helper = new GuiTestHelper();
 
+	private long waittime = 500;
+	
 	@Before
 	public void setUp() throws InterruptedException {
 		helper.startNewBEASTInstance();
 	}
 
 	@Test
-	public void testCBMCCheck() throws InterruptedException, AWTException {
+	public void testCBMCCheck() throws InterruptedException {
+		
 		ParameterEditor parameterEditor = helper.getParamEditorOfCurrentInstace();
 
+		
+		Thread.sleep(waittime);
+		
 		String pathToProject = "./src/test/testfiles/SingleChoiceAnonymity.beast";
 
+		Thread.sleep(waittime);
+		
 		ProjectSaverLoader projectSaverLoader = new ProjectSaverLoader();
 
+		Thread.sleep(waittime);
+		
 		Project loadedProject = (Project) projectSaverLoader.createFromSaveString(readProject(pathToProject));
 
+		Thread.sleep(waittime);
+		
 		parameterEditor.loadProject(loadedProject);
 
+		Thread.sleep(waittime);
+		
 		parameterEditor.startCheck();
 
+		Thread.sleep(waittime);
+		
 		boolean running = true;
 		while (running) {
 			if (parameterEditor.getReacts()) {
@@ -62,8 +78,12 @@ public class HighLevelPropertycheckerTest {
 
 		}
 
+		Thread.sleep(waittime);
+		
 		PropertyList propList = helper.getPropListOfCurrentInstance();
 
+		Thread.sleep(waittime);
+		
 		List<PropertyItem> list = propList.getList();
 
 		for (Iterator<PropertyItem> iterator = list.iterator(); iterator.hasNext();) {
@@ -74,7 +94,7 @@ public class HighLevelPropertycheckerTest {
 	}
 
 	@Test
-	public void testCBMCCheckTimeOut() throws InterruptedException, AWTException {
+	public void testCBMCCheckTimeOut() throws InterruptedException {
 
 
 		ParameterEditor parameterEditor = helper.getParamEditorOfCurrentInstace();
@@ -112,7 +132,6 @@ public class HighLevelPropertycheckerTest {
 	}
 
 	private String readProject(String pathToProject) throws InterruptedException {
-		helper.startNewBEASTInstance();
 
 		// create a new saveString that contains a beast-project
 

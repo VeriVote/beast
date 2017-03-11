@@ -21,7 +21,7 @@ import java.security.Key;
  */
 public class GuiTestCEditor {
 
-    private final long waittime = 100;
+    private final long waittime = 500;
     GuiTestHelper helper = new GuiTestHelper();
 
     @Before
@@ -30,7 +30,7 @@ public class GuiTestCEditor {
     }
 
     @Test
-    public void testSaveFile() throws InterruptedException, AWTException {
+    public void testSaveFile() throws InterruptedException {
         CElectionDescriptionEditor electionDescriptionEditor = helper.getCEditorOfCurrentInstace();
         electionDescriptionEditor.setVisible(true);
 
@@ -50,7 +50,7 @@ public class GuiTestCEditor {
     }
 
     @Test
-    public void testCreateNewfileCEditor() throws InterruptedException, AWTException {
+    public void testCreateNewfileCEditor() throws InterruptedException {
         CElectionDescriptionEditor electionDescriptionEditor = helper.getCEditorOfCurrentInstace();
         ElectionDescription electionDescription = electionDescriptionEditor.getElectionDescription();
         Assert.assertEquals(electionDescription.getInputType().getId(), "one_candidate_per_voter");
