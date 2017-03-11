@@ -245,9 +245,15 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
         } 
         if(!isCaretAtEndOfLine() && isLineContainingCaretPosLocked()) {
             return;
-        }        
+        }
+
+
             
         try {
+            if (isLineContainingCaretPosLocked() && !isFollowingLineNotEmpty()) {
+                return;
+            }
+
             if(pane.getSelectedText() != null) {
                 pane.getStyledDocument().remove(
                         pane.getSelectionStart(),
@@ -259,6 +265,11 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
             Logger.getLogger(UserInsertToCode.class.getName()).log(Level.SEVERE, null, ex);
         }           
         
+    }
+
+    private boolean isFollowingLineNotEmpty() throws BadLocationException {
+        String codeFollowingCaret = styledDoc.getText(pane.getCaretPosition(), 2);
+        return codeFollowingCaret.equals("\n\n");
     }
 
     private boolean isCaretAtEndOfLine() {
@@ -281,12 +292,15 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
      */
     public void removeToTheLeft() {
         if(selectionIncludesLockedLines()) return;
-
         try {
             if(isLineContainingCaretPosLocked()) {
                 if(!pane.getStyledDocument().getText(currentCaretPosition - 2, 2).equals("\n\n"))
                     return;
             }
+            if(caretPosIsOnLineBeginning() &&
+                    pane.getSelectedText() == null &&
+                    lineAboveIsLocked() &&
+                    !caretPosIsOnEmptyLine()) return;
             if(pane.getSelectedText() != null) {
                 pane.getStyledDocument().remove(
                         pane.getSelectionStart(),
@@ -298,6 +312,22 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
         } catch (BadLocationException ex) {
             Logger.getLogger(UserInsertToCode.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private boolean caretPosIsOnLineBeginning() throws BadLocationException {
+        return styledDoc.getText(pane.getCaretPosition() - 1, 1).equals("\n");
+    }
+
+    private boolean caretPosIsOnEmptyLine() throws BadLocationException {
+        return styledDoc.getText(pane.getCaretPosition() - 1, 2).equals("\n\n");
+    }
+
+    private boolean lineAboveIsLocked() throws BadLocationException {
+        return pane.getStyledDocument().getText(pane.getCaretPosition() - 1, 1).equals("\n") &&
+                lockedLines.isLineLocked(
+                        JTextPaneToolbox.getLinesBetween(
+                                pane, pane.getCaretPosition(),
+                                pane.getCaretPosition()).get(0) - 1);
     }
 
     private boolean selectionIncludesLockedLines() {
