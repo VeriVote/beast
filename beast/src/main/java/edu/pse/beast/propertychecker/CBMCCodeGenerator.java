@@ -9,7 +9,6 @@ import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.toolbox.CCodeHelper;
@@ -97,7 +96,6 @@ public class CBMCCodeGenerator {
         code.add("unsigned int voteSumForCandidate(INPUT, unsigned int candidate) {".replace("INPUT", input));
         code.add("\tunsigned int sum = 0;");
         code.add("\tfor(unsigned int i = 0; i < V; ++i) {");
-        if(inputType.getType().getListLvl() == 1) {
             code.add("\t\tif(arr[i] == candidate) sum++;");
         } else {
             code.add("\t\tsum += arr[i][candidate];");
@@ -176,9 +174,7 @@ public class CBMCCodeGenerator {
                         break;
                     case CANDIDATE:
                         code.add("unsigned int " + id + " = nondet_uint();");
-                        // a Candidate is basically an unsigned int. Candidate 1 is 1 and so on
                         code.add("assume(0 <= " + id + " && " + id + " < C);");
-                        // C is the number of total Candidates. 0 is NOT a Candidate
                         break;
                     case SEAT:
                         // a Seat is a also an unsigned int. 
@@ -264,7 +260,6 @@ public class CBMCCodeGenerator {
             code.add(votesX + ";");
 
             String[] counter = {"counter_0", "counter_1", "counter_2", "counter_3"};
-            String forTemplate = "for(unsigned int COUNTER = 0; COUNTER < MAX; ++COUNTER){";
 
             InternalTypeContainer inputContainer = inputType.getType();
             int listDepth = 0;
@@ -292,7 +287,6 @@ public class CBMCCodeGenerator {
             code.add(nondetInt);
             code.add(voteDecl);
 
-            if (inputType.getId().equals("list_of_candidates_per_voter")) {
                 addPreferenceVotingArrayInitialisation(voteNumber);
             }
 
@@ -336,15 +330,9 @@ public class CBMCCodeGenerator {
     private void addPreferenceVotingArrayInitialisation(int voteNumber) {
         code.add("for (unsigned int j_prime = 0; j_prime < C; j_prime++) {");
         code.addTab();
-        code.add("if ((votes" + voteNumber + " [counter_0][counter_1] != 0) && (counter_1 != j_prime)) {");
         code.addTab();
         code.add("assume (votes" + voteNumber + "[counter_0][counter_1] != votes"
                 + voteNumber + "[counter_0][j_prime]);");
-        code.deleteTab();
-        code.add("}");
-        code.add("if ((votes" + voteNumber + "[counter_0][counter_1] == 0) && (counter_1 <= j_prime)) {");
-        code.addTab();
-        code.add("assume (votes" + voteNumber + "[counter_0][j_prime] == 0);");
         code.deleteTab();
         code.add("}");
         code.deleteTab();
