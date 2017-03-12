@@ -1,4 +1,4 @@
-package edu.pse.beast.propertylist.Controller;
+package edu.pse.beast.propertylist;
 
 import static org.junit.Assert.*;
 
