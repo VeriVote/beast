@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.propertychecker;
 
+import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
@@ -44,13 +45,8 @@ public class CBMCCodeGeneratorTest {
 
     public static void main(String args[]) {
 
-        InternalTypeContainer intype1 = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
-        InternalTypeContainer intype2 = new InternalTypeContainer(intype1, InternalTypeRep.CANDIDATE);
-        InternalTypeContainer intype3 = new InternalTypeContainer(intype2, InternalTypeRep.VOTER);
-        ElectionTypeContainer inputType = new ElectionTypeContainer(intype1, "list_of_candidates_per_voter");
-        InternalTypeContainer type2 = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
-        InternalTypeContainer outtype = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
-        ElectionTypeContainer outputType = new ElectionTypeContainer(outtype, "output");
+        ElectionTypeContainer inputType = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.PREFERENCE);
+        ElectionTypeContainer outputType = new ElectionTemplateHandler().getStandardResult();
 
         ElectionDescription electionDescription = new ElectionDescription("name", inputType, outputType, 0);
         ArrayList<String> userCode = new ArrayList<>();

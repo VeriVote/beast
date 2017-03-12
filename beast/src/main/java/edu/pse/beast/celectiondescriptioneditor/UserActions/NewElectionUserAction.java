@@ -9,6 +9,7 @@ import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateChooser;
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.UserAction;
 
@@ -42,7 +43,9 @@ public class NewElectionUserAction extends UserAction {
         electionTemplateDialog.setVisible(true);
     }
 
-    public void create(String input, String res, String name) {
+    public void create(ElectionTypeContainer.ElectionTypeIds input,
+                       ElectionTypeContainer.ElectionTypeIds  res,
+                       String name) {
         try {
             ElectionDescription description = cCodeHelper.generateElectionDescription(
                     input, res, name, 

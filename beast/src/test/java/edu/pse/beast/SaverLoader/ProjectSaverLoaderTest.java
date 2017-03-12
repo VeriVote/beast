@@ -33,8 +33,8 @@ public class ProjectSaverLoaderTest {
     public static void setUpClass() {
         projectSaverLoader = new ProjectSaverLoader();
         ElectionTemplateHandler electionTemplateHandler = new ElectionTemplateHandler();
-        ElectionTypeContainer inputType = electionTemplateHandler.getById("list_of_integer_vals_per_voter");
-        ElectionTypeContainer outputType = electionTemplateHandler.getById("one_candidate_or_zero");
+        ElectionTypeContainer inputType = electionTemplateHandler.getById(ElectionTypeContainer.ElectionTypeIds.WEIGHTED_APPROVAL);
+        ElectionTypeContainer outputType = electionTemplateHandler.getStandardResult();
 
         ElectionDescription electionDescription = new ElectionDescription("testDescription", inputType, outputType, 2);
         ArrayList<String> code = new ArrayList<String>();

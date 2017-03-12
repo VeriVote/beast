@@ -1,5 +1,6 @@
 package edu.pse.beast.propertychecker;
 
+import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
@@ -25,13 +26,9 @@ public class PropertyCheckerTest {
 
     public void testWhole() {
 
-        InternalTypeContainer intype1 = new InternalTypeContainer(InternalTypeRep.APPROVAL);
-        InternalTypeContainer intype2 = new InternalTypeContainer(intype1, InternalTypeRep.CANDIDATE);
-        InternalTypeContainer intype3 = new InternalTypeContainer(intype2, InternalTypeRep.VOTER);
-        ElectionTypeContainer inputType = new ElectionTypeContainer(intype3, "input");
-        InternalTypeContainer type2 = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
-        InternalTypeContainer outtype = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
-        ElectionTypeContainer outputType = new ElectionTypeContainer(outtype, "output");
+        ElectionTypeContainer inputType =
+                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.WEIGHTED_APPROVAL);
+        ElectionTypeContainer outputType = new ElectionTemplateHandler().getStandardResult();
 
         ElectionDescription electionDescription = new ElectionDescription("name", inputType, outputType, 0);
         ArrayList<String> userCode = new ArrayList<>();

@@ -48,9 +48,11 @@ public class ElectionDescriptionSaverLoader implements SaverLoader {
         String code = split[0].replace("<code>\n", "");
         String [] codeArray = StringSaverLoader.createFromSaveString(code).split("\n");
         split = split[1].split("\n</inputType>\n");
-        ElectionTypeContainer inputType = electionTemplateHandler.getById(split[0].replace("<inputType>\n", ""));
+        ElectionTypeContainer inputType = electionTemplateHandler.getById(
+                ElectionTypeContainer.ElectionTypeIds.valueOf(split[0].replace("<inputType>\n", "")));
         split = split[1].split("\n</outputType>\n");
-        ElectionTypeContainer outputType = electionTemplateHandler.getById(split[0].replace("<outputType>\n", ""));
+        ElectionTypeContainer outputType = electionTemplateHandler.getById(
+                ElectionTypeContainer.ElectionTypeIds.valueOf(split[0].replace("<outputType>\n", "")));
         ElectionDescription electionDescription = new ElectionDescription(name, inputType, outputType, votingDecLine);
         electionDescription.setCode(Arrays.asList(codeArray));
         return electionDescription;

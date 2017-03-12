@@ -10,23 +10,14 @@ import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * This class handles all available ElectionTypeContainer for input and output.
  * @author Holger-Desktop
  */
 public class ElectionTemplateHandler {
-    private final String[] inputIds = {
-        "one_candidate_per_voter",
-        "list_of_candidates_per_voter",
-        "list_of_yes_no_per_voter",
-        "list_of_integer_vals_per_voter"
-    };
-    
-    private final String[] resultIds = {
-        "one_candidate_or_zero",
-        "candidate_per_seat"
-    };
     
     private final ArrayList<ElectionTypeContainer> inputTypes = new ArrayList<>();
     private final ArrayList<ElectionTypeContainer> resTypes = new ArrayList<>();
@@ -37,7 +28,7 @@ public class ElectionTemplateHandler {
                 new ElectionTypeContainer(
                         new InternalTypeContainer(
                                 new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER),
-                        "one_candidate_per_voter"));
+                        ElectionTypeContainer.ElectionTypeIds.SINGLE_CHOICE));
         inputTypes.add(
                 new ElectionTypeContainer(
                         new InternalTypeContainer(
@@ -45,7 +36,7 @@ public class ElectionTemplateHandler {
                                         new InternalTypeContainer(InternalTypeRep.INTEGER),
                                         InternalTypeRep.CANDIDATE 
                                 ), InternalTypeRep.VOTER),
-                        "list_of_candidates_per_voter"));
+                        ElectionTypeContainer.ElectionTypeIds.PREFERENCE));
         
         inputTypes.add(
                 new ElectionTypeContainer(
@@ -54,52 +45,55 @@ public class ElectionTemplateHandler {
                                         new InternalTypeContainer(InternalTypeRep.APPROVAL),
                                         InternalTypeRep.CANDIDATE
                                 ), InternalTypeRep.VOTER),
-                        "list_of_yes_no_per_voter"));
+                        ElectionTypeContainer.ElectionTypeIds.APPROVAL));
         
         inputTypes.add(
                 new ElectionTypeContainer(
                         new InternalTypeContainer(
                                 new InternalTypeContainer(
-                                        new InternalTypeContainer(InternalTypeRep.WEIGHTEDAPPROVAL),
+                                        new InternalTypeContainer(InternalTypeRep.INTEGER),
                                         InternalTypeRep.CANDIDATE
                                 ), InternalTypeRep.VOTER),
-                        "list_of_integer_vals_per_voter"));
+                        ElectionTypeContainer.ElectionTypeIds.WEIGHTED_APPROVAL));
         
         resTypes.add(new ElectionTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE),
-                "one_candidate_or_zero"));
+                ElectionTypeContainer.ElectionTypeIds.CAND_OR_UNDEF));
         
         resTypes.add(new ElectionTypeContainer(
                 new InternalTypeContainer(
                         new InternalTypeContainer(InternalTypeRep.CANDIDATE),
                         InternalTypeRep.SEAT),
-                "candidate_per_seat"));
-    }    
-    
-    public String[] getInputIds() {
-        return inputIds;
+                ElectionTypeContainer.ElectionTypeIds.CAND_PER_SEAT));
     }
-    
-    public String[] getOutputIds() {
-        return resultIds;
+
+    public List<ElectionTypeContainer.ElectionTypeIds> getInputIds() {
+        return Arrays.asList(ElectionTypeContainer.ElectionTypeIds.SINGLE_CHOICE,
+                ElectionTypeContainer.ElectionTypeIds.PREFERENCE,
+                ElectionTypeContainer.ElectionTypeIds.APPROVAL,
+                ElectionTypeContainer.ElectionTypeIds.WEIGHTED_APPROVAL);
     }
-    
+
+    public List<ElectionTypeContainer.ElectionTypeIds> getResIds() {
+        return Arrays.asList(ElectionTypeContainer.ElectionTypeIds.CAND_OR_UNDEF,
+                ElectionTypeContainer.ElectionTypeIds.CAND_PER_SEAT);
+    }
+
     /**
      * returns the elecitontypecontainer having the supplied id
      * @param id the id of the elecitontypecontainer to be retrieved
      * @return the electiontypecontainer if it exists, null otherwise
      */
-    public ElectionTypeContainer getById(String id) {
-        System.out.println(id);
-        for(int i = 0; i < inputIds.length; ++i) {
-            if(inputIds[i].equals(id))
-                return inputTypes.get(i);
+    public ElectionTypeContainer getById(ElectionTypeContainer.ElectionTypeIds id) {
+        for (ElectionTypeContainer cont :
+                inputTypes) {
+            if(cont.getId() == id) return cont;
         }
-        
-        for(int i = 0; i < resultIds.length; ++i) {
-            if(resultIds[i].equals(id))
-                return resTypes.get(i);        
+
+        for (ElectionTypeContainer cont :
+                resTypes) {
+            if (cont.getId() == id) return cont;
         }
-        
+
         return  null;
     }
 

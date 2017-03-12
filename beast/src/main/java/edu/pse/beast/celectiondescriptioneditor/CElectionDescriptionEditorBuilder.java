@@ -120,9 +120,10 @@ public class CElectionDescriptionEditorBuilder {
 
         
         try {
-            editor.loadElectionDescription(new CCodeHelper().generateElectionDescription(
-                    templateHandler.getInputIds()[0],
-                    templateHandler.getOutputIds()[0],
+            editor.loadElectionDescription(
+                    new CCodeHelper().generateElectionDescription(
+                    templateHandler.getStandardInput().getId(),
+                    templateHandler.getStandardResult().getId(),
                     "new_election",
                     templateHandler,
                     objRefsForBuilder.getStringIF().getCElectionEditorStringResProvider().getElectionStringRes()));

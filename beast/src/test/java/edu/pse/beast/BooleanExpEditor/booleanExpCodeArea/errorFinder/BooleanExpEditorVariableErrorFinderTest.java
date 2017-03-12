@@ -54,8 +54,8 @@ public class BooleanExpEditorVariableErrorFinderTest {
 
     @Test
     public void testFindsCantCompareErrorSymbolicVars() {
-        ElectionTypeContainer input = new ElectionTemplateHandler().getById("list_of_candidates_per_voter");
-        ElectionTypeContainer res = new ElectionTemplateHandler().getById("one_candidate_or_zero");
+        ElectionTypeContainer input = new ElectionTemplateHandler().getStandardInput();
+        ElectionTypeContainer res = new ElectionTemplateHandler().getStandardResult();
         
         BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
         scopehandler.enterNewScope();
@@ -76,8 +76,8 @@ public class BooleanExpEditorVariableErrorFinderTest {
     
     @Test
     public void testFindsCantCompareErrorDifferentLists() {
-        ElectionTypeContainer input = new ElectionTemplateHandler().getById("list_of_candidates_per_voter");
-        ElectionTypeContainer res = new ElectionTemplateHandler().getById("one_candidate_or_zero");
+        ElectionTypeContainer input = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.PREFERENCE);
+        ElectionTypeContainer res = new ElectionTemplateHandler().getStandardResult();
         
         BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
         scopehandler.enterNewScope();
@@ -98,8 +98,8 @@ public class BooleanExpEditorVariableErrorFinderTest {
     
     @Test
     public void testFindsWrongVarPassedToVotesum() {
-        ElectionTypeContainer input = new ElectionTemplateHandler().getById("list_of_candidates_per_voter");
-        ElectionTypeContainer res = new ElectionTemplateHandler().getById("one_candidate_or_zero");
+        ElectionTypeContainer input = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.PREFERENCE);
+        ElectionTypeContainer res = new ElectionTemplateHandler().getStandardResult();
         
         BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
         scopehandler.enterNewScope();
@@ -120,8 +120,8 @@ public class BooleanExpEditorVariableErrorFinderTest {
     
     @Test
     public void testGetVarNotDeclError() {
-        ElectionTypeContainer input = new ElectionTemplateHandler().getById("list_of_candidates_per_voter");
-        ElectionTypeContainer res = new ElectionTemplateHandler().getById("one_candidate_or_zero");
+        ElectionTypeContainer input = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.PREFERENCE);
+        ElectionTypeContainer res = new ElectionTemplateHandler().getStandardResult();
         
         BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
         scopehandler.enterNewScope();
@@ -140,8 +140,8 @@ public class BooleanExpEditorVariableErrorFinderTest {
     
     @Test
     public void testTooManyVarsPassedElect() {
-        ElectionTypeContainer input = new ElectionTemplateHandler().getById("list_of_candidates_per_voter");
-        ElectionTypeContainer res = new ElectionTemplateHandler().getById("one_candidate_or_zero");
+        ElectionTypeContainer input = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.PREFERENCE);
+        ElectionTypeContainer res = new ElectionTemplateHandler().getStandardResult();
         
         BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
         scopehandler.enterNewScope();
@@ -161,8 +161,8 @@ public class BooleanExpEditorVariableErrorFinderTest {
     
     @Test
     public void testTooManyVarsPassedVote() {
-        ElectionTypeContainer input = new ElectionTemplateHandler().getById("one_candidate_per_voter");
-        ElectionTypeContainer res = new ElectionTemplateHandler().getById("one_candidate_or_zero");
+        ElectionTypeContainer input = new ElectionTemplateHandler().getStandardInput();
+        ElectionTypeContainer res = new ElectionTemplateHandler().getStandardResult();
         
         BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
         scopehandler.enterNewScope();
@@ -185,8 +185,8 @@ public class BooleanExpEditorVariableErrorFinderTest {
     
     @Test 
     public void testWrongVarTypePassed() {
-        ElectionTypeContainer input = new ElectionTemplateHandler().getById("one_candidate_per_voter");
-        ElectionTypeContainer res = new ElectionTemplateHandler().getById("one_candidate_or_zero");
+        ElectionTypeContainer input = new ElectionTemplateHandler().getStandardInput();
+        ElectionTypeContainer res = new ElectionTemplateHandler().getStandardResult();
         
         BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
         scopehandler.enterNewScope();
@@ -206,8 +206,8 @@ public class BooleanExpEditorVariableErrorFinderTest {
     
     @Test 
     public void handlesGrammerErrorsTest() {
-        ElectionTypeContainer input = new ElectionTemplateHandler().getById("one_candidate_per_voter");
-        ElectionTypeContainer res = new ElectionTemplateHandler().getById("one_candidate_or_zero");
+        ElectionTypeContainer input = new ElectionTemplateHandler().getStandardInput();
+        ElectionTypeContainer res = new ElectionTemplateHandler().getStandardResult();
         
         BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
         scopehandler.enterNewScope();

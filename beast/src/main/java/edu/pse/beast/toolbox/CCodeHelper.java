@@ -10,6 +10,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
+import edu.pse.beast.stringresource.EnumToIdMapping;
 import edu.pse.beast.stringresource.StringResourceLoader;
 
 import java.util.ArrayList;
@@ -114,8 +115,8 @@ public class CCodeHelper {
      * @return the complete voting function
      */
     public ElectionDescription generateElectionDescription(
-            String input,
-            String res,
+            ElectionTypeContainer.ElectionTypeIds input,
+            ElectionTypeContainer.ElectionTypeIds res,
             String name,
             ElectionTemplateHandler templateHandler,
             StringResourceLoader stringResourceLoader) {
@@ -126,8 +127,16 @@ public class CCodeHelper {
                 templateHandler.getById(res),
                 2);
         ArrayList<String> code = new ArrayList<>();
-        code.add("//" + stringResourceLoader.getStringFromID(input) + ": " + stringResourceLoader.getStringFromID(input + "_exp"));
-        code.add("//" + stringResourceLoader.getStringFromID(input) + ": " + stringResourceLoader.getStringFromID(res + "_exp"));
+        String inputIdInFile = EnumToIdMapping.getIDInFile(input);
+        String resIdInFile = EnumToIdMapping.getIDInFile(res);
+        code.add("//" +
+                stringResourceLoader.getStringFromID(inputIdInFile)
+                + ": " +
+                stringResourceLoader.getStringFromID(inputIdInFile + "_exp"));
+        code.add("//" +
+                stringResourceLoader.getStringFromID(resIdInFile)
+                + ": " +
+                stringResourceLoader.getStringFromID(resIdInFile + "_exp"));
         code.add(generateDeclString(templateHandler.getById(input), templateHandler.getById(res)) + " ");
         code.add("} ");
         description.setCode(code);

@@ -11,17 +11,28 @@ public class ElectionTypeContainer {
     private final InternalTypeContainer type;
     private int lowerBound;
     private int upperBound;
-    private String id;
+    private ElectionTypeIds id;
+
+    public enum ElectionTypeIds {
+        SINGLE_CHOICE,
+        PREFERENCE,
+        APPROVAL,
+        WEIGHTED_APPROVAL,
+        CAND_OR_UNDEF,
+        CAND_PER_SEAT
+    }
+
     /**
      * Constructor
      * @param type the type of this election
      */
-    public ElectionTypeContainer(InternalTypeContainer type, String id) {
+    public ElectionTypeContainer(InternalTypeContainer type, ElectionTypeIds id) {
         this.type = type;
         this.id = id;
         lowerBound = 0;
         upperBound = 5;
     }
+
     
     /**
      * 
@@ -51,7 +62,7 @@ public class ElectionTypeContainer {
      *
      * @return the id of this typecontainer
      */
-    public String getId() {
+    public ElectionTypeIds getId() {
         return id;
     }
 

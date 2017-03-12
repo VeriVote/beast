@@ -6,6 +6,8 @@
 package edu.pse.beast.celectiondescriptioneditor.ElectionTemplates;
 
 import edu.pse.beast.celectiondescriptioneditor.UserActions.NewElectionUserAction;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
+import edu.pse.beast.stringresource.EnumToIdMapping;
 import edu.pse.beast.stringresource.StringResourceLoader;
 
 import javax.swing.*;
@@ -20,8 +22,8 @@ public class ElectionTemplateChooser extends javax.swing.JFrame {
     private final NewElectionUserAction action;
     private ElectionTemplateHandler electionTemplateHandler;
     private final StringResourceLoader loader;
-    private ArrayList<String> inputIds = new ArrayList<>();
-    private ArrayList<String> resIds = new ArrayList<>();
+    private ArrayList<ElectionTypeContainer.ElectionTypeIds> inputIds = new ArrayList<>();
+    private ArrayList<ElectionTypeContainer.ElectionTypeIds> resIds = new ArrayList<>();
     private final String emptyNameTextFieldError;
 
     /**
@@ -42,24 +44,28 @@ public class ElectionTemplateChooser extends javax.swing.JFrame {
             if (nameField.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, emptyNameTextFieldError, "", JOptionPane.OK_OPTION);
             } else {
-                action.create(inputIds.get(inputList.getSelectedIndex()),
+                action.create(
+                        inputIds.get(inputList.getSelectedIndex()),
                         resIds.get(resultList.getSelectedIndex()),
                         nameField.getText());
                 this.dispose();
             }
         });
-        for (int i = 0; i < electionTemplateHandler.getInputIds().length; ++i) {
-            inputIds.add(electionTemplateHandler.getInputIds()[i]);
-            inputList.addItem(loader.getStringFromID(electionTemplateHandler.getInputIds()[i]));
+        for(ElectionTypeContainer.ElectionTypeIds id : electionTemplateHandler.getInputIds()) {
+            inputIds.add(id);
+            String toAdd = loader.getIdForString(EnumToIdMapping.getIDInFile(id));
+            inputList.addItem(toAdd);
         }
 
-        for (int i = 0; i < electionTemplateHandler.getOutputIds().length; ++i) {
-            resIds.add(electionTemplateHandler.getOutputIds()[i]);
-            resultList.addItem(loader.getStringFromID(electionTemplateHandler.getOutputIds()[i]));
+        for(ElectionTypeContainer.ElectionTypeIds id : electionTemplateHandler.getResIds()) {
+            resIds.add(id);
+            resultList.addItem(loader.getIdForString(EnumToIdMapping.getIDInFile(id)));
         }
 
         getRootPane().setDefaultButton(createButton);
     }
+
+
 
     /**
      * This method is called from within the constructor to initialize the form.

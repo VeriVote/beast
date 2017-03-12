@@ -21,8 +21,8 @@ public class ElectionDescriptionSaverLoaderTest {
     @BeforeClass
     public static void setUpClass() {
         electionTemplateHandler = new ElectionTemplateHandler();
-        ElectionTypeContainer inputType = electionTemplateHandler.getById("list_of_integer_vals_per_voter");
-        ElectionTypeContainer outputType = electionTemplateHandler.getById("one_candidate_or_zero");
+        ElectionTypeContainer inputType = electionTemplateHandler.getById(ElectionTypeContainer.ElectionTypeIds.WEIGHTED_APPROVAL);
+        ElectionTypeContainer outputType = electionTemplateHandler.getStandardResult();
         electionDescriptionSaverLoader = new ElectionDescriptionSaverLoader();
 
         electionDescription = new ElectionDescription("testDescription", inputType, outputType, 2);
