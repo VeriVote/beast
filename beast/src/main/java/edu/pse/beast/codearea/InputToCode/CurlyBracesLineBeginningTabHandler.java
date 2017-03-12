@@ -32,10 +32,7 @@ public class CurlyBracesLineBeginningTabHandler implements LineBeginningTabsHand
             else if(code.charAt(pos) == '}') --amt;
         }
         
-        for(int pos = caretPos; pos < code.length() && code.charAt(pos) == '}'; ++pos) {
-            --amt;
-            return amt;
-        }
+        if(code.charAt(caretPos) == '}') --amt;
         return amt;
     }
     
