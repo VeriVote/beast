@@ -1,7 +1,7 @@
-package edu.pse.beast.saverloader.StaticSaverLoaders;
+package edu.pse.beast.SaverLoader.StaticSaverLoaders;
 
 import org.junit.Test;
-
+import edu.pse.beast.saverloader.StaticSaverLoaders.SaverLoaderHelper;
 import java.util.Map;
 
 import static org.junit.Assert.*;
