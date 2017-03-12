@@ -25,8 +25,8 @@ public class ElectionDescriptionSaverLoader implements SaverLoader {
         created += h.getStringForAttr("name", electionDescription.getName());
         created += h.getStringForAttr("votingDeclLine", electionDescription.getVotingDeclLine());
         created += h.getStringForAttr("code", electionDescription.getCode());
-        created += h.getStringForAttr("inputType", EnumToIdMapping.getIDInFile(electionDescription.getInputType().getId()) );
-        created += h.getStringForAttr("outputType", EnumToIdMapping.getIDInFile(electionDescription.getOutputType().getId()));
+        created += h.getStringForAttr("inputType", electionDescription.getInputType().getId().toString());
+        created += h.getStringForAttr("outputType", electionDescription.getOutputType().getId().toString());
         return created;
     }
 
@@ -37,14 +37,9 @@ public class ElectionDescriptionSaverLoader implements SaverLoader {
 
         String name = m.get("name");
         ElectionTypeContainer inputType = electionTemplateHandler.getById(
-                ElectionTypeContainer.ElectionTypeIds.valueOf(
-                        EnumToIdMapping.getEnumStringFromIdInFile(
-                                m.get("inputType"))
-                        ));
+                ElectionTypeContainer.ElectionTypeIds.valueOf(m.get("inputType")));
         ElectionTypeContainer outputType = electionTemplateHandler.getById(
-                ElectionTypeContainer.ElectionTypeIds.valueOf(EnumToIdMapping.getEnumStringFromIdInFile(
-                        m.get("outputType"))
-                ));
+                ElectionTypeContainer.ElectionTypeIds.valueOf(m.get("outputType")));
         int votingDecLine = Integer.valueOf(m.get("votingDeclLine"));
         String[] codeArray = m.get("code").split("\n");
 
