@@ -1,0 +1,66 @@
+title : Parametereditor
+voters : Wähler
+candidates : Kandidaten
+seats : Sitze
+timeout : Dauer
+max_processes : Max. Prozesse
+to : bis
+advanced : Erweitert...
+seconds : Sekunden
+minutes : Minuten
+hours : Stunden
+days : Tage
+title_advanced : Benutzerdefinierte Argumente für CBMC
+ok : OK
+cancel : Abbrechen
+title_about : About BEAST
+about : About
+version : Version
+openDialogTitleText : Projekt Öffnen
+saveDialogTitleText : Projekt Speichern
+lookInLabelText : Suchen in:
+openButtonText : Öffnen
+cancelButtonText : Abbrechen
+fileNameLabelText : Dateiname
+filesOfTypeLabelText : Dateityp
+openApproveButtonToolTipText : Öffnen
+openApproveButtonText : Öffnen
+saveApproveButtonToolTipText : Speichern
+saveApproveButtonText : Speichern
+cancelButtonToolTipText : Abbrechen
+fileNameHeaderText : Dateiname
+upFolderToolTipText : Eine Ebene höher
+homeFolderToolTipText : Home
+newFolderToolTipText : Neuen Ordner erstellen
+listViewButtonToolTipText : Listen Ansicht
+newFolderButtonText : Neuen Ordner erstellen
+renameFileButtonText : Umbennen
+deleteFileButtonText : Löschen
+filterLabelText : Dateityp
+detailsViewButtonToolTipText : Details
+fileSizeHeaderText : Größe
+fileDateHeaderText : Zuletzt modifiziert
+fileApproveRegex : (.)+\.beast
+fileDescription : BEAST-Projekt-Datei (*.beast)
+objectCouldNotBeConvertedToString : Projekt konnte nicht in einen String zum speichern konvertiert werden.
+objectCouldNotBeSavedError : Objekt konnte nicht gespeichert werden.
+inputOutputErrorOpen : Die Datei existiert nicht oder Sie verfügen nicht über ausreichende Rechte.
+invalidFileFormatErrorMessage : Die gegebene Datei enthält kein gültiges BEAST-Projekt-Format.
+wrongEncodingError : Das Projekt enthält falsch kodierte Zeichen.
+inputOutputErrorSave : Das Verzeichnis in dem gespeichert werden soll existiert nicht oder Sie verfügen nicht über ausreichende Rechte.
+wrongFileNameError : Der angegebene Name entspricht nicht dem regulären Ausdruck '[_a-zA-Z0-9\-\.\s]+'.
+fileSuffix : .beast
+saveChanges : Änderungen an '
+saveChangesSuffix : ' speichern?
+yesOption : Ja
+noOption : Nein
+cancelOption : Abbrechen
+searchingForErrors : Suche nach Fehlern
+electionDescriptionErrors : Es bestehen noch Fehler im Wahlverfahren.
+propertyErrors : Es bestehen noch Fehler in den zu prüfenden Eigenschaften.
+parameterErrors : Es bestehen noch Fehler in den Parametern.
+startingCheck : Analyse wird gestartet
+waitingForPropertyResult : Warte auf Ergebnis der Eigenschaft '
+analysisEnded : Analyse beendet nach
+noProperty : Es wurde keine Eigenschaft zur Analyse ausgewählt.
+falseStop : Nur eine laufende Analyse kann gestoppt werden.

@@ -20,10 +20,6 @@ import java.util.LinkedList;
 public abstract class StringResourceProvider {
 
     /**
-     * the path containing all languagefolders with the textfiles
-     */
-    protected String relativePath;
-    /**
      * languageId. Choose "de" for german
      */
     protected String languageId;
@@ -33,12 +29,9 @@ public abstract class StringResourceProvider {
      * to call it yourself
      *
      * @param languageId the language. Choose "de" for german
-     * @param relativePath the path containing all languagefolders with the
-     * textfiles
      */
-    public StringResourceProvider(String languageId, String relativePath) {
+    public StringResourceProvider(String languageId) {
         this.languageId = languageId;
-        this.relativePath = relativePath;
     }
 
     /**
@@ -73,7 +66,7 @@ public abstract class StringResourceProvider {
         ErrorLogger.log("The file " + file.getName() + " is not correclty formated");
         ErrorLogger.log("You can find and correct the file in this directory " + file.getAbsolutePath());
     }
-    
+
     /**
      * This method is used to initialize the StringResourceLoaders of the
      * subclasses
@@ -86,7 +79,7 @@ public abstract class StringResourceProvider {
         String subFolderAndFilename = getFileLocationString(moduleName);
         String superFolder = SuperFolderFinder.getSuperFolder();
         String location = superFolder + subFolderAndFilename;
-        File file = new File(location); //for ex foo.txt
+        File file = new File(location);
         {
             LinkedList<String> inputList;
             try {

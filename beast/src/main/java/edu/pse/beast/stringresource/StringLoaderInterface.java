@@ -7,14 +7,12 @@ package edu.pse.beast.stringresource;
 
 /**
  * This class manages all StringResProviders and therefore all acces to all
- * Strings the User gets to see. If you want to change the location of the
- * Stringfiles inside the Project you have to edit this class.
+ * Strings the User gets to see. 
  *
  * @author Niels
  */
 public class StringLoaderInterface {
 
-    private static final String FILELOCATION = "";
     private final PropertyListStringResProvider propListStr;
     private final BooleanExpEditorStringResProvider booleanExpStr;
     private final CElectionEditorStringResProvider cElecStr;
@@ -26,11 +24,11 @@ public class StringLoaderInterface {
      * @param languageId the languageId. choose "de" for german
      */
     public StringLoaderInterface(String languageId) {
-        propListStr = new PropertyListStringResProvider(languageId, FILELOCATION);
-        booleanExpStr = new BooleanExpEditorStringResProvider(languageId, FILELOCATION);
-        cElecStr = new CElectionEditorStringResProvider(languageId, FILELOCATION);
-        paramEdStr = new ParameterEditorStringResProvider(languageId, FILELOCATION);
-        optionStr = new OptionStringResProvider(languageId, FILELOCATION);
+        propListStr = new PropertyListStringResProvider(languageId);
+        booleanExpStr = new BooleanExpEditorStringResProvider(languageId);
+        cElecStr = new CElectionEditorStringResProvider(languageId);
+        paramEdStr = new ParameterEditorStringResProvider(languageId);
+        optionStr = new OptionStringResProvider(languageId);
     }
 
     /**
