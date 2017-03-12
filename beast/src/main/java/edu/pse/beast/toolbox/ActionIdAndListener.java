@@ -40,5 +40,11 @@ public class ActionIdAndListener {
     public ActionListener getListener() {
         return this.listener;
     }
-    
+
+    @Override
+    public String toString() {
+        return "ActionIdAndListener{" +
+                "id='" + id + '\'' +
+                '}';
+    }
 }

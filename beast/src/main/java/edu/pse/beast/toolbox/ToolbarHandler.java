@@ -8,6 +8,8 @@ package edu.pse.beast.toolbox;
 import edu.pse.beast.stringresource.StringResourceLoader;
 
 import javax.swing.*;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  *
@@ -19,12 +21,30 @@ public abstract class ToolbarHandler {
     private final ImageResourceProvider imageRes;
     private final JButton[] buttons;
     protected JToolBar toolbar;
+
+    private class ActionIdListenerSorter implements Comparator<ActionIdAndListener> {
+        private String[] standardIdOrder = {"new", "save", "save_as", "load", "undo", "redo", "copy", "cut", "paste"};
+        @Override
+        public int compare(ActionIdAndListener lhs, ActionIdAndListener rhs) {
+            Integer lhsPos = findInarr(lhs.getId());
+            int rhsPos = findInarr(rhs.getId());
+            return lhsPos.compareTo(rhsPos);
+        }
+
+        private int findInarr(String s) {
+            for (int i = 0; i < standardIdOrder.length; i++) {
+                if(standardIdOrder[i].equals(s)) return i;
+            }
+            return standardIdOrder.length;
+        }
+    }
     
     public ToolbarHandler(
             ImageResourceProvider imageRes,
             StringResourceLoader stringRes,
             ActionIdAndListener[] actionIdsAndListener,
             JToolBar toolbar) {
+        Arrays.sort(actionIdsAndListener, new ActionIdListenerSorter());
         this.stringRes = stringRes;
         this.actionIdsAndListener = actionIdsAndListener;
         this.imageRes = imageRes;
