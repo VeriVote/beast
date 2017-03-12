@@ -31,6 +31,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 
 	private PLModel model;
 	private PropertyList controller;
+	
 	private String title;
 	private String currentlyLoadedPropertyListName;
 	private StringLoaderInterface sli;
@@ -45,6 +46,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 
 	private ArrayList<ListItem> items = new ArrayList<ListItem>();
 	private ListItem nextToPresent;
+	
 	private JButton addNewButton = new JButton();
 	private JButton addCreatedButton = new JButton();
 	
@@ -74,8 +76,8 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		this.model = model;
 		model.addObserver(this);
 		init();
-                Thread t = new Thread(new RepaintThread(this));
-                t.start();
+        Thread t = new Thread(new RepaintThread(this));
+        t.start();
 	}
 	
 	
@@ -114,7 +116,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		getContentPane().add(endpanel, BorderLayout.SOUTH);
 
 		addNewButton.setIcon(addIcon);
-		addNewButton.addActionListener(new ActionListener() {
+		addNewButton.addActionListener(new ActionListener() { // adds a new property
 			public void actionPerformed(ActionEvent e) {
 				if (reactsToInput)
 					controller.addNewProperty();
@@ -124,7 +126,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		endpanel.add(addNewButton, BorderLayout.LINE_END);
 		
 		addCreatedButton.setIcon(addIcon);
-		addCreatedButton.addActionListener(new ActionListener() {
+		addCreatedButton.addActionListener(new ActionListener() { // adds a property that is loaded
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (reactsToInput) {
@@ -224,7 +226,6 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 			current.updateStringRes(sli);
 			items.add(current);
 			panel.add(current, BorderLayout.CENTER);
-			// propertyItem.getResultInterface().presentTo(current);
 		}
 		panel.revalidate();
 		panel.repaint();
@@ -243,9 +244,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	/**
 	 * Adds the given string to the window title, used for displaying name of
 	 * currently loaded PropertyList object
-	 * 
-	 * @param propListName
-	 *            name of the currently loaded PropertyList object
+	 * @param propListName name of the currently loaded PropertyList object
 	 */
 	public void setWindowTitle(String propListName) {
 		this.setCurrentlyLoadedPropertyListName(propListName);

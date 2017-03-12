@@ -29,8 +29,8 @@ public class DeleteDescriptionAction {
 	/**
 	 * Deletes the property.
 	 */
-	public void perform() {
-		model.deleteProperty(item, editor);
+	public boolean perform() {
+		return model.deleteProperty(item, editor);
 	}
 
 	/**

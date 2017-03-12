@@ -55,7 +55,6 @@ public class PLModel extends Observable implements NameInterface {
 			PropertyItem updated = prop;
 			String newName = prop.getDescription().getName() + "x";
 			updated.setDescriptionName(newName);
-			//propertyList.add(updated);
 			addDescription(updated);
 		}
 		else {
@@ -92,7 +91,6 @@ public class PLModel extends Observable implements NameInterface {
 	public void editProperty(PropertyItem prop, BooleanExpEditor editor) {
 		editor.letUserEditPostAndPreProperties(prop.getDescription(), true);
 		editor.getView().setVisible(true);
-		//prop.setResultType(ResultType.UNTESTED);
 		updateView();
 	}
 
@@ -144,16 +142,6 @@ public class PLModel extends Observable implements NameInterface {
 		updateView();
 		
 		return true;
-		
-		
-		/*for (PropertyItem item : propertyList) {
-			if (item.getResultType() == ResultType.UNTESTED && item.getTestStatus()) {
-				res.presentTo(item);
-				updateView();
-				return true;
-			}
-		}
-		return false;*/
 	}
 
     /**
