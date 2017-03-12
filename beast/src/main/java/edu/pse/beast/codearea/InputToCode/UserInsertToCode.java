@@ -262,8 +262,7 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
             }
             pane.getStyledDocument().remove(currentCaretPosition, 1);
         } catch (BadLocationException ex) {
-            Logger.getLogger(UserInsertToCode.class.getName()).log(Level.SEVERE, null, ex);
-        }           
+        }
         
     }
 
@@ -310,7 +309,6 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
             if(currentCaretPosition == 0) return;
             pane.getStyledDocument().remove(currentCaretPosition - 1, 1);
         } catch (BadLocationException ex) {
-            Logger.getLogger(UserInsertToCode.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

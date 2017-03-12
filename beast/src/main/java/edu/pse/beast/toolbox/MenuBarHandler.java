@@ -101,7 +101,6 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
 
                 currentMenu.add(currentItem);
             }
-
             createdMenuBar.add(currentMenu);
         }
     }
