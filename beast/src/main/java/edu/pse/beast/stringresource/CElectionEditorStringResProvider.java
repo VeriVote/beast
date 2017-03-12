@@ -20,11 +20,9 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
     /**
      *
      * @param languageId the languageId. Set to "de" for german
-     * @param relativePath the location of the folder with the languagesorted
-     * stringfiles
      */
-    public CElectionEditorStringResProvider(String languageId, String relativePath) {
-        super(languageId, relativePath);
+    public CElectionEditorStringResProvider(String languageId) {
+        super(languageId);
         this.initialize();
     }
 

@@ -4,7 +4,6 @@ import edu.pse.beast.datatypes.electiondescription.ElectionType;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
-import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 
 import java.util.List;
 

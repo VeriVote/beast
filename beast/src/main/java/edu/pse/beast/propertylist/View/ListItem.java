@@ -79,7 +79,6 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
 
         showResult.setPreferredSize(new Dimension(80, 40));
         showResult.setIcon(eyeIcon);
-        //present();
         showResult.setBackground(presentColor());
         showResult.addActionListener(new ActionListener() {
             @Override

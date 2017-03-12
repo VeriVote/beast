@@ -42,7 +42,7 @@ public class StringResourceLoader {
         }
     }
 
-    /**     *
+    /**     
      * @param id Id of the String you want to load
      * @return the String with the id
      */

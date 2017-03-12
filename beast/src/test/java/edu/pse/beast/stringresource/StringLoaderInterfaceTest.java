@@ -1,0 +1,93 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package edu.pse.beast.stringresource;
+
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+/**
+ *
+ * @author Niels
+ */
+public class StringLoaderInterfaceTest {
+
+    private StringLoaderInterface instance;
+
+    public StringLoaderInterfaceTest() {
+        this.instance = new StringLoaderInterface("test");
+//        BooleanExpEditorStringResProvider boolInstance = new BooleanExpEditorStringResProvider("test");
+//        CElectionEditorStringResProvider cInstance = new CElectionEditorStringResProvider("test");
+//
+//        OptionStringResProviderTest optInstance;
+
+    }
+
+    /**
+     * Test of getPropertyListStringResProvider method, of class
+     * StringLoaderInterface.
+     */
+    @Test
+    public void testGetPropertyListStringResProvider() {
+        System.out.println("getPropertyListStringResProvider");
+        PropertyListStringResProvider result = instance.getPropertyListStringResProvider();
+        assert (result != null);
+    }
+
+    /**
+     * Test of getBooleanExpEditorStringResProvider method, of class
+     * StringLoaderInterface.
+     */
+    @Test
+    public void testGetBooleanExpEditorStringResProvider() {
+        System.out.println("getBooleanExpEditorStringResProvider");
+        BooleanExpEditorStringResProvider result = instance.getBooleanExpEditorStringResProvider();
+        assert (result != null);
+    }
+
+    /**
+     * Test of getCElectionEditorStringResProvider method, of class
+     * StringLoaderInterface.
+     */
+    @Test
+    public void testGetCElectionEditorStringResProvider() {
+        System.out.println("getCElectionEditorStringResProvider");
+        CElectionEditorStringResProvider result = instance.getCElectionEditorStringResProvider();
+        assert (result != null);
+    }
+
+    /**
+     * Test of getParameterEditorStringResProvider method, of class
+     * StringLoaderInterface.
+     */
+    @Test
+    public void testGetParameterEditorStringResProvider() {
+        System.out.println("getParameterEditorStringResProvider");
+        ParameterEditorStringResProvider result = instance.getParameterEditorStringResProvider();
+        assert (result != null);
+    }
+
+    /**
+     * Test of getOptionStringResProvider method, of class
+     * StringLoaderInterface.
+     */
+    @Test
+    public void testGetOptionStringResProvider() {
+        System.out.println("getOptionStringResProvider");
+        OptionStringResProvider result = instance.getOptionStringResProvider();
+        assert (result != null);
+    }
+
+    /**
+     * Test of setLanguage method, of class StringLoaderInterface.
+     */
+    @Test
+    public void testSetLanguage() {
+        System.out.println("setLanguage");
+        instance.setLanguage("test");
+        // if there isn't an exception or an error message this should be correct
+    }
+
+}

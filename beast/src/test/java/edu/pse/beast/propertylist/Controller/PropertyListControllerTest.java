@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -55,6 +56,9 @@ public class PropertyListControllerTest {
 	public void deleteItemTest() {
 		list.deleteProperty(list.getList().get(0));
 		assertEquals(list.getList().size(), 2);
+		assertFalse(list.deleteProperty(null));
+		list.deleteProperty(list.getList().get(1));
+		assertEquals(list.getList().size(), 1);
 	}
 	
 	@Test

@@ -21,11 +21,9 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
     /**
      *
      * @param languageId the languageId. Set to "de" for german
-     * @param relativePath the location of the folder with the languagesorted
-     * stringfiles
      */
-    public BooleanExpEditorStringResProvider(String languageId, String relativePath) {
-        super(languageId, relativePath);
+    public BooleanExpEditorStringResProvider(String languageId) {
+        super(languageId);
         this.initialize();
     }
 

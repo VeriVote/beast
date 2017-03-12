@@ -53,9 +53,7 @@ public class ResultPresenterWindow extends JFrame {
 
     private void init() {
         this.setLayout(new BorderLayout());
-        //this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-        //this.setUndecorated(true);
         getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
         this.setResizable(true);
         setBounds(0, 0, 400, 500);
@@ -133,13 +131,6 @@ public class ResultPresenterWindow extends JFrame {
             int vote = votes[i].intValue();
             result[vote]++;
             
-            /* assumes that vote value is not 0
-            if (vote < 0) {
-                result[vote - 1]++;
-            }
-            else{
-                result[vote]++;
-            }*/
         }
         return result;
     }
@@ -156,12 +147,6 @@ public class ResultPresenterWindow extends JFrame {
                     for (int j = 0; j < candidates; j++) {
                     	int chosenCandidate = (int) (long) vote[j];
                     	result[chosenCandidate] += candidates - j;
-                    	
-                        /* assumes that chosenCandidate is not 0. if chosenCandidate is 0, the election is rigged
-                        if (chosenCandidate != 0) {
-                            result[chosenCandidate - 1] += candidates - j;
-                        }
-                        //result[candidate] += candidates - j; */
                     }
                     break;
                 case WEIGHTEDAPPROVAL:
@@ -257,53 +242,43 @@ public class ResultPresenterWindow extends JFrame {
 
             // The votes part of the document
             appendPane(srl.getStringFromID("votes") + ": ");
-            if (ex.isChooseOneCandidate()) {
-
-                List<Long> voteList = ex.getVotes().get(i).getList();
-                // first votelist is shown without difference to earlier votings
-                if (i == 0) {
-                    for (Long vote : voteList) {
-                        appendPane(vote + ", ");
-                    }
-                } else {
-                    // further lists are shown, if they did something different
-                    List<Long> precedingList = ex.getVotes().get(i - 1).getList();
-                    for (int j = 0; j < voteList.size(); j++) {
-                        Long preceding = precedingList.get(j);
-                        Long vote = voteList.get(j);
-                        if (preceding.equals(vote)) {
-                            appendPane(vote.toString() + ", ");
-                        } else {
-                            appendPaneColored(vote.toString(), Color.RED);
-                            appendPane(", ");
-                        }
-                    }
+            if (ex.isChooseOneCandidate()) { // only one candidate is elected
+            	
+            	Long[] precedingList;
+                Long[] voteList = ex.getVotes().get(i).getArray();
+                
+                precedingList = i == 0 ? voteList : ex.getVotes().get(i - 1).getArray();
+                
+                for (int j = 0; j < voteList.length; j++) {
+                	Color color = precedingList[j].equals(voteList[j]) ? Color.BLACK : Color.RED;
+                	appendPaneColored(voteList[j].toString(), color);
+                	appendPane(", ");
                 }
                 eraseLastCharacters(2);
-            } else {
-                List<ArrayList<Long>> precedingList;
-                List<ArrayList<Long>> voteList = ex.getVoteList().get(i).getList();
+                
+            } else { // more than one candidate is elected
+            	
+                Long[][] precedingList;
+                Long[][] voteList = ex.getVoteList().get(i).getArray();
 
-                if (i == 0) {
-                    precedingList = voteList;
-                } else {
-                    precedingList = ex.getVoteList().get(i - 1).getList();
-                }
+                precedingList = i == 0 ? voteList : ex.getVoteList().get(i - 1).getArray();
 
-                for (int j = 0; j < voteList.size(); j++) {
-                    ArrayList<Long> preceding = precedingList.get(j);
-                    ArrayList<Long> vote = voteList.get(j);
-                    if (preceding.equals(vote)) {
-                        appendPane(vote.toString() + ", ");
+                for (int j = 0; j < voteList.length; j++) {
+
+                    if (Arrays.equals(precedingList[j], voteList[j])) {
+                        appendPane(Arrays.toString(voteList[j]) + ", ");
                     } else {
-                        appendPaneColored(vote.toString(), Color.RED);
+                        appendPaneColored(Arrays.toString(voteList[j]), Color.RED);
                         appendPane(", ");
                     }
+                    
                 }
+                eraseLastCharacters(2);
 
             }
             appendLine("");
 
+            
             // The elected part of the document
             appendPane(srl.getStringFromID("elected") + ": ");
             if (ex.isOneSeatOnly()) {
@@ -312,11 +287,8 @@ public class ResultPresenterWindow extends JFrame {
 
                 // only show differences to preceding election when it is not
                 // the first election
-                if (i == 0) {
-                    preceding = elected;
-                } else {
-                    preceding = ex.getElect().get(i - 1).getValue();
-                }
+                
+                preceding = i == 0 ? elected : ex.getElect().get(i - 1).getValue();
                 
                 Color color = preceding == elected ? Color.BLACK : Color.RED;
 
@@ -327,22 +299,12 @@ public class ResultPresenterWindow extends JFrame {
                 	appendPaneColored(elected.toString() + ", ", color);
                 }
                 
-                /*if (preceding == elected) {
-                    appendPane(elected.toString() + ", ");
-                } else {
-                    appendPaneColored(elected.toString(), Color.RED);
-                    appendPane(", ");
-                }*/
                 eraseLastCharacters(2);
             } else {
                 Long[] preceding;
                 Long[] elected = ex.getSeats().get(i).getArray();
 
-                if (i == 0) {
-                    preceding = elected;
-                } else {
-                    preceding = ex.getSeats().get(i - 1).getArray();
-                }
+                preceding = i == 0 ? elected : ex.getSeats().get(i - 1).getArray();
                 
                 for (int j = 0; j < elected.length; j++) {
                 	Color color = preceding[j].equals(elected[j]) ? Color.BLACK : Color.RED;
@@ -357,15 +319,6 @@ public class ResultPresenterWindow extends JFrame {
                 }
                 eraseLastCharacters(2);
                 
-                /*Color color = preceding.equals(elected) ? Color.BLACK : Color.RED;
-                
-                appendPaneColored(Arrays.toString(elected), color);
-
-                if (preceding.equals(elected)) {
-                    appendPane(Arrays.toString(elected));
-                } else {
-                    appendPaneColored(Arrays.toString(elected), Color.RED);
-                }*/
             }
 
             // The vote points part of the document
