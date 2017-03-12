@@ -9,7 +9,10 @@ import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.saverloader.StaticSaverLoaders.FormalPropertySaverLoader;
+import edu.pse.beast.saverloader.StaticSaverLoaders.SaverLoaderHelper;
 import edu.pse.beast.saverloader.StaticSaverLoaders.SymbolicVarListSaverLoader;
+
+import java.util.Map;
 
 /**
  * Implements SaverLoader methods for creating saveStrings from PostAndPrePropertiesDescription objects and vice versa.
@@ -18,32 +21,29 @@ import edu.pse.beast.saverloader.StaticSaverLoaders.SymbolicVarListSaverLoader;
 public class PostAndPrePropertiesDescriptionSaverLoader implements SaverLoader {
 
     @Override
-    public String createSaveString(Object props) {
-        String created = "";
-        String name = "<postAndPrePropsName>\n" + ((PostAndPrePropertiesDescription) props).getName()
-                + "\n</postAndPrePropsName>\n";
-        String preProps = "<pre>\n" + FormalPropertySaverLoader.createSaveString(
-                ((PostAndPrePropertiesDescription) props).getPrePropertiesDescription()) + "\n</pre>\n";
-        String postProps = "<post>\n" + FormalPropertySaverLoader.createSaveString(
-                ((PostAndPrePropertiesDescription) props).getPostPropertiesDescription()) + "\n</post>\n";
-        String varlist = "<varlist>\n" + SymbolicVarListSaverLoader.createSaveString(
-                ((PostAndPrePropertiesDescription) props).getSymVarList()) + "\n</varlist>\n";
-        created += name + preProps + postProps + varlist;
-        return created;
+    public String createSaveString(Object obj) {
+        SaverLoaderHelper h = new SaverLoaderHelper();
+        PostAndPrePropertiesDescription props = (PostAndPrePropertiesDescription) obj;
+        StringBuilder saveStr = new StringBuilder();
+        saveStr.append(h.getStringForAttr("name", props.getName()));
+        saveStr.append(h.getStringForAttr("pre", FormalPropertySaverLoader.createSaveString(
+                props.getPrePropertiesDescription())));
+        saveStr.append(h.getStringForAttr("post", FormalPropertySaverLoader.createSaveString(
+                props.getPostPropertiesDescription())));
+        saveStr.append(h.getStringForAttr("varlist",
+                SymbolicVarListSaverLoader.createSaveString(props.getSymVarList())));
+        return saveStr.toString();
     }
 
     @Override
     public Object createFromSaveString(String s) throws ArrayIndexOutOfBoundsException {
-        String split[] = s.split("\n</postAndPrePropsName>\n");
-        String name = split[0].replace("<postAndPrePropsName>\n", "");
-        split = split[1].split("\n</pre>\n");
-        String preString = split[0].replace("<pre>\n", "");
+        Map<String, String> m = new SaverLoaderHelper().parseSaveString(s);
+        String name = m.get("name");
+        String preString = m.get("pre");
         FormalPropertiesDescription pre = FormalPropertySaverLoader.createFromSaveString(preString);
-        split = split[1].split("\n</post>\n");
-        String postString = split[0].replace("<post>\n", "");
+        String postString = m.get("post");
         FormalPropertiesDescription post = FormalPropertySaverLoader.createFromSaveString(postString);
-        split = split[1].split("\n</varlist>\n");
-        String varlistString = split[0].replace("<varlist>\n", "");
+        String varlistString = m.get("varlist");
         SymbolicVariableList varList = SymbolicVarListSaverLoader.createFromSaveString(varlistString);
         return new PostAndPrePropertiesDescription(name, pre, post, varList);
     }

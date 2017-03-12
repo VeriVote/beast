@@ -5,6 +5,9 @@ import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.saverloader.StaticSaverLoaders.ElectionCheckParameterSaverLoader;
+import edu.pse.beast.saverloader.StaticSaverLoaders.SaverLoaderHelper;
+
+import java.util.Map;
 
 /**
 * Implements SaverLoader methods for creating saveStrings from Project objects and vice versa.
@@ -24,34 +27,33 @@ public class ProjectSaverLoader implements SaverLoader {
     }
 
     @Override
-    public String createSaveString(Object project) {
-        String name = "<projectName>\n" + ((Project) project).getName()
-                + "\n</projectName>\n";
-        String electionDescription = "<electionDescription>\n" + electionDescriptionSaverLoader.createSaveString(
-                ((Project) project).getElecDescr())
-                + "\n</electionDescription>\n";
-        String propertyList = "<propertyList>\n" + propertyListSaverLoader.createSaveString(
-                ((Project) project).getPropList()) + "\n</propertyList>\n";
-        String electionCheckParameter = "<electionCheckParameter>\n" + ElectionCheckParameterSaverLoader.
-                createSaveString(((Project) project).getElectionCheckParameter())
-                + "\n</electionCheckParameter>\n";
-        return name + electionDescription + propertyList + electionCheckParameter;
+    public String createSaveString(Object obj) {
+        SaverLoaderHelper h = new SaverLoaderHelper();
+        Project proj = (Project) obj;
+        StringBuilder saveString = new StringBuilder();
+        saveString.append(h.getStringForAttr("name", proj.getName()));
+        String electionDescStr = electionDescriptionSaverLoader.createSaveString(proj.getElecDescr());
+        saveString.append(h.getStringForAttr("elecDesc", electionDescStr));
+        String propListStr = propertyListSaverLoader.createSaveString(proj.getPropList());
+        saveString.append(h.getStringForAttr("propList", propListStr));
+        String electionCheckParamStr = ElectionCheckParameterSaverLoader.createSaveString(
+                proj.getElectionCheckParameter());
+        saveString.append(h.getStringForAttr("electionCheckParams", electionCheckParamStr));
+        return saveString.toString();
     }
 
     @Override
     public Object createFromSaveString(String s) throws ArrayIndexOutOfBoundsException {
-        String [] split = s.split("\n</projectName>\n");
-        String name = split[0].replace("<projectName>\n", "");
-        split = split[1].split("\n</electionDescription>\n");
-        ElectionDescription electionDescription = ((ElectionDescription) electionDescriptionSaverLoader.
-                createFromSaveString(split[0].replace("<electionDescription>\n", "")));
-        split = split[1].split("\n</propertyList>\n");
-        PLModel propertyList = ((PLModel) propertyListSaverLoader.createFromSaveString(
-                split[0].replace("<propertyList>\n", "")));
-        split = split[1].split("\n</electionCheckParameter>\n");
+        Map<String,String> m = new SaverLoaderHelper().parseSaveString(s);
+        String name = m.get("name");
+        String descStr = m.get("elecDesc");
+        ElectionDescription electionDescription =
+                (ElectionDescription) electionDescriptionSaverLoader.createFromSaveString(descStr);
+        String propListStr = m.get("propList");
+        PLModel propertyList = ((PLModel) propertyListSaverLoader.createFromSaveString(propListStr));
+        String paramStr = m.get("electionCheckParams");
         ElectionCheckParameter electionCheckParameter = (ElectionCheckParameter)
-                ElectionCheckParameterSaverLoader.createFromSaveString(
-                        split[0].replace("<electionCheckParameter>\n", ""));
+                ElectionCheckParameterSaverLoader.createFromSaveString(paramStr);
         return new Project(electionCheckParameter, propertyList, electionDescription, name);
     }
 

@@ -14,6 +14,7 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.saverloader.ProjectSaverLoader;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -79,8 +80,8 @@ public class ProjectSaverLoaderTest {
         assert (recreatedElectionDescription.getName().equals("testDescription"));
         assert (recreatedElectionDescription.getCode().get(0).equals("sdfgokdffg"));
         assert (recreatedElectionDescription.getCode().get(1).equals("sdkofgdfg"));
-        assert (recreatedElectionDescription.getInputType().getId().equals("list_of_integer_vals_per_voter"));
-        assert (recreatedElectionDescription.getOutputType().getId().equals("one_candidate_or_zero"));
+        Assert.assertEquals(ElectionTypeContainer.ElectionTypeIds.WEIGHTED_APPROVAL,
+                recreatedElectionDescription.getInputType().getId());
         assert (recreatedElectionDescription.getVotingDeclLine() == 2);
 
         ElectionCheckParameter recreatedElectionCheckParameter = project.getElectionCheckParameter();
