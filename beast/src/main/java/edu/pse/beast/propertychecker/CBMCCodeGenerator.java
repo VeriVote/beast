@@ -89,7 +89,7 @@ public class CBMCCodeGenerator {
     }
 
     private void addVoteSumFunc() {
-        String input = inputType.getType().isList() ? "unsigned int arr[V][C] " : "unsigned int arr[V]";
+        String input = inputType.getType().getListedType().isList() ? "unsigned int arr[V][C]" : "unsigned int arr[V]";
         code.add("unsigned int voteSumForCandidate(INPUT, unsigned int candidate) {".replace("INPUT", input));
         code.add("\tunsigned int sum = 0;");
         code.add("\tfor(unsigned int i = 0; i < V; ++i) {");

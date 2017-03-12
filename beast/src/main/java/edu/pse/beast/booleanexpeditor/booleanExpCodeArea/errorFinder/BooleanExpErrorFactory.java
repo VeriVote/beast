@@ -78,10 +78,9 @@ public class BooleanExpErrorFactory {
         return err;
     }
     
-    static CodeError createWrongVarToVotesumError(FormalPropertyDescriptionParser.VoteSumExpContext ctx, SymbolicVariable symbolicVar) {
+    static CodeError createWrongVarToVotesumError(FormalPropertyDescriptionParser.VoteSumExpContext ctx, InternalTypeContainer passedType) {
         CodeError err = generateStandardError(ctx, "wrong_var_passed_to_votesum");
-        err.setExtraInfo("var_name", symbolicVar.getId());
-        err.setExtraInfo("var_type", symbolicVar.getInternalTypeContainer().getInternalType().toString());
+        err.setExtraInfo("var_type", passedType.getInternalType().toString());
         return err;
     }
     

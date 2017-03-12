@@ -287,8 +287,7 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         if (number > maxVoteExp) {
             maxVoteExp = number;
         }
-        VoteSumForCandExp expNode = new VoteSumForCandExp(number,
-                ((SymbolicVarExp) expStack.pop()).getSymbolicVar());
+        VoteSumForCandExp expNode = new VoteSumForCandExp(number, expStack.pop());
         expStack.push(expNode);
     }
 

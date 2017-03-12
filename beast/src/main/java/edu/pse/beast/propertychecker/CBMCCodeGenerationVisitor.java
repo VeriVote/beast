@@ -398,13 +398,13 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitVoteSumExp(VoteSumForCandExp exp) {
+        exp.getAccesingVariable().getVisited(this);
         String funcCallTemplate = "unsigned int VARNAME = voteSumForCandidate(votesNUM, CAND);";
-        String candidateVar = exp.getSymbolicVariable().getId();
         String counter = "voteSumExp_" + voteSumCounter;
         voteSumCounter++;
         funcCallTemplate = funcCallTemplate.replaceAll("VARNAME", counter);
         funcCallTemplate = funcCallTemplate.replaceAll("NUM", String.valueOf(exp.getVoteNumber()));
-        funcCallTemplate = funcCallTemplate.replaceAll("CAND", candidateVar);
+        funcCallTemplate = funcCallTemplate.replaceAll("CAND", variableNames.pop());
         code.add(funcCallTemplate);
         variableNames.push(counter);
     }

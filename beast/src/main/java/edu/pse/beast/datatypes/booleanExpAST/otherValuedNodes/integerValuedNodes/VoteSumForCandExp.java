@@ -1,6 +1,7 @@
 package edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes;
 
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpNodeVisitor;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.TypeExpression;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 
 /**
@@ -10,16 +11,15 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
  */
 public class VoteSumForCandExp extends IntegerValuedExpression {
 
-    private final SymbolicVariable symbVar;
+    private final TypeExpression acessingVar;
     private final int voteArrNum;
 
     /**
+     *  @param voteArrNum the number of the vote array
      *
-     * @param voteArrNum the number of the vote array
-     * @param symbVar the symbolic variable of this node
      */
-    public VoteSumForCandExp(int voteArrNum, SymbolicVariable symbVar) {
-        this.symbVar = symbVar;
+    public VoteSumForCandExp(int voteArrNum, TypeExpression acessingVar) {
+        this.acessingVar = acessingVar;
         this.voteArrNum = voteArrNum;
     }
 
@@ -27,8 +27,8 @@ public class VoteSumForCandExp extends IntegerValuedExpression {
      *
      * @return the symbolic variable of this node
      */
-    public SymbolicVariable getSymbolicVariable() {
-        return symbVar;
+    public TypeExpression getAccesingVariable() {
+        return acessingVar;
     }
 
     @Override

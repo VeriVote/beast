@@ -45,7 +45,7 @@ public class CBMCCodeGeneratorTest {
 
     public static void main(String args[]) {
 
-        ElectionTypeContainer inputType = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.PREFERENCE);
+        ElectionTypeContainer inputType = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.SINGLE_CHOICE);
         ElectionTypeContainer outputType = new ElectionTemplateHandler().getStandardResult();
 
         ElectionDescription electionDescription = new ElectionDescription("name", inputType, outputType, 0);
@@ -56,8 +56,8 @@ public class CBMCCodeGeneratorTest {
 
         SymbolicVariableList symbolicVariableList = new SymbolicVariableList();
 
-        String pre = "VOTES1(VOTER_AT_POS(0))(c) == 3";
-        String post = "";
+        String pre = "VOTE_SUM_FOR_CANDIDATE1(CAND_AT_POS(0)) == 0;";
+        String post = "ELECT1 != ELECT2;";
         // String post = "1 == 2;";
 
         FormalPropertiesDescription preDescr = new FormalPropertiesDescription(pre);

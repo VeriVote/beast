@@ -20,16 +20,6 @@ public class CBMCCodeGenerationVisitorTest {
     );
 
     @Test
-    public void testVotesExp() {
-        visitor.setToPrePropertyMode();
-        BooleanExpressionNode n = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
-                "c == VOTES1(v)", new SymbolicVariable(
-                        "v", new InternalTypeContainer(InternalTypeRep.VOTER))).
-                getBooleanExpressions().get(0).get(0);
-        List<String> c = visitor.generateCode(n);
-    }
-
-    @Test
     public void testSimpleSummationCode() {
         visitor.setToPrePropertyMode();
         BooleanExpressionNode n = FormalPropertySyntaxTreeToAstTranslatorTest.translate("1 == C - 1;", new SymbolicVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE))).

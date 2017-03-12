@@ -343,14 +343,14 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
     @Override
     public void exitVoteSumExp(FormalPropertyDescriptionParser.VoteSumExpContext ctx) {
-        SymbolicVarExp passedVar = (SymbolicVarExp) expStack.pop();
-        if (passedVar.getSymbolicVar().getInternalTypeContainer().getInternalType() != InternalTypeRep.CANDIDATE) {
-            created.add(BooleanExpErrorFactory.createWrongVarToVotesumError(ctx, passedVar.getSymbolicVar()));
+        TypeExpression passedVar = expStack.pop();
+        if (passedVar.getInternalTypeContainer().getInternalType() != InternalTypeRep.CANDIDATE) {
+            created.add(BooleanExpErrorFactory.createWrongVarToVotesumError(ctx, passedVar.getInternalTypeContainer()));
         }
         String numberString = ctx.Votesum().getText().substring("VOTE_SUM_FOR_CANDIDATE".length());
         int number = Integer.valueOf(numberString);
         if (number == 0) created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroVotesum(ctx));
-        expStack.add(new VoteSumForCandExp(number, passedVar.getSymbolicVar()));
+        expStack.add(new VoteSumForCandExp(number, passedVar));
     }
 
     @Override

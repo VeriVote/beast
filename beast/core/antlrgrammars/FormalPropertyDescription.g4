@@ -50,7 +50,7 @@ passType: passSymbVar|passByPos;
 
 constantExp : 'V' | 'C' | 'S';
 
-voteSumExp : Votesum passSymbVar;
+voteSumExp : Votesum passType;
 
 passSymbVar : OpenBracket symbolicVarExp ClosedBracket;
 

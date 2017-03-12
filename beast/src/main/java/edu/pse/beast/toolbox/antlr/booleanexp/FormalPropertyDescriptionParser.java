@@ -1354,8 +1354,8 @@ public class FormalPropertyDescriptionParser extends Parser {
 
 	public static class VoteSumExpContext extends ParserRuleContext {
 		public TerminalNode Votesum() { return getToken(FormalPropertyDescriptionParser.Votesum, 0); }
-		public PassSymbVarContext passSymbVar() {
-			return getRuleContext(PassSymbVarContext.class,0);
+		public PassTypeContext passType() {
+			return getRuleContext(PassTypeContext.class,0);
 		}
 		public VoteSumExpContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1385,7 +1385,7 @@ public class FormalPropertyDescriptionParser extends Parser {
 			setState(188);
 			match(Votesum);
 			setState(189);
-			passSymbVar();
+			passType();
 			}
 		}
 		catch (RecognitionException re) {
@@ -1674,9 +1674,9 @@ public class FormalPropertyDescriptionParser extends Parser {
 		"\2\2\2\u00b4\u00b7\3\2\2\2\u00b5\u00b3\3\2\2\2\u00b5\u00b6\3\2\2\2\u00b6"+
 		"!\3\2\2\2\u00b7\u00b5\3\2\2\2\u00b8\u00bb\5(\25\2\u00b9\u00bb\5,\27\2"+
 		"\u00ba\u00b8\3\2\2\2\u00ba\u00b9\3\2\2\2\u00bb#\3\2\2\2\u00bc\u00bd\t"+
-		"\2\2\2\u00bd%\3\2\2\2\u00be\u00bf\7\20\2\2\u00bf\u00c0\5(\25\2\u00c0\'"+
-		"\3\2\2\2\u00c1\u00c2\7\22\2\2\u00c2\u00c3\5.\30\2\u00c3\u00c4\7\21\2\2"+
-		"\u00c4)\3\2\2\2\u00c5\u00c6\7\22\2\2\u00c6\u00c7\5\22\n\2\u00c7\u00c8"+
+		"\2\2\2\u00bd%\3\2\2\2\u00be\u00bf\7\20\2\2\u00bf\u00c0\5\"\22\2\u00c0"+
+		"\'\3\2\2\2\u00c1\u00c2\7\22\2\2\u00c2\u00c3\5.\30\2\u00c3\u00c4\7\21\2"+
+		"\2\u00c4)\3\2\2\2\u00c5\u00c6\7\22\2\2\u00c6\u00c7\5\22\n\2\u00c7\u00c8"+
 		"\7\21\2\2\u00c8+\3\2\2\2\u00c9\u00ca\7\22\2\2\u00ca\u00cb\5\24\13\2\u00cb"+
 		"\u00cc\7\21\2\2\u00cc-\3\2\2\2\u00cd\u00ce\7\27\2\2\u00ce/\3\2\2\2\16"+
 		"\63Aho\u0083\u008d\u0095\u0097\u009d\u00ae\u00b5\u00ba";
