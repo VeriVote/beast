@@ -98,6 +98,68 @@ public class HighLevelPropertycheckerTest {
 		}
 
 	}
+	
+	@Test
+	public void testCheckAbort() throws InterruptedException {
+		
+		ParameterEditor parameterEditor = helper.getParamEditorOfCurrentInstace();
+
+		Thread.sleep(waittime);
+		
+		String pathToProject = "./src/test/testfiles/SingleChoiceAnonymity.beast";
+
+		Thread.sleep(waittime);
+		
+		ProjectSaverLoader projectSaverLoader = new ProjectSaverLoader();
+
+		Thread.sleep(waittime);
+		
+		Project loadedProject = (Project) projectSaverLoader.createFromSaveString(readProject(pathToProject));
+
+		Thread.sleep(waittime);
+		
+		parameterEditor.loadProject(loadedProject);
+
+		Thread.sleep(waittime);
+		
+		parameterEditor.startCheck();
+
+		//wait a bit, so the test can start properly
+		Thread.sleep(5000);
+		
+		//abort the checking
+		parameterEditor.abortCheck();
+		
+		boolean running = true;
+		while (running) {
+			if (parameterEditor.getReacts()) {
+				running = false;
+			} else {
+				Thread.sleep(1000);
+			}
+
+		}
+
+		Thread.sleep(waittime);
+		
+		PropertyList propList = helper.getPropListOfCurrentInstance();
+
+		Thread.sleep(waittime);
+		
+		List<PropertyItem> list = propList.getList();
+
+		
+		
+		for (Iterator<PropertyItem> iterator = list.iterator(); iterator.hasNext();) {
+			//the first example shouldn't be zero, because there the assertion fails
+			PropertyItem propertyItem = (PropertyItem) iterator.next();
+			assertNull(propertyItem.getExample());
+			//the second example should lead to null, because the assetion holds
+			propertyItem = (PropertyItem) iterator.next();
+			assertNull(propertyItem.getExample());
+		}
+
+	}
 
 	@Test
 	public void testCBMCCheckTimeOut() throws InterruptedException {
