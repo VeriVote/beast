@@ -12,7 +12,7 @@ import java.util.List;
  * @author Niels
  */
 public class SymbolicVariableList {
-    
+
     private final LinkedList<SymbolicVariable> symbolicVariableList;
     private final List<VariableListListener> listenerList = new ArrayList<>();
 
@@ -46,10 +46,12 @@ public class SymbolicVariableList {
      */
     public boolean isVarIDAllowed(String id) {
         boolean varAllowed = true;
-        for (SymbolicVariable var : symbolicVariableList) {
-            if (var.getId().equals(id)) {
-                varAllowed = false;
-                break;
+        if (!symbolicVariableList.isEmpty()) {
+            for (SymbolicVariable var : symbolicVariableList) {
+                if (var.getId().equals(id)) {
+                    varAllowed = false;
+                    break;
+                }
             }
         }
         return varAllowed;
