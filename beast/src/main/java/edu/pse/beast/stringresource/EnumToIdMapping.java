@@ -22,10 +22,14 @@ public class EnumToIdMapping {
         return getIdStringForEnumString(id.toString());
     }
 
-    public static String getExplanationIdInFile(String originalId) {
-        return originalId + "_exp";
+    public static String getEnumStringFromIdInFile(String idInFile) {
+        for (Map.Entry<String, String> e:
+             enumStringsToIds.entrySet()) {
+            if(e.getValue().equals(idInFile))
+                return e.getKey();
+        }
+        return null;
     }
-
 
     private static void createEnumStringsToIds() {
         enumStringsToIds = new HashMap<>();

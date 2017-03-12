@@ -3,9 +3,13 @@ package edu.pse.beast.saverloader;
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
+import edu.pse.beast.datatypes.internal.InternalTypeRep;
+import edu.pse.beast.saverloader.StaticSaverLoaders.SaverLoaderHelper;
 import edu.pse.beast.saverloader.StaticSaverLoaders.StringSaverLoader;
+import edu.pse.beast.stringresource.EnumToIdMapping;
 
 import java.util.Arrays;
+import java.util.Map;
 
 /**
  * Implements SaverLoader methods for creating saveStrings from ElectionDescription objects and vice versa.
@@ -14,45 +18,36 @@ import java.util.Arrays;
 public class ElectionDescriptionSaverLoader implements SaverLoader {
 
     @Override
-    public String createSaveString(Object electionDescription) {
+    public String createSaveString(Object obj) {
+        SaverLoaderHelper h = new SaverLoaderHelper();
         String created = "";
-        String name = "<electionName>\n" + ((ElectionDescription) electionDescription).getName()
-                + "\n</electionName>\n";
-        String votingDecLine = "<votingDecLine>\n" + ((ElectionDescription) electionDescription).getVotingDeclLine()
-                + "\n</votingDecLine>\n";
-        String code = "<code>\n";
-        String codeString = "";
-        for (String s : ((ElectionDescription) electionDescription).getCode()) {
-            codeString += s + "\n";
-        }
-        code += StringSaverLoader.createSaveString(codeString) + "\n</code>\n";
-        String inputType = "<inputType>\n"
-                + ((ElectionDescription) electionDescription).getInputType().getId()
-                + "\n</inputType>\n";
-        String outputType = "<outputType>\n"
-                + ((ElectionDescription) electionDescription).getOutputType().getId()
-                + "\n</outputType>\n";
-        created += name + votingDecLine + code + inputType + outputType;
+        ElectionDescription electionDescription = (ElectionDescription) obj;
+        created += h.getStringForAttr("name", electionDescription.getName());
+        created += h.getStringForAttr("votingDeclLine", electionDescription.getVotingDeclLine());
+        created += h.getStringForAttr("code", electionDescription.getCode());
+        created += h.getStringForAttr("inputType", EnumToIdMapping.getIDInFile(electionDescription.getInputType().getId()) );
+        created += h.getStringForAttr("outputType", EnumToIdMapping.getIDInFile(electionDescription.getOutputType().getId()));
         return created;
     }
 
     @Override
     public Object createFromSaveString(String s) throws ArrayIndexOutOfBoundsException {
         ElectionTemplateHandler electionTemplateHandler = new ElectionTemplateHandler();
+        Map<String, String> m = new SaverLoaderHelper().parseSaveString(s);
 
-        String split[] = s.split("\n</electionName>\n");
-        String name = split[0].replace("<electionName>\n", "");
-        split = split[1].split("\n</votingDecLine>\n");
-        int votingDecLine = Integer.parseInt(split[0].replace("<votingDecLine>\n", ""));
-        split = split[1].split("\n</code>\n");
-        String code = split[0].replace("<code>\n", "");
-        String [] codeArray = StringSaverLoader.createFromSaveString(code).split("\n");
-        split = split[1].split("\n</inputType>\n");
+        String name = m.get("name");
         ElectionTypeContainer inputType = electionTemplateHandler.getById(
-                ElectionTypeContainer.ElectionTypeIds.valueOf(split[0].replace("<inputType>\n", "")));
-        split = split[1].split("\n</outputType>\n");
+                ElectionTypeContainer.ElectionTypeIds.valueOf(
+                        EnumToIdMapping.getEnumStringFromIdInFile(
+                                m.get("inputType"))
+                        ));
         ElectionTypeContainer outputType = electionTemplateHandler.getById(
-                ElectionTypeContainer.ElectionTypeIds.valueOf(split[0].replace("<outputType>\n", "")));
+                ElectionTypeContainer.ElectionTypeIds.valueOf(EnumToIdMapping.getEnumStringFromIdInFile(
+                        m.get("outputType"))
+                ));
+        int votingDecLine = Integer.valueOf(m.get("votingDeclLine"));
+        String[] codeArray = m.get("code").split("\n");
+
         ElectionDescription electionDescription = new ElectionDescription(name, inputType, outputType, votingDecLine);
         electionDescription.setCode(Arrays.asList(codeArray));
         return electionDescription;

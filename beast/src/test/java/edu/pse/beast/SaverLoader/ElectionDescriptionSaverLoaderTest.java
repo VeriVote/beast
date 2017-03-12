@@ -4,49 +4,46 @@ import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTempla
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
+import edu.pse.beast.saverloader.StaticSaverLoaders.SaverLoaderHelper;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * JUnit Testclass for saverloader.ElectionDescriptionSaverLoader.
  * @author NikolaiLMS
  */
 public class ElectionDescriptionSaverLoaderTest {
-    private static ElectionDescription electionDescription;
-    private static ElectionDescriptionSaverLoader electionDescriptionSaverLoader;
-    private static ElectionTemplateHandler electionTemplateHandler;
-
-    @BeforeClass
-    public static void setUpClass() {
-        electionTemplateHandler = new ElectionTemplateHandler();
-        ElectionTypeContainer inputType = electionTemplateHandler.getById(ElectionTypeContainer.ElectionTypeIds.WEIGHTED_APPROVAL);
-        ElectionTypeContainer outputType = electionTemplateHandler.getStandardResult();
-        electionDescriptionSaverLoader = new ElectionDescriptionSaverLoader();
-
-        electionDescription = new ElectionDescription("testDescription", inputType, outputType, 2);
-        ArrayList<String> code = new ArrayList<String>();
-        code.add("sdfgokdffg");
-        code.add("sdkofgdfg");
-        electionDescription.setCode(code);
-    }
-
-    /**
-     * Tests the ElectionDescriptionSaverLoader by creating a saveString from a
-     * ElectionDescription object, then recreating that object from the saveString and checking its integrity.
-     */
     @Test
-    public void testCreateFromSaveString() throws Exception {
-        String saveString = electionDescriptionSaverLoader.createSaveString(electionDescription);
-        ElectionDescription recreatedElectionDescription = (ElectionDescription)
-                electionDescriptionSaverLoader.createFromSaveString(saveString);
+    public void testLoadFromCreatedSaveString() {
+        ElectionTemplateHandler electionTemplateHandler = new ElectionTemplateHandler();
+        ElectionDescriptionSaverLoader s = new ElectionDescriptionSaverLoader();
 
-        assert (recreatedElectionDescription.getName().equals("testDescription"));
-        assert (recreatedElectionDescription.getCode().get(0).equals("sdfgokdffg"));
-        assert (recreatedElectionDescription.getCode().get(1).equals("sdkofgdfg"));
-        assert (recreatedElectionDescription.getInputType().getId().equals("list_of_integer_vals_per_voter"));
-        assert (recreatedElectionDescription.getOutputType().getId().equals("one_candidate_or_zero"));
-        assert (recreatedElectionDescription.getVotingDeclLine() == 2);
+        ElectionDescription desc = new ElectionDescription(
+                "desc",
+                electionTemplateHandler.getStandardInput(),
+                electionTemplateHandler.getStandardResult(),
+                2);
+        desc.setCode(Arrays.asList(
+                "//line1",
+                "//line2",
+                "unsigned int voting(unsigned int votes[V]) {",
+                "return 0;",
+                "}"));
+        String save = s.createSaveString(desc);
+        ElectionDescription loadedDesc = (ElectionDescription) s.createFromSaveString(save);
+        assertEquals("desc", loadedDesc.getName());
+        assertEquals(electionTemplateHandler.getStandardInput().getId(), loadedDesc.getInputType().getId());
+        assertEquals(electionTemplateHandler.getStandardResult().getId(), loadedDesc.getOutputType().getId());
+        assertEquals(desc.getCode().get(0), loadedDesc.getCode().get(0));
+        assertEquals(desc.getCode().get(1), loadedDesc.getCode().get(1));
+        assertEquals(desc.getCode().get(2), loadedDesc.getCode().get(2));
+        assertEquals(desc.getCode().get(3), loadedDesc.getCode().get(3));
+        assertEquals(desc.getCode().get(4), loadedDesc.getCode().get(4));
     }
 }
