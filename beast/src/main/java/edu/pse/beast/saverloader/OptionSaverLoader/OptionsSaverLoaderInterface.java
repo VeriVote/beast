@@ -12,6 +12,7 @@ import edu.pse.beast.options.CEditorOptions.CElectionEditorOptions;
 import edu.pse.beast.options.CodeAreaOptions.CodeAreaOptions;
 import edu.pse.beast.options.OptionElement;
 import edu.pse.beast.options.Options;
+import edu.pse.beast.options.ParametereditorOptions.DeleteCFilesOptions;
 import edu.pse.beast.options.ParametereditorOptions.LanguageOptions;
 import edu.pse.beast.options.ParametereditorOptions.ParametereditorOptions;
 import edu.pse.beast.parametereditor.ParameterEditor;
@@ -36,6 +37,13 @@ public class OptionsSaverLoaderInterface {
                 getSaveStringOnlyForOption("lang_opts",
                 loadStringResForResLoader("lang_opts")));
         return new LanguageOptions(sli, loader);
+    }
+    
+    public static DeleteCFilesOptions loadFileOpts() throws IOException {
+        StringResourceLoader loader = new StringResourceLoader(
+                getSaveStringOnlyForOption("file_opts",
+                loadStringResForResLoader("file_opts")));
+        return new DeleteCFilesOptions(loader);
     }
     
     public static CElectionEditorOptions loadCEditorOpts(CElectionDescriptionEditor editor) throws IOException {

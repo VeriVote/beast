@@ -3,6 +3,7 @@ package edu.pse.beast.propertychecker;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
+import edu.pse.beast.options.ParametereditorOptions.DeleteCFilesOptions;
 import edu.pse.beast.toolbox.*;
 
 import java.io.File;
@@ -65,7 +66,6 @@ public class CBMCProcessFactory extends CheckerFactory {
         // create the file in which the code is saved if it doesn't exist
         // already
         if (toCheck == null) {
-
             // create the file only once for each factory and reuse it then
             toCheck = createCodeFile(electionDescSrc, postAndPrepPropDesc);
         }
@@ -174,7 +174,7 @@ public class CBMCProcessFactory extends CheckerFactory {
 
     @Override
     protected void cleanUp() {
-        if (deleteTmpFiles && toCheck != null && toCheck.exists()) {
+        if (DeleteCFilesOptions.deleteTmpFiles() && toCheck != null && toCheck.exists()) {
             toCheck.delete();
         }
     }

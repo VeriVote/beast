@@ -5,6 +5,7 @@ import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.highlevel.PSECentralObjectProvider;
 import edu.pse.beast.options.BooleanExpEditorOptions.BooleanExpEditorOptions;
 import edu.pse.beast.options.CEditorOptions.CElectionEditorOptions;
+import edu.pse.beast.options.ParametereditorOptions.DeleteCFilesOptions;
 import edu.pse.beast.options.ParametereditorOptions.LanguageOptions;
 import edu.pse.beast.options.ParametereditorOptions.ParametereditorOptions;
 import edu.pse.beast.parametereditor.ParameterEditor;
@@ -24,9 +25,10 @@ public class OptionsInterface {
     private BooleanExpEditorOptions booleanExpEditorOptions;
     private CElectionEditorOptions cElectionEditorOptions;
     private ParametereditorOptions parametereditorOptions;
+    private DeleteCFilesOptions deleteFilesOptions;
 
     /**
-     * Getter for the BooleanExpEditorOptions
+     * Getter for the BooleanExpEditorOptions 
      * 
      * @param editor
      *            BooleanExpEditor
@@ -103,6 +105,17 @@ public class OptionsInterface {
             }
         }
         return languageOptions;
+    }
+    
+    public DeleteCFilesOptions getDeleteFileOptions() {
+    	if (deleteFilesOptions == null) {
+    		try {
+    			deleteFilesOptions = OptionsSaverLoaderInterface.loadFileOpts();
+            } catch (IOException ex) {
+            	deleteFilesOptions = new DeleteCFilesOptions();
+            }
+    	}
+    	return deleteFilesOptions;
     }
 
     /**
