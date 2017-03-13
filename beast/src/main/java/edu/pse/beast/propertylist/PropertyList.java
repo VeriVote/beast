@@ -46,13 +46,16 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
      * property descriptions.
      * @param fileChooser the FileChooser with which files can be loaded and saved
      */
-    public PropertyList(PLModel model, BooleanExpEditor editor, FileChooser fileChooser) {
+    public PropertyList(PLModel model, BooleanExpEditor editor, FileChooser fileChooser,
+    		StringLoaderInterface sli) {
         this.model = model;
         this.editor = editor;
-        this.sli = new StringLoaderInterface("de");
+        this.sli = sli;
         view = new PropertyListWindow(this, model);
+        
         setChangeHandler(new PLChangeHandler(model));
         actionList = new LinkedList<DeleteDescriptionAction>();
+        
         model.initialize();
         this.fileChooser = fileChooser;
     }
@@ -62,7 +65,7 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
      * @param model Only needs the model for testing purposes
      */
     public PropertyList(PLModel model) {
-    	this(model, null, null);
+    	this(model, null, null, null);
     }
 
     
@@ -83,7 +86,7 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
      * @param newName The new name for the property
      */
     public void changeName(PropertyItem prop, String newName) {
-        if (!model.changeName(prop, newName)) {
+        if (!model.changeName(prop, newName, editor)) {
             view.rejectNameChange(prop);
         }
     }
@@ -109,13 +112,11 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
      * Deletes a property from the list.
      * @param prop The property to delete
      */
-    public boolean deleteProperty(PropertyItem prop) {
+    public void deleteProperty(PropertyItem prop) {
     	DeleteDescriptionAction act = new DeleteDescriptionAction(model, prop, editor);
     	if (act.perform()) {
     		actionList.add(act);
-    		return true;
     	}
-    	return false;
     }
 
     /**
