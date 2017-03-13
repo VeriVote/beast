@@ -1,17 +1,6 @@
-<projectName>
-SequentialTestTrueFalse
-</projectName>
-<electionDescription>
-<electionName>
-ApprovalVoting.beast
-</electionName>
-<votingDecLine>
-2
-</votingDecLine>
-<code>
-//Zustimmungswahl: Wähler bewertet jeden Kandidaten mit Ja/Nein
-//Zustimmungswahl: Ein gewählter Kandidat oder unentschieden
-unsigned int  voting(unsigned int votes[V][C]) { 
+4 name23 SequentialTestTrueFalse8 elecDesc831 4 name12 ApprovalTest14 votingDeclLine1 24 code727 //Präferenzwahl: Wähler legt Ranking für alle Kandidaten fest
+//Kandidat oder unentschieden: Ein gewählter Kandidat oder unentschieden
+unsigned int voting(unsigned int votes[V][C]) { 
     unsigned int res[C];
     unsigned int i = 0;
     unsigned int j = 0;
@@ -29,7 +18,7 @@ unsigned int  voting(unsigned int votes[V][C]) {
     for (i = 0; i < C; i++) {
         if (max < res[i]) {
             max = res[i];
-            elect = i+1;
+            elect = i;
         } else {
             if (max == res[i]) {
                 elect = C;
@@ -38,35 +27,12 @@ unsigned int  voting(unsigned int votes[V][C]) {
     }
     return elect;
 } 
-
-</code>
-<inputType>
-list_of_yes_no_per_voter
-</inputType>
-<outputType>
-one_candidate_or_zero
-</outputType>
-
-</electionDescription>
-<propertyList>
-<propertyListName>
+9 inputType10 PREFERENCE10 outputType13 CAND_OR_UNDEF8 propList481 <propertyListName>
 New PropertyList
 </propertyListName>
 <propertyItem>
 <postAndPreProps>
-<postAndPrePropsName>
-FalseProperty
-</postAndPrePropsName>
-<pre>
-FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);
-</pre>
-<post>
-ELECT1 != ELECT2;
-</post>
-<varlist>
-
-</varlist>
-
+4 name14 FalseProperty23 pre43 FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);4 post17 ELECT1 != ELECT2;7 varlist0 
 </postAndPreProps>
 <testStatus>
 true
@@ -75,39 +41,24 @@ true
 </propertyItem>
 <propertyItem>
 <postAndPreProps>
-<postAndPrePropsName>
-TrueProperty
-</postAndPrePropsName>
-<pre>
-FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);
-</pre>
-<post>
-ELECT1 == ELECT2;
-</post>
-<varlist>
-
-</varlist>
-
+4 name13 Eigenschaft 03 pre43 FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);4 post17 ELECT1 == ELECT2;7 varlist0 
 </postAndPreProps>
 <testStatus>
 true
 </testStatus>
 
 </propertyItem>
-
-</propertyList>
-<electionCheckParameter>
-<amountVotersMin>
-8
+19 electionCheckParams375 <amountVotersMin>
+5
 </amountVotersMin>
 <amountVotersMax>
-8
+5
 </amountVotersMax>
 <amountCandidatesMin>
 3
 </amountCandidatesMin>
 <amountCandidatesMax>
-3
+7
 </amountCandidatesMax>
 <amountSeatsMin>
 1
@@ -117,18 +68,16 @@ true
 </amountSeatsMax>
 <timeout>
 <duration>
-600000
+0
 </duration>
 <timeunit>
-MINUTES
+SECONDS
 </timeunit>
 
 </timeout>
 <processes>
-1
+0
 </processes>
 <argument>
 
 </argument>
-
-</electionCheckParameter>
