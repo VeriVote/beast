@@ -28,7 +28,7 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
      */
     public TimeoutValueHandler(JSpinner timeoutSpinner, JComboBox timeoutUnit) {
         this.timeoutSpinner = timeoutSpinner;
-        timeoutSpinner.setValue(1);
+        timeoutSpinner.setValue(0);
         this.timeoutUnit = timeoutUnit;
         timeoutBefore = getTimeout();
         setHasChanged(false);
