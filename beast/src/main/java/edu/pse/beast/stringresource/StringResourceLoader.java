@@ -9,14 +9,15 @@ import edu.pse.beast.toolbox.ErrorLogger;
 
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
 
 /**
  *
  * @author Niels
  */
 public class StringResourceLoader {
-    
+
     private final HashMap<String, String> idsToString;
 
     /**
@@ -42,7 +43,7 @@ public class StringResourceLoader {
         }
     }
 
-    /**     
+    /**
      * @param id Id of the String you want to load
      * @return the String with the id
      */
@@ -53,17 +54,26 @@ public class StringResourceLoader {
         }
         return get;
     }
-    
+
     /**
-     * 
+     * if multiple keys have the same Value only the first key is returned
      * @param s the String for which you want to know the Id
-     * @return if the String is not found null is returned, otherwise the id is returned
+     * @return if the String is not found null is returned, otherwise the id is
+     * returned
      */
     public String getIdForString(String s) {
-        return idsToString.get(s);
+        if (idsToString.containsValue(s)) {
+            for (Entry<String, String> entry : idsToString.entrySet()) {
+                if (Objects.equals(s, entry.getValue())) {
+                    return entry.getKey();
+                }
+            }
+        }
+        return null;
     }
+
     /**
-     * 
+     *
      * @param id the checked id
      * @return true if it contains the id
      */
