@@ -26,4 +26,15 @@ public class AtPosExp extends TypeExpression {
     public IntegerValuedExpression getIntegerValuedExpression() {
         return integerValuedExpression;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AtPosExp atPosExp = (AtPosExp) o;
+
+        return integerValuedExpression != null ? integerValuedExpression.equals(atPosExp.integerValuedExpression) : atPosExp.integerValuedExpression == null;
+    }
+
 }

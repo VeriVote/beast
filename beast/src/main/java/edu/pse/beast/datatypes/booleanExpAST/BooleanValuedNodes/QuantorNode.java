@@ -23,8 +23,21 @@ public abstract class QuantorNode extends BooleanExpressionNode {
         this.declSymbVar = declSymbVar;
         this.followingNode = followingNode;
     }
-    
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        QuantorNode that = (QuantorNode) o;
+
+        if (declSymbVar != null ? !declSymbVar.equals(that.declSymbVar) : that.declSymbVar != null) return false;
+        return followingNode != null ? followingNode.equals(that.followingNode) : that.followingNode == null;
+    }
+
+
     /**
+
      * 
      * @return the symbolic variable of this expression
      */

@@ -60,6 +60,16 @@ public class ComparisonNode extends BooleanExpressionNode {
         visitor.visitComparisonNode(this);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-    
+        ComparisonNode that = (ComparisonNode) o;
+
+        if (lhsTypeExp != null ? !lhsTypeExp.equals(that.lhsTypeExp) : that.lhsTypeExp != null) return false;
+        if (rhsTypeExp != null ? !rhsTypeExp.equals(that.rhsTypeExp) : that.rhsTypeExp != null) return false;
+        return comparisonSymbol != null ? comparisonSymbol.equals(that.comparisonSymbol) : that.comparisonSymbol == null;
+    }
+
 }

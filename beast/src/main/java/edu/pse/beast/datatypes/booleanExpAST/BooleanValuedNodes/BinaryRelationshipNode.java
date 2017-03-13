@@ -35,4 +35,16 @@ public abstract class BinaryRelationshipNode extends BooleanExpressionNode {
     public BooleanExpressionNode getRHSBooleanExpNode() {
         return rhsExpNode;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BinaryRelationshipNode that = (BinaryRelationshipNode) o;
+
+        if (lhsExpNode != null ? !lhsExpNode.equals(that.lhsExpNode) : that.lhsExpNode != null) return false;
+        return rhsExpNode != null ? rhsExpNode.equals(that.rhsExpNode) : that.rhsExpNode == null;
+    }
+
 }

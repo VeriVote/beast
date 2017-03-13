@@ -40,4 +40,6 @@ public class BooleanExpListNode {
         }
         boolNodesPerElectLevel.get(highestElectNumber).add(node);
     }
+
+
 }

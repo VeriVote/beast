@@ -29,4 +29,14 @@ public abstract class TypeExpression extends BooleanExpressionNode {
         return container;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TypeExpression that = (TypeExpression) o;
+
+        return container != null ? container.equals(that.container) : that.container == null;
+    }
+
 }

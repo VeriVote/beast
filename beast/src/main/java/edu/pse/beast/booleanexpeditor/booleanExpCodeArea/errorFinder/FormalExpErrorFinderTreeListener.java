@@ -180,12 +180,12 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
         if(ctx.Mult() != null) {
             IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
             IntegerValuedExpression lsh = (IntegerValuedExpression) expStack.pop();
-            BinaryIntegerValuedNode expNode = new BinaryIntegerValuedNode(lsh, rhs, ctx.Mult().getText(), ctx.getText());
+            BinaryIntegerValuedNode expNode = new BinaryIntegerValuedNode(lsh, rhs, ctx.Mult().getText());
             expStack.push(expNode);
         } else if(ctx.Add() != null) {
             IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
             IntegerValuedExpression lsh = (IntegerValuedExpression) expStack.pop();
-            BinaryIntegerValuedNode expNode = new BinaryIntegerValuedNode(lsh, rhs, ctx.Add().getText(), ctx.getText());
+            BinaryIntegerValuedNode expNode = new BinaryIntegerValuedNode(lsh, rhs, ctx.Add().getText());
             expStack.push(expNode);
         }
     }

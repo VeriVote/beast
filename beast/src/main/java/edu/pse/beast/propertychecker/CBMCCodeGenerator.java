@@ -330,14 +330,10 @@ public class CBMCCodeGenerator {
     }
 
     private void addPreferenceVotingArrayInitialisation(int voteNumber) {
-        code.add("for (unsigned int j_prime = 0; j_prime < C; j_prime++) {");
-        code.addTab();
-        code.add("if (counter_1 != j_prime) {");
+        code.add("for (unsigned int j_prime = 0; j_prime < MAX; j_prime++) {".replace("MAX", "counter_1"));
         code.addTab();
         code.add("assume (votes" + voteNumber + "[counter_0][counter_1] != votes"
                 + voteNumber + "[counter_0][j_prime]);");
-        code.deleteTab();
-        code.add("}");
         code.deleteTab();
         code.add("}");
     }

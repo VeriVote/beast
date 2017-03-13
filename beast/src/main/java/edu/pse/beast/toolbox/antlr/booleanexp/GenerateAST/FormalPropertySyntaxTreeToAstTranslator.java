@@ -14,6 +14,7 @@ import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
+import edu.pse.beast.toolbox.Tuple;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionBaseListener;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.BooleanExpListContext;
@@ -22,6 +23,7 @@ import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -55,6 +57,7 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         walker.walk(this, parseTree);
         return generated;
     }
+
 
     @Override
     public void enterBooleanExpList(FormalPropertyDescriptionParser.BooleanExpListContext ctx) {
@@ -171,7 +174,7 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         TypeExpression rhs = expStack.pop();
         TypeExpression lhs = expStack.pop();
         if(lhs.getInternalTypeContainer().getInternalType() == InternalTypeRep.INTEGER) {
-            IntegerComparisonNode node = new IntegerComparisonNode(lhs, rhs, comparisonSymbol, ctx.getText());
+            IntegerComparisonNode node = new IntegerComparisonNode(lhs, rhs, comparisonSymbol);
             nodeStack.add(node);
         }
         else {
@@ -200,12 +203,12 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         if(ctx.Mult() != null) {
             IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
             IntegerValuedExpression lsh = (IntegerValuedExpression) expStack.pop();
-            BinaryIntegerValuedNode expNode = new BinaryIntegerValuedNode(lsh, rhs, ctx.Mult().getText(), ctx.getText());
+            BinaryIntegerValuedNode expNode = new BinaryIntegerValuedNode(lsh, rhs, ctx.Mult().getText());
             expStack.push(expNode);
         } else if(ctx.Add() != null) {
             IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
             IntegerValuedExpression lsh = (IntegerValuedExpression) expStack.pop();
-            BinaryIntegerValuedNode expNode = new BinaryIntegerValuedNode(lsh, rhs, ctx.Add().getText(), ctx.getText());
+            BinaryIntegerValuedNode expNode = new BinaryIntegerValuedNode(lsh, rhs, ctx.Add().getText());
             expStack.push(expNode);
         }
     }

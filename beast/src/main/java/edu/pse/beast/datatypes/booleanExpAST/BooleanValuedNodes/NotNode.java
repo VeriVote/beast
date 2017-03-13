@@ -10,8 +10,9 @@ import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BooleanExpressio
  */
 public class NotNode extends BooleanExpressionNode {
     private BooleanExpressionNode followingNode;
-    
+
     /**
+
      * creates a new NotNode
      * @param followingNode the node that follows this node (the node that gets negated)
      */
@@ -30,5 +31,15 @@ public class NotNode extends BooleanExpressionNode {
     @Override
     public void getVisited(BooleanExpNodeVisitor visitor) {
         visitor.visitNotNode(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        NotNode notNode = (NotNode) o;
+
+        return followingNode != null ? followingNode.equals(notNode.followingNode) : notNode.followingNode == null;
     }
 }

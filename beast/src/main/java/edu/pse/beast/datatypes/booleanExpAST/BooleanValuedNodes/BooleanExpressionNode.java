@@ -15,5 +15,7 @@ public abstract class BooleanExpressionNode {
      * @param visitor the visitor that visits
      */
     public abstract void getVisited(BooleanExpNodeVisitor visitor);
+
+
     
 }

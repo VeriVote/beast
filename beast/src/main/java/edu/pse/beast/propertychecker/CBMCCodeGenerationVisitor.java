@@ -304,6 +304,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         InternalTypeContainer cont = lhslistLevel > rhslistLevel
                 ? node.getLHSBooleanExpNode().getInternalTypeContainer()
                 : node.getRHSBooleanExpNode().getInternalTypeContainer();
+
+        while(cont.getListLvl() != maxListLevel) cont = cont.getListedType();
+
         String internCode = "unsigned int BOOL = 1;";
         internCode = internCode.replace("BOOL", varName);
         code.add(internCode);
@@ -333,6 +336,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             loop = loop.replaceAll("BOOL", varName);
             code.add(loop);
             code.addTab();
+            cont = cont.getListedType();
         }
         String rhs = variableNames.pop();
         String lhs = variableNames.pop();

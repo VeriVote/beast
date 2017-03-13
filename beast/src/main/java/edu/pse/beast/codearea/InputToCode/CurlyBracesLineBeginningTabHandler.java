@@ -24,17 +24,14 @@ public class CurlyBracesLineBeginningTabHandler implements LineBeginningTabsHand
     public int getTabsForLine(int caretPos) {
         int amt = 0;
         String code = JTextPaneToolbox.getText(pane);
-        for(int pos = caretPos - 1; pos >= 0; --pos) {
-            if(code.charAt(pos) == '{') {
+        for (int pos = caretPos - 1; pos >= 0; --pos) {
+            if (code.charAt(pos) == '{') {
                 ++amt;
-                while(pos >= 0 && code.charAt(pos) != '\n') --pos;
-            }
-            else if(code.charAt(pos) == '}') --amt;
+                while (pos >= 0 && code.charAt(pos) != '\n') --pos;
+            } else if (code.charAt(pos) == '}') --amt;
         }
-        
-        if(code.charAt(caretPos) == '}') --amt;
+
+        if (code.charAt(caretPos) == '}') --amt;
         return amt;
     }
-    
-    
 }

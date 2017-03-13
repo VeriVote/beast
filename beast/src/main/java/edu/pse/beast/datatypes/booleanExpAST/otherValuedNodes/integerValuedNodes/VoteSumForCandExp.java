@@ -44,4 +44,22 @@ public class VoteSumForCandExp extends IntegerValuedExpression {
         return voteArrNum;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        VoteSumForCandExp that = (VoteSumForCandExp) o;
+
+        if (voteArrNum != that.voteArrNum) return false;
+        return acessingVar != null ? acessingVar.equals(that.acessingVar) : that.acessingVar == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = acessingVar != null ? acessingVar.hashCode() : 0;
+        result = 31 * result + voteArrNum;
+        return result;
+    }
 }

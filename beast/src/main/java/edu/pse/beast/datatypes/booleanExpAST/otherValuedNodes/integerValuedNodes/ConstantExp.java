@@ -31,4 +31,20 @@ public class ConstantExp extends IntegerValuedExpression {
     public void getVisited(BooleanExpNodeVisitor visitor) {
         visitor.visitConstExp(this);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        ConstantExp that = (ConstantExp) o;
+
+        return constant != null ? constant.equals(that.constant) : that.constant == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return constant != null ? constant.hashCode() : 0;
+    }
 }

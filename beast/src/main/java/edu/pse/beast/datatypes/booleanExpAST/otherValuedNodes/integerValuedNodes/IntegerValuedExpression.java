@@ -19,4 +19,5 @@ public abstract class IntegerValuedExpression extends TypeExpression {
         super(new InternalTypeContainer(InternalTypeRep.INTEGER));
     }
 
+
 }

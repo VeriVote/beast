@@ -37,4 +37,13 @@ public class SymbolicVarExp extends TypeExpression {
         visitor.visitSymbVarExp(this);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SymbolicVarExp that = (SymbolicVarExp) o;
+
+        return symbVar != null ? symbVar.equals(that.symbVar) : that.symbVar == null;
+    }
 }
