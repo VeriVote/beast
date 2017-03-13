@@ -56,7 +56,7 @@ public class ErrorDisplayTest {
 				"yeah");
 		win.presentFailure(error);
 		
-		DataTable data = new DataTable(Integer.class);
+		/*DataTable data = new DataTable(Integer.class);
 		data.add(5);
 		data.add(6);
 		
