@@ -63,8 +63,14 @@ public abstract class StringResourceProvider {
      * @param file that has the wrongFormat
      */
     private void errorFileHasWrongFormat(File file) {
-        ErrorLogger.log("The file " + file.getName() + " is not correclty formated");
+        ErrorLogger.log("The file " + file.getName() + " is not correctly formated");
         ErrorLogger.log("You can find and correct the file in this directory " + file.getAbsolutePath());
+    }
+
+    private void fileNotFound(File file) {
+
+        ErrorLogger.log("The file " + file.getName() + " can not be found");
+        ErrorLogger.log("The file should be in this directory " + file.getAbsolutePath());
     }
 
     /**
@@ -86,6 +92,8 @@ public abstract class StringResourceProvider {
                 inputList = FileLoader.loadFileAsString(file);
                 return new StringResourceLoader(inputList);
             } catch (IOException ex) {
+                fileNotFound(file);
+            } catch (IndexOutOfBoundsException ie) {
                 errorFileHasWrongFormat(file);
             }
 

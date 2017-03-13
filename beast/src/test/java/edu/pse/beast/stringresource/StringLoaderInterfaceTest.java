@@ -6,7 +6,6 @@
 package edu.pse.beast.stringresource;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -14,15 +13,13 @@ import static org.junit.Assert.*;
  */
 public class StringLoaderInterfaceTest {
 
-    private StringLoaderInterface instance;
+    private final StringLoaderInterface instance;
 
+    /**
+     * Test setup
+     */
     public StringLoaderInterfaceTest() {
         this.instance = new StringLoaderInterface("test");
-//        BooleanExpEditorStringResProvider boolInstance = new BooleanExpEditorStringResProvider("test");
-//        CElectionEditorStringResProvider cInstance = new CElectionEditorStringResProvider("test");
-//
-//        OptionStringResProviderTest optInstance;
-
     }
 
     /**
@@ -87,7 +84,7 @@ public class StringLoaderInterfaceTest {
     public void testSetLanguage() {
         System.out.println("setLanguage");
         instance.setLanguage("test");
-        // if there isn't an exception or an error message this should be correct
+        // if there isn't an error message this should be correct
     }
 
 }
