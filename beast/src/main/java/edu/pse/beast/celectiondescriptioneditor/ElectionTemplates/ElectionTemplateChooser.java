@@ -53,13 +53,13 @@ public class ElectionTemplateChooser extends javax.swing.JFrame {
         });
         for(ElectionTypeContainer.ElectionTypeIds id : electionTemplateHandler.getInputIds()) {
             inputIds.add(id);
-            String toAdd = loader.getIdForString(EnumToIdMapping.getIDInFile(id));
+            String toAdd = loader.getStringFromID(EnumToIdMapping.getIDInFile(id));
             inputList.addItem(toAdd);
         }
 
         for(ElectionTypeContainer.ElectionTypeIds id : electionTemplateHandler.getResIds()) {
             resIds.add(id);
-            resultList.addItem(loader.getIdForString(EnumToIdMapping.getIDInFile(id)));
+            resultList.addItem(loader.getStringFromID(EnumToIdMapping.getIDInFile(id)));
         }
 
         getRootPane().setDefaultButton(createButton);
