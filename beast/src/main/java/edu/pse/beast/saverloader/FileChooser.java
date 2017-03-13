@@ -155,7 +155,7 @@ public class FileChooser {
                 outputObject = saverLoader.createFromSaveString(content);
                 lastLoadedFile = selectedFile;
                 hasBeenSaved = true;
-            } catch (ArrayIndexOutOfBoundsException e) {
+            } catch (Exception e) {
                 JOptionPane.showOptionDialog(null,
                         stringResourceLoader.getStringFromID(
                                 "invalidFileFormatErrorMessage"), "",

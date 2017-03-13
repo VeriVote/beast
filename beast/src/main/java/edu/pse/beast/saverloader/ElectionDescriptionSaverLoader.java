@@ -3,10 +3,7 @@ package edu.pse.beast.saverloader;
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.saverloader.StaticSaverLoaders.SaverLoaderHelper;
-import edu.pse.beast.saverloader.StaticSaverLoaders.StringSaverLoader;
-import edu.pse.beast.stringresource.EnumToIdMapping;
 
 import java.util.Arrays;
 import java.util.Map;
