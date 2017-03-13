@@ -262,6 +262,10 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	public JToolBar getToolbar() {
 		return toolBar;
 	}
+	
+	public JMenuBar getMainMenuBar() {
+		return menuBar;
+	}
 
 	public ArrayList<ListItem> getList() {
 		return items;
