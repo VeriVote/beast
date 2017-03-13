@@ -6,9 +6,10 @@ import edu.pse.beast.options.OptionElement;
 
 public class DeleteCFilesElement extends OptionElement {
 
-	public DeleteCFilesElement(String id, List<String> choosableOptions) {
-		super(id, choosableOptions);
-		// TODO Auto-generated constructor stub
+	public DeleteCFilesElement(List<String> choosableOptions, String chosenDeleteCID) {
+		super("delete_file", choosableOptions);
+		if(chosenDeleteCID == null) handleSelection(choosableOptions.get(0));
+		else handleSelection(chosenDeleteCID);
 	}
 
 	@Override

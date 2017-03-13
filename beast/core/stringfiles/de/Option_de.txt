@@ -3,13 +3,16 @@ lang_opts : Sprachoptionen
 ok_button : Anwenden
 param : ParameterEditor
 param_opts : ParameterEditor Optionen
+delete_file : Temporäre Dateien löschen
+keep_files : Ja
+not_keep_files : Nein
 checker : Verfügbare Checker
 de : Deutsch
 en : Englisch
 codearea_opts: Textfeld Optionen
 ccodearea_opts : Code Optionen
 ceditor_opts : C-Editor Optionen
-fonttype: Font
+fonttype : Font
 fontsize : Textgröße
 spaces_per_tab : Anzahl Leerzeichen per Tab
 booleanexpeditor_opts : Formale Eigenschaften-Editor Optionen

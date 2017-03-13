@@ -22,7 +22,7 @@ import java.util.List;
  * with the ParameterEditorWindow and the communication with high level.
  * @author Jonas
  */
-public class ParameterEditor implements ParameterSource, MainNotifier, DisplaysStringsToUser{
+public class ParameterEditor implements ParameterSource, MainNotifier, DisplaysStringsToUser {
 
     private final ParameterEditorWindow window;
     private final CElectionDescriptionEditor cElectionDescriptionEditor;
