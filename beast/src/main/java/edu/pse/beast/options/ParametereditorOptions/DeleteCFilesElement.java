@@ -13,8 +13,7 @@ public class DeleteCFilesElement extends OptionElement {
 
 	@Override
 	public void handleSelection(String selection) {
-		// TODO Auto-generated method stub
-		
+	    this.chosenOption = selection;
 	}
 
 }
