@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Introduction</h1>
-<h1>Examples</h1>
+The FormalPropertyEditor used a special language, cak
 <h1>Language contructs: Reference</h1>
 <h2>Refering to voters, candidates or seats</h2>
 When testing election descriptions for properties, it is often the case that one wants to formulate
@@ -70,10 +70,62 @@ May times, one wants to define a property which should hold for all or at least 
 This can be accomplished using quantors.
 <h3>For all</h3>
 To define that a property should hold for all instances of a type, one can use the FOR_ALL constructs.
+These exist for the three most important types: voters, candidates and seats:
+<ul>
+    <li>FOR_ALL_VOTERS() :</li>
+    <li>FOR_ALL_CANDIDATES() :</li>
+    <li>FOR_ALL_SEATS() :</li>
+</ul>
+All three expect an as of yet undefined symbolic variable as an argument passed between the brackets.
+In the boolean Expression following the colon, this symbolic variable can be used to describe a
+property which needs to hold for all variables of the same type.
+<div class="example">
+    All voters vote for candidate at position 0: FOR_ALL_VOTERS(v) : VOTES1(v) == CAND_AT_POS(0);
+    ALL candidates have at least one vote: FOR_ALL_CANDIDATES(c) : VOTE_SUM_FOR_CANDIDATE1(c) > 0;
+</div>
 <h3>There exists</h3>
+If one wants to define a property which holds for at least one voter, candidate or seat one can use
+the THERE_EXISTS contructs. Their are, analogously to the FOR_ALL expressions, one for each type:
+<ul>
+    <li>EXISTS_ONE_VOTER() :</li>
+    <li>EXISTS_ONE_CANDIDATE() :</li>
+    <li>EXISTS_ONE_SEAT() :</li>
+</ul>
+They each expect an as of yet undefined symbolic variable to be passed between the brackets. This variable
+can then be used in the boolean expression following the colon to define a property which must hold for
+at least one voter/candidate/seat.
+<div class="example">
+    <ul>
+        <li>There exists a least one voter who votes for the first
+        candidate: EXISTS_ONE_VOTER(v) : VOTES1(v) == CAND_AT_POS(0);
+        </li>
+        <li>
+        For each seat there exists one candidate occupying this seat:
+        FOR_ALL_SEATS(s) : EXISTS_ONE_CANDIDATE(c) : ELECT1(s) == c;
+        </li>
+    </ul>
+</div>
 <h2>Binary boolean relationships</h2>
-
-
-
+Binary boolean relationships are very common when formulating boolean expressions. BooleanExpLang provides the most
+common and useful ones:
+<ul>
+    <li>Logical And: &&</li>
+    <li>Logical Or: ||</li>
+    <li>Implication: ==></li>
+    <li>Aquivalency: <==></li>
+</ul>
+Using these, two boolean Expressions can be combined to produce a third one.
+<div class="example">
+    <ul>
+        <li>
+            A candidate wins if and only if he has more than half the votes:
+            ELECT1 == c <==> VOTE_SUM_FOR_CANDIDATE1(c) > V/2;
+        </li>
+        <li>
+            If a candidate has more than 2 and less then 5 votes, the first voter votes for him:
+            (VOTE_SUM_FOR_CANDIDATE1(c) > 2 && VOTE_SUM_FOR_CANDIDATE1(c) < 5) ==> VOTES1(VOTER_AT_POS(0)) == c;
+        </li>
+    </ul>
+</div>
 </body>
 </html>
