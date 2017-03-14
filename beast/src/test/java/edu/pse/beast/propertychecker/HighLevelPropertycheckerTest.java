@@ -33,7 +33,7 @@ public class HighLevelPropertycheckerTest {
 
 	GuiTestHelper helper = new GuiTestHelper();
 
-	private long waittime = 500;
+	private long waittime = 2000;
 	
 	@Before
 	public void setUp() throws InterruptedException {
@@ -125,7 +125,7 @@ public class HighLevelPropertycheckerTest {
 		parameterEditor.startCheck();
 
 		//wait a bit, so the test can start properly
-		Thread.sleep(5000);
+		Thread.sleep(waittime);
 		
 		//abort the checking
 		parameterEditor.abortCheck();

@@ -184,9 +184,8 @@ public class ParameterEditorBuilder {
     }
     
     private UserAction createOptionsUserAction(ObjectRefsForBuilder refs, PSECentralObjectProvider centralObjectProvider) {
-        return new OptionsUserAction(                
-                refs.getOptionIF().getParameterEditorOptions(refs.getLanguageOpts(), editor, centralObjectProvider), 
-                editor, refs.getOptionIF().getOptionPresenter(refs));
+        return new OptionsUserAction(
+                refs.getOptionIF().getParameterEditorOptions(refs.getLanguageOpts(), refs.getDeleteCFilesOptions(), editor, centralObjectProvider), editor, refs.getOptionIF().getOptionPresenter(refs));
     }
 
     private UserAction createShowPropertyListUserAction(JFrame propertyListWindow) {

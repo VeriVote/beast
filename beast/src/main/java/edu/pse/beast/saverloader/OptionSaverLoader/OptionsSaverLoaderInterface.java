@@ -82,12 +82,12 @@ public class OptionsSaverLoaderInterface {
     
     
     public static ParametereditorOptions loadParameterEditorOpts(
-            LanguageOptions langOpts, ParameterEditor editor,
+            LanguageOptions langOpts, DeleteCFilesOptions delCFileOpts, ParameterEditor editor,
             PSECentralObjectProvider centralObjectProvider) throws IOException {
         LinkedList<String> saveString = loadStringResForResLoader("param_opts");
         LinkedList<String> onlySaveString = getSaveStringOnlyForOption("param_opts", saveString);
         StringResourceLoader loader = new StringResourceLoader(onlySaveString);
-        return new ParametereditorOptions(loader, langOpts, editor, centralObjectProvider);
+        return new ParametereditorOptions(loader, langOpts, delCFileOpts, editor, centralObjectProvider);
     }
     
     private static LinkedList<String> getSaveStringOnlyForOption(String id, LinkedList<String> saveString) {

@@ -77,11 +77,11 @@ public class OptionsInterface {
      *            PSECentralObjectProvider
      * @return ParametereditorOptions
      */
-    public ParametereditorOptions getParameterEditorOptions(LanguageOptions langOpts, ParameterEditor editor,
+    public ParametereditorOptions getParameterEditorOptions(LanguageOptions langOpts, DeleteCFilesOptions delCFileOpts,ParameterEditor editor,
             PSECentralObjectProvider centralObjectProvider) {
         if (parametereditorOptions == null) {
             try {
-                parametereditorOptions = OptionsSaverLoaderInterface.loadParameterEditorOpts(langOpts, editor,
+                parametereditorOptions = OptionsSaverLoaderInterface.loadParameterEditorOpts(langOpts, delCFileOpts, editor,
                         centralObjectProvider);
             } catch (IOException e) {
             }
