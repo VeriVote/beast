@@ -24,7 +24,7 @@ public class ShowHelpUserAction extends UserAction implements DisplaysStringsToU
 
     @Override
     public void perform() {
-        File f = new File(SuperFolderFinder.getSuperFolder() + "./" + pathToHelpFile);
+        File f = new File(SuperFolderFinder.getSuperFolder() + "/" + pathToHelpFile);
         try {
             Desktop.getDesktop().browse(f.toURI());
         } catch (IOException e) {
