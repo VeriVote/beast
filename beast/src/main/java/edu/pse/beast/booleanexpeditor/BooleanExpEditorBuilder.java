@@ -98,7 +98,7 @@ public class BooleanExpEditorBuilder {
         BooleanExpEditorToolbarHandler toolBarHandler = new BooleanExpEditorToolbarHandler(window,
                 ImageResourceProvider.getToolbarImages(),
                 objectRefsForBuilder.getStringIF().getBooleanExpEditorStringResProvider().getToolbarTipStringRes(),
-                createActionIdAndListenerListForToolbarHandler(editor));
+                createActionIdAndListenerListForToolbarHandler(editor, objectRefsForBuilder));
 
         editor.setToolBarHandler(toolBarHandler);
         editor.setMenuBarHandler(menuBarHandler);
@@ -191,8 +191,9 @@ public class BooleanExpEditorBuilder {
      * a BooleanExpEditorWindow object.
      * @return said list, a ActionIdAndListener[] object
      */
-    private ActionIdAndListener[] createActionIdAndListenerListForToolbarHandler(BooleanExpEditor editor) {
-        ActionIdAndListener[] created = new ActionIdAndListener[9];
+    private ActionIdAndListener[] createActionIdAndListenerListForToolbarHandler(
+            BooleanExpEditor editor, ObjectRefsForBuilder refs) {
+        ActionIdAndListener[] created = new ActionIdAndListener[10];
 
         UserAction newProps = createNewPropsUserAction(editor);
         UserAction undo = createUndoUserAction(editor);
@@ -203,6 +204,9 @@ public class BooleanExpEditorBuilder {
         UserAction copy = createCopyUserAction(editor);
         UserAction cut = createCutUserAction(editor);
         UserAction paste = createPasteUserAction(editor);
+        ShowHelpUserAction showHelp = new ShowHelpUserAction();
+        refs.getLanguageOpts().addStringDisplayer(showHelp);
+
         created[0] = createFromUserAction(newProps);
         created[1] = createFromUserAction(undo);
         created[2] = createFromUserAction(redo);
@@ -212,6 +216,7 @@ public class BooleanExpEditorBuilder {
         created[6] = createFromUserAction(copy);
         created[7] = createFromUserAction(cut);
         created[8] = createFromUserAction(paste);
+        created[9] = createFromUserAction(showHelp);
 
         editor.addUserAction('n', newProps);
         editor.addUserAction('s', save);

@@ -20,7 +20,7 @@ public class ImageResourceProvider {
         if(toolbar == null) {
             String[] ids = {"new", "save", "save_as", 
                 "load", "copy", "cut", "paste", "undo", "redo",
-            "start", "stop"};
+            "start", "stop", "showHelpToUser"};
             toolbar =
                     new ImageResourceProvider("/core/images/toolbar/",
                     ids);

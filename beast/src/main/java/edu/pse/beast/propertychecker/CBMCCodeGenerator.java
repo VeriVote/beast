@@ -330,7 +330,7 @@ public class CBMCCodeGenerator {
     }
 
     private void addPreferenceVotingArrayInitialisation(int voteNumber) {
-        code.add("for (unsigned int j_prime = 0; j_prime < MAX; j_prime++) {".replace("MAX", "counter_1"));
+        code.add("for (unsigned int j_prime = 0; j_prime < counter_1; j_prime++) {");
         code.addTab();
         code.add("assume (votes" + voteNumber + "[counter_0][counter_1] != votes"
                 + voteNumber + "[counter_0][j_prime]);");

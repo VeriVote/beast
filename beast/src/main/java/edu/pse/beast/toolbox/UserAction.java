@@ -5,6 +5,8 @@
  */
 package edu.pse.beast.toolbox;
 
+import java.io.IOException;
+
 /**
  * This interface is implemented by all classes which represent actions
  * the user can perform which cannot be undone

@@ -11,15 +11,15 @@ public class DeleteCFilesOptions extends Options {
     private static boolean deleteFiles = false;
 
     public DeleteCFilesOptions(StringResourceLoader stringResLoader) {
-        super("keep_files");
-        String choosenOption = stringResLoader.getStringFromID("deleteTmpFiles");
+        super("delete_file");
+        String choosenOption = stringResLoader.getStringFromID("delete_file");
         if (choosenOption != null && choosenOption.equals("not_keep_files")) {
             deleteFiles = true;
         }
     }
 
     public DeleteCFilesOptions() {
-        super("keep_files");
+        super("delete_file");
         deleteFiles = false;
     }
 
