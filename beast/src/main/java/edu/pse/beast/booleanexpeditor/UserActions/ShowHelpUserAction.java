@@ -16,7 +16,6 @@ public class ShowHelpUserAction extends UserAction implements DisplaysStringsToU
     private String pathToHelpFile;
 
     /**
-     * @param id the identification
      */
     public ShowHelpUserAction() {
         super("showHelpToUser");

@@ -1,0 +1,25 @@
+body {
+    background-color: #EFEFEF;
+    color: #101010;
+    font-family: "Abyssinica SIL";
+    font-size: 150%;
+}
+
+#nav > a {
+    display: block;
+    color: #101010;
+}
+
+#back_to_top {
+    position: fixed;
+    right: 2em;
+    bottom: 2em;
+    background-color: #101010;
+    padding: .5em;
+}
+
+#back_to_top > a {
+    color: #EFEFEF;
+    text-decoration: none;
+}
+
