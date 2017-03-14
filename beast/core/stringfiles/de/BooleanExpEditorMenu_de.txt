@@ -25,3 +25,4 @@ numberOfCandidates : Anzahl der Kandidaten (C)
 numberOfSeats : Anzahl vorhandener Sitze (S)
 codeMenu : Code
 staticErrorFinding : Statische Fehlersuche
+pathToLangHelp : core/Helpfiles/BooleanExpLang/en/BooleanExpHelp.html

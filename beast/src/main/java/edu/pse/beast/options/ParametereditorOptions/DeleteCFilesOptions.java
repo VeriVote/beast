@@ -18,7 +18,7 @@ public class DeleteCFilesOptions extends Options {
         	deleteFiles = true;
         }
         List<String> choosableOptionList = Arrays.asList("Don't keep tmp files", "Keep tmp files");
-        DeleteCFilesElement fileOptElem = new DeleteCFilesElement(choosenOption, choosableOptionList);
+        DeleteCFilesElement fileOptElem = new DeleteCFilesElement(choosableOptionList, choosenOption);
         optElements.add(fileOptElem);
         
     }

@@ -7,3 +7,4 @@ redo : Redo
 copy : Copy
 cut : Cut
 paste : Paste
+showHelpToUser : show language help
