@@ -22,8 +22,8 @@ public abstract class ToolbarHandler {
     private final ImageResourceProvider imageRes;
     private final JButton[] buttons;
     protected JToolBar toolbar;
-    private final int buttonwidth = 24;
-    private final int buttonHeight = 24;
+    private final int buttonwidth = 32;
+    private final int buttonHeight = 32;
 
     private class ActionIdListenerSorter implements Comparator<ActionIdAndListener> {
         private String[] standardIdOrder = {"new", "save", "save_as", "load", "undo", "redo", "copy", "cut", "paste"};
