@@ -67,6 +67,15 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
     public PropertyList(PLModel model) {
     	this(model, null, null, null);
     }
+    
+    /**
+     * Another Test constructor
+     * @param model Needs the model for testing purposes
+     * @param editor And the editor
+     */
+    public PropertyList(PLModel model, BooleanExpEditor editor) {
+    	this(model, editor, null, null);
+    }
 
     
     /**
@@ -85,10 +94,12 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
      * @param prop The property you want to change
      * @param newName The new name for the property
      */
-    public void changeName(PropertyItem prop, String newName) {
+    public boolean changeName(PropertyItem prop, String newName) {
         if (!model.changeName(prop, newName, editor)) {
             view.rejectNameChange(prop);
+            return false;
         }
+        return true;
     }
 
     /**

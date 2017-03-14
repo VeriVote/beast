@@ -13,12 +13,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.pse.beast.propertylist.PropertyList;
+import edu.pse.beast.propertylist.TestHelper;
 import edu.pse.beast.propertylist.View.PropertyListWindow;
 
 public class GuiFileTests {
 	
 	private final long wait = 300;
-	GuiTestHelper helper = new GuiTestHelper();
+	TestHelper helper = new TestHelper();
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
