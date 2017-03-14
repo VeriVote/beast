@@ -9,21 +9,20 @@ import edu.pse.beast.saverloader.OptionSaverLoader.OptionsSaverLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 
 public class ParametereditorOptions extends Options {
+
     private final LanguageOptions langOpts;
-    private final DeleteCFilesOptions delCFileOpts;
     private final DeleteCFilesElement deleteElem;
     private final ParameterEditor editor;
     private final PSECentralObjectProvider centralObjectProvider;
     private final CheckerOptionElement checkerOptElem;
 
-    public ParametereditorOptions(StringResourceLoader loader, LanguageOptions langOpts,
-            DeleteCFilesOptions delCFileOpts, ParameterEditor editor,
+    private static boolean deleteFiles = false;
+
+    public ParametereditorOptions(StringResourceLoader loader, LanguageOptions langOpts, ParameterEditor editor,
             PSECentralObjectProvider centralObjectProvider) {
         super("param_opts");
         this.langOpts = langOpts;
-        this.delCFileOpts = delCFileOpts;
         this.subOptions.add(langOpts);
-        this.subOptions.add(delCFileOpts);
         this.editor = editor;
         this.centralObjectProvider = centralObjectProvider;
         this.checkerOptElem = new CheckerOptionElement(CheckerFactoryFactory.getAvailableCheckerIDs(),
@@ -32,15 +31,12 @@ public class ParametereditorOptions extends Options {
         this.deleteElem = new DeleteCFilesElement(java.util.Arrays.asList("not_keep_files", "keep_files"),
                 loader.getIdForString("keep_files"));
         this.optElements.add(deleteElem);
-        delCFileOpts.addOptionElement(deleteElem);
     }
 
-    public ParametereditorOptions(LanguageOptions langOpts, DeleteCFilesOptions delCFileOpts,
-            ParameterEditor editor, PSECentralObjectProvider centralObjectProvider) {
+    public ParametereditorOptions(LanguageOptions langOpts, ParameterEditor editor,
+            PSECentralObjectProvider centralObjectProvider) {
         super("param_opts");
         this.langOpts = langOpts;
-        this.delCFileOpts = delCFileOpts;
-        this.subOptions.add(delCFileOpts);
         this.subOptions.add(langOpts);
         this.editor = editor;
         this.centralObjectProvider = centralObjectProvider;
@@ -55,8 +51,19 @@ public class ParametereditorOptions extends Options {
     protected void reapplySpecialized() {
         OptionsSaverLoaderInterface.saveOpt(langOpts); // needed since lang opts
                                                        // are loaded seperately
-        delCFileOpts.reapply();
+        
+        String choosenOption = deleteElem.getChosenOption();
+
+        if (choosenOption.equals("not_keep_files")) {
+            deleteFiles = true;
+        } else {
+            deleteFiles = false;
+        }
         centralObjectProvider.setCheckerCommunicator(new PropertyChecker(checkerOptElem.getChosenOption()));
+    }
+
+    public static boolean deleteTmpFiles() {
+        return deleteFiles;
     }
 
 }

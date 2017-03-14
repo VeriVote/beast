@@ -3,7 +3,7 @@ package edu.pse.beast.propertychecker;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
-import edu.pse.beast.options.ParametereditorOptions.DeleteCFilesOptions;
+import edu.pse.beast.options.ParametereditorOptions.ParametereditorOptions;
 import edu.pse.beast.toolbox.*;
 
 import java.io.File;
@@ -174,7 +174,8 @@ public class CBMCProcessFactory extends CheckerFactory {
 
     @Override
     protected void cleanUp() {
-        if (!DeleteCFilesOptions.deleteTmpFiles() && toCheck != null && toCheck.exists()) {
+        if (!ParametereditorOptions.deleteTmpFiles() && toCheck != null && toCheck.exists()) {
+            System.out.println("gelöscht");
             toCheck.delete();
         }
     }
