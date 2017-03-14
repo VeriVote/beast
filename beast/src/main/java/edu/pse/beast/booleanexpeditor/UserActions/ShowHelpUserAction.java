@@ -2,6 +2,7 @@ package edu.pse.beast.booleanexpeditor.UserActions;
 
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
+import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.toolbox.UserAction;
 
 import java.awt.*;
@@ -23,7 +24,7 @@ public class ShowHelpUserAction extends UserAction implements DisplaysStringsToU
 
     @Override
     public void perform() {
-        File f = new File("./" + pathToHelpFile);
+        File f = new File(SuperFolderFinder.getSuperFolder() + "./" + pathToHelpFile);
         try {
             Desktop.getDesktop().browse(f.toURI());
         } catch (IOException e) {
