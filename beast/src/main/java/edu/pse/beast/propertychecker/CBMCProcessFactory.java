@@ -174,7 +174,7 @@ public class CBMCProcessFactory extends CheckerFactory {
 
     @Override
     protected void cleanUp() {
-        if (!ParametereditorOptions.deleteTmpFiles() && toCheck != null && toCheck.exists()) {
+        if (ParametereditorOptions.deleteTmpFiles() && toCheck != null && toCheck.exists()) {
             System.out.println("gelöscht");
             toCheck.delete();
         }

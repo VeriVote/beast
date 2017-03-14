@@ -1,11 +1,11 @@
-lang : Sprache
+﻿lang : Sprache
 lang_opts : Sprachoptionen
 ok_button : Anwenden
 param : ParameterEditor
 param_opts : ParameterEditor Optionen
-delete_file : Temporäre Dateien löschen
-keep_files : Ja
-not_keep_files : Nein
+delete_file : Temporär erzeugte Dateien speichern
+keep_files : Speichern
+not_keep_files : Löschen
 checker : Verfügbare Checker
 de : Deutsch
 en : Englisch

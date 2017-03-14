@@ -52,6 +52,9 @@ public class ParametereditorOptions extends Options {
         OptionsSaverLoaderInterface.saveOpt(langOpts); // needed since lang opts
                                                        // are loaded seperately
         
+        centralObjectProvider.setCheckerCommunicator(new PropertyChecker(checkerOptElem.getChosenOption()));
+        
+        //extract if the user wants to keep the files, or delete them
         String choosenOption = deleteElem.getChosenOption();
 
         if (choosenOption.equals("not_keep_files")) {
@@ -59,7 +62,6 @@ public class ParametereditorOptions extends Options {
         } else {
             deleteFiles = false;
         }
-        centralObjectProvider.setCheckerCommunicator(new PropertyChecker(checkerOptElem.getChosenOption()));
     }
 
     public static boolean deleteTmpFiles() {
