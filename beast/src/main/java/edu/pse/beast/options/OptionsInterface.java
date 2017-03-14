@@ -5,7 +5,6 @@ import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.highlevel.PSECentralObjectProvider;
 import edu.pse.beast.options.BooleanExpEditorOptions.BooleanExpEditorOptions;
 import edu.pse.beast.options.CEditorOptions.CElectionEditorOptions;
-import edu.pse.beast.options.ParametereditorOptions.DeleteCFilesOptions;
 import edu.pse.beast.options.ParametereditorOptions.LanguageOptions;
 import edu.pse.beast.options.ParametereditorOptions.ParametereditorOptions;
 import edu.pse.beast.parametereditor.ParameterEditor;
@@ -25,7 +24,7 @@ public class OptionsInterface {
     private BooleanExpEditorOptions booleanExpEditorOptions;
     private CElectionEditorOptions cElectionEditorOptions;
     private ParametereditorOptions parametereditorOptions;
-    private DeleteCFilesOptions deleteFilesOptions;
+  //  private DeleteCFilesOptions deleteFilesOptions;
 
     /**
      * Getter for the BooleanExpEditorOptions 
@@ -77,11 +76,11 @@ public class OptionsInterface {
      *            PSECentralObjectProvider
      * @return ParametereditorOptions
      */
-    public ParametereditorOptions getParameterEditorOptions(LanguageOptions langOpts, DeleteCFilesOptions delCFileOpts,ParameterEditor editor,
+    public ParametereditorOptions getParameterEditorOptions(LanguageOptions langOpts, ParameterEditor editor,
             PSECentralObjectProvider centralObjectProvider) {
         if (parametereditorOptions == null) {
             try {
-                parametereditorOptions = OptionsSaverLoaderInterface.loadParameterEditorOpts(langOpts, delCFileOpts, editor,
+                parametereditorOptions = OptionsSaverLoaderInterface.loadParameterEditorOpts(langOpts, editor,
                         centralObjectProvider);
             } catch (IOException e) {
             }
@@ -105,17 +104,6 @@ public class OptionsInterface {
             }
         }
         return languageOptions;
-    }
-    
-    public DeleteCFilesOptions getDeleteFileOptions() {
-    	if (deleteFilesOptions == null) {
-    		try {
-    			deleteFilesOptions = OptionsSaverLoaderInterface.loadFileOpts();
-            } catch (IOException ex) {
-            	deleteFilesOptions = new DeleteCFilesOptions();
-            }
-    	}
-    	return deleteFilesOptions;
     }
 
     /**

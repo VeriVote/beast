@@ -6,7 +6,6 @@
 package edu.pse.beast.toolbox;
 
 import edu.pse.beast.options.OptionsInterface;
-import edu.pse.beast.options.ParametereditorOptions.DeleteCFilesOptions;
 import edu.pse.beast.options.ParametereditorOptions.LanguageOptions;
 import edu.pse.beast.saverloader.SaverLoaderInterface;
 import edu.pse.beast.stringresource.StringLoaderInterface;
@@ -25,7 +24,6 @@ public class ObjectRefsForBuilder {
     private final StringLoaderInterface stringIF;
     private final LanguageOptions languageOpts;
     private final SaverLoaderInterface saverLoaderIF;
-    private final DeleteCFilesOptions delCFileOpts;
     
     /**
      * Constructor
@@ -35,11 +33,10 @@ public class ObjectRefsForBuilder {
      * @param saverLoaderIF the saverloaderinterface
      */
     public ObjectRefsForBuilder(OptionsInterface optionsIF, StringLoaderInterface stringIF,
-            LanguageOptions languageOpts, DeleteCFilesOptions delCFileOpts, SaverLoaderInterface saverLoaderIF) {
+            LanguageOptions languageOpts, SaverLoaderInterface saverLoaderIF) {
         this.optionsIF = optionsIF;
         this.stringIF = stringIF;
         this.languageOpts = languageOpts;
-        this.delCFileOpts = delCFileOpts;
         this.saverLoaderIF = saverLoaderIF;
     }
     
@@ -65,14 +62,6 @@ public class ObjectRefsForBuilder {
      */
     public LanguageOptions getLanguageOpts() {
         return languageOpts;
-    }
-    
-    /**
-     * 
-     * @return the options if you want to delete the tmp files or not
-     */
-    public DeleteCFilesOptions getDeleteCFilesOptions() {
-        return delCFileOpts;
     }
     
     /**

@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * @author Holger-Desktop
  */
 public class ParameterEditorBuilder {
-
+    
     private ParameterEditor editor;
     private ParameterEditorWindow window;
     private final String[] menuHeadingIds = {"fileMenu", "projectMenu", "editorMenu", "showHideWindowsMenu"};
@@ -185,7 +185,7 @@ public class ParameterEditorBuilder {
     
     private UserAction createOptionsUserAction(ObjectRefsForBuilder refs, PSECentralObjectProvider centralObjectProvider) {
         return new OptionsUserAction(
-                refs.getOptionIF().getParameterEditorOptions(refs.getLanguageOpts(), refs.getDeleteCFilesOptions(), editor, centralObjectProvider), editor, refs.getOptionIF().getOptionPresenter(refs));
+                refs.getOptionIF().getParameterEditorOptions(refs.getLanguageOpts(), editor, centralObjectProvider), editor, refs.getOptionIF().getOptionPresenter(refs));
     }
 
     private UserAction createShowPropertyListUserAction(JFrame propertyListWindow) {

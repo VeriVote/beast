@@ -1,7 +1,5 @@
 new_option param_opts
 checker : cbmc
-delete_file : not_keep_files
+delete_file : keep_files
 new_option lang_opts
-lang : de
-new_option delete_file
-delete_file : not_keep_files
+lang : en

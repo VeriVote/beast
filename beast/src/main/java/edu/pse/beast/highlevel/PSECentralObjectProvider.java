@@ -5,7 +5,6 @@ import edu.pse.beast.booleanexpeditor.BooleanExpEditorBuilder;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditorBuilder;
 import edu.pse.beast.options.OptionsInterface;
-import edu.pse.beast.options.ParametereditorOptions.DeleteCFilesOptions;
 import edu.pse.beast.options.ParametereditorOptions.LanguageOptions;
 import edu.pse.beast.parametereditor.ParameterEditor;
 import edu.pse.beast.parametereditor.ParameterEditorBuilder;
@@ -41,10 +40,9 @@ public class PSECentralObjectProvider implements CentralObjectProvider {
         StringLoaderInterface stringIf = new StringLoaderInterface("de"); 
         SaverLoaderInterface saverLoaderIF = new SaverLoaderInterface();
         LanguageOptions langOpts = optionsInterface.getLanguageOptions(stringIf);
-        DeleteCFilesOptions delCFileOpts = optionsInterface.getDeleteFileOptions();
         ObjectRefsForBuilder refs = new ObjectRefsForBuilder(
                 optionsInterface, stringIf, 
-                langOpts, delCFileOpts, saverLoaderIF);
+                langOpts, saverLoaderIF);
         //The instances themselves are created.
         cElectionEditor = new CElectionDescriptionEditorBuilder().createCElectionDescriptionEditor(refs);
         booleanExpEditor = new BooleanExpEditorBuilder().createBooleanExpEditorObject(refs, cElectionEditor);        
