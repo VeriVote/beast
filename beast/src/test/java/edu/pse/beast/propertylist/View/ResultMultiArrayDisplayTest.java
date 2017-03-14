@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResultMultiArrayDisplayTest {
+	ResultPresenterWindow win;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -27,16 +28,14 @@ public class ResultMultiArrayDisplayTest {
 
 	@After
 	public void tearDown() throws Exception {
+		win.dispose();
 	}
+
 
 	@Test
-	public void test() {
-		//fail("Not yet implemented");
-	}
-
-	public static void main(String[] args) {
+	public void testMultiArrayFailureExample() throws InterruptedException {
 		
-		ResultPresenterWindow win = new ResultPresenterWindow();
+		win = new ResultPresenterWindow();
 		win.setVisible(true);
 		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
@@ -138,5 +137,6 @@ public class ResultMultiArrayDisplayTest {
 		
 		win.presentFailureExample(fail);
 		
+		Thread.sleep(100);
 	}
 }

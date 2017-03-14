@@ -51,5 +51,12 @@ public class GuiFileTests {
 		//bar.getMenu(0).getItem(0).doClick();
 		Thread.sleep(wait);
 	}
+	
+	@Test
+	public void buttonTest() {
+		PropertyList proli = helper.getPropListOfCurrentInstance();
+		PropertyListWindow view = proli.getView();
+		
+	}
 
 }

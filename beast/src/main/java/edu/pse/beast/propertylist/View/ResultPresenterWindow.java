@@ -59,16 +59,16 @@ public class ResultPresenterWindow extends JFrame {
         setBounds(0, 0, 400, 500);
         Dimension iconSize = new Dimension(120, 40);
 
-        showResult = new JButton();
-        showResult.setPreferredSize(iconSize);
-        showResult.setIcon(eyeIcon);
-        showResult.addActionListener(new ActionListener() {
+        setShowResult(new JButton());
+        getShowResult().setPreferredSize(iconSize);
+        getShowResult().setIcon(eyeIcon);
+        getShowResult().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 setVisible(false);
             }
         });
-        getContentPane().add(showResult, BorderLayout.PAGE_START);
+        getContentPane().add(getShowResult(), BorderLayout.PAGE_START);
 
         result = new JTextPane();
         result.setEditable(false);
@@ -79,10 +79,10 @@ public class ResultPresenterWindow extends JFrame {
                 JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         this.add(jsp);
 
-        export = new JButton();
-        export.setPreferredSize(iconSize);
-        export.setText(srl.getStringFromID("export"));
-        export.addActionListener(new ActionListener() {
+        setExport(new JButton());
+        getExport().setPreferredSize(iconSize);
+        getExport().setText(srl.getStringFromID("export"));
+        getExport().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFileChooser fc = new JFileChooser();
@@ -107,7 +107,7 @@ public class ResultPresenterWindow extends JFrame {
                 }
             }
         });
-        getContentPane().add(export, BorderLayout.PAGE_END);
+        getContentPane().add(getExport(), BorderLayout.PAGE_END);
 
         this.addWindowFocusListener(new WindowFocusListener() {
             @Override
@@ -207,7 +207,7 @@ public class ResultPresenterWindow extends JFrame {
     }
 
     private void packFrame() {
-        getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, showResult.getBackground()));
+        getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, getShowResult().getBackground()));
         pack();
     }
 
@@ -374,5 +374,17 @@ public class ResultPresenterWindow extends JFrame {
     public void setExample(FailureExample example) {
         this.example = example;
     }
+
+	private void setShowResult(JButton showResult) {
+		this.showResult = showResult;
+	}
+
+	private JButton getExport() {
+		return export;
+	}
+
+	private void setExport(JButton export) {
+		this.export = export;
+	}
 
 }
