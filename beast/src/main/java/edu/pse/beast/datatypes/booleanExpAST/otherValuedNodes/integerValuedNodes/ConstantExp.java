@@ -33,6 +33,11 @@ public class ConstantExp extends IntegerValuedExpression {
     }
 
     @Override
+    public String getTreeString(int depth) {
+        return "const " + constant + "\n";
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

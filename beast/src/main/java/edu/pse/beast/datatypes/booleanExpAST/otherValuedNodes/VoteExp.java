@@ -30,4 +30,9 @@ public class VoteExp extends AccessValueNode {
     public void getVisited(BooleanExpNodeVisitor visitor) {
         visitor.visitVoteExp(this);
     }
+
+    @Override
+    public String getTreeString(int depth) {
+        return null;
+    }
 }

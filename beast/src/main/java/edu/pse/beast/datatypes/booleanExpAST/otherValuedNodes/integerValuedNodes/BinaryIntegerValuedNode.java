@@ -23,6 +23,16 @@ public class BinaryIntegerValuedNode extends IntegerValuedExpression {
         visitor.visitBinaryIntegerValuedNode(this);
     }
 
+    @Override
+    public String getTreeString(int depth) {
+        StringBuilder b = new StringBuilder();
+        String tabs = "\t\t\t\t\t\t\t\t\t\t".substring(0,depth + 1);
+        b.append("BinaryIntNode: Symbol " + relationSymbol + "\n");
+        b.append(tabs + "lhs: " + lhs.getTreeString(depth + 1));
+        b.append(tabs + "rhs: " + rhs.getTreeString(depth + 1));
+        return b.toString();
+    }
+
     public String getRelationSymbol() {
         return relationSymbol;
     }
@@ -41,5 +51,7 @@ public class BinaryIntegerValuedNode extends IntegerValuedExpression {
             return false;
         return true;
     }
+
+
 
 }

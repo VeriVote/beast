@@ -23,4 +23,9 @@ public class ElectExp extends AccessValueNode {
         visitor.visitElectExp(this);
     }
 
+    @Override
+    public String getTreeString(int depth) {
+        return null;
+    }
+
 }

@@ -34,6 +34,13 @@ public class NotNode extends BooleanExpressionNode {
     }
 
     @Override
+    public String getTreeString(int depth) {
+        String tabs = "\t\t\t\t\t\t\t\t\t\t\t\t".substring(0, depth + 1);
+        return "NOT\n" +
+                tabs + "following: " + followingNode.getTreeString(depth + 1);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

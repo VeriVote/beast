@@ -25,4 +25,13 @@ public class IntegerComparisonNode extends ComparisonNode {
         visitor.visitIntegerComparisonNode(this);
     }
 
+    @Override
+    public String getTreeString(int depth) {
+            StringBuilder b = new StringBuilder();
+            String tabs = "\t\t\t\t\t\t\t\t\t\t\t".substring(0, depth);
+            b.append(tabs + "IntegerComparisonNode: Symbol " + comparisonSymbol.getCStringRep() + "\n");
+            b.append(tabs + "\t" + "lhs: " + lhsTypeExp.getTreeString(depth + 1));
+            b.append(tabs + "\t" + "rhs: " + rhsTypeExp.getTreeString(depth + 1));
+            return b.toString();
+    }
 }

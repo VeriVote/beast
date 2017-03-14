@@ -16,6 +16,6 @@ public abstract class BooleanExpressionNode {
      */
     public abstract void getVisited(BooleanExpNodeVisitor visitor);
 
-
+    public abstract String getTreeString(int depth);
     
 }

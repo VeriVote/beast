@@ -38,6 +38,12 @@ public class SymbolicVarExp extends TypeExpression {
     }
 
     @Override
+    public String getTreeString(int depth) {
+        return "SymbVar: {id " + symbVar.getId() +
+                ", type: " + symbVar.getInternalTypeContainer().getInternalType().toString() + "}\n";
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

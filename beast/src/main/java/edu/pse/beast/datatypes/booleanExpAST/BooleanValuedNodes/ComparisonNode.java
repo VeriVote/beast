@@ -11,10 +11,10 @@ import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.TypeExpression;
  */
 public class ComparisonNode extends BooleanExpressionNode {
 
-    private final TypeExpression lhsTypeExp;
-    private final TypeExpression rhsTypeExp;
+    protected final TypeExpression lhsTypeExp;
+    protected final TypeExpression rhsTypeExp;
 
-    private final ComparisonSymbol comparisonSymbol;
+    protected final ComparisonSymbol comparisonSymbol;
     
     /**
      * 
@@ -72,4 +72,13 @@ public class ComparisonNode extends BooleanExpressionNode {
         return comparisonSymbol != null ? comparisonSymbol.equals(that.comparisonSymbol) : that.comparisonSymbol == null;
     }
 
+    @Override
+    public String getTreeString(int depth) {
+        StringBuilder b = new StringBuilder();
+        String tabs = "\t\t\t\t\t\t\t\t\t\t\t".substring(0, depth);
+        b.append(tabs + comparisonSymbol.getCStringRep() + "\n");
+        b.append(tabs + "\t" + "lhs: " + lhsTypeExp.getTreeString(depth + 1));
+        b.append(tabs + "\t" + "rhs: " + rhsTypeExp.getTreeString(depth + 1));
+        return b.toString();
+    }
 }

@@ -19,6 +19,11 @@ public class IntegerNode extends IntegerValuedExpression {
         visitor.visitIntegerNode(this);
     }
 
+    @Override
+    public String getTreeString(int depth) {
+        return "Integer: " + heldInteger + "\n";
+    }
+
     public int getHeldInteger() {
         return heldInteger;
     }

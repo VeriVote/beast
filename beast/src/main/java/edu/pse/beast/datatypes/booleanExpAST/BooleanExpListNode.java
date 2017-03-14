@@ -2,6 +2,7 @@ package edu.pse.beast.datatypes.booleanExpAST;
 
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BooleanExpressionNode;
 
+import javax.print.DocFlavor;
 import java.util.ArrayList;
 /**
  * 
@@ -41,5 +42,16 @@ public class BooleanExpListNode {
         boolNodesPerElectLevel.get(highestElectNumber).add(node);
     }
 
+    @Override
+    public String toString() {
+        StringBuilder b = new StringBuilder();
+        boolNodesPerElectLevel.forEach( l -> l.forEach( n -> b.append(n.toString())));
+        return b.toString();
+    }
 
+    public String getTreeString() {
+        StringBuilder b = new StringBuilder();
+        boolNodesPerElectLevel.forEach(l -> l.forEach(n -> b.append(n.getTreeString(0))));
+        return b.toString();
+    }
 }

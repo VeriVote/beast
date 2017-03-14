@@ -36,6 +36,13 @@ public class VoteSumForCandExp extends IntegerValuedExpression {
         visitor.visitVoteSumExp(this);
     }
 
+    @Override
+    public String getTreeString(int depth) {
+        return "Votesum " + voteArrNum + "\n" +
+                "\t\t\t\t\t\t\t\t\t\t".substring(0,depth + 1 ) +
+                "var " + acessingVar.getTreeString(depth + 1);
+    }
+
     /**
      * 
      * @return the number of the vote array

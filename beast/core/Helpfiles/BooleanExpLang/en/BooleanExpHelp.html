@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <LINK REL=StyleSheet HREF="../style.css" TYPE="text/css">
+<LINK REL="stylesheet" href="../../jquery-ui-1.12.1.custom/jquery-ui.css">
 <head>
     <meta charset="UTF-8">
     <title>BooleanExpLang explanation</title>
@@ -18,7 +19,7 @@
 </div>
 <div id="introduction_container">
     <h1 id="introduction" >Introduction</h1>
-    The FormalPropertyEditor used a special language, called BooleanExpLang to allow the formulation of boolean
+    The FormalPropertyEditor uses a special language, called BooleanExpLang to allow the formulation of boolean
     Expressions. These boolean Expressions are then what the election description is checked for. This manual
     provides an overview over the different syntactic structures the user can use to build these expressions.
     These structures can generally be divided into two categories: Those which return boolean Values and those
@@ -49,11 +50,13 @@
 <div id="reference_container">
     <h1 id="reference">Language constructs: A Reference</h1>
     <h2 id="refToTypes">Refering to voters, candidates or seats</h2>
-    When testing election descriptions for properties, it is often the case that one wants to formulate
-    these properties while refering to a specific voter, candidate or seat. Often it is the case that one wants
-    to make statements regarding the state of one of these types before the election and its impact on the election result.
-    There are two ways one can go about refering to a specific type in BooleanExpLang: Via symbolic variables or by specifying
-    a position.
+    <p>
+        When testing election descriptions for properties, it is often the case that one wants to formulate
+        these properties while refering to a specific voter, candidate or seat. Often it is the case that one wants
+        to make statements regarding the state of one of these types before the election and its impact on the election result.
+        There are two ways one can go about refering to a specific type in BooleanExpLang: Via symbolic variables or by specifying
+        a position.
+    </p>
     <h3>Symbolic variables</h3>
     Symbolic variables represent any voter, candidate or seat and thus give a possibility to refer to the same type
     in several different paces. This enables the user to identify given type instances. Symbolic variables
@@ -185,4 +188,7 @@
 
 </div>
 </body>
+<script src="../../jquery.js"></script>
+<script src="../../jquery-ui-1.12.1.custom/jquery-ui.js";></script>
+
 </html>

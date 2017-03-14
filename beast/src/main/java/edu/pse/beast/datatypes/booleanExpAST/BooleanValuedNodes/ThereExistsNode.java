@@ -25,4 +25,11 @@ public class ThereExistsNode extends QuantorNode {
         visitor.visitThereExistsNode(this);
     }
 
+    @Override
+    public String getTreeString(int depth) {
+        return "ExistsOne: Declared var: " + getDeclaredSymbolicVar().getId() + "\n" +
+                "\t\t\t\t\t\t\t\t\t\t\t\t".substring(0,depth + 1) + "following: " +
+                getFollowingExpNode().getTreeString(depth + 1);
+    }
+
 }

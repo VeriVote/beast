@@ -23,6 +23,12 @@ public class AtPosExp extends TypeExpression {
         visitor.visitAtPosNode(this);
     }
 
+    @Override
+    public String getTreeString(int depth) {
+        return "atpos\n" + "\t\t\t\t\t\t\t\t\t\t".substring(0,depth + 1 ) + "int " +
+                integerValuedExpression.getTreeString(depth + 1);
+    }
+
     public IntegerValuedExpression getIntegerValuedExpression() {
         return integerValuedExpression;
     }

@@ -24,4 +24,11 @@ public class ForAllNode extends QuantorNode {
     public void getVisited(BooleanExpNodeVisitor visitor) {
         visitor.visitForAllNode(this);
     }
+
+    @Override
+    public String getTreeString(int depth) {
+        return "ForAll: Declared var: " + getDeclaredSymbolicVar().getId() + "\n" +
+                "\t\t\t\t\t\t\t\t\t\t\t\t".substring(0,depth + 1) + "following: " +
+                getFollowingExpNode().getTreeString(depth + 1);
+    }
 }
