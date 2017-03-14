@@ -62,7 +62,28 @@ public class UserAstTestHelper {
                 Assert.assertEquals(expStr, ast.getTreeString());
             }
         }
+    }
 
+    @Test
+    public void integerValuesTest() {
+        String formula = "V / C * VOTE_SUM_FOR_CANDIDATE1(c) == S - 4 + 2;";
+        BooleanExpListNode ast = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
+                formula,
+                new SymbolicVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE)));
+        String astString = ast.getTreeString();
+        String expString = "IntegerComparisonNode: Symbol ==\n" +
+                "\tlhs: BinaryIntNode: Symbol *\n" +
+                "\t\tlhs: BinaryIntNode: Symbol /\n" +
+                "\t\t\tlhs: const V\n" +
+                "\t\t\trhs: const C\n" +
+                "\t\trhs: Votesum 1\n" +
+                "\t\t\tvar SymbVar: {id c, type: CANDIDATE}\n" +
+                "\trhs: BinaryIntNode: Symbol +\n" +
+                "\t\tlhs: BinaryIntNode: Symbol -\n" +
+                "\t\t\tlhs: const S\n" +
+                "\t\t\trhs: Integer: 4\n" +
+                "\t\trhs: Integer: 2\n";
+        Assert.assertEquals(expString, astString);
     }
 
 }
