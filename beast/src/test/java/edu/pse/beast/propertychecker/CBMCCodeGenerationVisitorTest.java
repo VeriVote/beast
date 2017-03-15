@@ -5,10 +5,12 @@ import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BooleanExpressio
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
+import edu.pse.beast.toolbox.Tuple;
 import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.FormalPropertySyntaxTreeToAstTranslatorTest;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -179,8 +181,43 @@ public class CBMCCodeGenerationVisitorTest {
     }
 
     @Test
-    p
+    public void testVotes() {
+        String expression = "VOTES1(v) == c";
+        String expected = "unsigned int comparison_0 = 1;\n" +
+                "comparison_0 = c == votes1[v];\n" +
+                "assume(comparison_0);\n";
+        BooleanExpressionNode n =
+                FormalPropertySyntaxTreeToAstTranslatorTest.translate(
+                        expression,
+                        Arrays.asList(
+                                new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
+                                new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER))
+                        ).
+                        getBooleanExpressions().get(0).get(0);
+        visitor.setToPrePropertyMode();
+        List<String> c = visitor.generateCode(n);
+        String actual = listToString(c);
+        Assert.assertEquals(expected, actual);
+    }
 
-
+    @Test
+    public void testElectExpression() {
+        String expression = "ELECT1 == c";
+        String expected = "unsigned int comparison_0 = 1;\n" +
+                "comparison_0 = c == elect1;\n" +
+                "assume(comparison_0);\n";
+        BooleanExpressionNode n =
+                FormalPropertySyntaxTreeToAstTranslatorTest.translate(
+                        expression,
+                        Arrays.asList(
+                                new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
+                                new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER))
+                ).
+                getBooleanExpressions().get(1).get(0);
+        visitor.setToPrePropertyMode();
+        List<String> c = visitor.generateCode(n);
+        String actual = listToString(c);
+        Assert.assertEquals(expected, actual);
+    }
 
 }
