@@ -135,4 +135,50 @@ public class CBMCCodeGenerationVisitorTest {
         String actual = listToString(c);
         Assert.assertEquals(expected, actual);
     }
+
+    @Test
+    public void testGenerateForAllCode() {
+        String expression = "FOR_ALL_VOTERS(v) : v == v;";
+        String expected = "unsigned int forAll_0 = 1;\n" +
+                "for(unsigned int v = 0; v < V && forAll_0; v++) {\n" +
+                "\tunsigned int comparison_0 = 1;\n" +
+                "\tcomparison_0 = v == v;\n" +
+                "\tforAll_0 = comparison_0;\n" +
+                "}\n" +
+                "assume(forAll_0);\n";
+        BooleanExpressionNode n =
+                FormalPropertySyntaxTreeToAstTranslatorTest.translate(
+                        expression,
+                        new SymbolicVariable(
+                                "c", new InternalTypeContainer(InternalTypeRep.CANDIDATE))).
+                        getBooleanExpressions().get(0).get(0);
+        visitor.setToPrePropertyMode();
+        List<String> c = visitor.generateCode(n);
+        String actual = listToString(c);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testGenerateThereExists() {
+        String expression = "EXISTS_ONE_SEAT(s) : s == s;";
+        String expected = "unsigned int thereExists_0 = 0;\n" +
+                "for(unsigned int s = 0; s < S && !thereExists_0; s++) {\n" +
+                "\tunsigned int comparison_0 = 1;\n" +
+                "\tcomparison_0 = s == s;\n" +
+                "\tthereExists_0 = comparison_0;\n" +
+                "}\n" +
+                "assume(thereExists_0);\n";
+        BooleanExpressionNode n =
+                FormalPropertySyntaxTreeToAstTranslatorTest.translate(
+                        expression,
+                        new SymbolicVariable(
+                                "c", new InternalTypeContainer(InternalTypeRep.CANDIDATE))).
+                        getBooleanExpressions().get(0).get(0);
+        visitor.setToPrePropertyMode();
+        List<String> c = visitor.generateCode(n);
+        String actual = listToString(c);
+        Assert.assertEquals(expected, actual);
+    }
+
+
 }
