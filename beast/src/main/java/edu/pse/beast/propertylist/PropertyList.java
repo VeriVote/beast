@@ -191,7 +191,7 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
 
     @Override
     public ArrayList<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptions() {
-        editor.updatePostAndPrePropObject();
+        //editor.updatePostAndPrePropObject();
         ArrayList<PostAndPrePropertiesDescription> result = new ArrayList<PostAndPrePropertiesDescription>();
         ArrayList<PropertyItem> from = model.getPropertyList();
         editor.updatePostAndPrePropObject();
@@ -205,7 +205,7 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
 
     @Override
     public void presentResult(ResultInterface res, Integer index) {
-        model.setNextToBePresented(res, index);
+        model.presentResultToItem(res, index);
     }
 
     @Override
@@ -225,9 +225,9 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
      * Provides the StringResourceLoader for the menu strings of property list
      * @return StringResourceLoader for the menu strings
      */
-    public StringResourceLoader getMenuStringLoader() {
+    /*protected StringResourceLoader getMenuStringLoader() {
         return sli.getPropertyListStringResProvider().getMenuStringRes();
-    }
+    }*/
     
     /**
      * Returns the last delete action.
@@ -255,7 +255,7 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
      * @return Data model of property list.
      */
     public PLModel getModel() {
-        return (PLModel) model;
+        return model;
     }
 
     /**
@@ -264,7 +264,7 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
      */
     public void setPLModel(PLModel model) {
         this.model.loadAnotherModel(model);
-        view.setWindowTitle(((PLModel) model).getName());
+        view.setWindowTitle(model.getName());
     }
 
     /**

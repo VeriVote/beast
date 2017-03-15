@@ -61,7 +61,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		@Override
 		public void windowGainedFocus(WindowEvent windowEvent) {
 			super.windowGainedFocus(windowEvent);
-			((PLModel) model).updateView();
+			model.updateView();
 		}
 	};
 

@@ -65,12 +65,15 @@ public class PLModel extends Observable implements NameInterface {
 	 * @return true when the addition was a success
 	 */
 	public boolean addDescription(PropertyItem prop) {
-		if (propertyList.indexOf(prop) != -1) {
+		if (indexOfName(prop.getDescriptionName()) != -1) {
 			prop.setDescriptionName(UUID.randomUUID().toString());
 			
-			/*while (propertyList.indexOf(prop) != -1) {
-				prop.setDescriptionName(prop.getDescriptionName() + "x");
+			/*while (indexOfName(prop.getDescriptionName()) != -1) {
+			  String oldName = prop.getDescriptionName();
+		      prop.setDescriptionName(oldName + "x");
 			}*/
+			
+			//prop.setDescriptionName(prop.getDescriptionName() + "x");
 			
 			propertyList.add(prop);
 		} else {
@@ -155,6 +158,7 @@ public class PLModel extends Observable implements NameInterface {
 	 */
 	public void setNewList() {
 		this.propertyList.clear();
+		name = "New PropertyList";
 		updateView();
 	}
 
@@ -167,14 +171,14 @@ public class PLModel extends Observable implements NameInterface {
 	 *            The index of the result object
 	 * @return Returns if there is a next item to receive a result
 	 */
-	public boolean setNextToBePresented(ResultInterface res, Integer index) {
+	public void presentResultToItem(ResultInterface res, Integer index) {
 		ArrayList<PropertyItem> testedList = getTestedPropertyList();
 
 		res.presentTo(testedList.get(index));
 
 		updateView();
 
-		return true;
+		
 	}
 
 	/**
@@ -223,9 +227,9 @@ public class PLModel extends Observable implements NameInterface {
 	 * 
 	 * @return Returns the property list model
 	 */
-	public PLModel getModel() {
+	/*public PLModel getModel() {
 		return this;
-	}
+	}*/
 
 	@Override
 	public void setNewName(String newName) {
