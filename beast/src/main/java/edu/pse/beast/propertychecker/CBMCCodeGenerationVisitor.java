@@ -413,7 +413,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     }
 
     private String getNewNumberVariableName() {
-        return "integerVar_" + numberVars++;
+        String newNumberVariable = "integerVar_" + numberVars;
+        numberVars++;
+        return newNumberVariable;
     }
 
     @Override
@@ -421,7 +423,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         listComparisonNode.getLHSBooleanExpNode().getVisited(this);
         listComparisonNode.getRHSBooleanExpNode().getVisited(this);
 
-        String varNameDecl = "integer_comp_" + comparisonNodeCounter++;
+        String varNameDecl = "integer_comp_" + comparisonNodeCounter;
+        comparisonNodeCounter++;
         String rhs = variableNames.pop();
         String lhs = variableNames.pop();
 
@@ -459,8 +462,10 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     }
 
     private String getAtPosVarName(AtPosExp atPosExp) {
+        int amtByPos = amtByPosVar;
+        amtByPosVar++;
         return atPosExp.getInternalTypeContainer().getInternalType().toString().toLowerCase()
-                + "AtPos_" + amtByPosVar++;
+                + "AtPos_" + amtByPos;
     }
 
     private void testIfLast() {
