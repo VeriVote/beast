@@ -91,16 +91,20 @@ public class CBMCCodeGenerator {
     private void addVoteSumFunc() {
         String input = inputType.getType().getListedType().isList() ? "unsigned int arr[V][C]" : "unsigned int arr[V]";
         code.add("unsigned int voteSumForCandidate(INPUT, unsigned int candidate) {".replace("INPUT", input));
-        code.add("\tunsigned int sum = 0;");
-        code.add("\tfor(unsigned int i = 0; i < V; ++i) {");
+        code.addTab();
+        code.add("unsigned int sum = 0;");
+        code.add("for(unsigned int i = 0; i < V; ++i) {");
+        code.addTab();
         if (inputType.getType().getListLvl() == 1) {
-            code.add("\t\tif(arr[i] == candidate) sum++;");
+            code.add("if(arr[i] == candidate) sum++;");
         } else {
-            code.add("\t\tsum += arr[i][candidate];");
+            code.add("sum += arr[i][candidate];");
         }
-        code.add("\t}");
-        code.add("\treturn sum;");
-        code.add("}\n");
+        code.deleteTab();
+        code.add("}");
+        code.add("return sum;");
+        code.deleteTab();
+        code.add("}");
     }
 
     // maybe add something that let's the user use imports
