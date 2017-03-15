@@ -46,9 +46,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private int comparisonNodeCounter;
     private int voteSumCounter;
     private final ElectionTypeContainer inputType;
-    private Queue<String> voteSumVars = new LinkedList<>();
-    private Queue<Integer> voteSumLevels = new LinkedList<>();
-    private int numberExpDepth = 0;
+    private int listlvl = 0;
+    private int amtByPosVar = 0;
+
 
     private Stack<String> variableNames; //stack of the variable names. 
     private CodeArrayListBeautifier code; // object, that handels the generated code
@@ -89,7 +89,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
      */
     public void setToPostPropertyMode() {
         assumeOrAssert = "assert";
-
     }
 
     /**
@@ -101,9 +100,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     public ArrayList<String> generateCode(BooleanExpressionNode node) {
         code = new CodeArrayListBeautifier();
         variableNames = new Stack<>();
-
         node.getVisited(this);
-
         return code.getCodeArrayList();
     }
 
@@ -114,7 +111,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
      */
     @Override
     public void visitAndNode(LogicalAndNode node) {
-
         String varName = "and_" + andNodeCounter;
         andNodeCounter++;
         variableNames.push(varName);
@@ -122,7 +118,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         node.getRHSBooleanExpNode().getVisited(this);
         code.add("unsigned int " + varName + " = ((" + variableNames.pop() + ") && (" + variableNames.pop() + "));");
         testIfLast();
-
     }
 
     /**
@@ -275,7 +270,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         code.add("unsigned int " + varName + " = !(" + variableNames.pop() + ");");
         testIfLast();
     }
-    int listlvl = 0;
+
     @Override
     public void visitComparisonNode(ComparisonNode node) {
         String varName = "comparison_" + comparisonNodeCounter;
@@ -466,7 +461,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         variableNames.push(varName);
     }
 
-    private int amtByPosVar = 0;
     private String getAtPosVarName(AtPosExp atPosExp) {
         return atPosExp.getInternalTypeContainer().getInternalType().toString().toLowerCase() +
                 "AtPos_" + amtByPosVar++;

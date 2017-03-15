@@ -2,6 +2,7 @@ package edu.pse.beast.Gui;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.BEASTCommunicator;
 import edu.pse.beast.highlevel.CentralObjectProvider;
 import edu.pse.beast.highlevel.PSECentralObjectProvider;
@@ -53,7 +54,8 @@ public class GuiTestCEditor {
     public void testCreateNewfileCEditor() throws InterruptedException {
         CElectionDescriptionEditor electionDescriptionEditor = helper.getCEditorOfCurrentInstace();
         ElectionDescription electionDescription = electionDescriptionEditor.getElectionDescription();
-        Assert.assertEquals(electionDescription.getInputType().getId(), "one_candidate_per_voter");
+        Assert.assertEquals(electionDescription.getInputType().getId(),
+                ElectionTypeContainer.ElectionTypeIds.SINGLE_CHOICE);
 
         electionDescriptionEditor.setVisible(true);
         helper.clickMenuItemInCEditor(0,0,waittime);
@@ -67,6 +69,7 @@ public class GuiTestCEditor {
 
         helper.performKeystrokes(keys, 50);
         electionDescription = electionDescriptionEditor.getElectionDescription();
-        Assert.assertEquals(electionDescription.getInputType().getId(), "list_of_candidates_per_voter");
+        Assert.assertEquals(electionDescription.getInputType().getId(),
+                ElectionTypeContainer.ElectionTypeIds.PREFERENCE);
     }
 }

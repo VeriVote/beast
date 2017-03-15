@@ -115,9 +115,7 @@ public class CurlyBracesLineBeginningTabHandlerTest {
         tabs = handler.getTabsForLine(7);
         assertEquals(3, tabs);    
         tabs = handler.getTabsForLine(8);
-        assertEquals(2, tabs);  
-        tabs = handler.getTabsForLine(9);
-        assertEquals(2, tabs);  
+        assertEquals(2, tabs);
     }
 
     /**

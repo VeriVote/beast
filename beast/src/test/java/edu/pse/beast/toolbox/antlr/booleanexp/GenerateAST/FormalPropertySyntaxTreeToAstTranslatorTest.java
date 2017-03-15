@@ -36,22 +36,6 @@ public class FormalPropertySyntaxTreeToAstTranslatorTest {
         handler = new BooleanExpANTLRHandler(pane.getStyledDocument());
     }
 
-    @Test
-    public void parseSimpleAddition() {
-        BooleanExpListNode created = translate("1 == 2 - 1;", Arrays.asList());
-        BooleanExpListNode expected = new BooleanExpListNode();
-        IntegerNode lhsIntNode = new IntegerNode(1);
-
-        IntegerNode rhs2 = new IntegerNode(2);
-        IntegerNode rhs1 = new IntegerNode(1);
-        BinaryIntegerValuedNode minus = new BinaryIntegerValuedNode(rhs2, rhs1, "-");
-
-        IntegerComparisonNode comparisonNode =
-                new IntegerComparisonNode(lhsIntNode, minus, new ComparisonSymbol("=="));
-
-        expected.addNode(comparisonNode, 0);
-        AstTesterHelper.areTheSame(created, expected);
-    }
 
     @Test
     public void parseVoterAtPos() {

@@ -7,6 +7,7 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,9 +15,8 @@ import java.util.List;
  * Created by holger on 14.03.17.
  */
 public class UserAstTestHelper {
-    public static void main(String[] args) {
 
-    }
+
 
     @Test
     public void testBinaryOtherExpAST() {
