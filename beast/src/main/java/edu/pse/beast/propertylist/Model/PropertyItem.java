@@ -105,6 +105,10 @@ public class PropertyItem implements ResultPresenterElement {
     	this.description = new PostAndPrePropertiesDescription(newName, this.description.getPrePropertiesDescription(),
     			this.description.getPostPropertiesDescription(), this.description.getSymVarList());
     }
+    
+    public String getDescriptionName() {
+    	return this.description.getName();
+    }
 
     public void setTestStatus(boolean newStatus) {
         willBeTested = newStatus;

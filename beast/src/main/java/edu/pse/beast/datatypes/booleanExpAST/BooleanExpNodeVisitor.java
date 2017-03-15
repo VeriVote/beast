@@ -35,7 +35,7 @@ public interface BooleanExpNodeVisitor {
      *
      * @param node the node to visit
      */
-    void visitAquivalencyNode(EquivalencyNode node);
+    void visitEquivalencyNode(EquivalencyNode node);
 
     /**
      *

@@ -12,6 +12,7 @@ import java.util.List;
 
 public class ErrorDisplayTest {
 	
+	ResultPresenterWindow win;
 
 	
 
@@ -29,20 +30,13 @@ public class ErrorDisplayTest {
 
 	@After
 	public void tearDown() throws Exception {
-	}
-
-	@Test
-	public void test() {
-		//fail("Not yet implemented");
-		/*OptionsInterface options = new OptionsInterface();
-		ObjectRefsForBuilder refs = new ObjectRefsForBuilder(options, new StringLoaderInterface("de"), 
-				options.getLanguageOptions(), new SaverLoaderInterface());
-        PropertyList propertyList = new PropertyListBuilder().createPropertyList(refs, null);*/
+		win.dispose();
 	}
 	
-	public static void main(String[] args) {
+	@Test
+	public void testErrorDisplay() throws InterruptedException {
 		
-		ResultPresenterWindow win = new ResultPresenterWindow();
+		win = new ResultPresenterWindow();
 		win.setVisible(true);
 		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		List<String> error = Arrays.asList("Some lines to test the window.", 
@@ -55,6 +49,8 @@ public class ErrorDisplayTest {
 				"and i try",
 				"yeah");
 		win.presentFailure(error);
+		
+		Thread.sleep(100);
 		
 		/*DataTable data = new DataTable(Integer.class);
 		data.add(5);

@@ -2,6 +2,8 @@ package edu.pse.beast.propertylist;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -10,6 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
+import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PropertyItem;
@@ -17,10 +20,16 @@ import edu.pse.beast.propertylist.Model.PropertyItem;
 public class PropertyListControllerTest {
 	
 	static PropertyList list;
+	static BooleanExpEditor editor;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		list = new PropertyList(new PLModel());
+		TestHelper helper = new TestHelper();
+		//helper.startNewBEASTInstance();
+		//list = helper.getPropertyList();
+		
+		editor = helper.getBooleanExpEditor();
+		list = new PropertyList(new PLModel(), editor);
 	}
 
 	@AfterClass
@@ -41,8 +50,13 @@ public class PropertyListControllerTest {
 
 	@Test
 	public void changeNameTest() {
-		list.changeName(list.getList().get(0), "testname");
-		assertEquals(list.getList().get(0).getDescription().getName(), "testname");
+		PropertyItem item = list.getList().get(0);
+		editor.letUserEditPostAndPreProperties(item.getDescription(), false);
+		list.changeName(item, "testname");
+		
+		assertEquals(item.getDescription().getName(), "testname");
+		
+		assertFalse(list.changeName(list.getList().get(1), "testname"));
 	}
 	
 	@Test
@@ -67,6 +81,9 @@ public class PropertyListControllerTest {
 		item.setDescriptionName("testname");
 		list.addDescription(item);
 		assertEquals(list.getList().size(), 4);
+		
+		list.addDescription(item);
+		//assertEquals(list.getList().size(), 4);
 		assertEquals(list.getList().get(3), item);
 	}
 	
@@ -76,6 +93,17 @@ public class PropertyListControllerTest {
 		assertEquals(list.getList().size(), 4);
 	}
 	
+	@Test
+	public void editPropertyTest() {
+		list.editProperty(list.getList().get(1));
+	}
+	
+	@Test
+	public void getTestedList() {
+		list.getList().get(0).setTestStatus(true);
+		ArrayList<PostAndPrePropertiesDescription> testedlist = list.getPostAndPrePropertiesDescriptions();
+		assertEquals(testedlist.size(), 1);
+	}
 	
 
 }

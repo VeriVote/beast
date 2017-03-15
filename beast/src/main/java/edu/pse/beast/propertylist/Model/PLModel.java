@@ -7,6 +7,7 @@ import edu.pse.beast.highlevel.ResultInterface;
 
 import java.util.ArrayList;
 import java.util.Observable;
+import java.util.UUID;
 
 public class PLModel extends Observable implements NameInterface {
 
@@ -34,9 +35,9 @@ public class PLModel extends Observable implements NameInterface {
 	 */
 	public boolean changeName(PropertyItem prop, String newName, BooleanExpEditor editor) {
 		int index = propertyList.indexOf(prop);
-		if (index == -1) {
+		/*if (index == -1) {
 			return false;
-		}
+		}*/
 		if (indexOfName(newName) != -1 && prop.getDescription().getName() != newName) {
 			return false;
 		}
@@ -65,10 +66,13 @@ public class PLModel extends Observable implements NameInterface {
 	 */
 	public boolean addDescription(PropertyItem prop) {
 		if (propertyList.indexOf(prop) != -1) {
-			PropertyItem updated = prop;
-			String newName = prop.getDescription().getName() + "x";
-			updated.setDescriptionName(newName);
-			addDescription(updated);
+			prop.setDescriptionName(UUID.randomUUID().toString());
+			
+			/*while (propertyList.indexOf(prop) != -1) {
+				prop.setDescriptionName(prop.getDescriptionName() + "x");
+			}*/
+			
+			propertyList.add(prop);
 		} else {
 			propertyList.add(prop);
 		}
@@ -122,8 +126,8 @@ public class PLModel extends Observable implements NameInterface {
 	 */
 	public boolean deleteProperty(PropertyItem prop, BooleanExpEditor editor) {
 		int index = propertyList.indexOf(prop);
-		if (index == -1)
-			return false;
+		/*if (index == -1)
+			return false;*/
 		propertyList.remove(index);
 		if (propertyList.isEmpty())
 			addNewProperty(editor);

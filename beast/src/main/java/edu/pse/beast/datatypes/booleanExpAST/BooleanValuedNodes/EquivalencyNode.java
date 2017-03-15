@@ -22,7 +22,7 @@ public class EquivalencyNode extends BinaryRelationshipNode {
 
     @Override
     public void getVisited(BooleanExpNodeVisitor visitor) {
-        visitor.visitAquivalencyNode(this);
+        visitor.visitEquivalencyNode(this);
     }
 
     @Override

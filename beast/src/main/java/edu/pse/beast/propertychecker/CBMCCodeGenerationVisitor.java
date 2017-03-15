@@ -5,19 +5,15 @@
  */
 package edu.pse.beast.propertychecker;
 
-
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.*;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.*;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.*;
-import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.ErrorLogger;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Stack;
 
 /**
@@ -45,10 +41,16 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private int notNodeCounter;
     private int comparisonNodeCounter;
     private int voteSumCounter;
+<<<<<<< HEAD
     private final ElectionTypeContainer inputType;
     private int listlvl = 0;
     private int amtByPosVar = 0;
 
+=======
+    private int numberVars;
+    private int listlvl;
+    private int amtByPosVar;
+>>>>>>> 455b20dc7d4e63430e8a1e5b7b78799ca77bf46c
 
     private Stack<String> variableNames; //stack of the variable names. 
     private CodeArrayListBeautifier code; // object, that handels the generated code
@@ -57,10 +59,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
      * this creates the visitor You should create 1 and only 1 visitor for every
      * c. file you want to make you have to set it to pre- or post-property mode
      * in order for it to function
-     * @param inputType the input Type of the Election
+     *
      */
-    public CBMCCodeGenerationVisitor(ElectionTypeContainer inputType) {
-        this.inputType = inputType;
+    public CBMCCodeGenerationVisitor() {
         andNodeCounter = 0;
         orNodeCounter = 0;
         implicationNodeCounter = 0;
@@ -70,6 +71,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         notNodeCounter = 0;
         comparisonNodeCounter = 0;
         voteSumCounter = 0;
+        numberVars = 0;
+        listlvl = 0;
+        amtByPosVar = 0;
 
         code = new CodeArrayListBeautifier();
 
@@ -160,7 +164,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
      * @param node equivalencz node
      */
     @Override
-    public void visitAquivalencyNode(EquivalencyNode node) {
+    public void visitEquivalencyNode(EquivalencyNode node) {
         String varName = "aquivalency_" + aquivalencyNodeCounter;
         aquivalencyNodeCounter++;
         variableNames.push(varName);
@@ -279,7 +283,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         listlvl = 0;
 
         for (InternalTypeContainer cont = node.getLHSBooleanExpNode().getInternalTypeContainer();
-             cont.isList(); cont = cont.getListedType()) {
+                cont.isList(); cont = cont.getListedType()) {
             listlvl++;
         }
         node.getLHSBooleanExpNode().getVisited(this);
@@ -288,7 +292,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         listlvl = 0;
 
         for (InternalTypeContainer cont = node.getRHSBooleanExpNode().getInternalTypeContainer();
-             cont.isList(); cont = cont.getListedType()) {
+                cont.isList(); cont = cont.getListedType()) {
             listlvl++;
         }
 
@@ -300,7 +304,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                 ? node.getLHSBooleanExpNode().getInternalTypeContainer()
                 : node.getRHSBooleanExpNode().getInternalTypeContainer();
 
-        while(cont.getListLvl() != maxListLevel) cont = cont.getListedType();
+        while (cont.getListLvl() != maxListLevel) {
+            cont = cont.getListedType();
+        }
 
         String internCode = "unsigned int BOOL = 1;";
         internCode = internCode.replace("BOOL", varName);
@@ -374,8 +380,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         variableNames.push(tempCode);
     }
 
-
-
     @Override
     public void visitVoteExp(VoteExp exp) {
         visitAcessingNodesReverseOrder(exp);
@@ -414,7 +418,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         variableNames.push(varName);
     }
 
-    private int numberVars = 0;
     private String getNewNumberVariableName() {
         return "integerVar_" + numberVars++;
     }
@@ -428,10 +431,10 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String rhs = variableNames.pop();
         String lhs = variableNames.pop();
 
-        String comparisonString = "unsigned int " + varNameDecl + " = "  +
-                rhs + " " +
-                listComparisonNode.getComparisonSymbol().getCStringRep() + " " +
-                lhs + ";";
+        String comparisonString = "unsigned int " + varNameDecl + " = "
+                + rhs + " "
+                + listComparisonNode.getComparisonSymbol().getCStringRep() + " "
+                + lhs + ";";
 
         code.add(comparisonString);
         variableNames.push(varNameDecl);
@@ -445,8 +448,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String rhs = variableNames.pop();
         String lhs = variableNames.pop();
         String varname = getNewNumberVariableName();
-        code.add("unsigned int " + varname + " = " + lhs +
-                " " + binaryIntegerValuedNode.getRelationSymbol() + " " + rhs + ";");
+        code.add("unsigned int " + varname + " = " + lhs
+                + " " + binaryIntegerValuedNode.getRelationSymbol() + " " + rhs + ";");
         variableNames.push(varname);
     }
 
@@ -462,8 +465,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     }
 
     private String getAtPosVarName(AtPosExp atPosExp) {
-        return atPosExp.getInternalTypeContainer().getInternalType().toString().toLowerCase() +
-                "AtPos_" + amtByPosVar++;
+        return atPosExp.getInternalTypeContainer().getInternalType().toString().toLowerCase()
+                + "AtPos_" + amtByPosVar++;
     }
 
     private void testIfLast() {
