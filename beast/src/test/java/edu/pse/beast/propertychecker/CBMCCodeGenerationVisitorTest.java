@@ -16,9 +16,7 @@ import java.util.List;
  */
 public class CBMCCodeGenerationVisitorTest {
 
-    private CBMCCodeGenerationVisitor visitor = new CBMCCodeGenerationVisitor(
-            new ElectionTemplateHandler().getStandardInput()
-    );
+    private CBMCCodeGenerationVisitor visitor = new CBMCCodeGenerationVisitor();
 
     private String listToString(List<String> c) {
         StringBuilder b = new StringBuilder();
@@ -179,6 +177,10 @@ public class CBMCCodeGenerationVisitorTest {
         String actual = listToString(c);
         Assert.assertEquals(expected, actual);
     }
+
+    @Test
+    p
+
 
 
 }

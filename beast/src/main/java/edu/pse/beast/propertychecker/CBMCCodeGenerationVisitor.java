@@ -41,16 +41,10 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private int notNodeCounter;
     private int comparisonNodeCounter;
     private int voteSumCounter;
-<<<<<<< HEAD
-    private final ElectionTypeContainer inputType;
     private int listlvl = 0;
     private int amtByPosVar = 0;
 
-=======
     private int numberVars;
-    private int listlvl;
-    private int amtByPosVar;
->>>>>>> 455b20dc7d4e63430e8a1e5b7b78799ca77bf46c
 
     private Stack<String> variableNames; //stack of the variable names. 
     private CodeArrayListBeautifier code; // object, that handels the generated code
