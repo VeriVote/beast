@@ -468,7 +468,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     private void testIfLast() {
         if (variableNames.size() == 1) {
-            if (assumeOrAssert.equals("assert") || assumeOrAssert.equals("assume")) {
+            if (assumeOrAssert != null) {
                 code.add(assumeOrAssert + "(" + variableNames.pop() + ");");
             } else {
                 ErrorLogger.log("The CodeGeneration Visitor wasn't set to a proper mode");

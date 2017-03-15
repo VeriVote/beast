@@ -17,7 +17,6 @@ import java.util.List;
 public class UserAstTestHelper {
 
 
-
     @Test
     public void testBinaryOtherExpAST() {
         List<String> comparisonSymbols = Arrays.asList("==", "<", "<=", ">", ">=");
