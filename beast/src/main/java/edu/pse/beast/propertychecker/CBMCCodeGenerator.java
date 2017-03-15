@@ -62,7 +62,7 @@ public class CBMCCodeGenerator {
         code = new CodeArrayListBeautifier();
         inputType = electionDescription.getInputType();
         outputType = electionDescription.getOutputType();
-        this.visitor = new CBMCCodeGenerationVisitor(inputType);
+        this.visitor = new CBMCCodeGenerationVisitor();
         cCodeHelper = new CCodeHelper();
         generateCode();
 
