@@ -70,7 +70,7 @@ public class JTextPaneToolbox {
      */
     public static int transformToLineNumber(String code, int absPos) {
         int amt = 0;
-        for(int i = 0; i < absPos; ++i) {
+        for(int i = 0; i < absPos && i < code.length(); ++i) {
             if(code.charAt(i) == '\n') amt++;
         }
         return amt;

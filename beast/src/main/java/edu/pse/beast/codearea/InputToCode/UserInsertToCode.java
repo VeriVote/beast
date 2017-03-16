@@ -177,7 +177,8 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
                     pane.getSelectionEnd() - pane.getSelectionStart());
         }
         if(openCloseCharList.isOpenChar(insertChar)) {
-            OpenCloseChar occ = openCloseCharList.getOpenCloseChar(insertChar);dontTypeClosingChar = true;
+            OpenCloseChar occ = openCloseCharList.getOpenCloseChar(insertChar);
+            dontTypeClosingChar = true;
             occ.insertIntoDocument(pane, currentCaretPosition);
             dontTypeClosingChar = true;                        
         } else if(dontTypeClosingChar && openCloseCharList.isCloseChar(insertChar)) {
@@ -296,17 +297,23 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
                 if(!pane.getStyledDocument().getText(currentCaretPosition - 2, 2).equals("\n\n"))
                     return;
             }
-            if(caretPosIsOnLineBeginning() &&
-                    pane.getSelectedText() == null &&
-                    lineAboveIsLocked() &&
-                    !caretPosIsOnEmptyLine()) return;
+            try {
+                if(caretPosIsOnLineBeginning() &&
+                        pane.getSelectedText() == null &&
+                        lineAboveIsLocked() &&
+                        !caretPosIsOnEmptyLine())
+                    return;
+            } catch(BadLocationException ex) {
+
+            }
+            if(currentCaretPosition == 0 &&
+                    pane.getSelectedText() == null) return;
             if(pane.getSelectedText() != null) {
                 pane.getStyledDocument().remove(
                         pane.getSelectionStart(),
                         pane.getSelectionEnd() - pane.getSelectionStart());
                 return;
             }
-            if(currentCaretPosition == 0) return;
             pane.getStyledDocument().remove(currentCaretPosition - 1, 1);
         } catch (BadLocationException ex) {
         }
