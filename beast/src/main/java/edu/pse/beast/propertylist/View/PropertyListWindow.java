@@ -57,13 +57,13 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	 * Updates the view when focus is gained in this JFrame, needed to update
 	 * naming of ListItems when Property was saved in BooleanExpEditor.
 	 */
-	private WindowAdapter windowAdapter = new WindowAdapter() {
+	/*private WindowAdapter windowAdapter = new WindowAdapter() {
 		@Override
 		public void windowGainedFocus(WindowEvent windowEvent) {
 			super.windowGainedFocus(windowEvent);
 			model.updateView();
 		}
-	};
+	};*/
 
 	
 	/**
@@ -138,8 +138,8 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		endpanel.add(addCreatedButton, BorderLayout.LINE_END);
 		
 		setResizable(false);
-		this.addWindowListener(windowAdapter);
-		this.addWindowFocusListener(windowAdapter);
+		//this.addWindowListener(windowAdapter);
+		//this.addWindowFocusListener(windowAdapter);
 	}
 
 	
@@ -220,7 +220,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		this.validate();
 
 		for (PropertyItem propertyItem : propertyList) {
-			ListItem current = new ListItem(controller, model, propertyItem);
+			ListItem current = new ListItem(controller, model, propertyItem, this);
 			if (propertyItem.getResultType() == ResultType.TESTED)
 				this.setNextToPresent(current);
 			current.updateStringRes(sli);

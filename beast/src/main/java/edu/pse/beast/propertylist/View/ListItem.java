@@ -65,13 +65,13 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
      * @param model The model of PropertyList
      * @param prop The PropertyItem to be viewed
      */
-    public ListItem(PropertyList controller, PLModel model, PropertyItem prop) {
+    public ListItem(PropertyList controller, PLModel model, PropertyItem prop, PropertyListWindow owner) {
         this.model = model;
         this.controller = controller;
         this.prop = prop;
         reactsToInput = true;
         sli = new StringLoaderInterface("de");
-        resWindow = new ResultPresenterWindow(sli);
+        resWindow = new ResultPresenterWindow(sli, owner);
         init();
     } 
     

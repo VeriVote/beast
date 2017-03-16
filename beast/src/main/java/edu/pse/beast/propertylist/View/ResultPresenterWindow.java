@@ -30,6 +30,8 @@ public class ResultPresenterWindow extends JFrame {
     private JTextPane result;
     StringResourceLoader srl;
     private FailureExample example;
+    
+    private PropertyListWindow owner;
 
     private final String pathToEye = "/core/images/other/eye.png";
     private final ImageIcon eyeIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToEye);
@@ -38,15 +40,16 @@ public class ResultPresenterWindow extends JFrame {
      *
      */
     public ResultPresenterWindow() {
-        this(new StringLoaderInterface("de"));
+        this(new StringLoaderInterface("de"), null);
     }
 
     /**
      * @param sli
      */
-    public ResultPresenterWindow(StringLoaderInterface sli) {
+    public ResultPresenterWindow(StringLoaderInterface sli, PropertyListWindow owner) {
         PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
-        srl = provider.getOtherStringRes();
+        this.srl = provider.getOtherStringRes();
+        this.owner = owner;
         this.setVisible(false);
         init();
     }
@@ -116,7 +119,9 @@ public class ResultPresenterWindow extends JFrame {
 
             @Override
             public void windowLostFocus(WindowEvent e) {
-                setVisible(false);
+            	if (!owner.isFocused()) { // the if clause doesn't seem to be doing what it is supposed to
+            		setVisible(false);
+            	}
             }
         });
         pack();
