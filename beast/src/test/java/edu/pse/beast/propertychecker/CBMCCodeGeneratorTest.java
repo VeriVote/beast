@@ -12,76 +12,222 @@ import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
-import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 
 import java.util.ArrayList;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
+ * All of these Tests are very simple tests if the output contains Strings that
+ * should be there It devides the generated Code by the comments that devide the
+ * different part of the CodeGeneration So if a test fails first check if you
+ * didn't change a String that seperated the different parts of the Code before
  *
  * @author Niels
+ *
  */
 public class CBMCCodeGeneratorTest {
 
-    @BeforeClass
-    public static void setUpClass() throws Exception {
-    }
+    private CBMCCodeGenerator instance;
+    // you can change any of the following attributes.
+    // just use initialize() to set up instance to use them.
+    private ElectionDescription electionDescription;
+    private final SymbolicVariableList symVariableList;
+    private String pre;
+    private String post;
+    private ElectionTypeContainer inputType;
+    private ElectionTypeContainer outputType;
+    private final ArrayList<String> userCode;
 
-    @AfterClass
-    public static void tearDownClass() throws Exception {
-    }
-
-    @Before
-    public void setUp() throws Exception {
-    }
-
-    @After
-    public void tearDown() throws Exception {
-    }
-
-    public static void main(String args[]) {
-
-        ElectionTypeContainer inputType = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.PREFERENCE);
-        ElectionTypeContainer outputType = new ElectionTemplateHandler().getStandardResult();
-
-        ElectionDescription electionDescription = new ElectionDescription("name", inputType, outputType, 0);
-        ArrayList<String> userCode = new ArrayList<>();
+    /**
+     * this initializes the Attributes with easy values, that can be generated
+     */
+    public CBMCCodeGeneratorTest() {
+        inputType = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.SINGLE_CHOICE);
+        outputType = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.CAND_OR_UNDEF);
+        int votingDeclLine = 0;
+        electionDescription = new ElectionDescription("name", inputType, outputType, votingDeclLine);
+        userCode = new ArrayList<>();
         userCode.add("votingcode");
         userCode.add("abalsdf");
         electionDescription.setCode(userCode);
 
-        SymbolicVariableList symbolicVariableList = new SymbolicVariableList();
+        symVariableList = new SymbolicVariableList();
 
-        String pre = "FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);";
-        String post = "ELECT1 != ELECT2;";
-        // String post = "1 == 2;";
+        pre = "FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);";
+        post = "ELECT1 != ELECT2;";
+        this.initialize();
+    }
 
+    /**
+     * tests if the user code is in the output
+     */
+    @Test
+    public void testUserCode() {
+        System.out.println("testUserCode");
+        userCode.clear();
+        String test1 = "dfsgsdfgV]) { ";
+        String test2 = "return 0; }";
+        userCode.add(test1);
+        userCode.add(test2);
+        String userCodeComment = "//Code of the user";
+        this.initialize();
+        assertTrue(outputContains(test1, userCodeComment));
+        assertTrue(outputContains(test2, userCodeComment));
+    }
+
+    /**
+     * tests if the PreProperty Description contains the right operands
+     */
+    @Test
+    public void testPreProperty() {
+        System.out.println("testPreProperty");
+
+        String preComment = "//preproperties";
+        pre = "VOTES1 == VOTES2 && ELECT1 == ELECT2";
+        initialize();
+        assertTrue(outputContains("&&", preComment));
+
+        pre = "VOTES1 == VOTES2 || ELECT1 == ELECT2";
+        initialize();
+        assertTrue(outputContains("||", preComment));
+
+        pre = "VOTES1 < VOTES2;";
+        initialize();
+        assertTrue(outputContains("<", preComment));
+
+        pre = "VOTES1 > VOTES2;";
+        initialize();
+        assertTrue(outputContains("<", preComment));
+
+        pre = "VOTES1 == VOTES2;";
+        initialize();
+        assertTrue(outputContains("==", preComment));
+
+        pre = "VOTES1 != VOTES2;";
+        initialize();
+        assertTrue(outputContains("!=", preComment));
+
+        pre = "VOTES1 <= VOTES2;";
+        initialize();
+        assertTrue(outputContains("<=", preComment));
+
+        pre = "VOTES1 >= VOTES2;";
+        initialize();
+        assertTrue(outputContains(">=", preComment));
+
+    }
+
+    /**
+     * tests if the PostProperty Description contains the right operands
+     */
+    @Test
+    public void testPostProperty() {
+        System.out.println("testPreProperty");
+        String postComment = "//postproperties ";
+
+        post = "VOTES1 == VOTES2 && ELECT1 == ELECT2";
+        initialize();
+        assertTrue(outputContains("&&", postComment));
+
+        post = "VOTES1 == VOTES2 || ELECT1 == ELECT2";
+        initialize();
+        assertTrue(outputContains("||", postComment));
+
+        post = "VOTES1 < VOTES2;";
+        initialize();
+        assertTrue(outputContains("<", postComment));
+
+        post = "VOTES1 > VOTES2;";
+        initialize();
+        assertTrue(outputContains("<", postComment));
+
+        post = "VOTES1 == VOTES2;";
+        initialize();
+        assertTrue(outputContains("==", postComment));
+
+        post = "VOTES1 != VOTES2;";
+        initialize();
+        assertTrue(outputContains("!=", postComment));
+
+        post = "VOTES1 <= VOTES2;";
+        initialize();
+        assertTrue(outputContains("<=", postComment));
+
+        post = "VOTES1 >= VOTES2;";
+        initialize();
+        assertTrue(outputContains(">=", postComment));
+    }
+
+    /**
+     *
+     */
+    @Test
+    public void testSymbolicVariableList() {
+        int max = symVariableList.getSymbolicVariables().size();
+        for (int i = max - 1; i > 0; i--) {
+            symVariableList.removeSymbolicVariable(i);
+        }
+        symVariableList.addSymbolicVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
+        symVariableList.addSymbolicVariable("v", new InternalTypeContainer(InternalTypeRep.VOTER));
+        symVariableList.addSymbolicVariable("s", new InternalTypeContainer(InternalTypeRep.SEAT));
+        symVariableList.addSymbolicVariable("i", new InternalTypeContainer(InternalTypeRep.INTEGER));
+        initialize();
+
+        String symbVarComment = "//Symbolic Variables initialisation";
+        String test1 = "unsigned int v = nondet_uint();";
+        String test2 = "unsigned int c = nondet_uint();";
+        String test3 = "unsigned int s = nondet_uint();";
+        String test4 = "unsigned int i = nondet_uint();";
+
+        assertTrue(outputContains(test1, symbVarComment));
+        assertTrue(outputContains(test2, symbVarComment));
+        assertTrue(outputContains(test3, symbVarComment));
+        assertTrue(outputContains(test4, symbVarComment));
+    }
+
+    private void initialize() {
         FormalPropertiesDescription preDescr = new FormalPropertiesDescription(pre);
         FormalPropertiesDescription postDescr = new FormalPropertiesDescription(post);
 
+        electionDescription = new ElectionDescription("name", inputType, outputType, 0);
+        electionDescription.setCode(userCode);
+
         PostAndPrePropertiesDescription postAndPrePropertiesDescription
-                = new PostAndPrePropertiesDescription("name", preDescr, postDescr, symbolicVariableList);
+                = new PostAndPrePropertiesDescription("name", preDescr, postDescr, symVariableList);
 
-        SymbolicVariableList symVariableList = new SymbolicVariableList();
-        symVariableList.addSymbolicVariable("v", new InternalTypeContainer(InternalTypeRep.VOTER));
-        symVariableList.addSymbolicVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
-        symVariableList.addSymbolicVariable("w", new InternalTypeContainer(InternalTypeRep.VOTER));
-        // symVariableList.addSymbolicVariable("i", new InternalTypeContainer(InternalTypeRep.VOTER));
+        instance = new CBMCCodeGenerator(electionDescription, postAndPrePropertiesDescription);
 
-        postAndPrePropertiesDescription.setSymbolicVariableList(symVariableList);
-
-        CBMCCodeGenerator generator = new CBMCCodeGenerator(electionDescription, postAndPrePropertiesDescription);
-
-        System.out.println();
-        System.out.println("-----------------hier beginnt der generierte Code-------------------");
-        System.out.println();
-        ArrayList<String> code;
-        code = generator.getCode();
-        code.forEach(System.out::println);
     }
 
+    /**
+     * this method checks if a string is after a specific comment and before the
+     * next use of "//"
+     *
+     * @param wantedOutput the output you want in a part of the generated code
+     * @param commentToDistinguishPart the comment which starts the codePart
+     * @return if the wantedOutput is in the codePart
+     */
+    private boolean outputContains(String wantedOutput, String commentToDistinguishPart) {
+        boolean contains = false;
+        boolean insideWantedPart = false;
+
+        for (String line : instance.getCode()) {
+            if (!insideWantedPart) {
+                insideWantedPart = line.contains(commentToDistinguishPart);
+            } else {
+                if (line.contains("//")) {
+                    break;
+                }
+                contains = line.contains(wantedOutput);
+
+                //System.out.println(line);
+                if (contains) {
+                    break;
+                }
+            }
+        }
+        return contains;
+    }
 }

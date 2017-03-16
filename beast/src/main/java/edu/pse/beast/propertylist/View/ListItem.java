@@ -52,10 +52,10 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
      * @param controller The controller of PropertyList
      * @param model The model of PropertyList
      */
-    public ListItem(PropertyList controller, PLModel model) {
+    /*public ListItem(PropertyList controller, PLModel model) {
         this(controller, model, new PropertyItem());
         init();
-    }
+    }*/
 
     /**
      * Constructor

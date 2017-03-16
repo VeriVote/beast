@@ -64,7 +64,8 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
         return timeOut;
     }
     /**
-     * Setter for the timeout
+     * Setter for the timeout. Determines if the desired timeout is allowed and
+     * adjusts the spinner and combobox accordingly.
      * @param to new TimeOut
      */
     public void setValue(TimeOut to) {
@@ -94,7 +95,8 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
             }
             timeoutBefore = getTimeout();
         } else {
-            timeoutSpinner.setValue(timeoutBefore.getOrigUnit().convert(timeoutBefore.getDuration(), TimeUnit.MILLISECONDS));
+            timeoutSpinner.setValue(timeoutBefore.getOrigUnit().convert(timeoutBefore.getDuration(),
+                    TimeUnit.MILLISECONDS));
             switch (timeoutBefore.getOrigUnit()) {
                 case SECONDS:
                     timeoutUnit.setSelectedIndex(0);
