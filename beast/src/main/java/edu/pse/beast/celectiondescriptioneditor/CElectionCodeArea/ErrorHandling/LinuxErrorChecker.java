@@ -21,11 +21,20 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
     
     //this flag prohibits that file are creates by the compiler and
     //only the syntax is checked
-    private final String syntaxCheckOnly = "-fsyntax-only";
+    private final String findMissingReturnOption = "-Wreturn-type";
+    
+    //we want to compile to a specific name, so we can delete the file
+    //then later on
+    private final String setOutputFileName = "-o ";
 
     @Override
     public Process checkCodeFileForErrors(File toCheck) {
 
+    	
+    	String nameOfOutFile = toCheck.getName().replace(".c", ".out");
+    	
+    	String compileToThis = setOutputFileName + nameOfOutFile;
+    	
         Process startedProcess = null;
 
         List<String> arguments = new ArrayList<String>();
@@ -33,9 +42,11 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
         //add the arguments needed for the call
         arguments.add(compilerString);
 
-        arguments.add(syntaxCheckOnly);
+        arguments.add(findMissingReturnOption);
 
         arguments.add(toCheck.getAbsolutePath());
+        
+        arguments.add(compileToThis);
 
         ProcessBuilder prossBuild = new ProcessBuilder(arguments.toArray(new String[0]));
 
