@@ -18,6 +18,7 @@ import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 
+import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -183,6 +184,7 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
     @Override
     public void resumeReacting() {
         view.resumeReacting();
+        editor.getView().setExtendedState(Frame.NORMAL);
         editor.getView().setVisible(editorWasVisible);
     }
 
