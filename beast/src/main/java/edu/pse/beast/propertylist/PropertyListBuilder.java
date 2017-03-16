@@ -36,7 +36,7 @@ public class PropertyListBuilder {
         PLModel model = new PLModel();
         FileChooser fileChooser = new FileChooser(refs.getStringIF().getPropertyListStringResProvider().getOtherStringRes(),
                 new PropertyListSaverLoader(), null);
-        controller = new PropertyList(model, booleanExpEditor, fileChooser, refs.getStringIF());
+        controller = new PropertyList(model, booleanExpEditor, fileChooser);
         booleanExpEditor.setPropertyListController(controller);
 
         window = controller.getView();
@@ -57,7 +57,7 @@ public class PropertyListBuilder {
         refs.getLanguageOpts().addStringDisplayer(window);
         refs.getLanguageOpts().addStringDisplayer(menuBarHandler);
         refs.getLanguageOpts().addStringDisplayer(toolbarHandler);
-        refs.getLanguageOpts().addStringDisplayer(controller);
+        //refs.getLanguageOpts().addStringDisplayer(controller);
         
         controller.start();
         return controller;
