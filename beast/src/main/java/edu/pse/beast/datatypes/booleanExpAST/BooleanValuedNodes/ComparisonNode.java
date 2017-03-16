@@ -15,6 +15,7 @@ public class ComparisonNode extends BooleanExpressionNode {
     protected final TypeExpression rhsTypeExp;
 
     protected final ComparisonSymbol comparisonSymbol;
+
     
     /**
      * 

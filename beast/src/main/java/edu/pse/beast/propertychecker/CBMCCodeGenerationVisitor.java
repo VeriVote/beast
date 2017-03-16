@@ -269,11 +269,18 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         testIfLast();
     }
 
+    /**
+     * generates the code for the comparison of 2 types which aren't integers
+     * These types can be lists which may have diferrent depth and might be acessed
+     * by variables.
+     * @param node the node to visit
+     */
     @Override
     public void visitComparisonNode(ComparisonNode node) {
         String varName = "comparison_" + comparisonNodeCounter;
         comparisonNodeCounter++;
         variableNames.push(varName);
+
         listlvl = 0;
 
         for (InternalTypeContainer cont = node.getLHSBooleanExpNode().getInternalTypeContainer();

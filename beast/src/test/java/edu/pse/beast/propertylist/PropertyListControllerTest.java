@@ -83,7 +83,6 @@ public class PropertyListControllerTest {
 		assertEquals(list.getList().size(), 4);
 		
 		list.addDescription(item);
-		//assertEquals(list.getList().size(), 4);
 		assertEquals(list.getList().get(3), item);
 	}
 	

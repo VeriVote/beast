@@ -85,7 +85,7 @@ public class CodeAreaOptions extends Options {
     @Override
     protected void reapplySpecialized() {
         Font f = new Font(fontType.getChosenOption(), Font.PLAIN, fontSize.getsize());
-        codeArea.getPane().setFont(f);
+        codeArea.setFont(f);
         codeArea.getInsertToCode().getTabInserter().setAmountSpacesPerTab(spacesPerTab.getNumberTabs());
     }
 
