@@ -13,6 +13,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -101,6 +103,15 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
                     controller.changeName(prop, name.getText());
                 }
             }
+        });
+        name.addFocusListener(new FocusListener() {
+			@Override
+			public void focusGained(FocusEvent fe) {}
+
+			@Override
+			public void focusLost(FocusEvent fe) {
+				controller.changeName(prop, name.getText());
+			}
         });
         this.add(name, BorderLayout.LINE_START);
 
