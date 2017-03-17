@@ -506,26 +506,14 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
 
 	@Override
 	public void displayText(String stringIdForResources, boolean showLoader, String additionalText) {
+	    imageLabel.setVisible(showLoader);
 		if (!"".equals(stringIdForResources)) {
 			statusLabel.setText(stringResIF.getParameterEditorStringResProvider().getOtherStringRes()
 					.getStringFromID(stringIdForResources) + additionalText);
 		} else {
 			statusLabel.setText("");
 		}
-		imageLabel.setVisible(showLoader);
-		for (int i = 0; i < 5; i++) {
-			try {
-				Thread.sleep(50);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			if (imageLabel.isVisible() != showLoader) {
-				imageLabel.setVisible(showLoader);
-			} else {
-				return;
-			}
-		}
-
-
+		imageLabel.repaint();
+		this.repaint();
 	}
 }
