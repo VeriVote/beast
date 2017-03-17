@@ -27,7 +27,7 @@ public class FactoryController implements Runnable {
      * gives access to the factorycontroller for the shutdown hook.
      */
     protected FactoryController thisObject = this;
-    
+
     private final ElectionDescriptionSource electionDescSrc;
     private final PostAndPrePropertiesDescriptionSource postAndPrePropDescrSrc;
     private final ParameterSource parmSrc;
@@ -41,19 +41,13 @@ public class FactoryController implements Runnable {
     private volatile boolean stopped = false;
     private final int concurrentChecker;
 
-
     /**
-     * 
-     * @param electionDescSrc
-     *            the source for the election descriptions
-     * @param postAndPrePropDescrSrc
-     *            the properties to be checked
-     * @param parmSrc
-     *            the parameter
-     * @param checkerID
-     *            the ID of the checker that should be used
-     * @param concurrentChecker
-     *            the amount of concurrent checker to be used
+     *
+     * @param electionDescSrc the source for the election descriptions
+     * @param postAndPrePropDescrSrc the properties to be checked
+     * @param parmSrc the parameter
+     * @param checkerID the ID of the checker that should be used
+     * @param concurrentChecker the amount of concurrent checker to be used
      */
     public FactoryController(ElectionDescriptionSource electionDescSrc,
             PostAndPrePropertiesDescriptionSource postAndPrePropDescrSrc, ParameterSource parmSrc,
@@ -99,8 +93,10 @@ public class FactoryController implements Runnable {
         List<PostAndPrePropertiesDescription> properties = postAndPrePropDescrSrc
                 .getPostAndPrePropertiesDescriptions();
 
-        outerLoop: for (int i = 0; i < properties.size(); i++) {
-            innerLoop: while (!stopped) {
+        outerLoop:
+        for (int i = 0; i < properties.size(); i++) {
+            innerLoop:
+            while (!stopped) {
                 if (currentlyRunning.size() < concurrentChecker) {
                     CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID, this,
                             electionDescSrc, properties.get(i), parmSrc, results.get(i));
@@ -142,9 +138,9 @@ public class FactoryController implements Runnable {
     /**
      * tells the controller to stop checking. It stops all currently running
      * Checkers and doesn't start new ones.
-     * 
-     * @param timeOut
-     *            if it is true, the checking was stopped because of a timeout;
+     *
+     * @param timeOut if it is true, the checking was stopped because of a
+     * timeout;
      */
     public synchronized void stopChecking(boolean timeOut) {
 
@@ -161,22 +157,24 @@ public class FactoryController implements Runnable {
             for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
                 Result result = (Result) iterator.next();
                 if (!result.isFinished()) {
-                    result.setFinished();
                     // in case of a timeout set a timeout flag
                     result.setForcefullyStopped();
                     if (timeOut) {
                         result.setTimeoutFlag();
                     }
+                    result.setFinished();
                 }
             }
         }
     }
 
     /**
-     * notifies the factory that one of the started checker factories finished, so a new
-     * one could be started.
-     * @param finishedFactory the factory that just finished, so it can be removed
-     *      from the list of ones to be notified when the checking is stopped forcefully
+     * notifies the factory that one of the started checker factories finished,
+     * so a new one could be started.
+     *
+     * @param finishedFactory the factory that just finished, so it can be
+     * removed from the list of ones to be notified when the checking is stopped
+     * forcefully
      */
     public synchronized void notifyThatFinished(CheckerFactory finishedFactory) {
         if (currentlyRunning.size() == 0) {
@@ -189,10 +187,10 @@ public class FactoryController implements Runnable {
     }
 
     /**
-     * 
+     *
      * @return a NEW list with all the results objects. This list is used
-     *         nowhere in the propertychecker, so you can remove parts out of it
-     *         as you want.
+     * nowhere in the propertychecker, so you can remove parts out of it as you
+     * want.
      */
     public List<ResultInterface> getResults() {
         if (results == null) {
@@ -214,6 +212,7 @@ public class FactoryController implements Runnable {
     }
 
     public class FactoryEnder extends Thread {
+
         @Override
         public void run() {
             thisObject.stopChecking(false);
