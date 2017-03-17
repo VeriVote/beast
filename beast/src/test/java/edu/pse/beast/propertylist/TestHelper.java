@@ -64,7 +64,7 @@ public class TestHelper {
     public PropertyList getPropertyList() {
     	CElectionDescriptionEditor cElectionEditor = new CElectionDescriptionEditorBuilder().createCElectionDescriptionEditor(refs);
     	BooleanExpEditor booleanExpEditor = new BooleanExpEditorBuilder().createBooleanExpEditorObject(refs, cElectionEditor);
-    	return new PropertyList(new PLModel(), booleanExpEditor, null, null);
+    	return new PropertyList(new PLModel(), booleanExpEditor, null);
     }
 
     public BooleanExpEditor getBooleanExpEditor() {
