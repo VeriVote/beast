@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CBMCProcessFactory extends CheckerFactory {
-
-    private final boolean deleteTmpFiles = true;
-    
     
     private final OperatingSystems os;
 
@@ -29,7 +26,7 @@ public class CBMCProcessFactory extends CheckerFactory {
     // failed
     private final String FAILURELINE = "VERIFICATION FAILED";
 
-    private final String pathToTempFolder = "/core/c_tempfiles/";
+    private final String pathToTempFolder = "/core/generated_c_files/";
 
     /**
      * creates a new CBMC checker factory, that determines what operating system
@@ -175,7 +172,6 @@ public class CBMCProcessFactory extends CheckerFactory {
     @Override
     protected void cleanUp() {
         if (ParametereditorOptions.deleteTmpFiles() && toCheck != null && toCheck.exists()) {
-            System.out.println("gelöscht");
             toCheck.delete();
         }
     }

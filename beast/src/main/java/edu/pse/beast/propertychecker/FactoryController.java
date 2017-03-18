@@ -63,6 +63,7 @@ public class FactoryController implements Runnable {
         this.checkerID = checkerID;
         this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
 
+        //get a list of result objects that fit for the specified checkerID 
         this.results = CheckerFactoryFactory.getMatchingResult(checkerID,
                 postAndPrePropDescrSrc.getPostAndPrePropertiesDescriptions().size());
 
@@ -77,6 +78,7 @@ public class FactoryController implements Runnable {
         // start the factorycontroller
         new Thread(this, "FactoryController").start();
 
+        //if the user wishes for a timeout, we activate it here
         if (parmSrc.getParameter().getTimeout().isActive()) {
             notifier = new TimeOutNotifier(this, parmSrc.getParameter().getTimeout().getDuration());
         } else {
@@ -97,6 +99,7 @@ public class FactoryController implements Runnable {
         for (int i = 0; i < properties.size(); i++) {
             innerLoop:
             while (!stopped) {
+                //if we can start more checkers (we haven't used our allowed pool completly), we can start a new one
                 if (currentlyRunning.size() < concurrentChecker) {
                     CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID, this,
                             electionDescSrc, properties.get(i), parmSrc, results.get(i));
@@ -109,6 +112,8 @@ public class FactoryController implements Runnable {
 
                     break innerLoop;
                 } else {
+                    //ELSE, we try to sleep a bit. It is important that we only sleep if no new checker
+                    //was started, or ele it would take 
                     try {
                         Thread.sleep(POLLINGINTERVAL);
                     } catch (InterruptedException e) {
@@ -146,6 +151,7 @@ public class FactoryController implements Runnable {
 
         if (!stopped) {
             this.stopped = true;
+            //send a signal to all currently running Checkers so they will stop
             for (Iterator<CheckerFactory> iterator = currentlyRunning.iterator(); iterator.hasNext();) {
                 CheckerFactory toStop = (CheckerFactory) iterator.next();
                 toStop.stopChecking();
@@ -153,7 +159,7 @@ public class FactoryController implements Runnable {
 
             // set all not finished results to finished, to indicate that they
             // are
-            // ready.
+            // ready to be presented
             for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
                 Result result = (Result) iterator.next();
                 if (!result.isFinished()) {
@@ -211,8 +217,15 @@ public class FactoryController implements Runnable {
         }
     }
 
+    /**
+     * This Class is there for the shutDownHook
+     * It is used, so if the program has a chance of cleaning up,
+     * it still has a chance of messaging all checkers to stop running
+     * 
+     * @author Lukas
+     *
+     */
     public class FactoryEnder extends Thread {
-
         @Override
         public void run() {
             thisObject.stopChecking(false);

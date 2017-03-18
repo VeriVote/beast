@@ -17,7 +17,9 @@ import java.util.List;
  *
  */
 public class LinuxErrorChecker extends SystemSpecificErrorChecker {
-	// program that is to be used for checking
+    
+
+    // program that is to be used for checking
 	private final String compilerString = "gcc";
 
 	// this flag prohibits that file are creates by the compiler and

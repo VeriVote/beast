@@ -8,29 +8,23 @@ import edu.pse.beast.toolbox.ErrorLogger;
 import java.util.List;
 
 /**
- * this class gives you access to an underlying, system specific compiler so our program
- * can check for deeper errors in the code, that we couldn't find on our own
+ * this class gives you access to an underlying, system specific compiler so our
+ * program can check for deeper errors in the code, that we couldn't find on our
+ * own
+ * 
  * @author Lukas
  *
  */
 public class DeepErrorChecker {
-private final OperatingSystems os;
+    private final OperatingSystems os;
+
+    SystemSpecificErrorChecker errorChecker = null;
     
     /**
      * creates a new checker, that first of all determines its operating system
      */
     public DeepErrorChecker() {
         this.os = determineOS();
-    }
-    
-    /**
-     * checks the given list of c code (one entry per line) for errors
-     * @param toCheck the code to check
-     * @return a list of codeErros
-     */
-    public List<CodeError> checkCodeForErrors(List<String> toCheck) {
-        
-        SystemSpecificErrorChecker errorChecker = null;
         
         switch (os) {
         case Linux:
@@ -47,12 +41,22 @@ private final OperatingSystems os;
         default:
             ErrorLogger.log("Warning, your OS couldn't be determined or is not supported yet.");
         }
-        
-        return errorChecker.checkCodeForErrors(toCheck);        
     }
-    
+
+    /**
+     * checks the given list of c code (one entry per line) for errors
+     * 
+     * @param toCheck
+     *            the code to check
+     * @return a list of codeErros
+     */
+    public List<CodeError> checkCodeForErrors(List<String> toCheck) {
+        return errorChecker.checkCodeForErrors(toCheck);
+    }
+
     /**
      * determines the operating system that this program is running on
+     * 
      * @return the OperatingSystem as the enum
      */
     private OperatingSystems determineOS() {
