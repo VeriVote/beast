@@ -282,4 +282,8 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	public void setList(ArrayList<ListItem> items) {
 		this.items = items;
 	}
+	
+	public JButton getAddNewButton() {
+		return addNewButton;
+	}
 }
