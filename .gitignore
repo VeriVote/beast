@@ -48,3 +48,4 @@ beast/core/c_tempfiles/*.c
 
 # Options
 *opts.txt
+beast/core/generated_c_files/*.c
