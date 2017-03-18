@@ -9,7 +9,6 @@ import edu.pse.beast.propertylist.Model.ResultType;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
-import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.RepaintThread;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
@@ -160,15 +159,6 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	}
 
 	/**
-	 * Updates the view so that all changes (in the model) are visible.
-	 */
-	public void updateView() {
-		panel.revalidate();
-		this.validate();
-		panel.repaint();
-	}
-
-	/**
 	 * Resets the name attribute because the name change for a PropertyItem was
 	 * rejected.
 	 * 
@@ -237,7 +227,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		this.validate();
 
 		for (PropertyItem propertyItem : propertyList) {
-			ListItem current = new ListItem(controller, model, propertyItem, this);
+			ListItem current = new ListItem(controller, model, propertyItem);
 			if (propertyItem.getResultType() == ResultType.TESTED)
 				this.setNextToPresent(current);
 			current.updateStringRes(sli);

@@ -1,8 +1,5 @@
 package edu.pse.beast.propertylist.View;
 
-import de.erichseifert.gral.data.DataTable;
-import de.erichseifert.gral.plots.PiePlot;
-import de.erichseifert.gral.ui.DrawablePanel;
 import org.junit.*;
 
 import javax.swing.*;

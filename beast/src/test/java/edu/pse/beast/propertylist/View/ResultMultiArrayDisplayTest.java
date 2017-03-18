@@ -39,7 +39,7 @@ public class ResultMultiArrayDisplayTest {
 		win.setVisible(true);
 		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		ElectionType elt = ElectionType.SINGLECHOICE;
+		//ElectionType elt = ElectionType.SINGLECHOICE;
 		List<Long[][]> voted = new ArrayList<Long[][]>();
 		List<Long[]> electeds = new ArrayList<Long[]>();
 		voted.add(new Long[][]{ {3l,2l,1l}, {2l,3l,1l}, {2l,2l,2l} });

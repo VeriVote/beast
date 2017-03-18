@@ -1,9 +1,5 @@
 package edu.pse.beast.propertylist.ViewAutomated;
 
-import static org.junit.Assert.*;
-
-import java.awt.MenuBar;
-
 import javax.swing.JMenuBar;
 
 import org.junit.After;

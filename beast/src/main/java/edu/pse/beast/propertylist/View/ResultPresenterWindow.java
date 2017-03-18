@@ -13,12 +13,9 @@ import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,8 +27,6 @@ public class ResultPresenterWindow extends JFrame {
     private JTextPane result;
     StringResourceLoader srl;
     private FailureExample example;
-    
-    private PropertyListWindow owner;
 
     private final String pathToEye = "/core/images/other/eye.png";
     private final ImageIcon eyeIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToEye);
@@ -40,16 +35,15 @@ public class ResultPresenterWindow extends JFrame {
      *
      */
     public ResultPresenterWindow() {
-        this(new StringLoaderInterface("de"), null);
+        this(new StringLoaderInterface("de"));
     }
 
     /**
      * @param sli
      */
-    public ResultPresenterWindow(StringLoaderInterface sli, PropertyListWindow owner) {
+    public ResultPresenterWindow(StringLoaderInterface sli) {
         PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
         this.srl = provider.getOtherStringRes();
-        this.owner = owner;
         this.setVisible(false);
         init();
     }
