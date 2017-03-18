@@ -112,18 +112,19 @@ public class ResultPresenterWindow extends JFrame {
         });
         getContentPane().add(getExport(), BorderLayout.PAGE_END);
 
-        this.addWindowFocusListener(new WindowFocusListener() {
+        /*this.addWindowFocusListener(new WindowFocusListener() {
             @Override
             public void windowGainedFocus(WindowEvent e) {
             }
 
             @Override
             public void windowLostFocus(WindowEvent e) {
-            	if (!owner.isFocused()) { // the if clause doesn't seem to be doing what it is supposed to
+            	if (!isVisible) setVisible(false); // but not setting the variable to false, if it should be compared to others
+            	/*if (!owner.isFocused()) { // the if clause doesn't seem to be doing what it is supposed to
             		setVisible(false);
             	}
             }
-        });
+        });*/
         pack();
     }
 
