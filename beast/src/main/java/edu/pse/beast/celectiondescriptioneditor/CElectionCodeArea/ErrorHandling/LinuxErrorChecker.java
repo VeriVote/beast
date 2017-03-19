@@ -53,7 +53,7 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
 
         String nameOfOutFile = toCheck.getName().replace(".c", ".out");
 
-        String compileToThis = setOutputFileName + nameOfOutFile;
+        String compileToThis = SuperFolderFinder.getSuperFolder() + setOutputFileName + nameOfOutFile;
 
         String userIncludeAndPath = enableUserInclude + SuperFolderFinder.getSuperFolder() + userIncludeFolder;
 
