@@ -2,6 +2,7 @@ package edu.pse.beast.propertychecker;
 
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BooleanExpressionNode;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
@@ -192,8 +193,8 @@ public class CBMCCodeGenerationVisitorTest {
                         Arrays.asList(
                                 new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
                                 new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER))
-                ).
-                        getBooleanExpressions().get(0).get(0);
+                )
+                .   getBooleanExpressions().get(0).get(0);
         visitor.setToPrePropertyMode();
         List<String> c = visitor.generateCode(n);
         String actual = listToString(c);
@@ -212,11 +213,147 @@ public class CBMCCodeGenerationVisitorTest {
                         Arrays.asList(
                                 new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
                                 new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER))
-                ).
-                        getBooleanExpressions().get(1).get(0);
+                )
+                .getBooleanExpressions().get(1).get(0);
         visitor.setToPrePropertyMode();
         List<String> c = visitor.generateCode(n);
         String actual = listToString(c);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testCompareExpression() {
+        String expression = "VOTES1(v) == c;";
+        String expected = "unsigned int comparison_0 = 1;\n" +
+                "comparison_0 = c == votes1[v];\n" +
+                "assume(comparison_0);\n";
+        BooleanExpressionNode n
+                = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
+                expression,
+                Arrays.asList(
+                        new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
+                        new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER))
+        )
+        .getBooleanExpressions().get(0).get(0);
+
+        visitor.setToPrePropertyMode();
+        List<String> c = visitor.generateCode(n);
+        String actual = listToString(c);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testCompareExpressionList1Deep() {
+        String expression = "VOTES1 == VOTES2;";
+        String expected = "unsigned int comparison_0 = 1;\n" +
+                "for(unsigned int count_0 = 0; count_0 < V && comparison_0; ++count_0) {\n" +
+                "\tcomparison_0 = votes2[count_0] == votes1[count_0];\n" +
+                "}\n" +
+                "assume(comparison_0);\n";
+        BooleanExpressionNode n
+                = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
+                expression,
+                Arrays.asList(
+                        new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
+                        new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER))
+        )
+                .getBooleanExpressions().get(0).get(0);
+
+        visitor.setToPrePropertyMode();
+        List<String> c = visitor.generateCode(n);
+        String actual = listToString(c);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testCompareList2Deep() {
+        String expression = "VOTES1 == VOTES2;";
+        String expected = "unsigned int comparison_0 = 1;\n" +
+                "for(unsigned int count_0 = 0; count_0 < V && comparison_0; ++count_0) {\n" +
+                "\tfor(unsigned int count_1 = 0; count_1 < C && comparison_0; ++count_1) {\n" +
+                "\t\tcomparison_0 = votes2[count_0][count_1] == votes1[count_0][count_1];\n" +
+                "\t}\n" +
+                "}\n" +
+                "assume(comparison_0);\n";
+        BooleanExpressionNode n
+                = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
+                expression,
+                Arrays.asList(
+                        new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
+                        new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER)),
+                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.PREFERENCE)
+        ).getBooleanExpressions().get(0).get(0);
+
+        visitor.setToPrePropertyMode();
+        List<String> c = visitor.generateCode(n);
+        String actual = listToString(c);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testAnonymityPreForWeightedApproval() {
+        String expression = "FOR_ALL_VOTERS(i) : (i != v && i != w) ==> VOTES1(i) == VOTES2(i);";
+        String expected = "unsigned int forAll_0 = 1;\n" +
+                "for(unsigned int i = 0; i < V && forAll_0; i++) {\n" +
+                "\tunsigned int comparison_0 = 1;\n" +
+                "\tcomparison_0 = v != i;\n" +
+                "\tunsigned int comparison_1 = 1;\n" +
+                "\tcomparison_1 = w != i;\n" +
+                "\tunsigned int and_0 = ((comparison_1) && (comparison_0));\n" +
+                "\tunsigned int comparison_2 = 1;\n" +
+                "\tfor(unsigned int count_0 = 0; count_0 < C && comparison_2; ++count_0) {\n" +
+                "\t\tcomparison_2 = votes2[i][count_0] == votes1[i][count_0];\n" +
+                "\t}\n" +
+                "\tunsigned int implication_0 = (!(and_0) || (comparison_2));\n" +
+                "\tforAll_0 = implication_0;\n" +
+                "}\n" +
+                "assume(forAll_0);\n";
+        BooleanExpressionNode n
+                = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
+                expression,
+                Arrays.asList(
+                        new Tuple<String, InternalTypeRep>("w", InternalTypeRep.VOTER),
+                        new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER)),
+                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.WEIGHTED_APPROVAL)
+        ).getBooleanExpressions().get(0).get(0);
+
+        visitor.setToPrePropertyMode();
+        List<String> c = visitor.generateCode(n);
+        String actual = listToString(c);
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testCandidateWithMostApprovalWins() {
+        String expression = "(FOR_ALL_CANDIDATES(i) : ((i != c) ==> (VOTE_SUM_FOR_CANDIDATE1(c) > VOTE_SUM_FOR_CANDIDATE1(i)))) ==> ELECT1 == c;";
+        String expected = "unsigned int forAll_0 = 1;\n" +
+                "for(unsigned int i = 0; i < V && forAll_0; i++) {\n" +
+                "\tunsigned int comparison_0 = 1;\n" +
+                "\tcomparison_0 = v != i;\n" +
+                "\tunsigned int comparison_1 = 1;\n" +
+                "\tcomparison_1 = w != i;\n" +
+                "\tunsigned int and_0 = ((comparison_1) && (comparison_0));\n" +
+                "\tunsigned int comparison_2 = 1;\n" +
+                "\tfor(unsigned int count_0 = 0; count_0 < C && comparison_2; ++count_0) {\n" +
+                "\t\tcomparison_2 = votes2[i][count_0] == votes1[i][count_0];\n" +
+                "\t}\n" +
+                "\tunsigned int implication_0 = (!(and_0) || (comparison_2));\n" +
+                "\tforAll_0 = implication_0;\n" +
+                "}\n" +
+                "assume(forAll_0);\n";
+        BooleanExpressionNode n
+                = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
+                expression,
+                Arrays.asList(
+                        new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
+                        new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER)),
+                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.APPROVAL)
+        ).getBooleanExpressions().get(1).get(0);
+
+        visitor.setToPrePropertyMode();
+        List<String> c = visitor.generateCode(n);
+        String actual = listToString(c);
+        System.out.println(actual);
         Assert.assertEquals(expected, actual);
     }
 
