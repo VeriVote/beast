@@ -33,7 +33,7 @@ public class CBMCCodeGenerationVisitorTest {
         String expected = "unsigned int integerVar_0 = 1;\n"
                 + "unsigned int integerVar_1 = 1;\n"
                 + "unsigned int integerVar_2 = C - integerVar_1;\n"
-                + "unsigned int integer_comp_0 = integerVar_2 == integerVar_0;\n"
+                + "unsigned int integer_comp_0 = integerVar_0 == integerVar_2;\n"
                 + "assume(integer_comp_0);\n";
         visitor.setToPrePropertyMode();
         BooleanExpressionNode n
@@ -52,7 +52,7 @@ public class CBMCCodeGenerationVisitorTest {
         String expression = "1 == VOTE_SUM_FOR_CANDIDATE1(c);";
         String expected = "unsigned int integerVar_0 = 1;\n"
                 + "unsigned int voteSumExp_0 = voteSumForCandidate(votes1, c);\n"
-                + "unsigned int integer_comp_0 = voteSumExp_0 == integerVar_0;\n"
+                + "unsigned int integer_comp_0 = integerVar_0 == voteSumExp_0;\n"
                 + "assume(integer_comp_0);\n";
         visitor.setToPrePropertyMode();
         BooleanExpressionNode n
@@ -76,7 +76,7 @@ public class CBMCCodeGenerationVisitorTest {
                 + "unsigned int integerVar_4 = integerVar_3 - C;\n"
                 + "unsigned int voterAtPos_0 = integerVar_4;\n"
                 + "unsigned int comparison_0 = 1;\n"
-                + "comparison_0 = voterAtPos_0 == v;\n"
+                + "comparison_0 = v == voterAtPos_0;\n"
                 + "assume(comparison_0);\n";
 
         visitor.setToPrePropertyMode();
@@ -102,7 +102,7 @@ public class CBMCCodeGenerationVisitorTest {
                 + "unsigned int integerVar_3 = voteSumExp_2 / integerVar_2;\n"
                 + "unsigned int integerVar_4 = integerVar_1 - integerVar_3;\n"
                 + "unsigned int integerVar_5 = integerVar_4 + V;\n"
-                + "unsigned int integer_comp_0 = integerVar_5 == integerVar_0;\n"
+                + "unsigned int integer_comp_0 = integerVar_0 == integerVar_5;\n"
                 + "assume(integer_comp_0);\n";
         String expression
                 = "1 == VOTE_SUM_FOR_CANDIDATE1(c) * VOTE_SUM_FOR_CANDIDATE2(c)"
@@ -185,7 +185,7 @@ public class CBMCCodeGenerationVisitorTest {
     public void testVotes() {
         String expression = "VOTES1(v) == c";
         String expected = "unsigned int comparison_0 = 1;\n"
-                + "comparison_0 = c == votes1[v];\n"
+                + "comparison_0 = votes1[v] == c;\n"
                 + "assume(comparison_0);\n";
         BooleanExpressionNode n
                 = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
@@ -205,7 +205,7 @@ public class CBMCCodeGenerationVisitorTest {
     public void testElectExpression() {
         String expression = "ELECT1 == c";
         String expected = "unsigned int comparison_0 = 1;\n"
-                + "comparison_0 = c == elect1;\n"
+                + "comparison_0 = elect1 == c;\n"
                 + "assume(comparison_0);\n";
         BooleanExpressionNode n
                 = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
@@ -225,7 +225,7 @@ public class CBMCCodeGenerationVisitorTest {
     public void testCompareExpression() {
         String expression = "VOTES1(v) == c;";
         String expected = "unsigned int comparison_0 = 1;\n" +
-                "comparison_0 = c == votes1[v];\n" +
+                "comparison_0 = votes1[v] == c;\n" +
                 "assume(comparison_0);\n";
         BooleanExpressionNode n
                 = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
@@ -247,7 +247,7 @@ public class CBMCCodeGenerationVisitorTest {
         String expression = "VOTES1 == VOTES2;";
         String expected = "unsigned int comparison_0 = 1;\n" +
                 "for(unsigned int count_0 = 0; count_0 < V && comparison_0; ++count_0) {\n" +
-                "\tcomparison_0 = votes2[count_0] == votes1[count_0];\n" +
+                "\tcomparison_0 = votes1[count_0] == votes2[count_0];\n" +
                 "}\n" +
                 "assume(comparison_0);\n";
         BooleanExpressionNode n
@@ -271,7 +271,7 @@ public class CBMCCodeGenerationVisitorTest {
         String expected = "unsigned int comparison_0 = 1;\n" +
                 "for(unsigned int count_0 = 0; count_0 < V && comparison_0; ++count_0) {\n" +
                 "\tfor(unsigned int count_1 = 0; count_1 < C && comparison_0; ++count_1) {\n" +
-                "\t\tcomparison_0 = votes2[count_0][count_1] == votes1[count_0][count_1];\n" +
+                "\t\tcomparison_0 = votes1[count_0][count_1] == votes2[count_0][count_1];\n" +
                 "\t}\n" +
                 "}\n" +
                 "assume(comparison_0);\n";
@@ -296,13 +296,13 @@ public class CBMCCodeGenerationVisitorTest {
         String expected = "unsigned int forAll_0 = 1;\n" +
                 "for(unsigned int i = 0; i < V && forAll_0; i++) {\n" +
                 "\tunsigned int comparison_0 = 1;\n" +
-                "\tcomparison_0 = v != i;\n" +
+                "\tcomparison_0 = i != v;\n" +
                 "\tunsigned int comparison_1 = 1;\n" +
-                "\tcomparison_1 = w != i;\n" +
+                "\tcomparison_1 = i != w;\n" +
                 "\tunsigned int and_0 = ((comparison_1) && (comparison_0));\n" +
                 "\tunsigned int comparison_2 = 1;\n" +
                 "\tfor(unsigned int count_0 = 0; count_0 < C && comparison_2; ++count_0) {\n" +
-                "\t\tcomparison_2 = votes2[i][count_0] == votes1[i][count_0];\n" +
+                "\t\tcomparison_2 = votes1[i][count_0] == votes2[i][count_0];\n" +
                 "\t}\n" +
                 "\tunsigned int implication_0 = (!(and_0) || (comparison_2));\n" +
                 "\tforAll_0 = implication_0;\n" +
@@ -327,20 +327,19 @@ public class CBMCCodeGenerationVisitorTest {
     public void testCandidateWithMostApprovalWins() {
         String expression = "(FOR_ALL_CANDIDATES(i) : ((i != c) ==> (VOTE_SUM_FOR_CANDIDATE1(c) > VOTE_SUM_FOR_CANDIDATE1(i)))) ==> ELECT1 == c;";
         String expected = "unsigned int forAll_0 = 1;\n" +
-                "for(unsigned int i = 0; i < V && forAll_0; i++) {\n" +
+                "for(unsigned int i = 0; i < C && forAll_0; i++) {\n" +
                 "\tunsigned int comparison_0 = 1;\n" +
-                "\tcomparison_0 = v != i;\n" +
-                "\tunsigned int comparison_1 = 1;\n" +
-                "\tcomparison_1 = w != i;\n" +
-                "\tunsigned int and_0 = ((comparison_1) && (comparison_0));\n" +
-                "\tunsigned int comparison_2 = 1;\n" +
-                "\tfor(unsigned int count_0 = 0; count_0 < C && comparison_2; ++count_0) {\n" +
-                "\t\tcomparison_2 = votes2[i][count_0] == votes1[i][count_0];\n" +
-                "\t}\n" +
-                "\tunsigned int implication_0 = (!(and_0) || (comparison_2));\n" +
-                "\tforAll_0 = implication_0;\n" +
+                "\tcomparison_0 = i != c;\n" +
+                "\tunsigned int voteSumExp_0 = voteSumForCandidate(votes1, c);\n" +
+                "\tunsigned int voteSumExp_1 = voteSumForCandidate(votes1, i);\n" +
+                "\tunsigned int integer_comp_1 = voteSumExp_0 > voteSumExp_1;\n" +
+                "\tunsigned int implication_1 = (!(comparison_0) || (integer_comp_1));\n" +
+                "\tforAll_0 = implication_1;\n" +
                 "}\n" +
-                "assume(forAll_0);\n";
+                "unsigned int comparison_2 = 1;\n" +
+                "comparison_2 = elect1 == c;\n" +
+                "unsigned int implication_0 = (!(forAll_0) || (comparison_2));\n" +
+                "assume(implication_0);\n";
         BooleanExpressionNode n
                 = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
                 expression,
@@ -353,7 +352,6 @@ public class CBMCCodeGenerationVisitorTest {
         visitor.setToPrePropertyMode();
         List<String> c = visitor.generateCode(n);
         String actual = listToString(c);
-        System.out.println(actual);
         Assert.assertEquals(expected, actual);
     }
 
