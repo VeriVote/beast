@@ -42,7 +42,7 @@ public class CurlyBracesLineBeginningTabHandlerTest {
     @After
     public void tearDown() {
     }
-    
+
     
     @Test
     public void testGetEasyCurlyTabsForLine() throws BadLocationException {

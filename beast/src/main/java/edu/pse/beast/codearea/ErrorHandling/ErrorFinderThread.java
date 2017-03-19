@@ -19,6 +19,7 @@ import java.util.logging.Logger;
  */
 public class ErrorFinderThread implements Runnable {
     private volatile boolean keepRunning = true;
+    private volatile boolean pause = false;
     private ErrorFinderList l;
     private ArrayList<CodeError> lastFoundErrors = new ArrayList<>();
     private Thread t;
@@ -47,10 +48,13 @@ public class ErrorFinderThread implements Runnable {
             Logger.getLogger(ErrorFinderThread.class.getName()).log(Level.SEVERE, null, ex);
         }
         while(keepRunning) {
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException ex) {
-            }            
+            do {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ex) {
+                }
+            } while (pause);
+
             lastFoundErrors = l.getErrors();
             c.foundNewErrors(lastFoundErrors);
         }
@@ -60,5 +64,12 @@ public class ErrorFinderThread implements Runnable {
         return lastFoundErrors;
     }
     
-    
+
+    public void pauseChecking() {
+        pause = true;
+    }
+
+    public void resumeChecking() {
+        pause = false;
+    }
 }

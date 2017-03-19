@@ -238,6 +238,14 @@ public class CodeArea implements AncestorListener {
         pane.setFont(f);
         tln.setFont(f);
     }
+
+    public void pauseErrorFinding() {
+        errorCtrl.pauseErrorFinding();
+    }
+
+    public void resumeErrorFinding() {
+        errorCtrl.resumeErrorFinding();
+    }
     
 
 }

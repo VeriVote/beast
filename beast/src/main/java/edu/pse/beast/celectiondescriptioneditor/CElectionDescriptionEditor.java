@@ -127,12 +127,14 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
 
     @Override
     public void stopReacting() {
+        codeArea.pauseErrorFinding();
         wasVisible = window.isVisible();
         window.setVisible(false);
     }
 
     @Override
     public void resumeReacting() {
+        codeArea.resumeErrorFinding();
         if (wasVisible) {
             window.setVisible(true);
         }

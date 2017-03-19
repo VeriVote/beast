@@ -55,7 +55,15 @@ public class ErrorController {
      * this function is called by error finder classes if they find new errors
      * @param lastFoundErrors the list of newly found errors
      */
-    void foundNewErrors(ArrayList<CodeError> lastFoundErrors) {
+    public void foundNewErrors(ArrayList<CodeError> lastFoundErrors) {
         displayer.showErrors(lastFoundErrors);
     }
-}
+
+    public void pauseErrorFinding() {
+        t.pauseChecking();
+    }
+
+    public void resumeErrorFinding() {
+        t.resumeChecking();
+    }
+ }
