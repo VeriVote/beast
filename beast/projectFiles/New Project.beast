@@ -1,31 +1,30 @@
-4 name11 New Project8 elecDesc297 4 name3 asd14 votingDeclLine1 24 code200 //Single-choice: Wähler stimmt jeweils für einen Kandidaten
+4 name11 New Project8 elecDesc279 4 name3 asd14 votingDeclLine1 24 code182 //Single-choice: Wähler stimmt jeweils für einen Kandidaten
 //Kandidat oder unentschieden: Ein gewählter Kandidat oder unentschieden
 unsigned int voting(unsigned int votes[V]) { 
-        return 0;
 } 
-9 inputType13 SINGLE_CHOICE10 outputType13 CAND_OR_UNDEF8 propList224 <propertyListName>
+9 inputType13 SINGLE_CHOICE10 outputType13 CAND_OR_UNDEF8 propList204 <propertyListName>
 New PropertyList
 </propertyListName>
 <propertyItem>
 <postAndPreProps>
-4 name13 Eigenschaft 03 pre0 4 post17 ELECT1 != ELECT2;7 varlist0 
+4 name10 Property 03 pre0 4 post0 7 varlist0 
 </postAndPreProps>
 <testStatus>
-true
+false
 </testStatus>
 
 </propertyItem>
-19 electionCheckParams377 <amountVotersMin>
-20
+19 electionCheckParams375 <amountVotersMin>
+1
 </amountVotersMin>
 <amountVotersMax>
-20
+1
 </amountVotersMax>
 <amountCandidatesMin>
-5
+1
 </amountCandidatesMin>
 <amountCandidatesMax>
-5
+1
 </amountCandidatesMax>
 <amountSeatsMin>
 1
