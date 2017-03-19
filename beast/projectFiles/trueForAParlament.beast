@@ -1,0 +1,54 @@
+4 name17 trueForAParlament8 elecDesc362 4 name5 seats14 votingDeclLine1 24 code266 //Preference: Voter ranks all candidates according to his preference
+//Seats per party: Number of seats per party
+unsigned int * voting(unsigned int votes[V][C]) { 
+        static  int r[S];
+   for (int i = 0; i < S; ++i) {
+      r[i] = 0;
+   }
+        return r;
+} 
+9 inputType10 PREFERENCE10 outputType13 CAND_PER_SEAT8 propList267 <propertyListName>
+New PropertyList
+</propertyListName>
+<propertyItem>
+<postAndPreProps>
+4 name12 TrueProperty3 pre43 FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);4 post17 ELECT1 == ELECT2;7 varlist0 
+</postAndPreProps>
+<testStatus>
+true
+</testStatus>
+
+</propertyItem>
+19 electionCheckParams375 <amountVotersMin>
+6
+</amountVotersMin>
+<amountVotersMax>
+6
+</amountVotersMax>
+<amountCandidatesMin>
+3
+</amountCandidatesMin>
+<amountCandidatesMax>
+3
+</amountCandidatesMax>
+<amountSeatsMin>
+5
+</amountSeatsMin>
+<amountSeatsMax>
+5
+</amountSeatsMax>
+<timeout>
+<duration>
+0
+</duration>
+<timeunit>
+SECONDS
+</timeunit>
+
+</timeout>
+<processes>
+0
+</processes>
+<argument>
+
+</argument>
