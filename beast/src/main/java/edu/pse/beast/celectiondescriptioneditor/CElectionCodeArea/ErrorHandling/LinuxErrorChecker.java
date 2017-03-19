@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * the linux implementation for checking the code This implementation uses gcc
  * for checking
@@ -83,6 +85,8 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
             e.printStackTrace();
         }
 
+        System.out.println("started linux errorCheck with call: " + StringUtils.join(arguments, " "));
+        
         return startedProcess;
     }
 
