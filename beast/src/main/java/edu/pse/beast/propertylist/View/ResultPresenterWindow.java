@@ -272,12 +272,15 @@ public class ResultPresenterWindow extends JFrame {
         for (int j = 0; j < elected.length; j++) {
         	Color color = preceding[j].equals(elected[j]) ? Color.BLACK : Color.RED;
         	
-        	if (elected[j] == ex.getNumOfCandidates()) { // no candidate wins
+        	/*if (elected[j] == ex.getNumOfCandidates()) {
         		appendPaneColored(srl.getStringFromID("draw"), color);
         	}
         	else {
-        		appendPaneColored(elected[j].toString(), color);
-        	}
+        		
+        	}*/
+        	
+        	appendPaneColored(elected[j].toString(), color);
+        	
         	appendPane(", ");
         }
         eraseLastCharacters(2);
