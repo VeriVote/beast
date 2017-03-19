@@ -42,25 +42,7 @@ public class CurlyBracesLineBeginningTabHandlerTest {
     @After
     public void tearDown() {
     }
-
-    /**
-     * Test of getTabsForLine method, of class CurlyBracesLineBeginningTabHandler.
-     */
-    @Ignore("does not work in windows. the asserted length is 15 and not 13")
-    @Test
-    public void testGetZeroTabsForLine() throws BadLocationException {
-        System.out.println("getTabsForLine");
-        String insert = "asdasd" + System.lineSeparator() + "asdasd";
-        pane.getStyledDocument().insertString(0, insert, null);
-        
-        assertEquals(13, pane.getText().length());
-        
-        int tabs = handler.getTabsForLine(0);
-        assertEquals(0, tabs);
-        
-        tabs = handler.getTabsForLine(9);
-        assertEquals(0, tabs);        
-    }
+    
     
     @Test
     public void testGetEasyCurlyTabsForLine() throws BadLocationException {
