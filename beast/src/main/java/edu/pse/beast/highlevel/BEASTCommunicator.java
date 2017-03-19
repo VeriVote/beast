@@ -158,31 +158,61 @@ public class BEASTCommunicator implements CheckListener {
     private String createTimeString(double passedTimeSeconds) {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         String timeString = "";
-        if (passedTimeSeconds >= 86400) {
-            int days = (int) passedTimeSeconds / 86400;
-            double daysRemainder = passedTimeSeconds % 86400;
-            int hours = (int) daysRemainder / 3600;
-            double hoursRemainder = daysRemainder % 3600;
-            int minutes = (int) hoursRemainder / 60;
-            double minutesRemainder = hoursRemainder % 60;
-            String seconds = decimalFormat.format(minutesRemainder);
-            timeString = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
-        } else if (passedTimeSeconds >= 3600) {
-            int hours = (int) passedTimeSeconds / 3600;
-            double hoursRemainder = passedTimeSeconds % 3600;
-            int minutes = (int) hoursRemainder / 60;
-            double minutesRemainder = hoursRemainder % 60;
-            String seconds = decimalFormat.format(minutesRemainder);
-            timeString = hours + "h " + minutes + "m " + seconds + "s";
-        } else if (passedTimeSeconds >= 60) {
-            int minutes = (int) passedTimeSeconds / 60;
-            double minutesRemainder = passedTimeSeconds % 60;
-            String seconds = decimalFormat.format(minutesRemainder);
-            timeString = minutes + "min " + seconds + "s";
+        if (passedTimeLongerThanDay(passedTimeSeconds)) {
+            timeString = createTimeStringLongerThanDay(passedTimeSeconds, decimalFormat);
+        } else if (passedTimeLongerThanHour(passedTimeSeconds)) {
+            timeString = createTimeStringLongerThanHour(passedTimeSeconds, decimalFormat);
+        } else if (passedTimeLongerThanMinute(passedTimeSeconds)) {
+            timeString = createTimeStringLongerThanMinute(passedTimeSeconds, decimalFormat);
         } else {
             String seconds = decimalFormat.format(passedTimeSeconds);
             timeString = seconds + "s";
         }
         return timeString;
+    }
+
+    private String createTimeStringLongerThanMinute(double passedTimeSeconds, DecimalFormat decimalFormat) {
+        String timeString;
+        int minutes = (int) passedTimeSeconds / 60;
+        double minutesRemainder = passedTimeSeconds % 60;
+        String seconds = decimalFormat.format(minutesRemainder);
+        timeString = minutes + "min " + seconds + "s";
+        return timeString;
+    }
+
+    private String createTimeStringLongerThanHour(double passedTimeSeconds, DecimalFormat decimalFormat) {
+        String timeString;
+        int hours = (int) passedTimeSeconds / 3600;
+        double hoursRemainder = passedTimeSeconds % 3600;
+        int minutes = (int) hoursRemainder / 60;
+        double minutesRemainder = hoursRemainder % 60;
+        String seconds = decimalFormat.format(minutesRemainder);
+        timeString = hours + "h " + minutes + "m " + seconds + "s";
+        return timeString;
+    }
+
+    private String createTimeStringLongerThanDay(double passedTimeSeconds, DecimalFormat decimalFormat) {
+        String timeString;
+        int days = (int) passedTimeSeconds / 86400;
+        double daysRemainder = passedTimeSeconds % 86400;
+        int hours = (int) daysRemainder / 3600;
+        double hoursRemainder = daysRemainder % 3600;
+        int minutes = (int) hoursRemainder / 60;
+        double minutesRemainder = hoursRemainder % 60;
+        String seconds = decimalFormat.format(minutesRemainder);
+        timeString = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+        return timeString;
+    }
+
+    private boolean passedTimeLongerThanDay(double passedTimeSeconds) {
+        return passedTimeSeconds >= 86400;
+    }
+
+    private boolean passedTimeLongerThanHour(double passedTimeSeconds) {
+        return passedTimeSeconds >= 3600;
+    }
+
+    private boolean passedTimeLongerThanMinute(double passedTimeSeconds) {
+        return passedTimeSeconds >= 60;
     }
 }
