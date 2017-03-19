@@ -302,8 +302,17 @@ public class CBMCCodeGenerator {
             }
             //initialize elects
             if (outputType.getType().isList()) {
-                String electX = "unsigned int *elect" + voteNumber;
-                code.add(electX + " = voting(votes" + voteNumber + ");");
+                String temp = "unsigned int* tempElect" + voteNumber + " = voting(votes" + voteNumber + ");";
+                code.add(temp);
+                String electX = "unsigned int elect" + voteNumber + "[S];";
+                code.add(electX);
+                String forLoop = "for (int electLoop = 0; electLoop < S; electLoop++) {";
+                code.add(forLoop);
+                code.addTab();
+                code.add("elect" + voteNumber + "[electLoop] = tempElect" + voteNumber + "[electLoop];");
+                code.deleteTab();
+                code.add("}");
+
             } else {
                 String electX = "unsigned int elect" + voteNumber;
                 electX += cCodeHelper.getCArrayType(outputType.getType());
