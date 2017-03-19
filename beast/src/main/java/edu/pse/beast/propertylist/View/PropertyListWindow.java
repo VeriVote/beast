@@ -107,8 +107,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		getContentPane().add(endpanel, BorderLayout.SOUTH);
 
 		addNewButton.setIcon(addIcon);
-		addNewButton.addActionListener(new ActionListener() { // adds a new
-																// property
+		addNewButton.addActionListener(new ActionListener() { // adds a new property
 			public void actionPerformed(ActionEvent e) {
 				if (reactsToInput)
 					controller.addNewProperty();
@@ -118,10 +117,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		endpanel.add(addNewButton, BorderLayout.LINE_END);
 
 		addCreatedButton.setIcon(addIcon);
-		addCreatedButton.addActionListener(new ActionListener() { // adds a
-																	// property
-																	// that is
-																	// loaded
+		addCreatedButton.addActionListener(new ActionListener() { // adds a property that is loaded
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (reactsToInput) {
