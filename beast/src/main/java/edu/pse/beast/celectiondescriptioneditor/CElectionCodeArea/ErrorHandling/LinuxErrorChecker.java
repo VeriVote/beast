@@ -93,8 +93,6 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
             e.printStackTrace();
         }
 
-        System.out.println("started linux errorCheck with call: " + StringUtils.join(arguments, " "));
-
         return startedProcess;
     }
 

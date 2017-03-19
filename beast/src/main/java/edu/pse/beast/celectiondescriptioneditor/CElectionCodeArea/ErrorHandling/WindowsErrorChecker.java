@@ -73,9 +73,6 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
             String clExeCall = "\"" + vsCmd + "\"" + " & " + compilerString + " " + userIncludeAndPath + " " + ("\"" + toCheck.getAbsolutePath() + "\"") 
                     + " " + (" /Fo" + toCheck.getParent() + "\\ ") + (" /Fe" + toCheck.getParent() + "\\ ") + compileAllIncludesInIncludePath;
             
-            
-            System.out.println("clCall: " + clExeCall);
-
             List<String> callInList = new ArrayList<String>();
             
             callInList.add(clExeCall);
@@ -86,8 +83,7 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
             
             
             // this call starts a new VScmd instance and lets cl.exe (the compiler) run in it
-    //        ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", clExeCall);
-
+            // ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", clExeCall);
             ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", batFile.getAbsolutePath());
             
             try {

@@ -86,16 +86,6 @@ public abstract class SystemSpecificErrorChecker {
                 e1.printStackTrace();
             }
             
-            for (Iterator iterator = result.iterator(); iterator.hasNext();) {
-                String string = (String) iterator.next();
-                System.out.println("res: " + string);
-            }
-            
-            for (Iterator iterator = errors.iterator(); iterator.hasNext();) {
-                String string = (String) iterator.next();
-                System.out.println("err: " + string);
-            }
-            
             //parse the errors out of the returned lists
             List<CodeError> toReturn = parseError(result, errors);
             
