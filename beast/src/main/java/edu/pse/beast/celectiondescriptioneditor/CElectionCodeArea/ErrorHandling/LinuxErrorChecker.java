@@ -2,6 +2,7 @@ package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling
 
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
 import java.io.File;
@@ -37,7 +38,7 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
 
     // we want to compile all available c files, so the user doesn't have to
     // specify anything
-    private final String compileAllIncludesInFolder = "*.c";
+    private final String cFileEnder = ".c";
 
     // if gcc finds, that a return is missing, it prints out this error message.
     // The error then
@@ -53,9 +54,10 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
 
         String userIncludeAndPath = enableUserInclude + SuperFolderFinder.getSuperFolder() + userIncludeFolder;
 
-        //we have to compile all includes that the user puts in that folder, in case some of them are needed
-        String compileAllIncludesInIncludePath = "\"" + SuperFolderFinder.getSuperFolder() + userIncludeFolder + compileAllIncludesInFolder + "\"";
-        
+        // get all Files from the form "*.c" so we can include them into cbmc,
+        List<String> allFiles = FileLoader.listAllFilesFromFolder(
+                "\"" + SuperFolderFinder.getSuperFolder() + userIncludeFolder + "\"", cFileEnder);
+
         Process startedProcess = null;
 
         List<String> arguments = new ArrayList<String>();
@@ -67,13 +69,16 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
 
         arguments.add(findMissingReturnOption);
 
-        //add the path to the created file that should be checked
+        // add the path to the created file that should be checked
         arguments.add(toCheck.getAbsolutePath());
-        
-        //add the path that points to all files that might be included
-        arguments.add(compileAllIncludesInIncludePath);
 
-        //defines the position to what place the compiled files should be sent
+        // iterate over all "*.c" files from the include folder, to include them
+        for (Iterator<String> iterator = allFiles.iterator(); iterator.hasNext();) {
+            String toBeIncludedFile = (String) iterator.next();
+            arguments.add(toBeIncludedFile);
+        }
+
+        // defines the position to what place the compiled files should be sent
         arguments.add(compileToThis);
 
         ProcessBuilder prossBuild = new ProcessBuilder(arguments.toArray(new String[0]));
@@ -86,7 +91,7 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
         }
 
         System.out.println("started linux errorCheck with call: " + StringUtils.join(arguments, " "));
-        
+
         return startedProcess;
     }
 
