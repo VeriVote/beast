@@ -4,6 +4,7 @@ import edu.pse.beast.parametereditor.ParameterEditor;
 import edu.pse.beast.toolbox.UserAction;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * UserAction to toggle visibility of the BooleanExpEditor window
@@ -26,10 +27,12 @@ public class ShowHideBooleanExpEditor extends UserAction {
     @Override
     public void perform() {
         if (editor.getReacts()) {
-            if (booleanExpEditorWindow.isVisible()) {
+            if (booleanExpEditorWindow.isVisible() && booleanExpEditorWindow.getState() == 0) {
                 booleanExpEditorWindow.setVisible(false);
             } else {
                 booleanExpEditorWindow.setVisible(true);
+                booleanExpEditorWindow.setState(Frame.NORMAL);
+                booleanExpEditorWindow.requestFocus();
             }
         }
     }

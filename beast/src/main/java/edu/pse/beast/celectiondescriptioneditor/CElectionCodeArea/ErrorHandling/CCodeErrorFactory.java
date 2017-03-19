@@ -18,7 +18,7 @@ public class CCodeErrorFactory {
     private static final String ids[] = {"compilererror", "antlr"};
 
     public static CodeError generateCompilerError(int line, int posInLine, String varName, String message) {
-        CodeError toReturn = new CodeError(line - 3 * 3, posInLine, ids[0], 0, -1, -1);
+        CodeError toReturn = new CodeError(line - 9, posInLine, ids[0], 0, -1, -1);
         toReturn.setExtraInfo("var", varName);
         toReturn.setExtraInfo("msg", message);
         return toReturn;

@@ -5,12 +5,12 @@ unsigned int voting(unsigned int votes[V]) {
         int y = foo(3);
         return y;
 } 
-9 inputType13 SINGLE_CHOICE10 outputType13 CAND_OR_UNDEF8 propList206 <propertyListName>
+9 inputType13 SINGLE_CHOICE10 outputType13 CAND_OR_UNDEF8 propList224 <propertyListName>
 New PropertyList
 </propertyListName>
 <propertyItem>
 <postAndPreProps>
-4 name13 Eigenschaft 03 pre0 4 post0 7 varlist0 
+4 name13 Eigenschaft 03 pre0 4 post17 ELECT1 != ELECT2;7 varlist0 
 </postAndPreProps>
 <testStatus>
 true
@@ -24,16 +24,16 @@ true
 1
 </amountVotersMax>
 <amountCandidatesMin>
-1
+4
 </amountCandidatesMin>
 <amountCandidatesMax>
-1
+4
 </amountCandidatesMax>
 <amountSeatsMin>
-1
+3
 </amountSeatsMin>
 <amountSeatsMax>
-1
+3
 </amountSeatsMax>
 <timeout>
 <duration>

@@ -53,7 +53,7 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
 
         String nameOfOutFile = toCheck.getName().replace(".c", ".out");
 
-        String compileToThis = setOutputFileName + nameOfOutFile;
+        String compileToThis = SuperFolderFinder.getSuperFolder() + setOutputFileName + nameOfOutFile;
 
         String userIncludeAndPath = enableUserInclude + SuperFolderFinder.getSuperFolder() + userIncludeFolder;
 
@@ -92,8 +92,6 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        System.out.println("started linux errorCheck with call: " + StringUtils.join(arguments, " "));
 
         return startedProcess;
     }

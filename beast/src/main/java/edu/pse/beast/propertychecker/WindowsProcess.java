@@ -142,8 +142,6 @@ public class WindowsProcess extends CBMCProcess {
 
                 List<String> callInList = new ArrayList<String>();
                 
-                System.out.println("cbmcCall: " + cbmcCall);
-                
                 callInList.add(cbmcCall);
                 
                 File batFile = new File(toCheck.getParent() + "\\" + toCheck.getName().replace(".c", ".bat"));
