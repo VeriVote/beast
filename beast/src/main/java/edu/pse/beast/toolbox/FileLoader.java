@@ -8,9 +8,12 @@ package edu.pse.beast.toolbox;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -65,14 +68,14 @@ public final class FileLoader {
     }
 
     /**
-     * gets a new Name inside a directory
+     * creates a new Name inside a directory
      * @param pathToDir the path of the directory you want the new unique String to be created in 
      * @return the unique String
      */
     public static synchronized  String getNewUniqueName(String pathToDir) {
         ArrayList<String> usedNames = new ArrayList<>();
 
-        File folder = new File(pathToDir);
+        File folder = new File(pathToDir.replace("\"", ""));
         File[] listOfFiles = folder.listFiles();
 
         if (listOfFiles != null) {
@@ -94,5 +97,28 @@ public final class FileLoader {
     private static String getRandomName(int wordSize) {
         SecureRandom random = new SecureRandom();
         return new java.math.BigInteger(wordSize, random).toString(32);
+    }
+    
+    /**
+     * returns all files that end with the specified String that are in this folder
+     * @param pathToDir the path to the folder
+     * @param endsWith the String 
+     */
+    public static List<String> listAllFilesFromFolder(String pathToDir, String endsWith) {
+        ArrayList<String> foundFiles = new ArrayList<>();
+        
+        File folder = new File(pathToDir.replace("\"", ""));
+        
+        File[] listOfFiles = folder.listFiles();
+        
+        if (listOfFiles != null) {
+            for (File file : listOfFiles) {    
+                if (file.isFile() && file.getName().endsWith(endsWith)) {
+                    //surround it with quotes in case there are spaces in there
+                    foundFiles.add("\"" + file.getAbsolutePath() + "\"");
+                }
+            }
+        }
+        return foundFiles;
     }
 }

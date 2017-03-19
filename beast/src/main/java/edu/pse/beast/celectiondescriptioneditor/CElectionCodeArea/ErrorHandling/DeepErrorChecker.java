@@ -16,16 +16,22 @@ import java.util.List;
  *
  */
 public class DeepErrorChecker {
-    private final OperatingSystems os;
 
-    SystemSpecificErrorChecker errorChecker = null;
+    private static SystemSpecificErrorChecker errorChecker = null;
+
+    private static boolean INITIALIZED = false;
+
+    private DeepErrorChecker() {
+        
+    }
     
     /**
      * creates a new checker, that first of all determines its operating system
+     * and then creates the correlating one
      */
-    public DeepErrorChecker() {
-        this.os = determineOS();
-        
+    private static void init() {
+        OperatingSystems os = determineOS();
+
         switch (os) {
         case Linux:
             errorChecker = new LinuxErrorChecker();
@@ -41,6 +47,8 @@ public class DeepErrorChecker {
         default:
             ErrorLogger.log("Warning, your OS couldn't be determined or is not supported yet.");
         }
+
+        INITIALIZED = true;
     }
 
     /**
@@ -50,7 +58,10 @@ public class DeepErrorChecker {
      *            the code to check
      * @return a list of codeErros
      */
-    public List<CodeError> checkCodeForErrors(List<String> toCheck) {
+    public static List<CodeError> checkCodeForErrors(List<String> toCheck) {
+        if (!INITIALIZED) {
+            init();
+        }
         return errorChecker.checkCodeForErrors(toCheck);
     }
 
@@ -59,14 +70,14 @@ public class DeepErrorChecker {
      * 
      * @return the OperatingSystem as the enum
      */
-    private OperatingSystems determineOS() {
+    private static OperatingSystems determineOS() {
         String environment = System.getProperty("os.name");
         OperatingSystems determinedOS = null;
         if (environment.toLowerCase().contains("linux")) {
             determinedOS = OperatingSystems.Linux;
-        } else if (environment.toLowerCase().contains("windows") && os == null) {
+        } else if (environment.toLowerCase().contains("windows")) {
             determinedOS = OperatingSystems.Windows;
-        } else if (environment.toLowerCase().contains("mac") && os == null) {
+        } else if (environment.toLowerCase().contains("mac")) {
             determinedOS = OperatingSystems.Mac;
         } else {
             ErrorLogger.log("Sorry, your OS " + environment + " is not supported");

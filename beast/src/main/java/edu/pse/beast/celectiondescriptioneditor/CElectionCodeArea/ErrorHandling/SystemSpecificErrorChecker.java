@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -27,7 +28,6 @@ public abstract class SystemSpecificErrorChecker {
         //clear the folder where the files that get checked get saved to, because sometimes they
         //persist from the last time BEAST was run
         try {
-            System.out.println("clean");
             FileUtils.cleanDirectory(new File(SuperFolderFinder.getSuperFolder() + pathToTempFolder));
         } catch (IOException e) {
             // TODO Auto-generated catch block
@@ -56,8 +56,7 @@ public abstract class SystemSpecificErrorChecker {
         File objFile = new File(pathToNewFile + ".obj");
         
         //write the code to the file
-        FileSaver.writeStringLinesToFile(toCheck, cFile);
-        
+        FileSaver.writeStringLinesToFile(toCheck, cFile);        
         
         Process process = checkCodeFileForErrors(cFile);
         
@@ -79,11 +78,16 @@ public abstract class SystemSpecificErrorChecker {
                 e1.printStackTrace();
             }
             
+            for (Iterator iterator = result.iterator(); iterator.hasNext();) {
+                String string = (String) iterator.next();
+                System.out.println("res: " + string);
+            }
+            
             //parse the errors out of the returned lists
             List<CodeError> toReturn = parseError(result, errors);
             
             //deletes the temporary file, so it doesn't clog up the filesystem
-            cFile.delete();            
+            //cFile.delete();            
             objFile.delete();
             
             return toReturn;

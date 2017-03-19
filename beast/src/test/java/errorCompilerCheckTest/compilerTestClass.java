@@ -24,9 +24,7 @@ public class compilerTestClass {
     //    List<String> toTest = null;
         
         
-        DeepErrorChecker d = new DeepErrorChecker();
-        
-        List<CodeError> toTest = d.checkCodeForErrors(list);
+        List<CodeError> toTest = DeepErrorChecker.checkCodeForErrors(list);
         
         for (Iterator<CodeError> iterator = toTest.iterator(); iterator.hasNext();) {
             CodeError codeError = (CodeError) iterator.next();

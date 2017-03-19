@@ -16,6 +16,9 @@ public class LinuxProcess extends CBMCProcess {
     //the time in milliseconds to wait for the termination of the process on linux
     private final long WAITINGTIME = 3000;
     
+    private final String enableUserInclude = "-I";
+    private final String userIncludeFolder = "/core/user_includes/";
+    
     /**
      * creates a new CBMC Checker for the windows OS
      * 
@@ -48,8 +51,11 @@ public class LinuxProcess extends CBMCProcess {
 
         List<String> arguments = new ArrayList<String>();
 
-        String cbmc = new File(SuperFolderFinder.getSuperFolder() + RELATIVEPATHTOCBMC64).getPath();
+        String cbmc = "\"" + new File(SuperFolderFinder.getSuperFolder() + RELATIVEPATHTOCBMC64).getPath() + "\"";
 
+        //enable the usage of includes in cbmc
+        String userIncludeAndPath = "\"" + enableUserInclude + SuperFolderFinder.getSuperFolder() + userIncludeFolder + "\"";
+        
         if (!new File(cbmc).exists()) {
             ErrorForUserDisplayer.displayError(
                     "Can't find the cbmc program in the subfolger \"linux/cbmcLin/\", please download it from "
@@ -63,8 +69,11 @@ public class LinuxProcess extends CBMCProcess {
 
             arguments.add(cbmc);
 
-            arguments.add(toCheck.getAbsolutePath());
+            //wrap it in quotes, in case the path has spaces in it
+            arguments.add("\"" + toCheck.getAbsolutePath() + "\"");
 
+            arguments.add(userIncludeAndPath);
+            
             // here we supply this call with the correct values for the voters,
             // candidates and seats
             arguments.add("-D V=" + voters);

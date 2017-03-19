@@ -2,6 +2,7 @@ package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling
 
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.toolbox.SuperFolderFinder;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +30,12 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
 	// we want to compile to a specific name, so we can delete the file
 	// then later on
 	private final String setOutputFileName = "-o ";
-
+	
+	
+	private final String enableUserInclude = "-I/";
+	private final String userIncludeFolder = "/core/user_includes/";
+	
+	
 	//if gcc finds, that a return is missing, it prints out this error message. The error then 
 	//stands in the format: "FILENANE:LINE:COLUMN warning:control reaches..."
 	private final String gccMissingReturnFound = "warning: control reaches end of non-void function";
@@ -41,12 +47,16 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
 
 		String compileToThis = setOutputFileName + nameOfOutFile;
 
+		String userIncludeAndPath = enableUserInclude + SuperFolderFinder.getSuperFolder() + userIncludeFolder;
+		
 		Process startedProcess = null;
 
 		List<String> arguments = new ArrayList<String>();
 
 		// add the arguments needed for the call
 		arguments.add(compilerString);
+		
+		arguments.add(userIncludeAndPath);
 
 		arguments.add(findMissingReturnOption);
 
@@ -103,7 +113,7 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
 							varName = message.split("‘")[1].split("’")[0];
 						}
 
-						codeErrors.add(CCodeErrorFactory.generateCompilterError(lineNumber, linePos, varName, message));
+						codeErrors.add(CCodeErrorFactory.generateCompilerError(lineNumber, linePos, varName, message));
 
 					} catch (NumberFormatException e) {
 						ErrorLogger.log("can't parse the current error line from gcc");
@@ -127,7 +137,7 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
 						
 						message = "Missing return";
 
-						codeErrors.add(CCodeErrorFactory.generateCompilterError(lineNumber, linePos, varName, message));
+						codeErrors.add(CCodeErrorFactory.generateCompilerError(lineNumber, linePos, varName, message));
 
 					} catch (NumberFormatException e) {
 						ErrorLogger.log("can't parse the current error line from gcc");

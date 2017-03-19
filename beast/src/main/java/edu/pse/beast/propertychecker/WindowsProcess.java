@@ -16,11 +16,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class WindowsProcess extends CBMCProcess {
     private long WAITINGTIMEFORTERMINATION = 3000;
 
     private final String relativePathToCBMC32 = "/windows/cbmcWIN/cbmc.exe";
     private final String relativePathToCBMC64 = "/windows/cbmcWIN/cbmc64.exe";
+
+    private final String enableUserInclude = "-I";
+    private final String userIncludeFolder = "/core/user_includes/";
+
+    // we want to compile all available c files, so the user doesn't have to
+    // specify anything
+    private final String cFileEnder = ".c";
 
     /**
      * creates a new CBMC Checker for the windows OS
@@ -56,6 +65,16 @@ public class WindowsProcess extends CBMCProcess {
         // set the values for the voters, candidates and seats
         String arguments = userCommands + " -D V=" + voters + " -D C=" + candidates + " -D S=" + seats;
 
+        // enable the usage of includes in cbmc
+        String userIncludeAndPath = "\"" + enableUserInclude + SuperFolderFinder.getSuperFolder()
+                + userIncludeFolder + "\"";
+
+        //get all Files from the form "*.c" so we can include them into cbmc,
+        List<String> allFiles = FileLoader.listAllFilesFromFolder("\"" + SuperFolderFinder.getSuperFolder() + userIncludeFolder +"\"", cFileEnder);
+        
+        //we have to give all available "*c" files to cbmc, in case the user used his own includes, so we combine them here
+        String compileAllIncludesInIncludePath = StringUtils.join(allFiles, " ");
+        
         String vsCmd = null;
         Process startedProcess = null;
 
@@ -77,6 +96,10 @@ public class WindowsProcess extends CBMCProcess {
                             + "/windows/ in the BEAST installation folder.");
             return null;
         } else {
+
+            // surround the vsCMD string with quotes, in case it has spaces in
+            // it
+            vsCmd = "\"" + vsCmd + "\"";
 
             // determine the os architecture
             boolean is64bit = false;
@@ -108,15 +131,31 @@ public class WindowsProcess extends CBMCProcess {
                                 + "in the BEAST installation folder and try again.");
             } else {
 
+                // surround it with quotes, in case there are spaces in the name
+                cbmcEXE = "\"" + cbmcEXE + "\"";
+
                 // because windows is weird the whole call that will get placed
                 // inside
                 // VScmd has to be in one giant string
-                String cbmcCall = "\"" + vsCmd + "\"" + " & " + "\"" + cbmcEXE + "\"" + " " + "\"" 
-                        + toCheck.getAbsolutePath() + "\"" + " " + arguments;
+                String cbmcCall = vsCmd + " & " + cbmcEXE + " " + userIncludeAndPath + " " + "\""
+                        + toCheck.getAbsolutePath() + "\"" + " " + compileAllIncludesInIncludePath + " " + arguments;
 
+                List<String> callInList = new ArrayList<String>();
+                
+                callInList.add(cbmcCall);
+                
+                //let the .bat file delete itself
+                callInList.add("(goto) 2>nul & del \"%~f0\"");
+                
+                File batFile = new File(toCheck.getParent() + "\\" + FileLoader.getNewUniqueName(toCheck.getParent()) + ".bat");
+                
+                FileSaver.writeStringLinesToFile(callInList, batFile);
+                
                 // this call starts a new VScmd instance and lets cbmc run in it
-                ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", cbmcCall);
+               // ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", cbmcCall);
 
+                ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", "\"" + batFile.getAbsolutePath() + "\"");
+                
                 try {
                     startedProcess = prossBuild.start();
                 } catch (IOException e) {
@@ -147,7 +186,8 @@ public class WindowsProcess extends CBMCProcess {
             List<String> children = new ArrayList<String>();
 
             // latch to synchronize on, so we can be sure that every
-            // childprocess is found and written to this List that contains the children
+            // childprocess is found and written to this List that contains the
+            // children
             CountDownLatch latch = new CountDownLatch(1);
 
             ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", cmdCall);
@@ -174,29 +214,31 @@ public class WindowsProcess extends CBMCProcess {
                         cbmcFinder.waitFor();
                         latch.await();
                     } catch (InterruptedException e) {
-                        ErrorLogger.log("This thread should not to be interrupted while waiting for these results");
+                        ErrorLogger
+                                .log("This thread should not to be interrupted while waiting for these results");
                     }
                 }
 
-                //traverse all children
+                // traverse all children
                 for (Iterator<String> iterator = children.iterator(); iterator.hasNext();) {
                     String line = (String) iterator.next();
 
                     // trim it down so it only has a single space in between, so
                     // we can split there
                     line = line.trim().replaceAll(" +", " ");
-                    if (line.split(" ").length == 2) { // filter out misformed lines
-                        //search for the 32 and 64 bit version, 
-                        //so we don't have to make a whole new class for each of them
+                    if (line.split(" ").length == 2) { // filter out misformed
+                                                       // lines
+                        // search for the 32 and 64 bit version,
+                        // so we don't have to make a whole new class for each
+                        // of them
                         if (line.split(" ")[0].equals("cbmc.exe") || line.split(" ")[0].equals("cbmc64.exe")) {
                             if (cbmcPID == -1) {
                                 // extract the PID from the line
                                 cbmcPID = Integer.parseInt(line.split(" ")[1]);
-                            } else { 
-                                ErrorLogger
-                                        .log("Found multiple CBMC instances in this process tree. This is not "
-                                                + "intended, only one will be closed, "
-                                                + "please close the others by hand.");
+                            } else {
+                                ErrorLogger.log("Found multiple CBMC instances in this process tree. This is not "
+                                        + "intended, only one will be closed, "
+                                        + "please close the others by hand.");
                             }
                         }
                     }
@@ -208,7 +250,8 @@ public class WindowsProcess extends CBMCProcess {
 
             if (cbmcPID != -1) {
 
-                //now wrap the newly gotten process in a win32Process object to terminate it then
+                // now wrap the newly gotten process in a win32Process object to
+                // terminate it then
                 Win32Process cbmcProcess;
                 try {
                     cbmcProcess = new Win32Process(cbmcPID);
@@ -275,7 +318,8 @@ public class WindowsProcess extends CBMCProcess {
 
                 WinNT.HANDLE handle = new WinNT.HANDLE();
 
-                //get the immutable value and set it accessible so we don't run into errors
+                // get the immutable value and set it accessible so we don't run
+                // into errors
                 Field toSet = handle.getClass().getDeclaredField("immutable");
 
                 toSet.setAccessible(true);
@@ -285,13 +329,14 @@ public class WindowsProcess extends CBMCProcess {
 
                 int pid = kernel.GetProcessId(handle);
 
-                //set it back to the original value and make it unaccessable again
+                // set it back to the original value and make it unaccessable
+                // again
                 toSet.setBoolean(handle, savedState);
 
                 toSet.setAccessible(false);
 
                 return pid;
-                
+
             } catch (NoSuchFieldException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

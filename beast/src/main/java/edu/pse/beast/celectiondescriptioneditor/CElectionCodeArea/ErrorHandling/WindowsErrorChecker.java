@@ -3,9 +3,13 @@ package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.toolbox.FileLoader;
+import edu.pse.beast.toolbox.FileSaver;
+import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.toolbox.WindowsOStoolbox;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,8 +27,15 @@ import java.util.regex.Pattern;
 public class WindowsErrorChecker extends SystemSpecificErrorChecker {
 
     //the compiler we use on windows, because it is also needed by cbmc
-    private final String compilerString = "cl";
-
+    private final String compilerString = "cl.exe";
+    
+    //used to enable includes from the users own written classes
+    private final String enableUserInclude = "/I";
+    private final String userIncludeFolder = "/core/user_includes/";
+    
+    //we want to compile all available c files, so the user doesn't have to specify anything
+    private final String compileAllIncludesInFolder = "*.c";
+    
     @Override
     public Process checkCodeFileForErrors(File toCheck) {
 
@@ -32,6 +43,11 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
 
         Process startedProcess = null;
 
+        String userIncludeAndPath = enableUserInclude + "\"" + SuperFolderFinder.getSuperFolder() + userIncludeFolder + "\"";
+        
+        //we have to compile all includes that the user puts in that folder, in case some of them are needed
+        String compileAllIncludesInIncludePath = "\"" + SuperFolderFinder.getSuperFolder() + userIncludeFolder + compileAllIncludesInFolder + "\"";
+        
         // try to get the vsCMD
         try {
             vsCmd = WindowsOStoolbox.getVScmdPath();
@@ -54,17 +70,37 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
             // inside
             // VScmd has to be in one giant string. Put the created file in the output directory, so
             // it can be deleted afterwards
-            String clExeCall = "\"" + vsCmd + "\"" + " & " + compilerString + " " + ("\"" + toCheck.getAbsolutePath() + "\"") 
-                    + (" /Fo" + toCheck.getParent() + "\\");
+            String clExeCall = "\"" + vsCmd + "\"" + " & " + compilerString + " " + userIncludeAndPath + " " + ("\"" + toCheck.getAbsolutePath() + "\"") 
+                    + " " + (" /Fo" + toCheck.getParent() + "\\ ") + (" /Fe" + toCheck.getParent() + "\\ ") + compileAllIncludesInIncludePath;
+            
+            
+            System.out.println("clCall: " + clExeCall);
 
+            List<String> callInList = new ArrayList<String>();
+            
+            callInList.add(clExeCall);
+            
+            //let the .bat file delete itself
+            callInList.add("(goto) 2>nul & del \"%~f0\"");
+            
+            File batFile = new File(toCheck.getParent() + "\\" + FileLoader.getNewUniqueName(toCheck.getParent()) + ".bat");
+            
+            FileSaver.writeStringLinesToFile(callInList, batFile);
+            
+            
             // this call starts a new VScmd instance and lets cl.exe (the compiler) run in it
-            ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", clExeCall);
+    //        ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", clExeCall);
 
+            ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", batFile.getAbsolutePath());
+            
             try {
                 startedProcess = prossBuild.start();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            
+            //delete the created bat file
+           // batFile.delete();
         }
         return startedProcess;
     }
@@ -113,11 +149,19 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
                         }
                     }
                     
-                    codeErrors.add(CCodeErrorFactory.generateCompilterError(lineNumber, -1, varName, message));
+                    codeErrors.add(CCodeErrorFactory.generateCompilerError(lineNumber, -1, varName, message));
 
 
                 } catch (NumberFormatException e) {
                     ErrorLogger.log("can't parse the current error line from cl.exe");
+                }
+            } else 
+            if (line.contains(" : error LNK")){
+                String[] splittedArray = line.split(":");
+                
+                if (splittedArray.length >= 2) {
+                    String subString = splittedArray[2];
+                    codeErrors.add(CCodeErrorFactory.generateCompilerError(-1, -1, "", subString));
                 }
             }
         }

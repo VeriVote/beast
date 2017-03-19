@@ -49,3 +49,9 @@ beast/core/c_tempfiles/*.c
 # Options
 *opts.txt
 beast/core/generated_c_files/*.c
+beast/core/generated_c_files/*.bat
+beast/core/generated_c_files/*.exe
+beast/core/c_tempfiles/*.c
+beast/core/c_tempfiles/*.exe
+beast/core/c_tempfiles/*.obj
+beast/core/c_tempfiles/*.bat
