@@ -58,8 +58,11 @@ public class CBMCResult extends Result {
      */
     private FailureExample createFailureExample() {
 
+        
+        
         // datermine the elect values
         if (getResult() != null && getElectionType() != null) {
+            
             List<CBMCResultWrapperLong> elect = readLongs("elect", getResult());
 
             // define these arrays, because switch case doesn't let me reassign

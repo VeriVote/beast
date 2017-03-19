@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -105,6 +106,13 @@ public abstract class Checker implements Runnable {
 				e.printStackTrace();
 			}
 
+			for (Iterator iterator = result.iterator(); iterator.hasNext();) {
+                String string = (String) iterator.next();
+                System.out.println("res: " + string);
+            }
+			
+			//System.exit(0);
+			
 			finished = true;
 		} else {
 			ErrorLogger.log("Process couldn't be started");

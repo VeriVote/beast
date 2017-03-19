@@ -276,24 +276,25 @@ public abstract class CheckerFactory implements Runnable {
      */
     private ElectionType getElectionTypeFromElectionDescription() {
         ElectionTypeContainer inputType = electionDescSrc.getElectionDescription().getInputType();
+        
+        ElectionType toReturn = ElectionType.SINGLECHOICE;
+        
         switch (inputType.getId()) {
             case SINGLE_CHOICE:
-                return ElectionType.SINGLECHOICE;
+                toReturn = ElectionType.SINGLECHOICE;
             case PREFERENCE:
-                return ElectionType.PREFERENCE;
+                toReturn = ElectionType.PREFERENCE;
             case APPROVAL:
-                return ElectionType.APPROVAL;
+                toReturn = ElectionType.APPROVAL;
             case WEIGHTED_APPROVAL:
-                return ElectionType.WEIGHTEDAPPROVAL;
+                toReturn = ElectionType.WEIGHTEDAPPROVAL;
             case CAND_OR_UNDEF:
-                break;
+                toReturn.setResultTypeSeats(false);
             case CAND_PER_SEAT:
-                break;
+                toReturn.setResultTypeSeats(true);
             default:
-                throw new AssertionError(inputType.getId().name());
-
-        }
-        ErrorLogger.log("unsupported inputType of the Election");
-        return null;
+                toReturn.setResultTypeSeats(false);
+        }  
+        return toReturn;
     }
 }

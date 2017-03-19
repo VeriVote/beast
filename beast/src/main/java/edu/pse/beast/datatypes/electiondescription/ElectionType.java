@@ -25,6 +25,23 @@ public enum ElectionType {
 	/**
 	 * Every voter gives each candidate a rating from a minimum value to a maximum value.
 	 */
-	WEIGHTEDAPPROVAL
+	WEIGHTEDAPPROVAL;
+    
+    private boolean candPerSeat = false;
+    
+    /**
+     * sets the result type to the specified value
+     * @param candPerSeat true, if it is candidates per seat, else false
+     */
+    public void setResultTypeSeats(boolean candPerSeat) {
+        this.candPerSeat = candPerSeat;
+    }
 	
+    /**
+     * tells, if the voting methode was candidates per seats or not
+     * @return true, if it is candidates per seat, else false
+     */
+    public boolean getResultTypeSeats() {
+        return candPerSeat;
+    }
 }
