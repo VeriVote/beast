@@ -30,7 +30,7 @@ public class NewPropertyList extends UserAction {
         controller.getChangeHandler().setChangedSinceSave(false);
         controller.resetActionList();
         controller.getModel().setNewList();
-        controller.getFileChooser().setHasBeenSaved(false);
+        //controller.getFileChooser().setHasBeenSaved(false);
     }
 
 }

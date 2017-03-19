@@ -1,5 +1,9 @@
 package edu.pse.beast.propertylist.ViewAutomated;
 
+import static org.junit.Assert.*;
+
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.awt.Window;
 import java.awt.event.KeyEvent;
 
@@ -56,42 +60,40 @@ public class GuiFileTests {
 	}*/
 	
 	@Test
-	public void buttonTest() throws InterruptedException {
+	public void newPropertyListTest() throws InterruptedException, AWTException {
 		PropertyList proli = helper.getPropListOfCurrentInstance();
 		PropertyListWindow view = proli.getView();
 		
 		view.setVisible(true);
 		//ErrorLogger.log(view.getToolbar().getComponentAtIndex(0).getClass().toString());
 		
-		view.getAddNewButton().doClick();
-		view.getAddNewButton().doClick();
+		//view.getAddNewButton().doClick();
+		//view.getAddNewButton().doClick();
 		Thread.sleep(wait);
 		
 		JButton newList = (JButton) view.getToolbar().getComponentAtIndex(0);
 		
-		GuiTestHelper helpi = new GuiTestHelper();
+		JButton saveList = (JButton) view.getToolbar().getComponentAtIndex(1);
 		
 		//newList.doClick();
 		
+		proli.getModel().setNewName("testee");
+		
+		
+		newList.doClick();
+		
 		Thread.sleep(wait);
 		
+		assertEquals(proli.getModel().getName(), "New PropertyList");
 		
-		int[] keys = {
-				KeyEvent.VK_ESCAPE
+		/*int[] keys = {
+				KeyEvent.VK_ENTER
 		};
 		
-		
-		helpi.startNewBEASTInstance();
-		PropertyList listi = helpi.getPropListOfCurrentInstance();
-		view = listi.getView();
-		view.setVisible(true);
-		
-		view.getAddNewButton().doClick();
-		view.getAddNewButton().doClick();
-		
-		newList = (JButton) view.getToolbar().getComponentAtIndex(0);
-		newList.doClick();
-		helpi.performKeystrokes(keys, 50);
+		Robot r = new Robot();
+		r.keyPress(KeyEvent.VK_ENTER);
+		r.keyRelease(KeyEvent.VK_ENTER);*/
+
 		//helper.performKeystrokes(keys, 50);
 		
 		/*Window[] windows = view.getOwnedWindows();
@@ -102,11 +104,10 @@ public class GuiFileTests {
 
 		
 		
-		Thread.sleep(wait);
+		//Thread.sleep(wait);
 		
 
-		
-
+	
 		
 		
 		/*Object[] opts = opt.getOptions();

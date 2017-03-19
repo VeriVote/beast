@@ -1,3 +1,21 @@
 <propertyListName>
 New PropertyList
 </propertyListName>
+<propertyItem>
+<postAndPreProps>
+4 name13 Eigenschaft 03 pre0 4 post0 7 varlist0 
+</postAndPreProps>
+<testStatus>
+false
+</testStatus>
+
+</propertyItem>
+<propertyItem>
+<postAndPreProps>
+4 name13 Eigenschaft 13 pre0 4 post0 7 varlist0 
+</postAndPreProps>
+<testStatus>
+false
+</testStatus>
+
+</propertyItem>
