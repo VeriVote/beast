@@ -1,0 +1,67 @@
+4 name24 ComplexApprovalParlament8 elecDesc684 4 name8 prefParl14 votingDeclLine1 24 code588 //Approval: Voter approves or rejects each candidate
+//Seats per party: Number of seats per party
+unsigned int * voting(unsigned int votes[V][C]) { 
+        static unsigned int parl[S];
+        int j = 0;
+        for(int k = 0; k < S; k++){
+                parl[k] = C;
+        } 
+        for(int i = 0; i < C; i++) {
+                if(votes[0][i]){
+                        if(j < S){
+                                parl[j] = i;
+                                j++;        
+                        }
+                        
+                }
+        }
+        
+        return parl;
+} 
+9 inputType8 APPROVAL10 outputType13 CAND_PER_SEAT8 propList374 <propertyListName>
+New PropertyList
+</propertyListName>
+<propertyItem>
+<postAndPreProps>
+4 name13 Eigenschaft 03 pre67 FOR_ALL_CANDIDATES(c2) : VOTES1(v)(c2) == 1;
+v == VOTER_AT_POS(0);4 post60 FOR_ALL_CANDIDATES(c) : EXISTS_ONE_SEAT(s) : ELECT1(s) == c;7 varlist38 symbolic_variable: id: v type: VOTER;
+
+</postAndPreProps>
+<testStatus>
+true
+</testStatus>
+
+</propertyItem>
+19 electionCheckParams380 <amountVotersMin>
+14
+</amountVotersMin>
+<amountVotersMax>
+14
+</amountVotersMax>
+<amountCandidatesMin>
+2
+</amountCandidatesMin>
+<amountCandidatesMax>
+11
+</amountCandidatesMax>
+<amountSeatsMin>
+11
+</amountSeatsMin>
+<amountSeatsMax>
+11
+</amountSeatsMax>
+<timeout>
+<duration>
+0
+</duration>
+<timeunit>
+SECONDS
+</timeunit>
+
+</timeout>
+<processes>
+4
+</processes>
+<argument>
+
+</argument>
