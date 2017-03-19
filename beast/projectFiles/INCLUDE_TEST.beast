@@ -1,4 +1,5 @@
-4 name12 INCLUDE_TEST8 elecDesc331 4 name12 new_election14 votingDeclLine1 24 code224 //Single-choice: Wähler stimmt jeweils für einen Kandidaten
+4 name12 INCLUDE_TEST8 elecDesc348 4 name12 new_election14 votingDeclLine1 34 code241 #include "foo.h"
+//Single-choice: Wähler stimmt jeweils für einen Kandidaten
 //Kandidat oder unentschieden: Ein gewählter Kandidat oder unentschieden
 unsigned int voting(unsigned int votes[V]) { 
         int y = foo(3);
