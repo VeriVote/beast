@@ -114,14 +114,14 @@ public class FailureExample {
     }
 
     public boolean isChooseOneCandidate() {
-        if (getVotes() != null)
+        if (electionType == ElectionType.SINGLECHOICE)
             return true;
         else
             return false;
     }
 
     public boolean isOneSeatOnly() {
-        if (getElect() != null)
+        if (numOfSeats == 1)
             return true;
         return false;
     }
