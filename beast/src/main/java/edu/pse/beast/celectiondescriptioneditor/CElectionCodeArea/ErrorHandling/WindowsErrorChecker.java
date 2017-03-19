@@ -80,10 +80,7 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
             
             callInList.add(clExeCall);
             
-            //let the .bat file delete itself
-            callInList.add("(goto) 2>nul & del \"%~f0\"");
-            
-            File batFile = new File(toCheck.getParent() + "\\" + FileLoader.getNewUniqueName(toCheck.getParent()) + ".bat");
+            File batFile = new File(toCheck.getParent() + "\\" + toCheck.getName().replace(".c", ".bat"));
             
             FileSaver.writeStringLinesToFile(callInList, batFile);
             
@@ -98,9 +95,6 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            
-            //delete the created bat file
-           // batFile.delete();
         }
         return startedProcess;
     }

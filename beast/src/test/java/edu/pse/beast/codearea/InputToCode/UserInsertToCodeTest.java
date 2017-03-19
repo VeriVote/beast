@@ -1,4 +1,5 @@
-package edu.pse.beast.codearea.InputToCode;
+package edu.pse.beast.CodeArea.InputToCode;
+
 
 import static org.junit.Assert.*;
 

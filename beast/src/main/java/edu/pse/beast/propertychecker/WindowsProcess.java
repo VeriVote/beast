@@ -137,17 +137,16 @@ public class WindowsProcess extends CBMCProcess {
                 // because windows is weird the whole call that will get placed
                 // inside
                 // VScmd has to be in one giant string
-                String cbmcCall = vsCmd + " & " + cbmcEXE + " " + userIncludeAndPath + " " + "\""
+                String cbmcCall =  vsCmd + " & " + cbmcEXE + " " + userIncludeAndPath + " " + "\""
                         + toCheck.getAbsolutePath() + "\"" + " " + compileAllIncludesInIncludePath + " " + arguments;
 
                 List<String> callInList = new ArrayList<String>();
                 
+                System.out.println("cbmcCall: " + cbmcCall);
+                
                 callInList.add(cbmcCall);
                 
-                //let the .bat file delete itself
-                callInList.add("(goto) 2>nul & del \"%~f0\"");
-                
-                File batFile = new File(toCheck.getParent() + "\\" + FileLoader.getNewUniqueName(toCheck.getParent()) + ".bat");
+                File batFile = new File(toCheck.getParent() + "\\" + toCheck.getName().replace(".c", ".bat"));
                 
                 FileSaver.writeStringLinesToFile(callInList, batFile);
                 
@@ -161,7 +160,7 @@ public class WindowsProcess extends CBMCProcess {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
+                
                 return startedProcess;
             }
         }

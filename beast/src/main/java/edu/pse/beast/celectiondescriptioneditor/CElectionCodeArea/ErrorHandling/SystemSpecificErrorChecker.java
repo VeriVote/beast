@@ -55,6 +55,14 @@ public abstract class SystemSpecificErrorChecker {
         
         File objFile = new File(pathToNewFile + ".obj");
         
+        //on windows we have to create a .bat file, so we create a reference to the file
+        //that will be created, to delete it afterwards
+        File batFile = new File(pathToNewFile + ".bat");
+        
+      //on windows we have to create a .bat file, so we create a reference to the file
+        //that will be created, to delete it afterwards
+        File exeFile = new File(pathToNewFile + ".exe");
+        
         //write the code to the file
         FileSaver.writeStringLinesToFile(toCheck, cFile);        
         
@@ -83,12 +91,19 @@ public abstract class SystemSpecificErrorChecker {
                 System.out.println("res: " + string);
             }
             
+            for (Iterator iterator = errors.iterator(); iterator.hasNext();) {
+                String string = (String) iterator.next();
+                System.out.println("err: " + string);
+            }
+            
             //parse the errors out of the returned lists
             List<CodeError> toReturn = parseError(result, errors);
             
             //deletes the temporary file, so it doesn't clog up the filesystem
-            //cFile.delete();            
+            cFile.delete();            
             objFile.delete();
+            batFile.delete();
+            exeFile.delete();
             
             return toReturn;
         } else {
