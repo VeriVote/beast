@@ -355,4 +355,29 @@ public class CBMCCodeGenerationVisitorTest {
         Assert.assertEquals(expected, actual);
     }
 
+    @Test
+    public void testCompareTwoElect() {
+        String expression =
+                "ELECT1 == ELECT2;";
+        String expected = "unsigned int comparison_0 = 1;\n" +
+                "for(unsigned int count_0 = 0; count_0 < S && comparison_0; ++count_0) {\n" +
+                "\tcomparison_0 = elect1[count_0] == elect2[count_0];\n" +
+                "}\n" +
+                "assume(comparison_0);\n";
+        BooleanExpressionNode n
+                = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
+                expression,
+                Arrays.asList(
+                        new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
+                        new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER)),
+                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.APPROVAL),
+                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.CAND_PER_SEAT)
+        ).getBooleanExpressions().get(2).get(0);
+
+        visitor.setToPrePropertyMode();
+        List<String> c = visitor.generateCode(n);
+        String actual = listToString(c);
+        Assert.assertEquals(expected, actual);
+    }
+
 }

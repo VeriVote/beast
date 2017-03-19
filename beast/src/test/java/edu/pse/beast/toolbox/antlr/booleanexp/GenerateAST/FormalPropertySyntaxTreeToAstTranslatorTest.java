@@ -123,4 +123,19 @@ public class FormalPropertySyntaxTreeToAstTranslatorTest {
                 getStandardOutput(),
                 scope);
     }
+
+    public static BooleanExpListNode translate(String expression, List<Tuple<String, InternalTypeRep>> nameAndTypes,
+                                               ElectionTypeContainer byId, ElectionTypeContainer byId1) {
+        JTextPane pane = new JTextPane();
+        pane.setText(expression);
+        BooleanExpANTLRHandler booleanExpANTLRHandler = new BooleanExpANTLRHandler(pane.getStyledDocument());
+        FormalPropertySyntaxTreeToAstTranslator translator = new FormalPropertySyntaxTreeToAstTranslator();
+        BooleanExpScope scope;
+        scope = new BooleanExpScope();
+        nameAndTypes.forEach(t -> scope.addTypeForId(t.x, new InternalTypeContainer(t.y)));
+        return translator.generateFromSyntaxTree(booleanExpANTLRHandler.getParseTree(),
+                byId.getType(),
+                byId1.getType(),
+                scope);
+    }
 }
