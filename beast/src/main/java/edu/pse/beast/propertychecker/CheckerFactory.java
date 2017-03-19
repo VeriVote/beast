@@ -276,25 +276,37 @@ public abstract class CheckerFactory implements Runnable {
      */
     private ElectionType getElectionTypeFromElectionDescription() {
         ElectionTypeContainer inputType = electionDescSrc.getElectionDescription().getInputType();
-        
-        ElectionType toReturn = ElectionType.SINGLECHOICE;
-        
+        ElectionTypeContainer outputType = electionDescSrc.getElectionDescription().getOutputType();
+
+        ElectionType toReturn = null;
+
         switch (inputType.getId()) {
             case SINGLE_CHOICE:
                 toReturn = ElectionType.SINGLECHOICE;
+                break;
             case PREFERENCE:
                 toReturn = ElectionType.PREFERENCE;
+                break;
             case APPROVAL:
                 toReturn = ElectionType.APPROVAL;
+                break;
             case WEIGHTED_APPROVAL:
                 toReturn = ElectionType.WEIGHTEDAPPROVAL;
+                break;
+
+            default:
+                ErrorLogger.log("InputType of the Election is not set correctly");
+        }
+        switch (outputType.getId()) {
             case CAND_OR_UNDEF:
                 toReturn.setResultTypeSeats(false);
+                break;
             case CAND_PER_SEAT:
                 toReturn.setResultTypeSeats(true);
+                break;
             default:
-                toReturn.setResultTypeSeats(false);
-        }  
+                ErrorLogger.log("OutputType of the Election is not set correctly");
+        }
         return toReturn;
     }
 }
