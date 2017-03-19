@@ -186,6 +186,7 @@ public class BooleanExpEditor implements DisplaysStringsToUser {
      * @param postAndPrePropertiesDescription the PostAndPreProperties object that should be loaded in the editor
      */
     public void loadNewProperties(PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
+        updatePostAndPrePropObject();
         currentlyLoadedPostAndPreProp = postAndPrePropertiesDescription;
         symbolicVarListController.setSymbVarList(postAndPrePropertiesDescription.getSymbolicVariableList());
         window.setNewTextpanes();
