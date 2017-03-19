@@ -11,8 +11,13 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Shows a failure example where the election is Single-Choice and one seat is allocated.
+ * @author Justin
+ */
 public class ResultSingleDisplayTest {
 	ResultPresenterWindow win;
+	private int wait = 100;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -69,6 +74,6 @@ public class ResultSingleDisplayTest {
 	
 		win.presentFailureExample(fail);
 		
-		Thread.sleep(100);
+		Thread.sleep(wait);
 	}
 }

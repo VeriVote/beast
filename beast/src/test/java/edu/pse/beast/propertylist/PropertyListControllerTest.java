@@ -16,6 +16,10 @@ import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 
+/**
+ * Tests the commands for changing the PropertyList.
+ * @author Justin
+ */
 public class PropertyListControllerTest {
 	
 	static PropertyList list;

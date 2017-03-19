@@ -3,13 +3,8 @@ package edu.pse.beast.propertylist.ViewAutomated;
 import static org.junit.Assert.*;
 
 import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.Window;
-import java.awt.event.KeyEvent;
 
 import javax.swing.JButton;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,11 +12,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.pse.beast.Gui.GuiTestHelper;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.propertylist.TestHelper;
 import edu.pse.beast.propertylist.View.PropertyListWindow;
-import edu.pse.beast.toolbox.ErrorLogger;
 
 public class GuiFileTests {
 	
@@ -73,7 +66,7 @@ public class GuiFileTests {
 		
 		JButton newList = (JButton) view.getToolbar().getComponentAtIndex(0);
 		
-		JButton saveList = (JButton) view.getToolbar().getComponentAtIndex(1);
+		//JButton saveList = (JButton) view.getToolbar().getComponentAtIndex(1);
 		
 		//newList.doClick();
 		
