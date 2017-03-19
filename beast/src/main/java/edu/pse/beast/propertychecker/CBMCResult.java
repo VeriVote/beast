@@ -58,11 +58,13 @@ public class CBMCResult extends Result {
      */
     private FailureExample createFailureExample() {
 
+        System.out.println("drin");
         
+        System.out.println(getElectionType());
         
         // datermine the elect values
         if (getResult() != null && getElectionType() != null) {
-            
+
             List<CBMCResultWrapperLong> elect = readLongs("elect", getResult());
 
             // define these arrays, because switch case doesn't let me reassign
@@ -70,6 +72,7 @@ public class CBMCResult extends Result {
             // same name,
             // and i am a bit worried, that they won't get created properly;
             List<CBMCResultWrapperMultiArray> votesList;
+            // this list can be empty, if no voting for seats took place
             List<CBMCResultWrapperSingleArray> seatsList;
             List<CBMCResultWrapperSingleArray> singleVotesList;
 
@@ -82,7 +85,10 @@ public class CBMCResult extends Result {
 
                 votesList = readTwoDimVar("votes", getResult());
 
-                seatsList = readOneDimVar("seats", getResult());
+                // read all the variables with form electN[] that are arrays, to
+                // extract the seats that
+                // got chosen
+                seatsList = readOneDimVar("elect", getResult());
 
                 return new FailureExample(getElectionType(), null, votesList, elect, seatsList, getNumCandidates(),
                         getNumSeats(), getNumVoters());
@@ -91,7 +97,16 @@ public class CBMCResult extends Result {
 
                 votesList = readTwoDimVar("votes", getResult());
 
-                seatsList = readOneDimVar("seats", getResult());
+                // read all the variables with form electN[] that are arrays, to
+                // extract the seats that
+                // got chosen
+                seatsList = readOneDimVar("elect", getResult());
+                
+                //Long[] arr = seatsList.get(0).getArray();
+
+//                for (int i = 0; i < arr.length; i++) {
+//                    System.out.println("val: " + arr[i]);
+//                }
 
                 return new FailureExample(getElectionType(), null, votesList, elect, seatsList, getNumCandidates(),
                         getNumSeats(), getNumVoters());
@@ -100,15 +115,29 @@ public class CBMCResult extends Result {
 
                 singleVotesList = readOneDimVar("votes", getResult());
 
-                return new FailureExample(getElectionType(), singleVotesList, null, elect, null,
+                // read all the variables with form electN[] that are arrays, to
+                // extract the seats that
+                // got chosen
+                seatsList = readOneDimVar("elect", getResult());
+
+                return new FailureExample(getElectionType(), singleVotesList, null, elect, seatsList,
                         getNumCandidates(), getNumSeats(), getNumVoters());
 
             case WEIGHTEDAPPROVAL:
 
                 votesList = readTwoDimVar("votes", getResult());
 
-                seatsList = readOneDimVar("seats", getResult());
+                // read all the variables with form electN[] that are arrays, to
+                // extract the seats that
+                // got chosen
+                seatsList = readOneDimVar("elect", getResult());
 
+                Long[] arr = seatsList.get(0).getArray();
+
+                for (int i = 0; i < arr.length; i++) {
+                    System.out.println("val: " + arr[i]);
+                }
+                
                 return new FailureExample(getElectionType(), null, votesList, elect, seatsList, getNumCandidates(),
                         getNumSeats(), getNumVoters());
 
