@@ -24,7 +24,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
 	private String title = "";
 	private String currentlyLoadedProjectName = "New Project";
 	private final ImageIcon loading;
-	private final JLabel imageLabel;
+	private JLabel imageLabel;
 	private StringLoaderInterface stringResIF;
 
 	/**
@@ -35,10 +35,10 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
 		setReacts(true);
 		userFeedbackPanel.setLayout(new BorderLayout());
 		loading = new ImageIcon(SuperFolderFinder.getSuperFolder() + "/core/images/other/loader.gif");
-		imageLabel = new JLabel(loading);
+		imageLabel = new JLabel();
+		imageLabel.setHorizontalAlignment(JLabel.CENTER);
 		imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		userFeedbackPanel.add(imageLabel);
-		imageLabel.setVisible(false);
 		Thread t = new Thread(new RepaintThread(this));
 		t.start();
 	}
@@ -506,14 +506,16 @@ public class ParameterEditorWindow extends javax.swing.JFrame implements Display
 
 	@Override
 	public void displayText(String stringIdForResources, boolean showLoader, String additionalText) {
-	    imageLabel.setVisible(showLoader);
+		if (showLoader) {
+			imageLabel.setIcon(loading);
+		} else {
+			imageLabel.setIcon(null);
+		}
 		if (!"".equals(stringIdForResources)) {
 			statusLabel.setText(stringResIF.getParameterEditorStringResProvider().getOtherStringRes()
 					.getStringFromID(stringIdForResources) + additionalText);
 		} else {
 			statusLabel.setText("");
 		}
-		imageLabel.repaint();
-		this.repaint();
 	}
 }
