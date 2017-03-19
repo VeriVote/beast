@@ -1,0 +1,20 @@
+4 name8 prefParl14 votingDeclLine1 24 code564 //Approval: Voter approves or rejects each candidate
+//Seats per party: Number of seats per party
+unsigned int * voting(unsigned int votes[V][C]) { 
+        static unsigned int parl[S];
+        int j = 0;
+        for(int i = 0; i < C; i++) {
+                if(votes[0][i]){
+                        if(j < S){
+                                parl[j] = i;
+                                j++;        
+                        }
+                        
+                }
+        }
+        while(j < S){
+                parl[j] = C;
+                j++;
+        }
+} 
+9 inputType8 APPROVAL10 outputType13 CAND_PER_SEAT

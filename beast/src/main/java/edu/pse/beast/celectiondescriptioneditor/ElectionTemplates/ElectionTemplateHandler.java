@@ -42,7 +42,7 @@ public class ElectionTemplateHandler {
                 new ElectionTypeContainer(
                         new InternalTypeContainer(
                                 new InternalTypeContainer(
-                                        new InternalTypeContainer(InternalTypeRep.APPROVAL),
+                                        new InternalTypeContainer(InternalTypeRep.INTEGER),
                                         InternalTypeRep.CANDIDATE
                                 ), InternalTypeRep.VOTER),
                         ElectionTypeContainer.ElectionTypeIds.APPROVAL));
