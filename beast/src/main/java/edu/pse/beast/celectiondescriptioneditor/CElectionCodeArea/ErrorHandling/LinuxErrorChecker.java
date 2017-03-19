@@ -18,133 +18,145 @@ import java.util.List;
  *
  */
 public class LinuxErrorChecker extends SystemSpecificErrorChecker {
-    
 
     // program that is to be used for checking
-	private final String compilerString = "gcc";
+    private final String compilerString = "gcc";
 
-	// this flag prohibits that file are creates by the compiler and
-	// only the syntax is checked
-	private final String findMissingReturnOption = "-Wreturn-type";
+    // this flag prohibits that file are creates by the compiler and
+    // only the syntax is checked
+    private final String findMissingReturnOption = "-Wreturn-type";
 
-	// we want to compile to a specific name, so we can delete the file
-	// then later on
-	private final String setOutputFileName = "-o ";
-	
-	
-	private final String enableUserInclude = "-I/";
-	private final String userIncludeFolder = "/core/user_includes/";
-	
-	
-	//if gcc finds, that a return is missing, it prints out this error message. The error then 
-	//stands in the format: "FILENANE:LINE:COLUMN warning:control reaches..."
-	private final String gccMissingReturnFound = "warning: control reaches end of non-void function";
+    // we want to compile to a specific name, so we can delete the file
+    // then later on
+    private final String setOutputFileName = "-o ";
 
-	@Override
-	public Process checkCodeFileForErrors(File toCheck) {
-		
-		String nameOfOutFile = toCheck.getName().replace(".c", ".out");
+    private final String enableUserInclude = "-I/";
+    private final String userIncludeFolder = "/core/user_includes/";
 
-		String compileToThis = setOutputFileName + nameOfOutFile;
+    // we want to compile all available c files, so the user doesn't have to
+    // specify anything
+    private final String compileAllIncludesInFolder = "*.c";
 
-		String userIncludeAndPath = enableUserInclude + SuperFolderFinder.getSuperFolder() + userIncludeFolder;
-		
-		Process startedProcess = null;
+    // if gcc finds, that a return is missing, it prints out this error message.
+    // The error then
+    // stands in the format: "FILENANE:LINE:COLUMN warning:control reaches..."
+    private final String gccMissingReturnFound = "warning: control reaches end of non-void function";
 
-		List<String> arguments = new ArrayList<String>();
+    @Override
+    public Process checkCodeFileForErrors(File toCheck) {
 
-		// add the arguments needed for the call
-		arguments.add(compilerString);
-		
-		arguments.add(userIncludeAndPath);
+        String nameOfOutFile = toCheck.getName().replace(".c", ".out");
 
-		arguments.add(findMissingReturnOption);
+        String compileToThis = setOutputFileName + nameOfOutFile;
 
-		arguments.add(toCheck.getAbsolutePath());
+        String userIncludeAndPath = enableUserInclude + SuperFolderFinder.getSuperFolder() + userIncludeFolder;
 
-		arguments.add(compileToThis);
+        //we have to compile all includes that the user puts in that folder, in case some of them are needed
+        String compileAllIncludesInIncludePath = "\"" + SuperFolderFinder.getSuperFolder() + userIncludeFolder + compileAllIncludesInFolder + "\"";
+        
+        Process startedProcess = null;
 
-		ProcessBuilder prossBuild = new ProcessBuilder(arguments.toArray(new String[0]));
+        List<String> arguments = new ArrayList<String>();
 
-		try {
-			// start the process
-			startedProcess = prossBuild.start();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        // add the arguments needed for the call
+        arguments.add(compilerString);
 
-		return startedProcess;
-	}
+        arguments.add(userIncludeAndPath);
 
-	@Override
-	protected List<CodeError> parseError(List<String> result, List<String> errors) {
-		List<CodeError> codeErrors = new ArrayList<CodeError>();
+        arguments.add(findMissingReturnOption);
 
-		// gcc gives the errors out in the error stream so we traverse it
-		for (Iterator<String> iterator = errors.iterator(); iterator.hasNext();) {
-			String line = (String) iterator.next();
+        //add the path to the created file that should be checked
+        arguments.add(toCheck.getAbsolutePath());
+        
+        //add the path that points to all files that might be included
+        arguments.add(compileAllIncludesInIncludePath);
 
-			int lineNumber = -1;
+        //defines the position to what place the compiled files should be sent
+        arguments.add(compileToThis);
 
-			int linePos = -1;
+        ProcessBuilder prossBuild = new ProcessBuilder(arguments.toArray(new String[0]));
 
-			String varName = "";
+        try {
+            // start the process
+            startedProcess = prossBuild.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-			String message = "";
+        return startedProcess;
+    }
 
-			// we only want error lines, no warning or something else
-			if (line.contains("error:")) {
+    @Override
+    protected List<CodeError> parseError(List<String> result, List<String> errors) {
+        List<CodeError> codeErrors = new ArrayList<CodeError>();
 
-				// we want the format :line:position: ... error:
-				// so we need at least 4 ":" in the string to be sure to find a
-				// line and the position and the error
-				if (line.split(":").length > 4) {
+        // gcc gives the errors out in the error stream so we traverse it
+        for (Iterator<String> iterator = errors.iterator(); iterator.hasNext();) {
+            String line = (String) iterator.next();
 
-					try {
+            int lineNumber = -1;
 
-						// put the output in the containers for them
-						lineNumber = Integer.parseInt(line.split(":")[1]);
+            int linePos = -1;
 
-						linePos = Integer.parseInt(line.split(":")[2]);
+            String varName = "";
 
-						message = line.split("error:")[1];
+            String message = "";
 
-						if (message.contains("‘") && message.contains("’")) {
-							varName = message.split("‘")[1].split("’")[0];
-						}
+            // we only want error lines, no warning or something else
+            if (line.contains("error:")) {
 
-						codeErrors.add(CCodeErrorFactory.generateCompilerError(lineNumber, linePos, varName, message));
+                // we want the format :line:position: ... error:
+                // so we need at least 4 ":" in the string to be sure to find a
+                // line and the position and the error
+                if (line.split(":").length > 4) {
 
-					} catch (NumberFormatException e) {
-						ErrorLogger.log("can't parse the current error line from gcc");
-					}
-				}
-			} else if (line.contains(gccMissingReturnFound)) {
+                    try {
 
-				// we want the format :line:position: ... error:
-				// so we need at least 4 ":" in the string to be sure to find a
-				// line and the position and the error
+                        // put the output in the containers for them
+                        lineNumber = Integer.parseInt(line.split(":")[1]);
 
-					try {
+                        linePos = Integer.parseInt(line.split(":")[2]);
 
-						//the output has the form"FILENANE:LINE:COLUMN warning:control reaches..."
-						
-						lineNumber = Integer.parseInt(line.split(":")[1]);
-						
-						linePos = Integer.parseInt(line.split(":")[2]);
-						
-						varName = "";
-						
-						message = "Missing return";
+                        message = line.split("error:")[1];
 
-						codeErrors.add(CCodeErrorFactory.generateCompilerError(lineNumber, linePos, varName, message));
+                        if (message.contains("‘") && message.contains("’")) {
+                            varName = message.split("‘")[1].split("’")[0];
+                        }
 
-					} catch (NumberFormatException e) {
-						ErrorLogger.log("can't parse the current error line from gcc");
-					}
-				
-			}
-		}
-		return codeErrors;
-	}
+                        codeErrors.add(
+                                CCodeErrorFactory.generateCompilerError(lineNumber, linePos, varName, message));
+
+                    } catch (NumberFormatException e) {
+                        ErrorLogger.log("can't parse the current error line from gcc");
+                    }
+                }
+            } else if (line.contains(gccMissingReturnFound)) {
+
+                // we want the format :line:position: ... error:
+                // so we need at least 4 ":" in the string to be sure to find a
+                // line and the position and the error
+
+                try {
+
+                    // the output has the form"FILENANE:LINE:COLUMN
+                    // warning:control reaches..."
+
+                    lineNumber = Integer.parseInt(line.split(":")[1]);
+
+                    linePos = Integer.parseInt(line.split(":")[2]);
+
+                    varName = "";
+
+                    message = "Missing return";
+
+                    codeErrors.add(CCodeErrorFactory.generateCompilerError(lineNumber, linePos, varName, message));
+
+                } catch (NumberFormatException e) {
+                    ErrorLogger.log("can't parse the current error line from gcc");
+                }
+
+            }
+        }
+        return codeErrors;
+    }
 }

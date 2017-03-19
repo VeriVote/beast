@@ -2,11 +2,13 @@ package edu.pse.beast.propertychecker;
 
 import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class LinuxProcess extends CBMCProcess {
@@ -18,6 +20,10 @@ public class LinuxProcess extends CBMCProcess {
     
     private final String enableUserInclude = "-I";
     private final String userIncludeFolder = "/core/user_includes/";
+
+    // we want to compile all available c files, so the user doesn't have to
+    // specify anything
+    private final String cFileEnder = ".c";
     
     /**
      * creates a new CBMC Checker for the windows OS
@@ -56,6 +62,9 @@ public class LinuxProcess extends CBMCProcess {
         //enable the usage of includes in cbmc
         String userIncludeAndPath = "\"" + enableUserInclude + SuperFolderFinder.getSuperFolder() + userIncludeFolder + "\"";
         
+        //get all Files from the form "*.c" so we can include them into cbmc,
+        List<String> allFiles = FileLoader.listAllFilesFromFolder("\"" + SuperFolderFinder.getSuperFolder() + userIncludeFolder +"\"", cFileEnder);
+        
         if (!new File(cbmc).exists()) {
             ErrorForUserDisplayer.displayError(
                     "Can't find the cbmc program in the subfolger \"linux/cbmcLin/\", please download it from "
@@ -69,10 +78,16 @@ public class LinuxProcess extends CBMCProcess {
 
             arguments.add(cbmc);
 
+            arguments.add(userIncludeAndPath);
+            
             //wrap it in quotes, in case the path has spaces in it
             arguments.add("\"" + toCheck.getAbsolutePath() + "\"");
-
-            arguments.add(userIncludeAndPath);
+            
+            //iterate over all "*.c" files from the include folder, to include them
+            for (Iterator<String> iterator = allFiles.iterator(); iterator.hasNext();) {
+                String toBeIncludedFile = (String) iterator.next();
+                arguments.add(toBeIncludedFile);
+            }
             
             // here we supply this call with the correct values for the voters,
             // candidates and seats
