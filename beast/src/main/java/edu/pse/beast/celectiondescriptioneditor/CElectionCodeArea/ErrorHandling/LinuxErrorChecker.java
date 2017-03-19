@@ -45,6 +45,9 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
     // stands in the format: "FILENANE:LINE:COLUMN warning:control reaches..."
     private final String gccMissingReturnFound = "warning: control reaches end of non-void function";
 
+    // if gcc finds that a function is missing, it gets displayed like this:
+    private final String gccMissingFuctionFound = "warning: implicit declaration of function";
+
     @Override
     public Process checkCodeFileForErrors(File toCheck) {
 
@@ -75,7 +78,7 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
         // iterate over all "*.c" files from the include folder, to include them
         for (Iterator<String> iterator = allFiles.iterator(); iterator.hasNext();) {
             String toBeIncludedFile = (String) iterator.next();
-            arguments.add(toBeIncludedFile);
+            arguments.add(toBeIncludedFile.replace("\"", "").replace(" ", "\\ "));
         }
 
         // defines the position to what place the compiled files should be sent
@@ -164,6 +167,35 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
                     ErrorLogger.log("can't parse the current error line from gcc");
                 }
 
+            } else if (line.contains(gccMissingFuctionFound)) {
+                // we want the format :line:position: ... error:
+                // so we need at least 4 ":" in the string to be sure to find a
+                // line and the position and the error
+
+                String[] splittedLine = line.split(":");
+                
+                if (splittedLine.length >= 4)
+                
+                try {
+
+                    // the output has the form"FILENANE:LINE:COLUMN
+                    // warning:control reaches..."
+
+                    lineNumber = Integer.parseInt(line.split(":")[1]);
+
+                    linePos = Integer.parseInt(line.split(":")[2]);
+
+                    if (message.contains("‘") && message.contains("’")) {
+                        varName = message.split("‘")[1].split("’")[0];
+                    }
+
+                    message = line.split("warning:")[1];
+
+                    codeErrors.add(CCodeErrorFactory.generateCompilerError(lineNumber, linePos, varName, message));
+
+                } catch (NumberFormatException e) {
+                    ErrorLogger.log("can't parse the current error line from gcc");
+                }
             }
         }
         return codeErrors;
