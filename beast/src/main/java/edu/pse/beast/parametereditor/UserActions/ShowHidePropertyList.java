@@ -4,6 +4,7 @@ import edu.pse.beast.parametereditor.ParameterEditor;
 import edu.pse.beast.toolbox.UserAction;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * UserAction to toggle visibility of the PropertyList window
@@ -26,10 +27,12 @@ public class ShowHidePropertyList extends UserAction {
     @Override
     public void perform() {
         if (editor.getReacts()) {
-            if (propertyListWindow.isVisible()) {
+            if (propertyListWindow.isVisible() && propertyListWindow.getState() == 0) {
                 propertyListWindow.setVisible(false);
             } else {
                 propertyListWindow.setVisible(true);
+                propertyListWindow.setState(Frame.NORMAL);
+                propertyListWindow.requestFocus();
             }
         }
     }
