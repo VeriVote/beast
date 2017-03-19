@@ -65,28 +65,28 @@ public class LinuxProcess extends CBMCProcess {
         //get all Files from the form "*.c" so we can include them into cbmc,
         List<String> allFiles = FileLoader.listAllFilesFromFolder("\"" + SuperFolderFinder.getSuperFolder() + userIncludeFolder +"\"", cFileEnder);
         
-        if (!new File(cbmc).exists()) {
+        if (!new File(cbmc.replace("\"", "")).exists()) {
             ErrorForUserDisplayer.displayError(
                     "Can't find the cbmc program in the subfolger \"linux/cbmcLin/\", please download it from "
                     + "the cbmc website and place it there!");
-        } else if (!new File(cbmc).canExecute()) {
+        } else if (!new File(cbmc.replace("\"", "")).canExecute()) {
             ErrorForUserDisplayer
                     .displayError("This program doesn't have the privileges to execute this program. \n "
                             + "Please change the access rights for the program \"/linux/cbmcLin/cbmc\" in the "
                             + "BEAST installation folder and try again");
         } else {
 
-            arguments.add(cbmc);
+            arguments.add(cbmc.replace("\"", ""));
 
-            arguments.add(userIncludeAndPath);
+            arguments.add(userIncludeAndPath.replace("\"", ""));
             
             //wrap it in quotes, in case the path has spaces in it
-            arguments.add("\"" + toCheck.getAbsolutePath() + "\"");
+            arguments.add(toCheck.getAbsolutePath().replace("\"", ""));
             
             //iterate over all "*.c" files from the include folder, to include them
             for (Iterator<String> iterator = allFiles.iterator(); iterator.hasNext();) {
                 String toBeIncludedFile = (String) iterator.next();
-                arguments.add(toBeIncludedFile);
+                arguments.add(toBeIncludedFile.replace("\"", ""));
             }
             
             // here we supply this call with the correct values for the voters,
