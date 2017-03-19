@@ -57,10 +57,10 @@ public class CBMCResult extends Result {
      * @return a failure example that show how the voters voted and who won then
      */
     private FailureExample createFailureExample() {
-
-        System.out.println("drin");
         
-        System.out.println(getElectionType());
+        System.out.println("type: " + getElectionType());
+        
+        System.out.println(getElectionType().getResultTypeSeats());
         
         // datermine the elect values
         if (getResult() != null && getElectionType() != null) {

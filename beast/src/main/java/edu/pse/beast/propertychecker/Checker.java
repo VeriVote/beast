@@ -105,13 +105,6 @@ public abstract class Checker implements Runnable {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-			for (Iterator iterator = result.iterator(); iterator.hasNext();) {
-                String string = (String) iterator.next();
-                System.out.println("res: " + string);
-            }
-			
-			//System.exit(0);
 			
 			finished = true;
 		} else {
