@@ -9,6 +9,7 @@ import edu.pse.beast.datatypes.booleanExpAST.ComparisonSymbol;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.AtPosExp;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.BinaryIntegerValuedNode;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.IntegerNode;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
@@ -106,5 +107,20 @@ public class FormalPropertySyntaxTreeToAstTranslatorTest {
                 scope);
     }
 
-    
+
+    public static BooleanExpListNode translate(
+            String s, List<Tuple<String, InternalTypeRep>> nameAndTypes,
+            ElectionTypeContainer inputType) {
+        JTextPane pane = new JTextPane();
+        pane.setText(s);
+        BooleanExpANTLRHandler booleanExpANTLRHandler = new BooleanExpANTLRHandler(pane.getStyledDocument());
+        FormalPropertySyntaxTreeToAstTranslator translator = new FormalPropertySyntaxTreeToAstTranslator();
+        BooleanExpScope scope;
+        scope = new BooleanExpScope();
+        nameAndTypes.forEach(t -> scope.addTypeForId(t.x, new InternalTypeContainer(t.y)));
+        return translator.generateFromSyntaxTree(booleanExpANTLRHandler.getParseTree(),
+                inputType.getType(),
+                getStandardOutput(),
+                scope);
+    }
 }

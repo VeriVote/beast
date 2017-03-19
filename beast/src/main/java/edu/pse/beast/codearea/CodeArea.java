@@ -19,6 +19,7 @@ import edu.pse.beast.toolbox.UserAction;
 import javax.swing.*;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -232,7 +233,19 @@ public class CodeArea implements AncestorListener {
     public UserInputHandler getUserInputHandler() {
         return userInputHandler;
     }
-    
+
+    public void setFont(Font f) {
+        pane.setFont(f);
+        tln.setFont(f);
+    }
+
+    public void pauseErrorFinding() {
+        errorCtrl.pauseErrorFinding();
+    }
+
+    public void resumeErrorFinding() {
+        errorCtrl.resumeErrorFinding();
+    }
     
 
 }

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,6 +16,10 @@ import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 
+/**
+ * Tests the commands for changing the PropertyList.
+ * @author Justin
+ */
 public class PropertyListControllerTest {
 	
 	static PropertyList list;
@@ -83,7 +86,6 @@ public class PropertyListControllerTest {
 		assertEquals(list.getList().size(), 4);
 		
 		list.addDescription(item);
-		//assertEquals(list.getList().size(), 4);
 		assertEquals(list.getList().get(3), item);
 	}
 	

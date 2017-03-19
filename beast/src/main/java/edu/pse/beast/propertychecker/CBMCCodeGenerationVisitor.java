@@ -269,13 +269,23 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         testIfLast();
     }
 
+    /**
+     * generates the code for the comparison of 2 types which aren't integers
+     * These types can be lists which may have diferrent depth and might be acessed
+     * by variables.
+     * @param node the node to visit
+     */
     @Override
     public void visitComparisonNode(ComparisonNode node) {
         String varName = "comparison_" + comparisonNodeCounter;
         comparisonNodeCounter++;
         variableNames.push(varName);
-        listlvl = 0;
 
+        //let the visitor generate the code for the left value
+        //which will be compared. This is also used to find out
+        //how many list levels need to be compared, meaning how
+        //many for loops need to be generated
+        listlvl = 0;
         for (InternalTypeContainer cont = node.getLHSBooleanExpNode().getInternalTypeContainer();
                 cont.isList(); cont = cont.getListedType()) {
             listlvl++;
@@ -284,7 +294,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         int lhslistLevel = listlvl;
 
         listlvl = 0;
-
         for (InternalTypeContainer cont = node.getRHSBooleanExpNode().getInternalTypeContainer();
                 cont.isList(); cont = cont.getListedType()) {
             listlvl++;
@@ -292,6 +301,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
         node.getRHSBooleanExpNode().getVisited(this);
         int rhslistLevel = listlvl;
+
 
         int maxListLevel = lhslistLevel > rhslistLevel ? lhslistLevel : rhslistLevel;
         InternalTypeContainer cont = lhslistLevel > rhslistLevel
@@ -306,6 +316,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         internCode = internCode.replace("BOOL", varName);
         code.add(internCode);
         ArrayList<String> counter = new ArrayList<>();
+
+        //generate the for loops used to test the two types..
+        //
         for (int i = 0; i < maxListLevel; ++i) {
             String max = "";
             String countingVar = "count_" + i;
@@ -335,12 +348,12 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         }
         String rhs = variableNames.pop();
         String lhs = variableNames.pop();
-        internCode = varName + " = " + rhs;
+        internCode = varName + " = " + lhs;
         for (int i = 0; i < lhslistLevel; ++i) {
             internCode += "[VAR]".replace("VAR", counter.get(i));
         }
         internCode += " " + node.getComparisonSymbol().getCStringRep() + " ";
-        internCode += lhs;
+        internCode += rhs;
         for (int i = 0; i < rhslistLevel; ++i) {
             internCode += "[VAR]".replace("VAR", counter.get(i));
         }
@@ -429,9 +442,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String lhs = variableNames.pop();
 
         String comparisonString = "unsigned int " + varNameDecl + " = "
-                + rhs + " "
+                + lhs + " "
                 + listComparisonNode.getComparisonSymbol().getCStringRep() + " "
-                + lhs + ";";
+                + rhs + ";";
 
         code.add(comparisonString);
         variableNames.push(varNameDecl);

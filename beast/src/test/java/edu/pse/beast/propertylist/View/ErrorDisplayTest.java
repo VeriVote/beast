@@ -1,19 +1,19 @@
 package edu.pse.beast.propertylist.View;
 
-import de.erichseifert.gral.data.DataTable;
-import de.erichseifert.gral.plots.PiePlot;
-import de.erichseifert.gral.ui.DrawablePanel;
 import org.junit.*;
 
 import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;
 
-
+/**
+ * Shows an error message for a property.
+ * @author Justin
+ */
 public class ErrorDisplayTest {
 	
 	ResultPresenterWindow win;
-
+	private int wait = 100;
 	
 
 	@BeforeClass
@@ -50,7 +50,7 @@ public class ErrorDisplayTest {
 				"yeah");
 		win.presentFailure(error);
 		
-		Thread.sleep(100);
+		Thread.sleep(wait);
 		
 		/*DataTable data = new DataTable(Integer.class);
 		data.add(5);

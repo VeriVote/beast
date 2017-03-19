@@ -11,8 +11,13 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Shows a failure example where there is a list of votings and multiple seats are allocated.
+ * @author Justin
+ */
 public class ResultMultiArrayDisplayTest {
 	ResultPresenterWindow win;
+	private int wait = 100;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -39,7 +44,7 @@ public class ResultMultiArrayDisplayTest {
 		win.setVisible(true);
 		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		ElectionType elt = ElectionType.SINGLECHOICE;
+		//ElectionType elt = ElectionType.SINGLECHOICE;
 		List<Long[][]> voted = new ArrayList<Long[][]>();
 		List<Long[]> electeds = new ArrayList<Long[]>();
 		voted.add(new Long[][]{ {3l,2l,1l}, {2l,3l,1l}, {2l,2l,2l} });
@@ -137,6 +142,6 @@ public class ResultMultiArrayDisplayTest {
 		
 		win.presentFailureExample(fail);
 		
-		Thread.sleep(100);
+		Thread.sleep(wait);
 	}
 }

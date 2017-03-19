@@ -7,7 +7,6 @@ package edu.pse.beast.propertylist;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
-import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenter;
@@ -15,9 +14,6 @@ import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.propertylist.View.PropertyListWindow;
 import edu.pse.beast.saverloader.FileChooser;
-import edu.pse.beast.stringresource.StringLoaderInterface;
-import edu.pse.beast.stringresource.StringResourceLoader;
-
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -209,7 +205,6 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
     @Override
     public void resetResults() {
         model.resetResults();
-        view.updateView();
     }
     
     /**

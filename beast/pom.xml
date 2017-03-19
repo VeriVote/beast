@@ -5,7 +5,7 @@
 	<groupId>edu.pse.beast</groupId>
 	<artifactId>Beast</artifactId>
 	<packaging>jar</packaging>
-	<version>1.4.18</version>
+	<version>1.4.19</version>
 
 	<name>Beast</name>
 	<url>http://maven.apache.org</url>

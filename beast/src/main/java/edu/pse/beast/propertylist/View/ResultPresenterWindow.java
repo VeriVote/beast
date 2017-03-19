@@ -5,6 +5,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionType;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
+import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
 import javax.swing.*;
@@ -13,12 +14,9 @@ import javax.swing.text.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,8 +28,6 @@ public class ResultPresenterWindow extends JFrame {
     private JTextPane result;
     StringResourceLoader srl;
     private FailureExample example;
-    
-    private PropertyListWindow owner;
 
     private final String pathToEye = "/core/images/other/eye.png";
     private final ImageIcon eyeIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToEye);
@@ -40,16 +36,15 @@ public class ResultPresenterWindow extends JFrame {
      *
      */
     public ResultPresenterWindow() {
-        this(new StringLoaderInterface("de"), null);
+        this(new StringLoaderInterface("de"));
     }
 
     /**
      * @param sli
      */
-    public ResultPresenterWindow(StringLoaderInterface sli, PropertyListWindow owner) {
+    public ResultPresenterWindow(StringLoaderInterface sli) {
         PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
         this.srl = provider.getOtherStringRes();
-        this.owner = owner;
         this.setVisible(false);
         init();
     }
@@ -105,25 +100,13 @@ public class ResultPresenterWindow extends JFrame {
                     fw.write(result.getText());
                     fw.flush();
                     fw.close();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+                } catch (IOException ioe) {
+                    ErrorLogger.log(ioe.getMessage());
                 }
             }
         });
         getContentPane().add(getExport(), BorderLayout.PAGE_END);
 
-        this.addWindowFocusListener(new WindowFocusListener() {
-            @Override
-            public void windowGainedFocus(WindowEvent e) {
-            }
-
-            @Override
-            public void windowLostFocus(WindowEvent e) {
-            	if (!owner.isFocused()) { // the if clause doesn't seem to be doing what it is supposed to
-            		setVisible(false);
-            	}
-            }
-        });
         pack();
     }
 
@@ -189,7 +172,7 @@ public class ResultPresenterWindow extends JFrame {
         try {
             doc.insertString(doc.getLength(), text, attr);
         } catch (BadLocationException e) {
-            e.printStackTrace();
+            ErrorLogger.log(e.getMessage());
         }
         result.setStyledDocument(doc);
     }
@@ -203,7 +186,7 @@ public class ResultPresenterWindow extends JFrame {
         try {
             doc.remove(doc.getLength() - amount, amount);
         } catch (BadLocationException e) {
-            e.printStackTrace();
+        	ErrorLogger.log(e.getMessage());
         }
     }
 
@@ -233,7 +216,7 @@ public class ResultPresenterWindow extends JFrame {
         packFrame();
     }
 
-    public void presentFailureExample(FailureExample ex) {
+    public void presentFailureExample(FailureExample ex) { // writes the failure example to the styled document
         if (ex == null) {
             return;
         }
@@ -247,39 +230,10 @@ public class ResultPresenterWindow extends JFrame {
 
             // The votes part of the document
             appendPane(srl.getStringFromID("votes") + ": ");
-            if (ex.isChooseOneCandidate()) { // only one candidate is elected
-            	
-            	Long[] precedingList;
-                Long[] voteList = ex.getVotes().get(i).getArray();
-                
-                precedingList = i == 0 ? voteList : ex.getVotes().get(i - 1).getArray();
-                
-                for (int j = 0; j < voteList.length; j++) {
-                	Color color = precedingList[j].equals(voteList[j]) ? Color.BLACK : Color.RED;
-                	appendPaneColored(voteList[j].toString(), color);
-                	appendPane(", ");
-                }
-                eraseLastCharacters(2);
-                
-            } else { // more than one candidate is elected
-            	
-                Long[][] precedingList;
-                Long[][] voteList = ex.getVoteList().get(i).getArray();
-
-                precedingList = i == 0 ? voteList : ex.getVoteList().get(i - 1).getArray();
-
-                for (int j = 0; j < voteList.length; j++) {
-
-                    if (Arrays.equals(precedingList[j], voteList[j])) {
-                        appendPane(Arrays.toString(voteList[j]) + ", ");
-                    } else {
-                        appendPaneColored(Arrays.toString(voteList[j]), Color.RED);
-                        appendPane(", ");
-                    }
-                    
-                }
-                eraseLastCharacters(2);
-
+            if (ex.isChooseOneCandidate()) {
+            	writeVotesForOneCandidate(ex, i);
+            } else {
+            	writeVotesForMultipleCandidates(ex, i);
             }
             appendLine("");
 
@@ -287,43 +241,9 @@ public class ResultPresenterWindow extends JFrame {
             // The elected part of the document
             appendPane(srl.getStringFromID("elected") + ": ");
             if (ex.isOneSeatOnly()) {
-                Long preceding;
-                Long elected = ex.getElect().get(i).getValue();
-
-                // only show differences to preceding election when it is not
-                // the first election
-                
-                preceding = i == 0 ? elected : ex.getElect().get(i - 1).getValue();
-                
-                Color color = preceding == elected ? Color.BLACK : Color.RED;
-
-                if (elected == ex.getNumOfCandidates()) { // no candidate wins
-                	appendPaneColored(srl.getStringFromID("draw") + ", ", color);
-                }
-                else {
-                	appendPaneColored(elected.toString() + ", ", color);
-                }
-                
-                eraseLastCharacters(2);
+            	writeElectedOneCandidate(ex, i);
             } else {
-                Long[] preceding;
-                Long[] elected = ex.getSeats().get(i).getArray();
-
-                preceding = i == 0 ? elected : ex.getSeats().get(i - 1).getArray();
-                
-                for (int j = 0; j < elected.length; j++) {
-                	Color color = preceding[j].equals(elected[j]) ? Color.BLACK : Color.RED;
-                	
-                	if (elected[j] == ex.getNumOfCandidates()) { // no candidate wins
-                		appendPaneColored(srl.getStringFromID("draw"), color);
-                	}
-                	else {
-                		appendPaneColored(elected[j].toString(), color);
-                	}
-                	appendPane(", ");
-                }
-                eraseLastCharacters(2);
-                
+            	writeElectedMultipleCandidates(ex, i);
             }
 
             // The vote points part of the document
@@ -343,7 +263,81 @@ public class ResultPresenterWindow extends JFrame {
         packFrame();
     }
 
-    public void presentSuccess() {
+    private void writeElectedMultipleCandidates(FailureExample ex, int i) {
+    	Long[] preceding;
+        Long[] elected = ex.getSeats().get(i).getArray();
+
+        preceding = i == 0 ? elected : ex.getSeats().get(i - 1).getArray();
+        
+        for (int j = 0; j < elected.length; j++) {
+        	Color color = preceding[j].equals(elected[j]) ? Color.BLACK : Color.RED;
+        	
+        	if (elected[j] == ex.getNumOfCandidates()) { // no candidate wins
+        		appendPaneColored(srl.getStringFromID("draw"), color);
+        	}
+        	else {
+        		appendPaneColored(elected[j].toString(), color);
+        	}
+        	appendPane(", ");
+        }
+        eraseLastCharacters(2);
+		
+	}
+
+	private void writeElectedOneCandidate(FailureExample ex, int i) {
+    	Long preceding;
+        Long elected = ex.getElect().get(i).getValue();
+
+        // only show differences to preceding election when it is not the first election
+        preceding = i == 0 ? elected : ex.getElect().get(i - 1).getValue();
+        
+        Color color = preceding == elected ? Color.BLACK : Color.RED;
+
+        if (elected == ex.getNumOfCandidates()) { // no candidate wins
+        	appendPaneColored(srl.getStringFromID("draw") + ", ", color);
+        }
+        else {
+        	appendPaneColored(elected.toString() + ", ", color);
+        }
+        
+        eraseLastCharacters(2);
+	}
+
+	private void writeVotesForMultipleCandidates(FailureExample ex, int i) {
+    	Long[][] precedingList;
+        Long[][] voteList = ex.getVoteList().get(i).getArray();
+
+        precedingList = i == 0 ? voteList : ex.getVoteList().get(i - 1).getArray();
+
+        for (int j = 0; j < voteList.length; j++) {
+
+            if (Arrays.equals(precedingList[j], voteList[j])) {
+                appendPane(Arrays.toString(voteList[j]) + ", ");
+            } else {
+                appendPaneColored(Arrays.toString(voteList[j]), Color.RED);
+                appendPane(", ");
+            }
+            
+        }
+        eraseLastCharacters(2);
+		
+	}
+
+	private void writeVotesForOneCandidate(FailureExample ex, int i) {
+    	Long[] precedingList;
+        Long[] voteList = ex.getVotes().get(i).getArray();
+        
+        precedingList = i == 0 ? voteList : ex.getVotes().get(i - 1).getArray();
+        
+        for (int j = 0; j < voteList.length; j++) {
+        	Color color = precedingList[j].equals(voteList[j]) ? Color.BLACK : Color.RED;
+        	appendPaneColored(voteList[j].toString(), color);
+        	appendPane(", ");
+        }
+        eraseLastCharacters(2);
+	}
+
+	public void presentSuccess() {
         erasePane();
         appendPane(srl.getStringFromID("successMessage"));
         packFrame();

@@ -1,19 +1,5 @@
-<electionName>
-new
-</electionName>
-<votingDecLine>
-2
-</votingDecLine>
-<code>
-//Single-choice: Wähler stimmt jeweils für einen Kandidaten
-//Single-choice: Ein gewählter Kandidat oder unentschiedenx<yds<AFDASDASSDA
+4 name3 new14 votingDeclLine1 24 code182 //Single-choice: Wähler stimmt jeweils für einen Kandidaten
+//Kandidat oder unentschieden: Ein gewählter Kandidat oder unentschieden
 unsigned int voting(unsigned int votes[V]) { 
 } 
-
-</code>
-<inputType>
-one_candidate_per_voter
-</inputType>
-<outputType>
-one_candidate_or_zero
-</outputType>
+9 inputType13 SINGLE_CHOICE10 outputType13 CAND_OR_UNDEF

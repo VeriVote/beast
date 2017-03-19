@@ -3,19 +3,12 @@ package edu.pse.beast.Gui;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
-import edu.pse.beast.highlevel.BEASTCommunicator;
-import edu.pse.beast.highlevel.CentralObjectProvider;
-import edu.pse.beast.highlevel.PSECentralObjectProvider;
-import edu.pse.beast.parametereditor.ParameterEditor;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.security.Key;
 
 /**
  * Created by holger on 07.03.17.
@@ -31,7 +24,7 @@ public class GuiTestCEditor {
     }
 
     @Test
-    public void testSaveFile() throws InterruptedException {
+    public void testSaveAndLoadFile() throws InterruptedException {
         CElectionDescriptionEditor electionDescriptionEditor = helper.getCEditorOfCurrentInstace();
         electionDescriptionEditor.setVisible(true);
 
@@ -47,6 +40,17 @@ public class GuiTestCEditor {
 
         File createdfile = new File("./projectFiles/n.elec");
         Assert.assertTrue(createdfile.exists());
+
+        int[] tabAndEnter = {
+                KeyEvent.VK_TAB,
+                KeyEvent.VK_TAB,
+                KeyEvent.VK_ENTER
+        };
+
+        helper.performKeystrokesConcurrently(tabAndEnter, waittime,100);
+
+        helper.clickMenuItemInCEditor(0, 3, 50);
+
         createdfile.delete();
     }
 
@@ -72,4 +76,5 @@ public class GuiTestCEditor {
         Assert.assertEquals(electionDescription.getInputType().getId(),
                 ElectionTypeContainer.ElectionTypeIds.PREFERENCE);
     }
+
 }

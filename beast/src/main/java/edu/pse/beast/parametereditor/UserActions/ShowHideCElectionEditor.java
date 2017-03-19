@@ -1,5 +1,6 @@
 package edu.pse.beast.parametereditor.UserActions;
 
+import edu.pse.beast.parametereditor.ParameterEditor;
 import edu.pse.beast.toolbox.UserAction;
 
 import javax.swing.*;
@@ -10,22 +11,27 @@ import javax.swing.*;
  */
 public class ShowHideCElectionEditor extends UserAction {
     private final JFrame cElectionEditorWindow;
+    private final ParameterEditor editor;
     /**
      * Constructor
+     * @param editor ParameterEditor which this UserAction belongs to
      * @param cElectionEditorWindow CElectionEditor window
      */
-    public ShowHideCElectionEditor(JFrame cElectionEditorWindow) {
+    public ShowHideCElectionEditor(ParameterEditor editor, JFrame cElectionEditorWindow) {
         super("showCElectionEditor");
+        this.editor = editor;
         this.cElectionEditorWindow = cElectionEditorWindow;
     }
 
 
     @Override
     public void perform() {
-        if (cElectionEditorWindow.isVisible()) {
-            cElectionEditorWindow.setVisible(false);
-        } else {
-            cElectionEditorWindow.setVisible(true);
+        if (editor.getReacts()) {
+            if (cElectionEditorWindow.isVisible()) {
+                cElectionEditorWindow.setVisible(false);
+            } else {
+                cElectionEditorWindow.setVisible(true);
+            }
         }
     }
 }

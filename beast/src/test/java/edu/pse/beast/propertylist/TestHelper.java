@@ -1,5 +1,9 @@
 package edu.pse.beast.propertylist;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.booleanexpeditor.BooleanExpEditorBuilder;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
@@ -10,8 +14,6 @@ import edu.pse.beast.highlevel.PSECentralObjectProvider;
 import edu.pse.beast.options.OptionsInterface;
 import edu.pse.beast.options.ParametereditorOptions.LanguageOptions;
 import edu.pse.beast.parametereditor.ParameterEditor;
-import edu.pse.beast.parametereditor.ParameterEditorBuilder;
-import edu.pse.beast.propertychecker.PropertyChecker;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.saverloader.SaverLoaderInterface;
@@ -81,5 +83,51 @@ public class TestHelper {
                 booleanExpEditor, propertyList, this);
         paramEd.addCheckListener(communicator);
         langOpts.reapply();*/
+    }
+    
+    public void performKeystrokesConcurrently(int[] strokes, long timeBefore, long timeBetween) {
+        Thread t = new Thread(() -> {
+            try {
+                Thread.sleep(timeBefore);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            try {
+                performKeystrokes(strokes, timeBetween);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        t.start();
+    }
+    
+    public void performShortcut(int key, long timeoutafter) throws InterruptedException {
+        Robot r = null;
+		try {
+			r = new Robot();
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        r.keyPress(KeyEvent.VK_CONTROL);
+        r.keyPress(key);
+        r.keyRelease(key);
+        r.keyPress(KeyEvent.VK_CONTROL);
+        Thread.sleep(timeoutafter);
+    }
+
+    public void performKeystrokes(int[] keys, long waittimeBetweenStrokes) throws InterruptedException {
+        Robot r = null;
+		try {
+			r = new Robot();
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        for (int i = 0; i < keys.length; i++) {
+            r.keyPress(keys[i]);
+            r.keyRelease(keys[i]);
+            Thread.sleep(waittimeBetweenStrokes);
+        }
     }
 }
