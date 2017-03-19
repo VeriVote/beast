@@ -10,6 +10,10 @@ import org.junit.Test;
 
 import edu.pse.beast.propertylist.Model.PropertyItem;
 
+/**
+ * Tests equality of PropertyItems.
+ * @author Justin
+ */
 public class PropertyItemTest {
 
 	@BeforeClass
@@ -29,7 +33,7 @@ public class PropertyItemTest {
 	}
 
 	@Test
-	public void test() {
+	public void testItemEquality() {
 		PropertyItem it1 = new PropertyItem();
 		PropertyItem it2 = new PropertyItem();
 		assertFalse(it1.equals(null));

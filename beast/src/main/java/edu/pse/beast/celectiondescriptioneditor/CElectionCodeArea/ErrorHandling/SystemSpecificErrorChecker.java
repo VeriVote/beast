@@ -5,10 +5,13 @@ import edu.pse.beast.toolbox.*;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+
+import org.apache.commons.io.FileUtils;
 
 /**
  * this is the superclass for system specific error checkers 
@@ -19,6 +22,18 @@ import java.util.concurrent.CountDownLatch;
 public abstract class SystemSpecificErrorChecker {
     
     private final String pathToTempFolder = "/core/c_tempfiles/";
+    
+    public SystemSpecificErrorChecker() {
+        //clear the folder where the files that get checked get saved to, because sometimes they
+        //persist from the last time BEAST was run
+        try {
+            System.out.println("clean");
+            FileUtils.cleanDirectory(new File(SuperFolderFinder.getSuperFolder() + pathToTempFolder));
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
     
     /**
      * checks the code for errors
@@ -37,7 +52,7 @@ public abstract class SystemSpecificErrorChecker {
         //pathToNewFile = pathToNewFile.replaceAll("%20", " ");
         //create two links to files, so in case an object file gets created we can delete it afterwards too
         File cFile = new File(pathToNewFile + ".c");
-
+        
         File objFile = new File(pathToNewFile + ".obj");
         
         //write the code to the file

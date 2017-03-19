@@ -7,7 +7,6 @@ package edu.pse.beast.propertylist;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
-import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenter;
@@ -15,9 +14,7 @@ import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.propertylist.View.PropertyListWindow;
 import edu.pse.beast.saverloader.FileChooser;
-import edu.pse.beast.stringresource.StringLoaderInterface;
-import edu.pse.beast.stringresource.StringResourceLoader;
-
+import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -28,12 +25,11 @@ import java.util.LinkedList;
  * @author Justin
  */
 public class PropertyList implements PostAndPrePropertiesDescriptionSource,
-        ResultPresenter, Runnable, DisplaysStringsToUser {
+        ResultPresenter, Runnable {
 
     private PLModel model;
     private PropertyListWindow view;
     private BooleanExpEditor editor;
-    private StringLoaderInterface sli;
     private PLChangeHandler changeHandler;
     private LinkedList<DeleteDescriptionAction> actionList;
     private FileChooser fileChooser;
@@ -46,11 +42,9 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
      * property descriptions.
      * @param fileChooser the FileChooser with which files can be loaded and saved
      */
-    public PropertyList(PLModel model, BooleanExpEditor editor, FileChooser fileChooser,
-    		StringLoaderInterface sli) {
+    public PropertyList(PLModel model, BooleanExpEditor editor, FileChooser fileChooser) {
         this.model = model;
         this.editor = editor;
-        this.sli = sli;
         view = new PropertyListWindow(this, model);
         
         setChangeHandler(new PLChangeHandler(model));
@@ -65,7 +59,7 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
      * @param model Only needs the model for testing purposes
      */
     public PropertyList(PLModel model) {
-    	this(model, null, null, null);
+    	this(model, null, null);
     }
     
     /**
@@ -74,7 +68,7 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
      * @param editor And the editor
      */
     public PropertyList(PLModel model, BooleanExpEditor editor) {
-    	this(model, editor, null, null);
+    	this(model, editor, null);
     }
 
     
@@ -186,12 +180,12 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
     @Override
     public void resumeReacting() {
         view.resumeReacting();
+        editor.getView().setExtendedState(Frame.NORMAL);
         editor.getView().setVisible(editorWasVisible);
     }
 
     @Override
     public ArrayList<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptions() {
-        //editor.updatePostAndPrePropObject();
         ArrayList<PostAndPrePropertiesDescription> result = new ArrayList<PostAndPrePropertiesDescription>();
         ArrayList<PropertyItem> from = model.getPropertyList();
         editor.updatePostAndPrePropObject();
@@ -211,23 +205,7 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
     @Override
     public void resetResults() {
         model.resetResults();
-        view.updateView();
     }
-
-    @Override
-    public void updateStringRes(StringLoaderInterface sli) {
-        this.sli = sli;
-        fileChooser.updateStringRessourceLoader(sli.getPropertyListStringResProvider().getOtherStringRes());
-    }
-
-    
-    /**
-     * Provides the StringResourceLoader for the menu strings of property list
-     * @return StringResourceLoader for the menu strings
-     */
-    /*protected StringResourceLoader getMenuStringLoader() {
-        return sli.getPropertyListStringResProvider().getMenuStringRes();
-    }*/
     
     /**
      * Returns the last delete action.
@@ -295,9 +273,6 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
 	public BooleanExpEditor getEditor() {
 		return editor;
 	}
-
-
-
 
 
 }

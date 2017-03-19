@@ -13,6 +13,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
@@ -48,16 +50,6 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
     private final Icon xMarkIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToXMark);
 
     /**
-     * Constructor with an empty property (empty except for the name).
-     * @param controller The controller of PropertyList
-     * @param model The model of PropertyList
-     */
-    /*public ListItem(PropertyList controller, PLModel model) {
-        this(controller, model, new PropertyItem());
-        init();
-    }*/
-
-    /**
      * Constructor
      * @param controller The controller of PropertyList
      * @param model The model of PropertyList
@@ -84,7 +76,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Point pos = showResult.getLocationOnScreen();
-                resWindow.setLocation((int) pos.getX() - 30, (int) pos.getY() - 35);
+                resWindow.setLocation((int) pos.getX() - 30, (int) pos.getY() - 35); // good alignment for the result window
                 resWindow.getShowResult().setBackground(presentColor());
                 passMessageToResultWindow();
                 resWindow.setVisible(true);
@@ -101,6 +93,15 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
                     controller.changeName(prop, name.getText());
                 }
             }
+        });
+        name.addFocusListener(new FocusListener() { // change name as well when focus was lost
+			@Override
+			public void focusGained(FocusEvent fe) {}
+
+			@Override
+			public void focusLost(FocusEvent fe) {
+				controller.changeName(prop, name.getText());
+			}
         });
         this.add(name, BorderLayout.LINE_START);
 

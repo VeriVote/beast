@@ -8,6 +8,10 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+/**
+ * Test the builder for PropertyList.
+ * @author Justin
+ */
 public class PropertyListBuilderTest {
 	static TestHelper helper;
 

@@ -5,6 +5,7 @@ import edu.pse.beast.datatypes.NameInterface;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.ResultInterface;
 
+import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.UUID;
@@ -117,6 +118,7 @@ public class PLModel extends Observable implements NameInterface {
 	public void editProperty(PropertyItem prop, BooleanExpEditor editor) {
 		editor.letUserEditPostAndPreProperties(prop.getDescription(), true);
 		editor.getView().setVisible(true);
+		editor.getView().setExtendedState(Frame.NORMAL);
 		updateView();
 	}
 

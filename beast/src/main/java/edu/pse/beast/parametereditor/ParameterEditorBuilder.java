@@ -189,15 +189,15 @@ public class ParameterEditorBuilder {
     }
 
     private UserAction createShowPropertyListUserAction(JFrame propertyListWindow) {
-        return new ShowHidePropertyList(propertyListWindow);
+        return new ShowHidePropertyList(editor, propertyListWindow);
     }
 
     private UserAction createShowBooleanExpEditorUserAction(JFrame booleanExpEditorWindow) {
-        return new ShowHideBooleanExpEditor(booleanExpEditorWindow);
+        return new ShowHideBooleanExpEditor(editor, booleanExpEditorWindow);
     }
 
     private UserAction createShowCElectionEditorUserAction(JFrame cCodeEditorGUI) {
-        return new ShowHideCElectionEditor(cCodeEditorGUI);
+        return new ShowHideCElectionEditor(editor, cCodeEditorGUI);
     }
 
     private ActionIdAndListener createFromUserAction(UserAction userAc) {

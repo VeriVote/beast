@@ -1,14 +1,18 @@
 package edu.pse.beast.codearea.InputToCode;
 
-import edu.pse.beast.codearea.Actionlist.Actionlist;
-import edu.pse.beast.codearea.SaveTextBeforeRemove;
+import static org.junit.Assert.*;
+
+import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.swing.*;
-import javax.swing.text.BadLocationException;
-
-import static org.junit.Assert.*;
+import edu.pse.beast.codearea.SaveTextBeforeRemove;
+import edu.pse.beast.codearea.Actionlist.Actionlist;
+import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
+import edu.pse.beast.codearea.InputToCode.OpenCloseCharList;
+import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
 
 /**
  * Created by holger on 16.03.17.

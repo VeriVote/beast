@@ -18,12 +18,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 /**
  * This class is the view of PropertyList.
+ * 
  * @author Justin
  */
 @SuppressWarnings("serial")
@@ -31,7 +33,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 
 	private PLModel model;
 	private PropertyList controller;
-	
+
 	private String title;
 	private String currentlyLoadedPropertyListName;
 	private StringLoaderInterface sli;
@@ -46,41 +48,30 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 
 	private ArrayList<ListItem> items = new ArrayList<ListItem>();
 	private ListItem nextToPresent;
-	
+
 	private JButton addNewButton = new JButton();
 	private JButton addCreatedButton = new JButton();
-	
+
 	private final String pathToAdd = "/core/images/other/add.png";
 	private final ImageIcon addIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToAdd);
 
 	/**
-	 * Updates the view when focus is gained in this JFrame, needed to update
-	 * naming of ListItems when Property was saved in BooleanExpEditor.
-	 */
-	private WindowAdapter windowAdapter = new WindowAdapter() {
-		@Override
-		public void windowGainedFocus(WindowEvent windowEvent) {
-			super.windowGainedFocus(windowEvent);
-			model.updateView();
-		}
-	};
-
-	
-	/**
 	 * Constructor
-	 * @param controller The PropertyList controller
-	 * @param model The model of PropertyList
+	 * 
+	 * @param controller
+	 *            The PropertyList controller
+	 * @param model
+	 *            The model of PropertyList
 	 */
 	public PropertyListWindow(PropertyList controller, PLModel model) {
 		this.controller = controller;
 		this.model = model;
 		model.addObserver(this);
 		init();
-        Thread t = new Thread(new RepaintThread(this));
-        t.start();
+		Thread t = new Thread(new RepaintThread(this));
+		t.start();
 	}
-	
-	
+
 	private void init() {
 		this.setLayout(new BorderLayout());
 		setBounds(700, 100, 500, 500);
@@ -107,7 +98,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 				panel.add(item, BorderLayout.CENTER);
 			}
 		}
-		
+
 		JScrollPane jsp = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		this.add(jsp);
@@ -124,7 +115,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 
 		});
 		endpanel.add(addNewButton, BorderLayout.LINE_END);
-		
+
 		addCreatedButton.setIcon(addIcon);
 		addCreatedButton.addActionListener(new ActionListener() { // adds a property that is loaded
 			@Override
@@ -136,25 +127,39 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 			}
 		});
 		endpanel.add(addCreatedButton, BorderLayout.LINE_END);
-		
+
 		setResizable(false);
-		this.addWindowListener(windowAdapter);
-		this.addWindowFocusListener(windowAdapter);
+
+		this.addWindowFocusListener(new WindowFocusListener() {
+			@Override
+			public void windowGainedFocus(WindowEvent we) {
+				for (ListItem item : items) {
+					if (item.resWindow.isVisible())
+						item.resWindow.setVisible(true);
+				}
+			}
+
+			@Override
+			public void windowLostFocus(WindowEvent we) {
+			}
+		});
+
+		this.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent we) {
+				for (ListItem item : items) {
+					item.resWindow.setVisible(false);
+				}
+			}
+		});
 	}
 
-	
 	/**
-	 * Updates the view so that all changes (in the model) are visible.
-	 */
-	public void updateView() {
-		panel.revalidate();
-		this.validate();
-		panel.repaint();
-	}
-	
-	/**
-	 * Resets the name attribute because the name change for a PropertyItem was rejected.
-	 * @param prop The PropertyItem that couldn't be changed
+	 * Resets the name attribute because the name change for a PropertyItem was
+	 * rejected.
+	 * 
+	 * @param prop
+	 *            The PropertyItem that couldn't be changed
 	 */
 	public void rejectNameChange(PropertyItem prop) {
 		controller.changeName(prop, prop.getDescription().getName());
@@ -181,7 +186,6 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		this.setEnabled(true);
 	}
 
-	
 	@Override
 	public void updateStringRes(StringLoaderInterface sli) {
 		this.sli = sli;
@@ -205,14 +209,13 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		updateItems(model.getPropertyList());
 	}
 
-	
 	// private methods
 	private void setReactsToInput(boolean reacts) {
 		reactsToInput = reacts;
 		for (ListItem item : items)
 			item.setReactsToInput(reacts);
 	}
-	
+
 	private void updateItems(ArrayList<PropertyItem> propertyList) {
 		items = new ArrayList<ListItem>();
 		panel.removeAll();
@@ -231,7 +234,6 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		panel.repaint();
 	}
 
-	
 	// getter and setter
 	public ListItem getNextToPresent() {
 		return nextToPresent;
@@ -244,7 +246,9 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	/**
 	 * Adds the given string to the window title, used for displaying name of
 	 * currently loaded PropertyList object
-	 * @param propListName name of the currently loaded PropertyList object
+	 * 
+	 * @param propListName
+	 *            name of the currently loaded PropertyList object
 	 */
 	public void setWindowTitle(String propListName) {
 		this.setCurrentlyLoadedPropertyListName(propListName);
@@ -258,11 +262,11 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	public void setCurrentlyLoadedPropertyListName(String currentlyLoadedPropertyListName) {
 		this.currentlyLoadedPropertyListName = currentlyLoadedPropertyListName;
 	}
-	
+
 	public JToolBar getToolbar() {
 		return toolBar;
 	}
-	
+
 	public JMenuBar getMainMenuBar() {
 		return menuBar;
 	}
@@ -273,5 +277,9 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 
 	public void setList(ArrayList<ListItem> items) {
 		this.items = items;
+	}
+	
+	public JButton getAddNewButton() {
+		return addNewButton;
 	}
 }
