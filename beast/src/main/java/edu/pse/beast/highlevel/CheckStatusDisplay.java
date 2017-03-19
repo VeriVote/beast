@@ -15,4 +15,8 @@ public interface CheckStatusDisplay {
      *                       StringResourceLoader (e.g. elapsed time)
      */
     void displayText(String stringIdForResources, boolean showLoader, String additionalText);
+    /**
+     * signals that a repaint should be done
+     */
+    void signalThatAnalysisEnded();
 }

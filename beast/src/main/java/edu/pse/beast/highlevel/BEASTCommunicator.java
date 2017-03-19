@@ -88,6 +88,7 @@ public class BEASTCommunicator implements CheckListener {
                     resumeReacting(centralObjectProvider);
                     checkStatusDisplayer.displayText("analysisEnded", false,
                             " " + timeString);
+                    checkStatusDisplayer.signalThatAnalysisEnded();
                 }
             });
             waitForResultsThread.start();
