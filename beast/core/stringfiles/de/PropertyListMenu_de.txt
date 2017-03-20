@@ -7,7 +7,7 @@ newProperty : Neue Eigenschaft erstellen
 loadProperty : Eigenschaft wählen
 fileMenu : Datei
 editMenu : Bearbeiten
-load : Laden
+load : Öffnen
 title : Eigenschaftenliste
 new : Neue Liste
 save : Speichern

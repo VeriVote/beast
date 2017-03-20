@@ -122,10 +122,12 @@ public class BooleanExpEditorBuilder {
         UserAction load = createLoadPropsUserAction(editor);
         UserAction saveAs = createSaveAsPropsUserAction(editor);
         UserAction save = createSavePropsUserAction(editor);
+
         fileList.add(createFromUserAction(newProps));
-        fileList.add(createFromUserAction(load));
         fileList.add(createFromUserAction(save));
         fileList.add(createFromUserAction(saveAs));
+        fileList.add(createFromUserAction(load));
+
 
         ArrayList<ActionIdAndListener> editList = new ArrayList<>();
         UserAction undo = createUndoUserAction(editor);

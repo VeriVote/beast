@@ -7,7 +7,7 @@ newProperty : Create new property
 loadProperty : Choose property
 fileMenu : File
 editMenu : Edit
-load : Load
+load : Open
 title : Property List
 new : New list
 save : Save

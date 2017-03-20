@@ -94,10 +94,10 @@ public class ParameterEditorBuilder {
                     ObjectRefsForBuilder refs, PSECentralObjectProvider centralObjectProvider) {
         ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
 
-        UserAction load = createLoadProjectUserAction(cElectionDescriptionEditor, propertyList, stringResourceLoader, saverLoader);
         UserAction save = createSaveProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoader);
         UserAction save_as = createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList, stringResourceLoader,
                 saverLoader);
+        UserAction load = createLoadProjectUserAction(cElectionDescriptionEditor, propertyList, stringResourceLoader, saverLoader);
         UserAction start = createStartCheckUserAction();
         UserAction stop = createAbortCheckUserAction();
         UserAction options = createOptionsUserAction(refs, centralObjectProvider);
@@ -106,9 +106,10 @@ public class ParameterEditorBuilder {
         UserAction showCElectionEditor = createShowCElectionEditorUserAction(cElectionDescriptionEditor.getView());
 
         ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
-        fileList.add(createFromUserAction(load));
         fileList.add(createFromUserAction(save));
         fileList.add(createFromUserAction(save_as));
+        fileList.add(createFromUserAction(load));
+
 
         ArrayList<ActionIdAndListener> projectList = new ArrayList<>();
         projectList.add(createFromUserAction(start));
