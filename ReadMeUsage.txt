@@ -1,7 +1,16 @@
 Welcome to BEAST (Bounded Election Attribute Structuring Tool) is a tool in which you can check if voting methodes satisfy 
 specific Properties.
 
+
 Before usage, read this a bit, to get a small understanding what bounded model checking is: http://www.cprover.org/cbmc/doc/manual.pdf
+
+___________
+Dependencies to use it: 
+
+Linux: you have to have gcc installed.
+#Windows: you have to have Visual Studio (including the c++ files) installed#
+___________
+
 
 How to use it:
 
