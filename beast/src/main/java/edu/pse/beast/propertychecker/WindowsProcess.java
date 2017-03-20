@@ -19,7 +19,7 @@ import java.util.concurrent.CountDownLatch;
 import org.apache.commons.lang3.StringUtils;
 
 public class WindowsProcess extends CBMCProcess {
-    private long WAITINGTIMEFORTERMINATION = 3000;
+    private long WAITINGTIMEFORTERMINATION = 8000;
 
     private final String relativePathToCBMC32 = "/windows/cbmcWIN/cbmc.exe";
     private final String relativePathToCBMC64 = "/windows/cbmcWIN/cbmc64.exe";
@@ -261,13 +261,13 @@ public class WindowsProcess extends CBMCProcess {
 
                 }
             } else {
+                
                 /*
                  * if we are here, we can't find a child named cbmc. That means
                  * that a) cbmc just stopped, so we wait some seconds to see it
                  * the parent stopped too by then b) cbmc just can't be stopped
                  * this way, so the user has to do it manually
                  */
-
                 try {
                     Thread.sleep(WAITINGTIMEFORTERMINATION);
                 } catch (InterruptedException e) {

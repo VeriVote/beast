@@ -58,10 +58,6 @@ public class CBMCResult extends Result {
      */
     private FailureExample createFailureExample() {
         
-        System.out.println("type: " + getElectionType());
-        
-        System.out.println(getElectionType().getResultTypeSeats());
-        
         // datermine the elect values
         if (getResult() != null && getElectionType() != null) {
 
@@ -131,12 +127,6 @@ public class CBMCResult extends Result {
                 // extract the seats that
                 // got chosen
                 seatsList = readOneDimVar("elect", getResult());
-
-                Long[] arr = seatsList.get(0).getArray();
-
-                for (int i = 0; i < arr.length; i++) {
-                    System.out.println("val: " + arr[i]);
-                }
                 
                 return new FailureExample(getElectionType(), null, votesList, elect, seatsList, getNumCandidates(),
                         getNumSeats(), getNumVoters());
