@@ -52,6 +52,7 @@ public class GuiTestCEditor {
         helper.clickMenuItemInCEditor(0, 3, 50);
 
         createdfile.delete();
+        helper.endInstance();
     }
 
     @Test
@@ -75,6 +76,8 @@ public class GuiTestCEditor {
         electionDescription = electionDescriptionEditor.getElectionDescription();
         Assert.assertEquals(electionDescription.getInputType().getId(),
                 ElectionTypeContainer.ElectionTypeIds.PREFERENCE);
+
+        helper.endInstance();
     }
 
 }

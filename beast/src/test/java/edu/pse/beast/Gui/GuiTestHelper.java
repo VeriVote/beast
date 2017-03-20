@@ -53,6 +53,11 @@ public class GuiTestHelper {
         Thread.sleep(waittime);
     }
 
+    public void endInstance() {
+        ParameterEditor ed = (ParameterEditor) centralObjectProvider.getParameterSrc();
+        ed.getView().dispose();
+    }
+
     public void performKeystrokesConcurrently(int[] strokes, long timeBefore, long timeBetween) {
         Thread t = new Thread(() -> {
             try {

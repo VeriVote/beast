@@ -97,6 +97,8 @@ public class HighLevelPropertycheckerTest {
 			assertNull(propertyItem.getExample());
 		}
 
+		helper.endInstance();
+
 	}
 	
 	@Test
@@ -159,6 +161,8 @@ public class HighLevelPropertycheckerTest {
 			assertNull(propertyItem.getExample());
 		}
 
+		helper.endInstance();
+
 	}
 
 	@Test
@@ -196,6 +200,8 @@ public class HighLevelPropertycheckerTest {
 			PropertyItem propertyItem = (PropertyItem) iterator.next();
 			assertNull(propertyItem.getExample());
 		}
+
+		helper.endInstance();
 
 	}
 

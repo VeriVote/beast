@@ -257,7 +257,7 @@ public class CBMCCodeGenerationVisitorTest {
                         new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
                         new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER))
         )
-                .getBooleanExpressions().get(0).get(0);
+        .getBooleanExpressions().get(0).get(0);
 
         visitor.setToPrePropertyMode();
         List<String> c = visitor.generateCode(n);

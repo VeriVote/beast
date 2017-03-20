@@ -1,7 +1,7 @@
 one_candidate_per_voter_exp : Voter chooses exactly one candidate
 list_of_candidates_per_voter_exp : Voter ranks all candidates according to his preference
 list_of_yes_no_per_voter_exp : Voter approves or rejects each candidate
-list_of_integer_vals_per_voter_exp : Voter ranks each candidate with an integer number
+list_of_integer_vals_per_voter_exp : Voter ranks each candidate with an integer number between 0 and 100
 
 one_candidate_per_voter : Single-choice
 list_of_candidates_per_voter : Preference
@@ -9,10 +9,10 @@ list_of_yes_no_per_voter : Approval
 list_of_integer_vals_per_voter : Weighted-approval
 
 one_candidate_or_zero_exp : One winner or not determined
-candidate_per_seat_exp : Number of seats per party
+candidate_per_seat_exp : Every seat gets assigned to a candidate
 
 one_candidate_or_zero : Candidate or not determined
-candidate_per_seat : Seats per party
+candidate_per_seat : Seats to candidates
 
 create : Create
 

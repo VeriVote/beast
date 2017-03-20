@@ -30,7 +30,7 @@ public class ElectionTypeContainer {
         this.type = type;
         this.id = id;
         lowerBound = 0;
-        upperBound = 5;
+        upperBound = 100;
     }
 
     
