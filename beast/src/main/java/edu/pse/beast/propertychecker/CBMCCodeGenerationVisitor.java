@@ -183,20 +183,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         variableNames.push(varName);
         code.add("unsigned int " + varName + " = 1;");
         String max = "";
-        switch (node.getDeclaredSymbolicVar().getInternalTypeContainer().getInternalType()) {
-            case VOTER:
-                max = "V";
-                break;
-            case CANDIDATE:
-                max = "C";
-                break;
-            case SEAT:
-                max = "S";
-                break;
-            default:
-                throw new AssertionError(node.getDeclaredSymbolicVar().getInternalTypeContainer()
-                        .getInternalType().name());
-        }
+        max = getMaxString(node);
         String tempString = "for(unsigned int SYMBVAR = 0; SYMBVAR < MAX && FORALL; SYMBVAR++) {";
         tempString = tempString.replaceAll("SYMBVAR", node.getDeclaredSymbolicVar().getId());
         tempString = tempString.replace("MAX", max);
@@ -210,18 +197,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         testIfLast();
     }
 
-    /**
-     * generates the code to an ThereExistsNode
-     *
-     * @param node the visited node
-     */
-    @Override
-    public void visitThereExistsNode(ThereExistsNode node) {
-        String varName = "thereExists_" + thereExistsNodeCounter;
-        thereExistsNodeCounter++;
-        variableNames.push(varName);
-        code.add("unsigned int " + varName + " = 0;");
-        String max = "";
+    private String getMaxString(QuantorNode node) {
+        String max;
         switch (node.getDeclaredSymbolicVar().getInternalTypeContainer().getInternalType()) {
             case VOTER:
                 max = "V";
@@ -236,6 +213,21 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                 throw new AssertionError(node.getDeclaredSymbolicVar().getInternalTypeContainer()
                         .getInternalType().name());
         }
+        return max;
+    }
+
+    /**
+     * generates the code to an ThereExistsNode
+     *
+     * @param node the visited node
+     */
+    @Override
+    public void visitThereExistsNode(ThereExistsNode node) {
+        String varName = "thereExists_" + thereExistsNodeCounter;
+        thereExistsNodeCounter++;
+        variableNames.push(varName);
+        code.add("unsigned int " + varName + " = 0;");
+        String max = getMaxString(node);
         String tempString = "for(unsigned int SYMBVAR = 0; SYMBVAR < MAX && !THEREEXISTS; SYMBVAR++) {";
         tempString = tempString.replaceAll("SYMBVAR", node.getDeclaredSymbolicVar().getId());
         tempString = tempString.replaceAll("MAX", max);
