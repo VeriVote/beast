@@ -240,10 +240,10 @@ public class ResultPresenterWindow extends JFrame {
             
             // The elected part of the document
             appendPane(srl.getStringFromID("elected") + ": ");
-            if (ex.isOneSeatOnly()) {
-            	writeElectedOneCandidate(ex, i);
+            if (ex.getElectionType().getResultTypeSeats()) {
+                writeElectedMultipleCandidates(ex, i);
             } else {
-            	writeElectedMultipleCandidates(ex, i);
+                writeElectedOneCandidate(ex, i);
             }
 
             // The vote points part of the document
@@ -272,15 +272,12 @@ public class ResultPresenterWindow extends JFrame {
         for (int j = 0; j < elected.length; j++) {
         	Color color = preceding[j].equals(elected[j]) ? Color.BLACK : Color.RED;
         	
-        	/*if (elected[j] == ex.getNumOfCandidates()) {
+        	if (elected[j] >= ex.getNumOfCandidates()) { // no candidate wins
         		appendPaneColored(srl.getStringFromID("draw"), color);
         	}
         	else {
-        		
-        	}*/
-        	
-        	appendPaneColored(elected[j].toString(), color);
-        	
+        		appendPaneColored(elected[j].toString(), color);
+        	}
         	appendPane(", ");
         }
         eraseLastCharacters(2);
@@ -296,7 +293,7 @@ public class ResultPresenterWindow extends JFrame {
         
         Color color = preceding == elected ? Color.BLACK : Color.RED;
 
-        if (elected == ex.getNumOfCandidates()) { // no candidate wins
+        if (elected >= ex.getNumOfCandidates()) { // no candidate wins
         	appendPaneColored(srl.getStringFromID("draw") + ", ", color);
         }
         else {
