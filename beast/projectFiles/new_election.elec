@@ -1,5 +1,0 @@
-4 name3 new14 votingDeclLine1 24 code182 //Single-choice: Wähler stimmt jeweils für einen Kandidaten
-//Kandidat oder unentschieden: Ein gewählter Kandidat oder unentschieden
-unsigned int voting(unsigned int votes[V]) { 
-} 
-9 inputType13 SINGLE_CHOICE10 outputType13 CAND_OR_UNDEF
