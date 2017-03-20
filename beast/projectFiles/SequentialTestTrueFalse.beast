@@ -27,12 +27,12 @@ unsigned int voting(unsigned int votes[V][C]) {
     }
     return elect;
 } 
-9 inputType10 PREFERENCE10 outputType13 CAND_OR_UNDEF8 propList481 <propertyListName>
+9 inputType10 PREFERENCE10 outputType13 CAND_OR_UNDEF8 propList479 <propertyListName>
 New PropertyList
 </propertyListName>
 <propertyItem>
 <postAndPreProps>
-4 name14 FalseProperty23 pre43 FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);4 post17 ELECT1 != ELECT2;7 varlist0 
+4 name13 FalseProperty3 pre43 FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);4 post17 ELECT1 != ELECT2;7 varlist0 
 </postAndPreProps>
 <testStatus>
 true
@@ -41,7 +41,7 @@ true
 </propertyItem>
 <propertyItem>
 <postAndPreProps>
-4 name13 Eigenschaft 03 pre43 FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);4 post17 ELECT1 == ELECT2;7 varlist0 
+4 name12 TrueProperty3 pre43 FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);4 post17 ELECT1 == ELECT2;7 varlist0 
 </postAndPreProps>
 <testStatus>
 true
