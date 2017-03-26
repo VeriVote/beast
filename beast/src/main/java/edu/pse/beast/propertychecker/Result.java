@@ -6,6 +6,8 @@
 package edu.pse.beast.propertychecker;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionType;
+
+import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenterElement;
 
@@ -28,6 +30,7 @@ public abstract class Result implements ResultInterface {
     private int numSeats;
     private int numCandidates;
     private ElectionType electionType;
+    private PostAndPrePropertiesDescription property;
     private boolean forcefulleStopped;
 
     /**
@@ -167,6 +170,14 @@ public abstract class Result implements ResultInterface {
         this.error = new ArrayList<String>();
         this.error.add(errorLine);
     }
+    
+    /**
+     * sets the property that this result contains the result from
+     * @param property
+     */
+    public void setProperty(PostAndPrePropertiesDescription property) {
+        this.property = property;
+    }
 
     /**
      * 
@@ -242,5 +253,9 @@ public abstract class Result implements ResultInterface {
      */
     public void setForcefullyStopped() {
         this.forcefulleStopped = true;
+    }
+    
+    public PostAndPrePropertiesDescription getPropertyDesctiption() {
+    	return property;
     }
 }

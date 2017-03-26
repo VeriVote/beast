@@ -276,7 +276,7 @@ public class ResultPresenterWindow extends JFrame {
         		appendPaneColored(srl.getStringFromID("draw"), color);
         	}
         	else {
-        		appendPaneColored(elected[j].toString(), color);
+        		appendPaneColored(ex.getSymbolicSeatForIndex(elected[j]), color);
         	}
         	appendPane(", ");
         }
@@ -297,7 +297,7 @@ public class ResultPresenterWindow extends JFrame {
         	appendPaneColored(srl.getStringFromID("draw") + ", ", color);
         }
         else {
-        	appendPaneColored(elected.toString() + ", ", color);
+        	appendPaneColored(ex.getSymbolicCandidateForIndex(elected) + ", ", color);
         }
         
         eraseLastCharacters(2);
@@ -314,7 +314,16 @@ public class ResultPresenterWindow extends JFrame {
             if (Arrays.equals(precedingList[j], voteList[j])) {
                 appendPane(Arrays.toString(voteList[j]) + ", ");
             } else {
-                appendPaneColored(Arrays.toString(voteList[j]), Color.RED);
+            	String toAppend = "";
+            	
+            	for (int k = 0; k < voteList[j].length; k++) {
+					toAppend = toAppend + ", " + ex.getSymbolicCandidateForIndex(voteList[j][k]);
+				}
+            	
+            	//wrap it in brackets
+            	toAppend = "[" + toAppend + "]";
+            	
+                appendPaneColored(toAppend, Color.RED);
                 appendPane(", ");
             }
             
@@ -331,7 +340,7 @@ public class ResultPresenterWindow extends JFrame {
         
         for (int j = 0; j < voteList.length; j++) {
         	Color color = precedingList[j].equals(voteList[j]) ? Color.BLACK : Color.RED;
-        	appendPaneColored(voteList[j].toString(), color);
+        	appendPaneColored(ex.getSymbolicVoterForIndex(voteList[j]), color);
         	appendPane(", ");
         }
         eraseLastCharacters(2);

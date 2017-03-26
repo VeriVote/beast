@@ -4,7 +4,10 @@ import edu.pse.beast.datatypes.electiondescription.ElectionType;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
+import edu.pse.beast.propertychecker.SymbolicVarNameAndNumber;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -32,6 +35,10 @@ public class FailureExample {
     private final int numOfVoters;
 
     private final int numOfElections;
+    
+    private List<SymbolicVarNameAndNumber> symbCandidates = new ArrayList<SymbolicVarNameAndNumber>();
+    private List<SymbolicVarNameAndNumber> symbVoters = new ArrayList<SymbolicVarNameAndNumber>();
+    private List<SymbolicVarNameAndNumber> symbSeats = new ArrayList<SymbolicVarNameAndNumber>();
 
     /**
      * Creates the FailureExample from the returned data of CBMC. If specific
@@ -125,6 +132,88 @@ public class FailureExample {
             return true;
         return false;
     }
+    
+    /**
+     * saves a candidate symbolic variable in the list
+     * @param name
+     * @param number
+     */
+    public void addSymbolicCadidate(String name, long number) {
+    	symbCandidates.add(new SymbolicVarNameAndNumber(name, number));
+    }
+    
+    /**
+     * saves a seat symbolic variable in the list
+     * @param name
+     * @param number
+     */
+    public void addSymbolicSeat(String name, long number) {
+    	symbSeats.add(new SymbolicVarNameAndNumber(name, number));
+    }
+    
+    /**
+     * saves a voter symbolic variable in the list
+     * @param name
+     * @param number
+     */
+    public void addSymbolicVoters(String name, long number) {
+    	symbVoters.add(new SymbolicVarNameAndNumber(name, number));
+    }
+    
+    public String getSymbolicCandidateForIndex(long number) {
+        String toOutput = "";        
+        for (Iterator<SymbolicVarNameAndNumber> iterator = symbCandidates.iterator(); iterator.hasNext();) {
+            SymbolicVarNameAndNumber symbolicVarCandidate = (SymbolicVarNameAndNumber) iterator.next();        
+            if (symbolicVarCandidate.getNumber() == number) { //if multiple variables share the same number
+                if (toOutput != "") {
+                    toOutput = toOutput + " / " + symbolicVarCandidate.getName();
+                } else { //if this is the first variable with this index 
+                    toOutput = symbolicVarCandidate.getName();
+                }
+            }
+        }
+        if (toOutput == "") {
+        	toOutput = "" + number;
+        }
+        return toOutput;
+    }
+    
+    public String getSymbolicSeatForIndex(long number) {
+        String toOutput = "";        
+        for (Iterator<SymbolicVarNameAndNumber> iterator = symbSeats.iterator(); iterator.hasNext();) {
+            SymbolicVarNameAndNumber symbolicVarSeat = (SymbolicVarNameAndNumber) iterator.next();        
+            if (symbolicVarSeat.getNumber() == number) { //if multiple variables share the same number
+                if (toOutput != "") {
+                    toOutput = toOutput + " / " + symbolicVarSeat.getName();
+                } else { //if this is the first variable with this index 
+                    toOutput = symbolicVarSeat.getName();
+                }
+            }
+        }
+        if (toOutput == "") {
+        	toOutput = "" + number;
+        }
+        return toOutput;
+    }
+    
+    public String getSymbolicVoterForIndex(long number) {
+        String toOutput = "";        
+        for (Iterator<SymbolicVarNameAndNumber> iterator = symbVoters.iterator(); iterator.hasNext();) {
+            SymbolicVarNameAndNumber symbolicVarVoter = (SymbolicVarNameAndNumber) iterator.next();        
+            if (symbolicVarVoter.getNumber() == number) { //if multiple variables share the same number
+                if (toOutput != "") {
+                    toOutput = toOutput + " / " + symbolicVarVoter.getName();
+                } else { //if this is the first variable with this index 
+                    toOutput = symbolicVarVoter.getName();
+                }
+            }
+        }
+        if (toOutput == "") {
+        	toOutput = "" + number;
+        }
+        return toOutput;
+    }
+    
 
     public String getTypeString() {
         switch (electionType) {
