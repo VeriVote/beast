@@ -128,7 +128,7 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 		});
 		endpanel.add(addCreatedButton, BorderLayout.LINE_END);
 
-		setResizable(false);
+		//setResizable(false);
 
 		this.addWindowFocusListener(new WindowFocusListener() {
 			@Override
