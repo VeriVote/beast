@@ -1,9 +1,9 @@
-4 name5 debug8 elecDesc307 4 name12 new_election14 votingDeclLine1 24 code200 //Single-choice: Wähler stimmt jeweils für einen Kandidaten
+4 name5 debug8 elecDesc300 4 name5 xvxcv14 votingDeclLine1 24 code207 //Zustimmungswahl: Wähler bewertet jeden Kandidaten mit Ja/Nein
 //Kandidat oder unentschieden: Ein gewählter Kandidat oder unentschieden
-unsigned int voting(unsigned int votes[V]) { 
+unsigned int voting(unsigned int votes[V][C]) { 
         return 0;
 } 
-9 inputType13 SINGLE_CHOICE10 outputType13 CAND_OR_UNDEF8 propList224 <propertyListName>
+9 inputType8 APPROVAL10 outputType13 CAND_OR_UNDEF8 propList224 <propertyListName>
 New PropertyList
 </propertyListName>
 <propertyItem>

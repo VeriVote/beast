@@ -20,7 +20,15 @@ public class ThreadedBufferedReader implements Runnable {
     private final List<String> readLines;
     private volatile boolean isInterrupted = false;
     private final CountDownLatch latch;
+    
+    private final boolean checkForUnwind;
 
+    private final int checkingInterval = 5000;
+    
+    private final int warningInterval = 1000;
+    
+    private final String unwindPrefix = "Unwinding loop";
+    
     /**
      * Class for reading a stream from the program
      * 
@@ -31,11 +39,12 @@ public class ThreadedBufferedReader implements Runnable {
      * @param latch
      *            the latch to synchronize on
      */
-    public ThreadedBufferedReader(BufferedReader reader, List<String> readLines, CountDownLatch latch) {
+    public ThreadedBufferedReader(BufferedReader reader, List<String> readLines, CountDownLatch latch, boolean checkForUnwind) {
         this.reader = reader;
         this.readLines = readLines;
         this.latch = latch;
-
+        this.checkForUnwind = checkForUnwind;
+        
         new Thread(this, "ReaderThread").start();
     }
 
@@ -45,13 +54,40 @@ public class ThreadedBufferedReader implements Runnable {
      */
     @Override
     public void run() {
+    	boolean warningShown = false;
+    	
+    	int curr = 0;
+    	
         String line = null;
 
         try {
             line = reader.readLine();
             while (line != null && !isInterrupted) {
                 readLines.add(line);
+                if (checkForUnwind && (curr > checkingInterval)) {
+                	if (line.startsWith(unwindPrefix)) {
+                		//we are still unwinding, so we check the line now
+                		//to see, how much we are unwinding
+                		try {
+                			int iteration = Integer.parseInt(line.split("iteration")[1].split("file")[0].replace(" ", ""));	
+                			if (iteration > warningInterval) {
+                				new Thread() {
+                			        public void run() {
+                			            ErrorForUserDisplayer.displayError("A loop in your c program is still (more than a thousand times) getting unrolled. Maybe you want to "
+                			            		+ "stop the checking manually and add the \"--unwind\" option.");
+                			        }
+                			    }.start();
+                			}
+                			//reset curr;
+                			curr = 0;
+						} catch (Exception e) {
+							// do nothing
+						}
+                		
+                	}
+                }
                 line = reader.readLine();
+                curr++;
             }
         } catch (IOException e) {
             ErrorLogger.log("Reader was closed unexpectedly");

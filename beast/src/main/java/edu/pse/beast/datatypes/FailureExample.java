@@ -121,16 +121,16 @@ public class FailureExample {
     }
 
     public boolean isChooseOneCandidate() {
-        if (electionType == ElectionType.SINGLECHOICE)
-            return true;
-        else
-            return false;
+        switch (getElectionType()) {
+		case SINGLECHOICE:
+			return true;
+		default:
+			return false;
+		}
     }
 
     public boolean isOneSeatOnly() {
-        if (numOfSeats == 1)
-            return true;
-        return false;
+        return !getElectionType().getResultTypeSeats();
     }
     
     /**

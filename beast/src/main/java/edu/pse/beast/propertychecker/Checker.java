@@ -71,9 +71,9 @@ public abstract class Checker implements Runnable {
 		if (process != null) {
 			CountDownLatch latch = new CountDownLatch(2);
 			ThreadedBufferedReader outReader = new ThreadedBufferedReader(
-					new BufferedReader(new InputStreamReader(process.getInputStream())), result, latch);
+					new BufferedReader(new InputStreamReader(process.getInputStream())), result, latch, true);
 			ThreadedBufferedReader errReader = new ThreadedBufferedReader(
-					new BufferedReader(new InputStreamReader(process.getErrorStream())), errors, latch);
+					new BufferedReader(new InputStreamReader(process.getErrorStream())), errors, latch, false);
 
 			polling: while (!interrupted || !finished) {
 				if (!process.isAlive() && !interrupted) {
