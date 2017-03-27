@@ -9,6 +9,7 @@ import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
+import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.toolbox.CCodeHelper;
@@ -276,9 +277,9 @@ public class CBMCCodeGenerator {
                 inputContainer = inputContainer.getListedType();
                 listDepth++;
             }
-            String min = cCodeHelper.getMin(inputType, inputContainer.getInternalType());
-            String max = cCodeHelper.getMax(inputType, inputContainer.getInternalType());
-
+            String min = cCodeHelper.getMin(inputType);
+            String max = cCodeHelper.getMax(inputType);
+            
             String votesElement = "votes" + voteNumber;
             for (int i = 0; i < listDepth; ++i) {
                 votesElement += "[COUNTER]".replace("COUNTER", counter[i]);

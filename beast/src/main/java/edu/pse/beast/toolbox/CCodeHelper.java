@@ -18,13 +18,15 @@ import java.util.ArrayList;
 /**
  * This class contains functionallity to generate C Code from internal data
  * structurs
+ *
  * @author Holger-Desktop
  */
 public class CCodeHelper {
 
     /**
-     * returns the C constant which is the max amount of elements in
-     * a given list container
+     * returns the C constant which is the max amount of elements in a given
+     * list container
+     *
      * @param cont the typecontainer representing the list
      * @return the size of the container in C Code
      */
@@ -41,8 +43,10 @@ public class CCodeHelper {
     }
 
     /**
-     * creates the C-Type text representation of the given Internaltypecontainer,
-     * arrays are created as arrays: "unsigned int votes[V][C]", for example
+     * creates the C-Type text representation of the given
+     * Internaltypecontainer, arrays are created as arrays: "unsigned int
+     * votes[V][C]", for example
+     *
      * @param cont the container for which the C type should be created
      * @param name the name of the variable
      * @return the c type
@@ -56,10 +60,12 @@ public class CCodeHelper {
         }
         return decl;
     }
-    
+
     /**
-     * creates the C-Type text representation of the given Internaltypecontainer,
-     * arrays are created as pointers: "unsigned int *", for example
+     * creates the C-Type text representation of the given
+     * Internaltypecontainer, arrays are created as pointers: "unsigned int *",
+     * for example
+     *
      * @param cont the container for which the C type should be created
      * @return the c type
      */
@@ -74,8 +80,9 @@ public class CCodeHelper {
     }
 
     /**
-     * if the given InternaltypeContainer represents a list, it generates the 
+     * if the given InternaltypeContainer represents a list, it generates the
      * String representing a corresponding C-Array. Ex return: "[C]"
+     *
      * @param cont the container for which the C type should be created
      * @return the amount of square brackets and length constants needed
      */
@@ -92,6 +99,7 @@ public class CCodeHelper {
     /**
      * generates the Decleration String for a voting function depending on its
      * input and result typ
+     *
      * @param input the input format of the voting array passed to the function
      * @param res the result format of the voting function
      * @return the voting function declaration line
@@ -104,13 +112,15 @@ public class CCodeHelper {
     }
 
     /**
-     * Generates the complete function block which is placed in the C editor
-     * if the user creates a new election description. It adds the explanatory
+     * Generates the complete function block which is placed in the C editor if
+     * the user creates a new election description. It adds the explanatory
      * comments and the closing curly bracket
-     * @param input  the input format of the voting array passed to the function
+     *
+     * @param input the input format of the voting array passed to the function
      * @param res the result format of the voting function
      * @param name the name of the election
-     * @param templateHandler the Templatehandler which generated input and result types
+     * @param templateHandler the Templatehandler which generated input and
+     * result types
      * @param stringResourceLoader the string ressource loader currently used
      * @return the complete voting function
      */
@@ -129,67 +139,66 @@ public class CCodeHelper {
         ArrayList<String> code = new ArrayList<>();
         String inputIdInFile = EnumToIdMapping.getIDInFile(input);
         String resIdInFile = EnumToIdMapping.getIDInFile(res);
-        code.add("//" +
-                stringResourceLoader.getStringFromID(inputIdInFile)
-                + ": " +
-                stringResourceLoader.getStringFromID(inputIdInFile + "_exp"));
-        code.add("//" +
-                stringResourceLoader.getStringFromID(resIdInFile)
-                + ": " +
-                stringResourceLoader.getStringFromID(resIdInFile + "_exp"));
+        code.add("//"
+                + stringResourceLoader.getStringFromID(inputIdInFile)
+                + ": "
+                + stringResourceLoader.getStringFromID(inputIdInFile + "_exp"));
+        code.add("//"
+                + stringResourceLoader.getStringFromID(resIdInFile)
+                + ": "
+                + stringResourceLoader.getStringFromID(resIdInFile + "_exp"));
         code.add(generateDeclString(templateHandler.getById(input), templateHandler.getById(res)) + " ");
         code.add("} ");
         description.setCode(code);
         return description;
     }
 
+
+    /**
+     * returns the max value an element of the given ElectionTypeContainer can
+     * have
+     *
+     * @param inputType the list whose elements max value needs to be determined
+     * @return max value an element of the given ElectionTypeContainer can have
+     */
+    public String getMax(ElectionTypeContainer inputType) {
+        switch (inputType.getId()) {
+            case APPROVAL:
+                return "2";
+            case SINGLE_CHOICE:
+                return "C";
+            case PREFERENCE:
+                return "C";
+            case WEIGHTED_APPROVAL:
+                return String.valueOf(inputType.getUpperBound());
+            default:
+                throw new AssertionError(inputType.getId().name());
+            
+        }
+    }
+
     /**
      * returns the minimum value an element of the given ElectionTypeContainer
      * can have
-     * @param inputElectionType the list whose elements min value needs to be
+     *
+     * @param inputType the list whose elements min value needs to be
      * determined
-     * @param rep the InternalTypeRep contained in the ElectionTypeContainer
-     * @return minimum value an element of the given ElectionTypeContainer
-     * can have
+     * @return minimum value an element of the given ElectionTypeContainer can
+     * have
      */
-    public String getMin(ElectionTypeContainer inputElectionType, InternalTypeRep rep) {
-        if (null != rep) switch (rep) {
-            case WEIGHTEDAPPROVAL:
-                return String.valueOf(inputElectionType.getLowerBound());
-            case INTEGER:
+    public String getMin(ElectionTypeContainer inputType) {
+        switch (inputType.getId()) {
+            case SINGLE_CHOICE:
                 return "0";
-            case CANDIDATE:
+            case PREFERENCE:
                 return "0";
             case APPROVAL:
                 return "0";
+            case WEIGHTED_APPROVAL:
+                return String.valueOf(inputType.getLowerBound());
             default:
-                break;
+                throw new AssertionError(inputType.getId().name());
+
         }
-        return null;
-    }
-    
-     /**
-     * returns the max value an element of the given ElectionTypeContainer
-     * can have
-     * @param inputElectionType the list whose elements max value needs to be
-     * determined
-     * @param rep the InternalTypeRep contained in the ElectionTypeContainer
-     * @return max value an element of the given ElectionTypeContainer
-     * can have
-     */
-    public String getMax(ElectionTypeContainer inputElectionType, InternalTypeRep rep) {
-        if (null != rep) switch (rep) {
-            case WEIGHTEDAPPROVAL:
-                return String.valueOf(inputElectionType.getUpperBound());
-            case INTEGER:
-                return "C";
-            case CANDIDATE:
-                return "C";
-            case APPROVAL:
-                return "2";
-            default:
-                break;
-        }
-        return null;
     }
 }
