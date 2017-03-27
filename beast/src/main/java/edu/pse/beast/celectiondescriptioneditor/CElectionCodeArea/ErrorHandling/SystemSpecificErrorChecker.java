@@ -71,9 +71,9 @@ public abstract class SystemSpecificErrorChecker {
         if (process != null) {
             CountDownLatch latch = new CountDownLatch(2);
             ThreadedBufferedReader outReader = new ThreadedBufferedReader(
-                    new BufferedReader(new InputStreamReader(process.getInputStream())), result, latch);
+                    new BufferedReader(new InputStreamReader(process.getInputStream())), result, latch, false);
             ThreadedBufferedReader errReader = new ThreadedBufferedReader(
-                    new BufferedReader(new InputStreamReader(process.getErrorStream())), errors, latch);
+                    new BufferedReader(new InputStreamReader(process.getErrorStream())), errors, latch, false);
 
             
             //wait for the process to finish;

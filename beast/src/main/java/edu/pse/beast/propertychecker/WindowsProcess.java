@@ -201,7 +201,7 @@ public class WindowsProcess extends CBMCProcess {
 
             if (cbmcFinder != null) {
                 new ThreadedBufferedReader(new BufferedReader(new InputStreamReader(cbmcFinder.getInputStream())),
-                        children, latch);
+                        children, latch, false);
 
                 // because the process only takes a second of time anyways and
                 // an interrupt could prevent the shutting

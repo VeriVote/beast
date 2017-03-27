@@ -1,0 +1,50 @@
+4 name5 debug8 elecDesc300 4 name5 xvxcv14 votingDeclLine1 24 code207 //Zustimmungswahl: Wähler bewertet jeden Kandidaten mit Ja/Nein
+//Kandidat oder unentschieden: Ein gewählter Kandidat oder unentschieden
+unsigned int voting(unsigned int votes[V][C]) { 
+        return 0;
+} 
+9 inputType8 APPROVAL10 outputType13 CAND_OR_UNDEF8 propList224 <propertyListName>
+New PropertyList
+</propertyListName>
+<propertyItem>
+<postAndPreProps>
+4 name13 Eigenschaft 03 pre0 4 post17 ELECT1 != ELECT2;7 varlist0 
+</postAndPreProps>
+<testStatus>
+true
+</testStatus>
+
+</propertyItem>
+19 electionCheckParams375 <amountVotersMin>
+6
+</amountVotersMin>
+<amountVotersMax>
+6
+</amountVotersMax>
+<amountCandidatesMin>
+4
+</amountCandidatesMin>
+<amountCandidatesMax>
+4
+</amountCandidatesMax>
+<amountSeatsMin>
+2
+</amountSeatsMin>
+<amountSeatsMax>
+2
+</amountSeatsMax>
+<timeout>
+<duration>
+0
+</duration>
+<timeunit>
+SECONDS
+</timeunit>
+
+</timeout>
+<processes>
+0
+</processes>
+<argument>
+
+</argument>

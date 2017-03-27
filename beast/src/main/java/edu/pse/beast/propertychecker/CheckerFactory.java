@@ -2,8 +2,6 @@ package edu.pse.beast.propertychecker;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionType;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
@@ -53,6 +51,7 @@ public abstract class CheckerFactory implements Runnable {
         // catch it here
         if (result != null) {
             result.setElectionType(getElectionTypeFromElectionDescription());
+            result.setProperty(postAndPrepPropDesc);
         }
     }
 
