@@ -341,6 +341,7 @@ public class ResultPresenterWindow extends JFrame {
         for (int j = 0; j < voteList.length; j++) {
         	Color color = precedingList[j].equals(voteList[j]) ? Color.BLACK : Color.RED;
         	appendPaneColored(ex.getSymbolicVoterForIndex(voteList[j]), color);
+        	System.out.println("test: " + ex.getSymbolicVoterForIndex(voteList[j]));
         	appendPane(", ");
         }
         eraseLastCharacters(2);

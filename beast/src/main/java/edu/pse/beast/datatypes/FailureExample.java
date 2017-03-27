@@ -197,7 +197,7 @@ public class FailureExample {
     }
     
     public String getSymbolicVoterForIndex(long number) {
-        String toOutput = "";        
+        String toOutput = "";  
         for (Iterator<SymbolicVarNameAndNumber> iterator = symbVoters.iterator(); iterator.hasNext();) {
             SymbolicVarNameAndNumber symbolicVarVoter = (SymbolicVarNameAndNumber) iterator.next();        
             if (symbolicVarVoter.getNumber() == number) { //if multiple variables share the same number

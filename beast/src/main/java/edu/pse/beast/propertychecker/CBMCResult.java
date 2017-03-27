@@ -61,7 +61,7 @@ public class CBMCResult extends Result {
 	private FailureExample createFailureExample() {
 		// determine the elect values
 		if (getResult() != null && getElectionType() != null) {
-			
+
 			FailureExample toReturn = null;
 
 			List<CBMCResultWrapperLong> elect = readLongs("elect", getResult());
@@ -135,8 +135,7 @@ public class CBMCResult extends Result {
 				this.setError("This votingtype hasn't been implemented yet please do so in the class CBMC_Result");
 				return null;
 			}
-			
-			
+
 			// determine the values for the symbolic variables
 			// that the user set
 
@@ -145,10 +144,11 @@ public class CBMCResult extends Result {
 
 			// iterate through them
 
-			for (Iterator iterator = symbolicVariableList.iterator(); iterator.hasNext();) {
+			for (Iterator<SymbolicVariable> iterator = symbolicVariableList.iterator(); iterator.hasNext();) {
 				SymbolicVariable symbolicVariable = (SymbolicVariable) iterator.next();
 
 				InternalTypeContainer internalType = symbolicVariable.getInternalTypeContainer();
+
 				String name = symbolicVariable.getId();
 
 				if (!internalType.isList()) {
@@ -160,7 +160,7 @@ public class CBMCResult extends Result {
 					if (extracted != null) {
 
 						long number = (long) extracted;
-						
+
 						switch (internalType.getInternalType()) {
 
 						case VOTER:
@@ -179,7 +179,7 @@ public class CBMCResult extends Result {
 				}
 
 			}
-			return toReturn;			
+			return toReturn;
 		} else {
 			this.setError(
 					"No input could be read from the Checker, please make sure that it is there and working properly");
@@ -192,31 +192,23 @@ public class CBMCResult extends Result {
 		Long toReturn = null;
 
 		Pattern correctChecker = Pattern.compile("(\\b" + name + "=[0-9]+u)(.*)");
-
-		Pattern longExtractor = Pattern.compile("(\\b" + name + ")(.*)");
-
+		
 		Iterator<String> iterator = getResult().iterator();
 		String line = mergeLinesToOne(iterator, segmentEnder);
-
-		line = mergeLinesToOne(iterator, segmentEnder);
 
 		while (line.length() > 0) {
 			Matcher checkerMatcher = correctChecker.matcher(line);
 			if (checkerMatcher.find()) {
-				Matcher longMatcher = longExtractor.matcher(checkerMatcher.group(0));
-				if (longMatcher.find()) {
-					String longLine = longMatcher.group(1);
-					// replace all no number characters
-					String number = longLine.replaceAll(("[^-?0-9]*"), "");
-
-					// split at the "(" and ")" to extract the bit value
-					String valueAsString = line.split("\\(")[1].split("\\)")[0];
-					// parse the binary value to a long
-					toReturn = Long.parseLong(valueAsString, 2);
-				}
-				line = mergeLinesToOne(iterator, segmentEnder);
+				// split at the "(" and ")" to extract the bit value
+				String valueAsString = line.split("\\(")[1].split("\\)")[0];
+				// parse the binary value to a long
+				toReturn = Long.parseLong(valueAsString, 2);
 			}
+			line = mergeLinesToOne(iterator, segmentEnder);
 		}
+		
+		System.out.println("gefunden: " + toReturn);
+		
 		return toReturn;
 	}
 
