@@ -52,8 +52,10 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
     public Process checkCodeFileForErrors(File toCheck) {
 
         String nameOfOutFile = toCheck.getName().replace(".c", ".out");
+        
+        File outFile = new File(toCheck.getParentFile(), nameOfOutFile);
 
-        String compileToThis = SuperFolderFinder.getSuperFolder() + setOutputFileName + nameOfOutFile;
+        String compileToThis =  setOutputFileName + outFile.getAbsolutePath();
 
         String userIncludeAndPath = enableUserInclude + SuperFolderFinder.getSuperFolder() + userIncludeFolder;
 

@@ -1,4 +1,5 @@
-4 name22 Presentation30_03SEATS8 elecDesc1870 4 name5 seats14 votingDeclLine1 44 code1770 #include <stdlib.h>
+4 name22 Presentation30_03SEATS8 elecDesc1922 4 name5 seats14 votingDeclLine1 54 code1822 #include <stdlib.h>
+#include <assert.h>
 //Single-choice: Wähler stimmt jeweils für einen Kandidaten
 //Sitze
 int maxDistricts = 10;
@@ -43,6 +44,7 @@ int findMaxCand(unsigned int distVotes[], int size) {
         int maxValue = 0;
         
         for(unsigned int i = 0; i < size; ++i) {
+                assert(1 == 3);
                 if (distVotes[i] > maxValue) {
                         maxIndex = i;
                         maxValue = distVotes[i];
@@ -50,19 +52,16 @@ int findMaxCand(unsigned int distVotes[], int size) {
         }
         return maxIndex;
 }
-9 inputType13 SINGLE_CHOICE10 outputType13 CAND_PER_SEAT8 propList703 <propertyListName>
+9 inputType13 SINGLE_CHOICE10 outputType13 CAND_PER_SEAT8 propList494 <propertyListName>
 New PropertyList
 </propertyListName>
 <propertyItem>
 <postAndPreProps>
-4 name13 HillaryTrump23 pre287 VOTE_SUM_FOR_CANDIDATE1(Hillary) >> (V / 2);
+4 name13 HillaryTrump23 pre173 Trump != Hillary;
+VOTE_SUM_FOR_CANDIDATE1(Hillary) >> (V / 2);
 VOTE_SUM_FOR_CANDIDATE1(Trump) < VOTE_SUM_FOR_CANDIDATE1(Hillary);
-VOTE_SUM_FOR_CANDIDATE1(Stein) < VOTE_SUM_FOR_CANDIDATE1(Trump);
-VOTE_SUM_FOR_CANDIDATE1(Johnson) < VOTE_SUM_FOR_CANDIDATE1(Stein);
-FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);4 post17 ELECT1 != ELECT2;7 varlist188 symbolic_variable: id: Trump type: CANDIDATE;
+FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);4 post17 ELECT1 != ELECT2;7 varlist94 symbolic_variable: id: Trump type: CANDIDATE;
 symbolic_variable: id: Hillary type: CANDIDATE;
-symbolic_variable: id: Stein type: CANDIDATE;
-symbolic_variable: id: Johnson type: CANDIDATE;
 
 </postAndPreProps>
 <testStatus>
@@ -70,14 +69,14 @@ true
 </testStatus>
 
 </propertyItem>
-19 electionCheckParams394 <amountVotersMin>
-100
+19 electionCheckParams390 <amountVotersMin>
+3
 </amountVotersMin>
 <amountVotersMax>
-100
+4
 </amountVotersMax>
 <amountCandidatesMin>
-4
+2
 </amountCandidatesMin>
 <amountCandidatesMax>
 4
