@@ -213,7 +213,8 @@ public class ResultPresenterWindow extends JFrame {
         for (String line : error) {
             appendLine(line);
         }
-        packFrame();
+        setSize(600, 600);
+        //packFrame();
     }
 
     public void presentFailureExample(FailureExample ex) { // writes the failure example to the styled document
@@ -260,7 +261,8 @@ public class ResultPresenterWindow extends JFrame {
             }
             appendLine("\n");
         }
-        packFrame();
+        setSize(600, 600);
+        //packFrame();
     }
 
     private void writeElectedMultipleCandidates(FailureExample ex, int i) {
