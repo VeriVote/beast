@@ -217,6 +217,8 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	}
 
 	private void updateItems(ArrayList<PropertyItem> propertyList) {
+		for (ListItem item : items) item.resWindow.setVisible(false);
+		
 		items = new ArrayList<ListItem>();
 		panel.removeAll();
 		panel.revalidate();
