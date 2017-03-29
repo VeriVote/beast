@@ -36,4 +36,9 @@ public class SymbolicVariable {
     public InternalTypeContainer getInternalTypeContainer() {
         return internalTypeContainer;
     }
+    
+    @Override
+    public SymbolicVariable clone() {
+    	return new SymbolicVariable(id, internalTypeContainer);
+    }
 }

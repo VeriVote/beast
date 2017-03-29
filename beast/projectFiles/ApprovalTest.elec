@@ -1,0 +1,6 @@
+4 name12 ApprovalTest14 votingDeclLine1 24 code201 //Präferenzwahl: Wähler legt Ranking für alle Kandidaten fest
+//Kandidat oder unentschieden: Ein gewählter Kandidat oder unentschieden
+unsigned int voting(unsigned int votes[V][C]) { 
+    return 1;
+} 
+9 inputType10 PREFERENCE10 outputType13 CAND_OR_UNDEF

@@ -74,6 +74,10 @@ public class PostAndPrePropertiesDescription implements NameInterface {
     public List<SymbolicVariable> getSymbolicVariableList() {
         return symbolicVariableList.getSymbolicVariables();
     }
+    
+    public List<SymbolicVariable> getSymbolicVariablesCloned() {
+    	return symbolicVariableList.getSymbolicVariablesCloned();
+    }
 
     /**
      *

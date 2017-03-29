@@ -195,7 +195,7 @@ public class CBMCResult extends Result {
 			// that the user set
 
 			// get ALL symbolic variables
-			List<SymbolicVariable> symbolicVariableList = super.getPropertyDesctiption().getSymbolicVariableList();
+			List<SymbolicVariable> symbolicVariableList = super.getPropertyDesctiption().getSymbolicVariablesCloned();
 
 			// iterate through them
 
