@@ -275,7 +275,7 @@ public class ResultPresenterWindow extends JFrame {
         	Color color = preceding[j].equals(elected[j]) ? Color.BLACK : Color.RED;
         	
         	if (elected[j] >= ex.getNumOfCandidates()) { // no candidate wins
-        		appendPaneColored(srl.getStringFromID("draw"), color);
+        		appendPaneColored(srl.getStringFromID("draw") + "(" + elected[j] + ")", color);
         	}
         	else {
         		appendPaneColored("" + elected[j], color);
@@ -296,7 +296,7 @@ public class ResultPresenterWindow extends JFrame {
         Color color = preceding == elected ? Color.BLACK : Color.RED;
 
         if (elected >= ex.getNumOfCandidates()) { // no candidate wins
-        	appendPaneColored(srl.getStringFromID("draw") + ", ", color);
+        	appendPaneColored(srl.getStringFromID("draw") + "(" + elected + ")" + ", ", color);
         }
         else {
         	appendPaneColored(ex.getSymbolicCandidateForIndex(elected) + ", ", color);

@@ -1,6 +1,20 @@
-4 name29 Presentation30_03_TRUMP_VOTED8 elecDesc1915 4 name10 FPTP_FULL314 votingDeclLine2 324 code1808 #include <stdlib.h>
+4 name29 Presentation30_03_TRUMP_VOTED8 elecDesc1912 4 name4 FPTP14 votingDeclLine2 344 code1812 #include <stdlib.h>
 //Single-choice: Wähler stimmt jeweils für einen Kandidaten
 //Kandidat oder unentschieden: Ein gewählter Kandidat oder unentschieden
+
+int findMaxCand(unsigned int distVotes[], int size) {
+        int maxIndex = 0;
+        int maxValue = 0;
+        
+        for(unsigned int i = 0; i < size; ++i) {
+                if (distVotes[i] > maxValue) {
+                        maxIndex = i;
+                        maxValue = distVotes[i];
+                }
+        }
+        return maxIndex;
+}
+
 
 int voteDistrict(int index, int offset, int amountVotes, unsigned int votes[V]) {
         unsigned int distVotes[C];
@@ -16,22 +30,10 @@ int voteDistrict(int index, int offset, int amountVotes, unsigned int votes[V]) 
         return findMaxCand(distVotes, C);
 }
 
-int findMaxCand(unsigned int distVotes[], int size) {
-        int maxIndex = 0;
-        int maxValue = 0;
-        
-        for(unsigned int i = 0; i < size; ++i) {
-                if (distVotes[i] > maxValue) {
-                        maxIndex = i;
-                        maxValue = distVotes[i];
-                }
-        }
-        return maxIndex;
-}
-
 int maxDistricts = 50;
+
 unsigned int voting(unsigned int votes[V]) { 
-        int amountDistricts = min(V, maxDistricts);
+         int amountDistricts = min(V, maxDistricts);
         int votesPerDistrict = V / amountDistricts;
         
         int *districts = malloc(amountDistricts * sizeof(int));
@@ -50,7 +52,7 @@ unsigned int voting(unsigned int votes[V]) {
         
         
         return findMaxCand(districts, amountDistricts); 
-}
+} 
 9 inputType13 SINGLE_CHOICE10 outputType13 CAND_OR_UNDEF8 propList660 <propertyListName>
 New PropertyList
 </propertyListName>
