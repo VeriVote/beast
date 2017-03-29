@@ -33,9 +33,9 @@ public class BooleanExpEditorBuilder {
             "fileMenu",
             "editMenu",
             "editorMenu",
-            "makroMenu",
+            "codeMenu",
             "constantsMenu",
-            "codeMenu"
+            "makroMenu"
     };
 
     /**
@@ -181,9 +181,10 @@ public class BooleanExpEditorBuilder {
         created.add(fileList);
         created.add(editList);
         created.add(editorList);
-        created.add(makroList);
-        created.add(constantsList);
         created.add(codeList);
+        created.add(constantsList);
+        created.add(makroList);
+
 
         return created;
     }
