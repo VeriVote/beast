@@ -52,9 +52,9 @@ public class SymbolicVariableListTest {
         InternalTypeContainer internalTypeContainer = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.addSymbolicVariable(id, internalTypeContainer);
-        assert (instance.getSymbolicVariables().getFirst().getInternalTypeContainer().getInternalType()
+        assert (((LinkedList<SymbolicVariable>)instance.getSymbolicVariables()).getFirst().getInternalTypeContainer().getInternalType()
                 == InternalTypeRep.INTEGER);
-        assert (instance.getSymbolicVariables().getFirst().getId().equals("test"));
+        assert (((LinkedList<SymbolicVariable>)instance.getSymbolicVariables()).getFirst().getId().equals("test"));
     }
 
     /**
@@ -87,7 +87,7 @@ public class SymbolicVariableListTest {
 
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.setSymbolicVariableList(symbolicVariableList);
-        assert (instance.getSymbolicVariables().getFirst().getId().equals("test"));
+        assert (((LinkedList<SymbolicVariable>)instance.getSymbolicVariables()).getFirst().getId().equals("test"));
         assert (instance.getSymbolicVariables().get(1).getId().equals("test2"));
     }
 
@@ -101,9 +101,9 @@ public class SymbolicVariableListTest {
         InternalTypeContainer internalTypeContainer = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.addSymbolicVariable(id, internalTypeContainer);
-        assert (instance.getSymbolicVariables().getFirst().getInternalTypeContainer().getInternalType()
+        assert (((LinkedList<SymbolicVariable>)instance.getSymbolicVariables()).getFirst().getInternalTypeContainer().getInternalType()
                 == InternalTypeRep.INTEGER);
-        assert (instance.getSymbolicVariables().getFirst().getId().equals("test"));
+        assert (((LinkedList<SymbolicVariable>)instance.getSymbolicVariables()).getFirst().getId().equals("test"));
     }
 
     /**
