@@ -16,7 +16,7 @@ import org.apache.commons.io.FileUtils;
 
 /**
  * this is the superclass for system specific error checkers 
- * that gets implementen for the needed operating systems
+ * that gets implemented for the needed operating systems
  * @author Lukas
  *
  */
