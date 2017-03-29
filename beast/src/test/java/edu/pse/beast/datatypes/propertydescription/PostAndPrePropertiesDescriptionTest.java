@@ -41,7 +41,7 @@ public class PostAndPrePropertiesDescriptionTest {
         symbVarList.addSymbolicVariable("test", new InternalTypeContainer(InternalTypeRep.INTEGER));
         PostAndPrePropertiesDescription instance = new PostAndPrePropertiesDescription("name", null, null, symbVarList);
         List<SymbolicVariable> result = instance.getSymbolicVariableList();
-        assertEquals(symbVarList.getSymbolicVariables().getFirst(), result.get(0));
+        assertEquals(symbVarList.getSymbolicVariables().get(0), result.get(0));
     }
 
     /**
@@ -54,7 +54,7 @@ public class PostAndPrePropertiesDescriptionTest {
         symbVarList.addSymbolicVariable("test", new InternalTypeContainer(InternalTypeRep.INTEGER));
         PostAndPrePropertiesDescription instance = new PostAndPrePropertiesDescription("name", null, null, symbVarList);
         SymbolicVariableList result = instance.getSymVarList();
-        assertEquals(symbVarList.getSymbolicVariables().getFirst(), result.getSymbolicVariables().get(0));
+        assertEquals(symbVarList.getSymbolicVariables().get(0), result.getSymbolicVariables().get(0));
     }
 
     /**
@@ -69,7 +69,7 @@ public class PostAndPrePropertiesDescriptionTest {
         PostAndPrePropertiesDescription instance = new PostAndPrePropertiesDescription("name");
         instance.setSymbolicVariableList(symbVarList);
         SymbolicVariableList result = instance.getSymVarList();
-        assertEquals(symbVarList.getSymbolicVariables().getFirst(), result.getSymbolicVariables().get(0));
+        assertEquals(symbVarList.getSymbolicVariables().get(0), result.getSymbolicVariables().get(0));
     }
 
     /**

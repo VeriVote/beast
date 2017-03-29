@@ -39,14 +39,14 @@ public class CErrorDisplayer extends ErrorDisplayer {
     public String createMsg(CodeError er) {
         if (er.getId().equals("antlr")) {
             int line = er.getLine();
-            int start = JTextPaneToolbox.getLineBeginning(pane, line - 1);
+            int start = JTextPaneToolbox.getLineBeginning(pane, line - 2);
             int end = JTextPaneToolbox.getClosestLineBeginningAfter(pane, start);
             er.setStartPos(start);
             er.setEndPos(end);
             return er.getExtraInfo("msg");
         } else if (er.getId().equals("compilererror")) {
             int line = er.getLine();
-            int start = JTextPaneToolbox.getLineBeginning(pane, line - 1);
+            int start = JTextPaneToolbox.getLineBeginning(pane, line - 2);
             int end = JTextPaneToolbox.getClosestLineBeginningAfter(pane, start);
             er.setStartPos(start);
             er.setEndPos(end);
