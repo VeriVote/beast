@@ -1,4 +1,4 @@
-4 name29 Presentation30_03_TRUMP_VOTED8 elecDesc1912 4 name4 FPTP14 votingDeclLine2 344 code1812 #include <stdlib.h>
+4 name29 Presentation30_03_TRUMP_VOTED8 elecDesc2105 4 name4 FPTP14 votingDeclLine2 334 code2005 #include <stdlib.h>
 //Single-choice: Wähler stimmt jeweils für einen Kandidaten
 //Kandidat oder unentschieden: Ein gewählter Kandidat oder unentschieden
 
@@ -14,7 +14,6 @@ int findMaxCand(unsigned int distVotes[], int size) {
         }
         return maxIndex;
 }
-
 
 int voteDistrict(int index, int offset, int amountVotes, unsigned int votes[V]) {
         unsigned int distVotes[C];
@@ -51,17 +50,58 @@ unsigned int voting(unsigned int votes[V]) {
                                                        votesPerDistrict, (V - alreadyVoted), votes);
         
         
-        return findMaxCand(districts, amountDistricts); 
+        int summedUp[C];
+
+        for (unsigned int i = 0; i < C; ++i) {
+	summedUp[i] = 0;
+        }
+
+        for (unsigned int i = 0; i < amountDistricts; ++i) {
+	summedUp[districts[i]]++;
+        }
+        
+        return findMaxCand(summedUp, C);
+
 } 
-9 inputType13 SINGLE_CHOICE10 outputType13 CAND_OR_UNDEF8 propList660 <propertyListName>
+9 inputType13 SINGLE_CHOICE10 outputType13 CAND_OR_UNDEF8 propList1494 <propertyListName>
 New PropertyList
 </propertyListName>
 <propertyItem>
 <postAndPreProps>
-4 name13 HillaryTrump23 pre243 VOTE_SUM_FOR_CANDIDATE1(Hillary) >> (V / 2);
+4 name14 USelection20163 pre352 VOTE_SUM_FOR_CANDIDATE1(Hillary) >> (V / 2);
 VOTE_SUM_FOR_CANDIDATE1(Trump) < VOTE_SUM_FOR_CANDIDATE1(Hillary);
 VOTE_SUM_FOR_CANDIDATE1(Stein) < VOTE_SUM_FOR_CANDIDATE1(Trump);
-VOTE_SUM_FOR_CANDIDATE1(Johnson) < VOTE_SUM_FOR_CANDIDATE1(Stein);4 post18 ELECT1 == Hillary;7 varlist188 symbolic_variable: id: Trump type: CANDIDATE;
+VOTE_SUM_FOR_CANDIDATE1(Johnson) < VOTE_SUM_FOR_CANDIDATE1(Stein);
+Hillary != Trump;
+Hillary != Johnson;
+Hillary != Stein;
+Trump != Johnson;
+Trump != Stein;
+Johnson != Stein;
+4 post18 ELECT1 == Hillary;7 varlist188 symbolic_variable: id: Trump type: CANDIDATE;
+symbolic_variable: id: Hillary type: CANDIDATE;
+symbolic_variable: id: Stein type: CANDIDATE;
+symbolic_variable: id: Johnson type: CANDIDATE;
+
+</postAndPreProps>
+<testStatus>
+true
+</testStatus>
+
+</propertyItem>
+<propertyItem>
+<postAndPreProps>
+4 name25 USelection2016_100Percent3 pre351 VOTE_SUM_FOR_CANDIDATE1(Hillary) >>= (V);
+VOTE_SUM_FOR_CANDIDATE1(Trump) < VOTE_SUM_FOR_CANDIDATE1(Hillary);
+VOTE_SUM_FOR_CANDIDATE1(Stein) <= VOTE_SUM_FOR_CANDIDATE1(Trump);
+VOTE_SUM_FOR_CANDIDATE1(Johnson) <= VOTE_SUM_FOR_CANDIDATE1(Stein);
+Hillary != Trump;
+Hillary != Johnson;
+Hillary != Stein;
+Trump != Johnson;
+Trump != Stein;
+Johnson != Stein;
+4 post18 ELECT1 == Hillary;7 varlist188 symbolic_variable: id: Trump type: CANDIDATE;
 symbolic_variable: id: Hillary type: CANDIDATE;
 symbolic_variable: id: Stein type: CANDIDATE;
 symbolic_variable: id: Johnson type: CANDIDATE;
@@ -73,10 +113,10 @@ true
 
 </propertyItem>
 19 electionCheckParams392 <amountVotersMin>
-100
+200
 </amountVotersMin>
 <amountVotersMax>
-100
+200
 </amountVotersMax>
 <amountCandidatesMin>
 4
@@ -103,5 +143,5 @@ SECONDS
 0
 </processes>
 <argument>
---unwind 105;
+--unwind 210;
 </argument>

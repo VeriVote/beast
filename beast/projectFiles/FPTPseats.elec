@@ -1,6 +1,7 @@
-4 name4 FPTP14 votingDeclLine2 334 code2005 #include <stdlib.h>
+4 name9 FPTPseats14 votingDeclLine2 354 code2013 #include <stdlib.h>
 //Single-choice: Wähler stimmt jeweils für einen Kandidaten
-//Kandidat oder unentschieden: Ein gewählter Kandidat oder unentschieden
+//Sitze auf Kandidaten: Jedem Sitz wird ein Kandidat zugeteilt
+
 
 int findMaxCand(unsigned int distVotes[], int size) {
         int maxIndex = 0;
@@ -29,9 +30,10 @@ int voteDistrict(int index, int offset, int amountVotes, unsigned int votes[V]) 
         return findMaxCand(distVotes, C);
 }
 
+
 int maxDistricts = 50;
 
-unsigned int voting(unsigned int votes[V]) { 
+unsigned int * voting(unsigned int votes[V]) { 
          int amountDistricts = min(V, maxDistricts);
         int votesPerDistrict = V / amountDistricts;
         
@@ -53,14 +55,13 @@ unsigned int voting(unsigned int votes[V]) {
         int summedUp[C];
 
         for (unsigned int i = 0; i < C; ++i) {
-	summedUp[i] = 0;
+                summedUp[i] = 0;
         }
 
         for (unsigned int i = 0; i < amountDistricts; ++i) {
-	summedUp[districts[i]]++;
+                summedUp[districts[i]]++;
         }
         
-        return findMaxCand(summedUp, C);
-
+        return districts;
 } 
-9 inputType13 SINGLE_CHOICE10 outputType13 CAND_OR_UNDEF
+9 inputType13 SINGLE_CHOICE10 outputType13 CAND_PER_SEAT

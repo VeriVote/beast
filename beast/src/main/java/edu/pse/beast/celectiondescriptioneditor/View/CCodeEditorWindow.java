@@ -126,7 +126,7 @@ public class CCodeEditorWindow extends javax.swing.JFrame implements DisplaysStr
 
         jMenuItem9.setText("jMenuItem9");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setTitle("Wahleditor - EinfacheMehrheitswahl.c");
 
         jScrollPane3.setViewportView(jTextPane1);

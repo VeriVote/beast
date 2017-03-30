@@ -129,6 +129,11 @@ public class FailureExample {
 		}
     }
 
+    /**
+     * 
+     * @return true, if only "one seat" (read, a candidate) is going to be
+     * elected, in case of a voting for a parliarment, it returns false
+     */
     public boolean isOneSeatOnly() {
         return !getElectionType().getResultTypeSeats();
     }
