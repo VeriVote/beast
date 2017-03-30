@@ -68,10 +68,10 @@ New PropertyList
 </propertyListName>
 <propertyItem>
 <postAndPreProps>
-4 name14 USelection20163 pre352 VOTE_SUM_FOR_CANDIDATE1(Hillary) >> (V / 2);
+4 name25 USelection2016_100Percent3 pre351 VOTE_SUM_FOR_CANDIDATE1(Hillary) >>= (V);
 VOTE_SUM_FOR_CANDIDATE1(Trump) < VOTE_SUM_FOR_CANDIDATE1(Hillary);
-VOTE_SUM_FOR_CANDIDATE1(Stein) < VOTE_SUM_FOR_CANDIDATE1(Trump);
-VOTE_SUM_FOR_CANDIDATE1(Johnson) < VOTE_SUM_FOR_CANDIDATE1(Stein);
+VOTE_SUM_FOR_CANDIDATE1(Stein) <= VOTE_SUM_FOR_CANDIDATE1(Trump);
+VOTE_SUM_FOR_CANDIDATE1(Johnson) <= VOTE_SUM_FOR_CANDIDATE1(Stein);
 Hillary != Trump;
 Hillary != Johnson;
 Hillary != Stein;
@@ -91,10 +91,10 @@ true
 </propertyItem>
 <propertyItem>
 <postAndPreProps>
-4 name25 USelection2016_100Percent3 pre351 VOTE_SUM_FOR_CANDIDATE1(Hillary) >>= (V);
+4 name14 USelection20163 pre352 VOTE_SUM_FOR_CANDIDATE1(Hillary) >> (V / 2);
 VOTE_SUM_FOR_CANDIDATE1(Trump) < VOTE_SUM_FOR_CANDIDATE1(Hillary);
-VOTE_SUM_FOR_CANDIDATE1(Stein) <= VOTE_SUM_FOR_CANDIDATE1(Trump);
-VOTE_SUM_FOR_CANDIDATE1(Johnson) <= VOTE_SUM_FOR_CANDIDATE1(Stein);
+VOTE_SUM_FOR_CANDIDATE1(Stein) < VOTE_SUM_FOR_CANDIDATE1(Trump);
+VOTE_SUM_FOR_CANDIDATE1(Johnson) < VOTE_SUM_FOR_CANDIDATE1(Stein);
 Hillary != Trump;
 Hillary != Johnson;
 Hillary != Stein;
