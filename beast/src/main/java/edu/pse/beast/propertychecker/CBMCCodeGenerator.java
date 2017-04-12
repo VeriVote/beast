@@ -114,7 +114,7 @@ public class CBMCCodeGenerator {
         code.add("#include <stdint.h>");
         code.add("#include <assert.h>");
         code.add("");
-        code.add("int nondet_uint();");
+        code.add("unsigned int nondet_uint();");
         code.add("int nondet_int();");
         code.add("");
         code.add("#define assert2(x, y) __CPROVER_assert(x, y)");
