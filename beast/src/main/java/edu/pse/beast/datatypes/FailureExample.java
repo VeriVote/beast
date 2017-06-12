@@ -1,6 +1,8 @@
 package edu.pse.beast.datatypes;
 
-import edu.pse.beast.datatypes.electiondescription.ElectionType;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer.ElectionInputTypeIds;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
@@ -18,7 +20,7 @@ import java.util.List;
  */
 public class FailureExample {
 
-    private final ElectionType electionType;
+    private final ElectionDescription electionDescription;
 
     private final List<CBMCResultWrapperSingleArray> votes;
 
@@ -44,7 +46,7 @@ public class FailureExample {
      * Creates the FailureExample from the returned data of CBMC. If specific
      * data is not given, initialize with null reference.
      * 
-     * @param electionType
+     * @param electionDescription
      *            The type of the election description
      * @param votes
      *            A list of votings for a single candidate given as an integer
@@ -65,11 +67,11 @@ public class FailureExample {
      * @param numOfVoters
      *            The number of voters that voted for the candidates.
      */
-    public FailureExample(ElectionType electionType, List<CBMCResultWrapperSingleArray> votes,
+    public FailureExample(ElectionDescription electionDescription, List<CBMCResultWrapperSingleArray> votes,
             List<CBMCResultWrapperMultiArray> voteList, List<CBMCResultWrapperLong> elect,
             List<CBMCResultWrapperSingleArray> seats, int numOfCandidates, int numOfSeats, int numOfVoters) {
 
-        this.electionType = electionType;
+        this.electionDescription = electionDescription;
         this.votes = votes;
         this.voteList = voteList;
         this.elect = elect;
@@ -84,8 +86,8 @@ public class FailureExample {
             this.numOfElections = voteList.size();
     }
 
-    public ElectionType getElectionType() {
-        return electionType;
+    public ElectionDescription getElectionDescription() {
+        return electionDescription;
     }
 
     public List<CBMCResultWrapperSingleArray> getVotes() {
@@ -121,12 +123,7 @@ public class FailureExample {
     }
 
     public boolean isChooseOneCandidate() {
-        switch (getElectionType()) {
-		case SINGLECHOICE:
-			return true;
-		default:
-			return false;
-		}
+    	return (electionDescription.getInputType().getInputID() == ElectionInputTypeIds.SINGLE_CHOICE);
     }
 
     /**
@@ -135,7 +132,7 @@ public class FailureExample {
      * elected, in case of a voting for a parliarment, it returns false
      */
     public boolean isOneSeatOnly() {
-        return !getElectionType().getResultTypeSeats();
+    	return !electionDescription.getOutputType().getResultTypeSeats();
     }
     
     /**
@@ -221,18 +218,7 @@ public class FailureExample {
     
 
     public String getTypeString() {
-        switch (electionType) {
-        case SINGLECHOICE:
-            return "single-choice";
-        case APPROVAL:
-            return "approval";
-        case WEIGHTEDAPPROVAL:
-            return "weighted-approval";
-        case PREFERENCE:
-            return "preference";
-        default:
-            return "unknown";
-        }
+    	return electionDescription.getInputType().getInputID().toString();
     }
 
 }

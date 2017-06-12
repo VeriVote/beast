@@ -6,6 +6,8 @@
 package edu.pse.beast.celectiondescriptioneditor.ElectionTemplates;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer.ElectionInputTypeIds;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer.ElectionOutputTypeIds;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 
@@ -58,9 +60,7 @@ public class ElectionTemplateHandler {
      * @return the ids that are used for the input
      */
     public List<ElectionTypeContainer.ElectionInputTypeIds> getInputIds() {
-        return Arrays.asList(ElectionTypeContainer.ElectionInputTypeIds.SINGLE_CHOICE,
-                ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE, ElectionTypeContainer.ElectionInputTypeIds.APPROVAL,
-                ElectionTypeContainer.ElectionInputTypeIds.WEIGHTED_APPROVAL);
+        return Arrays.asList(ElectionTypeContainer.ElectionInputTypeIds.values());
     }
 
     /**
@@ -68,8 +68,7 @@ public class ElectionTemplateHandler {
      * @return the ids that are used for the output
      */
     public List<ElectionTypeContainer.ElectionOutputTypeIds> getResIds() {
-        return Arrays.asList(ElectionTypeContainer.ElectionOutputTypeIds.CAND_OR_UNDEF,
-                ElectionTypeContainer.ElectionOutputTypeIds.CAND_PER_SEAT);
+        return Arrays.asList(ElectionOutputTypeIds.values());
     }
 
     /**
@@ -79,9 +78,9 @@ public class ElectionTemplateHandler {
      *            the id of the elecitontypecontainer to be retrieved
      * @return the electiontypecontainer if it exists, null otherwise
      */
-    public ElectionTypeContainer getById(ElectionTypeContainer.ElectionInputTypeIds id) {
+    public ElectionTypeContainer getById(ElectionInputTypeIds id) {
         for (ElectionTypeContainer cont : inputTypes) {
-            if (cont.getInputId() == id)
+            if (cont.getInputID() == id)
                 return cont;
         }
 
@@ -95,7 +94,7 @@ public class ElectionTemplateHandler {
      *            the id of the elecitontypecontainer to be retrieved
      * @return the electiontypecontainer if it exists, null otherwise
      */
-    public ElectionTypeContainer getById(ElectionTypeContainer.ElectionOutputTypeIds id) {
+    public ElectionTypeContainer getById(ElectionOutputTypeIds id) {
         for (ElectionTypeContainer cont : resTypes) {
             if (cont.getOutputId() == id)
                 return cont;

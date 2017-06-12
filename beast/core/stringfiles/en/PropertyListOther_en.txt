@@ -16,9 +16,9 @@ timeoutMessage : The analysis was timed out.
 cancelMessage : The analysis was stopped by the user.
 failureMessage : The analysis couldn't be done because there was an error. Following the original error message.
 failureExampleMessage : The given property is not fulfilled. The failure occurred with this election result.
-single-choice : Single-Choice
+single_choice : Single-Choice
 approval : Approval
-weighted-approval : Weighted Approval
+weighted_approval : Weighted Approval
 preference : Preference
 unknown : Unknown
 openDialogTitleText : Open property list

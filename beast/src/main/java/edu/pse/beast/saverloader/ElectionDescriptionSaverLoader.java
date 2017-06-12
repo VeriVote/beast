@@ -22,8 +22,8 @@ public class ElectionDescriptionSaverLoader implements SaverLoader {
         created += h.getStringForAttr("name", electionDescription.getName());
         created += h.getStringForAttr("votingDeclLine", electionDescription.getVotingDeclLine());
         created += h.getStringForAttr("code", electionDescription.getCode());
-        created += h.getStringForAttr("inputType", electionDescription.getInputType().getInputId().toString());
-        created += h.getStringForAttr("outputType", electionDescription.getOutputType().getInputId().toString());
+        created += h.getStringForAttr("inputType", electionDescription.getInputType().getInputID().toString());
+        created += h.getStringForAttr("outputType", electionDescription.getOutputType().getInputID().toString());
         return created;
     }
 

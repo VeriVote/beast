@@ -14,24 +14,14 @@ public class ElectionTypeContainer {
     private ElectionInputTypeIds inID;
     private ElectionOutputTypeIds outID;
     
-//    public enum ElectionTypeIds {
-//        SINGLE_CHOICE,
-//        PREFERENCE,
-//        APPROVAL,
-//        WEIGHTED_APPROVAL,
-//        CAND_OR_UNDEF,
-//        CAND_PER_SEAT
-//    }
-    
-    
-    public enum ElectionInputTypeIds {
+    public static enum ElectionInputTypeIds {
         SINGLE_CHOICE,
         PREFERENCE,
         APPROVAL,
-        WEIGHTED_APPROVAL,
+        WEIGHTED_APPROVAL
     }
     
-    public enum ElectionOutputTypeIds {
+    public static enum ElectionOutputTypeIds {
         CAND_OR_UNDEF,
         CAND_PER_SEAT
     }
@@ -93,7 +83,7 @@ public class ElectionTypeContainer {
      *
      * @return the id of this input typecontainer
      */
-    public ElectionInputTypeIds getInputId() {
+    public ElectionInputTypeIds getInputID() {
         return inID;
     }
 
@@ -119,6 +109,14 @@ public class ElectionTypeContainer {
      */
     public void setUpperBound(int upperBound) {
         this.upperBound = upperBound;
+    }
+	
+    /**
+     * tells, if the voting methode was candidates per seats or not
+     * @return true, if it is candidates per seat, else false
+     */
+    public boolean getResultTypeSeats() {
+        return (outID == ElectionOutputTypeIds.CAND_PER_SEAT);
     }
     
 }

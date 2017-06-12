@@ -64,17 +64,4 @@ public class EnumToIdMapping {
         enumStringsToIds.put(ElectionTypeContainer.ElectionOutputTypeIds.CAND_PER_SEAT.toString(),
                 "candidate_per_seat");
     }
-    
-    public enum ElectionInputTypeIds {
-        SINGLE_CHOICE,
-        PREFERENCE,
-        APPROVAL,
-        WEIGHTED_APPROVAL,
-    }
-    
-    public enum ElectionOutputTypeIds {
-        CAND_OR_UNDEF,
-        CAND_PER_SEAT
-    }
-
 }

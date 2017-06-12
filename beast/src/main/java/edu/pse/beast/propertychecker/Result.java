@@ -5,8 +5,8 @@
  */
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.electiondescription.ElectionType;
-
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenterElement;
@@ -29,7 +29,7 @@ public abstract class Result implements ResultInterface {
     private int numVoters;
     private int numSeats;
     private int numCandidates;
-    private ElectionType electionType;
+    private ElectionDescription electionDescription;
     private PostAndPrePropertiesDescription property;
     private boolean forcefulleStopped;
 
@@ -207,8 +207,8 @@ public abstract class Result implements ResultInterface {
      * 
      * @return the election type
      */
-    public ElectionType getElectionType() {
-        return electionType;
+    public ElectionDescription getElectionDescription() {
+        return electionDescription;
     }
 
     /**
@@ -240,11 +240,11 @@ public abstract class Result implements ResultInterface {
 
     /**
      * 
-     * @param electionType
+     * @param electionTypeContainer
      *            the electiontype to be set
      */
-    public void setElectionType(ElectionType electionType) {
-        this.electionType = electionType;
+    public void setElectionType(ElectionDescription electionDescription) {
+        this.electionDescription = electionDescription;
     }
 
     /**

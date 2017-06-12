@@ -1,6 +1,6 @@
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.electiondescription.ElectionType;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
@@ -50,7 +50,7 @@ public abstract class CheckerFactory implements Runnable {
         // because we create a new instance with all variables null, we have to
         // catch it here
         if (result != null) {
-            result.setElectionType(getElectionTypeFromElectionDescription());
+            result.setElectionType(getElectionDescription());
             result.setProperty(postAndPrepPropDesc);
         }
     }
@@ -273,39 +273,7 @@ public abstract class CheckerFactory implements Runnable {
      * @return the election Type that the here give ElectionDescriptionSource
      * describes
      */
-    private ElectionType getElectionTypeFromElectionDescription() {
-        ElectionTypeContainer inputType = electionDescSrc.getElectionDescription().getInputType();
-        ElectionTypeContainer outputType = electionDescSrc.getElectionDescription().getOutputType();
-
-        ElectionType toReturn = null;
-
-        switch (inputType.getInputId()) {
-            case SINGLE_CHOICE:
-                toReturn = ElectionType.SINGLECHOICE;
-                break;
-            case PREFERENCE:
-                toReturn = ElectionType.PREFERENCE;
-                break;
-            case APPROVAL:
-                toReturn = ElectionType.APPROVAL;
-                break;
-            case WEIGHTED_APPROVAL:
-                toReturn = ElectionType.WEIGHTEDAPPROVAL;
-                break;
-
-            default:
-                ErrorLogger.log("InputType of the Election is not set correctly");
-        }
-        switch (outputType.getOutputId()) {
-            case CAND_OR_UNDEF:
-                toReturn.setResultTypeSeats(false);
-                break;
-            case CAND_PER_SEAT:
-                toReturn.setResultTypeSeats(true);
-                break;
-            default:
-                ErrorLogger.log("OutputType of the Election is not set correctly");
-        }
-        return toReturn;
+    private ElectionDescription getElectionDescription() {
+    	return electionDescSrc.getElectionDescription();    	
     }
 }

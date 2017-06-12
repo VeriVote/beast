@@ -60,7 +60,7 @@ public class CBMCResult extends Result {
 	 */
 	private FailureExample createFailureExample() {
 		// determine the elect values
-		if (getResult() != null && getElectionType() != null) {
+		if (getResult() != null && getElectionDescription() != null) {
 
 			FailureExample toReturn = null;
 
@@ -74,9 +74,9 @@ public class CBMCResult extends Result {
 			List<CBMCResultWrapperSingleArray> singleVotesList;
 
 			// it is voting for seats, and not for candidates
-			if (getElectionType().getResultTypeSeats()) {
+			if (!getElectionDescription().getOutputType().getResultTypeSeats()) {
 
-				switch (getElectionType()) {
+				switch (getElectionDescription().getInputType().getInputID()) {
 
 				// get the fitting type and extract the values out of it,
 				// because we
@@ -92,7 +92,7 @@ public class CBMCResult extends Result {
 					// got chosen
 					seatsList = readOneDimVar("elect", getResult());
 
-					toReturn = new FailureExample(getElectionType(), null, votesList, null, seatsList,
+					toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
 							getNumCandidates(), getNumSeats(), getNumVoters());
 					break;
 				case PREFERENCE:
@@ -105,10 +105,10 @@ public class CBMCResult extends Result {
 					// got chosen
 					seatsList = readOneDimVar("elect", getResult());
 
-					toReturn = new FailureExample(getElectionType(), null, votesList, null, seatsList,
+					toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
 							getNumCandidates(), getNumSeats(), getNumVoters());
 					break;
-				case SINGLECHOICE:
+				case SINGLE_CHOICE:
 
 					singleVotesList = readOneDimVar("votes", getResult());
 
@@ -118,10 +118,10 @@ public class CBMCResult extends Result {
 					// got chosen
 					seatsList = readOneDimVar("elect", getResult());
 
-					toReturn = new FailureExample(getElectionType(), singleVotesList, null, null, seatsList,
+					toReturn = new FailureExample(getElectionDescription(), singleVotesList, null, null, seatsList,
 							getNumCandidates(), getNumSeats(), getNumVoters());
 					break;
-				case WEIGHTEDAPPROVAL:
+				case WEIGHTED_APPROVAL:
 
 					votesList = readTwoDimVar("votes", getResult());
 
@@ -131,12 +131,12 @@ public class CBMCResult extends Result {
 					// got chosen
 					seatsList = readOneDimVar("elect", getResult());
 
-					toReturn = new FailureExample(getElectionType(), null, votesList, null, seatsList,
+					toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
 							getNumCandidates(), getNumSeats(), getNumVoters());
 					break;
 				default:
 					ErrorForUserDisplayer
-							.displayError("This votingtype you are using hasn't been implemented yet to be displaye. "
+							.displayError("This votingtype you are using hasn't been implemented yet to be displayed. "
 									+ "Please do so in the class CBMC_Result");
 					this.setError("This votingtype hasn't been implemented yet please do so in the class CBMC_Result");
 					return null;
@@ -147,7 +147,7 @@ public class CBMCResult extends Result {
 				// read the elect value, because here we dont work with seats
 				List<CBMCResultWrapperLong> elect = readLongs("elect", getResult());
 
-				switch (getElectionType()) {
+				switch (getElectionDescription().getInputType().getInputID()) {
 
 				// get the fitting type and extract the values out of it,
 				// because we
@@ -157,28 +157,28 @@ public class CBMCResult extends Result {
 
 					votesList = readTwoDimVar("votes", getResult());
 
-					toReturn = new FailureExample(getElectionType(), null, votesList, elect, null, getNumCandidates(),
+					toReturn = new FailureExample(getElectionDescription(), null, votesList, elect, null, getNumCandidates(),
 							getNumSeats(), getNumVoters());
 					break;
 				case PREFERENCE:
 
 					votesList = readTwoDimVar("votes", getResult());
 
-					toReturn = new FailureExample(getElectionType(), null, votesList, elect, null, getNumCandidates(),
+					toReturn = new FailureExample(getElectionDescription(), null, votesList, elect, null, getNumCandidates(),
 							getNumSeats(), getNumVoters());
 					break;
-				case SINGLECHOICE:
+				case SINGLE_CHOICE:
 
 					singleVotesList = readOneDimVar("votes", getResult());
 
-					toReturn = new FailureExample(getElectionType(), singleVotesList, null, elect, null,
+					toReturn = new FailureExample(getElectionDescription(), singleVotesList, null, elect, null,
 							getNumCandidates(), getNumSeats(), getNumVoters());
 					break;
-				case WEIGHTEDAPPROVAL:
+				case WEIGHTED_APPROVAL:
 
 					votesList = readTwoDimVar("votes", getResult());
 
-					toReturn = new FailureExample(getElectionType(), null, votesList, elect, null, getNumCandidates(),
+					toReturn = new FailureExample(getElectionDescription(), null, votesList, elect, null, getNumCandidates(),
 							getNumSeats(), getNumVoters());
 					break;
 				default:

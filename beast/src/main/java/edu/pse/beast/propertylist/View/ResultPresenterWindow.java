@@ -1,10 +1,11 @@
 package edu.pse.beast.propertylist.View;
 
 import edu.pse.beast.datatypes.FailureExample;
-import edu.pse.beast.datatypes.electiondescription.ElectionType;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
+import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
@@ -123,21 +124,21 @@ public class ResultPresenterWindow extends JFrame {
         return result;
     }
 
-    private Long[] getVotePoints(Long[][] votes, ElectionType type, FailureExample ex) {
+    private Long[] getVotePoints(Long[][] votes, ElectionTypeContainer type, FailureExample ex) {
         int candidates = ex.getNumOfCandidates();
         Long[] result = new Long[candidates];
         Arrays.fill(result, 0l);
 
         for (int i = 0; i < ex.getNumOfVoters(); i++) {
             Long[] vote = votes[i];
-            switch (type) {
+            switch (type.getInputID()) {
             case PREFERENCE:
                 for (int j = 0; j < candidates; j++) {
                     int chosenCandidate = (int) (long) vote[j];
                     result[chosenCandidate] += candidates - j;
                 }
                 break;
-            case WEIGHTEDAPPROVAL:
+            case WEIGHTED_APPROVAL:
                 for (int j = 0; j < candidates; j++) {
                     result[j] += vote[j];
                 }
@@ -150,6 +151,9 @@ public class ResultPresenterWindow extends JFrame {
                 }
                 break;
             default:
+            	ErrorForUserDisplayer
+				.displayError("This votingtype you are using hasn't been implemented yet for the result presentation. "
+						+ "Please do so in the class ResultPresenterWindow.java");
                 break;
             }
         }
@@ -242,7 +246,7 @@ public class ResultPresenterWindow extends JFrame {
 
             // The elected part of the document
             appendPane(srl.getStringFromID("elected") + ": ");
-            if (ex.getElectionType().getResultTypeSeats()) {
+            if (ex.getElectionDescription().getOutputType().getResultTypeSeats()) {
                 writeElectedMultipleCandidates(ex, i);
             } else {
                 writeElectedOneCandidate(ex, i);
@@ -255,7 +259,7 @@ public class ResultPresenterWindow extends JFrame {
             if (ex.isChooseOneCandidate()) {
                 result = getVotePoints(ex.getVotes().get(i).getArray(), ex);
             } else {
-                result = getVotePoints(ex.getVoteList().get(i).getArray(), ex.getElectionType(), ex);
+                result = getVotePoints(ex.getVoteList().get(i).getArray(), ex.getElectionDescription().getInputType(), ex);
             }
             for (int j = 0; j < result.length; j++) {
                 appendLine(srl.getStringFromID("Candidate") + " " + ex.getSymbolicCandidateForIndex(j) + ": "

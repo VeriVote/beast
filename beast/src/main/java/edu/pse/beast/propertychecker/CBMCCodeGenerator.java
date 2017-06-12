@@ -293,7 +293,7 @@ public class CBMCCodeGenerator {
             code.add(nondetInt);
             code.add(voteDecl);
 
-            if (inputType.getInputId() == ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE) {
+            if (inputType.getInputID() == ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE) {
                 addPreferenceVotingArrayInitialisation(voteNumber);
             }
 
