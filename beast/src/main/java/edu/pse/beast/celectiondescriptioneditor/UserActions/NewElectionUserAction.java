@@ -43,8 +43,8 @@ public class NewElectionUserAction extends UserAction {
         electionTemplateDialog.setVisible(true);
     }
 
-    public void create(ElectionTypeContainer.ElectionTypeIds input,
-                       ElectionTypeContainer.ElectionTypeIds  res,
+    public void create(ElectionTypeContainer.ElectionInputTypeIds input,
+                       ElectionTypeContainer.ElectionOutputTypeIds  res,
                        String name) {
         try {
             ElectionDescription description = cCodeHelper.generateElectionDescription(

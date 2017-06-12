@@ -26,6 +26,10 @@ public class CElectionCodeArea extends CodeArea {
     private final CVariableErrorFinder varErrFinder;
     private final CSyntaxHl cSyntaxHl;
 
+    /**
+     * constructor
+     * @param codeArea the code area to be associated with
+     */
     public CElectionCodeArea(CodeArea codeArea) {
         super(codeArea);
         antlrHandler = new CAntlrHandler(pane);
@@ -40,7 +44,7 @@ public class CElectionCodeArea extends CodeArea {
      * displays the given code to the user in the JTextPane
      *
      * @param code the code to be displayed
-     * @throws BadLocationException
+     * @throws BadLocationException in case of a bad location
      */
     public void letUserEditCode(List<String> code) throws BadLocationException {
         String s = "";

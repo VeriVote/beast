@@ -1,15 +1,14 @@
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling;
 
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
+
 import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
-import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.toolbox.WindowsOStoolbox;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,24 +17,25 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * this is the windows specific implementation to check code.
- * It uses cl.exe from the c++ pack for visual studio to 
- * check the code for errors
+ * this is the windows specific implementation to check code. It uses cl.exe
+ * from the c++ pack for visual studio to check the code for errors
+ * 
  * @author Lukas
  *
  */
 public class WindowsErrorChecker extends SystemSpecificErrorChecker {
 
-    //the compiler we use on windows, because it is also needed by cbmc
+    // the compiler we use on windows, because it is also needed by cbmc
     private final String compilerString = "cl.exe";
-    
-    //used to enable includes from the users own written classes
+
+    // used to enable includes from the users own written classes
     private final String enableUserInclude = "/I";
     private final String userIncludeFolder = "/core/user_includes/";
-    
-    //we want to compile all available c files, so the user doesn't have to specify anything
+
+    // we want to compile all available c files, so the user doesn't have to
+    // specify anything
     private final String compileAllIncludesInFolder = "*.c";
-    
+
     @Override
     public Process checkCodeFileForErrors(File toCheck) {
 
@@ -43,11 +43,14 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
 
         Process startedProcess = null;
 
-        String userIncludeAndPath = enableUserInclude + "\"" + SuperFolderFinder.getSuperFolder() + userIncludeFolder + "\"";
-        
-        //we have to compile all includes that the user puts in that folder, in case some of them are needed
-        String compileAllIncludesInIncludePath = "\"" + SuperFolderFinder.getSuperFolder() + userIncludeFolder + compileAllIncludesInFolder + "\"";
-        
+        String userIncludeAndPath = enableUserInclude + "\"" + SuperFolderFinder.getSuperFolder() + userIncludeFolder
+                + "\"";
+
+        // we have to compile all includes that the user puts in that folder, in
+        // case some of them are needed
+        String compileAllIncludesInIncludePath = "\"" + SuperFolderFinder.getSuperFolder() + userIncludeFolder
+                + compileAllIncludesInFolder + "\"";
+
         // try to get the vsCMD
         try {
             vsCmd = WindowsOStoolbox.getVScmdPath();
@@ -65,27 +68,30 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
                             + "/windows/ in the BEAST installation folder.");
             return null;
         } else {
-            
+
             // because windows is weird the whole call that will get placed
             // inside
-            // VScmd has to be in one giant string. Put the created file in the output directory, so
+            // VScmd has to be in one giant string. Put the created file in the
+            // output directory, so
             // it can be deleted afterwards
-            String clExeCall = "\"" + vsCmd + "\"" + " & " + compilerString + " " + userIncludeAndPath + " " + ("\"" + toCheck.getAbsolutePath() + "\"") 
-                    + " " + (" /Fo" + toCheck.getParent() + "\\ ") + (" /Fe" + toCheck.getParent() + "\\ ") + compileAllIncludesInIncludePath;
-            
+            String clExeCall = "\"" + vsCmd + "\"" + " & " + compilerString + " " + userIncludeAndPath + " "
+                    + ("\"" + toCheck.getAbsolutePath() + "\"") + " " + (" /Fo" + toCheck.getParent() + "\\ ")
+                    + (" /Fe" + toCheck.getParent() + "\\ ") + compileAllIncludesInIncludePath;
+
             List<String> callInList = new ArrayList<String>();
-            
+
             callInList.add(clExeCall);
-            
+
             File batFile = new File(toCheck.getParent() + "\\" + toCheck.getName().replace(".c", ".bat"));
-            
+
             FileSaver.writeStringLinesToFile(callInList, batFile);
-            
-            
-            // this call starts a new VScmd instance and lets cl.exe (the compiler) run in it
-            // ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", clExeCall);
+
+            // this call starts a new VScmd instance and lets cl.exe (the
+            // compiler) run in it
+            // ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c",
+            // clExeCall);
             ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", batFile.getAbsolutePath());
-            
+
             try {
                 startedProcess = prossBuild.start();
             } catch (IOException e) {
@@ -99,10 +105,11 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
     protected List<CodeError> parseError(List<String> result, List<String> errors) {
         List<CodeError> codeErrors = new ArrayList<CodeError>();
 
-        //errors are displayed like "(LINENUMBER)" where linenumber is a whole number
+        // errors are displayed like "(LINENUMBER)" where linenumber is a whole
+        // number
         Pattern lineExtractor = Pattern.compile("((.*)(\\([0-9]*\\))(.*))");
 
-        //cl.exe prints out the results in the result list
+        // cl.exe prints out the results in the result list
         for (Iterator<String> iterator = result.iterator(); iterator.hasNext();) {
             String line = (String) iterator.next();
 
@@ -117,20 +124,23 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
             if (linesMatcher.find()) {
                 try {
 
-                    //we want the first occurance of such a "linenumber" indentifier, so we don't have to worry
-                    //about code injection from strings or such
-                    //then we split at "(" and ")" to extract the number
+                    // we want the first occurance of such a "linenumber"
+                    // indentifier, so we don't have to worry
+                    // about code injection from strings or such
+                    // then we split at "(" and ")" to extract the number
                     lineNumber = Integer.parseInt(linesMatcher.group(1).split("\\(")[1].split("\\)")[0]);
 
-                    //get the error message here by splitting at a common (error/warning C[ERRORNUMBER]) identifier
+                    // get the error message here by splitting at a common
+                    // (error/warning C[ERRORNUMBER]) identifier
                     String[] varAndMessage = line.split("([a-zA-Z]+ C[0-9]+:)");
-                    
-                   // String msg = line.substring(line.lastIndexOf(":"));
-                    //to prevent exceptions
+
+                    // String msg = line.substring(line.lastIndexOf(":"));
+                    // to prevent exceptions
                     if (varAndMessage.length > 1) {
                         String toSplit = varAndMessage[1];
-                        
-                        //the variable and compilermessage is between ":"'s, so we split there.
+
+                        // the variable and compilermessage is between ":"'s, so
+                        // we split there.
                         if (toSplit.contains(":")) {
                             varName = toSplit.split(":")[0].replaceAll("\"", "");
                             message = toSplit.split(":")[1];
@@ -138,17 +148,15 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
                             message = toSplit;
                         }
                     }
-                    
-                    codeErrors.add(CCodeErrorFactory.generateCompilerError(lineNumber, -1, varName, message));
 
+                    codeErrors.add(CCodeErrorFactory.generateCompilerError(lineNumber, -1, varName, message));
 
                 } catch (NumberFormatException e) {
                     ErrorLogger.log("can't parse the current error line from cl.exe");
                 }
-            } else 
-            if (line.contains(" : error LNK")){
+            } else if (line.contains(" : error LNK")) {
                 String[] splittedArray = line.split(":");
-                
+
                 if (splittedArray.length >= 2) {
                     String subString = splittedArray[2];
                     codeErrors.add(CCodeErrorFactory.generateCompilerError(-1, -1, "", subString));

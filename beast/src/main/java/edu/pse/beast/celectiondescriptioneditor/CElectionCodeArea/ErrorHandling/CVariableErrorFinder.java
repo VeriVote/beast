@@ -15,15 +15,21 @@ import java.util.ArrayList;
 /**
  * This class uses an external compiler (either gcc on linux or cl on windows)
  * to find errors in the c code
+ * 
  * @author Holger-Desktop
  */
 public class CVariableErrorFinder implements ErrorFinder {
     private final JTextPane pane;
-    
+
+    /**
+     * constructor
+     * 
+     * @param pane the pane the C-errors get shown
+     */
     public CVariableErrorFinder(JTextPane pane) {
         this.pane = pane;
     }
-    
+
     @Override
     public ArrayList<CodeError> getErrors() {
         String code = JTextPaneToolbox.getText(pane);
@@ -40,5 +46,5 @@ public class CVariableErrorFinder implements ErrorFinder {
         ArrayList<CodeError> found = new ArrayList<>(DeepErrorChecker.checkCodeForErrors(seperated));
         return found;
     }
-    
+
 }

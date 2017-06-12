@@ -1,6 +1,7 @@
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling;
 
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
+
 import edu.pse.beast.toolbox.*;
 
 import java.io.BufferedReader;
@@ -8,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -24,6 +24,9 @@ public abstract class SystemSpecificErrorChecker {
     
     private final String pathToTempFolder = "/core/c_tempfiles/";
     
+    /**
+     * constructor creates an error checker that compiles the c code and passes it on to a system specific compiler
+     */
     public SystemSpecificErrorChecker() {
         //clear the folder where the files that get checked get saved to, because sometimes they
         //persist from the last time BEAST was run
@@ -103,17 +106,17 @@ public abstract class SystemSpecificErrorChecker {
     }
     
     /**
-     * checks a file for errors. Has to be implemented systemspecific
+     * checks a file for errors. Has to be implemented system specific
      * @param toCheck the file to check
      * @return a process that is currently checking the file
      */
     protected abstract Process checkCodeFileForErrors(File toCheck);
     
     /**
-     * parses the system specific outputs from the process to the commong "CodeError" format
+     * parses the system specific outputs from the process to the internal "CodeError" format
      * @param result the result list from the previously started process
      * @param errors the error list from the previously started process
-     * @return a list of all found coderrors in the list
+     * @return a list of all found code errors in the list
      */
     protected abstract List<CodeError> parseError(List<String> result, List<String> errors);
 }

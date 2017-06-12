@@ -26,6 +26,10 @@ public class CElectionDescriptionEditorChangeHandler {
         updatePreValue();
     }
 
+    /**
+     * adds a new text pane
+     * @param codeArea the text pane to add
+     */
     public void addNewTextPane(JTextPane codeArea) {
         this.codeArea = codeArea;
         updatePreValue();

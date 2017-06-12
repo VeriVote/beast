@@ -22,8 +22,8 @@ public class ElectionDescriptionSaverLoader implements SaverLoader {
         created += h.getStringForAttr("name", electionDescription.getName());
         created += h.getStringForAttr("votingDeclLine", electionDescription.getVotingDeclLine());
         created += h.getStringForAttr("code", electionDescription.getCode());
-        created += h.getStringForAttr("inputType", electionDescription.getInputType().getId().toString());
-        created += h.getStringForAttr("outputType", electionDescription.getOutputType().getId().toString());
+        created += h.getStringForAttr("inputType", electionDescription.getInputType().getInputId().toString());
+        created += h.getStringForAttr("outputType", electionDescription.getOutputType().getInputId().toString());
         return created;
     }
 
@@ -34,9 +34,9 @@ public class ElectionDescriptionSaverLoader implements SaverLoader {
 
         String name = m.get("name");
         ElectionTypeContainer inputType = electionTemplateHandler.getById(
-                ElectionTypeContainer.ElectionTypeIds.valueOf(m.get("inputType")));
+                ElectionTypeContainer.ElectionInputTypeIds.valueOf(m.get("inputType")));
         ElectionTypeContainer outputType = electionTemplateHandler.getById(
-                ElectionTypeContainer.ElectionTypeIds.valueOf(m.get("outputType")));
+                ElectionTypeContainer.ElectionOutputTypeIds.valueOf(m.get("outputType")));
         int votingDecLine = Integer.valueOf(m.get("votingDeclLine"));
         String[] codeArray = m.get("code").split("\n");
 

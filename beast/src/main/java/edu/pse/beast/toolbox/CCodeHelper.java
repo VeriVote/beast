@@ -125,8 +125,8 @@ public class CCodeHelper {
      * @return the complete voting function
      */
     public ElectionDescription generateElectionDescription(
-            ElectionTypeContainer.ElectionTypeIds input,
-            ElectionTypeContainer.ElectionTypeIds res,
+            ElectionTypeContainer.ElectionInputTypeIds input,
+            ElectionTypeContainer.ElectionOutputTypeIds res,
             String name,
             ElectionTemplateHandler templateHandler,
             StringResourceLoader stringResourceLoader) {
@@ -162,7 +162,7 @@ public class CCodeHelper {
      * @return max value an element of the given ElectionTypeContainer can have
      */
     public String getMax(ElectionTypeContainer inputType) {
-        switch (inputType.getId()) {
+        switch (inputType.getInputId()) {
             case APPROVAL:
                 return "2";
             case SINGLE_CHOICE:
@@ -172,7 +172,7 @@ public class CCodeHelper {
             case WEIGHTED_APPROVAL:
                 return String.valueOf(inputType.getUpperBound());
             default:
-                throw new AssertionError(inputType.getId().name());
+                throw new AssertionError(inputType.getInputId().name());
             
         }
     }
@@ -187,7 +187,7 @@ public class CCodeHelper {
      * have
      */
     public String getMin(ElectionTypeContainer inputType) {
-        switch (inputType.getId()) {
+        switch (inputType.getInputId()) {
             case SINGLE_CHOICE:
                 return "0";
             case PREFERENCE:
@@ -197,7 +197,7 @@ public class CCodeHelper {
             case WEIGHTED_APPROVAL:
                 return String.valueOf(inputType.getLowerBound());
             default:
-                throw new AssertionError(inputType.getId().name());
+                throw new AssertionError(inputType.getInputId().name());
 
         }
     }

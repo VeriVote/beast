@@ -31,8 +31,8 @@ import java.util.Stack;
  *
  * @author Holger-Desktop
  */
-public class FormalExpErrorFinderTreeListener implements FormalPropertyDescriptionListener,
-        VariableListListener, ElectionDescriptionChangeListener {
+public class FormalExpErrorFinderTreeListener
+        implements FormalPropertyDescriptionListener, VariableListListener, ElectionDescriptionChangeListener {
 
     private final ArrayList<CodeError> created = new ArrayList<>();
     private final BooleanExpScopehandler scopeHandler = new BooleanExpScopehandler();
@@ -40,6 +40,14 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
     private ElectionTypeContainer output;
     private Stack<TypeExpression> expStack;
 
+    /**
+     * constructor to create the error finder in the tree list
+     * 
+     * @param list
+     *            the list with the symbolic variables
+     * @param ceditor
+     *            the editor where the code is
+     */
     public FormalExpErrorFinderTreeListener(SymbolicVariableList list, CElectionDescriptionEditor ceditor) {
         list.addListener(this);
         scopeHandler.enterNewScope();
@@ -51,14 +59,31 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
         ceditor.addListener(this);
     }
 
+    /**
+     * sets up the input for the error finder
+     * 
+     * @param input
+     *            the election type container
+     */
     public void setInput(ElectionTypeContainer input) {
         this.input = input;
     }
 
+    /**
+     * sets up the output for the error finder
+     * 
+     * @param output
+     *            the election type container
+     */
     public void setOutput(ElectionTypeContainer output) {
         this.output = output;
     }
 
+    /**
+     * gives all code errors found
+     * 
+     * @return a list of all found errors
+     */
     public ArrayList<CodeError> getErrors() {
         return created;
     }
@@ -177,19 +202,18 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
     @Override
     public void exitNumberExpression(FormalPropertyDescriptionParser.NumberExpressionContext ctx) {
-        if(ctx.Mult() != null) {
+        if (ctx.Mult() != null) {
             IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
             IntegerValuedExpression lsh = (IntegerValuedExpression) expStack.pop();
             BinaryIntegerValuedNode expNode = new BinaryIntegerValuedNode(lsh, rhs, ctx.Mult().getText());
             expStack.push(expNode);
-        } else if(ctx.Add() != null) {
+        } else if (ctx.Add() != null) {
             IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
             IntegerValuedExpression lsh = (IntegerValuedExpression) expStack.pop();
             BinaryIntegerValuedNode expNode = new BinaryIntegerValuedNode(lsh, rhs, ctx.Add().getText());
             expStack.push(expNode);
         }
     }
-
 
     @Override
     public void enterTypeByPosExp(FormalPropertyDescriptionParser.TypeByPosExpContext ctx) {
@@ -208,8 +232,7 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
     @Override
     public void exitVoterByPosExp(FormalPropertyDescriptionParser.VoterByPosExpContext ctx) {
-        expStack.push(
-                new AtPosExp(new InternalTypeContainer(InternalTypeRep.VOTER) ,
+        expStack.push(new AtPosExp(new InternalTypeContainer(InternalTypeRep.VOTER),
                 (IntegerValuedExpression) expStack.pop()));
     }
 
@@ -220,9 +243,8 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
     @Override
     public void exitCandByPosExp(FormalPropertyDescriptionParser.CandByPosExpContext ctx) {
-        expStack.push(
-                new AtPosExp(new InternalTypeContainer(InternalTypeRep.CANDIDATE) ,
-                        (IntegerValuedExpression) expStack.pop()));
+        expStack.push(new AtPosExp(new InternalTypeContainer(InternalTypeRep.CANDIDATE),
+                (IntegerValuedExpression) expStack.pop()));
     }
 
     @Override
@@ -232,9 +254,8 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
     @Override
     public void exitSeatByPosExp(FormalPropertyDescriptionParser.SeatByPosExpContext ctx) {
-        expStack.push(
-                new AtPosExp(new InternalTypeContainer(InternalTypeRep.SEAT) ,
-                        (IntegerValuedExpression) expStack.pop()));
+        expStack.push(new AtPosExp(new InternalTypeContainer(InternalTypeRep.SEAT),
+                (IntegerValuedExpression) expStack.pop()));
     }
 
     @Override
@@ -264,7 +285,8 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
         }
         String numberString = ctx.Elect().getText().substring("ELECT".length());
         int number = Integer.valueOf(numberString);
-        if (number == 0) created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroElect(ctx));
+        if (number == 0)
+            created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroElect(ctx));
         expStack.add(new ElectExp(cont, null, 0));
     }
 
@@ -282,7 +304,8 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
         }
         String numberString = ctx.Vote().getText().substring("VOTES".length());
         int number = Integer.valueOf(numberString);
-        if (number == 0) created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroVotes(ctx));
+        if (number == 0)
+            created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroVotes(ctx));
         expStack.add(new ElectExp(cont, null, 0));
     }
 
@@ -297,7 +320,7 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
     }
 
     private void testIfTooManyVarsPassed(List<FormalPropertyDescriptionParser.PassTypeContext> ctx,
-                                         InternalTypeContainer cont) {
+            InternalTypeContainer cont) {
         int amountPassedVariables = ctx.size();
         int listDepth = 0;
         for (; cont.isList(); cont = cont.getListedType()) {
@@ -309,7 +332,7 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
     }
 
     private void testIfWrongTypePassed(List<FormalPropertyDescriptionParser.PassTypeContext> ctx,
-                                       InternalTypeContainer cont) {
+            InternalTypeContainer cont) {
         int amtPassed = ctx.size();
         Stack<TypeExpression> passedTypes = new Stack<>();
         for (int i = 0; i < amtPassed; ++i) {
@@ -318,8 +341,7 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
         int i = 0;
         for (; cont.isList() && i < ctx.size(); cont = cont.getListedType()) {
             TypeExpression currentVarExp = passedTypes.pop();
-            if (cont.getAccesTypeIfList() != currentVarExp.getInternalTypeContainer().
-                    getInternalType()) {
+            if (cont.getAccesTypeIfList() != currentVarExp.getInternalTypeContainer().getInternalType()) {
                 created.add(BooleanExpErrorFactory.createWrongVarTypePassed(cont, ctx.get(i), currentVarExp));
             }
             ++i;
@@ -349,7 +371,8 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
         }
         String numberString = ctx.Votesum().getText().substring("VOTE_SUM_FOR_CANDIDATE".length());
         int number = Integer.valueOf(numberString);
-        if (number == 0) created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroVotesum(ctx));
+        if (number == 0)
+            created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroVotesum(ctx));
         expStack.add(new VoteSumForCandExp(number, passedVar));
     }
 
@@ -388,8 +411,6 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
     }
 
-
-
     @Override
     public void exitSymbolicVarExp(FormalPropertyDescriptionParser.SymbolicVarExpContext ctx) {
         String name = ctx.getText();
@@ -405,8 +426,6 @@ public class FormalExpErrorFinderTreeListener implements FormalPropertyDescripti
 
         expStack.add(expNode);
     }
-
-
 
     @Override
     public void visitTerminal(TerminalNode tn) {

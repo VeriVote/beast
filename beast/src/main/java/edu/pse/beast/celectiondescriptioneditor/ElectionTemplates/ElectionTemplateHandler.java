@@ -15,92 +15,97 @@ import java.util.List;
 
 /**
  * This class handles all available ElectionTypeContainer for input and output.
+ * 
  * @author Holger-Desktop
  */
 public class ElectionTemplateHandler {
-    
+
     private final ArrayList<ElectionTypeContainer> inputTypes = new ArrayList<>();
     private final ArrayList<ElectionTypeContainer> resTypes = new ArrayList<>();
-    
-    
+
+    /**
+     * creates the template handler and sets it up for usage
+     */
     public ElectionTemplateHandler() {
-        inputTypes.add(
-                new ElectionTypeContainer(
-                        new InternalTypeContainer(
-                                new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER),
-                        ElectionTypeContainer.ElectionTypeIds.SINGLE_CHOICE));
-        inputTypes.add(
-                new ElectionTypeContainer(
-                        new InternalTypeContainer(
-                                new InternalTypeContainer(
-                                        new InternalTypeContainer(InternalTypeRep.INTEGER),
-                                        InternalTypeRep.CANDIDATE 
-                                ), InternalTypeRep.VOTER),
-                        ElectionTypeContainer.ElectionTypeIds.PREFERENCE));
-        
-        inputTypes.add(
-                new ElectionTypeContainer(
-                        new InternalTypeContainer(
-                                new InternalTypeContainer(
-                                        new InternalTypeContainer(InternalTypeRep.INTEGER),
-                                        InternalTypeRep.CANDIDATE
-                                ), InternalTypeRep.VOTER),
-                        ElectionTypeContainer.ElectionTypeIds.APPROVAL));
-        
-        inputTypes.add(
-                new ElectionTypeContainer(
-                        new InternalTypeContainer(
-                                new InternalTypeContainer(
-                                        new InternalTypeContainer(InternalTypeRep.INTEGER),
-                                        InternalTypeRep.CANDIDATE
-                                ), InternalTypeRep.VOTER),
-                        ElectionTypeContainer.ElectionTypeIds.WEIGHTED_APPROVAL));
-        
+        inputTypes.add(new ElectionTypeContainer(
+                new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER),
+                ElectionTypeContainer.ElectionInputTypeIds.SINGLE_CHOICE));
+        inputTypes.add(new ElectionTypeContainer(
+                new InternalTypeContainer(new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.INTEGER),
+                        InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER),
+                ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE));
+
+        inputTypes.add(new ElectionTypeContainer(
+                new InternalTypeContainer(new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.INTEGER),
+                        InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER),
+                ElectionTypeContainer.ElectionInputTypeIds.APPROVAL));
+
+        inputTypes.add(new ElectionTypeContainer(
+                new InternalTypeContainer(new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.INTEGER),
+                        InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER),
+                ElectionTypeContainer.ElectionInputTypeIds.WEIGHTED_APPROVAL));
+
         resTypes.add(new ElectionTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE),
-                ElectionTypeContainer.ElectionTypeIds.CAND_OR_UNDEF));
-        
+                ElectionTypeContainer.ElectionOutputTypeIds.CAND_OR_UNDEF));
+
         resTypes.add(new ElectionTypeContainer(
-                new InternalTypeContainer(
-                        new InternalTypeContainer(InternalTypeRep.CANDIDATE),
-                        InternalTypeRep.SEAT),
-                ElectionTypeContainer.ElectionTypeIds.CAND_PER_SEAT));
+                new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.SEAT),
+                ElectionTypeContainer.ElectionOutputTypeIds.CAND_PER_SEAT));
     }
 
-    public List<ElectionTypeContainer.ElectionTypeIds> getInputIds() {
-        return Arrays.asList(ElectionTypeContainer.ElectionTypeIds.SINGLE_CHOICE,
-                ElectionTypeContainer.ElectionTypeIds.PREFERENCE,
-                ElectionTypeContainer.ElectionTypeIds.APPROVAL,
-                ElectionTypeContainer.ElectionTypeIds.WEIGHTED_APPROVAL);
+    /**
+     * 
+     * @return the ids that are used for the input
+     */
+    public List<ElectionTypeContainer.ElectionInputTypeIds> getInputIds() {
+        return Arrays.asList(ElectionTypeContainer.ElectionInputTypeIds.SINGLE_CHOICE,
+                ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE, ElectionTypeContainer.ElectionInputTypeIds.APPROVAL,
+                ElectionTypeContainer.ElectionInputTypeIds.WEIGHTED_APPROVAL);
     }
 
-    public List<ElectionTypeContainer.ElectionTypeIds> getResIds() {
-        return Arrays.asList(ElectionTypeContainer.ElectionTypeIds.CAND_OR_UNDEF,
-                ElectionTypeContainer.ElectionTypeIds.CAND_PER_SEAT);
+    /**
+     * 
+     * @return the ids that are used for the output
+     */
+    public List<ElectionTypeContainer.ElectionOutputTypeIds> getResIds() {
+        return Arrays.asList(ElectionTypeContainer.ElectionOutputTypeIds.CAND_OR_UNDEF,
+                ElectionTypeContainer.ElectionOutputTypeIds.CAND_PER_SEAT);
     }
 
     /**
      * returns the elecitontypecontainer having the supplied id
-     * @param id the id of the elecitontypecontainer to be retrieved
+     * 
+     * @param id
+     *            the id of the elecitontypecontainer to be retrieved
      * @return the electiontypecontainer if it exists, null otherwise
      */
-    public ElectionTypeContainer getById(ElectionTypeContainer.ElectionTypeIds id) {
-        for (ElectionTypeContainer cont :
-                inputTypes) {
-            if(cont.getId() == id) return cont;
+    public ElectionTypeContainer getById(ElectionTypeContainer.ElectionInputTypeIds id) {
+        for (ElectionTypeContainer cont : inputTypes) {
+            if (cont.getInputId() == id)
+                return cont;
         }
 
-        for (ElectionTypeContainer cont :
-                resTypes) {
-            if (cont.getId() == id) return cont;
+        return null;
+    }
+    
+    /**
+     * returns the elecitontypecontainer having the supplied id
+     * 
+     * @param id
+     *            the id of the elecitontypecontainer to be retrieved
+     * @return the electiontypecontainer if it exists, null otherwise
+     */
+    public ElectionTypeContainer getById(ElectionTypeContainer.ElectionOutputTypeIds id) {
+        for (ElectionTypeContainer cont : resTypes) {
+            if (cont.getOutputId() == id)
+                return cont;
         }
-
-        return  null;
+        return null;
     }
 
     public ElectionTypeContainer getStandardInput() {
         return inputTypes.get(0);
     }
-
 
     public ElectionTypeContainer getStandardResult() {
         return resTypes.get(0);

@@ -22,6 +22,11 @@ public class CSyntaxHl {
     private final CAntlrHandler antlrHandler;
     private final SyntaxHL syntaxHL;
 
+    /**
+     *  constructor
+     * @param antlrHandler the antlr handler
+     * @param syntaxHL the syntax highlighter
+     */
     public CSyntaxHl(CAntlrHandler antlrHandler, SyntaxHL syntaxHL) {
         this.antlrHandler = antlrHandler;
         this.syntaxHL = syntaxHL;

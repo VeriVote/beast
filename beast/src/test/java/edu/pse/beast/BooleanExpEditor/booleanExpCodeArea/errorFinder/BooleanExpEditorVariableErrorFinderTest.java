@@ -76,7 +76,7 @@ public class BooleanExpEditorVariableErrorFinderTest {
     
     @Test
     public void testFindsCantCompareErrorDifferentLists() {
-        ElectionTypeContainer input = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.PREFERENCE);
+        ElectionTypeContainer input = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE);
         ElectionTypeContainer res = new ElectionTemplateHandler().getStandardResult();
         
         BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
@@ -98,7 +98,7 @@ public class BooleanExpEditorVariableErrorFinderTest {
     
     @Test
     public void testFindsWrongVarPassedToVotesum() {
-        ElectionTypeContainer input = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.PREFERENCE);
+        ElectionTypeContainer input = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE);
         ElectionTypeContainer res = new ElectionTemplateHandler().getStandardResult();
         
         BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
@@ -120,7 +120,7 @@ public class BooleanExpEditorVariableErrorFinderTest {
     
     @Test
     public void testGetVarNotDeclError() {
-        ElectionTypeContainer input = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.PREFERENCE);
+        ElectionTypeContainer input = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE);
         ElectionTypeContainer res = new ElectionTemplateHandler().getStandardResult();
         
         BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
@@ -140,7 +140,7 @@ public class BooleanExpEditorVariableErrorFinderTest {
     
     @Test
     public void testTooManyVarsPassedElect() {
-        ElectionTypeContainer input = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.PREFERENCE);
+        ElectionTypeContainer input = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE);
         ElectionTypeContainer res = new ElectionTemplateHandler().getStandardResult();
         
         BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();

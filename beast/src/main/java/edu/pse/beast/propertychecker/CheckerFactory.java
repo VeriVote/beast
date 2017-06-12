@@ -279,7 +279,7 @@ public abstract class CheckerFactory implements Runnable {
 
         ElectionType toReturn = null;
 
-        switch (inputType.getId()) {
+        switch (inputType.getInputId()) {
             case SINGLE_CHOICE:
                 toReturn = ElectionType.SINGLECHOICE;
                 break;
@@ -296,7 +296,7 @@ public abstract class CheckerFactory implements Runnable {
             default:
                 ErrorLogger.log("InputType of the Election is not set correctly");
         }
-        switch (outputType.getId()) {
+        switch (outputType.getOutputId()) {
             case CAND_OR_UNDEF:
                 toReturn.setResultTypeSeats(false);
                 break;

@@ -15,11 +15,11 @@ import java.util.List;
  * @author Lukas
  *
  */
-public class DeepErrorChecker {
+public final class DeepErrorChecker {
 
     private static SystemSpecificErrorChecker errorChecker = null;
 
-    private static boolean INITIALIZED = false;
+    private static boolean initialized = false;
 
     private DeepErrorChecker() {
         
@@ -48,7 +48,7 @@ public class DeepErrorChecker {
             ErrorLogger.log("Warning, your OS couldn't be determined or is not supported yet.");
         }
 
-        INITIALIZED = true;
+        initialized = true;
     }
 
     /**
@@ -59,7 +59,7 @@ public class DeepErrorChecker {
      * @return a list of codeErros
      */
     public static List<CodeError> checkCodeForErrors(List<String> toCheck) {
-        if (!INITIALIZED) {
+        if (!initialized) {
             init();
         }
         return errorChecker.checkCodeForErrors(toCheck);

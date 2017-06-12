@@ -17,12 +17,18 @@ import java.util.BitSet;
 
 /**
  * This class uses antlr to find syntax errors in the C code
+ * 
  * @author Holger-Desktop
  */
 public class CGrammarErrorFinder implements ErrorFinder, ANTLRErrorListener {
     private final CAntlrHandler antlrHandler;
     private final ArrayList<CodeError> errors = new ArrayList<>();
-    
+
+    /**
+     * constructor
+     * 
+     * @param antlrHandler the handle to AntLR used for error finding
+     */
     public CGrammarErrorFinder(CAntlrHandler antlrHandler) {
         this.antlrHandler = antlrHandler;
         antlrHandler.getParser().removeErrorListeners();
@@ -30,32 +36,34 @@ public class CGrammarErrorFinder implements ErrorFinder, ANTLRErrorListener {
     }
 
     @Override
-    public ArrayList<CodeError> getErrors() {     
-        errors.clear();       
+    public ArrayList<CodeError> getErrors() {
+        errors.clear();
         antlrHandler.getCParseTree();
         return errors;
-    }   
+    }
 
     @Override
-    public void syntaxError(Recognizer<?, ?> rcgnzr, Object offendingSymbol, int line, int charPosInLine, String msg, RecognitionException e) {
-        CodeError err = new CodeError(line, charPosInLine, "antlr", 0, ((Token) offendingSymbol).getStartIndex(), ((Token) offendingSymbol).getStopIndex());
+    public void syntaxError(Recognizer<?, ?> rcgnzr, Object offendingSymbol, int line, int charPosInLine, String msg,
+            RecognitionException e) {
+        CodeError err = new CodeError(line, charPosInLine, "antlr", 0, ((Token) offendingSymbol).getStartIndex(),
+                ((Token) offendingSymbol).getStopIndex());
         err.setExtraInfo("msg", msg);
         errors.add(err);
     }
 
     @Override
     public void reportAmbiguity(Parser parser, DFA dfa, int i, int i1, boolean bln, BitSet bitset, ATNConfigSet atncs) {
-        
+
     }
 
     @Override
     public void reportAttemptingFullContext(Parser parser, DFA dfa, int i, int i1, BitSet bitset, ATNConfigSet atncs) {
-       
+
     }
 
     @Override
     public void reportContextSensitivity(Parser parser, DFA dfa, int i, int i1, int i2, ATNConfigSet atncs) {
-        
+
     }
-    
+
 }

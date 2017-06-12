@@ -1,6 +1,7 @@
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling;
 
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
+
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.SuperFolderFinder;
@@ -10,8 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
 
 /**
  * the linux implementation for checking the code This implementation uses gcc

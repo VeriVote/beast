@@ -51,20 +51,35 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
     private Boolean wasVisible;
     private ObjectRefsForBuilder refs;
 
-    public CElectionDescriptionEditor(
-            CElectionCodeArea codeArea,
-            CCodeEditorWindow gui,
-            CElectionCodeAreaBuilder builder,
-            ErrorWindow errorWindow,
-            CElectionDescriptionEditorChangeHandler CElectionDescriptionEditorChangeHandler,
-            StringLoaderInterface stringLoaderInterface,
-            FileChooser fileChooser,
-            ObjectRefsForBuilder refs) {
+    /**
+     * constructor for the election description editor
+     * 
+     * @param codeArea
+     *            the code area
+     * @param gui
+     *            the editor window
+     * @param builder
+     *            the code area builder
+     * @param errorWindow
+     *            the error window
+     * @param cElectionDescriptionEditorChangeHandler
+     *            the handler that notifies of change
+     * @param stringLoaderInterface
+     *            the string loader interface
+     * @param fileChooser
+     *            the file chooser
+     * @param refs
+     *            the references for the builder
+     */
+    public CElectionDescriptionEditor(CElectionCodeArea codeArea, CCodeEditorWindow gui,
+            CElectionCodeAreaBuilder builder, ErrorWindow errorWindow,
+            CElectionDescriptionEditorChangeHandler cElectionDescriptionEditorChangeHandler,
+            StringLoaderInterface stringLoaderInterface, FileChooser fileChooser, ObjectRefsForBuilder refs) {
         this.codeArea = codeArea;
         this.window = gui;
         this.builder = builder;
         this.errorWindow = errorWindow;
-        this.changeHandler = CElectionDescriptionEditorChangeHandler;
+        this.changeHandler = cElectionDescriptionEditorChangeHandler;
         this.stringLoaderInterface = stringLoaderInterface;
         this.fileChooser = fileChooser;
         this.refs = refs;
@@ -82,6 +97,14 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
         return currentDescription;
     }
 
+    /**
+     * adds an user action
+     * 
+     * @param c
+     *            the character
+     * @param ac
+     *            the user action
+     */
     public void addUserAction(char c, UserAction ac) {
         userActions.add(ac);
         userActionChars.add(c);
@@ -106,10 +129,22 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
         errorWindow.displayErrors(errors, (CErrorDisplayer) codeArea.getErrorCtrl().getDisplayer());
     }
 
+    /**
+     * sets the election editor menu bar handler
+     * 
+     * @param cElectionEditorMenubarHandler
+     *            the reference to the handler
+     */
     public void setcElectionEditorMenubarHandler(CElectionEditorMenubarHandler cElectionEditorMenubarHandler) {
         this.menubarHandler = cElectionEditorMenubarHandler;
     }
 
+    /**
+     * sets the election editor toolbar handler
+     * 
+     * @param cElectionEditorToolbarHandler
+     *            the election editor toolbar handler
+     */
     public void setcElectionEditorToolbarHandler(CElectionEditorToolbarHandler cElectionEditorToolbarHandler) {
         this.toolbarHandler = cElectionEditorToolbarHandler;
     }
@@ -153,9 +188,11 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
      * presents the given electiondescription to the user so he can edit it,
      * prompting him to save the current description before doing so
      *
-     * @param description the description to be shown to the user
+     * @param description
+     *            the description to be shown to the user
      * @return true if the desciprion was updates, false otherwise
      * @throws BadLocationException
+     *             in case of a bad location
      */
     public boolean letUserEditElectionDescription(ElectionDescription description) throws BadLocationException {
         if (changeHandler.hasChanged()) {
@@ -177,9 +214,11 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
      * electiondescription. Does not ask the user to save the current desciprion
      * before doing sos
      *
-     * @param description the description to be displayed in the
-     * celectiondesciprioncodearea
+     * @param description
+     *            the description to be displayed in the
+     *            celectiondesciprioncodearea
      * @throws BadLocationException
+     *             in case of a bad location
      */
     public void loadElectionDescription(ElectionDescription description) throws BadLocationException {
         this.currentDescription = description;
@@ -188,8 +227,7 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
         codeArea.getErrorCtrl().stopThread();
         codeArea.getAutoComplCtrl().stopThread();
 
-        codeArea = builder.createCElectionCodeArea(window.getCodeArea(),
-                window.getCodeAreaScrollPane(),
+        codeArea = builder.createCElectionCodeArea(window.getCodeArea(), window.getCodeAreaScrollPane(),
                 new CErrorDisplayer(window.getCodeArea(), stringLoaderInterface));
         for (int i = 0; i < userActions.size(); i++) {
             UserAction get = userActions.get(i);
@@ -228,22 +266,50 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
         return this.changeHandler;
     }
 
+    /**
+     * adds the listener to this editor
+     * 
+     * @param l
+     *            this listener to add
+     */
     public void addListener(ElectionDescriptionChangeListener l) {
         descriptionChangeListeners.add(l);
     }
 
+    /**
+     * remove the listener from this editor
+     * 
+     * @param l
+     *            the listener to remove
+     */
     public void removeListener(ElectionDescriptionChangeListener l) {
         descriptionChangeListeners.remove(l);
     }
 
+    /**
+     * turns the editor visible or invisble
+     * 
+     * @param vis
+     *            true, if it should be visible, false, if invisble
+     */
     public void setVisible(boolean vis) {
         window.setVisible(vis);
     }
 
+    /**
+     * gives the reference to the file chooser
+     * 
+     * @return the file chooser
+     */
     public FileChooser getFileChooser() {
         return fileChooser;
     }
 
+    /**
+     * gives the reference to the stringloader interface
+     * 
+     * @return the stringloader interface
+     */
     public StringLoaderInterface getStringInterface() {
         return this.stringLoaderInterface;
     }
@@ -253,7 +319,9 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
         this.stringLoaderInterface = stringResIF;
         menubarHandler.updateStringRes(stringLoaderInterface);
         toolbarHandler.updateStringRes(stringLoaderInterface);
-        fileChooser.updateStringRessourceLoader(stringLoaderInterface.getCElectionEditorStringResProvider().getMenuStringRes());
-        fileChooser.updateStringRessourceLoader(stringLoaderInterface.getCElectionEditorStringResProvider().getMenuStringRes());
+        fileChooser.updateStringRessourceLoader(
+                stringLoaderInterface.getCElectionEditorStringResProvider().getMenuStringRes());
+        fileChooser.updateStringRessourceLoader(
+                stringLoaderInterface.getCElectionEditorStringResProvider().getMenuStringRes());
     }
 }

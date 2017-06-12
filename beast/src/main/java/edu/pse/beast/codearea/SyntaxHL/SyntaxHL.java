@@ -5,7 +5,9 @@ import javax.swing.text.AbstractDocument;
 import java.util.ArrayList;
 
 /**
- * Instances of this class are able to apply syntax highlighting to the given JTextPane
+ * Instances of this class are able to apply syntax highlighting to the given
+ * JTextPane
+ * 
  * @author NikolaiLMS
  */
 public class SyntaxHL {
@@ -13,7 +15,9 @@ public class SyntaxHL {
 
     /**
      * Constructor
-     * @param textPane JTextPane the filter should be applied to
+     * 
+     * @param textPane
+     *            JTextPane the filter should be applied to
      */
     public SyntaxHL(JTextPane textPane) {
         this.textPane = textPane;
@@ -21,10 +25,13 @@ public class SyntaxHL {
 
     /**
      * Creates a new SyntaxHlCompositeFilter and gives it to the textpane
-     * @param regexAndColorList the list of RegexAndColor elements containint the information for syntaxHL
+     * 
+     * @param regexAndColorList
+     *            the list of RegexAndColor elements containint the information
+     *            for syntaxHL
      */
     public void updateFilter(ArrayList<RegexAndColor> regexAndColorList) {
-        ((AbstractDocument) textPane.getStyledDocument()).setDocumentFilter
-                (new SyntaxHLCompositeFilter(textPane, regexAndColorList));
+        ((AbstractDocument) textPane.getStyledDocument())
+                .setDocumentFilter(new SyntaxHLCompositeFilter(textPane, regexAndColorList));
     }
 }

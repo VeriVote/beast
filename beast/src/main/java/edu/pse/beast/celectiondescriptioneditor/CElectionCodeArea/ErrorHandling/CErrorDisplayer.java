@@ -22,9 +22,12 @@ import java.util.ArrayList;
  */
 public class CErrorDisplayer extends ErrorDisplayer {
 
-    public CErrorDisplayer(
-            JTextPane pane,
-            StringLoaderInterface stringResIF) {
+    /**
+     * constructor
+     * @param pane the pane the errors get shown in
+     * @param stringResIF the string resource interface
+     */
+    public CErrorDisplayer(JTextPane pane, StringLoaderInterface stringResIF) {
         super(pane, stringResIF.getCElectionEditorStringResProvider().getCErrorStringRes());
     }
 
@@ -36,6 +39,11 @@ public class CErrorDisplayer extends ErrorDisplayer {
         }
     }
 
+    /**
+     * creates a message to the user detailing an error
+     * @param er the code Error to be turned into a readable form
+     * @return the code error, formatted to a string
+     */
     public String createMsg(CodeError er) {
         if (er.getId().equals("antlr")) {
             int line = er.getLine();
