@@ -21,10 +21,10 @@ public class MainClass {
      * @param args not used
      */
     public static void main(String[] args) {
-        BEASTCommunicator communicator = new BEASTCommunicator();
-        CentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
-        communicator.setCentralObjectProvider(centralObjectProvider);
+        //BEASTCommunicator communicator = new BEASTCommunicator();
+        //CentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
+        //communicator.setCentralObjectProvider(centralObjectProvider);
     	
-    	//new ElectionInputWindow(new ElectionTypeContainer(null, ElectionInputTypeIds.WEIGHTED_APPROVAL));
+    	new ElectionInputWindow(new ElectionTypeContainer(null, ElectionInputTypeIds.WEIGHTED_APPROVAL));
     }
 }

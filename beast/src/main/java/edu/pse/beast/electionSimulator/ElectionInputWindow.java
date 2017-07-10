@@ -19,6 +19,8 @@ import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.FileWriter;
@@ -29,7 +31,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @SuppressWarnings("serial")
-public class ElectionInputWindow extends JFrame implements ActionListener, ComponentListener, AdjustmentListener {
+public class ElectionInputWindow extends JFrame implements ActionListener, ComponentListener, AdjustmentListener, MouseWheelListener {
 
 	private int amountCandidates = 1;
 	private int amountVoters = 1;
@@ -135,6 +137,8 @@ public class ElectionInputWindow extends JFrame implements ActionListener, Compo
 
 		addVoter.addActionListener(this);
 		removeVoter.addActionListener(this);
+		
+		this.addMouseWheelListener(this);
 
 		horizontalScroll.addAdjustmentListener(this);
 
@@ -321,5 +325,17 @@ public class ElectionInputWindow extends JFrame implements ActionListener, Compo
 			verticalOffset = verticalScroll.getValue();
 		}
 		update();
+	}
+
+	@Override
+	public void mouseWheelMoved(MouseWheelEvent event) {
+		int amount = event.getWheelRotation();
+		if(amount > 0 ) {
+			verticalOffset = Math.min(verticalOffset + amount * 5,  (amountVoters - 1) * elementHeight * 2);
+			update();
+		} else {
+			verticalOffset = Math.max(verticalOffset + amount * 5,  0);
+			update();
+		}
 	}
 }
