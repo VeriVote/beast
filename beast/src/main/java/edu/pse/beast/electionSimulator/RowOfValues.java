@@ -65,7 +65,9 @@ public class RowOfValues extends JPanel implements DocumentListener {
 
 	public void removeColumn() {
 		amountOfCandidates--;
+		this.remove(fields.get(fields.size() - 1));
 		fields.remove(fields.size() - 1);
+		System.out.println("remove");
 		update();
 	}
 

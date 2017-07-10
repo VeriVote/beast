@@ -19,6 +19,7 @@ import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -36,7 +37,6 @@ public class ElectionInputWindow extends JFrame implements ActionListener, Compo
 	private int elementHeight = 30;
 	private int elementWidth = 50;
 
-	private int scrollBarHeight = 350;
 	private int scrollBarWidth = 20;
 
 	private int borderMarginSmall = Math.max(elementHeight, elementWidth);
@@ -48,6 +48,10 @@ public class ElectionInputWindow extends JFrame implements ActionListener, Compo
 	private int horizontalOffset = 0;
 
 	private int verticalOffset = 0;
+	
+	private int fieldsPerWidth = 0;
+	
+	private int fieldsPerHeight = 0;
 
 	private JButton addCandidate;
 	private JButton addVoter;
@@ -56,7 +60,6 @@ public class ElectionInputWindow extends JFrame implements ActionListener, Compo
 	private JButton removeVoter;
 
 	private JScrollBar horizontalScroll;
-
 	private JScrollBar verticalScroll;
 
 	StringResourceLoader srl;
@@ -102,6 +105,10 @@ public class ElectionInputWindow extends JFrame implements ActionListener, Compo
 		this.setLayout(null);
 		this.setBounds(0, 0, startWidth, startHeight);
 
+		fieldsPerWidth = (this.getWidth() - 2 * (borderMarginSmall)) / (2 * widthMultiplier);
+		
+		fieldsPerHeight = (this.getHeight() - 2 * (borderMarginSmall * 2)) / (2 * heightMultiplier);
+		
 		addCandidate = new JButton("+C");
 
 		addVoter = new JButton("+V");
@@ -145,7 +152,7 @@ public class ElectionInputWindow extends JFrame implements ActionListener, Compo
 	}
 
 	private void update() {
-
+	    
 		for (int i = 0; i < amountVoters; i++) {
 			this.remove(rows.get(i));
 			this.remove(horizontalScroll);
@@ -162,18 +169,26 @@ public class ElectionInputWindow extends JFrame implements ActionListener, Compo
 			this.remove(vField);
 		}
 		
-		if (amountCandidates > 5) {
+		if (amountCandidates > fieldsPerWidth) {
 			horizontalScroll.setBounds((int) (borderMarginSmall + (elementWidth * 3 - scrollBarWidth / 2)),
-					borderMarginSmall * 2, scrollBarHeight, scrollBarWidth);
+					borderMarginSmall * 2,
+					Math.min(amountCandidates * widthMultiplier , (this.getWidth() - 2 * (borderMarginSmall + (elementWidth * 3 - scrollBarWidth / 2)))),
+					scrollBarWidth);
 			horizontalScroll.setValues(horizontalOffset, 1, 0, (amountCandidates - 1) * elementWidth * 2);
 			this.add(horizontalScroll);
+		} else {
+		    horizontalOffset = 0;
 		}
 
-		if (amountVoters > 5) {
+		if (amountVoters > fieldsPerHeight) {
 			verticalScroll.setBounds((int) (borderMarginSmall + (elementWidth * 2 - scrollBarWidth / 2)),
-					borderMarginSmall * 2 + elementHeight,  scrollBarWidth, scrollBarHeight);
+					borderMarginSmall * 2 + elementHeight,
+					scrollBarWidth,
+					Math.min(amountVoters * heightMultiplier, (this.getHeight() - 2 * (borderMarginSmall * 2 + elementHeight))));
 			verticalScroll.setValues(verticalOffset, 1, 0, (amountVoters -1) * elementHeight * 2);
 			this.add(verticalScroll);
+		} else {
+		    verticalOffset = 0;
 		}
 
 		addCandidate.setBounds(((amountCandidates + 2) * widthMultiplier - horizontalOffset), borderMarginSmall, elementWidth,
@@ -222,7 +237,11 @@ public class ElectionInputWindow extends JFrame implements ActionListener, Compo
 	}
 
 	public void componentResized(ComponentEvent e) {
+	    fieldsPerWidth = (int) ((this.getWidth() - 1.5 * (borderMarginSmall)) / (1.5 * widthMultiplier));
+	    fieldsPerHeight = (int) ((this.getHeight() - 1.5 * (borderMarginSmall)) / (1.5 * heightMultiplier));
+	    
 		updateRows();
+		update();
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -243,6 +262,7 @@ public class ElectionInputWindow extends JFrame implements ActionListener, Compo
 				}
 				this.remove(candidates.get(candidates.size() - 1));
 				candidates.remove(candidates.size() - 1);
+				horizontalOffset = Math.min(horizontalOffset, (amountCandidates -1) * elementWidth * 2);
 			}
 		} else if (e.getSource() == addVoter) {
 			amountVoters++;
@@ -260,6 +280,7 @@ public class ElectionInputWindow extends JFrame implements ActionListener, Compo
 				rows.remove(rows.size() - 1);
 				this.remove(voters.get(voters.size() - 1));
 				voters.remove(voters.size() - 1);
+				verticalOffset = Math.min(verticalOffset, (amountVoters - 1) * elementHeight * 2);
 			}
 		}
 		update();
@@ -300,6 +321,5 @@ public class ElectionInputWindow extends JFrame implements ActionListener, Compo
 			verticalOffset = verticalScroll.getValue();
 		}
 		update();
-		System.out.println("vertical: " + verticalOffset + " | hori: " + horizontalOffset);
 	}
 }
