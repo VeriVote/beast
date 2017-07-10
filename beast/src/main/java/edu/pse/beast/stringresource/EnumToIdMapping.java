@@ -1,6 +1,8 @@
 package edu.pse.beast.stringresource;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer.ElectionInputTypeIds;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer.ElectionOutputTypeIds;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,17 +53,18 @@ public class EnumToIdMapping {
     }
 
     private static void createElectionTypeStringMapping() {
-        enumStringsToIds.put(ElectionTypeContainer.ElectionInputTypeIds.SINGLE_CHOICE.toString(),
-                "one_candidate_per_voter");
-        enumStringsToIds.put(ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE.toString(),
-                "list_of_candidates_per_voter");
-        enumStringsToIds.put(ElectionTypeContainer.ElectionInputTypeIds.APPROVAL.toString(),
-                "list_of_yes_no_per_voter");
-        enumStringsToIds.put(ElectionTypeContainer.ElectionInputTypeIds.WEIGHTED_APPROVAL.toString(),
-                "list_of_integer_vals_per_voter");
-        enumStringsToIds.put(ElectionTypeContainer.ElectionOutputTypeIds.CAND_OR_UNDEF.toString(),
-                "one_candidate_or_zero");
-        enumStringsToIds.put(ElectionTypeContainer.ElectionOutputTypeIds.CAND_PER_SEAT.toString(),
-                "candidate_per_seat");
+    	
+    	ElectionInputTypeIds[] inTypes = ElectionTypeContainer.ElectionInputTypeIds.values();
+    	
+    	for (int i = 0; i < inTypes.length; i++) {
+			enumStringsToIds.put(inTypes[i].toString(), inTypes[i].toString());
+		}
+    	
+    	ElectionOutputTypeIds[] outTypes = ElectionTypeContainer.ElectionOutputTypeIds.values();
+
+    	
+    	for (int i = 0; i < outTypes.length; i++) {
+			enumStringsToIds.put(outTypes[i].toString(), outTypes[i].toString());
+		}
     }
 }

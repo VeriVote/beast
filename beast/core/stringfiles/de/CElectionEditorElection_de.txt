@@ -1,18 +1,18 @@
-﻿SINGLE_CHOICE: Wähler stimmt jeweils für einen Kandidaten
-list_of_candidates_per_voter_exp : Wähler legt Ranking für alle Kandidaten fest
-list_of_yes_no_per_voter_exp : Wähler bewertet jeden Kandidaten mit Ja/Nein
-list_of_integer_vals_per_voter_exp : Wähler bewertet jeden Kandidaten mit Zahlenwert zwischen 0 und 100
+SINGLE_CHOICE_exp : Wähler stimmt jeweils für einen Kandidaten
+PREFERENCE_exp : Wähler legt Ranking für alle Kandidaten fest
+APPROVAL_exp : Wähler bewertet jeden Kandidaten mit Ja/Nein
+WEIGHTED_APPROVAL_exp : Wähler bewertet jeden Kandidaten mit Zahlenwert zwischen 0 und 100
 
-one_candidate_per_voter : Single-choice
-PREFERENCE: Präferenzwahl
-APPROVAL: Zustimmungswahl
-WEIGHTED_APPROVAL: Gewichtete Wahl
+SINGLE_CHOICE : Single-choice
+PREFERENCE : Präferenzwahl
+APPROVAL : Zustimmungswahl
+WEIGHTED_APPROVAL : Gewichtete Wahl
 
-one_candidate_or_zero_exp : Ein gewählter Kandidat oder unentschieden
-candidate_per_seat_exp : Jedem Sitz wird ein Kandidat zugeteilt
+CAND_OR_UNDEF_exp : Ein gewählter Kandidat oder unentschieden
+CAND_PER_SEAT_exp : Jedem Sitz wird ein Kandidat zugeteilt
 
-CAND_OR_UNDEF: Kandidat oder unentschieden
-CAND_PER_SEAT: Sitze auf Kandidaten
+CAND_OR_UNDEF : Kandidat oder unentschieden
+CAND_PER_SEAT : Sitze auf Kandidaten
 
 create : Erstellen
 

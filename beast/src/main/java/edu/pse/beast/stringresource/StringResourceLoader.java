@@ -8,7 +8,9 @@ package edu.pse.beast.stringresource;
 import edu.pse.beast.toolbox.ErrorLogger;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
@@ -28,19 +30,19 @@ public class StringResourceLoader {
      */
     public StringResourceLoader(LinkedList<String> stringRes) throws ArrayIndexOutOfBoundsException {
         idsToString = new HashMap<>();
-        String line;
-        String[] split;
-        String id;
-        String displayedText;
-        while (!stringRes.isEmpty()) {
-            line = stringRes.pop();
-            if (line.length() != 0) {
-                split = line.split(":", 2);
-                id = split[0].trim();
-                displayedText = split[1].trim();
-                idsToString.put(id, displayedText);
+        
+        for (Iterator<String> iterator = stringRes.iterator(); iterator.hasNext();) {
+			String line = (String) iterator.next();
+			
+			
+			if (line.length() != 0) {
+                String[] split = line.split(":", 2);
+                String id = split[0].trim();
+                String displayedText = split[1].trim();
+
+                idsToString.put(id.toLowerCase(), displayedText);
             }
-        }
+		}
     }
 
     /**
@@ -48,9 +50,11 @@ public class StringResourceLoader {
      * @return the String with the id
      */
     public String getStringFromID(String id) {
-        String get = idsToString.get(id);
+    	
+        String get = idsToString.get(id.toLowerCase());
+        
         if (get == null) {
-            ErrorLogger.log("this Id was not found in a Stringfile: " + id);
+            ErrorLogger.log("this Id was not found in a Stringfile: " + id.toLowerCase());
         }
         return get;
     }
@@ -64,7 +68,7 @@ public class StringResourceLoader {
     public String getIdForString(String s) {
         if (idsToString.containsValue(s)) {
             for (Entry<String, String> entry : idsToString.entrySet()) {
-                if (Objects.equals(s, entry.getValue())) {
+                if (Objects.equals(s.toLowerCase(), entry.getValue().toLowerCase())) {
                     return entry.getKey();
                 }
             }
@@ -78,6 +82,6 @@ public class StringResourceLoader {
      * @return true if it contains the id
      */
     public boolean containsId(String id) {
-        return idsToString.containsKey(id);
+        return idsToString.containsKey(id.toLowerCase());
     }
 }
