@@ -1,20 +1,22 @@
-package edu.pse.beast.electionSimulator;
+package edu.pse.beast.electionSimulator.Model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import de.erichseifert.gral.graphics.Container;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 
 public class RowOfValues extends JPanel implements DocumentListener {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2852540931615771801L;
 	private int elementHeight;
 	private int elementWidth;
 
@@ -22,8 +24,6 @@ public class RowOfValues extends JPanel implements DocumentListener {
 
 	private int offset = 0;
 	
-	private ElectionInputWindow parent;
-
 	private ArrayList<Integer> values;
 	private ArrayList<JTextField> fields;
 
@@ -31,35 +31,36 @@ public class RowOfValues extends JPanel implements DocumentListener {
 
 	private int amountOfCandidates = 0;
 
+
 	private boolean locked = false;
 
-	public RowOfValues(ElectionInputWindow parent, ElectionTypeContainer container, int amountOfCandidates,
+	public RowOfValues(ElectionSimulationModel parent, ElectionTypeContainer container, int amountOfCandidates,
 			int elementWidth, int elementHeight, int widthMultiplier) {
-		this.parent = parent;
 		this.container = container;
 		this.elementWidth = elementWidth;
 		this.elementHeight = elementHeight;
 		this.widthMultiplier = widthMultiplier;
 		values = new ArrayList<>(amountOfCandidates);
 		fields = new ArrayList<>(amountOfCandidates);
-
+		this.setLayout(null);
 		this.setVisible(true);
 
 		for (int i = 0; i < amountOfCandidates; i++) {
 			addColumn();
 		}
-		update();
-		this.repaint();
 	}
 
 	public void addColumn() {
 		amountOfCandidates++;
 
 		values.add(0);
-		fields.add(new JTextField("0"));
-
-		fields.get(fields.size() - 1).getDocument().addDocumentListener(this);
-
+		
+		JTextField toAdd = new JTextField("0");
+		toAdd.getDocument().addDocumentListener(this);
+		toAdd.setSize(elementWidth, elementHeight);
+		
+		fields.add(toAdd);
+		
 		update();
 	}
 
@@ -67,7 +68,6 @@ public class RowOfValues extends JPanel implements DocumentListener {
 		amountOfCandidates--;
 		this.remove(fields.get(fields.size() - 1));
 		fields.remove(fields.size() - 1);
-		System.out.println("remove");
 		update();
 	}
 
@@ -76,6 +76,7 @@ public class RowOfValues extends JPanel implements DocumentListener {
 			JTextField field = (JTextField) iterator.next();
 			this.remove(field);
 		}
+
 		this.setSize(widthMultiplier * (amountOfCandidates), elementHeight * 2);
 
 		for (int i = 0; i < amountOfCandidates; i++) {
@@ -175,7 +176,6 @@ public class RowOfValues extends JPanel implements DocumentListener {
 				}
 				
 				final int finalV = value;
-				
 				Runnable callValueChecker = new Runnable() {
 					@Override
 					public void run() {
@@ -188,5 +188,22 @@ public class RowOfValues extends JPanel implements DocumentListener {
 				SwingUtilities.invokeLater(callValueChecker);
 			}
 		}
+	}
+	
+	//getter and setter
+	public ArrayList<Integer> getValues() {
+		return values;
+	}
+	
+	public void setValues(ArrayList<Integer> values) {
+		this.values = values;
+	}
+	
+	public ArrayList<JTextField> getFields() {
+		return fields;
+	}
+	
+	public void setFields(ArrayList<JTextField> fields) {
+		this.fields = fields;
 	}
 }

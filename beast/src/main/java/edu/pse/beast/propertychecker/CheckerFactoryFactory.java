@@ -5,6 +5,7 @@ import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.toolbox.ErrorLogger;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -88,8 +89,21 @@ public final class CheckerFactoryFactory {
             ErrorLogger.log("The specified checkerID wasn't found");
             return null;
         }
-
     }
+    
+    public static CheckerFactory getCheckerFactory(String checkerID, FactoryController controller, File toCheck,
+			ParameterSource paramSrc, Result result) {
+    	init();
+
+        if (factories.keySet().contains(checkerID)) {
+            return factories.get(checkerID).getNewInstance(controller, toCheck,
+                    paramSrc, result);
+
+        } else {
+            ErrorLogger.log("The specified checkerID wasn't found");
+            return null;
+        }
+	}
 
     /**
      * creates a specified amount of result objects that fit for the checkerID
@@ -112,4 +126,15 @@ public final class CheckerFactoryFactory {
         }
     }
 
+	public static List<Result> getMatchingUnprocessedResult(String checkerID, int amount) {
+		init();
+		
+		List<Result> results = new ArrayList<Result>();
+		
+		for (int i = 0; i < amount; i++) {
+			results.add(new UnprocessedResult());
+		}
+		
+		return results;
+	}
 }

@@ -7,6 +7,7 @@ package edu.pse.beast.propertychecker;
 
 import edu.pse.beast.highlevel.*;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -36,6 +37,24 @@ public class PropertyChecker implements ResultCheckerCommunicator {
             this.factoryController = new FactoryController(elecDescr, propDescrSrc, params, checkerID,
                     params.getParameter().getProcesses());
             return factoryController.getResults();
+        }
+    }
+    
+    @Override
+    /**
+     * this methode allows to pass a full file onward, so code generation can happen
+     * before, and it gets ignored beforehand.
+     * @param toCheck the file to check
+     * @param params the parameter with which the check will be run
+     * @return a 
+     */
+    public List<UnprocessedResult> checkFile(File toCheck, ParameterSource params) {
+        if (toCheck == null || params == null) {
+            return null;
+        } else {
+            this.factoryController = new FactoryController(toCheck, params, checkerID,
+                    params.getParameter().getProcesses());
+            return factoryController.getUnprocessedResults();
         }
     }
 

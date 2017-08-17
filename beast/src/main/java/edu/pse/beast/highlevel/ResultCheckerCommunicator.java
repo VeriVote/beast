@@ -1,6 +1,9 @@
 package edu.pse.beast.highlevel;
 
+import java.io.File;
 import java.util.List;
+
+import edu.pse.beast.propertychecker.UnprocessedResult;
 
 /**
  * The ResultCheckerCommunicator starts and stops checks.
@@ -18,9 +21,11 @@ public interface ResultCheckerCommunicator {
      *            ElectionCheckParameter
      * @return array of ResultInterfaces
      */
-    List<ResultInterface> checkPropertiesForDescription(ElectionDescriptionSource elecDescr,
+    public List<ResultInterface> checkPropertiesForDescription(ElectionDescriptionSource elecDescr,
             PostAndPrePropertiesDescriptionSource propDescrSrc, ParameterSource params);
 
+    public List<UnprocessedResult> checkFile(File toCheck, ParameterSource params);
+    
     /**
      * Stops checks.
      * @return false if unable to abort check

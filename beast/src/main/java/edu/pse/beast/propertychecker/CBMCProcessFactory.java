@@ -51,7 +51,12 @@ public class CBMCProcessFactory extends CheckerFactory {
         os = determineOS();
     }
 
-    @Override
+    public CBMCProcessFactory(FactoryController controller, File toCheck, ParameterSource paramSrc, Result result) {
+    	super(controller, toCheck, paramSrc, result);
+        os = determineOS();
+	}
+
+	@Override
     protected Checker startProcess(ElectionDescriptionSource electionDescSrc,
             PostAndPrePropertiesDescription postAndPrepPropDesc, String advanced, int voters, int candidates,
             int seats, CheckerFactory parent) {
@@ -87,6 +92,41 @@ public class CBMCProcessFactory extends CheckerFactory {
 
         return startedChecker;
     }
+	
+	@Override
+	protected Checker startProcess(File toCheck, String advanced, int voters, int candidates, int seats,
+			CheckerFactory parent) {
+        String userOptions = advanced.trim().replaceAll(" +", " ");
+
+        // remove all unnecessary whitespaces
+
+        // create the file in which the code is saved if it doesn't exist
+        // already
+        if (this.toCheck == null) {
+            // create the file only once for each factory and reuse it then
+            this.toCheck = toCheck;
+        }
+
+        Checker startedChecker = null;
+
+        switch (os) {
+        case Linux:
+            startedChecker = new LinuxProcess(voters, candidates, seats, userOptions, this.toCheck, parent);
+            break;
+        case Windows:
+            startedChecker = new WindowsProcess(voters, candidates, seats, userOptions, this.toCheck, parent);
+            break;
+        case Mac:
+            ErrorForUserDisplayer.displayError(
+                    "MacOS is not supported yet, please implement the class CBMCProcess and add it then here in the "
+                            + "CBMCProcessFactory to be created");
+            break;
+        default:
+            ErrorLogger.log("Warning, your OS couldn't be determined or is not supported yet.");
+        }
+
+        return startedChecker;
+	}
 
     @Override
     public boolean checkAssertionSuccess(List<String> toCheck) {
@@ -126,6 +166,12 @@ public class CBMCProcessFactory extends CheckerFactory {
             PostAndPrePropertiesDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result) {
         return new CBMCProcessFactory(controller, electionDescSrc, postAndPrepPropDesc, paramSrc, result);
     }
+    
+    @Override
+	public CheckerFactory getNewInstance(FactoryController controller, File toCheck, ParameterSource paramSrc,
+			Result result) {
+    	return new CBMCProcessFactory(controller, toCheck, paramSrc, result);
+	}
 
     @Override
     public List<Result> getMatchingResult(int amount) {

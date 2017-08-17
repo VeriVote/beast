@@ -2,7 +2,7 @@ package edu.pse.beast.highlevel;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer.ElectionInputTypeIds;
-import edu.pse.beast.electionSimulator.ElectionInputWindow;
+import edu.pse.beast.electionSimulator.ElectionSimulation;
 
 /**
  * The MainClass creates an CentralObjectProvider which creates all other parts
@@ -21,10 +21,10 @@ public class MainClass {
      * @param args not used
      */
     public static void main(String[] args) {
-        //BEASTCommunicator communicator = new BEASTCommunicator();
-        //CentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
-        //communicator.setCentralObjectProvider(centralObjectProvider);
+        BEASTCommunicator communicator = new BEASTCommunicator();
+        CentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
+        communicator.setCentralObjectProvider(centralObjectProvider);
     	
-    	new ElectionInputWindow(new ElectionTypeContainer(null, ElectionInputTypeIds.WEIGHTED_APPROVAL));
+    	//new ElectionSimulation(new ElectionTypeContainer(null, ElectionInputTypeIds.WEIGHTED_APPROVAL));
     }
 }
