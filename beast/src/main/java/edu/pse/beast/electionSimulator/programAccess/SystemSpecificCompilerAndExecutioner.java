@@ -41,23 +41,12 @@ public abstract class SystemSpecificCompilerAndExecutioner {
 		}
 	}
 
-	public int runAnalysis(List<String> code, int[][] votingData) {
+	public List<Integer> runAnalysis(List<String> code) {
 		
-		int winner = -1;
-		
-		List<String> dataAsStringList = new ArrayList<String>();
-		
-		for (int i = 0; i < votingData.length; i++) {
-			String tmp = "";
-			for (int j = 0; j < votingData[i].length; j++) {
-				if (j < (votingData[i].length - 1)) {
-					tmp = tmp + votingData[i][j] + ";";
-				} else {
-					tmp = tmp + votingData[i][j];
-				}
-			}
-		}
-		
+	    //array that returns the result
+	    List<Integer> toReturn = new ArrayList<Integer>();
+	    
+	    
 		List<String> result = new ArrayList<String>();
 
 		List<String> errors = new ArrayList<String>();
@@ -137,8 +126,23 @@ public abstract class SystemSpecificCompilerAndExecutioner {
 				//here the computation is done
 				
 				//the winning candidate gets printed as a number in the last line
+				//like this:
+				//winner = x (,y, z ..)  ( = if seats are selected)
 				
-				winner = Integer.parseInt(result.get(0));
+				
+				
+				String winner = result.get(0);
+				
+				winner = winner.split("=")[1].replaceAll("\\s+", "");
+				
+				if(winner.contains(",")) {
+				    String[] winnerArray = winner.split(",");
+				    for (int i = 0; i < winnerArray.length; i++) {
+                        toReturn.add(Integer.parseInt(winnerArray[i]));
+                    }
+				} else {
+				    toReturn.add(Integer.parseInt(winner));
+				}
 				
 			} else {
 				ErrorLogger.log("Couldn't compile the source file");
@@ -156,7 +160,7 @@ public abstract class SystemSpecificCompilerAndExecutioner {
 		exeFile.delete();
 		outFile.delete();
 		dataFile.delete();
-		return winner;
+		return toReturn;
 	}
 
 	/**

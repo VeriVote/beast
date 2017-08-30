@@ -58,11 +58,11 @@ public final class CompilerAndExecutioner {
      *            the code to check
      * @return a list of codeErros
      */
-    public static int compileAndRun(List<String> toCheck, int[][] votingData) {
+    public static List<Integer> compileAndRun(List<String> toCheck) {
         if (!initialized) {
             init();
         }
-        return specificComAndExe.runAnalysis(toCheck, votingData);
+        return specificComAndExe.runAnalysis(toCheck);
     }
 
     /**

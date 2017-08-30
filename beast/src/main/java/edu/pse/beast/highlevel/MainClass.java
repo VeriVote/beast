@@ -26,5 +26,6 @@ public class MainClass {
         communicator.setCentralObjectProvider(centralObjectProvider);
     	
     	//new ElectionSimulation(new ElectionTypeContainer(null, ElectionInputTypeIds.WEIGHTED_APPROVAL));
+    	//new ElectionSimulation(centralObjectProvider);
     }
 }

@@ -111,21 +111,21 @@ public class BEASTCommunicator implements CheckListener {
      * @param pseCentralObjectProvider CentralObjectProvider instance
      * @return true if errors exist, false otherwise
      */
-    private boolean checkForErrors(CentralObjectProvider pseCentralObjectProvider) {
-        stopReacting(centralObjectProvider);
+    public static boolean checkForErrors(CentralObjectProvider pseCentralObjectProvider) {
+        stopReacting(pseCentralObjectProvider);
         CheckStatusDisplay checkStatusDisplayer = pseCentralObjectProvider.getCheckStatusDisplay();
         checkStatusDisplayer.displayText("searchingForErrors", true, "");
         if (!pseCentralObjectProvider.getElectionDescriptionSource().isCorrect()) {
             checkStatusDisplayer.displayText("electionDescriptionErrors", false, "");
-            resumeReacting(centralObjectProvider);
+            resumeReacting(pseCentralObjectProvider);
             return true;
         } else if (!pseCentralObjectProvider.getPostAndPrePropertiesSource().isCorrect()) {
             checkStatusDisplayer.displayText("propertyErrors", false, "");
-            resumeReacting(centralObjectProvider);
+            resumeReacting(pseCentralObjectProvider);
             return true;
         } else if (!pseCentralObjectProvider.getParameterSrc().isCorrect()) {
             checkStatusDisplayer.displayText("parameterErrors", false, "");
-            resumeReacting(centralObjectProvider);
+            resumeReacting(pseCentralObjectProvider);
             return true;
         } else {
             return false;
@@ -136,7 +136,7 @@ public class BEASTCommunicator implements CheckListener {
      * Makes the GUIs stop reacting.
      * @param pseCentralObjectProvider CentralObjectProvider instance
      */
-    private void stopReacting(CentralObjectProvider pseCentralObjectProvider) {
+    public static void stopReacting(CentralObjectProvider pseCentralObjectProvider) {
         pseCentralObjectProvider.getElectionDescriptionSource().stopReacting();
         pseCentralObjectProvider.getPostAndPrePropertiesSource().stopReacting();
         pseCentralObjectProvider.getParameterSrc().stopReacting();
@@ -146,7 +146,7 @@ public class BEASTCommunicator implements CheckListener {
      * Makes the GUIs resume reacting.
      * @param pseCentralObjectProvider CentralObjectProvider instance
      */
-    private void resumeReacting(CentralObjectProvider pseCentralObjectProvider) {
+    public static void resumeReacting(CentralObjectProvider pseCentralObjectProvider) {
         pseCentralObjectProvider.getElectionDescriptionSource().resumeReacting();
         pseCentralObjectProvider.getPostAndPrePropertiesSource().resumeReacting();
         pseCentralObjectProvider.getParameterSrc().resumeReacting();
