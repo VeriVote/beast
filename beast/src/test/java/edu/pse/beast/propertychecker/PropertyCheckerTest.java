@@ -27,7 +27,7 @@ public class PropertyCheckerTest {
     public void testWhole() {
 
         ElectionTypeContainer inputType =
-                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.WEIGHTED_APPROVAL);
+                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.WEIGHTED_APPROVAL);
         ElectionTypeContainer outputType = new ElectionTemplateHandler().getStandardResult();
 
         ElectionDescription electionDescription = new ElectionDescription("name", inputType, outputType, 0);

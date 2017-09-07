@@ -1,6 +1,7 @@
 package edu.pse.beast.SaverLoader;
 
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
+
 import edu.pse.beast.datatypes.Project;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
@@ -34,7 +35,7 @@ public class ProjectSaverLoaderTest {
     public static void setUpClass() {
         projectSaverLoader = new ProjectSaverLoader();
         ElectionTemplateHandler electionTemplateHandler = new ElectionTemplateHandler();
-        ElectionTypeContainer inputType = electionTemplateHandler.getById(ElectionTypeContainer.ElectionTypeIds.WEIGHTED_APPROVAL);
+        ElectionTypeContainer inputType = electionTemplateHandler.getById(ElectionTypeContainer.ElectionInputTypeIds.WEIGHTED_APPROVAL);
         ElectionTypeContainer outputType = electionTemplateHandler.getStandardResult();
 
         ElectionDescription electionDescription = new ElectionDescription("testDescription", inputType, outputType, 2);
@@ -80,8 +81,8 @@ public class ProjectSaverLoaderTest {
         assert (recreatedElectionDescription.getName().equals("testDescription"));
         assert (recreatedElectionDescription.getCode().get(0).equals("sdfgokdffg"));
         assert (recreatedElectionDescription.getCode().get(1).equals("sdkofgdfg"));
-        Assert.assertEquals(ElectionTypeContainer.ElectionTypeIds.WEIGHTED_APPROVAL,
-                recreatedElectionDescription.getInputType().getId());
+        Assert.assertEquals(ElectionTypeContainer.ElectionInputTypeIds.WEIGHTED_APPROVAL,
+                recreatedElectionDescription.getInputType().getInputID());
         assert (recreatedElectionDescription.getVotingDeclLine() == 2);
 
         ElectionCheckParameter recreatedElectionCheckParameter = project.getElectionCheckParameter();

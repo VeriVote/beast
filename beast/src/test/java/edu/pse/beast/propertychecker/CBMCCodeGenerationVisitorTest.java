@@ -281,7 +281,7 @@ public class CBMCCodeGenerationVisitorTest {
                 Arrays.asList(
                         new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
                         new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER)),
-                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.PREFERENCE)
+                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE)
         ).getBooleanExpressions().get(0).get(0);
 
         visitor.setToPrePropertyMode();
@@ -314,7 +314,7 @@ public class CBMCCodeGenerationVisitorTest {
                 Arrays.asList(
                         new Tuple<String, InternalTypeRep>("w", InternalTypeRep.VOTER),
                         new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER)),
-                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.WEIGHTED_APPROVAL)
+                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.WEIGHTED_APPROVAL)
         ).getBooleanExpressions().get(0).get(0);
 
         visitor.setToPrePropertyMode();
@@ -346,7 +346,7 @@ public class CBMCCodeGenerationVisitorTest {
                 Arrays.asList(
                         new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
                         new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER)),
-                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.APPROVAL)
+                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.APPROVAL)
         ).getBooleanExpressions().get(1).get(0);
 
         visitor.setToPrePropertyMode();
@@ -370,8 +370,8 @@ public class CBMCCodeGenerationVisitorTest {
                 Arrays.asList(
                         new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
                         new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER)),
-                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.APPROVAL),
-                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.CAND_PER_SEAT)
+                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.APPROVAL),
+                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionOutputTypeIds.CAND_PER_SEAT)
         ).getBooleanExpressions().get(2).get(0);
 
         visitor.setToPrePropertyMode();

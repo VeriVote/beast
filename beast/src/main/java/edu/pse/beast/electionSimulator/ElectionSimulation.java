@@ -296,13 +296,13 @@ public class ElectionSimulation
                         // value
 
                         int left = 0;
-                        int right = votingData.length; // how many votes we have
-
+                        int right = votingData.length - 1; // how many votes we have
+                        int margin = 0;
+                        
+                        
                         while (left < right) {
                             // calculate the margin to check
-                            int margin = left + Math.round((float) (right - left) / 2);
-
-                            System.out.println("left: " + left);
+                            margin = (int) (left + Math.floor((float) (right - left) / 2));
                             
                             // generate the code for the margin
                             if (running) {
@@ -347,6 +347,9 @@ public class ElectionSimulation
                             System.out.println("left: " + left + " right " + right);
 
                         }
+                        
+                        System.out.println("final margin: " + margin);
+                        
                     } else { // TODO make this like the other error check, so it
                              // would
                         // open the c window

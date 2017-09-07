@@ -2,13 +2,15 @@ package edu.pse.beast.propertychecker;
 
 import static org.junit.Assert.*;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.pse.beast.datatypes.electiondescription.ElectionType;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 
 public class CBMCResult_Test {
 
@@ -61,30 +63,6 @@ public class CBMCResult_Test {
         result = new CBMCResult();
 
        // result.setResult(lines);
-    }
-
-    @Test
-    public void singleChoice() {
-        result.setElectionType(ElectionType.SINGLECHOICE);
-        singleDim();
-    }
-
-    @Test
-    public void preference() {
-        result.setElectionType(ElectionType.PREFERENCE);
-        multiDim();
-    }
-
-    @Test
-    public void approval() {
-        result.setElectionType(ElectionType.APPROVAL);
-        multiDim();
-    }
-
-    @Test
-    public void wightedApproval() {
-        result.setElectionType(ElectionType.WEIGHTEDAPPROVAL);
-        multiDim();
     }
 
     @Test

@@ -38,8 +38,8 @@ public class ElectionDescriptionSaverLoaderTest {
         String save = s.createSaveString(desc);
         ElectionDescription loadedDesc = (ElectionDescription) s.createFromSaveString(save);
         assertEquals("desc", loadedDesc.getName());
-        assertEquals(electionTemplateHandler.getStandardInput().getId(), loadedDesc.getInputType().getId());
-        assertEquals(electionTemplateHandler.getStandardResult().getId(), loadedDesc.getOutputType().getId());
+        assertEquals(electionTemplateHandler.getStandardInput().getInputID(), loadedDesc.getInputType().getInputID());
+        assertEquals(electionTemplateHandler.getStandardResult().getInputID(), loadedDesc.getOutputType().getInputID());
         assertEquals(desc.getCode().get(0), loadedDesc.getCode().get(0));
         assertEquals(desc.getCode().get(1), loadedDesc.getCode().get(1));
         assertEquals(desc.getCode().get(2), loadedDesc.getCode().get(2));
@@ -67,8 +67,8 @@ public class ElectionDescriptionSaverLoaderTest {
         String save = s.createSaveString(desc);
         ElectionDescription loadedDesc = (ElectionDescription) s.createFromSaveString(save);
         assertEquals("desc", loadedDesc.getName());
-        assertEquals(electionTemplateHandler.getStandardInput().getId(), loadedDesc.getInputType().getId());
-        assertEquals(electionTemplateHandler.getStandardResult().getId(), loadedDesc.getOutputType().getId());
+        assertEquals(electionTemplateHandler.getStandardInput().getInputID(), loadedDesc.getInputType().getInputID());
+        assertEquals(electionTemplateHandler.getStandardResult().getInputID(), loadedDesc.getOutputType().getInputID());
         assertEquals(desc.getCode().get(0), loadedDesc.getCode().get(0));
         assertEquals(desc.getCode().get(1), loadedDesc.getCode().get(1));
         assertEquals(desc.getCode().get(2), loadedDesc.getCode().get(2));

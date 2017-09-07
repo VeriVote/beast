@@ -44,8 +44,8 @@ public class CBMCCodeGeneratorTest {
      * this initializes the Attributes with easy values, that can be generated
      */
     public CBMCCodeGeneratorTest() {
-        inputType = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.SINGLE_CHOICE);
-        outputType = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionTypeIds.CAND_OR_UNDEF);
+        inputType = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.SINGLE_CHOICE);
+        outputType = new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionOutputTypeIds.CAND_OR_UNDEF);
         int votingDeclLine = 0;
         electionDescription = new ElectionDescription("name", inputType, outputType, votingDeclLine);
         userCode = new ArrayList<>();

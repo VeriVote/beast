@@ -59,8 +59,8 @@ public class GuiTestCEditor {
     public void testCreateNewfileCEditor() throws InterruptedException {
         CElectionDescriptionEditor electionDescriptionEditor = helper.getCEditorOfCurrentInstace();
         ElectionDescription electionDescription = electionDescriptionEditor.getElectionDescription();
-        Assert.assertEquals(electionDescription.getInputType().getId(),
-                ElectionTypeContainer.ElectionTypeIds.SINGLE_CHOICE);
+        Assert.assertEquals(electionDescription.getInputType().getInputID(),
+                ElectionTypeContainer.ElectionInputTypeIds.SINGLE_CHOICE);
 
         electionDescriptionEditor.setVisible(true);
         helper.clickMenuItemInCEditor(0,0,waittime);
@@ -74,8 +74,8 @@ public class GuiTestCEditor {
 
         helper.performKeystrokes(keys, 50);
         electionDescription = electionDescriptionEditor.getElectionDescription();
-        Assert.assertEquals(electionDescription.getInputType().getId(),
-                ElectionTypeContainer.ElectionTypeIds.PREFERENCE);
+        Assert.assertEquals(electionDescription.getInputType().getInputID(),
+                ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE);
 
         helper.endInstance();
     }
