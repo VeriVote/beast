@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * the linux implementation for checking the code This implementation uses gcc
@@ -27,7 +28,7 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
     // this flag prohibits that file are creates by the compiler and
     // only the syntax is checked
     private final String findMissingReturnOption = "-Wreturn-type";
-
+    
     // we want to compile to a specific name, so we can delete the file
     // then later on
     private final String setOutputFileName = "-o ";
@@ -87,6 +88,10 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
 
         ProcessBuilder prossBuild = new ProcessBuilder(arguments.toArray(new String[0]));
 
+        Map<String, String> environment = prossBuild.environment();
+        
+        environment.put("LC_ALL", "C"); //set the language for the following call to english
+        
         try {
             // start the process
             startedProcess = prossBuild.start();
