@@ -27,8 +27,6 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
     // this flag prohibits that file are creates by the compiler and
     // only the syntax is checked
     private final String findMissingReturnOption = "-Wreturn-type";
-    
-    private final String gccToEnglish = "export LC_ALL=C;";
 
     // we want to compile to a specific name, so we can delete the file
     // then later on
@@ -67,8 +65,6 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
         Process startedProcess = null;
 
         List<String> arguments = new ArrayList<String>();
-        
-        arguments.add(gccToEnglish);
 
         // add the arguments needed for the call
         arguments.add(compilerString);
