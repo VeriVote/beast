@@ -23,6 +23,14 @@ public class CBMCResult extends Result {
 	private FailureExample failureExample = null;
 
 	private final String segmentEnder = "-----------------------------------";
+	
+    // this is the last line in the cbmc output, if the verification was
+    // successful
+    private final String SUCCESSLINE = "VERIFICATION SUCCESSFUL";
+
+    // this is the last line in the cbmc output, if the assertion
+    // failed
+    private final String FAILURELINE = "VERIFICATION FAILED";
 
 	@Override
 	public void presentTo(ResultPresenterElement presenter) {
@@ -600,4 +608,22 @@ public class CBMCResult extends Result {
 	public FailureExample getFailureExample() {
 		return failureExample;
 	}
+	
+    @Override
+    public boolean checkAssertionSuccess() {
+        if (super.getResult() != null && super.getResult().size() > 0) {
+            return super.getResult().get(super.getResult().size() - 1).contains(SUCCESSLINE);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean checkAssertionFailure() {
+        if (super.getResult() != null && super.getResult().size() > 0) {
+            return super.getResult().get(super.getResult().size() - 1).contains(FAILURELINE);
+        } else {
+            return false;
+        }
+    }
 }

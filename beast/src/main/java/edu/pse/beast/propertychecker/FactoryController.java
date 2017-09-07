@@ -294,7 +294,7 @@ public class FactoryController implements Runnable {
 		}
 	}
 
-	public List<UnprocessedResult> getUnprocessedResults() {
+	public List<UnprocessedCBMCResult> getUnprocessedResults() {
 		if (results == null) {
 
 			ErrorLogger.log("Result objects couldn't be created.");
@@ -302,10 +302,10 @@ public class FactoryController implements Runnable {
 
 		} else {
 
-			List<UnprocessedResult> toReturn = new ArrayList<UnprocessedResult>();
+			List<UnprocessedCBMCResult> toReturn = new ArrayList<UnprocessedCBMCResult>();
 
 			for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
-				UnprocessedResult result = (UnprocessedResult) iterator.next();
+				UnprocessedCBMCResult result = (UnprocessedCBMCResult) iterator.next();
 				toReturn.add(result);
 			}
 

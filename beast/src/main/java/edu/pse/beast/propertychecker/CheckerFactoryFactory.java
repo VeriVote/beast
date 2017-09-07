@@ -132,7 +132,7 @@ public final class CheckerFactoryFactory {
 		List<Result> results = new ArrayList<Result>();
 		
 		for (int i = 0; i < amount; i++) {
-			results.add(new UnprocessedResult());
+			results.add(new UnprocessedCBMCResult());
 		}
 		
 		return results;

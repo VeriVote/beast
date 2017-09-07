@@ -41,20 +41,14 @@ public class PropertyChecker implements ResultCheckerCommunicator {
     }
     
     @Override
-    /**
-     * this methode allows to pass a full file onward, so code generation can happen
-     * before, and it gets ignored beforehand.
-     * @param toCheck the file to check
-     * @param params the parameter with which the check will be run
-     * @return a 
-     */
-    public List<UnprocessedResult> checkFile(File toCheck, ParameterSource params) {
+    public UnprocessedCBMCResult checkFile(File toCheck, ParameterSource params) {
         if (toCheck == null || params == null) {
             return null;
         } else {
             this.factoryController = new FactoryController(toCheck, params, checkerID,
                     params.getParameter().getProcesses());
-            return factoryController.getUnprocessedResults();
+            //because we only have ONE file to check, we  only give back the first result
+            return factoryController.getUnprocessedResults().get(0);
         }
     }
 

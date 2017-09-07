@@ -3,7 +3,7 @@ package edu.pse.beast.propertychecker;
 import edu.pse.beast.highlevel.ResultPresenterElement;
 import edu.pse.beast.toolbox.ErrorLogger;
 
-public class UnprocessedResult extends Result {
+public class UnprocessedCBMCResult extends CBMCResult {
 	
 	@Override
 	public void presentTo(ResultPresenterElement presenter) {

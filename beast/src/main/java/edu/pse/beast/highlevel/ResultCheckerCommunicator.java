@@ -3,7 +3,7 @@ package edu.pse.beast.highlevel;
 import java.io.File;
 import java.util.List;
 
-import edu.pse.beast.propertychecker.UnprocessedResult;
+import edu.pse.beast.propertychecker.UnprocessedCBMCResult;
 
 /**
  * The ResultCheckerCommunicator starts and stops checks.
@@ -24,7 +24,13 @@ public interface ResultCheckerCommunicator {
     public List<ResultInterface> checkPropertiesForDescription(ElectionDescriptionSource elecDescr,
             PostAndPrePropertiesDescriptionSource propDescrSrc, ParameterSource params);
 
-    public List<UnprocessedResult> checkFile(File toCheck, ParameterSource params);
+    /**
+     * starts the check for a give file
+     * @param toCheck the file to check
+     * @param params the parameters to give extra
+     * @return a single unprocessedResult
+     */
+    public UnprocessedCBMCResult checkFile(File toCheck, ParameterSource params);
     
     /**
      * Stops checks.

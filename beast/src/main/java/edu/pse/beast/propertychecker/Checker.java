@@ -106,22 +106,11 @@ public abstract class Checker implements Runnable {
 				e.printStackTrace();
 			}
 			
-			for (Iterator iterator = result.iterator(); iterator.hasNext();) {
-                String string = (String) iterator.next();
-                System.out.println("r: " + string);
-            }
-			
-			
-			for (Iterator iterator = errors.iterator(); iterator.hasNext();) {
-                String string = (String) iterator.next();
-                System.out.println("e: " + string);
-            }
-			
 			finished = true;
 		} else {
 			ErrorLogger.log("Process couldn't be started");
 		}
-
+		
 		parent.notifyThatFinished(result, errors);
 	}
 

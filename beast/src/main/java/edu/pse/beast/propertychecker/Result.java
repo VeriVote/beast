@@ -258,4 +258,16 @@ public abstract class Result implements ResultInterface {
     public PostAndPrePropertiesDescription getPropertyDesctiption() {
     	return property;
     }
+
+    /**
+     * checks if the assertion holds
+     * @return true, if the assertion holds, else false
+     */
+    public abstract boolean checkAssertionSuccess();
+
+    /**
+     * checks if the assertion doesn't hold
+     * @return true, if the assertion failed, else false
+     */
+    public abstract boolean checkAssertionFailure();
 }
