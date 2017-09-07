@@ -171,10 +171,10 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
 
     @Override
     public void stopReacting() {
-        view.setVisible(true);
+        //view.setVisible(true);
         view.stopReacting();
         editorWasVisible = editor.getView().isVisible();
-        editor.getView().setVisible(false);
+        //editor.getView().setVisible(false);
     }
 
     @Override

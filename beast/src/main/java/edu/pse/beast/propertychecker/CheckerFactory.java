@@ -79,11 +79,11 @@ public abstract class CheckerFactory implements Runnable {
 		this.electionDescSrc = null;
 
 		// because we create a new instance with all variables null, we have to
-		// catch it here
-		if (result != null) {
-			result.setElectionType(getElectionDescription());
-			result.setProperty(postAndPrepPropDesc);
-		}
+//		// catch it here
+//		if (result != null) {
+//			result.setElectionType(getElectionDescription());
+//			result.setProperty(postAndPrepPropDesc);
+//		}
 	}
 
 	/**

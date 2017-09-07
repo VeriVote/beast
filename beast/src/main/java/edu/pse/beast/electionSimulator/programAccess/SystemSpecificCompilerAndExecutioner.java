@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -123,12 +124,18 @@ public abstract class SystemSpecificCompilerAndExecutioner {
 					e1.printStackTrace();
 				}
 				
+				
+				for (Iterator iterator = errors.iterator(); iterator.hasNext();) {
+                    String error = (String) iterator.next();
+                    System.out.println(error);
+                }
+				
+				
 				//here the computation is done
 				
 				//the winning candidate gets printed as a number in the last line
 				//like this:
 				//winner = x (,y, z ..)  ( = if seats are selected)
-				
 				
 				
 				String winner = result.get(0);

@@ -37,6 +37,9 @@ public class CVariableErrorFinder implements ErrorFinder {
         seperated.add("#ifndef V\n #define V 1\n #endif");
         seperated.add("#ifndef C\n #define C 1\n #endif");
         seperated.add("#ifndef S\n #define S 1\n #endif");
+        //because we want to reserver the function name "verify" we define it here
+        seperated.add("void verify() {} ;");
+        
         seperated.add("int main() {");
         seperated.add("}");
         String codeSep[] = code.split("\n");

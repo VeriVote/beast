@@ -145,9 +145,9 @@ public class FactoryController implements Runnable {
 	@Override
 	public void run() {
 
-		List<PostAndPrePropertiesDescription> properties = postAndPrePropDescrSrc.getPostAndPrePropertiesDescriptions();
 
 		if (!fromFile) { //if we have properties, we have to iterate over all of them and start them all
+		    List<PostAndPrePropertiesDescription> properties = postAndPrePropDescrSrc.getPostAndPrePropertiesDescriptions();
 			outerLoop: for (int i = 0; i < properties.size(); i++) {
 				innerLoop: while (!stopped) {
 					// if we can start more checkers (we haven't used our

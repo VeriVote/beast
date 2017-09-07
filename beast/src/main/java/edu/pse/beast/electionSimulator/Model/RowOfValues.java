@@ -111,7 +111,7 @@ public class RowOfValues extends JPanel implements DocumentListener {
 				for (int i = 0; i < values.size(); i++) {
 					values.set(i, 0);
 				}
-				values.set(position, 1);
+				vettedValue = 1;
 			} else {
 				vettedValue = 0;
 			}
@@ -130,7 +130,9 @@ public class RowOfValues extends JPanel implements DocumentListener {
 			System.out.println("unknown election type");
 		}
 
-		// update all values
+		values.set(position, vettedValue);
+		
+		// update all values that will get shown
 		for (int i = 0; i < values.size(); i++) {
 			try {
 					fields.get(i).setText("" + values.get(i));
@@ -138,7 +140,6 @@ public class RowOfValues extends JPanel implements DocumentListener {
 				System.err.println(e);
 			}
 		}
-		values.set(position, vettedValue);
 	}
 
 	@Override
