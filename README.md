@@ -20,3 +20,15 @@ We combine these two inputs into one C file, which we then send to CBMC for veri
 If we find an assertion error, we extract that data holding the violation and present it to the user, such that they can change their election description.
 
 BEAST is written in Java and runs on Linux (tested on: Ubuntu 16, Arch, Mint) and Windows (tested on: 10, 7)
+
+This software was designed and implemented during the bachelor course
+[Software Engineering Practice](https://formal.iti.kit.edu/teaching/pse/201617/voting/) by:
+
+* Justin Hecht
+* Niels Hanselmann
+* Holger Klein
+* Nikolai Schnell
+* Lukas Stapelbroek
+* Jonas Wohnig
+
+For more information, please contact [Michael Kirsten](https://formal.iti.kit.edu/~kirsten/?lang=en)
