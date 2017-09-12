@@ -1,4 +1,4 @@
-# PSE-Wahlverfahren-Implementierung
+# BEAST - Automated Election Verification via Bounded Model Checking
 
 Welcome to BEAST (Bounded Election Attribute Structuring Tool). This is a tool with which you can check whether voting methods satisfy
 specific properties (e.g., some fairness properties or that the winner received a majority of the votes).
