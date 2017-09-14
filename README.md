@@ -2,7 +2,7 @@
 
 Welcome to BEAST (Bounded Election Attribute Structuring Tool). This is a tool with which you can check whether voting methods satisfy
 specific properties (e.g., some fairness properties or that the winner received a majority of the votes).
-The background of this work and possible extensions are described the following paper: https://formal.iti.kit.edu/biblio/?lang=en&key=BeckertBormerEA2016
+The background of this work and possible extensions are described in the following paper: https://formal.iti.kit.edu/biblio/?lang=en&key=BeckertBormerEA2016
 
 If you want more information on how to use or extend BEAST, please read the other two ReadMe files.
 
