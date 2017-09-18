@@ -2,6 +2,7 @@ package edu.pse.beast.electionSimulator.Model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -88,20 +89,28 @@ public class RowOfValues extends JPanel implements DocumentListener {
 		this.repaint();
 	}
 
-	private void checkValue(int newValue, int position) {
+	private void checkAndInsertValue(int newValue, int position) {
 		int vettedValue = 0;
+		
 		switch (container.getInputID()) {
 		case APPROVAL:
 			if (newValue != 0 && newValue != 1) {
 				vettedValue = 0;
+			} else {
+				vettedValue = newValue;
 			}
 			break;
 
 		case PREFERENCE:
+			
 			if (newValue < 0 || newValue > amountOfCandidates) {
 				vettedValue = 0;
 			} else {
-				vettedValue = newValue;
+				if(values.contains(newValue)) {
+					vettedValue = 0;
+				} else {
+					vettedValue = newValue;
+				}
 			}
 			break;
 
@@ -119,7 +128,7 @@ public class RowOfValues extends JPanel implements DocumentListener {
 			break;
 
 		case WEIGHTED_APPROVAL:
-			if (newValue < 0 || newValue > amountOfCandidates) {
+			if (newValue < 0 || newValue > 100) {
 				vettedValue = 0;
 			} else {
 				vettedValue = newValue;
@@ -181,7 +190,7 @@ public class RowOfValues extends JPanel implements DocumentListener {
 					@Override
 					public void run() {
 						locked = true;
-						checkValue(finalV, finalI);
+						checkAndInsertValue(finalV, finalI);
 						locked = false;
 					}
 				};
@@ -206,5 +215,14 @@ public class RowOfValues extends JPanel implements DocumentListener {
 	
 	public void setFields(ArrayList<JTextField> fields) {
 		this.fields = fields;
+	}
+	
+	public void setContainer(ElectionTypeContainer container) {
+		this.container = container;
+		
+		for (int i = 0; i < values.size(); i++) {
+			checkAndInsertValue(0, i);
+		}
+		
 	}
 }

@@ -101,4 +101,9 @@ public class PSECentralObjectProvider implements CentralObjectProvider {
         this.checkerCommunicator = checkerCommunicator;
     }
 
+	@Override
+	public CElectionDescriptionEditor getCElectionEditor() {
+		return cElectionEditor;
+	}
+
 }

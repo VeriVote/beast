@@ -98,4 +98,32 @@ public class CBMCResultWrapperSingleArray {
         }
         return toReturn;
     }
+    
+    /**
+     * 
+     * @return wraps the single array into an array in the two dimensional format.
+     * This is specifically targeted for the single_choice option, so the result will
+     * be a sparse array in which only one entry in each row will be one, every other entry will be
+     * zero
+     */
+    public CBMCResultWrapperMultiArray wrapInTwoDim(int index, String name, int amountCandidates) {
+    	
+    	CBMCResultWrapperMultiArray twoDimArr = new CBMCResultWrapperMultiArray(index, name);
+    	
+    	Long[] asArray = getArray();
+    	
+    	
+    	for(int i = 0; i < asArray.length; i++) {
+    		long currentCandidate = asArray[i];
+    		
+    		if(currentCandidate == 0) {
+    			//add 0 to the last candidate position, so the whole row will be zeros
+    			twoDimArr.addTo(i, amountCandidates - 1,  0);
+    		} else {
+    			twoDimArr.addTo(i, (int) (currentCandidate - 1), 1);
+    		}
+    	}
+    	
+    	return twoDimArr;
+    }
 }

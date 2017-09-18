@@ -1,6 +1,7 @@
 package edu.pse.beast.electionSimulator.Model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 
@@ -82,6 +83,10 @@ public class ElectionSimulationModel extends Observable implements NameInterface
 	
 	public void changeContainer(ElectionTypeContainer container) {
 		this.container = container;
+		for (Iterator iterator = rows.iterator(); iterator.hasNext();) {
+			RowOfValues currentRow = (RowOfValues) iterator.next();
+			currentRow.setContainer(container);
+		}
 	}
 	public ArrayList<JTextField> getCandidates() {
 		return candidates;

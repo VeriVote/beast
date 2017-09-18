@@ -249,7 +249,7 @@ public class CBMCResult extends Result {
 		}
 	}
 
-	private Long readSymbolicVariable(String name, List<String> toExtract) {
+	protected Long readSymbolicVariable(String name, List<String> toExtract) {
 		Long toReturn = null;
 
 		Pattern correctChecker = Pattern.compile("(\\b" + name + "=[0-9]+u)(.*)");
@@ -281,7 +281,7 @@ public class CBMCResult extends Result {
 	 *            searched var
 	 * @return a list of all occurrences
 	 */
-	private List<CBMCResultWrapperLong> readLongs(String name, List<String> toExtract) {
+	protected List<CBMCResultWrapperLong> readLongs(String name, List<String> toExtract) {
 
 		List<CBMCResultWrapperLong> toReturn = new ArrayList<CBMCResultWrapperLong>();
 
@@ -343,7 +343,7 @@ public class CBMCResult extends Result {
 	 * @return a list of all variables with a matching name with their index and
 	 *         values that occured in the give list
 	 */
-	private List<CBMCResultWrapperSingleArray> readOneDimVar(String name, List<String> toExtract) {
+	protected List<CBMCResultWrapperSingleArray> readOneDimVar(String name, List<String> toExtract) {
 
 		List<CBMCResultWrapperSingleArray> list = new ArrayList<CBMCResultWrapperSingleArray>();
 
@@ -460,7 +460,7 @@ public class CBMCResult extends Result {
 	 *            the list to extract the variables out
 	 * @return the finished list with all variables stored in
 	 */
-	private List<CBMCResultWrapperMultiArray> readTwoDimVar(String name, List<String> toExtract) {
+	protected List<CBMCResultWrapperMultiArray> readTwoDimVar(String name, List<String> toExtract) {
 
 		List<CBMCResultWrapperMultiArray> list = new ArrayList<CBMCResultWrapperMultiArray>();
 
@@ -583,7 +583,7 @@ public class CBMCResult extends Result {
 	 * @param regexToEndAt
 	 * @return
 	 */
-	private String mergeLinesToOne(Iterator<String> toMerge, String regexToEndAt) {
+	protected String mergeLinesToOne(Iterator<String> toMerge, String regexToEndAt) {
 		String toReturn = "";
 		boolean notEnded = true;
 		while (notEnded) {

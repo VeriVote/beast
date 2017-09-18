@@ -1,6 +1,9 @@
 
 package edu.pse.beast.highlevel;
 
+import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
+import edu.pse.beast.parametereditor.ParameterEditor;
+
 /**
  * The CentralObjectProvider provides access to the interfaces for the packages used 
  * to run BEAST for the BEASTCommunicator.
@@ -42,4 +45,16 @@ public interface CentralObjectProvider {
      * @return CheckStatusDisplay to which access is needed
      */
     CheckStatusDisplay getCheckStatusDisplay();
+    
+    /**
+     * gives access to the ParameterEditor
+     * @return the parameter Editor
+     */
+    ParameterEditor getParameterEditor();
+    
+    /**
+     * gives access to the c election editor
+     * @return the c election editor
+     */
+    CElectionDescriptionEditor getCElectionEditor();
 }

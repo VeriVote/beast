@@ -264,6 +264,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier, DisplaysS
     }
     
     public void setSeatAmount(int amount) {
+    	
         seatHandler.setMinAndMax(amount, amount);
     }
 }

@@ -6,6 +6,7 @@
 package edu.pse.beast.celectiondescriptioneditor;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
+
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeAreaBuilder;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CErrorDisplayer;
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
@@ -34,7 +35,6 @@ public class CElectionDescriptionEditorBuilder {
 
     private final String[] menuHeadingIds = {"file", "edit", "editor", "code" };
     private CElectionCodeAreaBuilder codeAreaBuilder;
-
     private UserAction newAcc;
     private UserAction save;
     private UserAction saveAs;
