@@ -22,7 +22,7 @@ public class MainClass {
      */
     public static void main(String[] args) {
         BEASTCommunicator communicator = new BEASTCommunicator();
-        CentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
+        PSECentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
         communicator.setCentralObjectProvider(centralObjectProvider);
     	
     	//new ElectionSimulation(new ElectionTypeContainer(null, ElectionInputTypeIds.WEIGHTED_APPROVAL));

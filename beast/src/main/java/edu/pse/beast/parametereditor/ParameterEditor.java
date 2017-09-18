@@ -254,4 +254,16 @@ public class ParameterEditor implements ParameterSource, MainNotifier, DisplaysS
     public void updateStringRes(StringLoaderInterface stringResIF) {
         fileChooser.updateStringRessourceLoader(stringResIF.getParameterEditorStringResProvider().getOtherStringRes());
     }
+    
+    public void setVoterAmount(int amount) {
+        voterHandler.setMinAndMax(amount, amount);
+    }
+    
+    public void setCandidateAmount(int amount) {
+        candHandler.setMinAndMax(amount, amount);
+    }
+    
+    public void setSeatAmount(int amount) {
+        seatHandler.setMinAndMax(amount, amount);
+    }
 }

@@ -31,6 +31,7 @@ import edu.pse.beast.highlevel.BEASTCommunicator;
 import edu.pse.beast.highlevel.CentralObjectProvider;
 import edu.pse.beast.highlevel.CheckStatusDisplay;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
+import edu.pse.beast.highlevel.PSECentralObjectProvider;
 import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
 import edu.pse.beast.highlevel.ResultInterface;
@@ -52,7 +53,7 @@ public class ElectionSimulation
 
     private ElectionTypeContainer outputContainer;
 
-    private CentralObjectProvider centralObjectProvider;
+    private PSECentralObjectProvider centralObjectProvider;
 
     private boolean react = false;
 
@@ -67,11 +68,11 @@ public class ElectionSimulation
     private ElectionSimulationWindow view;
     private ElectionSimulationModel model;
 
-    public ElectionSimulation(CentralObjectProvider centralObjectProvider) {
+    public ElectionSimulation(PSECentralObjectProvider centralObjectProvider) {
         this(centralObjectProvider, new StringLoaderInterface("de"));
     }
 
-    public ElectionSimulation(CentralObjectProvider centralObjectProvider, StringLoaderInterface sli) {
+    public ElectionSimulation(PSECentralObjectProvider centralObjectProvider, StringLoaderInterface sli) {
         this.inputContainer = centralObjectProvider.getElectionDescriptionSource().getElectionDescription()
                 .getInputType();
         this.outputContainer = centralObjectProvider.getElectionDescriptionSource().getElectionDescription()
@@ -258,6 +259,7 @@ public class ElectionSimulation
 
             running = false;
             centralObjectProvider.getResultCheckerCommunicator().abortChecking();
+            BEASTCommunicator.resumeReacting(centralObjectProvider);
             react = true;
 
         } else {
@@ -269,6 +271,8 @@ public class ElectionSimulation
                 public void run() {
                     if (!BEASTCommunicator.checkForErrors(centralObjectProvider)) {
 
+                        BEASTCommunicator.stopReacting(centralObjectProvider);
+                        
                         // ElectionDescriptionSource electSrc =
                         // centralObjectProvider.getElectionDescriptionSource();
                         // PostAndPrePropertiesDescriptionSource postAndPreSrc =
@@ -280,12 +284,17 @@ public class ElectionSimulation
 
                         int[][] votingData = new int[model.getAmountVoters()][model.getAmountCandidates()];
 
-                        // lies die Daten in ein 2d array
+                        // read the data in a 2d array
                         for (int i = 0; i < model.getAmountVoters(); i++) {
                             for (int j = 0; j < model.getAmountCandidates(); j++) {
                                 votingData[i][j] = model.getRows().get(i).getValues().get(j);
                             }
                         }
+                        
+                        //set the values for the vote
+                        centralObjectProvider.getParameterEditor().setVoterAmount(model.getAmountVoters());
+                        centralObjectProvider.getParameterEditor().setCandidateAmount(model.getAmountCandidates());
+                        centralObjectProvider.getParameterEditor().setSeatAmount(model.getAmountCandidates());
 
                         List<String> codeLines = generateRunnableCode(votingData);
 
@@ -349,6 +358,8 @@ public class ElectionSimulation
                         }
                         
                         System.out.println("final margin: " + margin);
+                        
+                        BEASTCommunicator.resumeReacting(centralObjectProvider);
                         
                     } else { // TODO make this like the other error check, so it
                              // would

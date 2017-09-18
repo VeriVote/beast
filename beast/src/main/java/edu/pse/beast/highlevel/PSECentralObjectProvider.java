@@ -88,6 +88,10 @@ public class PSECentralObjectProvider implements CentralObjectProvider {
     public CheckStatusDisplay getCheckStatusDisplay() {
         return paramEd.getView();
     }
+    
+    public ParameterEditor getParameterEditor() {
+        return paramEd;
+    }
 
     /**
      * Setter for the CheckerCommunicator, called when other checker than cbmc is switched to.
