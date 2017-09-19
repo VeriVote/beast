@@ -21,6 +21,8 @@ import java.util.regex.Pattern;
 public class CBMCResult extends Result {
 
 	private FailureExample failureExample = null;
+	
+	private boolean createsExample = true;
 
 	private final String segmentEnder = "-----------------------------------";
 	
@@ -31,6 +33,14 @@ public class CBMCResult extends Result {
     // this is the last line in the cbmc output, if the assertion
     // failed
     private final String FAILURELINE = "VERIFICATION FAILED";
+    
+    public CBMCResult() {
+        //empty constructor
+    }
+    
+    public CBMCResult(boolean createsExample) {
+        this.createsExample = createsExample;
+    }
 
 	@Override
 	public void presentTo(ResultPresenterElement presenter) {
@@ -58,7 +68,9 @@ public class CBMCResult extends Result {
 	@Override
 	public void setResult(List<String> result) {
 		super.setResult(result);
-		failureExample = createFailureExample();
+		if(createsExample) {
+		    failureExample = createFailureExample();
+		}
 	}
 
 	/**
@@ -252,7 +264,7 @@ public class CBMCResult extends Result {
 	protected Long readSymbolicVariable(String name, List<String> toExtract) {
 		Long toReturn = null;
 
-		Pattern correctChecker = Pattern.compile("(\\b" + name + "=[0-9]+u)(.*)");
+		Pattern correctChecker = Pattern.compile("(\\b" + name + "=[0-9]+u*)(.*)");
 
 		Iterator<String> iterator = getResult().iterator();
 		String line = mergeLinesToOne(iterator, segmentEnder);
@@ -285,7 +297,7 @@ public class CBMCResult extends Result {
 
 		List<CBMCResultWrapperLong> toReturn = new ArrayList<CBMCResultWrapperLong>();
 
-		Pattern correctChecker = Pattern.compile("(\\b" + name + "[0-9]+=[0-9]+u)(.*)");
+		Pattern correctChecker = Pattern.compile("(\\b" + name + "[0-9]+=[0-9]+u*)(.*)");
 
 		Pattern longExtractor = Pattern.compile("(\\b" + name + "[0-9]+)(.*)");
 
@@ -298,6 +310,7 @@ public class CBMCResult extends Result {
 
 			Matcher checkerMatcher = correctChecker.matcher(line);
 			if (checkerMatcher.find()) {
+			    
 				Matcher longMatcher = longExtractor.matcher(checkerMatcher.group(0));
 				if (longMatcher.find()) {
 
