@@ -75,7 +75,7 @@ public class WindowsCompilerAndRunner extends SystemSpecificCompilerAndExecution
             // output directory, so
             // it can be deleted afterwards
             String clExeCall = "\"" + vsCmd + "\"" + " & " + compilerString + " " + userIncludeAndPath + " "
-                    + ("\"" + toCheck.getAbsolutePath() + "\"")
+                    + ("\"" + toCheck.getAbsolutePath() + "\"") + " " + (" /Fo" + toCheck.getParent() + "\\ ")
                     + (" /Fe" + toCheck.getParent() + "\\ ") + compileAllIncludesInIncludePath;
 
             List<String> callInList = new ArrayList<String>();
