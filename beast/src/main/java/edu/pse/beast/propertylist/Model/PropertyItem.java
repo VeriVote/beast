@@ -21,6 +21,7 @@ public class PropertyItem implements ResultPresenterElement {
     private ResultType resultType;
     private List<String> error;
     private FailureExample example;
+    private boolean willBeMarginComputed;
 
     /**
      * Constructor for the class
@@ -140,6 +141,10 @@ public class PropertyItem implements ResultPresenterElement {
 
     public void setError(List<String> error) {
         this.error = error;
+    }
+
+    public boolean getMarginStatus() {
+        return willBeMarginComputed;
     }
 
 }
