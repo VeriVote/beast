@@ -380,7 +380,7 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
                             System.err.println("error, no margin result");
                         } else {
                             if (outputContainer
-                                    .getOutputId() == ElectionTypeContainer.ElectionOutputTypeIds.CAND_OR_UNDEF) {
+                                    .getOutputID() == ElectionTypeContainer.ElectionOutputTypeIds.CAND_OR_UNDEF) {
                                 System.out.println("winner before: " + winnerResults.get(0));
                             } else {
 
@@ -412,7 +412,7 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
                                 }
 
                                 if (outputContainer
-                                        .getOutputId() == ElectionTypeContainer.ElectionOutputTypeIds.CAND_OR_UNDEF) {
+                                        .getOutputID() == ElectionTypeContainer.ElectionOutputTypeIds.CAND_OR_UNDEF) {
                                     System.out.println("new winner: " + finalMarginResult.getNewResult()[0]);
                                 } else {
 
@@ -523,7 +523,7 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 
     private List<String> generateRunnableCode(int[][] votingData) {
         // if we vote for seats, we get the result as an array
-        boolean multiOut = outputContainer.getOutputId() == ElectionOutputTypeIds.CAND_PER_SEAT;
+        boolean multiOut = outputContainer.getOutputID() == ElectionOutputTypeIds.CAND_PER_SEAT;
 
         // this list will hold all the code in for later
         List<String> code = new ArrayList<String>();
@@ -643,7 +643,7 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 
     private List<String> generateMarginComputationCode(int[][] votingData, int margin, List<Integer> origResult) {
         // if we vote for seats, we get the result as an array
-        boolean multiOut = (outputContainer.getOutputId() == ElectionOutputTypeIds.CAND_PER_SEAT);
+        boolean multiOut = (outputContainer.getOutputID() == ElectionOutputTypeIds.CAND_PER_SEAT);
 
         // this list will hold all the code in for later
         List<String> code = new ArrayList<String>();
