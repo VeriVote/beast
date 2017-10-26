@@ -91,7 +91,7 @@ public class ElectionTypeContainer {
     *
     * @return the id of this output typecontainer
     */
-   public ElectionOutputTypeIds getOutputId() {
+   public ElectionOutputTypeIds getOutputID() {
        return outID;
    }
     

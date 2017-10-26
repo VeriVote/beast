@@ -103,7 +103,7 @@ public class CElectionDescriptionEditorBuilder {
 
         try {
             editor.loadElectionDescription(new CCodeHelper().generateElectionDescription(
-                    templateHandler.getStandardInput().getInputID(), templateHandler.getStandardResult().getOutputId(),
+                    templateHandler.getStandardInput().getInputID(), templateHandler.getStandardResult().getOutputID(),
                     "new_election", templateHandler,
                     objRefsForBuilder.getStringIF().getCElectionEditorStringResProvider().getElectionStringRes()));
         } catch (BadLocationException ex) {

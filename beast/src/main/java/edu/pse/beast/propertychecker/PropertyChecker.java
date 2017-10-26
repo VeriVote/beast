@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.propertychecker;
 
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.highlevel.*;
 
 import java.io.File;
@@ -41,14 +42,16 @@ public class PropertyChecker implements ResultCheckerCommunicator {
     }
     
     @Override
-    public UnprocessedCBMCResult checkFile(File toCheck, ParameterSource params) {
+    public UnprocessedCBMCResult checkFile(File toCheck, ElectionDescription electionDescr, ParameterSource params) {
         if (toCheck == null || params == null) {
             return null;
         } else {
             this.factoryController = new FactoryController(toCheck, params, checkerID,
                     params.getParameter().getProcesses());
             //because we only have ONE file to check, we  only give back the first result
-            return factoryController.getUnprocessedResults().get(0);
+            UnprocessedCBMCResult toReturn = factoryController.getUnprocessedResults().get(0);
+            toReturn.setElectionType(electionDescr);
+            return toReturn;
         }
     }
 

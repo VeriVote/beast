@@ -3,6 +3,7 @@ package edu.pse.beast.highlevel;
 import java.io.File;
 import java.util.List;
 
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.propertychecker.UnprocessedCBMCResult;
 
 /**
@@ -30,7 +31,7 @@ public interface ResultCheckerCommunicator {
      * @param params the parameters to give extra
      * @return a single unprocessedResult
      */
-    public UnprocessedCBMCResult checkFile(File toCheck, ParameterSource params);
+    public UnprocessedCBMCResult checkFile(File toCheck, ElectionDescription elecDescr, ParameterSource params);
     
     /**
      * Stops checks.

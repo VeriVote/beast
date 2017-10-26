@@ -96,7 +96,7 @@ public class ElectionTemplateHandler {
      */
     public ElectionTypeContainer getById(ElectionOutputTypeIds id) {
         for (ElectionTypeContainer cont : resTypes) {
-            if (cont.getOutputId() == id)
+            if (cont.getOutputID() == id)
                 return cont;
         }
         return null;

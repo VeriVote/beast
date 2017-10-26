@@ -37,6 +37,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
     protected JButton showResult = new JButton();
     protected JTextField name = new JTextField();
     protected JCheckBox testStatus = new JCheckBox();
+    protected JCheckBox marginComputation = new JCheckBox();
     protected JButton changeButton = new JButton();
     protected JButton deleteButton = new JButton();
     
@@ -120,6 +121,24 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
             }
         });
         this.add(testStatus, BorderLayout.LINE_START);
+        
+        
+        marginComputation.setText("margin");
+        marginComputation.setSelected(prop.getMarginStatus());
+        testStatus.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (reactsToInput) {
+                    if (e.getStateChange() == ItemEvent.SELECTED) {
+                        controller.setTestStatus(prop, true);
+                    } else {
+                        controller.setTestStatus(prop, false);
+                    }
+                }
+            }
+        });
+        this.add(testStatus, BorderLayout.LINE_START);
+        
 
         changeButton.setPreferredSize(iconSize);
         changeButton.setIcon(wrenchIcon);
