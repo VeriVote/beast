@@ -70,7 +70,7 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 	private ElectionSimulationModel model;
 
 	public ElectionSimulation(PSECentralObjectProvider centralObjectProvider) {
-		this(centralObjectProvider, new StringLoaderInterface("de"));
+		this(centralObjectProvider, new StringLoaderInterface("en"));
 	}
 
 	public ElectionSimulation(PSECentralObjectProvider centralObjectProvider, StringLoaderInterface sli) {

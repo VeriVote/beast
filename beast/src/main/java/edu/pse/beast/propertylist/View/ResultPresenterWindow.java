@@ -37,7 +37,7 @@ public class ResultPresenterWindow extends JFrame {
      *
      */
     public ResultPresenterWindow() {
-        this(new StringLoaderInterface("de"));
+        this(new StringLoaderInterface("en"));
     }
 
     /**

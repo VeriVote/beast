@@ -69,7 +69,6 @@ public class CBMCResult extends Result {
 	private FailureExample createFailureExample() {
 		// determine the elect values
 		if (getResult() != null && getElectionDescription() != null) {
-
 			FailureExample toReturn = null;
 
 			// define these arrays, because switch case doesn't let me reassign
@@ -82,7 +81,10 @@ public class CBMCResult extends Result {
 			List<CBMCResultWrapperSingleArray> singleVotesList;
 
 			// it is voting for seats, and not for candidates
-			if (!getElectionDescription().getOutputType().getResultTypeSeats()) {
+			
+			
+			
+			if (getElectionDescription().getOutputType().getResultTypeSeats()) {
 
 				switch (getElectionDescription().getInputType().getInputID()) {
 

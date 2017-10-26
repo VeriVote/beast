@@ -30,7 +30,7 @@ public class TestHelper {
 	
 	public TestHelper() {
 		OptionsInterface optionsInterface = new OptionsInterface();
-        StringLoaderInterface stringIf = new StringLoaderInterface("de"); 
+        StringLoaderInterface stringIf = new StringLoaderInterface("en"); 
         SaverLoaderInterface saverLoaderIF = new SaverLoaderInterface();
         LanguageOptions langOpts = optionsInterface.getLanguageOptions(stringIf);
         refs = new ObjectRefsForBuilder(

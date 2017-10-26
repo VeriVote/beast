@@ -92,7 +92,7 @@ public class PLModel extends Observable implements NameInterface {
 	 * @return Returns true if the property could be added
 	 */
 	public boolean addNewProperty(BooleanExpEditor editor) {
-		String name = "Eigenschaft ";
+		String name = "Property ";
 		int i = 0;
 		while (indexOfName(name + i) != -1)
 			i++;

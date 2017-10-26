@@ -33,7 +33,7 @@ public class BooleanExpEditorVariableErrorFinderTest {
         pane = new JTextPane();
         aNTLRHandler = new BooleanExpANTLRHandler(pane.getStyledDocument());
         varList = new SymbolicVariableList();
-        stringRes = new StringLoaderInterface("de").getBooleanExpEditorStringResProvider().getBooleanExpErrorStringRes();
+        stringRes = new StringLoaderInterface("en").getBooleanExpEditorStringResProvider().getBooleanExpErrorStringRes();
     }
     
     @BeforeClass

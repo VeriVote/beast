@@ -60,7 +60,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
         this.controller = controller;
         this.prop = prop;
         reactsToInput = true;
-        sli = new StringLoaderInterface("de");
+        sli = new StringLoaderInterface("en");
         resWindow = new ResultPresenterWindow(sli);
         init();
     } 

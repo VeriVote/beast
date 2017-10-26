@@ -25,7 +25,6 @@ public class MainClass {
         PSECentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
         communicator.setCentralObjectProvider(centralObjectProvider);
     	
-    	//new ElectionSimulation(new ElectionTypeContainer(null, ElectionInputTypeIds.WEIGHTED_APPROVAL));
-    	new ElectionSimulation(centralObjectProvider);
+    	//  	new ElectionSimulation(centralObjectProvider);
     }
 }

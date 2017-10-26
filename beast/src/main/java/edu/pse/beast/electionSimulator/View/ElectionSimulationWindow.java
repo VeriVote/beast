@@ -63,7 +63,7 @@ public class ElectionSimulationWindow extends JFrame {
 	 *
 	 */
 	public ElectionSimulationWindow(ElectionTypeContainer container, ElectionSimulation controller, ElectionSimulationModel model) {
-		this(new StringLoaderInterface("de"), container, controller, model);
+		this(new StringLoaderInterface("en"), container, controller, model);
 	}
 
 	/**

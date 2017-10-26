@@ -36,7 +36,7 @@ public abstract class SystemSpecificErrorChecker {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-    }
+}
     
     /**
      * checks the code for errors
