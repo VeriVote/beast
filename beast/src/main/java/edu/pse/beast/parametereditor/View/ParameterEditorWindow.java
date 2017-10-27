@@ -71,7 +71,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame
         seatMax = new javax.swing.JSpinner();
         timeout = new javax.swing.JLabel();
         timeoutNum = new javax.swing.JSpinner();
-        timeoutUnit = new javax.swing.JComboBox<>();
+        timeoutUnit = new javax.swing.JComboBox<String>();
         processes = new javax.swing.JLabel();
         amountProcessesSpinner = new javax.swing.JSpinner();
         advancedButton = new javax.swing.JButton();
@@ -116,7 +116,9 @@ public class ParameterEditorWindow extends javax.swing.JFrame
 
         timeoutNum.setMaximumSize(new java.awt.Dimension(0, 32767));
 
-        timeoutUnit.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sekunden", "Minuten", "Stunden", "Tage" }));
+        timeoutUnit.setModel(new javax.swing.DefaultComboBoxModel<String>(
+                new String[] { "Sekunden", "Minuten", "Stunden", "Tage" }
+                ));
 
         processes.setText("Max. Prozesse");
 
@@ -441,7 +443,7 @@ public class ParameterEditorWindow extends javax.swing.JFrame
         seatTo.setText(other.getStringFromID("to"));
         advancedButton.setText(other.getStringFromID("advanced"));
         aboutButton.setText(other.getStringFromID("about"));
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel();
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
         model.addElement(other.getStringFromID("seconds"));
         model.addElement(other.getStringFromID("minutes"));
         model.addElement(other.getStringFromID("hours"));

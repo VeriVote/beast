@@ -18,8 +18,8 @@ import java.util.List;
  * @author Nikolai
  */
 public class SymbolicVarListController implements DisplaysStringsToUser {
-    private final JList jList;
-    private final DefaultListModel jListModel;
+    private final JList<String> jList;
+    private final DefaultListModel<String> jListModel;
     private final SymbolicVariableList symbolicVariableList;
     private StringLoaderInterface stringLoaderInterface;
     private String voterString;
@@ -41,13 +41,13 @@ public class SymbolicVarListController implements DisplaysStringsToUser {
      * @param booleanExpEditorWindow the BooleanExpEditorWindow object (view)
      * @param symbolicVariableList the SymbolicVariableList
      */
-    SymbolicVarListController(JList jList, JButton addVarButton, JButton removeVarButton,
+    SymbolicVarListController(JList<String> jList, JButton addVarButton, JButton removeVarButton,
                               StringLoaderInterface stringLoaderInterface, SymbolicVariableList symbolicVariableList,
                               BooleanExpEditorWindow booleanExpEditorWindow) {
         this.jList = jList;
         this.stringLoaderInterface = stringLoaderInterface;
         this.symbolicVariableList = symbolicVariableList;
-        this.jListModel = (DefaultListModel) jList.getModel();
+        this.jListModel = (DefaultListModel<String>) jList.getModel();
         this.booleanExpEditorWindow = booleanExpEditorWindow;
         updateStringRes(stringLoaderInterface);
         addVarButton.addActionListener(new AddVarActionListener());

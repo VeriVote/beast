@@ -34,7 +34,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
     private javax.swing.JToolBar toolbar;
     private javax.swing.JTextPane prePropTextPane;
     private JTextPane focusedTextPane;
-    private DefaultListModel listModel;
+    private DefaultListModel<String> listModel;
     private String titleString;
     // End of variables declaration
 
@@ -65,8 +65,8 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
         prePropScrollPane = new javax.swing.JScrollPane();
         prePropTextPane = new javax.swing.JTextPane();
         symVarScrollPane = new javax.swing.JScrollPane();
-        listModel = new DefaultListModel();
-        symVarList = new javax.swing.JList<>(listModel);
+        listModel = new DefaultListModel<String>();
+        symVarList = new javax.swing.JList<String>(listModel);
         symVarList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         symVarList.setLayoutOrientation(JList.VERTICAL);
         postPropLabel = new javax.swing.JLabel();
@@ -216,7 +216,7 @@ public class BooleanExpEditorWindow extends javax.swing.JFrame implements Displa
      * Getter
      * @return the JList that contains the user defined symbolic variables
      */
-    public javax.swing.JList getSymVarList() {
+    public javax.swing.JList<String> getSymVarList() {
         return symVarList;
     }
 

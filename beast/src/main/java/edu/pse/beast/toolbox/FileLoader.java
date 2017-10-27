@@ -45,6 +45,7 @@ public final class FileLoader {
                 stringlist.add(line);
                 line = br.readLine();
             }
+            br.close();
         
         return stringlist;
     }

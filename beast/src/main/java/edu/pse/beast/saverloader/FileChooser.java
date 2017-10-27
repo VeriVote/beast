@@ -211,7 +211,8 @@ public class FileChooser {
         ((NameInterface) object).setNewName(localfile.getName().split(stringResourceLoader.getStringFromID(
                 "fileSuffix"))[0]);
         saveString = saverLoader.createSaveString(object);
-        Writer out;
+        Writer out = null;
+        boolean closed = false;
         try {
             out = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream(localfile), "UTF-8"));
@@ -234,8 +235,23 @@ public class FileChooser {
                     options,
                     options[0]);
             return false;
+        } finally {
+            try {
+                out.close();
+                closed = true;
+            } catch (IOException e) {
+                JOptionPane.showOptionDialog(null,
+                        stringResourceLoader.getStringFromID(
+                                "objectCouldNotBeSavedError"), "",
+                        JOptionPane.PLAIN_MESSAGE,
+                        JOptionPane.ERROR_MESSAGE,
+                        null,
+                        options,
+                        options[0]);
+                closed = false;
+            }
         }
-        boolean closed = false;
+        closed = false;
         try {
             try {
                 out.write(saveString);

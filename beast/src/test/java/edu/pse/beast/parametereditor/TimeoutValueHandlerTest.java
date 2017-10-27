@@ -20,9 +20,9 @@ public class TimeoutValueHandlerTest {
     @Test
     public void testTimeout() {
         System.out.println("set/getTimeout");
-        JComboBox comboBox = new JComboBox();
+        JComboBox<String> comboBox = new JComboBox<String>();
         JSpinner spinner = new JSpinner();
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel();
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
         model.addElement("s");
         model.addElement("m");
         model.addElement("h");
@@ -76,9 +76,9 @@ public class TimeoutValueHandlerTest {
     @Test
     public void testReactsAndHasChanged() {
         System.out.println("ReactsAndHasChanged");
-        JComboBox comboBox = new JComboBox();
+        JComboBox<String> comboBox = new JComboBox<String>();
         JSpinner spinner = new JSpinner();
-        DefaultComboBoxModel<String> model = new DefaultComboBoxModel();
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
         model.addElement("s");
         model.addElement("m");
         model.addElement("h");

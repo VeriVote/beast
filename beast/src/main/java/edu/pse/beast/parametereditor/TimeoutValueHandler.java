@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class TimeoutValueHandler implements ChangeListener, ActionListener {
     private final JSpinner timeoutSpinner;
-    private final JComboBox timeoutUnit;
+    private final JComboBox<String> timeoutUnit;
     private TimeOut timeoutBefore;
     private boolean reacts;
     private boolean hasChanged;
@@ -26,7 +26,7 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
      * @param timeoutSpinner JSpinner for the timeout value
      * @param timeoutUnit JComboBox for the timeout unit
      */
-    public TimeoutValueHandler(JSpinner timeoutSpinner, JComboBox timeoutUnit) {
+    public TimeoutValueHandler(JSpinner timeoutSpinner, JComboBox<String> timeoutUnit) {
         this.timeoutSpinner = timeoutSpinner;
         timeoutSpinner.setValue(0);
         this.timeoutUnit = timeoutUnit;
