@@ -33,8 +33,9 @@ public class ErrorWindow {
     public void displayErrors(ArrayList<CodeError> errors, CErrorDisplayer cErrorDisplayer) {
         String errorsAsString = errorString + ": " + errors.size() + "\n";
         for (int i = 0; i < errors.size(); i++) {
-            errorsAsString += i+1 + ": " + cErrorDisplayer.createMsg(errors.get(i)) + " (" + lineString +
-                    (errors.get(i).getLine() - 1) + ")" + "\n";
+            errorsAsString +=
+                    i+1 + ": " + cErrorDisplayer.createMsg(errors.get(i)) +
+                    " (" + lineString + " " + (errors.get(i).getLine() - 1) + ")" + "\n";
         }
         textPane.setText(errorsAsString);
     }
