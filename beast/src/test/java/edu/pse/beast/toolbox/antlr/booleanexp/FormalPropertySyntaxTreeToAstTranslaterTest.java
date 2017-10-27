@@ -48,8 +48,12 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
     @Test
     public void testCreateASTComparison() {
         FormalPropertySyntaxTreeToAstTranslator translater = new FormalPropertySyntaxTreeToAstTranslator();
-        InternalTypeContainer inputType = new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
-        InternalTypeContainer output = new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.CANDIDATE);  
+        InternalTypeContainer inputType =
+                new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE),
+                                          InternalTypeRep.VOTER);
+        InternalTypeContainer output =
+                new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE),
+                                          InternalTypeRep.CANDIDATE);
         
         BooleanExpScope declaredVar = new BooleanExpScope();
         declaredVar.addTypeForId("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));

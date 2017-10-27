@@ -7,12 +7,9 @@ package edu.pse.beast.CodeArea.InputToCode;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 
 import javax.swing.*;
-import javax.swing.text.BadLocationException;
 
-import static org.junit.Assert.assertEquals;
 /**
  *
  * @author Holger-Desktop
