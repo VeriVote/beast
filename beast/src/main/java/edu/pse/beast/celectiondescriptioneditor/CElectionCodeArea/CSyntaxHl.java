@@ -34,7 +34,8 @@ public class CSyntaxHl {
         ArrayList<RegexAndColor> regexAndColorList = new ArrayList<>();
         for (String s : antlrHandler.getTypeLiterals()) {
             String regexWithWhiteSpace = "(\\(|\\s|\\A)" + s + "(\\s|\\Z|\\))";
-            regexAndColorList.add(new RegexAndColor(regexWithWhiteSpace, Color.GREEN));
+            regexAndColorList.add(new RegexAndColor(regexWithWhiteSpace,
+                                                    new Color(75,0,130).brighter())); // BRIGHT INDIGO
         }
         for (String s : antlrHandler.getControllLiterals()) {
             String regexWithWhiteSpace = "(\\(|\\s|\\A)" + s + "(\\s|\\Z|\\))";

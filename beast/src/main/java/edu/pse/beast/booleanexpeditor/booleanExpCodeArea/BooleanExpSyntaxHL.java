@@ -32,7 +32,7 @@ public class BooleanExpSyntaxHL {
             regexAndColorList.add(new RegexAndColor(s, Color.BLUE));
         }
         regexAndColorList.add(new RegexAndColor("(ELECT[0-9]+\\([a-zA-Z_]*\\))|(VOTES[0-9]+\\([a-zA-Z_]*\\))",
-                Color.GREEN));
+                Color.GREEN.darker()));
 
         syntaxHL.updateFilter(regexAndColorList);
     }

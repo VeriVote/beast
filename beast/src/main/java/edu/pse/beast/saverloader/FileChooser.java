@@ -213,6 +213,7 @@ public class FileChooser {
         saveString = saverLoader.createSaveString(object);
         Writer out = null;
         boolean closed = false;
+        boolean success = true;
         try {
             out = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream(localfile), "UTF-8"));
@@ -225,6 +226,7 @@ public class FileChooser {
                     null,
                     options,
                     options[0]);
+            success = false;
             return false;
         } catch (FileNotFoundException e) {
             JOptionPane.showOptionDialog(null,
@@ -234,11 +236,14 @@ public class FileChooser {
                     null,
                     options,
                     options[0]);
+            success = false;
             return false;
         } finally {
             try {
-                out.close();
-                closed = true;
+                if (!success) {
+                    out.close();
+                    closed = true;
+                }
             } catch (IOException e) {
                 JOptionPane.showOptionDialog(null,
                         stringResourceLoader.getStringFromID(
