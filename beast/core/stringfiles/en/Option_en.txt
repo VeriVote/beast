@@ -3,8 +3,8 @@ lang_opts : Language options
 ok_button : Apply
 param : ParameterEditor 
 param_opts : ParameterEditor Options
-checker : available Checker
-delete_file : Keep created temp files
+checker : Selected Checker
+delete_file : Handle temporary Files
 keep_files : Keep
 not_keep_files : Delete
 de : German
@@ -14,6 +14,6 @@ ccodearea_opts : Code Options
 ceditor_opts : C-Editor Options
 fonttype: Font
 fontsize : Font Size
-spaces_per_tab : Amount Spaces Per Tab
+spaces_per_tab : Tab Size in Spaces
 booleanexpeditor_opts : Formal Properties Editor Options
 booleanexpcodearea_opts : Formal Properties Editor Code Options

@@ -35,7 +35,7 @@ public class BooleanExpEditorBuilder {
             "editorMenu",
             "codeMenu",
             "constantsMenu",
-            "makroMenu"
+            "macroMenu"
     };
 
     /**
@@ -124,9 +124,9 @@ public class BooleanExpEditorBuilder {
         UserAction save = createSavePropsUserAction(editor);
 
         fileList.add(createFromUserAction(newProps));
+        fileList.add(createFromUserAction(load));
         fileList.add(createFromUserAction(save));
         fileList.add(createFromUserAction(saveAs));
-        fileList.add(createFromUserAction(load));
 
 
         ArrayList<ActionIdAndListener> editList = new ArrayList<>();
@@ -213,17 +213,17 @@ public class BooleanExpEditorBuilder {
         created[0] = createFromUserAction(newProps);
         created[1] = createFromUserAction(undo);
         created[2] = createFromUserAction(redo);
-        created[3] = createFromUserAction(save);
-        created[4] = createFromUserAction(saveAs);
-        created[5] = createFromUserAction(load);
+        created[3] = createFromUserAction(load);
+        created[4] = createFromUserAction(save);
+        created[5] = createFromUserAction(saveAs);
         created[6] = createFromUserAction(copy);
         created[7] = createFromUserAction(cut);
         created[8] = createFromUserAction(paste);
         created[9] = createFromUserAction(showHelp);
 
         editor.addUserAction('n', newProps);
-        editor.addUserAction('s', save);
         editor.addUserAction('o', load);
+        editor.addUserAction('s', save);
         editor.addUserAction('c', copy);
         editor.addUserAction('x', cut);
         editor.addUserAction('v', paste);

@@ -86,9 +86,9 @@ public class CElectionDescriptionEditorBuilder {
         CElectionEditorMenubarHandler menuBarHandler = new CElectionEditorMenubarHandler(menuHeadingIds, window,
                 createActionIdAndListenerList(objRefsForBuilder, editor), objRefsForBuilder.getStringIF());
 
-        // toolbar: new save save_as load copy cut paste undo redo
-        ActionIdAndListener[] idAndListener = {createFromUserAction(newAcc), createFromUserAction(save),
-                createFromUserAction(saveAs), createFromUserAction(load), createFromUserAction(undo),
+        // toolbar: new load save save_as copy cut paste undo redo
+        ActionIdAndListener[] idAndListener = {createFromUserAction(newAcc), createFromUserAction(load),
+                createFromUserAction(save), createFromUserAction(saveAs), createFromUserAction(undo),
                 createFromUserAction(redo), createFromUserAction(copy), createFromUserAction(cut),
                 createFromUserAction(paste) };
 
@@ -123,9 +123,9 @@ public class CElectionDescriptionEditorBuilder {
         ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
 
         newAcc = createNewElectionUserAction(editor);
+        load = createLoadElectionUserAction(editor);
         saveAs = createSaveAsElectionUserAction(editor);
         save = createSaveElectionUserAction(editor);
-        load = createLoadElectionUserAction(editor);
         copy = createElectionCopyUserAction(editor);
         cut = createElectionCutUserAction(editor);
         paste = createElectionPasteUserAction(editor);
@@ -133,16 +133,16 @@ public class CElectionDescriptionEditorBuilder {
         redo = createElectionRedoUserAction(editor);
 
         editor.addUserAction('n', newAcc);
-        editor.addUserAction('s', save);
         editor.addUserAction('o', load);
+        editor.addUserAction('s', save);
         editor.addUserAction('c', copy);
         editor.addUserAction('x', cut);
         editor.addUserAction('v', paste);
 
         fileList.add(createFromUserAction(newAcc));
+        fileList.add(createFromUserAction(load));
         fileList.add(createFromUserAction(save));
         fileList.add(createFromUserAction(saveAs));
-        fileList.add(createFromUserAction(load));
 
         ArrayList<ActionIdAndListener> editList = new ArrayList<>();
         editList.add(createFromUserAction(copy));

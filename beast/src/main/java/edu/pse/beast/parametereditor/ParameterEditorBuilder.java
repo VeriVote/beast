@@ -106,9 +106,9 @@ public class ParameterEditorBuilder {
         UserAction showCElectionEditor = createShowCElectionEditorUserAction(cElectionDescriptionEditor.getView());
 
         ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
+        fileList.add(createFromUserAction(load));
         fileList.add(createFromUserAction(save));
         fileList.add(createFromUserAction(save_as));
-        fileList.add(createFromUserAction(load));
 
 
         ArrayList<ActionIdAndListener> projectList = new ArrayList<>();

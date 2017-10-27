@@ -71,14 +71,14 @@ public class PropertyListBuilder {
 
         UserAction newly = createNewPropertyList();
         UserAction undo = createUndoChangesPropertyList();
+        UserAction load = createLoadPropertyList();
         UserAction save = createSavePropertyList();
         UserAction saveAs = createSaveAsPropertyList();
-        UserAction load = createLoadPropertyList();
 
         fileList.add(createFromUserAction(newly));
+        fileList.add(createFromUserAction(load));
         fileList.add(createFromUserAction(save));
         fileList.add(createFromUserAction(saveAs));
-        fileList.add(createFromUserAction(load));
 
         ArrayList<ActionIdAndListener> editList = new ArrayList<>();
 

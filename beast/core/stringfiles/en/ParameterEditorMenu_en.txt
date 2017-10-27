@@ -1,8 +1,8 @@
 fileMenu : File
 new : New project
+load : Open
 save : Save
 save_as : Save as
-load : Open
 projectMenu : Project
 start : Start check
 stop : Stop check

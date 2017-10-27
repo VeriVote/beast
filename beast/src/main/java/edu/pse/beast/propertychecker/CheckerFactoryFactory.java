@@ -22,7 +22,7 @@ public final class CheckerFactoryFactory {
     private static void init() {
         if (!initialized) {
             // cbmc is always included, so we add it here
-            factories.put("cbmc", new CBMCProcessFactory(null, null, null, null, null));
+            factories.put("CBMC", new CBMCProcessFactory(null, null, null, null, null));
 
             // TODO search for other classes
 

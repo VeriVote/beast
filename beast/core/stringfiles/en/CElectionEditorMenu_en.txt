@@ -5,7 +5,7 @@ save_as : Save as
 load : Open
 edit : Edit
 undo : Undo
-redo : Redp
+redo : Redo
 copy : Copy
 cut : Cut
 paste : Paste

@@ -11,7 +11,7 @@ cut : Cut
 paste : Paste
 editorMenu : Editor
 options : Options
-makroMenu : Makros
+makroMenu : Macros
 forAllVoters : FOR_ALL_VOTERS()
 forAllCandidates : FOR_ALL_CANDIDATES()
 forAllSeats : FOR_ALL_SEATS()

@@ -83,9 +83,9 @@ public class ElectionSimulationWindow extends JFrame {
 		
 		//these buttons will end up in the toolbar
 		newButton = new JButton("new");
+		loadDataButton = new JButton("load");
 		saveButton = new JButton("save");
 		saveAsButton = new JButton("saveAs");
-		loadDataButton = new JButton("load");
 		undoButton = new JButton("undo");
 		redoButton = new JButton("redo");
 		
@@ -121,18 +121,18 @@ public class ElectionSimulationWindow extends JFrame {
 
 		
 		newButton.setSize(model.getButtonWidth(), model.getButtonHeight());
+		loadDataButton.setSize(model.getButtonWidth(), model.getButtonHeight());
 		saveButton.setSize(model.getButtonWidth(), model.getButtonHeight());
 		saveAsButton.setSize(model.getButtonWidth(), model.getButtonHeight());
-		loadDataButton.setSize(model.getButtonWidth(), model.getButtonHeight());
 		undoButton.setSize(model.getButtonWidth(), model.getButtonHeight());
 		redoButton.setSize(model.getButtonWidth(), model.getButtonHeight());
 		startStopButton.setSize(model.getButtonWidth(), model.getButtonHeight());
 		
 		
 		toolBar.add(newButton);
+		toolBar.add(loadDataButton);
 		toolBar.add(saveButton);
 		toolBar.add(saveAsButton);
-		toolBar.add(loadDataButton);
 		toolBar.add(undoButton);
 		toolBar.add(redoButton);
 		toolBar.add(startStopButton);
@@ -179,28 +179,27 @@ public class ElectionSimulationWindow extends JFrame {
 			}
 		});
 
+		loadDataButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                controller.loadData();
+            }
+        });
+
 		saveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				controller.save();
 			}
 		});
-		
+
 		saveAsButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				controller.saveAs();
 			}
 		});
-		
-		loadDataButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				controller.loadData();
-			}
-			
-		});
-		
+
 		undoButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -208,7 +207,7 @@ public class ElectionSimulationWindow extends JFrame {
 			}
 			
 		});
-		
+
 		redoButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -216,7 +215,7 @@ public class ElectionSimulationWindow extends JFrame {
 			}
 			
 		});
-		
+
 		startStopButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -224,8 +223,8 @@ public class ElectionSimulationWindow extends JFrame {
 			}
 			
 		});
-		
-		
+
+
 		this.addMouseWheelListener(controller);
 
 		horizontalScroll.addAdjustmentListener(controller);

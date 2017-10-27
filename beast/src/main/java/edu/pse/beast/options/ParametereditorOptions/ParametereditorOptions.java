@@ -40,7 +40,8 @@ public class ParametereditorOptions extends Options {
         this.subOptions.add(langOpts);
         this.editor = editor;
         this.centralObjectProvider = centralObjectProvider;
-        this.checkerOptElem = new CheckerOptionElement(CheckerFactoryFactory.getAvailableCheckerIDs(), "cbmc");
+        this.checkerOptElem =
+                new CheckerOptionElement(CheckerFactoryFactory.getAvailableCheckerIDs(), "CBMC");
         this.optElements.add(checkerOptElem);
         this.deleteElem = new DeleteCFilesElement(java.util.Arrays.asList("not_keep_files", "keep_files"),
                 "keep_files");

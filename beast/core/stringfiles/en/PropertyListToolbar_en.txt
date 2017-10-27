@@ -1,8 +1,8 @@
 addNew : New
 new : Edit new election description
+load : Open
 save : Save
 save_as : Save as
-load : Open
 undo : Undo last action
 redo : Redo last action
 copy : Copy
