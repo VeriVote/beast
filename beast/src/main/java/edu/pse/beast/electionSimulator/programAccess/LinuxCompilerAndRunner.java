@@ -1,8 +1,5 @@
 package edu.pse.beast.electionSimulator.programAccess;
 
-import edu.pse.beast.codearea.ErrorHandling.CodeError;
-
-import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 

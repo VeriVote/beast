@@ -10,6 +10,7 @@ import edu.pse.beast.stringresource.StringResourceLoader;
  */
 public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
 
+    private static final long serialVersionUID = 1L;
     /**
      * Creates new form VersionWindow
      */

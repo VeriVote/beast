@@ -17,6 +17,8 @@ import javax.swing.*;
 public class CCodeEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
 
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Update the language dependent displayed Strings in this class.
      * @param stringLoaderInterface the new stringLoaderInterface

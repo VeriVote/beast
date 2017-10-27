@@ -19,6 +19,7 @@ import java.util.ArrayList;
  */
 public class ElectionTemplateChooser extends javax.swing.JFrame {
 
+    private static final long serialVersionUID = 1L;
     private ArrayList<ElectionTypeContainer.ElectionInputTypeIds> inputIds = new ArrayList<>();
     private ArrayList<ElectionTypeContainer.ElectionOutputTypeIds> resIds = new ArrayList<>();
     

@@ -37,7 +37,7 @@ public class OpenCloseCharHighlighter implements CaretListener {
         this.charList = charList;
         this.pane = pane;pane.addCaretListener(this);
         highlighter = (DefaultHighlighter) pane.getHighlighter();
-        hPainter = new DefaultHighlighter.DefaultHighlightPainter(Color.RED);
+        hPainter = new DefaultHighlighter.DefaultHighlightPainter(Color.LIGHT_GRAY);
     }
 
     @Override

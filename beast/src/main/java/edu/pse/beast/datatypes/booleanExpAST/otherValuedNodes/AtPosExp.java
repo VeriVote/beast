@@ -4,7 +4,6 @@ import edu.pse.beast.datatypes.booleanExpAST.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.IntegerValuedExpression;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 
-import java.net.Inet6Address;
 
 /**
  * Created by holger on 09.03.17.

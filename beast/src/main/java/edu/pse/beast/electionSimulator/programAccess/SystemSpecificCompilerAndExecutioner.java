@@ -1,7 +1,5 @@
 package edu.pse.beast.electionSimulator.programAccess;
 
-import edu.pse.beast.codearea.ErrorHandling.CodeError;
-
 import edu.pse.beast.toolbox.*;
 
 import java.io.BufferedReader;
@@ -125,8 +123,8 @@ public abstract class SystemSpecificCompilerAndExecutioner {
 				}
 				
 				
-				for (Iterator iterator = errors.iterator(); iterator.hasNext();) {
-                    String error = (String) iterator.next();
+				for (Iterator<String> iterator = errors.iterator(); iterator.hasNext();) {
+                    String error = iterator.next();
                     System.out.println(error);
                 }
 				

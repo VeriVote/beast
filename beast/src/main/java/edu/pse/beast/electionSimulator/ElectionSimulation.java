@@ -12,15 +12,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.JTextField;
 
-import com.google.common.cache.Weigher;
-
-import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
-import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer.ElectionOutputTypeIds;
@@ -29,15 +23,7 @@ import edu.pse.beast.electionSimulator.Model.RowOfValues;
 import edu.pse.beast.electionSimulator.View.ElectionSimulationWindow;
 import edu.pse.beast.electionSimulator.programAccess.CompilerAndExecutioner;
 import edu.pse.beast.highlevel.BEASTCommunicator;
-import edu.pse.beast.highlevel.CentralObjectProvider;
-import edu.pse.beast.highlevel.CheckStatusDisplay;
-import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.PSECentralObjectProvider;
-import edu.pse.beast.highlevel.ParameterSource;
-import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
-import edu.pse.beast.highlevel.ResultInterface;
-import edu.pse.beast.highlevel.ResultPresenter;
-import edu.pse.beast.propertychecker.PropertyChecker;
 import edu.pse.beast.propertychecker.UnprocessedCBMCResult;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ErrorForUserDisplayer;
@@ -386,7 +372,8 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 
                                 String tmpAcc = "";
 
-                                for (Iterator iterator = winnerResults.iterator(); iterator.hasNext();) {
+                                for (Iterator<Integer> iterator = winnerResults.iterator();
+                                        iterator.hasNext();) {
                                     Integer integer = (Integer) iterator.next();
                                     tmpAcc = integer + ", " + tmpAcc;
                                 }

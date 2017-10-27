@@ -1,7 +1,6 @@
 package edu.pse.beast.parametereditor;
 
 import javax.swing.JSpinner;
-import javax.swing.event.ChangeEvent;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

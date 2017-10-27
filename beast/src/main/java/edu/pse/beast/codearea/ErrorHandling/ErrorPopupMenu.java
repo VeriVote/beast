@@ -15,6 +15,7 @@ import java.awt.event.KeyListener;
  * @author Holger-Desktop
  */
 public class ErrorPopupMenu extends JPopupMenu implements KeyListener {
+    private static final long serialVersionUID = 1L;
     private JMenuItem errorItem;
     private JTextPane pane;
 

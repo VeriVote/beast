@@ -16,6 +16,7 @@ import javax.swing.*;
  * @author Nikolai
  */
 public class BooleanExpEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
+    private static final long serialVersionUID = 1L;
     // Variables declaration - do not modify
     private javax.swing.JButton addSymVarButton;
     private javax.swing.JButton removeSymVarButton;

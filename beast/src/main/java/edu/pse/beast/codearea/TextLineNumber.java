@@ -37,7 +37,8 @@ import java.util.HashMap;
 public class TextLineNumber extends JPanel
 	implements CaretListener, DocumentListener, PropertyChangeListener
 {
-	public final static float LEFT = 0.0f;
+	private static final long serialVersionUID = 1L;
+    public final static float LEFT = 0.0f;
 	public final static float CENTER = 0.5f;
 	public final static float RIGHT = 1.0f;
 
@@ -54,6 +55,7 @@ public class TextLineNumber extends JPanel
 	private boolean updateFont;
 	private int borderGap;
 	private Color currentLineForeground;
+	private int currentLineStyle;
 	private float digitAlignment;
 	private int minimumDisplayDigits;
 
@@ -91,7 +93,8 @@ public class TextLineNumber extends JPanel
 		setFont( component.getFont() );
 
 		setBorderGap( 5 );
-		setCurrentLineForeground( Color.RED );
+		//setCurrentLineForeground( Color.RED );
+		setCurrentLineStyle( Font.BOLD );
 		setDigitAlignment( RIGHT );
 		setMinimumDisplayDigits( minimumDisplayDigits );
 
@@ -167,6 +170,38 @@ public class TextLineNumber extends JPanel
 	{
 		this.currentLineForeground = currentLineForeground;
 	}
+
+	/**
+     *  The style used to render the current line digits. Default style is Font.BOLD.
+     *
+     *  @param style  the style used to render the current line
+     */
+    public void setCurrentLineStyle(int style)
+    {
+        this.currentLineStyle = style;
+    }
+
+    /**
+     *  Gets the default plain line rendering Style
+     *
+     *  @return the Style used to render the default line number
+     */
+    public Font getDefaultLineStyle()
+    {
+        final Font f = getFont();
+        return new Font(f.getFontName(), Font.PLAIN, f.getSize());
+    }
+
+    /**
+     *  Gets the current line rendering Style
+     *
+     *  @return the Style used to render the current line number
+     */
+    public Font getCurrentLineStyle()
+    {
+        final Font f = getFont();
+        return new Font(f.getFontName(), currentLineStyle, f.getSize());
+    }
 
 	/**
 	 *  Gets the digit alignment
@@ -267,10 +302,13 @@ public class TextLineNumber extends JPanel
 		{
 			try
             {
-    			if (isCurrentLine(rowStartOffset))
+    			if (isCurrentLine(rowStartOffset)) {
     				g.setColor( getCurrentLineForeground() );
-    			else
+    				g.setFont( getCurrentLineStyle() );
+    			} else {
     				g.setColor( getForeground() );
+    				g.setFont( getDefaultLineStyle() );
+    			}
 
     			//  Get the line number as a string and then determine the
     			//  "X" and "Y" offsets for drawing the string.

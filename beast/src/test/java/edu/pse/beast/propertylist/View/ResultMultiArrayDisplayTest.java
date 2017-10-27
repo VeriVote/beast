@@ -1,14 +1,6 @@
 package edu.pse.beast.propertylist.View;
 
-import edu.pse.beast.datatypes.FailureExample;
-import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
-import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
-import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import org.junit.*;
-
-import javax.swing.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Shows a failure example where there is a list of votings and multiple seats are allocated.

@@ -2,7 +2,6 @@ package edu.pse.beast.electionSimulator.Model;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;

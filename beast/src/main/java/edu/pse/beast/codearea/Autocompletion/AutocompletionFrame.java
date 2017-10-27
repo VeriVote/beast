@@ -14,6 +14,8 @@ import java.awt.event.KeyEvent;
  */
 public class AutocompletionFrame extends javax.swing.JFrame {
 
+    private static final long serialVersionUID = 1L;
+
     /**
      * Creates new form AutocompletionFrame
      */

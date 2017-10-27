@@ -11,7 +11,6 @@ import edu.pse.beast.propertylist.PropertyList;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.security.Key;
 
 /**
  * Created by holger on 07.03.17.

@@ -35,8 +35,8 @@ public class CodeAreaBuilder {
      * errorcontroller
      * @return The created codearea object
      */
-    public CodeArea createCodeArea(JTextPane codeArea, JScrollPane codeAreaScroll, ObjectRefsForBuilder refs,
-            ErrorDisplayer errorDisplayer) {
+    public CodeArea createCodeArea(JTextPane codeArea, JScrollPane codeAreaScroll,
+                                   ObjectRefsForBuilder refs, ErrorDisplayer errorDisplayer) {
         //simply create all necessary objects        
         OpenCloseCharList occL = new OpenCloseCharList();
 
@@ -50,7 +50,8 @@ public class CodeAreaBuilder {
 
         CodeInputHandler codeInputHandler = new CodeInputHandler(insertToCode);
 
-        UserInputHandler userInputHandler = new UserInputHandler(codeArea, codeInputHandler, shortcutHandler);
+        UserInputHandler userInputHandler =
+                new UserInputHandler(codeArea, codeInputHandler, shortcutHandler);
 
         TextLineNumber tln = new TextLineNumber(codeArea);
         codeAreaScroll.setRowHeaderView(tln);
@@ -61,12 +62,14 @@ public class CodeAreaBuilder {
 
         AutocompletionController autocompletion = new AutocompletionController(codeArea, insertToCode);
 
-        TextChangedActionAdder actionAdder = new TextChangedActionAdder(codeArea, actionList, textBeforeRemove);
+        TextChangedActionAdder actionAdder =
+                new TextChangedActionAdder(codeArea, actionList, textBeforeRemove);
 
         SyntaxHL syntaxHL = new SyntaxHL(codeArea);
 
-        CodeArea created = new CodeArea(codeArea, tln, userInputHandler, insertToCode, actionList, error,
-                autocompletion, syntaxHL, stoppedTypingContinuouslyMessager);
+        CodeArea created =
+                new CodeArea(codeArea, tln, userInputHandler, insertToCode, actionList, error,
+                             autocompletion, syntaxHL, stoppedTypingContinuouslyMessager);
         CodeAreaUserActions userActions = new CodeAreaUserActions(created);
         created.setUserActionList(userActions);
 

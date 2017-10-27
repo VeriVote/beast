@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
     private JTextPane pane;
     private String prevText;
-    private Actionlist actionlist;
+    // private Actionlist actionlist;
     
     /**
      * @param pane The JTextPane of whose StyledDocument the text should be saved
@@ -39,7 +39,7 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
     public SaveTextBeforeRemove(JTextPane pane, Actionlist actionlist) {
         this.pane = pane;
         pane.addKeyListener(this);
-        this.actionlist = actionlist;
+        // this.actionlist = actionlist;
         actionlist.addActionlistListener(this);
         try {
             prevText = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());

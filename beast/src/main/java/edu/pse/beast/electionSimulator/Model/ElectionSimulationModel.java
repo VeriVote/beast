@@ -5,8 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 
-import javax.swing.JButton;
-import javax.swing.JScrollBar;
 import javax.swing.JTextField;
 
 import edu.pse.beast.datatypes.NameInterface;
@@ -83,8 +81,8 @@ public class ElectionSimulationModel extends Observable implements NameInterface
 	
 	public void changeContainer(ElectionTypeContainer container) {
 		this.container = container;
-		for (Iterator iterator = rows.iterator(); iterator.hasNext();) {
-			RowOfValues currentRow = (RowOfValues) iterator.next();
+		for (Iterator<RowOfValues> iterator = rows.iterator(); iterator.hasNext();) {
+			RowOfValues currentRow = iterator.next();
 			currentRow.setContainer(container);
 		}
 	}

@@ -45,10 +45,10 @@ public class StoppedTypingContinuouslyMessager implements KeyListener, CaretList
 
     @Override
     public void keyTyped(KeyEvent ke) {
-        if (ke.getKeyCode() == ke.VK_ENTER
-                || ke.getKeyCode() == ke.VK_RIGHT) {
+        if (ke.getKeyCode() == KeyEvent.VK_ENTER
+                || ke.getKeyCode() == KeyEvent.VK_RIGHT) {
             msgAllListener(pane.getCaretPosition() + 1);
-        } else if (ke.getKeyCode() == ke.VK_DELETE) {
+        } else if (ke.getKeyCode() == KeyEvent.VK_DELETE) {
             msgAllListener(pane.getCaretPosition());
         }
     }

@@ -1,7 +1,5 @@
 package edu.pse.beast.electionSimulator.programAccess;
 
-import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.SystemSpecificErrorChecker;
-import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.propertychecker.OperatingSystems;
 import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;

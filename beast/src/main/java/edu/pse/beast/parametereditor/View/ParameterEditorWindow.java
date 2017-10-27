@@ -17,8 +17,10 @@ import java.awt.*;
  *
  * @author Jonas
  */
-public class ParameterEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser, CheckStatusDisplay {
+public class ParameterEditorWindow extends javax.swing.JFrame
+        implements DisplaysStringsToUser, CheckStatusDisplay {
 
+    private static final long serialVersionUID = 1L;
     private final AdvancedWindow advWindow = new AdvancedWindow();
     private final AboutWindow versionWindow = new AboutWindow();
     private boolean reacts;

@@ -9,6 +9,7 @@ import edu.pse.beast.stringresource.StringResourceLoader;
  * @author Jonas
  */
 public class AdvancedWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
+    private static final long serialVersionUID = 1L;
     private String textAfterLastOK = "";
     private boolean reacts;
 

@@ -2,14 +2,9 @@ package edu.pse.beast.SaverLoader;
 
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
-import edu.pse.beast.saverloader.StaticSaverLoaders.SaverLoaderHelper;
-import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;

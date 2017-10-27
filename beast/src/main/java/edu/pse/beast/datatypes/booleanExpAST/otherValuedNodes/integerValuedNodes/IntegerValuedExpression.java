@@ -5,7 +5,6 @@
  */
 package edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes;
 
-import edu.pse.beast.datatypes.booleanExpAST.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.TypeExpression;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;

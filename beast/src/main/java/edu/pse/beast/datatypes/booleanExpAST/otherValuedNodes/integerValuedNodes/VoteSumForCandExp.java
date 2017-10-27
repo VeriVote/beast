@@ -2,7 +2,6 @@ package edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNode
 
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.TypeExpression;
-import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 
 /**
  *

@@ -2,8 +2,6 @@ package edu.pse.beast.propertychecker;
 
 import static org.junit.Assert.*;
 
-import java.awt.AWTException;
-import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,16 +12,11 @@ import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import edu.pse.beast.Gui.GuiTestHelper;
-import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.datatypes.Project;
-import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.parametereditor.ParameterEditor;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.propertylist.Model.PropertyItem;

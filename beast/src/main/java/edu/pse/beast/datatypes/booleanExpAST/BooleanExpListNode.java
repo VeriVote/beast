@@ -2,7 +2,6 @@ package edu.pse.beast.datatypes.booleanExpAST;
 
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BooleanExpressionNode;
 
-import javax.print.DocFlavor;
 import java.util.ArrayList;
 /**
  * 

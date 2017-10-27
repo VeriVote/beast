@@ -1,9 +1,5 @@
 package edu.pse.beast.highlevel;
 
-import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
-import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer.ElectionInputTypeIds;
-import edu.pse.beast.electionSimulator.ElectionSimulation;
-
 /**
  * The MainClass creates an CentralObjectProvider which creates all other parts
  * of the program and with it a BEASTCommunicator which coordinates them.
