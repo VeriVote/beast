@@ -26,7 +26,8 @@ public abstract class ToolbarHandler {
     private final int buttonHeight = 32;
 
     private class ActionIdListenerSorter implements Comparator<ActionIdAndListener> {
-        private String[] standardIdOrder = {"new", "save", "save_as", "load", "undo", "redo", "copy", "cut", "paste"};
+        private String[] standardIdOrder =
+            {"new", "load", "save", "save_as", "undo", "redo", "cut", "copy", "paste"};
         @Override
         public int compare(ActionIdAndListener lhs, ActionIdAndListener rhs) {
             Integer lhsPos = findInarr(lhs.getId());
@@ -43,14 +44,14 @@ public abstract class ToolbarHandler {
     }
     
     public ToolbarHandler(
-            ImageResourceProvider imageRes,
+            ImageResourceProvider imRes,
             StringResourceLoader stringRes,
             ActionIdAndListener[] actionIdsAndListener,
             JToolBar toolbar) {
         Arrays.sort(actionIdsAndListener, new ActionIdListenerSorter());
         this.stringRes = stringRes;
         this.actionIdsAndListener = actionIdsAndListener;
-        this.imageRes = imageRes;
+        this.imageRes = imRes;
         this.buttons = new JButton[actionIdsAndListener.length];
         this.toolbar = toolbar;
         

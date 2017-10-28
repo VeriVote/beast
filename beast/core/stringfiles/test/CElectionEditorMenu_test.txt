@@ -6,8 +6,8 @@ load : Öffnen
 edit : Bearbeiten
 undo : Rückgängig
 redo : Wiederholen
-copy : Kopieren
 cut : Ausschneiden
+copy : Kopieren
 paste : Einfügen
 editor : Editor
 options : Eigenschaften

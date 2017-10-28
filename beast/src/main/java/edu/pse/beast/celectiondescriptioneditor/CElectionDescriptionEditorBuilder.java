@@ -36,16 +36,16 @@ public class CElectionDescriptionEditorBuilder {
     private final String[] menuHeadingIds = {"file", "edit", "editor", "code" };
     private CElectionCodeAreaBuilder codeAreaBuilder;
     private UserAction newAcc;
+    private UserAction load;
     private UserAction save;
     private UserAction saveAs;
-    private UserAction load;
     private UserAction options;
     private UserAction staticErrorFinding;
     private UserAction undo;
     private UserAction redo;
-    private UserAction paste;
-    private UserAction copy;
     private UserAction cut;
+    private UserAction copy;
+    private UserAction paste;
 
     /**
      * creates a CElectionDescriptionEditor object and returns it
@@ -89,7 +89,7 @@ public class CElectionDescriptionEditorBuilder {
         // toolbar: new load save save_as copy cut paste undo redo
         ActionIdAndListener[] idAndListener = {createFromUserAction(newAcc), createFromUserAction(load),
                 createFromUserAction(save), createFromUserAction(saveAs), createFromUserAction(undo),
-                createFromUserAction(redo), createFromUserAction(copy), createFromUserAction(cut),
+                createFromUserAction(redo), createFromUserAction(cut), createFromUserAction(copy),
                 createFromUserAction(paste) };
 
         ImageResourceProvider imageRes = ImageResourceProvider.getToolbarImages();
@@ -126,17 +126,17 @@ public class CElectionDescriptionEditorBuilder {
         load = createLoadElectionUserAction(editor);
         saveAs = createSaveAsElectionUserAction(editor);
         save = createSaveElectionUserAction(editor);
-        copy = createElectionCopyUserAction(editor);
-        cut = createElectionCutUserAction(editor);
-        paste = createElectionPasteUserAction(editor);
         undo = createElectionUndoUserAction(editor);
         redo = createElectionRedoUserAction(editor);
+        cut = createElectionCutUserAction(editor);
+        copy = createElectionCopyUserAction(editor);
+        paste = createElectionPasteUserAction(editor);
 
         editor.addUserAction('n', newAcc);
         editor.addUserAction('o', load);
         editor.addUserAction('s', save);
-        editor.addUserAction('c', copy);
         editor.addUserAction('x', cut);
+        editor.addUserAction('c', copy);
         editor.addUserAction('v', paste);
 
         fileList.add(createFromUserAction(newAcc));
@@ -145,11 +145,11 @@ public class CElectionDescriptionEditorBuilder {
         fileList.add(createFromUserAction(saveAs));
 
         ArrayList<ActionIdAndListener> editList = new ArrayList<>();
-        editList.add(createFromUserAction(copy));
-        editList.add(createFromUserAction(cut));
-        editList.add(createFromUserAction(paste));
         editList.add(createFromUserAction(undo));
         editList.add(createFromUserAction(redo));
+        editList.add(createFromUserAction(cut));
+        editList.add(createFromUserAction(copy));
+        editList.add(createFromUserAction(paste));
 
         ArrayList<ActionIdAndListener> editorList = new ArrayList<>();
         options = createPresentOptionsUserAction(objRefsForBuilder, editor);

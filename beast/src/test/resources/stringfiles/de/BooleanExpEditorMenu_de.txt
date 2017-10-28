@@ -6,12 +6,15 @@ save_as : Speichern unter
 editMenu : Bearbeiten
 undo : Rückgängig
 redo : Wiederholen
-copy : Kopieren
 cut : Ausschneiden
+copy : Kopieren
 paste : Einfügen
 editorMenu : Editor
 options : Einstellungen
 macroMenu : Makros
+voterAtPos : VOTER_AT_POS()
+candAtPos : CAND_AT_POS()
+seatAtPos : SEAT_AT_POS()
 forAllVoters : FOR_ALL_VOTERS()
 forAllCandidates : FOR_ALL_CANDIDATES()
 forAllSeats : FOR_ALL_SEATS()

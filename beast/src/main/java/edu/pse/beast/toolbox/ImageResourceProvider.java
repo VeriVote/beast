@@ -18,9 +18,9 @@ public class ImageResourceProvider {
     private static ImageResourceProvider toolbar;
     public static ImageResourceProvider getToolbarImages() {
         if(toolbar == null) {
-            String[] ids = {"new", "save", "save_as", 
-                "load", "copy", "cut", "paste", "undo", "redo",
-            "start", "stop", "showHelpToUser"};
+            String[] ids = {"new", "load", "save", "save_as",
+                    "undo", "redo", "cut", "copy", "paste",
+                    "start", "stop", "showHelpToUser"};
             toolbar =
                     new ImageResourceProvider("/core/images/toolbar/",
                     ids);
@@ -35,9 +35,10 @@ public class ImageResourceProvider {
     public ImageResourceProvider(String folder, String[] ids) {
         this.folder = folder;
         this.ids = ids;
-        for(String s : ids) {
+        for(String s : this.ids) {
             
-            File toRead = new File(SuperFolderFinder.getSuperFolder() + folder + s + ".png");
+            File toRead =
+                    new File(SuperFolderFinder.getSuperFolder() + this.folder + s + ".png");
             
     //        String location = folder + s + ".png";
             Image img = null;

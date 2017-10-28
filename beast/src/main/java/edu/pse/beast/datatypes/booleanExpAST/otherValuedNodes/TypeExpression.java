@@ -14,7 +14,7 @@ public abstract class TypeExpression extends BooleanExpressionNode {
 
     /**
      *
-     * @param container the type of this quantor
+     * @param container the type of this quantifier
      */
     public TypeExpression(InternalTypeContainer container) {
         this.container = container;
@@ -22,7 +22,7 @@ public abstract class TypeExpression extends BooleanExpressionNode {
 
     /**
      *
-     * @return the type of this quantor
+     * @return the type of this quantifier
      */
     public InternalTypeContainer getInternalTypeContainer() {
         return container;
@@ -38,4 +38,8 @@ public abstract class TypeExpression extends BooleanExpressionNode {
         return container != null ? container.equals(that.container) : that.container == null;
     }
 
+    @Override
+    public int hashCode() {
+        return 31 + (container != null ? container.hashCode() : 0);
+    }
 }

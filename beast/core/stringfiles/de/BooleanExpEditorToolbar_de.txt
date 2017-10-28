@@ -4,7 +4,7 @@ save : Speichern
 save_as : Speichern unter
 undo : Rückgängig
 redo : Wiederholen
-copy : Kopieren
 cut : Ausschneiden
+copy : Kopieren
 paste : Einfügen
 showHelpToUser : Hilfe für Sprache anzeigen

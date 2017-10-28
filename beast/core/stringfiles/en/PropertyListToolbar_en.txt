@@ -5,6 +5,6 @@ save : Save
 save_as : Save as
 undo : Undo last action
 redo : Redo last action
-copy : Copy
 cut : Cut
+copy : Copy
 paste : Paste

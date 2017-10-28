@@ -6,12 +6,15 @@ save_as : Save as
 editMenu : Edit
 undo : Undo
 redo : Redo
-copy : Copy
 cut : Cut
+copy : Copy
 paste : Paste
 editorMenu : Editor
 options : Options
 macroMenu : Macros
+voterAtPos : VOTER_AT_POS()
+candAtPos : CAND_AT_POS()
+seatAtPos : SEAT_AT_POS()
 forAllVoters : FOR_ALL_VOTERS()
 forAllCandidates : FOR_ALL_CANDIDATES()
 forAllSeats : FOR_ALL_SEATS()

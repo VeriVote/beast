@@ -132,14 +132,14 @@ public class BooleanExpEditorBuilder {
         ArrayList<ActionIdAndListener> editList = new ArrayList<>();
         UserAction undo = createUndoUserAction(editor);
         UserAction redo = createRedoUserAction(editor);
-        UserAction copy = createCopyUserAction(editor);
         UserAction cut = createCutUserAction(editor);
+        UserAction copy = createCopyUserAction(editor);
         UserAction paste = createPasteUserAction(editor);
         
         editList.add(createFromUserAction(undo));
         editList.add(createFromUserAction(redo));
-        editList.add(createFromUserAction(copy));
         editList.add(createFromUserAction(cut));
+        editList.add(createFromUserAction(copy));
         editList.add(createFromUserAction(paste));
 
         ArrayList<ActionIdAndListener> editorList = new ArrayList<>();
@@ -147,17 +147,32 @@ public class BooleanExpEditorBuilder {
         editorList.add(createFromUserAction(presentOptions));
 
         ArrayList<ActionIdAndListener> makroList = new ArrayList<>();
-        UserAction forAllVotersMakro = createMakroUserAction("forAllVoters", "FOR_ALL_VOTERS()", editor);
-        UserAction forAllCandidatesMakro = createMakroUserAction("forAllCandidates", "FOR_ALL_CANDIDATES()",
+
+        UserAction voterAtPosMakro =
+                createMakroUserAction("voterAtPos", "VOTER_AT_POS()", editor);
+        UserAction candAtPosMakro =
+                createMakroUserAction("candAtPos", "CAND_AT_POS()", editor);
+        UserAction seatAtPosMakro =
+                createMakroUserAction("seatAtPos", "SEAT_AT_POS()", editor);
+        UserAction forAllVotersMakro =
+                createMakroUserAction("forAllVoters", "FOR_ALL_VOTERS()", editor);
+        UserAction forAllCandidatesMakro =
+                createMakroUserAction("forAllCandidates", "FOR_ALL_CANDIDATES()",
                 editor);
-        UserAction forAllSeatsMakro = createMakroUserAction("forAllSeats", "FOR_ALL_SEATS()", editor);
-        UserAction existsOneVoterMakro = createMakroUserAction("existsOneVoter", "EXISTS_ONE_VOTER()",
+        UserAction forAllSeatsMakro =
+                createMakroUserAction("forAllSeats", "FOR_ALL_SEATS()", editor);
+        UserAction existsOneVoterMakro =
+                createMakroUserAction("existsOneVoter", "EXISTS_ONE_VOTER()",
                 editor);
-        UserAction existsOneCandidateMakro = createMakroUserAction("existsOneCandidate",
-                "EXISTS_ONE_CANDIDATE()", editor);
-        UserAction existsOneSeatMakro = createMakroUserAction("existsOneSeat", "EXISTS_ONE_SEAT()", editor);
-        UserAction sumVotesForCandidateMakro =  createMakroUserAction("voteSumForCandidate",
-                "VOTE_SUM_FOR_CANDIDATE()", editor);
+        UserAction existsOneCandidateMakro =
+                createMakroUserAction("existsOneCandidate", "EXISTS_ONE_CANDIDATE()", editor);
+        UserAction existsOneSeatMakro =
+                createMakroUserAction("existsOneSeat", "EXISTS_ONE_SEAT()", editor);
+        UserAction sumVotesForCandidateMakro =
+                createMakroUserAction("voteSumForCandidate", "VOTE_SUM_FOR_CANDIDATE()", editor);
+        makroList.add(createFromUserAction(voterAtPosMakro));
+        makroList.add(createFromUserAction(candAtPosMakro));
+        makroList.add(createFromUserAction(seatAtPosMakro));
         makroList.add(createFromUserAction(forAllVotersMakro));
         makroList.add(createFromUserAction(forAllCandidatesMakro));
         makroList.add(createFromUserAction(forAllSeatsMakro));
@@ -224,8 +239,8 @@ public class BooleanExpEditorBuilder {
         editor.addUserAction('n', newProps);
         editor.addUserAction('o', load);
         editor.addUserAction('s', save);
-        editor.addUserAction('c', copy);
         editor.addUserAction('x', cut);
+        editor.addUserAction('c', copy);
         editor.addUserAction('v', paste);
         return created;
     }

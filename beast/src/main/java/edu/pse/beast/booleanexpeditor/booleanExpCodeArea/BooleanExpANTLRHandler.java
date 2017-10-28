@@ -70,7 +70,8 @@ public class BooleanExpANTLRHandler {
      */
     public String[] getMakroRegex() {
         return new String[]
-                {"FOR_ALL_VOTERS\\([a-zA-Z_]*\\)", "FOR_ALL_CANDIDATES\\([a-zA-Z_]*\\)",
+                { "VOTER_AT_POS\\([0-9]+\\)", "CAND_AT_POS\\([0-9]+\\)", "SEAT_AT_POS\\([0-9]+\\)",
+                        "FOR_ALL_VOTERS\\([a-zA-Z_]*\\)", "FOR_ALL_CANDIDATES\\([a-zA-Z_]*\\)",
                         "FOR_ALL_SEATS\\([a-zA-Z_]*\\)", "EXISTS_ONE_VOTER\\([a-zA-Z_]*\\)",
                         "EXISTS_ONE_CANDIDATE\\([a-zA-Z_]*\\)", "EXISTS_ONE_SEAT\\([a-zA-Z_]*\\)",
                         "VOTE_SUM_FOR_CANDIDATE[0-9]+\\([a-zA-Z_]*\\)"};

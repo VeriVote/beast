@@ -102,4 +102,25 @@ public class InternalTypeContainer {
         return lvl;
     }
 
+    @Override
+    public int hashCode() {
+        int result = 31 + (accesTypeIfList != null ? accesTypeIfList.hashCode() : 0);
+        result = 31 * result + ((internalType != null) ? internalType.hashCode() : 0);
+        result = 31 * result + (isList ? 1231 : 1237);
+        result = 31 * result + (listedType != null ? listedType.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+
+        InternalTypeContainer other = (InternalTypeContainer) obj;
+
+        if (accesTypeIfList != other.accesTypeIfList) return false;
+        if (internalType != other.internalType) return false;
+        if (isList != other.isList) return false;
+        return listedType != null ? listedType.equals(other.listedType) : other.listedType == null;
+    }
 }
