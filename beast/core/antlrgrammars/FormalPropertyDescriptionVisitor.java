@@ -1,4 +1,4 @@
-// Generated from FormalPropertyDescription.g4 by ANTLR 4.5.1
+// Generated from FormalPropertyDescription.g4 by ANTLR 4.5.2
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -123,6 +123,12 @@ public interface FormalPropertyDescriptionVisitor<T> extends ParseTreeVisitor<T>
 	 * @return the visitor result
 	 */
 	T visitVoteSumExp(FormalPropertyDescriptionParser.VoteSumExpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#voteSumUniqueExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVoteSumUniqueExp(FormalPropertyDescriptionParser.VoteSumUniqueExpContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#passSymbVar}.
 	 * @param ctx the parse tree

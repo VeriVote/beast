@@ -398,9 +398,12 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     }
 
     @Override
-    public void visitVoteSumExp(VoteSumForCandExp exp) {
+    public void visitVoteSumExp(VoteSumForCandExp exp, boolean unique) {
         exp.getAccesingVariable().getVisited(this);
-        String funcCallTemplate = "unsigned int VARNAME = voteSumForCandidate(votesNUM, CAND);";
+        String funcCallTemplate =
+                "unsigned int VARNAME = voteSumForCandidate" +
+                (unique ? "Unique" : "") +
+                "(votesNUM, CAND);";
         String counter = "voteSumExp_" + voteSumCounter;
         voteSumCounter++;
         funcCallTemplate = funcCallTemplate.replaceAll("VARNAME", counter);

@@ -8,6 +8,7 @@ package edu.pse.beast.propertychecker;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer.ElectionInputTypeIds;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
@@ -78,7 +79,8 @@ public class CBMCCodeGenerator {
 
     private void generateCode() {
         addHeader();
-        addVoteSumFunc();
+        addVoteSumFunc(false);
+        addVoteSumFunc(true);
 
         code.add("//Code of the user");
         ArrayList<String> electionDescriptionCode = new ArrayList<>();
@@ -88,17 +90,30 @@ public class CBMCCodeGenerator {
         addMainMethod();
     }
 
-    private void addVoteSumFunc() {
-        String input = inputType.getType().getListedType().isList() ? "unsigned int arr[V][C]" : "unsigned int arr[V]";
-        code.add("unsigned int voteSumForCandidate(INPUT, unsigned int candidate) {".replace("INPUT", input));
+    private void addVoteSumFunc(boolean unique) {
+        String input = inputType.getType().getListedType().isList() ?
+                        "unsigned int arr[V][C]" : "unsigned int arr[V]";
+        code.add("unsigned int voteSumForCandidate" +
+                 (unique ? "Unique" : "") +
+                 "(INPUT, unsigned int candidate) {"
+                .replace("INPUT", input));
         code.addTab();
         code.add("unsigned int sum = 0;");
         code.add("for(unsigned int i = 0; i < V; ++i) {");
         code.addTab();
         if (inputType.getType().getListLvl() == 1) {
             code.add("if(arr[i] == candidate) sum++;");
+        } else if (inputType.getInputID() == ElectionInputTypeIds.APPROVAL
+                || inputType.getInputID() == ElectionInputTypeIds.WEIGHTED_APPROVAL) {
+            code.add("unsigned int candSum = arr[i][candidate];");
+            if (unique) {
+                code.add("for(unsigned int j = 0; j < C; ++i) {");
+                code.add("if(j != candidate && arr[i][j] >= candSum) candSum = 0;");
+                code.add("}");
+            }
+            code.add("sum += candSum;");
         } else {
-            code.add("sum += arr[i][candidate];");
+            code.add("if(arr[i][0] == candidate) sum++;");
         }
         code.deleteTab();
         code.add("}");

@@ -12,14 +12,16 @@ public class VoteSumForCandExp extends IntegerValuedExpression {
 
     private final TypeExpression acessingVar;
     private final int voteArrNum;
+    private final boolean unique;
 
     /**
      *  @param voteArrNum the number of the vote array
      *
      */
-    public VoteSumForCandExp(int voteArrNum, TypeExpression acessingVar) {
+    public VoteSumForCandExp(int voteArrNum, TypeExpression acessingVar, boolean unique) {
         this.acessingVar = acessingVar;
         this.voteArrNum = voteArrNum;
+        this.unique = unique;
     }
 
     /**
@@ -32,22 +34,30 @@ public class VoteSumForCandExp extends IntegerValuedExpression {
 
     @Override
     public void getVisited(BooleanExpNodeVisitor visitor) {
-        visitor.visitVoteSumExp(this);
+        visitor.visitVoteSumExp(this, unique);
     }
 
     @Override
     public String getTreeString(int depth) {
-        return "Votesum " + voteArrNum + "\n" +
+        return "Votesum" + (unique ? "Unique" : "") + " " + voteArrNum + "\n" +
                 "\t\t\t\t\t\t\t\t\t\t".substring(0,depth + 1 ) +
                 "var " + acessingVar.getTreeString(depth + 1);
     }
 
     /**
-     * 
+     *
      * @return the number of the vote array
      */
     public int getVoteNumber() {
         return voteArrNum;
+    }
+
+    /**
+     *
+     * @return whether only unique candidate sums are taken into account
+     */
+    public boolean isUnique() {
+        return unique;
     }
 
     @Override
@@ -58,13 +68,15 @@ public class VoteSumForCandExp extends IntegerValuedExpression {
 
         VoteSumForCandExp that = (VoteSumForCandExp) o;
 
+        if (unique != that.unique) return false;
         if (voteArrNum != that.voteArrNum) return false;
         return acessingVar != null ? acessingVar.equals(that.acessingVar) : that.acessingVar == null;
     }
 
     @Override
     public int hashCode() {
-        int result = acessingVar != null ? acessingVar.hashCode() : 0;
+        int result = 31 + (acessingVar != null ? acessingVar.hashCode() : 0);
+        result = 31 * result + (unique ? 1231 : 1237);
         result = 31 * result + voteArrNum;
         return result;
     }

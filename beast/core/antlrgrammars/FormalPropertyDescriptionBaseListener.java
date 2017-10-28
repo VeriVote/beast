@@ -1,4 +1,4 @@
-// Generated from FormalPropertyDescription.g4 by ANTLR 4.5.1
+// Generated from FormalPropertyDescription.g4 by ANTLR 4.5.2
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -238,6 +238,18 @@ public class FormalPropertyDescriptionBaseListener implements FormalPropertyDesc
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitVoteSumExp(FormalPropertyDescriptionParser.VoteSumExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVoteSumUniqueExp(FormalPropertyDescriptionParser.VoteSumUniqueExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVoteSumUniqueExp(FormalPropertyDescriptionParser.VoteSumUniqueExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

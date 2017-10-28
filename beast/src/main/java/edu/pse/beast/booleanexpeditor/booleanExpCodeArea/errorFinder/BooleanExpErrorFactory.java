@@ -31,7 +31,7 @@ public class BooleanExpErrorFactory {
 
     /**
      * creates an error when a variable was not created
-     * 
+     *
      * @param ctx
      *            the context* of the symbolic variable expression
      * @return the error object that describes the problem
@@ -44,7 +44,7 @@ public class BooleanExpErrorFactory {
 
     /**
      * creates an antlr error
-     * 
+     *
      * @param line
      *            the line the error is in
      * @param charInline
@@ -62,7 +62,7 @@ public class BooleanExpErrorFactory {
 
     /**
      * creates an error when too many variables are passed
-     * 
+     *
      * @param ctx
      *            the context of the symbolic variable expression
      * @return the errorobject that describes the problem
@@ -76,7 +76,7 @@ public class BooleanExpErrorFactory {
 
     /**
      * creates an error when a wrong variable was passed
-     * 
+     *
      * @param cont
      *            the internal type
      * @param ctx
@@ -98,7 +98,7 @@ public class BooleanExpErrorFactory {
 
     /**
      * creates an error when two not comparable things are being compared
-     * 
+     *
      * @param ctx
      *            the context of the symbolic variable expression
      * @param lhsCont
@@ -117,7 +117,7 @@ public class BooleanExpErrorFactory {
 
     /**
      * creates an error when two incomparable things get compared
-     * 
+     *
      * @param ctx
      *            the comparison context
      * @param lhsCont
@@ -136,7 +136,7 @@ public class BooleanExpErrorFactory {
 
     /**
      * create code error for a wront war to votesum
-     * 
+     *
      * @param ctx
      *            the sum expression contect
      * @param passedType
@@ -151,21 +151,38 @@ public class BooleanExpErrorFactory {
     }
 
     /**
+     * create code error for a wront war to votesum
+     *
+     * @param ctx
+     *            the sum expression contect
+     * @param passedType
+     *            the passed type
+     * @return the code error
+     */
+    static CodeError createWrongVarToVotesumError(
+            FormalPropertyDescriptionParser.VoteSumUniqueExpContext ctx,
+            InternalTypeContainer passedType) {
+        CodeError err = generateStandardError(ctx, "wrong_var_passed_to_votesum_unique");
+        err.setExtraInfo("var_type", passedType.getInternalType().toString());
+        return err;
+    }
+
+    /**
      * create the error that indicates that a number must be greater than zero
      * for a votesum
-     * 
+     *
      * @param ctx
      *            the vote sum expression context
      * @return the code error
      */
-    static CodeError createNumberMustBeGreaterZeroVotesum(FormalPropertyDescriptionParser.VoteSumExpContext ctx) {
+    static CodeError createNumberMustBeGreaterZeroVotesum(ParserRuleContext ctx) {
         CodeError err = generateStandardError(ctx, "number_must_be_greater_0");
         return err;
     }
 
     /**
      * creates an error if an "elect" value is smaller than zero
-     * 
+     *
      * @param ctx
      *            the election expression context
      * @return the code error
@@ -177,7 +194,7 @@ public class BooleanExpErrorFactory {
 
     /**
      * creates an error if an "votes" value is smaller than zero
-     * 
+     *
      * @param ctx
      *            the vote expression context
      * @return the code error

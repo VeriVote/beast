@@ -22,6 +22,7 @@ existsOneVoter : EXISTS_ONE_VOTER()
 existsOneCandidate : EXISTS_ONE_CANDIDATE()
 existsOneSeat : EXISTS_ONE_SEAT()
 voteSumForCandidate : VOTE_SUM_FOR_CANDIDATE()
+voteSumForUniqueCandidate : VOTE_SUM_FOR_UNIQUE_CANDIDATE()
 constantsMenu : Konstanten
 numberOfVoters : Anzahl der Wähler (V)
 numberOfCandidates : Anzahl der Kandidaten (C)

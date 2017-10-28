@@ -363,17 +363,44 @@ public class FormalExpErrorFinderTreeListener
 
     }
 
-    @Override
-    public void exitVoteSumExp(FormalPropertyDescriptionParser.VoteSumExpContext ctx) {
+    private void exitVoteSumExp(ParserRuleContext ctx, boolean unique) {
+        final Class<FormalPropertyDescriptionParser.VoteSumUniqueExpContext> cu =
+                FormalPropertyDescriptionParser.VoteSumUniqueExpContext.class;
+        final Class<FormalPropertyDescriptionParser.VoteSumExpContext> c =
+                FormalPropertyDescriptionParser.VoteSumExpContext.class;
+
         TypeExpression passedVar = expStack.pop();
         if (passedVar.getInternalTypeContainer().getInternalType() != InternalTypeRep.CANDIDATE) {
-            created.add(BooleanExpErrorFactory.createWrongVarToVotesumError(ctx, passedVar.getInternalTypeContainer()));
+            final CodeError ce = unique ?
+                    BooleanExpErrorFactory.createWrongVarToVotesumError(
+                            cu.cast(ctx), passedVar.getInternalTypeContainer()) :
+                    BooleanExpErrorFactory.createWrongVarToVotesumError(
+                            c.cast(ctx), passedVar.getInternalTypeContainer());
+            created.add(ce);
         }
-        String numberString = ctx.Votesum().getText().substring("VOTE_SUM_FOR_CANDIDATE".length());
+        final TerminalNode tn = unique ? cu.cast(ctx).VotesumUnique() : c.cast(ctx).Votesum();
+        final String expStr = unique ? "VOTE_SUM_FOR_UNIQUE_CANDIDATE" : "VOTE_SUM_FOR_CANDIDATE";
+        String numberString = tn.getText().substring(expStr.length());
+
         int number = Integer.valueOf(numberString);
         if (number == 0)
             created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroVotesum(ctx));
-        expStack.add(new VoteSumForCandExp(number, passedVar));
+        expStack.add(new VoteSumForCandExp(number, passedVar, unique));
+    }
+
+    @Override
+    public void exitVoteSumExp(FormalPropertyDescriptionParser.VoteSumExpContext ctx) {
+        exitVoteSumExp(ctx, false);
+    }
+
+    @Override
+    public void enterVoteSumUniqueExp(FormalPropertyDescriptionParser.VoteSumUniqueExpContext ctx) {
+
+    }
+
+    @Override
+    public void exitVoteSumUniqueExp(FormalPropertyDescriptionParser.VoteSumUniqueExpContext ctx) {
+        exitVoteSumExp(ctx, true);
     }
 
     @Override
@@ -466,5 +493,4 @@ public class FormalExpErrorFinderTreeListener
     public void outputChanged(ElectionTypeContainer output) {
         this.output = output;
     }
-
 }

@@ -74,7 +74,8 @@ public class BooleanExpANTLRHandler {
                         "FOR_ALL_VOTERS\\([a-zA-Z_]*\\)", "FOR_ALL_CANDIDATES\\([a-zA-Z_]*\\)",
                         "FOR_ALL_SEATS\\([a-zA-Z_]*\\)", "EXISTS_ONE_VOTER\\([a-zA-Z_]*\\)",
                         "EXISTS_ONE_CANDIDATE\\([a-zA-Z_]*\\)", "EXISTS_ONE_SEAT\\([a-zA-Z_]*\\)",
-                        "VOTE_SUM_FOR_CANDIDATE[0-9]+\\([a-zA-Z_]*\\)"};
+                        "VOTE_SUM_FOR_CANDIDATE[0-9]+\\([a-zA-Z_]*\\)",
+                        "VOTE_SUM_FOR_UNIQUE_CANDIDATE[0-9]+\\([a-zA-Z_]*\\)"};
     }
 
     /**

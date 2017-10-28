@@ -89,7 +89,7 @@ public interface BooleanExpNodeVisitor {
      *
      * @param exp the vote sum expression to visit
      */
-    void visitVoteSumExp(VoteSumForCandExp exp);
+    void visitVoteSumExp(VoteSumForCandExp exp, boolean unique);
 
     void visitIntegerNode(IntegerNode integerNode);
 

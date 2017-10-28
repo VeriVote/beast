@@ -73,6 +73,10 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
             String template = getTemplateString("wrong_var_passed_to_votesum");
             template = template.replace("GIVENTYPE", codeError.getExtraInfo("var_type"));
             return template;
+        }  else if (codeError.getId().equals("wrong_var_passed_to_votesum_unique")) {
+            String template = getTemplateString("wrong_var_passed_to_votesum_unique");
+            template = template.replace("GIVENTYPE", codeError.getExtraInfo("var_type"));
+            return template;
         } else if (codeError.getId().equals("number_must_be_greater_0")) {
             String template = getTemplateString("number_must_be_greater_0");            
             return template;

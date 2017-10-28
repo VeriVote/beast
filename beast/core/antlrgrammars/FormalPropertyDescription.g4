@@ -28,6 +28,7 @@ numberExpression : 	'(' numberExpression ')' |
 			numberExpression Mult numberExpression |
 			numberExpression Add numberExpression |			
 			voteSumExp |
+			voteSumUniqueExp |
 			constantExp |
 			integer;
 
@@ -52,6 +53,8 @@ constantExp : 'V' | 'C' | 'S';
 
 voteSumExp : Votesum passType;
 
+voteSumUniqueExp : VotesumUnique passType;
+
 passSymbVar : OpenBracket symbolicVarExp ClosedBracket;
 
 passPosition : OpenBracket numberExpression ClosedBracket;
@@ -71,6 +74,8 @@ Vote : 'VOTES' Integer;
 Elect : 'ELECT' Integer;
 
 Votesum : 'VOTE_SUM_FOR_CANDIDATE' Integer;
+
+VotesumUnique : 'VOTE_SUM_FOR_UNIQUE_CANDIDATE' Integer;
 
 ClosedBracket : ')';
 

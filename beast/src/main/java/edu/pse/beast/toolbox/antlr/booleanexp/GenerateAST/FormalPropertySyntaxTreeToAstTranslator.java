@@ -281,15 +281,33 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 
     }
 
-    @Override
-    public void exitVoteSumExp(FormalPropertyDescriptionParser.VoteSumExpContext ctx) {
-        String numberString = ctx.Votesum().getText().substring("VOTE_SUM_FOR_CANDIDATE".length());
+    private void exitVoteSum(final String exprStr, final TerminalNode tn, final boolean unique) {
+        String numberString = tn.getText().substring(exprStr.length());
         int number = Integer.valueOf(numberString);
         if (number > maxVoteExp) {
             maxVoteExp = number;
         }
-        VoteSumForCandExp expNode = new VoteSumForCandExp(number, expStack.pop());
+        VoteSumForCandExp expNode = new VoteSumForCandExp(number, expStack.pop(), unique);
         expStack.push(expNode);
+    }
+
+    @Override
+    public void exitVoteSumExp(FormalPropertyDescriptionParser.VoteSumExpContext ctx) {
+        final String exprStr = "VOTE_SUM_FOR_CANDIDATE";
+        final TerminalNode tn = ctx.Votesum();
+        exitVoteSum(exprStr, tn, false);
+    }
+
+    @Override
+    public void enterVoteSumUniqueExp(FormalPropertyDescriptionParser.VoteSumUniqueExpContext ctx) {
+
+    }
+
+    @Override
+    public void exitVoteSumUniqueExp(FormalPropertyDescriptionParser.VoteSumUniqueExpContext ctx) {
+        final String exprStr = "VOTE_SUM_FOR_UNIQUE_CANDIDATE";
+        final TerminalNode tn = ctx.VotesumUnique();
+        exitVoteSum(exprStr, tn, true);
     }
 
     @Override

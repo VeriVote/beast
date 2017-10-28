@@ -1,4 +1,4 @@
-package edu.pse.beast.toolbox.antlr.booleanexp;// Generated from FormalPropertyDescription.g4 by ANTLR 4.5.1
+package edu.pse.beast.toolbox.antlr.booleanexp;// Generated from FormalPropertyDescription.g4 by ANTLR 4.5.2
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -196,6 +196,16 @@ public interface FormalPropertyDescriptionListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVoteSumExp(FormalPropertyDescriptionParser.VoteSumExpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#voteSumUniqueExp}.
+	 * @param ctx the parse tree
+	 */
+	void enterVoteSumUniqueExp(FormalPropertyDescriptionParser.VoteSumUniqueExpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#voteSumUniqueExp}.
+	 * @param ctx the parse tree
+	 */
+	void exitVoteSumUniqueExp(FormalPropertyDescriptionParser.VoteSumUniqueExpContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#passSymbVar}.
 	 * @param ctx the parse tree

@@ -170,6 +170,9 @@ public class BooleanExpEditorBuilder {
                 createMakroUserAction("existsOneSeat", "EXISTS_ONE_SEAT()", editor);
         UserAction sumVotesForCandidateMakro =
                 createMakroUserAction("voteSumForCandidate", "VOTE_SUM_FOR_CANDIDATE()", editor);
+        UserAction sumVotesForUniqueCandidateMakro =
+                createMakroUserAction("voteSumForUniqueCandidate",
+                                      "VOTE_SUM_FOR_UNIQUE_CANDIDATE()", editor);
         makroList.add(createFromUserAction(voterAtPosMakro));
         makroList.add(createFromUserAction(candAtPosMakro));
         makroList.add(createFromUserAction(seatAtPosMakro));
@@ -180,6 +183,7 @@ public class BooleanExpEditorBuilder {
         makroList.add(createFromUserAction(existsOneCandidateMakro));
         makroList.add(createFromUserAction(existsOneSeatMakro));
         makroList.add(createFromUserAction(sumVotesForCandidateMakro));
+        makroList.add(createFromUserAction(sumVotesForUniqueCandidateMakro));
 
         ArrayList<ActionIdAndListener> constantsList = new ArrayList<>();
         UserAction votersConstant = createConstantUserAction("Voters", "V", editor);
