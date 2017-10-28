@@ -1,4 +1,4 @@
-electionpoints : Stimmenpunkte
+electionpoints : Stimmenauszählung
 Candidate : Kandidat
 title : Eigenschaftenliste
 newButton : Neu

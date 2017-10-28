@@ -22,9 +22,9 @@ import java.awt.event.ItemListener;
  * Represents the view for a PropertyItem.
  * @author Justin
  */
-@SuppressWarnings("serial")
 public class ListItem extends JPanel implements DisplaysStringsToUser {
 
+    private static final long serialVersionUID = 1L;
     PLModel model;
     PropertyList controller;
 

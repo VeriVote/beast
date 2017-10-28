@@ -1,4 +1,4 @@
-electionpoints : Votesum
+electionpoints : Vote Count
 Candidate : Candidate
 title : Property List
 newButton : New

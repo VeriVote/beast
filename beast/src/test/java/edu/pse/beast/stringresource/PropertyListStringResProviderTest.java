@@ -53,7 +53,7 @@ public class PropertyListStringResProviderTest {
     public void testGetOtherStringRes() {
         System.out.println("getOtherStringRes");
         StringResourceLoader result = instance.getOtherStringRes();
-        assertEquals("Stimmenpunkte", result.getStringFromID("electionpoints"));
+        assertEquals("Stimmenauszählung", result.getStringFromID("electionpoints"));
 
     }
 

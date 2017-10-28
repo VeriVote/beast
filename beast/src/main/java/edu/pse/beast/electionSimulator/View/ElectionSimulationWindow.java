@@ -11,10 +11,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
 
-@SuppressWarnings("serial")
 public class ElectionSimulationWindow extends JFrame {
 
-	public final JButton addCandidate;
+	private static final long serialVersionUID = 1L;
+    public final JButton addCandidate;
 	public final JButton addVoter;
 
 	public final JButton removeCandidate;

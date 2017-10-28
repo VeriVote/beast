@@ -28,10 +28,10 @@ import java.util.Observer;
  * 
  * @author Justin
  */
-@SuppressWarnings("serial")
 public class PropertyListWindow extends JFrame implements DisplaysStringsToUser, Observer {
 
-	private PLModel model;
+	private static final long serialVersionUID = 1L;
+    private PLModel model;
 	private PropertyList controller;
 
 	private String title;

@@ -12,6 +12,8 @@ paste : Einfügen
 editorMenu : Editor
 options : Einstellungen
 macroMenu : Makros
+elect : ELECT
+votes : VOTES()
 voterAtPos : VOTER_AT_POS()
 candAtPos : CAND_AT_POS()
 seatAtPos : SEAT_AT_POS()

@@ -21,9 +21,9 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-@SuppressWarnings("serial")
 public class ResultPresenterWindow extends JFrame {
 
+    private static final long serialVersionUID = 1L;
     private JButton showResult;
     private JButton export;
     private JTextPane result;
@@ -135,19 +135,13 @@ public class ResultPresenterWindow extends JFrame {
             case PREFERENCE:
                 for (int j = 0; j < candidates; j++) {
                     int chosenCandidate = (int) (long) vote[j];
-                    result[chosenCandidate] += candidates - j;
-                }
-                break;
-            case WEIGHTED_APPROVAL:
-                for (int j = 0; j < candidates; j++) {
-                    result[j] += vote[j];
+                    result[chosenCandidate] += candidates - 1 - j;
                 }
                 break;
             case APPROVAL:
+            case WEIGHTED_APPROVAL:
                 for (int j = 0; j < candidates; j++) {
-                    if (vote[j] == 1l) {
-                        result[j]++;
-                    }
+                    result[j] += vote[j];
                 }
                 break;
             default:
@@ -233,7 +227,9 @@ public class ResultPresenterWindow extends JFrame {
         appendLine("");
 
         for (int i = 0; i < ex.getNumOfElections(); i++) {
-            appendLine(srl.getStringFromID("election") + " " + (i + 1));
+            appendLine("====== " +
+                       srl.getStringFromID("election").toUpperCase() + " " + (i + 1) +
+                       " ======");
 
             // The votes part of the document
             appendPane(srl.getStringFromID("votes") + ": ");
@@ -254,7 +250,9 @@ public class ResultPresenterWindow extends JFrame {
 
             // The vote points part of the document
             appendLine("\n");
-            appendLine(srl.getStringFromID("electionpoints"));
+            appendLine("====== " +
+                       srl.getStringFromID("electionpoints").toUpperCase() +
+                       " ======");
             Long[] result;
             if (ex.isChooseOneCandidate()) {
                 result = getVotePoints(ex.getVotes().get(i).getArray(), ex);
