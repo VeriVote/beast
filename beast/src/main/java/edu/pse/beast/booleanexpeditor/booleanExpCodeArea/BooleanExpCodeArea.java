@@ -22,11 +22,11 @@ public class BooleanExpCodeArea extends CodeArea {
      * @param grammarErrorFinder the BooleanExpEditorGrammarErrorFinder object
      */
     BooleanExpCodeArea(CodeArea codeArea,
-                              BooleanExpANTLRHandler antlrHandler,
+                              BooleanExpANTLRHandler aHandler,
                               BooleanExpEditorVariableErrorFinder variableErrorFinder,
                               BooleanExpEditorGrammarErrorFinder grammarErrorFinder) {
         super(codeArea);
-        this.antlrHandler = antlrHandler;
+        this.antlrHandler = aHandler;
         this.grammarErrorFinder = grammarErrorFinder;
         this.variableErrorFinder = variableErrorFinder;
         errorCtrl.addErrorFinder(grammarErrorFinder);
