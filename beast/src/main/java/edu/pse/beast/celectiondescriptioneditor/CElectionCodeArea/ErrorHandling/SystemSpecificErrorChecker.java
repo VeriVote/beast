@@ -21,9 +21,58 @@ import org.apache.commons.io.FileUtils;
  *
  */
 public abstract class SystemSpecificErrorChecker {
-    
-    private final String pathToTempFolder = "/core/c_tempfiles/";
-    
+
+    /**
+     * Taken from "org.apache.commons.io.FileUtils"
+     * Lists files in a directory, asserting that the supplied directory satisfies
+     * exists and is a directory
+     * @param directory The directory to list
+     * @return The files in the directory, never null.
+     * @throws IOException if an I/O error occurs
+     */
+    private static File[] verifiedListFiles(File directory) throws IOException {
+        if (!directory.exists()) {
+            throw new IllegalArgumentException(directory + " does not exist");
+        }
+        if (!directory.isDirectory()) {
+            throw new IllegalArgumentException(directory + " is not a directory");
+        }
+        final File[] files = directory.listFiles();
+        if (files == null) {  // null if security restricted
+            throw new IOException("Failed to list contents of " + directory);
+        }
+        return files;
+    }
+
+    /**
+     * Taken and adapted from "org.apache.commons.io.FileUtils"
+     * Cleans a directory without deleting it.
+     *
+     * @param directory directory to clean
+     * @throws IOException              in case cleaning is unsuccessful
+     * @throws IllegalArgumentException if {@code directory} does not exist or is not a directory
+     */
+   private static void cleanDirectory(final File directory, String keep) throws IOException {
+       final File[] files = verifiedListFiles(directory);
+
+       IOException exception = null;
+       for (final File file : files) {
+           try {
+               if (!file.getName().equals(keep)) { // Difference to original method
+                   FileUtils.forceDelete(file);
+               }
+           } catch (final IOException ioe) {
+               exception = ioe;
+           }
+       }
+
+       if (null != exception) {
+           throw exception;
+       }
+   }
+
+   private final String pathToTempFolder = "/core/c_tempfiles/";
+
     /**
      * constructor creates an error checker that compiles the c code and passes it on to a system specific compiler
      */
@@ -31,7 +80,8 @@ public abstract class SystemSpecificErrorChecker {
         //clear the folder where the files that get checked get saved to, because sometimes they
         //persist from the last time BEAST was run
         try {
-            FileUtils.cleanDirectory(new File(SuperFolderFinder.getSuperFolder() + pathToTempFolder));
+            final String dummy = "dummy.file";
+            cleanDirectory(new File(SuperFolderFinder.getSuperFolder() + pathToTempFolder), dummy);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
