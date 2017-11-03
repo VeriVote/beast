@@ -96,7 +96,7 @@ public class PLModel extends Observable implements NameInterface {
 		int i = 0;
 		while (indexOfName(name + i) != -1)
 			i++;
-		PropertyItem newItem = new PropertyItem(new PostAndPrePropertiesDescription(name + i), false);
+		PropertyItem newItem = new PropertyItem(new PostAndPrePropertiesDescription(name + i), false, false);
 		propertyList.add(newItem);
 		if (editor != null) {
 			editor.letUserEditPostAndPreProperties(newItem.getDescription(), true);
@@ -269,6 +269,10 @@ public class PLModel extends Observable implements NameInterface {
 		this.setChanged();
 		this.notifyObservers();
 		this.clearChanged();
+	}
+
+	public void setMarginStatus(PropertyItem prop, boolean newStatus) {
+		prop.setMarginStatus(newStatus);
 	}
 
 }

@@ -103,7 +103,7 @@ public class PropertyListControllerTest {
 	@Test
 	public void getTestedList() {
 		list.getList().get(0).setTestStatus(true);
-		ArrayList<PostAndPrePropertiesDescription> testedlist = list.getPostAndPrePropertiesDescriptions();
+		ArrayList<PostAndPrePropertiesDescription> testedlist = list.getPostAndPrePropertiesDescriptionsCheck();
 		assertEquals(testedlist.size(), 1);
 	}
 	

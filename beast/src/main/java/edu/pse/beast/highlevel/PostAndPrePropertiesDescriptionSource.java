@@ -1,4 +1,3 @@
-
 package edu.pse.beast.highlevel;
 
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
@@ -17,7 +16,13 @@ public interface PostAndPrePropertiesDescriptionSource {
      * election check.
      * @return PostAndPrePropertiesDescription
      */
-    List<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptions();
+    List<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptionsCheck();
+    /**
+     * Provides access to the description of post and preproperties for the
+     * election for which the margin computation is wished.
+     * @return PostAndPrePropertiesDescription
+     */
+    List<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptionsMargin();
     /**
      * Returns true if all the PostAndPrePropertiesDescriptions are correct.
      * @return correctness

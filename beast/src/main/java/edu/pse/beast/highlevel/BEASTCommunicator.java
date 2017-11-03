@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  */
 public class BEASTCommunicator implements CheckListener {
 
-    private CentralObjectProvider centralObjectProvider;
+    private static CentralObjectProvider centralObjectProvider;
     private List<ResultInterface> resultList;
 
     /**
@@ -36,7 +36,7 @@ public class BEASTCommunicator implements CheckListener {
         CheckStatusDisplay checkStatusDisplayer = centralObjectProvider.getCheckStatusDisplay();
 
         // checks if there even are any properties selected for analysis in the PostAndPrePropertiesSource
-        if (postAndPreSrc.getPostAndPrePropertiesDescriptions().isEmpty()) {
+        if (postAndPreSrc.getPostAndPrePropertiesDescriptionsCheck().isEmpty() && postAndPreSrc.getPostAndPrePropertiesDescriptionsMargin().isEmpty()) {
             checkStatusDisplayer.displayText("noProperty", false, "");
             return;
         }
@@ -57,17 +57,17 @@ public class BEASTCommunicator implements CheckListener {
                     long elapsedTime;
                     double passedTimeSeconds = 0;
 
-                    boolean[] resultPresented = new boolean[postAndPreSrc.getPostAndPrePropertiesDescriptions().size()];
+                    boolean[] resultPresented = new boolean[postAndPreSrc.getPostAndPrePropertiesDescriptionsCheck().size()];
 
                     int numberOfPresentedResults = 0;
 
-                    while (numberOfPresentedResults < postAndPreSrc.getPostAndPrePropertiesDescriptions().size()) {
+                    while (numberOfPresentedResults < postAndPreSrc.getPostAndPrePropertiesDescriptionsCheck().size()) {
                         elapsedTime = System.nanoTime() - startTime;
                         passedTimeSeconds = (double) elapsedTime / 1000000000.0;
                         timeString = createTimeString(passedTimeSeconds);
 
                         checkStatusDisplayer.displayText("waitingForPropertyResult", true,
-                                postAndPreSrc.getPostAndPrePropertiesDescriptions().
+                                postAndPreSrc.getPostAndPrePropertiesDescriptionsCheck().
                                         get(numberOfPresentedResults).getName() + "' (" + timeString + ")");
 
                         try {
@@ -216,4 +216,8 @@ public class BEASTCommunicator implements CheckListener {
     private boolean passedTimeLongerThanMinute(double passedTimeSeconds) {
         return passedTimeSeconds >= 60;
     }
+
+	public static CentralObjectProvider getCentralObjectProvider() {
+		return centralObjectProvider;
+	}
 }

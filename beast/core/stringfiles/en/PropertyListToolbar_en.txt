@@ -8,3 +8,4 @@ redo : Redo last action
 cut : Cut
 copy : Copy
 paste : Paste
+simulation: open/ close simulation window

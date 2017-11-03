@@ -17,7 +17,7 @@ import java.util.UUID;
 public class PropertyItem implements ResultPresenterElement {
 
     private PostAndPrePropertiesDescription description;
-    private Boolean willBeTested;
+    private boolean willBeTested;
     private ResultType resultType;
     private List<String> error;
     private FailureExample example;
@@ -28,9 +28,12 @@ public class PropertyItem implements ResultPresenterElement {
      * @param descr The property description to add to the property item
      * @param testStatus Sets whether the property will be analyzed in the next check
      */
-    public PropertyItem(PostAndPrePropertiesDescription descr, Boolean testStatus) {
+    public PropertyItem(PostAndPrePropertiesDescription descr, boolean testStatus, boolean willBeMarginComputed) {
         description = descr;
         willBeTested = testStatus;
+        
+        this.willBeMarginComputed = willBeMarginComputed;
+        
         resultType = ResultType.UNTESTED;
     }
 
@@ -39,14 +42,14 @@ public class PropertyItem implements ResultPresenterElement {
      * @param descr The property description to add to the property item
      */
     public PropertyItem(PostAndPrePropertiesDescription descr) {
-        this(descr, true);
+        this(descr, true, false);
     }
 
     /**
      * Constructor without parameters returns a pretty unique name for the property description and a blank description.
      */
     public PropertyItem() {
-        this(new PostAndPrePropertiesDescription(UUID.randomUUID().toString()), false);
+        this(new PostAndPrePropertiesDescription(UUID.randomUUID().toString()), false, false);
     }
     
     
@@ -113,6 +116,10 @@ public class PropertyItem implements ResultPresenterElement {
 
     public void setTestStatus(boolean newStatus) {
         willBeTested = newStatus;
+    }
+    
+    public void setMarginStatus(boolean newStatus) {
+        willBeMarginComputed = newStatus;
     }
     
     public Boolean getTestStatus() {

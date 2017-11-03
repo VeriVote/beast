@@ -55,7 +55,8 @@ public class PropertyListSaverLoader implements SaverLoader {
                 + postAndPrePropertiesDescriptionSaverLoader.createSaveString(propertyItem.getDescription())
                 + "\n</postAndPreProps>\n";
         String testStatus = "<testStatus>\n" + propertyItem.getTestStatus() + "\n</testStatus>\n";
-        return postAndPreProps + testStatus;
+        String marginStatus = "<marginStatus>\n" + propertyItem.getMarginStatus() + "\n</marginStatus>\n";
+        return postAndPreProps + testStatus + marginStatus;
     }
 
     private PropertyItem createPropertyItem(String saveString) throws ArrayIndexOutOfBoundsException {
@@ -64,10 +65,13 @@ public class PropertyListSaverLoader implements SaverLoader {
                 = ((PostAndPrePropertiesDescription) postAndPrePropertiesDescriptionSaverLoader.
                         createFromSaveString(split[0].replace("<postAndPreProps>\n", "")));
         split = split[1].split("\n</testStatus>\n");
-        if ((split[0].replace("<testStatus>\n", "")).equals("true")) {
-            return new PropertyItem(postAndPrePropertiesDescription, true);
-        } else {
-            return new PropertyItem(postAndPrePropertiesDescription, false);
-        }
+        
+        boolean willBeTested = (split[0].replace("<testStatus>\n", "")).equals("true");
+        
+        split = split[1].split("\n</marginStatus>\n");
+        
+        boolean willBeMargined = (split[0].replace("<marginStatus>\n", "")).equals("true");
+        
+        return new PropertyItem(postAndPrePropertiesDescription, willBeTested, willBeMargined);
     }
 }

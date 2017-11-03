@@ -12,11 +12,14 @@ import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenter;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PropertyItem;
+import edu.pse.beast.propertylist.View.ListItem;
 import edu.pse.beast.propertylist.View.PropertyListWindow;
 import edu.pse.beast.saverloader.FileChooser;
 import java.awt.Frame;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Class acts as controller for everything related to the property list. Returns
@@ -185,12 +188,25 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
     }
 
     @Override
-    public ArrayList<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptions() {
+    public ArrayList<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptionsCheck() {
         ArrayList<PostAndPrePropertiesDescription> result = new ArrayList<PostAndPrePropertiesDescription>();
         ArrayList<PropertyItem> from = model.getPropertyList();
         editor.updatePostAndPrePropObject();
         for (PropertyItem prop : from) {
             if (prop.getTestStatus()) {
+                result.add(prop.getDescription());
+            }
+        }
+        return result;
+    }
+    
+    @Override
+    public ArrayList<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptionsMargin() {
+        ArrayList<PostAndPrePropertiesDescription> result = new ArrayList<PostAndPrePropertiesDescription>();
+        ArrayList<PropertyItem> from = model.getPropertyList();
+        editor.updatePostAndPrePropObject();
+        for (PropertyItem prop : from) {
+            if (prop.getMarginStatus()) {
                 result.add(prop.getDescription());
             }
         }
@@ -272,6 +288,19 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
      */
 	public BooleanExpEditor getEditor() {
 		return editor;
+	}
+
+	public void setMarginStatus(PropertyItem prop, boolean newStatus) {
+		model.setMarginStatus(prop, newStatus);
+	}
+
+	public void setMarginComputationBoxVisible(boolean visible) {
+		view.setShowsMarginBox(visible);
+		List<ListItem> items = view.getList();
+		for (Iterator iterator = items.iterator(); iterator.hasNext();) {
+			ListItem listItem = (ListItem) iterator.next();
+			listItem.setMarginComputationBoxVisible(visible);
+		}
 	}
 
 

@@ -36,8 +36,8 @@ public class PropertyListSaverLoaderTest {
 
         plModel = new PLModel();
         plModel.initialize();
-        PropertyItem propertyItem = new PropertyItem(description1, true);
-        PropertyItem propertyItem2 = new PropertyItem(description2, false);
+        PropertyItem propertyItem = new PropertyItem(description1, true, true);
+        PropertyItem propertyItem2 = new PropertyItem(description2, false, false);
         plModel.addDescription(propertyItem);
         plModel.addDescription(propertyItem2);
     }

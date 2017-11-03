@@ -78,7 +78,7 @@ public class FactoryController implements Runnable {
 		
 		// get a list of result objects that fit for the specified checkerID
 		this.results = CheckerFactoryFactory.getMatchingResult(checkerID,
-				postAndPrePropDescrSrc.getPostAndPrePropertiesDescriptions().size());
+				postAndPrePropDescrSrc.getPostAndPrePropertiesDescriptionsCheck().size());
 
 		// if the user doesn't specify a concrete amount for concurrent
 		// checkers, we just set it to the thread amount of this pc
@@ -147,7 +147,7 @@ public class FactoryController implements Runnable {
 
 
 		if (!fromFile) { //if we have properties, we have to iterate over all of them and start them all
-		    List<PostAndPrePropertiesDescription> properties = postAndPrePropDescrSrc.getPostAndPrePropertiesDescriptions();
+		    List<PostAndPrePropertiesDescription> properties = postAndPrePropDescrSrc.getPostAndPrePropertiesDescriptionsCheck();
 			outerLoop: for (int i = 0; i < properties.size(); i++) {
 				innerLoop: while (!stopped) {
 					// if we can start more checkers (we haven't used our

@@ -1,4 +1,4 @@
-addNew : Neu
+﻿addNew : Neu
 new : Neue Wahlverfahrensbeschreibung editieren
 save : Speichern
 save_as : Speichern unter
@@ -8,3 +8,4 @@ redo : Letzte Aktion Wiederholen
 cut : Ausschneiden
 copy : Kopieren
 paste : Einfügen
+simulation: Öffne/ Schließe Simulationsfenster

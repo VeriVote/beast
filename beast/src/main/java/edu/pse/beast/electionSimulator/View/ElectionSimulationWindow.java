@@ -7,11 +7,13 @@ import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 import javax.swing.*;
+
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Iterator;
 
-public class ElectionSimulationWindow extends JFrame {
+public class ElectionSimulationWindow extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
     public final JButton addCandidate;
@@ -28,6 +30,10 @@ public class ElectionSimulationWindow extends JFrame {
 	public final JButton redoButton;
 	public final JButton startStopButton;
 	
+	private String[] modes = { "outcome (c)", "outcome  (cbmc)" , "outcome (c) + margin(cbmc)", "outcome (cbmc) + margin(cbmc)"};
+	
+	//create the combo box
+	private final JComboBox<String> modeListBox;
 	
 	public final JScrollBar horizontalScroll;
 	public final JScrollBar verticalScroll;
@@ -43,6 +49,8 @@ public class ElectionSimulationWindow extends JFrame {
     private String yesOption;
     private String noOption;
     private String cancelOption;
+    
+	
 	
 	
 
@@ -89,7 +97,12 @@ public class ElectionSimulationWindow extends JFrame {
 		undoButton = new JButton("undo");
 		redoButton = new JButton("redo");
 		
+		modeListBox = new JComboBox<String>(modes);
+		
 		startStopButton = new JButton("start");
+		modeListBox.setSelectedIndex(3);
+		modeListBox.addActionListener(this);
+
 		
 		horizontalScroll = new JScrollBar(JScrollBar.HORIZONTAL, 0, 1, 0, model.getAmountCandidates());
 		
@@ -127,7 +140,7 @@ public class ElectionSimulationWindow extends JFrame {
 		undoButton.setSize(model.getButtonWidth(), model.getButtonHeight());
 		redoButton.setSize(model.getButtonWidth(), model.getButtonHeight());
 		startStopButton.setSize(model.getButtonWidth(), model.getButtonHeight());
-		
+		modeListBox.setMaximumSize(new Dimension(model.getButtonWidth() * 4, (int) Math.ceil(model.getButtonHeight() / 2)));
 		
 		toolBar.add(newButton);
 		toolBar.add(loadDataButton);
@@ -136,6 +149,7 @@ public class ElectionSimulationWindow extends JFrame {
 		toolBar.add(undoButton);
 		toolBar.add(redoButton);
 		toolBar.add(startStopButton);
+		toolBar.add(modeListBox);
 		
 		
 		this.add(toolBar);
@@ -160,8 +174,6 @@ public class ElectionSimulationWindow extends JFrame {
 		model.getVoters().add(new JTextField("V1"));
 
 		this.setResizable(true);
-
-		setVisible(true);
 
 		update();
 
@@ -325,6 +337,11 @@ public class ElectionSimulationWindow extends JFrame {
 		}
 
 		this.repaint();
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		controller.setMode((String) modeListBox.getSelectedItem());
 	}
 
 //	public void componentResized(ComponentEvent e) {

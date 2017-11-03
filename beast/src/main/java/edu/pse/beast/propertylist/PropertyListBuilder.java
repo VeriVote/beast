@@ -74,11 +74,13 @@ public class PropertyListBuilder {
         UserAction load = createLoadPropertyList();
         UserAction save = createSavePropertyList();
         UserAction saveAs = createSaveAsPropertyList();
+        UserAction openSim = createOpenSimulation();
 
         fileList.add(createFromUserAction(newly));
         fileList.add(createFromUserAction(load));
         fileList.add(createFromUserAction(save));
         fileList.add(createFromUserAction(saveAs));
+        fileList.add(createFromUserAction(openSim));
 
         ArrayList<ActionIdAndListener> editList = new ArrayList<>();
 
@@ -90,19 +92,21 @@ public class PropertyListBuilder {
     }
 
     private ActionIdAndListener[] createActionIdAndListenerListForToolbarHandler() {
-        ActionIdAndListener[] created = new ActionIdAndListener[5];
+        ActionIdAndListener[] created = new ActionIdAndListener[6];
 
         UserAction newly = createNewPropertyList();
         UserAction load = createLoadPropertyList();
         UserAction save = createSavePropertyList();
         UserAction saveAs = createSaveAsPropertyList();
         UserAction undo = createUndoChangesPropertyList();
+        UserAction openSim = createOpenSimulation();
 
         created[0] = createFromUserAction(newly);
         created[1] = createFromUserAction(load);
         created[2] = createFromUserAction(save);
         created[3] = createFromUserAction(saveAs);
         created[4] = createFromUserAction(undo);
+        created[5] = createFromUserAction(openSim);
 
         return created;
     }
@@ -125,6 +129,10 @@ public class PropertyListBuilder {
 
     private UndoChangesPropertyList createUndoChangesPropertyList() {
         return new UndoChangesPropertyList((PropertyList) controller);
+    }
+    
+    private OpenSimulationWindow createOpenSimulation() {
+        return new OpenSimulationWindow((PropertyList) controller);
     }
 
     private ActionIdAndListener createFromUserAction(UserAction userAc) {

@@ -4,6 +4,7 @@ title : Property List
 newButton : New
 createdButton : Existing
 check : Analyse
+margin: Margin
 export : Export
 electionType : Election Description
 election : Election

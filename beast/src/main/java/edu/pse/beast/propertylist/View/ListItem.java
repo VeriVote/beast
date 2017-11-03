@@ -37,9 +37,12 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
     protected JButton showResult = new JButton();
     protected JTextField name = new JTextField();
     protected JCheckBox testStatus = new JCheckBox();
+    
     protected JCheckBox marginComputation = new JCheckBox();
     protected JButton changeButton = new JButton();
     protected JButton deleteButton = new JButton();
+    
+    private GroupLayout layout = new GroupLayout(this);
     
     private final String pathToEye = "/core/images/other/eye.png";
     private final ImageIcon eyeIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToEye);
@@ -57,6 +60,11 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
      * @param prop The PropertyItem to be viewed
      */
     public ListItem(PropertyList controller, PLModel model, PropertyItem prop) {
+    	this.setLayout(layout);
+    	
+    	layout.setAutoCreateGaps(true);
+    	layout.setAutoCreateContainerGaps(true);
+    	
         this.model = model;
         this.controller = controller;
         this.prop = prop;
@@ -83,8 +91,8 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
                 resWindow.setVisible(true);
             }
         });
-        this.add(showResult, BorderLayout.LINE_START);
 
+        
         name.setPreferredSize(new Dimension(200, 30));
         name.setText(prop.getDescription().getName());
         name.addActionListener(new ActionListener() {
@@ -104,8 +112,8 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
 				controller.changeName(prop, name.getText());
 			}
         });
-        this.add(name, BorderLayout.LINE_START);
 
+        
         testStatus.setText("Check");
         testStatus.setSelected(prop.getTestStatus());
         testStatus.addItemListener(new ItemListener() {
@@ -119,26 +127,22 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
                     }
                 }
             }
-        });
-        this.add(testStatus, BorderLayout.LINE_START);
+        });       
         
-        
-        marginComputation.setText("margin");
+        marginComputation.setText("Margin");
         marginComputation.setSelected(prop.getMarginStatus());
-        testStatus.addItemListener(new ItemListener() {
+        marginComputation.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if (reactsToInput) {
                     if (e.getStateChange() == ItemEvent.SELECTED) {
-                        controller.setTestStatus(prop, true);
+                        controller.setMarginStatus(prop, true);
                     } else {
-                        controller.setTestStatus(prop, false);
+                        controller.setMarginStatus(prop, false);
                     }
                 }
             }
         });
-        this.add(testStatus, BorderLayout.LINE_START);
-        
 
         changeButton.setPreferredSize(iconSize);
         changeButton.setIcon(wrenchIcon);
@@ -150,7 +154,6 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
                 }
             }
         });
-        this.add(changeButton, BorderLayout.LINE_START);
 
         deleteButton.setPreferredSize(iconSize);
         deleteButton.setIcon(xMarkIcon);
@@ -162,8 +165,32 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
                 }
             }
         });
-        this.add(deleteButton, BorderLayout.LINE_START);
 
+        
+        layout.setHorizontalGroup(
+        		   layout.createSequentialGroup()
+        		      .addComponent(showResult)
+        		      .addComponent(name)
+        		      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+        		           .addComponent(changeButton)
+        		           .addComponent(testStatus))
+        		      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+           		           .addComponent(deleteButton)
+           		           .addComponent(marginComputation))
+        		);
+        		layout.setVerticalGroup(
+        		   layout.createSequentialGroup()
+        		      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+        		           .addComponent(showResult)
+        		           .addComponent(name)
+        		           .addComponent(changeButton)
+        		           .addComponent(deleteButton))
+        		      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+           		           .addComponent(testStatus)
+           		           .addComponent(marginComputation))
+        		);
+        
+        
     }
     
     
@@ -175,6 +202,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
         StringResourceLoader other = provider.getOtherStringRes();
 
         this.testStatus.setText(other.getStringFromID("check"));
+        this.marginComputation.setText(other.getStringFromID("margin"));
         this.revalidate();
         this.repaint();
     }
@@ -242,4 +270,8 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
         }
     }
 
+	public void setMarginComputationBoxVisible(boolean visible) {
+		marginComputation.setVisible(visible);
+	}
+    
 }

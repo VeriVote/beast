@@ -38,6 +38,8 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	private String currentlyLoadedPropertyListName;
 	private StringLoaderInterface sli;
 	private boolean reactsToInput = true;
+	
+	private boolean showsMarginBox = false;
 
 	private JMenuBar menuBar;
 	private JMenu menuFile;
@@ -226,6 +228,9 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 
 		for (PropertyItem propertyItem : propertyList) {
 			ListItem current = new ListItem(controller, model, propertyItem);
+			
+			current.setMarginComputationBoxVisible(showsMarginBox);
+			
 			if (propertyItem.getResultType() == ResultType.TESTED)
 				this.setNextToPresent(current);
 			current.updateStringRes(sli);
@@ -283,5 +288,9 @@ public class PropertyListWindow extends JFrame implements DisplaysStringsToUser,
 	
 	public JButton getAddNewButton() {
 		return addNewButton;
+	}
+	
+	public void setShowsMarginBox(boolean newValue) {
+		this.showsMarginBox = newValue;
 	}
 }

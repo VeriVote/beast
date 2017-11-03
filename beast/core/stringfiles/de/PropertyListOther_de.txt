@@ -4,6 +4,7 @@ title : Eigenschaftenliste
 newButton : Neu
 createdButton : Bestehende
 check : Analyse
+margin: Margin
 export : Exportieren
 electionType : Wahlverfahren
 election : Wahl
