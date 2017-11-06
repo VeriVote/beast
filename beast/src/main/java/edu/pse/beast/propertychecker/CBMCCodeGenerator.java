@@ -26,9 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This creates the .c file which will be used to check it with CBMC It
- * generates a mainmethod, (with the FormalProperty inside it) important
- * IncludingCode and the votingMethode (the ElectionDescription)
+ * This class creates the .c file which will be checked with CBMC. It
+ * generates a main method (including the FormalProperty), important
+ * IncludingCode and the votingMethod (the ElectionDescription).
  *
  * @author Niels
  */
@@ -42,16 +42,16 @@ public class CBMCCodeGenerator {
     private final ElectionTypeContainer inputType;
     private final ElectionTypeContainer outputType;
     private final CCodeHelper cCodeHelper;
-    private int numberOfTimesVoted; // this number should be the number of rounds of votes the Propertys compare.
+    private int numberOfTimesVoted; // this should be the number of elections compared in the properties.
 
     /**
-     * After the build the code is fully generated and can be aquired by
+     * After the build, the code is fully generated and can be acquired via
      * getCode();
      *
-     * @param electionDescription the lectionDecription that holds the code that
-     * describes the voting method. that code will be merged with the generated
+     * @param electionDescription the electionDecription that holds the code that
+     * describes the voting method. That code will be merged with the generated
      * code
-     * @param postAndPrePropertiesDescription the Descriptions that will be used
+     * @param postAndPrePropertiesDescription the descriptions that will be used
      * to generate the C-Code for CBMC
      */
     public CBMCCodeGenerator(ElectionDescription electionDescription,
@@ -122,7 +122,7 @@ public class CBMCCodeGenerator {
         code.add("}");
     }
 
-    // maybe add something that let's the user use imports
+    // maybe add something that lets the user use imports
     private void addHeader() {
         code.add("#include <stdlib.h>");
         code.add("#include <stdint.h>");
@@ -137,15 +137,15 @@ public class CBMCCodeGenerator {
     }
 
     /**
-     * adds the main method the main method declares the boolean expression. In
-     * the main method the votingmethod is called
+     * Adds the main method. the main method declares the boolean expression.
+     * In the main method, the voting method is called.
      */
     private void addMainMethod() {
 
         code.add("int main(int argc, char *argv[]) {");
         code.addTab();
 
-        // first the Variables have to be Initialized
+        // first the Variables have to be initialized
         addSymbVarInitialisation();
 
         //generating the pre and post AbstractSyntaxTrees
@@ -158,7 +158,7 @@ public class CBMCCodeGenerator {
 
         addVotesArrayAndElectInitialisation();
 
-        // the the PreProperties must be definied
+        // the PreProperties must be defined
         addPreProperties(preAST);
 
         // now the Post Properties can be checked
@@ -184,20 +184,20 @@ public class CBMCCodeGenerator {
 
                     case VOTER:
                         code.add("unsigned int " + id + " = nondet_uint();");
-                        // a Voter is basically an unsigned int.
-                        // The number shows which vote from votesX (the Array of all votes) belongs to the voter.
+                        // a voter is basically an unsigned int.
+                        // The number shows which vote from votesX (the array of all votes) belongs to the voter.
                         code.add("assume(0 <= " + id + " && " + id + " < V);");
-                        // The Voter has to be in the range of possible Voters. V is the total amount of Voters.
+                        // The voter has to be in the range of possible voters. V is the total amount of voters.
                         break;
                     case CANDIDATE:
                         code.add("unsigned int " + id + " = nondet_uint();");
-                        // a Candidate is basically an unsigned int. Candidate 0 is 0 and so on
+                        // a candidate is basically an unsigned int. Candidate 0 is 0 and so on
                         code.add("assume(0 <= " + id + " && " + id + " < C);");
-                        // C is the number of total Candidates. 0 is A Candidate. C is not a candidate
+                        // C is the number of total candidates. 0 is a candidate. C is not a candidate
                         break;
                     case SEAT:
                         // a Seat is a also an unsigned int. 
-                        // The return of a votingmethod (an Array) gives the elected candidate(value) of the seat(id)
+                        // The return of a voting method (an array) gives the elected candidate(value) of the seat(id)
                         code.add("unsigned int " + id + " = nondet_uint();");
                         // there are S seats. From 0 to S-1
                         code.add("assume(0 <= " + id + " && " + id + " < S);");
@@ -270,7 +270,7 @@ public class CBMCCodeGenerator {
 
     private void addVotesArrayAndElectInitialisation() {
 
-        code.add("//voting-array and elect variable initialisation");
+        code.add("//voting array and elect variable initialisation");
 
         for (int voteNumber = 1; voteNumber <= numberOfTimesVoted; voteNumber++) {
 
@@ -283,7 +283,17 @@ public class CBMCCodeGenerator {
 
             InternalTypeContainer inputContainer = inputType.getType();
             int listDepth = 0;
+            String firstVotesElement = "votes" + voteNumber;
             while (inputContainer.isList()) {
+                if (inputType.getInputID() // First rank is always nonempty
+                        == ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE) {
+                    if (inputContainer.getListedType().isList()) {
+                        firstVotesElement += "[COUNTER]".replace("COUNTER", counter[listDepth]);
+                    } else {
+                        firstVotesElement += "[0]";
+                        code.add("assume(" + firstVotesElement + " != C);");
+                    }
+                }
                 String currentFor = forTemplate.replaceAll("COUNTER", counter[listDepth]);
                 currentFor = currentFor.replaceAll("MAX", cCodeHelper.getListSize(inputContainer));
                 code.add(currentFor);
@@ -300,7 +310,13 @@ public class CBMCCodeGenerator {
             }
 
             String nondetInt = (votesElement + " = nondet_uint();");
-            String voteDecl = ("assume((MIN <= " + votesElement + ") && (" + votesElement + " < MAX));");
+            String voteDecl = ("assume((MIN <= " + votesElement + ") && (" + votesElement);
+
+            if (inputType.getInputID() // Allow incomplete rankings
+                    == ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE) {
+                voteDecl += " <= MAX));";
+            } else { voteDecl += " < MAX));"; }
+
             voteDecl = voteDecl.replace("MIN", min);
             voteDecl = voteDecl.replace("MAX", max);
 
@@ -360,8 +376,16 @@ public class CBMCCodeGenerator {
     private void addPreferenceVotingArrayInitialisation(int voteNumber) {
         code.add("for (unsigned int j_prime = 0; j_prime < counter_1; j_prime++) {");
         code.addTab();
-        code.add("assume (votes" + voteNumber + "[counter_0][counter_1] != votes"
+        code.add("if (votes"  + voteNumber + "[counter_0][j_prime] != C) {");
+        code.addTab();
+        code.add("assume(votes" + voteNumber + "[counter_0][counter_1] != votes"
                 + voteNumber + "[counter_0][j_prime]);");
+        code.deleteTab();
+        code.add("} else {");
+        code.addTab();
+        code.add("assume(votes" + voteNumber + "[counter_0][counter_1] == C);");
+        code.deleteTab();
+        code.add("}");
         code.deleteTab();
         code.add("}");
     }
