@@ -1,7 +1,7 @@
 package edu.pse.beast.booleanexpeditor.UserActions;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.toolbox.UserAction;
 
@@ -25,10 +25,10 @@ public class SaveAsPropsUserAction extends UserAction {
 
     @Override
     public void perform() {
-        PostAndPrePropertiesDescription currentlyLoaded = editor.getCurrentlyLoadedPostAndPreProp();
+        PreAndPostConditionsDescription currentlyLoaded = editor.getCurrentlyLoadedPreAndPostCondition();
         if (fileChooser.saveObject(currentlyLoaded, true)) {
             editor.getChangeHandler().updatePreValues();
-            editor.getView().setWindowTitle(editor.getCurrentlyLoadedPostAndPreProp().getName());
+            editor.getView().setWindowTitle(editor.getCurrentlyLoadedPreAndPostCondition().getName());
             editor.findErrorsAndDisplayThem();
         }
     }

@@ -8,7 +8,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 
 import java.util.ArrayList;
@@ -46,8 +46,8 @@ public class PropertyCheckerTest {
         FormalPropertiesDescription preDescr = new FormalPropertiesDescription(pre);
         FormalPropertiesDescription postDescr = new FormalPropertiesDescription(post);
 
-        PostAndPrePropertiesDescription postAndPrePropertiesDescription = new PostAndPrePropertiesDescription("name",
-                preDescr, postDescr, symbolicVariableList);
+        PreAndPostConditionsDescription preAndPostConditionsDescription =
+                new PreAndPostConditionsDescription("name", preDescr, postDescr, symbolicVariableList);
 
         SymbolicVariableList symVariableList = new SymbolicVariableList();
         symVariableList.addSymbolicVariable("u", new InternalTypeContainer(InternalTypeRep.VOTER));
@@ -55,14 +55,14 @@ public class PropertyCheckerTest {
         // symVariableList.addSymbolicVariable("i", new
         // InternalTypeContainer(InternalTypeRep.VOTER));
 
-        postAndPrePropertiesDescription.setSymbolicVariableList(symVariableList);
+        preAndPostConditionsDescription.setSymbolicVariableList(symVariableList);
 
         PropertyChecker propCheck = CheckerFactoryFactory.createPropertyChecker("cbmc");
 
   //      implElectionDescriptionSource eSrc = new implElectionDescriptionSource(electionDescription);
 
-        List<PostAndPrePropertiesDescription> tmp = new ArrayList<PostAndPrePropertiesDescription>();
-        tmp.add(postAndPrePropertiesDescription);
+        List<PreAndPostConditionsDescription> tmp = new ArrayList<PreAndPostConditionsDescription>();
+        tmp.add(preAndPostConditionsDescription);
 
   //      implPropertyDescriptionSource pSrc = new implPropertyDescriptionSource(tmp);
 

@@ -9,6 +9,6 @@ wrong_var_passed_to_votesum_descr : VOTE_SUM_FOR_CANDIDATE erwartet eine Variabl
 wrong_var_passed_to_votesum_unique_descr : VOTE_SUM_FOR_UNIQUE_CANDIDATE erwartet eine Variable vom Typ Wähler. Übergeben wurde VAR vom Typ GIVENTYPE.
 line : Zeile
 char : Zeichen
-preProps : Vorbedingungen
-postProps : Nachbedingungen
+preConditions : Vorbedingungen
+postConditions : Nachbedingungen
 number_must_be_greater_0_descr : Die übergebene Zahl muss größer als Null sein

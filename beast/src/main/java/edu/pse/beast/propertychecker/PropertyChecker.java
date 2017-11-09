@@ -30,7 +30,7 @@ public class PropertyChecker implements ResultCheckerCommunicator {
 
     @Override
     public List<ResultInterface> checkPropertiesForDescription(ElectionDescriptionSource elecDescr,
-            PostAndPrePropertiesDescriptionSource propDescrSrc, ParameterSource params) {
+            PreAndPostConditionsDescriptionSource propDescrSrc, ParameterSource params) {
 
         if (elecDescr == null || propDescrSrc == null || params == null) {
             return null;

@@ -20,7 +20,7 @@ import java.util.Stack;
  * This is the visitor for the codeGeneration For every assert or assume it
  * should be called to visit the top node 1 time it will move down and generate
  * the code. to get the generated code, you have to use the method generateCode
- * You also have to set it either to Pre oder PostPropertyMode.
+ * You also have to set it either to Pre- or PostConditionMode.
  *
  * @author Niels
  */
@@ -74,18 +74,18 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     }
 
     /**
-     * sets the visitor to prePropertyMode. That means the top node will be
+     * sets the visitor to preConditionMode. That means the top node will be
      * assumed in the code
      */
-    public void setToPrePropertyMode() {
+    public void setToPreConditionMode() {
         assumeOrAssert = "assume";
     }
 
     /**
-     * sets the visitor to postPropertyMode. That means the top node will be
+     * sets the visitor to postConditionMode. That means the top node will be
      * asserted in the code
      */
-    public void setToPostPropertyMode() {
+    public void setToPostConditionMode() {
         assumeOrAssert = "assert";
     }
 

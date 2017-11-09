@@ -68,7 +68,7 @@ unsigned int * voting(unsigned int votes[V]) {
 New PropertyList
 </propertyListName>
 <propertyItem>
-<postAndPreProps>
+<preAndPostConditions>
 4 name19 HillaryVsTrumpSEATS3 pre314 VOTE_SUM_FOR_CANDIDATE1(Hillary) >> (V / 2);
 VOTE_SUM_FOR_CANDIDATE1(Trump) < VOTE_SUM_FOR_CANDIDATE1(Hillary);
 VOTE_SUM_FOR_CANDIDATE1(Stein) < VOTE_SUM_FOR_CANDIDATE1(Trump);
@@ -79,7 +79,7 @@ symbolic_variable: id: Hillary type: CANDIDATE;
 symbolic_variable: id: Stein type: CANDIDATE;
 symbolic_variable: id: Johnson type: CANDIDATE;
 
-</postAndPreProps>
+</preAndPostConditions>
 <testStatus>
 true
 </testStatus>

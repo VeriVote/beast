@@ -15,7 +15,7 @@ import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpE
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.saverloader.FileChooser;
@@ -35,11 +35,11 @@ public class BooleanExpEditor implements DisplaysStringsToUser {
     private final SymbolicVarListController symbolicVarListController;
     private final BooleanExpEditorWindowStarter windowStarter;
     private final ErrorWindow errorWindow;
-    private PostAndPrePropertiesDescription currentlyLoadedPostAndPreProp;
+    private PreAndPostConditionsDescription currentlyLoadedPreAndPostCondition;
     private BooleanExpEditorMenubarHandler menuBarHandler;
     private BooleanExpEditorToolbarHandler toolBarHandler;
-    private BooleanExpCodeArea prePropCodeArea;
-    private BooleanExpCodeArea postPropCodeArea;
+    private BooleanExpCodeArea preConditionCodeArea;
+    private BooleanExpCodeArea postConditionCodeArea;
     private final ChangeHandler changeHandler;
     private final CodeAreaFocusListener codeAreaFocusListener;
     private final BooleanExpCodeAreaBuilder codeAreaBuilder;
@@ -54,28 +54,28 @@ public class BooleanExpEditor implements DisplaysStringsToUser {
 
     /**
      * Constructor
-     * @param prePropCodeArea the initial BooleanExpCodeArea object for the preConditions
-     * @param postPropCodeArea the initial BooleanExpCodeArea object for the postConditions
+     * @param preConditionCodeArea the initial BooleanExpCodeArea object for the preConditions
+     * @param postConditionCodeArea the initial BooleanExpCodeArea object for the postConditions
      * @param window the View this class forms the controller to
      * @param symbolicVarListController the controller for the SymbolicVarList displayed in window
-     * @param errorWindow the controller for the TextPane displaying Errors in pre- and post-properties
+     * @param errorWindow the controller for the TextPane displaying Errors in pre- and postconditions
      * @param changeHandler ChangeHandler
      * @param codeAreaFocusListener CodeAreaFocusListener
-     * @param postAndPrePropertiesDescription the initial PostAndPrePropertiesDescription object
+     * @param preAndPostConditionsDescription the initial PreAndPostConditionsDescription object
      * @param codeAreaBuilder the BuilderClass for building BooleanExpCodeAreas
      * @param objectRefsForBuilder the ObjectRefsForBuilder object, used for creating new BooleanExpCodeAreas
      * @param cEditor the CElectionDescriptionEditor object, used for error finding based on the currently loaded
      *                ElectionDescription and its inputs/outputs
      * @param fileChooser the FileChooser object used for saving and loading files
      */
-    BooleanExpEditor(BooleanExpCodeArea prePropCodeArea,
-                     BooleanExpCodeArea postPropCodeArea,
+    BooleanExpEditor(BooleanExpCodeArea preConditionCodeArea,
+                     BooleanExpCodeArea postConditionCodeArea,
                      BooleanExpEditorWindow window,
                      SymbolicVarListController symbolicVarListController,
                      ErrorWindow errorWindow,
                      ChangeHandler changeHandler,
                      CodeAreaFocusListener codeAreaFocusListener,
-                     PostAndPrePropertiesDescription postAndPrePropertiesDescription,
+                     PreAndPostConditionsDescription preAndPostConditionsDescription,
                      BooleanExpCodeAreaBuilder codeAreaBuilder,
                      ObjectRefsForBuilder objectRefsForBuilder,
                      CElectionDescriptionEditor cEditor,
@@ -83,18 +83,18 @@ public class BooleanExpEditor implements DisplaysStringsToUser {
         this.window = window;
         this.objectRefsForBuilder = objectRefsForBuilder;
         this.errorWindow = errorWindow;
-        this.currentlyLoadedPostAndPreProp = postAndPrePropertiesDescription;
+        this.currentlyLoadedPreAndPostCondition = preAndPostConditionsDescription;
         this.symbolicVarListController = symbolicVarListController;
-        this.prePropCodeArea = prePropCodeArea;
-        this.postPropCodeArea = postPropCodeArea;
+        this.preConditionCodeArea = preConditionCodeArea;
+        this.postConditionCodeArea = postConditionCodeArea;
         this.changeHandler = changeHandler;
         this.codeAreaBuilder = codeAreaBuilder;
         this.cEditor = cEditor;
         this.fileChooser = fileChooser;
-        prePropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
-        postPropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
+        preConditionCodeArea.getPane().addFocusListener(codeAreaFocusListener);
+        postConditionCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         this.codeAreaFocusListener = codeAreaFocusListener;
-        letUserEditPostAndPreProperties(postAndPrePropertiesDescription, false);
+        letUserEditPreAndPostConditions(preAndPostConditionsDescription, false);
         windowStarter = new BooleanExpEditorWindowStarter(window);
     }
 
@@ -124,16 +124,18 @@ public class BooleanExpEditor implements DisplaysStringsToUser {
     }
 
     /**
-     * Fetches errors from the pre- and postProp TextPanes in form of CodeError ArrayLists.
+     * Fetches errors from the pre- and postCondition TextPanes in form of CodeError ArrayLists.
      * @return true if no errors were found.
      */
     public boolean findErrorsAndDisplayThem() {
-        ArrayList<CodeError> prePropErrors = prePropCodeArea.getErrorCtrl().getErrorFinderList().getErrors();
-        ArrayList<CodeError> postPropErrors = postPropCodeArea.getErrorCtrl().getErrorFinderList().getErrors();
-        errorWindow.displayErrors(prePropErrors, postPropErrors,
-                ((BooleanExpErrorDisplayer) prePropCodeArea.getErrorCtrl().getDisplayer()));
-        updatePostAndPrePropObject();
-        return (prePropErrors.size() == 0 && postPropErrors.size() == 0);
+        ArrayList<CodeError> preConditionErrors =
+                preConditionCodeArea.getErrorCtrl().getErrorFinderList().getErrors();
+        ArrayList<CodeError> postConditionErrors =
+                postConditionCodeArea.getErrorCtrl().getErrorFinderList().getErrors();
+        errorWindow.displayErrors(preConditionErrors, postConditionErrors,
+                ((BooleanExpErrorDisplayer) preConditionCodeArea.getErrorCtrl().getDisplayer()));
+        updatePreAndPostConditionObject();
+        return (preConditionErrors.size() == 0 && postConditionErrors.size() == 0);
     }
 
     @Override
@@ -154,96 +156,96 @@ public class BooleanExpEditor implements DisplaysStringsToUser {
     void addUserAction(char c, UserAction userAction) {
         userActions.add(userAction);
         userActionChars.add(c);
-        prePropCodeArea.getUserInputHandler().getShortcutHandler().addAction(c, userAction);
+        preConditionCodeArea.getUserInputHandler().getShortcutHandler().addAction(c, userAction);
     }
 
     /**
-     * Loads and displays the given PostAndPrePropertiesDescription Object.
-     * @param postAndPrePropertiesDescription The PostAndPrePropertiesDescription Object
+     * Loads and displays the given PreAndPostConditionsDescription Object.
+     * @param preAndPostConditionsDescription The PreAndPostConditionsDescription Object
      * @param loadedFromPropertyList boolean that is used to know whether the object is loaded from the propertylist,
      *                               or from inside the editor, used for SaveBeforeChange handling
      * @return a boolean stating the success of the loading
      */
-    public boolean letUserEditPostAndPreProperties(PostAndPrePropertiesDescription postAndPrePropertiesDescription,
+    public boolean letUserEditPreAndPostConditions(PreAndPostConditionsDescription preAndPostConditionsDescription,
                                                    boolean loadedFromPropertyList) {
         if (!this.loadedFromPropertyList && changeHandler.hasChanged()) {
-            if (fileChooser.openSaveChangesDialog(getCurrentlyLoadedPostAndPreProp())) {
-                loadNewProperties(postAndPrePropertiesDescription);
+            if (fileChooser.openSaveChangesDialog(getCurrentlyLoadedPreAndPostCondition())) {
+                loadNewProperties(preAndPostConditionsDescription);
                 this.loadedFromPropertyList = loadedFromPropertyList;
                 return true;
             } else {
                 return false;
             }
         } else {
-            loadNewProperties(postAndPrePropertiesDescription);
+            loadNewProperties(preAndPostConditionsDescription);
             this.loadedFromPropertyList = loadedFromPropertyList;
             return true;
         }
     }
 
     /**
-     * Loads the given PostAndPreProperties object into the BooleanExpEditor
-     * @param postAndPrePropertiesDescription the PostAndPreProperties object that should be loaded in the editor
+     * Loads the given PreAndPostConditions object into the BooleanExpEditor
+     * @param preAndPostConditionsDescription the PreAndPostConditions object that should be loaded in the editor
      */
-    public void loadNewProperties(PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
-        updatePostAndPrePropObject();
-        currentlyLoadedPostAndPreProp = postAndPrePropertiesDescription;
-        symbolicVarListController.setSymbVarList(postAndPrePropertiesDescription.getSymbolicVariableList());
+    public void loadNewProperties(PreAndPostConditionsDescription preAndPostConditionsDescription) {
+        updatePreAndPostConditionObject();
+        currentlyLoadedPreAndPostCondition = preAndPostConditionsDescription;
+        symbolicVarListController.setSymbVarList(preAndPostConditionsDescription.getSymbolicVariableList());
         window.setNewTextpanes();
-        changeHandler.addNewTextPanes(window.getPrePropTextPane(), window.getPostPropTextPane());
+        changeHandler.addNewTextPanes(window.getPreConditionTextPane(), window.getPostConditionTextPane());
 
-        cEditor.removeListener(prePropCodeArea.getVariableErrorFinder());
-        cEditor.removeListener(postPropCodeArea.getVariableErrorFinder());
+        cEditor.removeListener(preConditionCodeArea.getVariableErrorFinder());
+        cEditor.removeListener(postConditionCodeArea.getVariableErrorFinder());
 
-        symbolicVarListController.getSymbolicVariableList().removeListener(prePropCodeArea.getVariableErrorFinder().
+        symbolicVarListController.getSymbolicVariableList().removeListener(preConditionCodeArea.getVariableErrorFinder().
                 getLis());
-        symbolicVarListController.getSymbolicVariableList().removeListener(postPropCodeArea.getVariableErrorFinder().
+        symbolicVarListController.getSymbolicVariableList().removeListener(postConditionCodeArea.getVariableErrorFinder().
                 getLis());
 
-        prePropCodeArea.getErrorCtrl().stopThread();
-        postPropCodeArea.getErrorCtrl().stopThread();
+        preConditionCodeArea.getErrorCtrl().stopThread();
+        postConditionCodeArea.getErrorCtrl().stopThread();
 
-        prePropCodeArea.getAutoComplCtrl().stopThread();
-        postPropCodeArea.getAutoComplCtrl().stopThread();
+        preConditionCodeArea.getAutoComplCtrl().stopThread();
+        postConditionCodeArea.getAutoComplCtrl().stopThread();
         
-        prePropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
-                window.getPrePropTextPane(), window.getPrePropScrollPane(),
+        preConditionCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
+                window.getPreConditionTextPane(), window.getPreConditionScrollPane(),
                 symbolicVarListController.getSymbolicVariableList(), cEditor);
-        postPropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
-                window.getPostPropTextPane(), window.getPostPropScrollPane(),
+        postConditionCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
+                window.getPostConditionTextPane(), window.getPostConditionScrollPane(),
                 symbolicVarListController.getSymbolicVariableList(), cEditor);
 
         for (int i = 0; i < userActions.size(); i++) {
             UserAction get = userActions.get(i);
             char c = userActionChars.get(i);
-            prePropCodeArea.linkActionToShortcut(c, get);
-            postPropCodeArea.linkActionToShortcut(c, get);
+            preConditionCodeArea.linkActionToShortcut(c, get);
+            postConditionCodeArea.linkActionToShortcut(c, get);
         }
 
-        cEditor.addListener(prePropCodeArea.getVariableErrorFinder());
-        cEditor.addListener(postPropCodeArea.getVariableErrorFinder());
+        cEditor.addListener(preConditionCodeArea.getVariableErrorFinder());
+        cEditor.addListener(postConditionCodeArea.getVariableErrorFinder());
 
-        postPropCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getInputType());
-        postPropCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getOutputType());
+        postConditionCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getInputType());
+        postConditionCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getOutputType());
 
-        prePropCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getInputType());
-        prePropCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getOutputType());
+        preConditionCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getInputType());
+        preConditionCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getOutputType());
 
-        prePropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
-        postPropCodeArea.getPane().addFocusListener(codeAreaFocusListener);
-        codeAreaFocusListener.addNewCodeAreas(prePropCodeArea, postPropCodeArea);
+        preConditionCodeArea.getPane().addFocusListener(codeAreaFocusListener);
+        postConditionCodeArea.getPane().addFocusListener(codeAreaFocusListener);
+        codeAreaFocusListener.addNewCodeAreas(preConditionCodeArea, postConditionCodeArea);
 
-        prePropCodeArea.getPane().setText(postAndPrePropertiesDescription.getPrePropertiesDescription().getCode());
-        postPropCodeArea.getPane().setText(postAndPrePropertiesDescription.getPostPropertiesDescription().getCode());
+        preConditionCodeArea.getPane().setText(preAndPostConditionsDescription.getPreConditionsDescription().getCode());
+        postConditionCodeArea.getPane().setText(preAndPostConditionsDescription.getPostConditionsDescription().getCode());
 
         this.findErrorsAndDisplayThem();
-        this.window.setWindowTitle(postAndPrePropertiesDescription.getName());
+        this.window.setWindowTitle(preAndPostConditionsDescription.getName());
         changeHandler.updatePreValues();
         objectRefsForBuilder.getOptionIF().getBooleanExpEditorOptions(this, objectRefsForBuilder).reapply();
     }
 
     /**
-     * Method for checking if the currently loaded PostAndPrePropertiesDescription Object contains errors.
+     * Method for checking if the currently loaded PreAndPostConditionsDescription Object contains errors.
      * @return true if there are no errors, false otherwise
      */
     public boolean isCorrect() {
@@ -251,15 +253,15 @@ public class BooleanExpEditor implements DisplaysStringsToUser {
     }
 
     /**
-     * Updates the currentlyLoadedPostAndPreProp object (model) according to the current state of the
+     * Updates the currentlyLoadedPreAndPostCondition object (model) according to the current state of the
      * BooleanExpEditorWindow (View).
      */
-    public void updatePostAndPrePropObject() {
-        currentlyLoadedPostAndPreProp.setPrePropertiesDescription(
-                new FormalPropertiesDescription(prePropCodeArea.getPane().getText()));
-        currentlyLoadedPostAndPreProp.setPostPropertiesDescription(
-                new FormalPropertiesDescription(postPropCodeArea.getPane().getText()));
-        currentlyLoadedPostAndPreProp.getSymVarList().setSymbolicVariableList(
+    public void updatePreAndPostConditionObject() {
+        currentlyLoadedPreAndPostCondition.setPreConditionsDescription(
+                new FormalPropertiesDescription(preConditionCodeArea.getPane().getText()));
+        currentlyLoadedPreAndPostCondition.setPostConditionsDescription(
+                new FormalPropertiesDescription(postConditionCodeArea.getPane().getText()));
+        currentlyLoadedPreAndPostCondition.getSymVarList().setSymbolicVariableList(
                 symbolicVarListController.getSymbolicVariableList().getSymbolicVariables());
     }
 
@@ -290,7 +292,7 @@ public class BooleanExpEditor implements DisplaysStringsToUser {
 
     /**
      * Getter, used by SaveProps/SaveAsProps/LoadProps and NewProps UserActions to load and save files containing
-     * PostAndPrePropertiesDescription objects.
+     * PreAndPostConditionsDescription objects.
      * @return the FileChooser
      */
     public FileChooser getFileChooser() {
@@ -298,12 +300,12 @@ public class BooleanExpEditor implements DisplaysStringsToUser {
     }
 
     /**
-     * Updates the the PostAndPrePropertiesDescription object (model) of this class and
+     * Updates the the PreAndPostConditionsDescription object (model) of this class and
      * @return s it.
      */
-    public PostAndPrePropertiesDescription getCurrentlyLoadedPostAndPreProp() {
-        updatePostAndPrePropObject();
-        return currentlyLoadedPostAndPreProp;
+    public PreAndPostConditionsDescription getCurrentlyLoadedPreAndPostCondition() {
+        updatePreAndPostConditionObject();
+        return currentlyLoadedPreAndPostCondition;
     }
 
     /**
@@ -331,19 +333,19 @@ public class BooleanExpEditor implements DisplaysStringsToUser {
     }
 
     /**
-     * Getter for the current prePropCodeArea
-     * @return the current prePropCodeArea
+     * Getter for the current preConditionCodeArea
+     * @return the current preConditionCodeArea
      */
-    public BooleanExpCodeArea getPrePropCodeArea() {
-        return prePropCodeArea;
+    public BooleanExpCodeArea getPreConditionCodeArea() {
+        return preConditionCodeArea;
     }
 
     /**
-     * Getter for the current postPropCodeArea
-     * @return the current postPropCodeArea
+     * Getter for the current postConditionCodeArea
+     * @return the current postConditionCodeArea
      */
-    public BooleanExpCodeArea getPostPropCodeArea() {
-        return postPropCodeArea;
+    public BooleanExpCodeArea getPostConditionCodeArea() {
+        return postConditionCodeArea;
     }
     
 }

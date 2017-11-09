@@ -43,7 +43,7 @@ public class ParameterEditor implements ParameterSource, MainNotifier, DisplaysS
     /**
      * Constructor which also links the handlers to the View elements
      * @param cElectionDescriptionEditor CElectionDescriptionEditor
-     * @param propertyList PropertyList where the PostAndPrePropertyDescriptions come from
+     * @param propertyList PropertyList where the PreAndPostConditionDescriptions come from
      * @param window View window
      * @param fileChooser FileChooser for saving/loading
      */

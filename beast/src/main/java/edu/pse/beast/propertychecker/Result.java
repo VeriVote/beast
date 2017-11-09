@@ -6,7 +6,7 @@
 package edu.pse.beast.propertychecker;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenterElement;
 
@@ -29,7 +29,7 @@ public abstract class Result implements ResultInterface {
     private int numSeats;
     private int numCandidates;
     private ElectionDescription electionDescription;
-    private PostAndPrePropertiesDescription property;
+    private PreAndPostConditionsDescription property;
     private boolean forcefulleStopped;
 
     /**
@@ -174,7 +174,7 @@ public abstract class Result implements ResultInterface {
      * sets the property that this result contains the result from
      * @param property
      */
-    public void setProperty(PostAndPrePropertiesDescription property) {
+    public void setProperty(PreAndPostConditionsDescription property) {
         this.property = property;
     }
 
@@ -254,7 +254,7 @@ public abstract class Result implements ResultInterface {
         this.forcefulleStopped = true;
     }
     
-    public PostAndPrePropertiesDescription getPropertyDesctiption() {
+    public PreAndPostConditionsDescription getPropertyDesctiption() {
     	return property;
     }
 

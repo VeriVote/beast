@@ -31,24 +31,24 @@ unsigned int voting(unsigned int votes[V][C]) {
 New PropertyList
 </propertyListName>
 <propertyItem>
-<postAndPreProps>
+<preAndPostConditions>
 4 name13 FalseProperty3 pre43 FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);4 post17 ELECT1 != ELECT2;7 varlist94 symbolic_variable: id: Trump type: CANDIDATE;
 symbolic_variable: id: Hillary type: CANDIDATE;
 
-</postAndPreProps>
+</preAndPostConditions>
 <testStatus>
 true
 </testStatus>
 
 </propertyItem>
 <propertyItem>
-<postAndPreProps>
+<preAndPostConditions>
 4 name12 HillaryTrump3 pre178 FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);
 FOR_ALL_CANDIDATES(c) : VOTE_SUM_FOR_CANDIDATE1(Trump) < (V / 2);
 FOR_ALL_CANDIDATES(c) : VOTE_SUM_FOR_CANDIDATE1(Hillary) >> (V / 2);4 post18 ELECT1 != Hillary;7 varlist94 symbolic_variable: id: Trump type: CANDIDATE;
 symbolic_variable: id: Hillary type: CANDIDATE;
 
-</postAndPreProps>
+</preAndPostConditions>
 <testStatus>
 true
 </testStatus>

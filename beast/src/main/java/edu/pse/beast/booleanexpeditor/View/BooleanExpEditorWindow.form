@@ -135,7 +135,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextPane" name="prePropTextPane">
+        <Component class="javax.swing.JTextPane" name="preConditionTextPane">
         </Component>
       </SubComponents>
     </Container>

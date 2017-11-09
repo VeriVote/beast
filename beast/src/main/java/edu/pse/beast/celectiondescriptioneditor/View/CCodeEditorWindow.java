@@ -98,7 +98,7 @@ public class CCodeEditorWindow extends javax.swing.JFrame implements DisplaysStr
     }
 
     /**
-     * Adds the given string to the window title, used for displaying name of currently loaded PostAndPrePropDescription
+     * Adds the given string to the window title, used for displaying name of currently loaded PreAndPostConditionDescription
      * @param s
      */
     public void setWindowTitle(String s) {

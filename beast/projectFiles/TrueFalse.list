@@ -2,10 +2,10 @@
 TrueFalse
 </propertyListName>
 <propertyItem>
-<postAndPreProps>
-<postAndPrePropsName>
+<preAndPostConditions>
+<preAndPostConditionsName>
 False
-</postAndPrePropsName>
+</preAndPostConditionsName>
 <pre>
 FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);
 </pre>
@@ -16,17 +16,17 @@ ELECT1 != ELECT2;
 
 </varlist>
 
-</postAndPreProps>
+</preAndPostConditions>
 <testStatus>
 true
 </testStatus>
 
 </propertyItem>
 <propertyItem>
-<postAndPreProps>
-<postAndPrePropsName>
+<preAndPostConditions>
+<preAndPostConditionsName>
 True
-</postAndPrePropsName>
+</preAndPostConditionsName>
 <pre>
 FOR_ALL_VOTERS(v) : VOTES1(v) == VOTES2(v);
 </pre>
@@ -37,7 +37,7 @@ ELECT1 == ELECT2;
 
 </varlist>
 
-</postAndPreProps>
+</preAndPostConditions>
 <testStatus>
 true
 </testStatus>

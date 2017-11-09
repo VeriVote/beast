@@ -20,8 +20,8 @@ public class PSECentralObjectProviderTest {
         ElectionDescriptionSource failResultEDS = null;
         ElectionDescriptionSource resultEDS = instance.getElectionDescriptionSource();
         assertNotEquals(failResultEDS, resultEDS);
-        PostAndPrePropertiesDescriptionSource failResultPNP = null;
-        PostAndPrePropertiesDescriptionSource resultPNP = instance.getPostAndPrePropertiesSource();
+        PreAndPostConditionsDescriptionSource failResultPNP = null;
+        PreAndPostConditionsDescriptionSource resultPNP = instance.getPreAndPostConditionsSource();
         assertNotEquals(failResultPNP, resultPNP);
         ResultCheckerCommunicator failResultRCC = null;
         ResultCheckerCommunicator resultRCC = instance.getResultCheckerCommunicator();

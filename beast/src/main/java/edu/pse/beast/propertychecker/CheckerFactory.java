@@ -1,7 +1,7 @@
 package edu.pse.beast.propertychecker;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.toolbox.ErrorLogger;
@@ -19,7 +19,7 @@ public abstract class CheckerFactory implements Runnable {
 
     private final FactoryController controller;
     private final ElectionDescriptionSource electionDescSrc;
-    private final PostAndPrePropertiesDescription postAndPrepPropDesc;
+    private final PreAndPostConditionsDescription postAndPrepPropDesc;
     private final ParameterSource paramSrc;
     private final Result result;
     private final long POLLINGINTERVAL = 1000;
@@ -48,7 +48,7 @@ public abstract class CheckerFactory implements Runnable {
      *            the result object where the result has to be put in
      */
     protected CheckerFactory(FactoryController controller, ElectionDescriptionSource electionDescSrc,
-            PostAndPrePropertiesDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result) {
+            PreAndPostConditionsDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result) {
 
         this.controller = controller;
         this.electionDescSrc = electionDescSrc;
@@ -292,7 +292,7 @@ public abstract class CheckerFactory implements Runnable {
      *         other properties
      */
     protected abstract Checker startProcess(ElectionDescriptionSource electionDescSrc,
-            PostAndPrePropertiesDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
+            PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
             CheckerFactory parent);
 
     /**
@@ -349,7 +349,7 @@ public abstract class CheckerFactory implements Runnable {
      * @return a new CheckerFactory
      */
     public abstract CheckerFactory getNewInstance(FactoryController controller,
-            ElectionDescriptionSource electionDescSrc, PostAndPrePropertiesDescription postAndPrepPropDesc,
+            ElectionDescriptionSource electionDescSrc, PreAndPostConditionsDescription postAndPrepPropDesc,
             ParameterSource paramSrc, Result result);
 
     /**

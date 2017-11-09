@@ -2,7 +2,7 @@ package edu.pse.beast.propertylist.Model;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.NameInterface;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.ResultInterface;
 
 import java.awt.Frame;
@@ -42,16 +42,16 @@ public class PLModel extends Observable implements NameInterface {
 		if (indexOfName(newName) != -1 && prop.getDescription().getName() != newName) {
 			return false;
 		}
-		PostAndPrePropertiesDescription old = propertyList.get(index).getDescription();
+		PreAndPostConditionsDescription old = propertyList.get(index).getDescription();
 
-		if (editor != null && editor.getCurrentlyLoadedPostAndPreProp().getName().equals(old.getName())) {
-			old = editor.getCurrentlyLoadedPostAndPreProp();
-			propertyList.get(index).setDescription(newName, old.getPrePropertiesDescription(),
-					old.getPostPropertiesDescription(), old.getSymVarList());
-			editor.letUserEditPostAndPreProperties(propertyList.get(index).getDescription(), true);
+		if (editor != null && editor.getCurrentlyLoadedPreAndPostCondition().getName().equals(old.getName())) {
+			old = editor.getCurrentlyLoadedPreAndPostCondition();
+			propertyList.get(index).setDescription(newName, old.getPreConditionsDescription(),
+					old.getPostConditionsDescription(), old.getSymVarList());
+			editor.letUserEditPreAndPostConditions(propertyList.get(index).getDescription(), true);
 		} else {
-			propertyList.get(index).setDescription(newName, old.getPrePropertiesDescription(),
-					old.getPostPropertiesDescription(), old.getSymVarList());
+			propertyList.get(index).setDescription(newName, old.getPreConditionsDescription(),
+					old.getPostConditionsDescription(), old.getSymVarList());
 		}
 
 		updateView();
@@ -96,10 +96,10 @@ public class PLModel extends Observable implements NameInterface {
 		int i = 0;
 		while (indexOfName(name + i) != -1)
 			i++;
-		PropertyItem newItem = new PropertyItem(new PostAndPrePropertiesDescription(name + i), false, false);
+		PropertyItem newItem = new PropertyItem(new PreAndPostConditionsDescription(name + i), false, false);
 		propertyList.add(newItem);
 		if (editor != null) {
-			editor.letUserEditPostAndPreProperties(newItem.getDescription(), true);
+			editor.letUserEditPreAndPostConditions(newItem.getDescription(), true);
 			editor.getView().setVisible(true);
 		}
 		updateView();
@@ -116,7 +116,7 @@ public class PLModel extends Observable implements NameInterface {
 	 *            property
 	 */
 	public void editProperty(PropertyItem prop, BooleanExpEditor editor) {
-		editor.letUserEditPostAndPreProperties(prop.getDescription(), true);
+		editor.letUserEditPreAndPostConditions(prop.getDescription(), true);
 		editor.getView().setVisible(true);
 		editor.getView().setExtendedState(Frame.NORMAL);
 		updateView();
@@ -137,7 +137,7 @@ public class PLModel extends Observable implements NameInterface {
 		if (propertyList.isEmpty())
 			addNewProperty(editor);
 		if (editor != null) {
-			editor.letUserEditPostAndPreProperties(propertyList.get(0).getDescription(), true);
+			editor.letUserEditPreAndPostConditions(propertyList.get(0).getDescription(), true);
 		}
 		updateView();
 		return true;

@@ -37,7 +37,7 @@ public class CElectionDescriptionEditorChangeHandler {
 
     /**
      * Updates the "pre" variables used for comparison.
-     * Called after a new PostAndPrePropertiesDescription object is loaded or saved.
+     * Called after a new PreAndPostConditionsDescription object is loaded or saved.
      */
     public void updatePreValue() {
         preString = codeArea.getText();

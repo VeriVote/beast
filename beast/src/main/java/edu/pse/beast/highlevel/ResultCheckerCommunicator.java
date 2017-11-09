@@ -17,13 +17,13 @@ public interface ResultCheckerCommunicator {
      * @param elecDescr
      *            ElectionDescriptionSource
      * @param propDescrSrc
-     *            PostAndPrePropertiesDescription
+     *            PreAndPostConditionsDescription
      * @param params
      *            ElectionCheckParameter
      * @return array of ResultInterfaces
      */
     public List<ResultInterface> checkPropertiesForDescription(ElectionDescriptionSource elecDescr,
-            PostAndPrePropertiesDescriptionSource propDescrSrc, ParameterSource params);
+            PreAndPostConditionsDescriptionSource propDescrSrc, ParameterSource params);
 
     /**
      * starts the check for a give file

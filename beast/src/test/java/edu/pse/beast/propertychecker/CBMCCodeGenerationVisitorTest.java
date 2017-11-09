@@ -35,7 +35,7 @@ public class CBMCCodeGenerationVisitorTest {
                 + "unsigned int integerVar_2 = C - integerVar_1;\n"
                 + "unsigned int integer_comp_0 = integerVar_0 == integerVar_2;\n"
                 + "assume(integer_comp_0);\n";
-        visitor.setToPrePropertyMode();
+        visitor.setToPreConditionMode();
         BooleanExpressionNode n
                 = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
                         expression,
@@ -54,7 +54,7 @@ public class CBMCCodeGenerationVisitorTest {
                 + "unsigned int voteSumExp_0 = voteSumForCandidate(votes1, c);\n"
                 + "unsigned int integer_comp_0 = integerVar_0 == voteSumExp_0;\n"
                 + "assume(integer_comp_0);\n";
-        visitor.setToPrePropertyMode();
+        visitor.setToPreConditionMode();
         BooleanExpressionNode n
                 = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
                         expression,
@@ -79,7 +79,7 @@ public class CBMCCodeGenerationVisitorTest {
                 + "comparison_0 = v == voterAtPos_0;\n"
                 + "assume(comparison_0);\n";
 
-        visitor.setToPrePropertyMode();
+        visitor.setToPreConditionMode();
         BooleanExpressionNode n = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
                 expression,
                 new SymbolicVariable(
@@ -108,7 +108,7 @@ public class CBMCCodeGenerationVisitorTest {
                 = "1 == VOTE_SUM_FOR_CANDIDATE1(c) * VOTE_SUM_FOR_CANDIDATE2(c)"
                 + " - VOTE_SUM_FOR_CANDIDATE3(c) / 5 + V;";
 
-        visitor.setToPrePropertyMode();
+        visitor.setToPreConditionMode();
         BooleanExpressionNode n = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
                 expression,
                 new SymbolicVariable(
@@ -131,7 +131,7 @@ public class CBMCCodeGenerationVisitorTest {
                         new SymbolicVariable(
                                 "c", new InternalTypeContainer(InternalTypeRep.CANDIDATE))).
                         getBooleanExpressions().get(0).get(0);
-        visitor.setToPrePropertyMode();
+        visitor.setToPreConditionMode();
         List<String> c = visitor.generateCode(n);
         String actual = listToString(c);
         Assert.assertEquals(expected, actual);
@@ -153,7 +153,7 @@ public class CBMCCodeGenerationVisitorTest {
                         new SymbolicVariable(
                                 "c", new InternalTypeContainer(InternalTypeRep.CANDIDATE))).
                         getBooleanExpressions().get(0).get(0);
-        visitor.setToPrePropertyMode();
+        visitor.setToPreConditionMode();
         List<String> c = visitor.generateCode(n);
         String actual = listToString(c);
         Assert.assertEquals(expected, actual);
@@ -175,7 +175,7 @@ public class CBMCCodeGenerationVisitorTest {
                         new SymbolicVariable(
                                 "c", new InternalTypeContainer(InternalTypeRep.CANDIDATE))).
                         getBooleanExpressions().get(0).get(0);
-        visitor.setToPrePropertyMode();
+        visitor.setToPreConditionMode();
         List<String> c = visitor.generateCode(n);
         String actual = listToString(c);
         Assert.assertEquals(expected, actual);
@@ -195,7 +195,7 @@ public class CBMCCodeGenerationVisitorTest {
                                 new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER))
                 )
                 .   getBooleanExpressions().get(0).get(0);
-        visitor.setToPrePropertyMode();
+        visitor.setToPreConditionMode();
         List<String> c = visitor.generateCode(n);
         String actual = listToString(c);
         Assert.assertEquals(expected, actual);
@@ -215,7 +215,7 @@ public class CBMCCodeGenerationVisitorTest {
                                 new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER))
                 )
                 .getBooleanExpressions().get(1).get(0);
-        visitor.setToPrePropertyMode();
+        visitor.setToPreConditionMode();
         List<String> c = visitor.generateCode(n);
         String actual = listToString(c);
         Assert.assertEquals(expected, actual);
@@ -236,7 +236,7 @@ public class CBMCCodeGenerationVisitorTest {
         )
         .getBooleanExpressions().get(0).get(0);
 
-        visitor.setToPrePropertyMode();
+        visitor.setToPreConditionMode();
         List<String> c = visitor.generateCode(n);
         String actual = listToString(c);
         Assert.assertEquals(expected, actual);
@@ -259,7 +259,7 @@ public class CBMCCodeGenerationVisitorTest {
         )
         .getBooleanExpressions().get(0).get(0);
 
-        visitor.setToPrePropertyMode();
+        visitor.setToPreConditionMode();
         List<String> c = visitor.generateCode(n);
         String actual = listToString(c);
         Assert.assertEquals(expected, actual);
@@ -284,7 +284,7 @@ public class CBMCCodeGenerationVisitorTest {
                 new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE)
         ).getBooleanExpressions().get(0).get(0);
 
-        visitor.setToPrePropertyMode();
+        visitor.setToPreConditionMode();
         List<String> c = visitor.generateCode(n);
         String actual = listToString(c);
         Assert.assertEquals(expected, actual);
@@ -317,7 +317,7 @@ public class CBMCCodeGenerationVisitorTest {
                 new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.WEIGHTED_APPROVAL)
         ).getBooleanExpressions().get(0).get(0);
 
-        visitor.setToPrePropertyMode();
+        visitor.setToPreConditionMode();
         List<String> c = visitor.generateCode(n);
         String actual = listToString(c);
         Assert.assertEquals(expected, actual);
@@ -349,7 +349,7 @@ public class CBMCCodeGenerationVisitorTest {
                 new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.APPROVAL)
         ).getBooleanExpressions().get(1).get(0);
 
-        visitor.setToPrePropertyMode();
+        visitor.setToPreConditionMode();
         List<String> c = visitor.generateCode(n);
         String actual = listToString(c);
         Assert.assertEquals(expected, actual);
@@ -374,7 +374,7 @@ public class CBMCCodeGenerationVisitorTest {
                 new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionOutputTypeIds.CAND_PER_SEAT)
         ).getBooleanExpressions().get(2).get(0);
 
-        visitor.setToPrePropertyMode();
+        visitor.setToPreConditionMode();
         List<String> c = visitor.generateCode(n);
         String actual = listToString(c);
         Assert.assertEquals(expected, actual);

@@ -7,9 +7,9 @@ unsigned int voting(unsigned int votes[V]) {
 New PropertyList
 </propertyListName>
 <propertyItem>
-<postAndPreProps>
+<preAndPostConditions>
 4 name13 Eigenschaft 03 pre16                 4 post17 ELECT1 != ELECT2;7 varlist0 
-</postAndPreProps>
+</preAndPostConditions>
 <testStatus>
 true
 </testStatus>

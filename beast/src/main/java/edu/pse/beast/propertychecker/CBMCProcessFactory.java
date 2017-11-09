@@ -1,6 +1,6 @@
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.options.ParametereditorOptions.ParametereditorOptions;
@@ -46,7 +46,7 @@ public class CBMCProcessFactory extends CheckerFactory {
      *            the result object that the end result should be written to
      */
     protected CBMCProcessFactory(FactoryController controller, ElectionDescriptionSource electionDescSrc,
-            PostAndPrePropertiesDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result) {
+            PreAndPostConditionsDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result) {
         super(controller, electionDescSrc, postAndPrepPropDesc, paramSrc, result);
         os = determineOS();
     }
@@ -58,7 +58,7 @@ public class CBMCProcessFactory extends CheckerFactory {
 
 	@Override
     protected Checker startProcess(ElectionDescriptionSource electionDescSrc,
-            PostAndPrePropertiesDescription postAndPrepPropDesc, String advanced, int voters, int candidates,
+            PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates,
             int seats, CheckerFactory parent) {
 
         String userOptions = advanced.trim().replaceAll(" +", " ");
@@ -163,7 +163,7 @@ public class CBMCProcessFactory extends CheckerFactory {
 
     @Override
     public CheckerFactory getNewInstance(FactoryController controller, ElectionDescriptionSource electionDescSrc,
-            PostAndPrePropertiesDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result) {
+            PreAndPostConditionsDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result) {
         return new CBMCProcessFactory(controller, electionDescSrc, postAndPrepPropDesc, paramSrc, result);
     }
     
@@ -191,7 +191,7 @@ public class CBMCProcessFactory extends CheckerFactory {
      * @return a file that contains the generated code from the two above variables
      */
     public File createCodeFile(ElectionDescriptionSource electionDescSrc,
-            PostAndPrePropertiesDescription postAndPrepPropDesc) {
+            PreAndPostConditionsDescription postAndPrepPropDesc) {
 
         // create a code generator, that creates a code file for this call only
         // one time in this factory factory;

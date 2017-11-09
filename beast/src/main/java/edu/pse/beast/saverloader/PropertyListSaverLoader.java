@@ -1,6 +1,6 @@
 package edu.pse.beast.saverloader;
 
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 
@@ -10,14 +10,14 @@ import edu.pse.beast.propertylist.Model.PropertyItem;
  * @author NikolaiLMS
  */
 public class PropertyListSaverLoader implements SaverLoader {
-    private PostAndPrePropertiesDescriptionSaverLoader postAndPrePropertiesDescriptionSaverLoader;
+    private PreAndPostConditionsDescriptionSaverLoader preAndPostConditionsDescriptionSaverLoader;
 
     /**
      * Constructor
-     * Initializes PostAndPrePropertiesDescriptionSaverLoader object.
+     * Initializes PreAndPostConditionsDescriptionSaverLoader object.
      */
     public PropertyListSaverLoader() {
-        this.postAndPrePropertiesDescriptionSaverLoader = new PostAndPrePropertiesDescriptionSaverLoader();
+        this.preAndPostConditionsDescriptionSaverLoader = new PreAndPostConditionsDescriptionSaverLoader();
     }
 
     @Override
@@ -51,19 +51,19 @@ public class PropertyListSaverLoader implements SaverLoader {
 
 
     private String createPropertyItemString(PropertyItem propertyItem) {
-        String postAndPreProps = "<postAndPreProps>\n"
-                + postAndPrePropertiesDescriptionSaverLoader.createSaveString(propertyItem.getDescription())
-                + "\n</postAndPreProps>\n";
+        String preAndPostConditions = "<postAndPreConditions>\n"
+                + preAndPostConditionsDescriptionSaverLoader.createSaveString(propertyItem.getDescription())
+                + "\n</preAndPostConditions>\n";
         String testStatus = "<testStatus>\n" + propertyItem.getTestStatus() + "\n</testStatus>\n";
         String marginStatus = "<marginStatus>\n" + propertyItem.getMarginStatus() + "\n</marginStatus>\n";
-        return postAndPreProps + testStatus + marginStatus;
+        return preAndPostConditions + testStatus + marginStatus;
     }
 
     private PropertyItem createPropertyItem(String saveString) throws ArrayIndexOutOfBoundsException {
-        String [] split = saveString.split("\n</postAndPreProps>\n");
-        PostAndPrePropertiesDescription postAndPrePropertiesDescription
-                = ((PostAndPrePropertiesDescription) postAndPrePropertiesDescriptionSaverLoader.
-                        createFromSaveString(split[0].replace("<postAndPreProps>\n", "")));
+        String [] split = saveString.split("\n</preAndPostConditions>\n");
+        PreAndPostConditionsDescription preAndPostConditionsDescription
+                = ((PreAndPostConditionsDescription) preAndPostConditionsDescriptionSaverLoader.
+                        createFromSaveString(split[0].replace("<preAndPostConditions>\n", "")));
         split = split[1].split("\n</testStatus>\n");
         
         boolean willBeTested = (split[0].replace("<testStatus>\n", "")).equals("true");
@@ -72,6 +72,6 @@ public class PropertyListSaverLoader implements SaverLoader {
         
         boolean willBeMargined = (split[0].replace("<marginStatus>\n", "")).equals("true");
         
-        return new PropertyItem(postAndPrePropertiesDescription, willBeTested, willBeMargined);
+        return new PropertyItem(preAndPostConditionsDescription, willBeTested, willBeMargined);
     }
 }

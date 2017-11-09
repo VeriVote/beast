@@ -9,6 +9,6 @@ wrong_var_passed_to_votesum_descr : VOTE_SUM_FOR_CANDIDATE expects a variable of
 wrong_var_passed_to_votesum_unique_descr : VOTE_SUM_FOR_UNIQUE_CANDIDATE expects a variable of type candidate. You passed VAR of type GIVENTYPE.
 line : Line
 char : Character
-preProps : Pre-conditions
-postProps : Post-conditions
+preConditions : Preconditions
+postConditions : Postconditions
 number_must_be_greater_0_descr : The passed number must be greater than zero

@@ -1,6 +1,6 @@
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.toolbox.ErrorLogger;
@@ -77,7 +77,7 @@ public final class CheckerFactoryFactory {
      * @return a new CheckerFactory if the ID was found, else null
      */
     public static CheckerFactory getCheckerFactory(String checkerID, FactoryController controller,
-            ElectionDescriptionSource electionDescSrc, PostAndPrePropertiesDescription postAndPrepPropDesc,
+            ElectionDescriptionSource electionDescSrc, PreAndPostConditionsDescription postAndPrepPropDesc,
             ParameterSource paramSrc, Result result) {
         init();
 

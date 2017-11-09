@@ -451,8 +451,8 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 	// public void test() {
 	// ElectionDescriptionSource electSrc =
 	// centralObjectProvider.getElectionDescriptionSource();
-	// PostAndPrePropertiesDescriptionSource postAndPreSrc =
-	// centralObjectProvider.getPostAndPrePropertiesSource();
+	// PreAndPostConditionsDescriptionSource preAndPostSrc =
+	// centralObjectProvider.getPreAndPostConditionsSource();
 	// ParameterSource paramSrc = centralObjectProvider.getParameterSrc();
 	// CheckStatusDisplay checkStatusDisplayer =
 	// centralObjectProvider.getCheckStatusDisplay();
@@ -480,18 +480,18 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 	// double passedTimeSeconds = 0;
 	//
 	// boolean[] resultPresented = new
-	// boolean[postAndPreSrc.getPostAndPrePropertiesDescriptions().size()];
+	// boolean[preAndPostSrc.getPreAndPostConditionsDescriptions().size()];
 	//
 	// int numberOfPresentedResults = 0;
 	//
 	// while (numberOfPresentedResults <
-	// postAndPreSrc.getPostAndPrePropertiesDescriptions().size()) {
+	// postAndPreSrc.getPreAndPostConditionsDescriptions().size()) {
 	// elapsedTime = System.nanoTime() - startTime;
 	// passedTimeSeconds = (double) elapsedTime / 1000000000.0;
 	// timeString = createTimeString(passedTimeSeconds);
 	//
 	// checkStatusDisplayer.displayText("waitingForPropertyResult", true,
-	// postAndPreSrc.getPostAndPrePropertiesDescriptions().get(numberOfPresentedResults)
+	// preAndPostSrc.getPreAndPostConditionsDescriptions().get(numberOfPresentedResults)
 	// .getName() + "' (" + timeString + ")");
 	//
 	// try {

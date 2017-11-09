@@ -21,9 +21,9 @@ public class SavePropsUserAction extends UserAction {
 
     @Override
     public void perform() {
-        if (editor.getFileChooser().saveObject(editor.getCurrentlyLoadedPostAndPreProp(), false)) {
+        if (editor.getFileChooser().saveObject(editor.getCurrentlyLoadedPreAndPostCondition(), false)) {
             editor.getChangeHandler().updatePreValues();
-            editor.getView().setWindowTitle(editor.getCurrentlyLoadedPostAndPreProp().getName());
+            editor.getView().setWindowTitle(editor.getCurrentlyLoadedPreAndPostCondition().getName());
             editor.findErrorsAndDisplayThem();
         }
     }

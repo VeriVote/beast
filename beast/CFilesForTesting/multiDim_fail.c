@@ -82,7 +82,7 @@ int main(int argc, char *argv[]) {
 	unsigned int elect2;
 	elect2 = voting(votes2);
 	
-	//preproperties 
+	//preconditions
 	
 	unsigned int forAll_0 = 1;
 	for(unsigned int i = 0; i < V && forAll_0; i++) {
@@ -101,7 +101,7 @@ int main(int argc, char *argv[]) {
 	forAll_0 = 1;
 	assume(forAll_0);
 	
-	//postproperties 
+	//postconditions
 	
 	unsigned int comparison_3 = 1;
 	comparison_3 = elect1 == elect2;

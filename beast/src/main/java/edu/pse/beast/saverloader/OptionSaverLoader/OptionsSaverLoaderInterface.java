@@ -67,7 +67,7 @@ public class OptionsSaverLoaderInterface {
     private static BooleanExpCodeAreaOptions loadBooleanExpCodeAreaOpts(
             BooleanExpEditor editor,
             LinkedList<String> saveString) {
-        CodeAreaOptions codeAreaOpts = loadCodeAreaOpts(editor.getPrePropCodeArea(), saveString);
+        CodeAreaOptions codeAreaOpts = loadCodeAreaOpts(editor.getPreConditionCodeArea(), saveString);
         BooleanExpCodeAreaOptions created = new BooleanExpCodeAreaOptions(editor, codeAreaOpts);
         return created;
     }

@@ -2,12 +2,12 @@ package edu.pse.beast.booleanexpeditor.UserActions;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
- * UserAction subclass responsible creating a new PostAndPrePropertiesDescription object and loading it into the editor
+ * UserAction subclass responsible creating a new PreAndPostConditionsDescription object and loading it into the editor
  * and propertylist.
  * @author NikolaiLMS
  */
@@ -25,19 +25,19 @@ public class NewPropsUserAction extends UserAction {
 
     /**
      * Method that
-     * @return s an empty PostAndPrePropertiesDescription object that can be loaded into the editor/propertylist.
+     * @return s an empty PreAndPostConditionsDescription object that can be loaded into the editor/propertylist.
      */
-    public static PostAndPrePropertiesDescription createEmptyPostAndPropObject() {
+    public static PreAndPostConditionsDescription createEmptyPreAndPostConditionObject() {
         FormalPropertiesDescription preDesc = new FormalPropertiesDescription("");
         FormalPropertiesDescription postDesc = new FormalPropertiesDescription("");
         SymbolicVariableList symbolicVariableList = new SymbolicVariableList();
-        return new PostAndPrePropertiesDescription("NewFormalProperty", preDesc, postDesc,
+        return new PreAndPostConditionsDescription("NewFormalProperty", preDesc, postDesc,
                         symbolicVariableList);
     }
 
     @Override
     public void perform() {
-        if (booleanExpEditor.letUserEditPostAndPreProperties(createEmptyPostAndPropObject(), false)) {
+        if (booleanExpEditor.letUserEditPreAndPostConditions(createEmptyPreAndPostConditionObject(), false)) {
             booleanExpEditor.getFileChooser().setHasBeenSaved(false);
             booleanExpEditor.getPropertyListController().addNewProperty();
         }
