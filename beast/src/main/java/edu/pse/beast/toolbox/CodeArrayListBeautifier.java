@@ -6,6 +6,7 @@
 package edu.pse.beast.toolbox;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -73,11 +74,15 @@ public class CodeArrayListBeautifier {
      *
      * @param arrayList the added ArrayList
      */
-    public void addArrayList(ArrayList<String> arrayList) {
+    public void addArrayList(List<String> arrayList) {
         if (arrayList != null) {
             arrayList.forEach((singleItem) -> {
                 this.add(singleItem);
             });
         }
     }
+
+	public void addAll(List<String> votingResultCode) {
+		addArrayList(votingResultCode);
+	}
 }

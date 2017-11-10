@@ -8,6 +8,7 @@ package edu.pse.beast.propertylist;
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
+import edu.pse.beast.highlevel.PropertyAndMarginBool;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenter;
 import edu.pse.beast.propertylist.Model.PLModel;
@@ -212,6 +213,22 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
         }
         return result;
     }
+    
+	@Override
+	public List<PropertyAndMarginBool> getPostAndPrePropertiesDescriptionsCheckAndMargin() {
+		ArrayList<PropertyAndMarginBool> result = new ArrayList<PropertyAndMarginBool>();
+        ArrayList<PropertyItem> from = model.getPropertyList();
+        editor.updatePostAndPrePropObject();
+        for (PropertyItem prop : from) {
+            if (prop.getTestStatus()) {
+                result.add(new PropertyAndMarginBool(prop.getDescription(), false));
+            }
+            if (prop.getMarginStatus()) {
+                result.add(new PropertyAndMarginBool(prop.getDescription(), true));
+            }
+        }
+        return result;
+	}
 
     @Override
     public void presentResult(ResultInterface res, Integer index) {
@@ -302,6 +319,4 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
 			listItem.setMarginComputationBoxVisible(visible);
 		}
 	}
-
-
 }

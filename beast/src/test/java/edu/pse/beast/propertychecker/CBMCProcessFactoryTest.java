@@ -14,7 +14,7 @@ public class CBMCProcessFactoryTest {
 	
 	@Before
 	public void setup() {
-		prosFac  = new CBMCProcessFactory(null, null, null, null, null);
+		prosFac  = new CBMCProcessFactory(null, null, null, null, null, false);
 	}
 	
 	@Test

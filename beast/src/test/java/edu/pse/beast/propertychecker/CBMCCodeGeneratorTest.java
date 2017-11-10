@@ -197,7 +197,7 @@ public class CBMCCodeGeneratorTest {
         PostAndPrePropertiesDescription postAndPrePropertiesDescription
                 = new PostAndPrePropertiesDescription("name", preDescr, postDescr, symVariableList);
 
-        instance = new CBMCCodeGenerator(electionDescription, postAndPrePropertiesDescription);
+        instance = new CBMCCodeGenerator(electionDescription, postAndPrePropertiesDescription, 0, null, false);
 
     }
 

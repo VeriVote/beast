@@ -185,4 +185,8 @@ public abstract class Checker implements Runnable {
 	 * system specific implementation to stop the process that got started
 	 */
 	protected abstract void stopProcess();
+	
+	public abstract boolean checkAssertionSuccess();
+	
+	public abstract boolean checkAssertionFailure();
 }

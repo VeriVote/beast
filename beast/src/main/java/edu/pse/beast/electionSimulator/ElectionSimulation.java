@@ -36,9 +36,9 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 
 	private final String pathToTempFolder = "/core/c_tempfiles/";
 
-	private ElectionTypeContainer inputContainer;
+	private static ElectionTypeContainer inputContainer;
 
-	private ElectionTypeContainer outputContainer;
+	private static ElectionTypeContainer outputContainer;
 
 	private PSECentralObjectProvider centralObjectProvider;
 
@@ -52,16 +52,16 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 
 	private StringLoaderInterface sli;
 	
-	private Modes currentMode = Modes.searchMinDiffAndShowCBMC;
+	private static Modes currentMode = Modes.searchMinDiffAndShowCBMC;
 
 	private final long SLEEPINTERVAL = 1000; // sleep interval in milliseconds
 
-	private enum Modes {
+	public enum Modes {
 		compileAndRun, compileAndRunCBMC, searchMinDiffAndShowCandCBMC, searchMinDiffAndShowCBMC;
 	}
 
-	private ElectionSimulationWindow view;
-	private ElectionSimulationModel model;
+	private static ElectionSimulationWindow view;
+	private static ElectionSimulationModel model;
 
 	public ElectionSimulation() {
 		this(new StringLoaderInterface("en"));
@@ -294,25 +294,25 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 				public void run() {
 					if (!BEASTCommunicator.checkForErrors(centralObjectProvider)) {
 
-						BEASTCommunicator.stopReacting(centralObjectProvider);
-
-						centralObjectProvider.getCheckStatusDisplay().displayText("startingCheck", true, "");
-
-						int[][] votingData = new int[model.getAmountVoters()][model.getAmountCandidates()];
-
-						// read the data in a 2d array
-						for (int i = 0; i < model.getAmountVoters(); i++) {
-							for (int j = 0; j < model.getAmountCandidates(); j++) {
-								votingData[i][j] = model.getRows().get(i).getValues().get(j);
-							}
-						}
+//						BEASTCommunicator.stopReacting(centralObjectProvider);
+//
+//						centralObjectProvider.getCheckStatusDisplay().displayText("startingCheck", true, "");
+//
+//						int[][] votingData = new int[model.getAmountVoters()][model.getAmountCandidates()];
+//
+//						// read the data in a 2d array
+//						for (int i = 0; i < model.getAmountVoters(); i++) {
+//							for (int j = 0; j < model.getAmountCandidates(); j++) {
+//								votingData[i][j] = model.getRows().get(i).getValues().get(j);
+//							}
+//						}
 
 						// set the values for the vote
-						centralObjectProvider.getParameterEditor().setVoterAmount(model.getAmountVoters());
-						centralObjectProvider.getParameterEditor().setCandidateAmount(model.getAmountCandidates());
-						centralObjectProvider.getParameterEditor().setSeatAmount(model.getAmountCandidates());
+//						centralObjectProvider.getParameterEditor().setVoterAmount(model.getAmountVoters());
+//						centralObjectProvider.getParameterEditor().setCandidateAmount(model.getAmountCandidates());
+//						centralObjectProvider.getParameterEditor().setSeatAmount(model.getAmountCandidates());
 
-						List<String> codeLines = generateRunnableCode(votingData);
+//						List<String> codeLines = generateRunnableCode(votingData);
 
 						List<Integer> winnerResults = CompilerAndExecutioner.compileAndRun(codeLines);
 						// here we now have the winner(s) of the computation
@@ -1096,5 +1096,42 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 		default:
 			break;
 		}
+	}
+
+	public static int[][] getVotingData() {
+		int[][] votingData = new int[model.getAmountVoters()][model.getAmountCandidates()];
+
+		// read the data in a 2d array
+		for (int i = 0; i < model.getAmountVoters(); i++) {
+			for (int j = 0; j < model.getAmountCandidates(); j++) {
+				votingData[i][j] = model.getRows().get(i).getValues().get(j);
+			}
+		}
+		
+		return votingData;
+	}
+
+	public static int getNumVoters() {
+		return model.getAmountVoters();
+	}
+	
+	public static int getNumCandidates() {
+		if (!outputContainer.getResultTypeSeats()) {
+			return model.getAmountCandidates();
+		} else {
+			return 0;
+		}
+	}
+	
+	public static int getNumSeats() {
+		if (outputContainer.getResultTypeSeats()) {
+			return model.getAmountCandidates();
+		} else {
+			return 0;
+		}
+	}
+
+	public static Modes getMode() {
+		return currentMode;
 	}
 }

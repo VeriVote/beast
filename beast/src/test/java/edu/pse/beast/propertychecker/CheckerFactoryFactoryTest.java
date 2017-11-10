@@ -41,7 +41,7 @@ public class CheckerFactoryFactoryTest {
     
     @Test
     public void createCheckerfactorySuccess() {
-        CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory("cbmc", null, null, null, null, null);
+        CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory("cbmc", null, null, null, null, null, false);
         
         assertNotNull(factory);
         
@@ -50,7 +50,7 @@ public class CheckerFactoryFactoryTest {
     
     @Test
     public void createCheckerfactoryFailure() {
-        CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory("nicht_cbmc", null, null, null, null, null);
+        CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory("nicht_cbmc", null, null, null, null, null, false);
         
         assertNull(factory);
     }

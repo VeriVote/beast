@@ -122,10 +122,7 @@ public class ElectionSimulationWindow extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
 		this.getContentPane().addComponentListener(controller);
-
-		// add initial row
-	//	rows.add(new RowOfValues(this, container, model.getAmountCandidates(), model.getElementWidth(), model.getElementHeight(),  model.getWidthMultiplier()));
-
+		
 		this.setLayout(null);
 		this.setBounds(0, 0, model.getStartWidth(), model.getStartHeight());
 

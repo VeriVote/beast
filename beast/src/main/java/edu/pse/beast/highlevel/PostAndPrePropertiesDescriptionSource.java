@@ -17,6 +17,7 @@ public interface PostAndPrePropertiesDescriptionSource {
      * @return PostAndPrePropertiesDescription
      */
     List<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptionsCheck();
+    
     /**
      * Provides access to the description of post and preproperties for the
      * election for which the margin computation is wished.
@@ -36,5 +37,10 @@ public interface PostAndPrePropertiesDescriptionSource {
      * Resumes reacting to user input after the check is over.
      */
     void resumeReacting();
-    
+
+    /**
+     * gives all properties for which a check (AND OR) a margin computation are requested
+     * @return
+     */
+	List<PropertyAndMarginBool> getPostAndPrePropertiesDescriptionsCheckAndMargin();
 }

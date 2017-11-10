@@ -22,7 +22,7 @@ public final class CheckerFactoryFactory {
     private static void init() {
         if (!initialized) {
             // cbmc is always included, so we add it here
-            factories.put("CBMC", new CBMCProcessFactory(null, null, null, null, null));
+            factories.put("CBMC", new CBMCProcessFactory(null, null, null, null, null, false));
 
             // TODO search for other classes
 
@@ -74,16 +74,17 @@ public final class CheckerFactoryFactory {
      *            the parameters
      * @param result
      *            the result object where the result should be put in
+     * @param  
      * @return a new CheckerFactory if the ID was found, else null
      */
     public static CheckerFactory getCheckerFactory(String checkerID, FactoryController controller,
             ElectionDescriptionSource electionDescSrc, PostAndPrePropertiesDescription postAndPrepPropDesc,
-            ParameterSource paramSrc, Result result) {
+            ParameterSource paramSrc, Result result, boolean isMargin) {
         init();
 
         if (factories.keySet().contains(checkerID)) {
             return factories.get(checkerID).getNewInstance(controller, electionDescSrc, postAndPrepPropDesc,
-                    paramSrc, result);
+                    paramSrc, result, isMargin);
 
         } else {
             ErrorLogger.log("The specified checkerID wasn't found");
@@ -92,12 +93,12 @@ public final class CheckerFactoryFactory {
     }
     
     public static CheckerFactory getCheckerFactory(String checkerID, FactoryController controller, File toCheck,
-			ParameterSource paramSrc, Result result) {
+			ParameterSource paramSrc, Result result, boolean isMargin) {
     	init();
 
         if (factories.keySet().contains(checkerID)) {
             return factories.get(checkerID).getNewInstance(controller, toCheck,
-                    paramSrc, result);
+                    paramSrc, result, isMargin);
 
         } else {
             ErrorLogger.log("The specified checkerID wasn't found");
