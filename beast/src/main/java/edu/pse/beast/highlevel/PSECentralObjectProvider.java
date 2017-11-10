@@ -60,7 +60,7 @@ public class PSECentralObjectProvider implements CentralObjectProvider {
     }
 
     @Override
-    public PostAndPrePropertiesDescriptionSource getPostAndPrePropertiesSource() {
+    public PreAndPostConditionsDescriptionSource getPreAndPostConditionsSource() {
         return propertyList;
     }
 

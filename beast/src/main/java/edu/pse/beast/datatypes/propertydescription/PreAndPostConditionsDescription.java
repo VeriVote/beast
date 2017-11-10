@@ -13,52 +13,52 @@ import java.util.List;
  *
  * @author Niels
  */
-public class PostAndPrePropertiesDescription implements NameInterface {
+public class PreAndPostConditionsDescription implements NameInterface {
 
     private String name;
     private SymbolicVariableList symbolicVariableList;
-    private FormalPropertiesDescription prePropertiesDescription;
-    private FormalPropertiesDescription postPropertiesDescription;
+    private FormalPropertiesDescription preConditionsDescription;
+    private FormalPropertiesDescription postConditionsDescription;
 
     /**
      *
      * @param name HAS to be UNIQUE in the context
      */
-    public PostAndPrePropertiesDescription(String name) {
+    public PreAndPostConditionsDescription(String name) {
         this.name = name;
         this.symbolicVariableList = new SymbolicVariableList();
-        this.prePropertiesDescription = new FormalPropertiesDescription("");
-        this.postPropertiesDescription = new FormalPropertiesDescription("");
+        this.preConditionsDescription = new FormalPropertiesDescription("");
+        this.postConditionsDescription = new FormalPropertiesDescription("");
     }
 
     /**
      * Creator without a SymbolicVariableList
      *
      * @param name HAS to be UNIQUE in the context
-     * @param preDescr the prePropterie Description of the Property
-     * @param postDescr the postPropterie Description of the Property
+     * @param preDescr the preCondition Description of the Property
+     * @param postDescr the postCondition Description of the Property
      */
-    public PostAndPrePropertiesDescription(String name, FormalPropertiesDescription preDescr,
+    public PreAndPostConditionsDescription(String name, FormalPropertiesDescription preDescr,
             FormalPropertiesDescription postDescr) {
         this.name = name;
-        this.prePropertiesDescription = preDescr;
-        this.postPropertiesDescription = postDescr;
+        this.preConditionsDescription = preDescr;
+        this.postConditionsDescription = postDescr;
     }
 
     /**
      * Creator with a SymbolicVariableList
      *
-     * @param name name of the PostAndPrePropertiesDescription
-     * @param preDescr The prePropertyDescription
-     * @param postDescr The postPropertyDescription
+     * @param name name of the PreAndPostConditionsDescription
+     * @param preDescr The preConditionDescription
+     * @param postDescr The postConditionDescription
      * @param symbolicVariableList the symbolicVariableList
      */
-    public PostAndPrePropertiesDescription(String name,
+    public PreAndPostConditionsDescription(String name,
             FormalPropertiesDescription preDescr,
             FormalPropertiesDescription postDescr, SymbolicVariableList symbolicVariableList) {
         this.name = name;
-        this.prePropertiesDescription = preDescr;
-        this.postPropertiesDescription = postDescr;
+        this.preConditionsDescription = preDescr;
+        this.postConditionsDescription = postDescr;
         this.symbolicVariableList = symbolicVariableList;
     }
 
@@ -89,7 +89,7 @@ public class PostAndPrePropertiesDescription implements NameInterface {
 
     /**
      *
-     * @param symbolicVariableList the list, which is to be setted as new
+     * @param symbolicVariableList the list, which is to be settled as new
      */
     public void setSymbolicVariableList(SymbolicVariableList symbolicVariableList) {
         this.symbolicVariableList = symbolicVariableList;
@@ -97,34 +97,34 @@ public class PostAndPrePropertiesDescription implements NameInterface {
 
     /**
      *
-     * @return the postPropertiesDescription
+     * @return the postConditionsDescription
      */
-    public FormalPropertiesDescription getPostPropertiesDescription() {
-        return postPropertiesDescription;
+    public FormalPropertiesDescription getPostConditionsDescription() {
+        return postConditionsDescription;
     }
 
     /**
      *
-     * @return the prePropertiesDescirption
+     * @return the preConditionsDescirption
      */
-    public FormalPropertiesDescription getPrePropertiesDescription() {
-        return prePropertiesDescription;
+    public FormalPropertiesDescription getPreConditionsDescription() {
+        return preConditionsDescription;
     }
 
     /**
      *
-     * @param postPropertiesDescription the new postPropertiesDescription
+     * @param postConditionsDescription the new postConditionsDescription
      */
-    public void setPostPropertiesDescription(FormalPropertiesDescription postPropertiesDescription) {
-        this.postPropertiesDescription = postPropertiesDescription;
+    public void setPostConditionsDescription(FormalPropertiesDescription postConditionsDescription) {
+        this.postConditionsDescription = postConditionsDescription;
     }
 
     /**
      *
-     * @param prePropertiesDescription the new prePropertiesDescription
+     * @param preConditionsDescription the new preConditionsDescription
      */
-    public void setPrePropertiesDescription(FormalPropertiesDescription prePropertiesDescription) {
-        this.prePropertiesDescription = prePropertiesDescription;
+    public void setPreConditionsDescription(FormalPropertiesDescription preConditionsDescription) {
+        this.preConditionsDescription = preConditionsDescription;
     }
 
     @Override

@@ -11,37 +11,39 @@ import java.awt.event.FocusListener;
  */
 public class CodeAreaFocusListener implements FocusListener {
     private BooleanExpCodeArea lastFocused;
-    private BooleanExpCodeArea prePropCodeArea;
-    private BooleanExpCodeArea postPropCodeArea;
+    private BooleanExpCodeArea preConditionCodeArea;
+    private BooleanExpCodeArea postConditionCodeArea;
 
     /**
      * Constructor
-     * @param prePropCodeArea CodeArea for pre conditions
-     * @param postPropCodeArea CodeArea for post conditions
+     * @param preConditionCodeArea CodeArea for preconditions
+     * @param postConditionCodeArea CodeArea for postconditions
      */
-    public CodeAreaFocusListener(BooleanExpCodeArea prePropCodeArea, BooleanExpCodeArea postPropCodeArea) {
-        lastFocused = prePropCodeArea;
-        this.prePropCodeArea = prePropCodeArea;
-        this.postPropCodeArea = postPropCodeArea;
+    public CodeAreaFocusListener(BooleanExpCodeArea preConditionCodeArea,
+                                 BooleanExpCodeArea postConditionCodeArea) {
+        lastFocused = preConditionCodeArea;
+        this.preConditionCodeArea = preConditionCodeArea;
+        this.postConditionCodeArea = postConditionCodeArea;
     }
 
     /**
      * Method that sets new BooleanExpCodeAreas
-     * @param prePropCodeArea the new BooleanExpCodeArea for pre-conditions
-     * @param postPropCodeArea the new BooleanExpCodeArea for post-conditions
+     * @param preConditionCodeArea the new BooleanExpCodeArea for preconditions
+     * @param postConditionCodeArea the new BooleanExpCodeArea for postconditions
      */
-    public void addNewCodeAreas(BooleanExpCodeArea prePropCodeArea, BooleanExpCodeArea postPropCodeArea) {
-        this.prePropCodeArea = prePropCodeArea;
-        this.postPropCodeArea = postPropCodeArea;
-        lastFocused = prePropCodeArea;
+    public void addNewCodeAreas(BooleanExpCodeArea preConditionCodeArea,
+                                BooleanExpCodeArea postConditionCodeArea) {
+        this.preConditionCodeArea = preConditionCodeArea;
+        this.postConditionCodeArea = postConditionCodeArea;
+        lastFocused = preConditionCodeArea;
     }
 
     @Override
     public void focusGained(FocusEvent focusEvent) {
-        if ((focusEvent.getComponent()).equals(prePropCodeArea.getPane())) {
-            lastFocused = prePropCodeArea;
+        if ((focusEvent.getComponent()).equals(preConditionCodeArea.getPane())) {
+            lastFocused = preConditionCodeArea;
         } else {
-            lastFocused = postPropCodeArea;
+            lastFocused = postConditionCodeArea;
         }
     }
 

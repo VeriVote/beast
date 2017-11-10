@@ -5,11 +5,11 @@
  */
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
-import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
 import edu.pse.beast.highlevel.PropertyAndMarginBool;
+import edu.pse.beast.highlevel.PreAndPostConditionsDescriptionSource;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.TimeOutNotifier;
@@ -31,7 +31,7 @@ public class FactoryController implements Runnable {
 	protected FactoryController thisObject = this;
 
 	private final ElectionDescriptionSource electionDescSrc;
-	private final PostAndPrePropertiesDescriptionSource postAndPrePropDescrSrc;
+	private final PreAndPostConditionsDescriptionSource preAndPostConditionDescrSrc;
 	private final ParameterSource parmSrc;
 	private final List<Result> results;
 	private final TimeOutNotifier notifier;
@@ -52,7 +52,7 @@ public class FactoryController implements Runnable {
 	 *
 	 * @param electionDescSrc
 	 *            the source for the election descriptions
-	 * @param postAndPrePropDescrSrc
+	 * @param preAndPostConditionDescrSrc
 	 *            the properties to be checked
 	 * @param parmSrc
 	 *            the parameter
@@ -62,15 +62,16 @@ public class FactoryController implements Runnable {
 	 *            the amount of concurrent checker to be used
 	 */
 	public FactoryController(ElectionDescriptionSource electionDescSrc,
-			PostAndPrePropertiesDescriptionSource postAndPrePropDescrSrc, ParameterSource parmSrc, String checkerID,
-			int concurrentChecker) {
+			                 PreAndPostConditionsDescriptionSource preAndPostConditionDescrSrc,
+			                 ParameterSource parmSrc, String checkerID,
+			                 int concurrentChecker) {
 
 		// add a shutdown hook so all the checker are stopped properly so they
 		// don't clog the host pc
 		Runtime.getRuntime().addShutdownHook(new FactoryEnder());
 
 		this.electionDescSrc = electionDescSrc;
-		this.postAndPrePropDescrSrc = postAndPrePropDescrSrc;
+		this.preAndPostConditionDescrSrc = preAndPostConditionDescrSrc;
 		this.parmSrc = parmSrc;
 		this.checkerID = checkerID;
 		this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
@@ -79,7 +80,7 @@ public class FactoryController implements Runnable {
 
 		// get a list of result objects that fit for the specified checkerID
 		this.results = CheckerFactoryFactory.getMatchingResult(checkerID,
-				postAndPrePropDescrSrc.getPostAndPrePropertiesDescriptionsCheckAndMargin().size());
+				preAndPostConditionDescrSrc.getPreAndPostConditionsDescriptionsCheck().size());
 
 		// if the user doesn't specify a concrete amount for concurrent
 		// checkers, we just set it to the thread amount of this pc
@@ -114,11 +115,11 @@ public class FactoryController implements Runnable {
 		this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
 
 		// we don't need these if we start with a file already
-		this.postAndPrePropDescrSrc = null;
+		this.preAndPostConditionDescrSrc = null;
 		this.electionDescSrc = null;
 
 		// get a list of result objects that fit for the specified checkerID
-		// because we have no postAndPreProperties we only need ONE result
+		// because we have no preAndPostConditions we only need ONE result
 		this.results = CheckerFactoryFactory.getMatchingUnprocessedResult(checkerID, 1);
 
 		// if the user doesn't specify a concrete amount for concurrent
@@ -145,12 +146,11 @@ public class FactoryController implements Runnable {
 	 */
 	@Override
 	public void run() {
-		
 		fromFile = false; //TODO clean that up later
 		
 		if (!fromFile) { // if we have properties, we have to iterate over all
 							// of them and start them all
-			List<PropertyAndMarginBool> propertiesToCheckAndMargin = postAndPrePropDescrSrc
+			List<PropertyAndMarginBool> propertiesToCheckAndMargin = preAndPostConditionDescrSrc
 					.getPostAndPrePropertiesDescriptionsCheckAndMargin();
 			
 			outerLoop: for (int i = 0; i < propertiesToCheckAndMargin.size(); i++) {

@@ -19,8 +19,8 @@ public class SaverLoaderInterface {
     private final ProjectSaverLoader projSL = new ProjectSaverLoader();
     private final ElectionDescriptionSaverLoader electionDescrSL = new ElectionDescriptionSaverLoader();
     private final SymbolicVarListSaverLoader symVarListSL = null;
-    private final PostAndPrePropertiesDescriptionSaverLoader propDescrSL = new
-            PostAndPrePropertiesDescriptionSaverLoader();
+    private final PreAndPostConditionsDescriptionSaverLoader propDescrSL = new
+            PreAndPostConditionsDescriptionSaverLoader();
     private final FormalPropertySaverLoader formalPropDescrSL = null;
     private final OptionsSaverLoaderInterface optSLI = null;
 
@@ -57,10 +57,10 @@ public class SaverLoaderInterface {
     }
 
     /**
-     * Getter for PostAndPrePropertiesDescriptionSaverLoader
-     * @return the PostAndPrePropertiesDescriptionSaverLoader
+     * Getter for PreAndPostConditionsDescriptionSaverLoader
+     * @return the PreAndPostConditionsDescriptionSaverLoader
      */
-    public PostAndPrePropertiesDescriptionSaverLoader getPostAndPrePropertiesDescriptionSaverLoader() {
+    public PreAndPostConditionsDescriptionSaverLoader getPreAndPostConditionsDescriptionSaverLoader() {
         return propDescrSL;
     }
 

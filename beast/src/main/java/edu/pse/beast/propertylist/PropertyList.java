@@ -6,9 +6,10 @@
 package edu.pse.beast.propertylist;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
-import edu.pse.beast.highlevel.PostAndPrePropertiesDescriptionSource;
+
 import edu.pse.beast.highlevel.PropertyAndMarginBool;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.highlevel.PreAndPostConditionsDescriptionSource;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenter;
 import edu.pse.beast.propertylist.Model.PLModel;
@@ -28,7 +29,7 @@ import java.util.List;
  *
  * @author Justin
  */
-public class PropertyList implements PostAndPrePropertiesDescriptionSource,
+public class PropertyList implements PreAndPostConditionsDescriptionSource,
         ResultPresenter, Runnable {
 
     private PLModel model;
@@ -162,7 +163,7 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
     public boolean isCorrect() {
         for (PropertyItem item : model.getPropertyList()) {
             if (item.getTestStatus()) {
-                if (!editor.letUserEditPostAndPreProperties(item.getDescription(), true)) {
+                if (!editor.letUserEditPreAndPostConditions(item.getDescription(), true)) {
                     return false;
                 } else if (!editor.isCorrect()) {
                     editor.getView().setVisible(true);
@@ -189,10 +190,10 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
     }
 
     @Override
-    public ArrayList<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptionsCheck() {
-        ArrayList<PostAndPrePropertiesDescription> result = new ArrayList<PostAndPrePropertiesDescription>();
+    public ArrayList<PreAndPostConditionsDescription> getPreAndPostConditionsDescriptionsCheck() {
+        ArrayList<PreAndPostConditionsDescription> result = new ArrayList<PreAndPostConditionsDescription>();
         ArrayList<PropertyItem> from = model.getPropertyList();
-        editor.updatePostAndPrePropObject();
+        editor.updatePreAndPostConditionObject();
         for (PropertyItem prop : from) {
             if (prop.getTestStatus()) {
                 result.add(prop.getDescription());
@@ -202,10 +203,10 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
     }
     
     @Override
-    public ArrayList<PostAndPrePropertiesDescription> getPostAndPrePropertiesDescriptionsMargin() {
-        ArrayList<PostAndPrePropertiesDescription> result = new ArrayList<PostAndPrePropertiesDescription>();
+    public ArrayList<PreAndPostConditionsDescription> getPreAndPostConditionsDescriptionsMargin() {
+        ArrayList<PreAndPostConditionsDescription> result = new ArrayList<PreAndPostConditionsDescription>();
         ArrayList<PropertyItem> from = model.getPropertyList();
-        editor.updatePostAndPrePropObject();
+        editor.updatePreAndPostConditionObject();
         for (PropertyItem prop : from) {
             if (prop.getMarginStatus()) {
                 result.add(prop.getDescription());
@@ -218,7 +219,7 @@ public class PropertyList implements PostAndPrePropertiesDescriptionSource,
 	public List<PropertyAndMarginBool> getPostAndPrePropertiesDescriptionsCheckAndMargin() {
 		ArrayList<PropertyAndMarginBool> result = new ArrayList<PropertyAndMarginBool>();
         ArrayList<PropertyItem> from = model.getPropertyList();
-        editor.updatePostAndPrePropObject();
+        editor.updatePreAndPostConditionObject();;
         for (PropertyItem prop : from) {
             if (prop.getTestStatus()) {
                 result.add(new PropertyAndMarginBool(prop.getDescription(), false));

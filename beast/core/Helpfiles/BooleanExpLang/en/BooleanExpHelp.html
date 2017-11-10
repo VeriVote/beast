@@ -11,10 +11,10 @@
 <div id="nav">
     <a href="#introduction">Introduction</a>
     <a href="#reference">Language constructs: A Reference</a>
-    <a href="#refToTypes">Refering to voters, candidates or seats</a>
+    <a href="#refToTypes">Referring to voters, candidates or seats</a>
     <a href="#numandsum">Numbers and sums</a>
     <a href="#comparators">Comparators</a>
-    <a href="#quantors">Quantors</a>
+    <a href="#quantifiers">Quantifiers</a>
     <a href="#binary_rels">Binary boolean relationships</a>
 </div>
 <div id="introduction_container">
@@ -25,48 +25,48 @@
     These structures can generally be divided into two categories: Those which return boolean Values and those
     that return another value. Each given boolean Expression must always return a boolean Value at the highest level.
     It can, however, use the other values to formulate boolean Expressions such as when comparing to integers values.
-    The different boolean Expressions are seperated by semicolons. To get a first taste of the possibilities, load the
+    The different boolean Expressions are separated by semicolons. To get a first taste of the possibilities, load the
     project LearningBooleanExpLang.beast via the parameter editor. It is a very simple test bed to learn how
     different boolean Expressions work. To see that everything is set up correctly, start an analysis. It should show
-    a counterexample after a few secounds.
-    If you open the only defined property, you will observe that it has ELECT1 != ELECT2 as a postproperty. If you
+    a counterexample after a few seconds.
+    If you open the only defined property, you will observe that it has ELECT1 != ELECT2 as a postcondition. If you
     have a look at the election description, you will notice that it always returns 0. This means the first
-    candidate always wins regardless of the votes cast. Thus, the postproperty always leads to counterexamples being found -
-    if the preproperties can be statisfied.
-    To see that this is the case, enter "2 != 2;" as a preproperty. If you start an analysis now, you will find
-    that it does NOT find a counterexample. This is because it couldn't find a single example which statisfied
+    candidate always wins regardless of the votes cast. Thus, the postcondition always leads to counterexamples being
+    found - if the preconditions can be satisfied.
+    To see that this is the case, enter "2 != 2;" as a precondition. If you start an analysis now, you will find
+    that it does NOT find a counterexample. This is because it couldn't find a single example which satisfied
     the first expression - 2 != 2 - for obvious reasons.
-    To get a taste of the different ways one can set preproperties to change the votes cast, delete this expression.
-    Then, write as a preproperty: "VOTES1(VOTER_AT_POS(0)) == CAND_AT_POS(2);" and run an analysis. If you check
+    To get a taste of the different ways one can set preconditions to change the votes cast, delete this expression.
+    Then, write as a precondition: "VOTES1(VOTER_AT_POS(0)) == CAND_AT_POS(2);" and run an analysis. If you check
     out the counterexample, you will find that the first voter in the first round of voting cast his vote for the
-    2nd candidate. You can replace the value passed to CAND_AT_POS with different integers and observe the effect.
-    Be aware howveer, that if you type a number larger than the amount of candidates tested for - 5 - (meaning
+    second candidate. You can replace the value passed to CAND_AT_POS with different integers and observe the effect.
+    Be aware however, that if you type a number larger than the amount of candidates tested for - 5 - (meaning
     you type in a 4, since counting starts at 0)the result will be undefined behaviour.
     You can also change the number after VOTES from 1 to 2 and observe that the first voter now casts his vote for
-    the 2nd candidate in the 2nd round of voting. Translated into natural english, the property would read as:
+    the second candidate in the second round of voting. Translated into natural English, the property would read as:
     The Voter at position 0 (VOTER_AT_POS(0)) votes, in the first round of voting (VOTES!) for the candidate at position
     2 (CAND_AT_POS(2)). Be aware that, while counting for CAND_AT_POS starts at 0, counting for VOTES starts at 1.
 </div>
 <div id="reference_container">
     <h1 id="reference">Language constructs: A Reference</h1>
-    <h2 id="refToTypes">Refering to voters, candidates or seats</h2>
+    <h2 id="refToTypes">Referring to voters, candidates or seats</h2>
     <p>
         When testing election descriptions for properties, it is often the case that one wants to formulate
-        these properties while refering to a specific voter, candidate or seat. Often it is the case that one wants
+        these properties while referring to a specific voter, candidate or seat. Often it is the case that one wants
         to make statements regarding the state of one of these types before the election and its impact on the election result.
-        There are two ways one can go about refering to a specific type in BooleanExpLang: Via symbolic variables or by specifying
+        There are two ways one can go about referring to a specific type in BooleanExpLang: Via symbolic variables or by specifying
         a position.
     </p>
     <h3>Symbolic variables</h3>
     Symbolic variables represent any voter, candidate or seat and thus give a possibility to refer to the same type
-    in several different paces. This enables the user to identify given type instances. Symbolic variables
+    in several different places. This enables the user to identify given type instances. Symbolic variables
     are controlled by the area right under the toolbar. To add one, one must simply click on the add-button and
     supply a unique name and a type. Afterwards, it is possible to refer to the created symbolic variable in both
-    pre and post property descriptions.
+    the pre- and postcondition descriptions.
     <div class="example">
         <ul>
             <li>Test if there is one voter v whose vote always wins the election. Define a symbolic variable v. Define as a
-                post property: ELECT1 == VOTES1(v);
+                postcondition: ELECT1 == VOTES1(v);
             </li>
         </ul>
     </div>
@@ -90,17 +90,17 @@
 
     </div>
     <h2 id="numandsum">Numbers and sums</h2>
-    It is often helpful to be able to write and compare sums, products etc of integer values. BooleanExpLang enables
+    It is often helpful to be able to write and compare sums, products etc. of integer values. BooleanExpLang enables
     addition, subtraction, multiplication and divisions. These can be nested arbitrarily. Their results can be used
-    wherever an integer value is expected, such as when refering to a type via its position or when comparing
-    values. It is thus possible to write properties such as 2 != 1 + 1. This will obivously always return false. These
+    wherever an integer value is expected, such as when referring to a type via its position or when comparing
+    values. It is thus possible to write properties such as 2 != 1 + 1. This will obviously always return false. These
     sums and products can contain any expression which evaluates to integers, such as constants or
     VOTE_SUM_FOR_CANDIDATE().
     <div class="example">
         <ul>
             <li>An expression which will always be true: 2 == 2 * 1;</li>
             <li>
-                A complicated, probably useles, but nevertheless allowed expression:
+                A complicated, probably useless, but nevertheless allowed expression:
                 V == C + 3 / S - 4 * VOTE_SUM_FOR_CANDIDATE1(c);
             </li>
             <li>
@@ -113,7 +113,7 @@
     etc. BooleanExpLang supports all common comparison types:
     <ul>
         <li>Equality: ==</li>
-        <li>InEquality: !=</li>
+        <li>Inequality: !=</li>
         <li>Less than: <</li>
         <li>Less than or equal: <=</li>
         <li>Greater than: ></li>
@@ -121,11 +121,11 @@
     </ul>
     When using greater/lesser comparisons with voters, candidates or seats what's compared is their placement. So,
     VOTER_AT_POS(0) < VOTER_AT_POS(1) would be true, whereas CAND_AT_POS(5) >= CAND_AT_POS(6) wouldn't be.
-    <h2 id="quantors">Quantors</h2>
+    <h2 id="quantifiers">Quantifiers</h2>
     May times, one wants to define a property which should hold for all or at least one Voter,Candidate or Seat.
-    This can be accomplished using quantors.
+    This can be accomplished using quantifiers.
     <h3>For all</h3>
-    To define that a property should hold for all instances of a type, one can use the FOR_ALL constructs.
+    In order to define that a property should hold for all instances of a type, one can use the FOR_ALL constructs.
     These exist for the three most important types: voters, candidates and seats:
     <ul>
         <li>FOR_ALL_VOTERS() :</li>
@@ -143,7 +143,7 @@
     </div>
     <h3>There exists</h3>
     If one wants to define a property which holds for at least one voter, candidate or seat one can use
-    the THERE_EXISTS contructs. Their are, analogously to the FOR_ALL expressions, one for each type:
+    the THERE_EXISTS constructs. Their are, analogously to the FOR_ALL expressions, one for each type:
     <ul>
         <li>EXISTS_ONE_VOTER() :</li>
         <li>EXISTS_ONE_CANDIDATE() :</li>
@@ -170,7 +170,7 @@
         <li>Logical And: &&</li>
         <li>Logical Or: ||</li>
         <li>Implication: ==></li>
-        <li>Aquivalency: <==></li>
+        <li>Equivalence: <==></li>
     </ul>
     Using these, two boolean Expressions can be combined to produce a third one.
     <div class="example">

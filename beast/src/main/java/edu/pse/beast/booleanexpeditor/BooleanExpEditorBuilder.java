@@ -7,10 +7,10 @@ import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeArea;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeAreaBuilder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.CodeAreaFocusListener;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.saverloader.FileChooser;
-import edu.pse.beast.saverloader.PostAndPrePropertiesDescriptionSaverLoader;
+import edu.pse.beast.saverloader.PreAndPostConditionsDescriptionSaverLoader;
 import edu.pse.beast.toolbox.ActionIdAndListener;
 import edu.pse.beast.toolbox.ImageResourceProvider;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
@@ -56,9 +56,9 @@ public class BooleanExpEditorBuilder {
                 window.getAddSymVarButton(), window.getRemoveSymVarButton(), objectRefsForBuilder.getStringIF(),
                 symbolicVariableList, window);
 
-        //creation of empty PostAndPrePropertiesDescription object
-        PostAndPrePropertiesDescription emptyPostAndPrePropertiesDescription
-                = NewPropsUserAction.createEmptyPostAndPropObject();
+        //creation of empty PreAndPostConditionsDescription object
+        PreAndPostConditionsDescription emptyPreAndPostConditionsDescription
+                = NewPropsUserAction.createEmptyPreAndPostConditionObject();
 
         //creation of ErrorWindow object
         ErrorWindow errorWindow = new ErrorWindow(window.getErrorTextPane(), objectRefsForBuilder.getStringIF());
@@ -66,28 +66,34 @@ public class BooleanExpEditorBuilder {
 
         //creation of BooleanExpCodeAreas objects using the JTextPanes from the BooleanExpEditorWindow instance "window"
         BooleanExpCodeAreaBuilder codeAreaBuilder = new BooleanExpCodeAreaBuilder();
-        BooleanExpCodeArea prePropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
-                window.getPrePropTextPane(), window.getPrePropScrollPane(), symbolicVariableList, ceditor);
-        BooleanExpCodeArea postPropCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
-                window.getPostPropTextPane(), window.getPostPropScrollPane(), symbolicVariableList, ceditor);
+        BooleanExpCodeArea preConditionCodeArea = codeAreaBuilder
+                .createBooleanExpCodeAreaObject(objectRefsForBuilder,
+                                                window.getPreConditionTextPane(),
+                                                window.getPreConditionScrollPane(),
+                                                symbolicVariableList, ceditor);
+        BooleanExpCodeArea postConditionCodeArea = codeAreaBuilder
+                .createBooleanExpCodeAreaObject(objectRefsForBuilder,
+                                                window.getPostConditionTextPane(),
+                                                window.getPostConditionScrollPane(),
+                                                symbolicVariableList, ceditor);
 
         
         // create ChangeHandler
-        ChangeHandler changeHandler = new ChangeHandler(prePropCodeArea.getPane(),
-                postPropCodeArea.getPane(), symbolicVariableList);
+        ChangeHandler changeHandler = new ChangeHandler(preConditionCodeArea.getPane(),
+                postConditionCodeArea.getPane(), symbolicVariableList);
 
         //create CodeAreaFocusListener
-        CodeAreaFocusListener codeAreaFocusListener = new CodeAreaFocusListener(prePropCodeArea, postPropCodeArea);
+        CodeAreaFocusListener codeAreaFocusListener = new CodeAreaFocusListener(preConditionCodeArea, postConditionCodeArea);
 
         //create FileChooser
         FileChooser fileChooser = new FileChooser(
                 objectRefsForBuilder.getStringIF().getBooleanExpEditorStringResProvider()
-                        .getBooleanExpEditorWindowStringRes(), new PostAndPrePropertiesDescriptionSaverLoader(),
+                        .getBooleanExpEditorWindowStringRes(), new PreAndPostConditionsDescriptionSaverLoader(),
                 null);
 
-        BooleanExpEditor editor = new BooleanExpEditor(prePropCodeArea, postPropCodeArea, window,
+        BooleanExpEditor editor = new BooleanExpEditor(preConditionCodeArea, postConditionCodeArea, window,
                 symbolicVarListController, errorWindow, changeHandler, codeAreaFocusListener,
-                emptyPostAndPrePropertiesDescription, codeAreaBuilder, objectRefsForBuilder, ceditor, fileChooser);
+                emptyPreAndPostConditionsDescription, codeAreaBuilder, objectRefsForBuilder, ceditor, fileChooser);
 
         //creation of BooleanExpEditorMenubarHandler
         BooleanExpEditorMenubarHandler menuBarHandler = new BooleanExpEditorMenubarHandler(menuHeaderIds, window,

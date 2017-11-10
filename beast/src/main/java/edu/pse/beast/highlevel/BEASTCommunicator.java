@@ -31,12 +31,12 @@ public class BEASTCommunicator implements CheckListener {
     public void startCheck() {
         centralObjectProvider.getResultPresenter().resetResults();
         ElectionDescriptionSource electSrc = centralObjectProvider.getElectionDescriptionSource();
-        PostAndPrePropertiesDescriptionSource postAndPreSrc = centralObjectProvider.getPostAndPrePropertiesSource();
+        PreAndPostConditionsDescriptionSource preAndPostSrc = centralObjectProvider.getPreAndPostConditionsSource();
         ParameterSource paramSrc = centralObjectProvider.getParameterSrc();
         CheckStatusDisplay checkStatusDisplayer = centralObjectProvider.getCheckStatusDisplay();
 
-        // checks if there even are any properties selected for analysis in the PostAndPrePropertiesSource
-        if (postAndPreSrc.getPostAndPrePropertiesDescriptionsCheck().isEmpty() && postAndPreSrc.getPostAndPrePropertiesDescriptionsMargin().isEmpty()) {
+        // checks if there even are any properties selected for analysis in the PreAndPostConditionsSource
+        if (preAndPostSrc.getPreAndPostConditionsDescriptionsCheck().isEmpty() && preAndPostSrc.getPreAndPostConditionsDescriptionsMargin().isEmpty()) {
             checkStatusDisplayer.displayText("noProperty", false, "");
             return;
         }
@@ -45,7 +45,7 @@ public class BEASTCommunicator implements CheckListener {
             // analysis gets started by CheckerCommunicator.checkPropertiesForDescription() getting called
             checkStatusDisplayer.displayText("startingCheck", true, "");
             resultList = centralObjectProvider.getResultCheckerCommunicator()
-                    .checkPropertiesForDescription(electSrc, postAndPreSrc, paramSrc);
+                    .checkPropertiesForDescription(electSrc, preAndPostSrc, paramSrc);
 
             // Thread that checks for new presentable results every 50 milliseconds
             Thread waitForResultsThread = new Thread(new Runnable() {
@@ -57,17 +57,17 @@ public class BEASTCommunicator implements CheckListener {
                     long elapsedTime;
                     double passedTimeSeconds = 0;
 
-                    boolean[] resultPresented = new boolean[postAndPreSrc.getPostAndPrePropertiesDescriptionsCheck().size()];
+                    boolean[] resultPresented = new boolean[preAndPostSrc.getPreAndPostConditionsDescriptionsCheck().size()];
 
                     int numberOfPresentedResults = 0;
 
-                    while (numberOfPresentedResults < postAndPreSrc.getPostAndPrePropertiesDescriptionsCheck().size()) {
+                    while (numberOfPresentedResults < preAndPostSrc.getPreAndPostConditionsDescriptionsCheck().size()) {
                         elapsedTime = System.nanoTime() - startTime;
                         passedTimeSeconds = (double) elapsedTime / 1000000000.0;
                         timeString = createTimeString(passedTimeSeconds);
 
                         checkStatusDisplayer.displayText("waitingForPropertyResult", true,
-                                postAndPreSrc.getPostAndPrePropertiesDescriptionsCheck().
+                                preAndPostSrc.getPreAndPostConditionsDescriptionsCheck().
                                         get(numberOfPresentedResults).getName() + "' (" + timeString + ")");
 
                         try {
@@ -107,7 +107,7 @@ public class BEASTCommunicator implements CheckListener {
 
     /**
      * Checks for errors in the current UserInputs from ElectionDescriptionSource, ParameterSrc and
-     * PostAndPrePropertiesSource.
+     * PreAndPostConditionsSource.
      * @param pseCentralObjectProvider CentralObjectProvider instance
      * @return true if errors exist, false otherwise
      */
@@ -119,7 +119,7 @@ public class BEASTCommunicator implements CheckListener {
             checkStatusDisplayer.displayText("electionDescriptionErrors", false, "");
             resumeReacting(pseCentralObjectProvider);
             return true;
-        } else if (!pseCentralObjectProvider.getPostAndPrePropertiesSource().isCorrect()) {
+        } else if (!pseCentralObjectProvider.getPreAndPostConditionsSource().isCorrect()) {
             checkStatusDisplayer.displayText("propertyErrors", false, "");
             resumeReacting(pseCentralObjectProvider);
             return true;
@@ -138,7 +138,7 @@ public class BEASTCommunicator implements CheckListener {
      */
     public static void stopReacting(CentralObjectProvider pseCentralObjectProvider) {
         pseCentralObjectProvider.getElectionDescriptionSource().stopReacting();
-        pseCentralObjectProvider.getPostAndPrePropertiesSource().stopReacting();
+        pseCentralObjectProvider.getPreAndPostConditionsSource().stopReacting();
         pseCentralObjectProvider.getParameterSrc().stopReacting();
     }
 
@@ -148,7 +148,7 @@ public class BEASTCommunicator implements CheckListener {
      */
     public static void resumeReacting(CentralObjectProvider pseCentralObjectProvider) {
         pseCentralObjectProvider.getElectionDescriptionSource().resumeReacting();
-        pseCentralObjectProvider.getPostAndPrePropertiesSource().resumeReacting();
+        pseCentralObjectProvider.getPreAndPostConditionsSource().resumeReacting();
         pseCentralObjectProvider.getParameterSrc().resumeReacting();
     }
 

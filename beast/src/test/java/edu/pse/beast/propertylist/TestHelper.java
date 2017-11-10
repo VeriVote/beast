@@ -56,11 +56,11 @@ public class TestHelper {
     }
 
     public BooleanExpEditor getBooleanExpEditorOfCurrentInstance() {
-        return ((PropertyList) (centralObjectProvider.getPostAndPrePropertiesSource())).getEditor();
+        return ((PropertyList) (centralObjectProvider.getPreAndPostConditionsSource())).getEditor();
     }
 
     public PropertyList getPropListOfCurrentInstance() {
-        return (PropertyList) (centralObjectProvider.getPostAndPrePropertiesSource());
+        return (PropertyList) (centralObjectProvider.getPreAndPostConditionsSource());
     }
     
     public PropertyList getPropertyList() {

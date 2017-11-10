@@ -1,7 +1,7 @@
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
 import edu.pse.beast.electionSimulator.ElectionSimulation;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.options.ParametereditorOptions.ParametereditorOptions;
@@ -46,8 +46,7 @@ public class CBMCProcessFactory extends CheckerFactory {
      * @param result
      *            the result object that the end result should be written to
      */
-    protected CBMCProcessFactory(FactoryController controller, ElectionDescriptionSource electionDescSrc,
-            PostAndPrePropertiesDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result, boolean isMargin) {
+    protected CBMCProcessFactory(FactoryController controller, ElectionDescriptionSource electionDescSrc,PreAndPostConditionsDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result, boolean isMargin) {
         super(controller, electionDescSrc, postAndPrepPropDesc, paramSrc, result, isMargin);
         os = determineOS();
     }
@@ -164,6 +163,78 @@ public class CBMCProcessFactory extends CheckerFactory {
 //
 //        return startedChecker;
 //	}
+//
+//	@Override
+//    protected Checker startProcess(ElectionDescriptionSource electionDescSrc,
+//            PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates,
+//            int seats, CheckerFactory parent) {
+//
+//        String userOptions = advanced.trim().replaceAll(" +", " ");
+//
+//        // remove all unnecessary whitespaces
+//
+//        // create the file in which the code is saved if it doesn't exist
+//        // already
+//        if (toCheck == null) {
+//            // create the file only once for each factory and reuse it then
+//            toCheck = createCodeFile(electionDescSrc, postAndPrepPropDesc);
+//        }
+//
+//        Checker startedChecker = null;
+//
+//        switch (os) {
+//        case Linux:
+//            startedChecker = new LinuxProcess(voters, candidates, seats, userOptions, toCheck, parent);
+//            break;
+//        case Windows:
+//            startedChecker = new WindowsProcess(voters, candidates, seats, userOptions, toCheck, parent);
+//            break;
+//        case Mac:
+//            ErrorForUserDisplayer.displayError(
+//                    "MacOS is not supported yet, please implement the class CBMCProcess and add it then here in the "
+//                            + "CBMCProcessFactory to be created");
+//            break;
+//        default:
+//            ErrorLogger.log("Warning, your OS couldn't be determined or is not supported yet.");
+//        }
+//
+//        return startedChecker;
+//    }
+//	
+//	@Override
+//	protected Checker startProcess(File toCheck, String advanced, int voters, int candidates, int seats,
+//			CheckerFactory parent) {
+//        String userOptions = advanced.trim().replaceAll(" +", " ");
+//
+//        // remove all unnecessary whitespaces
+//
+//        // create the file in which the code is saved if it doesn't exist
+//        // already
+//        if (this.toCheck == null) {
+//            // create the file only once for each factory and reuse it then
+//            this.toCheck = toCheck;
+//        }
+//
+//        Checker startedChecker = null;
+//
+//        switch (os) {
+//        case Linux:
+//            startedChecker = new LinuxProcess(voters, candidates, seats, userOptions, this.toCheck, parent);
+//            break;
+//        case Windows:
+//            startedChecker = new WindowsProcess(voters, candidates, seats, userOptions, this.toCheck, parent);
+//            break;
+//        case Mac:
+//            ErrorForUserDisplayer.displayError(
+//                    "MacOS is not supported yet, please implement the class CBMCProcess and add it then here in the "
+//                            + "CBMCProcessFactory to be created");
+//            break;
+//        default:
+//            ErrorLogger.log("Warning, your OS couldn't be determined or is not supported yet.");
+//        }
+//
+//        return startedChecker;
+//	}
 
     @Override
     public boolean checkAssertionSuccess(List<String> toCheck) {
@@ -200,7 +271,7 @@ public class CBMCProcessFactory extends CheckerFactory {
 
     @Override
     public CheckerFactory getNewInstance(FactoryController controller, ElectionDescriptionSource electionDescSrc,
-            PostAndPrePropertiesDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result, boolean isMargin) {
+    		PreAndPostConditionsDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result, boolean isMargin) {
         return new CBMCProcessFactory(controller, electionDescSrc, postAndPrepPropDesc, paramSrc, result, isMargin);
     }
     
@@ -227,8 +298,9 @@ public class CBMCProcessFactory extends CheckerFactory {
      * @param postAndPrepPropDesc the property that this specific processfactory should check
      * @return a file that contains the generated code from the two above variables
      */
+
     public File createCodeFileCheck(ElectionDescriptionSource electionDescSrc,
-            PostAndPrePropertiesDescription postAndPrepPropDesc, boolean  isMargin) {
+    		PreAndPostConditionsDescription postAndPrepPropDesc, boolean  isMargin) {
 
         // create a code generator, that creates a code file for this call only
         // one time in this factory factory;
@@ -261,7 +333,7 @@ public class CBMCProcessFactory extends CheckerFactory {
      * @return a file that contains the generated code from the two above variables
      */
     public File createCodeFileMargin(ElectionDescriptionSource electionDescSrc,
-            PostAndPrePropertiesDescription postAndPrepPropDesc, int margin, List<Integer> origResult, boolean  isTest) {
+            PreAndPostConditionsDescription postAndPrepPropDesc, int margin, List<Integer> origResult, boolean  isTest) {
 
         // create a code generator, that creates a code file for this call only
         // one time in this factory factory;
@@ -428,7 +500,7 @@ public class CBMCProcessFactory extends CheckerFactory {
     
     @Override
     protected Checker startProcessCheck(ElectionDescriptionSource electionDescSrc,
-          PostAndPrePropertiesDescription postAndPrepPropDesc, String advanced, int voters, int candidates,
+          PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates,
           int seats, CheckerFactory parent, boolean isMargin) {
 
       String userOptions = advanced.trim().replaceAll(" +", " ");
@@ -465,7 +537,7 @@ public class CBMCProcessFactory extends CheckerFactory {
 
 	@Override
 	protected Checker startProcessTest(ElectionDescriptionSource electionDescSrc,
-			PostAndPrePropertiesDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
+			PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
 			CheckerFactory parent) {
 		// TODO Auto-generated method stub
 		return null;
@@ -473,7 +545,7 @@ public class CBMCProcessFactory extends CheckerFactory {
 
 	@Override
 	protected Checker startProcessMargin(ElectionDescriptionSource electionDescSrc,
-			PostAndPrePropertiesDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
+			PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
 			CheckerFactory parent, int margin, List<Integer> origResult, boolean isTest) {
 		String userOptions = advanced.trim().replaceAll(" +", " ");
 

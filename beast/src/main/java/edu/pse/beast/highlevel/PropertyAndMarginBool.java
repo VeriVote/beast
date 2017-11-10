@@ -1,18 +1,18 @@
 package edu.pse.beast.highlevel;
 
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
 public class PropertyAndMarginBool {
 	
-	private PostAndPrePropertiesDescription description;
+	private PreAndPostConditionsDescription description;
 	private boolean marginStatus;
 	
-	public PropertyAndMarginBool(PostAndPrePropertiesDescription description, boolean marginStatus) {
+	public PropertyAndMarginBool(PreAndPostConditionsDescription description, boolean marginStatus) {
 		this.description = description;
 		this.marginStatus = marginStatus;
 	}
 	
-	public PostAndPrePropertiesDescription getDescription() {
+	public PreAndPostConditionsDescription getDescription() {
 		return description;
 	}
 	

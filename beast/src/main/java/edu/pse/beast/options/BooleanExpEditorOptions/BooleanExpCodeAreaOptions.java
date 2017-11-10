@@ -27,15 +27,15 @@ public class BooleanExpCodeAreaOptions extends Options {
     BooleanExpCodeAreaOptions(BooleanExpEditor editor) {
         super("booleanexpcodearea_opts");
         this.editor = editor;
-        this.codeAreaOptions = new CodeAreaOptions(editor.getPrePropCodeArea());
+        this.codeAreaOptions = new CodeAreaOptions(editor.getPreConditionCodeArea());
         subOptions.add(codeAreaOptions);
     }
 
     @Override
     protected void reapplySpecialized() {
-        codeAreaOptions.setCodeArea(editor.getPrePropCodeArea());
+        codeAreaOptions.setCodeArea(editor.getPreConditionCodeArea());
         codeAreaOptions.reapply();
-        codeAreaOptions.setCodeArea(editor.getPostPropCodeArea());
+        codeAreaOptions.setCodeArea(editor.getPostConditionCodeArea());
         codeAreaOptions.reapply();
     }
 }

@@ -314,14 +314,14 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 
 //						List<String> codeLines = generateRunnableCode(votingData);
 
-						List<Integer> winnerResults = CompilerAndExecutioner.compileAndRun(codeLines);
+						List<Integer> winnerResults = CompilerAndExecutioner.compileAndRun(null);
 						// here we now have the winner(s) of the computation
 
 						// here we now make a binary search tree for the margin
 						// value
 
 						int left = 0;
-						int right = votingData.length - 1; // how many votes we
+						int right = 0; // how many votes we
 															// have
 						int margin = 0;
 
@@ -332,7 +332,7 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 							margin = (int) (left + Math.floor((float) (right - left) / 2));
 
 							// generate the code for the margin
-							List<String> boundedCheckingCodeLines = generateMarginComputationCode(votingData, margin,
+							List<String> boundedCheckingCodeLines = generateMarginComputationCode(null, margin,
 									winnerResults);
 
 							// create a temporary file, in which the code
@@ -451,8 +451,8 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 	// public void test() {
 	// ElectionDescriptionSource electSrc =
 	// centralObjectProvider.getElectionDescriptionSource();
-	// PostAndPrePropertiesDescriptionSource postAndPreSrc =
-	// centralObjectProvider.getPostAndPrePropertiesSource();
+	// PreAndPostConditionsDescriptionSource preAndPostSrc =
+	// centralObjectProvider.getPreAndPostConditionsSource();
 	// ParameterSource paramSrc = centralObjectProvider.getParameterSrc();
 	// CheckStatusDisplay checkStatusDisplayer =
 	// centralObjectProvider.getCheckStatusDisplay();
@@ -480,18 +480,18 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 	// double passedTimeSeconds = 0;
 	//
 	// boolean[] resultPresented = new
-	// boolean[postAndPreSrc.getPostAndPrePropertiesDescriptions().size()];
+	// boolean[preAndPostSrc.getPreAndPostConditionsDescriptions().size()];
 	//
 	// int numberOfPresentedResults = 0;
 	//
 	// while (numberOfPresentedResults <
-	// postAndPreSrc.getPostAndPrePropertiesDescriptions().size()) {
+	// postAndPreSrc.getPreAndPostConditionsDescriptions().size()) {
 	// elapsedTime = System.nanoTime() - startTime;
 	// passedTimeSeconds = (double) elapsedTime / 1000000000.0;
 	// timeString = createTimeString(passedTimeSeconds);
 	//
 	// checkStatusDisplayer.displayText("waitingForPropertyResult", true,
-	// postAndPreSrc.getPostAndPrePropertiesDescriptions().get(numberOfPresentedResults)
+	// preAndPostSrc.getPreAndPostConditionsDescriptions().get(numberOfPresentedResults)
 	// .getName() + "' (" + timeString + ")");
 	//
 	// try {

@@ -6,7 +6,7 @@
 package edu.pse.beast.saverloader;
 
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.saverloader.StaticSaverLoaders.FormalPropertySaverLoader;
 import edu.pse.beast.saverloader.StaticSaverLoaders.SaverLoaderHelper;
@@ -15,21 +15,22 @@ import edu.pse.beast.saverloader.StaticSaverLoaders.SymbolicVarListSaverLoader;
 import java.util.Map;
 
 /**
- * Implements SaverLoader methods for creating saveStrings from PostAndPrePropertiesDescription objects and vice versa.
+ * Implements SaverLoader methods for creating saveStrings from
+ * PreAndPostConditionsDescription objects and vice versa.
  * @author Holger-Desktop
  */
-public class PostAndPrePropertiesDescriptionSaverLoader implements SaverLoader {
+public class PreAndPostConditionsDescriptionSaverLoader implements SaverLoader {
 
     @Override
     public String createSaveString(Object obj) {
         SaverLoaderHelper h = new SaverLoaderHelper();
-        PostAndPrePropertiesDescription props = (PostAndPrePropertiesDescription) obj;
+        PreAndPostConditionsDescription props = (PreAndPostConditionsDescription) obj;
         StringBuilder saveStr = new StringBuilder();
         saveStr.append(h.getStringForAttr("name", props.getName()));
         saveStr.append(h.getStringForAttr("pre", FormalPropertySaverLoader.createSaveString(
-                props.getPrePropertiesDescription())));
+                props.getPreConditionsDescription())));
         saveStr.append(h.getStringForAttr("post", FormalPropertySaverLoader.createSaveString(
-                props.getPostPropertiesDescription())));
+                props.getPostConditionsDescription())));
         saveStr.append(h.getStringForAttr("varlist",
                 SymbolicVarListSaverLoader.createSaveString(props.getSymVarList())));
         return saveStr.toString();
@@ -45,6 +46,6 @@ public class PostAndPrePropertiesDescriptionSaverLoader implements SaverLoader {
         FormalPropertiesDescription post = FormalPropertySaverLoader.createFromSaveString(postString);
         String varlistString = m.get("varlist");
         SymbolicVariableList varList = SymbolicVarListSaverLoader.createFromSaveString(varlistString);
-        return new PostAndPrePropertiesDescription(name, pre, post, varList);
+        return new PreAndPostConditionsDescription(name, pre, post, varList);
     }
 }

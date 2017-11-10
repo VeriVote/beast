@@ -16,10 +16,10 @@ public interface CentralObjectProvider {
      */
     ElectionDescriptionSource getElectionDescriptionSource();
     /**
-     * Provides access to the PostAndPrePropertiesDescriptionSource
-     * @return PostAndPrePropertiesDescriptionSource to which access is needed
+     * Provides access to the PreAndPostConditionsDescriptionSource
+     * @return PreAndPostConditionsDescriptionSource to which access is needed
      */
-    PostAndPrePropertiesDescriptionSource getPostAndPrePropertiesSource();
+    PreAndPostConditionsDescriptionSource getPreAndPostConditionsSource();
     /**
      * Provides access to the ResultCheckerCommunicator
      * @return ResultCheckerCommunicator to which access is needed

@@ -11,7 +11,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer.ElectionInputTypeIds;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer.ElectionOutputTypeIds;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.electionSimulator.ElectionSimulation;
 import edu.pse.beast.highlevel.BEASTCommunicator;
@@ -30,9 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This creates the .c file which will be used to check it with CBMC It
- * generates a mainmethod, (with the FormalProperty inside it) important
- * IncludingCode and the votingMethode (the ElectionDescription)
+ * This class creates the .c file which will be checked with CBMC. It
+ * generates a main method (including the FormalProperty), important
+ * IncludingCode and the votingMethod (the ElectionDescription).
  *
  * @author Niels
  */
@@ -40,7 +40,7 @@ public class CBMCCodeGenerator {
 
 	private final CodeArrayListBeautifier code;
 	private final ElectionDescription electionDescription;
-	private final PostAndPrePropertiesDescription postAndPrePropertiesDescription;
+	private final PreAndPostConditionsDescription PreAndPostConditionsDescription;
 	private final FormalPropertySyntaxTreeToAstTranslator translator;
 	private final CBMCCodeGenerationVisitor visitor;
 	private final ElectionTypeContainer inputType;
@@ -61,16 +61,16 @@ public class CBMCCodeGenerator {
 	 *            the lectionDecription that holds the code that describes the
 	 *            voting method. that code will be merged with the generated
 	 *            code
-	 * @param postAndPrePropertiesDescription
+	 * @param PreAndPostConditionsDescription
 	 *            the Descriptions that will be used to generate the C-Code for
 	 *            CBMC
 	 */
 	public CBMCCodeGenerator(ElectionDescription electionDescription,
-			PostAndPrePropertiesDescription postAndPrePropertiesDescription) {
+			PreAndPostConditionsDescription PreAndPostConditionsDescription) {
 
 		this.translator = new FormalPropertySyntaxTreeToAstTranslator();
 		this.electionDescription = electionDescription;
-		this.postAndPrePropertiesDescription = postAndPrePropertiesDescription;
+		this.PreAndPostConditionsDescription = PreAndPostConditionsDescription;
 		code = new CodeArrayListBeautifier();
 		inputType = electionDescription.getInputType();
 		outputType = electionDescription.getOutputType();
@@ -89,17 +89,17 @@ public class CBMCCodeGenerator {
 	 *            the lectionDecription that holds the code that describes the
 	 *            voting method. that code will be merged with the generated
 	 *            code
-	 * @param postAndPrePropertiesDescription
+	 * @param PreAndPostConditionsDescription
 	 *            the Descriptions that will be used to generate the C-Code for
 	 *            CBMC
 	 */
 	public CBMCCodeGenerator(ElectionDescription electionDescription,
-			PostAndPrePropertiesDescription postAndPrePropertiesDescription, int margin, List<Integer> origResult,
+			PreAndPostConditionsDescription PreAndPostConditionsDescription, int margin, List<Integer> origResult,
 			boolean isTest) {
 
 		this.translator = new FormalPropertySyntaxTreeToAstTranslator();
 		this.electionDescription = electionDescription;
-		this.postAndPrePropertiesDescription = postAndPrePropertiesDescription;
+		this.PreAndPostConditionsDescription = PreAndPostConditionsDescription;
 		code = new CodeArrayListBeautifier();
 		inputType = electionDescription.getInputType();
 		outputType = electionDescription.getOutputType();
@@ -620,9 +620,9 @@ public class CBMCCodeGenerator {
 
 		// generating the pre and post AbstractSyntaxTrees
 		BooleanExpListNode preAST = generateAST(
-				postAndPrePropertiesDescription.getPrePropertiesDescription().getCode());
+				PreAndPostConditionsDescription.getPreConditionsDescription().getCode());
 		BooleanExpListNode postAST = generateAST(
-				postAndPrePropertiesDescription.getPostPropertiesDescription().getCode());
+				PreAndPostConditionsDescription.getPostConditionsDescription().getCode());
 
 		initializeNumberOfTimesVoted(preAST, postAST);
 
@@ -643,7 +643,7 @@ public class CBMCCodeGenerator {
 	 * method.
 	 */
 	private void addSymbVarInitialisation() {
-		List<SymbolicVariable> symbolicVariableList = postAndPrePropertiesDescription.getSymbolicVariableList();
+		List<SymbolicVariable> symbolicVariableList = PreAndPostConditionsDescription.getSymbolicVariableList();
 		code.add("//Symbolic Variables initialisation");
 		symbolicVariableList.forEach((symbVar) -> {
 			InternalTypeContainer internalType = symbVar.getInternalTypeContainer();
@@ -704,7 +704,7 @@ public class CBMCCodeGenerator {
 		code.add("");
 		code.add("//preproperties ");
 		code.add("");
-		visitor.setToPrePropertyMode();
+		visitor.setToPreConditionMode();
 		preAST.getBooleanExpressions().forEach((booleanExpressionLists) -> {
 			booleanExpressionLists.forEach((booleanNode) -> {
 				code.addArrayList(visitor.generateCode(booleanNode));
@@ -721,7 +721,7 @@ public class CBMCCodeGenerator {
 		code.add("");
 		code.add("//postproperties ");
 		code.add("");
-		visitor.setToPostPropertyMode();
+		visitor.setToPostConditionMode();
 		postAST.getBooleanExpressions().forEach((booleanExpressionLists) -> {
 			booleanExpressionLists.forEach((booleanNode) -> {
 				code.addArrayList(visitor.generateCode(booleanNode));
@@ -821,7 +821,7 @@ public class CBMCCodeGenerator {
 
 		BooleanExpScope declaredVars = new BooleanExpScope();
 
-		postAndPrePropertiesDescription.getSymbolicVariableList().forEach((v) -> {
+		PreAndPostConditionsDescription.getSymbolicVariableList().forEach((v) -> {
 			declaredVars.addTypeForId(v.getId(), v.getInternalTypeContainer());
 		});
 

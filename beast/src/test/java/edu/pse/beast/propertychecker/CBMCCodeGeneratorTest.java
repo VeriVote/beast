@@ -11,7 +11,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 
 import java.util.ArrayList;
@@ -19,10 +19,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * All of these Tests are very simple tests if the output contains Strings that
- * should be there It devides the generated Code by the comments that devide the
- * different part of the CodeGeneration So if a test fails first check if you
- * didn't change a String that seperated the different parts of the Code before
+ * All of these tests are very simple tests if the output contains Strings that
+ * should be there. It divides the generated code by the comments that divide the
+ * different parts of the CodeGeneration. Hence if a test fails, first check if you
+ * didn't change a String that separated the different parts of the Code before.
  *
  * @author Niels
  *
@@ -78,13 +78,13 @@ public class CBMCCodeGeneratorTest {
     }
 
     /**
-     * tests if the PreProperty Description contains the right operands
+     * tests if the PreCondition Description contains the right operands
      */
     @Test
-    public void testPreProperty() {
-        System.out.println("testPreProperty");
+    public void testPreCondition() {
+        System.out.println("testPreCondition");
 
-        String preComment = "//preproperties";
+        String preComment = "//preconditions";
         pre = "VOTES1 == VOTES2 && ELECT1 == ELECT2";
         initialize();
         assertTrue(outputContains("&&", preComment));
@@ -120,12 +120,12 @@ public class CBMCCodeGeneratorTest {
     }
 
     /**
-     * tests if the PostProperty Description contains the right operands
+     * tests if the PostCondition Description contains the right operands
      */
     @Test
-    public void testPostProperty() {
-        System.out.println("testPreProperty");
-        String postComment = "//postproperties ";
+    public void testPostCondition() {
+        System.out.println("testPreCondition");
+        String postComment = "//postconditions";
 
         post = "VOTES1 == VOTES2 && ELECT1 == ELECT2";
         initialize();
@@ -194,11 +194,10 @@ public class CBMCCodeGeneratorTest {
         electionDescription = new ElectionDescription("name", inputType, outputType, 0);
         electionDescription.setCode(userCode);
 
-        PostAndPrePropertiesDescription postAndPrePropertiesDescription
-                = new PostAndPrePropertiesDescription("name", preDescr, postDescr, symVariableList);
+        PreAndPostConditionsDescription preAndPostConditionsDescription
+                = new PreAndPostConditionsDescription("name", preDescr, postDescr, symVariableList);
 
-        instance = new CBMCCodeGenerator(electionDescription, postAndPrePropertiesDescription, 0, null, false);
-
+        instance = new CBMCCodeGenerator(electionDescription, preAndPostConditionsDescription, 0, null, false);
     }
 
     /**

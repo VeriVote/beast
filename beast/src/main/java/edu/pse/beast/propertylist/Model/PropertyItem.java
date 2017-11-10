@@ -2,7 +2,7 @@ package edu.pse.beast.propertylist.Model;
 
 import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.highlevel.ResultPresenterElement;
 
@@ -10,13 +10,14 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * This class wraps property descriptions of type PostAndPrePropertiesDescription. Further data is the test status and the result
- * of the property analysis. Also the counter example of the analysis is stored here.
+ * This class wraps property descriptions of type PreAndPostConditionsDescription.
+ * Further data is the test status and the result of the property analysis. Also
+ * the counter example of the analysis is stored here.
  * @author Justin
  */
 public class PropertyItem implements ResultPresenterElement {
 
-    private PostAndPrePropertiesDescription description;
+    private PreAndPostConditionsDescription description;
     private boolean willBeTested;
     private ResultType resultType;
     private List<String> error;
@@ -28,7 +29,7 @@ public class PropertyItem implements ResultPresenterElement {
      * @param descr The property description to add to the property item
      * @param testStatus Sets whether the property will be analyzed in the next check
      */
-    public PropertyItem(PostAndPrePropertiesDescription descr, boolean testStatus, boolean willBeMarginComputed) {
+    public PropertyItem(PreAndPostConditionsDescription descr, boolean testStatus, boolean willBeMarginComputed) {
         description = descr;
         willBeTested = testStatus;
         
@@ -41,7 +42,7 @@ public class PropertyItem implements ResultPresenterElement {
      * Constructor with one parameter sets the test status to true.
      * @param descr The property description to add to the property item
      */
-    public PropertyItem(PostAndPrePropertiesDescription descr) {
+    public PropertyItem(PreAndPostConditionsDescription descr) {
         this(descr, true, false);
     }
 
@@ -49,7 +50,7 @@ public class PropertyItem implements ResultPresenterElement {
      * Constructor without parameters returns a pretty unique name for the property description and a blank description.
      */
     public PropertyItem() {
-        this(new PostAndPrePropertiesDescription(UUID.randomUUID().toString()), false, false);
+        this(new PreAndPostConditionsDescription(UUID.randomUUID().toString()), false, false);
     }
     
     
@@ -92,22 +93,25 @@ public class PropertyItem implements ResultPresenterElement {
     }
 
     // getter and setter
-    public PostAndPrePropertiesDescription getDescription() {
+    public PreAndPostConditionsDescription getDescription() {
         return description;
     }
 
-    public void setDescription(PostAndPrePropertiesDescription descr) {
+    public void setDescription(PreAndPostConditionsDescription descr) {
         this.description = descr;
     }
 
-    public void setDescription(String newName, FormalPropertiesDescription preProp,
-            FormalPropertiesDescription postProp, SymbolicVariableList symVars) {
-        this.description = new PostAndPrePropertiesDescription(newName, preProp, postProp, symVars);
+    public void setDescription(String newName, FormalPropertiesDescription preCond,
+            FormalPropertiesDescription postCond, SymbolicVariableList symVars) {
+        this.description = new PreAndPostConditionsDescription(newName, preCond, postCond, symVars);
     }
     
     public void setDescriptionName(String newName) {
-    	this.description = new PostAndPrePropertiesDescription(newName, this.description.getPrePropertiesDescription(),
-    			this.description.getPostPropertiesDescription(), this.description.getSymVarList());
+    	this.description =
+    	        new PreAndPostConditionsDescription(
+    	                newName, this.description.getPreConditionsDescription(),
+    	                this.description.getPostConditionsDescription(),
+    	                this.description.getSymVarList());
     }
     
     public String getDescriptionName() {

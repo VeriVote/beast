@@ -10,7 +10,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PropertyItem;
@@ -51,9 +51,9 @@ public class ProjectSaverLoaderTest {
         list.addSymbolicVariable("voter2", new InternalTypeContainer(InternalTypeRep.VOTER));
         list.addSymbolicVariable("candidate", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
         list.addSymbolicVariable("seat", new InternalTypeContainer(InternalTypeRep.SEAT));
-        PostAndPrePropertiesDescription description1 = new PostAndPrePropertiesDescription("description1",
+        PreAndPostConditionsDescription description1 = new PreAndPostConditionsDescription("description1",
                 pre, post, list);
-        PostAndPrePropertiesDescription description2 = new PostAndPrePropertiesDescription("description2",
+        PreAndPostConditionsDescription description2 = new PreAndPostConditionsDescription("description2",
                 pre, post, list);
 
         PLModel plModel = new PLModel();
@@ -101,9 +101,9 @@ public class ProjectSaverLoaderTest {
 
         PLModel recreatedPLModel = recreatedProject.getPropList();
         assert (recreatedPLModel.getPropertyList().get(0).getDescription().getName().equals("description1"));
-        assert (recreatedPLModel.getPropertyList().get(0).getDescription().getPostPropertiesDescription().getCode().
+        assert (recreatedPLModel.getPropertyList().get(0).getDescription().getPostConditionsDescription().getCode().
                 equals("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD"));
-        assert (recreatedPLModel.getPropertyList().get(0).getDescription().getPrePropertiesDescription().getCode().
+        assert (recreatedPLModel.getPropertyList().get(0).getDescription().getPreConditionsDescription().getCode().
                 equals("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD"));
         assert (recreatedPLModel.getPropertyList().get(0).getDescription().getSymbolicVariableList().get(0).
                 getId().equals("voter1"));
@@ -124,9 +124,9 @@ public class ProjectSaverLoaderTest {
         assert (recreatedPLModel.getPropertyList().get(0).getTestStatus().equals(true));
 
         assert (recreatedPLModel.getPropertyList().get(1).getDescription().getName().equals("description2"));
-        assert (recreatedPLModel.getPropertyList().get(1).getDescription().getPostPropertiesDescription().getCode().
+        assert (recreatedPLModel.getPropertyList().get(1).getDescription().getPostConditionsDescription().getCode().
                 equals("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD"));
-        assert (recreatedPLModel.getPropertyList().get(1).getDescription().getPrePropertiesDescription().getCode().
+        assert (recreatedPLModel.getPropertyList().get(1).getDescription().getPreConditionsDescription().getCode().
                 equals("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD"));
         assert (recreatedPLModel.getPropertyList().get(1).getDescription().getSymbolicVariableList().get(0).
                 getId().equals("voter1"));

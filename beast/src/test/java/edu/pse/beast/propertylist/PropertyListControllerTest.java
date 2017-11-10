@@ -11,7 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
-import edu.pse.beast.datatypes.propertydescription.PostAndPrePropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PropertyItem;
@@ -54,7 +54,7 @@ public class PropertyListControllerTest {
 	@Test
 	public void changeNameTest() {
 		PropertyItem item = list.getList().get(0);
-		editor.letUserEditPostAndPreProperties(item.getDescription(), false);
+		editor.letUserEditPreAndPostConditions(item.getDescription(), false);
 		list.changeName(item, "testname");
 		
 		assertEquals(item.getDescription().getName(), "testname");
@@ -103,7 +103,7 @@ public class PropertyListControllerTest {
 	@Test
 	public void getTestedList() {
 		list.getList().get(0).setTestStatus(true);
-		ArrayList<PostAndPrePropertiesDescription> testedlist = list.getPostAndPrePropertiesDescriptionsCheck();
+		ArrayList<PreAndPostConditionsDescription> testedlist = list.getPreAndPostConditionsDescriptionsCheck();
 		assertEquals(testedlist.size(), 1);
 	}
 	

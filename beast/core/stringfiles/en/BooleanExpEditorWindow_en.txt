@@ -1,7 +1,7 @@
 windowTitle : Property editor
 symbolicVariablesLabel : Symbolic variables
-preProperties : Pre-conditions
-postProperties : Post-conditions
+preConditions : Preconditions
+postConditions : Postconditions
 add : Add
 remove : Remove
 voter : Voter

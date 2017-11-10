@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * this class is a BufferedReader that runs in a seperate Thread. All read lines
- * are stored in a passed List It either stops if the stream ends, or it gets
- * stopped from the outside. When it finished normally it also counts down a
- * latch to notify other waiting Threads
+ * this class is a BufferedReader that runs in a separate thread. All read lines
+ * are stored in a passed list. It either stops if the stream ends, or it gets
+ * stopped from the outside. When it finishes normally, it also counts down a
+ * latch to notify other waiting threads.
  * 
  * @author Lukas
  *
@@ -39,7 +39,8 @@ public class ThreadedBufferedReader implements Runnable {
      * @param latch
      *            the latch to synchronize on
      */
-    public ThreadedBufferedReader(BufferedReader reader, List<String> readLines, CountDownLatch latch, boolean checkForUnwind) {
+    public ThreadedBufferedReader(BufferedReader reader, List<String> readLines,
+                                  CountDownLatch latch, boolean checkForUnwind) {
         this.reader = reader;
         this.readLines = readLines;
         this.latch = latch;
@@ -49,15 +50,15 @@ public class ThreadedBufferedReader implements Runnable {
     }
 
     /**
-     * starts the Thread. The reader reads each line, adds it to the list. In
-     * the end it notifies a latch, that it is finished
+     * Starts the thread. The reader reads each line, adds it to the list. At
+     * the end it notifies a latch, that it is finished.
      */
     @Override
     public void run() {
-    	boolean warningShown = false;
-    	
-    	int curr = 0;
-    	
+        boolean warningShown = false;
+
+        int curr = 0;
+
         String line = null;
 
         try {
@@ -65,26 +66,32 @@ public class ThreadedBufferedReader implements Runnable {
             while (line != null && !isInterrupted) {
                 readLines.add(line);
                 if (checkForUnwind && (curr > checkingInterval)) {
-                	if (line.startsWith(unwindPrefix)) {
-                		//we are still unwinding, so we check the line now
-                		//to see, how much we are unwinding
-                		try {
-                			int iteration = Integer.parseInt(line.split("iteration")[1].split("file")[0].replace(" ", ""));	
-                			if (iteration > warningInterval) {
-                				new Thread() {
-                			        public void run() {
-                			            ErrorForUserDisplayer.displayError("A loop in your c program is still (more than a thousand times) getting unrolled. Maybe you want to "
-                			            		+ "stop the checking manually and add the \"--unwind\" option.");
-                			        }
-                			    }.start();
-                			}
-                			//reset curr;
-                			curr = 0;
-						} catch (Exception e) {
-							// do nothing
-						}
-                		
-                	}
+                    if (line.startsWith(unwindPrefix)) {
+                        //we are still unwinding, so we check the line now
+                        //to see, how much we are unwinding
+                        try {
+                            int iteration = Integer.parseInt(
+                                    line.split("iteration")[1].split("file")[0]
+                                            .replace(" ", ""));
+                            if (iteration > warningInterval) {
+                                new Thread() {
+                                    public void run() {
+                                        ErrorForUserDisplayer.displayError(
+                                            "A loop in your c program is still"
+                                          + " (more than a thousand times)"
+                                          + " getting unrolled. Maybe you want"
+                                          + " to stop the checking manually and"
+                                          + " add the \"--unwind\" option."
+                                          );
+                                    }
+                                }.start();
+                            }
+                            //reset curr;
+                            curr = 0;
+                        } catch (Exception e) {
+                            // do nothing
+                        }
+                    }
                 }
                 line = reader.readLine();
                 curr++;

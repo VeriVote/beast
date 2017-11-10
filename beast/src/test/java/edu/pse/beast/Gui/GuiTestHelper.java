@@ -36,11 +36,11 @@ public class GuiTestHelper {
     }
 
     public BooleanExpEditor getBooleanExpEditorOfCurrentInstance() {
-        return ((PropertyList) (centralObjectProvider.getPostAndPrePropertiesSource())).getEditor();
+        return ((PropertyList) (centralObjectProvider.getPreAndPostConditionsSource())).getEditor();
     }
 
     public PropertyList getPropListOfCurrentInstance() {
-        return (PropertyList) (centralObjectProvider.getPostAndPrePropertiesSource());
+        return (PropertyList) (centralObjectProvider.getPreAndPostConditionsSource());
     }
 
     public void clickMenuItemInCEditor(int subMenu, int item, long waittime) throws InterruptedException {
