@@ -30,9 +30,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class creates the .c file which will be checked with CBMC. It
- * generates a main method (including the FormalProperty), important
- * IncludingCode and the votingMethod (the ElectionDescription).
+ * This class creates the .c file which will be checked with CBMC. It generates
+ * a main method (including the FormalProperty), important IncludingCode and the
+ * votingMethod (the ElectionDescription).
  *
  * @author Niels
  */
@@ -50,20 +50,17 @@ public class CBMCCodeGenerator {
 									// rounds of votes the Properties compare.
 	private final boolean isMargin;
 	private int margin;
-	private List<Integer> origResult;
+	private List<Long> origResult;
 	private boolean isTest;
 
 	/**
-	 * After the build the code is fully generated and can be aquired by
-	 * getCode();
+	 * After the build the code is fully generated and can be aquired by getCode();
 	 *
 	 * @param electionDescription
 	 *            the lectionDecription that holds the code that describes the
-	 *            voting method. that code will be merged with the generated
-	 *            code
+	 *            voting method. that code will be merged with the generated code
 	 * @param PreAndPostConditionsDescription
-	 *            the Descriptions that will be used to generate the C-Code for
-	 *            CBMC
+	 *            the Descriptions that will be used to generate the C-Code for CBMC
 	 */
 	public CBMCCodeGenerator(ElectionDescription electionDescription,
 			PreAndPostConditionsDescription PreAndPostConditionsDescription) {
@@ -82,19 +79,16 @@ public class CBMCCodeGenerator {
 	}
 
 	/**
-	 * After the build the code is fully generated and can be aquired by
-	 * getCode();
+	 * After the build the code is fully generated and can be aquired by getCode();
 	 *
 	 * @param electionDescription
 	 *            the lectionDecription that holds the code that describes the
-	 *            voting method. that code will be merged with the generated
-	 *            code
+	 *            voting method. that code will be merged with the generated code
 	 * @param PreAndPostConditionsDescription
-	 *            the Descriptions that will be used to generate the C-Code for
-	 *            CBMC
+	 *            the Descriptions that will be used to generate the C-Code for CBMC
 	 */
 	public CBMCCodeGenerator(ElectionDescription electionDescription,
-			PreAndPostConditionsDescription PreAndPostConditionsDescription, int margin, List<Integer> origResult,
+			PreAndPostConditionsDescription PreAndPostConditionsDescription, int margin, List<Long> origResult,
 			boolean isTest) {
 
 		this.translator = new FormalPropertySyntaxTreeToAstTranslator();
@@ -138,7 +132,7 @@ public class CBMCCodeGenerator {
 	}
 
 	private void generateCodeMargin() { // we want to create code for a margin
-										// computation
+										// computation or just a test run
 
 		boolean multiOut = electionDescription.getOutputType().getOutputID() == ElectionOutputTypeIds.CAND_PER_SEAT;
 
@@ -151,20 +145,22 @@ public class CBMCCodeGenerator {
 		code.addAll(BEASTCommunicator.getCentralObjectProvider().getElectionDescriptionSource().getElectionDescription()
 				.getCode());
 
+		// add the code which defines the votes
+		code.addAll(getVotingResultCode(votingData));
+
 		switch (ElectionSimulation.getMode()) {
 		case compileAndRunCBMC:
-
-			// add the code which defines the votes
-			code.addAll(getVotingResultCode(votingData));
-
-			code.addAll(BEASTCommunicator.getCentralObjectProvider().getElectionDescriptionSource()
-					.getElectionDescription().getCode());
 
 			addMarginMainTest(multiOut);
 			break;
 
 		case searchMinDiffAndShowCBMC:
-			addMarginMainCheck(multiOut, votingData, margin, origResult);
+
+			if (isTest) {
+				addMarginMainTest(multiOut);
+			} else {
+				addMarginMainCheck(multiOut, margin, origResult);
+			}
 
 			break;
 
@@ -177,7 +173,7 @@ public class CBMCCodeGenerator {
 
 	}
 
-	private void addMarginMainCheck(boolean multiOut, int[][] votingData, int margin, List<Integer> origResult) {
+	private void addMarginMainCheck(boolean multiOut, int margin, List<Long> origResult) {
 		// we add the margin which will get computed by the model checker
 		code.add("#ifndef MARGIN\n #define MARGIN " + margin + "\n #endif");
 		// we also add the original result, which is calculated by compiling the
@@ -188,9 +184,6 @@ public class CBMCCodeGenerator {
 		} else {
 			code.addAll(getLastResultCode(origResult.get(0)));
 		}
-
-		// add the array "ORIG_RESULTS" to the code. It contains the voting data
-		code.addAll(getVotingResultCode(votingData));
 
 		// add the verify methode:
 		// taken and adjusted from the paper:
@@ -467,90 +460,42 @@ public class CBMCCodeGenerator {
 		switch (electionDescription.getInputType().getInputID()) {
 		case SINGLE_CHOICE:
 			if (multiOut) {
-				code.add("int *winner = voting(ORIG_VOTES);"); // call the
+				code.add("int *winner1 = voting(ORIG_VOTES);"); // call the
 																// voting method
-				code.add("");
-				code.add("fprintf(stdout, \"winner: =\");");
-				code.add("for(int j = 0; j < C - 1; j++) {");
-				code.add("fprintf(stdout, \"%d,\", winner[j]);");
-				code.add("}");
-				code.add("fprintf(stdout, \"%d\", winner[C - 1]);"); // add the
-																		// last
-																		// line
-																		// without
-																		// a
-																		// comma
 			} else {
-				code.add("int winner = voting(ORIG_VOTES);"); // we just have a
+				code.add("int winner1 = voting(ORIG_VOTES);"); // we just have a
 																// single int as
 																// the winner
-				code.add("fprintf(stdout, \"winner: = %d\", winner);");
 			}
 			break;
 		case APPROVAL:
 			if (multiOut) {
-				code.add("int *winner = voting(ORIG_VOTES);"); // call the
+				code.add("int *winner1 = voting(ORIG_VOTES);"); // call the
 																// voting method
-				code.add("");
-				code.add("fprintf(stdout, \"winner: =\");");
-				code.add("for(int j = 0; j < C - 1; j++) {");
-				code.add("fprintf(stdout, \"%d,\", winner[j]);");
-				code.add("}");
-				code.add("fprintf(stdout, \"%d\", winner[C - 1]);"); // add the
-																		// last
-																		// line
-																		// without
-																		// a
-																		// comma
 			} else {
-				code.add("int winner = voting(ORIG_VOTES);"); // we just have a
+				code.add("int winner1 = voting(ORIG_VOTES);"); // we just have a
 																// single int as
 																// the winner
-				code.add("fprintf(stdout, \"winner: = %d\", winner);");
 			}
 			break;
 		case WEIGHTED_APPROVAL:
 			if (multiOut) {
-				code.add("int *winner = voting(ORIG_VOTES);"); // call the
+				code.add("int *winner1 = voting(ORIG_VOTES);"); // call the
 																// voting method
-				code.add("");
-				code.add("fprintf(stdout, \"winner: =\");");
-				code.add("for(int j = 0; j < C - 1; j++) {");
-				code.add("fprintf(stdout, \"%d,\", winner[j]);");
-				code.add("}");
-				code.add("fprintf(stdout, \"%d\", winner[C - 1]);"); // add the
-																		// last
-																		// line
-																		// without
-																		// a
-																		// comma
 			} else {
-				code.add("int winner = voting(ORIG_VOTES);"); // we just have a
+				code.add("int winner1 = voting(ORIG_VOTES);"); // we just have a
 																// single int as
 																// the winner
-				code.add("fprintf(stdout, \"winner: = %d\", winner);");
 			}
 			break;
 		case PREFERENCE:
 			if (multiOut) {
-				code.add("int *winner = voting(ORIG_VOTES);"); // call the
+				code.add("int *winner1 = voting(ORIG_VOTES);"); // call the
 																// voting method
-				code.add("");
-				code.add("fprintf(stdout, \"winner: =\");");
-				code.add("for(int j = 0; j < C - 1; j++) {");
-				code.add("fprintf(stdout, \"%d,\", winner[j]);");
-				code.add("}");
-				code.add("fprintf(stdout, \"%d\", winner[C - 1]);"); // add the
-																		// last
-																		// line
-																		// without
-																		// a
-																		// comma
 			} else {
-				code.add("int winner = voting(ORIG_VOTES);"); // we just have a
+				code.add("int winner1 = voting(ORIG_VOTES);"); // we just have a
 																// single int as
 																// the winner
-				code.add("fprintf(stdout, \"winner: = %d\", winner);");
 			}
 			break;
 
@@ -559,6 +504,9 @@ public class CBMCCodeGenerator {
 					"the current input type was not found. Please extend the methode \"generateRunnableCode\" in the class ElectionSimulation ");
 			break;
 		}
+
+		// add an assertion that always fails, so we can extract the trace
+		code.add("assert(0);");
 
 		code.add("}");
 	}
@@ -607,8 +555,8 @@ public class CBMCCodeGenerator {
 	}
 
 	/**
-	 * adds the main method the main method declares the boolean expression. In
-	 * the main method the votingmethod is called
+	 * adds the main method the main method declares the boolean expression. In the
+	 * main method the votingmethod is called
 	 */
 	private void addMainMethod() {
 
@@ -639,8 +587,7 @@ public class CBMCCodeGenerator {
 	}
 
 	/**
-	 * this should be used to create the VarInitialisation within the main
-	 * method.
+	 * this should be used to create the VarInitialisation within the main method.
 	 */
 	private void addSymbVarInitialisation() {
 		List<SymbolicVariable> symbolicVariableList = PreAndPostConditionsDescription.getSymbolicVariableList();
@@ -920,7 +867,7 @@ public class CBMCCodeGenerator {
 		return dataAsArray;
 	}
 
-	private List<String> getLastResultCode(List<Integer> origResult) {
+	private List<String> getLastResultCode(List<Long> origResult) {
 
 		List<String> dataAsArray = new ArrayList<String>();
 
@@ -946,7 +893,7 @@ public class CBMCCodeGenerator {
 		return dataAsArray;
 	}
 
-	private List<String> getLastResultCode(int origResult) {
+	private List<String> getLastResultCode(Long origResult) {
 
 		List<String> dataAsArray = new ArrayList<String>();
 

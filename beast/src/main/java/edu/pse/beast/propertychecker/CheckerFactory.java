@@ -11,6 +11,7 @@ import edu.pse.beast.toolbox.FileSaver;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -202,18 +203,49 @@ public abstract class CheckerFactory implements Runnable {
 							ElectionSimulation.getNumVoters(), ElectionSimulation.getNumCandidates(),
 							ElectionSimulation.getNumSeats(), this, 0, null, true);
 
-					// TODO wait here for it to finish
 
-					List<Integer> origResult = null;
-					Result marginResult;
+
+					while (!finished && !stopped) {
+						try {
+							// polling in 1 second steps to save cpu time
+							Thread.sleep(POLLINGINTERVAL);
+						} catch (InterruptedException e) {
+							ErrorLogger.log("interrupted while busy waiting! (CheckerFactory");
+						}
+					}
+				
+					CBMCResult dummyResult = new CBMCResult();
 					
+					List<Long> origResult = new ArrayList<Long>();
 					
+
+					switch (electionDescSrc.getElectionDescription().getOutputType().getOutputID()) {
+					case CAND_OR_UNDEF:
+						
+						List<CBMCResultWrapperLong> tmpResultLong = dummyResult.readLongs("winner", lastResult);
+						
+						origResult.add(tmpResultLong.get(0).getValue());
+						
+						break;
+					
+					case CAND_PER_SEAT:
+						
+						List<CBMCResultWrapperSingleArray> tmpResultOneDim = dummyResult.readOneDimVar("winner", lastResult);
+						
+						origResult = tmpResultOneDim.get(0).getList();
+						
+						break;
+
+					default:
+						
+						ErrorLogger.log("unknown output type in \"CheckerFactory\"");
+						
+						break;
+					}			
 					
 					int left = 0;
 					int right = ElectionSimulation.getNumVoters(); // how many votes we have
 					int margin = 0;
-
-					UnprocessedCBMCResult finalMarginResult = null;
 
 					while ((left < right) && !stopped) {
 						// calculate the margin to check
@@ -231,6 +263,11 @@ public abstract class CheckerFactory implements Runnable {
 								e.printStackTrace();
 							}
 						}
+						
+						for (Iterator iterator = currentlyRunning.getResultList().iterator(); iterator.hasNext();) {
+							String s = (String ) iterator.next();
+							System.out.println("cR: " + s);
+						}
 
 						System.out.println("finished for margin " + margin + " result: "
 								+ currentlyRunning.checkAssertionSuccess());
@@ -240,11 +277,17 @@ public abstract class CheckerFactory implements Runnable {
 							margin = margin + 1;
 						} else {
 							right = margin;
-							finalMarginResult = new UnprocessedCBMCResult();
-							
-							finalMarginResult.setResult(currentlyRunning.getResultList());
 						}
 					}
+					
+					result.setResult(currentlyRunning.getResultList());
+					
+					//result.setHasMargin()
+					
+					result.setFinalMargin(margin);
+					
+					System.out.println("final margin: " + margin);
+					
 				}
 			}
 		}
@@ -353,7 +396,7 @@ public abstract class CheckerFactory implements Runnable {
 	 */
 	protected abstract Checker startProcessMargin(ElectionDescriptionSource electionDescSrc,
 			PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
-			CheckerFactory parent, int margin, List<Integer> origResult, boolean isTest);
+			CheckerFactory parent, int margin, List<Long> origResult, boolean isTest);
 
 	/**
 	 * starts a new Checker with the given parameters. Implementation depends on

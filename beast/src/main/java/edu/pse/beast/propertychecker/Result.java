@@ -31,6 +31,8 @@ public abstract class Result implements ResultInterface {
     private ElectionDescription electionDescription;
     private PreAndPostConditionsDescription property;
     private boolean forcefulleStopped;
+    private boolean hasMargin = false;
+    private int finalMargin = -1;
 
     /**
      * Presents the result of the check. Every class that extends this class has
@@ -269,4 +271,20 @@ public abstract class Result implements ResultInterface {
      * @return true, if the assertion failed, else false
      */
     public abstract boolean checkAssertionFailure();
+
+	public void setFinalMargin(int margin) {
+		this.finalMargin = margin;
+	}
+	
+	public int getFinalMargin() {
+		return finalMargin;
+	}
+	
+	public void setHasFinalMargin(boolean b) {
+		this.hasMargin = b;
+	}
+	
+	public boolean hasFinalMargin() {
+		return hasMargin;
+	}
 }

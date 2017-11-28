@@ -268,7 +268,7 @@ public class CBMCResult extends Result {
 
 		Pattern correctChecker = Pattern.compile("(\\b" + name + "=[0-9]+u*)(.*)");
 
-		Iterator<String> iterator = getResult().iterator();
+		Iterator<String> iterator = toExtract.iterator();
 		String line = mergeLinesToOne(iterator, segmentEnder);
 
 		while (line.length() > 0) {
@@ -303,7 +303,7 @@ public class CBMCResult extends Result {
 
 		Pattern longExtractor = Pattern.compile("(\\b" + name + "[0-9]+)(.*)");
 
-		Iterator<String> iterator = getResult().iterator();
+		Iterator<String> iterator = toExtract.iterator();
 		String line = mergeLinesToOne(iterator, segmentEnder);
 
 		line = mergeLinesToOne(iterator, segmentEnder);
@@ -367,7 +367,7 @@ public class CBMCResult extends Result {
 		// number. Also, the next character has to be an equals sign
 		Pattern votesExtractor = null;
 
-		Iterator<String> iterator = getResult().iterator();
+		Iterator<String> iterator = toExtract.iterator();
 		String line = mergeLinesToOne(iterator, segmentEnder);
 
 		while (line.length() > 0) {
@@ -466,7 +466,7 @@ public class CBMCResult extends Result {
 	}
 
 	/**
-	 * reads a two dimensional variables that match a given name from the cbmc
+	 * reads a two dimensional variables that matches a given name from the cbmc
 	 * output and puts it in a wrapper object
 	 * 
 	 * @param name
@@ -481,7 +481,7 @@ public class CBMCResult extends Result {
 
 		Pattern votesExtractor = null;
 
-		Iterator<String> iterator = getResult().iterator();
+		Iterator<String> iterator = toExtract.iterator();
 		String line = mergeLinesToOne(iterator, segmentEnder);
 
 		while (line.length() > 0) {
