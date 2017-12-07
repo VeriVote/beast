@@ -49,6 +49,8 @@ public class CVariableErrorFinder implements ErrorFinder {
         seperated.add("void __CPROVER_assert(int x, int y) {}");
         seperated.add("void __CPROVER_assume(int x) {}");
         
+        seperated.add("struct result { unsigned int arr[S]; };");
+        
         seperated.add("void assume(int x) {}");
         seperated.add("void assert(int x) {}");
         seperated.add("void assert2(int x, int y) {}");

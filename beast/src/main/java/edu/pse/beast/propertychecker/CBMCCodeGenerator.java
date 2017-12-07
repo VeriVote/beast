@@ -190,13 +190,16 @@ public class CBMCCodeGenerator {
 		// https://formal.iti.kit.edu/~beckert/pub/evoteid2016.pdf
 		code.add("void verify() {");
 		// code.add("int new_votes1[V], diff[V], total_diff, pos_diff;");
-
+		
+		code.addTab();
+		
 		code.add("int total_diff = 0;");
 
 		switch (inputType.getInputID()) {
 		case SINGLE_CHOICE:
 			code.add("int new_votes1[V];");
 			code.add("for (int i = 0; i < V; i++) {"); // go over all voters
+			code.addTab();
 			code.add("int changed = nondet_int();"); // determine, if we want to
 														// changed votes for
 														// this
@@ -204,49 +207,56 @@ public class CBMCCodeGenerator {
 			code.add("assume(0 <= changed);");
 			code.add("assume(changed <= 1);");
 			code.add("if(changed) {");
+			code.addTab();
 			code.add("total_diff++;"); // if we changed the vote, we keep track
 										// of it
 			code.add("new_votes1[i] = !ORIG_VOTES[i];"); // flip the vote (0 ->
 															// 1 |
 															// 1 -> 0)
+			code.deleteTab();
 			code.add("} else {");
+			code.addTab();
 			code.add("new_votes1[i] = ORIG_VOTES[i];");
+			code.deleteTab();
 			code.add("}");
+			code.deleteTab();
 			code.add("}");
 			code.add("assume(total_diff <= MARGIN);"); // no more changes than
 														// margin allows
-			if (multiOut) {
-				code.add("int *tmp_result = voting(new_votes1);");
-
-				code.add("int new_result1[S];"); // create the array where the
-													// new seats will get saved
-
-				code.add("for (int i = 0; i < S; i++) {"); // iterate over the
-															// seat array, and
-															// fill it
-				// we do this, so our cbmc parser can read out the value of the
-				// array
-				code.add("new_result1[i] = tmp_result[i];");
-				code.add("}"); // close the for loop
-
-				code.add("for (int i = 0; i < S; i++) {"); // iterate over all
-															// candidates /
-															// seats and assert
-															// their equality
-				code.add("assert(new_result1[i] == ORIG_RESULT[i]);");
-				code.add("}"); // end of the for loop
-			} else {
-				code.add("int new_result1 = voting(new_votes1);");
-				code.add("assert(new_result1 == ORIG_RESULT);");
-			}
-			code.add("}"); // end of the function
+//			if (multiOut) {
+//				code.add("int *tmp_result = voting(new_votes1);");
+//
+//				code.add("int new_result1[S];"); // create the array where the
+//													// new seats will get saved
+//
+//				code.add("for (int i = 0; i < S; i++) {"); // iterate over the
+//															// seat array, and
+//															// fill it
+//				// we do this, so our cbmc parser can read out the value of the
+//				// array
+//				code.add("new_result1[i] = tmp_result[i];");
+//				code.add("}"); // close the for loop
+//
+//				code.add("for (int i = 0; i < S; i++) {"); // iterate over all
+//															// candidates /
+//															// seats and assert
+//															// their equality
+//				code.add("assert(new_result1[i] == ORIG_RESULT[i]);");
+//				code.add("}"); // end of the for loop
+//			} else {
+//				code.add("int new_result1 = voting(new_votes1);");
+//				code.add("assert(new_result1 == ORIG_RESULT);");
+//			}
+//			code.add("}"); // end of the function
 			break;
 		case APPROVAL:
 
 			code.add("int new_votes1[V][C];");
 
 			code.add("for (int i = 0; i < V; i++) {"); // go over all voters
+			code.addTab();
 			code.add("for (int j = 0; i < C; i++) {"); // go over all candidates
+			code.addTab();
 			code.add("int changed = nondet_int();"); // determine, if we want to
 														// changed votes for
 														// this
@@ -255,49 +265,57 @@ public class CBMCCodeGenerator {
 			code.add("assume(0 <= changed);");
 			code.add("assume(changed <= 1);");
 			code.add("if(changed) {");
+			code.addTab();
 			code.add("total_diff++;"); // if we changed the vote, we keep track
 										// of it
 			code.add("new_votes1[i][j] = !ORIG_VOTES[i][j];"); // flip the vote
 																// (0 -> 1 |
 			// 1 -> 0)
+			code.deleteTab();
 			code.add("} else {");
+			code.addTab();
 			code.add("new_votes1[i][j] = ORIG_VOTES[i][j];");
+			code.deleteTab();
 			code.add("}");
+			code.deleteTab();
 			code.add("}");
+			code.deleteTab();
 			code.add("}"); // end of the double for loop
 			code.add("assume(total_diff <= MARGIN);"); // no more changes than
 														// margin allows
-			if (multiOut) {
-				code.add("int *tmp_result = voting(new_votes1);");
-
-				code.add("int new_result1[S];"); // create the array where the
-													// new seats will get saved
-
-				code.add("for (int i = 0; i < S; i++) {"); // iterate over the
-															// seat array, and
-															// fill it
-				// we do this, so our cbmc parser can read out the value of the
-				// array
-				code.add("new_result1[i] = tmp_result[i];");
-				code.add("}"); // close the for loop
-
-				code.add("for (int i = 0; i < S; i++) {"); // iterate over all
-															// candidates /
-															// seats
-				code.add("assert(new_result1[i] == ORIG_RESULT[i]);");
-				code.add("}"); // end of the for loop
-			} else {
-				code.add("int new_result1 = voting(new_votes1);");
-				code.add("assert(new_result1 == ORIG_RESULT);");
-			}
-			code.add("}"); // end of the function
+//			if (multiOut) {
+//				code.add("int *tmp_result = voting(new_votes1);");
+//
+//				code.add("int new_result1[S];"); // create the array where the
+//													// new seats will get saved
+//
+//				code.add("for (int i = 0; i < S; i++) {"); // iterate over the
+//															// seat array, and
+//															// fill it
+//				// we do this, so our cbmc parser can read out the value of the
+//				// array
+//				code.add("new_result1[i] = tmp_result[i];");
+//				code.add("}"); // close the for loop
+//
+//				code.add("for (int i = 0; i < S; i++) {"); // iterate over all
+//															// candidates /
+//															// seats
+//				code.add("assert(new_result1[i] == ORIG_RESULT[i]);");
+//				code.add("}"); // end of the for loop
+//			} else {
+//				code.add("int new_result1 = voting(new_votes1);");
+//				code.add("assert(new_result1 == ORIG_RESULT);");
+//			}
+//			code.add("}"); // end of the function
 			break;
 		case WEIGHTED_APPROVAL:
 
 			code.add("int new_votes1[V][C];");
 
 			code.add("for (int i = 0; i < V; i++) {"); // go over all voters
+			code.addTab();
 			code.add("for (int j = 0; i < C; i++) {"); // go over all candidates
+			code.addTab();
 			code.add("int changed = nondet_int();"); // determine, if we want to
 														// changed votes for
 														// this
@@ -306,6 +324,7 @@ public class CBMCCodeGenerator {
 			code.add("assume(0 <= changed);");
 			code.add("assume(changed <= 1);");
 			code.add("if(changed) {");
+			code.addTab();
 			code.add("total_diff++;"); // if we changed the vote, we keep track
 										// of it
 			code.add("new_votes1[i][j] = nondet_int();");
@@ -319,44 +338,51 @@ public class CBMCCodeGenerator {
 			// original
 			code.add("assume(0 <= new_votes1[i][j]);");
 			code.add("assume(new_votes1[i][j] <= 100);");
+			code.deleteTab();
 			code.add("} else {");
+			code.addTab();
 			code.add("new_votes1[i][j] = ORIG_VOTES[i][j];");
+			code.deleteTab();
 			code.add("}");
+			code.deleteTab();
 			code.add("}");
+			code.deleteTab();
 			code.add("}"); // end of the double for loop
 			code.add("assume(total_diff <= MARGIN);"); // no more changes than
 														// margin allows
-			if (multiOut) {
-				code.add("int *tmp_result = voting(new_votes1);");
-
-				code.add("int new_result1[S];"); // create the array where the
-													// new seats will get saved
-
-				code.add("for (int i = 0; i < S; i++) {"); // iterate over the
-															// seat array, and
-															// fill it
-				// we do this, so our cbmc parser can read out the value of the
-				// array
-				code.add("new_result1[i] = tmp_result[i];");
-				code.add("}"); // close the for loop
-
-				code.add("for (int i = 0; i < S; i++) {"); // iterate over all
-															// candidates /
-															// seats
-				code.add("assert(new_result1[i] == ORIG_RESULT[i]);");
-				code.add("}"); // end of the for loop
-			} else {
-				code.add("int new_result1 = voting(new_votes1);");
-				code.add("assert(new_result1 == ORIG_RESULT);");
-			}
-			code.add("}"); // end of the function
+//			if (multiOut) {
+//				code.add("int *tmp_result = voting(new_votes1);");
+//
+//				code.add("int new_result1[S];"); // create the array where the
+//													// new seats will get saved
+//
+//				code.add("for (int i = 0; i < S; i++) {"); // iterate over the
+//															// seat array, and
+//															// fill it
+//				// we do this, so our cbmc parser can read out the value of the
+//				// array
+//				code.add("new_result1[i] = tmp_result[i];");
+//				code.add("}"); // close the for loop
+//
+//				code.add("for (int i = 0; i < S; i++) {"); // iterate over all
+//															// candidates /
+//															// seats
+//				code.add("assert(new_result1[i] == ORIG_RESULT[i]);");
+//				code.add("}"); // end of the for loop
+//			} else {
+//				code.add("int new_result1 = voting(new_votes1);");
+//				code.add("assert(new_result1 == ORIG_RESULT);");
+//			}
+//			code.add("}"); // end of the function
 			break;
 		case PREFERENCE:
 			// TODO fix
 			code.add("int new_votes1[V][C];");
 
 			code.add("for (int i = 0; i < V; i++) {"); // go over all voters
+			code.addTab();
 			code.add("for (int j = 0; i < C; i++) {"); // go over all candidates
+			code.addTab();
 			code.add("int changed = nondet_int();"); // determine, if we want to
 														// changed votes for
 														// this
@@ -365,6 +391,7 @@ public class CBMCCodeGenerator {
 			code.add("assume(0 <= changed);");
 			code.add("assume(changed <= 1);");
 			code.add("if(changed) {");
+			code.addTab();
 			code.add("total_diff++;"); // if we changed the vote, we keep track
 										// of it
 			code.add("new_votes1[i][j] = nondet_int();");
@@ -378,44 +405,87 @@ public class CBMCCodeGenerator {
 			// original
 			code.add("assume(0 <= new_votes1[i][j]);");
 			code.add("assume(new_votes1[i][j] <= 100);");
+			code.deleteTab();
 			code.add("} else {");
+			code.addTab();
 			code.add("new_votes1[i][j] = ORIG_VOTES[i][j];");
+			code.deleteTab();
 			code.add("}");
+			code.deleteTab();
 			code.add("}");
+			code.deleteTab();
 			code.add("}"); // end of the double for loop
 			code.add("assume(total_diff <= MARGIN);"); // no more changes than
 														// margin allows
-			if (multiOut) {
-				code.add("int *tmp_result = voting(new_votes1);");
-
-				code.add("int new_result1[S];"); // create the array where the
-													// new seats will get saved
-
-				code.add("for (int i = 0; i < S; i++) {"); // iterate over the
-															// seat array, and
-															// fill it
-				// we do this, so our cbmc parser can read out the value of the
-				// array
-				code.add("new_result1[i] = tmp_result[i];");
-				code.add("}"); // close the for loop
-
-				code.add("for (int i = 0; i < S; i++) {"); // iterate over all
-															// candidates /
-															// seats
-				code.add("assert(new_result1[i] == ORIG_RESULT[i]);");
-				code.add("}"); // end of the for loop
-			} else {
-				code.add("int new_result1 = voting(new_votes1);");
-				code.add("assert(new_result1 == ORIG_RESULT);");
-			}
-			code.add("}"); // end of the function
+//			if (multiOut) {
+//				code.add("int *tmp_result = voting(new_votes1);");
+//				
+//				code.add("int new_result1[S];"); // create the array where the
+//				// new seats will get saved
+//				
+//				code.add("for (int i = 0; i < S; i++) {"); // iterate over the
+//				// seat array, and
+//				// fill it
+//				// we do this, so our cbmc parser can read out the value of the
+//				// array
+//				code.add("new_result1[i] = tmp_result[i];");
+//				code.add("}"); // close the for loop
+//				
+//				code.add("for (int i = 0; i < S; i++) {"); // iterate over all
+//				// candidates /
+//				// seats
+//				code.add("assert(new_result1[i] == ORIG_RESULT[i]);");
+//				code.add("}"); // end of the for loop
+//			} else {
+//				code.add("int new_result1 = voting(new_votes1);");
+//				code.add("assert(new_result1 == ORIG_RESULT);");
+//			}
+//			code.add("}"); // end of the function
+			
 			break;
 
 		default:
+		
 			ErrorForUserDisplayer.displayError(
 					"the current input type was not found. Please extend the methode \"generateMarginComputationCode\" in the class ElectionSimulation ");
 			break;
 		}
+		
+		
+		if (multiOut) {
+			code.add("struct result tmp = voting(new_votes1);");
+			
+			code.add("int *tmp_result = tmp.arr;");
+			
+			code.add("int new_result1[S];"); // create the array where the
+			// new seats will get saved
+			
+			code.add("for (int i = 0; i < S; i++) {"); // iterate over the
+			code.addTab();
+			// seat array, and
+			// fill it
+			// we do this, so our cbmc parser can read out the value of the
+			// array
+			code.add("new_result1[i] = tmp_result[i];");
+			code.deleteTab();
+			code.add("}"); // close the for loop
+			
+			code.add("for (int i = 0; i < S; i++) {"); // iterate over all
+			code.addTab();
+			// candidates /
+			// seats
+			code.add("assert(new_result1[i] == ORIG_RESULT[i]);");
+			code.deleteTab();
+			code.add("}"); // end of the for loop
+		} else {
+			code.add("int new_result1 = voting(new_votes1);");
+			code.add("assert(new_result1 == ORIG_RESULT);");
+		}
+		
+		code.deleteTab();
+		
+		code.add("}"); // end of the function
+		
 
 		// not used lines ( I think) //TODO if they really aren't needed, delete
 		// them
@@ -431,23 +501,17 @@ public class CBMCCodeGenerator {
 
 		// add the main methode
 		code.add("int main() {");
+		code.addTab();
 		code.add("verify();");
+		code.deleteTab();
 		code.add("}");
 	}
 
 	private void addMarginHeaders(int[][] votingData) {
 
 		// add the headers CBMC needs;
-		code.add("#include <stdlib.h>");
-		code.add("#include <stdint.h>");
-		code.add("#include <assert.h>");
-		code.add("");
-		code.add("unsigned int nondet_uint();");
-		code.add("int nondet_int();");
-		code.add("");
-		code.add("#define assert2(x, y) __CPROVER_assert(x, y)");
-		code.add("#define assume(x) __CPROVER_assume(x)");
-		code.add("");
+		
+		addHeader();
 
 		// define some pre processor values
 		code.add("#ifndef V\n #define V " + votingData.length + "\n #endif");
@@ -456,58 +520,92 @@ public class CBMCCodeGenerator {
 	}
 
 	private void addMarginMainTest(boolean multiOut) {
+		
+		int voteNumber = 1; //because we only have one vote, we hardcode the value one here
+		
 		code.add("int main() {");
-		switch (electionDescription.getInputType().getInputID()) {
-		case SINGLE_CHOICE:
-			if (multiOut) {
-				code.add("int *winner1 = voting(ORIG_VOTES);"); // call the
-																// voting method
-			} else {
-				code.add("int winner1 = voting(ORIG_VOTES);"); // we just have a
-																// single int as
-																// the winner
-			}
-			break;
-		case APPROVAL:
-			if (multiOut) {
-				code.add("int *winner1 = voting(ORIG_VOTES);"); // call the
-																// voting method
-			} else {
-				code.add("int winner1 = voting(ORIG_VOTES);"); // we just have a
-																// single int as
-																// the winner
-			}
-			break;
-		case WEIGHTED_APPROVAL:
-			if (multiOut) {
-				code.add("int *winner1 = voting(ORIG_VOTES);"); // call the
-																// voting method
-			} else {
-				code.add("int winner1 = voting(ORIG_VOTES);"); // we just have a
-																// single int as
-																// the winner
-			}
-			break;
-		case PREFERENCE:
-			if (multiOut) {
-				code.add("int *winner1 = voting(ORIG_VOTES);"); // call the
-																// voting method
-			} else {
-				code.add("int winner1 = voting(ORIG_VOTES);"); // we just have a
-																// single int as
-																// the winner
-			}
-			break;
-
-		default:
-			ErrorForUserDisplayer.displayError(
-					"the current input type was not found. Please extend the methode \"generateRunnableCode\" in the class ElectionSimulation ");
-			break;
+		code.addTab();
+		
+		if(multiOut) {
+			
+			String temp = "struct result tmp" + voteNumber + " = voting(ORIG_VOTES);";
+			code.add(temp);
+			String tempElect = "unsigned int *tempElect" + voteNumber + " = tmp" + voteNumber + ".arr;";
+			code.add(tempElect);
+			String electX = "unsigned int elect" + voteNumber + "[S];";
+			code.add(electX);
+			String forLoop = "for (int electLoop = 0; electLoop < S; electLoop++) {";
+			code.add(forLoop);
+			code.addTab();
+			code.add("elect" + voteNumber + "[electLoop] = tempElect" + voteNumber + "[electLoop];");
+			code.deleteTab();
+			code.add("}");
+			
+		} else {
+			code.add("int elect1 = voting(ORIG_VOTES);"); // we just have a
+			// single int as
+			// the winner
 		}
+		
+		
+//		switch (electionDescription.getInputType().getInputID()) {
+//		
+//		
+//		
+//		
+//		
+//		case SINGLE_CHOICE:
+//			if (multiOut) {
+//				code.add("int *winner1 = voting(ORIG_VOTES);"); // call the
+//																// voting method
+//			} else {
+//				code.add("int winner1 = voting(ORIG_VOTES);"); // we just have a
+//																// single int as
+//																// the winner
+//			}
+//			break;
+//		case APPROVAL:
+//			if (multiOut) {
+//				code.add("int *winner1 = voting(ORIG_VOTES);"); // call the
+//																// voting method
+//			} else {
+//				code.add("int winner1 = voting(ORIG_VOTES);"); // we just have a
+//																// single int as
+//																// the winner
+//			}
+//			break;
+//		case WEIGHTED_APPROVAL:
+//			if (multiOut) {
+//				code.add("int *winner1 = voting(ORIG_VOTES);"); // call the
+//																// voting method
+//			} else {
+//				code.add("int winner1 = voting(ORIG_VOTES);"); // we just have a
+//																// single int as
+//																// the winner
+//			}
+//			break;
+//		case PREFERENCE:
+//			if (multiOut) {
+//				code.add("int *winner1 = voting(ORIG_VOTES);"); // call the
+//																// voting method
+//			} else {
+//				code.add("int winner1 = voting(ORIG_VOTES);"); // we just have a
+//																// single int as
+//																// the winner
+//			}
+//			break;
+//
+//		default:
+//			ErrorForUserDisplayer.displayError(
+//					"the current input type was not found. Please extend the methode \"generateRunnableCode\" in the class ElectionSimulation ");
+//			break;
+//		}
 
 		// add an assertion that always fails, so we can extract the trace
 		code.add("assert(0);");
 
+		code.deleteTab();
+		
 		code.add("}");
 	}
 
@@ -552,6 +650,7 @@ public class CBMCCodeGenerator {
 		code.add("#define assert2(x, y) __CPROVER_assert(x, y)");
 		code.add("#define assume(x) __CPROVER_assume(x)");
 		code.add("");
+		code.add("struct result { unsigned int arr[S]; };"); //add a result struct to be returned in case of a parliament
 	}
 
 	/**
@@ -739,8 +838,10 @@ public class CBMCCodeGenerator {
 			}
 			// initialize elects
 			if (outputType.getType().isList()) {
-				String temp = "unsigned int* tempElect" + voteNumber + " = voting(votes" + voteNumber + ");";
+				String temp = "struct result tmp" + voteNumber + " = voting(votes" + voteNumber + ");";
 				code.add(temp);
+				String tempElect = "unsigned int *tempElect" + voteNumber + " = tmp" + voteNumber + ".arr;";
+				code.add(tempElect);
 				String electX = "unsigned int elect" + voteNumber + "[S];";
 				code.add(electX);
 				String forLoop = "for (int electLoop = 0; electLoop < S; electLoop++) {";
