@@ -310,6 +310,17 @@ public class CBMCResult extends Result {
 
 		while (line.length() > 0) {
 
+			if(name.equals("new_votes")) {
+				int asdf = 6;
+				asdf = asdf + 5;
+				
+				if(line.contains("new_votes")) {
+					System.out.println("hier");
+				}
+				
+			}
+			
+			
 			Matcher checkerMatcher = correctChecker.matcher(line);
 			if (checkerMatcher.find()) {
 			    

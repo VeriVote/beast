@@ -13,7 +13,7 @@ import java.util.List;
 public class CBMCResultWrapperMultiArray {
 	private final int mainIndex;
 	private final String name;
-	private final List<ArrayList<Long>> list = new ArrayList<ArrayList<Long>>();
+	private final List<List<Long>> list = new ArrayList<List<Long>>();
 
 	/**
 	 * creates a new wrapper
@@ -76,7 +76,7 @@ public class CBMCResultWrapperMultiArray {
 	 * 
 	 * @return the list that describes this variable
 	 */
-	public List<ArrayList<Long>> getList() {
+	public List<List<Long>> getList() {
 		return list;
 	}
 
@@ -117,7 +117,7 @@ public class CBMCResultWrapperMultiArray {
 			return new Long[0][0];
 		} else {
 
-			for (Iterator<ArrayList<Long>> iterator = list.iterator(); iterator.hasNext();) {
+			for (Iterator<List<Long>> iterator = list.iterator(); iterator.hasNext();) {
 				ArrayList<Long> subList = (ArrayList<Long>) iterator.next();
 				if (subList.size() > maxSize) {
 					maxSize = subList.size();

@@ -301,7 +301,7 @@ public abstract class CheckerFactory implements Runnable {
 
 					System.out.println("final margin: " + margin);
 
-					List<Long> newVotes = new ArrayList<Long>();
+					List<List<Long>> newVotes = new ArrayList<List<Long>>();
 					List<Long> newResult = new ArrayList<Long>();
 
 					if (hasMargin) {
@@ -309,12 +309,7 @@ public abstract class CheckerFactory implements Runnable {
 						switch (electionDescSrc.getElectionDescription().getOutputType().getOutputID()) {
 						case CAND_OR_UNDEF:
 
-							List<CBMCResultWrapperLong> tmpResultLong = dummyResult.readLongs("new_votes",
-									lastFailedRun);
-
-							newVotes.add(tmpResultLong.get(0).getValue());
-
-							tmpResultLong = dummyResult.readLongs("new_result", lastFailedRun);
+							List<CBMCResultWrapperLong> tmpResultLong = dummyResult.readLongs("new_result", lastFailedRun);
 
 							newResult.add(tmpResultLong.get(0).getValue());
 
@@ -322,12 +317,7 @@ public abstract class CheckerFactory implements Runnable {
 
 						case CAND_PER_SEAT:
 
-							List<CBMCResultWrapperSingleArray> tmpResultOneDim = dummyResult.readOneDimVar("new_votes",
-									lastFailedRun);
-
-							newVotes = tmpResultOneDim.get(0).getList();
-
-							tmpResultOneDim = dummyResult.readOneDimVar("new_result", lastFailedRun);
+							List<CBMCResultWrapperSingleArray> tmpResultOneDim = dummyResult.readOneDimVar("new_result", lastFailedRun);
 
 							newResult = tmpResultOneDim.get(0).getList();
 
@@ -339,15 +329,49 @@ public abstract class CheckerFactory implements Runnable {
 
 							break;
 						}
+						
+						switch (electionDescSrc.getElectionDescription().getInputType().getInputID()) {
+						case APPROVAL:
+							
+							newVotes = dummyResult.readTwoDimVar("new_votes", lastFailedRun).get(0).getList();
+							
+							break;
+							
+						case PREFERENCE:
+							
+							newVotes = dummyResult.readTwoDimVar("new_votes", lastFailedRun).get(0).getList();
+							
+							break;
+							
+						case SINGLE_CHOICE:
+							
+							newVotes.add(dummyResult.readOneDimVar("new_votes", lastFailedRun).get(0).getList());
+							
+							break;
+							
+						case WEIGHTED_APPROVAL:
+							
+							newVotes = dummyResult.readTwoDimVar("new_votes", lastFailedRun).get(0).getList();
+							
+							break;
+
+						default:
+							break;
+						}
 
 						int count = 0;
 
 						for (Iterator iterator = newVotes.iterator(); iterator.hasNext();) {
-							Long long1 = (Long) iterator.next();
-							System.out.println("new_vote " + count + ": " + long1);
-							count = count + 1;
+							int count2 = 0;
+							List<Long> list = (List<Long>) iterator.next();
+							System.out.println("");
+							System.out.print("new_votes: " + count++ +"==");
+							for (Iterator iterator2 = list.iterator(); iterator2.hasNext();) {
+								Long long1 = (Long) iterator2.next();
+								System.out.print(count2++ + ":" + long1 + "|");
+							}
 						}
-
+						System.out.println("");
 						System.out.println("===========");
 						
 						count = 0;
