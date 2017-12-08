@@ -18,3 +18,4 @@ areYouSure : Sind Sie sicher, nicht gespeicherte Daten gehen verloren?
 newList : Neue Liste
 wantToSaveBefore : Wollen Sie die Liste vorher abspeichern?
 saveList : Liste speichern
+simulation : Margin computation durchführen

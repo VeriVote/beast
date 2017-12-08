@@ -8,3 +8,4 @@ cut : Cut
 copy : Copy
 paste : Paste
 showHelpToUser : show language help
+simulation : run a margin computation

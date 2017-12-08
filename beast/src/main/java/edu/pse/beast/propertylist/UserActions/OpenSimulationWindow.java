@@ -24,11 +24,12 @@ public class OpenSimulationWindow extends UserAction {
     public OpenSimulationWindow(PropertyList controller) {
         super("simulation");
         this.controller = controller;
+        controller.setMarginComputationBoxVisible(true);
     }
 
     @Override
     public void perform() {
-    	controller.setMarginComputationBoxVisible(!simulationWindow.isOpen());
+    	//controller.setMarginComputationBoxVisible(!simulationWindow.isOpen());
         if (simulationWindow.isOpen()) {
         	simulationWindow.close();
         } else {

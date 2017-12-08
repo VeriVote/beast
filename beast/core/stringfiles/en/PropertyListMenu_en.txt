@@ -18,3 +18,4 @@ areYouSure : Are you sure? you will lose unsaved data!
 newList : New list
 wantToSaveBefore : Do you want to save the list beforehand?
 saveList : Save list
+simulation : perform margin compuation

@@ -8,3 +8,4 @@ cut : Ausschneiden
 copy : Kopieren
 paste : Einfügen
 showHelpToUser : Hilfe für Sprache anzeigen
+simulation : Margin computation durchführen

@@ -255,11 +255,6 @@ public abstract class CheckerFactory implements Runnable {
 
 						checkMarginAndWait(margin, origResult, advanced);
 
-						for (Iterator iterator = currentlyRunning.getResultList().iterator(); iterator.hasNext();) {
-							String s = (String) iterator.next();
-							System.out.println("cR: " + s);
-						}
-
 						System.out.println("finished for margin " + margin + " result: "
 								+ currentlyRunning.checkAssertionSuccess());
 
