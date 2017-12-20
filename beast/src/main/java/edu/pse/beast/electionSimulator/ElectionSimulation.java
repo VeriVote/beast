@@ -398,7 +398,7 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 
 							System.out.println("result_array: ");
 
-							Long[][] new_votes_output = finalMarginResult.getNewVotes().getArray();
+							Long[][] new_votes_output = finalMarginResult.getNewVotesWrappedMulti().getArray();
 
 							if (new_votes_output == null || new_votes_output[0] == null) {
 
@@ -1099,13 +1099,13 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 		}
 	}
 
-	public static int[][] getVotingData() {
-		int[][] votingData = new int[model.getAmountVoters()][model.getAmountCandidates()];
+	public static Long[][] getVotingData() {
+		Long[][] votingData = new Long[model.getAmountVoters()][model.getAmountCandidates()];
 
 		// read the data in a 2d array
 		for (int i = 0; i < model.getAmountVoters(); i++) {
 			for (int j = 0; j < model.getAmountCandidates(); j++) {
-				votingData[i][j] = model.getRows().get(i).getValues().get(j);
+				votingData[i][j] = (long)model.getRows().get(i).getValues().get(j);
 			}
 		}
 		
@@ -1134,5 +1134,21 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 
 	public static Modes getMode() {
 		return currentMode;
+	}
+
+	public static List<List<Long>> getVotingDataListofList() {
+		List<List<Long>> toReturn = new ArrayList<List<Long>>();
+		
+		Long[][] data  = getVotingData();
+		
+		for (int i = 0; i < data.length; i++) {
+			List<Long> tmp = new ArrayList<Long>();
+			for (int j = 0; j < data[0].length; j++) {
+				tmp.add(data[i][j]);
+			}
+			toReturn.add(tmp);
+		}
+		
+		return toReturn;
 	}
 }

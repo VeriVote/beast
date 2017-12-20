@@ -61,14 +61,14 @@ public class BEASTCommunicator implements CheckListener {
 
                     int numberOfPresentedResults = 0;
 
-                    while (numberOfPresentedResults < preAndPostSrc.getPreAndPostConditionsDescriptionsCheck().size()) {
+                    while (numberOfPresentedResults < preAndPostSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size()) {
                         elapsedTime = System.nanoTime() - startTime;
                         passedTimeSeconds = (double) elapsedTime / 1000000000.0;
                         timeString = createTimeString(passedTimeSeconds);
 
                         checkStatusDisplayer.displayText("waitingForPropertyResult", true,
-                                preAndPostSrc.getPreAndPostConditionsDescriptionsCheck().
-                                        get(numberOfPresentedResults).getName() + "' (" + timeString + ")");
+                                preAndPostSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().
+                                        get(numberOfPresentedResults).getDescription().getName() + "' (" + timeString + ")");
 
                         try {
                             Thread.sleep(50);

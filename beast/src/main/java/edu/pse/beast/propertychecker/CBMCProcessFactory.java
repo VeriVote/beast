@@ -52,7 +52,7 @@ public class CBMCProcessFactory extends CheckerFactory {
     }
 
     public CBMCProcessFactory(FactoryController controller, File toCheck, ParameterSource paramSrc, Result result, boolean isMargin) {
-    	super(controller, toCheck, paramSrc, result, isMargin);
+    	super(controller, paramSrc, result, isMargin);
         os = determineOS();
 	}
 

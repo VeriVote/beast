@@ -143,7 +143,7 @@ public class CBMCCodeGenerator {
         boolean multiOut = electionDescription.getOutputType()
                 .getOutputID() == ElectionOutputTypeIds.CAND_PER_SEAT;
 
-        int[][] votingData = ElectionSimulation.getVotingData();
+        Long[][] votingData = ElectionSimulation.getVotingData();
 
         // add the header and the voting data
         addMarginHeaders(votingData);
@@ -517,7 +517,7 @@ public class CBMCCodeGenerator {
         code.add("}");
     }
 
-    private void addMarginHeaders(int[][] votingData) {
+    private void addMarginHeaders(Long[][] votingData) {
 
         // add the headers CBMC needs;
 
@@ -936,7 +936,7 @@ public class CBMCCodeGenerator {
         code.add("}");
     }
 
-    private List<String> getVotingResultCode(int[][] votingData) {
+    private List<String> getVotingResultCode(Long[][] votingData) {
 
         // compile the input data as an integer array for c
         // and save the lines in this list

@@ -1,9 +1,11 @@
 package edu.pse.beast.propertylist.Model;
 
 import edu.pse.beast.datatypes.FailureExample;
+
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
+import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.highlevel.ResultPresenterElement;
 
 import java.util.List;
@@ -23,8 +25,17 @@ public class PropertyItem implements ResultPresenterElement {
     private List<String> error;
     private FailureExample example;
     private boolean willBeMarginComputed;
+	private Result result;
 
-    /**
+    public Result getResult() {
+		return result;
+	}
+
+	public void setResult(Result result) {
+		this.result = result;
+	}
+
+	/**
      * Constructor for the class
      * @param descr The property description to add to the property item
      * @param testStatus Sets whether the property will be analyzed in the next check
@@ -75,9 +86,9 @@ public class PropertyItem implements ResultPresenterElement {
     }
 
     @Override
-    public void presentFailureExample(FailureExample example) {
+    public void presentFailureExample(Result result) {
         resultType = ResultType.FAILUREEXAMPLE;
-        this.setExample(example);
+        this.result = result;
     }
     
     @Override
@@ -157,5 +168,11 @@ public class PropertyItem implements ResultPresenterElement {
     public boolean getMarginStatus() {
         return willBeMarginComputed;
     }
+
+	@Override
+	public void present(Result cbmcResult) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

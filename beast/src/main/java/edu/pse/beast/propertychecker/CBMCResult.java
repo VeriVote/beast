@@ -19,34 +19,35 @@ import java.util.regex.Pattern;
  *
  */
 public class CBMCResult extends Result {
-
-	private FailureExample failureExample = null;
-	
 	private boolean createsExample = true;
 
 	private final String segmentEnder = "-----------------------------------";
-	
-    // this is the last line in the cbmc output, if the verification was
-    // successful
-    private final String SUCCESSLINE = "VERIFICATION SUCCESSFUL";
 
-    // this is the last line in the cbmc output, if the assertion
-    // failed
-    private final String FAILURELINE = "VERIFICATION FAILED";
-    
-    public CBMCResult() {
-        //empty constructor
-    }
-    
-    public CBMCResult(boolean createsExample) {
-        this.createsExample = createsExample;
-    }
+	// this is the last line in the cbmc output, if the verification was
+	// successful
+	private final String SUCCESSLINE = "VERIFICATION SUCCESSFUL";
+
+	// this is the last line in the cbmc output, if the assertion
+	// failed
+	private final String FAILURELINE = "VERIFICATION FAILED";
+
+	public CBMCResult() {
+		// empty constructor
+	}
+
+	public CBMCResult(boolean createsExample) {
+		this.createsExample = createsExample;
+	}
 
 	@Override
 	public void presentTo(ResultPresenterElement presenter) {
-		if (!isFinished()) {
-			ErrorLogger.log("Result isn't ready yet");
-			return;
+		if (!hasSubResult()) {
+			if (!isFinished()) {
+				ErrorLogger.log("Result isn't ready yet");
+				return;
+			} else {
+				presenter.present(this);
+			}
 		} else if (isFocefullyStopped()) {
 			presenter.presentCanceled(isTimedOut());
 		} else if (!isValid()) {
@@ -55,7 +56,7 @@ public class CBMCResult extends Result {
 			presenter.presentSuccess();
 		} else {
 			if (failureExample != null) {
-				presenter.presentFailureExample(failureExample);
+				presenter.presentFailureExample(this);
 			} else {
 				if (getError() != null) {
 					setError(new ArrayList<String>());
@@ -68,8 +69,8 @@ public class CBMCResult extends Result {
 	@Override
 	public void setResult(List<String> result) {
 		super.setResult(result);
-		if(createsExample) {
-		    failureExample = createFailureExample();
+		if (createsExample) {
+			failureExample = createFailureExample();
 		}
 	}
 
@@ -80,186 +81,208 @@ public class CBMCResult extends Result {
 	 */
 	private FailureExample createFailureExample() {
 		// determine the elect values
-		if (getResult() != null && getElectionDescription() != null) {
+
+		if (!isMarginComp()) {
 			FailureExample toReturn = null;
 
-			// define these arrays, because switch case doesn't let me reassign
-			// the
-			// same name,
-			// and i am a bit worried, that they won't get created properly;
-			List<CBMCResultWrapperMultiArray> votesList;
-			// this list can be empty, if no voting for seats took place
-			List<CBMCResultWrapperSingleArray> seatsList;
-			List<CBMCResultWrapperSingleArray> singleVotesList;
+			if (getResult() != null && getElectionDescription() != null) {
 
-			// it is voting for seats, and not for candidates
-			
-			
-			
-			if (getElectionDescription().getOutputType().getResultTypeSeats()) {
+				// define these arrays, because switch case doesn't let me reassign
+				// the
+				// same name,
+				// and i am a bit worried, that they won't get created properly;
+				List<CBMCResultWrapperMultiArray> votesList;
+				// this list can be empty, if no voting for seats took place
+				List<CBMCResultWrapperSingleArray> seatsList;
+				List<CBMCResultWrapperSingleArray> singleVotesList;
 
-				switch (getElectionDescription().getInputType().getInputID()) {
+				// it is voting for seats, and not for candidates
 
-				// get the fitting type and extract the values out of it,
-				// because we
-				// know the format of the values
-				// for each specific type
-				case APPROVAL:
+				if (getElectionDescription().getOutputType().getResultTypeSeats()) {
 
-					votesList = readTwoDimVar("votes", getResult());
+					switch (getElectionDescription().getInputType().getInputID()) {
 
-					// read all the variables with form electN[] that are
-					// arrays, to
-					// extract the seats that
-					// got chosen
-					seatsList = readOneDimVar("elect", getResult());
+					// get the fitting type and extract the values out of it,
+					// because we
+					// know the format of the values
+					// for each specific type
+					case APPROVAL:
 
-					toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
-							getNumCandidates(), getNumSeats(), getNumVoters());
-					break;
-				case PREFERENCE:
+						votesList = readTwoDimVar("votes", getResult());
 
-					votesList = readTwoDimVar("votes", getResult());
+						// read all the variables with form electN[] that are
+						// arrays, to
+						// extract the seats that
+						// got chosen
+						seatsList = readOneDimVar("elect", getResult());
 
-					// read all the variables with form electN[] that are
-					// arrays, to
-					// extract the seats that
-					// got chosen
-					seatsList = readOneDimVar("elect", getResult());
+						toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
+								getNumCandidates(), getNumSeats(), getNumVoters());
+						break;
+					case PREFERENCE:
 
-					toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
-							getNumCandidates(), getNumSeats(), getNumVoters());
-					break;
-				case SINGLE_CHOICE:
+						votesList = readTwoDimVar("votes", getResult());
 
-					singleVotesList = readOneDimVar("votes", getResult());
+						// read all the variables with form electN[] that are
+						// arrays, to
+						// extract the seats that
+						// got chosen
+						seatsList = readOneDimVar("elect", getResult());
 
-					// read all the variables with form electN[] that are
-					// arrays, to
-					// extract the seats that
-					// got chosen
-					seatsList = readOneDimVar("elect", getResult());
+						toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
+								getNumCandidates(), getNumSeats(), getNumVoters());
+						break;
+					case SINGLE_CHOICE:
 
-					toReturn = new FailureExample(getElectionDescription(), singleVotesList, null, null, seatsList,
-							getNumCandidates(), getNumSeats(), getNumVoters());
-					break;
-				case WEIGHTED_APPROVAL:
+						singleVotesList = readOneDimVar("votes", getResult());
 
-					votesList = readTwoDimVar("votes", getResult());
+						// read all the variables with form electN[] that are
+						// arrays, to
+						// extract the seats that
+						// got chosen
+						seatsList = readOneDimVar("elect", getResult());
 
-					// read all the variables with form electN[] that are
-					// arrays, to
-					// extract the seats that
-					// got chosen
-					seatsList = readOneDimVar("elect", getResult());
+						toReturn = new FailureExample(getElectionDescription(), singleVotesList, null, null, seatsList,
+								getNumCandidates(), getNumSeats(), getNumVoters());
+						break;
+					case WEIGHTED_APPROVAL:
 
-					toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
-							getNumCandidates(), getNumSeats(), getNumVoters());
-					break;
-				default:
-					ErrorForUserDisplayer
-							.displayError("This votingtype you are using hasn't been implemented yet to be displayed. "
-									+ "Please do so in the class CBMC_Result");
-					this.setError("This votingtype hasn't been implemented yet please do so in the class CBMC_Result");
-					return null;
+						votesList = readTwoDimVar("votes", getResult());
+
+						// read all the variables with form electN[] that are
+						// arrays, to
+						// extract the seats that
+						// got chosen
+						seatsList = readOneDimVar("elect", getResult());
+
+						toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
+								getNumCandidates(), getNumSeats(), getNumVoters());
+						break;
+					default:
+						ErrorForUserDisplayer.displayError(
+								"This votingtype you are using hasn't been implemented yet to be displayed. "
+										+ "Please do so in the class CBMC_Result");
+						this.setError(
+								"This votingtype hasn't been implemented yet please do so in the class CBMC_Result");
+						return null;
+					}
+
+				} else {
+
+					// read the elect value, because here we dont work with seats
+					List<CBMCResultWrapperLong> elect = readLongs("elect", getResult());
+
+					switch (getElectionDescription().getInputType().getInputID()) {
+
+					// get the fitting type and extract the values out of it,
+					// because we
+					// know the format of the values
+					// for each specific type
+					case APPROVAL:
+
+						votesList = readTwoDimVar("votes", getResult());
+
+						toReturn = new FailureExample(getElectionDescription(), null, votesList, elect, null,
+								getNumCandidates(), getNumSeats(), getNumVoters());
+						break;
+					case PREFERENCE:
+
+						votesList = readTwoDimVar("votes", getResult());
+
+						toReturn = new FailureExample(getElectionDescription(), null, votesList, elect, null,
+								getNumCandidates(), getNumSeats(), getNumVoters());
+						break;
+					case SINGLE_CHOICE:
+
+						singleVotesList = readOneDimVar("votes", getResult());
+
+						toReturn = new FailureExample(getElectionDescription(), singleVotesList, null, elect, null,
+								getNumCandidates(), getNumSeats(), getNumVoters());
+						break;
+					case WEIGHTED_APPROVAL:
+
+						votesList = readTwoDimVar("votes", getResult());
+
+						toReturn = new FailureExample(getElectionDescription(), null, votesList, elect, null,
+								getNumCandidates(), getNumSeats(), getNumVoters());
+						break;
+					default:
+						ErrorForUserDisplayer.displayError(
+								"This votingtype you are using hasn't been implemented yet to be displaye. "
+										+ "Please do so in the class CBMC_Result");
+						this.setError(
+								"This votingtype hasn't been implemented yet please do so in the class CBMC_Result");
+						return null;
+
+					}
+
 				}
+				// determine the values for the symbolic variables
+				// that the user set
 
-			} else {
+				// get ALL symbolic variables
+				List<SymbolicVariable> symbolicVariableList = super.getPropertyDesctiption()
+						.getSymbolicVariablesCloned();
 
-				// read the elect value, because here we dont work with seats
-				List<CBMCResultWrapperLong> elect = readLongs("elect", getResult());
+				// iterate through them
 
-				switch (getElectionDescription().getInputType().getInputID()) {
+				for (Iterator<SymbolicVariable> iterator = symbolicVariableList.iterator(); iterator.hasNext();) {
+					SymbolicVariable symbolicVariable = (SymbolicVariable) iterator.next();
 
-				// get the fitting type and extract the values out of it,
-				// because we
-				// know the format of the values
-				// for each specific type
-				case APPROVAL:
+					InternalTypeContainer internalType = symbolicVariable.getInternalTypeContainer();
 
-					votesList = readTwoDimVar("votes", getResult());
+					String name = symbolicVariable.getId();
 
-					toReturn = new FailureExample(getElectionDescription(), null, votesList, elect, null, getNumCandidates(),
-							getNumSeats(), getNumVoters());
-					break;
-				case PREFERENCE:
+					if (!internalType.isList()) {
 
-					votesList = readTwoDimVar("votes", getResult());
+						// extract the value of "name" in the result
+						// if it is null, the variable couldn't be found
+						Long extracted = readSymbolicVariable(name, getResult());
 
-					toReturn = new FailureExample(getElectionDescription(), null, votesList, elect, null, getNumCandidates(),
-							getNumSeats(), getNumVoters());
-					break;
-				case SINGLE_CHOICE:
+						if (extracted != null) {
 
-					singleVotesList = readOneDimVar("votes", getResult());
+							long number = (long) extracted;
 
-					toReturn = new FailureExample(getElectionDescription(), singleVotesList, null, elect, null,
-							getNumCandidates(), getNumSeats(), getNumVoters());
-					break;
-				case WEIGHTED_APPROVAL:
+							switch (internalType.getInternalType()) {
 
-					votesList = readTwoDimVar("votes", getResult());
-
-					toReturn = new FailureExample(getElectionDescription(), null, votesList, elect, null, getNumCandidates(),
-							getNumSeats(), getNumVoters());
-					break;
-				default:
-					ErrorForUserDisplayer
-							.displayError("This votingtype you are using hasn't been implemented yet to be displaye. "
-									+ "Please do so in the class CBMC_Result");
-					this.setError("This votingtype hasn't been implemented yet please do so in the class CBMC_Result");
-					return null;
-
-				}
-
-			}
-			// determine the values for the symbolic variables
-			// that the user set
-
-			// get ALL symbolic variables
-			List<SymbolicVariable> symbolicVariableList = super.getPropertyDesctiption().getSymbolicVariablesCloned();
-
-			// iterate through them
-
-			for (Iterator<SymbolicVariable> iterator = symbolicVariableList.iterator(); iterator.hasNext();) {
-				SymbolicVariable symbolicVariable = (SymbolicVariable) iterator.next();
-
-				InternalTypeContainer internalType = symbolicVariable.getInternalTypeContainer();
-
-				String name = symbolicVariable.getId();
-
-				if (!internalType.isList()) {
-
-					// extract the value of "name" in the result
-					// if it is null, the variable couldn't be found
-					Long extracted = readSymbolicVariable(name, getResult());
-
-					if (extracted != null) {
-
-						long number = (long) extracted;
-
-						switch (internalType.getInternalType()) {
-
-						case VOTER:
-							toReturn.addSymbolicVoters(name, number);
-							break;
-						case CANDIDATE:
-							toReturn.addSymbolicCadidate(name, number);
-							break;
-						case SEAT:
-							toReturn.addSymbolicSeat(name, number);
-							break;
-						default:
-							// do nothing
+							case VOTER:
+								toReturn.addSymbolicVoters(name, number);
+								break;
+							case CANDIDATE:
+								toReturn.addSymbolicCadidate(name, number);
+								break;
+							case SEAT:
+								toReturn.addSymbolicSeat(name, number);
+								break;
+							default:
+								// do nothing
+							}
 						}
 					}
 				}
+				return toReturn;
+			} else {
+				this.setError(
+						"No input could be read from the Checker, please make sure that it is there and working properly");
+				return null;
 			}
+
+		} else { // we have a margin computation and have to create the example object for this
+
+			FailureExample toReturn = new FailureExample(getElectionDescription(), null, null, null, null, 0, 0, 0);
+			
+			toReturn.setHasFinalMargin(hasFinalMargin());
+
+			if (hasFinalMargin()) {
+				toReturn.setFinalMargin(getFinalMargin());
+			}
+
+			toReturn.setOrigVoting(origVoting);
+			toReturn.setOrigWinner(origWinner);
+			toReturn.setNewVotes(newVotes);
+			toReturn.setNewWinner(super.newWinner);
+
 			return toReturn;
-		} else {
-			this.setError(
-					"No input could be read from the Checker, please make sure that it is there and working properly");
-			return null;
 		}
 	}
 
@@ -309,10 +332,10 @@ public class CBMCResult extends Result {
 		line = mergeLinesToOne(iterator, segmentEnder);
 
 		while (line.length() > 0) {
-		
+
 			Matcher checkerMatcher = correctChecker.matcher(line);
 			if (checkerMatcher.find()) {
-			    
+
 				Matcher longMatcher = longExtractor.matcher(checkerMatcher.group(0));
 				if (longMatcher.find()) {
 
@@ -623,22 +646,22 @@ public class CBMCResult extends Result {
 	public FailureExample getFailureExample() {
 		return failureExample;
 	}
-	
-    @Override
-    public boolean checkAssertionSuccess() {
-        if (super.getResult() != null && super.getResult().size() > 0) {
-            return super.getResult().get(super.getResult().size() - 1).contains(SUCCESSLINE);
-        } else {
-            return false;
-        }
-    }
 
-    @Override
-    public boolean checkAssertionFailure() {
-        if (super.getResult() != null && super.getResult().size() > 0) {
-            return super.getResult().get(super.getResult().size() - 1).contains(FAILURELINE);
-        } else {
-            return false;
-        }
-    }
+	@Override
+	public boolean checkAssertionSuccess() {
+		if (super.getResult() != null && super.getResult().size() > 0) {
+			return super.getResult().get(super.getResult().size() - 1).contains(SUCCESSLINE);
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean checkAssertionFailure() {
+		if (super.getResult() != null && super.getResult().size() > 0) {
+			return super.getResult().get(super.getResult().size() - 1).contains(FAILURELINE);
+		} else {
+			return false;
+		}
+	}
 }

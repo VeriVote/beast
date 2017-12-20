@@ -12,6 +12,7 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.highlevel.PreAndPostConditionsDescriptionSource;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenter;
+import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.propertylist.View.ListItem;
@@ -216,19 +217,49 @@ public class PropertyList implements PreAndPostConditionsDescriptionSource,
     }
     
 	@Override
-	public List<PropertyAndMarginBool> getPostAndPrePropertiesDescriptionsCheckAndMargin() {
+	public List<PropertyAndMarginBool> getPreAndPostPropertiesDescriptionsCheckAndMargin() {
+		editor.updatePreAndPostConditionObject();
 		ArrayList<PropertyAndMarginBool> result = new ArrayList<PropertyAndMarginBool>();
         ArrayList<PropertyItem> from = model.getPropertyList();
-        editor.updatePreAndPostConditionObject();;
         for (PropertyItem prop : from) {
             if (prop.getTestStatus()) {
                 result.add(new PropertyAndMarginBool(prop.getDescription(), false));
-            }
+            } else
             if (prop.getMarginStatus()) {
                 result.add(new PropertyAndMarginBool(prop.getDescription(), true));
             }
         }
         return result;
+	}
+	
+
+	@Override
+	public List<Integer> referenceResult(List<Result> results) {
+		editor.updatePreAndPostConditionObject();
+		ArrayList<PropertyAndMarginBool> result = new ArrayList<PropertyAndMarginBool>();
+        ArrayList<PropertyItem> from = model.getPropertyList();
+        
+        int currentResult = 0; //we start from result 0;
+        
+        for (PropertyItem prop : from) {
+            if (prop.getTestStatus()) {
+            	//save a reference to the "parent" object
+            	Result parent = results.get(currentResult);
+
+            	currentResult++; //increase the pointer to the next result object to look at
+            	
+                if (prop.getMarginStatus()) { //if we now have a second object on this property:
+                	
+                	parent.addSubResult(results.get(currentResult));
+                	
+                	currentResult++;
+                }
+            } else
+            if (prop.getMarginStatus()) {
+                currentResult++;
+            }
+        }
+		return null;
 	}
 
     @Override

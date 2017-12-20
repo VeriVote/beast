@@ -1,6 +1,8 @@
 package edu.pse.beast.highlevel;
 
 import edu.pse.beast.datatypes.FailureExample;
+import edu.pse.beast.propertychecker.CBMCResult;
+import edu.pse.beast.propertychecker.Result;
 
 import java.util.List;
 
@@ -32,5 +34,7 @@ public interface ResultPresenterElement {
      * Presents the example that fails the property
      * @param example the example to be presented
      */
-    void presentFailureExample(FailureExample example);
+    void presentFailureExample(Result result);
+
+	void present(Result cbmcResult);
 }

@@ -5,6 +5,7 @@
  */
 package edu.pse.beast.propertychecker;
 
+import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.ResultInterface;
@@ -19,12 +20,14 @@ import java.util.List;
  */
 public abstract class Result implements ResultInterface {
 
+	protected FailureExample failureExample = null;
     private boolean valid = false;
     private boolean finished = false;
     private List<String> result;
     private List<String> error;
     private boolean timeOut = false;
     private boolean success = false;
+    private boolean hasSubResult = false;
     private int numVoters;
     private int numSeats;
     private int numCandidates;
@@ -33,8 +36,24 @@ public abstract class Result implements ResultInterface {
     private boolean forcefulleStopped;
     private boolean hasMargin = false;
     private int finalMargin = -1;
+    
+    private Result subResult = null;
+    private boolean isMarginComp = false;
+    
+	protected List<List<Long>> origVoting;
+	protected List<Long> origWinner;
+	protected List<List<Long>> newVotes;
+	protected List<Long> newWinner;
 
-    /**
+    public boolean isMarginComp() {
+		return isMarginComp;
+	}
+
+	public void setMarginComp(boolean isMarginComp) {
+		this.isMarginComp = isMarginComp;
+	}
+
+	/**
      * Presents the result of the check. Every class that extends this class has
      * to implement it for itself.
      * 
@@ -255,9 +274,37 @@ public abstract class Result implements ResultInterface {
     public void setForcefullyStopped() {
         this.forcefulleStopped = true;
     }
+    public void setFinalMargin(int margin) {
+    	this.finalMargin = margin;
+    }
+    
+    public int getFinalMargin() {
+    	return finalMargin;
+    }
+    
+    public void setHasFinalMargin(boolean b) {
+    	this.hasMargin = b;
+    }
+    
+    public boolean hasFinalMargin() {
+    	return hasMargin;
+    }
+    
+    public void addSubResult(Result subResult) {
+    	this.hasSubResult = true;
+    	this.subResult = subResult;
+    }
     
     public PreAndPostConditionsDescription getPropertyDesctiption() {
     	return property;
+    }
+    
+    public boolean hasSubResult() {
+    	return this.hasSubResult;
+    }
+    
+    public Result getSubResult() {
+    	return subResult;
     }
 
     /**
@@ -272,19 +319,39 @@ public abstract class Result implements ResultInterface {
      */
     public abstract boolean checkAssertionFailure();
 
-	public void setFinalMargin(int margin) {
-		this.finalMargin = margin;
+    public FailureExample getFailureExample() {
+    	return failureExample;
+    }
+
+	public List<List<Long>> getOrigVoting() {
+		return origVoting;
 	}
-	
-	public int getFinalMargin() {
-		return finalMargin;
+
+	public void setOrigVoting(List<List<Long>> origVoting) {
+		this.origVoting = origVoting;
 	}
-	
-	public void setHasFinalMargin(boolean b) {
-		this.hasMargin = b;
+
+	public List<Long> getOrigWinner() {
+		return origWinner;
 	}
-	
-	public boolean hasFinalMargin() {
-		return hasMargin;
+
+	public void setOrigWinner(List<Long> origWinner) {
+		this.origWinner = origWinner;
+	}
+
+	public List<List<Long>> getNewVotes() {
+		return newVotes;
+	}
+
+	public void setNewVotes(List<List<Long>> newVotes) {
+		this.newVotes = newVotes;
+	}
+
+	public List<Long> getNewWinner() {
+		return newWinner;
+	}
+
+	public void setNewWinner(List<Long> newWinner) {
+		this.newWinner = newWinner;
 	}
 }

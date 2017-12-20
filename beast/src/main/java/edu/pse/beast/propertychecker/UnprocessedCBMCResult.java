@@ -21,7 +21,8 @@ public class UnprocessedCBMCResult extends CBMCResult {
         ErrorLogger.log("There was an attempt to present an UnprocessedResult. This should + " + "never happen");
     }
 
-    public CBMCResultWrapperMultiArray getNewVotes() {
+    //returns te new Votes as a CBMCWrappedMultiArray
+    public CBMCResultWrapperMultiArray getNewVotesWrappedMulti() {
         // determine the elect values
         if (getResult() != null && getElectionDescription() != null) {
 

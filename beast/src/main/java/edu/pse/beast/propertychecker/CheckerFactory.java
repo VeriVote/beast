@@ -30,8 +30,6 @@ public abstract class CheckerFactory implements Runnable {
 	private final Result result;
 	private final long POLLINGINTERVAL = 1000;
 
-	private final File toCheck;
-
 	private Checker currentlyRunning;
 	private boolean stopped = false;
 	private boolean finished = false;
@@ -63,8 +61,6 @@ public abstract class CheckerFactory implements Runnable {
 		this.paramSrc = paramSrc;
 		this.result = result;
 
-		this.toCheck = null;
-
 		this.isMargin = isMargin;
 
 		// because we create a new instance with all variables null, we have to
@@ -75,12 +71,11 @@ public abstract class CheckerFactory implements Runnable {
 		}
 	}
 
-	// TODO maybe remove this, is probably unneeded, because we create the
-	// margin check later now
-	public CheckerFactory(FactoryController controller, File toCheck, ParameterSource paramSrc, Result result,
+//	// TODO maybe remove this, is probably unneeded, because we create the
+//	// margin check later now
+	public CheckerFactory(FactoryController controller, ParameterSource paramSrc, Result result,
 			boolean isMargin) {
 		this.controller = controller;
-		this.toCheck = toCheck;
 		this.paramSrc = paramSrc;
 		this.result = result;
 
@@ -282,7 +277,12 @@ public abstract class CheckerFactory implements Runnable {
 					// hasMargin now is true, if there is an upper bound,
 					// and false, if there is no margin
 
+					result.setMarginComp(true);
+					
 					result.setHasFinalMargin(hasMargin);
+					
+					result.setOrigWinner(origResult);
+					result.setOrigVoting(ElectionSimulation.getVotingDataListofList());
 
 					if (hasMargin) {
 						result.setResult(currentlyRunning.getResultList());
@@ -291,10 +291,6 @@ public abstract class CheckerFactory implements Runnable {
 						result.setResult(null);
 						result.setFinalMargin(-1);
 					}
-
-					System.out.println("has final margin: " + hasMargin);
-
-					System.out.println("final margin: " + margin);
 
 					List<List<Long>> newVotes = new ArrayList<List<Long>>();
 					List<Long> newResult = new ArrayList<Long>();
@@ -354,6 +350,12 @@ public abstract class CheckerFactory implements Runnable {
 							break;
 						}
 
+						result.setNewVotes(newVotes);
+						result.setNewWinner(newResult);
+						
+						result.setValid();
+						result.setFinished();
+						
 						int count = 0;
 
 						for (Iterator iterator = newVotes.iterator(); iterator.hasNext();) {

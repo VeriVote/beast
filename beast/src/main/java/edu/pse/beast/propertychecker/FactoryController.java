@@ -80,7 +80,7 @@ public class FactoryController implements Runnable {
 
 		// get a list of result objects that fit for the specified checkerID
 		this.results = CheckerFactoryFactory.getMatchingResult(checkerID,
-				preAndPostConditionDescrSrc.getPostAndPrePropertiesDescriptionsCheckAndMargin().size());
+				preAndPostConditionDescrSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size());
 
 		// if the user doesn't specify a concrete amount for concurrent
 		// checkers, we just set it to the thread amount of this pc
@@ -120,8 +120,10 @@ public class FactoryController implements Runnable {
 
 		// get a list of result objects that fit for the specified checkerID
 		// because we have no preAndPostConditions we only need ONE result
-		this.results = CheckerFactoryFactory.getMatchingUnprocessedResult(checkerID, 1);
+		this.results = CheckerFactoryFactory.getMatchingUnprocessedResult(checkerID, preAndPostConditionDescrSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size());
 
+		preAndPostConditionDescrSrc.referenceResult(this.results);
+		
 		// if the user doesn't specify a concrete amount for concurrent
 		// checkers, we just set it to the thread amount of this pc
 		if (concurrentChecker <= 0) {
@@ -146,12 +148,8 @@ public class FactoryController implements Runnable {
 	 */
 	@Override
 	public void run() {
-		fromFile = false; //TODO clean that up later
-		
-		if (!fromFile) { // if we have properties, we have to iterate over all
-							// of them and start them all
 			List<PropertyAndMarginBool> propertiesToCheckAndMargin = preAndPostConditionDescrSrc
-					.getPostAndPrePropertiesDescriptionsCheckAndMargin();
+					.getPreAndPostPropertiesDescriptionsCheckAndMargin();
 			
 			outerLoop: for (int i = 0; i < propertiesToCheckAndMargin.size(); i++) {
 				innerLoop: while (!stopped) {					
@@ -194,20 +192,6 @@ public class FactoryController implements Runnable {
 							+ "The waiting will still continue. To stop the factory properly, call \"stopChecking()\" !");
 				}
 			}
-			
-		} else {
-			// we only have one file to check, so we also only have one checker
-			// to start
-	//		CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID, this, toCheck, parmSrc,
-	//				results.get(0));
-
-	//		synchronized (this) {
-	//			currentlyRunning.add(factory);
-	//		}
-
-//			new Thread(factory, "CheckerFactory Property " + 0).start();
-
-		}
 
 		// wait for the last running threads to finish
 		while (currentlyRunning.size() > 0) {

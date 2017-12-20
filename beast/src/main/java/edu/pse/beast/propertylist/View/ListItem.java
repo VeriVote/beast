@@ -260,7 +260,7 @@ public class ListItem extends JPanel implements DisplaysStringsToUser {
                 resWindow.presentFailure(prop.getError());
                 break;
             case FAILUREEXAMPLE:
-                resWindow.presentFailureExample(prop.getExample());
+                resWindow.presentFailureExample(prop.getResult());
                 break;
             case UNTESTED:
                 resWindow.resetResult();
