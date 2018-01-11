@@ -49,10 +49,10 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 
 	private boolean isOpen = false;
 
-	private boolean intiated = false;
+	private static boolean initiated = false;
 
 	private StringLoaderInterface sli;
-	
+
 	private static Modes currentMode = Modes.searchMinDiffAndShowCBMC;
 
 	private final long SLEEPINTERVAL = 1000; // sleep interval in milliseconds
@@ -73,21 +73,20 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 	}
 
 	public void init(PSECentralObjectProvider centralObjectProvider) {
-		this.centralObjectProvider = (PSECentralObjectProvider) BEASTCommunicator.getCentralObjectProvider();
+		this.centralObjectProvider = centralObjectProvider;
 		this.inputContainer = centralObjectProvider.getElectionDescriptionSource().getElectionDescription()
 				.getInputType();
 		this.outputContainer = centralObjectProvider.getElectionDescriptionSource().getElectionDescription()
 				.getOutputType();
 		this.model = new ElectionSimulationModel(inputContainer);
 		this.view = new ElectionSimulationWindow(sli, inputContainer, this, model);
-		this.centralObjectProvider = centralObjectProvider;
 
 		centralObjectProvider.getCElectionEditor().addListener(this);
 
 		this.start();
 		react = true;
 
-		intiated = true;
+		initiated = true;
 	}
 
 	@Override
@@ -224,8 +223,8 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 	}
 
 	/**
-	 * gets called when one of the changed listener gets called here, we update
-	 * the models which are used
+	 * gets called when one of the changed listener gets called here, we update the
+	 * models which are used
 	 */
 	private void electionTypeChanged() {
 		this.inputContainer = centralObjectProvider.getElectionDescriptionSource().getElectionDescription()
@@ -295,25 +294,27 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 				public void run() {
 					if (!BEASTCommunicator.checkForErrors(centralObjectProvider)) {
 
-//						BEASTCommunicator.stopReacting(centralObjectProvider);
-//
-//						centralObjectProvider.getCheckStatusDisplay().displayText("startingCheck", true, "");
-//
-//						int[][] votingData = new int[model.getAmountVoters()][model.getAmountCandidates()];
-//
-//						// read the data in a 2d array
-//						for (int i = 0; i < model.getAmountVoters(); i++) {
-//							for (int j = 0; j < model.getAmountCandidates(); j++) {
-//								votingData[i][j] = model.getRows().get(i).getValues().get(j);
-//							}
-//						}
+						// BEASTCommunicator.stopReacting(centralObjectProvider);
+						//
+						// centralObjectProvider.getCheckStatusDisplay().displayText("startingCheck",
+						// true, "");
+						//
+						// int[][] votingData = new
+						// int[model.getAmountVoters()][model.getAmountCandidates()];
+						//
+						// // read the data in a 2d array
+						// for (int i = 0; i < model.getAmountVoters(); i++) {
+						// for (int j = 0; j < model.getAmountCandidates(); j++) {
+						// votingData[i][j] = model.getRows().get(i).getValues().get(j);
+						// }
+						// }
 
 						// set the values for the vote
-//						centralObjectProvider.getParameterEditor().setVoterAmount(model.getAmountVoters());
-//						centralObjectProvider.getParameterEditor().setCandidateAmount(model.getAmountCandidates());
-//						centralObjectProvider.getParameterEditor().setSeatAmount(model.getAmountCandidates());
+						// centralObjectProvider.getParameterEditor().setVoterAmount(model.getAmountVoters());
+						// centralObjectProvider.getParameterEditor().setCandidateAmount(model.getAmountCandidates());
+						// centralObjectProvider.getParameterEditor().setSeatAmount(model.getAmountCandidates());
 
-//						List<String> codeLines = generateRunnableCode(votingData);
+						// List<String> codeLines = generateRunnableCode(votingData);
 
 						List<Integer> winnerResults = CompilerAndExecutioner.compileAndRun(null);
 						// here we now have the winner(s) of the computation
@@ -323,7 +324,7 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 
 						int left = 0;
 						int right = 0; // how many votes we
-															// have
+										// have
 						int margin = 0;
 
 						UnprocessedCBMCResult finalMarginResult = null;
@@ -523,125 +524,127 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 	//
 	// }
 
-	private List<String> generateRunnableCode(int[][] votingData) {
-		// if we vote for seats, we get the result as an array
-		boolean multiOut = outputContainer.getOutputID() == ElectionOutputTypeIds.CAND_PER_SEAT;
-
-		// this list will hold all the code in for later
-		List<String> code = new ArrayList<String>();
-
-		code.add("#include <stdio.h>");
-		code.add("#ifndef V\n #define V " + votingData.length + "\n #endif");
-		code.add("#ifndef C\n #define C " + votingData[0].length + "\n #endif");
-		code.add("#ifndef S\n #define S " + votingData[0].length + "\n #endif");
-
-		// add the array "ORIG_RESULTS" to the code. It contains the voting data
-		code.addAll(getVotingResultCode(votingData));
-
-		// add the code the user wrote
-		code.addAll(centralObjectProvider.getElectionDescriptionSource().getElectionDescription().getCode());
-
-		code.add("int main() {");
-		switch (inputContainer.getInputID()) {
-		case SINGLE_CHOICE:
-			if (multiOut) {
-				code.add("int *winner = voting(ORIG_VOTES);"); // call the
-																// voting method
-				code.add("");
-				code.add("fprintf(stdout, \"winner: =\");");
-				code.add("for(int j = 0; j < C - 1; j++) {");
-				code.add("fprintf(stdout, \"%d,\", winner[j]);");
-				code.add("}");
-				code.add("fprintf(stdout, \"%d\", winner[C - 1]);"); // add the
-																		// last
-																		// line
-																		// without
-																		// a
-																		// comma
-			} else {
-				code.add("int winner = voting(ORIG_VOTES);"); // we just have a
-																// single int as
-																// the winner
-				code.add("fprintf(stdout, \"winner: = %d\", winner);");
-			}
-			break;
-		case APPROVAL:
-			if (multiOut) {
-				code.add("int *winner = voting(ORIG_VOTES);"); // call the
-																// voting method
-				code.add("");
-				code.add("fprintf(stdout, \"winner: =\");");
-				code.add("for(int j = 0; j < C - 1; j++) {");
-				code.add("fprintf(stdout, \"%d,\", winner[j]);");
-				code.add("}");
-				code.add("fprintf(stdout, \"%d\", winner[C - 1]);"); // add the
-																		// last
-																		// line
-																		// without
-																		// a
-																		// comma
-			} else {
-				code.add("int winner = voting(ORIG_VOTES);"); // we just have a
-																// single int as
-																// the winner
-				code.add("fprintf(stdout, \"winner: = %d\", winner);");
-			}
-			break;
-		case WEIGHTED_APPROVAL:
-			if (multiOut) {
-				code.add("int *winner = voting(ORIG_VOTES);"); // call the
-																// voting method
-				code.add("");
-				code.add("fprintf(stdout, \"winner: =\");");
-				code.add("for(int j = 0; j < C - 1; j++) {");
-				code.add("fprintf(stdout, \"%d,\", winner[j]);");
-				code.add("}");
-				code.add("fprintf(stdout, \"%d\", winner[C - 1]);"); // add the
-																		// last
-																		// line
-																		// without
-																		// a
-																		// comma
-			} else {
-				code.add("int winner = voting(ORIG_VOTES);"); // we just have a
-																// single int as
-																// the winner
-				code.add("fprintf(stdout, \"winner: = %d\", winner);");
-			}
-			break;
-		case PREFERENCE:
-			if (multiOut) {
-				code.add("int *winner = voting(ORIG_VOTES);"); // call the
-																// voting method
-				code.add("");
-				code.add("fprintf(stdout, \"winner: =\");");
-				code.add("for(int j = 0; j < C - 1; j++) {");
-				code.add("fprintf(stdout, \"%d,\", winner[j]);");
-				code.add("}");
-				code.add("fprintf(stdout, \"%d\", winner[C - 1]);"); // add the
-																		// last
-																		// line
-																		// without
-																		// a
-																		// comma
-			} else {
-				code.add("int winner = voting(ORIG_VOTES);"); // we just have a
-																// single int as
-																// the winner
-				code.add("fprintf(stdout, \"winner: = %d\", winner);");
-			}
-			break;
-
-		default:
-			ErrorForUserDisplayer.displayError(
-					"the current input type was not found. Please extend the methode \"generateRunnableCode\" in the class ElectionSimulation ");
-			break;
-		}
-
-		code.add("}");
-
-		return code;
-	}
+	// private List<String> generateRunnableCode(int[][] votingData) {
+	// // if we vote for seats, we get the result as an array
+	// boolean multiOut = outputContainer.getOutputID() ==
+	// ElectionOutputTypeIds.CAND_PER_SEAT;
+	//
+	// // this list will hold all the code in for later
+	// List<String> code = new ArrayList<String>();
+	//
+	// code.add("#include <stdio.h>");
+	// code.add("#ifndef V\n #define V " + votingData.length + "\n #endif");
+	// code.add("#ifndef C\n #define C " + votingData[0].length + "\n #endif");
+	// code.add("#ifndef S\n #define S " + votingData[0].length + "\n #endif");
+	//
+	// // add the array "ORIG_RESULTS" to the code. It contains the voting data
+	// code.addAll(getVotingResultCode(votingData));
+	//
+	// // add the code the user wrote
+	// code.addAll(centralObjectProvider.getElectionDescriptionSource().getElectionDescription().getCode());
+	//
+	// code.add("int main() {");
+	// switch (inputContainer.getInputID()) {
+	// case SINGLE_CHOICE:
+	// if (multiOut) {
+	// code.add("int *winner = voting(ORIG_VOTES);"); // call the
+	// // voting method
+	// code.add("");
+	// code.add("fprintf(stdout, \"winner: =\");");
+	// code.add("for(int j = 0; j < C - 1; j++) {");
+	// code.add("fprintf(stdout, \"%d,\", winner[j]);");
+	// code.add("}");
+	// code.add("fprintf(stdout, \"%d\", winner[C - 1]);"); // add the
+	// // last
+	// // line
+	// // without
+	// // a
+	// // comma
+	// } else {
+	// code.add("int winner = voting(ORIG_VOTES);"); // we just have a
+	// // single int as
+	// // the winner
+	// code.add("fprintf(stdout, \"winner: = %d\", winner);");
+	// }
+	// break;
+	// case APPROVAL:
+	// if (multiOut) {
+	// code.add("int *winner = voting(ORIG_VOTES);"); // call the
+	// // voting method
+	// code.add("");
+	// code.add("fprintf(stdout, \"winner: =\");");
+	// code.add("for(int j = 0; j < C - 1; j++) {");
+	// code.add("fprintf(stdout, \"%d,\", winner[j]);");
+	// code.add("}");
+	// code.add("fprintf(stdout, \"%d\", winner[C - 1]);"); // add the
+	// // last
+	// // line
+	// // without
+	// // a
+	// // comma
+	// } else {
+	// code.add("int winner = voting(ORIG_VOTES);"); // we just have a
+	// // single int as
+	// // the winner
+	// code.add("fprintf(stdout, \"winner: = %d\", winner);");
+	// }
+	// break;
+	// case WEIGHTED_APPROVAL:
+	// if (multiOut) {
+	// code.add("int *winner = voting(ORIG_VOTES);"); // call the
+	// // voting method
+	// code.add("");
+	// code.add("fprintf(stdout, \"winner: =\");");
+	// code.add("for(int j = 0; j < C - 1; j++) {");
+	// code.add("fprintf(stdout, \"%d,\", winner[j]);");
+	// code.add("}");
+	// code.add("fprintf(stdout, \"%d\", winner[C - 1]);"); // add the
+	// // last
+	// // line
+	// // without
+	// // a
+	// // comma
+	// } else {
+	// code.add("int winner = voting(ORIG_VOTES);"); // we just have a
+	// // single int as
+	// // the winner
+	// code.add("fprintf(stdout, \"winner: = %d\", winner);");
+	// }
+	// break;
+	// case PREFERENCE:
+	// if (multiOut) {
+	// code.add("int *winner = voting(ORIG_VOTES);"); // call the
+	// // voting method
+	// code.add("");
+	// code.add("fprintf(stdout, \"winner: =\");");
+	// code.add("for(int j = 0; j < C - 1; j++) {");
+	// code.add("fprintf(stdout, \"%d,\", winner[j]);");
+	// code.add("}");
+	// code.add("fprintf(stdout, \"%d\", winner[C - 1]);"); // add the
+	// // last
+	// // line
+	// // without
+	// // a
+	// // comma
+	// } else {
+	// code.add("int winner = voting(ORIG_VOTES);"); // we just have a
+	// // single int as
+	// // the winner
+	// code.add("fprintf(stdout, \"winner: = %d\", winner);");
+	// }
+	// break;
+	//
+	// default:
+	// ErrorForUserDisplayer.displayError(
+	// "the current input type was not found. Please extend the methode
+	// \"generateRunnableCode\" in the class ElectionSimulation ");
+	// break;
+	// }
+	//
+	// code.add("}");
+	//
+	// return code;
+	// }
 
 	private List<String> generateMarginComputationCode(int[][] votingData, int margin, List<Integer> origResult) {
 		// if we vote for seats, we get the result as an array
@@ -1058,7 +1061,7 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 	}
 
 	public void open() {
-		if (!intiated) {
+		if (!initiated) {
 			init((PSECentralObjectProvider) BEASTCommunicator.getCentralObjectProvider());
 		}
 
@@ -1075,22 +1078,23 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 		return isOpen;
 	}
 
-	// TODO schöner machen, vielleicht das enum mit der combobox verbinden, damit es automatisch geht
+	// TODO schöner machen, vielleicht das enum mit der combobox verbinden, damit es
+	// automatisch geht
 	public void setMode(String selectedItem) {
-		
+
 		switch (selectedItem) {
 		case "outcome (c)":
 			currentMode = Modes.compileAndRun;
 			break;
-		
+
 		case "outcome  (cbmc)":
 			currentMode = Modes.compileAndRunCBMC;
-			break;	
-		
+			break;
+
 		case "outcome (c) + margin(cbmc)":
 			currentMode = Modes.searchMinDiffAndShowCandCBMC;
 			break;
-	
+
 		case "outcome (cbmc) + margin(cbmc)":
 			currentMode = Modes.searchMinDiffAndShowCBMC;
 			break;
@@ -1100,35 +1104,43 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 	}
 
 	public static Long[][] getVotingData() {
-		Long[][] votingData = new Long[model.getAmountVoters()][model.getAmountCandidates()];
+		Long[][] votingData = {{0L}, {0L}};;
+		if (initiated) {
+			votingData = new Long[model.getAmountVoters()][model.getAmountCandidates()];
 
-		// read the data in a 2d array
-		for (int i = 0; i < model.getAmountVoters(); i++) {
-			for (int j = 0; j < model.getAmountCandidates(); j++) {
-				votingData[i][j] = (long)model.getRows().get(i).getValues().get(j);
+			// read the data in a 2d array
+			for (int i = 0; i < model.getAmountVoters(); i++) {
+				for (int j = 0; j < model.getAmountCandidates(); j++) {
+					votingData[i][j] = (long) model.getRows().get(i).getValues().get(j);
+				}
 			}
 		}
-		
+
 		return votingData;
 	}
 
 	public static int getNumVoters() {
-		return model.getAmountVoters();
-	}
-	
-	public static int getNumCandidates() {
-		if (!outputContainer.getResultTypeSeats()) {
-			return model.getAmountCandidates();
+		if (!initiated) {
+			return 1;
 		} else {
-			return 0;
+			return model.getAmountVoters();
 		}
 	}
-	
-	public static int getNumSeats() {
-		if (outputContainer.getResultTypeSeats()) {
-			return model.getAmountCandidates();
+
+	public static int getNumCandidates() {
+		if (!initiated) {
+			return 1;
 		} else {
-			return 0;
+			return model.getAmountCandidates();
+		}
+
+	}
+
+	public static int getNumSeats() {
+		if (!initiated) {
+			return 1;
+		} else {
+			return model.getAmountSeats();
 		}
 	}
 
@@ -1138,9 +1150,9 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 
 	public static List<List<Long>> getVotingDataListofList() {
 		List<List<Long>> toReturn = new ArrayList<List<Long>>();
-		
-		Long[][] data  = getVotingData();
-		
+
+		Long[][] data = getVotingData();
+
 		for (int i = 0; i < data.length; i++) {
 			List<Long> tmp = new ArrayList<Long>();
 			for (int j = 0; j < data[0].length; j++) {
@@ -1148,7 +1160,7 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 			}
 			toReturn.add(tmp);
 		}
-		
+
 		return toReturn;
 	}
 }

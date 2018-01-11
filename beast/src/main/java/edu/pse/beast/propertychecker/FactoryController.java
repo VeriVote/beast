@@ -5,7 +5,6 @@
  */
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.highlevel.PropertyAndMarginBool;
@@ -45,9 +44,6 @@ public class FactoryController implements Runnable {
 
 	private boolean fromFile = false;
 
-	// if we are given an already generated file, it is stored in this variable
-	private final File toCheck;
-
 	/**
 	 *
 	 * @param electionDescSrc
@@ -75,8 +71,6 @@ public class FactoryController implements Runnable {
 		this.parmSrc = parmSrc;
 		this.checkerID = checkerID;
 		this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
-
-		this.toCheck = null;
 
 		// get a list of result objects that fit for the specified checkerID
 		this.results = CheckerFactoryFactory.getMatchingResult(checkerID,
@@ -107,8 +101,6 @@ public class FactoryController implements Runnable {
 		Runtime.getRuntime().addShutdownHook(new FactoryEnder());
 
 		this.fromFile = true;
-
-		this.toCheck = toCheck;
 
 		this.parmSrc = parmSrc;
 		this.checkerID = checkerID;

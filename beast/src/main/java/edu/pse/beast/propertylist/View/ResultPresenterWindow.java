@@ -223,7 +223,7 @@ public class ResultPresenterWindow extends JFrame {
 
 		erasePane();
 
-		if (!parentResult.hasFinalMargin()) {
+		if (!parentResult.hasFinalMargin()) { //
 			FailureExample ex = parentResult.getFailureExample();
 
 			if (ex == null) {
@@ -285,12 +285,14 @@ public class ResultPresenterWindow extends JFrame {
 		FailureExample ex = marginResult.getFailureExample();
 
 		appendLine("================================");
-		appendLine("=========Margin Result==========");
+		appendLine("===========Margin Result===========");
 		appendLine("================================");
+		appendLine("");
 
 		List<List<Long>> origVotes = marginResult.getOrigVoting();
 		
 		appendLine("====original Votes====");
+		appendLine("");
 		
 		appendPane("[");
 		
@@ -304,17 +306,20 @@ public class ResultPresenterWindow extends JFrame {
 				if(iterator2.hasNext()) {
 					votes = votes + ", " + voter;
 				} else {
-					votes = votes + voter + "]";
+					votes = votes + ", " + voter + "]";
 				}
-				appendLine(votes);
 			}
+			appendPane(",\n" + votes);
 		}
 		
-		appendPane("]");
+		appendLine("");
+		
+		appendLine("]");
 		
 		appendLine("====original Result====");
+		appendLine("");
 		
-		appendPane("[");
+		appendLine("[");
 		
 		for (Iterator iterator = marginResult.getOrigWinner().iterator(); iterator.hasNext();) {
 			long currentValue = (Long) iterator.next();
@@ -326,16 +331,17 @@ public class ResultPresenterWindow extends JFrame {
 			}
 			
 		}
-
-		appendLine("====Margin computation====");
 		
-		appendLine("has final margin " + marginResult.hasFinalMargin());
+		appendLine("");
+		appendLine("====Margin computation====");
+		appendLine("");
+		appendLine("has final margin: " + marginResult.hasFinalMargin());
 		if (marginResult.hasFinalMargin()) {
-			
-			appendLine("" + marginResult.getFinalMargin());
-			
+			appendLine("");
+			appendLine("final margin:" + marginResult.getFinalMargin());
+			appendLine("");
 			appendLine("====new Votes====");
-			
+			appendLine("");
 			appendPane("[");
 			
 			for (Iterator iterator = marginResult.getNewVotes().iterator(); iterator.hasNext();) {
@@ -348,16 +354,18 @@ public class ResultPresenterWindow extends JFrame {
 					if(iterator2.hasNext()) {
 						votes = votes + ", " + voter;
 					} else {
-						votes = votes + voter + "]";
+						votes = votes + ", " + voter + "]";
 					}
-					appendLine(votes);
 				}
+				appendPane(",\n" + votes);
 			}
-			
-			appendPane("]");
-			
+			appendLine("");
+			appendLine("]");
+			appendLine("");
 			
 			appendLine("====new Result====");
+			
+			appendLine("");
 			
 			appendPane("[");
 			

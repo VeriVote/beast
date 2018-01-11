@@ -57,7 +57,7 @@ public class BEASTCommunicator implements CheckListener {
                     long elapsedTime;
                     double passedTimeSeconds = 0;
 
-                    boolean[] resultPresented = new boolean[preAndPostSrc.getPreAndPostConditionsDescriptionsCheck().size()];
+                    boolean[] resultPresented = new boolean[preAndPostSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size()];
 
                     int numberOfPresentedResults = 0;
 

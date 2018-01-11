@@ -71,8 +71,6 @@ public abstract class CheckerFactory implements Runnable {
 		}
 	}
 
-//	// TODO maybe remove this, is probably unneeded, because we create the
-//	// margin check later now
 	public CheckerFactory(FactoryController controller, ParameterSource paramSrc, Result result,
 			boolean isMargin) {
 		this.controller = controller;
@@ -110,278 +108,9 @@ public abstract class CheckerFactory implements Runnable {
 		advanced = String.join(";", advanced.split(";"));
 
 		if (!isMargin) {
-
-			outerLoop: for (Iterator<Integer> voteIterator = paramSrc.getParameter().getAmountVoters()
-					.iterator(); voteIterator.hasNext();) {
-				int voters = (int) voteIterator.next();
-				for (Iterator<Integer> candidateIterator = paramSrc.getParameter().getAmountCandidates()
-						.iterator(); candidateIterator.hasNext();) {
-					int candidates = (int) candidateIterator.next();
-					for (Iterator<Integer> seatsIterator = paramSrc.getParameter().getAmountSeats()
-							.iterator(); seatsIterator.hasNext();) {
-						int seats = (int) seatsIterator.next();
-
-						synchronized (this) {
-							if (!stopped) {
-								currentlyRunning = startProcessCheck(electionDescSrc, postAndPrepPropDesc, advanced,
-										voters, candidates, seats, this, false);
-
-								// check if the creation was successfull
-								if (currentlyRunning == null) {
-									// the process creation failed
-									stopped = true;
-									result.setFinished();
-									result.setError("Couldn't start the process, please follow the instructions you "
-											+ "got shown on the screen before");
-								}
-							}
-						}
-
-						// wait until we get stopped or the checker finished
-						while (!finished && !stopped) {
-							try {
-								// polling in 1 second steps to save cpu time
-								Thread.sleep(POLLINGINTERVAL);
-							} catch (InterruptedException e) {
-								ErrorLogger.log("interrupted while busy waiting! (CheckerFactory");
-							}
-						}
-
-						if (stopped) {
-							result.setFinished();
-							break outerLoop;
-						} else { // if it got started normally
-									// the checker finished checking for these
-									// specific
-									// parameters without being stopped and
-									// without a failure
-									// from the outside
-									// set currentlyRunnign to null, so we can
-									// catch, if the
-									// process creation failed
-							currentlyRunning = null;
-
-							// if the last check was successful, we have to
-							// keep checking the other ones
-							if (checkAssertionSuccess(lastResult)) {
-								finished = false;
-							} else {
-								// the wasn't successfull for some reason
-								// so stop now
-								finished = true;
-
-								if (checkAssertionFailure(lastResult)) {
-									result.setNumVoters(voters);
-									result.setNumCandidates(candidates);
-									result.setNumSeats(seats);
-									result.setResult(lastResult);
-									result.setValid();
-								} else {
-									result.setError(lastError);
-								}
-								result.setFinished();
-
-								break outerLoop;
-							}
-						}
-					}
-				}
-			}
+			runTest(advanced);
 		} else { // we want to make a margin computation
-			synchronized (this) {
-
-				if (!stopped) {
-
-					// determine the winner of this input of votes
-
-					currentlyRunning = startProcessMargin(electionDescSrc, postAndPrepPropDesc, advanced,
-							ElectionSimulation.getNumVoters(), ElectionSimulation.getNumCandidates(),
-							ElectionSimulation.getNumSeats(), this, 0, null, true);
-
-					while (!finished && !stopped) {
-						try {
-							// polling in 1 second steps to save cpu time
-							Thread.sleep(POLLINGINTERVAL);
-						} catch (InterruptedException e) {
-							ErrorLogger.log("interrupted while busy waiting! (CheckerFactory");
-						}
-					}
-
-					CBMCResult dummyResult = new CBMCResult();
-
-					List<Long> origResult = new ArrayList<Long>();
-
-					switch (electionDescSrc.getElectionDescription().getOutputType().getOutputID()) {
-					case CAND_OR_UNDEF:
-
-						List<CBMCResultWrapperLong> tmpResultLong = dummyResult.readLongs("elect", lastResult);
-
-						origResult.add(tmpResultLong.get(0).getValue());
-
-						break;
-
-					case CAND_PER_SEAT:
-
-						List<CBMCResultWrapperSingleArray> tmpResultOneDim = dummyResult.readOneDimVar("elect",
-								lastResult);
-
-						origResult = tmpResultOneDim.get(0).getList();
-
-						break;
-
-					default:
-
-						ErrorLogger.log("unknown output type in \"CheckerFactory\"");
-
-						break;
-					}
-
-					int left = 0;
-					int right = ElectionSimulation.getNumVoters(); // how many votes we have
-					int margin = 0;
-
-					List<String> lastFailedRun = new ArrayList<String>();
-
-					boolean hasUpperBound = false;
-
-					while ((left < right) && !stopped) {
-						// calculate the margin to check
-						margin = (int) (left + Math.floor((float) (right - left) / 2));
-
-						checkMarginAndWait(margin, origResult, advanced);
-
-						System.out.println("finished for margin " + margin + " result: "
-								+ currentlyRunning.checkAssertionSuccess());
-
-						if (currentlyRunning.checkAssertionSuccess()) {
-							left = margin + 1;
-							margin = margin + 1;
-						} else {
-							hasUpperBound = true;
-							right = margin;
-							lastFailedRun = lastResult;
-						}
-					}
-
-					boolean hasMargin = true;
-
-					// so far we haven't found an upper bound for the
-					// margin, so we have to check the last computated margin now:
-					if (!hasUpperBound) {
-						checkMarginAndWait(margin, origResult, advanced);
-						hasMargin = currentlyRunning.checkAssertionFailure();
-						if (hasMargin) {
-							lastFailedRun = lastResult;
-						}
-					}
-					// hasMargin now is true, if there is an upper bound,
-					// and false, if there is no margin
-
-					result.setMarginComp(true);
-					
-					result.setHasFinalMargin(hasMargin);
-					
-					result.setOrigWinner(origResult);
-					result.setOrigVoting(ElectionSimulation.getVotingDataListofList());
-
-					if (hasMargin) {
-						result.setResult(currentlyRunning.getResultList());
-						result.setFinalMargin(margin);
-					} else {
-						result.setResult(null);
-						result.setFinalMargin(-1);
-					}
-
-					List<List<Long>> newVotes = new ArrayList<List<Long>>();
-					List<Long> newResult = new ArrayList<Long>();
-
-					if (hasMargin) {
-
-						switch (electionDescSrc.getElectionDescription().getOutputType().getOutputID()) {
-						case CAND_OR_UNDEF:
-
-							List<CBMCResultWrapperLong> tmpResultLong = dummyResult.readLongs("new_result", lastFailedRun);
-
-							newResult.add(tmpResultLong.get(0).getValue());
-
-							break;
-
-						case CAND_PER_SEAT:
-
-							List<CBMCResultWrapperSingleArray> tmpResultOneDim = dummyResult.readOneDimVar("new_result", lastFailedRun);
-
-							newResult = tmpResultOneDim.get(0).getList();
-
-							break;
-
-						default:
-
-							ErrorLogger.log("unknown output type in \"CheckerFactory\"");
-
-							break;
-						}
-						
-						switch (electionDescSrc.getElectionDescription().getInputType().getInputID()) {
-						case APPROVAL:
-							
-							newVotes = dummyResult.readTwoDimVar("new_votes", lastFailedRun).get(0).getList();
-							
-							break;
-							
-						case PREFERENCE:
-							
-							newVotes = dummyResult.readTwoDimVar("new_votes", lastFailedRun).get(0).getList();
-							
-							break;
-							
-						case SINGLE_CHOICE:
-							
-							newVotes.add(dummyResult.readOneDimVar("new_votes", lastFailedRun).get(0).getList());
-							
-							break;
-							
-						case WEIGHTED_APPROVAL:
-							
-							newVotes = dummyResult.readTwoDimVar("new_votes", lastFailedRun).get(0).getList();
-							
-							break;
-
-						default:
-							break;
-						}
-
-						result.setNewVotes(newVotes);
-						result.setNewWinner(newResult);
-						
-						result.setValid();
-						result.setFinished();
-						
-						int count = 0;
-
-						for (Iterator iterator = newVotes.iterator(); iterator.hasNext();) {
-							int count2 = 0;
-							List<Long> list = (List<Long>) iterator.next();
-							System.out.println("");
-							System.out.print("new_votes: " + count++ +"==");
-							for (Iterator iterator2 = list.iterator(); iterator2.hasNext();) {
-								Long long1 = (Long) iterator2.next();
-								System.out.print(count2++ + ":" + long1 + "|");
-							}
-						}
-						System.out.println("");
-						System.out.println("===========");
-						
-						count = 0;
-
-						for (Iterator iterator = newResult.iterator(); iterator.hasNext();) {
-							Long long1 = (Long) iterator.next();
-							System.out.println("new_result " + count + ": " + long1);
-							count = count + 1;
-						}
-					}
-
-				}
-			}
+			runMargin(advanced);
 		}
 
 		// if the correct flags for the result object haven't been set yet, we
@@ -412,6 +141,289 @@ public abstract class CheckerFactory implements Runnable {
 
 		controller.notifyThatFinished(this);
 
+	}
+
+	/**
+	 * @param advanced
+	 */
+	private void runMargin(String advanced) {
+		synchronized (this) {
+
+			if (!stopped) {
+
+				// determine the winner of this input of votes
+
+				currentlyRunning = startProcessMargin(electionDescSrc, postAndPrepPropDesc, advanced,
+						ElectionSimulation.getNumVoters(), ElectionSimulation.getNumCandidates(),
+						ElectionSimulation.getNumSeats(), this, 0, null, true);
+
+				while (!finished && !stopped) {
+					try {
+						// polling in 1 second steps to save cpu time
+						Thread.sleep(POLLINGINTERVAL);
+					} catch (InterruptedException e) {
+						ErrorLogger.log("interrupted while busy waiting! (CheckerFactory");
+					}
+				}
+
+				CBMCResult dummyResult = new CBMCResult();
+
+				List<Long> origResult = new ArrayList<Long>();
+
+				switch (electionDescSrc.getElectionDescription().getOutputType().getOutputID()) {
+				case CAND_OR_UNDEF:
+
+					List<CBMCResultWrapperLong> tmpResultLong = dummyResult.readLongs("elect", lastResult);
+
+					origResult.add(tmpResultLong.get(0).getValue());
+
+					break;
+
+				case CAND_PER_SEAT:
+
+					List<CBMCResultWrapperSingleArray> tmpResultOneDim = dummyResult.readOneDimVar("elect",
+							lastResult);
+
+					origResult = tmpResultOneDim.get(0).getList();
+
+					break;
+
+				default:
+
+					ErrorLogger.log("unknown output type in \"CheckerFactory\"");
+
+					break;
+				}
+
+				int left = 0;
+				int right = ElectionSimulation.getNumVoters(); // how many votes we have
+				int margin = 0;
+
+				List<String> lastFailedRun = new ArrayList<String>();
+
+				boolean hasUpperBound = false;
+
+				while ((left < right) && !stopped) {
+					// calculate the margin to check
+					margin = (int) (left + Math.floor((float) (right - left) / 2));
+
+					checkMarginAndWait(margin, origResult, advanced);
+
+					System.out.println("finished for margin " + margin + " result: "
+							+ currentlyRunning.checkAssertionSuccess());
+
+					if (currentlyRunning.checkAssertionSuccess()) {
+						left = margin + 1;
+						margin = margin + 1;
+					} else {
+						hasUpperBound = true;
+						right = margin;
+						lastFailedRun = lastResult;
+					}
+				}
+
+				boolean hasMargin = true;
+
+				// so far we haven't found an upper bound for the
+				// margin, so we have to check the last computated margin now:
+				if (!hasUpperBound) {
+					checkMarginAndWait(margin, origResult, advanced);
+					hasMargin = currentlyRunning.checkAssertionFailure();
+					if (hasMargin) {
+						lastFailedRun = lastResult;
+					}
+				}
+				// hasMargin now is true, if there is an upper bound,
+				// and false, if there is no margin
+
+				result.setMarginComp(true);
+				
+				result.setHasFinalMargin(hasMargin);
+				
+				result.setOrigWinner(origResult);
+				result.setOrigVoting(ElectionSimulation.getVotingDataListofList());
+
+				if (hasMargin) {
+					result.setResult(currentlyRunning.getResultList());
+					result.setFinalMargin(margin);
+				} else {
+					result.setResult(null);
+					result.setFinalMargin(-1);
+				}
+
+				List<List<Long>> newVotes = new ArrayList<List<Long>>();
+				List<Long> newResult = new ArrayList<Long>();
+
+				if (hasMargin) {
+
+					switch (electionDescSrc.getElectionDescription().getOutputType().getOutputID()) {
+					case CAND_OR_UNDEF:
+
+						List<CBMCResultWrapperLong> tmpResultLong = dummyResult.readLongs("new_result", lastFailedRun);
+
+						newResult.add(tmpResultLong.get(0).getValue());
+
+						break;
+
+					case CAND_PER_SEAT:
+
+						List<CBMCResultWrapperSingleArray> tmpResultOneDim = dummyResult.readOneDimVar("new_result", lastFailedRun);
+
+						newResult = tmpResultOneDim.get(0).getList();
+
+						break;
+
+					default:
+
+						ErrorLogger.log("unknown output type in \"CheckerFactory\"");
+
+						break;
+					}
+					
+					switch (electionDescSrc.getElectionDescription().getInputType().getInputID()) {
+					case APPROVAL:
+						
+						newVotes = dummyResult.readTwoDimVar("new_votes", lastFailedRun).get(0).getList();
+						
+						break;
+						
+					case PREFERENCE:
+						
+						newVotes = dummyResult.readTwoDimVar("new_votes", lastFailedRun).get(0).getList();
+						
+						break;
+						
+					case SINGLE_CHOICE:
+						
+						newVotes.add(dummyResult.readOneDimVar("new_votes", lastFailedRun).get(0).getList());
+						
+						break;
+						
+					case WEIGHTED_APPROVAL:
+						
+						newVotes = dummyResult.readTwoDimVar("new_votes", lastFailedRun).get(0).getList();
+						
+						break;
+
+					default:
+						break;
+					}
+
+					result.setNewVotes(newVotes);
+					result.setNewWinner(newResult);
+					
+					result.setValid();
+					result.setFinished();
+					this.finished = true;
+					
+					int count = 0;
+
+					for (Iterator iterator = newVotes.iterator(); iterator.hasNext();) {
+						int count2 = 0;
+						List<Long> list = (List<Long>) iterator.next();
+						System.out.println("");
+						System.out.print("new_votes: " + count++ +"==");
+						for (Iterator iterator2 = list.iterator(); iterator2.hasNext();) {
+							Long long1 = (Long) iterator2.next();
+							System.out.print(count2++ + ":" + long1 + "|");
+						}
+					}
+					System.out.println("");
+					System.out.println("===========");
+					
+					count = 0;
+
+					for (Iterator iterator = newResult.iterator(); iterator.hasNext();) {
+						Long long1 = (Long) iterator.next();
+						System.out.println("new_result " + count + ": " + long1);
+						count = count + 1;
+					}
+				}
+
+			}
+		}
+	}
+
+	/**
+	 * @param advanced
+	 */
+	private void runTest(String advanced) {
+		outerLoop: for (Iterator<Integer> voteIterator = paramSrc.getParameter().getAmountVoters()
+				.iterator(); voteIterator.hasNext();) {
+			int voters = (int) voteIterator.next();
+			for (Iterator<Integer> candidateIterator = paramSrc.getParameter().getAmountCandidates()
+					.iterator(); candidateIterator.hasNext();) {
+				int candidates = (int) candidateIterator.next();
+				for (Iterator<Integer> seatsIterator = paramSrc.getParameter().getAmountSeats()
+						.iterator(); seatsIterator.hasNext();) {
+					int seats = (int) seatsIterator.next();
+
+					synchronized (this) {
+						if (!stopped) {
+							currentlyRunning = startProcessCheck(electionDescSrc, postAndPrepPropDesc, advanced,
+									voters, candidates, seats, this, false);
+
+							// check if the creation was successfull
+							if (currentlyRunning == null) {
+								// the process creation failed
+								stopped = true;
+								result.setFinished();
+								result.setError("Couldn't start the process, please follow the instructions you "
+										+ "got shown on the screen before");
+							}
+						}
+					}
+
+					// wait until we get stopped or the checker finished
+					while (!finished && !stopped) {
+						try {
+							// polling in 1 second steps to save cpu time
+							Thread.sleep(POLLINGINTERVAL);
+						} catch (InterruptedException e) {
+							ErrorLogger.log("interrupted while busy waiting! (CheckerFactory");
+						}
+					}
+
+					if (stopped) {
+						result.setFinished();
+						break outerLoop;
+					} else { // if it got started normally
+								// the checker finished checking for these
+								// specific
+								// parameters without being stopped and
+								// without a failure
+								// from the outside
+								// set currentlyRunnign to null, so we can
+								// catch, if the
+								// process creation failed
+						currentlyRunning = null;
+
+						// if the last check was successful, we have to
+						// keep checking the other ones
+						if (checkAssertionSuccess(lastResult)) {
+							finished = false;
+						} else {
+							// the wasn't successfull for some reason
+							// so stop now
+							finished = true;
+
+							if (checkAssertionFailure(lastResult)) {
+								result.setNumVoters(voters);
+								result.setNumCandidates(candidates);
+								result.setNumSeats(seats);
+								result.setResult(lastResult);
+								result.setValid();
+							} else {
+								result.setError(lastError);
+							}
+							result.setFinished();
+
+							break outerLoop;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -457,7 +469,6 @@ public abstract class CheckerFactory implements Runnable {
 			try {
 				Thread.sleep(SLEEPINTERVAL);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -666,8 +677,7 @@ public abstract class CheckerFactory implements Runnable {
 	 * @param result
 	 *            the object in which the result should be saved in later
 	 * @return a new CheckerFactory
-	 */ // TODO maybe remove this, because fromfile should not be used if the
-		// margin computation works
+	 */
 	public abstract CheckerFactory getNewInstance(FactoryController controller, File toCheck, ParameterSource paramSrc,
 			Result result, boolean isMargin);
 
