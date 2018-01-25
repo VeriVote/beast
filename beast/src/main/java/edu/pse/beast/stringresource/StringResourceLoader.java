@@ -5,13 +5,13 @@
  */
 package edu.pse.beast.stringresource;
 
-import edu.pse.beast.toolbox.ErrorLogger;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 import java.util.Objects;
+
+import edu.pse.beast.toolbox.ErrorLogger;
 
 /**
  *

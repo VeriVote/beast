@@ -5,11 +5,13 @@
  */
 package edu.pse.beast.datatypes;
 
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.propertylist.Model.PLModel;
-import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

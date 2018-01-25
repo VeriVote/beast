@@ -1,11 +1,12 @@
 package edu.pse.beast.options.CodeAreaOptions;
 
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.util.ArrayList;
+
 import edu.pse.beast.codearea.CodeArea;
 import edu.pse.beast.options.Options;
 import edu.pse.beast.stringresource.StringResourceLoader;
-
-import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * Options subclass for the CodeAreaOptions.

@@ -5,12 +5,13 @@
  */
 package edu.pse.beast.codearea.UserActions;
 
-import edu.pse.beast.toolbox.UserAction;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+
+import javax.swing.JTextPane;
+
+import edu.pse.beast.toolbox.UserAction;
 
 /**
  * This useraction takes the selected string in the given textpane and

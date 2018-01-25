@@ -1,9 +1,6 @@
 package edu.pse.beast.propertylist.UserActions;
 
-import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.electionSimulator.ElectionSimulation;
-import edu.pse.beast.highlevel.BEASTCommunicator;
-import edu.pse.beast.highlevel.PSECentralObjectProvider;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.toolbox.UserAction;
 

@@ -1,5 +1,7 @@
 package edu.pse.beast.propertylist;
 
+import javax.swing.JToolBar;
+
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.propertylist.View.PropertyListWindow;
 import edu.pse.beast.stringresource.StringLoaderInterface;
@@ -7,8 +9,6 @@ import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.ActionIdAndListener;
 import edu.pse.beast.toolbox.ImageResourceProvider;
 import edu.pse.beast.toolbox.ToolbarHandler;
-
-import javax.swing.*;
 
 /**
  * Handles tool-bar events for PropertyList.

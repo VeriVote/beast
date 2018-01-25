@@ -10,6 +10,6 @@ package edu.pse.beast.datatypes.electiondescription;
  * @author Holger-Desktop
  */
 public interface ElectionDescriptionChangeListener {
-    public void inputChanged(ElectionTypeContainer input);
-    public void outputChanged(ElectionTypeContainer output);
+    public void inputChanged(ElectionTypeContainer container);
+    public void outputChanged(ElectionTypeContainer container);
 }

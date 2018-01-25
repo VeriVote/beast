@@ -1,5 +1,11 @@
 package edu.pse.beast.Gui;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+
+import javax.swing.JMenuBar;
+
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.highlevel.BEASTCommunicator;
@@ -7,10 +13,6 @@ import edu.pse.beast.highlevel.CentralObjectProvider;
 import edu.pse.beast.highlevel.PSECentralObjectProvider;
 import edu.pse.beast.parametereditor.ParameterEditor;
 import edu.pse.beast.propertylist.PropertyList;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyEvent;
 
 /**
  * Created by holger on 07.03.17.

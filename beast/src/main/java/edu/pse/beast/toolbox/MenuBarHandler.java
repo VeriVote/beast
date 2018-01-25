@@ -5,13 +5,16 @@
  */
 package edu.pse.beast.toolbox;
 
-import edu.pse.beast.highlevel.DisplaysStringsToUser;
-import edu.pse.beast.stringresource.StringResourceLoader;
-
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+
+import edu.pse.beast.highlevel.DisplaysStringsToUser;
+import edu.pse.beast.stringresource.StringResourceLoader;
 
 /**
  *

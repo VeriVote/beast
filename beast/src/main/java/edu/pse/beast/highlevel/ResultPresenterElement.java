@@ -1,10 +1,8 @@
 package edu.pse.beast.highlevel;
 
-import edu.pse.beast.datatypes.FailureExample;
-import edu.pse.beast.propertychecker.CBMCResult;
-import edu.pse.beast.propertychecker.Result;
-
 import java.util.List;
+
+import edu.pse.beast.propertychecker.Result;
 
 /**
  * Element which is specifically used to display a result of a check to the user.

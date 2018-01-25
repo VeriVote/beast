@@ -5,10 +5,10 @@
  */
 package edu.pse.beast.CodeArea.InputToCode;
 
+import javax.swing.JTextPane;
+
 import org.junit.After;
 import org.junit.Before;
-
-import javax.swing.*;
 
 /**
  *

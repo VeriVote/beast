@@ -5,17 +5,18 @@
  */
 package edu.pse.beast.codearea.UserActions;
 
-import edu.pse.beast.codearea.CodeArea;
-import edu.pse.beast.toolbox.UserAction;
-
-import javax.swing.text.BadLocationException;
-import java.awt.*;
+import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.text.BadLocationException;
+
+import edu.pse.beast.codearea.CodeArea;
+import edu.pse.beast.toolbox.UserAction;
 
 /**
  * this useraction asks the given codearea to insert the currently copied string

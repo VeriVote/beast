@@ -1,17 +1,19 @@
 package edu.pse.beast.booleanexpeditor.booleanExpCodeArea;
 
+import java.util.ArrayList;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorGrammarErrorFinder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorVariableErrorFinder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpErrorDisplayer;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
-import edu.pse.beast.codearea.Autocompletion.AutocompletionOption;
 import edu.pse.beast.codearea.CodeArea;
 import edu.pse.beast.codearea.CodeAreaBuilder;
+import edu.pse.beast.codearea.Autocompletion.AutocompletionOption;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
-
-import javax.swing.*;
-import java.util.ArrayList;
 
 /**
  * Builder class to create a BooleanExpCodeArea object.

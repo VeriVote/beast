@@ -5,12 +5,18 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling;
 
+import java.util.ArrayList;
+
+import javax.swing.JTextPane;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CAntlrHandler;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import org.junit.*;
-
-import javax.swing.*;
-import java.util.ArrayList;
 
 /**
  *

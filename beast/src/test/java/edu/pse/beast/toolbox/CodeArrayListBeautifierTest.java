@@ -5,11 +5,12 @@
  */
 package edu.pse.beast.toolbox;
 
-import java.util.ArrayList;
-import org.junit.*;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
+
+import org.junit.Test;
 
 /**
  *

@@ -1,16 +1,17 @@
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling;
 
-//import edu.pse.beast.toolbox.antlr.booleanexp.ANTLRBooleanExpressionListener;
+import java.util.Arrays;
+import java.util.List;
 
-import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CLexer;
-import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CParser;
 import org.antlr.v4.gui.TreeViewer;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import java.util.Arrays;
-import java.util.List;
+//import edu.pse.beast.toolbox.antlr.booleanexp.ANTLRBooleanExpressionListener;
+
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CLexer;
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CParser;
 
 /**
  * @author NikolaiLMS

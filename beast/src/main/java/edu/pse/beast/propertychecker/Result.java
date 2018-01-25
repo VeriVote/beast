@@ -5,14 +5,14 @@
  */
 package edu.pse.beast.propertychecker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenterElement;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *

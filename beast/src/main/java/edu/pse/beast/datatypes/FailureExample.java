@@ -1,15 +1,14 @@
 package edu.pse.beast.datatypes;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer.ElectionInputTypeIds;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.propertychecker.SymbolicVarNameAndNumber;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * This class provides the result presenter with the necessary data about the
@@ -134,16 +133,16 @@ public class FailureExample {
 	}
 
 	public boolean isChooseOneCandidate() {
-		return (electionDescription.getInputType().getInputID() == ElectionInputTypeIds.SINGLE_CHOICE);
+		return electionDescription.getContainer().getInputType().isVotingForOneCandidate();
 	}
 
 	/**
 	 * 
 	 * @return true, if only "one seat" (read, a candidate) is going to be elected,
-	 *         in case of a voting for a parliarment, it returns false
+	 *         in case of a voting for a parliament, it returns false
 	 */
 	public boolean isOneSeatOnly() {
-		return !electionDescription.getOutputType().getResultTypeSeats();
+		return electionDescription.getContainer().getOutputType().isOutputOneCandidate();
 	}
 
 	/**
@@ -231,7 +230,7 @@ public class FailureExample {
 	}
 
 	public String getTypeString() {
-		return electionDescription.getInputType().getInputID().toString();
+		return electionDescription.getContainer().getInputType().getInputIDinFile();
 	}
 
 	public void setHasFinalMargin(boolean hasFinalMargin) {

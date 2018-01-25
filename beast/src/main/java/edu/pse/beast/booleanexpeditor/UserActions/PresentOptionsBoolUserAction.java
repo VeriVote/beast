@@ -1,7 +1,7 @@
 package edu.pse.beast.booleanexpeditor.UserActions;
 
-import edu.pse.beast.options.BooleanExpEditorOptions.BooleanExpEditorOptions;
 import edu.pse.beast.options.OptionPresenter;
+import edu.pse.beast.options.BooleanExpEditorOptions.BooleanExpEditorOptions;
 import edu.pse.beast.toolbox.UserAction;
 
 /**

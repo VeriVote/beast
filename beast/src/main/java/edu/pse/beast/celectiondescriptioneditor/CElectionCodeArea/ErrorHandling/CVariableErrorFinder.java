@@ -5,12 +5,13 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling;
 
+import java.util.ArrayList;
+
+import javax.swing.JTextPane;
+
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
 import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
-
-import javax.swing.*;
-import java.util.ArrayList;
 
 /**
  * This class uses an external compiler (either gcc on linux or cl on windows)

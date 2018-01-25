@@ -1,24 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.pse.beast.toolbox;
+
+import java.util.ArrayList;
 
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
-import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer.ElectionInputTypeIds;
-import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer.ElectionOutputTypeIds;
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeRep;
-import edu.pse.beast.highlevel.BEASTCommunicator;
-import edu.pse.beast.stringresource.EnumToIdMapping;
 import edu.pse.beast.stringresource.StringResourceLoader;
-
-import java.util.ArrayList;
-
-import org.openqa.selenium.OutputType;
+import edu.pse.beast.types.InternalTypeContainer;
+import edu.pse.beast.types.InternalTypeRep;
 
 /**
  * This class contains functionallity to generate C Code from internal data
@@ -52,7 +41,8 @@ public class CCodeHelper {
 	/**
 	 * creates the C-Type text representation of the given Internaltypecontainer,
 	 * arrays are created as arrays: "unsigned int votes[V][C]", for example
-	 * @param internalTypeContainer 
+	 * 
+	 * @param internalTypeContainer
 	 *
 	 * @param electionInputTypeIds
 	 *            the container for which the C type should be created
@@ -60,42 +50,12 @@ public class CCodeHelper {
 	 *            the name of the variable
 	 * @return the c type
 	 */
-	public String getCType(ElectionInputTypeIds inputType, InternalTypeContainer internalTypeContainer, String name) {
+	public String getCType(ElectionTypeContainer electionContainer, String name) {
 
-		InternalTypeContainer currentContainer = internalTypeContainer.getListedType();
-		
 		String decl = "unsigned int " + name;
-		
-		switch (inputType) {
-		case APPROVAL:
-			
-			decl += "[V][C]";
-			
-			break;
-		case PREFERENCE:
 
+		decl = decl + electionContainer.getInputType().getInputString();
 
-			
-			decl += "[V][C]";
-			
-			break;
-		case SINGLE_CHOICE:
-
-			decl += "[V]";
-			
-			break;
-		case WEIGHTED_APPROVAL:
-
-			decl += "[V][C]";
-			
-			break;
-
-		default:
-			
-			//do nothing
-			
-			break;
-		}
 		return decl;
 	}
 
@@ -107,31 +67,10 @@ public class CCodeHelper {
 	 *            the container for which the C type should be created
 	 * @return the c type
 	 */
-	public String getCTypePointer(ElectionOutputTypeIds outputType) {
+	public String getCTypePointer(ElectionTypeContainer electionContainer) {
 
-		String decl = "";
-
-		switch (outputType) {
-
-		case CAND_OR_UNDEF:
-
-			decl = "unsigned int";
-
-			break;
-
-		case CAND_PER_SEAT:
-
-			decl = "struct result";
-
-			break;
-
-		default:
-
-			decl = "unsigned int";
-
-			break;
-
-		}
+		String decl = electionContainer.getOutputType().getOutputString();
+		
 		return decl;
 	}
 
@@ -163,10 +102,10 @@ public class CCodeHelper {
 	 *            the result format of the voting function
 	 * @return the voting function declaration line
 	 */
-	public String generateDeclString(ElectionTypeContainer input, ElectionTypeContainer res) {
+	public String generateDeclString(ElectionTypeContainer container) {
 		String decl = "RESULT voting(VOTES) {";
-		decl = decl.replace("RESULT", getCTypePointer(res.getOutputID()));
-		decl = decl.replace("VOTES", getCType(input.getInputID(), input.getType(), "votes"));
+		decl = decl.replace("RESULT", getCTypePointer(container));
+		decl = decl.replace("VOTES", getCType(container, "votes"));
 		return decl;
 	}
 
@@ -182,25 +121,25 @@ public class CCodeHelper {
 	 * @param name
 	 *            the name of the election
 	 * @param templateHandler
-	 *            the Templatehandler which generated input and result types
+	 *            the Template handler which generated input and result types
 	 * @param stringResourceLoader
-	 *            the string ressource loader currently used
+	 *            the string resource loader currently used
 	 * @return the complete voting function
 	 */
-	public ElectionDescription generateElectionDescription(ElectionTypeContainer.ElectionInputTypeIds input,
-			ElectionTypeContainer.ElectionOutputTypeIds res, String name, ElectionTemplateHandler templateHandler,
-			StringResourceLoader stringResourceLoader) {
+	public ElectionDescription generateElectionDescription(ElectionTypeContainer container, String name,
+			ElectionTemplateHandler templateHandler, StringResourceLoader stringResourceLoader) {
 
-		ElectionDescription description = new ElectionDescription(name, templateHandler.getById(input),
-				templateHandler.getById(res), 2);
+		ElectionDescription description = new ElectionDescription(name, container.getInputType(),
+				container.getOutputType(), 2);
 		ArrayList<String> code = new ArrayList<>();
-		String inputIdInFile = EnumToIdMapping.getIDInFile(input);
-		String resIdInFile = EnumToIdMapping.getIDInFile(res);
+		String inputIdInFile = container.getInputType().getInputIDinFile();
+		String outputIdInFile = container.getOutputType().getOutputIDinFile();
+		
 		code.add("//" + stringResourceLoader.getStringFromID(inputIdInFile) + ": "
 				+ stringResourceLoader.getStringFromID(inputIdInFile + "_exp"));
-		code.add("//" + stringResourceLoader.getStringFromID(resIdInFile) + ": "
-				+ stringResourceLoader.getStringFromID(resIdInFile + "_exp"));
-		code.add(generateDeclString(templateHandler.getById(input), templateHandler.getById(res)) + " ");
+		code.add("//" + stringResourceLoader.getStringFromID(outputIdInFile) + ": "
+				+ stringResourceLoader.getStringFromID(outputIdInFile + "_exp"));
+		code.add(generateDeclString(container));
 		code.add("} ");
 		description.setCode(code);
 		return description;
@@ -213,20 +152,8 @@ public class CCodeHelper {
 	 *            the list whose elements max value needs to be determined
 	 * @return max value an element of the given ElectionTypeContainer can have
 	 */
-	public String getMax(ElectionTypeContainer inputType) {
-		switch (inputType.getInputID()) {
-		case APPROVAL:
-			return "2";
-		case SINGLE_CHOICE:
-			return "C";
-		case PREFERENCE:
-			return "C";
-		case WEIGHTED_APPROVAL:
-			return String.valueOf(inputType.getUpperBound());
-		default:
-			throw new AssertionError(inputType.getInputID().name());
-
-		}
+	public String getMax(ElectionTypeContainer container) {
+		return container.getInputType().getMaximalValue(container);
 	}
 
 	/**
@@ -237,19 +164,7 @@ public class CCodeHelper {
 	 *            the list whose elements min value needs to be determined
 	 * @return minimum value an element of the given ElectionTypeContainer can have
 	 */
-	public String getMin(ElectionTypeContainer inputType) {
-		switch (inputType.getInputID()) {
-		case SINGLE_CHOICE:
-			return "0";
-		case PREFERENCE:
-			return "0";
-		case APPROVAL:
-			return "0";
-		case WEIGHTED_APPROVAL:
-			return String.valueOf(inputType.getLowerBound());
-		default:
-			throw new AssertionError(inputType.getInputID().name());
-
-		}
+	public String getMin(ElectionTypeContainer container) {
+		return container.getInputType().getMinimalValue(container);
 	}
 }

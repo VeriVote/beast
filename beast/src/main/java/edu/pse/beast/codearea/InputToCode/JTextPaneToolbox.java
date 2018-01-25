@@ -5,11 +5,12 @@
  */
 package edu.pse.beast.codearea.InputToCode;
 
-import javax.swing.*;
-import javax.swing.text.BadLocationException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
 
 /**
  * This class is a collection of useful functionallity often needed when working

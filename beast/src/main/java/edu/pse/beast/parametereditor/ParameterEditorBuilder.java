@@ -1,9 +1,23 @@
 package edu.pse.beast.parametereditor;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JFrame;
+
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.highlevel.PSECentralObjectProvider;
-import edu.pse.beast.parametereditor.UserActions.*;
+import edu.pse.beast.parametereditor.UserActions.AbortCheckUserAction;
+import edu.pse.beast.parametereditor.UserActions.LoadProjectUserAction;
+import edu.pse.beast.parametereditor.UserActions.OptionsUserAction;
+import edu.pse.beast.parametereditor.UserActions.SaveProjectAsUserAction;
+import edu.pse.beast.parametereditor.UserActions.SaveProjectUserAction;
+import edu.pse.beast.parametereditor.UserActions.ShowHideBooleanExpEditor;
+import edu.pse.beast.parametereditor.UserActions.ShowHideCElectionEditor;
+import edu.pse.beast.parametereditor.UserActions.ShowHidePropertyList;
+import edu.pse.beast.parametereditor.UserActions.StartCheckUserAction;
 import edu.pse.beast.parametereditor.View.ParameterEditorWindow;
 import edu.pse.beast.parametereditor.View.ParameterEditorWindowStarter;
 import edu.pse.beast.propertylist.PropertyList;
@@ -16,11 +30,6 @@ import edu.pse.beast.toolbox.ActionIdAndListener;
 import edu.pse.beast.toolbox.ImageResourceProvider;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import edu.pse.beast.toolbox.UserAction;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 /**
  * The ParameterEditorBuilder builds a ParameterEditor and provides the references

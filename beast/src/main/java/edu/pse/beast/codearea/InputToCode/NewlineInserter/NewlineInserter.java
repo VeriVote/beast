@@ -5,11 +5,11 @@
  */
 package edu.pse.beast.codearea.InputToCode.NewlineInserter;
 
+import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
+
 import edu.pse.beast.codearea.InputToCode.LineBeginningTabsHandler;
 import edu.pse.beast.codearea.InputToCode.TabInserter;
-
-import javax.swing.*;
-import javax.swing.text.BadLocationException;
 
 /**
  * This interface is implemented by all classes which insert linebreaks

@@ -1,6 +1,9 @@
 package edu.pse.beast.propertylist.View;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 
 /**
  * Shows a failure example where there is a list of votings and multiple seats are allocated.

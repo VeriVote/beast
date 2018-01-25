@@ -5,11 +5,16 @@
  */
 package edu.pse.beast.propertylist;
 
-import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
+import java.awt.Frame;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
-import edu.pse.beast.highlevel.PropertyAndMarginBool;
+import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.PreAndPostConditionsDescriptionSource;
+import edu.pse.beast.highlevel.PropertyAndMarginBool;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenter;
 import edu.pse.beast.propertychecker.Result;
@@ -18,11 +23,6 @@ import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.propertylist.View.ListItem;
 import edu.pse.beast.propertylist.View.PropertyListWindow;
 import edu.pse.beast.saverloader.FileChooser;
-import java.awt.Frame;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Class acts as controller for everything related to the property list. Returns

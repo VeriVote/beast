@@ -1,13 +1,14 @@
 package edu.pse.beast.SaverLoader;
 
-import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
-import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+
+import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
+import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
 
 /**
  * JUnit Testclass for saverloader.ElectionDescriptionSaverLoader.

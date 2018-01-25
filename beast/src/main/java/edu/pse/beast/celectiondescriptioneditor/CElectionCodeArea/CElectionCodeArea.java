@@ -5,13 +5,14 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea;
 
+import java.util.List;
+
+import javax.swing.text.BadLocationException;
+
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CAntlrHandler;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CGrammarErrorFinder;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CVariableErrorFinder;
 import edu.pse.beast.codearea.CodeArea;
-
-import javax.swing.text.BadLocationException;
-import java.util.List;
 
 /**
  * This is the class which inherits from codearea to create a codearea more

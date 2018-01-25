@@ -1,13 +1,13 @@
 package edu.pse.beast.options.ParametereditorOptions;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.options.Options;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Options subclass for the language options.

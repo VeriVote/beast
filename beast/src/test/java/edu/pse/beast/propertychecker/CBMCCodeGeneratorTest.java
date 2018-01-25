@@ -5,18 +5,20 @@
  */
 package edu.pse.beast.propertychecker;
 
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+
+import org.junit.Test;
+
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
-
-import java.util.ArrayList;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import edu.pse.beast.types.InternalTypeContainer;
+import edu.pse.beast.types.InternalTypeRep;
 
 /**
  * All of these tests are very simple tests if the output contains Strings that

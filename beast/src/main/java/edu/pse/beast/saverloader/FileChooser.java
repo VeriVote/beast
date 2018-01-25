@@ -1,13 +1,26 @@
 package edu.pse.beast.saverloader;
 
+import java.awt.Component;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
+
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.filechooser.FileFilter;
+
 import edu.pse.beast.datatypes.NameInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.SuperFolderFinder;
-
-import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
-import java.awt.*;
-import java.io.*;
 
 /**
  * Class that allows saving and loading files.

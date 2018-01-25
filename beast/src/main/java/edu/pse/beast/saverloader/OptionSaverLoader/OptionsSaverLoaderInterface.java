@@ -1,17 +1,22 @@
 package edu.pse.beast.saverloader.OptionSaverLoader;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
-import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
 import edu.pse.beast.codearea.CodeArea;
 import edu.pse.beast.highlevel.PSECentralObjectProvider;
+import edu.pse.beast.options.OptionElement;
+import edu.pse.beast.options.Options;
 import edu.pse.beast.options.BooleanExpEditorOptions.BooleanExpCodeAreaOptions;
 import edu.pse.beast.options.BooleanExpEditorOptions.BooleanExpEditorOptions;
 import edu.pse.beast.options.CEditorOptions.CElectionCodeAreaOptions;
 import edu.pse.beast.options.CEditorOptions.CElectionEditorOptions;
 import edu.pse.beast.options.CodeAreaOptions.CodeAreaOptions;
-import edu.pse.beast.options.OptionElement;
-import edu.pse.beast.options.Options;
 import edu.pse.beast.options.ParametereditorOptions.LanguageOptions;
 import edu.pse.beast.options.ParametereditorOptions.ParametereditorOptions;
 import edu.pse.beast.parametereditor.ParameterEditor;
@@ -20,11 +25,6 @@ import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
 import edu.pse.beast.toolbox.SuperFolderFinder;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.LinkedList;
 
 /**
 *

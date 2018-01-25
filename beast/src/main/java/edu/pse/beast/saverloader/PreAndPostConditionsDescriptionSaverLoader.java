@@ -5,14 +5,14 @@
  */
 package edu.pse.beast.saverloader;
 
+import java.util.Map;
+
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.saverloader.StaticSaverLoaders.FormalPropertySaverLoader;
 import edu.pse.beast.saverloader.StaticSaverLoaders.SaverLoaderHelper;
 import edu.pse.beast.saverloader.StaticSaverLoaders.SymbolicVarListSaverLoader;
-
-import java.util.Map;
 
 /**
  * Implements SaverLoader methods for creating saveStrings from

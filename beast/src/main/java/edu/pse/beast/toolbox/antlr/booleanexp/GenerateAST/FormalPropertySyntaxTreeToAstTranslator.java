@@ -5,24 +5,46 @@
  */
 package edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST;
 
-import edu.pse.beast.datatypes.booleanExpAST.BooleanExpConstant;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.*;
-import edu.pse.beast.datatypes.booleanExpAST.ComparisonSymbol;
-import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.*;
-import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.*;
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeRep;
-import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionBaseListener;
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.BooleanExpListContext;
+import java.util.Stack;
+
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import java.util.Stack;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanExpConstant;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
+import edu.pse.beast.datatypes.booleanExpAST.ComparisonSymbol;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BinaryRelationshipNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BooleanExpressionNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.ComparisonNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.EquivalencyNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.ForAllNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.ImplicationNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.IntegerComparisonNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.LogicalAndNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.LogicalOrNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.NotNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.QuantorNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.ThereExistsNode;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.AtPosExp;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.ElectExp;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.SymbolicVarExp;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.TypeExpression;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.VoteExp;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.BinaryIntegerValuedNode;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.ConstantExp;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.IntegerNode;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.IntegerValuedExpression;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.VoteSumForCandExp;
+import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionBaseListener;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.BooleanExpListContext;
+import edu.pse.beast.types.InputType;
+import edu.pse.beast.types.InternalTypeContainer;
+import edu.pse.beast.types.InternalTypeRep;
+import edu.pse.beast.types.OutputType;
 
 /**
  *
@@ -31,8 +53,8 @@ import java.util.Stack;
 public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescriptionBaseListener {
 
     private BooleanExpListNode generated;
-    private InternalTypeContainer inputType;
-    private InternalTypeContainer resType;
+    private InputType inputType;
+    private OutputType resType;
     private int maxElectExp = 0;
     private int maxVoteExp = 0;
     private int currentHighestElect = 0;
@@ -44,8 +66,8 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 
     public BooleanExpListNode   generateFromSyntaxTree(
             BooleanExpListContext parseTree,
-            InternalTypeContainer inputType,
-            InternalTypeContainer resType,
+            InputType inputType,
+            OutputType resType,
             BooleanExpScope declaredVars) {
         scopeHandler = new BooleanExpScopehandler();
         scopeHandler.enterNewScope(declaredVars);

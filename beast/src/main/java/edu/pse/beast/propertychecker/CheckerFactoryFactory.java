@@ -1,15 +1,15 @@
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.highlevel.ElectionDescriptionSource;
-import edu.pse.beast.highlevel.ParameterSource;
-import edu.pse.beast.toolbox.ErrorLogger;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.highlevel.ElectionDescriptionSource;
+import edu.pse.beast.highlevel.ParameterSource;
+import edu.pse.beast.toolbox.ErrorLogger;
 
 public final class CheckerFactoryFactory {
     private static Map<String, CheckerFactory> factories = new HashMap<String, CheckerFactory>();

@@ -1,13 +1,13 @@
 package edu.pse.beast.booleanexpeditor.UserActions;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.toolbox.UserAction;
-
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Created by holger on 14.03.17.

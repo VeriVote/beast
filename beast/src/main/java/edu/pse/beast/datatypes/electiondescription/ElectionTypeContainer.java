@@ -1,6 +1,7 @@
 package edu.pse.beast.datatypes.electiondescription;
 
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
+import edu.pse.beast.types.InputType;
+import edu.pse.beast.types.OutputType;
 
 /**
  * Datatype for the Input and Output of an Election
@@ -8,60 +9,53 @@ import edu.pse.beast.datatypes.internal.InternalTypeContainer;
  *
  */
 public class ElectionTypeContainer {
-    private final InternalTypeContainer type;
+    //private final InternalTypeContainer type;
     private int lowerBound;
     private int upperBound;
-    private ElectionInputTypeIds inID;
-    private ElectionOutputTypeIds outID;
+    private InputType inType;
+    private OutputType outType;
+//    private ElectionInputTypeIds inID;
+//    private ElectionOutputTypeIds outID;
     
-    public static enum ElectionInputTypeIds {
-        SINGLE_CHOICE,
-        PREFERENCE,
-        APPROVAL,
-        WEIGHTED_APPROVAL
-    }
+//    public static enum ElectionInputTypeIds {
+//        SINGLE_CHOICE,
+//        PREFERENCE,
+//        APPROVAL,
+//        WEIGHTED_APPROVAL
+//    }
     
-    public static enum ElectionOutputTypeIds {
-        CAND_OR_UNDEF,
-        CAND_PER_SEAT
-    }
+//    public static enum ElectionOutputTypeIds {
+//        CAND_OR_UNDEF,
+//        CAND_PER_SEAT
+//    }
 
     /**
      * Constructor
      * @param type the type of this election
      */
-    public ElectionTypeContainer(InternalTypeContainer type, ElectionInputTypeIds inID, ElectionOutputTypeIds outID) {
-        this.type = type;
-        this.inID = inID;
-        this.outID = outID;
-        lowerBound = 0;
-        upperBound = 100;
+    public ElectionTypeContainer(InputType inType, OutputType outType, int lowerBound, int upperBound) {
+        this.inType = inType;
+        this.outType = outType;
+        this.lowerBound = lowerBound;
+        this.upperBound = upperBound;
     }
     
     /**
      * Constructor
      * @param type the type of this election
      */
-    public ElectionTypeContainer(InternalTypeContainer type, ElectionInputTypeIds inID) {
-        this(type, inID, null);
-    }
-    
-    /**
-     * Constructor
-     * @param type the type of this election
-     */
-    public ElectionTypeContainer(InternalTypeContainer type, ElectionOutputTypeIds outID) {
-        this(type, null, outID);
+    public ElectionTypeContainer(InputType inType, OutputType outType) {
+    	this(inType, outType, 0, 100);
     }
 
     
-    /**
-     * 
-     * @return the type of this election
-     */
-    public InternalTypeContainer getType() {
-        return type;
-    }
+//    /**
+//     * 
+//     * @return the type of this election
+//     */
+//    public InternalTypeContainer getType() {
+//        return type;
+//    }
     
     /**
      * 
@@ -83,16 +77,16 @@ public class ElectionTypeContainer {
      *
      * @return the id of this input typecontainer
      */
-    public ElectionInputTypeIds getInputID() {
-        return inID;
+    public InputType getInputType() {
+        return inType;
     }
 
     /**
     *
     * @return the id of this output typecontainer
     */
-   public ElectionOutputTypeIds getOutputID() {
-       return outID;
+   public OutputType getOutputType() {
+       return outType;
    }
     
     /**
@@ -110,13 +104,12 @@ public class ElectionTypeContainer {
     public void setUpperBound(int upperBound) {
         this.upperBound = upperBound;
     }
-	
-    /**
-     * tells, if the voting methode was candidates per seats or not
-     * @return true, if it is candidates per seat, else false
-     */
-    public boolean getResultTypeSeats() {
-        return (outID == ElectionOutputTypeIds.CAND_PER_SEAT);
-    }
-    
+
+	public void setInput(InputType inputType) {
+		this.inType = inputType;
+	}
+
+	public void setOutput(OutputType outputType) {
+		this.outType = outputType;
+	}
 }

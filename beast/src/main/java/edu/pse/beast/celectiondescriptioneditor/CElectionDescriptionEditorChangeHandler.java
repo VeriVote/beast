@@ -6,7 +6,7 @@
 package edu.pse.beast.celectiondescriptioneditor;
 
 
-import javax.swing.*;
+import javax.swing.JTextPane;
 
 /**
  * Class for checking whether the loaded CElectionDescription object has been modified since it was loaded.

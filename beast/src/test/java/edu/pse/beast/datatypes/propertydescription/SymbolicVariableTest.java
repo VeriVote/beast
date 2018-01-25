@@ -5,10 +5,12 @@
  */
 package edu.pse.beast.datatypes.propertydescription;
 
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeRep;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import edu.pse.beast.types.InternalTypeContainer;
+import edu.pse.beast.types.InternalTypeRep;
 
 /**
  *

@@ -5,9 +5,11 @@
  */
 package edu.pse.beast.stringresource;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.LinkedList;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

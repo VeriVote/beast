@@ -1,8 +1,8 @@
 package edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes;
 
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-
 import java.util.Arrays;
+
+import edu.pse.beast.types.InternalTypeContainer;
 
 /**
  * Created by holger on 09.03.17.

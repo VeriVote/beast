@@ -1,9 +1,12 @@
 package edu.pse.beast.parametereditor;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
+
 import javax.swing.JSpinner;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

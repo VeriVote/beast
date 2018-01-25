@@ -5,7 +5,7 @@
  */
 package edu.pse.beast.codearea.InputToCode;
 
-import javax.swing.*;
+import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 
 /**

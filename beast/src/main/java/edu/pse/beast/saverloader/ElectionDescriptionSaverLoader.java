@@ -1,12 +1,15 @@
 package edu.pse.beast.saverloader;
 
+import java.util.Arrays;
+import java.util.Map;
+
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
+import edu.pse.beast.pluginhandler.TypeLoader;
 import edu.pse.beast.saverloader.StaticSaverLoaders.SaverLoaderHelper;
-
-import java.util.Arrays;
-import java.util.Map;
+import edu.pse.beast.types.InputType;
+import edu.pse.beast.types.OutputType;
 
 /**
  * Implements SaverLoader methods for creating saveStrings from ElectionDescription objects and vice versa.
@@ -22,21 +25,18 @@ public class ElectionDescriptionSaverLoader implements SaverLoader {
         created += h.getStringForAttr("name", electionDescription.getName());
         created += h.getStringForAttr("votingDeclLine", electionDescription.getVotingDeclLine());
         created += h.getStringForAttr("code", electionDescription.getCode());
-        created += h.getStringForAttr("inputType", electionDescription.getInputType().getInputID().toString());
-        created += h.getStringForAttr("outputType", electionDescription.getOutputType().getOutputID().toString());
+        created += h.getStringForAttr("inputType", electionDescription.getContainer().getInputType().getInputIDinFile());
+        created += h.getStringForAttr("outputType", electionDescription.getContainer().getOutputType().getOutputIDinFile());
         return created;
     }
 
     @Override
     public Object createFromSaveString(String s) throws ArrayIndexOutOfBoundsException {
-        ElectionTemplateHandler electionTemplateHandler = new ElectionTemplateHandler();
         Map<String, String> m = new SaverLoaderHelper().parseSaveString(s);
 
         String name = m.get("name");
-        ElectionTypeContainer inputType = electionTemplateHandler.getById(
-                ElectionTypeContainer.ElectionInputTypeIds.valueOf(m.get("inputType")));
-        ElectionTypeContainer outputType = electionTemplateHandler.getById(
-                ElectionTypeContainer.ElectionOutputTypeIds.valueOf(m.get("outputType")));
+        InputType inputType = TypeLoader.getInByID(m.get("inputType"));
+        OutputType outputType = TypeLoader.getOutByID(m.get("outputType"));
         int votingDecLine = Integer.valueOf(m.get("votingDeclLine"));
         String[] codeArray = m.get("code").split("\n");
 

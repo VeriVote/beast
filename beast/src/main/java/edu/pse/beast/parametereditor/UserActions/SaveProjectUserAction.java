@@ -1,12 +1,12 @@
 package edu.pse.beast.parametereditor.UserActions;
 
+import java.io.File;
+
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.datatypes.Project;
 import edu.pse.beast.parametereditor.ParameterEditor;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.toolbox.UserAction;
-
-import java.io.File;
 
 /**
  * UserAction for saving a project

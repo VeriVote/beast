@@ -1,8 +1,8 @@
 package edu.pse.beast.options.BooleanExpEditorOptions;
 
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
-import edu.pse.beast.options.CodeAreaOptions.CodeAreaOptions;
 import edu.pse.beast.options.Options;
+import edu.pse.beast.options.CodeAreaOptions.CodeAreaOptions;
 
 /**
  * Options subclass for the BooleanExpCodeAreaOptions.

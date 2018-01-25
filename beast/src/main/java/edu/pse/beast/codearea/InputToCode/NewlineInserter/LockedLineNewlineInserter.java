@@ -5,12 +5,12 @@
  */
 package edu.pse.beast.codearea.InputToCode.NewlineInserter;
 
+import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
+
 import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
 import edu.pse.beast.codearea.InputToCode.LineBeginningTabsHandler;
 import edu.pse.beast.codearea.InputToCode.TabInserter;
-
-import javax.swing.*;
-import javax.swing.text.BadLocationException;
 
 /**
  * Inesrts newlines into locked lines by inserting it at their beginning,

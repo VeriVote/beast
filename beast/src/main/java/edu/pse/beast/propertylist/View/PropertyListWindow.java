@@ -1,5 +1,25 @@
 package edu.pse.beast.propertylist.View;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowFocusListener;
+import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
+
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JToolBar;
+
 import edu.pse.beast.booleanexpeditor.UserActions.LoadPropsUserAction;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.propertylist.PropertyList;
@@ -11,17 +31,6 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.RepaintThread;
 import edu.pse.beast.toolbox.SuperFolderFinder;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowFocusListener;
-import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 /**
  * This class is the view of PropertyList.

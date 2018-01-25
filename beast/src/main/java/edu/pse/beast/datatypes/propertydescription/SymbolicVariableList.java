@@ -1,13 +1,13 @@
 package edu.pse.beast.datatypes.propertydescription;
 
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-
-import edu.pse.beast.toolbox.ErrorLogger;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.types.InternalTypeContainer;
 
 /**
  *

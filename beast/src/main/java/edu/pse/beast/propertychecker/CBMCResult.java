@@ -1,17 +1,17 @@
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.FailureExample;
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
-import edu.pse.beast.highlevel.ResultPresenterElement;
-import edu.pse.beast.toolbox.ErrorForUserDisplayer;
-import edu.pse.beast.toolbox.ErrorLogger;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import edu.pse.beast.datatypes.FailureExample;
+import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
+import edu.pse.beast.highlevel.ResultPresenterElement;
+import edu.pse.beast.toolbox.ErrorForUserDisplayer;
+import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.types.InternalTypeContainer;
 
 /**
  * 
@@ -91,81 +91,88 @@ public class CBMCResult extends Result {
 				// the
 				// same name,
 				// and i am a bit worried, that they won't get created properly;
-				List<CBMCResultWrapperMultiArray> votesList;
+				List<CBMCResultWrapperMultiArray> votesList = getElectionDescription().getContainer().getInputType().readVoteList(getResult());
+				List<CBMCResultWrapperSingleArray> singleVotesList = getElectionDescription().getContainer().getInputType().readSingleVoteList(getResult());
+				
 				// this list can be empty, if no voting for seats took place
-				List<CBMCResultWrapperSingleArray> seatsList;
-				List<CBMCResultWrapperSingleArray> singleVotesList;
+				List<CBMCResultWrapperSingleArray> seatsList = getElectionDescription().getContainer().getOutputType().readSeatList(getResult());
+				List<CBMCResultWrapperLong> elect = getElectionDescription().getContainer().getOutputType().readElect(getResult());
+				
 
+				toReturn = new FailureExample(getElectionDescription(), singleVotesList, votesList, null, seatsList,
+						getNumCandidates(), getNumSeats(), getNumVoters());
+				
 				// it is voting for seats, and not for candidates
 
 				if (getElectionDescription().getOutputType().getResultTypeSeats()) {
 
-					switch (getElectionDescription().getInputType().getInputID()) {
-
-					// get the fitting type and extract the values out of it,
-					// because we
-					// know the format of the values
-					// for each specific type
-					case APPROVAL:
-
-						votesList = readTwoDimVar("votes", getResult());
-
-						// read all the variables with form electN[] that are
-						// arrays, to
-						// extract the seats that
-						// got chosen
-						seatsList = readOneDimVar("elect", getResult());
-
-						toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
-								getNumCandidates(), getNumSeats(), getNumVoters());
-						break;
-					case PREFERENCE:
-
-						votesList = readTwoDimVar("votes", getResult());
-
-						// read all the variables with form electN[] that are
-						// arrays, to
-						// extract the seats that
-						// got chosen
-						seatsList = readOneDimVar("elect", getResult());
-
-						toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
-								getNumCandidates(), getNumSeats(), getNumVoters());
-						break;
-					case SINGLE_CHOICE:
-
-						singleVotesList = readOneDimVar("votes", getResult());
-
-						// read all the variables with form electN[] that are
-						// arrays, to
-						// extract the seats that
-						// got chosen
-						seatsList = readOneDimVar("elect", getResult());
-
-						toReturn = new FailureExample(getElectionDescription(), singleVotesList, null, null, seatsList,
-								getNumCandidates(), getNumSeats(), getNumVoters());
-						break;
-					case WEIGHTED_APPROVAL:
-
-						votesList = readTwoDimVar("votes", getResult());
-
-						// read all the variables with form electN[] that are
-						// arrays, to
-						// extract the seats that
-						// got chosen
-						seatsList = readOneDimVar("elect", getResult());
-
-						toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
-								getNumCandidates(), getNumSeats(), getNumVoters());
-						break;
-					default:
-						ErrorForUserDisplayer.displayError(
-								"This votingtype you are using hasn't been implemented yet to be displayed. "
-										+ "Please do so in the class CBMC_Result");
-						this.setError(
-								"This votingtype hasn't been implemented yet please do so in the class CBMC_Result");
-						return null;
-					}
+//					switch (getElectionDescription().getInputType().getInputID()) {
+//
+//					
+//					// get the fitting type and extract the values out of it,
+//					// because we
+//					// know the format of the values
+//					// for each specific type
+//					case APPROVAL:
+//
+//						votesList = readTwoDimVar("votes", getResult());
+//
+//						// read all the variables with form electN[] that are
+//						// arrays, to
+//						// extract the seats that
+//						// got chosen
+//						seatsList = readOneDimVar("elect", getResult());
+//
+//						toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
+//								getNumCandidates(), getNumSeats(), getNumVoters());
+//						break;
+//					case PREFERENCE:
+//
+//						votesList = readTwoDimVar("votes", getResult());
+//
+//						// read all the variables with form electN[] that are
+//						// arrays, to
+//						// extract the seats that
+//						// got chosen
+//						seatsList = readOneDimVar("elect", getResult());
+//
+//						toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
+//								getNumCandidates(), getNumSeats(), getNumVoters());
+//						break;
+//					case SINGLE_CHOICE:
+//
+//						singleVotesList = readOneDimVar("votes", getResult());
+//
+//						// read all the variables with form electN[] that are
+//						// arrays, to
+//						// extract the seats that
+//						// got chosen
+//						seatsList = readOneDimVar("elect", getResult());
+//
+//						toReturn = new FailureExample(getElectionDescription(), singleVotesList, null, null, seatsList,
+//								getNumCandidates(), getNumSeats(), getNumVoters());
+//						break;
+//					case WEIGHTED_APPROVAL:
+//
+//						votesList = readTwoDimVar("votes", getResult());
+//
+//						// read all the variables with form electN[] that are
+//						// arrays, to
+//						// extract the seats that
+//						// got chosen
+//						seatsList = readOneDimVar("elect", getResult());
+//
+//						toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
+//								getNumCandidates(), getNumSeats(), getNumVoters());
+//						break;
+//					default:
+//						ErrorForUserDisplayer.displayError(
+//								"This votingtype you are using hasn't been implemented yet to be displayed. "
+//										+ "Please do so in the class CBMC_Result");
+//						this.setError(
+//								"This votingtype hasn't been implemented yet please do so in the class CBMC_Result");
+//						return null;
+//					}
 
 				} else {
 

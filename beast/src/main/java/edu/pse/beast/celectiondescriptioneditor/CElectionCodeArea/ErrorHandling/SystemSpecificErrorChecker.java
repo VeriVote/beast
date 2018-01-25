@@ -1,9 +1,5 @@
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling;
 
-import edu.pse.beast.codearea.ErrorHandling.CodeError;
-
-import edu.pse.beast.toolbox.*;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +9,13 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
 import org.apache.commons.io.FileUtils;
+
+import edu.pse.beast.codearea.ErrorHandling.CodeError;
+import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.toolbox.FileLoader;
+import edu.pse.beast.toolbox.FileSaver;
+import edu.pse.beast.toolbox.SuperFolderFinder;
+import edu.pse.beast.toolbox.ThreadedBufferedReader;
 
 /**
  * this is the superclass for system specific error checkers 

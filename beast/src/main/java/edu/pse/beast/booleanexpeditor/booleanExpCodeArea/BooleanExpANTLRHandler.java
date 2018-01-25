@@ -1,14 +1,16 @@
 package edu.pse.beast.booleanexpeditor.booleanExpCodeArea;
 
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
 
 /**
  * Class that uses precompiled ANTLR classes to analyse the code in styledDocument.

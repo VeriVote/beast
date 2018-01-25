@@ -1,8 +1,6 @@
 package edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes;
 
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpNodeVisitor;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BinaryRelationshipNode;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BooleanExpressionNode;
 
 /**
  * 

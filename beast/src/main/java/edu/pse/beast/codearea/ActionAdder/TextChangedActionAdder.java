@@ -5,20 +5,21 @@
  */
 package edu.pse.beast.codearea.ActionAdder;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.JTextPane;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.BadLocationException;
+
+import edu.pse.beast.codearea.SaveTextBeforeRemove;
+import edu.pse.beast.codearea.StoppedTypingContinuouslyListener;
+import edu.pse.beast.codearea.StoppedTypingContinuouslyMessager;
 import edu.pse.beast.codearea.Actionlist.Actionlist;
 import edu.pse.beast.codearea.Actionlist.TextAction.TextAddedAction;
 import edu.pse.beast.codearea.Actionlist.TextAction.TextDelta;
 import edu.pse.beast.codearea.Actionlist.TextAction.TextRemovedAction;
-import edu.pse.beast.codearea.SaveTextBeforeRemove;
-import edu.pse.beast.codearea.StoppedTypingContinuouslyListener;
-import edu.pse.beast.codearea.StoppedTypingContinuouslyMessager;
-
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.BadLocationException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * This class creates TextRemoved and TextAddedActions and adds them to the

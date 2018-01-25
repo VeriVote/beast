@@ -5,8 +5,10 @@
  */
 package edu.pse.beast.codearea.Autocompletion;
 
-import javax.swing.*;
 import java.awt.event.KeyEvent;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 
 /**
  *

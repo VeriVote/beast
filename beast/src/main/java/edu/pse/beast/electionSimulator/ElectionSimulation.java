@@ -10,7 +10,6 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,7 +17,6 @@ import javax.swing.JTextField;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
-import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer.ElectionOutputTypeIds;
 import edu.pse.beast.electionSimulator.Model.ElectionSimulationModel;
 import edu.pse.beast.electionSimulator.Model.RowOfValues;
 import edu.pse.beast.electionSimulator.View.ElectionSimulationWindow;
@@ -27,7 +25,6 @@ import edu.pse.beast.highlevel.BEASTCommunicator;
 import edu.pse.beast.highlevel.PSECentralObjectProvider;
 import edu.pse.beast.propertychecker.UnprocessedCBMCResult;
 import edu.pse.beast.stringresource.StringLoaderInterface;
-import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
 import edu.pse.beast.toolbox.SuperFolderFinder;
@@ -37,9 +34,7 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 
 	private final String pathToTempFolder = "/core/c_tempfiles/";
 
-	private static ElectionTypeContainer inputContainer;
-
-	private static ElectionTypeContainer outputContainer;
+	private static ElectionTypeContainer container;
 
 	private PSECentralObjectProvider centralObjectProvider;
 
@@ -74,12 +69,10 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 
 	public void init(PSECentralObjectProvider centralObjectProvider) {
 		this.centralObjectProvider = centralObjectProvider;
-		this.inputContainer = centralObjectProvider.getElectionDescriptionSource().getElectionDescription()
-				.getInputType();
-		this.outputContainer = centralObjectProvider.getElectionDescriptionSource().getElectionDescription()
-				.getOutputType();
-		this.model = new ElectionSimulationModel(inputContainer);
-		this.view = new ElectionSimulationWindow(sli, inputContainer, this, model);
+		this.container = centralObjectProvider.getElectionDescriptionSource().getElectionDescription()
+				.getContainer();
+		this.model = new ElectionSimulationModel(container);
+		this.view = new ElectionSimulationWindow(sli, container, this, model);
 
 		centralObjectProvider.getCElectionEditor().addListener(this);
 
@@ -180,7 +173,7 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 				}
 			} else if (e.getSource() == view.addVoter) {
 				model.setAmountVoters(model.getAmountVoters() + 1);
-				model.getRows().add(new RowOfValues(model, inputContainer, model.getAmountCandidates(),
+				model.getRows().add(new RowOfValues(model, container, model.getAmountCandidates(),
 						model.getElementWidth(), model.getElementHeight(), model.getWidthMultiplier()));
 				for (Iterator<RowOfValues> iterator = model.getRows().iterator(); iterator.hasNext();) {
 					RowOfValues row = (RowOfValues) iterator.next();
@@ -227,11 +220,9 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 	 * models which are used
 	 */
 	private void electionTypeChanged() {
-		this.inputContainer = centralObjectProvider.getElectionDescriptionSource().getElectionDescription()
-				.getInputType();
-		this.outputContainer = centralObjectProvider.getElectionDescriptionSource().getElectionDescription()
-				.getOutputType();
-		model.changeContainer(inputContainer);
+		this.container = centralObjectProvider.getElectionDescriptionSource().getElectionDescription()
+				.getContainer();
+		model.changeContainer(container);
 	}
 
 	/**
@@ -382,8 +373,7 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 						if (finalMarginResult == null) {
 							System.err.println("error, no margin result");
 						} else {
-							if (outputContainer
-									.getOutputID() == ElectionTypeContainer.ElectionOutputTypeIds.CAND_OR_UNDEF) {
+							if (container.getOutputType().isOutputOneCandidate()) {
 								System.out.println("winner before: " + winnerResults.get(0));
 							} else {
 
@@ -414,8 +404,7 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 									System.out.println("_________________");
 								}
 
-								if (outputContainer
-										.getOutputID() == ElectionTypeContainer.ElectionOutputTypeIds.CAND_OR_UNDEF) {
+								if (container.getOutputType().isOutputOneCandidate()) {
 									System.out.println("new winner: " + finalMarginResult.getNewResult()[0]);
 								} else {
 
@@ -648,29 +637,23 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 
 	private List<String> generateMarginComputationCode(int[][] votingData, int margin, List<Integer> origResult) {
 		// if we vote for seats, we get the result as an array
-		boolean multiOut = (outputContainer.getOutputID() == ElectionOutputTypeIds.CAND_PER_SEAT);
-
+		
+		boolean multiOut = !container.getOutputType().isOutputOneCandidate();		
+		
 		// this list will hold all the code in for later
 		List<String> code = new ArrayList<String>();
 
-		// add the headers CBMC needs;
-		code.add("#include <stdlib.h>");
-		code.add("#include <stdint.h>");
-		code.add("#include <assert.h>");
-		code.add("");
-		code.add("unsigned int nondet_uint();");
-		code.add("int nondet_int();");
-		code.add("");
-		code.add("#define assert2(x, y) __CPROVER_assert(x, y)");
-		code.add("#define assume(x) __CPROVER_assume(x)");
-		code.add("");
+		code = container.getInputType().addCheckerSpecificHeaders(code);
 
 		// define some pre processor values
 		code.add("#ifndef V\n #define V " + votingData.length + "\n #endif");
 		code.add("#ifndef C\n #define C " + votingData[0].length + "\n #endif");
 		code.add("#ifndef S\n #define S " + votingData[0].length + "\n #endif");
+		
 		// we add the margin which will get computed by the model checker
+		
 		code.add("#ifndef MARGIN\n #define MARGIN " + margin + "\n #endif");
+		
 		// we also add the original result, which is calculated by compiling the
 		// program and running it
 
@@ -689,234 +672,12 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 		// add the verify methode:
 		// taken and adjusted from the paper:
 		// https://formal.iti.kit.edu/~beckert/pub/evoteid2016.pdf
+		
 		code.add("void verify() {");
-		// code.add("int new_votes1[V], diff[V], total_diff, pos_diff;");
-
 		code.add("int total_diff = 0;");
 
-		switch (inputContainer.getInputID()) {
-		case SINGLE_CHOICE:
-			code.add("int new_votes1[V];");
-			code.add("for (int i = 0; i < V; i++) {"); // go over all voters
-			code.add("int changed = nondet_int();"); // determine, if we want to
-														// changed votes for
-														// this
-														// voter
-			code.add("assume(0 <= changed);");
-			code.add("assume(changed <= 1);");
-			code.add("if(changed) {");
-			code.add("total_diff++;"); // if we changed the vote, we keep track
-										// of it
-			code.add("new_votes1[i] = !ORIG_VOTES[i];"); // flip the vote (0 ->
-															// 1 |
-															// 1 -> 0)
-			code.add("} else {");
-			code.add("new_votes1[i] = ORIG_VOTES[i];");
-			code.add("}");
-			code.add("}");
-			code.add("assume(total_diff <= MARGIN);"); // no more changes than
-														// margin allows
-			if (multiOut) {
-				code.add("int *tmp_result = voting(new_votes1);");
-
-				code.add("int new_result1[S];"); // create the array where the
-													// new seats will get saved
-
-				code.add("for (int i = 0; i < S; i++) {"); // iterate over the
-															// seat array, and
-															// fill it
-				// we do this, so our cbmc parser can read out the value of the
-				// array
-				code.add("new_result1[i] = tmp_result[i];");
-				code.add("}"); // close the for loop
-
-				code.add("for (int i = 0; i < S; i++) {"); // iterate over all
-															// candidates /
-															// seats and assert
-															// their equality
-				code.add("assert(new_result1[i] == ORIG_RESULT[i]);");
-				code.add("}"); // end of the for loop
-			} else {
-				code.add("int new_result1 = voting(new_votes1);");
-				code.add("assert(new_result1 == ORIG_RESULT);");
-			}
-			code.add("}"); // end of the function
-			break;
-		case APPROVAL:
-
-			code.add("int new_votes1[V][C];");
-
-			code.add("for (int i = 0; i < V; i++) {"); // go over all voters
-			code.add("for (int j = 0; i < C; i++) {"); // go over all candidates
-			code.add("int changed = nondet_int();"); // determine, if we want to
-														// changed votes for
-														// this
-														// voter - candidate
-														// pair
-			code.add("assume(0 <= changed);");
-			code.add("assume(changed <= 1);");
-			code.add("if(changed) {");
-			code.add("total_diff++;"); // if we changed the vote, we keep track
-										// of it
-			code.add("new_votes1[i][j] = !ORIG_VOTES[i][j];"); // flip the vote
-																// (0 -> 1 |
-			// 1 -> 0)
-			code.add("} else {");
-			code.add("new_votes1[i][j] = ORIG_VOTES[i][j];");
-			code.add("}");
-			code.add("}");
-			code.add("}"); // end of the double for loop
-			code.add("assume(total_diff <= MARGIN);"); // no more changes than
-														// margin allows
-			if (multiOut) {
-				code.add("int *tmp_result = voting(new_votes1);");
-
-				code.add("int new_result1[S];"); // create the array where the
-													// new seats will get saved
-
-				code.add("for (int i = 0; i < S; i++) {"); // iterate over the
-															// seat array, and
-															// fill it
-				// we do this, so our cbmc parser can read out the value of the
-				// array
-				code.add("new_result1[i] = tmp_result[i];");
-				code.add("}"); // close the for loop
-
-				code.add("for (int i = 0; i < S; i++) {"); // iterate over all
-															// candidates /
-															// seats
-				code.add("assert(new_result1[i] == ORIG_RESULT[i]);");
-				code.add("}"); // end of the for loop
-			} else {
-				code.add("int new_result1 = voting(new_votes1);");
-				code.add("assert(new_result1 == ORIG_RESULT);");
-			}
-			code.add("}"); // end of the function
-			break;
-		case WEIGHTED_APPROVAL:
-
-			code.add("int new_votes1[V][C];");
-
-			code.add("for (int i = 0; i < V; i++) {"); // go over all voters
-			code.add("for (int j = 0; i < C; i++) {"); // go over all candidates
-			code.add("int changed = nondet_int();"); // determine, if we want to
-														// changed votes for
-														// this
-														// voter - candidate
-														// pair
-			code.add("assume(0 <= changed);");
-			code.add("assume(changed <= 1);");
-			code.add("if(changed) {");
-			code.add("total_diff++;"); // if we changed the vote, we keep track
-										// of it
-			code.add("new_votes1[i][j] = nondet_int();");
-			code.add("assume(new_votes1[i][j] != ORIG_VOTES[i][j]);"); // set
-																		// the
-																		// vote
-																		// to
-			// (0-100), but
-			// different
-			// from
-			// original
-			code.add("assume(0 <= new_votes1[i][j]);");
-			code.add("assume(new_votes1[i][j] <= 100);");
-			code.add("} else {");
-			code.add("new_votes1[i][j] = ORIG_VOTES[i][j];");
-			code.add("}");
-			code.add("}");
-			code.add("}"); // end of the double for loop
-			code.add("assume(total_diff <= MARGIN);"); // no more changes than
-														// margin allows
-			if (multiOut) {
-				code.add("int *tmp_result = voting(new_votes1);");
-
-				code.add("int new_result1[S];"); // create the array where the
-													// new seats will get saved
-
-				code.add("for (int i = 0; i < S; i++) {"); // iterate over the
-															// seat array, and
-															// fill it
-				// we do this, so our cbmc parser can read out the value of the
-				// array
-				code.add("new_result1[i] = tmp_result[i];");
-				code.add("}"); // close the for loop
-
-				code.add("for (int i = 0; i < S; i++) {"); // iterate over all
-															// candidates /
-															// seats
-				code.add("assert(new_result1[i] == ORIG_RESULT[i]);");
-				code.add("}"); // end of the for loop
-			} else {
-				code.add("int new_result1 = voting(new_votes1);");
-				code.add("assert(new_result1 == ORIG_RESULT);");
-			}
-			code.add("}"); // end of the function
-			break;
-		case PREFERENCE:
-			// TODO fix
-			code.add("int new_votes1[V][C];");
-
-			code.add("for (int i = 0; i < V; i++) {"); // go over all voters
-			code.add("for (int j = 0; i < C; i++) {"); // go over all candidates
-			code.add("int changed = nondet_int();"); // determine, if we want to
-														// changed votes for
-														// this
-														// voter - candidate
-														// pair
-			code.add("assume(0 <= changed);");
-			code.add("assume(changed <= 1);");
-			code.add("if(changed) {");
-			code.add("total_diff++;"); // if we changed the vote, we keep track
-										// of it
-			code.add("new_votes1[i][j] = nondet_int();");
-			code.add("assume(new_votes1[i][j] != ORIG_VOTES[i][j]);"); // set
-																		// the
-																		// vote
-																		// to
-			// (0-100), but
-			// different
-			// from
-			// original
-			code.add("assume(0 <= new_votes1[i][j]);");
-			code.add("assume(new_votes1[i][j] <= 100);");
-			code.add("} else {");
-			code.add("new_votes1[i][j] = ORIG_VOTES[i][j];");
-			code.add("}");
-			code.add("}");
-			code.add("}"); // end of the double for loop
-			code.add("assume(total_diff <= MARGIN);"); // no more changes than
-														// margin allows
-			if (multiOut) {
-				code.add("int *tmp_result = voting(new_votes1);");
-
-				code.add("int new_result1[S];"); // create the array where the
-													// new seats will get saved
-
-				code.add("for (int i = 0; i < S; i++) {"); // iterate over the
-															// seat array, and
-															// fill it
-				// we do this, so our cbmc parser can read out the value of the
-				// array
-				code.add("new_result1[i] = tmp_result[i];");
-				code.add("}"); // close the for loop
-
-				code.add("for (int i = 0; i < S; i++) {"); // iterate over all
-															// candidates /
-															// seats
-				code.add("assert(new_result1[i] == ORIG_RESULT[i]);");
-				code.add("}"); // end of the for loop
-			} else {
-				code.add("int new_result1 = voting(new_votes1);");
-				code.add("assert(new_result1 == ORIG_RESULT);");
-			}
-			code.add("}"); // end of the function
-			break;
-
-		default:
-			ErrorForUserDisplayer.displayError(
-					"the current input type was not found. Please extend the methode \"generateMarginComputationCode\" in the class ElectionSimulation ");
-			break;
-		}
+		code = container.getInputType().addVerifyMethod(code, multiOut);
+		
 
 		// not used lines ( I think) //TODO if they really aren't needed, delete
 		// them
@@ -932,7 +693,7 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 
 		// add the main methode
 		code.add("int main() {");
-		code.add("verify();");
+		code.add("\tverify();");
 		code.add("}");
 
 		return code;
@@ -942,28 +703,8 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 
 		// compile the input data as an integer array for c
 		// and save the lines in this list
-
-		boolean twoDim = false;
-
-		switch (inputContainer.getInputID()) {
-		case SINGLE_CHOICE:
-			twoDim = false;
-			break;
-		case APPROVAL:
-			twoDim = true;
-			break;
-		case WEIGHTED_APPROVAL:
-			twoDim = true;
-			break;
-		case PREFERENCE:
-			twoDim = true;
-			break;
-
-		default:
-			ErrorForUserDisplayer.displayError(
-					"the current input type was not found. Please extend the methode \"getVotingResultCode\" in the class ElectionSimulation ");
-			break;
-		}
+		
+		boolean twoDim = container.getInputType().isTwoDim();
 
 		List<String> dataAsArray = new ArrayList<String>();
 

@@ -5,11 +5,16 @@
  */
 package edu.pse.beast.booleanexpeditor.View;
 
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
+import javax.swing.JTextPane;
+import javax.swing.JToolBar;
+import javax.swing.ListSelectionModel;
+import javax.swing.WindowConstants;
+
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.RepaintThread;
-
-import javax.swing.*;
 
 /**
  * The JFrame that serves as the View for the booleanexpeditor Package.

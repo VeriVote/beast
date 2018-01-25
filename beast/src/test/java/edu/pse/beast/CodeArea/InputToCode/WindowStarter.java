@@ -5,7 +5,7 @@
  */
 package edu.pse.beast.CodeArea.InputToCode;
 
-import javax.swing.*;
+import javax.swing.JFrame;
 
 /**
  *

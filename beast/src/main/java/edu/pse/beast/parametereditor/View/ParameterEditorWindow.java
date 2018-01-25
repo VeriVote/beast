@@ -1,5 +1,14 @@
 package edu.pse.beast.parametereditor.View;
 
+import java.awt.BorderLayout;
+import java.awt.Component;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JSpinner;
+
 import edu.pse.beast.highlevel.CheckStatusDisplay;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.ParameterEditorStringResProvider;
@@ -7,9 +16,6 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.RepaintThread;
 import edu.pse.beast.toolbox.SuperFolderFinder;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * Window which takes all the user input for the parameters used by CBMC. It is

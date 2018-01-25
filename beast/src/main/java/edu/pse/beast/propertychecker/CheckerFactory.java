@@ -1,19 +1,16 @@
 package edu.pse.beast.propertychecker;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.electionSimulator.ElectionSimulation;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.toolbox.ErrorLogger;
-import edu.pse.beast.toolbox.FileLoader;
-import edu.pse.beast.toolbox.FileSaver;
-import edu.pse.beast.toolbox.SuperFolderFinder;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  *
@@ -167,6 +164,12 @@ public abstract class CheckerFactory implements Runnable {
 				}
 
 				CBMCResult dummyResult = new CBMCResult();
+				
+				
+				
+				electionDescSrc.getElectionDescription().getContainer().getOutputType()
+				
+				
 
 				List<Long> origResult = new ArrayList<Long>();
 

@@ -1,15 +1,15 @@
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.toolbox.ErrorForUserDisplayer;
-import edu.pse.beast.toolbox.ErrorLogger;
-import edu.pse.beast.toolbox.FileLoader;
-import edu.pse.beast.toolbox.SuperFolderFinder;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import edu.pse.beast.toolbox.ErrorForUserDisplayer;
+import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.toolbox.FileLoader;
+import edu.pse.beast.toolbox.SuperFolderFinder;
 
 public class LinuxProcess extends CBMCProcess {
 

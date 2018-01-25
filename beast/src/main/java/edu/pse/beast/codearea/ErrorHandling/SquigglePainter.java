@@ -6,8 +6,16 @@
 package edu.pse.beast.codearea.ErrorHandling;
 
 
-import javax.swing.text.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.Shape;
+
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.JTextComponent;
+import javax.swing.text.Position;
+import javax.swing.text.View;
 /*
  *  Implements a simple highlight painter that renders a rectangle around the
  *  area to be highlighted.

@@ -1,13 +1,14 @@
 package edu.pse.beast.SaverLoader;
 
-import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
-import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
-import edu.pse.beast.saverloader.StaticSaverLoaders.ElectionCheckParameterSaverLoader;
+import java.util.Arrays;
+import java.util.concurrent.TimeUnit;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
+import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
+import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
+import edu.pse.beast.saverloader.StaticSaverLoaders.ElectionCheckParameterSaverLoader;
 
 /**
  * JUnit Testclass for saverloader.StaticSaverLoaders.ElectionCheckParameterSaverLoader.

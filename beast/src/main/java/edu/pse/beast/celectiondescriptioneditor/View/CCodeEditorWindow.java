@@ -5,11 +5,15 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.View;
 
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.JToolBar;
+
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.RepaintThread;
-
-import javax.swing.*;
 
 /**
  * @author Holger

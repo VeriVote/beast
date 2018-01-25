@@ -5,15 +5,16 @@
  */
 package edu.pse.beast.codearea.UserActions;
 
-import edu.pse.beast.codearea.CodeArea;
-import edu.pse.beast.toolbox.UserAction;
-
-import javax.swing.text.BadLocationException;
-import java.awt.*;
+import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.text.BadLocationException;
+
+import edu.pse.beast.codearea.CodeArea;
+import edu.pse.beast.toolbox.UserAction;
 
 /**
  * This useraction takes the selected text in a given codearea and copies it

@@ -1,11 +1,12 @@
 package edu.pse.beast.SaverLoader;
 
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeRep;
-import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
-import edu.pse.beast.saverloader.StaticSaverLoaders.SymbolicVarListSaverLoader;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
+import edu.pse.beast.saverloader.StaticSaverLoaders.SymbolicVarListSaverLoader;
+import edu.pse.beast.types.InternalTypeContainer;
+import edu.pse.beast.types.InternalTypeRep;
 
 /**
  * JUnit Testclass for saverloader.StaticSaverLoaders.SymbolicVarListSaverLoader.

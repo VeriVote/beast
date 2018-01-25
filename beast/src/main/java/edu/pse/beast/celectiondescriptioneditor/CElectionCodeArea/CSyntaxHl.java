@@ -5,12 +5,12 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea;
 
+import java.awt.Color;
+import java.util.ArrayList;
+
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CAntlrHandler;
 import edu.pse.beast.codearea.SyntaxHL.RegexAndColor;
 import edu.pse.beast.codearea.SyntaxHL.SyntaxHL;
-
-import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * Sets the regular expressions to be highlighted by a syntaxhighlighter for the c

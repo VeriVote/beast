@@ -5,9 +5,9 @@
  */
 package edu.pse.beast.datatypes.propertydescription;
 
-import edu.pse.beast.datatypes.NameInterface;
-
 import java.util.List;
+
+import edu.pse.beast.datatypes.NameInterface;
 
 /**
  *

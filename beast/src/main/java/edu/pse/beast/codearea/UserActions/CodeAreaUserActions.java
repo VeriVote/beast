@@ -5,10 +5,10 @@
  */
 package edu.pse.beast.codearea.UserActions;
 
+import java.util.ArrayList;
+
 import edu.pse.beast.codearea.CodeArea;
 import edu.pse.beast.toolbox.UserAction;
-
-import java.util.ArrayList;
 
 /**
  * This class creates all useractions which can be performed on a simple 

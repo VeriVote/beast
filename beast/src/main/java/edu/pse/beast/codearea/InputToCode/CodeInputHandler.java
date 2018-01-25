@@ -5,8 +5,9 @@
  */
 package edu.pse.beast.codearea.InputToCode;
 
-import javax.swing.text.BadLocationException;
 import java.awt.event.KeyEvent;
+
+import javax.swing.text.BadLocationException;
 
 /**
  * This class is used by the userinputhandler to pass user input to the 

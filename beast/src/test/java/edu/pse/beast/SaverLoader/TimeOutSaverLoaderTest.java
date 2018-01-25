@@ -1,11 +1,12 @@
 package edu.pse.beast.SaverLoader;
 
-import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
-import edu.pse.beast.saverloader.StaticSaverLoaders.TimeOutSaverLoader;
+import java.util.concurrent.TimeUnit;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.concurrent.TimeUnit;
+import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
+import edu.pse.beast.saverloader.StaticSaverLoaders.TimeOutSaverLoader;
 
 /**
  * JUnit Testclass for saverloader.StaticSaverLoaders.TimeOutSaverLoader.

@@ -1,14 +1,15 @@
 package edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST;
 
-import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeRep;
-import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.List;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
+import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
+import edu.pse.beast.types.InternalTypeContainer;
+import edu.pse.beast.types.InternalTypeRep;
 
 /**
  * Created by holger on 14.03.17.

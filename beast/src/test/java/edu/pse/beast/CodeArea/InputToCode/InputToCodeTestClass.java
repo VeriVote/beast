@@ -5,13 +5,18 @@
  */
 package edu.pse.beast.CodeArea.InputToCode;
 
-import edu.pse.beast.codearea.Actionlist.Actionlist;
-import edu.pse.beast.codearea.InputToCode.*;
-import edu.pse.beast.codearea.SaveTextBeforeRemove;
-
-import javax.swing.text.BadLocationException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.text.BadLocationException;
+
+import edu.pse.beast.codearea.SaveTextBeforeRemove;
+import edu.pse.beast.codearea.Actionlist.Actionlist;
+import edu.pse.beast.codearea.InputToCode.CodeInputHandler;
+import edu.pse.beast.codearea.InputToCode.OpenCloseCharList;
+import edu.pse.beast.codearea.InputToCode.ShortcutHandler;
+import edu.pse.beast.codearea.InputToCode.UserInputHandler;
+import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
 /**
  *
  * @author Holger-Desktop

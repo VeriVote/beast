@@ -5,11 +5,12 @@
  */
 package edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder;
 
+import org.antlr.v4.runtime.ParserRuleContext;
+
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.TypeExpression;
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
-import org.antlr.v4.runtime.ParserRuleContext;
+import edu.pse.beast.types.InternalTypeContainer;
 
 /**
  *

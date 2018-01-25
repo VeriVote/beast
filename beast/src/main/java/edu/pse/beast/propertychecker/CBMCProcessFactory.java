@@ -1,15 +1,18 @@
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.electionSimulator.ElectionSimulation;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.options.ParametereditorOptions.ParametereditorOptions;
-import edu.pse.beast.toolbox.*;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import edu.pse.beast.toolbox.ErrorForUserDisplayer;
+import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.toolbox.FileLoader;
+import edu.pse.beast.toolbox.FileSaver;
+import edu.pse.beast.toolbox.SuperFolderFinder;
 
 public class CBMCProcessFactory extends CheckerFactory {
     

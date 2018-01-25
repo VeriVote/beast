@@ -1,8 +1,8 @@
 package edu.pse.beast.datatypes.booleanExpAST;
 
-import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BooleanExpressionNode;
-
 import java.util.ArrayList;
+
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BooleanExpressionNode;
 /**
  * 
  * @author Lukas, Holger

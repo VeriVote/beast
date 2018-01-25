@@ -1,6 +1,6 @@
 package edu.pse.beast.propertylist.ViewAutomated;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.awt.AWTException;
 

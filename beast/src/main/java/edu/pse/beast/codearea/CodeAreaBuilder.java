@@ -5,17 +5,22 @@
  */
 package edu.pse.beast.codearea;
 
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+
 import edu.pse.beast.codearea.ActionAdder.TextChangedActionAdder;
 import edu.pse.beast.codearea.Actionlist.Actionlist;
 import edu.pse.beast.codearea.Autocompletion.AutocompletionController;
 import edu.pse.beast.codearea.ErrorHandling.ErrorController;
 import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
-import edu.pse.beast.codearea.InputToCode.*;
+import edu.pse.beast.codearea.InputToCode.CodeInputHandler;
+import edu.pse.beast.codearea.InputToCode.OpenCloseCharList;
+import edu.pse.beast.codearea.InputToCode.ShortcutHandler;
+import edu.pse.beast.codearea.InputToCode.UserInputHandler;
+import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
 import edu.pse.beast.codearea.SyntaxHL.SyntaxHL;
 import edu.pse.beast.codearea.UserActions.CodeAreaUserActions;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
-
-import javax.swing.*;
 
 /**
  * This class builds a codearea and inititalizes all the classes needed by the

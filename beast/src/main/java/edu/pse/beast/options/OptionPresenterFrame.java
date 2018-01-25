@@ -1,11 +1,17 @@
 
 package edu.pse.beast.options;
 
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+
 import edu.pse.beast.saverloader.OptionSaverLoader.OptionsSaverLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * A JFrame subclass in with which OptionElement objects can be presented to the user.

@@ -5,13 +5,19 @@
  */
 package edu.pse.beast.CodeArea.InputToCode;
 
-import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
-import org.junit.*;
+import static org.junit.Assert.assertEquals;
 
-import javax.swing.*;
 import java.util.ArrayList;
 
-import static org.junit.Assert.assertEquals;
+import javax.swing.JTextPane;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
 
 /**
  *

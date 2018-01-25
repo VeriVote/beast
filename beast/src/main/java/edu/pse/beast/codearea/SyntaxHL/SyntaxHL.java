@@ -1,8 +1,9 @@
 package edu.pse.beast.codearea.SyntaxHL;
 
-import javax.swing.*;
-import javax.swing.text.AbstractDocument;
 import java.util.ArrayList;
+
+import javax.swing.JTextPane;
+import javax.swing.text.AbstractDocument;
 
 /**
  * Instances of this class are able to apply syntax highlighting to the given

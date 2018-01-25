@@ -14,7 +14,6 @@ import edu.pse.beast.highlevel.PSECentralObjectProvider;
 import edu.pse.beast.options.OptionsInterface;
 import edu.pse.beast.options.ParametereditorOptions.LanguageOptions;
 import edu.pse.beast.parametereditor.ParameterEditor;
-import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.saverloader.SaverLoaderInterface;
 import edu.pse.beast.stringresource.StringLoaderInterface;
