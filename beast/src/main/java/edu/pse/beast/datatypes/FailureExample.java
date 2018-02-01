@@ -43,9 +43,11 @@ public class FailureExample {
 
 	private int finalMargin;
 
-	private List<Long> origWinner;
+	private List<String> origWinner;
 
-	private List<List<Long>> newVotes;
+	private List<List<String>> newVotes;
+	
+	private List<String> origVotes;
 
 	/**
 	 * Creates the FailureExample from the returned data of CBMC. If specific data
@@ -237,25 +239,24 @@ public class FailureExample {
 		this.hasFinalMargin = hasFinalMargin;
 	}
 
-	public void setOrigVoting(List<List<Long>> origVoting) {
-		// TODO Auto-generated method stub
-
-	}
-
 	public void setFinalMargin(int finalMargin) {
 		this.finalMargin = finalMargin;
 	}
 
-	public void setOrigWinner(List<Long> origWinner) {
+	public void setOrigWinner(List<String> origWinner) {
 		this.origWinner = origWinner;
 	}
 
-	public void setNewVotes(List<List<Long>> newVotes) {
+	public void setNewVotes(List<List<String>> newVotes) {
 		this.newVotes = newVotes;
 	}
 
-	public void setNewWinner(List<Long> newWinner) {
+	public void setNewWinner(List<String> newWinner) {
 		this.origWinner = newWinner;
+	}
+
+	public void setOrigVoting(List<List<String>> origVoting) {
+		this.origVotes = origVotes;
 	}
 
 }

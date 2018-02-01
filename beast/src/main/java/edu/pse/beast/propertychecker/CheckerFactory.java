@@ -163,40 +163,12 @@ public abstract class CheckerFactory implements Runnable {
 					}
 				}
 
-				CBMCResult dummyResult = new CBMCResult();
-				
-				
-				
-				electionDescSrc.getElectionDescription().getContainer().getOutputType()
-				
-				
+			//	CBMCResult dummyResult = new CBMCResult();
 
-				List<Long> origResult = new ArrayList<Long>();
+				List<String> origResult = new ArrayList<String>();
 
-				switch (electionDescSrc.getElectionDescription().getOutputType().getOutputID()) {
-				case CAND_OR_UNDEF:
+				origResult = getElectionDescription().getContainer().getOutputType().getCodeToRunMargin(origResult, lastResult);
 
-					List<CBMCResultWrapperLong> tmpResultLong = dummyResult.readLongs("elect", lastResult);
-
-					origResult.add(tmpResultLong.get(0).getValue());
-
-					break;
-
-				case CAND_PER_SEAT:
-
-					List<CBMCResultWrapperSingleArray> tmpResultOneDim = dummyResult.readOneDimVar("elect",
-							lastResult);
-
-					origResult = tmpResultOneDim.get(0).getList();
-
-					break;
-
-				default:
-
-					ErrorLogger.log("unknown output type in \"CheckerFactory\"");
-
-					break;
-				}
 
 				int left = 0;
 				int right = ElectionSimulation.getNumVoters(); // how many votes we have
@@ -254,63 +226,15 @@ public abstract class CheckerFactory implements Runnable {
 					result.setFinalMargin(-1);
 				}
 
-				List<List<Long>> newVotes = new ArrayList<List<Long>>();
-				List<Long> newResult = new ArrayList<Long>();
+				List<List<String>> newVotes = new ArrayList<List<String>>();
+				List<String> newResult = new ArrayList<String>();
+				
 
 				if (hasMargin) {
-
-					switch (electionDescSrc.getElectionDescription().getOutputType().getOutputID()) {
-					case CAND_OR_UNDEF:
-
-						List<CBMCResultWrapperLong> tmpResultLong = dummyResult.readLongs("new_result", lastFailedRun);
-
-						newResult.add(tmpResultLong.get(0).getValue());
-
-						break;
-
-					case CAND_PER_SEAT:
-
-						List<CBMCResultWrapperSingleArray> tmpResultOneDim = dummyResult.readOneDimVar("new_result", lastFailedRun);
-
-						newResult = tmpResultOneDim.get(0).getList();
-
-						break;
-
-					default:
-
-						ErrorLogger.log("unknown output type in \"CheckerFactory\"");
-
-						break;
-					}
 					
-					switch (electionDescSrc.getElectionDescription().getInputType().getInputID()) {
-					case APPROVAL:
-						
-						newVotes = dummyResult.readTwoDimVar("new_votes", lastFailedRun).get(0).getList();
-						
-						break;
-						
-					case PREFERENCE:
-						
-						newVotes = dummyResult.readTwoDimVar("new_votes", lastFailedRun).get(0).getList();
-						
-						break;
-						
-					case SINGLE_CHOICE:
-						
-						newVotes.add(dummyResult.readOneDimVar("new_votes", lastFailedRun).get(0).getList());
-						
-						break;
-						
-					case WEIGHTED_APPROVAL:
-						
-						newVotes = dummyResult.readTwoDimVar("new_votes", lastFailedRun).get(0).getList();
-						
-						break;
+					newResult = getElectionDescription().getContainer().getOutputType().getNewResult(lastFailedRun);
 
-					default:
-						break;
-					}
+					newVotes = getElectionDescription().getContainer().getInputType().getNewVotes(lastFailedRun);
 
 					result.setNewVotes(newVotes);
 					result.setNewWinner(newResult);
@@ -463,7 +387,7 @@ public abstract class CheckerFactory implements Runnable {
 	 * @param origResult
 	 * @param advanced
 	 */
-	protected void checkMarginAndWait(int margin, List<Long> origResult, String advanced) {
+	protected void checkMarginAndWait(int margin, List<String> origResult, String advanced) {
 		currentlyRunning = startProcessMargin(electionDescSrc, postAndPrepPropDesc, advanced,
 				ElectionSimulation.getNumVoters(), ElectionSimulation.getNumCandidates(),
 				ElectionSimulation.getNumSeats(), this, margin, origResult, false);
@@ -525,7 +449,7 @@ public abstract class CheckerFactory implements Runnable {
 	 */
 	protected abstract Checker startProcessMargin(ElectionDescriptionSource electionDescSrc,
 			PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
-			CheckerFactory parent, int margin, List<Long> origResult, boolean isTest);
+			CheckerFactory parent, int margin, List<String> origResult, boolean isTest);
 
 	/**
 	 * starts a new Checker with the given parameters. Implementation depends on the

@@ -76,7 +76,7 @@ public class CbmcHelpMethods extends CommonHelpMethods {
 					// split at the "(" and ")" to extract the bit value
 					String valueAsString = line.split("\\(")[1].split("\\)")[0];
 					// prase the binary value to a long
-					Long value = Long.parseLong(valueAsString, 2);
+					String value = "" + Long.parseLong(valueAsString, 2);
 
 					boolean added = false;
 
@@ -101,7 +101,7 @@ public class CbmcHelpMethods extends CommonHelpMethods {
 	}
 
 	@Override
-	public List<CBMCResultWrapperSingleArray> readOneDimVar(String name, List<String> toExtract) {
+	public List<CBMCResultWrapperSingleArray> readOneDimVarLong(String name, List<String> toExtract) {
 
 		List<CBMCResultWrapperSingleArray> list = new ArrayList<CBMCResultWrapperSingleArray>();
 
@@ -136,7 +136,7 @@ public class CbmcHelpMethods extends CommonHelpMethods {
 					// split at the "(" and ")" to extract the value
 					String valueAsString = line.split("\\(")[1].split("\\)")[0];
 
-					long value = Long.parseLong(valueAsString, 2);
+					String value = "" + Long.parseLong(valueAsString, 2);
 
 					boolean added = false;
 
@@ -190,14 +190,14 @@ public class CbmcHelpMethods extends CommonHelpMethods {
 										.next();
 
 								if (wrapper.getMainIndex() == mainIndex) {
-									wrapper.addTo(i, Long.parseLong(subValueArray[i], 2));
+									wrapper.addTo(i, subValueArray[i]);
 									added = true;
 								}
 							}
 
 							if (!added) {
 								list.add(new CBMCResultWrapperSingleArray(mainIndex, name));
-								list.get(list.size() - 1).addTo(i, Long.parseLong(subValueArray[i], 2));
+								list.get(list.size() - 1).addTo(i, "" + Long.parseLong(subValueArray[i], 2));
 							}
 						}
 					}
@@ -209,7 +209,7 @@ public class CbmcHelpMethods extends CommonHelpMethods {
 	}
 
 	@Override
-	public List<CBMCResultWrapperMultiArray> readTwoDimVar(String name, List<String> toExtract) {
+	public List<CBMCResultWrapperMultiArray> readTwoDimVarLong(String name, List<String> toExtract) {
 		List<CBMCResultWrapperMultiArray> list = new ArrayList<CBMCResultWrapperMultiArray>();
 
 		Pattern votesExtractor = null;
@@ -247,7 +247,7 @@ public class CbmcHelpMethods extends CommonHelpMethods {
 					// split at the "(" and ")" to extract the value
 					String valueAsString = line.split("\\(")[1].split("\\)")[0];
 
-					long value = Long.parseLong(valueAsString, 2);
+					String value = "" + Long.parseLong(valueAsString, 2);
 
 					boolean added = false;
 
@@ -305,7 +305,7 @@ public class CbmcHelpMethods extends CommonHelpMethods {
 											.next();
 
 									if (wrapper.getMainIndex() == mainIndex) {
-										wrapper.addTo(i, j, Long.parseLong(subValues[j], 2));
+										wrapper.addTo(i, j, "" + Long.parseLong(subValues[j], 2));
 
 										added = true;
 									}
@@ -313,7 +313,7 @@ public class CbmcHelpMethods extends CommonHelpMethods {
 
 								if (!added) {
 									list.add(new CBMCResultWrapperMultiArray(mainIndex, name));
-									list.get(list.size() - 1).addTo(i, j, Long.parseLong(subValues[j], 2));
+									list.get(list.size() - 1).addTo(i, j, "" + Long.parseLong(subValues[j], 2));
 								}
 							}
 						}

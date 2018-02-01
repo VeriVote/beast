@@ -13,7 +13,7 @@ import java.util.List;
 public class CBMCResultWrapperMultiArray {
 	private final int mainIndex;
 	private final String name;
-	private final List<List<Long>> list = new ArrayList<List<Long>>();
+	private final List<List<String>> list = new ArrayList<List<String>>();
 
 	/**
 	 * creates a new wrapper
@@ -40,12 +40,12 @@ public class CBMCResultWrapperMultiArray {
 	 * @param toAdd
 	 *            the value to add at this position
 	 */
-	public void addTo(int firstIndex, int secondIndex, long toAdd) {
+	public void addTo(int firstIndex, int secondIndex, String toAdd) {
 		if (list.size() > firstIndex) {
 			addToLongList(list.get(firstIndex), secondIndex, toAdd);
 		} else {
 			for (int i = list.size(); i <= firstIndex; i++) {
-				list.add(new ArrayList<Long>());
+				list.add(new ArrayList<String>());
 			}
 			addToLongList(list.get(firstIndex), secondIndex, toAdd);
 		}
@@ -76,7 +76,7 @@ public class CBMCResultWrapperMultiArray {
 	 * 
 	 * @return the list that describes this variable
 	 */
-	public List<List<Long>> getList() {
+	public List<List<String>> getList() {
 		return list;
 	}
 
@@ -91,12 +91,12 @@ public class CBMCResultWrapperMultiArray {
 	 * @param toAdd
 	 *            the value to add
 	 */
-	private void addToLongList(List<Long> list, int indexToAddAt, long toAdd) {
+	private void addToLongList(List<String> list, int indexToAddAt, String toAdd) {
 		if (list.size() > indexToAddAt) {
 			list.set(indexToAddAt, toAdd);
 		} else {
 			for (int i = list.size(); i <= indexToAddAt; i++) {
-				list.add(0l);
+				list.add("0");
 			}
 			list.set(indexToAddAt, toAdd);
 		}
@@ -108,27 +108,27 @@ public class CBMCResultWrapperMultiArray {
 	 *         and size as the array that the c-program that cbmc analyzed had
 	 *         inside
 	 */
-	public Long[][] getArray() {
+	public String[][] getArray() {
 
-		Long[][] toReturn;
+		String[][] toReturn;
 		int maxSize = 0;
 
 		if (list == null) {
-			return new Long[0][0];
+			return new String[0][0];
 		} else {
 
-			for (Iterator<List<Long>> iterator = list.iterator(); iterator.hasNext();) {
-				ArrayList<Long> subList = (ArrayList<Long>) iterator.next();
+			for (Iterator<List<String>> iterator = list.iterator(); iterator.hasNext();) {
+				ArrayList<String> subList = (ArrayList<String>) iterator.next();
 				if (subList.size() > maxSize) {
 					maxSize = subList.size();
 				}
 			}
 
-			toReturn = new Long[list.size()][maxSize];
+			toReturn = new String[list.size()][maxSize];
 
 			for (int i = 0; i < toReturn.length; i++) {
 				for (int j = 0; j < toReturn[i].length; j++) {
-					toReturn[i][j] = 0L;
+					toReturn[i][j] = "0";
 				}
 			}
 			
@@ -138,7 +138,7 @@ public class CBMCResultWrapperMultiArray {
 					if (indexWorks && list.get(i).size() > j && list.get(i).get(j) != null) {
 						toReturn[i][j] = list.get(i).get(j);
 					} else {
-						toReturn[i][j] = 0L;
+						toReturn[i][j] = "0";
 					}
 				}
 			}

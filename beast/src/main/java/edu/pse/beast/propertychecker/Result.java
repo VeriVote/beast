@@ -40,10 +40,10 @@ public abstract class Result implements ResultInterface {
     private Result subResult = null;
     private boolean isMarginComp = false;
     
-	protected List<List<Long>> origVoting;
-	protected List<Long> origWinner;
-	protected List<List<Long>> newVotes;
-	protected List<Long> newWinner;
+	protected List<List<String>> origVoting;
+	protected List<String> origWinner;
+	protected List<List<String>> newVotes;
+	protected List<String> newWinner;
 
     public boolean isMarginComp() {
 		return isMarginComp;
@@ -323,35 +323,35 @@ public abstract class Result implements ResultInterface {
     	return failureExample;
     }
 
-	public List<List<Long>> getOrigVoting() {
+	public List<List<String>> getOrigVoting() {
 		return origVoting;
 	}
 
-	public void setOrigVoting(List<List<Long>> origVoting) {
+	public void setOrigVoting(List<List<String>> origVoting) {
 		this.origVoting = origVoting;
 	}
 
-	public List<Long> getOrigWinner() {
+	public List<String> getOrigWinner() {
 		return origWinner;
 	}
 
-	public void setOrigWinner(List<Long> origWinner) {
+	public void setOrigWinner(List<String> origWinner) {
 		this.origWinner = origWinner;
 	}
 
-	public List<List<Long>> getNewVotes() {
+	public List<List<String>> getNewVotes() {
 		return newVotes;
 	}
 
-	public void setNewVotes(List<List<Long>> newVotes) {
+	public void setNewVotes(List<List<String>> newVotes) {
 		this.newVotes = newVotes;
 	}
 
-	public List<Long> getNewWinner() {
+	public List<String> getNewWinner() {
 		return newWinner;
 	}
 
-	public void setNewWinner(List<Long> newWinner) {
+	public void setNewWinner(List<String> newWinner) {
 		this.newWinner = newWinner;
 	}
 }

@@ -389,7 +389,7 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 
 							System.out.println("result_array: ");
 
-							Long[][] new_votes_output = finalMarginResult.getNewVotesWrappedMulti().getArray();
+							String[][] new_votes_output = finalMarginResult.getNewVotesWrappedMulti().getArray();
 
 							if (new_votes_output == null || new_votes_output[0] == null) {
 
@@ -844,15 +844,15 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 		}
 	}
 
-	public static Long[][] getVotingData() {
-		Long[][] votingData = {{0L}, {0L}};;
+	public static String[][] getVotingData() {
+		String[][] votingData = {{"0"}, {"0"}};;
 		if (initiated) {
-			votingData = new Long[model.getAmountVoters()][model.getAmountCandidates()];
+			votingData = new String[model.getAmountVoters()][model.getAmountCandidates()];
 
 			// read the data in a 2d array
 			for (int i = 0; i < model.getAmountVoters(); i++) {
 				for (int j = 0; j < model.getAmountCandidates(); j++) {
-					votingData[i][j] = (long) model.getRows().get(i).getValues().get(j);
+					votingData[i][j] = model.getRows().get(i).getValues().get(j);
 				}
 			}
 		}
@@ -889,13 +889,13 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 		return currentMode;
 	}
 
-	public static List<List<Long>> getVotingDataListofList() {
-		List<List<Long>> toReturn = new ArrayList<List<Long>>();
+	public static List<List<String>> getVotingDataListofList() {
+		List<List<String>> toReturn = new ArrayList<List<String>>();
 
-		Long[][] data = getVotingData();
+		String[][] data = getVotingData();
 
 		for (int i = 0; i < data.length; i++) {
-			List<Long> tmp = new ArrayList<Long>();
+			List<String> tmp = new ArrayList<String>();
 			for (int j = 0; j < data[0].length; j++) {
 				tmp.add(data[i][j]);
 			}

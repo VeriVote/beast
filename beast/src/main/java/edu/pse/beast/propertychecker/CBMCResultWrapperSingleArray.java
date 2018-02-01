@@ -3,6 +3,8 @@ package edu.pse.beast.propertychecker;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.print.DocFlavor.STRING;
+
 /**
  * 
  * @author Lukas
@@ -11,7 +13,7 @@ import java.util.List;
 public class CBMCResultWrapperSingleArray {
     private final int mainIndex;
     private final String name;
-    private final List<Long> list = new ArrayList<Long>();
+    private final List<String> list = new ArrayList<String>();
 
     /**
      * creates a new wrapper
@@ -36,12 +38,12 @@ public class CBMCResultWrapperSingleArray {
      * @param toAdd
      *            the value to add at this position
      */
-    public void addTo(int index, long toAdd) {
+    public void addTo(int index, String toAdd) {
         if (list.size() > index) {
             list.set(index, toAdd);
         } else {
             for (int i = list.size(); i <= index; i++) {
-                list.add(0l);
+                list.add("0");
             }
             list.set(index, toAdd);
         }
@@ -54,7 +56,7 @@ public class CBMCResultWrapperSingleArray {
      * 
      * @return the list that describes this variable
      */
-    public List<Long> getList() {
+    public List<String> getList() {
         return list;
     }
 
@@ -81,19 +83,19 @@ public class CBMCResultWrapperSingleArray {
      *         and size as the array that the c-program that cbmc analyzed had
      *         inside
      */
-    public Long[] getArray() {
-        Long[] toReturn;
+    public String[] getArray() {
+        String[] toReturn;
         if ((list != null) && (list.size() > 0)) {
-            toReturn = new Long[list.size()];
+            toReturn = new String[list.size()];
         } else {
-            toReturn = new Long[0];
+            toReturn = new String[0];
         }
 
         for (int i = 0; i < toReturn.length; i++) {
             if (list.size() >= i && list.get(i) != null) {
                 toReturn[i] = list.get(i);
             } else {
-                toReturn[i] = 0l;
+                toReturn[i] = "0";
             }
         }
         return toReturn;
@@ -110,17 +112,17 @@ public class CBMCResultWrapperSingleArray {
     	
     	CBMCResultWrapperMultiArray twoDimArr = new CBMCResultWrapperMultiArray(index, name);
     	
-    	Long[] asArray = getArray();
+    	String[] asArray = getArray();
     	
     	
     	for(int i = 0; i < asArray.length; i++) {
-    		long currentCandidate = asArray[i];
+    		long currentCandidate = Long.parseLong(asArray[i]);
     		
-    		if(currentCandidate == 0) {
+    		if(currentCandidate == 0L) {
     			//add 0 to the last candidate position, so the whole row will be zeros
-    			twoDimArr.addTo(i, amountCandidates - 1,  0);
+    			twoDimArr.addTo(i, amountCandidates - 1,  "0");
     		} else {
-    			twoDimArr.addTo(i, (int) (currentCandidate - 1), 1);
+    			twoDimArr.addTo(i, (int) (currentCandidate - 1), "1");
     		}
     	}
     	

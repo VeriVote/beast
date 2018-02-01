@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.print.DocFlavor.STRING;
+
 import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.highlevel.ResultPresenterElement;
@@ -99,16 +101,88 @@ public class CBMCResult extends Result {
 				List<CBMCResultWrapperLong> elect = getElectionDescription().getContainer().getOutputType().readElect(getResult());
 				
 
-				toReturn = new FailureExample(getElectionDescription(), singleVotesList, votesList, null, seatsList,
+				toReturn = new FailureExample(getElectionDescription(), singleVotesList, votesList, elect, seatsList,
 						getNumCandidates(), getNumSeats(), getNumVoters());
 				
-				// it is voting for seats, and not for candidates
+//				// it is voting for seats, and not for candidates
+//
+//				if (getElectionDescription().getContainer().getOutputType().isOutputOneCandidate()) {
+//
+////					switch (getElectionDescription().getInputType().getInputID()) {
+////
+////					
+////					// get the fitting type and extract the values out of it,
+////					// because we
+////					// know the format of the values
+////					// for each specific type
+////					case APPROVAL:
+////
+////						votesList = readTwoDimVar("votes", getResult());
+////
+////						// read all the variables with form electN[] that are
+////						// arrays, to
+////						// extract the seats that
+////						// got chosen
+////						seatsList = readOneDimVar("elect", getResult());
+////
+////						toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
+////								getNumCandidates(), getNumSeats(), getNumVoters());
+////						break;
+////					case PREFERENCE:
+////
+////						votesList = readTwoDimVar("votes", getResult());
+////
+////						// read all the variables with form electN[] that are
+////						// arrays, to
+////						// extract the seats that
+////						// got chosen
+////						seatsList = readOneDimVar("elect", getResult());
+////
+////						toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
+////								getNumCandidates(), getNumSeats(), getNumVoters());
+////						break;
+////					case SINGLE_CHOICE:
+////
+////						singleVotesList = readOneDimVar("votes", getResult());
+////
+////						// read all the variables with form electN[] that are
+////						// arrays, to
+////						// extract the seats that
+////						// got chosen
+////						seatsList = readOneDimVar("elect", getResult());
+////
+////						toReturn = new FailureExample(getElectionDescription(), singleVotesList, null, null, seatsList,
+////								getNumCandidates(), getNumSeats(), getNumVoters());
+////						break;
+////					case WEIGHTED_APPROVAL:
+////
+////						votesList = readTwoDimVar("votes", getResult());
+////
+////						// read all the variables with form electN[] that are
+////						// arrays, to
+////						// extract the seats that
+////						// got chosen
+////						seatsList = readOneDimVar("elect", getResult());
+////
+////						toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
+////								getNumCandidates(), getNumSeats(), getNumVoters());
+////						break;
+////					default:
+////						ErrorForUserDisplayer.displayError(
+////								"This votingtype you are using hasn't been implemented yet to be displayed. "
+////										+ "Please do so in the class CBMC_Result");
+////						this.setError(
+////								"This votingtype hasn't been implemented yet please do so in the class CBMC_Result");
+////						return null;
+////					}
+//
+//				} else {
 
-				if (getElectionDescription().getOutputType().getResultTypeSeats()) {
-
+					// read the elect value, because here we dont work with seats
+//					List<CBMCResultWrapperLong> elect = readLongs("elect", getResult());
+//
 //					switch (getElectionDescription().getInputType().getInputID()) {
 //
-//					
 //					// get the fitting type and extract the values out of it,
 //					// because we
 //					// know the format of the values
@@ -117,113 +191,41 @@ public class CBMCResult extends Result {
 //
 //						votesList = readTwoDimVar("votes", getResult());
 //
-//						// read all the variables with form electN[] that are
-//						// arrays, to
-//						// extract the seats that
-//						// got chosen
-//						seatsList = readOneDimVar("elect", getResult());
-//
-//						toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
+//						toReturn = new FailureExample(getElectionDescription(), null, votesList, elect, null,
 //								getNumCandidates(), getNumSeats(), getNumVoters());
 //						break;
 //					case PREFERENCE:
 //
 //						votesList = readTwoDimVar("votes", getResult());
 //
-//						// read all the variables with form electN[] that are
-//						// arrays, to
-//						// extract the seats that
-//						// got chosen
-//						seatsList = readOneDimVar("elect", getResult());
-//
-//						toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
+//						toReturn = new FailureExample(getElectionDescription(), null, votesList, elect, null,
 //								getNumCandidates(), getNumSeats(), getNumVoters());
 //						break;
 //					case SINGLE_CHOICE:
 //
 //						singleVotesList = readOneDimVar("votes", getResult());
 //
-//						// read all the variables with form electN[] that are
-//						// arrays, to
-//						// extract the seats that
-//						// got chosen
-//						seatsList = readOneDimVar("elect", getResult());
-//
-//						toReturn = new FailureExample(getElectionDescription(), singleVotesList, null, null, seatsList,
+//						toReturn = new FailureExample(getElectionDescription(), singleVotesList, null, elect, null,
 //								getNumCandidates(), getNumSeats(), getNumVoters());
 //						break;
 //					case WEIGHTED_APPROVAL:
 //
 //						votesList = readTwoDimVar("votes", getResult());
 //
-//						// read all the variables with form electN[] that are
-//						// arrays, to
-//						// extract the seats that
-//						// got chosen
-//						seatsList = readOneDimVar("elect", getResult());
-//
-//						toReturn = new FailureExample(getElectionDescription(), null, votesList, null, seatsList,
+//						toReturn = new FailureExample(getElectionDescription(), null, votesList, elect, null,
 //								getNumCandidates(), getNumSeats(), getNumVoters());
 //						break;
 //					default:
 //						ErrorForUserDisplayer.displayError(
-//								"This votingtype you are using hasn't been implemented yet to be displayed. "
+//								"This votingtype you are using hasn't been implemented yet to be displaye. "
 //										+ "Please do so in the class CBMC_Result");
 //						this.setError(
 //								"This votingtype hasn't been implemented yet please do so in the class CBMC_Result");
 //						return null;
+//
 //					}
-
-				} else {
-
-					// read the elect value, because here we dont work with seats
-					List<CBMCResultWrapperLong> elect = readLongs("elect", getResult());
-
-					switch (getElectionDescription().getInputType().getInputID()) {
-
-					// get the fitting type and extract the values out of it,
-					// because we
-					// know the format of the values
-					// for each specific type
-					case APPROVAL:
-
-						votesList = readTwoDimVar("votes", getResult());
-
-						toReturn = new FailureExample(getElectionDescription(), null, votesList, elect, null,
-								getNumCandidates(), getNumSeats(), getNumVoters());
-						break;
-					case PREFERENCE:
-
-						votesList = readTwoDimVar("votes", getResult());
-
-						toReturn = new FailureExample(getElectionDescription(), null, votesList, elect, null,
-								getNumCandidates(), getNumSeats(), getNumVoters());
-						break;
-					case SINGLE_CHOICE:
-
-						singleVotesList = readOneDimVar("votes", getResult());
-
-						toReturn = new FailureExample(getElectionDescription(), singleVotesList, null, elect, null,
-								getNumCandidates(), getNumSeats(), getNumVoters());
-						break;
-					case WEIGHTED_APPROVAL:
-
-						votesList = readTwoDimVar("votes", getResult());
-
-						toReturn = new FailureExample(getElectionDescription(), null, votesList, elect, null,
-								getNumCandidates(), getNumSeats(), getNumVoters());
-						break;
-					default:
-						ErrorForUserDisplayer.displayError(
-								"This votingtype you are using hasn't been implemented yet to be displaye. "
-										+ "Please do so in the class CBMC_Result");
-						this.setError(
-								"This votingtype hasn't been implemented yet please do so in the class CBMC_Result");
-						return null;
-
-					}
-
-				}
+//
+////				}
 				// determine the values for the symbolic variables
 				// that the user set
 
@@ -354,7 +356,7 @@ public class CBMCResult extends Result {
 					// split at the "(" and ")" to extract the bit value
 					String valueAsString = line.split("\\(")[1].split("\\)")[0];
 					// prase the binary value to a long
-					Long value = Long.parseLong(valueAsString, 2);
+					String value = "" + Long.parseLong(valueAsString, 2);
 
 					boolean added = false;
 
@@ -423,7 +425,7 @@ public class CBMCResult extends Result {
 					// split at the "(" and ")" to extract the value
 					String valueAsString = line.split("\\(")[1].split("\\)")[0];
 
-					long value = Long.parseLong(valueAsString, 2);
+					String value = "" + Long.parseLong(valueAsString, 2);
 
 					boolean added = false;
 
@@ -477,14 +479,14 @@ public class CBMCResult extends Result {
 										.next();
 
 								if (wrapper.getMainIndex() == mainIndex) {
-									wrapper.addTo(i, Long.parseLong(subValueArray[i], 2));
+									wrapper.addTo(i, "" + Long.parseLong(subValueArray[i], 2));
 									added = true;
 								}
 							}
 
 							if (!added) {
 								list.add(new CBMCResultWrapperSingleArray(mainIndex, name));
-								list.get(list.size() - 1).addTo(i, Long.parseLong(subValueArray[i], 2));
+								list.get(list.size() - 1).addTo(i, "" + Long.parseLong(subValueArray[i], 2));
 							}
 						}
 					}
@@ -544,7 +546,7 @@ public class CBMCResult extends Result {
 					// split at the "(" and ")" to extract the value
 					String valueAsString = line.split("\\(")[1].split("\\)")[0];
 
-					long value = Long.parseLong(valueAsString, 2);
+					String value = "" + Long.parseLong(valueAsString, 2);
 
 					boolean added = false;
 
@@ -602,7 +604,7 @@ public class CBMCResult extends Result {
 											.next();
 
 									if (wrapper.getMainIndex() == mainIndex) {
-										wrapper.addTo(i, j, Long.parseLong(subValues[j], 2));
+										wrapper.addTo(i, j, "" + Long.parseLong(subValues[j], 2));
 
 										added = true;
 									}
@@ -610,7 +612,7 @@ public class CBMCResult extends Result {
 
 								if (!added) {
 									list.add(new CBMCResultWrapperMultiArray(mainIndex, name));
-									list.get(list.size() - 1).addTo(i, j, Long.parseLong(subValues[j], 2));
+									list.get(list.size() - 1).addTo(i, j, "" + Long.parseLong(subValues[j], 2));
 								}
 							}
 						}

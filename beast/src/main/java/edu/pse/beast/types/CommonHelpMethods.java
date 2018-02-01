@@ -18,7 +18,7 @@ public abstract class CommonHelpMethods {
 	 *            the name of the variable
 	 * @return a two dim wrapper of the voting results
 	 */
-	public abstract List<CBMCResultWrapperMultiArray> readTwoDimVar(String name, List<String> toExtract);
+	public abstract List<CBMCResultWrapperMultiArray> readTwoDimVarLong(String name, List<String> toExtract);
 
 	/**
 	 * reads a symbolic variable with a given name from a list
@@ -51,5 +51,5 @@ public abstract class CommonHelpMethods {
 	 * @return a list of all variables with a matching name with their index and
 	 *         values that occured in the give list
 	 */
-	public abstract List<CBMCResultWrapperSingleArray> readOneDimVar(String name, List<String> toExtract);
+	public abstract List<CBMCResultWrapperSingleArray> readOneDimVarLong(String name, List<String> toExtract);
 }

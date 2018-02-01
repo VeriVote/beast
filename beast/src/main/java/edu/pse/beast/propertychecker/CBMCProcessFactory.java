@@ -336,7 +336,7 @@ public class CBMCProcessFactory extends CheckerFactory {
      * @return a file that contains the generated code from the two above variables
      */
     public File createCodeFileMargin(ElectionDescriptionSource electionDescSrc,
-            PreAndPostConditionsDescription postAndPrepPropDesc, int margin, List<Long> origResult, boolean  isTest) {
+            PreAndPostConditionsDescription postAndPrepPropDesc, int margin, List<String> origResult, boolean  isTest) {
 
         // create a code generator, that creates a code file for this call only
         // one time in this factory factory;
@@ -549,7 +549,7 @@ public class CBMCProcessFactory extends CheckerFactory {
 	@Override
 	protected Checker startProcessMargin(ElectionDescriptionSource electionDescSrc,
 			PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
-			CheckerFactory parent, int margin, List<Long> origResult, boolean isTest) {
+			CheckerFactory parent, int margin, List<String> origResult, boolean isTest) {
 		String userOptions = advanced.trim().replaceAll(" +", " ");
 
 	      // remove all unnecessary whitespaces

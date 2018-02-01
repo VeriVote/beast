@@ -4,6 +4,7 @@ import java.util.List;
 
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
+import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 
 public abstract class OutputType {
 
@@ -39,10 +40,28 @@ public abstract class OutputType {
 	 * @param toExtract the list from which the result will be extracted
 	 * @return an array with the Result
 	 */
-	public abstract Long[] extractResult(List<String> toExtract);
+	public abstract String[] extractResult(List<String> toExtract);
 
 	public abstract List<CBMCResultWrapperSingleArray> readSeatList(List<String> toExtract);
 
 	public abstract List<CBMCResultWrapperLong> readElect(List<String> toExtract);
 
+	public abstract CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code);
+
+	public abstract CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code, int voteNumber);
+	
+	public abstract String getCArrayType();
+
+	/**
+	 * returns the code with the added line of the marginmaintest method. 
+	 * The methode has to end with an assertion that lets cbmc fail, so we can extract the result
+	 * @param code
+	 * @param voteNumber
+	 * @return
+	 */
+	public abstract CodeArrayListBeautifier addMarginMainTest(CodeArrayListBeautifier code, int voteNumber);
+
+	public abstract List<String> getCodeToRunMargin(List<String> origResult, List<String> lastResult);
+
+	public abstract List<String> getNewResult(List<String> lastFailedRun);
 }
