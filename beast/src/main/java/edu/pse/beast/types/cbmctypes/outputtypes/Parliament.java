@@ -5,6 +5,8 @@ import java.util.List;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.types.InternalTypeContainer;
+import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
 public class Parliament extends CBMCOutputType {
@@ -99,7 +101,7 @@ public class Parliament extends CBMCOutputType {
 
 	@Override
 	public String getCArrayType() {
-		return "[][]";
+		return "[V][C]";
 	}
 
 	@Override
@@ -146,5 +148,10 @@ public class Parliament extends CBMCOutputType {
 		List<CBMCResultWrapperSingleArray> tmpResultOneDim = super.helper.readOneDimVarLong("new_result", lastFailedRun);
 
 		return tmpResultOneDim.get(0).getList();
+	}
+	
+	@Override
+	public InternalTypeContainer getInternalTypeContainer() {
+		return new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
 	}
 }

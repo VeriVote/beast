@@ -9,6 +9,8 @@ import edu.pse.beast.electionSimulator.Model.RowOfValues;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.types.InternalTypeContainer;
+import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class Preference extends CBMCInputType {
@@ -245,7 +247,7 @@ public class Preference extends CBMCInputType {
 
 	@Override
 	public String getArrayType() {
-		return "[][]";
+		return "[V][C]";
 	}
 
 	@Override
@@ -274,5 +276,10 @@ public class Preference extends CBMCInputType {
 	@Override
 	public List<List<String>> getNewVotes(List<String> lastFailedRun) {
 		return super.helper.readTwoDimVarLong("new_votes", lastFailedRun).get(0).getList();
+	}
+	
+	@Override
+	public InternalTypeContainer getInternalTypeContainer() {
+		return new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
 	}
 }

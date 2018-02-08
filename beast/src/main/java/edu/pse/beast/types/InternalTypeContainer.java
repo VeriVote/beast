@@ -5,11 +5,13 @@
  */
 package edu.pse.beast.types;
 
+import java.lang.reflect.Type;
+
 /**
  *
  * @author Niels
  */
-public class InternalTypeContainer {
+public class InternalTypeContainer implements InOutType {
 
     private final boolean isList;
     private final InternalTypeRep internalType;
@@ -123,4 +125,9 @@ public class InternalTypeContainer {
         if (isList != other.isList) return false;
         return listedType != null ? listedType.equals(other.listedType) : other.listedType == null;
     }
+
+	@Override
+	public InternalTypeContainer getInternalTypeContainer() {
+		return this;
+	}
 }

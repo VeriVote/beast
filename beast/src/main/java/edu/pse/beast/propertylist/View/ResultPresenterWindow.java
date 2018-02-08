@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.print.DocFlavor.STRING;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -271,27 +272,27 @@ public class ResultPresenterWindow extends JFrame {
 	}
 
 	private void appendMarginResult(Result marginResult) {
-		FailureExample ex = marginResult.getFailureExample();
+		//FailureExample ex = marginResult.getFailureExample();
 
 		appendLine("================================");
 		appendLine("===========Margin Result===========");
 		appendLine("================================");
 		appendLine("");
 
-		List<List<Long>> origVotes = marginResult.getOrigVoting();
+		List<List<String>> origVotes = marginResult.getOrigVoting();
 		
 		appendLine("====original Votes====");
 		appendLine("");
 		
 		appendPane("[");
 		
-		for (Iterator iterator = origVotes.iterator(); iterator.hasNext();) {
-			List<Long> list = (List<Long>) iterator.next();
+		for (Iterator<List<String>> iterator = origVotes.iterator(); iterator.hasNext();) {
+			List<String> list = (List<String>) iterator.next();
 			
 			String votes = "[";
 			
-			for (Iterator iterator2 = list.iterator(); iterator2.hasNext();) {
-				Long voter = (Long) iterator2.next();
+			for (Iterator<String> iterator2 = list.iterator(); iterator2.hasNext();) {
+				String voter = (String) iterator2.next();
 				if(iterator2.hasNext()) {
 					votes = votes + ", " + voter;
 				} else {
@@ -310,8 +311,8 @@ public class ResultPresenterWindow extends JFrame {
 		
 		appendLine("[");
 		
-		for (Iterator iterator = marginResult.getOrigWinner().iterator(); iterator.hasNext();) {
-			long currentValue = (Long) iterator.next();
+		for (Iterator<String> iterator = marginResult.getOrigWinner().iterator(); iterator.hasNext();) {
+			String currentValue = (String) iterator.next();
 			
 			if(iterator.hasNext()) {
 				appendPane(currentValue + ", ");
@@ -333,13 +334,13 @@ public class ResultPresenterWindow extends JFrame {
 			appendLine("");
 			appendPane("[");
 			
-			for (Iterator iterator = marginResult.getNewVotes().iterator(); iterator.hasNext();) {
-				List<Long> list = (List<Long>) iterator.next();
+			for (Iterator<List<String>> iterator = marginResult.getNewVotes().iterator(); iterator.hasNext();) {
+				List<String> list = (List<String>) iterator.next();
 				
 				String votes = "[";
 				
-				for (Iterator iterator2 = list.iterator(); iterator2.hasNext();) {
-					Long voter = (Long) iterator2.next();
+				for (Iterator<String> iterator2 = list.iterator(); iterator2.hasNext();) {
+					String voter = (String) iterator2.next();
 					if(iterator2.hasNext()) {
 						votes = votes + ", " + voter;
 					} else {
@@ -358,8 +359,8 @@ public class ResultPresenterWindow extends JFrame {
 			
 			appendPane("[");
 			
-			for (Iterator iterator = marginResult.getNewWinner().iterator(); iterator.hasNext();) {
-				long currentValue = (Long) iterator.next();
+			for (Iterator<String> iterator = marginResult.getNewWinner().iterator(); iterator.hasNext();) {
+				String currentValue = (String) iterator.next();
 				
 				if(iterator.hasNext()) {
 					appendPane(currentValue + ", ");
@@ -394,8 +395,8 @@ public class ResultPresenterWindow extends JFrame {
 	}
 
 	private void writeElectedOneCandidate(FailureExample ex, int i) {
-		Long preceding;
-		Long elected = ex.getElect().get(i).getValue();
+		String preceding;
+		String elected = ex.getElect().get(i).getValue();
 
 		// only show differences to preceding election when it is not the first
 		// election
@@ -403,11 +404,13 @@ public class ResultPresenterWindow extends JFrame {
 
 		Color color = preceding == elected ? Color.BLACK : Color.RED;
 
-		if (elected >= ex.getNumOfCandidates()) { // no candidate wins
-			appendPaneColored(srl.getStringFromID("draw") + "(" + ex.getSymbolicCandidateForIndex(elected) + ")" + ", ",
+		long electedL = Long.parseLong(elected);
+		
+		if (electedL >= ex.getNumOfCandidates()) { // no candidate wins
+			appendPaneColored(srl.getStringFromID("draw") + "(" + ex.getSymbolicCandidateForIndex(electedL) + ")" + ", ",
 					color);
 		} else {
-			appendPaneColored(ex.getSymbolicCandidateForIndex(elected) + ", ", color);
+			appendPaneColored(ex.getSymbolicCandidateForIndex(electedL) + ", ", color);
 		}
 
 		eraseLastCharacters(2);

@@ -2,6 +2,7 @@ package edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes;
 
 import java.util.Arrays;
 
+import edu.pse.beast.types.InOutType;
 import edu.pse.beast.types.InternalTypeContainer;
 
 /**
@@ -11,9 +12,9 @@ public abstract class AccessValueNode extends TypeExpression {
     private final TypeExpression[] accessingVars;
     private final int count;
 
-    protected AccessValueNode(InternalTypeContainer internalTypeContainer,
+    protected AccessValueNode(InOutType type,
                               TypeExpression[] accessingVars, int count) {
-        super(internalTypeContainer);
+        super(type);
         this.accessingVars = accessingVars;
         this.count = count;
     }

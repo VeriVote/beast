@@ -242,8 +242,8 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
         changeHandler.addNewTextPane(codeArea.getPane());
         window.setWindowTitle(description.getName());
         for (ElectionDescriptionChangeListener l : descriptionChangeListeners) {
-            l.inputChanged(description.getContainer());
-            l.outputChanged(description.getContainer());
+            l.inputChanged(description.getContainer().getInputType());
+            l.outputChanged(description.getContainer().getOutputType());
         }
         findErrorsAndDisplayThem();
         refs.getOptionIF().getCElectionEditorOptions(this).reapply();

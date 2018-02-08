@@ -281,13 +281,13 @@ public class FormalExpErrorFinderTreeListener
 
     @Override
     public void enterElectExp(FormalPropertyDescriptionParser.ElectExpContext ctx) {
-        testIfTooManyVarsPassed(ctx.passType(), output.getInputType());
+        testIfTooManyVarsPassed(ctx.passType(), container.getOutputType().getInternalTypeContainer());
     }
 
     @Override
     public void exitElectExp(FormalPropertyDescriptionParser.ElectExpContext ctx) {
-        testIfWrongTypePassed(ctx.passType(), output.getInputType());
-        InternalTypeContainer cont = output.getInputType();
+        testIfWrongTypePassed(ctx.passType(), container.getOutputType().getInternalTypeContainer());
+        InternalTypeContainer cont = container.getOutputType().getInternalTypeContainer();
         for (int i = 0; i < ctx.passType().size() && cont.isList(); ++i) {
             cont = cont.getListedType();
         }
@@ -300,13 +300,13 @@ public class FormalExpErrorFinderTreeListener
 
     @Override
     public void enterVoteExp(FormalPropertyDescriptionParser.VoteExpContext ctx) {
-        testIfTooManyVarsPassed(ctx.passType(), input.getInputType());
+        testIfTooManyVarsPassed(ctx.passType(), container.getInputType().getInternalTypeContainer());
     }
 
     @Override
     public void exitVoteExp(FormalPropertyDescriptionParser.VoteExpContext ctx) {
-        testIfWrongTypePassed(ctx.passType(), input.getInputType());
-        InternalTypeContainer cont = input.getInputType();
+        testIfWrongTypePassed(ctx.passType(), container.getInputType().getInternalTypeContainer());
+        InternalTypeContainer cont = container.getInputType().getInternalTypeContainer();
         for (int i = 0; i < ctx.passType().size() && cont.isList(); ++i) {
             cont = cont.getListedType();
         }
@@ -493,12 +493,12 @@ public class FormalExpErrorFinderTreeListener
     }
 
     @Override
-    public void inputChanged(ElectionTypeContainer input) {
-        this.input = input;
+    public void inputChanged(InputType input) {
+        this.container.setInput(input);
     }
 
     @Override
-    public void outputChanged(ElectionTypeContainer output) {
-        this.output = output;
+    public void outputChanged(OutputType output) {
+        this.container.setOutput(output);
     }
 }

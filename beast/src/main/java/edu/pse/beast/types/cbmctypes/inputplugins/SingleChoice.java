@@ -10,6 +10,8 @@ import edu.pse.beast.electionSimulator.Model.RowOfValues;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.types.InternalTypeContainer;
+import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class SingleChoice extends CBMCInputType {
@@ -240,7 +242,7 @@ public class SingleChoice extends CBMCInputType {
 
 	@Override
 	public String getArrayType() {
-		return "[]";
+		return "[V]";
 	}
 
 	@Override
@@ -268,4 +270,9 @@ public class SingleChoice extends CBMCInputType {
 		return toReturn;
 	}
 
+	@Override
+	public InternalTypeContainer getInternalTypeContainer() {
+		return new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
+	}
+	
 }

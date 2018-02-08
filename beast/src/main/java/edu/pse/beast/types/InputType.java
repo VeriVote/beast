@@ -9,7 +9,7 @@ import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 
-public abstract class InputType {
+public abstract class InputType implements InOutType{
 	
 	protected CommonHelpMethods helper;
 	
@@ -130,5 +130,7 @@ public abstract class InputType {
 	public abstract CodeArrayListBeautifier getCodeForVoteSum(CodeArrayListBeautifier code, boolean unique);
 
 	public abstract List<List<String>> getNewVotes(List<String> lastFailedRun);
+
+	public abstract InternalTypeContainer getInternalTypeContainer();
 
 }

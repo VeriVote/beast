@@ -225,11 +225,11 @@ public class BooleanExpEditor implements DisplaysStringsToUser {
         cEditor.addListener(preConditionCodeArea.getVariableErrorFinder());
         cEditor.addListener(postConditionCodeArea.getVariableErrorFinder());
 
-        postConditionCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getContainer());
-        postConditionCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getContainer());
+        postConditionCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getContainer().getInputType());
+        postConditionCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getContainer().getOutputType());
 
-        preConditionCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getContainer());
-        preConditionCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getContainer());
+        preConditionCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getContainer().getInputType());
+        preConditionCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getContainer().getOutputType());
 
         preConditionCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         postConditionCodeArea.getPane().addFocusListener(codeAreaFocusListener);

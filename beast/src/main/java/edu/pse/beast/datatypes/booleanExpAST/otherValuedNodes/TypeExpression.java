@@ -1,6 +1,7 @@
 package edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes;
 
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BooleanExpressionNode;
+import edu.pse.beast.types.InOutType;
 import edu.pse.beast.types.InternalTypeContainer;
 
 /**
@@ -10,14 +11,14 @@ import edu.pse.beast.types.InternalTypeContainer;
  */
 public abstract class TypeExpression extends BooleanExpressionNode {
 
-    private final InternalTypeContainer container;
+    private final InOutType type;
 
     /**
      *
-     * @param container the type of this quantifier
+     * @param type the type of this quantifier
      */
-    public TypeExpression(InternalTypeContainer container) {
-        this.container = container;
+    public TypeExpression(InOutType type) {
+        this.type = type;
     }
 
     /**
@@ -25,7 +26,7 @@ public abstract class TypeExpression extends BooleanExpressionNode {
      * @return the type of this quantifier
      */
     public InternalTypeContainer getInternalTypeContainer() {
-        return container;
+        return type.getInternalTypeContainer();
     }
 
     @Override
@@ -35,11 +36,11 @@ public abstract class TypeExpression extends BooleanExpressionNode {
 
         TypeExpression that = (TypeExpression) o;
 
-        return container != null ? container.equals(that.container) : that.container == null;
+        return type != null ? type.equals(that.type) : that.type == null;
     }
 
     @Override
     public int hashCode() {
-        return 31 + (container != null ? container.hashCode() : 0);
+        return 31 + (type != null ? type.hashCode() : 0);
     }
 }

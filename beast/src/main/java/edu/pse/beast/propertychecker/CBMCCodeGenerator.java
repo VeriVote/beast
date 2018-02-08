@@ -412,7 +412,7 @@ public class CBMCCodeGenerator {
 		for (int voteNumber = 1; voteNumber <= numberOfTimesVoted; voteNumber++) {
 
 			String votesX = "unsigned int votes" + voteNumber;
-			votesX = electionDescription.getContainer().getInputType().getArrayType();
+			votesX = votesX + electionDescription.getContainer().getInputType().getArrayType();
 			code.add(votesX + ";");
 
 			String[] counter = { "counter_0", "counter_1", "counter_2", "counter_3" };

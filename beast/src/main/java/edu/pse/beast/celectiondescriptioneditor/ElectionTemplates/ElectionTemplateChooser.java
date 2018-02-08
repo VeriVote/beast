@@ -69,7 +69,7 @@ public class ElectionTemplateChooser extends javax.swing.JFrame {
         
         for (Iterator<OutputType> iterator = TypeLoader.getAvailableOutputTypes().iterator(); iterator.hasNext();) {
         	OutputType inType = (OutputType) iterator.next();
-			inputList.addItem(inType.getOutputIDinFile());
+			resultList.addItem(inType.getOutputIDinFile());
 		}
 
         getRootPane().setDefaultButton(createButton);

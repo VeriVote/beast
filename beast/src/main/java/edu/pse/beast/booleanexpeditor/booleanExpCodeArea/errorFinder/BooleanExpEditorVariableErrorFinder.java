@@ -10,8 +10,9 @@ import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
-import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
+import edu.pse.beast.types.InputType;
+import edu.pse.beast.types.OutputType;
 
 /**
  * Class for finding type-errors in symbolic variable usage in the
@@ -53,13 +54,13 @@ public class BooleanExpEditorVariableErrorFinder implements ErrorFinder, Electio
     }
 
     @Override
-    public void inputChanged(ElectionTypeContainer container) {
-        lis.setInput(container.getInputType());
+    public void inputChanged(InputType inType) {
+        lis.setInput(inType);
     }
 
     @Override
-    public void outputChanged(ElectionTypeContainer container) {
-        lis.setOutput(container.getOutputType());
+    public void outputChanged(OutputType outType) {
+        lis.setOutput(outType);
     }
 
     /**

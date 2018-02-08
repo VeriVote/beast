@@ -31,7 +31,7 @@ public class UnprocessedCBMCResult extends CBMCResult {
 		}
 	}
 
-	public Long[] getNewResult() {
+	public String[] getNewResult() {
 		// determine the elect values
 		if (getResult() != null && getElectionDescription() != null) {
 

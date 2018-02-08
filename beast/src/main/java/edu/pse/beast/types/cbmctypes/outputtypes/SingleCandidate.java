@@ -6,6 +6,8 @@ import java.util.List;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.types.InternalTypeContainer;
+import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
 public class SingleCandidate extends CBMCOutputType {
@@ -63,7 +65,7 @@ public class SingleCandidate extends CBMCOutputType {
 	@Override
 	public CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code, int voteNumber) {
 		String electX = "unsigned int elect" + voteNumber;
-		electX += getCArrayType();
+		electX = electX + getCArrayType();
 		code.add(electX + ";");
 		code.add("elect" + voteNumber + " = voting(votes" + voteNumber + ");");
 
@@ -72,7 +74,7 @@ public class SingleCandidate extends CBMCOutputType {
 
 	@Override
 	public String getCArrayType() {
-		return "[]";
+		return "[C]";
 	}
 
 	@Override
@@ -110,5 +112,10 @@ public class SingleCandidate extends CBMCOutputType {
 		List<String> toReturn = new ArrayList<String>();
 		toReturn.add(tmpResultLong.get(0).getValue());
 		return toReturn;
+	}
+	
+	@Override
+	public InternalTypeContainer getInternalTypeContainer() {
+		return new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
 	}
 }

@@ -28,6 +28,8 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
 import edu.pse.beast.toolbox.SuperFolderFinder;
+import edu.pse.beast.types.InputType;
+import edu.pse.beast.types.OutputType;
 
 public class ElectionSimulation implements Runnable, ActionListener, ComponentListener, AdjustmentListener,
 		MouseWheelListener, ElectionDescriptionChangeListener {
@@ -206,12 +208,12 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 	}
 
 	@Override
-	public void inputChanged(ElectionTypeContainer input) {
+	public void inputChanged(InputType input) {
 		electionTypeChanged();
 	}
 
 	@Override
-	public void outputChanged(ElectionTypeContainer output) {
+	public void outputChanged(OutputType output) {
 		electionTypeChanged();
 	}
 
@@ -408,7 +410,7 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 									System.out.println("new winner: " + finalMarginResult.getNewResult()[0]);
 								} else {
 
-									Long[] tmpArray = finalMarginResult.getNewResult();
+									String[] tmpArray = finalMarginResult.getNewResult();
 
 									String tmpAcc = "";
 

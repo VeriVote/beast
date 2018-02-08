@@ -6,7 +6,7 @@ import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 
-public abstract class OutputType {
+public abstract class OutputType implements InOutType {
 
 	protected CommonHelpMethods helper;
 	
@@ -64,4 +64,6 @@ public abstract class OutputType {
 	public abstract List<String> getCodeToRunMargin(List<String> origResult, List<String> lastResult);
 
 	public abstract List<String> getNewResult(List<String> lastFailedRun);
+
+	public abstract InternalTypeContainer getInternalTypeContainer();
 }
