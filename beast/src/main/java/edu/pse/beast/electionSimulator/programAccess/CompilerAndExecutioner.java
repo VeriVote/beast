@@ -56,7 +56,7 @@ public final class CompilerAndExecutioner {
      *            the code to check
      * @return a list of codeErros
      */
-    public static List<Integer> compileAndRun(List<String> toCheck) {
+    public static List<String> compileAndRun(List<String> toCheck) {
         if (!initialized) {
             init();
         }

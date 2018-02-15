@@ -5,11 +5,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.google.common.hash.HashFunction;
+
+import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.electionSimulator.ElectionSimulation;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
+import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
 
 /**
@@ -171,13 +175,21 @@ public abstract class CheckerFactory implements Runnable {
 
 
 				int left = 0;
-				int right = ElectionSimulation.getNumVoters(); // how many votes we have
+				int right = ElectionSimulation.getNumVotingPoints(); // how many votes we have
+				
+				
+				if(right == 1) {
+					ErrorForUserDisplayer.displayError("You wanted to computate a margin for one voter / votingPoint, which doesn't make any sense");
+				}
+				
 				int margin = 0;
 
 				List<String> lastFailedRun = new ArrayList<String>();
 
 				boolean hasUpperBound = false;
 
+				boolean hasMargin = false;
+				
 				while ((left < right) && !stopped) {
 					// calculate the margin to check
 					margin = (int) (left + Math.floor((float) (right - left) / 2));
@@ -190,14 +202,16 @@ public abstract class CheckerFactory implements Runnable {
 					if (currentlyRunning.checkAssertionSuccess()) {
 						left = margin + 1;
 						margin = margin + 1;
+						
+						hasMargin = true;
+						
 					} else {
 						hasUpperBound = true;
 						right = margin;
 						lastFailedRun = lastResult;
 					}
 				}
-
-				boolean hasMargin = true;
+				
 
 				// so far we haven't found an upper bound for the
 				// margin, so we have to check the last computated margin now:
@@ -211,6 +225,8 @@ public abstract class CheckerFactory implements Runnable {
 				// hasMargin now is true, if there is an upper bound,
 				// and false, if there is no margin
 
+				System.out.println("finished: hasFinalMargin: " + hasMargin + " || finalMargin = " + margin);
+				
 				result.setMarginComp(true);
 				
 				result.setHasFinalMargin(hasMargin);
@@ -245,13 +261,13 @@ public abstract class CheckerFactory implements Runnable {
 					
 					int count = 0;
 
-					for (Iterator iterator = newVotes.iterator(); iterator.hasNext();) {
+					for (Iterator<List<String>> iterator = newVotes.iterator(); iterator.hasNext();) {
 						int count2 = 0;
-						List<Long> list = (List<Long>) iterator.next();
+						List<String> list = (List<String>) iterator.next();
 						System.out.println("");
 						System.out.print("new_votes: " + count++ +"==");
-						for (Iterator iterator2 = list.iterator(); iterator2.hasNext();) {
-							Long long1 = (Long) iterator2.next();
+						for (Iterator<String> iterator2 = list.iterator(); iterator2.hasNext();) {
+							String long1 = (String) iterator2.next();
 							System.out.print(count2++ + ":" + long1 + "|");
 						}
 					}
@@ -260,9 +276,9 @@ public abstract class CheckerFactory implements Runnable {
 					
 					count = 0;
 
-					for (Iterator iterator = newResult.iterator(); iterator.hasNext();) {
-						Long long1 = (Long) iterator.next();
-						System.out.println("new_result " + count + ": " + long1);
+					for (Iterator<String> iterator = newResult.iterator(); iterator.hasNext();) {
+						String string1 = (String) iterator.next();
+						System.out.println("new_result " + count + ": " + string1);
 						count = count + 1;
 					}
 				}

@@ -2,11 +2,13 @@ SINGLE_CHOICE_exp : Wähler stimmt jeweils für einen Kandidaten
 PREFERENCE_exp : Wähler legt Ranking für alle Kandidaten fest
 APPROVAL_exp : Wähler bewertet jeden Kandidaten mit Ja/Nein
 WEIGHTED_APPROVAL_exp : Wähler bewertet jeden Kandidaten mit Zahlenwert zwischen 0 und 100
+SINGLE_CHOICE_STACK_exp : Die Stimmen werden nur als Stapel für die Parteien angesehen
 
 SINGLE_CHOICE : Single-choice
 PREFERENCE : Präferenzwahl
 APPROVAL : Zustimmungswahl
 WEIGHTED_APPROVAL : Gewichtete Wahl
+SINGLE_CHOICE_STACK : Stapel Single-choice
 
 CAND_OR_UNDEF_exp : Ein gewählter Kandidat oder unentschieden
 CAND_PER_SEAT_exp : Jedem Sitz wird ein Kandidat zugeteilt

@@ -1,5 +1,6 @@
 package edu.pse.beast.types.cbmctypes.outputtypes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
@@ -43,12 +44,11 @@ public class Parliament extends CBMCOutputType {
 
 	@Override
 	public CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code) {
-		code.add("void verify() {");
+		code.add("void verifyMain() {");
 		// code.add("int new_votes1[V], diff[V], total_diff, pos_diff;");
 
 		code.addTab();
 
-		code.add("int total_diff = 0;");
 		code.add("struct result tmp = voting(new_votes1);");
 
 		code.add("int *tmp_result = tmp.arr;");
@@ -57,9 +57,9 @@ public class Parliament extends CBMCOutputType {
 		// new seats will get saved
 
 		code.add("for (int i = 0; i < S; i++) {"); // iterate over the
-		code.addTab();
 		// seat array, and
 		// fill it
+		code.addTab();
 		// we do this, so our cbmc parser can read out the value of the
 		// array
 		code.add("new_result1[i] = tmp_result[i];");
@@ -135,23 +135,80 @@ public class Parliament extends CBMCOutputType {
 	@Override
 	public List<String> getCodeToRunMargin(List<String> origResult, List<String> lastResult) {
 
-		List<CBMCResultWrapperSingleArray> tmpResultOneDim = super.helper.readOneDimVarLong("elect",
-				lastResult);
+		List<CBMCResultWrapperSingleArray> tmpResultOneDim = super.helper.readOneDimVarLong("elect", lastResult);
 
 		origResult = tmpResultOneDim.get(0).getList();
-		
+
 		return origResult;
 	}
 
 	@Override
 	public List<String> getNewResult(List<String> lastFailedRun) {
-		List<CBMCResultWrapperSingleArray> tmpResultOneDim = super.helper.readOneDimVarLong("new_result", lastFailedRun);
+		List<CBMCResultWrapperSingleArray> tmpResultOneDim = super.helper.readOneDimVarLong("new_result",
+				lastFailedRun);
 
 		return tmpResultOneDim.get(0).getList();
 	}
-	
+
 	@Override
 	public InternalTypeContainer getInternalTypeContainer() {
 		return new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
+	}
+
+	@Override
+	public void addVerifyOutput(CodeArrayListBeautifier code) {
+		code.add("int *tmp_result = voting(new_votes1);");
+
+		code.add("int new_result1[S];"); // create the array where the
+											// new seats will get saved
+
+		code.add("for (int i = 0; i < S; i++) {"); // iterate over the
+													// seat array, and
+													// fill it
+		code.addTab();
+
+		// we do this, so our cbmc parser can read out the value of the
+		// array
+		code.add("new_result1[i] = tmp_result[i];");
+
+		code.deleteTab();
+		code.add("}"); // close the for loop
+
+		code.add("for (int i = 0; i < S; i++) {"); // iterate over all
+													// candidates /
+													// seats and assert
+													// their equality
+		code.addTab();
+
+		code.add("assert(new_result1[i] == ORIG_RESULT[i]);");
+
+		code.deleteTab();
+		code.add("}"); // end of the for loop
+	}
+
+	@Override
+	public void addLastResultAsCode(CodeArrayListBeautifier code, List<String> origResult) {
+		// first create the declaration of the array:
+		String declaration = "";
+
+		declaration = "int ORIG_RESULT[" + origResult.size() + "] = {";
+		code.addTab();
+
+		code.add(declaration);
+
+		String tmp = ""; // saves the amount of votes this seat got
+		for (int i = 0; i < origResult.size(); i++) {
+			if (i < origResult.size() - 1) {
+				tmp = tmp + origResult.get(i) + ",";
+			} else {
+				tmp = tmp + origResult.get(i);
+			}
+		}
+		code.add(tmp);
+
+		
+		code.deleteTab();
+		code.add("};");
+
 	}
 }

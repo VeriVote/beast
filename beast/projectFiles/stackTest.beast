@@ -1,0 +1,61 @@
+4 name9 stackTest8 elecDesc515 4 name14 smallStackTest14 votingDeclLine1 24 code400 //Stacked single-choice: Votes are only represented as stacks of votes for the parties
+//Candidate or not determined: One winner or not determined
+unsigned int voting(unsigned int votes[C]) {
+    int max = C;
+    int max_value = 0;
+    for(unsigned int i = 0; i < C; ++i) {
+        if (votes[i] > max_value) {
+            max_value = votes[i];
+            max = i;
+        }
+    }
+    return max;
+} 
+9 inputType19 SINGLE_CHOICE_STACK10 outputType13 CAND_OR_UNDEF8 propList250 <propertyListName>
+New PropertyList
+</propertyListName>
+<propertyItem>
+<postAndPreConditions>
+4 name10 Property 03 pre0 4 post0 7 varlist0 
+</preAndPostConditions>
+<testStatus>
+false
+</testStatus>
+<marginStatus>
+true
+</marginStatus>
+
+</propertyItem>
+19 electionCheckParams375 <amountVotersMin>
+1
+</amountVotersMin>
+<amountVotersMax>
+1
+</amountVotersMax>
+<amountCandidatesMin>
+1
+</amountCandidatesMin>
+<amountCandidatesMax>
+1
+</amountCandidatesMax>
+<amountSeatsMin>
+1
+</amountSeatsMin>
+<amountSeatsMax>
+1
+</amountSeatsMax>
+<timeout>
+<duration>
+0
+</duration>
+<timeunit>
+SECONDS
+</timeunit>
+
+</timeout>
+<processes>
+0
+</processes>
+<argument>
+
+</argument>

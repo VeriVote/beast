@@ -13,7 +13,6 @@ import org.antlr.v4.runtime.CommonTokenStream;
 
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.electionSimulator.ElectionSimulation;
@@ -41,12 +40,8 @@ public class CBMCCodeGenerator {
 	private final PreAndPostConditionsDescription PreAndPostConditionsDescription;
 	private final FormalPropertySyntaxTreeToAstTranslator translator;
 	private final CBMCCodeGenerationVisitor visitor;
-	private final ElectionTypeContainer types;
-	private final CCodeHelper cCodeHelper;
 	private int numberOfTimesVoted; // this number should be the number of
-									// rounds of votes the Properties compare.
-	private final boolean isMargin;
-	private int margin;
+									private int margin;
 	private List<String> origResult;
 	private boolean isTest;
 
@@ -66,10 +61,9 @@ public class CBMCCodeGenerator {
 		this.electionDescription = electionDescription;
 		this.PreAndPostConditionsDescription = PreAndPostConditionsDescription;
 		code = new CodeArrayListBeautifier();
-		types = electionDescription.getContainer();
+		electionDescription.getContainer();
 		this.visitor = new CBMCCodeGenerationVisitor();
-		cCodeHelper = new CCodeHelper();
-		this.isMargin = false;
+		new CCodeHelper();
 		generateCodeCheck();
 
 	}
@@ -91,14 +85,13 @@ public class CBMCCodeGenerator {
 		this.electionDescription = electionDescription;
 		this.PreAndPostConditionsDescription = PreAndPostConditionsDescription;
 		code = new CodeArrayListBeautifier();
-		types = electionDescription.getContainer();
+		electionDescription.getContainer();
 		this.visitor = new CBMCCodeGenerationVisitor();
-		cCodeHelper = new CCodeHelper();
+		new CCodeHelper();
 		this.margin = margin;
 		this.origResult = origResult;
 		this.isTest = isTest;
 
-		this.isMargin = true;
 		generateCodeMargin();
 
 	}
@@ -129,8 +122,6 @@ public class CBMCCodeGenerator {
 	private void generateCodeMargin() { // we want to create code for a margin
 										// computation or just a test run
 
-		// boolean multiOut = electionDescription.getOutputType().getOutputID() ==
-		// ElectionOutputTypeIds.CAND_PER_SEAT;
 
 		String[][] votingData = ElectionSimulation.getVotingData();
 
@@ -175,23 +166,20 @@ public class CBMCCodeGenerator {
 		// we also add the original result, which is calculated by compiling the
 		// program and running it
 
-		boolean singleOut = electionDescription.getContainer().getOutputType().isOutputOneCandidate();
+		//boolean singleOut = electionDescription.getContainer().getOutputType().isOutputOneCandidate();
 		
-		if (singleOut) {
-			code.addAll(getLastResultCode(origResult.get(0)));
-		} else {
-			code.addAll(getLastResultCode(origResult));
-		}
-
-		// add the main methode for the margin computation
-		code = electionDescription.getContainer().getInputType().addMarginMainCheck(code, margin, origResult);
+		electionDescription.getContainer().getOutputType().addLastResultAsCode(code, origResult);
+		
 
 		// add the verify methode:
 		// taken and adjusted from the paper:
 		// https://formal.iti.kit.edu/~beckert/pub/evoteid2016.pdf
 
-		code = electionDescription.getContainer().getOutputType().addMarginVerifyCheck(code);
+		
+		electionDescription.getContainer().getInputType().addVerifyMethod(code, electionDescription.getContainer().getOutputType());
 
+		//code = electionDescription.getContainer().getOutputType().addMarginVerifyCheck(code);
+		
 		// not used lines ( I think) //TODO if they really aren't needed, delete
 		// them
 		// code.add("new_votes1[i] = ORIG_VOTES[i] + diff[i];");
@@ -242,7 +230,7 @@ public class CBMCCodeGenerator {
 		code.addTab();
 		
 		//add the specific code which differs for different input types
-		code = electionDescription.getContainer().getInputType().getCodeForVoteSum(code, unique);
+		electionDescription.getContainer().getInputType().addCodeForVoteSum(code, unique);
 
 		code.deleteTab();
 		code.add("}");
@@ -446,7 +434,7 @@ public class CBMCCodeGenerator {
 			code.add(voteDecl);
 
 			// if we need to add something extra
-			code = electionDescription.getContainer().getInputType().addVotesArrayAndInit(code, voteNumber);
+			electionDescription.getContainer().getInputType().addExtraCodeAtEndOfCodeInit(code, voteNumber);
 
 			// close the function
 			for (int i = 0; i < listDepth; ++i) {
@@ -476,45 +464,5 @@ public class CBMCCodeGenerator {
 	private List<String> getVotingResultCode(String[][] votingData) {
 		// first create the declaration of the array:
 		return electionDescription.getContainer().getInputType().getVotingResultCode(votingData);
-	}
-
-	private List<String> getLastResultCode(List<String> origResult) {
-
-		List<String> dataAsArray = new ArrayList<String>();
-
-		// first create the declaration of the array:
-		String declaration = "";
-
-		declaration = "int ORIG_RESULT[" + origResult.size() + "] = {";
-
-		dataAsArray.add(declaration);
-
-		String tmp = ""; // saves the amount of votes this seat got
-		for (int i = 0; i < origResult.size(); i++) {
-			if (i < origResult.size() - 1) {
-				tmp = tmp + origResult.get(i) + ",";
-			} else {
-				tmp = tmp + origResult.get(i);
-			}
-		}
-		dataAsArray.add(tmp);
-
-		dataAsArray.add("};");
-
-		return dataAsArray;
-	}
-
-	private List<String> getLastResultCode(String origResult) {
-
-		List<String> dataAsArray = new ArrayList<String>();
-
-		// first create the declaration of the array:
-		String declaration = "";
-
-		declaration = "int ORIG_RESULT = " + origResult + ";";
-
-		dataAsArray.add(declaration);
-
-		return dataAsArray;
 	}
 }

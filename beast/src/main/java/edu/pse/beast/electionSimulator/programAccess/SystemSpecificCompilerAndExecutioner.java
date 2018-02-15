@@ -44,10 +44,10 @@ public abstract class SystemSpecificCompilerAndExecutioner {
 		}
 	}
 
-	public List<Integer> runAnalysis(List<String> code) {
+	public List<String> runAnalysis(List<String> code) {
 		
 	    //array that returns the result
-	    List<Integer> toReturn = new ArrayList<Integer>();
+	    List<String> toReturn = new ArrayList<String>();
 	    
 	    
 		List<String> result = new ArrayList<String>();
@@ -147,10 +147,10 @@ public abstract class SystemSpecificCompilerAndExecutioner {
 				if(winner.contains(",")) {
 				    String[] winnerArray = winner.split(",");
 				    for (int i = 0; i < winnerArray.length; i++) {
-                        toReturn.add(Integer.parseInt(winnerArray[i]));
+                        toReturn.add(winnerArray[i]);
                     }
 				} else {
-				    toReturn.add(Integer.parseInt(winner));
+				    toReturn.add(winner);
 				}
 				
 			} else {

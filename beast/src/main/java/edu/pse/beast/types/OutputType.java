@@ -66,4 +66,8 @@ public abstract class OutputType implements InOutType {
 	public abstract List<String> getNewResult(List<String> lastFailedRun);
 
 	public abstract InternalTypeContainer getInternalTypeContainer();
+
+	public abstract void addVerifyOutput(CodeArrayListBeautifier code);
+
+	public abstract void addLastResultAsCode(CodeArrayListBeautifier code, List<String> origResult);
 }

@@ -45,7 +45,7 @@ public class SingleCandidate extends CBMCOutputType {
 
 	@Override
 	public CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code) {
-		code.add("void verify() {");
+		code.add("void verifyMain() {");
 		// code.add("int new_votes1[V], diff[V], total_diff, pos_diff;");
 
 		code.addTab();
@@ -117,5 +117,21 @@ public class SingleCandidate extends CBMCOutputType {
 	@Override
 	public InternalTypeContainer getInternalTypeContainer() {
 		return new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
+	}
+
+	@Override
+	public void addVerifyOutput(CodeArrayListBeautifier code) {
+		code.add("int new_result1 = voting(new_votes1);");
+		code.add("assert(new_result1 == ORIG_RESULT);");
+	}
+
+	@Override
+	public void addLastResultAsCode(CodeArrayListBeautifier code, List<String> origResult) {
+		// just declare the variable as the result
+		String declaration = "";
+
+		declaration = "int ORIG_RESULT = " + origResult.get(0) + ";";
+
+		code.add(declaration);
 	}
 }

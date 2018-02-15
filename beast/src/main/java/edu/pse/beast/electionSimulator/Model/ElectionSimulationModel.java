@@ -116,15 +116,15 @@ public class ElectionSimulationModel extends Observable implements NameInterface
 	}
 	
 	public void setAmountCandidates(int amountCandidates) {
-		this.amountCandidates = amountCandidates;
+		this.amountCandidates = container.getInputType().vetAmountCandidates(amountCandidates);
 	}
 	
 	public void setAmountVoters(int amountVoters) {
-		this.amountVoters = amountVoters;
+		this.amountVoters = container.getInputType().vetAmountVoters(amountVoters);
 	}
 	
 	public void setAmountSeats(int amountSeats) {
-		this.amountSeats = amountSeats;
+		this.amountSeats = container.getInputType().vetAmountSeats(amountSeats);
 	}
 	
 	public int getElementHeight() {

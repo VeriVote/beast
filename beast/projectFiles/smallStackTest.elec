@@ -1,0 +1,14 @@
+4 name14 smallStackTest14 votingDeclLine1 24 code400 //Stacked single-choice: Votes are only represented as stacks of votes for the parties
+//Candidate or not determined: One winner or not determined
+unsigned int voting(unsigned int votes[C]) {
+    int max = C;
+    int max_value = 0;
+    for(unsigned int i = 0; i < C; ++i) {
+        if (votes[i] > max_value) {
+            max_value = votes[i];
+            max = i;
+        }
+    }
+    return max;
+} 
+9 inputType19 SINGLE_CHOICE_STACK10 outputType13 CAND_OR_UNDEF

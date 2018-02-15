@@ -9,6 +9,7 @@ import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.inputplugins.Approval;
 import edu.pse.beast.types.cbmctypes.inputplugins.Preference;
 import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
+import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoiceStack;
 import edu.pse.beast.types.cbmctypes.inputplugins.WeightedApproval;
 import edu.pse.beast.types.cbmctypes.outputtypes.Parliament;
 import edu.pse.beast.types.cbmctypes.outputtypes.SingleCandidate;
@@ -22,10 +23,11 @@ public class TypeLoader {
 	public static boolean init = false;
 
 	public static void loadTypes() { //TODO load add ons too
+		availableInTypes.add(new SingleChoice());
 		availableInTypes.add(new Approval());
 		availableInTypes.add(new Preference());
-		availableInTypes.add(new SingleChoice());
 		availableInTypes.add(new WeightedApproval());
+		availableInTypes.add(new SingleChoiceStack());
 		
 		availableOutTypes.add(new SingleCandidate());
 		availableOutTypes.add(new Parliament());

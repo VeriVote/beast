@@ -57,15 +57,14 @@ public abstract class InputType implements InOutType{
 	 * @param code the list to which the headers should be added to
 	 * @return the list containing the additions
 	 */
-	public abstract List<String> addCheckerSpecificHeaders(List<String> code);
+	public abstract void addCheckerSpecificHeaders(CodeArrayListBeautifier code);
 
 	/**
 	 * adds the verify method to the code list
 	 * @param code the list with the previous code
 	 * @param multiOut boolean, whether we have a single output candidate or a struct
-	 * @return the code with the added verify method
 	 */
-	public abstract List<String> addVerifyMethod(List<String> code, boolean multiOut);
+	public abstract void addVerifyMethod(CodeArrayListBeautifier code, OutputType outType);
 
 	/**
 	 * 
@@ -103,7 +102,7 @@ public abstract class InputType implements InOutType{
 
 	public abstract String[] getVotePoints(String[] votes, int amountCandidates, int amountVoters);
 
-	public abstract CodeArrayListBeautifier addMarginMainCheck(CodeArrayListBeautifier code, int margin, List<String> origResult);
+	//public abstract void addMarginMainCheck(CodeArrayListBeautifier code, int margin, List<String> origResult);
 	
 	public abstract List<String> getVotingResultCode(String[][] votingData);
 
@@ -125,12 +124,20 @@ public abstract class InputType implements InOutType{
 	 * @param voteNumber
 	 * @return
 	 */
-	public abstract CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code, int voteNumber);
+	public abstract void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, int voteNumber);
 
-	public abstract CodeArrayListBeautifier getCodeForVoteSum(CodeArrayListBeautifier code, boolean unique);
+	public abstract void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique);
 
 	public abstract List<List<String>> getNewVotes(List<String> lastFailedRun);
 
 	public abstract InternalTypeContainer getInternalTypeContainer();
 
+	public abstract int vetAmountCandidates(int amountCandidates);
+
+	public abstract int vetAmountVoters(int amountVoters);
+	
+	public abstract int vetAmountSeats(int amountSeats);
+
+	public abstract int getNumVotingPoints(String[][] votingData);
+	
 }

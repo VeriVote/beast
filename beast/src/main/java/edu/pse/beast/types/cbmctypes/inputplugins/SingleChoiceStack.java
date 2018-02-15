@@ -16,16 +16,16 @@ import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
-public class SingleChoice extends CBMCInputType {
-
+public class SingleChoiceStack extends CBMCInputType {
+	
 	@Override
 	public String getInputString() {
-		return "[V]";
+		return "[C]";
 	}
 
 	@Override
 	public String getInputIDinFile() {
-		return "SINGLE_CHOICE";
+		return "SINGLE_CHOICE_STACK";
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class SingleChoice extends CBMCInputType {
 
 	@Override
 	public String getMaximalValue(ElectionTypeContainer container) {
-		return "C";
+		return "V";
 	}
 
 	@Override
@@ -45,38 +45,42 @@ public class SingleChoice extends CBMCInputType {
 
 	@Override
 	public void addVerifyMethod(CodeArrayListBeautifier code, OutputType outType) {
-		
 		code.add("void verify() {");
 		code.addTab();
-		code.add("int total_diff = 0;");
-		code.add("int new_votes1[V];");
-		code.add("for (int i = 0; i < V; i++) {"); // go over all voters
-		code.addTab();
-		code.add("int changed = nondet_int();"); // determine, if we want to
-													// changed votes for
-													// this
-													// voter
-		code.add("assume(0 <= changed);");
-		code.add("assume(changed <= 1);");
-		code.add("if(changed) {");
-		code.addTab();
-		code.add("total_diff++;"); // if we changed the vote, we keep track
-									// of it
-		code.add("new_votes1[i] = !ORIG_VOTES[i];"); // flip the vote (0 ->
-														// 1 |
-														// 1 -> 0)
-		code.deleteTab();
-		code.add("} else {");
-		code.addTab();
-		code.add("new_votes1[i] = ORIG_VOTES[i];");
-		code.deleteTab();
-		code.add("}");
-		code.deleteTab();
-		code.add("}");
-		code.add("assume(total_diff <= MARGIN);"); // no more changes than
-													// margin allows
 		
-		outType.addVerifyOutput(code);
+			code.add("int total_diff = 0;");
+			code.add("int pos_diff = 0;");
+			
+			code.add("int new_votes1[C];");
+			code.add("int diff[C];");
+			
+			code.add("for (int i = 0; i < C; i++) {"); // go over all voters
+			code.addTab();
+			
+				code.add("diff[i] = nondet_int();"); 
+				
+				code.add("assume(-1 * MARGIN <= diff[i]);");
+				code.add("assume(diff[i] <= MARGIN);");
+				
+				code.add("assume(0 <= ORIG_VOTES[i] + diff[i]);");
+			
+			code.deleteTab();
+			code.add("}");
+			
+			code.add("for (int i = 0; i < C; i++) {"); // go over all voters
+			code.addTab();
+
+				code.add("new_votes1[i] = ORIG_VOTES[i] + diff[i];");
+				code.add("if (0 < diff[i]) pos_diff += diff[i];");
+				code.add("total_diff += diff[i];");
+				
+			code.deleteTab();
+			code.add("}");
+			
+			code.add("assume(pos_diff <= MARGIN);");
+			code.add("assume(total_diff == 0);");
+			
+			outType.addVerifyOutput(code);
 		
 		code.deleteTab();
 		code.add("}"); // end of the function
@@ -111,13 +115,8 @@ public class SingleChoice extends CBMCInputType {
 		} catch (NumberFormatException e) {
 			return "0";
 		}
-
-		if (number == 1) {
-			for (int i = 0; i < row.getValues().size(); i++) {
-				row.getValues().set(i, "0");
-			}
-			newValue = "1";
-		} else {
+		
+		if (number < 0) {
 			newValue = "0";
 		}
 		return newValue;
@@ -157,70 +156,25 @@ public class SingleChoice extends CBMCInputType {
 		return toReturn;
 	}
 
-//	@Override
-//	public void addMarginMainCheck(CodeArrayListBeautifier code, int margin,
-//			List<String> origResult) {
-//		code.add("int new_votes1[V];");
-//		code.add("for (int i = 0; i < V; i++) {"); // go over all voters
-//		code.addTab();
-//		code.add("int changed = nondet_int();"); // determine, if we want to
-//													// changed votes for
-//													// this
-//													// voter
-//		code.add("assume(0 <= changed);");
-//		code.add("assume(changed <= 1);");
-//		code.add("if(changed) {");
-//		code.addTab();
-//		code.add("total_diff++;"); // if we changed the vote, we keep track
-//									// of it
-//		code.add("new_votes1[i] = !ORIG_VOTES[i];"); // flip the vote (0 ->
-//														// 1 |
-//														// 1 -> 0)
-//		code.deleteTab();
-//		code.add("} else {");
-//		code.addTab();
-//		code.add("new_votes1[i] = ORIG_VOTES[i];");
-//		code.deleteTab();
-//		code.add("}");
-//		code.deleteTab();
-//		code.add("}");
-//		code.add("assume(total_diff <= MARGIN);"); // no more changes than
-//													// margin allows
-//	}
+	
 
 	@Override
 	public List<String> getVotingResultCode(String[][] votingData) {
 		List<String> toReturn = new ArrayList<String>();
 
-		toReturn.add("int ORIG_VOTES[" + votingData.length + "] = {");
+		toReturn.add("int ORIG_VOTES[" + votingData[0].length + "] = {");
 
-		// we have to map the two dimensional array to an one
-		// dimensional one
-		for (int i = 0; i < votingData.length; i++) {
-			int tmp = 0; // saves what this voter voted for
-			int tmpSum = 0;
-			for (int j = 0; j < votingData[i].length; j++) {
-				tmpSum += Long.parseLong(votingData[i][j]);
-				if (votingData[i][j].equals("0")) {
-					tmp = j;
-				}
-			}
-
-			if (tmpSum == 0) {
-				if (i < votingData.length - 1) {
-					toReturn.add("C ,");
-				} else {
-					toReturn.add("C");
-				}
-			} else {
-
-				if (i < votingData.length - 1) {
-					toReturn.add(tmp + ",");
-				} else {
-					toReturn.add("" + tmp);
-				}
-			}
+		//we only have the candidates, and only one "pseudo" voter, 
+		
+		String tmp = "" + votingData[0][0];
+		
+		for (int i = 1; i < votingData[0].length; i++) {
+			tmp = tmp + "," + votingData[0][i]; 
 		}
+		
+		toReturn.add(tmp);
+		
+		
 		
 		toReturn.add("};"); // close the array declaration
 		
@@ -271,11 +225,7 @@ public class SingleChoice extends CBMCInputType {
 
 	@Override
 	public int vetAmountVoters(int amountVoters) {
-		if(amountVoters < 1) {
-			return 1;
-		} else {
-			return amountVoters;
-		}
+		return 1;
 	}
 
 	@Override
@@ -286,10 +236,18 @@ public class SingleChoice extends CBMCInputType {
 			return amountSeats;
 		}
 	}
-
+	
 	@Override
 	public int getNumVotingPoints(String[][] votingData) {
-		return ElectionSimulation.getNumVoters();
+		int sum = 0;
+		
+		for (int i = 0; i < votingData.length; i++) {
+			for (int j = 0; j < votingData[0].length; j++) {
+				sum = sum + Integer.parseInt(votingData[i][j]);
+			}
+		}
+		
+		return sum;
 	}
 	
 }

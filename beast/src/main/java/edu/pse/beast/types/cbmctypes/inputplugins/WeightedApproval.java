@@ -5,12 +5,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
+import edu.pse.beast.electionSimulator.ElectionSimulation;
 import edu.pse.beast.electionSimulator.Model.RowOfValues;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
+import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class WeightedApproval extends CBMCInputType {
@@ -41,14 +43,16 @@ public class WeightedApproval extends CBMCInputType {
 	}
 
 	@Override
-	public List<String> addVerifyMethod(List<String> code, boolean multiOut) {
+	public void addVerifyMethod(CodeArrayListBeautifier code, OutputType outType) {
 		code.add("void verify() {");
 		code.add("int total_diff = 0;");
 
 		code.add("int new_votes1[V][C];");
 
 		code.add("for (int i = 0; i < V; i++) {"); // go over all voters
+		code.addTab();
 		code.add("for (int j = 0; i < C; i++) {"); // go over all candidates
+		code.addTab();
 		code.add("int changed = nondet_int();"); // determine, if we want to
 													// changed votes for
 													// this
@@ -57,6 +61,7 @@ public class WeightedApproval extends CBMCInputType {
 		code.add("assume(0 <= changed);");
 		code.add("assume(changed <= 1);");
 		code.add("if(changed) {");
+		code.addTab();
 		code.add("total_diff++;"); // if we changed the vote, we keep track
 									// of it
 		code.add("new_votes1[i][j] = nondet_int();");
@@ -70,38 +75,22 @@ public class WeightedApproval extends CBMCInputType {
 		// original
 		code.add("assume(0 <= new_votes1[i][j]);");
 		code.add("assume(new_votes1[i][j] <= 100);");
+		code.deleteTab();
 		code.add("} else {");
+		code.addTab();
 		code.add("new_votes1[i][j] = ORIG_VOTES[i][j];");
+		code.deleteTab();
 		code.add("}");
+		code.deleteTab();
 		code.add("}");
+		code.deleteTab();
 		code.add("}"); // end of the double for loop
 		code.add("assume(total_diff <= MARGIN);"); // no more changes than
 													// margin allows
-		if (multiOut) {
-			code.add("int *tmp_result = voting(new_votes1);");
 
-			code.add("int new_result1[S];"); // create the array where the
-												// new seats will get saved
-
-			code.add("for (int i = 0; i < S; i++) {"); // iterate over the
-														// seat array, and
-														// fill it
-			// we do this, so our cbmc parser can read out the value of the
-			// array
-			code.add("new_result1[i] = tmp_result[i];");
-			code.add("}"); // close the for loop
-
-			code.add("for (int i = 0; i < S; i++) {"); // iterate over all
-														// candidates /
-														// seats
-			code.add("assert(new_result1[i] == ORIG_RESULT[i]);");
-			code.add("}"); // end of the for loop
-		} else {
-			code.add("int new_result1 = voting(new_votes1);");
-			code.add("assert(new_result1 == ORIG_RESULT);");
-		}
+		outType.addVerifyOutput(code);
+		
 		code.add("}"); // end of the function
-		return code;
 	}
 
 	@Override
@@ -166,51 +155,50 @@ public class WeightedApproval extends CBMCInputType {
 		return super.wrongInputTypeArray(amountCandidates, amountVoters);
 	}
 
-	@Override
-	public CodeArrayListBeautifier addMarginMainCheck(CodeArrayListBeautifier code, int margin,
-			List<String> origResult) {
-		code.add("int new_votes1[V][C];");
-
-		code.add("for (int i = 0; i < V; i++) {"); // go over all voters
-		code.addTab();
-		code.add("for (int j = 0; i < C; i++) {"); // go over all candidates
-		code.addTab();
-		code.add("int changed = nondet_int();"); // determine, if we want to
-													// changed votes for
-													// this
-													// voter - candidate
-													// pair
-		code.add("assume(0 <= changed);");
-		code.add("assume(changed <= 1);");
-		code.add("if(changed) {");
-		code.addTab();
-		code.add("total_diff++;"); // if we changed the vote, we keep track
-									// of it
-		code.add("new_votes1[i][j] = nondet_int();");
-		code.add("assume(new_votes1[i][j] != ORIG_VOTES[i][j]);"); // set
-																	// the
-																	// vote
-																	// to
-		// (0-100), but
-		// different
-		// from
-		// original
-		code.add("assume(0 <= new_votes1[i][j]);");
-		code.add("assume(new_votes1[i][j] <= 100);");
-		code.deleteTab();
-		code.add("} else {");
-		code.addTab();
-		code.add("new_votes1[i][j] = ORIG_VOTES[i][j];");
-		code.deleteTab();
-		code.add("}");
-		code.deleteTab();
-		code.add("}");
-		code.deleteTab();
-		code.add("}"); // end of the double for loop
-		code.add("assume(total_diff <= MARGIN);"); // no more changes than
-													// margin allows
-		return code;
-	}
+//	@Override
+//	public void addMarginMainCheck(CodeArrayListBeautifier code, int margin,
+//			List<String> origResult) {
+//		code.add("int new_votes1[V][C];");
+//
+//		code.add("for (int i = 0; i < V; i++) {"); // go over all voters
+//		code.addTab();
+//		code.add("for (int j = 0; i < C; i++) {"); // go over all candidates
+//		code.addTab();
+//		code.add("int changed = nondet_int();"); // determine, if we want to
+//													// changed votes for
+//													// this
+//													// voter - candidate
+//													// pair
+//		code.add("assume(0 <= changed);");
+//		code.add("assume(changed <= 1);");
+//		code.add("if(changed) {");
+//		code.addTab();
+//		code.add("total_diff++;"); // if we changed the vote, we keep track
+//									// of it
+//		code.add("new_votes1[i][j] = nondet_int();");
+//		code.add("assume(new_votes1[i][j] != ORIG_VOTES[i][j]);"); // set
+//																	// the
+//																	// vote
+//																	// to
+//		// (0-100), but
+//		// different
+//		// from
+//		// original
+//		code.add("assume(0 <= new_votes1[i][j]);");
+//		code.add("assume(new_votes1[i][j] <= 100);");
+//		code.deleteTab();
+//		code.add("} else {");
+//		code.addTab();
+//		code.add("new_votes1[i][j] = ORIG_VOTES[i][j];");
+//		code.deleteTab();
+//		code.add("}");
+//		code.deleteTab();
+//		code.add("}");
+//		code.deleteTab();
+//		code.add("}"); // end of the double for loop
+//		code.add("assume(total_diff <= MARGIN);"); // no more changes than
+//													// margin allows
+//	}
 	
 	@Override
 	public List<String> getVotingResultCode(String[][] votingData) {
@@ -254,12 +242,11 @@ public class WeightedApproval extends CBMCInputType {
 	}
 
 	@Override
-	public CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code, int voteNumber) {
-		return code;
+	public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, int voteNumber) {
 	}
 
 	@Override
-	public CodeArrayListBeautifier getCodeForVoteSum(CodeArrayListBeautifier code, boolean unique) {
+	public void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique) {
 		code.add("unsigned int candSum = arr[i][candidate];");
 		if (unique) {
 			code.add("for(unsigned int j = 0; j < C; ++i) {");
@@ -267,8 +254,6 @@ public class WeightedApproval extends CBMCInputType {
 			code.add("}");
 		}
 		code.add("sum += candSum;");
-		
-		return code;
 	}
 
 	@Override
@@ -278,6 +263,39 @@ public class WeightedApproval extends CBMCInputType {
 	
 	@Override
 	public InternalTypeContainer getInternalTypeContainer() {
-		return new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
+		return new InternalTypeContainer(new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.INTEGER),
+                InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
+	}
+	
+	@Override
+	public int vetAmountCandidates(int amountCandidates) {
+		if(amountCandidates < 1) {
+			return 1;
+		} else {
+			return amountCandidates;
+		}
+	}
+
+	@Override
+	public int vetAmountVoters(int amountVoters) {
+		if(amountVoters < 1) {
+			return 1;
+		} else {
+			return amountVoters;
+		}
+	}
+
+	@Override
+	public int vetAmountSeats(int amountSeats) {
+		if(amountSeats < 1) {
+			return 1;
+		} else {
+			return amountSeats;
+		}
+	}
+	
+	@Override
+	public int getNumVotingPoints(String[][] votingData) {
+		return ElectionSimulation.getNumVoters();
 	}
 }
