@@ -22,6 +22,8 @@ import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.saverloader.ProjectSaverLoader;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
+import edu.pse.beast.types.cbmctypes.inputplugins.WeightedApproval;
+import edu.pse.beast.types.cbmctypes.outputtypes.SingleCandidate;
 
 /**
  * JUnit Testclass for saverloader.ProjectSaverLoader.
@@ -35,10 +37,7 @@ public class ProjectSaverLoaderTest {
     public static void setUpClass() {
         projectSaverLoader = new ProjectSaverLoader();
         ElectionTemplateHandler electionTemplateHandler = new ElectionTemplateHandler();
-        ElectionTypeContainer inputType = electionTemplateHandler.getById(ElectionTypeContainer.ElectionInputTypeIds.WEIGHTED_APPROVAL);
-        ElectionTypeContainer outputType = electionTemplateHandler.getStandardResult();
-
-        ElectionDescription electionDescription = new ElectionDescription("testDescription", inputType, outputType, 2);
+        ElectionDescription electionDescription = new ElectionDescription("testDescription", new WeightedApproval(), new SingleCandidate(), 2);
         ArrayList<String> code = new ArrayList<String>();
         code.add("sdfgokdffg");
         code.add("sdkofgdfg");
@@ -81,8 +80,6 @@ public class ProjectSaverLoaderTest {
         assert (recreatedElectionDescription.getName().equals("testDescription"));
         assert (recreatedElectionDescription.getCode().get(0).equals("sdfgokdffg"));
         assert (recreatedElectionDescription.getCode().get(1).equals("sdkofgdfg"));
-        Assert.assertEquals(ElectionTypeContainer.ElectionInputTypeIds.WEIGHTED_APPROVAL,
-                recreatedElectionDescription.getInputType().getInputID());
         assert (recreatedElectionDescription.getVotingDeclLine() == 2);
 
         ElectionCheckParameter recreatedElectionCheckParameter = project.getElectionCheckParameter();
