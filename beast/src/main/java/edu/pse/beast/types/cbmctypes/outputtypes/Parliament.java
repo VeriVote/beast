@@ -51,9 +51,9 @@ public class Parliament extends CBMCOutputType {
 
 		code.add("struct result tmp = voting(new_votes1);");
 
-		code.add("int *tmp_result = tmp.arr;");
+		code.add("unsigned int *tmp_result = tmp.arr;");
 
-		code.add("int new_result1[S];"); // create the array where the
+		code.add("unsigned int new_result1[S];"); // create the array where the
 		// new seats will get saved
 
 		code.add("for (int i = 0; i < S; i++) {"); // iterate over the
@@ -157,9 +157,9 @@ public class Parliament extends CBMCOutputType {
 
 	@Override
 	public void addVerifyOutput(CodeArrayListBeautifier code) {
-		code.add("int *tmp_result = voting(new_votes1);");
+		code.add("struct result tmp_result = voting(new_votes1);");
 
-		code.add("int new_result1[S];"); // create the array where the
+		code.add("unsigned int new_result1[S];"); // create the array where the
 											// new seats will get saved
 
 		code.add("for (int i = 0; i < S; i++) {"); // iterate over the
@@ -169,7 +169,7 @@ public class Parliament extends CBMCOutputType {
 
 		// we do this, so our cbmc parser can read out the value of the
 		// array
-		code.add("new_result1[i] = tmp_result[i];");
+		code.add("new_result1[i] = tmp_result.arr[i];");
 
 		code.deleteTab();
 		code.add("}"); // close the for loop

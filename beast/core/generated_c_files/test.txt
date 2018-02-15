@@ -1,0 +1,431 @@
+
+C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files>"C:\Users\lukas\Documents\GitHub\BEAST\beast\windows\VsDevCmd.bat"   & "C:\Users\lukas\Documents\GitHub\BEAST\beast\windows\cbmcWIN\cbmc64.exe" "-IC:\Users\lukas\Documents\GitHub\BEAST\beast/core/user_includes/" "C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c" "C:\Users\lukas\Documents\GitHub\BEAST\beast\core\user_includes\foo.c"  --trace -D V=1 -D C=5 -D S=1 
+
+C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files>cd "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools" 
+
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools>call VsDevCMD.bat 
+**********************************************************************
+** Visual Studio 2017 Developer Command Prompt v15.4.4
+** Copyright (c) 2017 Microsoft Corporation
+**********************************************************************
+CBMC version 5.5 64-bit x86_64 windows
+Parsing C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c
+Parsing C:\Users\lukas\Documents\GitHub\BEAST\beast\core\user_includes\foo.c
+Converting
+Type-checking foo
+Type-checking tj50o36en7tldjh8ju2v
+Generating GOTO Program
+Adding CPROVER library (x86_64)
+Removal of function pointers and virtual functions
+Partial Inlining
+Generic Property Instrumentation
+Starting Bounded Model Checking
+Unwinding loop verify.0 iteration 1 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 57 function verify thread 0
+Unwinding loop verify.0 iteration 2 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 57 function verify thread 0
+Unwinding loop verify.0 iteration 3 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 57 function verify thread 0
+Unwinding loop verify.0 iteration 4 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 57 function verify thread 0
+Unwinding loop verify.0 iteration 5 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 57 function verify thread 0
+Unwinding loop verify.1 iteration 1 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 63 function verify thread 0
+Unwinding loop verify.1 iteration 2 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 63 function verify thread 0
+Unwinding loop verify.1 iteration 3 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 63 function verify thread 0
+Unwinding loop verify.1 iteration 4 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 63 function verify thread 0
+Unwinding loop verify.1 iteration 5 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 63 function verify thread 0
+Unwinding loop voting.0 iteration 1 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 28 function voting thread 0
+Unwinding loop voting.1 iteration 1 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 29 function voting thread 0
+Unwinding loop voting.1 iteration 2 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 29 function voting thread 0
+Unwinding loop voting.1 iteration 3 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 29 function voting thread 0
+Unwinding loop voting.1 iteration 4 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 29 function voting thread 0
+Unwinding loop voting.1 iteration 5 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 29 function voting thread 0
+Unwinding loop voting.2 iteration 1 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 34 function voting thread 0
+Unwinding loop voting.2 iteration 2 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 34 function voting thread 0
+Unwinding loop voting.2 iteration 3 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 34 function voting thread 0
+Unwinding loop voting.2 iteration 4 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 34 function voting thread 0
+Unwinding loop voting.2 iteration 5 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 34 function voting thread 0
+Unwinding loop voting.3 iteration 1 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 33 function voting thread 0
+Unwinding loop verify.2 iteration 1 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 72 function verify thread 0
+Unwinding loop verify.3 iteration 1 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 75 function verify thread 0
+size of program expression: 242 steps
+simple slicing removed 8 assignments
+Generated 1 VCC(s), 1 remaining after simplification
+Passing problem to propositional reduction
+converting SSA
+Running propositional reduction
+Post-processing
+Solving with MiniSAT 2.2.1 with simplifier
+13035 variables, 59019 clauses
+SAT checker: instance is SATISFIABLE
+Runtime decision procedure: 0.16s
+
+** Results:
+[verify.assertion.1] assertion new_result1[i] == ORIG_RESULT[i]: FAILURE
+
+Trace for verify.assertion.1:
+
+State 22 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 53 function verify thread 0
+----------------------------------------------------
+  total_diff=0 (00000000000000000000000000000000)
+
+State 23 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 53 function verify thread 0
+----------------------------------------------------
+  total_diff=0 (00000000000000000000000000000000)
+
+State 24 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 54 function verify thread 0
+----------------------------------------------------
+  pos_diff=0 (00000000000000000000000000000000)
+
+State 25 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 54 function verify thread 0
+----------------------------------------------------
+  pos_diff=0 (00000000000000000000000000000000)
+
+State 26 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 55 function verify thread 0
+----------------------------------------------------
+  new_votes1={ 0, 0, 0, 0, 0 } ({ 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000 })
+
+State 27 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 56 function verify thread 0
+----------------------------------------------------
+  diff={ 0, 0, 0, 0, 0 } ({ 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000 })
+
+State 28 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 57 function verify thread 0
+----------------------------------------------------
+  i=0 (00000000000000000000000000000000)
+
+State 29 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 57 function verify thread 0
+----------------------------------------------------
+  i=0 (00000000000000000000000000000000)
+
+State 31 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 58 function verify thread 0
+----------------------------------------------------
+  diff[0ll]=0 (00000000000000000000000000000000)
+
+State 35 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 57 function verify thread 0
+----------------------------------------------------
+  i=1 (00000000000000000000000000000001)
+
+State 38 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 58 function verify thread 0
+----------------------------------------------------
+  diff[1ll]=0 (00000000000000000000000000000000)
+
+State 42 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 57 function verify thread 0
+----------------------------------------------------
+  i=2 (00000000000000000000000000000010)
+
+State 45 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 58 function verify thread 0
+----------------------------------------------------
+  diff[2ll]=-1 (11111111111111111111111111111111)
+
+State 49 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 57 function verify thread 0
+----------------------------------------------------
+  i=3 (00000000000000000000000000000011)
+
+State 52 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 58 function verify thread 0
+----------------------------------------------------
+  diff[3ll]=-3 (11111111111111111111111111111101)
+
+State 56 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 57 function verify thread 0
+----------------------------------------------------
+  i=4 (00000000000000000000000000000100)
+
+State 59 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 58 function verify thread 0
+----------------------------------------------------
+  diff[4ll]=4 (00000000000000000000000000000100)
+
+State 63 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 57 function verify thread 0
+----------------------------------------------------
+  i=5 (00000000000000000000000000000101)
+
+State 66 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 63 function verify thread 0
+----------------------------------------------------
+  i=0 (00000000000000000000000000000000)
+
+State 67 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 63 function verify thread 0
+----------------------------------------------------
+  i=0 (00000000000000000000000000000000)
+
+State 69 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 64 function verify thread 0
+----------------------------------------------------
+  new_votes1[0ll]=100 (00000000000000000000000001100100)
+
+State 71 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 66 function verify thread 0
+----------------------------------------------------
+  total_diff=0 (00000000000000000000000000000000)
+
+State 72 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 63 function verify thread 0
+----------------------------------------------------
+  i=1 (00000000000000000000000000000001)
+
+State 75 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 64 function verify thread 0
+----------------------------------------------------
+  new_votes1[1ll]=70 (00000000000000000000000001000110)
+
+State 77 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 66 function verify thread 0
+----------------------------------------------------
+  total_diff=0 (00000000000000000000000000000000)
+
+State 78 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 63 function verify thread 0
+----------------------------------------------------
+  i=2 (00000000000000000000000000000010)
+
+State 81 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 64 function verify thread 0
+----------------------------------------------------
+  new_votes1[2ll]=49 (00000000000000000000000000110001)
+
+State 83 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 66 function verify thread 0
+----------------------------------------------------
+  total_diff=-1 (11111111111111111111111111111111)
+
+State 84 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 63 function verify thread 0
+----------------------------------------------------
+  i=3 (00000000000000000000000000000011)
+
+State 87 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 64 function verify thread 0
+----------------------------------------------------
+  new_votes1[3ll]=27 (00000000000000000000000000011011)
+
+State 89 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 66 function verify thread 0
+----------------------------------------------------
+  total_diff=-4 (11111111111111111111111111111100)
+
+State 90 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 63 function verify thread 0
+----------------------------------------------------
+  i=4 (00000000000000000000000000000100)
+
+State 93 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 64 function verify thread 0
+----------------------------------------------------
+  new_votes1[4ll]=14 (00000000000000000000000000001110)
+
+State 95 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 65 function verify thread 0
+----------------------------------------------------
+  pos_diff=4 (00000000000000000000000000000100)
+
+State 96 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 66 function verify thread 0
+----------------------------------------------------
+  total_diff=0 (00000000000000000000000000000000)
+
+State 97 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 63 function verify thread 0
+----------------------------------------------------
+  i=5 (00000000000000000000000000000101)
+
+State 102 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 70 function verify thread 0
+----------------------------------------------------
+  tmp_result={ .arr={ 0ul } } ({ { 00000000000000000000000000000000 } })
+
+State 105 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 70 function verify thread 0
+----------------------------------------------------
+  votes=new_votes1!0@1 (0000001000000000000000000000000000000000000000000000000000000000)
+
+State 106 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 25 function voting thread 0
+----------------------------------------------------
+  r={ .arr={ 0ul } } ({ { 00000000000000000000000000000000 } })
+
+State 107 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 26 function voting thread 0
+----------------------------------------------------
+  divisor={ 0, 0, 0, 0, 0 } ({ 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000, 00000000000000000000000000000000 })
+
+State 108 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 28 function voting thread 0
+----------------------------------------------------
+  i=0ul (00000000000000000000000000000000)
+
+State 109 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 28 function voting thread 0
+----------------------------------------------------
+  i=0ul (00000000000000000000000000000000)
+
+State 111 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 28 function voting thread 0
+----------------------------------------------------
+  r.arr[0ll]=0ul (00000000000000000000000000000000)
+
+State 112 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 28 function voting thread 0
+----------------------------------------------------
+  i=1ul (00000000000000000000000000000001)
+
+State 115 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 29 function voting thread 0
+----------------------------------------------------
+  i=0ul (00000000000000000000000000000000)
+
+State 116 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 29 function voting thread 0
+----------------------------------------------------
+  i=0ul (00000000000000000000000000000000)
+
+State 118 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 29 function voting thread 0
+----------------------------------------------------
+  divisor[0ll]=1 (00000000000000000000000000000001)
+
+State 119 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 29 function voting thread 0
+----------------------------------------------------
+  i=1ul (00000000000000000000000000000001)
+
+State 122 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 29 function voting thread 0
+----------------------------------------------------
+  divisor[1ll]=1 (00000000000000000000000000000001)
+
+State 123 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 29 function voting thread 0
+----------------------------------------------------
+  i=2ul (00000000000000000000000000000010)
+
+State 126 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 29 function voting thread 0
+----------------------------------------------------
+  divisor[2ll]=1 (00000000000000000000000000000001)
+
+State 127 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 29 function voting thread 0
+----------------------------------------------------
+  i=3ul (00000000000000000000000000000011)
+
+State 130 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 29 function voting thread 0
+----------------------------------------------------
+  divisor[3ll]=1 (00000000000000000000000000000001)
+
+State 131 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 29 function voting thread 0
+----------------------------------------------------
+  i=4ul (00000000000000000000000000000100)
+
+State 134 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 29 function voting thread 0
+----------------------------------------------------
+  divisor[4ll]=1 (00000000000000000000000000000001)
+
+State 135 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 29 function voting thread 0
+----------------------------------------------------
+  i=5ul (00000000000000000000000000000101)
+
+State 138 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 31 function voting thread 0
+----------------------------------------------------
+  elected=0 (00000000000000000000000000000000)
+
+State 139 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 31 function voting thread 0
+----------------------------------------------------
+  elected=0 (00000000000000000000000000000000)
+
+State 140 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 33 function voting thread 0
+----------------------------------------------------
+  i=0ul (00000000000000000000000000000000)
+
+State 141 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 33 function voting thread 0
+----------------------------------------------------
+  i=0ul (00000000000000000000000000000000)
+
+State 143 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 34 function voting thread 0
+----------------------------------------------------
+  j=0ul (00000000000000000000000000000000)
+
+State 144 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 34 function voting thread 0
+----------------------------------------------------
+  j=0ul (00000000000000000000000000000000)
+
+State 147 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 36 function voting thread 0
+----------------------------------------------------
+  r.arr[0ll]=0ul (00000000000000000000000000000000)
+
+State 148 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 37 function voting thread 0
+----------------------------------------------------
+  divisor[0ll]=2 (00000000000000000000000000000010)
+
+State 149 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 34 function voting thread 0
+----------------------------------------------------
+  j=1ul (00000000000000000000000000000001)
+
+State 153 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 35 function voting thread 0
+----------------------------------------------------
+  elected=1 (00000000000000000000000000000001)
+
+State 154 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 36 function voting thread 0
+----------------------------------------------------
+  r.arr[0ll]=1ul (00000000000000000000000000000001)
+
+State 155 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 37 function voting thread 0
+----------------------------------------------------
+  divisor[1ll]=2 (00000000000000000000000000000010)
+
+State 156 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 34 function voting thread 0
+----------------------------------------------------
+  j=2ul (00000000000000000000000000000010)
+
+State 160 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 35 function voting thread 0
+----------------------------------------------------
+  elected=2 (00000000000000000000000000000010)
+
+State 161 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 36 function voting thread 0
+----------------------------------------------------
+  r.arr[0ll]=2ul (00000000000000000000000000000010)
+
+State 162 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 37 function voting thread 0
+----------------------------------------------------
+  divisor[2ll]=2 (00000000000000000000000000000010)
+
+State 163 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 34 function voting thread 0
+----------------------------------------------------
+  j=3ul (00000000000000000000000000000011)
+
+State 167 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 35 function voting thread 0
+----------------------------------------------------
+  elected=3 (00000000000000000000000000000011)
+
+State 168 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 36 function voting thread 0
+----------------------------------------------------
+  r.arr[0ll]=3ul (00000000000000000000000000000011)
+
+State 169 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 37 function voting thread 0
+----------------------------------------------------
+  divisor[3ll]=2 (00000000000000000000000000000010)
+
+State 170 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 34 function voting thread 0
+----------------------------------------------------
+  j=4ul (00000000000000000000000000000100)
+
+State 174 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 35 function voting thread 0
+----------------------------------------------------
+  elected=4 (00000000000000000000000000000100)
+
+State 175 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 36 function voting thread 0
+----------------------------------------------------
+  r.arr[0ll]=4ul (00000000000000000000000000000100)
+
+State 176 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 37 function voting thread 0
+----------------------------------------------------
+  divisor[4ll]=2 (00000000000000000000000000000010)
+
+State 177 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 34 function voting thread 0
+----------------------------------------------------
+  j=5ul (00000000000000000000000000000101)
+
+State 180 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 33 function voting thread 0
+----------------------------------------------------
+  i=1ul (00000000000000000000000000000001)
+
+State 185 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 70 function verify thread 0
+----------------------------------------------------
+  tmp_result={ .arr={ 4ul } } ({ { 00000000000000000000000000000100 } })
+
+State 186 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 71 function verify thread 0
+----------------------------------------------------
+  new_result1={ 0ul } ({ 00000000000000000000000000000000 })
+
+State 187 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 72 function verify thread 0
+----------------------------------------------------
+  i=0 (00000000000000000000000000000000)
+
+State 188 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 72 function verify thread 0
+----------------------------------------------------
+  i=0 (00000000000000000000000000000000)
+
+State 190 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 73 function verify thread 0
+----------------------------------------------------
+  new_result1[0ll]=4ul (00000000000000000000000000000100)
+
+State 191 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 72 function verify thread 0
+----------------------------------------------------
+  i=1 (00000000000000000000000000000001)
+
+State 194 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 75 function verify thread 0
+----------------------------------------------------
+  i=0 (00000000000000000000000000000000)
+
+State 195 file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 75 function verify thread 0
+----------------------------------------------------
+  i=0 (00000000000000000000000000000000)
+
+Violated property:
+  file C:\Users\lukas\Documents\GitHub\BEAST\beast\core\generated_c_files\tj50o36en7tldjh8ju2v.c line 76 function verify
+  assertion new_result1[i] == ORIG_RESULT[i]
+  FALSE
+
+
+** 1 of 1 failed (1 iteration)
+VERIFICATION FAILED

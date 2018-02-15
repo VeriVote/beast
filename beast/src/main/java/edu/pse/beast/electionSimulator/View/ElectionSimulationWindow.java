@@ -232,13 +232,13 @@ public class ElectionSimulationWindow extends JFrame implements ActionListener {
 			
 		});
 
-		startStopButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				controller.startStop();
-			}
-			
-		});
+//		startStopButton.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent arg0) {
+//				controller.startStop();
+//			}
+//			
+//		});
 
 
 		this.addMouseWheelListener(controller);
