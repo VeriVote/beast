@@ -1,7 +1,8 @@
 package edu.pse.beast.highlevel;
 
+import static org.junit.Assert.assertNotEquals;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

@@ -1,8 +1,9 @@
 package edu.pse.beast.SaverLoader;
 
-import edu.pse.beast.saverloader.StaticSaverLoaders.StringSaverLoader;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import edu.pse.beast.saverloader.StaticSaverLoaders.StringSaverLoader;
 
 
 /**

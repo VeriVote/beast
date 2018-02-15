@@ -1,14 +1,14 @@
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.toolbox.ErrorLogger;
-import edu.pse.beast.toolbox.ThreadedBufferedReader;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+
+import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.toolbox.ThreadedBufferedReader;
 
 public abstract class Checker implements Runnable {
 
@@ -185,4 +185,8 @@ public abstract class Checker implements Runnable {
 	 * system specific implementation to stop the process that got started
 	 */
 	protected abstract void stopProcess();
+	
+	public abstract boolean checkAssertionSuccess();
+	
+	public abstract boolean checkAssertionFailure();
 }

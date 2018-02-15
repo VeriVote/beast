@@ -4,7 +4,10 @@
  * and open the template in the editor.
  */
 package edu.pse.beast.datatypes.propertydescription;
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
+
+import edu.pse.beast.types.InternalTypeContainer;
+
+//import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 /**
  *
  * @author Niels

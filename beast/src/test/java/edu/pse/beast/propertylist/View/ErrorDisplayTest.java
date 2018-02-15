@@ -1,10 +1,15 @@
 package edu.pse.beast.propertylist.View;
 
-import org.junit.*;
-
-import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.swing.JFrame;
+
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  * Shows an error message for a property.

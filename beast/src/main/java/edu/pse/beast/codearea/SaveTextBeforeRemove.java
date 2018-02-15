@@ -5,15 +5,16 @@
  */
 package edu.pse.beast.codearea;
 
-import edu.pse.beast.codearea.ActionAdder.ActionlistListener;
-import edu.pse.beast.codearea.Actionlist.Actionlist;
-
-import javax.swing.*;
-import javax.swing.text.BadLocationException;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
+
+import edu.pse.beast.codearea.ActionAdder.ActionlistListener;
+import edu.pse.beast.codearea.Actionlist.Actionlist;
 
 /**
  * This class saves the text of a styled document before a removed event is

@@ -5,12 +5,15 @@
  */
 package edu.pse.beast.toolbox;
 
-import edu.pse.beast.stringresource.StringResourceLoader;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Image;
 import java.util.Arrays;
 import java.util.Comparator;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JToolBar;
+
+import edu.pse.beast.stringresource.StringResourceLoader;
 
 /**
  *

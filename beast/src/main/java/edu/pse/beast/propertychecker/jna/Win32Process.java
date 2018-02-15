@@ -1,12 +1,12 @@
 package edu.pse.beast.propertychecker.jna;
 
+import java.io.IOException;
+
 //thanks for the code to: http://stackoverflow.com/a/10124625
 
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.Kernel32Util;
 import com.sun.jna.platform.win32.WinNT;
-
-import java.io.IOException;
 
 public class Win32Process
 {

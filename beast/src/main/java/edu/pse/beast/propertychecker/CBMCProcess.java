@@ -4,6 +4,14 @@ import java.io.File;
 
 public abstract class CBMCProcess extends Checker {
 
+    // this is the last line in the cbmc output, if the verification was
+    // successful
+    private final String SUCCESSLINE = "VERIFICATION SUCCESSFUL";
+
+    // this is the last line in the cbmc output, if the assertion
+    // failed
+    private final String FAILURELINE = "VERIFICATION FAILED";
+	
     /**
      * creates a new CBMCProcess that is a super class for the system specific processes that run cbmc
      * @param voters the amount of voters
@@ -17,4 +25,21 @@ public abstract class CBMCProcess extends Checker {
         super(voters, candidates, seats, advanced, toCheck, parent);
     }
     
+    @Override
+    public boolean checkAssertionSuccess() {
+        if (super.getResultList() != null && super.getResultList().size() > 0) {
+            return super.getResultList().get(super.getResultList().size() - 1).contains(SUCCESSLINE);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean checkAssertionFailure() {
+        if (super.getResultList() != null && super.getResultList().size() > 0) {
+            return super.getResultList().get(super.getResultList().size() - 1).contains(FAILURELINE);
+        } else {
+            return false;
+        }
+    }
 }

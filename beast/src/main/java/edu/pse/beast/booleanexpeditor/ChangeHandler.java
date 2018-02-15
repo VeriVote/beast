@@ -1,10 +1,11 @@
 package edu.pse.beast.booleanexpeditor;
 
+import java.util.LinkedList;
+
+import javax.swing.JTextPane;
+
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
-
-import javax.swing.*;
-import java.util.LinkedList;
 
 /**
  * Class for checking whether the loaded PreAndPostConditionsDescription object has been modified since it was loaded.

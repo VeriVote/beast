@@ -1,11 +1,12 @@
 package edu.pse.beast.booleanexpeditor.View;
 
+import java.util.ArrayList;
+
+import javax.swing.JTextPane;
+
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpErrorDisplayer;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.stringresource.StringLoaderInterface;
-
-import javax.swing.*;
-import java.util.ArrayList;
 
 /**
  * Controller of the JTextPane for displaying errors in a BooleanExpEditorWindow

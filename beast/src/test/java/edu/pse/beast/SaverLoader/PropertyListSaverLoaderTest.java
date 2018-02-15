@@ -1,15 +1,16 @@
 package edu.pse.beast.SaverLoader;
 
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeRep;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.Model.PropertyItem;
 import edu.pse.beast.saverloader.PropertyListSaverLoader;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import edu.pse.beast.types.InternalTypeContainer;
+import edu.pse.beast.types.InternalTypeRep;
 
 /**
  * JUnit Testclass for saverloader.PropertyListSaverLoader.

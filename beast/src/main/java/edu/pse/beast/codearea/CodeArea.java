@@ -5,6 +5,13 @@
  */
 package edu.pse.beast.codearea;
 
+import java.awt.Font;
+import java.util.ArrayList;
+
+import javax.swing.JTextPane;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+
 import edu.pse.beast.codearea.Actionlist.Actionlist;
 import edu.pse.beast.codearea.Autocompletion.AutocompletionController;
 import edu.pse.beast.codearea.ErrorHandling.ErrorController;
@@ -15,12 +22,6 @@ import edu.pse.beast.codearea.SyntaxHL.RegexAndColor;
 import edu.pse.beast.codearea.SyntaxHL.SyntaxHL;
 import edu.pse.beast.codearea.UserActions.CodeAreaUserActions;
 import edu.pse.beast.toolbox.UserAction;
-
-import javax.swing.*;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
-import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * This class is the Fassade to the package of the same name - CodeArea. 

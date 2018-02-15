@@ -1,21 +1,22 @@
 package edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST;
 
+import java.util.List;
+
+import javax.swing.JTextPane;
+
+import org.junit.Before;
+import org.junit.Test;
+
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpANTLRHandler;
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.ComparisonNode;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.AtPosExp;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.toolbox.Tuple;
-import org.junit.Before;
-import org.junit.Test;
-
-import javax.swing.*;
-
-import java.util.List;
+import edu.pse.beast.types.InternalTypeContainer;
+import edu.pse.beast.types.InternalTypeRep;
 
 /**
  * Created by holger on 08.03.17.
@@ -59,8 +60,8 @@ public class FormalPropertySyntaxTreeToAstTranslatorTest {
     }
 
 
-    private static InternalTypeContainer getStandardInput() {
-        return new ElectionTemplateHandler().getStandardInput().getType();
+    private static ElectionTypeContainer getStandardInput() {
+        return new ElectionTemplateHandler().getStandardInput();
     }
 
     private static InternalTypeContainer getStandardOutput() {

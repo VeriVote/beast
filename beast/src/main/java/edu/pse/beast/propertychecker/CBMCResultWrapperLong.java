@@ -8,7 +8,7 @@ package edu.pse.beast.propertychecker;
 public class CBMCResultWrapperLong {
     private final int mainIndex;
     private final String name;
-    private long value = -1l;
+    private String value = "-1";
     
     /**
      * creates a new wrapper
@@ -24,7 +24,7 @@ public class CBMCResultWrapperLong {
      * 
      * @param value the value to be set
      */
-    public void setValue(long value) {
+    public void setValue(String value) {
         this.value = value;
     }
 
@@ -48,7 +48,7 @@ public class CBMCResultWrapperLong {
      * 
      * @return the value
      */
-    public long getValue() {
+    public String getValue() {
         return value;
     }
 }

@@ -1,10 +1,12 @@
 package edu.pse.beast.SaverLoader.StaticSaverLoaders;
 
-import org.junit.Test;
-import edu.pse.beast.saverloader.StaticSaverLoaders.SaverLoaderHelper;
+import static org.junit.Assert.assertEquals;
+
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import org.junit.Test;
+
+import edu.pse.beast.saverloader.StaticSaverLoaders.SaverLoaderHelper;
 
 /**
  * Created by holger on 12.03.17.

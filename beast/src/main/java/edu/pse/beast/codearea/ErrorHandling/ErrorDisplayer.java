@@ -5,20 +5,22 @@
  */
 package edu.pse.beast.codearea.ErrorHandling;
 
-import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
-import edu.pse.beast.highlevel.DisplaysStringsToUser;
-import edu.pse.beast.stringresource.StringResourceLoader;
-import edu.pse.beast.toolbox.Tuple;
-
-import javax.swing.*;
-import javax.swing.text.BadLocationException;
-import javax.swing.ToolTipManager;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.JTextPane;
+import javax.swing.ToolTipManager;
+import javax.swing.text.BadLocationException;
+
+import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
+import edu.pse.beast.highlevel.DisplaysStringsToUser;
+import edu.pse.beast.stringresource.StringResourceLoader;
+import edu.pse.beast.toolbox.Tuple;
 
 /**
  * This abstract class implements error displaying functionallity common to

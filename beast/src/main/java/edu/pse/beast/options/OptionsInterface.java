@@ -1,5 +1,7 @@
 package edu.pse.beast.options;
 
+import java.io.IOException;
+
 import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.highlevel.PSECentralObjectProvider;
@@ -11,8 +13,6 @@ import edu.pse.beast.parametereditor.ParameterEditor;
 import edu.pse.beast.saverloader.OptionSaverLoader.OptionsSaverLoaderInterface;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
-
-import java.io.IOException;
 
 /**
  * Class providing access to different OptionElement subclasses and an

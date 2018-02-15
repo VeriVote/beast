@@ -1,6 +1,6 @@
 package edu.pse.beast.propertylist;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.After;
 import org.junit.AfterClass;

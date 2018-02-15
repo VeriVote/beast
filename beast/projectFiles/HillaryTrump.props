@@ -1,2 +1,0 @@
-4 name12 HillaryTrump3 pre67 VOTE_SUM_FOR_CANDIDATE1(Hillary) >> VOTE_SUM_FOR_CANDIDATE1(Trump);4 post18 ELECT1 == Hillary;7 varlist94 symbolic_variable: id: Trump type: CANDIDATE;
-symbolic_variable: id: Hillary type: CANDIDATE;

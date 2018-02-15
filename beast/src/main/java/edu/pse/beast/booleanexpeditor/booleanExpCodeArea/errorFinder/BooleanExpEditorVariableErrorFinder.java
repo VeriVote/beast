@@ -1,16 +1,18 @@
 package edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder;
 
+import java.util.ArrayList;
+
+import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeWalker;
+
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpANTLRHandler;
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
-import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
-import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
-
-import java.util.ArrayList;
+import edu.pse.beast.types.InputType;
+import edu.pse.beast.types.OutputType;
 
 /**
  * Class for finding type-errors in symbolic variable usage in the
@@ -52,13 +54,13 @@ public class BooleanExpEditorVariableErrorFinder implements ErrorFinder, Electio
     }
 
     @Override
-    public void inputChanged(ElectionTypeContainer input) {
-        lis.setInput(input);
+    public void inputChanged(InputType inType) {
+        lis.setInput(inType);
     }
 
     @Override
-    public void outputChanged(ElectionTypeContainer output) {
-        lis.setOutput(output);
+    public void outputChanged(OutputType outType) {
+        lis.setOutput(outType);
     }
 
     /**

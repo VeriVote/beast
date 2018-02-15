@@ -1,7 +1,9 @@
 package edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes;
 
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpNodeVisitor;
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
+import edu.pse.beast.types.InOutType;
+import edu.pse.beast.types.InputType;
+import edu.pse.beast.types.InternalTypeContainer;
 
 /**
  *
@@ -12,12 +14,12 @@ public class VoteExp extends AccessValueNode {
 
     /**
      *
-     * @param internalTypeContainer the internal type
+     * @param type the internal type
      *
      * @param count the count of this vote
      */
-    public VoteExp(InternalTypeContainer internalTypeContainer, TypeExpression[] accessingVars, int count) {
-        super(internalTypeContainer, accessingVars, count);
+    public VoteExp(InOutType type, TypeExpression[] accessingVars, int count) {
+        super(type, accessingVars, count);
     }
 
     /**

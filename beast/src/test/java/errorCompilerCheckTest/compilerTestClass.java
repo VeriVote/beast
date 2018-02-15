@@ -1,11 +1,11 @@
 package errorCompilerCheckTest;
 
-import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.DeepErrorChecker;
-import edu.pse.beast.codearea.ErrorHandling.CodeError;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.DeepErrorChecker;
+import edu.pse.beast.codearea.ErrorHandling.CodeError;
 
 public class compilerTestClass {
     

@@ -1,8 +1,9 @@
 package edu.pse.beast.highlevel;
 
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-
 import java.util.List;
+
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.propertychecker.Result;
 
 /**
  * The PreAndPostConditionsDescriptionSource provides access to the
@@ -36,5 +37,13 @@ public interface PreAndPostConditionsDescriptionSource {
      * Resumes reacting to user input after the check is over.
      */
     void resumeReacting();
+	List<PropertyAndMarginBool> getPreAndPostPropertiesDescriptionsCheckAndMargin();
+	
+	/**
+	 * references result objects together, if they belong to the same property
+	 * @param results 
+	 * @return
+	 */
+	public List<Integer> referenceResult(List<Result> results);
     
 }

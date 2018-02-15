@@ -5,25 +5,43 @@
  */
 package edu.pse.beast.celectiondescriptioneditor;
 
-import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
-
-import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeAreaBuilder;
-import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CErrorDisplayer;
-import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
-import edu.pse.beast.celectiondescriptioneditor.UserActions.*;
-import edu.pse.beast.celectiondescriptioneditor.View.CCodeEditorWindow;
-import edu.pse.beast.celectiondescriptioneditor.View.CEditorWindowStarter;
-import edu.pse.beast.celectiondescriptioneditor.View.ErrorWindow;
-import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
-import edu.pse.beast.saverloader.FileChooser;
-import edu.pse.beast.toolbox.*;
-
-import javax.swing.text.BadLocationException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.text.BadLocationException;
+
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeAreaBuilder;
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CErrorDisplayer;
+import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
+import edu.pse.beast.celectiondescriptioneditor.UserActions.ElectionCopyUserAction;
+import edu.pse.beast.celectiondescriptioneditor.UserActions.ElectionCutUserAction;
+import edu.pse.beast.celectiondescriptioneditor.UserActions.ElectionPasteUserAction;
+import edu.pse.beast.celectiondescriptioneditor.UserActions.ElectionRedoUserAction;
+import edu.pse.beast.celectiondescriptioneditor.UserActions.ElectionUndoUserAction;
+import edu.pse.beast.celectiondescriptioneditor.UserActions.LoadElectionUserAction;
+import edu.pse.beast.celectiondescriptioneditor.UserActions.NewElectionUserAction;
+import edu.pse.beast.celectiondescriptioneditor.UserActions.PresentOptionsUserAction;
+import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveAsElectionUserAction;
+import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveElectionUserAction;
+import edu.pse.beast.celectiondescriptioneditor.UserActions.StaticErrorFindingUserAction;
+import edu.pse.beast.celectiondescriptioneditor.View.CCodeEditorWindow;
+import edu.pse.beast.celectiondescriptioneditor.View.CEditorWindowStarter;
+import edu.pse.beast.celectiondescriptioneditor.View.ErrorWindow;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
+import edu.pse.beast.pluginhandler.TypeLoader;
+import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
+import edu.pse.beast.saverloader.FileChooser;
+import edu.pse.beast.toolbox.ActionIdAndListener;
+import edu.pse.beast.toolbox.CCodeHelper;
+import edu.pse.beast.toolbox.ImageResourceProvider;
+import edu.pse.beast.toolbox.ObjectRefsForBuilder;
+import edu.pse.beast.toolbox.UserAction;
+import edu.pse.beast.types.InputType;
+import edu.pse.beast.types.OutputType;
 
 /**
  * This class creates a celectiondescriptioneditor object and all useractions
@@ -102,8 +120,14 @@ public class CElectionDescriptionEditorBuilder {
         ElectionTemplateHandler templateHandler = new ElectionTemplateHandler();
 
         try {
-            editor.loadElectionDescription(new CCodeHelper().generateElectionDescription(
-                    templateHandler.getStandardInput().getInputID(), templateHandler.getStandardResult().getOutputID(),
+        	
+        	InputType inType = TypeLoader.getStandartInputType();
+        	
+        	OutputType outType = TypeLoader.getStandartOutputType();
+        	
+        	ElectionTypeContainer container = new ElectionTypeContainer(inType, outType);
+        	
+            editor.loadElectionDescription(new CCodeHelper().generateElectionDescription(container,
                     "new_election", templateHandler,
                     objRefsForBuilder.getStringIF().getCElectionEditorStringResProvider().getElectionStringRes()));
         } catch (BadLocationException ex) {

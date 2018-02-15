@@ -1,9 +1,9 @@
 package edu.pse.beast.saverloader.StaticSaverLoaders;
 
+import java.util.ArrayList;
+
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
-
-import java.util.ArrayList;
 
 /**
  * Implements static methods for creating saveStrings from ElectionCheckParameter objects and vice versa.

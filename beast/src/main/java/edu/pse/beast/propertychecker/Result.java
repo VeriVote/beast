@@ -5,13 +5,14 @@
  */
 package edu.pse.beast.propertychecker;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenterElement;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
@@ -19,20 +20,40 @@ import java.util.List;
  */
 public abstract class Result implements ResultInterface {
 
+	protected FailureExample failureExample = null;
     private boolean valid = false;
     private boolean finished = false;
     private List<String> result;
     private List<String> error;
     private boolean timeOut = false;
     private boolean success = false;
+    private boolean hasSubResult = false;
     private int numVoters;
     private int numSeats;
     private int numCandidates;
     private ElectionDescription electionDescription;
     private PreAndPostConditionsDescription property;
     private boolean forcefulleStopped;
+    private boolean hasMargin = false;
+    private int finalMargin = -1;
+    
+    private Result subResult = null;
+    private boolean isMarginComp = false;
+    
+	protected List<List<String>> origVoting;
+	protected List<String> origWinner;
+	protected List<List<String>> newVotes;
+	protected List<String> newWinner;
 
-    /**
+    public boolean isMarginComp() {
+		return isMarginComp;
+	}
+
+	public void setMarginComp(boolean isMarginComp) {
+		this.isMarginComp = isMarginComp;
+	}
+
+	/**
      * Presents the result of the check. Every class that extends this class has
      * to implement it for itself.
      * 
@@ -253,9 +274,37 @@ public abstract class Result implements ResultInterface {
     public void setForcefullyStopped() {
         this.forcefulleStopped = true;
     }
+    public void setFinalMargin(int margin) {
+    	this.finalMargin = margin;
+    }
+    
+    public int getFinalMargin() {
+    	return finalMargin;
+    }
+    
+    public void setHasFinalMargin(boolean b) {
+    	this.hasMargin = b;
+    }
+    
+    public boolean hasFinalMargin() {
+    	return hasMargin;
+    }
+    
+    public void addSubResult(Result subResult) {
+    	this.hasSubResult = true;
+    	this.subResult = subResult;
+    }
     
     public PreAndPostConditionsDescription getPropertyDesctiption() {
     	return property;
+    }
+    
+    public boolean hasSubResult() {
+    	return this.hasSubResult;
+    }
+    
+    public Result getSubResult() {
+    	return subResult;
     }
 
     /**
@@ -269,4 +318,40 @@ public abstract class Result implements ResultInterface {
      * @return true, if the assertion failed, else false
      */
     public abstract boolean checkAssertionFailure();
+
+    public FailureExample getFailureExample() {
+    	return failureExample;
+    }
+
+	public List<List<String>> getOrigVoting() {
+		return origVoting;
+	}
+
+	public void setOrigVoting(List<List<String>> origVoting) {
+		this.origVoting = origVoting;
+	}
+
+	public List<String> getOrigWinner() {
+		return origWinner;
+	}
+
+	public void setOrigWinner(List<String> origWinner) {
+		this.origWinner = origWinner;
+	}
+
+	public List<List<String>> getNewVotes() {
+		return newVotes;
+	}
+
+	public void setNewVotes(List<List<String>> newVotes) {
+		this.newVotes = newVotes;
+	}
+
+	public List<String> getNewWinner() {
+		return newWinner;
+	}
+
+	public void setNewWinner(List<String> newWinner) {
+		this.newWinner = newWinner;
+	}
 }

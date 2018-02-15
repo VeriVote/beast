@@ -5,9 +5,10 @@
  */
 package edu.pse.beast.codearea.InputToCode;
 
-import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import javax.swing.JTextPane;
 
 /**
  * This class takes input from the user and forwards it to either 

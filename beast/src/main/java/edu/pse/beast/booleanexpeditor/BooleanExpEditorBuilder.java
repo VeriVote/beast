@@ -1,6 +1,25 @@
 package edu.pse.beast.booleanexpeditor;
 
-import edu.pse.beast.booleanexpeditor.UserActions.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import edu.pse.beast.booleanexpeditor.UserActions.AddConstUserAction;
+import edu.pse.beast.booleanexpeditor.UserActions.AddMakroUserAction;
+import edu.pse.beast.booleanexpeditor.UserActions.BooleanExpEditorConst;
+import edu.pse.beast.booleanexpeditor.UserActions.BooleanExpEditorMakro;
+import edu.pse.beast.booleanexpeditor.UserActions.CopyUserAction;
+import edu.pse.beast.booleanexpeditor.UserActions.CutUserAction;
+import edu.pse.beast.booleanexpeditor.UserActions.LoadPropsUserAction;
+import edu.pse.beast.booleanexpeditor.UserActions.NewPropsUserAction;
+import edu.pse.beast.booleanexpeditor.UserActions.PasteUserAction;
+import edu.pse.beast.booleanexpeditor.UserActions.PresentOptionsBoolUserAction;
+import edu.pse.beast.booleanexpeditor.UserActions.RedoBoolUserAction;
+import edu.pse.beast.booleanexpeditor.UserActions.SaveAsPropsUserAction;
+import edu.pse.beast.booleanexpeditor.UserActions.SavePropsUserAction;
+import edu.pse.beast.booleanexpeditor.UserActions.ShowHelpUserAction;
+import edu.pse.beast.booleanexpeditor.UserActions.StaticErrorFindingUserAction;
+import edu.pse.beast.booleanexpeditor.UserActions.UndoBoolUserAction;
 import edu.pse.beast.booleanexpeditor.View.BooleanExpEditorWindow;
 import edu.pse.beast.booleanexpeditor.View.ErrorWindow;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeArea;
@@ -15,10 +34,6 @@ import edu.pse.beast.toolbox.ActionIdAndListener;
 import edu.pse.beast.toolbox.ImageResourceProvider;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import edu.pse.beast.toolbox.UserAction;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 /**
  * Builder Class to create BooleanExpEditor Object.

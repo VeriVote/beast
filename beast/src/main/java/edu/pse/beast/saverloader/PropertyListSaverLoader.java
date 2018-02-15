@@ -51,7 +51,7 @@ public class PropertyListSaverLoader implements SaverLoader {
 
 
     private String createPropertyItemString(PropertyItem propertyItem) {
-        String preAndPostConditions = "<postAndPreConditions>\n"
+        String preAndPostConditions = "<preAndPostConditions>\n"
                 + preAndPostConditionsDescriptionSaverLoader.createSaveString(propertyItem.getDescription())
                 + "\n</preAndPostConditions>\n";
         String testStatus = "<testStatus>\n" + propertyItem.getTestStatus() + "\n</testStatus>\n";

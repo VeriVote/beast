@@ -5,17 +5,18 @@
  */
 package edu.pse.beast.codearea.InputToCode;
 
-import edu.pse.beast.codearea.SaveTextBeforeRemove;
-import edu.pse.beast.toolbox.SortedIntegerList;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import javax.swing.*;
+import javax.swing.JTextPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import edu.pse.beast.codearea.SaveTextBeforeRemove;
+import edu.pse.beast.toolbox.SortedIntegerList;
 
 /**
  * This class handles keeping track of the position of lines locked by

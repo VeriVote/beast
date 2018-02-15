@@ -1,7 +1,7 @@
 
 package edu.pse.beast.options;
 
-import javax.swing.*;
+import javax.swing.JComboBox;
 
 /**
  * A JComboBox to which OptionElement subclasses can be added.

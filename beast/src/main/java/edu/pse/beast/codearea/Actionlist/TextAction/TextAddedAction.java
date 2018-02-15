@@ -5,12 +5,13 @@
  */
 package edu.pse.beast.codearea.Actionlist.TextAction;
 
-import edu.pse.beast.codearea.Actionlist.Action;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.StyledDocument;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import edu.pse.beast.codearea.Actionlist.Action;
 
 /**
  * This class represents the act of adding text to a Styleddocument and makes

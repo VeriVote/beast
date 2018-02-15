@@ -1,15 +1,15 @@
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.highlevel.ElectionDescriptionSource;
-import edu.pse.beast.highlevel.ParameterSource;
-import edu.pse.beast.toolbox.ErrorLogger;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.highlevel.ElectionDescriptionSource;
+import edu.pse.beast.highlevel.ParameterSource;
+import edu.pse.beast.toolbox.ErrorLogger;
 
 public final class CheckerFactoryFactory {
     private static Map<String, CheckerFactory> factories = new HashMap<String, CheckerFactory>();
@@ -22,7 +22,7 @@ public final class CheckerFactoryFactory {
     private static void init() {
         if (!initialized) {
             // cbmc is always included, so we add it here
-            factories.put("CBMC", new CBMCProcessFactory(null, null, null, null, null));
+            factories.put("CBMC", new CBMCProcessFactory(null, null, null, null, null, false));
 
             // TODO search for other classes
 
@@ -74,16 +74,17 @@ public final class CheckerFactoryFactory {
      *            the parameters
      * @param result
      *            the result object where the result should be put in
+     * @param  
      * @return a new CheckerFactory if the ID was found, else null
      */
     public static CheckerFactory getCheckerFactory(String checkerID, FactoryController controller,
             ElectionDescriptionSource electionDescSrc, PreAndPostConditionsDescription postAndPrepPropDesc,
-            ParameterSource paramSrc, Result result) {
+            ParameterSource paramSrc, Result result, boolean isMargin) {
         init();
 
         if (factories.keySet().contains(checkerID)) {
             return factories.get(checkerID).getNewInstance(controller, electionDescSrc, postAndPrepPropDesc,
-                    paramSrc, result);
+                    paramSrc, result, isMargin);
 
         } else {
             ErrorLogger.log("The specified checkerID wasn't found");
@@ -92,12 +93,12 @@ public final class CheckerFactoryFactory {
     }
     
     public static CheckerFactory getCheckerFactory(String checkerID, FactoryController controller, File toCheck,
-			ParameterSource paramSrc, Result result) {
+			ParameterSource paramSrc, Result result, boolean isMargin) {
     	init();
 
         if (factories.keySet().contains(checkerID)) {
             return factories.get(checkerID).getNewInstance(controller, toCheck,
-                    paramSrc, result);
+                    paramSrc, result, isMargin);
 
         } else {
             ErrorLogger.log("The specified checkerID wasn't found");

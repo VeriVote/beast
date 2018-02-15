@@ -1,12 +1,16 @@
 package edu.pse.beast.parametereditor;
 
-import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
+import static org.junit.Assert.assertTrue;
+
 import java.util.concurrent.TimeUnit;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JSpinner;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 
 /**
  *

@@ -1,8 +1,10 @@
 package edu.pse.beast.parametereditor;
 
+import static org.junit.Assert.assertEquals;
+
 import javax.swing.JSpinner;
+
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *

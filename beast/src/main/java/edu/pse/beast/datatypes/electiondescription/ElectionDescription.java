@@ -1,8 +1,10 @@
 package edu.pse.beast.datatypes.electiondescription;
 
-import edu.pse.beast.datatypes.NameInterface;
-
 import java.util.List;
+
+import edu.pse.beast.datatypes.NameInterface;
+import edu.pse.beast.types.InputType;
+import edu.pse.beast.types.OutputType;
 
 /**
  * 
@@ -12,8 +14,7 @@ import java.util.List;
 public class ElectionDescription implements NameInterface {
     private String name;
     private List<String> code;
-    private ElectionTypeContainer inputType;
-    private ElectionTypeContainer outputType;
+    private ElectionTypeContainer container;
     private int votingDeclLine;
     
     /**
@@ -23,11 +24,10 @@ public class ElectionDescription implements NameInterface {
      * @param outputType the output type
      * @param votingDeclLine the votingDeclerationLine
      */
-    public ElectionDescription(String name, ElectionTypeContainer inputType,
-            ElectionTypeContainer outputType, int votingDeclLine) {
+    public ElectionDescription(String name, InputType inputType,
+            OutputType outputType, int votingDeclLine) {
         this.name = name;
-        this.outputType = outputType;
-        this.inputType = inputType;
+        this.container = new ElectionTypeContainer(inputType, outputType);
         this.votingDeclLine = votingDeclLine;
     }
     
@@ -59,16 +59,8 @@ public class ElectionDescription implements NameInterface {
      * 
      * @return the outputType of this description
      */
-    public ElectionTypeContainer getOutputType() {
-        return outputType;
-    }
-    
-    /**
-     * 
-     * @return the inputType of this description
-     */
-    public ElectionTypeContainer getInputType() {
-        return inputType;
+    public ElectionTypeContainer getContainer() {
+    	return container;
     }
     
     /**
@@ -99,16 +91,8 @@ public class ElectionDescription implements NameInterface {
      * 
      * @param outputType of this description
      */
-    public void setOutputType(ElectionTypeContainer outputType) {
-        this.outputType = outputType;
-    }
-    
-    /**
-     * 
-     * @param inputType of this description
-     */
-    public void setInputType(ElectionTypeContainer inputType) {
-        this.inputType = inputType;
+    public void setContainer(ElectionTypeContainer newContainer) {
+        this.container = newContainer;
     }
 
     @Override

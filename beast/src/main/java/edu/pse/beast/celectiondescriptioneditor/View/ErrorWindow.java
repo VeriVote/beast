@@ -1,11 +1,12 @@
 package edu.pse.beast.celectiondescriptioneditor.View;
 
+import java.util.ArrayList;
+
+import javax.swing.JTextPane;
+
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CErrorDisplayer;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.stringresource.StringLoaderInterface;
-
-import javax.swing.*;
-import java.util.ArrayList;
 
 /**
  * @author NikolaiLMS

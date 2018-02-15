@@ -5,14 +5,16 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea;
 
+import java.util.ArrayList;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CAntlrHandler;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CErrorDisplayer;
-import edu.pse.beast.codearea.Autocompletion.AutocompletionOption;
 import edu.pse.beast.codearea.CodeAreaBuilder;
+import edu.pse.beast.codearea.Autocompletion.AutocompletionOption;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
-
-import javax.swing.*;
-import java.util.ArrayList;
 
 /**
  * creates a celectioncodearea object. It uses its parent class Codeareabuilder

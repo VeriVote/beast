@@ -5,12 +5,12 @@
  */
 package edu.pse.beast.celectiondescriptioneditor;
 
+import java.util.ArrayList;
+
 import edu.pse.beast.celectiondescriptioneditor.View.CCodeEditorWindow;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ActionIdAndListener;
 import edu.pse.beast.toolbox.MenuBarHandler;
-
-import java.util.ArrayList;
 
 /**
  * creates and updates the menubar of a celectiondescriptioneditor. It also

@@ -5,6 +5,11 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.UserActions;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.text.BadLocationException;
+
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateChooser;
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
@@ -12,10 +17,6 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.UserAction;
-
-import javax.swing.text.BadLocationException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 /**
  *
  * @author Holger-Desktop
@@ -43,12 +44,11 @@ public class NewElectionUserAction extends UserAction {
         electionTemplateDialog.setVisible(true);
     }
 
-    public void create(ElectionTypeContainer.ElectionInputTypeIds input,
-                       ElectionTypeContainer.ElectionOutputTypeIds  res,
+    public void create(ElectionTypeContainer container,
                        String name) {
         try {
             ElectionDescription description = cCodeHelper.generateElectionDescription(
-                    input, res, name, 
+                    container, name, 
                     templateHandler, editor.getStringInterface().getCElectionEditorStringResProvider().getElectionStringRes());
             editor.letUserEditElectionDescription(description);
             editor.getFileChooser().setHasBeenSaved(false);

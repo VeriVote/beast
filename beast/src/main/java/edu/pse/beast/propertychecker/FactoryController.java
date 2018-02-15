@@ -5,18 +5,18 @@
  */
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.highlevel.ElectionDescriptionSource;
-import edu.pse.beast.highlevel.ParameterSource;
-import edu.pse.beast.highlevel.PreAndPostConditionsDescriptionSource;
-import edu.pse.beast.highlevel.ResultInterface;
-import edu.pse.beast.toolbox.ErrorLogger;
-import edu.pse.beast.toolbox.TimeOutNotifier;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import edu.pse.beast.highlevel.ElectionDescriptionSource;
+import edu.pse.beast.highlevel.ParameterSource;
+import edu.pse.beast.highlevel.PreAndPostConditionsDescriptionSource;
+import edu.pse.beast.highlevel.PropertyAndMarginBool;
+import edu.pse.beast.highlevel.ResultInterface;
+import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.toolbox.TimeOutNotifier;
 
 /**
  *
@@ -43,9 +43,6 @@ public class FactoryController implements Runnable {
 	private final int concurrentChecker;
 
 	private boolean fromFile = false;
-
-	//if we are given an already generated file, it is stored in this variable
-	private final File toCheck;
 
 	/**
 	 *
@@ -75,11 +72,9 @@ public class FactoryController implements Runnable {
 		this.checkerID = checkerID;
 		this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
 
-		this.toCheck = null;
-		
 		// get a list of result objects that fit for the specified checkerID
 		this.results = CheckerFactoryFactory.getMatchingResult(checkerID,
-				preAndPostConditionDescrSrc.getPreAndPostConditionsDescriptionsCheck().size());
+				preAndPostConditionDescrSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size());
 
 		// if the user doesn't specify a concrete amount for concurrent
 		// checkers, we just set it to the thread amount of this pc
@@ -107,8 +102,6 @@ public class FactoryController implements Runnable {
 
 		this.fromFile = true;
 
-		this.toCheck = toCheck;
-		
 		this.parmSrc = parmSrc;
 		this.checkerID = checkerID;
 		this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
@@ -119,8 +112,10 @@ public class FactoryController implements Runnable {
 
 		// get a list of result objects that fit for the specified checkerID
 		// because we have no preAndPostConditions we only need ONE result
-		this.results = CheckerFactoryFactory.getMatchingUnprocessedResult(checkerID, 1);
+		this.results = CheckerFactoryFactory.getMatchingUnprocessedResult(checkerID, preAndPostConditionDescrSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size());
 
+		preAndPostConditionDescrSrc.referenceResult(this.results);
+		
 		// if the user doesn't specify a concrete amount for concurrent
 		// checkers, we just set it to the thread amount of this pc
 		if (concurrentChecker <= 0) {
@@ -145,17 +140,16 @@ public class FactoryController implements Runnable {
 	 */
 	@Override
 	public void run() {
-
-
-		if (!fromFile) { //if we have properties, we have to iterate over all of them and start them all
-		    List<PreAndPostConditionsDescription> properties = preAndPostConditionDescrSrc.getPreAndPostConditionsDescriptionsCheck();
-			outerLoop: for (int i = 0; i < properties.size(); i++) {
-				innerLoop: while (!stopped) {
+			List<PropertyAndMarginBool> propertiesToCheckAndMargin = preAndPostConditionDescrSrc
+					.getPreAndPostPropertiesDescriptionsCheckAndMargin();
+			
+			outerLoop: for (int i = 0; i < propertiesToCheckAndMargin.size(); i++) {
+				innerLoop: while (!stopped) {					
 					// if we can start more checkers (we haven't used our
 					// allowed pool completely), we can start a new one
 					if (currentlyRunning.size() < concurrentChecker) {
 						CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID, this,
-								electionDescSrc, properties.get(i), parmSrc, results.get(i));
+								electionDescSrc, propertiesToCheckAndMargin.get(i).getDescription(), parmSrc, results.get(i), propertiesToCheckAndMargin.get(i).getMarginStatus());
 
 						synchronized (this) {
 							currentlyRunning.add(factory);
@@ -167,7 +161,8 @@ public class FactoryController implements Runnable {
 					} else {
 						// ELSE, we try to sleep a bit. It is important that we
 						// only sleep if no new checker
-						// was started, or else it would take
+						// was started, or else we have to wait when there 
+						// is more allowed space in our thread pool
 						try {
 							Thread.sleep(POLLINGINTERVAL);
 						} catch (InterruptedException e) {
@@ -180,6 +175,7 @@ public class FactoryController implements Runnable {
 					break outerLoop;
 				}
 			}
+
 			while (currentlyRunning.size() > 0) {
 				try {
 					Thread.sleep(POLLINGINTERVAL);
@@ -188,20 +184,8 @@ public class FactoryController implements Runnable {
 							+ "The waiting will still continue. To stop the factory properly, call \"stopChecking()\" !");
 				}
 			}
-		} else {
-			//we only have one file to check, so we also only have one checker to start
-			CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID, this,
-					toCheck, parmSrc, results.get(0));
-			
-			synchronized (this) {
-				currentlyRunning.add(factory);
-			}
-			
-			new Thread(factory, "CheckerFactory Property " + 0).start();
-			
-		}
-		
-		//wait for the last running threads to finish
+
+		// wait for the last running threads to finish
 		while (currentlyRunning.size() > 0) {
 			try {
 				Thread.sleep(POLLINGINTERVAL);
@@ -210,7 +194,7 @@ public class FactoryController implements Runnable {
 						+ "The waiting will still continue. To stop the factory properly, call \"stopChecking()\" !");
 			}
 		}
-		
+
 		if (notifier != null) {
 			// if the notifier thread is still active, we stop it.
 			notifier.disable();

@@ -1,7 +1,36 @@
 package edu.pse.beast.propertylist.View;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.print.DocFlavor.STRING;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
+
 import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
+import edu.pse.beast.electionSimulator.ElectionSimulation;
+import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
@@ -9,394 +38,478 @@ import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.text.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
 public class ResultPresenterWindow extends JFrame {
 
-    private static final long serialVersionUID = 1L;
-    private JButton showResult;
-    private JButton export;
-    private JTextPane result;
-    StringResourceLoader srl;
-    private FailureExample example;
+	private static final long serialVersionUID = 1L;
+	private JButton showResult;
+	private JButton export;
+	private JTextPane result;
+	StringResourceLoader srl;
+	private FailureExample example;
 
-    private final String pathToEye = "/core/images/other/eye.png";
-    private final ImageIcon eyeIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToEye);
+	private final String pathToEye = "/core/images/other/eye.png";
+	private final ImageIcon eyeIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToEye);
 
-    /**
-     *
-     */
-    public ResultPresenterWindow() {
-        this(new StringLoaderInterface("en"));
-    }
+	/**
+	 *
+	 */
+	public ResultPresenterWindow() {
+		this(new StringLoaderInterface("en"));
+	}
 
-    /**
-     * @param sli
-     */
-    public ResultPresenterWindow(StringLoaderInterface sli) {
-        PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
-        this.srl = provider.getOtherStringRes();
-        this.setVisible(false);
-        init();
-    }
+	/**
+	 * @param sli
+	 */
+	public ResultPresenterWindow(StringLoaderInterface sli) {
+		PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();
+		this.srl = provider.getOtherStringRes();
+		this.setVisible(false);
+		init();
+	}
 
-    private void init() {
-        this.setLayout(new BorderLayout());
+	private void init() {
+		this.setLayout(new BorderLayout());
 
-        getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
-        this.setResizable(true);
-        setBounds(0, 0, 400, 500);
-        Dimension iconSize = new Dimension(120, 40);
+		getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, Color.GRAY));
+		this.setResizable(true);
+		setBounds(0, 0, 400, 500);
+		Dimension iconSize = new Dimension(120, 40);
 
-        setShowResult(new JButton());
-        getShowResult().setPreferredSize(iconSize);
-        getShowResult().setIcon(eyeIcon);
-        getShowResult().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                setVisible(false);
-            }
-        });
-        getContentPane().add(getShowResult(), BorderLayout.PAGE_START);
+		setShowResult(new JButton());
+		getShowResult().setPreferredSize(iconSize);
+		getShowResult().setIcon(eyeIcon);
+		getShowResult().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+			}
+		});
+		getContentPane().add(getShowResult(), BorderLayout.PAGE_START);
 
-        result = new JTextPane();
-        result.setEditable(false);
-        result.setText(srl.getStringFromID("noResultYet"));
-        getContentPane().add(result, BorderLayout.CENTER);
+		result = new JTextPane();
+		result.setEditable(false);
+		result.setText(srl.getStringFromID("noResultYet"));
+		getContentPane().add(result, BorderLayout.CENTER);
 
-        JScrollPane jsp = new JScrollPane(result, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        this.add(jsp);
+		JScrollPane jsp = new JScrollPane(result, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		this.add(jsp);
 
-        setExport(new JButton());
-        getExport().setPreferredSize(iconSize);
-        getExport().setText(srl.getStringFromID("export"));
-        getExport().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser fc = new JFileChooser();
-                FileNameExtensionFilter filter = new FileNameExtensionFilter("Text", "txt");
-                fc.setFileFilter(filter);
-                fc.showSaveDialog(getParent());
-                if (fc.getSelectedFile() == null) {
-                    return;
-                }
-                try {
-                    File file = fc.getSelectedFile();
-                    String filename = file.toString();
-                    if (!filename.endsWith(".txt")) {
-                        filename += ".txt";
-                    }
-                    FileWriter fw = new FileWriter(filename);
-                    fw.write(result.getText());
-                    fw.flush();
-                    fw.close();
-                } catch (IOException ioe) {
-                    ErrorLogger.log(ioe.getMessage());
-                }
-            }
-        });
-        getContentPane().add(getExport(), BorderLayout.PAGE_END);
+		setExport(new JButton());
+		getExport().setPreferredSize(iconSize);
+		getExport().setText(srl.getStringFromID("export"));
+		getExport().addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser fc = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("Text", "txt");
+				fc.setFileFilter(filter);
+				fc.showSaveDialog(getParent());
+				if (fc.getSelectedFile() == null) {
+					return;
+				}
+				try {
+					File file = fc.getSelectedFile();
+					String filename = file.toString();
+					if (!filename.endsWith(".txt")) {
+						filename += ".txt";
+					}
+					FileWriter fw = new FileWriter(filename);
+					fw.write(result.getText());
+					fw.flush();
+					fw.close();
+				} catch (IOException ioe) {
+					ErrorLogger.log(ioe.getMessage());
+				}
+			}
+		});
+		getContentPane().add(getExport(), BorderLayout.PAGE_END);
 
-        pack();
-    }
+		pack();
+	}
 
-    // private methods
-    private Long[] getVotePoints(Long[] votes, FailureExample ex) {
-        Long[] result = new Long[ex.getNumOfCandidates()];
-        Arrays.fill(result, 0l);
+	// private methods
+	private String[] getVotePoints(String[] votes, ElectionTypeContainer type, FailureExample ex) {
+		
+		int amountCandidates = ex.getNumOfCandidates();
+		int amountVoters = ex.getNumOfVoters();
+		
+		return type.getInputType().getVotePoints(votes, amountCandidates, amountVoters);
+	}
 
-        for (int i = 0; i < ex.getNumOfVoters(); i++) {
-            int vote = votes[i].intValue();
-            result[vote]++;
+	private String[] getVotePoints(String[][] votes, ElectionTypeContainer type, FailureExample ex) {
+		int amountCandidates = ex.getNumOfCandidates();
+		int amountVoters = ex.getNumOfVoters();
+		
+		Long[] result = new Long[amountCandidates];
+		Arrays.fill(result, 0l);
 
-        }
-        return result;
-    }
+		return type.getInputType().getVotePoints(votes, amountCandidates, amountVoters);
+	}
 
-    private Long[] getVotePoints(Long[][] votes, ElectionTypeContainer type, FailureExample ex) {
-        int candidates = ex.getNumOfCandidates();
-        Long[] result = new Long[candidates];
-        Arrays.fill(result, 0l);
+	private void appendPane(String text) {
+		appendPaneStyled(text, null);
+	}
 
-        for (int i = 0; i < ex.getNumOfVoters(); i++) {
-            Long[] vote = votes[i];
-            switch (type.getInputID()) {
-            case PREFERENCE:
-                for (int j = 0; j < candidates; j++) {
-                    int chosenCandidate = (int) (long) vote[j];
-                    result[chosenCandidate] += candidates - 1 - j;
-                }
-                break;
-            case APPROVAL:
-            case WEIGHTED_APPROVAL:
-                for (int j = 0; j < candidates; j++) {
-                    result[j] += vote[j];
-                }
-                break;
-            default:
-            	ErrorForUserDisplayer
-				.displayError("This votingtype you are using hasn't been implemented yet for the result presentation. "
-						+ "Please do so in the class ResultPresenterWindow.java");
-                break;
-            }
-        }
-        return result;
-    }
+	private void appendPaneColored(String text, Color color) {
+		SimpleAttributeSet attr = new SimpleAttributeSet();
+		StyleConstants.setForeground(attr, color);
+		StyleConstants.setBold(attr, true);
+		appendPaneStyled(text, attr);
+	}
 
-    private void appendPane(String text) {
-        appendPaneStyled(text, null);
-    }
+	private void appendPaneStyled(String text, AttributeSet attr) {
+		StyledDocument doc = result.getStyledDocument();
+		try {
+			doc.insertString(doc.getLength(), text, attr);
+		} catch (BadLocationException e) {
+			ErrorLogger.log(e.getMessage());
+		}
+		result.setStyledDocument(doc);
+	}
 
-    private void appendPaneColored(String text, Color color) {
-        SimpleAttributeSet attr = new SimpleAttributeSet();
-        StyleConstants.setForeground(attr, color);
-        StyleConstants.setBold(attr, true);
-        appendPaneStyled(text, attr);
-    }
+	private void appendLine(String text) {
+		appendPane(text + "\n");
+	}
 
-    private void appendPaneStyled(String text, AttributeSet attr) {
-        StyledDocument doc = result.getStyledDocument();
-        try {
-            doc.insertString(doc.getLength(), text, attr);
-        } catch (BadLocationException e) {
-            ErrorLogger.log(e.getMessage());
-        }
-        result.setStyledDocument(doc);
-    }
+	private void eraseLastCharacters(int amount) {
+		StyledDocument doc = result.getStyledDocument();
+		try {
+			doc.remove(doc.getLength() - amount, amount);
+		} catch (BadLocationException e) {
+			ErrorLogger.log(e.getMessage());
+		}
+	}
 
-    private void appendLine(String text) {
-        appendPane(text + "\n");
-    }
+	private void erasePane() {
+		result.setText("");
+	}
 
-    private void eraseLastCharacters(int amount) {
-        StyledDocument doc = result.getStyledDocument();
-        try {
-            doc.remove(doc.getLength() - amount, amount);
-        } catch (BadLocationException e) {
-            ErrorLogger.log(e.getMessage());
-        }
-    }
+	private void packFrame() {
+		getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, getShowResult().getBackground()));
+		pack();
+	}
 
-    private void erasePane() {
-        result.setText("");
-    }
+	public void makeInvisible() {
+		this.setVisible(false);
+	}
 
-    private void packFrame() {
-        getRootPane().setBorder(BorderFactory.createMatteBorder(2, 2, 2, 2, getShowResult().getBackground()));
-        pack();
-    }
+	public void presentFailure(List<String> error) {
+		if (error == null) {
+			return;
+		}
+		erasePane();
+		appendLine(srl.getStringFromID("failureMessage"));
+		appendLine("");
+		for (String line : error) {
+			appendLine(line);
+		}
+		setSize(600, 600);
+		// packFrame();
+	}
 
-    public void makeInvisible() {
-        this.setVisible(false);
-    }
+	public void presentFailureExample(Result parentResult) { // writes the failure
+		// example to the
+		// styled document
 
-    public void presentFailure(List<String> error) {
-        if (error == null) {
-            return;
-        }
-        erasePane();
-        appendLine(srl.getStringFromID("failureMessage"));
-        appendLine("");
-        for (String line : error) {
-            appendLine(line);
-        }
-        setSize(600, 600);
-        // packFrame();
-    }
+		erasePane();
 
-    public void presentFailureExample(FailureExample ex) { // writes the failure
-                                                           // example to the
-                                                           // styled document
-        if (ex == null) {
-            return;
-        }
-        erasePane();
-        appendLine(srl.getStringFromID("failureExampleMessage"));
-        appendLine(srl.getStringFromID("electionType") + ": " + srl.getStringFromID(ex.getTypeString()) + "\n");
-        appendLine("");
+		if (!parentResult.hasFinalMargin()) { //
+			FailureExample ex = parentResult.getFailureExample();
 
-        for (int i = 0; i < ex.getNumOfElections(); i++) {
-            appendLine("====== " +
-                       srl.getStringFromID("election").toUpperCase() + " " + (i + 1) +
-                       " ======");
+			if (ex == null) {
+				return;
+			}
+			appendLine(srl.getStringFromID("failureExampleMessage"));
+			appendLine(srl.getStringFromID("electionType") + ": " + srl.getStringFromID(ex.getTypeString()) + "\n");
+			appendLine("");
 
-            // The votes part of the document
-            appendPane(srl.getStringFromID("votes") + ": ");
-            if (ex.isChooseOneCandidate()) {
-                writeVotesForOneCandidate(ex, i);
-            } else {
-                writeVotesForMultipleCandidates(ex, i);
-            }
-            appendLine("");
+			for (int i = 0; i < ex.getNumOfElections(); i++) {
+				appendLine("====== " + srl.getStringFromID("election").toUpperCase() + " " + (i + 1) + " ======");
 
-            // The elected part of the document
-            appendPane(srl.getStringFromID("elected") + ": ");
-            if (ex.getElectionDescription().getOutputType().getResultTypeSeats()) {
-                writeElectedMultipleCandidates(ex, i);
-            } else {
-                writeElectedOneCandidate(ex, i);
-            }
+				// The votes part of the document
+				appendPane(srl.getStringFromID("votes") + ": ");
+				if (ex.isChooseOneCandidate()) {
+					writeVotesForOneCandidate(ex, i);
+				} else {
+					writeVotesForMultipleCandidates(ex, i);
+				}
+				appendLine("");
 
-            // The vote points part of the document
-            appendLine("\n");
-            appendLine("====== " +
-                       srl.getStringFromID("electionpoints").toUpperCase() +
-                       " ======");
-            Long[] result;
-            if (ex.isChooseOneCandidate()) {
-                result = getVotePoints(ex.getVotes().get(i).getArray(), ex);
-            } else {
-                result = getVotePoints(ex.getVoteList().get(i).getArray(), ex.getElectionDescription().getInputType(), ex);
-            }
-            for (int j = 0; j < result.length; j++) {
-                appendLine(srl.getStringFromID("Candidate") + " " + ex.getSymbolicCandidateForIndex(j) + ": "
-                        + (int) (long) result[j]);
-            }
-            appendLine("\n");
-        }
-        setSize(600, 600);
-        // packFrame();
-    }
+				// The elected part of the document
+				appendPane(srl.getStringFromID("elected") + ": ");
+				if (ex.getElectionDescription().getContainer().getOutputType().isOutputOneCandidate()) {
+					writeElectedOneCandidate(ex, i);
+				} else {
+					writeElectedMultipleCandidates(ex, i);
+				}
 
-    private void writeElectedMultipleCandidates(FailureExample ex, int i) {
-        Long[] preceding;
-        Long[] elected = ex.getSeats().get(i).getArray();
+				// The vote points part of the document
+				appendLine("\n");
+				appendLine("====== " + srl.getStringFromID("electionpoints").toUpperCase() + " ======");
+				String[] result;
+				if (ex.isChooseOneCandidate()) {
+					result = getVotePoints(ex.getVotes().get(i).getArray(),ex.getElectionDescription().getContainer(), ex);
+				} else {
+					result = getVotePoints(ex.getVoteList().get(i).getArray(),
+							ex.getElectionDescription().getContainer(), ex);
+				}
+				for (int j = 0; j < result.length; j++) {
+					appendLine(srl.getStringFromID("Candidate") + " " + ex.getSymbolicCandidateForIndex(j) + ": "
+							+ result[j]);
+				}
+				appendLine("\n");
 
-        preceding = i == 0 ? elected : ex.getSeats().get(i - 1).getArray();
+				if (parentResult.hasSubResult()) {
+					appendMarginResult(parentResult.getSubResult());
+				}
+			}
+		} else {
+			appendMarginResult(parentResult);
+		}
 
-        for (int j = 0; j < elected.length; j++) {
-            Color color = preceding[j].equals(elected[j]) ? Color.BLACK : Color.RED;
+		setSize(600, 600);
+		// packFrame();
+	}
 
-            if (elected[j] >= ex.getNumOfCandidates()) { // no candidate wins
-                appendPaneColored(srl.getStringFromID("draw") + "(" + ex.getSymbolicCandidateForIndex(elected[j]) + ")", color);
-            } else {
-                appendPaneColored("" + elected[j], color);
-            }
-            appendPane(", ");
-        }
-        eraseLastCharacters(2);
+	private void appendMarginResult(Result marginResult) {
+		//FailureExample ex = marginResult.getFailureExample();
 
-    }
+		appendLine("================================");
+		appendLine("===========Margin Result===========");
+		appendLine("================================");
+		appendLine("");
 
-    private void writeElectedOneCandidate(FailureExample ex, int i) {
-        Long preceding;
-        Long elected = ex.getElect().get(i).getValue();
+		List<List<String>> origVotes = marginResult.getOrigVoting();
+		
+		appendLine("====original Votes====");
+		appendLine("");
+		
+		appendPane("[");
+		
+		for (Iterator<List<String>> iterator = origVotes.iterator(); iterator.hasNext();) {
+			List<String> list = (List<String>) iterator.next();
+			
+			String votes = "[";
+			
+			int index = 0;
+			
+			for (Iterator<String> iterator2 = list.iterator(); iterator2.hasNext();) {
+				String voter = (String) iterator2.next();
+				if(iterator2.hasNext()) {
+					votes = votes + ElectionSimulation.getPartyName(index++) + ": " + voter + ", ";
+				} else {
+					votes = votes + ", " + ElectionSimulation.getPartyName(index++) + ": " + voter + "]";
+				}
+			}
+			appendPane("\n" + votes);
+		}
+		
+		appendLine("");
+		
+		appendLine("]");
+		
+		appendLine("====original Result====");
+		appendLine("");
+		
+		appendLine("[");
+		
+		for (Iterator<String> iterator = marginResult.getOrigWinner().iterator(); iterator.hasNext();) {
+			String currentValue = (String) iterator.next();
+			
+			if(iterator.hasNext()) {
+				appendPane(ElectionSimulation.getPartyName(Integer.parseInt(currentValue)) + ", ");
+			} else {
+				appendPane(ElectionSimulation.getPartyName(Integer.parseInt(currentValue)) + "\n]");
+			}
+			
+		}
+		
+		appendLine("");
+		appendLine("====Margin computation====");
+		appendLine("");
+		appendLine("has final margin: " + marginResult.hasFinalMargin());
+		if (marginResult.hasFinalMargin()) {
+			appendLine("");
+			appendLine("final margin:" + marginResult.getFinalMargin());
+			appendLine("");
+			appendLine("====new Votes====");
+			appendLine("");
+			appendPane("[");
+			
+			for (Iterator<List<String>> iterator = marginResult.getNewVotes().iterator(); iterator.hasNext();) {
+				List<String> list = (List<String>) iterator.next();
+				
+				String votes = "[";
+				
+				int index = 0;
+				
+				for (Iterator<String> iterator2 = list.iterator(); iterator2.hasNext();) {
+					String voter = (String) iterator2.next();
+					if(iterator2.hasNext()) {
+						votes = votes + ElectionSimulation.getPartyName(index++) + ": " + voter + ", ";
+					} else {
+						votes = votes + ", " + ElectionSimulation.getPartyName(index++) + ": " + voter + "]";
+					}
+				}
+				appendPane("\n" + votes);
+			}
+			appendLine("");
+			appendLine("]");
+			appendLine("");
+			
+			appendLine("====new Result====");
+			
+			appendLine("");
+			
+			appendPane("[");
+			
+			for (Iterator<String> iterator = marginResult.getNewWinner().iterator(); iterator.hasNext();) {
+				String currentValue = (String) iterator.next();
+				
+				if(iterator.hasNext()) {
+					appendPane(ElectionSimulation.getPartyName(Integer.parseInt(currentValue)) + ", ");
+				} else {
+					appendPane(ElectionSimulation.getPartyName(Integer.parseInt(currentValue)) + "]");
+				}
+				
+			}
+			
+		}
+	}
 
-        // only show differences to preceding election when it is not the first
-        // election
-        preceding = i == 0 ? elected : ex.getElect().get(i - 1).getValue();
+	private void writeElectedMultipleCandidates(FailureExample ex, int i) {
+		String[] preceding;
+		String[] elected = ex.getSeats().get(i).getArray();
 
-        Color color = preceding == elected ? Color.BLACK : Color.RED;
+		preceding = i == 0 ? elected : ex.getSeats().get(i - 1).getArray();
 
-        if (elected >= ex.getNumOfCandidates()) { // no candidate wins
-            appendPaneColored(srl.getStringFromID("draw") + "(" + ex.getSymbolicCandidateForIndex(elected) + ")" + ", ", color);
-        } else {
-            appendPaneColored(ex.getSymbolicCandidateForIndex(elected) + ", ", color);
-        }
+		for (int j = 0; j < elected.length; j++) {
+			Color color = preceding[j].equals(elected[j]) ? Color.BLACK : Color.RED;
 
-        eraseLastCharacters(2);
-    }
+			if (Long.parseLong(elected[j]) >= ex.getNumOfCandidates()) { // no candidate wins
+				appendPaneColored(srl.getStringFromID("draw") + "(" + ex.getSymbolicCandidateForIndex(Long.parseLong(elected[j])) + ")",
+						color);
+			} else {
+				appendPaneColored("" + elected[j], color);
+			}
+			appendPane(", ");
+		}
+		eraseLastCharacters(2);
 
-    private void writeVotesForMultipleCandidates(FailureExample ex, int i) {
-        Long[][] precedingList;
-        Long[][] voteList = ex.getVoteList().get(i).getArray();
+	}
 
-        precedingList = i == 0 ? voteList : ex.getVoteList().get(i - 1).getArray();
+	private void writeElectedOneCandidate(FailureExample ex, int i) {
+		String preceding;
+		String elected = ex.getElect().get(i).getValue();
 
-        for (int j = 0; j < voteList.length; j++) {
+		// only show differences to preceding election when it is not the first
+		// election
+		preceding = i == 0 ? elected : ex.getElect().get(i - 1).getValue();
 
-            if (Arrays.equals(precedingList[j], voteList[j])) {
-                appendPane(Arrays.toString(voteList[j]) + ", ");
-            } else {
-                appendPaneColored(Arrays.toString(voteList[j]), Color.RED);
-                appendPane(", ");
-            }
+		Color color = preceding == elected ? Color.BLACK : Color.RED;
 
-        }
-        eraseLastCharacters(2);
+		long electedL = Long.parseLong(elected);
+		
+		if (electedL >= ex.getNumOfCandidates()) { // no candidate wins
+			appendPaneColored(srl.getStringFromID("draw") + "(" + ex.getSymbolicCandidateForIndex(electedL) + ")" + ", ",
+					color);
+		} else {
+			appendPaneColored(ex.getSymbolicCandidateForIndex(electedL) + ", ", color);
+		}
 
-    }
+		eraseLastCharacters(2);
+	}
 
-    private void writeVotesForOneCandidate(FailureExample ex, int i) {
-        Long[] precedingList;
-        Long[] voteList = ex.getVotes().get(i).getArray();
+	private void writeVotesForMultipleCandidates(FailureExample ex, int i) {
+		String[][] precedingList;
+		String[][] voteList = ex.getVoteList().get(i).getArray();
 
-        precedingList = i == 0 ? voteList : ex.getVotes().get(i - 1).getArray();
+		precedingList = i == 0 ? voteList : ex.getVoteList().get(i - 1).getArray();
 
-        if (ex.isOneSeatOnly()) {
-            for (int j = 0; j < voteList.length; j++) {
-                Color color = precedingList[j].equals(voteList[j]) ? Color.BLACK : Color.RED;
-                appendPaneColored(ex.getSymbolicCandidateForIndex(voteList[j]), color);
-                appendPane(", ");
-            }
-        } else {
-            for (int j = 0; j < voteList.length; j++) {
-                Color color = precedingList[j].equals(voteList[j]) ? Color.BLACK : Color.RED;
-                appendPaneColored(ex.getSymbolicSeatForIndex(voteList[j]), color);
-                appendPane(", ");
-            }
-        }
-        eraseLastCharacters(2);
-    }
+		for (int j = 0; j < voteList.length; j++) {
 
-    public void presentSuccess() {
-        erasePane();
-        appendPane(srl.getStringFromID("successMessage"));
-        packFrame();
-    }
+			if (Arrays.equals(precedingList[j], voteList[j])) {
+				appendPane(Arrays.toString(voteList[j]) + ", ");
+			} else {
+				appendPaneColored(Arrays.toString(voteList[j]), Color.RED);
+				appendPane(", ");
+			}
 
-    public void presentTimeOut() {
-        erasePane();
-        appendPane(srl.getStringFromID("timeoutMessage"));
-        packFrame();
-    }
+		}
+		eraseLastCharacters(2);
 
-    public void presentCancel() {
-        erasePane();
-        appendPane(srl.getStringFromID("cancelMessage"));
-        packFrame();
-    }
+	}
 
-    public void resetResult() {
-        erasePane();
-        result.setText(srl.getStringFromID("noResultYet"));
-        packFrame();
-    }
+	private void writeVotesForOneCandidate(FailureExample ex, int i) {
+		String[] precedingList;
+		String[] voteList = ex.getVotes().get(i).getArray();
 
-    // getter and setter
-    public JButton getShowResult() {
-        return showResult;
-    }
+		precedingList = i == 0 ? voteList : ex.getVotes().get(i - 1).getArray();
 
-    public FailureExample getExample() {
-        return example;
-    }
+		if (ex.isOneSeatOnly()) {
+			for (int j = 0; j < voteList.length; j++) {
+				Color color = precedingList[j].equals(voteList[j]) ? Color.BLACK : Color.RED;
+				appendPaneColored(ex.getSymbolicCandidateForIndex(Long.parseLong(voteList[j])), color);
+				appendPane(", ");
+			}
+		} else {
+			for (int j = 0; j < voteList.length; j++) {
+				Color color = precedingList[j].equals(voteList[j]) ? Color.BLACK : Color.RED;
+				appendPaneColored(ex.getSymbolicSeatForIndex(Long.parseLong(voteList[j])), color);
+				appendPane(", ");
+			}
+		}
+		eraseLastCharacters(2);
+	}
 
-    public void setExample(FailureExample example) {
-        this.example = example;
-    }
+	public void presentSuccess() {
+		erasePane();
+		appendPane(srl.getStringFromID("successMessage"));
+		packFrame();
+	}
 
-    private void setShowResult(JButton showResult) {
-        this.showResult = showResult;
-    }
+	public void presentTimeOut() {
+		erasePane();
+		appendPane(srl.getStringFromID("timeoutMessage"));
+		packFrame();
+	}
 
-    private JButton getExport() {
-        return export;
-    }
+	public void presentCancel() {
+		erasePane();
+		appendPane(srl.getStringFromID("cancelMessage"));
+		packFrame();
+	}
 
-    private void setExport(JButton export) {
-        this.export = export;
-    }
+	public void resetResult() {
+		erasePane();
+		result.setText(srl.getStringFromID("noResultYet"));
+		packFrame();
+	}
+
+	// getter and setter
+	public JButton getShowResult() {
+		return showResult;
+	}
+
+	public FailureExample getExample() {
+		return example;
+	}
+
+	public void setExample(FailureExample example) {
+		this.example = example;
+	}
+
+	private void setShowResult(JButton showResult) {
+		this.showResult = showResult;
+	}
+
+	private JButton getExport() {
+		return export;
+	}
+
+	private void setExport(JButton export) {
+		this.export = export;
+	}
 
 }

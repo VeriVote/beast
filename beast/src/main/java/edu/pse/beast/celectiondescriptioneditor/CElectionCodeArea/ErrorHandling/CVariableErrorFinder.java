@@ -5,12 +5,13 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling;
 
+import java.util.ArrayList;
+
+import javax.swing.JTextPane;
+
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
 import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
-
-import javax.swing.*;
-import java.util.ArrayList;
 
 /**
  * This class uses an external compiler (either gcc on linux or cl on windows)
@@ -48,6 +49,8 @@ public class CVariableErrorFinder implements ErrorFinder {
         
         seperated.add("void __CPROVER_assert(int x, int y) {}");
         seperated.add("void __CPROVER_assume(int x) {}");
+        
+        seperated.add("struct result { unsigned int arr[S]; };");
         
         seperated.add("void assume(int x) {}");
         seperated.add("void assert(int x) {}");

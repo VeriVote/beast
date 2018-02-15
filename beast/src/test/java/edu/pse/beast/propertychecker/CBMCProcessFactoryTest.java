@@ -1,6 +1,7 @@
 package edu.pse.beast.propertychecker;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ public class CBMCProcessFactoryTest {
 	
 	@Before
 	public void setup() {
-		prosFac  = new CBMCProcessFactory(null, null, null, null, null);
+		prosFac  = new CBMCProcessFactory(null, null, null, null, null, false);
 	}
 	
 	@Test

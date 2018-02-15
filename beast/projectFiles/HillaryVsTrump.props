@@ -1,8 +1,0 @@
-4 name14 HillaryVsTrump3 pre270 VOTE_SUM_FOR_CANDIDATE1(Hillary) >> (V / 2);
-VOTE_SUM_FOR_CANDIDATE1(Trump) < VOTE_SUM_FOR_CANDIDATE1(Hillary);
-VOTE_SUM_FOR_CANDIDATE1(Stein) < VOTE_SUM_FOR_CANDIDATE1(Trump);
-VOTE_SUM_FOR_CANDIDATE1(Johnson) < VOTE_SUM_FOR_CANDIDATE1(Stein);
-CAND_AT_POS(0) == Hillary;4 post18 ELECT1 == Hillary;7 varlist188 symbolic_variable: id: Trump type: CANDIDATE;
-symbolic_variable: id: Hillary type: CANDIDATE;
-symbolic_variable: id: Stein type: CANDIDATE;
-symbolic_variable: id: Johnson type: CANDIDATE;

@@ -1,9 +1,10 @@
 package edu.pse.beast.parametereditor;
 
-import javax.swing.*;
+import java.util.ArrayList;
+
+import javax.swing.JSpinner;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.util.ArrayList;
 
 /**
  * The MinMaxSpinValueHandler handles all user inputs on the ParameterEditor

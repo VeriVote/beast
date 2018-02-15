@@ -1,9 +1,6 @@
 package edu.pse.beast.propertylist.UserActions;
 
-import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.electionSimulator.ElectionSimulation;
-import edu.pse.beast.highlevel.BEASTCommunicator;
-import edu.pse.beast.highlevel.PSECentralObjectProvider;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.toolbox.UserAction;
 
@@ -24,11 +21,12 @@ public class OpenSimulationWindow extends UserAction {
     public OpenSimulationWindow(PropertyList controller) {
         super("simulation");
         this.controller = controller;
+        controller.setMarginComputationBoxVisible(true);
     }
 
     @Override
     public void perform() {
-    	controller.setMarginComputationBoxVisible(!simulationWindow.isOpen());
+    	//controller.setMarginComputationBoxVisible(!simulationWindow.isOpen());
         if (simulationWindow.isOpen()) {
         	simulationWindow.close();
         } else {

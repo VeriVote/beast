@@ -1,9 +1,10 @@
 package edu.pse.beast.codearea.SyntaxHL;
 
+import java.awt.Color;
+
 import javax.swing.text.AttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
-import java.awt.*;
 
 /**
  * Class encapsulating a regular Expression in a String object and a color in an AttributeSet object.

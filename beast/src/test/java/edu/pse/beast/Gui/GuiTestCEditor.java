@@ -1,14 +1,15 @@
 package edu.pse.beast.Gui;
 
-import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
-import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
+import java.awt.event.KeyEvent;
+import java.io.File;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.awt.event.KeyEvent;
-import java.io.File;
+import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 
 /**
  * Created by holger on 07.03.17.

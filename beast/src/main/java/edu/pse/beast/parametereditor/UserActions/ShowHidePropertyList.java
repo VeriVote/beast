@@ -1,10 +1,11 @@
 package edu.pse.beast.parametereditor.UserActions;
 
+import java.awt.Frame;
+
+import javax.swing.JFrame;
+
 import edu.pse.beast.parametereditor.ParameterEditor;
 import edu.pse.beast.toolbox.UserAction;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * UserAction to toggle visibility of the PropertyList window

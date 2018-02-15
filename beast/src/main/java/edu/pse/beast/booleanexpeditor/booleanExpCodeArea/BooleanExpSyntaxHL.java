@@ -1,10 +1,10 @@
 package edu.pse.beast.booleanexpeditor.booleanExpCodeArea;
 
+import java.awt.Color;
+import java.util.ArrayList;
+
 import edu.pse.beast.codearea.SyntaxHL.RegexAndColor;
 import edu.pse.beast.codearea.SyntaxHL.SyntaxHL;
-
-import java.awt.*;
-import java.util.ArrayList;
 
 /**
  * Class that updates the DocumentFilter of the JTextPanes StyledDocuments in BooleanExpEditor responsible for

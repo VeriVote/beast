@@ -1,6 +1,5 @@
 package edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes;
 
-import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BooleanExpressionNode;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 
 

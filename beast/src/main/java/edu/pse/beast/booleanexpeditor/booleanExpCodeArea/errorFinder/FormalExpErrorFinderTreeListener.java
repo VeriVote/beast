@@ -5,27 +5,37 @@
  */
 package edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Stack;
+
+import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.tree.ErrorNode;
+import org.antlr.v4.runtime.tree.TerminalNode;
+
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.*;
-import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.*;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.AtPosExp;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.ElectExp;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.SymbolicVarExp;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.TypeExpression;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.BinaryIntegerValuedNode;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.ConstantExp;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.IntegerNode;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.IntegerValuedExpression;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.VoteSumForCandExp;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import edu.pse.beast.datatypes.internal.InternalTypeRep;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.datatypes.propertydescription.VariableListListener;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionListener;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
 import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.BooleanExpScopehandler;
-import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.ErrorNode;
-import org.antlr.v4.runtime.tree.TerminalNode;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import edu.pse.beast.types.InputType;
+import edu.pse.beast.types.InternalTypeContainer;
+import edu.pse.beast.types.InternalTypeRep;
+import edu.pse.beast.types.OutputType;
 
 /**
  *
@@ -36,8 +46,7 @@ public class FormalExpErrorFinderTreeListener
 
     private final ArrayList<CodeError> created = new ArrayList<>();
     private final BooleanExpScopehandler scopeHandler = new BooleanExpScopehandler();
-    private ElectionTypeContainer input;
-    private ElectionTypeContainer output;
+    private ElectionTypeContainer container;
     private Stack<TypeExpression> expStack;
 
     /**
@@ -54,8 +63,7 @@ public class FormalExpErrorFinderTreeListener
         for (SymbolicVariable var : list.getSymbolicVariables()) {
             scopeHandler.addVariable(var.getId(), var.getInternalTypeContainer());
         }
-        this.input = ceditor.getElectionDescription().getInputType();
-        this.output = ceditor.getElectionDescription().getOutputType();
+        this.container = ceditor.getElectionDescription().getContainer();
         ceditor.addListener(this);
     }
 
@@ -65,8 +73,8 @@ public class FormalExpErrorFinderTreeListener
      * @param input
      *            the election type container
      */
-    public void setInput(ElectionTypeContainer input) {
-        this.input = input;
+    public void setInput(InputType inputType) {
+    	container.setInput(inputType);
     }
 
     /**
@@ -75,8 +83,8 @@ public class FormalExpErrorFinderTreeListener
      * @param output
      *            the election type container
      */
-    public void setOutput(ElectionTypeContainer output) {
-        this.output = output;
+    public void setOutput(OutputType outputType) {
+    	container.setOutput(outputType);
     }
 
     /**
@@ -273,13 +281,13 @@ public class FormalExpErrorFinderTreeListener
 
     @Override
     public void enterElectExp(FormalPropertyDescriptionParser.ElectExpContext ctx) {
-        testIfTooManyVarsPassed(ctx.passType(), output.getType());
+        testIfTooManyVarsPassed(ctx.passType(), container.getOutputType().getInternalTypeContainer());
     }
 
     @Override
     public void exitElectExp(FormalPropertyDescriptionParser.ElectExpContext ctx) {
-        testIfWrongTypePassed(ctx.passType(), output.getType());
-        InternalTypeContainer cont = output.getType();
+        testIfWrongTypePassed(ctx.passType(), container.getOutputType().getInternalTypeContainer());
+        InternalTypeContainer cont = container.getOutputType().getInternalTypeContainer();
         for (int i = 0; i < ctx.passType().size() && cont.isList(); ++i) {
             cont = cont.getListedType();
         }
@@ -292,13 +300,13 @@ public class FormalExpErrorFinderTreeListener
 
     @Override
     public void enterVoteExp(FormalPropertyDescriptionParser.VoteExpContext ctx) {
-        testIfTooManyVarsPassed(ctx.passType(), input.getType());
+        testIfTooManyVarsPassed(ctx.passType(), container.getInputType().getInternalTypeContainer());
     }
 
     @Override
     public void exitVoteExp(FormalPropertyDescriptionParser.VoteExpContext ctx) {
-        testIfWrongTypePassed(ctx.passType(), input.getType());
-        InternalTypeContainer cont = input.getType();
+        testIfWrongTypePassed(ctx.passType(), container.getInputType().getInternalTypeContainer());
+        InternalTypeContainer cont = container.getInputType().getInternalTypeContainer();
         for (int i = 0; i < ctx.passType().size() && cont.isList(); ++i) {
             cont = cont.getListedType();
         }
@@ -485,12 +493,12 @@ public class FormalExpErrorFinderTreeListener
     }
 
     @Override
-    public void inputChanged(ElectionTypeContainer input) {
-        this.input = input;
+    public void inputChanged(InputType input) {
+        this.container.setInput(input);
     }
 
     @Override
-    public void outputChanged(ElectionTypeContainer output) {
-        this.output = output;
+    public void outputChanged(OutputType output) {
+        this.container.setOutput(output);
     }
 }

@@ -5,8 +5,9 @@
  */
 package edu.pse.beast.codearea.ErrorHandling;
 
-import javax.swing.*;
 import java.util.ArrayList;
+
+import javax.swing.JTextPane;
 
 /**
  * This class facillitates communication between the various error finders

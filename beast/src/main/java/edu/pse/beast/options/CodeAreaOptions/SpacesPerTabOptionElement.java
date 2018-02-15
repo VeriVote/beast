@@ -1,8 +1,8 @@
 package edu.pse.beast.options.CodeAreaOptions;
 
-import edu.pse.beast.options.OptionElement;
-
 import java.util.List;
+
+import edu.pse.beast.options.OptionElement;
 
 /**
  * OptionElement subclass for the spacespertabs option.

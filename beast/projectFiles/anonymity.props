@@ -1,5 +1,0 @@
-4 name9 anonymity3 pre156 Alice != Bob;
-FOR_ALL_VOTERS(v) : (((v != Alice) && (v != Bob)) ==>> VOTES1(v) == VOTES2(v));
-VOTES1(Alice) == VOTES2(Bob);
-VOTES1(Bob) == VOTES2(Alice);4 post17 ELECT1 == ELECT2;7 varlist82 symbolic_variable: id: Alice type: VOTER;
-symbolic_variable: id: Bob type: VOTER;

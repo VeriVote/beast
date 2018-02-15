@@ -5,6 +5,8 @@
  */
 package edu.pse.beast.booleanexpeditor;
 
+import java.util.ArrayList;
+
 import edu.pse.beast.booleanexpeditor.View.BooleanExpEditorWindow;
 import edu.pse.beast.booleanexpeditor.View.BooleanExpEditorWindowStarter;
 import edu.pse.beast.booleanexpeditor.View.ErrorWindow;
@@ -22,8 +24,6 @@ import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import edu.pse.beast.toolbox.UserAction;
-
-import java.util.ArrayList;
 
 /**
  * The main class of this package that serves as an interface to the outside.
@@ -225,11 +225,11 @@ public class BooleanExpEditor implements DisplaysStringsToUser {
         cEditor.addListener(preConditionCodeArea.getVariableErrorFinder());
         cEditor.addListener(postConditionCodeArea.getVariableErrorFinder());
 
-        postConditionCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getInputType());
-        postConditionCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getOutputType());
+        postConditionCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getContainer().getInputType());
+        postConditionCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getContainer().getOutputType());
 
-        preConditionCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getInputType());
-        preConditionCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getOutputType());
+        preConditionCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getContainer().getInputType());
+        preConditionCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getContainer().getOutputType());
 
         preConditionCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         postConditionCodeArea.getPane().addFocusListener(codeAreaFocusListener);

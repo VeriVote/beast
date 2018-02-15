@@ -1,6 +1,10 @@
 
 package edu.pse.beast.parametereditor;
 
+import java.util.List;
+
+import javax.swing.text.BadLocationException;
+
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.datatypes.Project;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
@@ -13,9 +17,6 @@ import edu.pse.beast.parametereditor.View.ParameterEditorWindow;
 import edu.pse.beast.propertylist.PropertyList;
 import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
-
-import javax.swing.text.BadLocationException;
-import java.util.List;
 
 /**
  * The ParameterEditor is the central class that coordinates everything associated

@@ -1,14 +1,14 @@
 package edu.pse.beast.propertylist.Model;
 
-import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
-import edu.pse.beast.datatypes.NameInterface;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.highlevel.ResultInterface;
-
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.UUID;
+
+import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
+import edu.pse.beast.datatypes.NameInterface;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.highlevel.ResultInterface;
 
 public class PLModel extends Observable implements NameInterface {
 
@@ -154,6 +154,11 @@ public class PLModel extends Observable implements NameInterface {
 	public void setTestStatus(PropertyItem prop, boolean newStatus) {
 		prop.setTestStatus(newStatus);
 	}
+	
+
+	public void setMarginStatus(PropertyItem prop, boolean newStatus) {
+		prop.setMarginStatus(newStatus);
+	}
 
 	/**
 	 * Clears the current list.
@@ -175,7 +180,7 @@ public class PLModel extends Observable implements NameInterface {
 	 */
 	public void presentResultToItem(ResultInterface res, Integer index) {
 		ArrayList<PropertyItem> testedList = getTestedPropertyList();
-
+		
 		res.presentTo(testedList.get(index));
 
 		updateView();
@@ -255,7 +260,7 @@ public class PLModel extends Observable implements NameInterface {
 	private ArrayList<PropertyItem> getTestedPropertyList() {
 		ArrayList<PropertyItem> result = new ArrayList<PropertyItem>();
 		for (PropertyItem item : propertyList) {
-			if (item.getTestStatus())
+			if (item.getTestStatus() || item.getMarginStatus())
 				result.add(item);
 		}
 		return result;
@@ -269,10 +274,6 @@ public class PLModel extends Observable implements NameInterface {
 		this.setChanged();
 		this.notifyObservers();
 		this.clearChanged();
-	}
-
-	public void setMarginStatus(PropertyItem prop, boolean newStatus) {
-		prop.setMarginStatus(newStatus);
 	}
 
 }

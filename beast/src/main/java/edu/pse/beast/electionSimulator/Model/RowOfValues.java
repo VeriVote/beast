@@ -24,7 +24,7 @@ public class RowOfValues extends JPanel implements DocumentListener {
 
 	private int offset = 0;
 	
-	private ArrayList<Integer> values;
+	private ArrayList<String> values;
 	private ArrayList<JTextField> fields;
 
 	private ElectionTypeContainer container;
@@ -53,7 +53,7 @@ public class RowOfValues extends JPanel implements DocumentListener {
 	public void addColumn() {
 		amountOfCandidates++;
 
-		values.add(0);
+		values.add("0");
 		
 		JTextField toAdd = new JTextField("0");
 		toAdd.getDocument().addDocumentListener(this);
@@ -88,55 +88,9 @@ public class RowOfValues extends JPanel implements DocumentListener {
 		this.repaint();
 	}
 
-	private void checkAndInsertValue(int newValue, int position) {
-		int vettedValue = 0;
+	private void checkAndInsertValue(String newValue, int position) {
 		
-		switch (container.getInputID()) {
-		case APPROVAL:
-			if (newValue != 0 && newValue != 1) {
-				vettedValue = 0;
-			} else {
-				vettedValue = newValue;
-			}
-			break;
-
-		case PREFERENCE:
-			
-			if (newValue < 0 || newValue > amountOfCandidates) {
-				vettedValue = 0;
-			} else {
-				if(values.contains(newValue)) {
-					vettedValue = 0;
-				} else {
-					vettedValue = newValue;
-				}
-			}
-			break;
-
-		case SINGLE_CHOICE:
-
-			if (newValue == 1) {
-				for (int i = 0; i < values.size(); i++) {
-					values.set(i, 0);
-				}
-				vettedValue = 1;
-			} else {
-				vettedValue = 0;
-			}
-
-			break;
-
-		case WEIGHTED_APPROVAL:
-			if (newValue < 0 || newValue > 100) {
-				vettedValue = 0;
-			} else {
-				vettedValue = newValue;
-			}
-			break;
-
-		default:
-			System.out.println("unknown election type");
-		}
+		String vettedValue = container.getInputType().vetValue(newValue, container, this);
 
 		values.set(position, vettedValue);
 		
@@ -189,7 +143,7 @@ public class RowOfValues extends JPanel implements DocumentListener {
 					@Override
 					public void run() {
 						locked = true;
-						checkAndInsertValue(finalV, finalI);
+						checkAndInsertValue("" + finalV, finalI);
 						locked = false;
 					}
 				};
@@ -200,11 +154,11 @@ public class RowOfValues extends JPanel implements DocumentListener {
 	}
 	
 	//getter and setter
-	public ArrayList<Integer> getValues() {
+	public ArrayList<String> getValues() {
 		return values;
 	}
 	
-	public void setValues(ArrayList<Integer> values) {
+	public void setValues(ArrayList<String> values) {
 		this.values = values;
 	}
 	
@@ -220,8 +174,16 @@ public class RowOfValues extends JPanel implements DocumentListener {
 		this.container = container;
 		
 		for (int i = 0; i < values.size(); i++) {
-			checkAndInsertValue(0, i);
+			checkAndInsertValue("0", i);
 		}
 		
+	}
+
+	public int getAmountCandidates() {
+		return amountOfCandidates;
+	}
+	
+	public int getAmountVoters() {
+		return getAmountVoters();
 	}
 }

@@ -1,7 +1,7 @@
 package edu.pse.beast.propertylist.UserActions;
 
-import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.propertylist.PropertyList;
+import edu.pse.beast.propertylist.Model.PLModel;
 import edu.pse.beast.toolbox.UserAction;
 
 /**

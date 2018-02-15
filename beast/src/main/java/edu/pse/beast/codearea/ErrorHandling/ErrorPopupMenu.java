@@ -5,10 +5,13 @@
  */
 package edu.pse.beast.codearea.ErrorHandling;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.JTextPane;
 
 /**
  * This class is a simple popupmenu which displays an error message

@@ -5,12 +5,13 @@
  */
 package edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder;
 
+import java.util.ArrayList;
+
+import javax.swing.JTextPane;
+
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
 import edu.pse.beast.stringresource.StringLoaderInterface;
-
-import javax.swing.*;
-import java.util.ArrayList;
 
 /**
  * Class for displaying CodeErrors found in the BooleanExpEditor dynamically, triggered by mouse hovering.

@@ -20,7 +20,5 @@ public class MainClass {
         BEASTCommunicator communicator = new BEASTCommunicator();
         PSECentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
         communicator.setCentralObjectProvider(centralObjectProvider);
-    	
-    	//  	new ElectionSimulation(centralObjectProvider);
     }
 }

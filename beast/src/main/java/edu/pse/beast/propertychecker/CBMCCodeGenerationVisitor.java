@@ -5,16 +5,33 @@
  */
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.booleanExpAST.BooleanExpNodeVisitor;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.*;
-import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.*;
-import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.*;
-import edu.pse.beast.datatypes.internal.InternalTypeContainer;
-import edu.pse.beast.toolbox.CodeArrayListBeautifier;
-import edu.pse.beast.toolbox.ErrorLogger;
-
 import java.util.ArrayList;
 import java.util.Stack;
+
+import edu.pse.beast.datatypes.booleanExpAST.BooleanExpNodeVisitor;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BooleanExpressionNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.ComparisonNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.EquivalencyNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.ForAllNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.ImplicationNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.IntegerComparisonNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.LogicalAndNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.LogicalOrNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.NotNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.QuantorNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.ThereExistsNode;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.AccessValueNode;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.AtPosExp;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.ElectExp;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.SymbolicVarExp;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.VoteExp;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.BinaryIntegerValuedNode;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.ConstantExp;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.IntegerNode;
+import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.VoteSumForCandExp;
+import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.types.InternalTypeContainer;
 
 /**
  * This is the visitor for the codeGeneration For every assert or assume it

@@ -5,21 +5,24 @@
  */
 package edu.pse.beast.propertylist;
 
-import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.highlevel.PreAndPostConditionsDescriptionSource;
-import edu.pse.beast.highlevel.ResultInterface;
-import edu.pse.beast.highlevel.ResultPresenter;
-import edu.pse.beast.propertylist.Model.PLModel;
-import edu.pse.beast.propertylist.Model.PropertyItem;
-import edu.pse.beast.propertylist.View.ListItem;
-import edu.pse.beast.propertylist.View.PropertyListWindow;
-import edu.pse.beast.saverloader.FileChooser;
 import java.awt.Frame;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.highlevel.PreAndPostConditionsDescriptionSource;
+import edu.pse.beast.highlevel.PropertyAndMarginBool;
+import edu.pse.beast.highlevel.ResultInterface;
+import edu.pse.beast.highlevel.ResultPresenter;
+import edu.pse.beast.propertychecker.Result;
+import edu.pse.beast.propertylist.Model.PLModel;
+import edu.pse.beast.propertylist.Model.PropertyItem;
+import edu.pse.beast.propertylist.View.ListItem;
+import edu.pse.beast.propertylist.View.PropertyListWindow;
+import edu.pse.beast.saverloader.FileChooser;
 
 /**
  * Class acts as controller for everything related to the property list. Returns
@@ -212,6 +215,52 @@ public class PropertyList implements PreAndPostConditionsDescriptionSource,
         }
         return result;
     }
+    
+	@Override
+	public List<PropertyAndMarginBool> getPreAndPostPropertiesDescriptionsCheckAndMargin() {
+		editor.updatePreAndPostConditionObject();
+		ArrayList<PropertyAndMarginBool> result = new ArrayList<PropertyAndMarginBool>();
+        ArrayList<PropertyItem> from = model.getPropertyList();
+        for (PropertyItem prop : from) {
+            if (prop.getTestStatus()) {
+                result.add(new PropertyAndMarginBool(prop.getDescription(), false));
+            } else
+            if (prop.getMarginStatus()) {
+                result.add(new PropertyAndMarginBool(prop.getDescription(), true));
+            }
+        }
+        return result;
+	}
+	
+
+	@Override
+	public List<Integer> referenceResult(List<Result> results) {
+		editor.updatePreAndPostConditionObject();
+		ArrayList<PropertyAndMarginBool> result = new ArrayList<PropertyAndMarginBool>();
+        ArrayList<PropertyItem> from = model.getPropertyList();
+        
+        int currentResult = 0; //we start from result 0;
+        
+        for (PropertyItem prop : from) {
+            if (prop.getTestStatus()) {
+            	//save a reference to the "parent" object
+            	Result parent = results.get(currentResult);
+
+            	currentResult++; //increase the pointer to the next result object to look at
+            	
+                if (prop.getMarginStatus()) { //if we now have a second object on this property:
+                	
+                	parent.addSubResult(results.get(currentResult));
+                	
+                	currentResult++;
+                }
+            } else
+            if (prop.getMarginStatus()) {
+                currentResult++;
+            }
+        }
+		return null;
+	}
 
     @Override
     public void presentResult(ResultInterface res, Integer index) {
@@ -302,6 +351,4 @@ public class PropertyList implements PreAndPostConditionsDescriptionSource,
 			listItem.setMarginComputationBoxVisible(visible);
 		}
 	}
-
-
 }

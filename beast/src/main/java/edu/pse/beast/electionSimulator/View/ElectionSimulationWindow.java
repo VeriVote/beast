@@ -1,17 +1,24 @@
 package edu.pse.beast.electionSimulator.View;
 
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Iterator;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
+import javax.swing.JScrollBar;
+import javax.swing.JTextField;
+import javax.swing.JToolBar;
+
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.electionSimulator.ElectionSimulation;
 import edu.pse.beast.electionSimulator.Model.ElectionSimulationModel;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
-import javax.swing.*;
-
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Iterator;
 
 public class ElectionSimulationWindow extends JFrame implements ActionListener {
 
@@ -122,10 +129,7 @@ public class ElectionSimulationWindow extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 
 		this.getContentPane().addComponentListener(controller);
-
-		// add initial row
-	//	rows.add(new RowOfValues(this, container, model.getAmountCandidates(), model.getElementWidth(), model.getElementHeight(),  model.getWidthMultiplier()));
-
+		
 		this.setLayout(null);
 		this.setBounds(0, 0, model.getStartWidth(), model.getStartHeight());
 

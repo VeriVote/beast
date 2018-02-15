@@ -1,9 +1,10 @@
 package edu.pse.beast.SaverLoader;
 
-import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
-import edu.pse.beast.saverloader.StaticSaverLoaders.FormalPropertySaverLoader;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
+import edu.pse.beast.saverloader.StaticSaverLoaders.FormalPropertySaverLoader;
 
 /**
  * JUnit Testclass for saverloader.StaticSaverLoaders.FormalPropertySaverLoader.
