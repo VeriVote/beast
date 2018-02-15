@@ -29,6 +29,7 @@ import javax.swing.text.StyledDocument;
 
 import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
+import edu.pse.beast.electionSimulator.ElectionSimulation;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
@@ -291,15 +292,17 @@ public class ResultPresenterWindow extends JFrame {
 			
 			String votes = "[";
 			
+			int index = 0;
+			
 			for (Iterator<String> iterator2 = list.iterator(); iterator2.hasNext();) {
 				String voter = (String) iterator2.next();
 				if(iterator2.hasNext()) {
-					votes = votes + ", " + voter;
+					votes = votes + ElectionSimulation.getPartyName(index++) + ": " + voter + ", ";
 				} else {
-					votes = votes + ", " + voter + "]";
+					votes = votes + ", " + ElectionSimulation.getPartyName(index++) + ": " + voter + "]";
 				}
 			}
-			appendPane(",\n" + votes);
+			appendPane("\n" + votes);
 		}
 		
 		appendLine("");
@@ -315,9 +318,9 @@ public class ResultPresenterWindow extends JFrame {
 			String currentValue = (String) iterator.next();
 			
 			if(iterator.hasNext()) {
-				appendPane(currentValue + ", ");
+				appendPane(ElectionSimulation.getPartyName(Integer.parseInt(currentValue)) + ", ");
 			} else {
-				appendPane(currentValue + "]");
+				appendPane(ElectionSimulation.getPartyName(Integer.parseInt(currentValue)) + "\n]");
 			}
 			
 		}
@@ -339,15 +342,17 @@ public class ResultPresenterWindow extends JFrame {
 				
 				String votes = "[";
 				
+				int index = 0;
+				
 				for (Iterator<String> iterator2 = list.iterator(); iterator2.hasNext();) {
 					String voter = (String) iterator2.next();
 					if(iterator2.hasNext()) {
-						votes = votes + ", " + voter;
+						votes = votes + ElectionSimulation.getPartyName(index++) + ": " + voter + ", ";
 					} else {
-						votes = votes + ", " + voter + "]";
+						votes = votes + ", " + ElectionSimulation.getPartyName(index++) + ": " + voter + "]";
 					}
 				}
-				appendPane(",\n" + votes);
+				appendPane("\n" + votes);
 			}
 			appendLine("");
 			appendLine("]");
@@ -363,9 +368,9 @@ public class ResultPresenterWindow extends JFrame {
 				String currentValue = (String) iterator.next();
 				
 				if(iterator.hasNext()) {
-					appendPane(currentValue + ", ");
+					appendPane(ElectionSimulation.getPartyName(Integer.parseInt(currentValue)) + ", ");
 				} else {
-					appendPane(currentValue + "]");
+					appendPane(ElectionSimulation.getPartyName(Integer.parseInt(currentValue)) + "]");
 				}
 				
 			}

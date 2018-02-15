@@ -37,9 +37,9 @@ public class SaverLoaderHelper {
                 attrNameToContent.put(attr, cont);
             }
         } catch (StringIndexOutOfBoundsException ex) {
-            //if the string gets laoded from the file it ends with a \n which
+            //if the string gets loaded from the file it ends with a \n which
             //causes the load algorithm to throw a StringIndexOutOfBoundsException
-            //this exception can savely be ignored
+            //this exception can safely be ignored
         }
         return attrNameToContent;
     }

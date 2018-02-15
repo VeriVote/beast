@@ -15,7 +15,7 @@ unsigned int voting(unsigned int votes[C]) {
 New PropertyList
 </propertyListName>
 <propertyItem>
-<postAndPreConditions>
+<preAndPostConditions>
 4 name10 Property 03 pre0 4 post0 7 varlist0 
 </preAndPostConditions>
 <testStatus>

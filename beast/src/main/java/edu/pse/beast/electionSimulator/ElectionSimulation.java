@@ -376,4 +376,12 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 	public static int getNumVotingPoints() {
 		return container.getInputType().getNumVotingPoints(getVotingData());
 	}
+	
+	public static String getPartyName(int index) {
+		return model.getCandidates().get(index).getText();
+	}
+	
+	public static String getVoterName(int index) {
+		return model.getVoters().get(index).getText();
+	}
 }
