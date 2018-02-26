@@ -12,6 +12,7 @@ import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
 import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoiceStack;
 import edu.pse.beast.types.cbmctypes.inputplugins.WeightedApproval;
 import edu.pse.beast.types.cbmctypes.outputtypes.Parliament;
+import edu.pse.beast.types.cbmctypes.outputtypes.ParliamentStack;
 import edu.pse.beast.types.cbmctypes.outputtypes.SingleCandidate;
 
 public class TypeLoader {
@@ -31,6 +32,7 @@ public class TypeLoader {
 		
 		availableOutTypes.add(new SingleCandidate());
 		availableOutTypes.add(new Parliament());
+		availableOutTypes.add(new ParliamentStack());
 		
 		init = true;
 	}

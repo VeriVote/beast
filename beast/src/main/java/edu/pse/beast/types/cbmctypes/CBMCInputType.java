@@ -1,7 +1,9 @@
 package edu.pse.beast.types.cbmctypes;
 
+import java.util.Iterator;
 import java.util.List;
 
+import edu.pse.beast.electionSimulator.ElectionSimulation;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.types.InputType;
 
@@ -25,5 +27,49 @@ public abstract class CBMCInputType extends InputType {
 		code.add("#define assert2(x, y) __CPROVER_assert(x, y)");
 		code.add("#define assume(x) __CPROVER_assume(x)");
 		code.add("");
+	}
+	
+	public String getVoteDescriptionString(List<List<String>> origVotes) {
+		
+		String votesString = "";
+		
+		int voterIndex = 0;
+		
+		for (Iterator<List<String>> iterator = origVotes.iterator(); iterator.hasNext();) { //iterate over the voters
+			List<String> list = (List<String>) iterator.next();
+			String oneVoter = "";
+			
+			try {
+				oneVoter = ElectionSimulation.getVoterName(voterIndex);
+			} catch (Exception e) {
+				oneVoter = "" + voterIndex;
+			}
+			
+			oneVoter = oneVoter + ": ";
+			
+			voterIndex++;
+			
+			int partyIndex = 0;
+			
+			for (Iterator<String> iterator2 = list.iterator(); iterator2.hasNext();) { //iterate over the candidates
+				String voteAmount = (String) iterator2.next();
+				
+				
+				try {
+					oneVoter = oneVoter + ElectionSimulation.getPartyName(partyIndex);
+				} catch (Exception e) {
+					oneVoter = "" + partyIndex;
+				}
+				
+				oneVoter = oneVoter + ": " + voteAmount + ", ";
+				
+				partyIndex++;
+				
+			}
+			
+			votesString = votesString + oneVoter + "\n";
+		}
+		
+		return votesString;
 	}
 }

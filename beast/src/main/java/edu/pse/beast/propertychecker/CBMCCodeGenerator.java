@@ -255,6 +255,8 @@ public class CBMCCodeGenerator {
 																// struct to be
 																// returned in case
 																// of a parliament
+		
+		code.add("struct stack_result { unsigned int arr[C]; };"); //same for a stacked result for each party
 	}
 
 	/**

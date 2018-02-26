@@ -27,6 +27,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
+import de.erichseifert.gral.graphics.Container;
 import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.electionSimulator.ElectionSimulation;
@@ -274,7 +275,11 @@ public class ResultPresenterWindow extends JFrame {
 
 	private void appendMarginResult(Result marginResult) {
 		//FailureExample ex = marginResult.getFailureExample();
-
+		
+		
+		ElectionTypeContainer container = marginResult.getFailureExample().getElectionDescription().getContainer();
+		
+		
 		appendLine("================================");
 		appendLine("===========Margin Result===========");
 		appendLine("================================");
@@ -285,45 +290,20 @@ public class ResultPresenterWindow extends JFrame {
 		appendLine("====original Votes====");
 		appendLine("");
 		
-		appendPane("[");
 		
-		for (Iterator<List<String>> iterator = origVotes.iterator(); iterator.hasNext();) {
-			List<String> list = (List<String>) iterator.next();
-			
-			String votes = "[";
-			
-			int index = 0;
-			
-			for (Iterator<String> iterator2 = list.iterator(); iterator2.hasNext();) {
-				String voter = (String) iterator2.next();
-				if(iterator2.hasNext()) {
-					votes = votes + ElectionSimulation.getPartyName(index++) + ": " + voter + ", ";
-				} else {
-					votes = votes + ", " + ElectionSimulation.getPartyName(index++) + ": " + voter + "]";
-				}
-			}
-			appendPane("\n" + votes);
-		}
+		String toAppend = container.getInputType().getVoteDescriptionString(marginResult.getOrigVoting());
+		
+		
+		appendPane(toAppend);
 		
 		appendLine("");
-		
-		appendLine("]");
 		
 		appendLine("====original Result====");
 		appendLine("");
 		
-		appendLine("[");
+		toAppend = container.getOutputType().getResultDescriptionString(marginResult.getOrigWinner());
 		
-		for (Iterator<String> iterator = marginResult.getOrigWinner().iterator(); iterator.hasNext();) {
-			String currentValue = (String) iterator.next();
-			
-			if(iterator.hasNext()) {
-				appendPane(ElectionSimulation.getPartyName(Integer.parseInt(currentValue)) + ", ");
-			} else {
-				appendPane(ElectionSimulation.getPartyName(Integer.parseInt(currentValue)) + "\n]");
-			}
-			
-		}
+		appendPane(toAppend);
 		
 		appendLine("");
 		appendLine("====Margin computation====");
@@ -335,46 +315,23 @@ public class ResultPresenterWindow extends JFrame {
 			appendLine("");
 			appendLine("====new Votes====");
 			appendLine("");
-			appendPane("[");
 			
-			for (Iterator<List<String>> iterator = marginResult.getNewVotes().iterator(); iterator.hasNext();) {
-				List<String> list = (List<String>) iterator.next();
-				
-				String votes = "[";
-				
-				int index = 0;
-				
-				for (Iterator<String> iterator2 = list.iterator(); iterator2.hasNext();) {
-					String voter = (String) iterator2.next();
-					if(iterator2.hasNext()) {
-						votes = votes + ElectionSimulation.getPartyName(index++) + ": " + voter + ", ";
-					} else {
-						votes = votes + ", " + ElectionSimulation.getPartyName(index++) + ": " + voter + "]";
-					}
-				}
-				appendPane("\n" + votes);
-			}
-			appendLine("");
-			appendLine("]");
+			toAppend = container.getInputType().getVoteDescriptionString(marginResult.getNewVotes());
+			
+			appendPane(toAppend);
+			
 			appendLine("");
 			
 			appendLine("====new Result====");
 			
 			appendLine("");
 			
-			appendPane("[");
+			toAppend = container.getOutputType().getResultDescriptionString(marginResult.getNewWinner());
 			
-			for (Iterator<String> iterator = marginResult.getNewWinner().iterator(); iterator.hasNext();) {
-				String currentValue = (String) iterator.next();
-				
-				if(iterator.hasNext()) {
-					appendPane(ElectionSimulation.getPartyName(Integer.parseInt(currentValue)) + ", ");
-				} else {
-					appendPane(ElectionSimulation.getPartyName(Integer.parseInt(currentValue)) + "]");
-				}
-				
-			}
+			appendPane(toAppend);
 			
+		} else {
+			appendPane("There is no final margin!");
 		}
 	}
 

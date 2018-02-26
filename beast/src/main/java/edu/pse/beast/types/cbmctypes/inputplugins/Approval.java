@@ -2,6 +2,7 @@ package edu.pse.beast.types.cbmctypes.inputplugins;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
@@ -79,9 +80,9 @@ public class Approval extends CBMCInputType {
 		code.add("}"); // end of the double for loop
 		code.add("assume(total_diff <= MARGIN);"); // no more changes than
 													// margin allows
-		
+
 		outType.addVerifyOutput(code);
-		
+
 		code.add("}"); // end of the function
 	}
 
@@ -134,42 +135,42 @@ public class Approval extends CBMCInputType {
 		return super.wrongInputTypeArray(amountCandidates, amountVoters);
 	}
 
-//	@Override
-//	public void addMarginMainCheck(CodeArrayListBeautifier code, int margin,
-//			List<String> origResult) {
-//		code.add("int new_votes1[V][C];");
-//
-//		code.add("for (int i = 0; i < V; i++) {"); // go over all voters
-//		code.addTab();
-//		code.add("for (int j = 0; i < C; i++) {"); // go over all candidates
-//		code.addTab();
-//		code.add("int changed = nondet_int();"); // determine, if we want to
-//													// changed votes for
-//													// this
-//													// voter - candidate
-//													// pair
-//		code.add("assume(0 <= changed);");
-//		code.add("assume(changed <= 1);");
-//		code.add("if(changed) {");
-//		code.addTab();
-//		code.add("total_diff++;"); // if we changed the vote, we keep track
-//									// of it
-//		code.add("new_votes1[i][j] = !ORIG_VOTES[i][j];"); // flip the vote
-//															// (0 -> 1 |
-//		// 1 -> 0)
-//		code.deleteTab();
-//		code.add("} else {");
-//		code.addTab();
-//		code.add("new_votes1[i][j] = ORIG_VOTES[i][j];");
-//		code.deleteTab();
-//		code.add("}");
-//		code.deleteTab();
-//		code.add("}");
-//		code.deleteTab();
-//		code.add("}"); // end of the double for loop
-//		code.add("assume(total_diff <= MARGIN);"); // no more changes than
-//													// margin allows
-//	}
+	// @Override
+	// public void addMarginMainCheck(CodeArrayListBeautifier code, int margin,
+	// List<String> origResult) {
+	// code.add("int new_votes1[V][C];");
+	//
+	// code.add("for (int i = 0; i < V; i++) {"); // go over all voters
+	// code.addTab();
+	// code.add("for (int j = 0; i < C; i++) {"); // go over all candidates
+	// code.addTab();
+	// code.add("int changed = nondet_int();"); // determine, if we want to
+	// // changed votes for
+	// // this
+	// // voter - candidate
+	// // pair
+	// code.add("assume(0 <= changed);");
+	// code.add("assume(changed <= 1);");
+	// code.add("if(changed) {");
+	// code.addTab();
+	// code.add("total_diff++;"); // if we changed the vote, we keep track
+	// // of it
+	// code.add("new_votes1[i][j] = !ORIG_VOTES[i][j];"); // flip the vote
+	// // (0 -> 1 |
+	// // 1 -> 0)
+	// code.deleteTab();
+	// code.add("} else {");
+	// code.addTab();
+	// code.add("new_votes1[i][j] = ORIG_VOTES[i][j];");
+	// code.deleteTab();
+	// code.add("}");
+	// code.deleteTab();
+	// code.add("}");
+	// code.deleteTab();
+	// code.add("}"); // end of the double for loop
+	// code.add("assume(total_diff <= MARGIN);"); // no more changes than
+	// // margin allows
+	// }
 
 	@Override
 	public List<String> getVotingResultCode(String[][] votingData) {
@@ -214,7 +215,7 @@ public class Approval extends CBMCInputType {
 
 	@Override
 	public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, int voteNumber) {
-		
+
 	}
 
 	@Override
@@ -241,7 +242,7 @@ public class Approval extends CBMCInputType {
 
 	@Override
 	public int vetAmountCandidates(int amountCandidates) {
-		if(amountCandidates < 1) {
+		if (amountCandidates < 1) {
 			return 1;
 		} else {
 			return amountCandidates;
@@ -250,7 +251,7 @@ public class Approval extends CBMCInputType {
 
 	@Override
 	public int vetAmountVoters(int amountVoters) {
-		if(amountVoters < 1) {
+		if (amountVoters < 1) {
 			return 1;
 		} else {
 			return amountVoters;
@@ -259,13 +260,13 @@ public class Approval extends CBMCInputType {
 
 	@Override
 	public int vetAmountSeats(int amountSeats) {
-		if(amountSeats < 1) {
+		if (amountSeats < 1) {
 			return 1;
 		} else {
 			return amountSeats;
 		}
 	}
-	
+
 	@Override
 	public int getNumVotingPoints(String[][] votingData) {
 		return ElectionSimulation.getNumVoters();

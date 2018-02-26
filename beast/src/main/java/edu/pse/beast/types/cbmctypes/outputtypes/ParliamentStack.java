@@ -1,28 +1,26 @@
 package edu.pse.beast.types.cbmctypes.outputtypes;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.electionSimulator.ElectionSimulation;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
-import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
-public class Parliament extends CBMCOutputType {
+public class ParliamentStack extends CBMCOutputType {
 
 	@Override
 	public String getOutputString() {
-		return "struct result";
+		return "struct stack_result";
 	}
 
 	@Override
 	public String getOutputIDinFile() {
-		return "CAND_PER_SEAT";
+		return "STACK_PER_PARTY";
 	}
 
 	@Override
@@ -52,7 +50,7 @@ public class Parliament extends CBMCOutputType {
 
 		code.addTab();
 
-		code.add("struct result tmp = voting(new_votes1);");
+		code.add("struct stack_result tmp = voting(new_votes1);");
 
 		code.add("unsigned int *tmp_result = tmp.arr;");
 
@@ -80,19 +78,25 @@ public class Parliament extends CBMCOutputType {
 		code.deleteTab();
 
 		code.add("}"); // end of the function
+		
+		
+
+		code = new CodeArrayListBeautifier();
+
+		code.add("OK, vllt doch nicht löschen. parliament stack");
 
 		return code;
 	}
 
 	@Override
 	public CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code, int voteNumber) {
-		String temp = "struct result tmp" + voteNumber + " = voting(votes" + voteNumber + ");";
+		String temp = "struct stack_result tmp" + voteNumber + " = voting(votes" + voteNumber + ");";
 		code.add(temp);
 		String tempElect = "unsigned int *tempElect" + voteNumber + " = tmp" + voteNumber + ".arr;";
 		code.add(tempElect);
-		String electX = "unsigned int elect" + voteNumber + "[S];";
+		String electX = "unsigned int elect" + voteNumber + "[C];";
 		code.add(electX);
-		String forLoop = "for (int electLoop = 0; electLoop < S; electLoop++) {";
+		String forLoop = "for (int electLoop = 0; electLoop < C; electLoop++) {";
 		code.add(forLoop);
 		code.addTab();
 		code.add("elect" + voteNumber + "[electLoop] = tempElect" + voteNumber + "[electLoop];");
@@ -104,7 +108,7 @@ public class Parliament extends CBMCOutputType {
 
 	@Override
 	public String getCArrayType() {
-		return "[S]";
+		return "[C]";
 	}
 
 	@Override
@@ -112,13 +116,13 @@ public class Parliament extends CBMCOutputType {
 		code.add("int main() {");
 		code.addTab();
 
-		String temp = "struct result tmp" + voteNumber + " = voting(ORIG_VOTES);";
+		String temp = "struct stack_result tmp" + voteNumber + " = voting(ORIG_VOTES);";
 		code.add(temp);
 		String tempElect = "unsigned int *tempElect" + voteNumber + " = tmp" + voteNumber + ".arr;";
 		code.add(tempElect);
-		String electX = "unsigned int elect" + voteNumber + "[S];";
+		String electX = "unsigned int elect" + voteNumber + "[C];";
 		code.add(electX);
-		String forLoop = "for (int electLoop = 0; electLoop < S; electLoop++) {";
+		String forLoop = "for (int electLoop = 0; electLoop < C; electLoop++) {";
 		code.add(forLoop);
 		code.addTab();
 		code.add("elect" + voteNumber + "[electLoop] = tempElect" + voteNumber + "[electLoop];");
@@ -160,12 +164,12 @@ public class Parliament extends CBMCOutputType {
 
 	@Override
 	public void addVerifyOutput(CodeArrayListBeautifier code) {
-		code.add("struct result tmp_result = voting(new_votes1);");
+		code.add("struct stack_result tmp_result = voting(new_votes1);");
 
-		code.add("unsigned int new_result1[S];"); // create the array where the
-											// new seats will get saved
+		code.add("unsigned int new_result1[C];"); // create the array where the
+		// new seats will get saved
 
-		code.add("for (int i = 0; i < S; i++) {"); // iterate over the
+		code.add("for (int i = 0; i < C; i++) {"); // iterate over the
 													// seat array, and
 													// fill it
 		code.addTab();
@@ -177,7 +181,7 @@ public class Parliament extends CBMCOutputType {
 		code.deleteTab();
 		code.add("}"); // close the for loop
 
-		code.add("for (int i = 0; i < S; i++) {"); // iterate over all
+		code.add("for (int i = 0; i < C; i++) {"); // iterate over all
 													// candidates /
 													// seats and assert
 													// their equality
@@ -209,7 +213,6 @@ public class Parliament extends CBMCOutputType {
 		}
 		code.add(tmp);
 
-		
 		code.deleteTab();
 		code.add("};");
 
@@ -220,14 +223,18 @@ public class Parliament extends CBMCOutputType {
 		
 		String toReturn = "[";
 		
+		int index = 0;
+		
 		for (Iterator<String> iterator = result.iterator(); iterator.hasNext();) {
 			String currentValue = (String) iterator.next();
 			
 			try {
-				toReturn = toReturn + ElectionSimulation.getPartyName(Integer.parseInt(currentValue)) + ", ";
+				toReturn = toReturn + ElectionSimulation.getPartyName(index) + ": " + currentValue + ", ";
 			} catch (Exception e) {
-				toReturn = toReturn + currentValue + ", ";
+				toReturn = toReturn + index + ": " + currentValue + ", ";
 			}
+			
+			index++;
 		}
 		
 		toReturn = toReturn + "]";

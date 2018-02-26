@@ -305,7 +305,7 @@ public abstract class CheckerFactory implements Runnable {
 						if (!stopped) {
 							currentlyRunning = startProcessCheck(electionDescSrc, postAndPrepPropDesc, advanced,
 									voters, candidates, seats, this, false);
-
+							
 							// check if the creation was successfull
 							if (currentlyRunning == null) {
 								// the process creation failed

@@ -1,0 +1,70 @@
+4 name10 stack_test8 elecDesc775 4 name6 hoffen14 votingDeclLine1 24 code669 //Stacked single-choice: Votes are only represented as stacks of votes for the parties
+//Seats to candidates: Every seat gets assigned to a candidate
+struct result voting(unsigned int votes[C]) {
+    
+    struct result r;
+    int divisor[C];
+    
+    for(unsigned int i = 0; i < S; ++i) r.arr[i] = 0;
+    for(unsigned int i = 0; i < C; ++i) divisor[i] = 1;
+    
+    int elected = 0;
+    
+    for(unsigned int i = 0; i < S; ++i) {
+        for(unsigned int j = 0; j < C; ++j) {
+            if (divisor[j] * votes[elected] < divisor[elected] * votes[j]) elected = j;
+            r.arr[i] = elected;
+            divisor[elected]++;
+        }
+    }
+   
+        return r;
+} 
+9 inputType19 SINGLE_CHOICE_STACK10 outputType13 CAND_PER_SEAT8 propList250 <propertyListName>
+New PropertyList
+</propertyListName>
+<propertyItem>
+<preAndPostConditions>
+4 name10 Property 03 pre0 4 post0 7 varlist0 
+</preAndPostConditions>
+<testStatus>
+false
+</testStatus>
+<marginStatus>
+true
+</marginStatus>
+
+</propertyItem>
+19 electionCheckParams375 <amountVotersMin>
+1
+</amountVotersMin>
+<amountVotersMax>
+1
+</amountVotersMax>
+<amountCandidatesMin>
+1
+</amountCandidatesMin>
+<amountCandidatesMax>
+1
+</amountCandidatesMax>
+<amountSeatsMin>
+5
+</amountSeatsMin>
+<amountSeatsMax>
+5
+</amountSeatsMax>
+<timeout>
+<duration>
+0
+</duration>
+<timeunit>
+SECONDS
+</timeunit>
+
+</timeout>
+<processes>
+0
+</processes>
+<argument>
+
+</argument>

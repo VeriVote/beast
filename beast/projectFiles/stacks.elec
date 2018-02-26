@@ -1,0 +1,25 @@
+4 name6 stacks14 votingDeclLine1 24 code643 //Stacked single-choice: Votes are only represented as stacks of votes for the parties
+//null: null
+struct stack_result voting(unsigned int votes[C]) {
+    stack_result mandates;
+   int divisor[C];
+   
+   for (int i = 0; i < C; i++) mandates.arr[i] = 0;
+   for (int i = 0; i < C; i++) divisor[i] = 1;
+   
+   int elected = 0;
+   for (int j = 0, j < S; j++) {
+       for (int i = 0; i < C; i++) {
+             if (divisor[i] * votes[elected] < divisor[elected] * votes[i]) {
+                elected = i;
+             }
+       }
+       mandates.arr[elected]++;
+       divisor[elected]++;
+   }
+    
+    tmp.arr = mandates;
+    
+    return tmp;
+} 
+9 inputType19 SINGLE_CHOICE_STACK10 outputType15 STACK_PER_PARTY

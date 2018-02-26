@@ -4,6 +4,7 @@ import java.util.List;
 
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
+import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 
 public abstract class OutputType implements InOutType {
@@ -70,4 +71,6 @@ public abstract class OutputType implements InOutType {
 	public abstract void addVerifyOutput(CodeArrayListBeautifier code);
 
 	public abstract void addLastResultAsCode(CodeArrayListBeautifier code, List<String> origResult);
+
+	public abstract String getResultDescriptionString(List<String> result);
 }

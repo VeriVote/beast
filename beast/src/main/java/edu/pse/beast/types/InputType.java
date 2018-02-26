@@ -139,5 +139,7 @@ public abstract class InputType implements InOutType{
 	public abstract int vetAmountSeats(int amountSeats);
 
 	public abstract int getNumVotingPoints(String[][] votingData);
+
+	public abstract String getVoteDescriptionString(List<List<String>> origVotes);
 	
 }

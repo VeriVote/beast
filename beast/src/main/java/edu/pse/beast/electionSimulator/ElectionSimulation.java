@@ -346,11 +346,7 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 	}
 
 	public static int getNumSeats() {
-		if (!initiated) {
-			return 1;
-		} else {
-			return model.getAmountSeats();
-		}
+		return BEASTCommunicator.getCentralObjectProvider().getParameterSrc().getParameter().getAmountSeats().get(0);
 	}
 
 	public static Modes getMode() {
