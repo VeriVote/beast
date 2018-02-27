@@ -1,0 +1,31 @@
+4 name9 jefferson14 votingDeclLine1 44 code946 #include <limits.h>
+
+//Stacked single-choice: Votes are only represented as stacks of votes for the parties
+//null: null
+struct stack_result voting(unsigned int votes[C]) {
+ struct stack_result mandates;
+    
+ for (int i = 0; i < C; i++) { mandates.arr[i] = 0; }
+
+ int quotaNumerator = nondet_int();
+ int quotaDenominator = nondet_int();
+
+ __CPROVER_assume (0 < quotaNumerator && quotaNumerator <= INT_MAX);
+__CPROVER_assume (0 < quotaDenominator && quotaDenominator <= S);
+ __CPROVER_assume (quotaDenominator < quotaNumerator);
+
+ for (int i = 0; i < C; i++) {
+ __CPROVER_assume (0 <= quotaDenominator * votes[i]  && quotaDenominator * votes[i]<= INT_MAX);
+ mandates.arr[i] = ((quotaDenominator * votes[i]) / quotaNumerator);
+ __CPROVER_assume (0 <= mandates.arr[i] && mandates.arr[i] <= S);
+ }
+
+int total_mand = 0;
+ for (int i = 0; i < C; i++) {
+    total_mand += mandates.arr[i];
+    }
+ __CPROVER_assume (total_mand == S);
+
+return mandates;
+} 
+9 inputType19 SINGLE_CHOICE_STACK10 outputType15 STACK_PER_PARTY
