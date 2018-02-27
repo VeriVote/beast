@@ -193,7 +193,7 @@ public class CBMCCodeGenerator {
 		// code.add("assert (equals(result, ORIG_RESULT));");
 		// code.add("}");
 
-		// add the main methode
+		// add the main method
 		code.add("int main() {");
 		code.addTab();
 		code.add("verify();");

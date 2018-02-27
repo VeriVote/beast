@@ -60,7 +60,7 @@ public final class CheckerFactoryFactory {
     }
 
     /**
-     * this methode returns a new checkerfactory to produce checkers
+     * this method returns a new checkerfactory to produce checkers
      * 
      * @param checkerID
      *            the id

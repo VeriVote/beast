@@ -1,6 +1,7 @@
 package edu.pse.beast.toolbox;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -20,16 +21,23 @@ public class UnifiedNameContainer {
 		map.put("voter" , "V");
 		map.put("seats" , "S");
 
-		map.put("votingMethode" , "voting");
+		map.put("votingMethod" , "poking");
 		map.put("struct_result" , "result");
 		map.put("stack_result" , "stack_result");
 		map.put("result_arr_name" , "arr");
-
+		
 		map.put("votingArray" , "votes");
 	}
 
 	public static void addListener(NameChangeListener toAdd) {
 		listeners.add(toAdd);
+	}
+	
+	private static void notifyNameChangeListeners() {
+		for (Iterator<NameChangeListener> iterator = listeners.iterator(); iterator.hasNext();) {
+			NameChangeListener nameChangeListener = (NameChangeListener) iterator.next();
+			nameChangeListener.notifyNameChange();
+		}
 	}
 	
 	public static String getByKey(String key) {
@@ -47,17 +55,13 @@ public class UnifiedNameContainer {
 	public static String getVoter() {
 		return map.get("voter");
 	}
-	
-	public static String getVotes() {
-		return map.get("votes");
-	}
 
 	public static String getSeats() {
 		return map.get("seats");
 	}
 
-	public static String getVotingMethode() {
-		return map.get("votingMethode");
+	public static String getVotingMethod() {
+		return map.get("votingMethod");
 	}
 
 	public static String getStruct_result() {
@@ -83,17 +87,13 @@ public class UnifiedNameContainer {
 	public static String getVoterKey() {
 		return  "voter"; 
 	}
-	
-	public static String getVotesKey() {
-		return "votes";
-	}
 
 	public static String getSeatsKey() {
 		return  "seats"; 
 	}
 
-	public static String getVotingMethodeKey() {
-		return "votingMethode"; 
+	public static String getVotingMethodKey() {
+		return "votingMethod"; 
 	}
 
 	public static String getStruct_resultKey() {
@@ -113,39 +113,44 @@ public class UnifiedNameContainer {
 	}
 
 	public static void setCandidate(String candidate) {
-		map.put("candidate", candidate);
+		setInMap("candidate", candidate);
 	}
 
 	public static void setVoter(String voter) {
-		map.put("voter", voter);
+		setInMap("voter", voter);
 	}
 	
 	public static void setVotes(String votes) {
-		map.put("votes", votes);
+		setInMap("votes", votes);
 	}
 
 	public static void setSeats(String seats) {
-		map.put("seats", seats);
+		setInMap("seats", seats);
 	}
 
-	public static void setVotingMethode(String votingMethode) {
-		map.put("votingMethode", votingMethode);
+	public static void setVotingMethod(String votingMethod) {
+		setInMap("votingMethod", votingMethod);
 	}
 
 	public static void setStruct_result(String struct_result) {
-		map.put("struct_result", struct_result);
+		setInMap("struct_result", struct_result);
 	}
 
 	public static void setStack_result(String stack_result) {
-		map.put("stack_result", stack_result);
+		setInMap("stack_result", stack_result);
 	}
 
 	public static void setResult_arr_name(String result_arr_name) {
-		map.put("result_arr_name", result_arr_name);
+		setInMap("result_arr_name", result_arr_name);
 	}
 
 	public static void setVotingArray(String votingArray) {
-		map.put("votingArray", votingArray);
+		setInMap("votingArray", votingArray);
 	}
 
+	private static void setInMap(String key, String toSet) {
+		map.put(key, toSet);
+		notifyNameChangeListeners();
+	}
+	
 }

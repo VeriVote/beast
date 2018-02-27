@@ -12,6 +12,7 @@ import java.util.concurrent.CountDownLatch;
 import org.apache.commons.io.FileUtils;
 
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
+import edu.pse.beast.options.ParametereditorOptions.ParametereditorOptions;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
@@ -119,14 +120,15 @@ public abstract class SystemSpecificErrorChecker {
 		// pathToNewFile = pathToNewFile.replaceAll("%20", " ");
 		// create two links to files, so in case an object file gets created we can
 		// delete it afterwards too
+		
 		File cFile = new File(pathToNewFile + ".c");
+		// that will be created, to delete it afterwards
+		File batFile = new File(pathToNewFile + ".bat");
 
 		File objFile = new File(pathToNewFile + ".obj");
 
 		// on windows we have to create a .bat file, so we create a reference to the
 		// file
-		// that will be created, to delete it afterwards
-		File batFile = new File(pathToNewFile + ".bat");
 
 		// on windows we have to create a .bat file, so we create a reference to the
 		// file
@@ -160,9 +162,12 @@ public abstract class SystemSpecificErrorChecker {
 			List<CodeError> toReturn = parseError(result, errors);
 
 			// deletes the temporary file, so it doesn't clog up the filesystem
-			cFile.delete();
+			
+			if(!ParametereditorOptions.deleteTmpFiles()) {
+				cFile.delete();
+				batFile.delete();
+			}
 			objFile.delete();
-			batFile.delete();
 			exeFile.delete();
 
 			return toReturn;

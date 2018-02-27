@@ -55,7 +55,7 @@ public abstract class OutputType implements InOutType {
 
 	/**
 	 * returns the code with the added line of the marginmaintest method. 
-	 * The methode has to end with an assertion that lets cbmc fail, so we can extract the result
+	 * The method has to end with an assertion that lets cbmc fail, so we can extract the result
 	 * @param code
 	 * @param voteNumber
 	 * @return

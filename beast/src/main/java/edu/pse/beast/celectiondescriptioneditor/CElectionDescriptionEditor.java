@@ -27,6 +27,7 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.NameChangeListener;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
@@ -87,6 +88,8 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
         this.stringLoaderInterface = stringLoaderInterface;
         this.fileChooser = fileChooser;
         this.refs = refs;
+        
+        UnifiedNameContainer.addListener(this);
     }
 
     /**

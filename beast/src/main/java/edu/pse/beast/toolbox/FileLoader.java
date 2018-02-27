@@ -60,7 +60,7 @@ public final class FileLoader {
     /**
      * @param toRead the File you want to read
      * @return the image, if it was possible to read it. In case it couldn't be
-     * read, the methode returns null
+     * read, the method returns null
      */
     public static BufferedImage loadFileAsImage(File toRead) {
         BufferedImage toReturn = null;

@@ -307,7 +307,7 @@ public class WindowsProcess extends CBMCProcess {
      */
     private int getWindowsProcessId(Process proc) {
 
-        // credits for the methode to:
+        // credits for the method to:
         // http://cnkmym.blogspot.de/2011/10/how-to-get-process-id-in-windows.html
 
         if (proc.getClass().getName().equals("java.lang.Win32Process")

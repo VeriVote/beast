@@ -381,7 +381,7 @@ public abstract class CheckerFactory implements Runnable {
 	}
 
 	/**
-	 * when a checker finished it calls this methode to let the factory know that it
+	 * when a checker finished it calls this method to let the factory know that it
 	 * can start the next one, if it still has more to start
 	 *
 	 * @param lastResult
@@ -397,7 +397,7 @@ public abstract class CheckerFactory implements Runnable {
 
 	/**
 	 * executes a margin computation and waits for it to finish. The result/error is
-	 * in "lastResult/lastError" after the methode returned
+	 * in "lastResult/lastError" after the method returned
 	 * 
 	 * @param margin
 	 * @param origResult
@@ -643,7 +643,7 @@ public abstract class CheckerFactory implements Runnable {
 	public abstract boolean checkAssertionFailure(List<String> toCheck);
 
 	/**
-	 * this methode extracts the electionType from the description
+	 * this method extracts the electionType from the description
 	 *
 	 * @return the election Type that the here give ElectionDescriptionSource
 	 *         describes

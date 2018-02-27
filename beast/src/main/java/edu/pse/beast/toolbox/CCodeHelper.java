@@ -103,9 +103,9 @@ public class CCodeHelper {
 	 * @return the voting function declaration line
 	 */
 	public static String generateDeclString(ElectionTypeContainer container) {
-		String decl = "RESULT voting(VOTES) {";
+		String decl = "RESULT " + UnifiedNameContainer.getVotingMethod() + "(VOTES) {";
 		decl = decl.replace("RESULT", getCTypePointer(container));
-		decl = decl.replace("VOTES", getCType(container, UnifiedNameContainer.getVotes()));
+		decl = decl.replace("VOTES", getCType(container, UnifiedNameContainer.getVotingArray()));
 		return decl;
 	}
 

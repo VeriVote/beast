@@ -77,7 +77,7 @@ public class CBMCResult extends Result {
 	}
 
 	/**
-	 * this methode creates a failure example from the given output from cbmc
+	 * this method creates a failure example from the given output from cbmc
 	 * 
 	 * @return a failure example that show how the voters voted and who won then
 	 */
@@ -381,7 +381,7 @@ public class CBMCResult extends Result {
 	}
 
 	/**
-	 * this methode is used to extract
+	 * this method is used to extract
 	 * 
 	 * @param name
 	 *            the name of the saved variable
