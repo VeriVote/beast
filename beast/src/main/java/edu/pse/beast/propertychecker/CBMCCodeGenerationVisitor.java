@@ -31,6 +31,7 @@ import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.VoteSumForCandExp;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.InternalTypeContainer;
 
 /**
@@ -218,13 +219,13 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String max;
         switch (node.getDeclaredSymbolicVar().getInternalTypeContainer().getInternalType()) {
             case VOTER:
-                max = "V";
+                max = UnifiedNameContainer.getVoter();
                 break;
             case CANDIDATE:
-                max = "C";
+                max = UnifiedNameContainer.getCandidate();
                 break;
             case SEAT:
-                max = "S";
+                max = UnifiedNameContainer.getSeats();
                 break;
             default:
                 throw new AssertionError(node.getDeclaredSymbolicVar().getInternalTypeContainer()
@@ -335,13 +336,13 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             if (null != cont.getAccesTypeIfList()) {
                 switch (cont.getAccesTypeIfList()) {
                     case VOTER:
-                        max = "V";
+                        max = UnifiedNameContainer.getVoter();
                         break;
                     case CANDIDATE:
-                        max = "C";
+                        max = UnifiedNameContainer.getCandidate();
                         break;
                     case SEAT:
-                        max = "S";
+                        max = UnifiedNameContainer.getSeats();
                         break;
                     default:
                         break;

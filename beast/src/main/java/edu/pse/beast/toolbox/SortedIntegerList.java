@@ -7,7 +7,9 @@ package edu.pse.beast.toolbox;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * This class is simple wrapper around a sorted ArrayList (or other type of
@@ -228,6 +230,13 @@ public class SortedIntegerList {
             s += num + " ";
         }
         return s;
+    }
+    
+    public List<Integer> getCopiedList() {
+    	List<Integer> toReturn = new ArrayList<Integer>();
+    	Collections.copy(toReturn, container);
+
+    	return toReturn;
     }
 
 }

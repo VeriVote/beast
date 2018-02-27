@@ -20,6 +20,7 @@ import edu.pse.beast.highlevel.BEASTCommunicator;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
 import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.BooleanExpScope;
@@ -41,7 +42,7 @@ public class CBMCCodeGenerator {
 	private final FormalPropertySyntaxTreeToAstTranslator translator;
 	private final CBMCCodeGenerationVisitor visitor;
 	private int numberOfTimesVoted; // this number should be the number of
-									private int margin;
+	private int margin;
 	private List<String> origResult;
 	private boolean isTest;
 
@@ -122,7 +123,6 @@ public class CBMCCodeGenerator {
 	private void generateCodeMargin() { // we want to create code for a margin
 										// computation or just a test run
 
-
 		String[][] votingData = ElectionSimulation.getVotingData();
 
 		// add the header and the voting data
@@ -160,26 +160,27 @@ public class CBMCCodeGenerator {
 
 	}
 
-	private void addMarginMainCheck( int margin, List<String> origResult) {
+	private void addMarginMainCheck(int margin, List<String> origResult) {
 		// we add the margin which will get computed by the model checker
 		code.add("#ifndef MARGIN\n #define MARGIN " + margin + "\n #endif");
 		// we also add the original result, which is calculated by compiling the
 		// program and running it
 
-		//boolean singleOut = electionDescription.getContainer().getOutputType().isOutputOneCandidate();
-		
-		electionDescription.getContainer().getOutputType().addLastResultAsCode(code, origResult);
-		
+		// boolean singleOut =
+		// electionDescription.getContainer().getOutputType().isOutputOneCandidate();
 
-		// add the verify methode:
+		electionDescription.getContainer().getOutputType().addLastResultAsCode(code, origResult);
+
+		// add the verify method:
 		// taken and adjusted from the paper:
 		// https://formal.iti.kit.edu/~beckert/pub/evoteid2016.pdf
 
-		
-		electionDescription.getContainer().getInputType().addVerifyMethod(code, electionDescription.getContainer().getOutputType());
+		electionDescription.getContainer().getInputType().addVerifyMethod(code,
+				electionDescription.getContainer().getOutputType());
 
-		//code = electionDescription.getContainer().getOutputType().addMarginVerifyCheck(code);
-		
+		// code =
+		// electionDescription.getContainer().getOutputType().addMarginVerifyCheck(code);
+
 		// not used lines ( I think) //TODO if they really aren't needed, delete
 		// them
 		// code.add("new_votes1[i] = ORIG_VOTES[i] + diff[i];");
@@ -207,9 +208,9 @@ public class CBMCCodeGenerator {
 		addHeader();
 
 		// define some pre processor values
-		code.add("#ifndef V\n #define V " + votingData.length + "\n #endif");
-		code.add("#ifndef C\n #define C " + votingData[0].length + "\n #endif");
-		code.add("#ifndef S\n #define S " + votingData[0].length + "\n #endif");
+		code.add("#ifndef " + UnifiedNameContainer.getVoter() + "\n #define " + UnifiedNameContainer.getVoter() + " " + votingData.length + "\n #endif");
+		code.add("#ifndef " + UnifiedNameContainer.getCandidate() + " \n #define " + UnifiedNameContainer.getCandidate() + " " + votingData[0].length + "\n #endif");
+		code.add("#ifndef " + UnifiedNameContainer.getSeats() + "\n #define " + UnifiedNameContainer.getVoter() + " " + votingData[0].length + "\n #endif");
 	}
 
 	private void addMarginMainTest() {
@@ -228,8 +229,8 @@ public class CBMCCodeGenerator {
 		code.add("unsigned int sum = 0;");
 		code.add("for(unsigned int i = 0; i < V; ++i) {");
 		code.addTab();
-		
-		//add the specific code which differs for different input types
+
+		// add the specific code which differs for different input types
 		electionDescription.getContainer().getInputType().addCodeForVoteSum(code, unique);
 
 		code.deleteTab();
@@ -251,12 +252,15 @@ public class CBMCCodeGenerator {
 		code.add("#define assert2(x, y) __CPROVER_assert(x, y)");
 		code.add("#define assume(x) __CPROVER_assume(x)");
 		code.add("");
-		code.add("struct result { unsigned int arr[S]; };"); // add a result
-																// struct to be
-																// returned in case
-																// of a parliament
-		
-		code.add("struct stack_result { unsigned int arr[C]; };"); //same for a stacked result for each party
+		code.add("struct " + UnifiedNameContainer.getStruct_result() + " { unsigned int "
+				+ UnifiedNameContainer.getResult_arr_name() + "[S]; };"); // add a result
+		// struct to be
+		// returned in case
+		// of a parliament
+
+		code.add("struct " + UnifiedNameContainer.getStruct_stack_result() + " { unsigned int "
+				+ UnifiedNameContainer.getResult_arr_name() + "[S]; };"); // add a result
+		// same for a stacked result for each party
 	}
 
 	/**
@@ -404,6 +408,10 @@ public class CBMCCodeGenerator {
 			String votesX = "unsigned int votes" + voteNumber;
 			votesX = votesX + electionDescription.getContainer().getInputType().getArrayType();
 			code.add(votesX + ";");
+
+			String electX = "unsigned int elect" + voteNumber;
+			electX = electX + electionDescription.getContainer().getOutputType().getCArrayType();
+			code.add(electX + ";");
 
 			String[] counter = { "counter_0", "counter_1", "counter_2", "counter_3" };
 			String forTemplate = "for(unsigned int COUNTER = 0; COUNTER < MAX; COUNTER++){";

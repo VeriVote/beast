@@ -1,5 +1,7 @@
 package edu.pse.beast.booleanexpeditor.UserActions;
 
+import edu.pse.beast.toolbox.UnifiedNameContainer;
+
 /**
  * This class models constants for the BooleanExpEditor, namely the number of voters "V", the number of candidates "C"
  * and the number of seats "S".
@@ -18,6 +20,6 @@ public class BooleanExpEditorConst {
 
     @Override
     public String toString() {
-        return constant;
+        return UnifiedNameContainer.getByKey(constant);
     }
 }

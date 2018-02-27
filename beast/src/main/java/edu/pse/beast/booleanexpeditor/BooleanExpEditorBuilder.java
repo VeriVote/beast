@@ -33,6 +33,7 @@ import edu.pse.beast.saverloader.PreAndPostConditionsDescriptionSaverLoader;
 import edu.pse.beast.toolbox.ActionIdAndListener;
 import edu.pse.beast.toolbox.ImageResourceProvider;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
@@ -214,9 +215,9 @@ public class BooleanExpEditorBuilder {
         makroList.add(createFromUserAction(sumVotesForUniqueCandidateMakro));
 
         ArrayList<ActionIdAndListener> constantsList = new ArrayList<>();
-        UserAction votersConstant = createConstantUserAction("Voters", "V", editor);
-        UserAction candidatesConstant = createConstantUserAction("Candidates", "C", editor);
-        UserAction seatsConstant = createConstantUserAction("Seats", "S", editor);
+        UserAction votersConstant = createConstantUserAction("Voters", UnifiedNameContainer.getVoterKey(), editor);
+        UserAction candidatesConstant = createConstantUserAction("Candidates", UnifiedNameContainer.getCandidateKey(), editor);
+        UserAction seatsConstant = createConstantUserAction("Seats", UnifiedNameContainer.getSeatsKey(), editor);
         constantsList.add(createFromUserAction(votersConstant));
         constantsList.add(createFromUserAction(candidatesConstant));
         constantsList.add(createFromUserAction(seatsConstant));
@@ -317,8 +318,8 @@ public class BooleanExpEditorBuilder {
     }
 
     //methods for creating UserActions in "constants"-Menu
-    private AddConstUserAction createConstantUserAction(String id, String constant, BooleanExpEditor editor) {
-        return new AddConstUserAction(id, new BooleanExpEditorConst(constant), editor);
+    private AddConstUserAction createConstantUserAction(String id, String key, BooleanExpEditor editor) {
+        return new AddConstUserAction(id, new BooleanExpEditorConst(key), editor);
     }
 
     //methods for creating UserActions in "makro"-Menu

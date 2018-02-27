@@ -11,6 +11,7 @@ import edu.pse.beast.electionSimulator.Model.RowOfValues;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
@@ -20,7 +21,7 @@ public class SingleChoice extends CBMCInputType {
 
 	@Override
 	public String getInputString() {
-		return "[V]";
+		return "[" + UnifiedNameContainer.getVoter() + "]";
 	}
 
 	@Override
@@ -35,7 +36,7 @@ public class SingleChoice extends CBMCInputType {
 
 	@Override
 	public String getMaximalValue(ElectionTypeContainer container) {
-		return "C";
+		return  UnifiedNameContainer.getCandidate();
 	}
 
 	@Override
@@ -50,7 +51,7 @@ public class SingleChoice extends CBMCInputType {
 		code.addTab();
 		code.add("int total_diff = 0;");
 		code.add("int new_votes1[V];");
-		code.add("for (int i = 0; i < V; i++) {"); // go over all voters
+		code.add("for (int i = 0; i < " + UnifiedNameContainer.getVoter() + "; i++) {"); // go over all voters
 		code.addTab();
 		code.add("int changed = nondet_int();"); // determine, if we want to
 													// changed votes for
@@ -208,9 +209,9 @@ public class SingleChoice extends CBMCInputType {
 
 			if (tmpSum == 0) {
 				if (i < votingData.length - 1) {
-					toReturn.add("C ,");
+					toReturn.add("" + UnifiedNameContainer.getCandidate() + " ,");
 				} else {
-					toReturn.add("C");
+					toReturn.add(UnifiedNameContainer.getCandidate());
 				}
 			} else {
 
@@ -229,7 +230,7 @@ public class SingleChoice extends CBMCInputType {
 
 	@Override
 	public String getArrayType() {
-		return "[V]";
+		return "[" + UnifiedNameContainer.getVoter() + "]";
 	}
 
 	@Override

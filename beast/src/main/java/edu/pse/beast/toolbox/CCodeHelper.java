@@ -25,13 +25,13 @@ public class CCodeHelper {
 	 *            the typecontainer representing the list
 	 * @return the size of the container in C Code
 	 */
-	public String getListSize(InternalTypeContainer cont) {
+	public static String getListSize(InternalTypeContainer cont) {
 		if (cont.getAccesTypeIfList() == InternalTypeRep.CANDIDATE) {
-			return "C";
+			return UnifiedNameContainer.getCandidate();
 		} else if (cont.getAccesTypeIfList() == InternalTypeRep.VOTER) {
-			return "V";
+			return UnifiedNameContainer.getVoter();
 		} else if (cont.getAccesTypeIfList() == InternalTypeRep.SEAT) {
-			return "S";
+			return UnifiedNameContainer.getSeats();
 		}
 
 		ErrorLogger.log("");
@@ -50,7 +50,7 @@ public class CCodeHelper {
 	 *            the name of the variable
 	 * @return the c type
 	 */
-	public String getCType(ElectionTypeContainer electionContainer, String name) {
+	public static String getCType(ElectionTypeContainer electionContainer, String name) {
 
 		String decl = "unsigned int " + name;
 
@@ -67,7 +67,7 @@ public class CCodeHelper {
 	 *            the container for which the C type should be created
 	 * @return the c type
 	 */
-	public String getCTypePointer(ElectionTypeContainer electionContainer) {
+	public static String getCTypePointer(ElectionTypeContainer electionContainer) {
 
 		String decl = electionContainer.getOutputType().getOutputString();
 		
@@ -82,7 +82,7 @@ public class CCodeHelper {
 	 *            the container for which the C type should be created
 	 * @return the amount of square brackets and length constants needed
 	 */
-	public String getCArrayType(InternalTypeContainer cont) {
+	public static String getCArrayType(InternalTypeContainer cont) {
 		InternalTypeContainer currentContainer = cont;
 		String decl = "";
 		while (currentContainer.isList()) {
@@ -93,8 +93,8 @@ public class CCodeHelper {
 	}
 
 	/**
-	 * generates the Decleration String for a voting function depending on its input
-	 * and result typ
+	 * generates the Declaration String for a voting function depending on its input
+	 * and result type
 	 *
 	 * @param input
 	 *            the input format of the voting array passed to the function
@@ -102,10 +102,10 @@ public class CCodeHelper {
 	 *            the result format of the voting function
 	 * @return the voting function declaration line
 	 */
-	public String generateDeclString(ElectionTypeContainer container) {
+	public static String generateDeclString(ElectionTypeContainer container) {
 		String decl = "RESULT voting(VOTES) {";
 		decl = decl.replace("RESULT", getCTypePointer(container));
-		decl = decl.replace("VOTES", getCType(container, "votes"));
+		decl = decl.replace("VOTES", getCType(container, UnifiedNameContainer.getVotes()));
 		return decl;
 	}
 
@@ -126,7 +126,7 @@ public class CCodeHelper {
 	 *            the string resource loader currently used
 	 * @return the complete voting function
 	 */
-	public ElectionDescription generateElectionDescription(ElectionTypeContainer container, String name,
+	public static ElectionDescription generateElectionDescription(ElectionTypeContainer container, String name,
 			ElectionTemplateHandler templateHandler, StringResourceLoader stringResourceLoader) {
 
 		ElectionDescription description = new ElectionDescription(name, container.getInputType(),
@@ -152,7 +152,7 @@ public class CCodeHelper {
 	 *            the list whose elements max value needs to be determined
 	 * @return max value an element of the given ElectionTypeContainer can have
 	 */
-	public String getMax(ElectionTypeContainer container) {
+	public static String getMax(ElectionTypeContainer container) {
 		return container.getInputType().getMaximalValue(container);
 	}
 
@@ -164,7 +164,7 @@ public class CCodeHelper {
 	 *            the list whose elements min value needs to be determined
 	 * @return minimum value an element of the given ElectionTypeContainer can have
 	 */
-	public String getMin(ElectionTypeContainer container) {
+	public static String getMin(ElectionTypeContainer container) {
 		return container.getInputType().getMinimalValue(container);
 	}
 }

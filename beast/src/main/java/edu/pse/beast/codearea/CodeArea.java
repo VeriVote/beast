@@ -7,10 +7,12 @@ package edu.pse.beast.codearea;
 
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JTextPane;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
+import javax.swing.text.BadLocationException;
 
 import edu.pse.beast.codearea.Actionlist.Actionlist;
 import edu.pse.beast.codearea.Autocompletion.AutocompletionController;
@@ -198,6 +200,10 @@ public class CodeArea implements AncestorListener {
      */
     public void insertString(String string) {
         insertToCode.insertString(string);
+    }
+    
+    public void replaceVotingDecline(List<String> code) throws BadLocationException {
+    	insertToCode.updateVotingDeclLine(code);
     }
 
     /**

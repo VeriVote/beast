@@ -45,7 +45,7 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
     private final String gccMissingReturnFound = "warning: control reaches end of non-void function";
 
     // if gcc finds that a function is missing, it gets displayed like this:
-    private final String gccMissingFuctionFound = "warning: implicit declaration of function";
+    private final String gccMissingFunctionFound = "warning: implicit declaration of function";
 
     @Override
     public Process checkCodeFileForErrors(File toCheck) {
@@ -170,7 +170,7 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
                     ErrorLogger.log("can't parse the current error line from gcc");
                 }
 
-            } else if (line.contains(gccMissingFuctionFound)) {
+            } else if (line.contains(gccMissingFunctionFound)) {
                 // we want the format :line:position: ... error:
                 // so we need at least 4 ":" in the string to be sure to find a
                 // line and the position and the error

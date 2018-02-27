@@ -10,6 +10,7 @@ import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.SuperFolderFinder;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 
 public class LinuxProcess extends CBMCProcess {
 
@@ -91,11 +92,11 @@ public class LinuxProcess extends CBMCProcess {
             
             // here we supply this call with the correct values for the voters,
             // candidates and seats
-            arguments.add("-D V=" + voters);
+            arguments.add("-D " + UnifiedNameContainer.getVoter() + "=" + voters);
 
-            arguments.add("-D C=" + candidates);
+            arguments.add("-D " + UnifiedNameContainer.getCandidate() + "=" + candidates);
 
-            arguments.add("-D S=" + seats);
+            arguments.add("-D " + UnifiedNameContainer.getSeats() + "=" + seats);
 
             // we need the trace command to track the output on the command line
             arguments.add("--trace");

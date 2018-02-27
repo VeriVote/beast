@@ -11,6 +11,7 @@ import edu.pse.beast.electionSimulator.Model.RowOfValues;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
@@ -20,7 +21,7 @@ public class SingleChoiceStack extends CBMCInputType {
 	
 	@Override
 	public String getInputString() {
-		return "[C]";
+		return "[" + UnifiedNameContainer.getCandidate() + "]";
 	}
 
 	@Override
@@ -35,7 +36,7 @@ public class SingleChoiceStack extends CBMCInputType {
 
 	@Override
 	public String getMaximalValue(ElectionTypeContainer container) {
-		return "V";
+		return UnifiedNameContainer.getVoter();
 	}
 
 	@Override
@@ -52,9 +53,9 @@ public class SingleChoiceStack extends CBMCInputType {
 			code.add("int pos_diff = 0;");
 			
 			code.add("int new_votes1[C];");
-			code.add("int diff[C];");
+			code.add("int diff[" + UnifiedNameContainer.getCandidate() + "];");
 			
-			code.add("for (int i = 0; i < C; i++) {"); // go over all voters
+			code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {"); // go over all voters
 			code.addTab();
 			
 				code.add("diff[i] = nondet_int();"); 
@@ -67,7 +68,7 @@ public class SingleChoiceStack extends CBMCInputType {
 			code.deleteTab();
 			code.add("}");
 			
-			code.add("for (int i = 0; i < C; i++) {"); // go over all voters
+			code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {"); // go over all voters
 			code.addTab();
 
 				code.add("new_votes1[i] = ORIG_VOTES[i] + diff[i];");
@@ -183,7 +184,7 @@ public class SingleChoiceStack extends CBMCInputType {
 
 	@Override
 	public String getArrayType() {
-		return "[V]";
+		return "[" + UnifiedNameContainer.getVoter() + "]";
 	}
 
 	@Override

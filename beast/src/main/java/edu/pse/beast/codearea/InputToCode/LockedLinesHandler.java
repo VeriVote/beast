@@ -6,6 +6,7 @@
 package edu.pse.beast.codearea.InputToCode;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -147,4 +148,8 @@ public class LockedLinesHandler implements DocumentListener {
         }
          lockedLines.clear();
     }
+
+	public List<Integer> getLockedLines() {
+		return lockedLines.getCopiedList();
+	}
 }

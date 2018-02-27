@@ -99,4 +99,8 @@ public class ElectionDescription implements NameInterface {
     public void setNewName(String newName) {
         setName(newName);
     }
+
+	public void updateVotingDeclLine(String newVotingDeclLine) {
+		this.code.set(votingDeclLine, newVotingDeclLine);
+	}
 }

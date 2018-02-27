@@ -7,6 +7,7 @@ import edu.pse.beast.electionSimulator.ElectionSimulation;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
@@ -15,7 +16,7 @@ public class ParliamentStack extends CBMCOutputType {
 
 	@Override
 	public String getOutputString() {
-		return "struct stack_result";
+		return UnifiedNameContainer.getStruct_stack_result();
 	}
 
 	@Override
@@ -54,10 +55,10 @@ public class ParliamentStack extends CBMCOutputType {
 
 		code.add("unsigned int *tmp_result = tmp.arr;");
 
-		code.add("unsigned int new_result1[S];"); // create the array where the
+		code.add("unsigned int new_result1[" + UnifiedNameContainer.getSeats() + "];"); // create the array where the
 		// new seats will get saved
 
-		code.add("for (int i = 0; i < S; i++) {"); // iterate over the
+		code.add("for (int i = 0; i < " + UnifiedNameContainer.getSeats() + "; i++) {"); // iterate over the
 		// seat array, and
 		// fill it
 		code.addTab();
@@ -67,7 +68,7 @@ public class ParliamentStack extends CBMCOutputType {
 		code.deleteTab();
 		code.add("}"); // close the for loop
 
-		code.add("for (int i = 0; i < S; i++) {"); // iterate over all
+		code.add("for (int i = 0; i < " + UnifiedNameContainer.getSeats() + "; i++) {"); // iterate over all
 		code.addTab();
 		// candidates /
 		// seats
@@ -83,7 +84,7 @@ public class ParliamentStack extends CBMCOutputType {
 
 		code = new CodeArrayListBeautifier();
 
-		code.add("OK, vllt doch nicht löschen. parliament stack");
+		code.add("IF SOMETHING GOES WRONG: SEARCH FOR DEBUG56693");
 
 		return code;
 	}
@@ -94,9 +95,9 @@ public class ParliamentStack extends CBMCOutputType {
 		code.add(temp);
 		String tempElect = "unsigned int *tempElect" + voteNumber + " = tmp" + voteNumber + ".arr;";
 		code.add(tempElect);
-		String electX = "unsigned int elect" + voteNumber + "[C];";
+		String electX = "unsigned int elect" + voteNumber + "[" + UnifiedNameContainer.getCandidate() + "];";
 		code.add(electX);
-		String forLoop = "for (int electLoop = 0; electLoop < C; electLoop++) {";
+		String forLoop = "for (int electLoop = 0; electLoop < " + UnifiedNameContainer.getCandidate() + "; electLoop++) {";
 		code.add(forLoop);
 		code.addTab();
 		code.add("elect" + voteNumber + "[electLoop] = tempElect" + voteNumber + "[electLoop];");
@@ -108,7 +109,7 @@ public class ParliamentStack extends CBMCOutputType {
 
 	@Override
 	public String getCArrayType() {
-		return "[C]";
+		return "[" + UnifiedNameContainer.getCandidate() + "]";
 	}
 
 	@Override
@@ -120,9 +121,9 @@ public class ParliamentStack extends CBMCOutputType {
 		code.add(temp);
 		String tempElect = "unsigned int *tempElect" + voteNumber + " = tmp" + voteNumber + ".arr;";
 		code.add(tempElect);
-		String electX = "unsigned int elect" + voteNumber + "[C];";
+		String electX = "unsigned int elect" + voteNumber + "[" + UnifiedNameContainer.getCandidate() + "];";
 		code.add(electX);
-		String forLoop = "for (int electLoop = 0; electLoop < C; electLoop++) {";
+		String forLoop = "for (int electLoop = 0; electLoop < " + UnifiedNameContainer.getCandidate() + "; electLoop++) {";
 		code.add(forLoop);
 		code.addTab();
 		code.add("elect" + voteNumber + "[electLoop] = tempElect" + voteNumber + "[electLoop];");
@@ -166,22 +167,22 @@ public class ParliamentStack extends CBMCOutputType {
 	public void addVerifyOutput(CodeArrayListBeautifier code) {
 		code.add("struct stack_result tmp_result = voting(new_votes1);");
 
-		code.add("unsigned int new_result1[C];"); // create the array where the
+		code.add("unsigned int new_result1[" + UnifiedNameContainer.getCandidate() + "];"); // create the array where the
 		// new seats will get saved
 
-		code.add("for (int i = 0; i < C; i++) {"); // iterate over the
+		code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {"); // iterate over the
 													// seat array, and
 													// fill it
 		code.addTab();
 
 		// we do this, so our cbmc parser can read out the value of the
 		// array
-		code.add("new_result1[i] = tmp_result.arr[i];");
+		code.add("new_result1[i] = tmp_result." + UnifiedNameContainer.getResult_arr_name() + "[i];");
 
 		code.deleteTab();
 		code.add("}"); // close the for loop
 
-		code.add("for (int i = 0; i < C; i++) {"); // iterate over all
+		code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {"); // iterate over all
 													// candidates /
 													// seats and assert
 													// their equality

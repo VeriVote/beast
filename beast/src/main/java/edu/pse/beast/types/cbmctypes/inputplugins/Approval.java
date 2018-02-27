@@ -11,6 +11,7 @@ import edu.pse.beast.electionSimulator.Model.RowOfValues;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
@@ -20,7 +21,7 @@ public class Approval extends CBMCInputType {
 
 	@Override
 	public String getInputString() {
-		return "[V][C]";
+		return "[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "]";
 	}
 
 	@Override
@@ -205,7 +206,7 @@ public class Approval extends CBMCInputType {
 
 	@Override
 	public String getArrayType() {
-		return "[V][C]";
+		return "[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "]";
 	}
 
 	@Override

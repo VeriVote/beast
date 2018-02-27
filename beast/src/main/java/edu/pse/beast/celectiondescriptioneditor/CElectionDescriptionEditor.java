@@ -19,10 +19,13 @@ import edu.pse.beast.celectiondescriptioneditor.View.ErrorWindow;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
+import edu.pse.beast.highlevel.BEASTCommunicator;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.saverloader.FileChooser;
 import edu.pse.beast.stringresource.StringLoaderInterface;
+import edu.pse.beast.toolbox.CCodeHelper;
+import edu.pse.beast.toolbox.NameChangeListener;
 import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 import edu.pse.beast.toolbox.UserAction;
 
@@ -34,7 +37,7 @@ import edu.pse.beast.toolbox.UserAction;
  *
  * @author Holger Klein
  */
-public class CElectionDescriptionEditor implements ElectionDescriptionSource, DisplaysStringsToUser {
+public class CElectionDescriptionEditor implements ElectionDescriptionSource, DisplaysStringsToUser, NameChangeListener {
 
     private CElectionCodeArea codeArea;
     private ElectionDescription currentDescription;
@@ -120,10 +123,22 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
         code = Arrays.asList(lines);
         currentDescription.setCode(code);
     }
+    
+    private void updateDecLine(String votingDeclLine) {
+    	
+    	currentDescription.setVotingDeclLine(codeArea.getFirstLockedLine());
+    	currentDescription.updateVotingDeclLine(votingDeclLine);
+    	
+    	try {
+			codeArea.replaceVotingDecline(currentDescription.getCode());
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
+    }
 
     /**
      * finds all errors in the currently displayed c code and displays them
-     * listed in the errorwindow
+     * listed in the error window
      */
     public void findErrorsAndDisplayThem() {
         ArrayList<CodeError> errors = codeArea.getErrorCtrl().getErrorFinderList().getErrors();
@@ -325,4 +340,9 @@ public class CElectionDescriptionEditor implements ElectionDescriptionSource, Di
         fileChooser.updateStringRessourceLoader(
                 stringLoaderInterface.getCElectionEditorStringResProvider().getMenuStringRes());
     }
+
+	@Override
+	public void notifyNameChange() {
+		updateDecLine(CCodeHelper.generateDeclString(BEASTCommunicator.getCentralObjectProvider().getElectionDescriptionSource().getElectionDescription().getContainer()));
+	}
 }

@@ -23,6 +23,7 @@ import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.toolbox.ThreadedBufferedReader;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.WindowsOStoolbox;
 
 public class WindowsProcess extends CBMCProcess {
@@ -70,7 +71,7 @@ public class WindowsProcess extends CBMCProcess {
         userCommands = userCommands + " --trace";
 
         // set the values for the voters, candidates and seats
-        String arguments = userCommands + " -D V=" + voters + " -D C=" + candidates + " -D S=" + seats;
+        String arguments = userCommands + " -D " + UnifiedNameContainer.getVoter() + "=" + voters + " -D " + UnifiedNameContainer.getVoter() + "=" + candidates + " -D " + UnifiedNameContainer.getSeats() + "=" + seats;
 
         // enable the usage of includes in cbmc
         String userIncludeAndPath = "\"" + enableUserInclude + SuperFolderFinder.getSuperFolder()

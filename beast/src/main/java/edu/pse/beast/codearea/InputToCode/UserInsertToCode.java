@@ -6,6 +6,8 @@
 package edu.pse.beast.codearea.InputToCode;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -199,6 +201,15 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
         lockedLines.lockLine(line);        
         this.currentInserter = this.newlineInserterChooser.getNewlineInserter();        
     }
+    
+    /** 
+     * unlocks the supplied line from editing
+     * @param line the line to be unlocked, starting at 0
+     */
+    public void unlockLine(int line) {
+    	lockedLines.unlockLine(line);
+    	this.currentInserter = this.newlineInserterChooser.getNewlineInserter();  
+    }
 
     /**
      * returns the first locked lines number. If no line is locked, an exception is
@@ -361,6 +372,34 @@ public class UserInsertToCode implements CaretListener, StoppedTypingContinuousl
 
     public TabInserter getTabInserter() {
         return tabInserter;
+    }
+    
+    /**
+     * updates the whole pane to the newest description
+     * @param code the code that will be shown in the editor
+     * @throws BadLocationException
+     */
+    public void updateVotingDeclLine(List<String> code) throws BadLocationException {
+    	pane.setCaretPosition(0);
+    	
+    	List<Integer> linesToRelock = lockedLines.getLockedLines();
+    	
+    	lockedLines.unlockAll();
+    	
+    	styledDoc.remove(0, styledDoc.getLength()); // clear the whole document
+    	
+    	int offset = 0;
+    	
+    	for (Iterator<String> iterator = code.iterator(); iterator.hasNext();) {
+			String string = (String) iterator.next();
+			styledDoc.insertString(offset, string + "\n", null);
+			offset = offset + string.length();
+		}
+    	
+    	for (Iterator<Integer> iterator = linesToRelock.iterator(); iterator.hasNext();) {
+			Integer integer = (Integer) iterator.next();
+			lockedLines.lockLine(integer);
+		}
     }
     
 }

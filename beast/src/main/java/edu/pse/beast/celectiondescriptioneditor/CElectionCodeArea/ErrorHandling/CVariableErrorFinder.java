@@ -12,6 +12,7 @@ import javax.swing.JTextPane;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
 import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 
 /**
  * This class uses an external compiler (either gcc on linux or cl on windows)
@@ -35,9 +36,10 @@ public class CVariableErrorFinder implements ErrorFinder {
     public ArrayList<CodeError> getErrors() {
         String code = JTextPaneToolbox.getText(pane);
         ArrayList<String> seperated = new ArrayList<>();
-        seperated.add("#ifndef V\n #define V 1\n #endif");
-        seperated.add("#ifndef C\n #define C 1\n #endif");
-        seperated.add("#ifndef S\n #define S 1\n #endif");
+        seperated.add("#ifndef " + UnifiedNameContainer.getVoter() + "\n #define " + UnifiedNameContainer.getVoter() + " 1\n #endif");
+        seperated.add("#ifndef " + UnifiedNameContainer.getCandidate() + " \n #define " + UnifiedNameContainer.getCandidate() + " 1\n #endif");
+        seperated.add("#ifndef " + UnifiedNameContainer.getSeats() + "\n #define " + UnifiedNameContainer.getVoter() + " 1\n #endif");
+
         //because we want to reserver the function name "verify" we define it here
         seperated.add("void verify() {}");
         

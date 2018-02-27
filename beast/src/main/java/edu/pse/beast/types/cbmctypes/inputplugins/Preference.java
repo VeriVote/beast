@@ -10,6 +10,7 @@ import edu.pse.beast.electionSimulator.Model.RowOfValues;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
@@ -19,7 +20,7 @@ public class Preference extends CBMCInputType {
 
 	@Override
 	public String getInputString() {
-		return "[V][C]";
+		return "[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "]";
 	}
 
 	@Override
@@ -34,7 +35,7 @@ public class Preference extends CBMCInputType {
 
 	@Override
 	public String getMaximalValue(ElectionTypeContainer container) {
-		return "C";
+		return UnifiedNameContainer.getCandidate();
 	}
 
 	@Override
@@ -48,11 +49,11 @@ public class Preference extends CBMCInputType {
 		code.add("int total_diff = 0;");
 
 		// TODO fix
-		code.add("int new_votes1[V][C];");
+		code.add("int new_votes1[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "];");
 
-		code.add("for (int i = 0; i < V; i++) {"); // go over all voters
+		code.add("for (int i = 0; i < " + UnifiedNameContainer.getVoter() + "; i++) {"); // go over all voters
 		code.addTab();
-		code.add("for (int j = 0; i < C; i++) {"); // go over all candidates
+		code.add("for (int j = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {"); // go over all candidates
 		code.addTab();
 		code.add("int changed = nondet_int();"); // determine, if we want to
 													// changed votes for
@@ -234,7 +235,7 @@ public class Preference extends CBMCInputType {
 
 	@Override
 	public String getArrayType() {
-		return "[V][C]";
+		return "[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "]";
 	}
 
 	@Override
