@@ -38,7 +38,7 @@ public class CVariableErrorFinder implements ErrorFinder {
         ArrayList<String> seperated = new ArrayList<>();
         seperated.add("#ifndef " + UnifiedNameContainer.getVoter() + "\n #define " + UnifiedNameContainer.getVoter() + " 1\n #endif");
         seperated.add("#ifndef " + UnifiedNameContainer.getCandidate() + " \n #define " + UnifiedNameContainer.getCandidate() + " 1\n #endif");
-        seperated.add("#ifndef " + UnifiedNameContainer.getSeats() + "\n #define " + UnifiedNameContainer.getVoter() + " 1\n #endif");
+        seperated.add("#ifndef " + UnifiedNameContainer.getSeats() + "\n #define " + UnifiedNameContainer.getSeats() + " 1\n #endif");
 
         //because we want to reserver the function name "verify" we define it here
         seperated.add("void verify() {}");

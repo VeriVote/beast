@@ -21,7 +21,7 @@ public class UnifiedNameContainer {
 		map.put("voter" , "V");
 		map.put("seats" , "S");
 
-		map.put("votingMethod" , "poking");
+		map.put("votingMethod" , "voting");
 		map.put("struct_result" , "result");
 		map.put("stack_result" , "stack_result");
 		map.put("result_arr_name" , "arr");
