@@ -1,15 +1,19 @@
 package edu.pse.beast.highlevel;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ListResourceBundle;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.toolbox.SuperFolderFinder;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -20,7 +24,7 @@ import javafx.stage.StageStyle;
  * @author Jonas
  */
 public class MainClass extends Application {
-	
+
 	/**
 	 * Starts BEAST by creating a BEASTCommunicator and corresponding
 	 * CentralObjectProvider. If you want to replace one or more implementation of
@@ -35,6 +39,7 @@ public class MainClass extends Application {
 		PSECentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
 		communicator.setCentralObjectProvider(centralObjectProvider);
 		launch(args);
+
 	}
 
 	@Override
@@ -43,13 +48,19 @@ public class MainClass extends Application {
 		Locale local = Locale.getDefault();
 		
 		try {
+			GUIController controller = new GUIController();
 			
-			Parent root = FXMLLoader.load(getClass().getResource("javafx/BEAST.fxml"), ResourceBundle.getBundle("edu.pse.beast.highlevel.javafx.bundles.LangBundle", local));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("javafx/BEAST.fxml"), ResourceBundle.getBundle("edu.pse.beast.highlevel.javafx.bundles.LangBundle", local));
 			
+			//Parent root = FXMLLoader.load(getClass().getResource("javafx/BEAST.fxml"), ResourceBundle.getBundle("edu.pse.beast.highlevel.javafx.bundles.LangBundle", local));
 			
-			Scene scene = new Scene(root, 800, 600);
-
+			loader.setController(controller);
+			
+			Parent root = loader.load();
+			
+			Scene scene = new Scene(root, 1600, 900);
 			stage.setTitle("BEAST");
+			stage.getIcons().add(new Image("file:///" + SuperFolderFinder.getSuperFolder() + "/core/images/other/BEAST.png"));
 			stage.setScene(scene);
 			stage.show();
 		} catch (Exception e) {
