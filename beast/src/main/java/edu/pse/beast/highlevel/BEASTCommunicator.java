@@ -11,10 +11,10 @@ import java.util.logging.Logger;
  *
  * @author Jonas
  */
-public class BEASTCommunicator implements CheckListener {
+public class BEASTCommunicator {
 
     private static CentralObjectProvider centralObjectProvider;
-    private List<ResultInterface> resultList;
+    private static List<ResultInterface> resultList;
 
     /**
      * Sets a new CentralObjectProvider which contains the references to the
@@ -24,11 +24,10 @@ public class BEASTCommunicator implements CheckListener {
      * set.
      */
     public void setCentralObjectProvider(CentralObjectProvider centralObjectProvider) {
-        this.centralObjectProvider = centralObjectProvider;
+        BEASTCommunicator.centralObjectProvider = centralObjectProvider;
     }
 
-    @Override
-    public void startCheck() {
+    public static boolean startCheck() {
         centralObjectProvider.getResultPresenter().resetResults();
         ElectionDescriptionSource electSrc = centralObjectProvider.getElectionDescriptionSource();
         PreAndPostConditionsDescriptionSource preAndPostSrc = centralObjectProvider.getPreAndPostConditionsSource();
@@ -38,7 +37,7 @@ public class BEASTCommunicator implements CheckListener {
         // checks if there even are any properties selected for analysis in the PreAndPostConditionsSource
         if (preAndPostSrc.getPreAndPostConditionsDescriptionsCheck().isEmpty() && preAndPostSrc.getPreAndPostConditionsDescriptionsMargin().isEmpty()) {
             checkStatusDisplayer.displayText("noProperty", false, "");
-            return;
+            return false;
         }
 
         if (!checkForErrors(centralObjectProvider)) {
@@ -92,17 +91,20 @@ public class BEASTCommunicator implements CheckListener {
                 }
             });
             waitForResultsThread.start();
+            return true;
+        } else {
+        	return false;
         }
     }
 
-    @Override
-    public void stopCheck() {
-        boolean stoppedAtATimeItIsAllowed;
-        stoppedAtATimeItIsAllowed = centralObjectProvider.getResultCheckerCommunicator().abortChecking();
+    public static boolean stopCheck() {
+        boolean stoppedAtATimeItIsAllowed = centralObjectProvider.getResultCheckerCommunicator().abortChecking();
         if (!stoppedAtATimeItIsAllowed) {
             CheckStatusDisplay checkStatusDisplayer = centralObjectProvider.getCheckStatusDisplay();
             checkStatusDisplayer.displayText("falseStop", false, "");
+            return false;
         }
+        return true;
     }
 
     /**
@@ -156,7 +158,7 @@ public class BEASTCommunicator implements CheckListener {
      * Creates a String that contains the given time in seconds in a readable format.
      * @param passedTimeSeconds the passed time in seconds as a double
      */
-    private String createTimeString(double passedTimeSeconds) {
+    private static String createTimeString(double passedTimeSeconds) {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         String timeString = "";
         if (passedTimeLongerThanDay(passedTimeSeconds)) {
@@ -172,7 +174,7 @@ public class BEASTCommunicator implements CheckListener {
         return timeString;
     }
 
-    private String createTimeStringLongerThanMinute(double passedTimeSeconds, DecimalFormat decimalFormat) {
+    private static String createTimeStringLongerThanMinute(double passedTimeSeconds, DecimalFormat decimalFormat) {
         String timeString;
         int minutes = (int) passedTimeSeconds / 60;
         double minutesRemainder = passedTimeSeconds % 60;
@@ -181,7 +183,7 @@ public class BEASTCommunicator implements CheckListener {
         return timeString;
     }
 
-    private String createTimeStringLongerThanHour(double passedTimeSeconds, DecimalFormat decimalFormat) {
+    private static String createTimeStringLongerThanHour(double passedTimeSeconds, DecimalFormat decimalFormat) {
         String timeString;
         int hours = (int) passedTimeSeconds / 3600;
         double hoursRemainder = passedTimeSeconds % 3600;
@@ -192,7 +194,7 @@ public class BEASTCommunicator implements CheckListener {
         return timeString;
     }
 
-    private String createTimeStringLongerThanDay(double passedTimeSeconds, DecimalFormat decimalFormat) {
+    private static String createTimeStringLongerThanDay(double passedTimeSeconds, DecimalFormat decimalFormat) {
         String timeString;
         int days = (int) passedTimeSeconds / 86400;
         double daysRemainder = passedTimeSeconds % 86400;
@@ -205,15 +207,15 @@ public class BEASTCommunicator implements CheckListener {
         return timeString;
     }
 
-    private boolean passedTimeLongerThanDay(double passedTimeSeconds) {
+    private static boolean passedTimeLongerThanDay(double passedTimeSeconds) {
         return passedTimeSeconds >= 86400;
     }
 
-    private boolean passedTimeLongerThanHour(double passedTimeSeconds) {
+    private static boolean passedTimeLongerThanHour(double passedTimeSeconds) {
         return passedTimeSeconds >= 3600;
     }
 
-    private boolean passedTimeLongerThanMinute(double passedTimeSeconds) {
+    private static boolean passedTimeLongerThanMinute(double passedTimeSeconds) {
         return passedTimeSeconds >= 60;
     }
 

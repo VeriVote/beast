@@ -75,42 +75,42 @@
 					<items>
 						<Menu mnemonicParsing="false" text="%key.voters">
 							<items>
-								<MenuItem mnemonicParsing="false" text="%key.maximum">
-									<graphic>
-										<TextField fx:id="maxVoter" onAction="#maxVoter" prefWidth="50.0" text="1" />
-									</graphic>
-								</MenuItem>
 								<MenuItem mnemonicParsing="false" text="%key.minimum">
 									<graphic>
 										<TextField fx:id="minVoter" onAction="#minVoter" prefWidth="50.0" text="1" />
+									</graphic>
+								</MenuItem>
+								<MenuItem mnemonicParsing="false" text="%key.maximum">
+									<graphic>
+										<TextField fx:id="maxVoter" onAction="#maxVoter" prefWidth="50.0" text="1" />
 									</graphic>
 								</MenuItem>
 							</items>
 						</Menu>
 						<Menu mnemonicParsing="false" text="%key.candidates">
 							<items>
-								<MenuItem mnemonicParsing="false" text="%key.maximum">
-									<graphic>
-										<TextField fx:id="maxCandidates" onAction="#maxCandidates" prefWidth="50.0" text="1" />
-									</graphic>
-								</MenuItem>
 								<MenuItem mnemonicParsing="false" text="%key.minimum">
 									<graphic>
 										<TextField fx:id="minCandidates" onAction="#minCandidates" prefWidth="50.0" text="1" />
+									</graphic>
+								</MenuItem>
+								<MenuItem mnemonicParsing="false" text="%key.maximum">
+									<graphic>
+										<TextField fx:id="maxCandidates" onAction="#maxCandidates" prefWidth="50.0" text="1" />
 									</graphic>
 								</MenuItem>
 							</items>
 						</Menu>
 						<Menu mnemonicParsing="false" text="%key.seats">
 							<items>
-								<MenuItem mnemonicParsing="false" text="%key.maximum">
-									<graphic>
-										<TextField fx:id="maxSeats" onAction="#maxSeats" prefWidth="50.0" text="1" />
-									</graphic>
-								</MenuItem>
 								<MenuItem mnemonicParsing="false" text="%key.minimum">
 									<graphic>
 										<TextField fx:id="minSeats" onAction="#minSeats" prefWidth="50.0" text="1" />
+									</graphic>
+								</MenuItem>
+								<MenuItem mnemonicParsing="false" text="%key.maximum">
+									<graphic>
+										<TextField fx:id="maxSeats" onAction="#maxSeats" prefWidth="50.0" text="1" />
 									</graphic>
 								</MenuItem>
 							</items>
@@ -157,7 +157,7 @@
                            <items>
                               <MenuItem mnemonicParsing="false">
                                  <graphic>
-                                    <TextField fx:id="advancedParameters1" onAction="#advancedParameters" />
+                                    <TextField fx:id="advancedParameters" onAction="#advancedParameters" />
                                  </graphic>
                               </MenuItem>
                            </items>
@@ -224,17 +224,17 @@
 				</Button>
             <Button id="redoButton" fx:id="cutButton" mnemonicParsing="false" onAction="#cutButton" text="">
                <tooltip>
-                  <Tooltip text="%key.redo" />
+                  <Tooltip text="%key.cut" />
                </tooltip>
             </Button>
             <Button id="redoButton" fx:id="copyButton" mnemonicParsing="false" onAction="#copyButton" text="">
                <tooltip>
-                  <Tooltip text="%key.redo" />
+                  <Tooltip text="%key.copy" />
                </tooltip>
             </Button>
             <Button id="redoButton" fx:id="pasteButton" mnemonicParsing="false" onAction="#pasteButton" text="">
                <tooltip>
-                  <Tooltip text="%key.redo" />
+                  <Tooltip text="%key.paste" />
                </tooltip>
             </Button>
             <Button id="redoButton" fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButton" text="">

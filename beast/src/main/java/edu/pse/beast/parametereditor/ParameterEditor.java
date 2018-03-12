@@ -9,9 +9,7 @@ import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 import edu.pse.beast.datatypes.Project;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
-import edu.pse.beast.highlevel.CheckListener;
 import edu.pse.beast.highlevel.DisplaysStringsToUser;
-import edu.pse.beast.highlevel.MainNotifier;
 import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.parametereditor.View.ParameterEditorWindow;
 import edu.pse.beast.propertylist.PropertyList;
@@ -23,12 +21,11 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
  * with the ParameterEditorWindow and the communication with high level.
  * @author Jonas
  */
-public class ParameterEditor implements ParameterSource, MainNotifier, DisplaysStringsToUser {
+public class ParameterEditor implements ParameterSource, DisplaysStringsToUser {
 
     private final ParameterEditorWindow window;
     private final CElectionDescriptionEditor cElectionDescriptionEditor;
     private final PropertyList propertyList;
-    private CheckListener checkListener;
     private final MinMaxSpinValueHandler voterHandler;
     private final MinMaxSpinValueHandler candHandler;
     private final MinMaxSpinValueHandler seatHandler;
@@ -105,25 +102,6 @@ public class ParameterEditor implements ParameterSource, MainNotifier, DisplaysS
         processHandler.setValue(param.getProcesses());
         argumentHandler.setArgument(param.getArgument());
         hasChanged = false;
-    }
-
-    /**
-     * Starts check of the election by notifying the CheckListener
-     */
-    public void startCheck() {
-        checkListener.startCheck();
-    }
-    /**
-     * Stops check of the election by notifying the CheckListener
-     */
-    public void abortCheck() {
-        checkListener.stopCheck();
-    }
-    
-
-    @Override
-    public void addCheckListener(CheckListener checkListenerObject) {
-        this.checkListener = checkListenerObject;
     }
 
     @Override

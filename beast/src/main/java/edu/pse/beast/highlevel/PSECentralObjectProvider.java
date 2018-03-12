@@ -50,7 +50,6 @@ public class PSECentralObjectProvider implements CentralObjectProvider {
         checkerCommunicator = new PropertyChecker("CBMC"); //this must be done via the checkerfactory at some point
         paramEd = new ParameterEditorBuilder().createParameterEditor(refs, cElectionEditor,
                 booleanExpEditor, propertyList, this);
-        paramEd.addCheckListener(communicator);
         langOpts.reapply();
     }
 
@@ -80,11 +79,6 @@ public class PSECentralObjectProvider implements CentralObjectProvider {
     }
 
     @Override
-    public MainNotifier getMainNotifier() {
-        return paramEd;
-    }
-
-    @Override
     public CheckStatusDisplay getCheckStatusDisplay() {
         return paramEd.getView();
     }
@@ -105,5 +99,4 @@ public class PSECentralObjectProvider implements CentralObjectProvider {
 	public CElectionDescriptionEditor getCElectionEditor() {
 		return cElectionEditor;
 	}
-
 }

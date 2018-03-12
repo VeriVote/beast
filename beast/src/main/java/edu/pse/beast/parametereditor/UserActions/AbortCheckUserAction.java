@@ -20,6 +20,5 @@ public class AbortCheckUserAction extends UserAction {
 
     @Override
     public void perform() {
-        editor.abortCheck();
     }
 }
