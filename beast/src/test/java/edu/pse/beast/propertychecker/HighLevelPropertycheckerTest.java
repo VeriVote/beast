@@ -57,20 +57,8 @@ public class HighLevelPropertycheckerTest {
 		parameterEditor.loadProject(loadedProject);
 
 		Thread.sleep(waittime);
-		
-		parameterEditor.startCheck();
 
 		Thread.sleep(waittime);
-		
-		boolean running = true;
-		while (running) {
-			if (parameterEditor.getReacts()) {
-				running = false;
-			} else {
-				Thread.sleep(1000);
-			}
-
-		}
 
 		Thread.sleep(waittime);
 		
@@ -117,24 +105,6 @@ public class HighLevelPropertycheckerTest {
 		parameterEditor.loadProject(loadedProject);
 
 		Thread.sleep(waittime);
-		
-		parameterEditor.startCheck();
-
-		//wait a bit, so the test can start properly
-		Thread.sleep(waittime);
-		
-		//abort the checking
-		parameterEditor.abortCheck();
-		
-		boolean running = true;
-		while (running) {
-			if (parameterEditor.getReacts()) {
-				running = false;
-			} else {
-				Thread.sleep(1000);
-			}
-
-		}
 
 		Thread.sleep(waittime);
 		
@@ -172,9 +142,6 @@ public class HighLevelPropertycheckerTest {
 		Project loadedProject = (Project) projectSaverLoader.createFromSaveString(readProject(pathToProject));
 
 		parameterEditor.loadProject(loadedProject);
-		
-
-		parameterEditor.startCheck();
 
 		boolean running = true;
 		while (running) {

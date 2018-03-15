@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.control.SplitPane?>
@@ -252,22 +253,34 @@
 							<tabs>
 								<Tab fx:id="codePane" onSelectionChanged="#codePaneClicked" text="%key.code">
 									<content>
-										<AnchorPane />
+										<AnchorPane>
+                                 <children>
+                                    <ScrollPane fx:id="codeScrollPane" fitToHeight="true" fitToWidth="true"/>
+                                 </children></AnchorPane>
 									</content>
 								</Tab>
 								<Tab fx:id="propertyPane" onSelectionChanged="#propertyPaneClicked" text="%key.property">
 									<content>
-										<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+										<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane fx:id="propertyScrollPane" fitToHeight="true" fitToWidth="true"/>
+                                 </children></AnchorPane>
 									</content>
 								</Tab>
 								<Tab fx:id="resultPane" onSelectionChanged="#resultPaneClicked" text="%key.result">
 									<content>
-										<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+										<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane fx:id="resultScrollPane" fitToHeight="true" fitToWidth="true"/>
+                                 </children></AnchorPane>
 									</content>
 								</Tab>
 								<Tab fx:id="inputPane" onSelectionChanged="#inputPaneClicked" text="%key.voteslist">
 									<content>
-										<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+										<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <ScrollPane fx:id="inputScrollPane" fitToHeight="true" fitToWidth="true"/>
+                                 </children></AnchorPane>
 									</content>
 								</Tab>
 							</tabs>

@@ -4,20 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.stringtemplate.v4.compiler.STParser.compoundElement_return;
+
+import edu.pse.beast.codeareaJAVAFX.RichTextFXCodeArea;
+import edu.pse.beast.codeareaJAVAFX.NewCodeArea;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 import edu.pse.beast.highlevel.BEASTCommunicator;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -27,6 +31,13 @@ public class GUIController {
 	private String pathToImages = "file:///" + SuperFolderFinder.getSuperFolder() + "/core/images/";
 
 	private boolean react = true;
+	
+	
+	private List<TabClass> mainWindowTabs = new ArrayList<TabClass>();
+	
+	private List<TabClass> bottomWindowTabs = new ArrayList<TabClass>();
+	
+	
 
 	@FXML // fx:id="maxVoter"
 	private TextField maxVoter;
@@ -114,7 +125,19 @@ public class GUIController {
 
 	@FXML // fx:id="consolePane"
 	private Tab consolePane;
+	
+	@FXML
+	private ScrollPane codeScrollPane;
 
+	@FXML
+	private ScrollPane propertyScrollPane;
+	
+	@FXML
+	private ScrollPane resultScrollPane;
+	
+	@FXML
+	private ScrollPane inputScrollPane;
+	
 	private boolean running = false;
 
 	// initial setup
@@ -133,7 +156,7 @@ public class GUIController {
 		deleteButton.setGraphic(new ImageView(pathToImages + "toolbar/x-mark.png"));
 		
 		//populate boxes
-		//add the timeunits you can choose
+		//add the time units you can choose
 		TimeUnitChoice.getItems().add(TimeUnit.SECONDS);
 		TimeUnitChoice.getItems().add(TimeUnit.MINUTES);
 		TimeUnitChoice.getItems().add(TimeUnit.HOURS);
@@ -143,7 +166,6 @@ public class GUIController {
 		addNumberEnforcer(minVoter, maxVoter, 1);
 		addNumberEnforcer(maxVoter, minVoter, -1);
 
-		
 		addNumberEnforcer(minCandidates, maxCandidates, 1);
 		addNumberEnforcer(maxCandidates, minCandidates, -1);
 	
@@ -156,6 +178,20 @@ public class GUIController {
 
 		addNumberEnforcer(timeOut);
 
+		
+		
+		NewCodeArea test = new NewCodeArea();
+		
+		
+		VirtualizedScrollPane<NewCodeArea> VSP = new VirtualizedScrollPane<NewCodeArea>(test);
+		
+		codePane.setContent(VSP);
+		
+		test.setStyle("-fx-font-family: consolas; -fx-font-size: 11pt;");
+		
+		//create the tabs which will be used
+		//mainWindowTabs.add(new RichTextFXCodeArea());
+		
 	}
 
 	// Top Panels

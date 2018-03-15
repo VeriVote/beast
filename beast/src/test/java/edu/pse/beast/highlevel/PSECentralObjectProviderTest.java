@@ -33,9 +33,6 @@ public class PSECentralObjectProviderTest {
         ResultPresenter failResultRP = null;
         ResultPresenter resultRP = instance.getResultPresenter();
         assertNotEquals(failResultRP, resultRP);
-        MainNotifier failResultMN = null;
-        MainNotifier resultMN = instance.getMainNotifier();
-        assertNotEquals(failResultMN, resultMN);
         CheckStatusDisplay failResultCSD = null;
         CheckStatusDisplay resultCSD = instance.getCheckStatusDisplay();
         assertNotEquals(failResultCSD, resultCSD);
