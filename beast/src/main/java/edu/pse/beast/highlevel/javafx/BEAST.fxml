@@ -12,6 +12,7 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -251,35 +252,31 @@
 					<items>
 						<TabPane prefHeight="200.0" prefWidth="195.0" tabClosingPolicy="UNAVAILABLE">
 							<tabs>
-								<Tab fx:id="codePane" onSelectionChanged="#codePaneClicked" text="%key.code">
-									<content>
-										<AnchorPane>
-                                 <children>
-                                    <ScrollPane fx:id="codeScrollPane" fitToHeight="true" fitToWidth="true"/>
-                                 </children></AnchorPane>
-									</content>
-								</Tab>
+								<Tab fx:id="codePane" onSelectionChanged="#codePaneClicked" text="%key.code" />
 								<Tab fx:id="propertyPane" onSelectionChanged="#propertyPaneClicked" text="%key.property">
-									<content>
-										<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <ScrollPane fx:id="propertyScrollPane" fitToHeight="true" fitToWidth="true"/>
-                                 </children></AnchorPane>
-									</content>
+                           <content>
+                              <SplitPane dividerPositions="0.5" orientation="VERTICAL">
+                                <items>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                       <children>
+                                          <TitledPane fx:id="prePropertyPane" animated="false" text="PreProperties" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                       <children>
+                                          <TitledPane fx:id="postPropertyPane" animated="false" text="PostProperties" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                       </children>
+                                    </AnchorPane>
+                                </items>
+                              </SplitPane>
+                           </content>
 								</Tab>
-								<Tab fx:id="resultPane" onSelectionChanged="#resultPaneClicked" text="%key.result">
-									<content>
-										<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                                 <children>
-                                    <ScrollPane fx:id="resultScrollPane" fitToHeight="true" fitToWidth="true"/>
-                                 </children></AnchorPane>
-									</content>
-								</Tab>
+								<Tab fx:id="resultPane" onSelectionChanged="#resultPaneClicked" text="%key.result" />
 								<Tab fx:id="inputPane" onSelectionChanged="#inputPaneClicked" text="%key.voteslist">
 									<content>
 										<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <ScrollPane fx:id="inputScrollPane" fitToHeight="true" fitToWidth="true"/>
+                                    <ScrollPane fx:id="inputScrollPane" fitToHeight="true" fitToWidth="true" />
                                  </children></AnchorPane>
 									</content>
 								</Tab>
@@ -287,21 +284,26 @@
 						</TabPane>
 						<TabPane tabClosingPolicy="UNAVAILABLE">
 							<tabs>
-								<Tab fx:id="errorPane" onSelectionChanged="#errorPaneClicked" text="Errors">
-									<content>
-										<AnchorPane />
-									</content>
-								</Tab>
+                        <Tab text="Information">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                          </content>
+                        </Tab>
 								<Tab fx:id="consolePane" onSelectionChanged="#consolePaneClicked" text="Console">
 									<content>
 										<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+									</content>
+								</Tab>
+								<Tab fx:id="errorPane" onSelectionChanged="#errorPaneClicked" text="Errors">
+									<content>
+										<AnchorPane />
 									</content>
 								</Tab>
 							</tabs>
 						</TabPane>
 					</items>
 				</SplitPane>
-				<AnchorPane />
+				<AnchorPane prefHeight="478.0" prefWidth="225.0" />
 			</items>
 		</SplitPane>
 	</children>

@@ -9,6 +9,8 @@ import org.stringtemplate.v4.compiler.STParser.compoundElement_return;
 
 import edu.pse.beast.codeareaJAVAFX.RichTextFXCodeArea;
 import edu.pse.beast.codeareaJAVAFX.NewCodeArea;
+import edu.pse.beast.codeareaJAVAFX.NewPostPropertyCodeArea;
+import edu.pse.beast.codeareaJAVAFX.NewPrePropertyCodeArea;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 import edu.pse.beast.highlevel.BEASTCommunicator;
@@ -24,6 +26,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.image.ImageView;
 
 public class GUIController {
@@ -126,8 +129,8 @@ public class GUIController {
 	@FXML // fx:id="consolePane"
 	private Tab consolePane;
 	
-	@FXML
-	private ScrollPane codeScrollPane;
+//	@FXML
+//	private ScrollPane codeScrollPane;
 
 	@FXML
 	private ScrollPane propertyScrollPane;
@@ -137,6 +140,12 @@ public class GUIController {
 	
 	@FXML
 	private ScrollPane inputScrollPane;
+	
+	@FXML
+	private TitledPane prePropertyPane;
+	
+	@FXML
+	private TitledPane postPropertyPane;
 	
 	private boolean running = false;
 
@@ -180,14 +189,32 @@ public class GUIController {
 
 		
 		
-		NewCodeArea test = new NewCodeArea();
+		NewCodeArea codeArea = new NewCodeArea();
 		
-		
-		VirtualizedScrollPane<NewCodeArea> VSP = new VirtualizedScrollPane<NewCodeArea>(test);
+		VirtualizedScrollPane<NewCodeArea> VSP = new VirtualizedScrollPane<NewCodeArea>(codeArea);
 		
 		codePane.setContent(VSP);
 		
-		test.setStyle("-fx-font-family: consolas; -fx-font-size: 11pt;");
+		
+		
+		NewPrePropertyCodeArea preArea = new NewPrePropertyCodeArea();
+		
+		VirtualizedScrollPane<NewPrePropertyCodeArea> VSPpre = new VirtualizedScrollPane<NewPrePropertyCodeArea>(preArea);
+		
+		prePropertyPane.setContent(VSPpre);
+		
+	
+		
+		NewPostPropertyCodeArea postArea = new NewPostPropertyCodeArea();
+		
+		VirtualizedScrollPane<NewPostPropertyCodeArea> VSPpost = new VirtualizedScrollPane<NewPostPropertyCodeArea>(postArea);
+		
+		postPropertyPane.setContent(VSPpost);
+		
+		
+		
+		
+		codeArea.setStyle("-fx-font-family: consolas; -fx-font-size: 11pt;");
 		
 		//create the tabs which will be used
 		//mainWindowTabs.add(new RichTextFXCodeArea());

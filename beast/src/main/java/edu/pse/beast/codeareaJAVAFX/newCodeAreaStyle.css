@@ -26,7 +26,16 @@
 }
 
 .method {
-	-fx-fill: red;
+	-fx-fill: firebrick;
+	-fx-font-weight: bold;
+}
+
+.datatype {
+	-fx-fill: blue;
+}
+
+.include {
+	-fx-fill: orange
 }
 
 .paragraph-box:has-caret {

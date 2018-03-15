@@ -13,7 +13,7 @@ import org.fxmisc.richtext.model.StyleSpansBuilder;
 
 import javafx.scene.Node;
 
-public class NewCodeArea extends CodeArea {
+public class NewPostPropertyCodeArea extends CodeArea {
 
 	private static final String[] KEYWORDS = new String[] { "auto", "break", "case", "const", "continue",
 			"default", "define", "do", "eilf", "else", "error", "const", "continue", "default", "do", "else", "enum", "extern",
@@ -38,7 +38,7 @@ public class NewCodeArea extends CodeArea {
 					+ ")" + "|(?<BRACKET>" + BRACKET_PATTERN + ")" + "|(?<SEMICOLON>" + SEMICOLON_PATTERN + ")"
 					+ "|(?<STRING>" + STRING_PATTERN + ")" + "|(?<COMMENT>" + COMMENT_PATTERN + ")");
 
-	public NewCodeArea() {
+	public NewPostPropertyCodeArea() {
 
 		String sampleCode = String.join("\n",
 				new String[] { "package com.example;", "", "import java.util.*;", "",
