@@ -24,6 +24,8 @@ import javafx.stage.StageStyle;
  * @author Jonas
  */
 public class MainClass extends Application {
+	
+	private static Stage mainStage;
 
 	/**
 	 * Starts BEAST by creating a BEASTCommunicator and corresponding
@@ -47,6 +49,8 @@ public class MainClass extends Application {
 		
 		Locale local = Locale.getDefault();
 		
+		mainStage = stage;
+		
 		try {
 			GUIController controller = new GUIController();
 			
@@ -58,13 +62,18 @@ public class MainClass extends Application {
 			
 			Parent root = loader.load();
 			
-			Scene scene = new Scene(root, 1600, 900);
+			Scene scene = new Scene(root, 1000, 600);
 			stage.setTitle("BEAST");
 			stage.getIcons().add(new Image("file:///" + SuperFolderFinder.getSuperFolder() + "/core/images/other/BEAST.png"));
 			stage.setScene(scene);
 			stage.show();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static Stage getMainStage() {
+		return mainStage;
 	}
 }

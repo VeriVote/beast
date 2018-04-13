@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -11,15 +13,19 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox stylesheets="@../javafx/style.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="532.0" prefWidth="545.0" stylesheets="@../javafx/style.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
 		<MenuBar VBox.vgrow="NEVER">
 			<menus>
@@ -246,17 +252,24 @@
             </Button>
 			</items>
 		</ToolBar>
-		<SplitPane dividerPositions="0.85" focusTraversable="true" prefHeight="411.0" prefWidth="455.0" VBox.vgrow="ALWAYS">
+		<SplitPane dividerPositions="0.699264705882353" focusTraversable="true" VBox.vgrow="ALWAYS">
 			<items>
-				<SplitPane dividerPositions="0.7" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+				<SplitPane dividerPositions="0.7" orientation="VERTICAL">
 					<items>
-						<TabPane prefHeight="200.0" prefWidth="195.0" tabClosingPolicy="UNAVAILABLE">
+						<TabPane fx:id="mainTabPane" prefHeight="200.0" prefWidth="195.0" tabClosingPolicy="UNAVAILABLE">
 							<tabs>
 								<Tab fx:id="codePane" onSelectionChanged="#codePaneClicked" text="%key.code" />
 								<Tab fx:id="propertyPane" onSelectionChanged="#propertyPaneClicked" text="%key.property">
                            <content>
-                              <SplitPane dividerPositions="0.5" orientation="VERTICAL">
+                              <SplitPane dividerPositions="0.11125654450261781, 0.5157068062827226" orientation="VERTICAL">
                                 <items>
+                                    <MenuBar>
+                                      <menus>
+                                          <Menu fx:id="variables" mnemonicParsing="false" text="%key.variables" />
+                                        <Menu fx:id="varAdd" mnemonicParsing="false" text="%key.add" />
+                                          <Menu fx:id="varRemove" mnemonicParsing="false" text="%key.remove" />
+                                      </menus>
+                                    </MenuBar>
                                     <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                        <children>
                                           <TitledPane fx:id="prePropertyPane" animated="false" text="PreProperties" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
@@ -271,7 +284,10 @@
                               </SplitPane>
                            </content>
 								</Tab>
-								<Tab fx:id="resultPane" onSelectionChanged="#resultPaneClicked" text="%key.result" />
+								<Tab fx:id="resultPane" onSelectionChanged="#resultPaneClicked" text="%key.result">
+                           <content>
+                              <TextArea fx:id="solutionField" prefHeight="200.0" prefWidth="200.0" text="&#10;" />
+                           </content></Tab>
 								<Tab fx:id="inputPane" onSelectionChanged="#inputPaneClicked" text="%key.voteslist">
 									<content>
 										<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -286,24 +302,60 @@
 							<tabs>
                         <Tab text="Information">
                           <content>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TextArea fx:id="infoTextArea" editable="false" prefHeight="91.33333333333333" prefWidth="382.0" text="Dies ist ein Test&#10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children></AnchorPane>
                           </content>
                         </Tab>
 								<Tab fx:id="consolePane" onSelectionChanged="#consolePaneClicked" text="Console">
 									<content>
-										<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+										<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <TextArea fx:id="consoleTextArea" editable="false" prefHeight="90.0" prefWidth="382.0" text="Dies ist die Konsole&#10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children></AnchorPane>
 									</content>
 								</Tab>
 								<Tab fx:id="errorPane" onSelectionChanged="#errorPaneClicked" text="Errors">
 									<content>
-										<AnchorPane />
+										<AnchorPane>
+                                 <children>
+                                    <TextArea fx:id="errorTextArea" editable="false" prefHeight="90.0" prefWidth="382.0" text="Dies sind die Errors&#10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                 </children></AnchorPane>
 									</content>
 								</Tab>
 							</tabs>
 						</TabPane>
 					</items>
 				</SplitPane>
-				<AnchorPane prefHeight="478.0" prefWidth="225.0" />
+            <BorderPane>
+               <bottom>
+                  <ToolBar BorderPane.alignment="CENTER">
+                    <items>
+                      <Button fx:id="newPropButton" mnemonicParsing="false" onAction="#newProperty" text="new">
+                           <tooltip>
+                              <Tooltip text="%key.newProp" />
+                           </tooltip></Button>
+                        <Button fx:id="loadPropButton" mnemonicParsing="false" onAction="#loadProperty" text="load">
+                           <tooltip>
+                              <Tooltip text="%key.loadProp" />
+                           </tooltip></Button>
+                        <Button fx:id="loadPropListButton" mnemonicParsing="false" onAction="#loadPropertyList" text="List">
+                           <tooltip>
+                              <Tooltip text="%key.loadPropList" />
+                           </tooltip>
+                        </Button>
+                        <Separator orientation="VERTICAL" />
+                        <CheckBox mnemonicParsing="false" />
+                        <Label text="propless margin" />
+                        <ImageView fx:id="proplessImage" pickOnBounds="true" preserveRatio="true" />
+                    </items>
+                  </ToolBar>
+               </bottom>
+               <center>
+                  <TreeView fx:id="treeView" BorderPane.alignment="CENTER" />
+               </center>
+            </BorderPane>
 			</items>
 		</SplitPane>
 	</children>

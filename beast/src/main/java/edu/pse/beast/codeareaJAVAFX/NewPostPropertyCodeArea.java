@@ -11,6 +11,8 @@ import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 
+import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import javafx.scene.Node;
 
 public class NewPostPropertyCodeArea extends CodeArea {
@@ -38,16 +40,13 @@ public class NewPostPropertyCodeArea extends CodeArea {
 					+ ")" + "|(?<BRACKET>" + BRACKET_PATTERN + ")" + "|(?<SEMICOLON>" + SEMICOLON_PATTERN + ")"
 					+ "|(?<STRING>" + STRING_PATTERN + ")" + "|(?<COMMENT>" + COMMENT_PATTERN + ")");
 
+	
+	private FormalPropertiesDescription description = new FormalPropertiesDescription("");
+	
+	
 	public NewPostPropertyCodeArea() {
 
-		String sampleCode = String.join("\n",
-				new String[] { "package com.example;", "", "import java.util.*;", "",
-						"public class Foo extends Bar implements Baz {", "", "    /*", "     * multi-line comment",
-						"     */", "    public static void main(String[] args) {", "        // single-line comment",
-						"        for(String arg: args) {", "            if(arg.length() != 0)",
-						"                System.out.println(arg);", "            else",
-						"                System.err.println(\"Warning: empty string as argument\");", "        }",
-						"    }", "", "}" });
+		String sampleCode = "";
 
 		String stylesheet = this.getClass().getResource("newCodeAreaStyle.css").toExternalForm();
 
@@ -66,7 +65,6 @@ public class NewPostPropertyCodeArea extends CodeArea {
 	}
 
 	private static StyleSpans<Collection<String>> computeHighlighting(String text) {
-		System.out.println("high");
 		Matcher matcher = PATTERN.matcher(text);
 		int lastKwEnd = 0;
 		StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
@@ -90,4 +88,9 @@ public class NewPostPropertyCodeArea extends CodeArea {
 		return spansBuilder.create();
 	}
 
+	public void setPostDescription(FormalPropertiesDescription description) {
+		this.description = description;
+		this.replaceText(0,0, description.getCode());
+	}
+	
 }

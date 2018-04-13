@@ -65,7 +65,6 @@ public class RichTextFXCodeArea extends CodeArea {
 	}
 
 	private static StyleSpans<Collection<String>> computeHighlighting(String text) {
-		System.out.println("high");
 		Matcher matcher = PATTERN.matcher(text);
 		int lastKwEnd = 0;
 		StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();

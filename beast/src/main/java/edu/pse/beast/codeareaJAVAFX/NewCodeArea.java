@@ -13,7 +13,7 @@ import org.fxmisc.richtext.model.StyleSpansBuilder;
 
 import javafx.scene.Node;
 
-public class NewCodeArea extends CodeArea {
+public class NewCodeArea extends SaveLoadCodeArea {
 
 	private static final String[] KEYWORDS = new String[] { "auto", "break", "case", "const", "continue",
 			"default", "define", "do", "eilf", "else", "error", "const", "continue", "default", "do", "else", "enum", "extern",
@@ -39,15 +39,9 @@ public class NewCodeArea extends CodeArea {
 					+ "|(?<STRING>" + STRING_PATTERN + ")" + "|(?<COMMENT>" + COMMENT_PATTERN + ")");
 
 	public NewCodeArea() {
-
-		String sampleCode = String.join("\n",
-				new String[] { "package com.example;", "", "import java.util.*;", "",
-						"public class Foo extends Bar implements Baz {", "", "    /*", "     * multi-line comment",
-						"     */", "    public static void main(String[] args) {", "        // single-line comment",
-						"        for(String arg: args) {", "            if(arg.length() != 0)",
-						"                System.out.println(arg);", "            else",
-						"                System.err.println(\"Warning: empty string as argument\");", "        }",
-						"    }", "", "}" });
+		super(".elec", "C:", "BEAST election description");
+		
+		String sampleCode = "";
 
 		String stylesheet = this.getClass().getResource("newCodeAreaStyle.css").toExternalForm();
 
@@ -66,7 +60,6 @@ public class NewCodeArea extends CodeArea {
 	}
 
 	private static StyleSpans<Collection<String>> computeHighlighting(String text) {
-		System.out.println("high");
 		Matcher matcher = PATTERN.matcher(text);
 		int lastKwEnd = 0;
 		StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
