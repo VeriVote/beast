@@ -8,6 +8,7 @@ import java.util.List;
 import com.google.common.hash.HashFunction;
 
 import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
+import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.electionSimulator.ElectionSimulation;
@@ -27,7 +28,7 @@ public abstract class CheckerFactory implements Runnable {
 	private final FactoryController controller;
 	private final ElectionDescriptionSource electionDescSrc;
 	private final PreAndPostConditionsDescription postAndPrepPropDesc;
-	private final ParameterSource paramSrc;
+	private final ElectionCheckParameter parameter;
 	private final Result result;
 	private final long POLLINGINTERVAL = 1000;
 
@@ -47,19 +48,19 @@ public abstract class CheckerFactory implements Runnable {
 	 *            the electionDescription
 	 * @param postAndPrepPropDesc
 	 *            the propertyDescription
-	 * @param paramSrc
+	 * @param parameter
 	 *            the parameter
 	 * @param result
 	 *            the result object where the result has to be put in
 	 */
 	protected CheckerFactory(FactoryController controller, ElectionDescriptionSource electionDescSrc,
-			PreAndPostConditionsDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result,
+			PreAndPostConditionsDescription postAndPrepPropDesc, ElectionCheckParameter parameter, Result result,
 			boolean isMargin) {
 
 		this.controller = controller;
 		this.electionDescSrc = electionDescSrc;
 		this.postAndPrepPropDesc = postAndPrepPropDesc;
-		this.paramSrc = paramSrc;
+		this.parameter = parameter;
 		this.result = result;
 
 		this.isMargin = isMargin;
@@ -72,10 +73,10 @@ public abstract class CheckerFactory implements Runnable {
 		}
 	}
 
-	public CheckerFactory(FactoryController controller, ParameterSource paramSrc, Result result,
+	public CheckerFactory(FactoryController controller, ElectionCheckParameter parameter, Result result,
 			boolean isMargin) {
 		this.controller = controller;
-		this.paramSrc = paramSrc;
+		this.parameter = parameter;
 		this.result = result;
 
 		this.isMargin = isMargin;
@@ -97,7 +98,7 @@ public abstract class CheckerFactory implements Runnable {
 	 */
 	public void run() {
 
-		String advanced = paramSrc.getParameter().getArgument();
+		String advanced = parameter.getArgument();
 
 		String[] toTrim = advanced.split(";");
 
@@ -291,13 +292,13 @@ public abstract class CheckerFactory implements Runnable {
 	 * @param advanced
 	 */
 	private void runTest(String advanced) {
-		outerLoop: for (Iterator<Integer> voteIterator = paramSrc.getParameter().getAmountVoters()
+		outerLoop: for (Iterator<Integer> voteIterator = parameter.getAmountVoters()
 				.iterator(); voteIterator.hasNext();) {
 			int voters = (int) voteIterator.next();
-			for (Iterator<Integer> candidateIterator = paramSrc.getParameter().getAmountCandidates()
+			for (Iterator<Integer> candidateIterator = parameter.getAmountCandidates()
 					.iterator(); candidateIterator.hasNext();) {
 				int candidates = (int) candidateIterator.next();
-				for (Iterator<Integer> seatsIterator = paramSrc.getParameter().getAmountSeats()
+				for (Iterator<Integer> seatsIterator = parameter.getAmountSeats()
 						.iterator(); seatsIterator.hasNext();) {
 					int seats = (int) seatsIterator.next();
 
@@ -598,7 +599,7 @@ public abstract class CheckerFactory implements Runnable {
 	 *            the electiondescriptionsource
 	 * @param postAndPrepPropDesc
 	 *            a description of the given property
-	 * @param paramSrc
+	 * @param parameter
 	 *            the source for the parameters
 	 * @param result
 	 *            the object in which the result should be saved in later
@@ -607,22 +608,22 @@ public abstract class CheckerFactory implements Runnable {
 	 */
 	public abstract CheckerFactory getNewInstance(FactoryController controller,
 			ElectionDescriptionSource electionDescSrc, PreAndPostConditionsDescription postAndPrepPropDesc,
-			ParameterSource paramSrc, Result result, boolean isMargin);
-
-	/**
-	 *
-	 * @param controller
-	 *            the Factorycontroller that controls this checkerfactory
-	 * @param toCheck
-	 *            the file we want the Checker to check
-	 * @param paramSrc
-	 *            the source for the parameters
-	 * @param result
-	 *            the object in which the result should be saved in later
-	 * @return a new CheckerFactory
-	 */
-	public abstract CheckerFactory getNewInstance(FactoryController controller, File toCheck, ParameterSource paramSrc,
-			Result result, boolean isMargin);
+			ElectionCheckParameter parameter, Result result, boolean isMargin);
+//
+//	/**
+//	 *
+//	 * @param controller
+//	 *            the Factorycontroller that controls this checkerfactory
+//	 * @param toCheck
+//	 *            the file we want the Checker to check
+//	 * @param paramSrc
+//	 *            the source for the parameters
+//	 * @param result
+//	 *            the object in which the result should be saved in later
+//	 * @return a new CheckerFactory
+//	 */
+//	public abstract CheckerFactory getNewInstance(FactoryController controller, File toCheck, ParameterSource paramSrc,
+//			Result result, boolean isMargin);
 
 	/**
 	 * checks if the result from the given checker found a counterexample or not

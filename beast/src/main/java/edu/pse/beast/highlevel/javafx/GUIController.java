@@ -11,8 +11,10 @@ import edu.pse.beast.codeareaJAVAFX.NewPostPropertyCodeArea;
 import edu.pse.beast.codeareaJAVAFX.NewPrePropertyCodeArea;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.BEASTCommunicator;
+import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -790,6 +792,10 @@ public class GUIController {
 
 	public List<ParentTreeItem> getProperties() {
 		return properties;
+	}
+
+	public ElectionDescription getElectionDescription() {
+		return codeArea.getElectionDescription();
 	}
 }
 

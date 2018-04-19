@@ -10,11 +10,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.highlevel.PreAndPostConditionsDescriptionSource;
 import edu.pse.beast.highlevel.PropertyAndMarginBool;
 import edu.pse.beast.highlevel.ResultInterface;
+import edu.pse.beast.highlevel.javafx.ChildTreeItem;
+import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.TimeOutNotifier;
 
@@ -31,9 +35,11 @@ public class FactoryController implements Runnable {
 
 	private final ElectionDescriptionSource electionDescSrc;
 	private final PreAndPostConditionsDescriptionSource preAndPostConditionDescrSrc;
-	private final ParameterSource parmSrc;
+	//private final ParameterSource parmSrc;
 	private final List<Result> results;
 	private final TimeOutNotifier notifier;
+	
+	private final List<ParentTreeItem> propertyParents;
 
 	private final long POLLINGINTERVAL = 1000;
 
@@ -44,97 +50,208 @@ public class FactoryController implements Runnable {
 
 	private boolean fromFile = false;
 
-	/**
-	 *
-	 * @param electionDescSrc
-	 *            the source for the election descriptions
-	 * @param preAndPostConditionDescrSrc
-	 *            the properties to be checked
-	 * @param parmSrc
-	 *            the parameter
-	 * @param checkerID
-	 *            the ID of the checker that should be used
-	 * @param concurrentChecker
-	 *            the amount of concurrent checker to be used
-	 */
-	public FactoryController(ElectionDescriptionSource electionDescSrc,
-			                 PreAndPostConditionsDescriptionSource preAndPostConditionDescrSrc,
-			                 ParameterSource parmSrc, String checkerID,
-			                 int concurrentChecker) {
+	private ElectionCheckParameter parameter;
 
+//	/**
+//	 *
+//	 * @param electionDescSrc
+//	 *            the source for the election descriptions
+//	 * @param preAndPostConditionDescrSrc
+//	 *            the properties to be checked
+//	 * @param parmSrc
+//	 *            the parameter
+//	 * @param checkerID
+//	 *            the ID of the checker that should be used
+//	 * @param concurrentChecker
+//	 *            the amount of concurrent checker to be used
+//	 */
+//	public FactoryController(ElectionDescriptionSource electionDescSrc,
+//			                 PreAndPostConditionsDescriptionSource preAndPostConditionDescrSrc,
+//			                 ParameterSource parmSrc, String checkerID,
+//			                 int concurrentChecker) {
+//
+//		// add a shutdown hook so all the checker are stopped properly so they
+//		// don't clog the host pc
+//		Runtime.getRuntime().addShutdownHook(new FactoryEnder());
+//
+//		this.electionDescSrc = electionDescSrc;
+//		this.preAndPostConditionDescrSrc = preAndPostConditionDescrSrc;
+//		//this.parmSrc = parmSrc;
+//		this.checkerID = checkerID;
+//		this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
+//
+//		// get a list of result objects that fit for the specified checkerID
+//		this.results = CheckerFactoryFactory.getMatchingResult(checkerID,
+//				preAndPostConditionDescrSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size());
+//
+//		// if the user doesn't specify a specific amount for concurrent
+//		// checkers, we just set it to the thread amount of this computer
+//		if (concurrentChecker <= 0) {
+//			this.concurrentChecker = Runtime.getRuntime().availableProcessors();
+//		} else {
+//			this.concurrentChecker = concurrentChecker;
+//		}
+//
+//		// start the factorycontroller
+//		new Thread(this, "FactoryController").start();
+//
+//		// if the user wishes for a timeout, we activate it here
+//		if (parmSrc.getParameter().getTimeout().isActive()) {
+//			notifier = new TimeOutNotifier(this, parmSrc.getParameter().getTimeout().getDuration());
+//		} else {
+//			notifier = null;
+//		}
+//	}
+//
+//	public FactoryController(File toCheck, ParameterSource parmSrc, String checkerID, int concurrentChecker) {
+//		// add a shutdown hook so all the checker are stopped properly so they
+//		// don't clog the host pc
+//		Runtime.getRuntime().addShutdownHook(new FactoryEnder());
+//
+//		this.fromFile = true;
+//
+//		//this.parmSrc = parmSrc;
+//		this.checkerID = checkerID;
+//		this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
+//
+//		// we don't need these if we start with a file already
+//		this.preAndPostConditionDescrSrc = null;
+//		this.electionDescSrc = null;
+//
+//		// get a list of result objects that fit for the specified checkerID
+//		// because we have no preAndPostConditions we only need ONE result
+//		this.results = CheckerFactoryFactory.getMatchingUnprocessedResult(checkerID, preAndPostConditionDescrSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size());
+//
+//		preAndPostConditionDescrSrc.referenceResult(this.results);
+//		
+//		// if the user doesn't specify a concrete amount for concurrent
+//		// checkers, we just set it to the thread amount of this pc
+//		if (concurrentChecker <= 0) {
+//			this.concurrentChecker = Runtime.getRuntime().availableProcessors();
+//		} else {
+//			this.concurrentChecker = concurrentChecker;
+//		}
+//
+//		// start the factorycontroller
+//		new Thread(this, "FactoryController").start();
+//
+//		// if the user wishes for a timeout, we activate it here
+//		if (parmSrc.getParameter().getTimeout().isActive()) {
+//			notifier = new TimeOutNotifier(this, parmSrc.getParameter().getTimeout().getDuration());
+//		} else {
+//			notifier = null;
+//		}
+//	}
+
+	public FactoryController(ElectionDescription elecDescr, List<ParentTreeItem> parentProperties,
+			ElectionCheckParameter electionCheckParameter, String checkerID, int concurrentChecker) {
 		// add a shutdown hook so all the checker are stopped properly so they
-		// don't clog the host pc
-		Runtime.getRuntime().addShutdownHook(new FactoryEnder());
+				// don't clog the host pc
+				Runtime.getRuntime().addShutdownHook(new FactoryEnder());
 
-		this.electionDescSrc = electionDescSrc;
-		this.preAndPostConditionDescrSrc = preAndPostConditionDescrSrc;
-		this.parmSrc = parmSrc;
-		this.checkerID = checkerID;
-		this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
+				this.fromFile = true;
 
-		// get a list of result objects that fit for the specified checkerID
-		this.results = CheckerFactoryFactory.getMatchingResult(checkerID,
-				preAndPostConditionDescrSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size());
+		//		this.parmSrc = null; //delete later on
+				this.parameter = electionCheckParameter;
+				this.checkerID = checkerID;
+				this.propertyParents = parentProperties;
+				this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
 
-		// if the user doesn't specify a concrete amount for concurrent
-		// checkers, we just set it to the thread amount of this pc
-		if (concurrentChecker <= 0) {
-			this.concurrentChecker = Runtime.getRuntime().availableProcessors();
-		} else {
-			this.concurrentChecker = concurrentChecker;
-		}
+				// we don't need these if we start with a file already
+				this.preAndPostConditionDescrSrc = null;
+				this.electionDescSrc = null;
 
-		// start the factorycontroller
-		new Thread(this, "FactoryController").start();
+				// get a list of result objects that fit for the specified checkerID
+				// because we have no preAndPostConditions we only need ONE result
+				this.results = CheckerFactoryFactory.getMatchingUnprocessedResult(checkerID, preAndPostConditionDescrSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size());
 
-		// if the user wishes for a timeout, we activate it here
-		if (parmSrc.getParameter().getTimeout().isActive()) {
-			notifier = new TimeOutNotifier(this, parmSrc.getParameter().getTimeout().getDuration());
-		} else {
-			notifier = null;
-		}
+				preAndPostConditionDescrSrc.referenceResult(this.results);
+				
+				// if the user doesn't specify a concrete amount for concurrent
+				// checkers, we just set it to the thread amount of this pc
+				if (concurrentChecker <= 0) {
+					this.concurrentChecker = Runtime.getRuntime().availableProcessors();
+				} else {
+					this.concurrentChecker = concurrentChecker;
+				}
+
+				// start the factorycontroller
+				new Thread(this, "FactoryController").start();
+
+				// if the user wishes for a timeout, we activate it here
+				if (electionCheckParameter.getTimeout().isActive()) {
+					notifier = new TimeOutNotifier(this, electionCheckParameter.getTimeout().getDuration());
+				} else {
+					notifier = null;
+				}
 	}
 
-	public FactoryController(File toCheck, ParameterSource parmSrc, String checkerID, int concurrentChecker) {
-		// add a shutdown hook so all the checker are stopped properly so they
-		// don't clog the host pc
-		Runtime.getRuntime().addShutdownHook(new FactoryEnder());
-
-		this.fromFile = true;
-
-		this.parmSrc = parmSrc;
-		this.checkerID = checkerID;
-		this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
-
-		// we don't need these if we start with a file already
-		this.preAndPostConditionDescrSrc = null;
-		this.electionDescSrc = null;
-
-		// get a list of result objects that fit for the specified checkerID
-		// because we have no preAndPostConditions we only need ONE result
-		this.results = CheckerFactoryFactory.getMatchingUnprocessedResult(checkerID, preAndPostConditionDescrSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size());
-
-		preAndPostConditionDescrSrc.referenceResult(this.results);
-		
-		// if the user doesn't specify a concrete amount for concurrent
-		// checkers, we just set it to the thread amount of this pc
-		if (concurrentChecker <= 0) {
-			this.concurrentChecker = Runtime.getRuntime().availableProcessors();
-		} else {
-			this.concurrentChecker = concurrentChecker;
-		}
-
-		// start the factorycontroller
-		new Thread(this, "FactoryController").start();
-
-		// if the user wishes for a timeout, we activate it here
-		if (parmSrc.getParameter().getTimeout().isActive()) {
-			notifier = new TimeOutNotifier(this, parmSrc.getParameter().getTimeout().getDuration());
-		} else {
-			notifier = null;
-		}
-	}
-
+//	/**
+//	 * starts the factoryController, so it then starts the needed checker
+//	 */
+//	@Override
+//	public void run() {
+//			List<PropertyAndMarginBool> propertiesToCheckAndMargin = preAndPostConditionDescrSrc
+//					.getPreAndPostPropertiesDescriptionsCheckAndMargin();
+//			
+//			outerLoop: for (int i = 0; i < propertiesToCheckAndMargin.size(); i++) {
+//				innerLoop: while (!stopped) {					
+//					// if we can start more checkers (we haven't used our
+//					// allowed pool completely), we can start a new one
+//					if (currentlyRunning.size() < concurrentChecker) {
+//						CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID, this,
+//								electionDescSrc, propertiesToCheckAndMargin.get(i).getDescription(), parmSrc, results.get(i), propertiesToCheckAndMargin.get(i).getMarginStatus());
+//
+//						synchronized (this) {
+//							currentlyRunning.add(factory);
+//						}
+//
+//						new Thread(factory, "CheckerFactory Property " + i).start();
+//
+//						break innerLoop;
+//					} else {
+//						// ELSE, we try to sleep a bit. It is important that we
+//						// only sleep if no new checker
+//						// was started, or else we have to wait when there 
+//						// is more allowed space in our thread pool
+//						try {
+//							Thread.sleep(POLLINGINTERVAL);
+//						} catch (InterruptedException e) {
+//							e.printStackTrace();
+//						}
+//					}
+//				}
+//
+//				if (stopped) {
+//					break outerLoop;
+//				}
+//			}
+//
+//			while (currentlyRunning.size() > 0) {
+//				try {
+//					Thread.sleep(POLLINGINTERVAL);
+//				} catch (InterruptedException e) {
+//					ErrorLogger.log("Was interrupted while waiting for the last processes to finish \n"
+//							+ "The waiting will still continue. To stop the factory properly, call \"stopChecking()\" !");
+//				}
+//			}
+//
+//		// wait for the last running threads to finish
+//		while (currentlyRunning.size() > 0) {
+//			try {
+//				Thread.sleep(POLLINGINTERVAL);
+//			} catch (InterruptedException e) {
+//				ErrorLogger.log("Was interrupted while waiting for the last processes to finish \n"
+//						+ "The waiting will still continue. To stop the factory properly, call \"stopChecking()\" !");
+//			}
+//		}
+//
+//		if (notifier != null) {
+//			// if the notifier thread is still active, we stop it.
+//			notifier.disable();
+//		}
+//	}
+	    
 	/**
 	 * starts the factoryController, so it then starts the needed checker
 	 */
@@ -149,7 +266,7 @@ public class FactoryController implements Runnable {
 					// allowed pool completely), we can start a new one
 					if (currentlyRunning.size() < concurrentChecker) {
 						CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID, this,
-								electionDescSrc, propertiesToCheckAndMargin.get(i).getDescription(), parmSrc, results.get(i), propertiesToCheckAndMargin.get(i).getMarginStatus());
+								electionDescSrc, propertiesToCheckAndMargin.get(i).getDescription(), parameter, results.get(i), propertiesToCheckAndMargin.get(i).getMarginStatus());
 
 						synchronized (this) {
 							currentlyRunning.add(factory);
@@ -221,15 +338,16 @@ public class FactoryController implements Runnable {
 			// set all not finished results to finished, to indicate that they
 			// are
 			// ready to be presented
-			for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
-				Result result = (Result) iterator.next();
-				if (!result.isFinished()) {
-					// in case of a timeout set a timeout flag
-					result.setForcefullyStopped();
-					if (timeOut) {
-						result.setTimeoutFlag();
+			
+			for (Iterator<ParentTreeItem> parentIterator = propertyParents.iterator(); parentIterator.hasNext();) {
+				ParentTreeItem parent = (ParentTreeItem) parentIterator.next();
+				
+				for (Iterator<ChildTreeItem> childIterator = parent.getSubItems().iterator(); childIterator.hasNext();) {
+					ChildTreeItem child = (ChildTreeItem) childIterator.next();
+					if(!child.getResult().isFinished()) {
+						child.getResult().setTimeoutFlag();
+						child.update();
 					}
-					result.setFinished();
 				}
 			}
 		}

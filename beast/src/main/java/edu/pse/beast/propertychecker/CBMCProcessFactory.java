@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
@@ -44,20 +45,20 @@ public class CBMCProcessFactory extends CheckerFactory {
      *            the source that describes the election
      * @param postAndPrepPropDesc
      *            the source that describes the specific property
-     * @param paramSrc
+     * @param parameter
      *            the source that describes all other parameters
      * @param result
      *            the result object that the end result should be written to
      */
-    protected CBMCProcessFactory(FactoryController controller, ElectionDescriptionSource electionDescSrc,PreAndPostConditionsDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result, boolean isMargin) {
-        super(controller, electionDescSrc, postAndPrepPropDesc, paramSrc, result, isMargin);
+    protected CBMCProcessFactory(FactoryController controller, ElectionDescriptionSource electionDescSrc,PreAndPostConditionsDescription postAndPrepPropDesc, ElectionCheckParameter parameter, Result result, boolean isMargin) {
+        super(controller, electionDescSrc, postAndPrepPropDesc, parameter, result, isMargin);
         os = determineOS();
     }
-
-    public CBMCProcessFactory(FactoryController controller, File toCheck, ParameterSource paramSrc, Result result, boolean isMargin) {
-    	super(controller, paramSrc, result, isMargin);
-        os = determineOS();
-	}
+//
+//    public CBMCProcessFactory(FactoryController controller, File toCheck, ParameterSource paramSrc, Result result, boolean isMargin) {
+//    	super(controller, paramSrc, result, isMargin);
+//        os = determineOS();
+//	}
 
 //	@Override
 //    protected Checker startProcessCheck(ElectionDescriptionSource electionDescSrc,
@@ -274,15 +275,15 @@ public class CBMCProcessFactory extends CheckerFactory {
 
     @Override
     public CheckerFactory getNewInstance(FactoryController controller, ElectionDescriptionSource electionDescSrc,
-    		PreAndPostConditionsDescription postAndPrepPropDesc, ParameterSource paramSrc, Result result, boolean isMargin) {
-        return new CBMCProcessFactory(controller, electionDescSrc, postAndPrepPropDesc, paramSrc, result, isMargin);
+    		PreAndPostConditionsDescription postAndPrepPropDesc, ElectionCheckParameter parameter, Result result, boolean isMargin) {
+        return new CBMCProcessFactory(controller, electionDescSrc, postAndPrepPropDesc, parameter, result, isMargin);
     }
-    
-    @Override
-	public CheckerFactory getNewInstance(FactoryController controller, File toCheck, ParameterSource paramSrc,
-			Result result, boolean isMargin) {
-    	return new CBMCProcessFactory(controller, toCheck, paramSrc, result, isMargin);
-	}
+//    
+//    @Override
+//	public CheckerFactory getNewInstance(FactoryController controller, File toCheck, ParameterSource paramSrc,
+//			Result result, boolean isMargin) {
+//    	return new CBMCProcessFactory(controller, toCheck, paramSrc, result, isMargin);
+//	}
 
     @Override
     public List<Result> getMatchingResult(int amount) {

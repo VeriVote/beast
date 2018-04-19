@@ -1,16 +1,29 @@
 package edu.pse.beast.codeareaJAVAFX;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.function.IntFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
+import edu.pse.beast.electionSimulator.Model.RowOfValues;
+import edu.pse.beast.highlevel.ElectionDescriptionSource;
+import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
+import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
+import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.types.InputType;
+import edu.pse.beast.types.InternalTypeContainer;
+import edu.pse.beast.types.OutputType;
+import edu.pse.beast.types.cbmctypes.inputplugins.Approval;
+import edu.pse.beast.types.cbmctypes.outputtypes.SingleCandidate;
 import javafx.scene.Node;
 
 public class NewCodeArea extends SaveLoadCodeArea {
@@ -38,8 +51,16 @@ public class NewCodeArea extends SaveLoadCodeArea {
 					+ ")" + "|(?<BRACKET>" + BRACKET_PATTERN + ")" + "|(?<SEMICOLON>" + SEMICOLON_PATTERN + ")"
 					+ "|(?<STRING>" + STRING_PATTERN + ")" + "|(?<COMMENT>" + COMMENT_PATTERN + ")");
 
+	private ElectionDescription source;
+	
 	public NewCodeArea() {
 		super(".elec", "C:", "BEAST election description");
+		
+		source = new ElectionDescription("New description", new Approval(), new SingleCandidate(), 0);
+		
+		List<String> code = new ArrayList<String>();
+		code.add("");
+		//code.add(source.getContainer().getInputType().);
 		
 		String sampleCode = "";
 
@@ -81,6 +102,10 @@ public class NewCodeArea extends SaveLoadCodeArea {
 		}
 		spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
 		return spansBuilder.create();
+	}
+
+	public ElectionDescription getElectionDescription() {
+		return source;
 	}
 
 }

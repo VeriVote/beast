@@ -91,7 +91,7 @@ public class NewPrePropertyCodeArea extends CodeArea {
 
 	public void setPreDescription(FormalPropertiesDescription description) {
 		this.description = description;
-		this.replaceText(0,0, description.getCode());
+		this.replaceText(0,this.getLength(), description.getCode());
 	}
 
 }

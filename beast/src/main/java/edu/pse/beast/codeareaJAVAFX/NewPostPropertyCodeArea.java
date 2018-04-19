@@ -62,6 +62,8 @@ public class NewPostPropertyCodeArea extends CodeArea {
 				});
 		this.replaceText(0, 0, sampleCode);
 
+		//s.richChanges()NewPostPropert
+		
 	}
 
 	private static StyleSpans<Collection<String>> computeHighlighting(String text) {
@@ -90,7 +92,7 @@ public class NewPostPropertyCodeArea extends CodeArea {
 
 	public void setPostDescription(FormalPropertiesDescription description) {
 		this.description = description;
-		this.replaceText(0,0, description.getCode());
+		this.replaceText(0,this.getLength(), description.getCode());
 	}
 	
 }

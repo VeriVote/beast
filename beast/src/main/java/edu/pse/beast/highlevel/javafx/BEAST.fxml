@@ -265,7 +265,14 @@
                                 <items>
                                     <MenuBar>
                                       <menus>
-                                          <Menu fx:id="variables" mnemonicParsing="false" text="%key.variables" />
+                                          <Menu fx:id="variables" mnemonicParsing="false" text="%key.variables">
+                                             <items>
+                                                <MenuItem mnemonicParsing="false" text="Voter V" />
+                                                <MenuItem mnemonicParsing="false" text="Voter V" />
+                                                <MenuItem mnemonicParsing="false" text="Voter V" />
+                                                <MenuItem mnemonicParsing="false" text="Voter V" />
+                                             </items>
+                                          </Menu>
                                         <Menu fx:id="varAdd" mnemonicParsing="false" text="%key.add" />
                                           <Menu fx:id="varRemove" mnemonicParsing="false" text="%key.remove" />
                                       </menus>

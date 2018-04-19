@@ -30,6 +30,7 @@ public class ParentTreeItem extends CustomTreeItem {
 
 	private ChildTreeItem checkItem;
 	private ChildTreeItem marginItem;
+	private ChildTreeItem testItem;
 
 	ParentTreeItem(PreAndPostConditionsDescription propDesc, boolean isSelected,
 			TreeItem<CustomTreeItem> treeItemReference) {
@@ -45,11 +46,13 @@ public class ParentTreeItem extends CustomTreeItem {
 		this.getChildren().add(new Separator(Orientation.VERTICAL));
 		this.getChildren().add(checkAll);
 
-		checkItem = new ChildTreeItem("Check ", this);
-		marginItem = new ChildTreeItem("Margin", this);
+		checkItem = new CheckChildTreeItem("Check ", this);
+		marginItem = new MarginChildTreeItem("Margin", this);
+		testItem = new TestChildTreeItem("Test", this);
 
 		subItems.add(checkItem);
 		subItems.add(marginItem);
+		subItems.add(testItem);
 
 		checkAll.selectedProperty().addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> ov, Boolean oldValue, Boolean newValue) {
@@ -151,6 +154,18 @@ public class ParentTreeItem extends CustomTreeItem {
 
 	public void setMarginStatus(AnalysisStatus status) {
 		marginItem.setStatus(status);
+	}
+
+	/**
+	 * notifies the parent, that at least one of the childrens 
+	 * result changed, so we have have to check all to update 
+	 * the GUI
+	 */
+	public void update() {
+		for (Iterator<ChildTreeItem> iterator = subItems.iterator(); iterator.hasNext();) {
+			ChildTreeItem child = (ChildTreeItem) iterator.next();
+			child.update();
+		}
 	}
 
 }

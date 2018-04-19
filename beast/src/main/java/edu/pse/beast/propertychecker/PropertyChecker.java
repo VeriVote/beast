@@ -8,12 +8,14 @@ package edu.pse.beast.propertychecker;
 import java.io.File;
 import java.util.List;
 
+import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
 import edu.pse.beast.highlevel.PreAndPostConditionsDescriptionSource;
 import edu.pse.beast.highlevel.ResultCheckerCommunicator;
 import edu.pse.beast.highlevel.ResultInterface;
+import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 
 /**
  *
@@ -31,33 +33,46 @@ public class PropertyChecker implements ResultCheckerCommunicator {
     public PropertyChecker(String checkerID) {
         this.checkerID = checkerID;
     }
-
-    @Override
-    public List<ResultInterface> checkPropertiesForDescription(ElectionDescriptionSource elecDescr,
-            PreAndPostConditionsDescriptionSource propDescrSrc, ParameterSource params) {
-
-        if (elecDescr == null || propDescrSrc == null || params == null) {
-            return null;
-        } else {
-            this.factoryController = new FactoryController(elecDescr, propDescrSrc, params, checkerID,
-                    params.getParameter().getProcesses());
-            return factoryController.getResults();
-        }
-    }
+//
+//    @Override
+//    public List<ResultInterface> checkPropertiesForDescription(ElectionDescriptionSource elecDescr,
+//            PreAndPostConditionsDescriptionSource propDescrSrc, ParameterSource params) {
+//
+//        if (elecDescr == null || propDescrSrc == null || params == null) {
+//            return null;
+//        } else {
+//            this.factoryController = new FactoryController(elecDescr, propDescrSrc, params, checkerID,
+//                    params.getParameter().getProcesses());
+//            return factoryController.getResults();
+//        }
+//    }
+    
     
     @Override
-    public UnprocessedCBMCResult checkFile(File toCheck, ElectionDescription electionDescr, ParameterSource params) {
-        if (toCheck == null || params == null) {
-            return null;
-        } else {
-            this.factoryController = new FactoryController(toCheck, params, checkerID,
-                    params.getParameter().getProcesses());
-            //because we only have ONE file to check, we  only give back the first result
-            UnprocessedCBMCResult toReturn = factoryController.getUnprocessedResults().get(0);
-            toReturn.setElectionType(electionDescr);
-            return toReturn;
-        }
+    public List<ResultInterface> checkPropertiesForDescription(ElectionDescription elecDescr,
+    		List<ParentTreeItem> parentProperties, ElectionCheckParameter electionCheckParameter) {
+    	 if (elecDescr == null || parentProperties == null || electionCheckParameter == null) {
+             return null;
+         } else {
+             this.factoryController = new FactoryController(elecDescr, parentProperties, electionCheckParameter, checkerID,
+            		 electionCheckParameter.getProcesses());
+             return factoryController.getResults();
+         }
     }
+//    
+//    @Override
+//    public UnprocessedCBMCResult checkFile(File toCheck, ElectionDescription electionDescr, ParameterSource params) {
+//        if (toCheck == null || params == null) {
+//            return null;
+//        } else {
+//            this.factoryController = new FactoryController(toCheck, params, checkerID,
+//                    params.getParameter().getProcesses());
+//            //because we only have ONE file to check, we  only give back the first result
+//            UnprocessedCBMCResult toReturn = factoryController.getUnprocessedResults().get(0);
+//            toReturn.setElectionType(electionDescr);
+//            return toReturn;
+//        }
+//    }
 
     @Override
     public boolean abortChecking() {
@@ -68,5 +83,4 @@ public class PropertyChecker implements ResultCheckerCommunicator {
             return false;
         }
     }
-
 }

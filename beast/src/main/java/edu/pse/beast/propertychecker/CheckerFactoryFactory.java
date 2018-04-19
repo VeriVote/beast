@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.ParameterSource;
@@ -70,7 +71,7 @@ public final class CheckerFactoryFactory {
      *            the electionSource
      * @param postAndPrepPropDesc
      *            the properySource
-     * @param paramSrc
+     * @param parameter
      *            the parameters
      * @param result
      *            the result object where the result should be put in
@@ -79,12 +80,12 @@ public final class CheckerFactoryFactory {
      */
     public static CheckerFactory getCheckerFactory(String checkerID, FactoryController controller,
             ElectionDescriptionSource electionDescSrc, PreAndPostConditionsDescription postAndPrepPropDesc,
-            ParameterSource paramSrc, Result result, boolean isMargin) {
+            ElectionCheckParameter parameter, Result result, boolean isMargin) {
         init();
 
         if (factories.keySet().contains(checkerID)) {
             return factories.get(checkerID).getNewInstance(controller, electionDescSrc, postAndPrepPropDesc,
-                    paramSrc, result, isMargin);
+                    parameter, result, isMargin);
 
         } else {
             ErrorLogger.log("The specified checkerID wasn't found");
@@ -92,19 +93,19 @@ public final class CheckerFactoryFactory {
         }
     }
     
-    public static CheckerFactory getCheckerFactory(String checkerID, FactoryController controller, File toCheck,
-			ParameterSource paramSrc, Result result, boolean isMargin) {
-    	init();
-
-        if (factories.keySet().contains(checkerID)) {
-            return factories.get(checkerID).getNewInstance(controller, toCheck,
-                    paramSrc, result, isMargin);
-
-        } else {
-            ErrorLogger.log("The specified checkerID wasn't found");
-            return null;
-        }
-	}
+//    public static CheckerFactory getCheckerFactory(String checkerID, FactoryController controller, File toCheck,
+//			ParameterSource paramSrc, Result result, boolean isMargin) {
+//    	init();
+//
+//        if (factories.keySet().contains(checkerID)) {
+//            return factories.get(checkerID).getNewInstance(controller, toCheck,
+//                    paramSrc, result, isMargin);
+//
+//        } else {
+//            ErrorLogger.log("The specified checkerID wasn't found");
+//            return null;
+//        }
+//	}
 
     /**
      * creates a specified amount of result objects that fit for the checkerID

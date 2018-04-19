@@ -1,11 +1,14 @@
 package edu.pse.beast.highlevel;
 
 import java.text.DecimalFormat;
+import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import edu.pse.beast.highlevel.javafx.ChildTreeItem;
 import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 
 /**
  * The BEASTCommunicator coordinates all the other parts of BEAST and starts and
@@ -29,78 +32,88 @@ public class BEASTCommunicator {
         BEASTCommunicator.centralObjectProvider = centralObjectProvider;
     }
 
-    public static boolean startCheck() {
-        centralObjectProvider.getResultPresenter().resetResults();
-        ElectionDescriptionSource electSrc = centralObjectProvider.getElectionDescriptionSource();
-        PreAndPostConditionsDescriptionSource preAndPostSrc = centralObjectProvider.getPreAndPostConditionsSource();
-        ParameterSource paramSrc = centralObjectProvider.getParameterSrc();
-        CheckStatusDisplay checkStatusDisplayer = centralObjectProvider.getCheckStatusDisplay();
-
-        // checks if there even are any properties selected for analysis in the PreAndPostConditionsSource
-        if (preAndPostSrc.getPreAndPostConditionsDescriptionsCheck().isEmpty() && preAndPostSrc.getPreAndPostConditionsDescriptionsMargin().isEmpty()) {
-			GUIController.setInfoText("no property selected (add string resouce loading later");
-            checkStatusDisplayer.displayText("noProperty", false, "");
-            return false;
-        }
-
-        if (!checkForErrors(centralObjectProvider)) {
-            // analysis gets started by CheckerCommunicator.checkPropertiesForDescription() getting called
-            checkStatusDisplayer.displayText("startingCheck", true, "");
-            resultList = centralObjectProvider.getResultCheckerCommunicator()
-                    .checkPropertiesForDescription(electSrc, preAndPostSrc, paramSrc);
-
-            // Thread that checks for new presentable results every 50 milliseconds
-            Thread waitForResultsThread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    // local variables for elapsed time displaying
-                    String timeString = "";
-                    long startTime = System.nanoTime();
-                    long elapsedTime;
-                    double passedTimeSeconds = 0;
-
-                    boolean[] resultPresented = new boolean[preAndPostSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size()];
-
-                    int numberOfPresentedResults = 0;
-
-                    while (numberOfPresentedResults < preAndPostSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size()) {
-                        elapsedTime = System.nanoTime() - startTime;
-                        passedTimeSeconds = (double) elapsedTime / 1000000000.0;
-                        timeString = createTimeString(passedTimeSeconds);
-
-                        checkStatusDisplayer.displayText("waitingForPropertyResult", true,
-                                preAndPostSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().
-                                        get(numberOfPresentedResults).getDescription().getName() + "' (" + timeString + ")");
-
-                        try {
-                            Thread.sleep(50);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(BEASTCommunicator.class.getName()).log(Level.SEVERE, null, ex);
-                        }
-                        for (int i = 0; i < resultPresented.length; i++) {
-                            ResultInterface result = resultList.get(i);
-                            if (result.readyToPresent() && !resultPresented[i]) {
-                                ResultPresenter resultPresenter = centralObjectProvider.getResultPresenter();
-                                resultPresenter.presentResult(result, i);
-                                resultPresented[i] = true;
-                                numberOfPresentedResults++;
-                            }
-                        }
-                    }
-                    resumeReacting(centralObjectProvider);
-                    checkStatusDisplayer.displayText("analysisEnded", false,
-                            " " + timeString);
-                    checkStatusDisplayer.signalThatAnalysisEnded();
-                }
-            });
-            waitForResultsThread.start();
-            return true;
-        } else {
-        	return false;
-        }
-    }
+//    public static boolean startCheck() {
+//        centralObjectProvider.getResultPresenter().resetResults();
+//        ElectionDescriptionSource electSrc = centralObjectProvider.getElectionDescriptionSource();
+//        PreAndPostConditionsDescriptionSource preAndPostSrc = centralObjectProvider.getPreAndPostConditionsSource();
+//        ParameterSource paramSrc = centralObjectProvider.getParameterSrc();
+//        CheckStatusDisplay checkStatusDisplayer = centralObjectProvider.getCheckStatusDisplay();
+//
+//        // checks if there even are any properties selected for analysis in the PreAndPostConditionsSource
+//        if (preAndPostSrc.getPreAndPostConditionsDescriptionsCheck().isEmpty() && preAndPostSrc.getPreAndPostConditionsDescriptionsMargin().isEmpty()) {
+//			GUIController.setInfoText("no property selected (add string resouce loading later");
+//            checkStatusDisplayer.displayText("noProperty", false, "");
+//            return false;
+//        }
+//
+//        if (!checkForErrors(centralObjectProvider)) {
+//            // analysis gets started by CheckerCommunicator.checkPropertiesForDescription() getting called
+//            checkStatusDisplayer.displayText("startingCheck", true, "");
+//            resultList = centralObjectProvider.getResultCheckerCommunicator()
+//                    .checkPropertiesForDescription(electSrc, preAndPostSrc, paramSrc);
+//            
+//            // Thread that checks for new presentable results every 50 milliseconds
+//            Thread waitForResultsThread = new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    // local variables for elapsed time displaying
+//                    String timeString = "";
+//                    long startTime = System.nanoTime();
+//                    long elapsedTime;
+//                    double passedTimeSeconds = 0;
+//
+//                    boolean[] resultPresented = new boolean[preAndPostSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size()];
+//
+//                    int numberOfPresentedResults = 0;
+//
+//                    while (numberOfPresentedResults < preAndPostSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size()) {
+//                        elapsedTime = System.nanoTime() - startTime;
+//                        passedTimeSeconds = (double) elapsedTime / 1000000000.0;
+//                        timeString = createTimeString(passedTimeSeconds);
+//
+//                        checkStatusDisplayer.displayText("waitingForPropertyResult", true,
+//                                preAndPostSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().
+//                                        get(numberOfPresentedResults).getDescription().getName() + "' (" + timeString + ")");
+//
+//                        try {
+//                            Thread.sleep(50);
+//                        } catch (InterruptedException ex) {
+//                            Logger.getLogger(BEASTCommunicator.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                        for (int i = 0; i < resultPresented.length; i++) {
+//                            ResultInterface result = resultList.get(i);
+//                            if (result.readyToPresent() && !resultPresented[i]) {
+//                                ResultPresenter resultPresenter = centralObjectProvider.getResultPresenter();
+//                                resultPresenter.presentResult(result, i);
+//                                resultPresented[i] = true;
+//                                numberOfPresentedResults++;
+//                            }
+//                        }
+//                    }
+//                    resumeReacting(centralObjectProvider);
+//                    checkStatusDisplayer.displayText("analysisEnded", false,
+//                            " " + timeString);
+//                    checkStatusDisplayer.signalThatAnalysisEnded();
+//                }
+//            });
+//            waitForResultsThread.start();
+//            return true;
+//        } else {
+//        	return false;
+//        }
+//    }
     
     public static boolean startCheckNEW() {
+    	
+    	for (Iterator<ParentTreeItem> iterator = GUIController.getController().getProperties().iterator(); iterator.hasNext();) {
+    		ParentTreeItem parentItem = (ParentTreeItem) iterator.next();
+			for (Iterator<ChildTreeItem> childIterator = parentItem.getSubItems().iterator(); childIterator.hasNext();) {
+				ChildTreeItem child = (ChildTreeItem) childIterator.next();
+				child.resetResult();
+			}
+		}
+    	
+    	
         centralObjectProvider.getResultPresenter().resetResults();
         ElectionDescriptionSource electSrc = centralObjectProvider.getElectionDescriptionSource();
         PreAndPostConditionsDescriptionSource preAndPostSrc = centralObjectProvider.getPreAndPostConditionsSource();
@@ -118,15 +131,19 @@ public class BEASTCommunicator {
             // analysis gets started by CheckerCommunicator.checkPropertiesForDescription() getting called
             checkStatusDisplayer.displayText("startingCheck", true, "");
             resultList = centralObjectProvider.getResultCheckerCommunicator()
-                    .checkPropertiesForDescription(electSrc, preAndPostSrc, paramSrc);
+                    .checkPropertiesForDescription(electSrc, preAndPostSrc, parameter);
+            
+            
+            resultList = centralObjectProvider.getResultCheckerCommunicator()
+            		.checkPropertiesForDescription(GUIController.getController().getElectionDescription(), GUIController.getController().getProperties(), GUIController.getController().getParameter());
+            
             
             // Thread that checks for new presentable results every 50 milliseconds
             Thread waitForResultsThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     // local variables for elapsed time displaying
-                    String timeString = "";
-                    long startTime = System.nanoTime();
+                    String timeString = "";                   long startTime = System.nanoTime();
                     long elapsedTime;
                     double passedTimeSeconds = 0;
 

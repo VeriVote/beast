@@ -152,10 +152,11 @@ public abstract class Result implements ResultInterface {
 
     /**
      * sets the flag that shows that a timeout was responsible for the stopped
-     * checking
+     * checking and sets the result to finished
      */
     public void setTimeoutFlag() {
         timeOut = true;
+        this.setFinished();
     }
 
     /**

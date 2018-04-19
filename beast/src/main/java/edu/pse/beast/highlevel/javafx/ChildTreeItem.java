@@ -12,7 +12,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-public class ChildTreeItem extends CustomTreeItem {
+public abstract class ChildTreeItem extends CustomTreeItem {
 
 	private Label propName;
 	private CheckBox checkBox = new CheckBox();
@@ -21,7 +21,7 @@ public class ChildTreeItem extends CustomTreeItem {
 	private boolean disabled = false;
 	private AnalysisStatus status = AnalysisStatus.NONE;
 	
-	private Result result;
+	protected Result result = null;
 
 	ChildTreeItem(String name, ParentTreeItem parent) {
 
@@ -76,10 +76,25 @@ public class ChildTreeItem extends CustomTreeItem {
 
 	public void setResult(Result result) {
 		this.result = result;
+		this.update();
 	}
 
 	public void setStatus(AnalysisStatus status) {
 		this.status = status;
 		checkBox.setText(status.toString());
 	}
+
+	public Result getResult() {
+		return result;
+	}
+	
+	/**
+	 * notifies the child object that its
+	 * result object changed, so it has to update its gui
+	 */
+	public void update() {
+		
+	}
+
+	public abstract void resetResult();
 }
