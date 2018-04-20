@@ -24,7 +24,6 @@ public class CElectionCodeArea extends CodeArea {
 
     private final CAntlrHandler antlrHandler;
     private final CGrammarErrorFinder grammerErrorFinder;
-    private final CVariableErrorFinder varErrFinder;
     private final CSyntaxHl cSyntaxHl;
 
     /**
@@ -35,9 +34,7 @@ public class CElectionCodeArea extends CodeArea {
         super(codeArea);
         antlrHandler = new CAntlrHandler(pane);
         grammerErrorFinder = new CGrammarErrorFinder(antlrHandler);
-        varErrFinder = new CVariableErrorFinder(pane);
         //errorCtrl.addErrorFinder(grammerErrorFinder);
-        errorCtrl.addErrorFinder(varErrFinder);
         cSyntaxHl = new CSyntaxHl(antlrHandler, syntaxHL);
     }
 

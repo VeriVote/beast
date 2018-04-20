@@ -97,7 +97,7 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 		
 	}
 
-	public abstract void resetResult();
+	public abstract void resetResult(Result result);
 	
 	public abstract AnalysisType getAnalysisType();
 

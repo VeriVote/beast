@@ -140,6 +140,8 @@ public class BEASTCommunicator {
 			GUIController.setInfoText("no property selected (add string resouce loading later");
 			return false;
 		}
+		
+		System.out.println("checkfor errors: " + checkForErrors(electionDesc, properties));
 
 		if (!checkForErrors(electionDesc, properties)) {
 			// analysis gets started by CheckerCommunicator.checkPropertiesForDescription()
@@ -228,24 +230,18 @@ public class BEASTCommunicator {
 		
 		
 		
+		
 		if (codeErrors.size() != 0) {
 			GUIController.getController().getCodeArea().displayErrors(codeErrors);
 			return true;
-		}
-		
-		BooleanExpANTLRHandler antlrHandler = new BooleanExpANTLRHandler(String.join("\n", description.getCode()));
-		
-		BooleanExpEditorVariableErrorFinder variableErrorFinder = new BooleanExpEditorVariableErrorFinder();
-		
-		BooleanExpEditorGrammarErrorFinder grammarErrorFinder = new BooleanExpEditorGrammarErrorFinder(antlrHandler);
-		
+		} 
 		
 		boolean errorsFound = false;
 		
 		for (Iterator<ParentTreeItem> iterator = properties.iterator(); iterator.hasNext();) {
 			ParentTreeItem parentTreeItem = (ParentTreeItem) iterator.next();
 			if (parentTreeItem.isChildSelected()) {
-				errorsFound = BooleanExpEditorGeneralErrorFinder.findErrors(parentTreeItem) || errorsFound;
+				errorsFound = BooleanExpEditorGeneralErrorFinder.hasErrors(parentTreeItem) || errorsFound;
 			}
 		}
 		

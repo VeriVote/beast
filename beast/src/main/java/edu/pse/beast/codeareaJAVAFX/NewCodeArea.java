@@ -3,6 +3,7 @@ package edu.pse.beast.codeareaJAVAFX;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.IntFunction;
 import java.util.regex.Matcher;
@@ -12,10 +13,11 @@ import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 
-import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.FormalExpErrorFinderTreeListener;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
+import edu.pse.beast.types.InputType;
+import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.inputplugins.Approval;
 import edu.pse.beast.types.cbmctypes.outputtypes.SingleCandidate;
 import javafx.scene.Node;
@@ -46,6 +48,8 @@ public class NewCodeArea extends SaveLoadCodeArea {
 					+ "|(?<STRING>" + STRING_PATTERN + ")" + "|(?<COMMENT>" + COMMENT_PATTERN + ")");
 
 	private ElectionDescription source;
+
+	private List<ElectionDescriptionChangeListener> listeners = new ArrayList<ElectionDescriptionChangeListener>();
 	
 	public NewCodeArea() {
 		super(".elec", "C:", "BEAST election description");
@@ -105,6 +109,17 @@ public class NewCodeArea extends SaveLoadCodeArea {
 	public void displayErrors(List<CodeError> codeErrors) {
 		System.out.println("TODO display code errors");
 	}
+	
+	public void createNew(InputType newIn, OutputType newOut) {
+		for (Iterator<ElectionDescriptionChangeListener> iterator = listeners.iterator(); iterator.hasNext();) {
+			ElectionDescriptionChangeListener listener = (ElectionDescriptionChangeListener) iterator
+					.next();
+			listener.inputChanged(newIn);
+			listener.outputChanged(newOut);
+		}
+		
+		System.out.println("TODO fix creating new CElectionDescription");
+	}
 
 //	public void addListener(ElectionDescriptionChangeListener listener) {
 //		listener.inputChanged(input);
@@ -113,6 +128,10 @@ public class NewCodeArea extends SaveLoadCodeArea {
 
 	public ElectionDescription getSource() {
 		return source;
+	}
+
+	public void addListener(ElectionDescriptionChangeListener listener) {
+		this.listeners.add(listener);
 	}
 
 }

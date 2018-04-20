@@ -24,7 +24,7 @@ public class CElectionCodeAreaJAVAFX extends CodeArea {
 
     private final CAntlrHandler antlrHandler;
     private final CGrammarErrorFinder grammerErrorFinder;
-    private final CVariableErrorFinder varErrFinder;
+   // private final CVariableErrorFinder varErrFinder;
     private final CSyntaxHl cSyntaxHl;
 
     /**
@@ -35,9 +35,9 @@ public class CElectionCodeAreaJAVAFX extends CodeArea {
         super(codeArea);
         antlrHandler = new CAntlrHandler(pane);
         grammerErrorFinder = new CGrammarErrorFinder(antlrHandler);
-        varErrFinder = new CVariableErrorFinder(pane);
+       // varErrFinder = new CVariableErrorFinder(pane);
         //errorCtrl.addErrorFinder(grammerErrorFinder);
-        errorCtrl.addErrorFinder(varErrFinder);
+       // errorCtrl.addErrorFinder(varErrFinder);
         cSyntaxHl = new CSyntaxHl(antlrHandler, syntaxHL);
     }
 

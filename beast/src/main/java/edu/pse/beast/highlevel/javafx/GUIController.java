@@ -13,9 +13,11 @@ import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.highlevel.BEASTCommunicator;
-import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.toolbox.SuperFolderFinder;
+import edu.pse.beast.types.InternalTypeContainer;
+import edu.pse.beast.types.InternalTypeRep;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -147,6 +149,9 @@ public class GUIController {
 
 	@FXML // fx:id="consolePane"
 	private Tab consolePane;
+	
+	@FXML
+	private Tab informationPane;
 
 	@FXML
 	private ScrollPane propertyScrollPane;
@@ -180,6 +185,23 @@ public class GUIController {
 	
 	@FXML
 	private TabPane mainTabPane;
+	
+	@FXML
+	private TabPane subTabPane;
+
+	@FXML
+	private TreeView<SymbolicVariable> variableTreeView;
+	
+	@FXML
+	private TextField symbVarField;
+	
+//	@FXML
+//	private Text
+//	
+//	@FXML
+//	private Button removeVarButton;
+	
+	
 	
 	private boolean running = false;
 
@@ -353,7 +375,27 @@ public class GUIController {
 	void resultPaneClicked(Event event) {
 
 	}
+	
+	
+	// ------------
+	// symb Var
+    @FXML
+    void addSymbCand(ActionEvent event) {
+    	BooleanExpEditorNEW.addSymbVar(new InternalTypeContainer(InternalTypeRep.CANDIDATE));
+    }
 
+    @FXML
+    void addSymbSeat(ActionEvent event) {
+    	BooleanExpEditorNEW.addSymbVar(new InternalTypeContainer(InternalTypeRep.SEAT));
+    }
+
+    @FXML
+    void addSymbVoter(ActionEvent event) {
+    	BooleanExpEditorNEW.addSymbVar(new InternalTypeContainer(InternalTypeRep.VOTER));
+    }
+	
+	
+	
 	// ------------
 	// Bottom Panels
 	@FXML
@@ -371,16 +413,16 @@ public class GUIController {
 	@FXML
 	void startStopPressed(ActionEvent event) {
 		if (!running) {
-			react = false; // lock the GUI
+			//react = false; // lock the GUI
 			if (BEASTCommunicator.startCheckNEW()) { // if we start it successful
 				startStopButton.setGraphic(new ImageView(pathToImages + "toolbar/stop.png"));
 			} else {
-				react = true;
+		//		react = true;
 			}
 		} else {
 			if (BEASTCommunicator.stopCheck()) {
 				startStopButton.setGraphic(new ImageView(pathToImages + "toolbar/start.png"));
-				react = true;
+		//		react = true;
 			}
 		}
 	}
@@ -681,13 +723,14 @@ public class GUIController {
 
 		Integer numberProcesses = Runtime.getRuntime().availableProcessors();
 
-		if (processes.getText() != "") {
+		
+		if (!processes.getText().equals("")) {
 			numberProcesses = Integer.parseInt(processes.getText());
 		}
 
 		TimeOut time = new TimeOut(TimeUnit.SECONDS, 0);
 
-		if (timeOut.getText() != "") {
+		if (!timeOut.getText().equals("")) {
 			time = new TimeOut(TimeUnitChoice.getValue(), Integer.parseInt(timeOut.getText()));
 			numberProcesses = Integer.parseInt(processes.getText());
 		}
@@ -717,6 +760,8 @@ public class GUIController {
 
 	public static void setInfoText(String text) {
 		controller.infoTextArea.setText(text);
+		
+		controller.getSubTabPane().getSelectionModel().select(controller.informationPane);
 	}
 
 	public static String getConsoleText() {
@@ -725,6 +770,8 @@ public class GUIController {
 
 	public static void setConsoleText(String text) {
 		controller.consoleTextArea.setText(text);
+		
+		controller.getSubTabPane().getSelectionModel().select(controller.consolePane);
 	}
 
 	public static String getErrorText() {
@@ -733,13 +780,15 @@ public class GUIController {
 
 	public static void setErrorText(String text) {
 		controller.errorTextArea.setText(text);
+		
+		controller.getSubTabPane().getSelectionModel().select(controller.errorPane);
 	}
 
 	public static TreeItem<CustomTreeItem> addTreeItem(PreAndPostConditionsDescription description) {
 		
 		TreeItem<CustomTreeItem> propRoot = new TreeItem<CustomTreeItem>();
 		
-		ParentTreeItem parent = new ParentTreeItem(description, false, propRoot);
+		properties.add(new ParentTreeItem(description, false, propRoot));
 		
 		root.getChildren().add(propRoot);
 
@@ -773,6 +822,10 @@ public class GUIController {
 	public TabPane getMainTabPane() {
 		return mainTabPane;
 	}
+	
+	public TabPane getSubTabPane() {
+		return subTabPane;
+	}
 
 	public Tab getPropertyTab() {
 		return propertyPane;
@@ -800,7 +853,20 @@ public class GUIController {
 
 	public String[][] getVotingData() {
 		// TODO Auto-generated method stub
+		System.out.println("GET VOTING DATA");
 		return null;
+	}
+	
+	public NewPrePropertyCodeArea getPreCodeArea() {
+		return preArea;
+	}
+	
+	public NewPostPropertyCodeArea getPostCodeArea() {
+		return postArea;
+	}
+	
+	public TextField getVariableNameField() {
+		return symbVarField;
 	}
 }
 

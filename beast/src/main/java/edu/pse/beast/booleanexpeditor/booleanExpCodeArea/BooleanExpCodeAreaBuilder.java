@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
 
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorGrammarErrorFinder;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorVariableErrorFinder;
@@ -37,10 +38,15 @@ public class BooleanExpCodeAreaBuilder extends CodeAreaBuilder {
 
         BooleanExpErrorDisplayer errorDisplayer = new BooleanExpErrorDisplayer(textPane, objectRefs.getStringIF());
         CodeArea tempCodeArea = super.createCodeArea(textPane, scrollPane, objectRefs, errorDisplayer);
-        BooleanExpANTLRHandler antlrHandler = new BooleanExpANTLRHandler(textPane.getStyledDocument());
+        BooleanExpANTLRHandler antlrHandler = null;
+		try {
+			antlrHandler = new BooleanExpANTLRHandler(textPane.getStyledDocument().getText(0, textPane.getStyledDocument().getLength()));
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         BooleanExpCodeArea created =  new BooleanExpCodeArea(tempCodeArea, antlrHandler,
-                new BooleanExpEditorVariableErrorFinder(antlrHandler, symbolicVariableList, ceditor),
-                new BooleanExpEditorGrammarErrorFinder(antlrHandler));
+                new BooleanExpEditorVariableErrorFinder());
         for (AutocompletionOption opt : createAutocompletionOptions()) {
             created.getAutoComplCtrl().add(opt);
         }

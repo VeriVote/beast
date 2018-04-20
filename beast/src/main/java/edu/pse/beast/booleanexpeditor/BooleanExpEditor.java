@@ -193,14 +193,14 @@ public class BooleanExpEditor implements DisplaysStringsToUser {
         symbolicVarListController.setSymbVarList(preAndPostConditionsDescription.getSymbolicVariableList());
         window.setNewTextpanes();
         changeHandler.addNewTextPanes(window.getPreConditionTextPane(), window.getPostConditionTextPane());
-
-        cEditor.removeListener(preConditionCodeArea.getVariableErrorFinder());
-        cEditor.removeListener(postConditionCodeArea.getVariableErrorFinder());
-
-        symbolicVarListController.getSymbolicVariableList().removeListener(preConditionCodeArea.getVariableErrorFinder().
-                getLis());
-        symbolicVarListController.getSymbolicVariableList().removeListener(postConditionCodeArea.getVariableErrorFinder().
-                getLis());
+//
+//        cEditor.removeListener(preConditionCodeArea.getVariableErrorFinder());
+//        cEditor.removeListener(postConditionCodeArea.getVariableErrorFinder());
+//
+//        symbolicVarListController.getSymbolicVariableList().removeListener(preConditionCodeArea.getVariableErrorFinder().
+//                getLis());
+//        symbolicVarListController.getSymbolicVariableList().removeListener(postConditionCodeArea.getVariableErrorFinder().
+//                getLis());
 
         preConditionCodeArea.getErrorCtrl().stopThread();
         postConditionCodeArea.getErrorCtrl().stopThread();
@@ -222,14 +222,14 @@ public class BooleanExpEditor implements DisplaysStringsToUser {
             postConditionCodeArea.linkActionToShortcut(c, get);
         }
 
-        cEditor.addListener(preConditionCodeArea.getVariableErrorFinder());
-        cEditor.addListener(postConditionCodeArea.getVariableErrorFinder());
-
-        postConditionCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getContainer().getInputType());
-        postConditionCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getContainer().getOutputType());
-
-        preConditionCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getContainer().getInputType());
-        preConditionCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getContainer().getOutputType());
+//        cEditor.addListener(preConditionCodeArea.getVariableErrorFinder());
+//        cEditor.addListener(postConditionCodeArea.getVariableErrorFinder());
+//
+//        postConditionCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getContainer().getInputType());
+//        postConditionCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getContainer().getOutputType());
+//
+//        preConditionCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getContainer().getInputType());
+//        preConditionCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getContainer().getOutputType());
 
         preConditionCodeArea.getPane().addFocusListener(codeAreaFocusListener);
         postConditionCodeArea.getPane().addFocusListener(codeAreaFocusListener);

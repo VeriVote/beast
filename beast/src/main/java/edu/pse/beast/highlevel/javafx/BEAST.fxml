@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
@@ -263,20 +264,52 @@
                            <content>
                               <SplitPane dividerPositions="0.11125654450261781, 0.5157068062827226" orientation="VERTICAL">
                                 <items>
-                                    <MenuBar>
-                                      <menus>
-                                          <Menu fx:id="variables" mnemonicParsing="false" text="%key.variables">
-                                             <items>
-                                                <MenuItem mnemonicParsing="false" text="Voter V" />
-                                                <MenuItem mnemonicParsing="false" text="Voter V" />
-                                                <MenuItem mnemonicParsing="false" text="Voter V" />
-                                                <MenuItem mnemonicParsing="false" text="Voter V" />
-                                             </items>
-                                          </Menu>
-                                        <Menu fx:id="varAdd" mnemonicParsing="false" text="%key.add" />
-                                          <Menu fx:id="varRemove" mnemonicParsing="false" text="%key.remove" />
-                                      </menus>
-                                    </MenuBar>
+                                    <BorderPane>
+                                       <center>
+                                          <TreeView fx:id="variableTreeView" BorderPane.alignment="CENTER" />
+                                       </center>
+                                       <right>
+                                          <BorderPane BorderPane.alignment="CENTER">
+                                             <top>
+                                                <BorderPane BorderPane.alignment="CENTER">
+                                                   <left>
+                                                      <MenuButton contentDisplay="BOTTOM" mnemonicParsing="false" text="%key.add" BorderPane.alignment="CENTER">
+                                                        <items>
+                                                          <MenuItem mnemonicParsing="false" text="Name">
+                                                               <graphic>
+                                                                  <TextField fx:id="symbVarField" maxWidth="110.0" />
+                                                               </graphic>
+                                                            </MenuItem>
+                                                          <MenuItem mnemonicParsing="false" onAction="#addSymbVoter">
+                                                               <graphic>
+                                                                  <Label text="%key.addVoter" />
+                                                               </graphic>
+                                                            </MenuItem>
+                                                            <MenuItem mnemonicParsing="false" onAction="#addSymbCand">
+                                                               <graphic>
+                                                                  <Label text="%key.addCandidate" />
+                                                               </graphic>
+                                                            </MenuItem>
+                                                            <MenuItem mnemonicParsing="false" onAction="#addSymbSeat">
+                                                               <graphic>
+                                                                  <Label text="%key.addSeat" />
+                                                               </graphic>
+                                                            </MenuItem>
+                                                        </items>
+                                                      </MenuButton>
+                                                   </left>
+                                                </BorderPane>
+                                             </top>
+                                             <bottom>
+                                                <BorderPane BorderPane.alignment="CENTER">
+                                                   <left>
+                                                      <Button fx:id="removeVarButton" mnemonicParsing="false" text="%key.remove" BorderPane.alignment="CENTER" />
+                                                   </left>
+                                                </BorderPane>
+                                             </bottom>
+                                          </BorderPane>
+                                       </right>
+                                    </BorderPane>
                                     <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                        <children>
                                           <TitledPane fx:id="prePropertyPane" animated="false" text="PreProperties" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
@@ -305,9 +338,9 @@
 								</Tab>
 							</tabs>
 						</TabPane>
-						<TabPane tabClosingPolicy="UNAVAILABLE">
+						<TabPane fx:id="subTabPane" tabClosingPolicy="UNAVAILABLE">
 							<tabs>
-                        <Tab text="Information">
+                        <Tab fx:id="informationPane" text="Information">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>

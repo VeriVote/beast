@@ -1,5 +1,6 @@
 package edu.pse.beast.datatypes.electiondescription;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.pse.beast.datatypes.NameInterface;
@@ -13,7 +14,7 @@ import edu.pse.beast.types.OutputType;
  */
 public class ElectionDescription implements NameInterface {
     private String name;
-    private List<String> code;
+    private List<String> code = new ArrayList<String>();
     private ElectionTypeContainer container;
     private int votingDeclLine;
     

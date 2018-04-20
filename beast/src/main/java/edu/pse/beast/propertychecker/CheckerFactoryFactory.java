@@ -20,11 +20,10 @@ public final class CheckerFactoryFactory {
 
 	private static void init() {
 		if (!initialized) {
-			
+
 			// cbmc is always included, so we add it here
 			factories.put("CBMC", new CBMCProcessFactory(null, null, null, null));
-			
-			
+
 			// TODO search for other classes
 
 			initialized = true;
@@ -109,52 +108,36 @@ public final class CheckerFactoryFactory {
 		}
 	}
 
-	// public static CheckerFactory getCheckerFactory(String checkerID,
-	// FactoryController controller, File toCheck,
-	// ParameterSource paramSrc, Result result, boolean isMargin) {
-	// init();
-	//
-	// if (factories.keySet().contains(checkerID)) {
-	// return factories.get(checkerID).getNewInstance(controller, toCheck,
-	// paramSrc, result, isMargin);
-	//
-	// } else {
-	// ErrorLogger.log("The specified checkerID wasn't found");
-	// return null;
-	// }
-	// }
-	//
-	// /**
-	// * creates a specified amount of result objects that fit for the checkerID
-	// *
-	// * @param checkerID
-	// * the ID for the checker
-	// * @param amount
-	// * the amount of result objects
-	// * @return a list of the specified result objects with the lenght of
-	// * "amount", null else
-	// */
-	// public static List<Result> getMatchingResult(String checkerID, int amount) {
-	// init();
-	// if (factories.keySet().contains(checkerID)) {
-	// return factories.get(checkerID).getMatchingResult(amount);
-	//
-	// } else {
-	// ErrorLogger.log("The specified checkerID wasn't found");
-	// return null;
-	// }
-	// }
-	//
-	// public static List<Result> getMatchingUnprocessedResult(String checkerID, int
-	// amount) {
-	// init();
-	//
-	// List<Result> results = new ArrayList<Result>();
-	//
-	// for (int i = 0; i < amount; i++) {
-	// results.add(new UnprocessedCBMCResult());
-	// }
-	//
-	// return results;
-	// }
+	/**
+	 * creates a specified amount of result objects that fit for the checkerID
+	 *
+	 * @param checkerID
+	 *            the ID for the checker
+	 * @param amount
+	 *            the amount of result objects
+	 * @return a list of the specified result objects with the lenght of "amount",
+	 *         null else
+	 */
+	public static Result getMatchingResult(String checkerID) {
+		init();
+		if (factories.keySet().contains(checkerID)) {
+			return factories.get(checkerID).getMatchingResult();
+
+		} else {
+			ErrorLogger.log("The specified checkerID wasn't found");
+			return null;
+		}
+	}
+
+	public static List<Result> getMatchingUnprocessedResult(String checkerID, int amount) {
+		init();
+
+		List<Result> results = new ArrayList<Result>();
+
+		for (int i = 0; i < amount; i++) {
+			results.add(new UnprocessedCBMCResult());
+		}
+
+		return results;
+	}
 }

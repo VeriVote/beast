@@ -6,6 +6,7 @@
 package edu.pse.beast.BooleanExpEditor.booleanExpCodeArea.errorFinder;
 
 import javax.swing.JTextPane;
+import javax.swing.text.BadLocationException;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -36,7 +37,12 @@ public class BooleanExpEditorVariableErrorFinderTest {
     private SymbolicVariableList varList;
     public BooleanExpEditorVariableErrorFinderTest() {
         pane = new JTextPane();
-        aNTLRHandler = new BooleanExpANTLRHandler(pane.getStyledDocument());
+        try {
+			aNTLRHandler = new BooleanExpANTLRHandler(pane.getStyledDocument().getText(0, 0));
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         varList = new SymbolicVariableList();
         stringRes = new StringLoaderInterface("en").getBooleanExpEditorStringResProvider().getBooleanExpErrorStringRes();
     }

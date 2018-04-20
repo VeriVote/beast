@@ -10,7 +10,6 @@ import edu.pse.beast.codearea.CodeArea;
  */
 public class BooleanExpCodeArea extends CodeArea {
     private final BooleanExpANTLRHandler antlrHandler;
-    private final BooleanExpEditorGrammarErrorFinder grammarErrorFinder;
     private final BooleanExpEditorVariableErrorFinder variableErrorFinder;
     private final BooleanExpSyntaxHL booleanExpSyntaxHL;
 
@@ -19,28 +18,17 @@ public class BooleanExpCodeArea extends CodeArea {
      * @param codeArea the codeArea object the super constructor is called with
      * @param antlrHandler BooleanExpAntlrHandler object
      * @param variableErrorFinder the BooleanExpEditorVariableErrorFinder object
-     * @param grammarErrorFinder the BooleanExpEditorGrammarErrorFinder object
      */
     BooleanExpCodeArea(CodeArea codeArea,
                               BooleanExpANTLRHandler aHandler,
-                              BooleanExpEditorVariableErrorFinder variableErrorFinder,
-                              BooleanExpEditorGrammarErrorFinder grammarErrorFinder) {
+                              BooleanExpEditorVariableErrorFinder variableErrorFinder) {
         super(codeArea);
-        this.antlrHandler = aHandler;
-        this.grammarErrorFinder = grammarErrorFinder;
+        this.antlrHandler = aHandler;;
         this.variableErrorFinder = variableErrorFinder;
-        errorCtrl.addErrorFinder(grammarErrorFinder);
-        errorCtrl.addErrorFinder(variableErrorFinder);
         booleanExpSyntaxHL = new BooleanExpSyntaxHL(antlrHandler, syntaxHL);
     }
 
-    /**
-     * Getter for the BooleanExpEditorGrammarErrorFinder object
-     * @return grammarErrorFinder
-     */
-    public BooleanExpEditorGrammarErrorFinder getGrammarErrorFinder() {
-        return grammarErrorFinder;
-    }
+
 
     /**
      * Getter for the BooleanExpEditorVariableErrorFinder object

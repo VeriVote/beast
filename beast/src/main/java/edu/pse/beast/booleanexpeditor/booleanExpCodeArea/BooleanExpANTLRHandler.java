@@ -18,7 +18,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
  * @author Nikolai
  */
 public class BooleanExpANTLRHandler {
-    private StyledDocument styledDocument ;
+    private String input;
     private FormalPropertyDescriptionLexer lexer;
     private FormalPropertyDescriptionParser parser;
 
@@ -27,6 +27,7 @@ public class BooleanExpANTLRHandler {
      * @param styledDocument the StyledDocument instance to analyze
      */
     public BooleanExpANTLRHandler(String input) {
+    	this.input = input;
         lexer = new FormalPropertyDescriptionLexer(new ANTLRInputStream(input));
 		CommonTokenStream ts = new CommonTokenStream(lexer);
 		parser = new FormalPropertyDescriptionParser(ts);
@@ -39,13 +40,7 @@ public class BooleanExpANTLRHandler {
      * @return a BooleanExpListContext node from the ANTLR generated ParseTree.
      */
     public FormalPropertyDescriptionParser.BooleanExpListContext getParseTree() {
-        String text = null;
-        try {
-            text = styledDocument.getText(0, styledDocument.getLength());
-        } catch (BadLocationException e) {
-            e.printStackTrace();
-        }
-        lexer.setInputStream(new ANTLRInputStream(text));
+        lexer.setInputStream(new ANTLRInputStream(input));
         CommonTokenStream ts = new CommonTokenStream(lexer);
         parser.setTokenStream(ts);
         return parser.booleanExpList();

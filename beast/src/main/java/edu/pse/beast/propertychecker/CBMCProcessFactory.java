@@ -320,12 +320,8 @@ public class CBMCProcessFactory extends CheckerFactory {
 	// }
 
 	@Override
-	public List<Result> getMatchingResult(int amount) {
-		List<Result> fittingResults = new ArrayList<Result>(amount);
-		for (int i = 0; i < amount; i++) {
-			fittingResults.add(new CBMCResult());
-		}
-		return fittingResults;
+	public Result getMatchingResult() {
+		return new CBMCResult();
 	}
 
 	/**

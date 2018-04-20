@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorGeneralErrorFinder;
+import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.propertychecker.Result;
 import javafx.beans.value.ChangeListener;
@@ -86,6 +88,10 @@ public class ParentTreeItem extends CustomTreeItem {
 				.setPostDescription(propDesc.getPostConditionsDescription());
 		
 		GUIController.getController().getMainTabPane().getSelectionModel().select(GUIController.getController().getPropertyTab());
+		
+		BooleanExpEditorGeneralErrorFinder.hasErrors(this); //checks if there are errors, and if there are
+		//displays them in the error tab
+		
 	}
 
 	private void checkBoxChanged(boolean state) {
@@ -185,6 +191,21 @@ public class ParentTreeItem extends CustomTreeItem {
 		}
 		
 		return selected;
+	}
+
+	public void addErrors(List<CodeError> combinedErrors) {
+		String errorText= "";
+		
+		
+		for (Iterator<CodeError> iterator = combinedErrors.iterator(); iterator.hasNext();) {
+			CodeError codeError = (CodeError) iterator.next();
+			String error = codeError.getLine() + " : " + codeError.getMsg() + "\n";
+			
+			errorText = errorText + error;
+		}
+		
+		GUIController.setErrorText(errorText);
+		
 	}
 
 }

@@ -159,6 +159,16 @@ public class FactoryController implements Runnable {
 				this.propertyParents = parentProperties;
 				this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
 				
+				
+				
+				for (Iterator<ParentTreeItem> parentiteratorI = parentProperties.iterator(); parentiteratorI.hasNext();) {
+					ParentTreeItem parentTreeItem = (ParentTreeItem) parentiteratorI.next();
+					for (Iterator<ChildTreeItem> childIterator = parentTreeItem.getSubItems().iterator(); childIterator.hasNext();) {
+						ChildTreeItem child = (ChildTreeItem) childIterator.next();
+						child.setResult(CheckerFactoryFactory.getMatchingResult(checkerID));
+					}
+				}
+				
 				// get a list of result objects that fit for the specified checkerID
 				// because we have no preAndPostConditions we only need ONE result
 //				this.results = CheckerFactoryFactory.getMatchingUnprocessedResult(checkerID, preAndPostConditionDescrSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size());

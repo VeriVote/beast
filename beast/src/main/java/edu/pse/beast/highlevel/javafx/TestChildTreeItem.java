@@ -1,5 +1,7 @@
 package edu.pse.beast.highlevel.javafx;
 
+import edu.pse.beast.propertychecker.Result;
+
 public class TestChildTreeItem extends ChildTreeItem {
 
 	TestChildTreeItem(String name, ParentTreeItem parent) {
@@ -7,4 +9,16 @@ public class TestChildTreeItem extends ChildTreeItem {
 		// TODO Auto-generated constructor stub
 	}
 
+	
+
+	@Override
+	public void resetResult(Result result) {
+		super.setResult(result);
+	}
+
+	@Override
+	public AnalysisType getAnalysisType() {
+		return AnalysisType.Test;
+	}
+	
 }
