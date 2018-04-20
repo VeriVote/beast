@@ -155,6 +155,10 @@ public class ParentTreeItem extends CustomTreeItem {
 	public void setMarginStatus(AnalysisStatus status) {
 		marginItem.setStatus(status);
 	}
+	
+	public PreAndPostConditionsDescription getPreAndPostPropertie() {
+		return propDesc;
+	}
 
 	/**
 	 * notifies the parent, that at least one of the childrens 
@@ -166,6 +170,21 @@ public class ParentTreeItem extends CustomTreeItem {
 			ChildTreeItem child = (ChildTreeItem) iterator.next();
 			child.update();
 		}
+	}
+	
+	/**
+	 * 
+	 * @return true, if at least one of the children has to be checked
+	 */
+	public boolean isChildSelected() {
+		boolean selected = false;
+		
+		for (Iterator<ChildTreeItem> iterator = subItems.iterator(); iterator.hasNext();) {
+			ChildTreeItem childItem = (ChildTreeItem) iterator.next();
+			selected = selected || childItem.isSelected();
+		}
+		
+		return selected;
 	}
 
 }

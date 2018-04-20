@@ -18,6 +18,7 @@ import edu.pse.beast.highlevel.PreAndPostConditionsDescriptionSource;
 import edu.pse.beast.highlevel.PropertyAndMarginBool;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.javafx.ChildTreeItem;
+import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.TimeOutNotifier;
@@ -33,13 +34,13 @@ public class FactoryController implements Runnable {
 	 */
 	protected FactoryController thisObject = this;
 
-	private final ElectionDescriptionSource electionDescSrc;
-	private final PreAndPostConditionsDescriptionSource preAndPostConditionDescrSrc;
 	//private final ParameterSource parmSrc;
-	private final List<Result> results;
+//	private final List<Result> results;
 	private final TimeOutNotifier notifier;
 	
-	private final List<ParentTreeItem> propertyParents;
+	//private final List<ParentTreeItem> propertyParents;
+	
+	List<ChildTreeItem> propertiesToCheck = new ArrayList<ChildTreeItem>();
 
 	private final long POLLINGINTERVAL = 1000;
 
@@ -47,10 +48,12 @@ public class FactoryController implements Runnable {
 	private final String checkerID;
 	private volatile boolean stopped = false;
 	private final int concurrentChecker;
-
-	private boolean fromFile = false;
-
+	
 	private ElectionCheckParameter parameter;
+
+	private final ElectionDescription elecDesc;
+
+	private final List<ParentTreeItem> propertyParents;
 
 //	/**
 //	 *
@@ -143,29 +146,24 @@ public class FactoryController implements Runnable {
 //		}
 //	}
 
-	public FactoryController(ElectionDescription elecDescr, List<ParentTreeItem> parentProperties,
+	public FactoryController(ElectionDescription elecDesc, List<ParentTreeItem> parentProperties,
 			ElectionCheckParameter electionCheckParameter, String checkerID, int concurrentChecker) {
 		// add a shutdown hook so all the checker are stopped properly so they
 				// don't clog the host pc
 				Runtime.getRuntime().addShutdownHook(new FactoryEnder());
-
-				this.fromFile = true;
-
-		//		this.parmSrc = null; //delete later on
+				
+				
+				this.elecDesc = elecDesc;
 				this.parameter = electionCheckParameter;
 				this.checkerID = checkerID;
 				this.propertyParents = parentProperties;
 				this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
-
-				// we don't need these if we start with a file already
-				this.preAndPostConditionDescrSrc = null;
-				this.electionDescSrc = null;
-
+				
 				// get a list of result objects that fit for the specified checkerID
 				// because we have no preAndPostConditions we only need ONE result
-				this.results = CheckerFactoryFactory.getMatchingUnprocessedResult(checkerID, preAndPostConditionDescrSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size());
-
-				preAndPostConditionDescrSrc.referenceResult(this.results);
+//				this.results = CheckerFactoryFactory.getMatchingUnprocessedResult(checkerID, preAndPostConditionDescrSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size());
+//
+//				preAndPostConditionDescrSrc.referenceResult(this.results);
 				
 				// if the user doesn't specify a concrete amount for concurrent
 				// checkers, we just set it to the thread amount of this pc
@@ -257,17 +255,36 @@ public class FactoryController implements Runnable {
 	 */
 	@Override
 	public void run() {
-			List<PropertyAndMarginBool> propertiesToCheckAndMargin = preAndPostConditionDescrSrc
-					.getPreAndPostPropertiesDescriptionsCheckAndMargin();
-			
-			outerLoop: for (int i = 0; i < propertiesToCheckAndMargin.size(); i++) {
+		
+		List<ChildTreeItem> propertiesToCheck = new ArrayList<ChildTreeItem>();
+		
+		//fill the list of properties
+		
+		for (Iterator<ParentTreeItem> iterator = propertyParents.iterator(); iterator
+				.hasNext();) {
+			ParentTreeItem parentItem = (ParentTreeItem) iterator.next();
+			for (Iterator<ChildTreeItem> childIterator = parentItem.getSubItems().iterator(); childIterator
+					.hasNext();) {
+				ChildTreeItem child = (ChildTreeItem) childIterator.next();
+				if (child.isSelected()) {
+					propertiesToCheck.add(child);
+				}
+			}
+		}
+
+			outerLoop: for (int i = 0; i < propertiesToCheck.size(); i++) {
 				innerLoop: while (!stopped) {					
 					// if we can start more checkers (we haven't used our
 					// allowed pool completely), we can start a new one
 					if (currentlyRunning.size() < concurrentChecker) {
-						CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID, this,
-								electionDescSrc, propertiesToCheckAndMargin.get(i).getDescription(), parameter, results.get(i), propertiesToCheckAndMargin.get(i).getMarginStatus());
+//						CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID, this,
+//								electionDescSrc, propertiesToCheck.get(i).getDescription(), parameter, results.get(i), propertiesToCheckAndMargin.get(i).getMarginStatus());
 
+						CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID, this,
+								elecDesc, propertiesToCheck.get(i), parameter);
+
+						
+						
 						synchronized (this) {
 							currentlyRunning.add(factory);
 						}
@@ -339,17 +356,14 @@ public class FactoryController implements Runnable {
 			// are
 			// ready to be presented
 			
-			for (Iterator<ParentTreeItem> parentIterator = propertyParents.iterator(); parentIterator.hasNext();) {
-				ParentTreeItem parent = (ParentTreeItem) parentIterator.next();
-				
-				for (Iterator<ChildTreeItem> childIterator = parent.getSubItems().iterator(); childIterator.hasNext();) {
-					ChildTreeItem child = (ChildTreeItem) childIterator.next();
-					if(!child.getResult().isFinished()) {
-						child.getResult().setTimeoutFlag();
-						child.update();
-					}
+			for (Iterator<ChildTreeItem> iterator = propertiesToCheck.iterator(); iterator.hasNext();) {
+				ChildTreeItem child = (ChildTreeItem) iterator.next();
+				if(!child.getResult().isFinished()) {
+					child.getResult().setTimeoutFlag();
+					child.update();
 				}
 			}
+			
 		}
 	}
 
@@ -372,49 +386,49 @@ public class FactoryController implements Runnable {
 		}
 	}
 
-	/**
-	 *
-	 * @return a NEW list with all the results objects. This list is used
-	 *         nowhere in the propertychecker, so you can remove parts out of it
-	 *         as you want.
-	 */
-	public List<ResultInterface> getResults() {
-		if (results == null) {
+//	/**
+//	 *
+//	 * @return a NEW list with all the results objects. This list is used
+//	 *         nowhere in the propertychecker, so you can remove parts out of it
+//	 *         as you want.
+//	 */
+//	public List<ResultInterface> getResults() {
+//		if (results == null) {
+//
+//			ErrorLogger.log("Result objects couldn't be created.");
+//			return null;
+//
+//		} else {
+//
+//			List<ResultInterface> toReturn = new ArrayList<ResultInterface>();
+//
+//			for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
+//				Result result = (Result) iterator.next();
+//				toReturn.add(result);
+//			}
+//
+//			return toReturn;
+//		}
+//	}
 
-			ErrorLogger.log("Result objects couldn't be created.");
-			return null;
-
-		} else {
-
-			List<ResultInterface> toReturn = new ArrayList<ResultInterface>();
-
-			for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
-				Result result = (Result) iterator.next();
-				toReturn.add(result);
-			}
-
-			return toReturn;
-		}
-	}
-
-	public List<UnprocessedCBMCResult> getUnprocessedResults() {
-		if (results == null) {
-
-			ErrorLogger.log("Result objects couldn't be created.");
-			return null;
-
-		} else {
-
-			List<UnprocessedCBMCResult> toReturn = new ArrayList<UnprocessedCBMCResult>();
-
-			for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
-				UnprocessedCBMCResult result = (UnprocessedCBMCResult) iterator.next();
-				toReturn.add(result);
-			}
-
-			return toReturn;
-		}
-	}
+//	public List<UnprocessedCBMCResult> getUnprocessedResults() {
+//		if (results == null) {
+//
+//			ErrorLogger.log("Result objects couldn't be created.");
+//			return null;
+//
+//		} else {
+//
+//			List<UnprocessedCBMCResult> toReturn = new ArrayList<UnprocessedCBMCResult>();
+//
+//			for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
+//				UnprocessedCBMCResult result = (UnprocessedCBMCResult) iterator.next();
+//				toReturn.add(result);
+//			}
+//
+//			return toReturn;
+//		}
+//	}
 
 	/**
 	 * This Class is there for the shutDownHook It is used, so if the program

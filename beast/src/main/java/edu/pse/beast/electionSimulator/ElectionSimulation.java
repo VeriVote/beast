@@ -40,10 +40,10 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 
 	private StringLoaderInterface sli;
 
-	private static Modes currentMode = Modes.searchMinDiffAndShowCBMC;
+	private static Modes currentMode = Modes.cbmc;
 
 	public enum Modes {
-		compileAndRun, compileAndRunCBMC, searchMinDiffAndShowCandCBMC, searchMinDiffAndShowCBMC;
+		vanilla, cbmc
 	}
 
 	private static ElectionSimulationWindow view;
@@ -292,19 +292,11 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 
 		switch (selectedItem) {
 		case "outcome (c)":
-			currentMode = Modes.compileAndRun;
+			currentMode = Modes.vanilla;
 			break;
 
 		case "outcome  (cbmc)":
-			currentMode = Modes.compileAndRunCBMC;
-			break;
-
-		case "outcome (c) + margin(cbmc)":
-			currentMode = Modes.searchMinDiffAndShowCandCBMC;
-			break;
-
-		case "outcome (cbmc) + margin(cbmc)":
-			currentMode = Modes.searchMinDiffAndShowCBMC;
+			currentMode = Modes.cbmc;
 			break;
 		default:
 			break;

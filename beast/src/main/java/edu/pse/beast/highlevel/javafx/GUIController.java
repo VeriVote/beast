@@ -372,7 +372,7 @@ public class GUIController {
 	void startStopPressed(ActionEvent event) {
 		if (!running) {
 			react = false; // lock the GUI
-			if (BEASTCommunicator.startCheckNEW()) { // if we start it successfull
+			if (BEASTCommunicator.startCheckNEW()) { // if we start it successful
 				startStopButton.setGraphic(new ImageView(pathToImages + "toolbar/stop.png"));
 			} else {
 				react = true;
@@ -796,6 +796,11 @@ public class GUIController {
 
 	public ElectionDescription getElectionDescription() {
 		return codeArea.getElectionDescription();
+	}
+
+	public String[][] getVotingData() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

@@ -18,24 +18,18 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
  * @author Nikolai
  */
 public class BooleanExpANTLRHandler {
-    private StyledDocument styledDocument;
+    private StyledDocument styledDocument ;
     private FormalPropertyDescriptionLexer lexer;
     private FormalPropertyDescriptionParser parser;
 
     /**
      * Constructor
-     * @param styledDocument the StyledDocument instance to analyse
+     * @param styledDocument the StyledDocument instance to analyze
      */
-    public BooleanExpANTLRHandler(StyledDocument styledDocument) {
-        try {
-            this.styledDocument = styledDocument;
-            lexer = new FormalPropertyDescriptionLexer(new ANTLRInputStream(
-                    styledDocument.getText(0, styledDocument.getLength())));
-            CommonTokenStream ts = new CommonTokenStream(lexer);
-            parser = new FormalPropertyDescriptionParser(ts);
-        } catch (BadLocationException ex) {
-            Logger.getLogger(BooleanExpANTLRHandler.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public BooleanExpANTLRHandler(String input) {
+        lexer = new FormalPropertyDescriptionLexer(new ANTLRInputStream(input));
+		CommonTokenStream ts = new CommonTokenStream(lexer);
+		parser = new FormalPropertyDescriptionParser(ts);
     }
 
     /**

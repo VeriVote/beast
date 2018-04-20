@@ -2,6 +2,8 @@ package edu.pse.beast.datatypes.electioncheckparameter;
 
 import java.util.List;
 
+import edu.pse.beast.electionSimulator.ElectionSimulation;
+
 /**
  * 
  * @author Lukas
@@ -81,4 +83,29 @@ public class ElectionCheckParameter {
     public String getArgument() {
         return argument;
     }
+
+	public int getMarginVotes() {
+		// TODO Auto-generated method stub
+		System.out.println("TODO getMarginVOTES");
+		return 0;
+	}
+	
+	public int getMarginCandidates() {
+		// TODO Auto-generated method stub
+		System.out.println("TODO getMarginVOTES");
+		return 0;
+	}
+	
+	public int getMarginSeats() {
+		// TODO Auto-generated method stub
+		System.out.println("TODO getMarginVOTES");
+		return 0;
+	}
+
+	public int getNumVotingPoints() {
+		
+		System.out.println("TODO getNumVotingPoints in electionCheckParameters");
+		
+		return ElectionSimulation.getNumVotingPoints();
+	}
 }

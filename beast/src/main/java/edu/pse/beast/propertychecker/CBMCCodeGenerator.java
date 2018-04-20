@@ -37,14 +37,14 @@ import edu.pse.beast.types.InternalTypeContainer;
 public class CBMCCodeGenerator {
 
 	private CodeArrayListBeautifier code;
-	private final ElectionDescription electionDescription;
-	private final PreAndPostConditionsDescription PreAndPostConditionsDescription;
+	private final ElectionDescription electionDesc;
+	private final PreAndPostConditionsDescription preAndPostCondDesc;
 	private final FormalPropertySyntaxTreeToAstTranslator translator;
 	private final CBMCCodeGenerationVisitor visitor;
 	private int numberOfTimesVoted; // this number should be the number of
 	private int margin;
 	private List<String> origResult;
-	private boolean isTest;
+	// private boolean isTest;
 
 	/**
 	 * After the build the code is fully generated and can be acquired by getCode();
@@ -55,14 +55,14 @@ public class CBMCCodeGenerator {
 	 * @param PreAndPostConditionsDescription
 	 *            the Descriptions that will be used to generate the C-Code for CBMC
 	 */
-	public CBMCCodeGenerator(ElectionDescription electionDescription,
+	public CBMCCodeGenerator(ElectionDescription electionDesc,
 			PreAndPostConditionsDescription PreAndPostConditionsDescription) {
 
 		this.translator = new FormalPropertySyntaxTreeToAstTranslator();
-		this.electionDescription = electionDescription;
-		this.PreAndPostConditionsDescription = PreAndPostConditionsDescription;
+		this.electionDesc = electionDesc;
+		this.preAndPostCondDesc = PreAndPostConditionsDescription;
 		code = new CodeArrayListBeautifier();
-		electionDescription.getContainer();
+		electionDesc.getContainer();
 		this.visitor = new CBMCCodeGenerationVisitor();
 		new CCodeHelper();
 		generateCodeCheck();
@@ -78,22 +78,36 @@ public class CBMCCodeGenerator {
 	 * @param PreAndPostConditionsDescription
 	 *            the Descriptions that will be used to generate the C-Code for CBMC
 	 */
-	public CBMCCodeGenerator(ElectionDescription electionDescription,
-			PreAndPostConditionsDescription PreAndPostConditionsDescription, int margin, List<String> origResult,
-			boolean isTest) {
+	public CBMCCodeGenerator(ElectionDescription electionDesc, PreAndPostConditionsDescription preAndPostCondDesc,
+			int margin, List<String> origResult, String[][] votingData) {
 
 		this.translator = new FormalPropertySyntaxTreeToAstTranslator();
-		this.electionDescription = electionDescription;
-		this.PreAndPostConditionsDescription = PreAndPostConditionsDescription;
+		this.electionDesc = electionDesc;
+		this.preAndPostCondDesc = preAndPostCondDesc;
 		code = new CodeArrayListBeautifier();
-		electionDescription.getContainer();
+		electionDesc.getContainer();
 		this.visitor = new CBMCCodeGenerationVisitor();
 		new CCodeHelper();
 		this.margin = margin;
 		this.origResult = origResult;
-		this.isTest = isTest;
+		
+		generateCodeMargin(votingData);
 
-		generateCodeMargin();
+	}
+
+	// constructor when it will be used to get the code for a test
+	public CBMCCodeGenerator(ElectionDescription electionDesc, PreAndPostConditionsDescription preAndPostCondDesc,
+			String[][] votingData) {
+
+		this.translator = new FormalPropertySyntaxTreeToAstTranslator();
+		this.electionDesc = electionDesc;
+		this.preAndPostCondDesc = preAndPostCondDesc;
+		code = new CodeArrayListBeautifier();
+		electionDesc.getContainer();
+		this.visitor = new CBMCCodeGenerationVisitor();
+		new CCodeHelper();
+		
+		generateCodeTest(votingData);
 
 	}
 
@@ -113,17 +127,32 @@ public class CBMCCodeGenerator {
 
 		code.add("//Code of the user");
 		ArrayList<String> electionDescriptionCode = new ArrayList<>();
-		electionDescriptionCode.addAll(electionDescription.getCode());
+		electionDescriptionCode.addAll(electionDesc.getCode());
 		code.addArrayList(electionDescriptionCode);
 
 		addMainMethod();
 
 	}
 
-	private void generateCodeMargin() { // we want to create code for a margin
+	private void generateCodeMargin(String[][] votingData) { // we want to create code for a margin
 										// computation or just a test run
 
-		String[][] votingData = ElectionSimulation.getVotingData();
+		// add the header and the voting data
+		addMarginHeaders(votingData);
+
+		// add the code the user wrote (e.g the election function)
+		code.addAll(BEASTCommunicator.getCentralObjectProvider().getElectionDescriptionSource().getElectionDescription()
+				.getCode());
+
+		// add the code which defines the votes
+		code.addAll(getVotingResultCode(votingData));
+		
+		addMarginMainCheck(margin, origResult);
+
+	}
+
+	private void generateCodeTest(String[][] votingData) { // we want to create code for a margin
+		// computation or just a test run
 
 		// add the header and the voting data
 		addMarginHeaders(votingData);
@@ -135,28 +164,8 @@ public class CBMCCodeGenerator {
 		// add the code which defines the votes
 		code.addAll(getVotingResultCode(votingData));
 
-		switch (ElectionSimulation.getMode()) {
-		case compileAndRunCBMC:
-
-			addMarginMainTest();
-			break;
-
-		case searchMinDiffAndShowCBMC:
-
-			if (isTest) {
-				addMarginMainTest();
-			} else {
-				addMarginMainCheck(margin, origResult);
-			}
-
-			break;
-
-		default:
-
-			System.err.println("unknown mode used");
-
-			break;
-		}
+		
+		addMarginMainTest(); //TODO add gcc ability here
 
 	}
 
@@ -169,14 +178,13 @@ public class CBMCCodeGenerator {
 		// boolean singleOut =
 		// electionDescription.getContainer().getOutputType().isOutputOneCandidate();
 
-		electionDescription.getContainer().getOutputType().addLastResultAsCode(code, origResult);
+		electionDesc.getContainer().getOutputType().addLastResultAsCode(code, origResult);
 
 		// add the verify method:
 		// taken and adjusted from the paper:
 		// https://formal.iti.kit.edu/~beckert/pub/evoteid2016.pdf
 
-		electionDescription.getContainer().getInputType().addVerifyMethod(code,
-				electionDescription.getContainer().getOutputType());
+		electionDesc.getContainer().getInputType().addVerifyMethod(code, electionDesc.getContainer().getOutputType());
 
 		// code =
 		// electionDescription.getContainer().getOutputType().addMarginVerifyCheck(code);
@@ -208,9 +216,12 @@ public class CBMCCodeGenerator {
 		addHeader();
 
 		// define some pre processor values
-		code.add("#ifndef " + UnifiedNameContainer.getVoter() + "\n #define " + UnifiedNameContainer.getVoter() + " " + votingData.length + "\n #endif");
-		code.add("#ifndef " + UnifiedNameContainer.getCandidate() + " \n #define " + UnifiedNameContainer.getCandidate() + " " + votingData[0].length + "\n #endif");
-		code.add("#ifndef " + UnifiedNameContainer.getSeats() + "\n #define " + UnifiedNameContainer.getVoter() + " " + votingData[0].length + "\n #endif");
+		code.add("#ifndef " + UnifiedNameContainer.getVoter() + "\n #define " + UnifiedNameContainer.getVoter() + " "
+				+ votingData.length + "\n #endif");
+		code.add("#ifndef " + UnifiedNameContainer.getCandidate() + " \n #define " + UnifiedNameContainer.getCandidate()
+				+ " " + votingData[0].length + "\n #endif");
+		code.add("#ifndef " + UnifiedNameContainer.getSeats() + "\n #define " + UnifiedNameContainer.getVoter() + " "
+				+ votingData[0].length + "\n #endif");
 	}
 
 	private void addMarginMainTest() {
@@ -218,11 +229,11 @@ public class CBMCCodeGenerator {
 		int voteNumber = 1; // because we only have one vote, we hardcode the
 							// value one here
 
-		code = electionDescription.getContainer().getOutputType().addMarginMainTest(code, voteNumber);
+		code = electionDesc.getContainer().getOutputType().addMarginMainTest(code, voteNumber);
 	}
 
 	private void addVoteSumFunc(boolean unique) {
-		String input = "unsigned int arr" + electionDescription.getContainer().getInputType().getInputString();
+		String input = "unsigned int arr" + electionDesc.getContainer().getInputType().getInputString();
 		code.add("unsigned int voteSumForCandidate" + (unique ? "Unique" : "")
 				+ "(INPUT, unsigned int candidate) {".replace("INPUT", input));
 		code.addTab();
@@ -231,7 +242,7 @@ public class CBMCCodeGenerator {
 		code.addTab();
 
 		// add the specific code which differs for different input types
-		electionDescription.getContainer().getInputType().addCodeForVoteSum(code, unique);
+		electionDesc.getContainer().getInputType().addCodeForVoteSum(code, unique);
 
 		code.deleteTab();
 		code.add("}");
@@ -276,10 +287,8 @@ public class CBMCCodeGenerator {
 		addSymbVarInitialisation();
 
 		// generating the pre and post AbstractSyntaxTrees
-		BooleanExpListNode preAST = generateAST(
-				PreAndPostConditionsDescription.getPreConditionsDescription().getCode());
-		BooleanExpListNode postAST = generateAST(
-				PreAndPostConditionsDescription.getPostConditionsDescription().getCode());
+		BooleanExpListNode preAST = generateAST(preAndPostCondDesc.getPreConditionsDescription().getCode());
+		BooleanExpListNode postAST = generateAST(preAndPostCondDesc.getPostConditionsDescription().getCode());
 
 		initializeNumberOfTimesVoted(preAST, postAST);
 
@@ -299,7 +308,7 @@ public class CBMCCodeGenerator {
 	 * this should be used to create the VarInitialisation within the main method.
 	 */
 	private void addSymbVarInitialisation() {
-		List<SymbolicVariable> symbolicVariableList = PreAndPostConditionsDescription.getSymbolicVariableList();
+		List<SymbolicVariable> symbolicVariableList = preAndPostCondDesc.getSymbolicVariableList();
 		code.add("//Symbolic Variables initialisation");
 		symbolicVariableList.forEach((symbVar) -> {
 			InternalTypeContainer internalType = symbVar.getInternalTypeContainer();
@@ -406,11 +415,11 @@ public class CBMCCodeGenerator {
 		for (int voteNumber = 1; voteNumber <= numberOfTimesVoted; voteNumber++) {
 
 			String votesX = "unsigned int votes" + voteNumber;
-			votesX = votesX + electionDescription.getContainer().getInputType().getArrayType();
+			votesX = votesX + electionDesc.getContainer().getInputType().getArrayType();
 			code.add(votesX + ";");
 
 			String electX = "unsigned int elect" + voteNumber;
-			electX = electX + electionDescription.getContainer().getOutputType().getCArrayType();
+			electX = electX + electionDesc.getContainer().getOutputType().getCArrayType();
 			code.add(electX + ";");
 
 			String[] counter = { "counter_0", "counter_1", "counter_2", "counter_3" };
@@ -418,17 +427,17 @@ public class CBMCCodeGenerator {
 
 			int listDepth = 0;
 
-			for (int i = 0; i < electionDescription.getContainer().getInputType().getDimension(); i++) {
+			for (int i = 0; i < electionDesc.getContainer().getInputType().getDimension(); i++) {
 				String currentFor = forTemplate.replaceAll("COUNTER", counter[listDepth]);
-				currentFor = currentFor.replaceAll("MAX", electionDescription.getContainer().getInputType()
-						.getMaximalValue(electionDescription.getContainer()));
+				currentFor = currentFor.replaceAll("MAX",
+						electionDesc.getContainer().getInputType().getMaximalValue(electionDesc.getContainer()));
 				code.add(currentFor);
 				code.addTab();
 				listDepth++;
 			}
-			String min = "" + electionDescription.getContainer().getLowerBound();
+			String min = "" + electionDesc.getContainer().getLowerBound();
 
-			String max = "" + electionDescription.getContainer().getUpperBound();
+			String max = "" + electionDesc.getContainer().getUpperBound();
 
 			String votesElement = "votes" + voteNumber;
 			for (int i = 0; i < listDepth; ++i) {
@@ -444,7 +453,7 @@ public class CBMCCodeGenerator {
 			code.add(voteDecl);
 
 			// if we need to add something extra
-			electionDescription.getContainer().getInputType().addExtraCodeAtEndOfCodeInit(code, voteNumber);
+			electionDesc.getContainer().getInputType().addExtraCodeAtEndOfCodeInit(code, voteNumber);
 
 			// close the function
 			for (int i = 0; i < listDepth; ++i) {
@@ -463,16 +472,16 @@ public class CBMCCodeGenerator {
 
 		BooleanExpScope declaredVars = new BooleanExpScope();
 
-		PreAndPostConditionsDescription.getSymbolicVariableList().forEach((v) -> {
+		preAndPostCondDesc.getSymbolicVariableList().forEach((v) -> {
 			declaredVars.addTypeForId(v.getId(), v.getInternalTypeContainer());
 		});
 
-		return translator.generateFromSyntaxTree(p.booleanExpList(), electionDescription.getContainer().getInputType(),
-				electionDescription.getContainer().getOutputType(), declaredVars);
+		return translator.generateFromSyntaxTree(p.booleanExpList(), electionDesc.getContainer().getInputType(),
+				electionDesc.getContainer().getOutputType(), declaredVars);
 	}
 
 	private List<String> getVotingResultCode(String[][] votingData) {
 		// first create the declaration of the array:
-		return electionDescription.getContainer().getInputType().getVotingResultCode(votingData);
+		return electionDesc.getContainer().getInputType().getVotingResultCode(votingData);
 	}
 }

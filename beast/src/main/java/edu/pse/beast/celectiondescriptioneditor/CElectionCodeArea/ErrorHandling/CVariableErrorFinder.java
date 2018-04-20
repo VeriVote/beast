@@ -5,13 +5,10 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling;
 
+import java.util.List;
 import java.util.ArrayList;
 
-import javax.swing.JTextPane;
-
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
-import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 
 /**
@@ -20,21 +17,9 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
  * 
  * @author Holger-Desktop
  */
-public class CVariableErrorFinder implements ErrorFinder {
-    private final JTextPane pane;
-
-    /**
-     * constructor
-     * 
-     * @param pane the pane the C-errors get shown
-     */
-    public CVariableErrorFinder(JTextPane pane) {
-        this.pane = pane;
-    }
-
-    @Override
-    public ArrayList<CodeError> getErrors() {
-        String code = JTextPaneToolbox.getText(pane);
+public class CVariableErrorFinder {
+    
+    public static List<CodeError> findErrors(List<String> code) {
         ArrayList<String> seperated = new ArrayList<>();
         seperated.add("#ifndef " + UnifiedNameContainer.getVoter() + "\n #define " + UnifiedNameContainer.getVoter() + " 1\n #endif");
         seperated.add("#ifndef " + UnifiedNameContainer.getCandidate() + " \n #define " + UnifiedNameContainer.getCandidate() + " 1\n #endif");
@@ -68,12 +53,9 @@ public class CVariableErrorFinder implements ErrorFinder {
         
         seperated.add("int main() {");
         seperated.add("}");
-        String codeSep[] = code.split("\n");
-        for (int i = 0; i < codeSep.length; i++) {
-            seperated.add(codeSep[i]);
-        }
+        
+        seperated.addAll(code);
         ArrayList<CodeError> found = new ArrayList<>(DeepErrorChecker.checkCodeForErrors(seperated));
         return found;
     }
-
 }

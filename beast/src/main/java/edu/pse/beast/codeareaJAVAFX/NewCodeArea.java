@@ -12,16 +12,10 @@ import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 
+import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.FormalExpErrorFinderTreeListener;
+import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
-import edu.pse.beast.electionSimulator.Model.RowOfValues;
-import edu.pse.beast.highlevel.ElectionDescriptionSource;
-import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
-import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
-import edu.pse.beast.toolbox.CodeArrayListBeautifier;
-import edu.pse.beast.types.InputType;
-import edu.pse.beast.types.InternalTypeContainer;
-import edu.pse.beast.types.OutputType;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.types.cbmctypes.inputplugins.Approval;
 import edu.pse.beast.types.cbmctypes.outputtypes.SingleCandidate;
 import javafx.scene.Node;
@@ -105,6 +99,19 @@ public class NewCodeArea extends SaveLoadCodeArea {
 	}
 
 	public ElectionDescription getElectionDescription() {
+		return source;
+	}
+
+	public void displayErrors(List<CodeError> codeErrors) {
+		System.out.println("TODO display code errors");
+	}
+
+//	public void addListener(ElectionDescriptionChangeListener listener) {
+//		listener.inputChanged(input);
+//		listener.outputChanged(output);
+//	}
+
+	public ElectionDescription getSource() {
 		return source;
 	}
 

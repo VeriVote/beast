@@ -1,5 +1,6 @@
 package edu.pse.beast.highlevel.javafx;
 
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.propertychecker.Result;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -97,4 +98,10 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 	}
 
 	public abstract void resetResult();
+	
+	public abstract AnalysisType getAnalysisType();
+
+	public PreAndPostConditionsDescription getPreAndPostProperties() {
+		return parent.getPreAndPostPropertie();
+	}
 }

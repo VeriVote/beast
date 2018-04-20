@@ -49,14 +49,14 @@ public class PropertyChecker implements ResultCheckerCommunicator {
     
     
     @Override
-    public List<ResultInterface> checkPropertiesForDescription(ElectionDescription elecDescr,
+    public boolean checkPropertiesForDescription(ElectionDescription elecDescr,
     		List<ParentTreeItem> parentProperties, ElectionCheckParameter electionCheckParameter) {
     	 if (elecDescr == null || parentProperties == null || electionCheckParameter == null) {
-             return null;
+    		 return false;
          } else {
              this.factoryController = new FactoryController(elecDescr, parentProperties, electionCheckParameter, checkerID,
             		 electionCheckParameter.getProcesses());
-             return factoryController.getResults();
+             return true;
          }
     }
 //    

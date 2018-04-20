@@ -14,7 +14,9 @@ import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
+import edu.pse.beast.celectiondescriptioneditor.UserActions.NewElectionUserAction;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
+import edu.pse.beast.codeareaJAVAFX.NewCodeArea;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.AtPosExp;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.ElectExp;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.SymbolicVarExp;
@@ -57,17 +59,18 @@ public class FormalExpErrorFinderTreeListener
      * @param ceditor
      *            the editor where the code is
      */
-    public FormalExpErrorFinderTreeListener(SymbolicVariableList list, CElectionDescriptionEditor ceditor) {
+    public FormalExpErrorFinderTreeListener(SymbolicVariableList list, NewCodeArea codeArea) {
+    	
         list.addListener(this);
         scopeHandler.enterNewScope();
         for (SymbolicVariable var : list.getSymbolicVariables()) {
             scopeHandler.addVariable(var.getId(), var.getInternalTypeContainer());
         }
-        this.container = ceditor.getElectionDescription().getContainer();
-        ceditor.addListener(this);
+        this.container = codeArea.getSource().getContainer();
+        codeArea.addListener(this);
     }
 
-    /**
+	/**
      * sets up the input for the error finder
      * 
      * @param input

@@ -19,26 +19,32 @@ import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
  * CodeArea this class is an attribute of.
  * @author Nikolai
  */
-public class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListener, ErrorFinder {
-    private final BooleanExpANTLRHandler antlrHandler;
+public class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListener {
     private final ArrayList<CodeError> errors = new ArrayList<>();
+    private static BooleanExpEditorGrammarErrorFinder finder;
 
-    /**
-     * Constructor
-     * @param antlrHandler the BooleanExpAntlrHandler this class uses to find grammar errors
-     */
     public BooleanExpEditorGrammarErrorFinder(BooleanExpANTLRHandler antlrHandler) {
-        this.antlrHandler = antlrHandler;
-        antlrHandler.getParser().addErrorListener(this);
-    }
+		antlrHandler.getParser().addErrorListener(this);
+	}
 
-
-    @Override
-    public ArrayList<CodeError> getErrors() {
-        errors.clear();
+	public static ArrayList<CodeError> getErrors(BooleanExpANTLRHandler antlrHandler) {
+    	
+    	finder = new BooleanExpEditorGrammarErrorFinder(antlrHandler);
+    	
+    	antlrHandler.getParser().addErrorListener(finder);
+    	
+        finder.clearErrors();
         antlrHandler.getParseTree();
-        return errors;
+        return finder.getErrors();
     }
+	
+	public void clearErrors() {
+		errors.clear();
+	}
+	
+	public ArrayList<CodeError> getErrors() {
+		return errors;
+	}
 
     @Override
     public void syntaxError(Recognizer<?, ?> rcgnzr, Object o, int line, int charInline, String msg,

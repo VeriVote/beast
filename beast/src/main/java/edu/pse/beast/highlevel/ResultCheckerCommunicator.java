@@ -37,7 +37,7 @@ public interface ResultCheckerCommunicator {
      *            ElectionCheckParameter
      * @return array of ResultInterfaces
      */
-    public  List<ResultInterface> checkPropertiesForDescription(ElectionDescription elecDescr,
+    public boolean checkPropertiesForDescription(ElectionDescription elecDescr,
     		List<ParentTreeItem> parentProperties, ElectionCheckParameter electionCheckParameter);
 //    
 //    /**
