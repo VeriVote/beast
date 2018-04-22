@@ -22,11 +22,11 @@ import edu.pse.beast.toolbox.ObjectRefsForBuilder;
  */
 public class PSECentralObjectProvider implements CentralObjectProvider {
     
-    private final ParameterEditor paramEd;
-    private final PropertyList propertyList;
-    private final BooleanExpEditor booleanExpEditor;
-    private final CElectionDescriptionEditor cElectionEditor;
-    private ResultCheckerCommunicator checkerCommunicator;
+//    private final ParameterEditor paramEd;
+//    private final PropertyList propertyList;
+//    private final BooleanExpEditor booleanExpEditor;
+//    private final CElectionDescriptionEditor cElectionEditor;
+//    private ResultCheckerCommunicator checkerCommunicator;
     
     /**
      * Constructor that creates instances of the classes that implement high level
@@ -44,48 +44,48 @@ public class PSECentralObjectProvider implements CentralObjectProvider {
                 optionsInterface, stringIf, 
                 langOpts, saverLoaderIF);
         //The instances themselves are created.
-        cElectionEditor = new CElectionDescriptionEditorBuilder().createCElectionDescriptionEditor(refs);
-        booleanExpEditor = new BooleanExpEditorBuilder().createBooleanExpEditorObject(refs, cElectionEditor);        
-        propertyList = new PropertyListBuilder().createPropertyList(refs, booleanExpEditor);
-        checkerCommunicator = new PropertyChecker("CBMC"); //this must be done via the checkerfactory at some point
-        paramEd = new ParameterEditorBuilder().createParameterEditor(refs, cElectionEditor,
-                booleanExpEditor, propertyList, this);
+        //cElectionEditor = new CElectionDescriptionEditorBuilder().createCElectionDescriptionEditor(refs);
+        //booleanExpEditor = new BooleanExpEditorBuilder().createBooleanExpEditorObject(refs, cElectionEditor);        
+        //propertyList = new PropertyListBuilder().createPropertyList(refs, booleanExpEditor);
+        //checkerCommunicator = new PropertyChecker("CBMC"); //this must be done via the checkerfactory at some point
+        //paramEd = new ParameterEditorBuilder().createParameterEditor(refs, cElectionEditor,
+         //       booleanExpEditor, propertyList, this);
         langOpts.reapply();
     }
 
-    @Override
-    public ElectionDescriptionSource getElectionDescriptionSource() {
-        return cElectionEditor;
-    }
-
-    @Override
-    public PreAndPostConditionsDescriptionSource getPreAndPostConditionsSource() {
-        return propertyList;
-    }
-
-    @Override
-    public ResultCheckerCommunicator getResultCheckerCommunicator() {
-        return checkerCommunicator;
-    }
-
-    @Override
-    public ParameterSource getParameterSrc() {
-        return paramEd;
-    }
-
-    @Override
-    public ResultPresenter getResultPresenter() {
-        return propertyList;
-    }
-
-    @Override
-    public CheckStatusDisplay getCheckStatusDisplay() {
-        return paramEd.getView();
-    }
-    
-    public ParameterEditor getParameterEditor() {
-        return paramEd;
-    }
+//    @Override
+//    public ElectionDescriptionSource getElectionDescriptionSource() {
+//        return cElectionEditor;
+//    }
+//
+//    @Override
+//    public PreAndPostConditionsDescriptionSource getPreAndPostConditionsSource() {
+//        return propertyList;
+//    }
+//
+//    @Override
+//    public ResultCheckerCommunicator getResultCheckerCommunicator() {
+//        return checkerCommunicator;
+//    }
+//
+//    @Override
+//    public ParameterSource getParameterSrc() {
+//        return paramEd;
+//    }
+//
+//    @Override
+//    public ResultPresenter getResultPresenter() {
+//        return propertyList;
+//    }
+//
+//    @Override
+//    public CheckStatusDisplay getCheckStatusDisplay() {
+//        return paramEd.getView();
+//    }
+//    
+//    public ParameterEditor getParameterEditor() {
+//        return paramEd;
+//    }
 
     /**
      * Setter for the CheckerCommunicator, called when other checker than cbmc is switched to.
@@ -95,8 +95,8 @@ public class PSECentralObjectProvider implements CentralObjectProvider {
         this.checkerCommunicator = checkerCommunicator;
     }
 
-	@Override
-	public CElectionDescriptionEditor getCElectionEditor() {
-		return cElectionEditor;
-	}
+//	@Override
+//	public CElectionDescriptionEditor getCElectionEditor() {
+//		return cElectionEditor;
+//	}
 }

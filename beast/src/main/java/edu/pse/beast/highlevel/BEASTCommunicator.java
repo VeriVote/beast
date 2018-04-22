@@ -33,7 +33,6 @@ import edu.pse.beast.propertylist.Model.PropertyItem;
 public class BEASTCommunicator {
 
 	private static CentralObjectProvider centralObjectProvider;
-	private static List<ResultInterface> resultList;
 
 	/**
 	 * Sets a new CentralObjectProvider which contains the references to the other

@@ -30,6 +30,12 @@
 	-fx-font-weight: bold;
 }
 
+.preprocessor {
+	-fx-fill: red;
+	-fx-font-weight: bold;
+}
+
+
 .datatype {
 	-fx-fill: blue;
 }

@@ -38,8 +38,8 @@ public class MainClass extends Application {
 	 */
 	public static void main(String[] args) {
 		BEASTCommunicator communicator = new BEASTCommunicator();
-		PSECentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
-		communicator.setCentralObjectProvider(centralObjectProvider);
+		//PSECentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
+		//communicator.setCentralObjectProvider(centralObjectProvider);
 		launch(args);
 
 	}
