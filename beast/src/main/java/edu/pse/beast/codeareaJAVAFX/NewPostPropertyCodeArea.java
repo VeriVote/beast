@@ -12,7 +12,6 @@ import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import javafx.scene.Node;
 
 public class NewPostPropertyCodeArea extends CodeArea {

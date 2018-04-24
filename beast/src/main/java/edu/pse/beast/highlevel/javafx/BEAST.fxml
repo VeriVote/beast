@@ -186,8 +186,16 @@
 				</Menu>
 				<Menu mnemonicParsing="false" text="%key.options">
 					<items>
-						<MenuItem mnemonicParsing="false" text="%key.miscOptions" />
                   <MenuItem mnemonicParsing="false" text="%key.constantName" />
+                  <Menu mnemonicParsing="false" text="%key.miscOptions">
+                    <items>
+                      <MenuItem mnemonicParsing="false" text="%key.deleteItems">
+                           <graphic>
+                              <CheckBox fx:id="deleteItmesCheckbox" mnemonicParsing="false" />
+                           </graphic>
+                        </MenuItem>
+                    </items>
+                  </Menu>
 					</items>
 				</Menu>
 				<Menu mnemonicParsing="false" text="%key.help">
@@ -330,9 +338,34 @@
                            </content></Tab>
 								<Tab fx:id="inputPane" onSelectionChanged="#inputPaneClicked" text="%key.voteslist">
 									<content>
-										<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+										<AnchorPane>
                                  <children>
-                                    <ScrollPane fx:id="inputScrollPane" fitToHeight="true" fitToWidth="true" />
+                                    <BorderPane>
+                                       <center>
+                                          <ScrollPane fx:id="inputScrollPane" fitToHeight="true" fitToWidth="true" prefHeight="292.6666666666667" prefWidth="377.3333333333333" BorderPane.alignment="CENTER" />
+                                       </center>
+                                       <top>
+                                          <MenuBar BorderPane.alignment="CENTER">
+                                            <menus>
+                                              <Menu mnemonicParsing="false" text="Voters">
+                                                   <graphic>
+                                                      <TextField maxWidth="50.0" text="0" />
+                                                   </graphic>
+                                              </Menu>
+                                                <Menu mnemonicParsing="false" text="Candidates">
+                                                   <graphic>
+                                                      <TextField maxWidth="50.0" text="0" />
+                                                   </graphic>
+                                                </Menu>
+                                                <Menu mnemonicParsing="false" text="Seats">
+                                                   <graphic>
+                                                      <TextField maxWidth="50.0" text="0" />
+                                                   </graphic>
+                                                </Menu>
+                                            </menus>
+                                          </MenuBar>
+                                       </top>
+                                    </BorderPane>
                                  </children></AnchorPane>
 									</content>
 								</Tab>

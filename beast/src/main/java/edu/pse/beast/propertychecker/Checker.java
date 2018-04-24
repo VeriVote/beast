@@ -101,7 +101,6 @@ public abstract class Checker implements Runnable {
 			try {
 				latch.await();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			

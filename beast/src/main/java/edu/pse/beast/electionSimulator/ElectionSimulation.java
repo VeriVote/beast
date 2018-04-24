@@ -18,9 +18,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeList
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.electionSimulator.Model.ElectionSimulationModel;
 import edu.pse.beast.electionSimulator.Model.RowOfValues;
-import edu.pse.beast.electionSimulator.View.ElectionSimulationWindow;
 import edu.pse.beast.highlevel.BEASTCommunicator;
-import edu.pse.beast.highlevel.PSECentralObjectProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
@@ -30,7 +28,7 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 
 	private static ElectionTypeContainer container;
 
-	private PSECentralObjectProvider centralObjectProvider;
+	//private PSECentralObjectProvider centralObjectProvider;
 
 	private boolean react = false;
 
@@ -57,19 +55,19 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 		this.sli = sli;
 	}
 
-	public void init(PSECentralObjectProvider centralObjectProvider) {
-		this.centralObjectProvider = centralObjectProvider;
-		ElectionSimulation.container = centralObjectProvider.getElectionDescriptionSource().getElectionDescription()
-				.getContainer();
-		ElectionSimulation.model = new ElectionSimulationModel(container);
-		ElectionSimulation.view = new ElectionSimulationWindow(sli, container, this, model);
-
-		centralObjectProvider.getCElectionEditor().addListener(this);
-
-		this.start();
-		react = true;
-
-		initiated = true;
+	public void init() {
+//		this.centralObjectProvider = centralObjectProvider;
+//		ElectionSimulation.container = centralObjectProvider.getElectionDescriptionSource().getElectionDescription()
+//				.getContainer();
+//		ElectionSimulation.model = new ElectionSimulationModel(container);
+//		ElectionSimulation.view = new ElectionSimulationWindow(sli, container, this, model);
+//
+//		centralObjectProvider.getCElectionEditor().addListener(this);
+//
+//		this.start();
+//		react = true;
+//
+//		initiated = true;
 	}
 
 	@Override
@@ -222,9 +220,9 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 	 * models which are used
 	 */
 	private void electionTypeChanged() {
-		ElectionSimulation.container = centralObjectProvider.getElectionDescriptionSource().getElectionDescription()
-				.getContainer();
-		model.changeContainer(container);
+//		ElectionSimulation.container = centralObjectProvider.getElectionDescriptionSource().getElectionDescription()
+//				.getContainer();
+//		model.changeContainer(container);
 	}
 
 	/**
@@ -269,9 +267,9 @@ public class ElectionSimulation implements Runnable, ActionListener, ComponentLi
 	}
 
 	public void open() {
-		if (!initiated) {
-			init((PSECentralObjectProvider) BEASTCommunicator.getCentralObjectProvider());
-		}
+//		if (!initiated) {
+//			init((PSECentralObjectProvider) BEASTCommunicator.getCentralObjectProvider());
+//		}
 
 		isOpen = true;
 		view.setVisible(true);

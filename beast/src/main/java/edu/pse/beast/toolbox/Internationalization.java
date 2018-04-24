@@ -1,5 +1,13 @@
 package edu.pse.beast.toolbox;
 
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.concurrent.Callable;
+
 /**
  * Copyright (c) 2016 sothawo
  *
@@ -13,14 +21,6 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-
-import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.concurrent.Callable;
 
 /**
  * I18N utility class..

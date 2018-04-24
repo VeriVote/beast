@@ -90,7 +90,6 @@ public class WindowsProcess extends CBMCProcess {
         try {
             vsCmd = WindowsOStoolbox.getVScmdPath();
         } catch (IOException e1) {
-            // TODO Auto-generated catch block
             e1.printStackTrace();
         }
 
@@ -343,16 +342,12 @@ public class WindowsProcess extends CBMCProcess {
                 return pid;
 
             } catch (NoSuchFieldException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (SecurityException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (IllegalArgumentException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }

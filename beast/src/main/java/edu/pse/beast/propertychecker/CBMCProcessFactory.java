@@ -7,9 +7,8 @@ import java.util.List;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.highlevel.ElectionDescriptionSource;
 import edu.pse.beast.highlevel.javafx.ChildTreeItem;
-import edu.pse.beast.options.ParametereditorOptions.ParametereditorOptions;
+import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.FileLoader;
@@ -580,7 +579,7 @@ public class CBMCProcessFactory extends CheckerFactory {
 
 	@Override
 	protected void cleanUp() {
-		if (ParametereditorOptions.deleteTmpFiles() && toCheck != null && toCheck.exists()) {
+		if(GUIController.getController().getDeleteTmpFiles() && toCheck != null && toCheck.exists()) {
 			toCheck.delete();
 		}
 	}

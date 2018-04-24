@@ -55,7 +55,6 @@ public class ThreadedBufferedReader implements Runnable {
      */
     @Override
     public void run() {
-        boolean warningShown = false;
 
         int curr = 0;
 

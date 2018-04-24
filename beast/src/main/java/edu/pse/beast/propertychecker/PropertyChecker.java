@@ -5,16 +5,11 @@
  */
 package edu.pse.beast.propertychecker;
 
-import java.io.File;
 import java.util.List;
 
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.highlevel.ElectionDescriptionSource;
-import edu.pse.beast.highlevel.ParameterSource;
-import edu.pse.beast.highlevel.PreAndPostConditionsDescriptionSource;
 import edu.pse.beast.highlevel.ResultCheckerCommunicator;
-import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 
 /**

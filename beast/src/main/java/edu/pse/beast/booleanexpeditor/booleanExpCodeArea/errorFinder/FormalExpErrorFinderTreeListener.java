@@ -13,8 +13,6 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
-import edu.pse.beast.celectiondescriptioneditor.UserActions.NewElectionUserAction;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.codeareaJAVAFX.NewCodeArea;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.AtPosExp;

@@ -3,9 +3,7 @@ package edu.pse.beast.saverloader;
 import java.util.Arrays;
 import java.util.Map;
 
-import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.pluginhandler.TypeLoader;
 import edu.pse.beast.saverloader.StaticSaverLoaders.SaverLoaderHelper;
 import edu.pse.beast.types.InputType;

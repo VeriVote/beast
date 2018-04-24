@@ -17,8 +17,28 @@ public final class CheckerFactoryFactory {
 	private CheckerFactoryFactory() {
 
 	}
-
-	private static void init() {
+	
+	static {
+		factories = searchForCheckers();
+	}
+	
+	private static Map<String, CheckerFactory> searchForCheckers() {
+		Map<String, CheckerFactory> foundFactories = new HashMap<String, CheckerFactory>();
+		
+		// cbmc is always included, so we add it here
+		foundFactories.put("CBMC", new CBMCProcessFactory(null, null, null, null));
+		
+		//TODO search for other factories
+		 
+		return foundFactories;
+	}
+		
+	public static void reloadCheckers() {
+		
+		factories.clear();
+		
+		factories = searchForCheckers();
+		
 		if (!initialized) {
 
 			// cbmc is always included, so we add it here
@@ -36,7 +56,6 @@ public final class CheckerFactoryFactory {
 	 * @return a list of all available checkers
 	 */
 	public static List<String> getAvailableCheckerIDs() {
-		init();
 		return new ArrayList<String>(factories.keySet());
 	}
 
@@ -49,7 +68,6 @@ public final class CheckerFactoryFactory {
 	 *         if it isn't found
 	 */
 	public static PropertyChecker createPropertyChecker(String checkerID) {
-		init();
 
 		if (factories.keySet().contains(checkerID)) {
 			return new PropertyChecker(checkerID);
@@ -97,7 +115,6 @@ public final class CheckerFactoryFactory {
 
 	public static CheckerFactory getCheckerFactory(String checkerID, FactoryController controller,
 			ElectionDescription electionDesc, ChildTreeItem childTreeItem, ElectionCheckParameter parameter) {
-		init();
 
 		if (factories.keySet().contains(checkerID)) {
 			return factories.get(checkerID).getNewInstance(controller, electionDesc, childTreeItem, parameter);
@@ -119,7 +136,6 @@ public final class CheckerFactoryFactory {
 	 *         null else
 	 */
 	public static Result getMatchingResult(String checkerID) {
-		init();
 		if (factories.keySet().contains(checkerID)) {
 			return factories.get(checkerID).getMatchingResult();
 
@@ -130,7 +146,6 @@ public final class CheckerFactoryFactory {
 	}
 
 	public static List<Result> getMatchingUnprocessedResult(String checkerID, int amount) {
-		init();
 
 		List<Result> results = new ArrayList<Result>();
 

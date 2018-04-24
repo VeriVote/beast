@@ -3,7 +3,6 @@ package edu.pse.beast.highlevel;
 import java.util.List;
 
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.propertychecker.Result;
 
 /**
  * The PreAndPostConditionsDescriptionSource provides access to the

@@ -1,13 +1,11 @@
 package edu.pse.beast.types.cbmctypes.outputtypes;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.electionSimulator.ElectionSimulation;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
-import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;

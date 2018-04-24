@@ -2,7 +2,6 @@ package edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes;
 
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpNodeVisitor;
 import edu.pse.beast.types.InOutType;
-import edu.pse.beast.types.InternalTypeContainer;
 
 /**
  * 

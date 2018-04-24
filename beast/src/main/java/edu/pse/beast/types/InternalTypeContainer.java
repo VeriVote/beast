@@ -5,8 +5,6 @@
  */
 package edu.pse.beast.types;
 
-import java.lang.reflect.Type;
-
 /**
  *
  * @author Niels

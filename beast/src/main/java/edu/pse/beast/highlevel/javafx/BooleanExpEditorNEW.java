@@ -1,7 +1,6 @@
 package edu.pse.beast.highlevel.javafx;
 
 import java.util.Iterator;
-import java.util.List;
 
 import edu.pse.beast.codeareaJAVAFX.NewPostPropertyCodeArea;
 import edu.pse.beast.codeareaJAVAFX.NewPrePropertyCodeArea;

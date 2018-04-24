@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
-import edu.pse.beast.electionSimulator.ElectionSimulation;
 import edu.pse.beast.electionSimulator.Model.RowOfValues;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;

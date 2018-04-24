@@ -1,11 +1,5 @@
 package edu.pse.beast.booleanexpeditor.booleanExpCodeArea;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.swing.text.BadLocationException;
-import javax.swing.text.StyledDocument;
-
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 

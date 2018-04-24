@@ -15,8 +15,7 @@ import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
-import edu.pse.beast.electionSimulator.ElectionSimulation;
-import edu.pse.beast.highlevel.BEASTCommunicator;
+import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.ErrorLogger;
@@ -141,8 +140,8 @@ public class CBMCCodeGenerator {
 		addMarginHeaders(votingData);
 
 		// add the code the user wrote (e.g the election function)
-		code.addAll(BEASTCommunicator.getCentralObjectProvider().getElectionDescriptionSource().getElectionDescription()
-				.getCode());
+		code.addAll(GUIController.getController().getElectionDescription().getCode());
+
 
 		// add the code which defines the votes
 		code.addAll(getVotingResultCode(votingData));
@@ -158,8 +157,8 @@ public class CBMCCodeGenerator {
 		addMarginHeaders(votingData);
 
 		// add the code the user wrote (e.g the election function)
-		code.addAll(BEASTCommunicator.getCentralObjectProvider().getElectionDescriptionSource().getElectionDescription()
-				.getCode());
+		
+		code.addAll(GUIController.getController().getElectionDescription().getCode());
 
 		// add the code which defines the votes
 		code.addAll(getVotingResultCode(votingData));
@@ -185,21 +184,6 @@ public class CBMCCodeGenerator {
 		// https://formal.iti.kit.edu/~beckert/pub/evoteid2016.pdf
 
 		electionDesc.getContainer().getInputType().addVerifyMethod(code, electionDesc.getContainer().getOutputType());
-
-		// code =
-		// electionDescription.getContainer().getOutputType().addMarginVerifyCheck(code);
-
-		// not used lines ( I think) //TODO if they really aren't needed, delete
-		// them
-		// code.add("new_votes1[i] = ORIG_VOTES[i] + diff[i];");
-		// code.add("if (0 < diff[i]) pos_diff += diff[i];");
-		// code.add("total_diff += diff[i];");
-		// code.add("}");
-		// code.add("__CPROVER_assume (pos_diff ≤ MARGIN);");
-		// code.add("__CPROVER_assume (total_diff == 0);");
-		// code.add("int *result = voting(new_votes1);");
-		// code.add("assert (equals(result, ORIG_RESULT));");
-		// code.add("}");
 
 		// add the main method
 		code.add("int main() {");

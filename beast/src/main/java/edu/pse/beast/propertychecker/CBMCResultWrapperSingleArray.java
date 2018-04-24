@@ -3,8 +3,6 @@ package edu.pse.beast.propertychecker;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.print.DocFlavor.STRING;
-
 /**
  * 
  * @author Lukas

@@ -56,7 +56,7 @@ public class RichTextFXCodeArea extends CodeArea {
 
 		this.setParagraphGraphicFactory(lineNumbers);
 
-		this.richChanges().filter(ch -> !ch.getInserted().equals(ch.getRemoved())) // XXX
+		this.richChanges().filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
 				.subscribe(change -> {
 					this.setStyleSpans(0, computeHighlighting(this.getText()));
 				});

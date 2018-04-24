@@ -5,8 +5,8 @@
  */
 package edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.toolbox.UnifiedNameContainer;

@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -12,7 +11,7 @@ import java.util.concurrent.CountDownLatch;
 import org.apache.commons.io.FileUtils;
 
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import edu.pse.beast.options.ParametereditorOptions.ParametereditorOptions;
+import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
@@ -147,7 +146,7 @@ public abstract class SystemSpecificErrorChecker {
 					new BufferedReader(new InputStreamReader(process.getInputStream())), result, latch, false);
 			ThreadedBufferedReader errReader = new ThreadedBufferedReader(
 					new BufferedReader(new InputStreamReader(process.getErrorStream())), errors, latch, false);
-
+			
 			// wait for the process to finish;
 			try {
 				process.waitFor();
@@ -163,7 +162,8 @@ public abstract class SystemSpecificErrorChecker {
 
 			// deletes the temporary file, so it doesn't clog up the filesystem
 			
-			if(!ParametereditorOptions.deleteTmpFiles()) {
+			
+			if(GUIController.getController().getDeleteTmpFiles()) {
 				cFile.delete();
 				batFile.delete();
 			}

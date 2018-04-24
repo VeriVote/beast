@@ -9,10 +9,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
-import javax.print.DocFlavor.STRING;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -27,15 +25,12 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
 
-import de.erichseifert.gral.graphics.Container;
 import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
-import edu.pse.beast.electionSimulator.ElectionSimulation;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
-import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 

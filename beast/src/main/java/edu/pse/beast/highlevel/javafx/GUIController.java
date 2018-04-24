@@ -1,5 +1,6 @@
 package edu.pse.beast.highlevel.javafx;
 
+import java.awt.Checkbox;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -131,6 +132,9 @@ public class GUIController {
 	
 	@FXML
 	private Button loadPropList;
+	
+	@FXML
+	private Checkbox deleteItmesCheckbox;
 
 	@FXML // fx:id="codePane"
 	private Tab codePane;
@@ -867,6 +871,10 @@ public class GUIController {
 	
 	public TextField getVariableNameField() {
 		return symbVarField;
+	}
+	
+	public boolean getDeleteTmpFiles() {
+		return deleteItmesCheckbox.getState();
 	}
 }
 

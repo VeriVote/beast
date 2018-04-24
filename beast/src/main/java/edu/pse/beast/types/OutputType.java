@@ -4,7 +4,6 @@ import java.util.List;
 
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
-import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 
 public abstract class OutputType implements InOutType {

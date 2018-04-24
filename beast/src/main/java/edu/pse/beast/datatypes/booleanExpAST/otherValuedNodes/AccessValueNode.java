@@ -3,7 +3,6 @@ package edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes;
 import java.util.Arrays;
 
 import edu.pse.beast.types.InOutType;
-import edu.pse.beast.types.InternalTypeContainer;
 
 /**
  * Created by holger on 09.03.17.

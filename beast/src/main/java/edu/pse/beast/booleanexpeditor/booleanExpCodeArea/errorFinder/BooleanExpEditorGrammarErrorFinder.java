@@ -12,7 +12,6 @@ import org.antlr.v4.runtime.dfa.DFA;
 
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpANTLRHandler;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
 
 /**
  * Class that finds errors which conflict with the grammar in BooleanExpGrammar.g in the BooleanExpression(s) of the

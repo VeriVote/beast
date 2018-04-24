@@ -8,12 +8,8 @@ import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.electionSimulator.ElectionSimulation;
-import edu.pse.beast.highlevel.ElectionDescriptionSource;
-import edu.pse.beast.highlevel.javafx.CheckChildTreeItem;
 import edu.pse.beast.highlevel.javafx.ChildTreeItem;
 import edu.pse.beast.highlevel.javafx.GUIController;
-import edu.pse.beast.highlevel.javafx.MarginChildTreeItem;
-import edu.pse.beast.highlevel.javafx.TestChildTreeItem;
 import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
 

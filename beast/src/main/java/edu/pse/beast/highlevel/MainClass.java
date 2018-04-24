@@ -1,8 +1,5 @@
 package edu.pse.beast.highlevel;
 
-import java.io.File;
-import java.net.URL;
-import java.util.ListResourceBundle;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -10,12 +7,10 @@ import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 /**
  * The MainClass creates an CentralObjectProvider which creates all other parts

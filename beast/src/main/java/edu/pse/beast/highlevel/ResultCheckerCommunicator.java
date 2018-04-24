@@ -1,12 +1,10 @@
 package edu.pse.beast.highlevel;
 
-import java.io.File;
 import java.util.List;
 
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.highlevel.javafx.ParentTreeItem;
-import edu.pse.beast.propertychecker.UnprocessedCBMCResult;
 
 /**
  * The ResultCheckerCommunicator starts and stops checks.

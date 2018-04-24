@@ -159,7 +159,6 @@ public class Preference extends CBMCInputType {
 //	@Override
 //	public void addMarginMainCheck(CodeArrayListBeautifier code, int margin,
 //			List<String> origResult) {
-//		// TODO fix
 //		code.add("int new_votes1[V][C];");
 //
 //		code.add("for (int i = 0; i < V; i++) {"); // go over all voters

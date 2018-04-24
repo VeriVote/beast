@@ -7,22 +7,15 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import edu.pse.beast.Gui.GuiTestCEditor;
-import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpANTLRHandler;
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorGeneralErrorFinder;
-import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorGrammarErrorFinder;
-import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorVariableErrorFinder;
-import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpErrorDisplayer;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CVariableErrorFinder;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import edu.pse.beast.codearea.ErrorHandling.ErrorFinder;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.javafx.ChildTreeItem;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.ParentTreeItem;
-import edu.pse.beast.propertylist.Model.PropertyItem;
+import edu.pse.beast.propertychecker.PropertyChecker;
 
 /**
  * The BEASTCommunicator coordinates all the other parts of BEAST and starts and
@@ -32,19 +25,13 @@ import edu.pse.beast.propertylist.Model.PropertyItem;
  */
 public class BEASTCommunicator {
 
-	private static CentralObjectProvider centralObjectProvider;
 
-	/**
-	 * Sets a new CentralObjectProvider which contains the references to the other
-	 * parts of BEAST.
-	 *
-	 * @param centralObjectProvider
-	 *            New CentralObjectProvider which is to be set.
-	 */
-	public void setCentralObjectProvider(CentralObjectProvider centralObjectProvider) {
-		BEASTCommunicator.centralObjectProvider = centralObjectProvider;
-	}
-
+	
+	
+	
+	
+	
+	static List<PropertyChecker> currentCheckers = new ArrayList<PropertyChecker>();
 	// public static boolean startCheck() {
 	// centralObjectProvider.getResultPresenter().resetResults();
 	// ElectionDescriptionSource electSrc =
@@ -146,9 +133,17 @@ public class BEASTCommunicator {
 			// analysis gets started by CheckerCommunicator.checkPropertiesForDescription()
 			// getting called
 			GUIController.setInfoText("starting Check");
-
-			boolean started = centralObjectProvider.getResultCheckerCommunicator()
-					.checkPropertiesForDescription(electionDesc, properties, parameter);
+//
+//			boolean started = centralObjectProvider.getResultCheckerCommunicator()
+//					.checkPropertiesForDescription(electionDesc, properties, parameter);
+//			
+//			
+			 
+			//TODO load the propertychecker 
+			boolean started = new PropertyChecker("CBMC").checkPropertiesForDescription(electionDesc, properties, parameter);
+			
+			
+			
 
 			if (started) {
 
@@ -207,11 +202,9 @@ public class BEASTCommunicator {
 	}
 
 	public static boolean stopCheck() {
-		boolean stoppedAtATimeItIsAllowed = centralObjectProvider.getResultCheckerCommunicator().abortChecking();
-		if (!stoppedAtATimeItIsAllowed) {
-			CheckStatusDisplay checkStatusDisplayer = centralObjectProvider.getCheckStatusDisplay();
-			checkStatusDisplayer.displayText("falseStop", false, "");
-			return false;
+		for (Iterator<PropertyChecker> iterator = currentCheckers.iterator(); iterator.hasNext();) {
+			PropertyChecker checker = (PropertyChecker) iterator.next();
+			checker.abortChecking();
 		}
 		return true;
 	}
@@ -246,30 +239,6 @@ public class BEASTCommunicator {
 		
 		return errorsFound;
     }
-
-	/**
-	 * Makes the GUIs stop reacting.
-	 * 
-	 * @param pseCentralObjectProvider
-	 *            CentralObjectProvider instance
-	 */
-	public static void stopReacting(CentralObjectProvider pseCentralObjectProvider) {
-		pseCentralObjectProvider.getElectionDescriptionSource().stopReacting();
-		pseCentralObjectProvider.getPreAndPostConditionsSource().stopReacting();
-		pseCentralObjectProvider.getParameterSrc().stopReacting();
-	}
-
-	/**
-	 * Makes the GUIs resume reacting.
-	 * 
-	 * @param pseCentralObjectProvider
-	 *            CentralObjectProvider instance
-	 */
-	public static void resumeReacting(CentralObjectProvider pseCentralObjectProvider) {
-		pseCentralObjectProvider.getElectionDescriptionSource().resumeReacting();
-		pseCentralObjectProvider.getPreAndPostConditionsSource().resumeReacting();
-		pseCentralObjectProvider.getParameterSrc().resumeReacting();
-	}
 
 	/**
 	 * Creates a String that contains the given time in seconds in a readable
@@ -337,9 +306,5 @@ public class BEASTCommunicator {
 
 	private static boolean passedTimeLongerThanMinute(double passedTimeSeconds) {
 		return passedTimeSeconds >= 60;
-	}
-
-	public static CentralObjectProvider getCentralObjectProvider() {
-		return centralObjectProvider;
 	}
 }
