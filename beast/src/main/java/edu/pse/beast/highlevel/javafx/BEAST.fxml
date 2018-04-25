@@ -26,8 +26,10 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
 <VBox prefHeight="532.0" prefWidth="545.0" stylesheets="@../javafx/style.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
@@ -89,12 +91,12 @@
 							<items>
 								<MenuItem mnemonicParsing="false" text="%key.minimum">
 									<graphic>
-										<TextField fx:id="minVoter" onAction="#minVoter" prefWidth="50.0" text="1" />
+										<TextField fx:id="minVoter" alignment="CENTER_RIGHT" onAction="#minVoter" prefWidth="50.0" text="1" />
 									</graphic>
 								</MenuItem>
 								<MenuItem mnemonicParsing="false" text="%key.maximum">
 									<graphic>
-										<TextField fx:id="maxVoter" onAction="#maxVoter" prefWidth="50.0" text="1" />
+										<TextField fx:id="maxVoter" alignment="CENTER_RIGHT" onAction="#maxVoter" prefWidth="50.0" text="1" />
 									</graphic>
 								</MenuItem>
 							</items>
@@ -103,12 +105,12 @@
 							<items>
 								<MenuItem mnemonicParsing="false" text="%key.minimum">
 									<graphic>
-										<TextField fx:id="minCandidates" onAction="#minCandidates" prefWidth="50.0" text="1" />
+										<TextField fx:id="minCandidates" alignment="CENTER_RIGHT" onAction="#minCandidates" prefWidth="50.0" text="1" />
 									</graphic>
 								</MenuItem>
 								<MenuItem mnemonicParsing="false" text="%key.maximum">
 									<graphic>
-										<TextField fx:id="maxCandidates" onAction="#maxCandidates" prefWidth="50.0" text="1" />
+										<TextField fx:id="maxCandidates" alignment="CENTER_RIGHT" onAction="#maxCandidates" prefWidth="50.0" text="1" />
 									</graphic>
 								</MenuItem>
 							</items>
@@ -117,12 +119,12 @@
 							<items>
 								<MenuItem mnemonicParsing="false" text="%key.minimum">
 									<graphic>
-										<TextField fx:id="minSeats" onAction="#minSeats" prefWidth="50.0" text="1" />
+										<TextField fx:id="minSeats" alignment="CENTER_RIGHT" onAction="#minSeats" prefWidth="50.0" text="1" />
 									</graphic>
 								</MenuItem>
 								<MenuItem mnemonicParsing="false" text="%key.maximum">
 									<graphic>
-										<TextField fx:id="maxSeats" onAction="#maxSeats" prefWidth="50.0" text="1" />
+										<TextField fx:id="maxSeats" alignment="CENTER_RIGHT" onAction="#maxSeats" prefWidth="50.0" text="1" />
 									</graphic>
 								</MenuItem>
 							</items>
@@ -135,7 +137,7 @@
 											<children>
 												<VBox>
 													<children>
-														<TextField fx:id="timeOut" onAction="#timeOut" prefWidth="50.0" />
+														<TextField fx:id="timeOut" alignment="CENTER_RIGHT" onAction="#timeOut" prefWidth="50.0" />
 													</children>
 												</VBox>
 												<ChoiceBox fx:id="TimeUnitChoice" />
@@ -149,7 +151,7 @@
 							<items>
 								<MenuItem mnemonicParsing="false" text="%key.processes">
 									<graphic>
-										<TextField fx:id="processes" onAction="#processes" prefWidth="50.0" />
+										<TextField fx:id="processes" alignment="CENTER_RIGHT" onAction="#processes" prefWidth="50.0" />
 									</graphic>
 								</MenuItem>
 							</items>
@@ -178,7 +180,7 @@
                            <items>
                               <MenuItem mnemonicParsing="false">
                                  <graphic>
-                                    <TextField fx:id="maxUnrolls" onAction="#maxUnrolls" />
+                                    <TextField fx:id="maxUnrolls" alignment="CENTER_RIGHT" onAction="#maxUnrolls" />
                                  </graphic>
                               </MenuItem>
                            </items>
@@ -347,16 +349,36 @@
                                        <center>
                                           <ScrollPane fx:id="inputScrollPane" fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
                                              <content>
-                                                <GridPane>
+                                                <GridPane fx:id="inputGridPane">
                                                   <columnConstraints>
-                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" />
+                                                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="50.0" prefWidth="50.0" />
                                                   </columnConstraints>
                                                   <rowConstraints>
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                   </rowConstraints>
+                                                   <children>
+                                                      <Pane />
+                                                      <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
+                                                         <center>
+                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Cand" BorderPane.alignment="CENTER" />
+                                                         </center>
+                                                         <right>
+                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="→" BorderPane.alignment="CENTER" />
+                                                         </right>
+                                                      </BorderPane>
+                                                      <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                                         <center>
+                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Voters:" BorderPane.alignment="CENTER" />
+                                                         </center>
+                                                         <bottom>
+                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text=" ↓" BorderPane.alignment="CENTER" />
+                                                         </bottom>
+                                                      </BorderPane>
+                                                   </children>
                                                 </GridPane>
                                              </content></ScrollPane>
                                        </center>
@@ -365,17 +387,17 @@
                                             <menus>
                                               <Menu mnemonicParsing="false" text="Voters">
                                                    <graphic>
-                                                      <TextField fx:id="inputVoterField" maxWidth="50.0" text="0" />
+                                                      <TextField fx:id="inputVoterField" alignment="CENTER_RIGHT" maxWidth="50.0" text="0" />
                                                    </graphic>
                                               </Menu>
                                                 <Menu mnemonicParsing="false" text="Candidates">
                                                    <graphic>
-                                                      <TextField fx:id="inputCandidateField" maxWidth="50.0" text="0" />
+                                                      <TextField fx:id="inputCandidateField" alignment="CENTER_RIGHT" maxWidth="50.0" text="0" />
                                                    </graphic>
                                                 </Menu>
                                                 <Menu mnemonicParsing="false" text="Seats">
                                                    <graphic>
-                                                      <TextField fx:id="inputSeatField" maxWidth="50.0" text="0" />
+                                                      <TextField fx:id="inputSeatField" alignment="CENTER_RIGHT" maxWidth="50.0" text="0" />
                                                    </graphic>
                                                 </Menu>
                                                 <Menu mnemonicParsing="false">

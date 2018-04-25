@@ -42,6 +42,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 public class GUIController {
@@ -216,6 +217,9 @@ public class GUIController {
 
 	@FXML
 	private TextField inputSeatField;
+	
+	@FXML
+	private GridPane inputGridPane;
 
 	// @FXML
 	// private Text

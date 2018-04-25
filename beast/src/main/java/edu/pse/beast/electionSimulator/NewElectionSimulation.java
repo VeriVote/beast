@@ -17,7 +17,9 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener 
 
 	private static ElectionSimulationModel model;
 
-	public NewElectionSimulation() {
+	public static void updateContainer(ElectionTypeContainer newContainer) {
+		container = newContainer;
+		model = new ElectionSimulationModel(newContainer);
 
 	}
 
