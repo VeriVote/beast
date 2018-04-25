@@ -1,8 +1,8 @@
 package edu.pse.beast.highlevel.javafx;
 
-import java.awt.Checkbox;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import org.fxmisc.flowless.VirtualizedScrollPane;
@@ -15,6 +15,7 @@ import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
+import edu.pse.beast.electionSimulator.NewElectionSimulation;
 import edu.pse.beast.highlevel.BEASTCommunicator;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.types.InternalTypeContainer;
@@ -24,7 +25,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
@@ -35,12 +40,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 public class GUIController {
 
 	private static GUIController controller;
-	
+
 	private static ArrayList<ParentTreeItem> properties = new ArrayList<ParentTreeItem>();
 
 	private String pathToImages = "file:///" + SuperFolderFinder.getSuperFolder() + "/core/images/";
@@ -54,6 +61,8 @@ public class GUIController {
 	private List<TabClass> bottomWindowTabs = new ArrayList<TabClass>();
 
 	private List<PreAndPostConditionsDescription> conditions = new ArrayList<PreAndPostConditionsDescription>();
+
+	private NewElectionSimulation electionSimulation = new NewElectionSimulation();
 
 	@FXML // fx:id="maxVoter"
 	private TextField maxVoter;
@@ -123,18 +132,18 @@ public class GUIController {
 
 	@FXML // fx:id="deleteButton"
 	private Button deleteButton;
-	
+
 	@FXML
 	private Button newProp;
-	
+
 	@FXML
 	private Button loadProp;
-	
+
 	@FXML
 	private Button loadPropList;
-	
+
 	@FXML
-	private Checkbox deleteItmesCheckbox;
+	private CheckBox deleteItemsCheckbox;
 
 	@FXML // fx:id="codePane"
 	private Tab codePane;
@@ -153,7 +162,7 @@ public class GUIController {
 
 	@FXML // fx:id="consolePane"
 	private Tab consolePane;
-	
+
 	@FXML
 	private Tab informationPane;
 
@@ -186,27 +195,34 @@ public class GUIController {
 
 	@FXML
 	private TextArea solutionField;
-	
+
 	@FXML
 	private TabPane mainTabPane;
-	
+
 	@FXML
 	private TabPane subTabPane;
 
 	@FXML
 	private TreeView<SymbolicVariable> variableTreeView;
-	
+
 	@FXML
 	private TextField symbVarField;
-	
-//	@FXML
-//	private Text
-//	
-//	@FXML
-//	private Button removeVarButton;
-	
-	
-	
+
+	@FXML
+	private TextField inputVoterField;
+
+	@FXML
+	private TextField inputCandidateField;
+
+	@FXML
+	private TextField inputSeatField;
+
+	// @FXML
+	// private Text
+	//
+	// @FXML
+	// private Button removeVarButton;
+
 	private boolean running = false;
 
 	private NewCodeArea codeArea;
@@ -218,7 +234,7 @@ public class GUIController {
 	// initial setup
 	@FXML
 	public void initialize() {
-		
+
 		controller = this;
 
 		// set images for the buttons
@@ -256,64 +272,86 @@ public class GUIController {
 
 		addNumberEnforcer(timeOut);
 
+		inputVoterField.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+
+				addVoterNumberEnforcer(inputVoterField, newValue);
+			}
+		});
+
+		inputCandidateField.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+
+				addVoterNumberEnforcer(inputCandidateField, newValue);
+			}
+		});
+		
+		inputSeatField.textProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+
+				addVoterNumberEnforcer(inputSeatField, newValue);
+			}
+		});
+
 		// init the propTree:
-		
-//		treeView.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>(){
-//
-//			@Override
-//			public PropertyTreeCell call(TreeView<String> param) {
-//				return new PropertyTreeCell();
-//			}
-//        });
-//		
-		
-//		   // Use a custom callback to determine the style of the tree item
-//        treeView.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
-//            @Override
-//            public TreeCell<String> call(TreeView<String> param) {
-//                return new CheckBoxTreeCell<String>(){
-//                    @Override
-//                    public void updateItem(String item, boolean empty){
-//                        super.updateItem(item, empty);
-//                        // If there is no information for the Cell, make it empty
-//                        if(empty){
-//                            setGraphic(null);
-//                            setText(null);
-//                        // Otherwise if it's not representation as an item of the tree
-//                        // is not a CheckBoxTreeItem, remove the checkbox item
-//                        }else if (!(getTreeItem() instanceof CheckBoxTreeItem)){
-//                            setGraphic(null);
-//                        }
-//                    }
-//                };
-//            }
-//        });
-		
+
+		// treeView.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>(){
+		//
+		// @Override
+		// public PropertyTreeCell call(TreeView<String> param) {
+		// return new PropertyTreeCell();
+		// }
+		// });
+		//
+
+		// // Use a custom callback to determine the style of the tree item
+		// treeView.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
+		// @Override
+		// public TreeCell<String> call(TreeView<String> param) {
+		// return new CheckBoxTreeCell<String>(){
+		// @Override
+		// public void updateItem(String item, boolean empty){
+		// super.updateItem(item, empty);
+		// // If there is no information for the Cell, make it empty
+		// if(empty){
+		// setGraphic(null);
+		// setText(null);
+		// // Otherwise if it's not representation as an item of the tree
+		// // is not a CheckBoxTreeItem, remove the checkbox item
+		// }else if (!(getTreeItem() instanceof CheckBoxTreeItem)){
+		// setGraphic(null);
+		// }
+		// }
+		// };
+		// }
+		// });
 
 		treeView.setShowRoot(false);
-		
-//		treeView.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
-//
-//			
-//			public TreeCell<String>() {
-//				@Override
-//	            public TreeCell<String> call(TreeView<String> p) {
-//	                return new TextFieldTreeCellImpl();
-//	            }
-//			}
-//			
-////			@Override
-////			public TreeCell<String> call(TreeView<String> param) {
-////				return new PropertyTreeCell();
-////			}
-//		});
+
+		// treeView.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
+		//
+		//
+		// public TreeCell<String>() {
+		// @Override
+		// public TreeCell<String> call(TreeView<String> p) {
+		// return new TextFieldTreeCellImpl();
+		// }
+		// }
+		//
+		//// @Override
+		//// public TreeCell<String> call(TreeView<String> param) {
+		//// return new PropertyTreeCell();
+		//// }
+		// });
 
 		root = new TreeItem<>();
 		root.setExpanded(true);
-		
-		
-		//final ParentTreeItem test1 = new ParentTreeItem("test1");
-		
+
+		// final ParentTreeItem test1 = new ParentTreeItem("test1");
+
 		// for testing add one "prop"
 
 		// final TreeItemParent parentNode1 = new TreeItemParent("test 1");
@@ -329,8 +367,8 @@ public class GUIController {
 		//
 		// parentNode1.getChildren().addAll(checkNode1, marginNode1);
 		//
-		//root.getChildren().add(test1);
-		
+		// root.getChildren().add(test1);
+
 		treeView.setRoot(root);
 
 		codeArea = new NewCodeArea();
@@ -343,9 +381,9 @@ public class GUIController {
 
 		VirtualizedScrollPane<NewPrePropertyCodeArea> VSPpre = new VirtualizedScrollPane<NewPrePropertyCodeArea>(
 				preArea);
-		
+
 		prePropertyPane.setContent(VSPpre);
-		
+
 		postArea = new NewPostPropertyCodeArea();
 
 		VirtualizedScrollPane<NewPostPropertyCodeArea> VSPpost = new VirtualizedScrollPane<NewPostPropertyCodeArea>(
@@ -361,308 +399,330 @@ public class GUIController {
 
 	// Top Panels
 	@FXML
-	void errorPaneClicked(Event event) {
+	public void errorPaneClicked(Event event) {
 
 	}
 
 	@FXML
-	void inputPaneClicked(Event event) {
+	public void inputPaneClicked(Event event) {
 
 	}
 
 	@FXML
-	void propertyPaneClicked(Event event) {
+	public void propertyPaneClicked(Event event) {
 
 	}
 
 	@FXML
-	void resultPaneClicked(Event event) {
+	public void resultPaneClicked(Event event) {
 
 	}
-	
-	
+
 	// ------------
 	// symb Var
-    @FXML
-    void addSymbCand(ActionEvent event) {
-    	BooleanExpEditorNEW.addSymbVar(new InternalTypeContainer(InternalTypeRep.CANDIDATE));
-    }
+	@FXML
+	public void addSymbCand(ActionEvent event) {
+		BooleanExpEditorNEW.addSymbVar(new InternalTypeContainer(InternalTypeRep.CANDIDATE));
+	}
 
-    @FXML
-    void addSymbSeat(ActionEvent event) {
-    	BooleanExpEditorNEW.addSymbVar(new InternalTypeContainer(InternalTypeRep.SEAT));
-    }
+	@FXML
+	public void addSymbSeat(ActionEvent event) {
+		BooleanExpEditorNEW.addSymbVar(new InternalTypeContainer(InternalTypeRep.SEAT));
+	}
 
-    @FXML
-    void addSymbVoter(ActionEvent event) {
-    	BooleanExpEditorNEW.addSymbVar(new InternalTypeContainer(InternalTypeRep.VOTER));
-    }
-	
-	
-	
+	@FXML
+	public void addSymbVoter(ActionEvent event) {
+		BooleanExpEditorNEW.addSymbVar(new InternalTypeContainer(InternalTypeRep.VOTER));
+	}
+
+	@FXML
+	public TextField getInputVoters() {
+		return inputVoterField;
+	}
+
 	// ------------
 	// Bottom Panels
 	@FXML
-	void codePaneClicked(Event event) {
+	public void codePaneClicked(Event event) {
 
 	}
 
 	@FXML
-	void consolePaneClicked(Event event) {
+	public void consolePaneClicked(Event event) {
 
 	}
 
 	// --------
 	// Icon Bar
 	@FXML
-	void startStopPressed(ActionEvent event) {
+	public void startStopPressed(ActionEvent event) {
 		if (!running) {
-			//react = false; // lock the GUI
+			// react = false; // lock the GUI
 			if (BEASTCommunicator.startCheckNEW()) { // if we start it successful
 				startStopButton.setGraphic(new ImageView(pathToImages + "toolbar/stop.png"));
 			} else {
-		//		react = true;
+				// react = true;
 			}
 		} else {
 			if (BEASTCommunicator.stopCheck()) {
 				startStopButton.setGraphic(new ImageView(pathToImages + "toolbar/start.png"));
-		//		react = true;
+				// react = true;
 			}
 		}
 	}
 
 	@FXML
-	void copyButton(ActionEvent event) {
+	public void copyButton(ActionEvent event) {
 
 	}
 
 	@FXML
-	void undoButton(ActionEvent event) {
+	public void undoButton(ActionEvent event) {
 
 	}
 
 	@FXML
-	void cutButton(ActionEvent event) {
+	public void cutButton(ActionEvent event) {
 
 	}
 
 	@FXML
-	void openButton(ActionEvent event) {
+	public void openButton(ActionEvent event) {
 
 	}
 
 	@FXML
-	void pasteButton(ActionEvent event) {
+	public void pasteButton(ActionEvent event) {
 
 	}
 
 	@FXML
-	void redoButton(ActionEvent event) {
+	public void redoButton(ActionEvent event) {
 
 	}
 
 	@FXML
-	void saveAsButton(ActionEvent event) {
+	public void saveAsButton(ActionEvent event) {
 		codeArea.saveAs("test");
 	}
 
 	@FXML
-	void saveButton(ActionEvent event) {
+	public void saveButton(ActionEvent event) {
 
 	}
 
 	@FXML
-	void deleteButton(ActionEvent event) {
+	public void deleteButton(ActionEvent event) {
 
 	}
 
 	// text manipulation menu buttons
 	@FXML
-	void copy(ActionEvent event) {
+	public void copy(ActionEvent event) {
 		copyButton(event);
 	}
 
 	@FXML
-	void delete(ActionEvent event) {
+	public void delete(ActionEvent event) {
 		deleteButton(event);
 	}
 
 	@FXML
-	void cut(ActionEvent event) {
+	public void cut(ActionEvent event) {
 		cutButton(event);
 	}
 
 	@FXML
-	void paste(ActionEvent event) {
+	public void paste(ActionEvent event) {
 		pasteButton(event);
 	}
 
 	@FXML
-	void redo(ActionEvent event) {
+	public void redo(ActionEvent event) {
 		redoButton(event);
 	}
 
 	@FXML
-	void undo(ActionEvent event) {
+	public void undo(ActionEvent event) {
 		undoButton(event);
 	}
 
 	// other menu buttons
 
 	@FXML
-	void advancedParameters(Event event) {
+	public void advancedParameters(Event event) {
 
 	}
 
 	@FXML
-	void helpClicked(ActionEvent event) {
+	public void helpClicked(ActionEvent event) {
 
 	}
 
 	@FXML
-	void maxCandidates(ActionEvent event) {
+	public void maxCandidates(ActionEvent event) {
 
 	}
 
 	@FXML
-	void maxSeats(ActionEvent event) {
+	public void maxSeats(ActionEvent event) {
 
 	}
 
 	@FXML
-	void maxUnrolls(ActionEvent event) {
+	public void maxUnrolls(ActionEvent event) {
 
 	}
 
 	@FXML
-	void maxVoter(ActionEvent event) {
+	public void maxVoter(ActionEvent event) {
 		System.out.println("test");
 		System.out.println(maxVoter.getText());
 	}
 
 	@FXML
-	void minCandidates(ActionEvent event) {
+	public void minCandidates(ActionEvent event) {
 
 	}
 
 	@FXML
-	void minSeats(ActionEvent event) {
+	public void minSeats(ActionEvent event) {
 
 	}
 
 	@FXML
-	void minVoter(ActionEvent event) {
+	public void minVoter(ActionEvent event) {
 
 	}
 
 	@FXML
-	void newElectionDescription(ActionEvent event) {
+	public void newElectionDescription(ActionEvent event) {
 
 	}
 
 	@FXML
-	void newProject(ActionEvent event) {
+	public void newProject(ActionEvent event) {
 
 	}
 
 	@FXML
-	void newPropertyList(ActionEvent event) {
+	public void newPropertyList(ActionEvent event) {
 
 	}
 
 	@FXML
-	void newVotingInpup(ActionEvent event) {
+	public void newVotingInpup(ActionEvent event) {
 
 	}
 
 	@FXML
-	void openElectionDescription(ActionEvent event) {
+	public void openElectionDescription(ActionEvent event) {
 
 	}
 
 	@FXML
-	void openProject(ActionEvent event) {
+	public void openProject(ActionEvent event) {
 
 	}
 
 	@FXML
-	void openPropertyList(ActionEvent event) {
+	public void openPropertyList(ActionEvent event) {
 
 	}
 
 	@FXML
-	void openVotingInput(ActionEvent event) {
+	public void openVotingInput(ActionEvent event) {
 
 	}
 
 	@FXML
-	void processes(ActionEvent event) {
+	public void processes(ActionEvent event) {
 
 	}
 
 	@FXML
-	void quitProgram(ActionEvent event) {
+	public void quitProgram(ActionEvent event) {
 
 	}
 
 	@FXML
-	void saveAsElectionDescription(ActionEvent event) {
+	public void saveAsElectionDescription(ActionEvent event) {
 
 	}
 
 	@FXML
-	void saveAsProject(ActionEvent event) {
+	public void saveAsProject(ActionEvent event) {
 
 	}
 
 	@FXML
-	void saveAsPropertyList(ActionEvent event) {
+	public void saveAsPropertyList(ActionEvent event) {
 
 	}
 
 	@FXML
-	void saveAsVotingInput(ActionEvent event) {
+	public void saveAsVotingInput(ActionEvent event) {
 
 	}
 
 	@FXML
-	void saveElectionDescription(ActionEvent event) {
+	public void saveElectionDescription(ActionEvent event) {
 
 	}
 
 	@FXML
-	void saveProject(ActionEvent event) {
+	public void saveProject(ActionEvent event) {
 
 	}
 
 	@FXML
-	void savePropertyList(ActionEvent event) {
+	public void savePropertyList(ActionEvent event) {
 
 	}
 
 	@FXML
-	void saveVotingInput(ActionEvent event) {
+	public void saveVotingInput(ActionEvent event) {
 
 	}
 
 	@FXML
-	void timeOut(ActionEvent event) {
+	public void timeOut(ActionEvent event) {
 
 	}
-	
+
 	@FXML
-	void newProperty(ActionEvent event) {
+	public void newProperty(ActionEvent event) {
 		addTreeItem(new PreAndPostConditionsDescription("new Property"));
 	}
-	
+
 	@FXML
-	void loadProperty(ActionEvent event) {
+	public void loadProperty(ActionEvent event) {
 		System.out.println("TODO LOAD PROPERTY");
+	}
+
+	@FXML
+	public void loadPropertyList(ActionEvent event) {
+		System.out.println("TODO LOAD PROPERTY LIST");
 	}
 	
 	@FXML
-	void loadPropertyList(ActionEvent event) {
-		System.out.println("TODO LOAD PROPERTY LIST");
+	public void resetInput(ActionEvent event) {
+		Alert confirmation = new Alert(AlertType.CONFIRMATION);
+		
+		Stage stage = (Stage) confirmation.getDialogPane().getScene().getWindow();
+
+		// Add a custom icon.
+		stage.getIcons().add(new Image(pathToImages + "other/BEAST.png"));
+		
+		confirmation.setTitle("Confirmation Dialog");
+		confirmation.setHeaderText("Do you really want to reset the input?");
+		confirmation.setContentText("Doing so will reset all previously given values");
+		
+		Optional<ButtonType> result = confirmation.showAndWait();
+		
+		if(result.get() == ButtonType.OK) {
+			electionSimulation.reset();
+		}
 	}
 
 	private void addNumberEnforcer(TextField field) {
@@ -727,7 +787,6 @@ public class GUIController {
 
 		Integer numberProcesses = Runtime.getRuntime().availableProcessors();
 
-		
 		if (!processes.getText().equals("")) {
 			numberProcesses = Integer.parseInt(processes.getText());
 		}
@@ -764,7 +823,7 @@ public class GUIController {
 
 	public static void setInfoText(String text) {
 		controller.infoTextArea.setText(text);
-		
+
 		controller.getSubTabPane().getSelectionModel().select(controller.informationPane);
 	}
 
@@ -774,7 +833,7 @@ public class GUIController {
 
 	public static void setConsoleText(String text) {
 		controller.consoleTextArea.setText(text);
-		
+
 		controller.getSubTabPane().getSelectionModel().select(controller.consolePane);
 	}
 
@@ -784,16 +843,16 @@ public class GUIController {
 
 	public static void setErrorText(String text) {
 		controller.errorTextArea.setText(text);
-		
+
 		controller.getSubTabPane().getSelectionModel().select(controller.errorPane);
 	}
 
 	public static TreeItem<CustomTreeItem> addTreeItem(PreAndPostConditionsDescription description) {
-		
+
 		TreeItem<CustomTreeItem> propRoot = new TreeItem<CustomTreeItem>();
-		
+
 		properties.add(new ParentTreeItem(description, false, propRoot));
-		
+
 		root.getChildren().add(propRoot);
 
 		return propRoot;
@@ -810,23 +869,23 @@ public class GUIController {
 	public TextArea getResultField() {
 		return solutionField;
 	}
-	
+
 	public NewCodeArea getCodeArea() {
 		return codeArea;
 	}
-	
+
 	public NewPrePropertyCodeArea getPreConditionsArea() {
 		return preArea;
 	}
-	
+
 	public NewPostPropertyCodeArea getPostConditionsArea() {
 		return postArea;
 	}
-	
+
 	public TabPane getMainTabPane() {
 		return mainTabPane;
 	}
-	
+
 	public TabPane getSubTabPane() {
 		return subTabPane;
 	}
@@ -838,11 +897,11 @@ public class GUIController {
 	public Tab getResultTab() {
 		return resultPane;
 	}
-	
+
 	public Tab getCodeTab() {
 		return codePane;
 	}
-	
+
 	public Tab getInputTab() {
 		return inputPane;
 	}
@@ -856,25 +915,43 @@ public class GUIController {
 	}
 
 	public String[][] getVotingData() {
-		// TODO Auto-generated method stub
-		System.out.println("GET VOTING DATA");
-		return null;
+		return NewElectionSimulation.getVotingData();
 	}
-	
+
 	public NewPrePropertyCodeArea getPreCodeArea() {
 		return preArea;
 	}
-	
+
 	public NewPostPropertyCodeArea getPostCodeArea() {
 		return postArea;
 	}
-	
+
 	public TextField getVariableNameField() {
 		return symbVarField;
 	}
-	
+
 	public boolean getDeleteTmpFiles() {
-		return deleteItmesCheckbox.getState();
+		return deleteItemsCheckbox.isSelected();
+	}
+
+	private void addVoterNumberEnforcer(TextField field, String newValue) {
+		newValue = newValue.replaceAll(" ", "");
+		if(newValue.length() != 0) {
+		int sign = 1;
+
+		if (newValue.charAt(0) == '-' && newValue.length() > 1) {
+			sign = -1;
+		}
+
+		if (!newValue.matches("\\d*")) {
+
+			String newText = newValue.replaceAll("[^\\d]", "");
+
+			newText = "" + (Long.parseLong(newText)) * sign;
+
+			field.setText(newText);
+		}
+		}
 	}
 }
 

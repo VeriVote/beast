@@ -3,7 +3,7 @@ package edu.pse.beast.types.cbmctypes.outputtypes;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.pse.beast.electionSimulator.ElectionSimulation;
+import edu.pse.beast.electionSimulator.NewElectionSimulation;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
@@ -230,7 +230,7 @@ public class ParliamentStack extends CBMCOutputType {
 			String currentValue = (String) iterator.next();
 			
 			try {
-				toReturn = toReturn + ElectionSimulation.getPartyName(index) + ": " + currentValue + ", ";
+				toReturn = toReturn + NewElectionSimulation.getPartyName(index) + ": " + currentValue + ", ";
 			} catch (Exception e) {
 				toReturn = toReturn + index + ": " + currentValue + ", ";
 			}

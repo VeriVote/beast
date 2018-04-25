@@ -234,4 +234,8 @@ public class ElectionSimulationModel extends Observable implements NameInterface
 	public int getButtonHeight() {
 		return borderMarginSmall;
 	}
+
+	public void reset() {
+		rows = new ArrayList<RowOfValues>();
+	}
 }

@@ -2,7 +2,7 @@ package edu.pse.beast.datatypes.electioncheckparameter;
 
 import java.util.List;
 
-import edu.pse.beast.electionSimulator.ElectionSimulation;
+import edu.pse.beast.electionSimulator.NewElectionSimulation;
 
 /**
  * 
@@ -106,6 +106,6 @@ public class ElectionCheckParameter {
 		
 		System.out.println("TODO getNumVotingPoints in electionCheckParameters");
 		
-		return ElectionSimulation.getNumVotingPoints();
+		return NewElectionSimulation.getNumVotingPoints();
 	}
 }

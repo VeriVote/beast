@@ -23,7 +23,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox prefHeight="532.0" prefWidth="545.0" stylesheets="@../javafx/style.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
@@ -191,7 +194,7 @@
                     <items>
                       <MenuItem mnemonicParsing="false" text="%key.deleteItems">
                            <graphic>
-                              <CheckBox fx:id="deleteItmesCheckbox" mnemonicParsing="false" />
+                              <CheckBox fx:id="deleteItemsCheckbox" mnemonicParsing="false" />
                            </graphic>
                         </MenuItem>
                     </items>
@@ -270,7 +273,7 @@
 								<Tab fx:id="codePane" onSelectionChanged="#codePaneClicked" text="%key.code" />
 								<Tab fx:id="propertyPane" onSelectionChanged="#propertyPaneClicked" text="%key.property">
                            <content>
-                              <SplitPane dividerPositions="0.11125654450261781, 0.5157068062827226" orientation="VERTICAL">
+                              <SplitPane dividerPositions="0.11125654450261781, 0.7" orientation="VERTICAL">
                                 <items>
                                     <BorderPane>
                                        <center>
@@ -340,26 +343,44 @@
 									<content>
 										<AnchorPane>
                                  <children>
-                                    <BorderPane>
+                                    <BorderPane prefHeight="292.6666666666667" prefWidth="402.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <center>
-                                          <ScrollPane fx:id="inputScrollPane" fitToHeight="true" fitToWidth="true" prefHeight="292.6666666666667" prefWidth="377.3333333333333" BorderPane.alignment="CENTER" />
+                                          <ScrollPane fx:id="inputScrollPane" fitToHeight="true" fitToWidth="true" BorderPane.alignment="CENTER">
+                                             <content>
+                                                <GridPane>
+                                                  <columnConstraints>
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                  </columnConstraints>
+                                                  <rowConstraints>
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                  </rowConstraints>
+                                                </GridPane>
+                                             </content></ScrollPane>
                                        </center>
                                        <top>
                                           <MenuBar BorderPane.alignment="CENTER">
                                             <menus>
                                               <Menu mnemonicParsing="false" text="Voters">
                                                    <graphic>
-                                                      <TextField maxWidth="50.0" text="0" />
+                                                      <TextField fx:id="inputVoterField" maxWidth="50.0" text="0" />
                                                    </graphic>
                                               </Menu>
                                                 <Menu mnemonicParsing="false" text="Candidates">
                                                    <graphic>
-                                                      <TextField maxWidth="50.0" text="0" />
+                                                      <TextField fx:id="inputCandidateField" maxWidth="50.0" text="0" />
                                                    </graphic>
                                                 </Menu>
                                                 <Menu mnemonicParsing="false" text="Seats">
                                                    <graphic>
-                                                      <TextField maxWidth="50.0" text="0" />
+                                                      <TextField fx:id="inputSeatField" maxWidth="50.0" text="0" />
+                                                   </graphic>
+                                                </Menu>
+                                                <Menu mnemonicParsing="false">
+                                                   <graphic>
+                                                      <Button mnemonicParsing="false" onAction="#resetInput" text="%key.reset" />
                                                    </graphic>
                                                 </Menu>
                                             </menus>

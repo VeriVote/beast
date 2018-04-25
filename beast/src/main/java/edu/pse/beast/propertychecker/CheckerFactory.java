@@ -7,7 +7,7 @@ import java.util.List;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.electionSimulator.ElectionSimulation;
+import edu.pse.beast.electionSimulator.NewElectionSimulation;
 import edu.pse.beast.highlevel.javafx.ChildTreeItem;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.ErrorForUserDisplayer;
@@ -337,7 +337,7 @@ public abstract class CheckerFactory implements Runnable {
 				childItem.getResult().setHasFinalMargin(hasMargin);
 
 				childItem.getResult().setOrigWinner(origResult);
-				childItem.getResult().setOrigVoting(ElectionSimulation.getVotingDataListofList());
+				childItem.getResult().setOrigVoting(NewElectionSimulation.getVotingDataListofList());
 
 				if (hasMargin) {
 					childItem.getResult().setResult(currentlyRunning.getResultList());
@@ -421,7 +421,7 @@ public abstract class CheckerFactory implements Runnable {
 						lastResult);
 
 				int left = 0;
-				int right = ElectionSimulation.getNumVotingPoints(); // how many votes we have
+				int right = NewElectionSimulation.getNumVotingPoints(); // how many votes we have
 
 				if (right == 1) {
 					ErrorForUserDisplayer.displayError(
@@ -477,7 +477,7 @@ public abstract class CheckerFactory implements Runnable {
 				childItem.getResult().setHasFinalMargin(hasMargin);
 
 				childItem.getResult().setOrigWinner(origResult);
-				childItem.getResult().setOrigVoting(ElectionSimulation.getVotingDataListofList());
+				childItem.getResult().setOrigVoting(NewElectionSimulation.getVotingDataListofList());
 
 				if (hasMargin) {
 					childItem.getResult().setResult(currentlyRunning.getResultList());

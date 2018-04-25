@@ -3,7 +3,7 @@ package edu.pse.beast.types.cbmctypes;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.pse.beast.electionSimulator.ElectionSimulation;
+import edu.pse.beast.electionSimulator.NewElectionSimulation;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.types.InputType;
 
@@ -40,7 +40,7 @@ public abstract class CBMCInputType extends InputType {
 			String oneVoter = "";
 			
 			try {
-				oneVoter = ElectionSimulation.getVoterName(voterIndex);
+				oneVoter = NewElectionSimulation.getVoterName(voterIndex);
 			} catch (Exception e) {
 				oneVoter = "" + voterIndex;
 			}
@@ -56,7 +56,7 @@ public abstract class CBMCInputType extends InputType {
 				
 				
 				try {
-					oneVoter = oneVoter + ElectionSimulation.getPartyName(partyIndex);
+					oneVoter = oneVoter + NewElectionSimulation.getPartyName(partyIndex);
 				} catch (Exception e) {
 					oneVoter = "" + partyIndex;
 				}
