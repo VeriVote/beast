@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.electionSimulator.NewElectionSimulation;
+import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.types.InputType;
 
@@ -40,7 +41,7 @@ public abstract class CBMCInputType extends InputType {
 			String oneVoter = "";
 			
 			try {
-				oneVoter = NewElectionSimulation.getVoterName(voterIndex);
+				oneVoter = GUIController.getController().getElectionSimulation().getVoterName(voterIndex);
 			} catch (Exception e) {
 				oneVoter = "" + voterIndex;
 			}
@@ -56,7 +57,7 @@ public abstract class CBMCInputType extends InputType {
 				
 				
 				try {
-					oneVoter = oneVoter + NewElectionSimulation.getPartyName(partyIndex);
+					oneVoter = oneVoter + GUIController.getController().getElectionSimulation().getPartyName(partyIndex);
 				} catch (Exception e) {
 					oneVoter = "" + partyIndex;
 				}

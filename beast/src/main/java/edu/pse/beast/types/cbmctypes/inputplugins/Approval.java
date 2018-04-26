@@ -6,7 +6,8 @@ import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.electionSimulator.NewElectionSimulation;
-import edu.pse.beast.electionSimulator.Model.RowOfValues;
+import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
@@ -97,7 +98,7 @@ public class Approval extends CBMCInputType {
 	}
 
 	@Override
-	public String vetValue(String newValue, ElectionTypeContainer container, RowOfValues row) {
+	public String vetValue(String newValue, ElectionTypeContainer container, NEWRowOfValues row) {
 
 		int number;
 
@@ -269,6 +270,6 @@ public class Approval extends CBMCInputType {
 
 	@Override
 	public int getNumVotingPoints(String[][] votingData) {
-		return NewElectionSimulation.getNumVoters();
+		return GUIController.getController().getElectionSimulation().getNumVoters();
 	}
 }

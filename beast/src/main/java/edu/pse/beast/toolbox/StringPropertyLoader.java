@@ -1,9 +1,9 @@
-package edu.pse.beast.toolbox;
-
-public class StringPropertyLoader {
-	
-	private String currentLanguage = "en";
-	
-	
-
-}
+//package edu.pse.beast.toolbox;
+//
+//public class StringPropertyLoader {
+//	
+//	private String currentLanguage = "en";
+//	
+//	
+//
+//}

@@ -3,117 +3,153 @@ package edu.pse.beast.highlevel.javafx;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import javax.swing.JTextField;
-
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.electionSimulator.Model.ElectionSimulationModel;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 
-public class NEWRowOfValues extends TextField {
+public class NEWRowOfValues {
 
 	private int elementHeight;
 	private int elementWidth;
 
-	private int widthMultiplier;
+	private int rowIndex;
 
-	private int offset = 0;
-	
 	private ArrayList<String> values;
 	private ArrayList<TextField> fields;
 
 	private ElectionTypeContainer container;
 
 	private int amountOfCandidates = 0;
+	private ElectionSimulationModel parent;
 
-	public NEWRowOfValues(ElectionSimulationModel parent, ElectionTypeContainer container, int amountOfCandidates) {
+	public NEWRowOfValues(ElectionSimulationModel parent, ElectionTypeContainer container, int amountOfCandidates,
+			int rowIndex) {
+		this.parent = parent;
 		this.container = container;
+		this.amountOfCandidates = amountOfCandidates;
+		this.rowIndex = rowIndex;
 		values = new ArrayList<>(amountOfCandidates);
 		fields = new ArrayList<>(amountOfCandidates);
-		this.setVisible(true);
 
 		for (int i = 0; i < amountOfCandidates; i++) {
 			addColumn();
 		}
 	}
 
-	public void addColumn() {
+	public synchronized void addColumn() {
 		amountOfCandidates++;
 
-		values.add("0");
-		
-		JTextField toAdd = new JTextField("0");
-		toAdd.getDocument().addDocumentListener(this);
-		toAdd.setSize(elementWidth, elementHeight);
-		
+		if (values.size() == fields.size()) {
+			values.add("0");
+		}
+
+		TextField toAdd = new TextField(values.get(fields.size()));
+
+		toAdd.textProperty().addListener(new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				addValueEnforcer(toAdd, fields.size());
+
+			}
+		});
+
+		toAdd.setMinSize(elementWidth, elementHeight);
+		toAdd.setPrefSize(elementWidth, elementHeight);
+		toAdd.setMaxSize(elementWidth, elementHeight);
+
 		fields.add(toAdd);
-		
+
 		update();
 	}
 
 	public void removeColumn() {
 		amountOfCandidates--;
-		this.remove(fields.get(fields.size() - 1));
 		fields.remove(fields.size() - 1);
 		update();
 	}
 
 	public void update() {
-		for (Iterator<JTextField> iterator = fields.iterator(); iterator.hasNext();) {
-			JTextField field = (JTextField) iterator.next();
-			this.remove(field);
+		for (Iterator<TextField> iterator = fields.iterator(); iterator.hasNext();) {
+			TextField textField = (TextField) iterator.next();
+			parent.getInputGridPane().getChildren().remove(textField);
 		}
-
-		this.setSize(widthMultiplier * (amountOfCandidates), elementHeight * 2);
 
 		for (int i = 0; i < amountOfCandidates; i++) {
-			fields.get(i).setBounds(widthMultiplier * i - offset, 0, elementWidth, elementHeight);
-			this.add(fields.get(i));
+			TextField field = fields.get(i);
+			parent.getInputGridPane().add(field, i, rowIndex);
 		}
-
-		this.setVisible(true);
-		this.repaint();
 	}
 
 	private void checkAndInsertValue(String newValue, int position) {
-		
+
 		String vettedValue = container.getInputType().vetValue(newValue, container, this);
 
 		values.set(position, vettedValue);
 		
-		// update all values that will get shown
-		for (int i = 0; i < values.size(); i++) {
-			try {
-					fields.get(i).setText("" + values.get(i));
-			} catch (Exception e) {
-				System.err.println(e);
-			}
+		if(position < fields.size()) {
+			fields.get(position).setText(vettedValue);
 		}
 	}
 
-	
-	//getter and setter
+	// getter and setter
 	public ArrayList<String> getValues() {
 		return values;
 	}
-	
+
 	public void setValues(ArrayList<String> values) {
 		this.values = values;
 	}
-	
+
 	public void setContainer(ElectionTypeContainer container) {
 		this.container = container;
-		
+
 		for (int i = 0; i < values.size(); i++) {
 			checkAndInsertValue("0", i);
 		}
-		
+
 	}
 
 	public int getAmountCandidates() {
 		return amountOfCandidates;
 	}
-	
+
 	public int getAmountVoters() {
 		return getAmountVoters();
+	}
+
+	private void addValueEnforcer(TextField field, int index) {
+		String vettedValue = this.container.getInputType().vetValue(field.getText(), container, this);
+		field.setText(vettedValue);
+		values.set(index, vettedValue);
+	}
+
+	public void setCandidates(int amountCandidates) {
+
+		if (this.amountOfCandidates < amountCandidates) {
+			while (this.amountOfCandidates < amountCandidates) {
+				addColumn();
+			}
+		} else if (this.amountOfCandidates > amountCandidates) {
+			while (this.amountOfCandidates > amountCandidates) {
+				removeColumn();
+			}
+		}
+		this.amountOfCandidates = amountCandidates;
+		updateVetting();
+	}
+
+	/**
+	 * vetts all numbers in the fields again, in case they are
+	 * dependant of a variable that was changed
+	 */
+	public void updateVetting() {
+		for (int i = 0; i < values.size(); i++) {
+
+			checkAndInsertValue(values.get(i), i);
+			
+		}
 	}
 }

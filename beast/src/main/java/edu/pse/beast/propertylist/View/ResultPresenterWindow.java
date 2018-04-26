@@ -280,8 +280,6 @@ public class ResultPresenterWindow extends JFrame {
 		appendLine("================================");
 		appendLine("");
 
-		List<List<String>> origVotes = marginResult.getOrigVoting();
-		
 		appendLine("====original Votes====");
 		appendLine("");
 		

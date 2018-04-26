@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.electionSimulator.NewElectionSimulation;
+import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
@@ -223,7 +224,7 @@ public class Parliament extends CBMCOutputType {
 			String currentValue = (String) iterator.next();
 			
 			try {
-				toReturn = toReturn + NewElectionSimulation.getPartyName(Integer.parseInt(currentValue)) + ", ";
+				toReturn = toReturn + GUIController.getController().getElectionSimulation().getPartyName(Integer.parseInt(currentValue)) + ", ";
 			} catch (Exception e) {
 				toReturn = toReturn + currentValue + ", ";
 			}

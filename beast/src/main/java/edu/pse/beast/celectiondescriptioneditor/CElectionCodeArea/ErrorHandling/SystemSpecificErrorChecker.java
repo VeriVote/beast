@@ -170,6 +170,9 @@ public abstract class SystemSpecificErrorChecker {
 			objFile.delete();
 			exeFile.delete();
 
+			outReader.finish();
+			errReader.finish();
+			
 			return toReturn;
 		} else {
 			ErrorLogger.log("Process couldn't be started");

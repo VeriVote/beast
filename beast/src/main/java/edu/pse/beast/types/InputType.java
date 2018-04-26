@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
-import edu.pse.beast.electionSimulator.Model.RowOfValues;
+import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
@@ -83,10 +83,10 @@ public abstract class InputType implements InOutType{
 	 * vets a value to determine if it is legal for the input type, or not
 	 * @param newValue
 	 * @param container
-	 * @param rowOfValues 
+	 * @param newRowOfValues 
 	 * @return
 	 */
-	public abstract String vetValue(String newValue, ElectionTypeContainer container, RowOfValues rowOfValues);
+	public abstract String vetValue(String newValue, ElectionTypeContainer container, NEWRowOfValues newRowOfValues);
 
 	public abstract List<CBMCResultWrapperMultiArray> readVoteList(List<String> toExtract);
 

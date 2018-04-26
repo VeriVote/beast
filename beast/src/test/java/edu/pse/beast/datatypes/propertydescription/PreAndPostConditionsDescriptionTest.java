@@ -137,7 +137,6 @@ public class PreAndPostConditionsDescriptionTest {
     @Test
     public void testSetNewName() {
         System.out.println("setNewName");
-        String newName = "";
         PreAndPostConditionsDescription instance = new PreAndPostConditionsDescription("test");
         instance.setNewName("test2");
         assert (instance.getName().equals("test2"));

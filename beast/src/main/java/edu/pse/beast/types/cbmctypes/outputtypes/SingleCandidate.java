@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.pse.beast.electionSimulator.NewElectionSimulation;
+import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
@@ -142,7 +143,7 @@ public class SingleCandidate extends CBMCOutputType {
 		String toReturn = "winner: ";
 		
 		try {
-			toReturn = NewElectionSimulation.getPartyName(Integer.parseInt(result.get(0)));
+			toReturn = GUIController.getController().getElectionSimulation().getPartyName(Integer.parseInt(result.get(0)));
 		} catch (Exception e) {
 			toReturn = result.get(0);
 		}

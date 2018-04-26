@@ -5,24 +5,15 @@
  */
 package edu.pse.beast.CodeArea.InputToCode;
 
-import javax.swing.JTextPane;
-
 import org.junit.After;
-import org.junit.Before;
 
 /**
  *
  * @author Holger-Desktop
  */
 public class NewlineTest {
-    private JTextPane pane;
     
-   
-    
-    @Before
-    public void setUp() {
-        pane = new JTextPane();
-    }
+ 
     
     @After
     public void tearDown() {

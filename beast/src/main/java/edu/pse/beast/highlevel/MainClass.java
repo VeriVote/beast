@@ -32,7 +32,7 @@ public class MainClass extends Application {
 	 *            not used
 	 */
 	public static void main(String[] args) {
-		BEASTCommunicator communicator = new BEASTCommunicator();
+		//new BEASTCommunicator();
 		//PSECentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
 		//communicator.setCentralObjectProvider(centralObjectProvider);
 		launch(args);

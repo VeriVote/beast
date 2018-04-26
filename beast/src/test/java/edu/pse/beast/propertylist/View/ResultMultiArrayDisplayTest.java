@@ -11,7 +11,6 @@ import org.junit.BeforeClass;
  */
 public class ResultMultiArrayDisplayTest {
 	ResultPresenterWindow win;
-	private int wait = 100;
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {

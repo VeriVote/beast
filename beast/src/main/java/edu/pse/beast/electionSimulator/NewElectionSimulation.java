@@ -7,48 +7,33 @@ import java.util.List;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.electionSimulator.Model.ElectionSimulationModel;
-import edu.pse.beast.electionSimulator.Model.RowOfValues;
+import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
+import javafx.scene.layout.GridPane;
 
 public class NewElectionSimulation implements ElectionDescriptionChangeListener {
 
-	private static ElectionTypeContainer container;
+	private ElectionTypeContainer container;
 
-	private static ElectionSimulationModel model;
+	private ElectionSimulationModel model;
+	
+	public NewElectionSimulation(
+		ElectionTypeContainer container, GridPane inputGridPane, GridPane voterGridPane, GridPane candidateGridPane) {
+			this.container = container;
+			model = new ElectionSimulationModel(container, inputGridPane, voterGridPane, candidateGridPane);
+	}
 
-	public static void updateContainer(ElectionTypeContainer newContainer) {
-		container = newContainer;
-		model = new ElectionSimulationModel(newContainer);
-
+	public void updateContainer(ElectionTypeContainer container) {
+		this.container = container;
+		model.changeContainer(container);
 	}
 
 	public synchronized void updateRows() {
-		for (Iterator<RowOfValues> iterator = model.getRows().iterator(); iterator.hasNext();) {
-			RowOfValues row = (RowOfValues) iterator.next();
+		for (Iterator<NEWRowOfValues> iterator = model.getRows().iterator(); iterator.hasNext();) {
+			NEWRowOfValues row = (NEWRowOfValues) iterator.next();
 			row.update();
 		}
-	}
-
-	@Override
-	public void inputChanged(InputType input) {
-		electionTypeChanged();
-	}
-
-	@Override
-	public void outputChanged(OutputType output) {
-		electionTypeChanged();
-	}
-
-	/**
-	 * gets called when one of the changed listener gets called here, we update the
-	 * models which are used
-	 */
-	private void electionTypeChanged() {
-		// ElectionSimulation.container =
-		// centralObjectProvider.getElectionDescriptionSource().getElectionDescription()
-		// .getContainer();
-		// model.changeContainer(container);
 	}
 
 	// TODO
@@ -84,7 +69,7 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener 
 
 	}
 
-	public static String[][] getVotingData() {
+	public String[][] getVotingData() {
 		String[][] votingData = { { "0" }, { "0" } };
 
 		votingData = new String[model.getAmountVoters()][model.getAmountCandidates()];
@@ -99,19 +84,19 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener 
 		return votingData;
 	}
 
-	public static int getNumVoters() {
+	public int getNumVoters() {
 		return model.getAmountVoters();
 	}
 
-	public static int getNumCandidates() {
+	public int getNumCandidates() {
 		return model.getAmountCandidates();
 	}
 
-	public static int getNumSeats() {
+	public int getNumSeats() {
 		return model.getAmountSeats();
 	}
 
-	public static List<List<String>> getVotingDataListofList() {
+	public List<List<String>> getVotingDataListofList() {
 		List<List<String>> toReturn = new ArrayList<List<String>>();
 
 		String[][] data = getVotingData();
@@ -127,15 +112,15 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener 
 		return toReturn;
 	}
 
-	public static int getNumVotingPoints() {
+	public int getNumVotingPoints() {
 		return container.getInputType().getNumVotingPoints(getVotingData());
 	}
 
-	public static String getPartyName(int index) {
+	public String getPartyName(int index) {
 		return model.getCandidates().get(index).getText();
 	}
 
-	public static String getVoterName(int index) {
+	public String getVoterName(int index) {
 		return model.getVoters().get(index).getText();
 	}
 
@@ -149,5 +134,36 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener 
 	
 	public void numSeatsChanged(int numSeats) {
 		model.setAmountSeats(numSeats);
+	}
+
+	public String setAndVetVoterNumber(String toVet) {
+		int vetted = container.getInputType().vetAmountVoters(Integer.parseInt(toVet));
+		model.setAmountVoters(vetted);
+		
+		return "" + vetted;
+	}
+	
+	public String setAndVetCandidateNumber(String toVet) {
+		int vetted = container.getInputType().vetAmountCandidates(Integer.parseInt(toVet));
+		model.setAmountCandidates(vetted);
+		
+		return "" + vetted;
+	}
+	
+	public String setAndVetSeatNumber(String toVet) {
+		int vetted = container.getInputType().vetAmountSeats(Integer.parseInt(toVet));
+		model.setAmountSeats(vetted);
+		
+		return "" + vetted;
+	}
+
+	@Override
+	public void inputChanged(InputType input) {
+		System.out.println("todo? ");
+	}
+
+	@Override
+	public void outputChanged(OutputType output) {
+		inputChanged(null);
 	}
 }

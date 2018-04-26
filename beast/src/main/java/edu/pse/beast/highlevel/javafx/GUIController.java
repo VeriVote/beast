@@ -16,6 +16,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.electionSimulator.NewElectionSimulation;
+import edu.pse.beast.electionSimulator.Model.ElectionSimulationModel;
 import edu.pse.beast.highlevel.BEASTCommunicator;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.types.InternalTypeContainer;
@@ -24,6 +25,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -42,6 +44,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -55,15 +58,11 @@ public class GUIController {
 
 	private static TreeItem<CustomTreeItem> root;
 
-	private boolean react = true;
-
 	private List<TabClass> mainWindowTabs = new ArrayList<TabClass>();
 
 	private List<TabClass> bottomWindowTabs = new ArrayList<TabClass>();
 
-	private List<PreAndPostConditionsDescription> conditions = new ArrayList<PreAndPostConditionsDescription>();
-
-	private NewElectionSimulation electionSimulation = new NewElectionSimulation();
+	private NewElectionSimulation electionSimulation;
 
 	@FXML // fx:id="maxVoter"
 	private TextField maxVoter;
@@ -217,9 +216,21 @@ public class GUIController {
 
 	@FXML
 	private TextField inputSeatField;
-	
+
 	@FXML
 	private GridPane inputGridPane;
+
+	@FXML
+	private ScrollPane voterScrollPane;
+
+	@FXML
+	private GridPane voterGridPane;
+
+	@FXML
+	private ScrollPane candidateScrollPane;
+
+	@FXML
+	private GridPane candidateGridPane;
 
 	// @FXML
 	// private Text
@@ -280,7 +291,7 @@ public class GUIController {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 
-				addVoterNumberEnforcer(inputVoterField, newValue);
+				addInputNumberEnforcer(inputVoterField, newValue);
 			}
 		});
 
@@ -288,15 +299,15 @@ public class GUIController {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 
-				addVoterNumberEnforcer(inputCandidateField, newValue);
+				addInputNumberEnforcer(inputCandidateField, newValue);
 			}
 		});
-		
+
 		inputSeatField.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 
-				addVoterNumberEnforcer(inputSeatField, newValue);
+				addInputNumberEnforcer(inputSeatField, newValue);
 			}
 		});
 
@@ -397,8 +408,21 @@ public class GUIController {
 
 		codeArea.setStyle("-fx-font-family: consolas; -fx-font-size: 11pt;");
 
-		// create the tabs which will be used
-		// mainWindowTabs.add(new RichTextFXCodeArea());
+		inputScrollPane.addEventHandler(ScrollEvent.ANY, new EventHandler<Event>() {
+			@Override
+			public void handle(Event event) { // synchronize the scrolling
+				voterScrollPane.vvalueProperty().set(inputScrollPane.getVvalue());
+
+				candidateScrollPane.hvalueProperty().set(inputScrollPane.getHvalue());
+			}
+		});
+
+		electionSimulation = new NewElectionSimulation(codeArea.getElectionDescription().getContainer(), inputGridPane,
+				voterGridPane, candidateGridPane);
+
+		
+		this.addInputNumberEnforcer(inputVoterField, ""); //update all numbers for the input fields
+		
 	}
 
 	// Top Panels
@@ -708,23 +732,23 @@ public class GUIController {
 	public void loadPropertyList(ActionEvent event) {
 		System.out.println("TODO LOAD PROPERTY LIST");
 	}
-	
+
 	@FXML
 	public void resetInput(ActionEvent event) {
 		Alert confirmation = new Alert(AlertType.CONFIRMATION);
-		
+
 		Stage stage = (Stage) confirmation.getDialogPane().getScene().getWindow();
 
 		// Add a custom icon.
 		stage.getIcons().add(new Image(pathToImages + "other/BEAST.png"));
-		
+
 		confirmation.setTitle("Confirmation Dialog");
 		confirmation.setHeaderText("Do you really want to reset the input?");
 		confirmation.setContentText("Doing so will reset all previously given values");
-		
+
 		Optional<ButtonType> result = confirmation.showAndWait();
-		
-		if(result.get() == ButtonType.OK) {
+
+		if (result.get() == ButtonType.OK) {
 			electionSimulation.reset();
 		}
 	}
@@ -778,10 +802,6 @@ public class GUIController {
 			}
 		});
 
-	}
-
-	public void setReact(boolean react) {
-		this.react = react;
 	}
 
 	public ElectionCheckParameter getParameter() {
@@ -919,7 +939,7 @@ public class GUIController {
 	}
 
 	public String[][] getVotingData() {
-		return NewElectionSimulation.getVotingData();
+		return electionSimulation.getVotingData();
 	}
 
 	public NewPrePropertyCodeArea getPreCodeArea() {
@@ -938,24 +958,50 @@ public class GUIController {
 		return deleteItemsCheckbox.isSelected();
 	}
 
-	private void addVoterNumberEnforcer(TextField field, String newValue) {
+	private void addInputNumberEnforcer(TextField field, String newValue) {
 		newValue = newValue.replaceAll(" ", "");
-		if(newValue.length() != 0) {
-		int sign = 1;
+		if (newValue.length() != 0) {
+			String sign = "";
 
-		if (newValue.charAt(0) == '-' && newValue.length() > 1) {
-			sign = -1;
+			if (newValue.charAt(0) == '-' && newValue.length() > 1) {
+				sign = "-";
+			}
+
+			if (!newValue.matches("\\d*")) {
+
+				String newText = "0";
+				if (!newValue.equals("")) {
+					newText = newValue.replaceAll("[^\\d]", "");
+				}
+				if(newText.equals("")) {
+					newText = "0";
+				}
+				field.setText(sign + newText);
+			}
+		} else {
+			field.setText("0");
+
+			String vettedVoters = electionSimulation.setAndVetVoterNumber(inputVoterField.getText());
+			if (vettedVoters != inputVoterField.getText()) {
+				inputVoterField.setText(vettedVoters);
+				System.out.println("vettedVotes " + vettedVoters);
+			}
+
+			String vettedCandidates = electionSimulation.setAndVetCandidateNumber(inputCandidateField.getText());
+			if (vettedVoters != inputCandidateField.getText()) {
+				inputCandidateField.setText(vettedCandidates);
+			}
+
+			String vettedSeats = electionSimulation.setAndVetSeatNumber(inputSeatField.getText());
+			if (vettedVoters != inputSeatField.getText()) {
+				inputSeatField.setText(vettedSeats);
+			}
+
 		}
+	}
 
-		if (!newValue.matches("\\d*")) {
-
-			String newText = newValue.replaceAll("[^\\d]", "");
-
-			newText = "" + (Long.parseLong(newText)) * sign;
-
-			field.setText(newText);
-		}
-		}
+	public NewElectionSimulation getElectionSimulation() {
+		return electionSimulation;
 	}
 }
 

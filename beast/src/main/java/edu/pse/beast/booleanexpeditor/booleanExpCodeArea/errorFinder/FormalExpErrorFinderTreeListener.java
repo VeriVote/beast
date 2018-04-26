@@ -175,7 +175,7 @@ public class FormalExpErrorFinderTreeListener
 
     @Override
     public void exitComparisonExp(FormalPropertyDescriptionParser.ComparisonExpContext ctx) {
-        String s = ctx.getText();
+        ctx.getText();
         TypeExpression rhs = expStack.pop();
         TypeExpression lhs = expStack.pop();
         InternalTypeContainer lhsCont = lhs.getInternalTypeContainer();

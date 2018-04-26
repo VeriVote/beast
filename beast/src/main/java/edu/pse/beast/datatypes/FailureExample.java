@@ -47,7 +47,7 @@ public class FailureExample {
 
 	private List<List<String>> newVotes;
 	
-	private List<String> origVotes;
+	private List<List<String>> origVotes;
 
 	/**
 	 * Creates the FailureExample from the returned data of CBMC. If specific data
@@ -256,7 +256,7 @@ public class FailureExample {
 	}
 
 	public void setOrigVoting(List<List<String>> origVoting) {
-		this.origVotes = origVotes;
+		this.origVotes = origVoting;
 	}
 
 }

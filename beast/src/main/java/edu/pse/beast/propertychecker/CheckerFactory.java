@@ -337,7 +337,7 @@ public abstract class CheckerFactory implements Runnable {
 				childItem.getResult().setHasFinalMargin(hasMargin);
 
 				childItem.getResult().setOrigWinner(origResult);
-				childItem.getResult().setOrigVoting(NewElectionSimulation.getVotingDataListofList());
+				childItem.getResult().setOrigVoting(GUIController.getController().getElectionSimulation().getVotingDataListofList());
 
 				if (hasMargin) {
 					childItem.getResult().setResult(currentlyRunning.getResultList());
@@ -421,7 +421,7 @@ public abstract class CheckerFactory implements Runnable {
 						lastResult);
 
 				int left = 0;
-				int right = NewElectionSimulation.getNumVotingPoints(); // how many votes we have
+				int right = GUIController.getController().getElectionSimulation().getNumVotingPoints(); // how many votes we have
 
 				if (right == 1) {
 					ErrorForUserDisplayer.displayError(
@@ -477,7 +477,7 @@ public abstract class CheckerFactory implements Runnable {
 				childItem.getResult().setHasFinalMargin(hasMargin);
 
 				childItem.getResult().setOrigWinner(origResult);
-				childItem.getResult().setOrigVoting(NewElectionSimulation.getVotingDataListofList());
+				childItem.getResult().setOrigVoting(GUIController.getController().getElectionSimulation().getVotingDataListofList());
 
 				if (hasMargin) {
 					childItem.getResult().setResult(currentlyRunning.getResultList());

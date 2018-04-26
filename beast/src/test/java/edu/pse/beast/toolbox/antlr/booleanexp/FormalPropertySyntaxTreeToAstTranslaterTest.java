@@ -43,21 +43,12 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
     public void tearDown() {
     }
     
-    private FormalPropertyDescriptionParser.BooleanExpListContext createFromString(String s) {
-        FormalPropertyDescriptionLexer lexer = new FormalPropertyDescriptionLexer(new ANTLRInputStream(s));
-        CommonTokenStream tokenS = new CommonTokenStream(lexer);
-        FormalPropertyDescriptionParser parser = new FormalPropertyDescriptionParser(tokenS);
-        return parser.booleanExpList();
-    }
-    
     @Test
     public void testCreateASTComparison() {
-        FormalPropertySyntaxTreeToAstTranslator translater = new FormalPropertySyntaxTreeToAstTranslator();
-        InternalTypeContainer inputType =
-                new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE),
+        new FormalPropertySyntaxTreeToAstTranslator();
+        new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE),
                                           InternalTypeRep.VOTER);
-        InternalTypeContainer output =
-                new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE),
+        new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE),
                                           InternalTypeRep.CANDIDATE);
         
         BooleanExpScope declaredVar = new BooleanExpScope();
@@ -67,9 +58,7 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
 //        String exp = "ELECT2(c) == VOTES2(v);";      
 //        BooleanExpListNode created = translater.generateFromSyntaxTree(createFromString(exp), inputType, output, declaredVar);
       
-        declaredVar = new BooleanExpScope();
-        String exp = "FOR_ALL_VOTERS(v) : EXISTS_ONE_CANDIDATE(c) : (c == VOTES2(v) && (VOTE_SUM_FOR_CANDIDATE(c)>= 3 ==> c < 2));";    
-        
+        declaredVar = new BooleanExpScope();       
     }
 
 
@@ -79,8 +68,8 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
        String exp = "FOR_ALL_VOTERS(v) : EXISTS_ONE_CANDIDATE(c) : VOTES1(v) == c && VOTES1(v) == c;";
        FormalPropertyDescriptionLexer lexer = new FormalPropertyDescriptionLexer(new ANTLRInputStream(exp));
        CommonTokenStream tokenS = new CommonTokenStream(lexer);
-       FormalPropertyDescriptionParser parser = new FormalPropertyDescriptionParser(tokenS);
-       FormalPropertySyntaxTreeToAstTranslator translater = new FormalPropertySyntaxTreeToAstTranslator();
+       new FormalPropertyDescriptionParser(tokenS);
+       new FormalPropertySyntaxTreeToAstTranslator();
     }
     
 }

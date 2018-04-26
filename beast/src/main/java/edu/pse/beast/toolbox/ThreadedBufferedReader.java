@@ -112,4 +112,8 @@ public class ThreadedBufferedReader implements Runnable {
             e.printStackTrace();
         }
     }
+
+	public void finish() {
+		//nothing, just to get the warning away
+	}
 }

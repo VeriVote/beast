@@ -5,71 +5,81 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Observable;
 
-import javax.swing.JTextField;
-
 import edu.pse.beast.datatypes.NameInterface;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
+import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 
 public class ElectionSimulationModel extends Observable implements NameInterface {
 
 	private String name;
-	
-	private List<RowOfValues> rows = new ArrayList<RowOfValues>();
 
-	private ArrayList<JTextField> candidates = new ArrayList<JTextField>();
+	private List<NEWRowOfValues> rows = new ArrayList<NEWRowOfValues>();
 
-	private ArrayList<JTextField> voters = new ArrayList<JTextField>();
-	
-	private ElectionTypeContainer container;	
+	private List<TextField> candidates = new ArrayList<TextField>();
 
-	private int amountCandidates = 1;
-	private int amountVoters = 1;
-	private int amountSeats = 1;
+	private List<TextField> voters = new ArrayList<TextField>();
 
-	private int elementHeight = 30;
-	private int elementWidth = 50;
+	private final GridPane inputGridPane;
 
-	private final int scrollBarWidth = 20;
+	private final GridPane voterGridPane;
 
-	private final int borderMarginSmall = Math.max(elementHeight, elementWidth);
+	private final GridPane candidateGridPane;
 
-	private final int widthMultiplier = Math.max(elementHeight, elementWidth) * 2;
+	private ElectionTypeContainer container;
 
-	private final int heightMultiplier = elementHeight * 2;
+	private int amountCandidates = 0;
+	private int amountVoters = 0;
+	private int amountSeats = 0;
 
-	private int horizontalOffset = 0;
+	private int currentRows = 0;
+	private int maxRows = 0;
 
-	private int verticalOffset = 0;
-	
-	private int fieldsPerWidth = 0;
-	
-	private int fieldsPerHeight = 0;
+	private int currentCandidates = 0;
 
-	private final int startHeight = 500;
-	private final int startWidth = 700;
-	
-	private int height = startHeight;
-	
-	private int width = startWidth;
-	
-	public ElectionSimulationModel(ElectionTypeContainer container) {
+	public ElectionSimulationModel(ElectionTypeContainer container, GridPane inputGridPane, GridPane voterGridPane,
+			GridPane candidateGridPane) {
 		this.container = container;
-		init();
+
+		this.inputGridPane = inputGridPane;
+		this.voterGridPane = voterGridPane;
+		this.candidateGridPane = candidateGridPane;
 	}
 
-	/**
-	 * Initializes the model.
-	 */
-	private void init() {
-		// add initial row
-		rows.add(new RowOfValues(this, container, this.getAmountCandidates(), this.getElementWidth(), this.getElementHeight(), this.getWidthMultiplier()));
-		
-		fieldsPerWidth = (width - 2 * (borderMarginSmall)) / (2 *  this.getWidthMultiplier());
-		
-		fieldsPerHeight = (height - 2 * (borderMarginSmall * 2)) / (2 * heightMultiplier);
+	private void addRow() {
+		if (currentRows == maxRows) {
+			NEWRowOfValues toAdd = new NEWRowOfValues(this, container, this.getAmountCandidates(), currentRows);
+			rows.add(toAdd);
 
+			TextField newVoter = new TextField("voter" + currentRows);
+
+			voters.add(newVoter);
+
+			voterGridPane.add(newVoter, 0, currentRows);
+
+			currentRows++;
+			maxRows++;
+		} else { // we already have a row with for this index, so we just make it visible again
+			rows.get(currentRows).setCandidates(this.getAmountCandidates());
+
+			voterGridPane.add(voters.get(currentRows), 0, currentRows);
+
+			currentRows++;
+		}
 	}
-	
+
+	private void removeRow() {
+
+		if (currentRows > 0) {
+			rows.remove(rows.size() - 1);
+
+			voterGridPane.getChildren().remove(voters.get(rows.size() - 1));
+
+			currentRows--;
+		}
+	}
+
 	@Override
 	public void setNewName(String newName) {
 		this.name = newName;
@@ -79,163 +89,125 @@ public class ElectionSimulationModel extends Observable implements NameInterface
 	public String getName() {
 		return name;
 	}
-	
+
 	public void changeContainer(ElectionTypeContainer container) {
 		this.container = container;
-		for (Iterator<RowOfValues> iterator = rows.iterator(); iterator.hasNext();) {
-			RowOfValues currentRow = iterator.next();
+		for (Iterator<NEWRowOfValues> iterator = rows.iterator(); iterator.hasNext();) {
+			NEWRowOfValues currentRow = iterator.next();
 			currentRow.setContainer(container);
 		}
 	}
-	public ArrayList<JTextField> getCandidates() {
+
+	public List<TextField> getCandidates() {
 		return candidates;
 	}
-	
-	public void setCandidates(ArrayList<JTextField> candidates) {
+
+	public void setCandidates(ArrayList<TextField> candidates) {
 		this.candidates = candidates;
 	}
-	
+
 	public ElectionTypeContainer getContainer() {
 		return container;
 	}
-	
+
 	public void setContainer(ElectionTypeContainer container) {
 		this.container = container;
 	}
-	
+
 	public int getAmountCandidates() {
 		return amountCandidates;
 	}
-	
+
 	public int getAmountSeats() {
 		return amountSeats;
 	}
-	
+
 	public int getAmountVoters() {
 		return amountVoters;
 	}
-	
+
 	public void setAmountCandidates(int amountCandidates) {
 		this.amountCandidates = container.getInputType().vetAmountCandidates(amountCandidates);
+		updateCandidates();
 	}
-	
+
 	public void setAmountVoters(int amountVoters) {
 		this.amountVoters = container.getInputType().vetAmountVoters(amountVoters);
+		updateVoters();
 	}
-	
+
 	public void setAmountSeats(int amountSeats) {
 		this.amountSeats = container.getInputType().vetAmountSeats(amountSeats);
+		updateVetting();
 	}
-	
-	public int getElementHeight() {
-		return elementHeight;
-	}
-	
-	public void setElementHeight(int elementHeight) {
-		this.elementHeight = elementHeight;
-	}
-	
-	public int getElementWidth() {
-		return elementWidth;
-	}
-	
-	public void setElementWidth(int elementWidth) {
-		this.elementWidth = elementWidth;
-	}
-	
-	public int getHorizontalOffset() {
-		return horizontalOffset;
-	}
-	
-	public void setHorizontalOffset(int horizontalOffset) {
-		this.horizontalOffset = horizontalOffset;
-	}
-	
-	public int getVerticalOffset() {
-		return verticalOffset;
-	}
-	
-	public void setVerticalOffset(int verticalOffset) {
-		this.verticalOffset = verticalOffset;
-	}
-	
-	public int getFieldsPerWidth() {
-		return fieldsPerWidth;
-	}
-	
-	public void setFieldsPerWidth(int fieldsPerWidth) {
-		this.fieldsPerWidth = fieldsPerWidth;
-	}
-	
-	public int getFieldsPerHeight() {
-		return fieldsPerHeight;
-	}
-	
-	public void setFieldsPerHeight(int fieldsPerHeight) {
-		this.fieldsPerHeight = fieldsPerHeight;
-	}
-	
-	public List<RowOfValues> getRows() {
+
+	public List<NEWRowOfValues> getRows() {
 		return rows;
 	}
-	
-	public ArrayList<JTextField> getVoters() {
+
+	public List<TextField> getVoters() {
 		return voters;
 	}
-	
-	public int getScrollBarWidth() {
-		return scrollBarWidth;
-	}
-	
-	public int getBorderMarginSmall() {
-		return borderMarginSmall;
-	}
-	
-	public int getWidthMultiplier() {
-		return widthMultiplier;
-	}
-	
-	public int getHeightMultiplier() {
-		return heightMultiplier;
-	}
-	
-	public int getStartHeight() {
-		return startHeight;
-	}
-	
-	public int getStartWidth() {
-		return startWidth;
-	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public int getHeight() {
-		return height;
-	}
-	
-	public void setHeight(int height) {
-		this.height = height;
-	}
-	
-	public int getWidth() {
-		return width;
-	}
-	
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-	public int getButtonWidth() {
-		return borderMarginSmall;
-	}
-
-	public int getButtonHeight() {
-		return borderMarginSmall;
-	}
 
 	public void reset() {
-		rows = new ArrayList<RowOfValues>();
+		rows = new ArrayList<NEWRowOfValues>();
+	}
+
+	public GridPane getInputGridPane() {
+		return inputGridPane;
+	}
+
+	private void updateVoters() {
+		if (currentRows < amountVoters) {
+			while (currentRows < amountVoters) {
+				addRow();
+			}
+		} else {
+			while (currentRows > amountVoters) {
+				removeRow();
+			}
+		}
+
+		updateVetting();
+	}
+
+	private void updateCandidates() {
+
+		System.out.println("update");
+		
+		for (Iterator<NEWRowOfValues> iterator = rows.iterator(); iterator.hasNext();) {
+			NEWRowOfValues row = (NEWRowOfValues) iterator.next();
+			row.setCandidates(amountCandidates);
+		}
+		if (currentCandidates < amountCandidates) {
+			while (currentCandidates < amountCandidates) {
+				TextField candToAdd = new TextField("cand" + currentCandidates);
+
+				candidates.add(candToAdd);
+				candidateGridPane.add(candToAdd, currentCandidates, 0);
+
+				currentCandidates++;
+			}
+		} else {
+			while (currentCandidates > amountCandidates) {
+				
+				candidateGridPane.getChildren().remove(candidates.get(currentCandidates - 1));
+
+				currentCandidates++;
+			}
+		}
+
+		updateVetting();
+	}
+
+	private void updateVetting() {
+		for (Iterator<NEWRowOfValues> iterator = rows.iterator(); iterator.hasNext();) {
+			NEWRowOfValues row = (NEWRowOfValues) iterator.next();
+			row.updateVetting();
+		}
 	}
 }

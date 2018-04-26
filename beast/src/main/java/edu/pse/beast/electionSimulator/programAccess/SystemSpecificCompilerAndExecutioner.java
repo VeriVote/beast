@@ -158,6 +158,9 @@ public abstract class SystemSpecificCompilerAndExecutioner {
 				// deletes the temporary file, so it doesn't clog up the filesystem
 			}
 			
+			outReader.finish();
+			errReader.finish();
+			
 		} else {
 			ErrorLogger.log("Couldn't compile the source file");
 			// deletes the temporary file, so it doesn't clog up the filesystem
