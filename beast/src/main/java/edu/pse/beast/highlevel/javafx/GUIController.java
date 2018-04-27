@@ -14,7 +14,6 @@ import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.electionSimulator.NewElectionSimulation;
 import edu.pse.beast.highlevel.BEASTCommunicator;
 import edu.pse.beast.toolbox.SuperFolderFinder;
@@ -25,11 +24,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -37,9 +33,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollToEvent;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
@@ -49,10 +43,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.PickResult;
 import javafx.scene.input.ScrollEvent;
-import javafx.scene.input.ScrollEvent.HorizontalTextScrollUnits;
-import javafx.scene.input.ScrollEvent.VerticalTextScrollUnits;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -211,7 +202,7 @@ public class GUIController {
 	private TabPane subTabPane;
 
 	@FXML
-	private TreeView<SymbolicVariable> variableTreeView;
+	private TreeView<String> variableTreeView;
 
 	@FXML
 	private TextField symbVarField;
@@ -254,7 +245,21 @@ public class GUIController {
 
 	private NewPostPropertyCodeArea postArea;
 
+	private BooleanExpEditorNEW booleanExpEditor;
+
 	private double scrollbarPadding = 15;
+
+	private TreeItem<String> voterItems;
+
+	private TreeItem<String> candidateItems;
+
+	private TreeItem<String> seatItems;
+
+	private int threshold = 5000; // 5 seconds to click "remove item" after one was selected
+
+	private long lastClicked = 0;
+
+	private TreeItem<String> itemToRemove;
 
 	// initial setup
 	@FXML
@@ -416,6 +421,27 @@ public class GUIController {
 
 		postPropertyPane.setContent(VSPpost);
 
+		variableTreeView.setShowRoot(false);
+		TreeItem<String> symbVarRoot = new TreeItem<String>();
+		symbVarRoot.setExpanded(true);
+
+		variableTreeView.setRoot(symbVarRoot);
+
+		this.voterItems = new TreeItem<String>("Voters");
+
+		this.candidateItems = new TreeItem<String>("Candidates");
+
+		this.seatItems = new TreeItem<String>("Seats");
+
+		symbVarRoot.getChildren().add(voterItems);
+		symbVarRoot.getChildren().add(candidateItems);
+		symbVarRoot.getChildren().add(seatItems);
+
+		booleanExpEditor = new BooleanExpEditorNEW(preArea, postArea, new PreAndPostConditionsDescription("default description"));
+
+		variableTreeView.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> setItemToRemove(newValue));
+		
 		codeArea.setStyle("-fx-font-family: consolas; -fx-font-size: 11pt;");
 
 		// inputScrollPane.addEventHandler(ScrollEvent.ANY, new EventHandler<Event>() {
@@ -436,11 +462,10 @@ public class GUIController {
 					long time = System.currentTimeMillis();
 
 					voterScrollPane.vvalueProperty().set(inputScrollPane.getVvalue());
-					
+
 					candidateScrollPane.hvalueProperty().set(inputScrollPane.getHvalue());
-					
+
 					inputScrollPane.fireEvent(new Event(ScrollEvent.ANY));
-					
 
 					try {
 						Thread.sleep(Math.max(0, 16 - (System.currentTimeMillis() - time)));
@@ -518,17 +543,29 @@ public class GUIController {
 	// symb Var
 	@FXML
 	public void addSymbCand(ActionEvent event) {
-		BooleanExpEditorNEW.addSymbVar(new InternalTypeContainer(InternalTypeRep.CANDIDATE));
+		booleanExpEditor.addSymbVar(new InternalTypeContainer(InternalTypeRep.CANDIDATE));
 	}
 
 	@FXML
 	public void addSymbSeat(ActionEvent event) {
-		BooleanExpEditorNEW.addSymbVar(new InternalTypeContainer(InternalTypeRep.SEAT));
+		booleanExpEditor.addSymbVar(new InternalTypeContainer(InternalTypeRep.SEAT));
 	}
 
 	@FXML
 	public void addSymbVoter(ActionEvent event) {
-		BooleanExpEditorNEW.addSymbVar(new InternalTypeContainer(InternalTypeRep.VOTER));
+		booleanExpEditor.addSymbVar(new InternalTypeContainer(InternalTypeRep.VOTER));
+	}
+
+	@FXML
+	public void removeSymbVar() {
+		if (itemToRemove != null) {
+			long time = System.currentTimeMillis();
+
+			if ((time - lastClicked) < threshold) {
+				booleanExpEditor.removeVariable(itemToRemove.getValue());
+				itemToRemove = null;
+			}
+		}
 	}
 
 	public TextField getInputVoters() {
@@ -1076,6 +1113,31 @@ public class GUIController {
 
 	public NewElectionSimulation getElectionSimulation() {
 		return electionSimulation;
+	}
+
+	public BooleanExpEditorNEW getBooleanExpEditor() {
+		return booleanExpEditor;
+	}
+
+	public TreeItem<String> getVoterTreeItems() {
+		return voterItems;
+	}
+
+	public TreeItem<String> getCandidateTreeItems() {
+		return candidateItems;
+	}
+
+	public TreeItem<String> getSeatTreeItems() {
+		return seatItems;
+	}
+
+	public void setItemToRemove(TreeItem<String> item) {
+		this.itemToRemove = item;
+		this.lastClicked = System.currentTimeMillis();
+	}
+
+	public void setCurrentPropertyDescription(ParentTreeItem propertyItem) {
+		booleanExpEditor.setCurrentPropertyDescription(propertyItem);
 	}
 
 }

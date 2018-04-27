@@ -43,7 +43,6 @@ public class NEWRowOfValues {
 	public synchronized void addColumn() {
 		if (values.size() == amountOfCandidates) {
 			values.add("0");
-			System.out.println("values added");
 		}
 
 		TextField field = new TextField(values.get(amountOfCandidates));
@@ -55,10 +54,13 @@ public class NEWRowOfValues {
 		fields.add(field);
 
 		field.textProperty().addListener(new ChangeListener<String>() {
+			
+			int position = fields.indexOf(field);;
+			
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				Platform.runLater(() -> {
-					addValueEnforcer(field, amountOfCandidates - 1);
+					checkAndInsertValue(newValue, position);
 				});
 			}
 		});
@@ -83,20 +85,21 @@ public class NEWRowOfValues {
 
 			for (int i = 0; i < amountOfCandidates; i++) {
 				TextField field = fields.get(i);
+				field.setText(values.get(i));
 				parent.getInputGridPane().add(field, i, rowIndex);
 			}
 		}
 	}
 
 	private void checkAndInsertValue(String newValue, int position) {
-
 		String vettedValue = container.getInputType().vetValue(newValue, container, this);
-
+		
 		values.set(position, vettedValue);
 
 		if (position < fields.size()) {
 			fields.get(position).setText(vettedValue);
 		}
+		update();
 	}
 
 	// getter and setter
@@ -124,12 +127,13 @@ public class NEWRowOfValues {
 	public int getAmountVoters() {
 		return getAmountVoters();
 	}
-
-	private synchronized void addValueEnforcer(TextField field, int index) {
-		String vettedValue = this.container.getInputType().vetValue(field.getText(), container, this);
-		field.setText(vettedValue);
-		values.set(index, vettedValue);
-	}
+//
+//	private synchronized void addValueEnforcer(TextField field, int index) {
+//		System.out.println(field.getText());
+//		String vettedValue = this.container.getInputType().vetValue(field.getText(), container, this);
+//		field.setText(vettedValue);
+//		values.set(index, vettedValue);
+//	}
 
 	public void setCandidates(int amountCandidates) {
 

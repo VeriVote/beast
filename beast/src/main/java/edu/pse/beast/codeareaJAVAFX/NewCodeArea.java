@@ -18,7 +18,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
-import edu.pse.beast.types.cbmctypes.inputplugins.Approval;
+import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
 import edu.pse.beast.types.cbmctypes.outputtypes.SingleCandidate;
 import javafx.scene.Node;
 
@@ -60,7 +60,7 @@ public class NewCodeArea extends SaveLoadCodeArea {
 	public NewCodeArea() {
 		super(".elec", "C:", "BEAST election description");
 
-		source = new ElectionDescription("New description", new Approval(), new SingleCandidate(), 0);
+		source = new ElectionDescription("New description", new SingleChoice(), new SingleCandidate(), 0);
 
 		List<String> code = new ArrayList<String>();
 		code.add("");

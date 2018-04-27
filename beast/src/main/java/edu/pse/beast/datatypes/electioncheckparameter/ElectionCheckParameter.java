@@ -2,7 +2,6 @@ package edu.pse.beast.datatypes.electioncheckparameter;
 
 import java.util.List;
 
-import edu.pse.beast.electionSimulator.NewElectionSimulation;
 import edu.pse.beast.highlevel.javafx.GUIController;
 
 /**

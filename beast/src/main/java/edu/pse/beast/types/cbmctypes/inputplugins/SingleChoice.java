@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
-import edu.pse.beast.electionSimulator.NewElectionSimulation;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
@@ -113,9 +112,10 @@ public class SingleChoice extends CBMCInputType {
 		} catch (NumberFormatException e) {
 			return "0";
 		}
-
+		
 		if (number == 1) {
 			for (int i = 0; i < row.getValues().size(); i++) {
+				System.out.println("index: " + i);
 				row.getValues().set(i, "0");
 			}
 			newValue = "1";

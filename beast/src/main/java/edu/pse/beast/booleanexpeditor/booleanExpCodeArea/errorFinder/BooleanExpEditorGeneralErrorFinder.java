@@ -5,7 +5,6 @@ import java.util.List;
 
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpANTLRHandler;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import edu.pse.beast.highlevel.javafx.BooleanExpEditorNEW;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 
@@ -38,14 +37,14 @@ public class BooleanExpEditorGeneralErrorFinder {
 		BooleanExpANTLRHandler preAntlrHandler = new BooleanExpANTLRHandler(parentTreeItem.getPreAndPostPropertie().getPreConditionsDescription().getCode());	
 		
 		combinedErrors.addAll(BooleanExpEditorGrammarErrorFinder.getErrors(preAntlrHandler));
-		combinedErrors.addAll(BooleanExpEditorVariableErrorFinder.getErrors(preAntlrHandler, BooleanExpEditorNEW.getSymbVarList(), GUIController.getController().getCodeArea()));
+		combinedErrors.addAll(BooleanExpEditorVariableErrorFinder.getErrors(preAntlrHandler, GUIController.getController().getBooleanExpEditor().getSymbVarList(), GUIController.getController().getCodeArea()));
 		
 		
 		//post cond error finder
 		
 		BooleanExpANTLRHandler postAntlrHandler = new BooleanExpANTLRHandler(parentTreeItem.getPreAndPostPropertie().getPreConditionsDescription().getCode());	
 		combinedErrors.addAll(BooleanExpEditorGrammarErrorFinder.getErrors(postAntlrHandler));
-		combinedErrors.addAll(BooleanExpEditorVariableErrorFinder.getErrors(postAntlrHandler, BooleanExpEditorNEW.getSymbVarList(), GUIController.getController().getCodeArea()));
+		combinedErrors.addAll(BooleanExpEditorVariableErrorFinder.getErrors(postAntlrHandler, GUIController.getController().getBooleanExpEditor().getSymbVarList(), GUIController.getController().getCodeArea()));
 
 		
 		return combinedErrors;

@@ -3,7 +3,6 @@ package edu.pse.beast.types.cbmctypes.outputtypes;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.pse.beast.electionSimulator.NewElectionSimulation;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;

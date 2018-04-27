@@ -3,7 +3,6 @@ package edu.pse.beast.types.cbmctypes;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.pse.beast.electionSimulator.NewElectionSimulation;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.types.InputType;

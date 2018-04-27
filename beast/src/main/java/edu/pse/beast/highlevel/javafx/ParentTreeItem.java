@@ -83,15 +83,7 @@ public class ParentTreeItem extends CustomTreeItem {
 	}
 
 	private void wasClicked() {
-		GUIController.getController().getPreConditionsArea().setPreDescription(propDesc.getPreConditionsDescription());
-		GUIController.getController().getPostConditionsArea()
-				.setPostDescription(propDesc.getPostConditionsDescription());
-		
-		GUIController.getController().getMainTabPane().getSelectionModel().select(GUIController.getController().getPropertyTab());
-		
-		BooleanExpEditorGeneralErrorFinder.hasErrors(this); //checks if there are errors, and if there are
-		//displays them in the error tab
-		
+		GUIController.getController().setCurrentPropertyDescription(this);
 	}
 
 	private void checkBoxChanged(boolean state) {

@@ -315,7 +315,7 @@
                                              <bottom>
                                                 <BorderPane BorderPane.alignment="CENTER">
                                                    <left>
-                                                      <Button fx:id="removeVarButton" mnemonicParsing="false" text="%key.remove" BorderPane.alignment="CENTER" />
+                                                      <Button mnemonicParsing="false" onAction="#removeSymbVar" text="%key.remove" BorderPane.alignment="CENTER" />
                                                    </left>
                                                 </BorderPane>
                                              </bottom>
