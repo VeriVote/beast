@@ -5,14 +5,15 @@ import java.util.Iterator;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.electionSimulator.Model.ElectionSimulationModel;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 
 public class NEWRowOfValues {
 
-	private int elementHeight;
-	private int elementWidth;
+	private double elementHeight;
+	private double elementWidth;
 
 	private int rowIndex;
 
@@ -23,63 +24,67 @@ public class NEWRowOfValues {
 
 	private int amountOfCandidates = 0;
 	private ElectionSimulationModel parent;
+	private boolean disabled;
 
 	public NEWRowOfValues(ElectionSimulationModel parent, ElectionTypeContainer container, int amountOfCandidates,
-			int rowIndex) {
+			int rowIndex, double elementWidth, double elementHeight) {
 		this.parent = parent;
 		this.container = container;
-		this.amountOfCandidates = amountOfCandidates;
 		this.rowIndex = rowIndex;
+
+		this.elementWidth = elementWidth;
+		this.elementHeight = elementHeight;
 		values = new ArrayList<>(amountOfCandidates);
 		fields = new ArrayList<>(amountOfCandidates);
 
-		for (int i = 0; i < amountOfCandidates; i++) {
-			addColumn();
-		}
+		this.setCandidates(amountOfCandidates);
 	}
 
 	public synchronized void addColumn() {
-		amountOfCandidates++;
-
-		if (values.size() == fields.size()) {
+		if (values.size() == amountOfCandidates) {
 			values.add("0");
+			System.out.println("values added");
 		}
 
-		TextField toAdd = new TextField(values.get(fields.size()));
+		TextField field = new TextField(values.get(amountOfCandidates));
 
-		toAdd.textProperty().addListener(new ChangeListener<String>() {
+		field.setMinSize(elementWidth, elementHeight);
+		field.setMaxSize(elementWidth, elementHeight);
+		field.setPrefSize(elementWidth, elementHeight);
 
+		fields.add(field);
+
+		field.textProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				addValueEnforcer(toAdd, fields.size());
-
+				Platform.runLater(() -> {
+					addValueEnforcer(field, amountOfCandidates - 1);
+				});
 			}
 		});
 
-		toAdd.setMinSize(elementWidth, elementHeight);
-		toAdd.setPrefSize(elementWidth, elementHeight);
-		toAdd.setMaxSize(elementWidth, elementHeight);
-
-		fields.add(toAdd);
-
+		amountOfCandidates++;
 		update();
 	}
 
-	public void removeColumn() {
-		amountOfCandidates--;
-		fields.remove(fields.size() - 1);
+	public synchronized void removeColumn() {
+		if (fields.size() > 0) {
+			amountOfCandidates--;
+		}
 		update();
 	}
 
 	public void update() {
-		for (Iterator<TextField> iterator = fields.iterator(); iterator.hasNext();) {
-			TextField textField = (TextField) iterator.next();
-			parent.getInputGridPane().getChildren().remove(textField);
-		}
+		if (!disabled) {
+			for (Iterator<TextField> iterator = fields.iterator(); iterator.hasNext();) {
+				TextField textField = (TextField) iterator.next();
+				parent.getInputGridPane().getChildren().remove(textField);
+			}
 
-		for (int i = 0; i < amountOfCandidates; i++) {
-			TextField field = fields.get(i);
-			parent.getInputGridPane().add(field, i, rowIndex);
+			for (int i = 0; i < amountOfCandidates; i++) {
+				TextField field = fields.get(i);
+				parent.getInputGridPane().add(field, i, rowIndex);
+			}
 		}
 	}
 
@@ -88,8 +93,8 @@ public class NEWRowOfValues {
 		String vettedValue = container.getInputType().vetValue(newValue, container, this);
 
 		values.set(position, vettedValue);
-		
-		if(position < fields.size()) {
+
+		if (position < fields.size()) {
 			fields.get(position).setText(vettedValue);
 		}
 	}
@@ -120,7 +125,7 @@ public class NEWRowOfValues {
 		return getAmountVoters();
 	}
 
-	private void addValueEnforcer(TextField field, int index) {
+	private synchronized void addValueEnforcer(TextField field, int index) {
 		String vettedValue = this.container.getInputType().vetValue(field.getText(), container, this);
 		field.setText(vettedValue);
 		values.set(index, vettedValue);
@@ -142,14 +147,25 @@ public class NEWRowOfValues {
 	}
 
 	/**
-	 * vetts all numbers in the fields again, in case they are
-	 * dependant of a variable that was changed
+	 * vetts all numbers in the fields again, in case they are dependant of a
+	 * variable that was changed
 	 */
 	public void updateVetting() {
 		for (int i = 0; i < values.size(); i++) {
-
 			checkAndInsertValue(values.get(i), i);
-			
+		}
+	}
+
+	public void enable() {
+		this.disabled = false;
+		update();
+	}
+
+	public void disable() {
+		this.disabled = true;
+		for (Iterator<TextField> iterator = fields.iterator(); iterator.hasNext();) {
+			TextField textField = (TextField) iterator.next();
+			parent.getInputGridPane().getChildren().remove(textField);
 		}
 	}
 }

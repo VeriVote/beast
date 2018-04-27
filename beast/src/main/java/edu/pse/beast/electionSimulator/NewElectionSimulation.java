@@ -7,6 +7,7 @@ import java.util.List;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.electionSimulator.Model.ElectionSimulationModel;
+import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
@@ -18,10 +19,28 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener 
 
 	private ElectionSimulationModel model;
 	
+	private GridPane inputGridPane;
+	private GridPane voterGridPane;
+	private GridPane candidateGridPane;
+	
 	public NewElectionSimulation(
 		ElectionTypeContainer container, GridPane inputGridPane, GridPane voterGridPane, GridPane candidateGridPane) {
 			this.container = container;
-			model = new ElectionSimulationModel(container, inputGridPane, voterGridPane, candidateGridPane);
+			
+			this.inputGridPane = inputGridPane;
+			this.voterGridPane = voterGridPane;
+			this.candidateGridPane = candidateGridPane;
+			
+			inputGridPane.setHgap(10);
+			inputGridPane.setVgap(10);
+			
+			voterGridPane.setHgap(10);
+			voterGridPane.setVgap(10);
+			
+			candidateGridPane.setHgap(10);
+			candidateGridPane.setVgap(10);
+			
+			model = new ElectionSimulationModel(container, inputGridPane, voterGridPane, candidateGridPane);	
 	}
 
 	public void updateContainer(ElectionTypeContainer container) {
@@ -41,7 +60,18 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener 
 	 * resets all fields and returns the view back to its original state
 	 */
 	public void reset() {
-		model.reset();
+		GUIController.getController().getInputVoters().setText("1");
+		GUIController.getController().getInputCandidates().setText("1");
+		GUIController.getController().getInputSeats().setText("1");
+		
+		inputGridPane.getChildren().clear();
+		voterGridPane.getChildren().clear();
+		candidateGridPane.getChildren().clear();
+				
+		
+		model = new ElectionSimulationModel(container, inputGridPane, voterGridPane, candidateGridPane);
+		model.setAmountCandidates(1);
+		model.setAmountVoters(1);
 	}
 
 	public void save() {

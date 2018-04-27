@@ -7,6 +7,7 @@ import java.util.Observable;
 
 import edu.pse.beast.datatypes.NameInterface;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
+import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -29,14 +30,18 @@ public class ElectionSimulationModel extends Observable implements NameInterface
 
 	private ElectionTypeContainer container;
 
-	private int amountCandidates = 0;
-	private int amountVoters = 0;
-	private int amountSeats = 0;
+	private int amountCandidates = 1;
+	private int amountVoters = 1;
+	private int amountSeats = 1;
 
 	private int currentRows = 0;
 	private int maxRows = 0;
 
 	private int currentCandidates = 0;
+
+	private double elementWidth = 50;
+
+	private double elementHeight = 25;
 
 	public ElectionSimulationModel(ElectionTypeContainer container, GridPane inputGridPane, GridPane voterGridPane,
 			GridPane candidateGridPane) {
@@ -49,19 +54,23 @@ public class ElectionSimulationModel extends Observable implements NameInterface
 
 	private void addRow() {
 		if (currentRows == maxRows) {
-			NEWRowOfValues toAdd = new NEWRowOfValues(this, container, this.getAmountCandidates(), currentRows);
+			NEWRowOfValues toAdd = new NEWRowOfValues(this, container, this.getAmountCandidates(), currentRows, elementWidth, elementHeight);
 			rows.add(toAdd);
 
 			TextField newVoter = new TextField("voter" + currentRows);
 
 			voters.add(newVoter);
 
+			newVoter.setMinSize(elementWidth, elementHeight);
+			newVoter.setPrefSize(elementWidth, elementHeight);
+			newVoter.setMaxSize(elementWidth, elementHeight);
+
 			voterGridPane.add(newVoter, 0, currentRows);
 
 			currentRows++;
 			maxRows++;
 		} else { // we already have a row with for this index, so we just make it visible again
-			rows.get(currentRows).setCandidates(this.getAmountCandidates());
+			rows.get(currentRows).enable();
 
 			voterGridPane.add(voters.get(currentRows), 0, currentRows);
 
@@ -72,11 +81,12 @@ public class ElectionSimulationModel extends Observable implements NameInterface
 	private void removeRow() {
 
 		if (currentRows > 0) {
-			rows.remove(rows.size() - 1);
-
-			voterGridPane.getChildren().remove(voters.get(rows.size() - 1));
 
 			currentRows--;
+
+			rows.get(currentRows).disable();
+
+			voterGridPane.getChildren().remove(voters.get(currentRows));
 		}
 	}
 
@@ -154,7 +164,33 @@ public class ElectionSimulationModel extends Observable implements NameInterface
 	}
 
 	public void reset() {
+		
+		GUIController.getController().getInputVoters().setText("1");
+		GUIController.getController().getInputCandidates().setText("1");
+		GUIController.getController().getInputSeats().setText("1");
+		
+		inputGridPane.getChildren().clear();
+		voterGridPane.getChildren().clear();
+		candidateGridPane.getChildren().clear();
+				
+		this.amountCandidates = 1;
+		this.amountVoters = 1;
+		this.amountSeats = 1;
+		
+		this.currentRows = 0;
+		this.maxRows = 0;
+		
+		this.currentCandidates = 0;
+		
+		GUIController.getController().getInputVoters().setText("1");
+		GUIController.getController().getInputCandidates().setText("1");
+		GUIController.getController().getInputSeats().setText("1");
+
+		
 		rows = new ArrayList<NEWRowOfValues>();
+		
+		voters = new ArrayList<TextField>();
+		candidates = new ArrayList<TextField>();
 	}
 
 	public GridPane getInputGridPane() {
@@ -177,30 +213,41 @@ public class ElectionSimulationModel extends Observable implements NameInterface
 
 	private void updateCandidates() {
 
-		System.out.println("update");
 		
 		for (Iterator<NEWRowOfValues> iterator = rows.iterator(); iterator.hasNext();) {
 			NEWRowOfValues row = (NEWRowOfValues) iterator.next();
 			row.setCandidates(amountCandidates);
 		}
+
+		
+		
 		if (currentCandidates < amountCandidates) {
 			while (currentCandidates < amountCandidates) {
-				TextField candToAdd = new TextField("cand" + currentCandidates);
 
-				candidates.add(candToAdd);
-				candidateGridPane.add(candToAdd, currentCandidates, 0);
+				if (candidates.size() > currentCandidates) {
+					candidateGridPane.add(candidates.get(currentCandidates), currentCandidates, 0);
 
+				} else {
+					TextField candToAdd = new TextField("cand" + currentCandidates);
+
+					candToAdd.setMinSize(elementWidth, elementHeight);
+					candToAdd.setPrefSize(elementWidth, elementHeight);
+					candToAdd.setMaxSize(elementWidth, elementHeight);
+
+					candidates.add(candToAdd);
+					candidateGridPane.add(candToAdd, currentCandidates, 0);
+				}
+				
 				currentCandidates++;
 			}
 		} else {
 			while (currentCandidates > amountCandidates) {
-				
-				candidateGridPane.getChildren().remove(candidates.get(currentCandidates - 1));
 
-				currentCandidates++;
+				currentCandidates--;
+
+				candidateGridPane.getChildren().remove(candidates.get(currentCandidates));
 			}
 		}
-
 		updateVetting();
 	}
 

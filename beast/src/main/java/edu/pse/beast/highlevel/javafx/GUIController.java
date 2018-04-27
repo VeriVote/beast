@@ -16,7 +16,6 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.electionSimulator.NewElectionSimulation;
-import edu.pse.beast.electionSimulator.Model.ElectionSimulationModel;
 import edu.pse.beast.highlevel.BEASTCommunicator;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.types.InternalTypeContainer;
@@ -26,7 +25,11 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -34,7 +37,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollToEvent;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
@@ -44,7 +49,10 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.PickResult;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.input.ScrollEvent.HorizontalTextScrollUnits;
+import javafx.scene.input.ScrollEvent.VerticalTextScrollUnits;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -246,6 +254,8 @@ public class GUIController {
 
 	private NewPostPropertyCodeArea postArea;
 
+	private double scrollbarPadding = 15;
+
 	// initial setup
 	@FXML
 	public void initialize() {
@@ -408,21 +418,79 @@ public class GUIController {
 
 		codeArea.setStyle("-fx-font-family: consolas; -fx-font-size: 11pt;");
 
-		inputScrollPane.addEventHandler(ScrollEvent.ANY, new EventHandler<Event>() {
-			@Override
-			public void handle(Event event) { // synchronize the scrolling
-				voterScrollPane.vvalueProperty().set(inputScrollPane.getVvalue());
+		// inputScrollPane.addEventHandler(ScrollEvent.ANY, new EventHandler<Event>() {
+		// @Override
+		// public void handle(Event event) { // synchronize the scrolling
+		// voterScrollPane.vvalueProperty().set(inputScrollPane.getVvalue());
+		//
+		// candidateScrollPane.hvalueProperty().set(inputScrollPane.getHvalue());
+		// }
+		// });
 
-				candidateScrollPane.hvalueProperty().set(inputScrollPane.getHvalue());
+		Thread scrollUpdater = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+
+				while (true) {
+					long time = System.currentTimeMillis();
+
+					voterScrollPane.vvalueProperty().set(inputScrollPane.getVvalue());
+					
+					candidateScrollPane.hvalueProperty().set(inputScrollPane.getHvalue());
+					
+					inputScrollPane.fireEvent(new Event(ScrollEvent.ANY));
+					
+
+					try {
+						Thread.sleep(Math.max(0, 16 - (System.currentTimeMillis() - time)));
+					} catch (InterruptedException e) {
+
+					}
+				}
 			}
 		});
+
+		scrollUpdater.start();
+
+		voterScrollPane.setPadding(new Insets(0, 0, scrollbarPadding, 0));
+
+		candidateScrollPane.setPadding(new Insets(0, scrollbarPadding, 0, 0));
+
+		voterScrollPane.addEventFilter(ScrollEvent.SCROLL, new EventHandler<ScrollEvent>() {
+			@Override
+			public void handle(ScrollEvent event) {
+				event.consume();
+			}
+		});
+
+		candidateScrollPane.addEventFilter(ScrollEvent.SCROLL, new EventHandler<ScrollEvent>() {
+			@Override
+			public void handle(ScrollEvent event) {
+				event.consume();
+			}
+		});
+
+		// voterScrollPane.addEventHandler(ScrollEvent.ANY, new EventHandler<Event>() {
+		// @Override
+		// public void handle(Event event) { // synchronize the scrolling
+		// voterScrollPane.vvalueProperty().set(inputScrollPane.getVvalue());
+		// }
+		// });
+		//
+		// candidateScrollPane.addEventHandler(ScrollEvent.ANY, new
+		// EventHandler<Event>() {
+		// @Override
+		// public void handle(Event event) { // synchronize the scrolling
+		// candidateScrollPane.hvalueProperty().set(inputScrollPane.getHvalue());
+		// }
+		// });
 
 		electionSimulation = new NewElectionSimulation(codeArea.getElectionDescription().getContainer(), inputGridPane,
 				voterGridPane, candidateGridPane);
 
-		
-		this.addInputNumberEnforcer(inputVoterField, ""); //update all numbers for the input fields
-		
+		this.addInputNumberEnforcer(inputVoterField, ""); // update all numbers for the input fields
+
 	}
 
 	// Top Panels
@@ -463,9 +531,16 @@ public class GUIController {
 		BooleanExpEditorNEW.addSymbVar(new InternalTypeContainer(InternalTypeRep.VOTER));
 	}
 
-	@FXML
 	public TextField getInputVoters() {
 		return inputVoterField;
+	}
+
+	public TextField getInputCandidates() {
+		return inputCandidateField;
+	}
+
+	public TextField getInputSeats() {
+		return inputSeatField;
 	}
 
 	// ------------
@@ -973,7 +1048,7 @@ public class GUIController {
 				if (!newValue.equals("")) {
 					newText = newValue.replaceAll("[^\\d]", "");
 				}
-				if(newText.equals("")) {
+				if (newText.equals("")) {
 					newText = "0";
 				}
 				field.setText(sign + newText);
@@ -981,28 +1056,28 @@ public class GUIController {
 		} else {
 			field.setText("0");
 
-			String vettedVoters = electionSimulation.setAndVetVoterNumber(inputVoterField.getText());
-			if (vettedVoters != inputVoterField.getText()) {
-				inputVoterField.setText(vettedVoters);
-				System.out.println("vettedVotes " + vettedVoters);
-			}
-
-			String vettedCandidates = electionSimulation.setAndVetCandidateNumber(inputCandidateField.getText());
-			if (vettedVoters != inputCandidateField.getText()) {
-				inputCandidateField.setText(vettedCandidates);
-			}
-
-			String vettedSeats = electionSimulation.setAndVetSeatNumber(inputSeatField.getText());
-			if (vettedVoters != inputSeatField.getText()) {
-				inputSeatField.setText(vettedSeats);
-			}
-
 		}
+		String vettedVoters = electionSimulation.setAndVetVoterNumber(inputVoterField.getText());
+		if (vettedVoters != inputVoterField.getText()) {
+			inputVoterField.setText(vettedVoters);
+		}
+
+		String vettedCandidates = electionSimulation.setAndVetCandidateNumber(inputCandidateField.getText());
+		if (vettedVoters != inputCandidateField.getText()) {
+			inputCandidateField.setText(vettedCandidates);
+		}
+
+		String vettedSeats = electionSimulation.setAndVetSeatNumber(inputSeatField.getText());
+		if (vettedVoters != inputSeatField.getText()) {
+			inputSeatField.setText(vettedSeats);
+		}
+
 	}
 
 	public NewElectionSimulation getElectionSimulation() {
 		return electionSimulation;
 	}
+
 }
 
 // class PairValueFactory implements
