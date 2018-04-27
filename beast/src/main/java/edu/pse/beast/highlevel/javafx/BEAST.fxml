@@ -86,48 +86,6 @@
 				</Menu>
 				<Menu mnemonicParsing="false" text="%key.parameters">
 					<items>
-						<Menu mnemonicParsing="false" text="%key.voters">
-							<items>
-								<MenuItem mnemonicParsing="false" text="%key.minimum">
-									<graphic>
-										<TextField fx:id="minVoter" alignment="CENTER_RIGHT" onAction="#minVoter" prefWidth="50.0" text="1" />
-									</graphic>
-								</MenuItem>
-								<MenuItem mnemonicParsing="false" text="%key.maximum">
-									<graphic>
-										<TextField fx:id="maxVoter" alignment="CENTER_RIGHT" onAction="#maxVoter" prefWidth="50.0" text="1" />
-									</graphic>
-								</MenuItem>
-							</items>
-						</Menu>
-						<Menu mnemonicParsing="false" text="%key.candidates">
-							<items>
-								<MenuItem mnemonicParsing="false" text="%key.minimum">
-									<graphic>
-										<TextField fx:id="minCandidates" alignment="CENTER_RIGHT" onAction="#minCandidates" prefWidth="50.0" text="1" />
-									</graphic>
-								</MenuItem>
-								<MenuItem mnemonicParsing="false" text="%key.maximum">
-									<graphic>
-										<TextField fx:id="maxCandidates" alignment="CENTER_RIGHT" onAction="#maxCandidates" prefWidth="50.0" text="1" />
-									</graphic>
-								</MenuItem>
-							</items>
-						</Menu>
-						<Menu mnemonicParsing="false" text="%key.seats">
-							<items>
-								<MenuItem mnemonicParsing="false" text="%key.minimum">
-									<graphic>
-										<TextField fx:id="minSeats" alignment="CENTER_RIGHT" onAction="#minSeats" prefWidth="50.0" text="1" />
-									</graphic>
-								</MenuItem>
-								<MenuItem mnemonicParsing="false" text="%key.maximum">
-									<graphic>
-										<TextField fx:id="maxSeats" alignment="CENTER_RIGHT" onAction="#maxSeats" prefWidth="50.0" text="1" />
-									</graphic>
-								</MenuItem>
-							</items>
-						</Menu>
 						<Menu mnemonicParsing="false" text="%key.timeout">
 							<items>
 								<MenuItem mnemonicParsing="false">
@@ -188,6 +146,52 @@
 						</Menu>
 					</items>
 				</Menu>
+            <Menu mnemonicParsing="false" text="%key.verificationBounds">
+              <items>
+						<Menu mnemonicParsing="false" text="%key.voters">
+							<items>
+								<MenuItem mnemonicParsing="false" text="%key.minimum">
+									<graphic>
+										<TextField fx:id="minVoter" alignment="CENTER_RIGHT" onAction="#minVoter" prefWidth="50.0" text="1" />
+									</graphic>
+								</MenuItem>
+								<MenuItem mnemonicParsing="false" text="%key.maximum">
+									<graphic>
+										<TextField fx:id="maxVoter" alignment="CENTER_RIGHT" onAction="#maxVoter" prefWidth="50.0" text="1" />
+									</graphic>
+								</MenuItem>
+							</items>
+						</Menu>
+						<Menu mnemonicParsing="false" text="%key.candidates">
+							<items>
+								<MenuItem mnemonicParsing="false" text="%key.minimum">
+									<graphic>
+										<TextField fx:id="minCandidates" alignment="CENTER_RIGHT" onAction="#minCandidates" prefWidth="50.0" text="1" />
+									</graphic>
+								</MenuItem>
+								<MenuItem mnemonicParsing="false" text="%key.maximum">
+									<graphic>
+										<TextField fx:id="maxCandidates" alignment="CENTER_RIGHT" onAction="#maxCandidates" prefWidth="50.0" text="1" />
+									</graphic>
+								</MenuItem>
+							</items>
+						</Menu>
+						<Menu mnemonicParsing="false" text="%key.seats">
+							<items>
+								<MenuItem mnemonicParsing="false" text="%key.minimum">
+									<graphic>
+										<TextField fx:id="minSeats" alignment="CENTER_RIGHT" onAction="#minSeats" prefWidth="50.0" text="1" />
+									</graphic>
+								</MenuItem>
+								<MenuItem mnemonicParsing="false" text="%key.maximum">
+									<graphic>
+										<TextField fx:id="maxSeats" alignment="CENTER_RIGHT" onAction="#maxSeats" prefWidth="50.0" text="1" />
+									</graphic>
+								</MenuItem>
+							</items>
+						</Menu>
+              </items>
+            </Menu>
 				<Menu mnemonicParsing="false" text="%key.options">
 					<items>
                   <MenuItem mnemonicParsing="false" text="%key.constantName" />
