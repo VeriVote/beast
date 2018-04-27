@@ -57,7 +57,7 @@ public class ElectionSimulationModel extends Observable implements NameInterface
 			NEWRowOfValues toAdd = new NEWRowOfValues(this, container, this.getAmountCandidates(), currentRows, elementWidth, elementHeight);
 			rows.add(toAdd);
 
-			TextField newVoter = new TextField("voter" + currentRows);
+			TextField newVoter = new TextField("V" + currentRows);
 
 			voters.add(newVoter);
 
@@ -228,7 +228,7 @@ public class ElectionSimulationModel extends Observable implements NameInterface
 					candidateGridPane.add(candidates.get(currentCandidates), currentCandidates, 0);
 
 				} else {
-					TextField candToAdd = new TextField("cand" + currentCandidates);
+					TextField candToAdd = new TextField("C" + currentCandidates);
 
 					candToAdd.setMinSize(elementWidth, elementHeight);
 					candToAdd.setPrefSize(elementWidth, elementHeight);
