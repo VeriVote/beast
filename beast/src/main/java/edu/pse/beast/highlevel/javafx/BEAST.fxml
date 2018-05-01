@@ -269,7 +269,7 @@
             </Button>
 			</items>
 		</ToolBar>
-		<SplitPane dividerPositions="0.699264705882353" focusTraversable="true" VBox.vgrow="ALWAYS">
+		<SplitPane dividerPositions="0.7513812154696132" focusTraversable="true" VBox.vgrow="ALWAYS">
 			<items>
 				<SplitPane dividerPositions="0.7" orientation="VERTICAL">
 					<items>
@@ -289,7 +289,7 @@
                                              <top>
                                                 <BorderPane BorderPane.alignment="CENTER">
                                                    <left>
-                                                      <MenuButton contentDisplay="BOTTOM" mnemonicParsing="false" text="%key.add" BorderPane.alignment="CENTER">
+                                                      <MenuButton fx:id="addSymbVarButton" alignment="CENTER" contentDisplay="BOTTOM" maxWidth="138.0" minWidth="138.0" mnemonicParsing="false" prefWidth="138.0" text="%key.add" BorderPane.alignment="CENTER">
                                                         <items>
                                                           <MenuItem mnemonicParsing="false" text="Name">
                                                                <graphic>
@@ -319,7 +319,7 @@
                                              <bottom>
                                                 <BorderPane BorderPane.alignment="CENTER">
                                                    <left>
-                                                      <Button mnemonicParsing="false" onAction="#removeSymbVar" text="%key.remove" BorderPane.alignment="CENTER" />
+                                                      <Button fx:id="removeSymbVarButton" alignment="CENTER" maxWidth="138.0" minWidth="138.0" mnemonicParsing="false" onAction="#removeSymbVar" prefWidth="138.0" text="%key.remove" BorderPane.alignment="CENTER" />
                                                    </left>
                                                 </BorderPane>
                                              </bottom>
@@ -495,6 +495,7 @@
                         <CheckBox mnemonicParsing="false" />
                         <Label text="propless margin" />
                         <ImageView fx:id="proplessImage" pickOnBounds="true" preserveRatio="true" />
+                        <Button mnemonicParsing="false" text="-" />
                     </items>
                   </ToolBar>
                </bottom>
