@@ -57,3 +57,4 @@ beast/core/c_tempfiles/*.obj
 beast/core/c_tempfiles/*.bat
 *.classpath
 beast/.settings/org.eclipse.jdt.core.prefs
+beast/.classpath
