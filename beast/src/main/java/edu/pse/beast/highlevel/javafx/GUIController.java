@@ -31,6 +31,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
@@ -230,6 +231,12 @@ public class GUIController {
 	@FXML
 	private GridPane candidateGridPane;
 
+	@FXML
+	private Button removeSymbVarButton;
+
+	@FXML
+	private MenuButton addSymbVarButton;
+
 	// @FXML
 	// private Text
 	//
@@ -258,7 +265,9 @@ public class GUIController {
 
 	private long lastClicked = 0;
 
-	private TreeItem<String> itemToRemove;
+	private TreeItem<String> symbVarToRemove;
+
+	private TreeItem<CustomTreeItem> propertyToRemove;
 
 	// initial setup
 	@FXML
@@ -436,11 +445,15 @@ public class GUIController {
 		symbVarRoot.getChildren().add(candidateItems);
 		symbVarRoot.getChildren().add(seatItems);
 
-		booleanExpEditor = new BooleanExpEditorNEW(preArea, postArea, new PreAndPostConditionsDescription("default description"));
+		booleanExpEditor = new BooleanExpEditorNEW(preArea, postArea,
+				new PreAndPostConditionsDescription("default description"));
 
 		variableTreeView.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> setItemToRemove(newValue));
-		
+				.addListener((observable, oldValue, newValue) -> setSymbVarToRemove(newValue));
+
+		treeView.getSelectionModel().selectedItemProperty()
+				.addListener((observable, oldValue, newValue) -> setPropertyToRemove(newValue));
+
 		codeArea.setStyle("-fx-font-family: consolas; -fx-font-size: 11pt;");
 
 		// inputScrollPane.addEventHandler(ScrollEvent.ANY, new EventHandler<Event>() {
@@ -456,7 +469,6 @@ public class GUIController {
 
 			@Override
 			public void run() {
-
 				while (true) {
 					long time = System.currentTimeMillis();
 
@@ -464,7 +476,7 @@ public class GUIController {
 
 					candidateScrollPane.hvalueProperty().set(inputScrollPane.getHvalue());
 
-					inputScrollPane.fireEvent(new Event(ScrollEvent.ANY));
+					//inputScrollPane.fireEvent(new Event(ScrollEvent.ANY));
 
 					try {
 						Thread.sleep(Math.max(0, 16 - (System.currentTimeMillis() - time)));
@@ -560,12 +572,25 @@ public class GUIController {
 
 	@FXML
 	public void removeSymbVar() {
-		if (itemToRemove != null) {
+		if (symbVarToRemove != null) {
 			long time = System.currentTimeMillis();
 
 			if ((time - lastClicked) < threshold) {
-				booleanExpEditor.removeVariable(itemToRemove.getValue());
-				itemToRemove = null;
+				booleanExpEditor.removeVariable(symbVarToRemove.getValue());
+				symbVarToRemove = null;
+			}
+		}
+	}
+	
+	@FXML
+	public void removePropVar() {
+		if (propertyToRemove != null) {
+			long time = System.currentTimeMillis();
+
+			if ((time - lastClicked) < threshold) {
+				root.getChildren().remove(propertyToRemove);
+
+				propertyToRemove = null;
 			}
 		}
 	}
@@ -1132,9 +1157,15 @@ public class GUIController {
 	public TreeItem<String> getSeatTreeItems() {
 		return seatItems;
 	}
+	
 
-	public void setItemToRemove(TreeItem<String> item) {
-		this.itemToRemove = item;
+	private void setPropertyToRemove(TreeItem<CustomTreeItem> prop) {
+		this.propertyToRemove = prop;
+		this.lastClicked = System.currentTimeMillis();
+	}
+
+	public void setSymbVarToRemove(TreeItem<String> item) {
+		this.symbVarToRemove = item;
 		this.lastClicked = System.currentTimeMillis();
 	}
 

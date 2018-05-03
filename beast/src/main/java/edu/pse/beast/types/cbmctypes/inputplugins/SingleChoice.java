@@ -115,7 +115,6 @@ public class SingleChoice extends CBMCInputType {
 		
 		if (number == 1) {
 			for (int i = 0; i < row.getValues().size(); i++) {
-				System.out.println("index: " + i);
 				row.getValues().set(i, "0");
 			}
 			newValue = "1";

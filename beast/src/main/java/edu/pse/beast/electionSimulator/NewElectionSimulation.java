@@ -100,7 +100,7 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener 
 	}
 
 	public String[][] getVotingData() {
-		String[][] votingData = { { "0" }, { "0" } };
+		String[][] votingData = { { "0" } };
 
 		votingData = new String[model.getAmountVoters()][model.getAmountCandidates()];
 
