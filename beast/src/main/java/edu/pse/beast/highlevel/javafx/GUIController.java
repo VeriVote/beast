@@ -51,7 +51,7 @@ public class GUIController {
 
 	private static GUIController controller;
 
-	private static ArrayList<ParentTreeItem> properties = new ArrayList<ParentTreeItem>();
+	private static List<ParentTreeItem> properties = new ArrayList<ParentTreeItem>();
 
 	private String pathToImages = "file:///" + SuperFolderFinder.getSuperFolder() + "/core/images/";
 
