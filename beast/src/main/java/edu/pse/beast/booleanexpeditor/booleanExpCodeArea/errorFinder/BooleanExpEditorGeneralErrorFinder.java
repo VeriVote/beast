@@ -5,6 +5,7 @@ import java.util.List;
 
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpANTLRHandler;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 
@@ -32,19 +33,21 @@ public class BooleanExpEditorGeneralErrorFinder {
 
 		List<CodeError> combinedErrors = new ArrayList<CodeError>();
 		
+		PreAndPostConditionsDescription property = parentTreeItem.getPreAndPostPropertie();
+		
 		//pre cond error finder
 		
-		BooleanExpANTLRHandler preAntlrHandler = new BooleanExpANTLRHandler(parentTreeItem.getPreAndPostPropertie().getPreConditionsDescription().getCode());	
+		BooleanExpANTLRHandler preAntlrHandler = new BooleanExpANTLRHandler(property.getPreConditionsDescription().getCode());	
 		
 		combinedErrors.addAll(BooleanExpEditorGrammarErrorFinder.getErrors(preAntlrHandler));
-		combinedErrors.addAll(BooleanExpEditorVariableErrorFinder.getErrors(preAntlrHandler, GUIController.getController().getBooleanExpEditor().getSymbVarList(), GUIController.getController().getCodeArea()));
+		combinedErrors.addAll(BooleanExpEditorVariableErrorFinder.getErrors(preAntlrHandler, property.getSymVarList(), GUIController.getController().getCodeArea()));
 		
 		
 		//post cond error finder
 		
-		BooleanExpANTLRHandler postAntlrHandler = new BooleanExpANTLRHandler(parentTreeItem.getPreAndPostPropertie().getPreConditionsDescription().getCode());	
+		BooleanExpANTLRHandler postAntlrHandler = new BooleanExpANTLRHandler(property.getPostConditionsDescription().getCode());	
 		combinedErrors.addAll(BooleanExpEditorGrammarErrorFinder.getErrors(postAntlrHandler));
-		combinedErrors.addAll(BooleanExpEditorVariableErrorFinder.getErrors(postAntlrHandler, GUIController.getController().getBooleanExpEditor().getSymbVarList(), GUIController.getController().getCodeArea()));
+		combinedErrors.addAll(BooleanExpEditorVariableErrorFinder.getErrors(postAntlrHandler, property.getSymVarList(), GUIController.getController().getCodeArea()));
 
 		
 		return combinedErrors;

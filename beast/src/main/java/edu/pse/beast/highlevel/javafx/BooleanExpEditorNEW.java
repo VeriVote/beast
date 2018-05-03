@@ -3,8 +3,7 @@ package edu.pse.beast.highlevel.javafx;
 import java.util.Iterator;
 
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorGeneralErrorFinder;
-import edu.pse.beast.codeareaJAVAFX.NewPostPropertyCodeArea;
-import edu.pse.beast.codeareaJAVAFX.NewPrePropertyCodeArea;
+import edu.pse.beast.codeareaJAVAFX.NewPropertyCodeArea;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
@@ -13,12 +12,11 @@ import javafx.scene.control.TreeItem;
 
 public class BooleanExpEditorNEW {
 
-	private SymbolicVariableList symbVars = new SymbolicVariableList();
-	private NewPrePropertyCodeArea preArea;
-	private NewPostPropertyCodeArea postArea;
+	private NewPropertyCodeArea preArea;
+	private NewPropertyCodeArea postArea;
 	private PreAndPostConditionsDescription currentPropertyDescription;
 
-	public BooleanExpEditorNEW(NewPrePropertyCodeArea preArea, NewPostPropertyCodeArea postArea,
+	public BooleanExpEditorNEW(NewPropertyCodeArea preArea, NewPropertyCodeArea postArea,
 			PreAndPostConditionsDescription propDesc) {
 		this.preArea = preArea;
 		this.postArea = postArea;
@@ -28,7 +26,7 @@ public class BooleanExpEditorNEW {
 	public boolean containsVarName(String name) {
 		boolean contains = false;
 
-		for (Iterator<SymbolicVariable> iterator = symbVars.getSymbolicVariables().iterator(); iterator.hasNext();) {
+		for (Iterator<SymbolicVariable> iterator = currentPropertyDescription.getSymbolicVariableList().iterator(); iterator.hasNext();) {
 			SymbolicVariable variable = (SymbolicVariable) iterator.next();
 			contains = contains || (variable.getId().equals(name));
 		}
@@ -36,15 +34,13 @@ public class BooleanExpEditorNEW {
 		return contains;
 	}
 
-	public synchronized void addSymbVar(InternalTypeContainer container) {
-		String toAdd = GUIController.getController().getVariableNameField().getText();
-
+	public synchronized void addSymbVar(InternalTypeContainer container, String toAdd, boolean fromExisting) {		
 		if (!toAdd.equals("")) {
 
 			GUIController.getController().getVariableNameField().setText("");
 
-			adding: if (!containsVarName(toAdd)) {
-
+			adding: if ((!containsVarName(toAdd)) || fromExisting) {
+				
 				TreeItem<String> newItem = new TreeItem<String>(toAdd);
 
 				switch (container.getInternalType()) {
@@ -63,14 +59,16 @@ public class BooleanExpEditorNEW {
 				default:
 					break adding;
 				}
-
-				symbVars.getSymbolicVariables().add(new SymbolicVariable(toAdd, container));
+				
+				if (!fromExisting) {
+					currentPropertyDescription.getSymbolicVariableList().add(new SymbolicVariable(toAdd, container));
+				}
 			}
 		}
 	}
 
 	public void removeVariable(String name) {
-		for (Iterator<SymbolicVariable> iterator = symbVars.getSymbolicVariables().iterator(); iterator.hasNext();) {
+		for (Iterator<SymbolicVariable> iterator = currentPropertyDescription.getSymbolicVariableList().iterator(); iterator.hasNext();) {
 			SymbolicVariable variable = (SymbolicVariable) iterator.next();
 			if (variable.getId().equals(name)) {
 				switch (variable.getInternalTypeContainer().getInternalType()) {
@@ -120,24 +118,41 @@ public class BooleanExpEditorNEW {
 		}
 	}
 
-	public NewPrePropertyCodeArea getPrePropertyArea() {
+	public void removeAllVariables() {
+		GUIController.getController().getVoterTreeItems().getChildren().clear();
+
+		GUIController.getController().getCandidateTreeItems().getChildren().clear();
+
+		GUIController.getController().getSeatTreeItems().getChildren().clear();
+	}
+
+	public NewPropertyCodeArea getPrePropertyArea() {
 		return preArea;
 	}
 
-	public NewPostPropertyCodeArea getPostPropertyArea() {
+	public NewPropertyCodeArea getPostPropertyArea() {
 		return postArea;
 	}
-
-	public SymbolicVariableList getSymbVarList() {
-		return symbVars;
+	
+	public PreAndPostConditionsDescription getPropertyDescription() {
+		return currentPropertyDescription;
 	}
 
 	public void setCurrentPropertyDescription(ParentTreeItem propertyItem) {
+		
 		this.currentPropertyDescription = propertyItem.getPreAndPostPropertie();
+		
+		this.removeAllVariables();
+		
+		preArea.setDescription(currentPropertyDescription.getPreConditionsDescription());
+		postArea.setDescription(currentPropertyDescription.getPostConditionsDescription());
 
-		preArea.setPreDescription(currentPropertyDescription.getPreConditionsDescription());
-		postArea.setPostDescription(currentPropertyDescription.getPostConditionsDescription());
-
+		for (Iterator<SymbolicVariable> iterator = currentPropertyDescription.getSymbolicVariableList().iterator(); iterator.hasNext();) {
+			SymbolicVariable variable = (SymbolicVariable) iterator.next();
+			
+			this.addSymbVar(variable.getInternalTypeContainer(), variable.getId(), true);
+		}
+		
 		GUIController.getController().getMainTabPane().getSelectionModel()
 				.select(GUIController.getController().getPropertyTab());
 

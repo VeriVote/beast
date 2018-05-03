@@ -8,8 +8,7 @@ import java.util.concurrent.TimeUnit;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 
 import edu.pse.beast.codeareaJAVAFX.NewCodeArea;
-import edu.pse.beast.codeareaJAVAFX.NewPostPropertyCodeArea;
-import edu.pse.beast.codeareaJAVAFX.NewPrePropertyCodeArea;
+import edu.pse.beast.codeareaJAVAFX.NewPropertyCodeArea;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
@@ -241,9 +240,9 @@ public class GUIController {
 
 	private NewCodeArea codeArea;
 
-	private NewPrePropertyCodeArea preArea;
+	private NewPropertyCodeArea preArea;
 
-	private NewPostPropertyCodeArea postArea;
+	private NewPropertyCodeArea postArea;
 
 	private BooleanExpEditorNEW booleanExpEditor;
 
@@ -255,7 +254,7 @@ public class GUIController {
 
 	private TreeItem<String> seatItems;
 
-	private int threshold = 5000; // 5 seconds to click "remove item" after one was selected
+	private int threshold = 10000; // 10 seconds to click "remove item" after one was selected
 
 	private long lastClicked = 0;
 
@@ -406,17 +405,17 @@ public class GUIController {
 		VirtualizedScrollPane<NewCodeArea> VSP = new VirtualizedScrollPane<NewCodeArea>(codeArea);
 
 		codePane.setContent(VSP);
+		
+		preArea = new NewPropertyCodeArea();
 
-		preArea = new NewPrePropertyCodeArea();
-
-		VirtualizedScrollPane<NewPrePropertyCodeArea> VSPpre = new VirtualizedScrollPane<NewPrePropertyCodeArea>(
+		VirtualizedScrollPane<NewPropertyCodeArea> VSPpre = new VirtualizedScrollPane<NewPropertyCodeArea>(
 				preArea);
 
 		prePropertyPane.setContent(VSPpre);
 
-		postArea = new NewPostPropertyCodeArea();
+		postArea = new NewPropertyCodeArea();
 
-		VirtualizedScrollPane<NewPostPropertyCodeArea> VSPpost = new VirtualizedScrollPane<NewPostPropertyCodeArea>(
+		VirtualizedScrollPane<NewPropertyCodeArea> VSPpost = new VirtualizedScrollPane<NewPropertyCodeArea>(
 				postArea);
 
 		postPropertyPane.setContent(VSPpost);
@@ -543,17 +542,20 @@ public class GUIController {
 	// symb Var
 	@FXML
 	public void addSymbCand(ActionEvent event) {
-		booleanExpEditor.addSymbVar(new InternalTypeContainer(InternalTypeRep.CANDIDATE));
+		String toAdd = GUIController.getController().getVariableNameField().getText();
+		booleanExpEditor.addSymbVar(new InternalTypeContainer(InternalTypeRep.CANDIDATE), toAdd, false);
 	}
 
 	@FXML
 	public void addSymbSeat(ActionEvent event) {
-		booleanExpEditor.addSymbVar(new InternalTypeContainer(InternalTypeRep.SEAT));
+		String toAdd = GUIController.getController().getVariableNameField().getText();
+		booleanExpEditor.addSymbVar(new InternalTypeContainer(InternalTypeRep.SEAT), toAdd, false);
 	}
 
 	@FXML
 	public void addSymbVoter(ActionEvent event) {
-		booleanExpEditor.addSymbVar(new InternalTypeContainer(InternalTypeRep.VOTER));
+		String toAdd = GUIController.getController().getVariableNameField().getText();
+		booleanExpEditor.addSymbVar(new InternalTypeContainer(InternalTypeRep.VOTER), toAdd, false);
 	}
 
 	@FXML
@@ -1010,11 +1012,11 @@ public class GUIController {
 		return codeArea;
 	}
 
-	public NewPrePropertyCodeArea getPreConditionsArea() {
+	public NewPropertyCodeArea getPreConditionsArea() {
 		return preArea;
 	}
 
-	public NewPostPropertyCodeArea getPostConditionsArea() {
+	public NewPropertyCodeArea getPostConditionsArea() {
 		return postArea;
 	}
 
@@ -1054,11 +1056,11 @@ public class GUIController {
 		return electionSimulation.getVotingData();
 	}
 
-	public NewPrePropertyCodeArea getPreCodeArea() {
+	public NewPropertyCodeArea getPreCodeArea() {
 		return preArea;
 	}
 
-	public NewPostPropertyCodeArea getPostCodeArea() {
+	public NewPropertyCodeArea getPostCodeArea() {
 		return postArea;
 	}
 
