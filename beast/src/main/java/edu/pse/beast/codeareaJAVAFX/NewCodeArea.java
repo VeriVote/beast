@@ -20,6 +20,8 @@ import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.toolbox.CCodeHelper;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
@@ -158,6 +160,10 @@ public class NewCodeArea extends SaveLoadCodeArea {
 
 	public void setNewElectionDescription(ElectionDescription newDescription) {
 		this.elecDescription = newDescription;
+		
+		String declarationString = CCodeHelper.generateDeclString(newDescription.getContainer());
+		
+		this.insertText(0, declarationString + "\n\n}");
 	}
 
 }
