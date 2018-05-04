@@ -622,18 +622,17 @@ public class GUIController {
 	// --------
 	// Icon Bar
 	@FXML
-	public void startStopPressed(ActionEvent event) {
+	public synchronized void startStopPressed(ActionEvent event) {
 		if (!running) {
 			// react = false; // lock the GUI
 			if (BEASTCommunicator.startCheckNEW()) { // if we start it successful
 				startStopButton.setGraphic(new ImageView(pathToImages + "toolbar/stop.png"));
-			} else {
-				// react = true;
+				running = true;
 			}
 		} else {
 			if (BEASTCommunicator.stopCheck()) {
 				startStopButton.setGraphic(new ImageView(pathToImages + "toolbar/start.png"));
-				// react = true;
+				running = false;
 			}
 		}
 	}
@@ -947,6 +946,10 @@ public class GUIController {
 		List<Integer> voter = getValues(minVoter, maxVoter);
 		List<Integer> cand = getValues(minCandidates, maxCandidates);
 		List<Integer> seat = getValues(minSeats, maxSeats);
+		
+		int marginVoters = electionSimulation.getNumVoters();
+		int marginCandidates = electionSimulation.getNumCandidates();
+		int marginSeats = electionSimulation.getNumSeats();
 
 		Integer numberProcesses = Runtime.getRuntime().availableProcessors();
 
@@ -963,7 +966,7 @@ public class GUIController {
 
 		String argument = advancedParameters.getText();
 
-		ElectionCheckParameter param = new ElectionCheckParameter(voter, cand, seat, time, numberProcesses, argument);
+		ElectionCheckParameter param = new ElectionCheckParameter(voter, cand, seat, marginVoters, marginCandidates, marginSeats, time, numberProcesses, argument);
 		return param;
 	}
 

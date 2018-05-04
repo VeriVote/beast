@@ -64,7 +64,7 @@ public class FormalExpErrorFinderTreeListener
         for (SymbolicVariable var : list.getSymbolicVariables()) {
             scopeHandler.addVariable(var.getId(), var.getInternalTypeContainer());
         }
-        this.container = codeArea.getSource().getContainer();
+        this.container = codeArea.getElectionDescription().getContainer();
         codeArea.addListener(this);
     }
 

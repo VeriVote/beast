@@ -107,7 +107,7 @@ public abstract class SystemSpecificErrorChecker {
 	 *            the code to check
 	 * @return all errors found in a list
 	 */
-	public List<CodeError> checkCodeForErrors(List<String> toCheck) {
+	public List<CodeError> checkCodeForErrors(List<String> toCheck, int lineOffset) {
 
 		List<String> result = new ArrayList<String>();
 
@@ -158,7 +158,7 @@ public abstract class SystemSpecificErrorChecker {
 			}
 
 			// parse the errors out of the returned lists
-			List<CodeError> toReturn = parseError(result, errors);
+			List<CodeError> toReturn = parseError(result, errors, lineOffset);
 
 			// deletes the temporary file, so it doesn't clog up the filesystem
 			
@@ -197,7 +197,8 @@ public abstract class SystemSpecificErrorChecker {
 	 *            the result list from the previously started process
 	 * @param errors
 	 *            the error list from the previously started process
+	 * @param lineOffset 
 	 * @return a list of all found code errors in the list
 	 */
-	protected abstract List<CodeError> parseError(List<String> result, List<String> errors);
+	protected abstract List<CodeError> parseError(List<String> result, List<String> errors, int lineOffset);
 }

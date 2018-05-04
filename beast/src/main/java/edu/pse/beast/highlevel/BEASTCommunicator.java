@@ -113,42 +113,49 @@ public class BEASTCommunicator {
 	// return false;
 	// }
 	// }
+	private static boolean stopped;
 
-	public static boolean startCheckNEW() {
+	public static synchronized boolean startCheckNEW() {
 
+		stopped = false;
+		
 		ElectionDescription electionDesc = GUIController.getController().getElectionDescription();
 		List<ParentTreeItem> properties = GUIController.getController().getProperties();
 		ElectionCheckParameter parameter = GUIController.getController().getParameter();
 
 		// checks if there even are any properties selected for analysis in the
 		// PreAndPostConditionsSource
-		if (properties.size() == 0) {
+		
+		boolean hasProperties = false;
+		
+		for (Iterator<ParentTreeItem> iterator = properties.iterator(); iterator.hasNext();) {
+			ParentTreeItem item = (ParentTreeItem) iterator.next();
+			hasProperties = hasProperties || item.isChildSelected();
+		}
+		
+		if (!hasProperties) {
 			GUIController.setInfoText("no property selected (add string resouce loading later");
 			return false;
 		}
-		
-		System.out.println("checkfor errors: " + checkForErrors(electionDesc, properties));
 
 		if (!checkForErrors(electionDesc, properties)) {
-			// analysis gets started by CheckerCommunicator.checkPropertiesForDescription()
-			// getting called
 			GUIController.setInfoText("starting Check");
-//
-//			boolean started = centralObjectProvider.getResultCheckerCommunicator()
-//					.checkPropertiesForDescription(electionDesc, properties, parameter);
-//			
-//			
 			 
 			//TODO load the propertychecker 
-			boolean started = new PropertyChecker("CBMC").checkPropertiesForDescription(electionDesc, properties, parameter);
 			
+			PropertyChecker checker = new PropertyChecker("CBMC");
 			
-			
-
+			currentCheckers.add(checker);
+						
+			// analysis gets started by CheckerCommunicator.checkPropertiesForDescription()
+			boolean started = checker.checkPropertiesForDescription(electionDesc, properties, parameter);
 			if (started) {
 
-				// Thread that checks for new presentable results every 32 milliseconds
+				// Thread that checks for new presentable results every n milliseconds
 				Thread waitForResultsThread = new Thread(new Runnable() {
+					
+					DecimalFormat df = new DecimalFormat("#.0");
+					
 					@Override
 					public void run() {
 						// local variables for elapsed time displaying
@@ -161,15 +168,15 @@ public class BEASTCommunicator {
 
 						boolean allDone = false;
 
-						while (!allDone) {
+						while (!allDone && !stopped) {
 							elapsedTime = System.nanoTime() - startTime;
 							passedTimeSeconds = (double) elapsedTime / 1000000000.0;
 							timeString = createTimeString(passedTimeSeconds);
 
-							GUIController.setInfoText("elapsed time " + passedTimeSeconds);
+							GUIController.setInfoText("elapsed time " + df.format(passedTimeSeconds));
 
 							try {
-								Thread.sleep(Math.max(0, 32 - (System.currentTimeMillis() - frameTime)));
+								Thread.sleep(Math.max(0, 67 - (System.currentTimeMillis() - frameTime)));
 							} catch (InterruptedException ex) {
 								Logger.getLogger(BEASTCommunicator.class.getName()).log(Level.SEVERE, null, ex);
 							}
@@ -193,7 +200,7 @@ public class BEASTCommunicator {
 					}
 				});
 				waitForResultsThread.start();
-				return true;
+				return true && !stopped;
 			} else {
 				return false;
 			}
@@ -201,10 +208,15 @@ public class BEASTCommunicator {
 		return false;
 	}
 
-	public static boolean stopCheck() {
+	public synchronized static boolean stopCheck() {
+		stopped = true;
+		
 		for (Iterator<PropertyChecker> iterator = currentCheckers.iterator(); iterator.hasNext();) {
 			PropertyChecker checker = (PropertyChecker) iterator.next();
 			checker.abortChecking();
+			
+			
+			System.out.println("aborting");
 		}
 		return true;
 	}
@@ -217,10 +229,11 @@ public class BEASTCommunicator {
      */
     public static boolean checkForErrors(ElectionDescription description, List<ParentTreeItem> properties) {
 		GUIController.setInfoText("searching for errors");
+		GUIController.getController().getBooleanExpEditor().saveProperty(); //save the currently opened property
+		
+		description.setCode(GUIController.getController().getCodeArea().getText());
 
 		List<CodeError> codeErrors = CVariableErrorFinder.findErrors(description.getCode());
-		
-		
 		
 		
 		if (codeErrors.size() != 0) {

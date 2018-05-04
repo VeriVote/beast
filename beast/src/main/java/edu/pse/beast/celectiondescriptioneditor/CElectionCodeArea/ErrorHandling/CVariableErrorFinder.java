@@ -21,9 +21,17 @@ public class CVariableErrorFinder {
     
     public static List<CodeError> findErrors(List<String> code) {
         ArrayList<String> seperated = new ArrayList<>();
-        seperated.add("#ifndef " + UnifiedNameContainer.getVoter() + "\n #define " + UnifiedNameContainer.getVoter() + " 1\n #endif");
-        seperated.add("#ifndef " + UnifiedNameContainer.getCandidate() + " \n #define " + UnifiedNameContainer.getCandidate() + " 1\n #endif");
-        seperated.add("#ifndef " + UnifiedNameContainer.getSeats() + "\n #define " + UnifiedNameContainer.getSeats() + " 1\n #endif");
+        seperated.add("#ifndef " + UnifiedNameContainer.getVoter());
+        seperated.add("#define " + UnifiedNameContainer.getVoter() + " 1");
+        seperated.add("#endif");
+        
+        seperated.add("#ifndef " + UnifiedNameContainer.getCandidate());
+        seperated.add("#define " + UnifiedNameContainer.getCandidate() + " 1");
+        seperated.add("#endif");
+        
+        seperated.add("#ifndef " + UnifiedNameContainer.getSeats());
+        seperated.add("#define " + UnifiedNameContainer.getSeats() + " 1");
+        seperated.add("#endif");
 
         //because we want to reserver the function name "verify" we define it here
         seperated.add("void verify() {}");
@@ -54,8 +62,10 @@ public class CVariableErrorFinder {
         seperated.add("int main() {");
         seperated.add("}");
         
+        int lineOffset = seperated.size() + 1;
+        
         seperated.addAll(code);
-        ArrayList<CodeError> found = new ArrayList<>(DeepErrorChecker.checkCodeForErrors(seperated));
+        ArrayList<CodeError> found = new ArrayList<>(DeepErrorChecker.checkCodeForErrors(seperated, lineOffset));
         return found;
     }
 }

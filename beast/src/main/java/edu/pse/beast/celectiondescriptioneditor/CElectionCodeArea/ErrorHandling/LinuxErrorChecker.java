@@ -102,7 +102,7 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
     }
 
     @Override
-    protected List<CodeError> parseError(List<String> result, List<String> errors) {
+    protected List<CodeError> parseError(List<String> result, List<String> errors, int lineOffset) {
         List<CodeError> codeErrors = new ArrayList<CodeError>();
 
         // gcc gives the errors out in the error stream so we traverse it
@@ -128,7 +128,7 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
                     try {
 
                         // put the output in the containers for them
-                        lineNumber = Integer.parseInt(line.split(":")[1]);
+                        lineNumber = Integer.parseInt(line.split(":")[1]) - lineOffset;
 
                         linePos = Integer.parseInt(line.split(":")[2]);
 

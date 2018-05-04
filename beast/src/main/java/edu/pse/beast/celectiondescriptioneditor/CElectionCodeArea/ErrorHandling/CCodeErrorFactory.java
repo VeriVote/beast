@@ -27,7 +27,7 @@ public class CCodeErrorFactory {
      * @return the created code error, containing all information given to this function
      */
     public static CodeError generateCompilerError(int line, int posInLine, String varName, String message) {
-        CodeError toReturn = new CodeError(line - 10, posInLine, IDS[0], 0, -1, -1);
+        CodeError toReturn = new CodeError(line, posInLine, IDS[0], 0, -1, -1);
         toReturn.setExtraInfo("var", varName);
         toReturn.setExtraInfo("msg", message);
         return toReturn;

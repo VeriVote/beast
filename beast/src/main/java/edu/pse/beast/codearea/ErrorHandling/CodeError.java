@@ -55,8 +55,7 @@ public class CodeError {
     }
 
     public String getMsg() {
-        // temporary
-        return "";
+        return extraInfo.get("msg");
     }
 
     public int getStartPos() {

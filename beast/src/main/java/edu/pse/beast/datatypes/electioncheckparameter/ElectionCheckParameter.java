@@ -2,6 +2,7 @@ package edu.pse.beast.datatypes.electioncheckparameter;
 
 import java.util.List;
 
+import edu.pse.beast.electionSimulator.Model.ElectionSimulationModel;
 import edu.pse.beast.highlevel.javafx.GUIController;
 
 /**
@@ -16,6 +17,9 @@ public class ElectionCheckParameter {
     private final TimeOut timeOut;
     private final Integer processes;
     private final String argument;
+	private final int marginVotes;
+	private final int marginCandidates;
+	private final int marginSeats;
 
     /**
      * 
@@ -27,10 +31,13 @@ public class ElectionCheckParameter {
      * @param argument the arguments given by the user
      */
     public ElectionCheckParameter(List<Integer> amountVoters, List<Integer> amountCandidates, 
-            List<Integer> amountSeats, TimeOut timeOut, Integer processes, String argument) {
+            List<Integer> amountSeats, int marginVotes, int marginCandidates, int marginSeats, TimeOut timeOut, Integer processes, String argument) {
         this.amountVoters = amountVoters;
         this.amountCandidates = amountCandidates;
         this.amountSeats = amountSeats;
+        this.marginVotes = marginVotes;
+        this.marginCandidates = marginCandidates;
+        this.marginSeats = marginSeats;
         this.timeOut = timeOut;
         this.processes = processes;
         this.argument = argument;
@@ -85,21 +92,15 @@ public class ElectionCheckParameter {
     }
 
 	public int getMarginVotes() {
-		// TODO Auto-generated method stub
-		System.out.println("TODO getMarginVOTES");
-		return 0;
+		return marginVotes;
 	}
 	
 	public int getMarginCandidates() {
-		// TODO Auto-generated method stub
-		System.out.println("TODO getMarginVOTES");
-		return 0;
+		return marginCandidates;
 	}
 	
 	public int getMarginSeats() {
-		// TODO Auto-generated method stub
-		System.out.println("TODO getMarginVOTES");
-		return 0;
+		return marginSeats;
 	}
 
 	public int getNumVotingPoints() {

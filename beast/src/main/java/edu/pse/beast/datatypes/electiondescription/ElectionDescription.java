@@ -1,6 +1,7 @@
 package edu.pse.beast.datatypes.electiondescription;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import edu.pse.beast.datatypes.NameInterface;
@@ -70,6 +71,16 @@ public class ElectionDescription implements NameInterface {
      */
     public void setCode(List<String> code) {
         this.code = code;
+    }
+    
+    /**
+     * 
+     * @param code of this description
+     */
+    public void setCode(String code) {
+    	String[] split = code.split("\n");
+    	
+    	this.code = new ArrayList<>(Arrays.asList(split));
     }
     
     /**

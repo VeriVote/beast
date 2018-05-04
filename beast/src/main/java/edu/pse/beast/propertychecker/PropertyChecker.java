@@ -28,19 +28,6 @@ public class PropertyChecker implements ResultCheckerCommunicator {
     public PropertyChecker(String checkerID) {
         this.checkerID = checkerID;
     }
-//
-//    @Override
-//    public List<ResultInterface> checkPropertiesForDescription(ElectionDescriptionSource elecDescr,
-//            PreAndPostConditionsDescriptionSource propDescrSrc, ParameterSource params) {
-//
-//        if (elecDescr == null || propDescrSrc == null || params == null) {
-//            return null;
-//        } else {
-//            this.factoryController = new FactoryController(elecDescr, propDescrSrc, params, checkerID,
-//                    params.getParameter().getProcesses());
-//            return factoryController.getResults();
-//        }
-//    }
     
     
     @Override
@@ -54,20 +41,6 @@ public class PropertyChecker implements ResultCheckerCommunicator {
              return true;
          }
     }
-//    
-//    @Override
-//    public UnprocessedCBMCResult checkFile(File toCheck, ElectionDescription electionDescr, ParameterSource params) {
-//        if (toCheck == null || params == null) {
-//            return null;
-//        } else {
-//            this.factoryController = new FactoryController(toCheck, params, checkerID,
-//                    params.getParameter().getProcesses());
-//            //because we only have ONE file to check, we  only give back the first result
-//            UnprocessedCBMCResult toReturn = factoryController.getUnprocessedResults().get(0);
-//            toReturn.setElectionType(electionDescr);
-//            return toReturn;
-//        }
-//    }
 
     @Override
     public boolean abortChecking() {

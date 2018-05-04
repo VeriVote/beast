@@ -101,7 +101,7 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
     }
 
     @Override
-    protected List<CodeError> parseError(List<String> result, List<String> errors) {
+    protected List<CodeError> parseError(List<String> result, List<String> errors, int lineOffset) {
         List<CodeError> codeErrors = new ArrayList<CodeError>();
 
         // errors are displayed like "(LINENUMBER)" where linenumber is a whole
@@ -127,7 +127,7 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
                     // indentifier, so we don't have to worry
                     // about code injection from strings or such
                     // then we split at "(" and ")" to extract the number
-                    lineNumber = Integer.parseInt(linesMatcher.group(1).split("\\(")[1].split("\\)")[0]);
+                    lineNumber = Integer.parseInt(linesMatcher.group(1).split("\\(")[1].split("\\)")[0]) - lineOffset;
 
                     // get the error message here by splitting at a common
                     // (error/warning C[ERRORNUMBER]) identifier

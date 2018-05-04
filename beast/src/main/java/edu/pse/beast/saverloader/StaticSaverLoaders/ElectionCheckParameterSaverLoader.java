@@ -86,6 +86,6 @@ public class ElectionCheckParameterSaverLoader {
         int processes = Integer.parseInt(split[0].replace("<processes>\n", ""));
         split = split[1].split("\n</argument>\n");
         String argument = split[0].replace("<argument>\n", "");
-        return new ElectionCheckParameter(amountVoters, amountCandidates, amountSeats, timeout, processes, argument);
+        return new ElectionCheckParameter(amountVoters, amountCandidates, amountSeats,1,1,1, timeout, processes, argument);
     }
 }

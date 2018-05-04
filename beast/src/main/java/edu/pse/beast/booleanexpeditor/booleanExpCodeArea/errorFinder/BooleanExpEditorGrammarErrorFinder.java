@@ -22,17 +22,14 @@ public class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListener {
     private final ArrayList<CodeError> errors = new ArrayList<>();
     private static BooleanExpEditorGrammarErrorFinder finder;
 
-    public BooleanExpEditorGrammarErrorFinder(BooleanExpANTLRHandler antlrHandler) {
+    private BooleanExpEditorGrammarErrorFinder(BooleanExpANTLRHandler antlrHandler) {  	
 		antlrHandler.getParser().addErrorListener(this);
 	}
 
 	public static ArrayList<CodeError> getErrors(BooleanExpANTLRHandler antlrHandler) {
     	
-    	finder = new BooleanExpEditorGrammarErrorFinder(antlrHandler);
-    	
-    	antlrHandler.getParser().addErrorListener(finder);
-    	
-        finder.clearErrors();
+    	finder = new BooleanExpEditorGrammarErrorFinder(antlrHandler);       
+        
         antlrHandler.getParseTree();
         return finder.getErrors();
     }
@@ -47,7 +44,7 @@ public class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListener {
 
     @Override
     public void syntaxError(Recognizer<?, ?> rcgnzr, Object o, int line, int charInline, String msg,
-                            RecognitionException re) {
+                            RecognitionException re) {   	
         errors.add(BooleanExpErrorFactory.createAntlrError(line, charInline, msg));
     }
 

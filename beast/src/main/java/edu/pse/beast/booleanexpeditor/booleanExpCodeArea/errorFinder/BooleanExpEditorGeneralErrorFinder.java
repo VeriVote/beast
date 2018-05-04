@@ -39,6 +39,8 @@ public class BooleanExpEditorGeneralErrorFinder {
 		
 		BooleanExpANTLRHandler preAntlrHandler = new BooleanExpANTLRHandler(property.getPreConditionsDescription().getCode());	
 		
+		
+		
 		combinedErrors.addAll(BooleanExpEditorGrammarErrorFinder.getErrors(preAntlrHandler));
 		combinedErrors.addAll(BooleanExpEditorVariableErrorFinder.getErrors(preAntlrHandler, property.getSymVarList(), GUIController.getController().getCodeArea()));
 		

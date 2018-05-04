@@ -49,7 +49,7 @@ public class NewPropertyCodeArea extends CodeArea {
 
 	public NewPropertyCodeArea() {
 
-		String stylesheet = this.getClass().getResource("newCodeAreaStyle.css").toExternalForm();
+		String stylesheet = this.getClass().getResource("propertyAreaSyntaxHighlight.css").toExternalForm();
 
 		this.getStylesheets().add(stylesheet);
 
@@ -94,13 +94,18 @@ public class NewPropertyCodeArea extends CodeArea {
 	 * @param description
 	 */
 	public void setDescription(FormalPropertiesDescription description) {
+
+		saveDescription();
+		
+		this.description = description;
+		this.replaceText(0, this.getLength(), description.getCode());
+	}
+	
+	public void saveDescription() {
 		if (this.description != null) {
 			this.description.setCode(this.textProperty().getValue());
 		} else {
 			System.out.println("maybe save property that was written when no property was selected");
 		}
-
-		this.description = description;
-		this.replaceText(0, this.getLength(), description.getCode());
 	}
 }

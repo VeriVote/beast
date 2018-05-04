@@ -58,11 +58,11 @@ public final class DeepErrorChecker {
      *            the code to check
      * @return a list of codeErros
      */
-    public static List<CodeError> checkCodeForErrors(List<String> toCheck) {
+    public static List<CodeError> checkCodeForErrors(List<String> toCheck, int lineOffset) {
         if (!initialized) {
             init();
         }
-        return errorChecker.checkCodeForErrors(toCheck);
+        return errorChecker.checkCodeForErrors(toCheck, lineOffset);
     }
 
     /**
