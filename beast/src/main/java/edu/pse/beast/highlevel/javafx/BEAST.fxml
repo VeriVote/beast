@@ -41,7 +41,7 @@
 								<MenuItem mnemonicParsing="false" onAction="#newProject" text="%key.project" />
 								<MenuItem mnemonicParsing="false" onAction="#newElectionDescription" text="%key.electiondescription" />
 								<MenuItem mnemonicParsing="false" onAction="#newPropertyList" text="%key.propertylist" />
-								<MenuItem mnemonicParsing="false" onAction="#newVotingInpup" text="%key.voteslist" />
+								<MenuItem mnemonicParsing="false" onAction="#newVotingInput" text="%key.voteslist" />
 							</items>
 						</Menu>
 						<Menu mnemonicParsing="false" text="%key.open">

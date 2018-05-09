@@ -9,8 +9,6 @@ import java.util.List;
 import java.util.function.IntFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.BaseStream;
-import java.util.stream.Stream;
 
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
@@ -21,7 +19,6 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.CCodeHelper;
-import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
@@ -69,10 +66,11 @@ public class NewCodeArea extends SaveLoadCodeArea {
 	public NewCodeArea() {
 		super(".elec", "C:", "BEAST election description");
 
-		ElectionDescription startElecDescription = new ElectionDescription("New description", new SingleChoice(), new SingleCandidate(), 0);
+		ElectionDescription startElecDescription = new ElectionDescription("New description", new SingleChoice(),
+				new SingleCandidate(), 0);
 
 		this.setNewElectionDescription(startElecDescription);
-		
+
 		List<String> code = new ArrayList<String>();
 		code.add("");
 		// code.add(source.getContainer().getInputType().);
@@ -150,8 +148,6 @@ public class NewCodeArea extends SaveLoadCodeArea {
 			listener.inputChanged(newIn);
 			listener.outputChanged(newOut);
 		}
-
-		System.out.println("TODO fix creating new CElectionDescription");
 	}
 
 	public void addListener(ElectionDescriptionChangeListener listener) {
@@ -160,10 +156,11 @@ public class NewCodeArea extends SaveLoadCodeArea {
 
 	public void setNewElectionDescription(ElectionDescription newDescription) {
 		this.elecDescription = newDescription;
-		
-		String declarationString = CCodeHelper.generateDeclString(newDescription.getContainer());
-		
-		this.insertText(0, declarationString + "\n\n}");
-	}
 
+		String declarationString = CCodeHelper.generateDeclString(newDescription.getContainer());
+
+		this.insertText(0, declarationString + "\n\n}");
+
+		this.setStyleSpans(0, computeHighlighting(this.getText()));
+	}
 }

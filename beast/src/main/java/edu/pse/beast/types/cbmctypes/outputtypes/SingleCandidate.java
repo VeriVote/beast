@@ -117,7 +117,7 @@ public class SingleCandidate extends CBMCOutputType {
 	
 	@Override
 	public InternalTypeContainer getInternalTypeContainer() {
-		return new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
+		return new InternalTypeContainer(InternalTypeRep.INTEGER);
 	}
 
 	@Override

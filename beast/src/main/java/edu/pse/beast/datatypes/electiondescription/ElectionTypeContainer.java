@@ -70,7 +70,6 @@ public class ElectionTypeContainer {
      * @return the upperBound of this election
      */
     public int getUpperBound() {
-    	System.out.println("up" + upperBound);
         return upperBound;
     }
 

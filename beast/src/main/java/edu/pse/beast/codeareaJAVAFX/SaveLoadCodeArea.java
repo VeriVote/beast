@@ -11,7 +11,7 @@ import org.fxmisc.richtext.CodeArea;
 import edu.pse.beast.highlevel.MainClass;
 import javafx.stage.FileChooser;
 
-public class SaveLoadCodeArea extends CodeArea {
+public abstract class SaveLoadCodeArea extends CodeArea {
 	private boolean hasSaveFile = false;
 	private File saveFile = null;
 	
@@ -104,5 +104,4 @@ public class SaveLoadCodeArea extends CodeArea {
             e.printStackTrace();
         }
 	}
-
 }

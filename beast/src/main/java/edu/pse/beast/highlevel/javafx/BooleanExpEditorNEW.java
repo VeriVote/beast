@@ -162,8 +162,8 @@ public class BooleanExpEditorNEW {
 	}
 
 	public void saveProperty() {
-		preArea.saveDescription();
-		postArea.saveDescription();
+		preArea.saveDescription(null);
+		postArea.saveDescription(null);
 	}
 
 }

@@ -369,6 +369,7 @@ public class CBMCCodeGenerator {
 
 		code.add("");
 		code.add("//postproperties ");
+		
 		code.add("");
 		visitor.setToPostConditionMode();
 		postAST.getBooleanExpressions().forEach((booleanExpressionLists) -> {

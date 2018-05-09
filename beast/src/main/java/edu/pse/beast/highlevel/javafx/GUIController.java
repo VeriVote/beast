@@ -773,11 +773,11 @@ public class GUIController {
 
 	@FXML
 	public void newPropertyList(ActionEvent event) {
-
+		
 	}
 
 	@FXML
-	public void newVotingInpup(ActionEvent event) {
+	public void newVotingInput(ActionEvent event) {
 
 	}
 

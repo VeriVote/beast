@@ -76,9 +76,9 @@ public class NewPropertyCodeArea extends CodeArea {
 											: matcher.group("QUANTORS") != null ? "quantors"
 													: matcher.group("PAREN") != null ? "paren"
 															: matcher.group("SEMICOLON") != null ? "semicolon" : null;
-			
+
 			/* never happens */ assert styleClass != null;
-			
+
 			spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
 			spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
 			lastKwEnd = matcher.end();
@@ -95,17 +95,19 @@ public class NewPropertyCodeArea extends CodeArea {
 	 */
 	public void setDescription(FormalPropertiesDescription description) {
 
-		saveDescription();
-		
+		saveDescription(description);
+
 		this.description = description;
 		this.replaceText(0, this.getLength(), description.getCode());
 	}
-	
-	public void saveDescription() {
+
+	public void saveDescription(FormalPropertiesDescription newDescription) {
 		if (this.description != null) {
 			this.description.setCode(this.textProperty().getValue());
 		} else {
-			System.out.println("maybe save property that was written when no property was selected");
+			if (newDescription != null) {
+				newDescription.setCode(this.textProperty().getValue());
+			}
 		}
 	}
 }
