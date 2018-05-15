@@ -1,13 +1,18 @@
 package edu.pse.beast.highlevel.javafx;
 
-import java.awt.MouseInfo;
-import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.fxmisc.flowless.VirtualizedScrollPane;
+
+import java.awt.MouseInfo;
+import java.awt.Point;
 
 import edu.pse.beast.codeareaJAVAFX.NewCodeArea;
 import edu.pse.beast.codeareaJAVAFX.NewPropertyCodeArea;
@@ -18,21 +23,29 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.electionSimulator.NewElectionSimulation;
 import edu.pse.beast.highlevel.BEASTCommunicator;
 import edu.pse.beast.toolbox.SuperFolderFinder;
+import edu.pse.beast.types.InOutType;
+import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
+import edu.pse.beast.types.OutputType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
@@ -240,6 +253,15 @@ public class GUIController {
 	@FXML
 	private MenuButton addSymbVarButton;
 
+	@FXML
+	private Button propNameButton;
+
+	@FXML
+	private TextField propNameField;
+
+	@FXML
+	private TextField resultNameField;
+
 	// @FXML
 	// private Text
 	//
@@ -273,6 +295,8 @@ public class GUIController {
 	private TreeItem<CustomTreeItem> propertyToRemove;
 
 	private Stage mainStage;
+
+	private boolean nameFieldIsChangeable = false;
 
 	public GUIController(Stage mainStage) {
 		this.mainStage = mainStage;
@@ -423,18 +447,16 @@ public class GUIController {
 		VirtualizedScrollPane<NewCodeArea> VSP = new VirtualizedScrollPane<NewCodeArea>(codeArea);
 
 		codePane.setContent(VSP);
-		
+
 		preArea = new NewPropertyCodeArea();
 
-		VirtualizedScrollPane<NewPropertyCodeArea> VSPpre = new VirtualizedScrollPane<NewPropertyCodeArea>(
-				preArea);
+		VirtualizedScrollPane<NewPropertyCodeArea> VSPpre = new VirtualizedScrollPane<NewPropertyCodeArea>(preArea);
 
 		prePropertyPane.setContent(VSPpre);
 
 		postArea = new NewPropertyCodeArea();
 
-		VirtualizedScrollPane<NewPropertyCodeArea> VSPpost = new VirtualizedScrollPane<NewPropertyCodeArea>(
-				postArea);
+		VirtualizedScrollPane<NewPropertyCodeArea> VSPpost = new VirtualizedScrollPane<NewPropertyCodeArea>(postArea);
 
 		postPropertyPane.setContent(VSPpost);
 
@@ -455,7 +477,7 @@ public class GUIController {
 		symbVarRoot.getChildren().add(seatItems);
 
 		booleanExpEditor = new BooleanExpEditorNEW(preArea, postArea,
-				new PreAndPostConditionsDescription("default description"));
+				new PreAndPostConditionsDescription("default description"), null);
 
 		variableTreeView.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> setSymbVarToRemove(newValue));
@@ -484,9 +506,9 @@ public class GUIController {
 					voterScrollPane.vvalueProperty().set(inputScrollPane.getVvalue());
 
 					candidateScrollPane.hvalueProperty().set(inputScrollPane.getHvalue());
-					
+
 					infoTextArea.setText("" + inputScrollPane.getHvalue() + "\n" + candidateScrollPane.getHvalue());
-					
+
 					inputScrollPane.fireEvent(new Event(ScrollEvent.ANY));
 
 					try {
@@ -592,7 +614,7 @@ public class GUIController {
 			}
 		}
 	}
-	
+
 	@FXML
 	public void removePropVar() {
 		if (propertyToRemove != null) {
@@ -726,6 +748,33 @@ public class GUIController {
 
 	// other menu buttons
 
+	@FXML // the user wants to edit the name of the current property
+	public void propNameButtonClicked(Event event) {
+		if (nameFieldIsChangeable) {
+			String text = propNameField.getText();
+			if (!text.equals("")) {
+				if (isValidFileName(text)) {
+					propNameField.setEditable(false);
+					resultNameField.setText(text);
+
+					booleanExpEditor.getPropertyDescription().setNewName(text);
+
+					if (booleanExpEditor.getCurrentItem() != null) {
+						booleanExpEditor.getCurrentItem().setText(text);
+					}
+					nameFieldIsChangeable = false;
+					propNameButton.setText("change");
+				} else {
+					setErrorText("invalid property name");
+				}
+			}
+		} else {
+			propNameButton.setText("save");
+			propNameField.setEditable(true);
+			nameFieldIsChangeable = true;
+		}
+	}
+
 	@FXML
 	public void advancedParameters(Event event) {
 
@@ -774,7 +823,19 @@ public class GUIController {
 
 	@FXML
 	public void newElectionDescription(ActionEvent event) {
-		showPopUp("test1", "test2", "test3");
+		 
+		List<List<InOutType>> types = new ArrayList<List<InOutType>>();
+		
+		List<String> description = new ArrayList<String>();
+		
+		types.add(InputType.getInputTypes());
+		description.add("input Type:");
+		
+		types.add(OutputType.getOutputTypes());
+		description.add("output Type:");
+		
+		
+		showPopUp("New Election Description", "chose the new Election description", description, types);
 	}
 
 	@FXML
@@ -784,7 +845,7 @@ public class GUIController {
 
 	@FXML
 	public void newPropertyList(ActionEvent event) {
-		
+
 	}
 
 	@FXML
@@ -888,7 +949,7 @@ public class GUIController {
 
 		confirmation.setX(mainStage.getX());
 		confirmation.setY(mainStage.getY());
-		
+
 		Stage stage = (Stage) confirmation.getDialogPane().getScene().getWindow();
 
 		// Add a custom icon.
@@ -960,7 +1021,7 @@ public class GUIController {
 		List<Integer> voter = getValues(minVoter, maxVoter);
 		List<Integer> cand = getValues(minCandidates, maxCandidates);
 		List<Integer> seat = getValues(minSeats, maxSeats);
-		
+
 		int marginVoters = electionSimulation.getNumVoters();
 		int marginCandidates = electionSimulation.getNumCandidates();
 		int marginSeats = electionSimulation.getNumSeats();
@@ -980,7 +1041,8 @@ public class GUIController {
 
 		String argument = advancedParameters.getText();
 
-		ElectionCheckParameter param = new ElectionCheckParameter(voter, cand, seat, marginVoters, marginCandidates, marginSeats, time, numberProcesses, argument);
+		ElectionCheckParameter param = new ElectionCheckParameter(voter, cand, seat, marginVoters, marginCandidates,
+				marginSeats, time, numberProcesses, argument);
 		return param;
 	}
 
@@ -1174,7 +1236,6 @@ public class GUIController {
 	public TreeItem<String> getSeatTreeItems() {
 		return seatItems;
 	}
-	
 
 	private void setPropertyToRemove(TreeItem<CustomTreeItem> prop) {
 		this.propertyToRemove = prop;
@@ -1187,38 +1248,102 @@ public class GUIController {
 	}
 
 	public void setCurrentPropertyDescription(ParentTreeItem propertyItem, boolean bringToFront) {
+		if(nameFieldIsChangeable) {
+			propNameButtonClicked(null); //try to save the text the user wrote
+		}
+		
+		if (booleanExpEditor.getCurrentItem() == null) {
+			if (!nameFieldIsChangeable) {
+				propertyItem.setText(propNameField.getText());
+				propertyItem.getPreAndPostPropertie().setNewName(propNameField.getText());
+			}
+		}
 		booleanExpEditor.setCurrentPropertyDescription(propertyItem, bringToFront);
+		propNameField.setText(propertyItem.getPreAndPostPropertie().getName());
+		resultNameField.setText(propertyItem.getPreAndPostPropertie().getName());
 	}
-	
-	
-	
-	
-	
-	private String showPopUp(String titleText, String infoText, String inputText) {
+
+	private <T> List<T> showPopUp(String titleText, String infoText, List<String> inputDescription, List<List<T>> inputPossibilites) {
+
+		Point position = MouseInfo.getPointerInfo().getLocation();
 		
-		TextInputDialog dialog = new TextInputDialog("");
+		Dialog<List<T>> dialog = new Dialog<>();
 		
-		dialog.setX(mainStage.getX());
-		dialog.setY(mainStage.getY());
+		//TextInputDialog dialog = new TextInputDialog("");
 		
+		dialog.setX(position.getX());
+		dialog.setY(position.getY());
+
 		dialog.setTitle(titleText);
 		dialog.setHeaderText(infoText);
-		dialog.setContentText(inputText);
-		
+		//dialog.setContentText(inputText);
+
 		Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
 
 		// Add a custom icon.
 		stage.getIcons().add(new Image(pathToImages + "other/BEAST.png"));
-
+		
+		
+		
+		ButtonType buttonType = new ButtonType("OK", ButtonData.OK_DONE);
+		dialog.getDialogPane().getButtonTypes().addAll(buttonType, ButtonType.CANCEL);
+		
+		
+		GridPane grid = new GridPane();
+		
+		grid.setHgap(10);
+		grid.setVgap(10);
+		grid.setPadding(new Insets(20, 150, 10, 10));
+		
+		
+		//populate the grid with the choices
+		
+		for (int i = 0; i < inputDescription.size(); i++) {
+			grid.add(new Label(inputDescription.get(i)), 0, i);
+			
+			ChoiceBox<T> box = new ChoiceBox<T>(FXCollections.observableList(inputPossibilites.get(i)));
+			
+			box.getSelectionModel().selectFirst();
+			
+			grid.add(box, 1, i);
+		}
+		
+		dialog.getDialogPane().setContent(grid);
 
 		// Traditional way to get the response value.
-		Optional<String> result = dialog.showAndWait();
-		
-		if (result.isPresent()){
+		Optional<List<T>> result = dialog.showAndWait();
+
+		if (result.isPresent()) {
 			return result.get();
 		} else {
-			return "";
+			return null;
 		}
+	}
+
+	// take from
+	// https://stackoverflow.com/questions/6730009/validate-a-file-name-on-windows?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+	//
+	// checks if a name is allowed for the windows file system (more restrictive
+	// than linux), so we can just name the files like that
+	public static boolean isValidFileName(String text) {
+		Pattern pattern = Pattern.compile(
+				"# Match a valid Windows filename (unspecified file system).          \n"
+						+ "^                                # Anchor to start of string.        \n"
+						+ "(?!                              # Assert filename is not: CON, PRN, \n"
+						+ "  (?:                            # AUX, NUL, COM1, COM2, COM3, COM4, \n"
+						+ "    CON|PRN|AUX|NUL|             # COM5, COM6, COM7, COM8, COM9,     \n"
+						+ "    COM[1-9]|LPT[1-9]            # LPT1, LPT2, LPT3, LPT4, LPT5,     \n"
+						+ "  )                              # LPT6, LPT7, LPT8, and LPT9...     \n"
+						+ "  (?:\\.[^.]*)?                  # followed by optional extension    \n"
+						+ "  $                              # and end of string                 \n"
+						+ ")                                # End negative lookahead assertion. \n"
+						+ "[^<>:\"/\\\\|?*\\x00-\\x1F]*     # Zero or more valid filename chars.\n"
+						+ "[^<>:\"/\\\\|?*\\x00-\\x1F\\ .]  # Last char is not a space or dot.  \n"
+						+ "$                                # Anchor to end of string.            ",
+				Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.COMMENTS);
+		Matcher matcher = pattern.matcher(text);
+		boolean isMatch = matcher.matches();
+		return isMatch;
 	}
 
 }

@@ -328,10 +328,10 @@
                                        <top>
                                           <BorderPane BorderPane.alignment="CENTER">
                                              <right>
-                                                <Button mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" />
+                                                <Button fx:id="propNameButton" mnemonicParsing="false" onMouseClicked="#propNameButtonClicked" text="change" BorderPane.alignment="CENTER" />
                                              </right>
                                              <center>
-                                                <TextField editable="false" text="no property" BorderPane.alignment="CENTER" />
+                                                <TextField fx:id="propNameField" editable="false" text="no property" BorderPane.alignment="CENTER" />
                                              </center>
                                           </BorderPane>
                                        </top>
@@ -359,7 +359,7 @@
                                  <top>
                                     <BorderPane BorderPane.alignment="CENTER">
                                        <top>
-                                          <TextField editable="false" text="no property" BorderPane.alignment="CENTER" />
+                                          <TextField fx:id="resultNameField" editable="false" text="no property" BorderPane.alignment="CENTER" />
                                        </top>
                                     </BorderPane>
                                  </top>

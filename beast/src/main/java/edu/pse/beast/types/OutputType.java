@@ -1,13 +1,34 @@
 package edu.pse.beast.types;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.types.cbmctypes.inputplugins.Approval;
+import edu.pse.beast.types.cbmctypes.inputplugins.Preference;
+import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
+import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoiceStack;
+import edu.pse.beast.types.cbmctypes.inputplugins.WeightedApproval;
+import edu.pse.beast.types.cbmctypes.outputtypes.Parliament;
+import edu.pse.beast.types.cbmctypes.outputtypes.ParliamentStack;
+import edu.pse.beast.types.cbmctypes.outputtypes.SingleCandidate;
 
 public abstract class OutputType implements InOutType {
 
+	private static List<InOutType> outputTypes = new ArrayList<InOutType>();
+	
+	static { //TODO let it load dynamically WORKAROUND so far
+		outputTypes.add(new SingleCandidate());
+		outputTypes.add(new Parliament());
+		outputTypes.add(new ParliamentStack());
+	}
+	
+	public static List<InOutType> getOutputTypes() {
+		return outputTypes;
+	}
+	
 	protected CommonHelpMethods helper;
 	
 	public OutputType() {

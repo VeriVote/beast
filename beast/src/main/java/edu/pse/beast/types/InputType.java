@@ -1,5 +1,6 @@
 package edu.pse.beast.types;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -8,8 +9,28 @@ import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.types.cbmctypes.inputplugins.Approval;
+import edu.pse.beast.types.cbmctypes.inputplugins.Preference;
+import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
+import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoiceStack;
+import edu.pse.beast.types.cbmctypes.inputplugins.WeightedApproval;
 
 public abstract class InputType implements InOutType{
+	
+	private static List<InOutType> inputTypes = new ArrayList<InOutType>();
+	
+	static { //TODO let it load dynamically WORKAROUND so far
+		inputTypes.add(new SingleChoice());
+		inputTypes.add(new Approval());
+		inputTypes.add(new Preference());
+		inputTypes.add(new SingleChoiceStack());
+		inputTypes.add(new WeightedApproval());
+	}
+	
+	public static List<InOutType> getInputTypes() {
+		return inputTypes;
+	}
+	
 	
 	protected CommonHelpMethods helper;
 	

@@ -6,11 +6,14 @@ import java.util.ResourceBundle;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * The MainClass creates an CentralObjectProvider which creates all other parts
@@ -61,6 +64,15 @@ public class MainClass extends Application {
 			stage.setTitle("BEAST");
 			stage.getIcons().add(new Image("file:///" + SuperFolderFinder.getSuperFolder() + "/core/images/other/BEAST.png"));
 			stage.setScene(scene);
+			
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			    @Override
+			    public void handle(WindowEvent t) {
+			        Platform.exit();
+			        System.exit(0);
+			    }
+			});
+			
 			stage.show();
 			
 		} catch (Exception e) {

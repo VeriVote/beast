@@ -199,5 +199,9 @@ public class ParentTreeItem extends CustomTreeItem {
 		GUIController.setErrorText(errorText);
 		
 	}
+	
+	public void setText(String text) {
+		propName.setText(text);
+	}
 
 }

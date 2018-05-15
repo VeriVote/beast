@@ -15,12 +15,14 @@ public class BooleanExpEditorNEW {
 	private NewPropertyCodeArea preArea;
 	private NewPropertyCodeArea postArea;
 	private PreAndPostConditionsDescription currentPropertyDescription;
+	private ParentTreeItem currentItem;
 
 	public BooleanExpEditorNEW(NewPropertyCodeArea preArea, NewPropertyCodeArea postArea,
-			PreAndPostConditionsDescription propDesc) {
+			PreAndPostConditionsDescription propDesc, ParentTreeItem currentItem) {
 		this.preArea = preArea;
 		this.postArea = postArea;
 		this.currentPropertyDescription = propDesc;
+		this.currentItem = currentItem;
 	}
 
 	public boolean containsVarName(String name) {
@@ -143,6 +145,7 @@ public class BooleanExpEditorNEW {
 	public void setCurrentPropertyDescription(ParentTreeItem propertyItem, boolean bringToFront) {
 
 		this.currentPropertyDescription = propertyItem.getPreAndPostPropertie();
+		this.currentItem = propertyItem;
 
 		this.removeAllVariables();
 
@@ -164,6 +167,10 @@ public class BooleanExpEditorNEW {
 			// displays them in the error tab
 		}
 
+	}
+	
+	public ParentTreeItem getCurrentItem() {
+		return currentItem;
 	}
 
 	public void saveProperty() {
