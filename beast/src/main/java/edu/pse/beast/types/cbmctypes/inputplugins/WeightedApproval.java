@@ -29,13 +29,13 @@ public class WeightedApproval extends CBMCInputType {
 	}
 
 	@Override
-	public String getMinimalValue(ElectionTypeContainer container) {
-		return "" + container.getLowerBound();
+	public String getMinimalValue() {
+		return "" + 0;
 	}
 
 	@Override
-	public String getMaximalValue(ElectionTypeContainer container) {
-		return "" + container.getUpperBound();
+	public String getMaximalValue() {
+		return "" + 100;
 	}
 
 	@Override
@@ -159,7 +159,7 @@ public class WeightedApproval extends CBMCInputType {
 //	@Override
 //	public void addMarginMainCheck(CodeArrayListBeautifier code, int margin,
 //			List<String> origResult) {
-//		code.add("int new_votes1[V][C];");
+//		code.add("int new_votes1[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "];");
 //
 //		code.add("for (int i = 0; i < V; i++) {"); // go over all voters
 //		code.addTab();
@@ -230,11 +230,6 @@ public class WeightedApproval extends CBMCInputType {
 		toReturn.add("};"); // close the array declaration)
 		
 		return toReturn;
-	}
-
-	@Override
-	public String getArrayType() {
-		return "[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "]";
 	}
 
 	@Override

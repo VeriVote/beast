@@ -45,8 +45,8 @@ public class CVariableErrorFinder {
         seperated.add("void __CPROVER_assert(int x, int y) {}");
         seperated.add("void __CPROVER_assume(int x) {}");
         
-        seperated.add("struct result { unsigned int arr[S]; };");
-        seperated.add("struct stack_result { unsigned int arr[C]; };");
+        seperated.add("struct result { unsigned int arr[" + UnifiedNameContainer.getSeats() + "]; };");
+        seperated.add("struct stack_result { unsigned int arr[" + UnifiedNameContainer.getCandidate() + "]; };");
         
         seperated.add("void assume(int x) {}");
         seperated.add("void assert(int x) {}");

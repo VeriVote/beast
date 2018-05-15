@@ -29,12 +29,12 @@ public class SingleChoiceStack extends CBMCInputType {
 	}
 
 	@Override
-	public String getMinimalValue(ElectionTypeContainer container) {
+	public String getMinimalValue() {
 		return "0";
 	}
 
 	@Override
-	public String getMaximalValue(ElectionTypeContainer container) {
+	public String getMaximalValue() {
 		return UnifiedNameContainer.getVoter();
 	}
 
@@ -51,7 +51,7 @@ public class SingleChoiceStack extends CBMCInputType {
 			code.add("int total_diff = 0;");
 			code.add("int pos_diff = 0;");
 			
-			code.add("int new_votes1[C];");
+			code.add("int new_votes1[" + UnifiedNameContainer.getCandidate() + "];");
 			code.add("int diff[" + UnifiedNameContainer.getCandidate() + "];");
 			
 			code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {"); // go over all voters
@@ -179,11 +179,6 @@ public class SingleChoiceStack extends CBMCInputType {
 		toReturn.add("};"); // close the array declaration
 		
 		return toReturn;
-	}
-
-	@Override
-	public String getArrayType() {
-		return "[" + UnifiedNameContainer.getVoter() + "]";
 	}
 
 	@Override

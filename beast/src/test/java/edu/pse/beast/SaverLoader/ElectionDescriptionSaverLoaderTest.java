@@ -9,6 +9,7 @@ import org.junit.Test;
 import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 
 /**
  * JUnit Testclass for saverloader.ElectionDescriptionSaverLoader.
@@ -25,7 +26,7 @@ public class ElectionDescriptionSaverLoaderTest {
 				electionTemplateHandler.getStandardInput().getInputType(),
 				electionTemplateHandler.getStandardResult().getOutputType(), 2);
 		desc.setCode(
-				Arrays.asList("//line1", "//line2", "unsigned int voting(unsigned int votes[V]) {", "return 0;", "}"));
+				Arrays.asList("//line1", "//line2", "unsigned int voting(unsigned int votes[" + UnifiedNameContainer.getVoter() + "]) {", "return 0;", "}"));
 		String save = s.createSaveString(desc);
 		ElectionDescription loadedDesc = (ElectionDescription) s.createFromSaveString(save);
 		assertEquals("desc", loadedDesc.getName());
@@ -52,7 +53,7 @@ public class ElectionDescriptionSaverLoaderTest {
 
 		desc.setCode(Arrays.asList("//Single-choice: Wähler stimmt jeweils für einen Kandidaten",
 				"//Kandidat oder unentschieden: Ein gewählter Kandidat oder unentschieden",
-				"unsigned int voting(unsigned int votes[V]) {", "return 0;", "} "));
+				"unsigned int voting(unsigned int votes[" + UnifiedNameContainer.getVoter() + "]) {", "return 0;", "} "));
 		String save = s.createSaveString(desc);
 		ElectionDescription loadedDesc = (ElectionDescription) s.createFromSaveString(save);
 		assertEquals("desc", loadedDesc.getName());

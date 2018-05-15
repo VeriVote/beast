@@ -40,7 +40,7 @@ public class CCodeHelper {
 
 	/**
 	 * creates the C-Type text representation of the given Internaltypecontainer,
-	 * arrays are created as arrays: "unsigned int votes[V][C]", for example
+	 * arrays are created as arrays: "unsigned int votes[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "]", for example
 	 * 
 	 * @param internalTypeContainer
 	 *
@@ -76,7 +76,7 @@ public class CCodeHelper {
 
 	/**
 	 * if the given InternaltypeContainer represents a list, it generates the String
-	 * representing a corresponding C-Array. Ex return: "[C]"
+	 * representing a corresponding C-Array. Ex return: "[" + UnifiedNameContainer.getCandidate() + "]"
 	 *
 	 * @param cont
 	 *            the container for which the C type should be created
@@ -153,7 +153,7 @@ public class CCodeHelper {
 	 * @return max value an element of the given ElectionTypeContainer can have
 	 */
 	public static String getMax(ElectionTypeContainer container) {
-		return container.getInputType().getMaximalValue(container);
+		return container.getInputType().getMaximalValue();
 	}
 
 	/**
@@ -165,6 +165,6 @@ public class CCodeHelper {
 	 * @return minimum value an element of the given ElectionTypeContainer can have
 	 */
 	public static String getMin(ElectionTypeContainer container) {
-		return container.getInputType().getMinimalValue(container);
+		return container.getInputType().getMinimalValue();
 	}
 }

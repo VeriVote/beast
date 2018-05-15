@@ -325,6 +325,16 @@
                                              </bottom>
                                           </BorderPane>
                                        </right>
+                                       <top>
+                                          <BorderPane BorderPane.alignment="CENTER">
+                                             <right>
+                                                <Button mnemonicParsing="false" text="Button" BorderPane.alignment="CENTER" />
+                                             </right>
+                                             <center>
+                                                <TextField editable="false" text="no property" BorderPane.alignment="CENTER" />
+                                             </center>
+                                          </BorderPane>
+                                       </top>
                                     </BorderPane>
                                     <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                        <children>
@@ -342,7 +352,18 @@
 								</Tab>
 								<Tab fx:id="resultPane" onSelectionChanged="#resultPaneClicked" text="%key.result">
                            <content>
-                              <TextArea fx:id="solutionField" prefHeight="200.0" prefWidth="200.0" text="&#10;" />
+                              <BorderPane>
+                                 <center>
+                                    <TextArea fx:id="solutionField" editable="false" text="&#10;" BorderPane.alignment="CENTER" />
+                                 </center>
+                                 <top>
+                                    <BorderPane BorderPane.alignment="CENTER">
+                                       <top>
+                                          <TextField editable="false" text="no property" BorderPane.alignment="CENTER" />
+                                       </top>
+                                    </BorderPane>
+                                 </top>
+                              </BorderPane>
                            </content></Tab>
 								<Tab fx:id="inputPane" onSelectionChanged="#inputPaneClicked" text="%key.voteslist">
 									<content>

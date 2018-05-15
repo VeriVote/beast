@@ -225,6 +225,9 @@ public abstract class CheckerFactory implements Runnable {
 								childItem.getResult().setNumVoters(voters);
 								childItem.getResult().setNumCandidates(candidates);
 								childItem.getResult().setNumSeats(seats);
+								
+								System.out.println("lastResult " + lastResult);
+								
 								childItem.getResult().setResult(lastResult);
 								childItem.getResult().setValid();
 							} else {

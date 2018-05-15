@@ -9,9 +9,6 @@ import edu.pse.beast.types.OutputType;
  *
  */
 public class ElectionTypeContainer {
-    //private final InternalTypeContainer type;
-    private int lowerBound;
-    private int upperBound;
     private InputType inType;
     private OutputType outType;
 //    private ElectionInputTypeIds inID;
@@ -29,23 +26,24 @@ public class ElectionTypeContainer {
 //        CAND_PER_SEAT
 //    }
 
-    /**
-     * Constructor
-     * @param type the type of this election
-     */
-    public ElectionTypeContainer(InputType inType, OutputType outType, int lowerBound, int upperBound) {
-        this.inType = inType;
-        this.outType = outType;
-        this.lowerBound = lowerBound;
-        this.upperBound = upperBound;
-    }
+//    /**
+//     * Constructor
+//     * @param type the type of this election
+//     */
+//    public ElectionTypeContainer(InputType inType, OutputType outType, int lowerBound, int upperBound) {
+//        this.inType = inType;
+//        this.outType = outType;
+//        this.lowerBound = lowerBound;
+//        this.upperBound = upperBound;
+//    }
     
     /**
      * Constructor
      * @param type the type of this election
      */
     public ElectionTypeContainer(InputType inType, OutputType outType) {
-    	this(inType, outType, 0, 100);
+    	this.inType = inType;
+    	this.outType = outType;
     }
 
     
@@ -56,22 +54,6 @@ public class ElectionTypeContainer {
 //    public InternalTypeContainer getType() {
 //        return type;
 //    }
-    
-    /**
-     * 
-     * @return the lowerBound of this election
-     */
-    public int getLowerBound() {
-        return lowerBound;
-    }
-    
-    /**
-     * 
-     * @return the upperBound of this election
-     */
-    public int getUpperBound() {
-        return upperBound;
-    }
 
     /**
      *
@@ -88,22 +70,6 @@ public class ElectionTypeContainer {
    public OutputType getOutputType() {
        return outType;
    }
-    
-    /**
-     * 
-     * @param lowerBound sets the lowerBound of this election
-     */
-    public void setLowerBound(int lowerBound) {
-        this.lowerBound = lowerBound;
-    }
-    
-    /**
-     * 
-     * @param upperBound sets the upperBound of this election
-     */
-    public void setUpperBound(int upperBound) {
-        this.upperBound = upperBound;
-    }
 
 	public void setInput(InputType inputType) {
 		this.inType = inputType;

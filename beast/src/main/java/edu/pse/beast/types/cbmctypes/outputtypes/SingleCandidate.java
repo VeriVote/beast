@@ -7,6 +7,7 @@ import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
@@ -47,13 +48,13 @@ public class SingleCandidate extends CBMCOutputType {
 	@Override
 	public CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code) {
 		code.add("void verifyMain() {");
-		// code.add("int new_votes1[V], diff[V], total_diff, pos_diff;");
+		// code.add("int new_votes1[" + UnifiedNameContainer.getVoter() + "], diff[" + UnifiedNameContainer.getVoter() + "], total_diff, pos_diff;");
 
 		code.addTab();
 
 		code.add("int total_diff = 0;");
 
-		code.add("int new_result1 = voting(new_votes1);");
+		code.add("int new_result1 = " + UnifiedNameContainer.getVotingMethod() + "(new_votes1);");
 		code.add("assert(new_result1 == ORIG_RESULT);");
 
 		code.deleteTab();
@@ -68,7 +69,7 @@ public class SingleCandidate extends CBMCOutputType {
 		String electX = "unsigned int elect" + voteNumber;
 		electX = electX + getCArrayType();
 		code.add(electX + ";");
-		code.add("elect" + voteNumber + " = voting(votes" + voteNumber + ");");
+		code.add("elect" + voteNumber + " = " + UnifiedNameContainer.getVotingMethod() + "(votes" + voteNumber + ");");
 
 		return code;
 	}
@@ -83,7 +84,7 @@ public class SingleCandidate extends CBMCOutputType {
 		code.add("int main() {");
 		code.addTab();
 
-		code.add("int elect1 = voting(ORIG_VOTES);"); // we just have a
+		code.add("int elect1 = " + UnifiedNameContainer.getVotingMethod() + "(ORIG_VOTES);"); // we just have a
 		// single int as
 		// the winner
 
@@ -122,7 +123,7 @@ public class SingleCandidate extends CBMCOutputType {
 
 	@Override
 	public void addVerifyOutput(CodeArrayListBeautifier code) {
-		code.add("int new_result1 = voting(new_votes1);");
+		code.add("int new_result1 = " + UnifiedNameContainer.getVotingMethod() + "(new_votes1);");
 		code.add("assert(new_result1 == ORIG_RESULT);");
 	}
 

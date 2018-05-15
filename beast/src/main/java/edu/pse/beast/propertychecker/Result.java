@@ -13,6 +13,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.ResultPresenterElement;
+import edu.pse.beast.highlevel.javafx.ChildTreeItem;
 
 /**
  *
@@ -44,6 +45,8 @@ public abstract class Result implements ResultInterface {
 	protected List<String> origWinner;
 	protected List<List<String>> newVotes;
 	protected List<String> newWinner;
+	
+	protected ChildTreeItem owner;
 
     public boolean isMarginComp() {
 		return isMarginComp;
@@ -52,15 +55,6 @@ public abstract class Result implements ResultInterface {
 	public void setMarginComp(boolean isMarginComp) {
 		this.isMarginComp = isMarginComp;
 	}
-
-	/**
-     * Presents the result of the check. Every class that extends this class has
-     * to implement it for itself.
-     * 
-     * @param presenter
-     *            the presentable where it is supposed to be presented on
-     */
-    public abstract void presentTo(ResultPresenterElement presenter);
 
     /**
      * 
@@ -133,6 +127,7 @@ public abstract class Result implements ResultInterface {
      */
     public void setFinished() {
         finished = true;
+        owner.setPresentable();
     }
 
     /**
@@ -354,5 +349,9 @@ public abstract class Result implements ResultInterface {
 
 	public void setNewWinner(List<String> newWinner) {
 		this.newWinner = newWinner;
+	}
+
+	public void setOwner(ChildTreeItem owner) {
+		this.owner = owner;
 	}
 }

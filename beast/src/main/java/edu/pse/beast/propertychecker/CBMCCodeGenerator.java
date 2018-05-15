@@ -128,7 +128,7 @@ public class CBMCCodeGenerator {
 		ArrayList<String> electionDescriptionCode = new ArrayList<>();
 		electionDescriptionCode.addAll(electionDesc.getCode());
 		code.addArrayList(electionDescriptionCode);
-
+		
 		addMainMethod();
 
 	}
@@ -173,9 +173,6 @@ public class CBMCCodeGenerator {
 		code.add("#ifndef MARGIN\n #define MARGIN " + margin + "\n #endif");
 		// we also add the original result, which is calculated by compiling the
 		// program and running it
-
-		// boolean singleOut =
-		// electionDescription.getContainer().getOutputType().isOutputOneCandidate();
 
 		electionDesc.getContainer().getOutputType().addLastResultAsCode(code, origResult);
 
@@ -248,13 +245,13 @@ public class CBMCCodeGenerator {
 		code.add("#define assume(x) __CPROVER_assume(x)");
 		code.add("");
 		code.add("struct " + UnifiedNameContainer.getStruct_result() + " { unsigned int "
-				+ UnifiedNameContainer.getResult_arr_name() + "[S]; };"); // add a result
+				+ UnifiedNameContainer.getResult_arr_name() + "[" + UnifiedNameContainer.getSeats() + "]; };"); // add a result
 		// struct to be
 		// returned in case
 		// of a parliament
 
 		code.add("struct " + UnifiedNameContainer.getStruct_stack_result() + " { unsigned int "
-				+ UnifiedNameContainer.getResult_arr_name() + "[S]; };"); // add a result
+				+ UnifiedNameContainer.getResult_arr_name() + "[" + UnifiedNameContainer.getSeats() + "]; };"); // add a result
 		// same for a stacked result for each party
 	}
 
@@ -399,34 +396,32 @@ public class CBMCCodeGenerator {
 
 		for (int voteNumber = 1; voteNumber <= numberOfTimesVoted; voteNumber++) {
 
+			code.add("//init for election: " + voteNumber);
+			
 			String votesX = "unsigned int votes" + voteNumber;
-			votesX = votesX + electionDesc.getContainer().getInputType().getArrayType();
+			votesX = votesX + electionDesc.getContainer().getInputType().getInputString();
 			code.add(votesX + ";");
 
-			String electX = "unsigned int elect" + voteNumber;
-			electX = electX + electionDesc.getContainer().getOutputType().getCArrayType();
-			code.add(electX + ";");
-
-			String[] counter = { "counter_0", "counter_1", "counter_2", "counter_3" };
+			//String[] counter = { "counter_0", "counter_1", "counter_2", "counter_3" };
 			String forTemplate = "for(unsigned int COUNTER = 0; COUNTER < MAX; COUNTER++){";
 
 			int listDepth = 0;
 
 			for (int i = 0; i < electionDesc.getContainer().getInputType().getDimension(); i++) {
-				String currentFor = forTemplate.replaceAll("COUNTER", counter[listDepth]);
+				String currentFor = forTemplate.replaceAll("COUNTER", "counter_" + listDepth);
 				currentFor = currentFor.replaceAll("MAX",
-						electionDesc.getContainer().getInputType().getMaximalValue(electionDesc.getContainer()));
+						electionDesc.getContainer().getInputType().getMaximalValue());
 				code.add(currentFor);
 				code.addTab();
 				listDepth++;
 			}
-			String min = "" + electionDesc.getContainer().getLowerBound();
+			String min = "" + electionDesc.getContainer().getInputType().getMinimalValue();
 
-			String max = "" + electionDesc.getContainer().getUpperBound();
+			String max = "" + electionDesc.getContainer().getInputType().getMaximalValue();
 
 			String votesElement = "votes" + voteNumber;
 			for (int i = 0; i < listDepth; ++i) {
-				votesElement += "[COUNTER]".replace("COUNTER", counter[i]);
+				votesElement += "[COUNTER]".replace("COUNTER", "counter_" + i);
 			}
 
 			String nondetInt = (votesElement + " = nondet_uint();");
@@ -440,12 +435,14 @@ public class CBMCCodeGenerator {
 			// if we need to add something extra
 			electionDesc.getContainer().getInputType().addExtraCodeAtEndOfCodeInit(code, voteNumber);
 
-			// close the function
+			// close the for loops
 			for (int i = 0; i < listDepth; ++i) {
 				code.deleteTab();
 				code.add("}");
 			}
-
+			
+			code = electionDesc.getContainer().getOutputType().addVotesArrayAndInit(code, voteNumber);
+			code.add("");
 		}
 
 	}

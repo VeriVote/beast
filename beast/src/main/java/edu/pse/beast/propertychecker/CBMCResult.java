@@ -39,33 +39,6 @@ public class CBMCResult extends Result {
 	}
 
 	@Override
-	public void presentTo(ResultPresenterElement presenter) {
-		if (!hasSubResult()) {
-			if (!isFinished()) {
-				ErrorLogger.log("Result isn't ready yet");
-				return;
-			} else {
-				presenter.present(this);
-			}
-		} else if (isFocefullyStopped()) {
-			presenter.presentCanceled(isTimedOut());
-		} else if (!isValid()) {
-			presenter.presentFailure(getError());
-		} else if (isSuccess()) {
-			presenter.presentSuccess();
-		} else {
-			if (failureExample != null) {
-				presenter.presentFailureExample(this);
-			} else {
-				if (getError() != null) {
-					setError(new ArrayList<String>());
-				}
-				presenter.presentFailure(getError());
-			}
-		}
-	}
-
-	@Override
 	public void setResult(List<String> result) {
 		super.setResult(result);
 		if (createsExample) {

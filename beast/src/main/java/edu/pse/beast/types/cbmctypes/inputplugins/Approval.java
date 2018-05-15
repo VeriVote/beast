@@ -29,13 +29,13 @@ public class Approval extends CBMCInputType {
 	}
 
 	@Override
-	public String getMinimalValue(ElectionTypeContainer container) {
+	public String getMinimalValue(){
 		return "0";
 	}
 
 	@Override
-	public String getMaximalValue(ElectionTypeContainer container) {
-		return "2";
+	public String getMaximalValue() {
+		return "1";
 	}
 
 	@Override
@@ -47,8 +47,8 @@ public class Approval extends CBMCInputType {
 	public void addVerifyMethod(CodeArrayListBeautifier code, OutputType outType) {
 		code.add("void verify() {");
 		code.add("int total_diff = 0;");
-
-		code.add("int new_votes1[V][C];");
+		
+		code.add("int new_votes1" + getInputString() + ";");
 
 		code.add("for (int i = 0; i < V; i++) {"); // go over all voters
 		code.addTab();
@@ -138,7 +138,7 @@ public class Approval extends CBMCInputType {
 	// @Override
 	// public void addMarginMainCheck(CodeArrayListBeautifier code, int margin,
 	// List<String> origResult) {
-	// code.add("int new_votes1[V][C];");
+	// code.add("int new_votes1[UnifiedNameContainer.getVoter()][UnifiedNameContainer.getCandidate()];");
 	//
 	// code.add("for (int i = 0; i < V; i++) {"); // go over all voters
 	// code.addTab();
@@ -201,11 +201,6 @@ public class Approval extends CBMCInputType {
 		toReturn.add("};"); // close the array declaration)
 
 		return toReturn;
-	}
-
-	@Override
-	public String getArrayType() {
-		return "[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "]";
 	}
 
 	@Override

@@ -47,11 +47,11 @@ public class Parliament extends CBMCOutputType {
 	@Override
 	public CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code) {
 		code.add("void verifyMain() {");
-		// code.add("int new_votes1[V], diff[V], total_diff, pos_diff;");
+		// code.add("int new_votes1[" + UnifiedNameContainer.getVoter() + "], diff[" + UnifiedNameContainer.getVoter() + "], total_diff, pos_diff;");
 
 		code.addTab();
 
-		code.add("struct result tmp = voting(new_votes1);");
+		code.add("struct result tmp = " + UnifiedNameContainer.getVotingMethod() + "(new_votes1);");
 
 		code.add("unsigned int *tmp_result = tmp." + UnifiedNameContainer.getResult_arr_name() + ";");
 
@@ -85,7 +85,7 @@ public class Parliament extends CBMCOutputType {
 
 	@Override
 	public CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code, int voteNumber) {
-		String temp = "struct result tmp" + voteNumber + " = voting(votes" + voteNumber + ");";
+		String temp = "struct result tmp" + voteNumber + " = " + UnifiedNameContainer.getVotingMethod() + "(votes" + voteNumber + ");";
 		code.add(temp);
 		String tempElect = "unsigned int *tempElect" + voteNumber + " = tmp" + voteNumber + "." + UnifiedNameContainer.getResult_arr_name() +";";
 		code.add(tempElect);
@@ -111,7 +111,7 @@ public class Parliament extends CBMCOutputType {
 		code.add("int main() {");
 		code.addTab();
 
-		String temp = "struct result tmp" + voteNumber + " = voting(ORIG_VOTES);";
+		String temp = "struct result tmp" + voteNumber + " = " + UnifiedNameContainer.getVotingMethod() + "(ORIG_VOTES);";
 		code.add(temp);
 		String tempElect = "unsigned int *tempElect" + voteNumber + " = tmp" + voteNumber + "." + UnifiedNameContainer.getResult_arr_name() + ";";
 		code.add(tempElect);
@@ -159,7 +159,7 @@ public class Parliament extends CBMCOutputType {
 
 	@Override
 	public void addVerifyOutput(CodeArrayListBeautifier code) {
-		code.add("struct result tmp_result = voting(new_votes1);");
+		code.add("struct result tmp_result = " + UnifiedNameContainer.getVotingMethod() + "(new_votes1);");
 
 		code.add("unsigned int new_result1[" + UnifiedNameContainer.getSeats() + "];"); // create the array where the
 											// new seats will get saved

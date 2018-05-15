@@ -162,7 +162,14 @@ public class FactoryController implements Runnable {
 			for (Iterator<ChildTreeItem> childIterator = parentTreeItem.getSubItems().iterator(); childIterator
 					.hasNext();) {
 				ChildTreeItem child = (ChildTreeItem) childIterator.next();
-				child.setResult(CheckerFactoryFactory.getMatchingResult(checkerID));
+				
+				Result childResult = CheckerFactoryFactory.getMatchingResult(checkerID);
+				
+				childResult.setOwner(child);
+				
+				childResult.setProperty(parentTreeItem.getPreAndPostPropertie());
+				
+				child.setResult(childResult);
 			}
 		}
 

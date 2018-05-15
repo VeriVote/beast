@@ -21,7 +21,7 @@ public abstract class InputType implements InOutType{
 
 	/**
 	 * returns a String containing the shape of the input object
-	 * e.g "[V]" for single choice 
+	 * e.g "[" + UnifiedNameContainer.getVoter() + "]" for single choice 
 	 * @return
 	 */
 	public abstract String getInputString();
@@ -37,14 +37,14 @@ public abstract class InputType implements InOutType{
 	 * @param container 
 	 * @return the minimal value a voter can assign
 	 */
-	public abstract String getMinimalValue(ElectionTypeContainer container);
+	public abstract String getMinimalValue();
 
 	/**
 	 * 
 	 * @param container 
 	 * @return the maximal value a voter can assign
 	 */
-	public abstract String getMaximalValue(ElectionTypeContainer container);
+	public abstract String getMaximalValue();
 
 	/**
 	 * 
@@ -106,12 +106,6 @@ public abstract class InputType implements InOutType{
 	
 	public abstract List<String> getVotingResultCode(String[][] votingData);
 
-	/**
-	 * 
-	 * @return the type of the array that this input type want, e.g [] for single_choice, or [][] for Approval
-	 */
-	public abstract String getArrayType();
-	
 	/**
 	 * 
 	 * @return the dimension of the array which holds the votes (e.g 1 for single choice, 2 for approval)

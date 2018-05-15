@@ -171,7 +171,7 @@ public class CBMCCodeGenerationVisitorTest {
 //    public void testVotes() {
 //        String expression = "VOTES1(v) == c";
 //        String expected = "unsigned int comparison_0 = 1;\n"
-//                + "comparison_0 = votes1[v] == c;\n"
+//                + "comparison_0 = votes1[" + UnifiedNameContainer.getVoter() + "] == c;\n"
 //                + "assume(comparison_0);\n";
 //        BooleanExpressionNode n
 //                = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
@@ -211,7 +211,7 @@ public class CBMCCodeGenerationVisitorTest {
 //    public void testCompareExpression() {
 //        String expression = "VOTES1(v) == c;";
 //        String expected = "unsigned int comparison_0 = 1;\n" +
-//                "comparison_0 = votes1[v] == c;\n" +
+//                "comparison_0 = votes1[" + UnifiedNameContainer.getVoter() + "] == c;\n" +
 //                "assume(comparison_0);\n";
 //        BooleanExpressionNode n
 //                = FormalPropertySyntaxTreeToAstTranslatorTest.translate(

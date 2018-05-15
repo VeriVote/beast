@@ -1,5 +1,7 @@
 package edu.pse.beast.highlevel.javafx;
 
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +40,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -269,6 +272,12 @@ public class GUIController {
 
 	private TreeItem<CustomTreeItem> propertyToRemove;
 
+	private Stage mainStage;
+
+	public GUIController(Stage mainStage) {
+		this.mainStage = mainStage;
+	}
+
 	// initial setup
 	@FXML
 	public void initialize() {
@@ -475,8 +484,10 @@ public class GUIController {
 					voterScrollPane.vvalueProperty().set(inputScrollPane.getVvalue());
 
 					candidateScrollPane.hvalueProperty().set(inputScrollPane.getHvalue());
-
-					//inputScrollPane.fireEvent(new Event(ScrollEvent.ANY));
+					
+					infoTextArea.setText("" + inputScrollPane.getHvalue() + "\n" + candidateScrollPane.getHvalue());
+					
+					inputScrollPane.fireEvent(new Event(ScrollEvent.ANY));
 
 					try {
 						Thread.sleep(Math.max(0, 16 - (System.currentTimeMillis() - time)));
@@ -763,7 +774,7 @@ public class GUIController {
 
 	@FXML
 	public void newElectionDescription(ActionEvent event) {
-
+		showPopUp("test1", "test2", "test3");
 	}
 
 	@FXML
@@ -875,6 +886,9 @@ public class GUIController {
 	public void resetInput(ActionEvent event) {
 		Alert confirmation = new Alert(AlertType.CONFIRMATION);
 
+		confirmation.setX(mainStage.getX());
+		confirmation.setY(mainStage.getY());
+		
 		Stage stage = (Stage) confirmation.getDialogPane().getScene().getWindow();
 
 		// Add a custom icon.
@@ -1172,8 +1186,39 @@ public class GUIController {
 		this.lastClicked = System.currentTimeMillis();
 	}
 
-	public void setCurrentPropertyDescription(ParentTreeItem propertyItem) {
-		booleanExpEditor.setCurrentPropertyDescription(propertyItem);
+	public void setCurrentPropertyDescription(ParentTreeItem propertyItem, boolean bringToFront) {
+		booleanExpEditor.setCurrentPropertyDescription(propertyItem, bringToFront);
+	}
+	
+	
+	
+	
+	
+	private String showPopUp(String titleText, String infoText, String inputText) {
+		
+		TextInputDialog dialog = new TextInputDialog("");
+		
+		dialog.setX(mainStage.getX());
+		dialog.setY(mainStage.getY());
+		
+		dialog.setTitle(titleText);
+		dialog.setHeaderText(infoText);
+		dialog.setContentText(inputText);
+		
+		Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
+
+		// Add a custom icon.
+		stage.getIcons().add(new Image(pathToImages + "other/BEAST.png"));
+
+
+		// Traditional way to get the response value.
+		Optional<String> result = dialog.showAndWait();
+		
+		if (result.isPresent()){
+			return result.get();
+		} else {
+			return "";
+		}
 	}
 
 }

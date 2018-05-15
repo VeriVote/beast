@@ -30,12 +30,12 @@ public class SingleChoice extends CBMCInputType {
 	}
 
 	@Override
-	public String getMinimalValue(ElectionTypeContainer container) {
+	public String getMinimalValue() {
 		return "0";
 	}
 
 	@Override
-	public String getMaximalValue(ElectionTypeContainer container) {
+	public String getMaximalValue() {
 		return  UnifiedNameContainer.getCandidate();
 	}
 
@@ -50,7 +50,7 @@ public class SingleChoice extends CBMCInputType {
 		code.add("void verify() {");
 		code.addTab();
 		code.add("int total_diff = 0;");
-		code.add("int new_votes1[V];");
+		code.add("int new_votes1[" + UnifiedNameContainer.getVoter() + "];");
 		code.add("for (int i = 0; i < " + UnifiedNameContainer.getVoter() + "; i++) {"); // go over all voters
 		code.addTab();
 		code.add("int changed = nondet_int();"); // determine, if we want to
@@ -161,7 +161,7 @@ public class SingleChoice extends CBMCInputType {
 //	@Override
 //	public void addMarginMainCheck(CodeArrayListBeautifier code, int margin,
 //			List<String> origResult) {
-//		code.add("int new_votes1[V];");
+//		code.add("int new_votes1[" + UnifiedNameContainer.getVoter() + "];");
 //		code.add("for (int i = 0; i < V; i++) {"); // go over all voters
 //		code.addTab();
 //		code.add("int changed = nondet_int();"); // determine, if we want to
@@ -226,11 +226,6 @@ public class SingleChoice extends CBMCInputType {
 		toReturn.add("};"); // close the array declaration
 		
 		return toReturn;
-	}
-
-	@Override
-	public String getArrayType() {
-		return "[" + UnifiedNameContainer.getVoter() + "]";
 	}
 
 	@Override

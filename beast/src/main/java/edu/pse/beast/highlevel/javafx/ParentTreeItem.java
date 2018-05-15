@@ -65,7 +65,7 @@ public class ParentTreeItem extends CustomTreeItem {
 		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				wasClicked();
+				wasClicked(true);
 			}
 		});
 
@@ -82,8 +82,8 @@ public class ParentTreeItem extends CustomTreeItem {
 
 	}
 
-	private void wasClicked() {
-		GUIController.getController().setCurrentPropertyDescription(this);
+	public void wasClicked(boolean bringToFront) {
+		GUIController.getController().setCurrentPropertyDescription(this, bringToFront);
 	}
 
 	private void checkBoxChanged(boolean state) {

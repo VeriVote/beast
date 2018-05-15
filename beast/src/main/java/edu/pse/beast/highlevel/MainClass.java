@@ -47,7 +47,7 @@ public class MainClass extends Application {
 		mainStage = stage;
 		
 		try {
-			GUIController controller = new GUIController();
+			GUIController controller = new GUIController(mainStage);
 			
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("javafx/BEAST.fxml"), ResourceBundle.getBundle("edu.pse.beast.highlevel.javafx.bundles.LangBundle", local));
 			
