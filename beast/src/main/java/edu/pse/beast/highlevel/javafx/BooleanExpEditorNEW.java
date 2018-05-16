@@ -178,4 +178,13 @@ public class BooleanExpEditorNEW {
 		postArea.saveDescription(null);
 	}
 
+	/**
+	 * clears all fields of the editor
+	 */
+	public void clear() {
+		this.removeAllVariables();
+		this.preArea.clear();
+		this.postArea.clear();
+	}
+
 }

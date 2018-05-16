@@ -516,7 +516,7 @@
                         <CheckBox mnemonicParsing="false" />
                         <Label text="propless margin" />
                         <ImageView fx:id="proplessImage" pickOnBounds="true" preserveRatio="true" />
-                        <Button mnemonicParsing="false" text="-" />
+                        <Button mnemonicParsing="false" onMouseClicked="#removePropVar" text="-" />
                     </items>
                   </ToolBar>
                </bottom>

@@ -618,6 +618,7 @@ public class GUIController {
 
 	@FXML
 	public void removePropVar() {
+		
 		if (propertyToRemove != null) {
 			long time = System.currentTimeMillis();
 
@@ -846,16 +847,38 @@ public class GUIController {
 	@FXML
 	public void newProject(ActionEvent event) {
 
+		List<List<InOutType>> types = new ArrayList<List<InOutType>>();
+
+		List<String> description = new ArrayList<String>();
+
+		types.add(InputType.getInputTypes());
+		description.add("input Type:");
+
+		types.add(OutputType.getOutputTypes());
+		description.add("output Type:");
+		
+		Pair<String, List<InOutType>> pair = showPopUp("New Project", "chose the new Election description",
+				description, types);
+
+		if (pair != null) {
+			codeArea.setNewElectionDescription(new ElectionDescription(pair.getKey(), (InputType) pair.getValue().get(0), (OutputType) pair.getValue().get(1), 0));
+		}
+		
+		newPropertyList(null);
+		newVotingInput(null);
 	}
 
 	@FXML
 	public void newPropertyList(ActionEvent event) {
+		
+		root.getChildren().clear();
+		booleanExpEditor.clear();
 
 	}
 
 	@FXML
 	public void newVotingInput(ActionEvent event) {
-
+		electionSimulation.reset();
 	}
 
 	@FXML
