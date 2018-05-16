@@ -245,4 +245,10 @@ public class SingleChoiceStack extends CBMCInputType {
 		return sum;
 	}
 	
+
+	@Override
+	public String otherToString() {
+		return "Single choice stack";
+	}
+	
 }

@@ -150,4 +150,10 @@ public class SingleCandidate extends CBMCOutputType {
 		
 		return toReturn;
 	}
+	
+
+	@Override
+	public String otherToString() {
+		return "Single candidate";
+	}
 }

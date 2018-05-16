@@ -294,4 +294,9 @@ public class WeightedApproval extends CBMCInputType {
 	public int getNumVotingPoints(String[][] votingData) {
 		return GUIController.getController().getElectionSimulation().getNumVoters();
 	}
+
+	@Override
+	public String otherToString() {
+		return "Weighted Approval";
+	}
 }

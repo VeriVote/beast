@@ -288,4 +288,10 @@ public class SingleChoice extends CBMCInputType {
 		return GUIController.getController().getElectionSimulation().getNumVoters();
 	}
 	
+
+	@Override
+	public String otherToString() {
+		return "Single choice";
+	}
+	
 }

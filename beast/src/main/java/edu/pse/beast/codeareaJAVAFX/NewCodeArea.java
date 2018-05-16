@@ -158,8 +158,8 @@ public class NewCodeArea extends SaveLoadCodeArea {
 		this.elecDescription = newDescription;
 
 		String declarationString = CCodeHelper.generateDeclString(newDescription.getContainer());
-
-		this.insertText(0, declarationString + "\n\n}");
+		
+		this.replaceText(declarationString + "\n\n}");
 
 		this.setStyleSpans(0, computeHighlighting(this.getText()));
 	}

@@ -29,6 +29,11 @@ public abstract class OutputType implements InOutType {
 		return outputTypes;
 	}
 	
+	@Override
+	public String toString() {
+		return otherToString();
+	}
+	
 	protected CommonHelpMethods helper;
 	
 	public OutputType() {

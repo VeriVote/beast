@@ -62,6 +62,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 public class GUIController {
 
@@ -823,19 +824,23 @@ public class GUIController {
 
 	@FXML
 	public void newElectionDescription(ActionEvent event) {
-		 
+
 		List<List<InOutType>> types = new ArrayList<List<InOutType>>();
-		
+
 		List<String> description = new ArrayList<String>();
-		
+
 		types.add(InputType.getInputTypes());
 		description.add("input Type:");
-		
+
 		types.add(OutputType.getOutputTypes());
 		description.add("output Type:");
 		
-		
-		showPopUp("New Election Description", "chose the new Election description", description, types);
+		Pair<String, List<InOutType>> pair = showPopUp("New Election Description", "chose the new Election description",
+				description, types);
+
+		if (pair != null) {
+			codeArea.setNewElectionDescription(new ElectionDescription(pair.getKey(), (InputType) pair.getValue().get(0), (OutputType) pair.getValue().get(1), 0));
+		}
 	}
 
 	@FXML
@@ -1248,10 +1253,10 @@ public class GUIController {
 	}
 
 	public void setCurrentPropertyDescription(ParentTreeItem propertyItem, boolean bringToFront) {
-		if(nameFieldIsChangeable) {
-			propNameButtonClicked(null); //try to save the text the user wrote
+		if (nameFieldIsChangeable) {
+			propNameButtonClicked(null); // try to save the text the user wrote
 		}
-		
+
 		if (booleanExpEditor.getCurrentItem() == null) {
 			if (!nameFieldIsChangeable) {
 				propertyItem.setText(propNameField.getText());
@@ -1263,58 +1268,85 @@ public class GUIController {
 		resultNameField.setText(propertyItem.getPreAndPostPropertie().getName());
 	}
 
-	private <T> List<T> showPopUp(String titleText, String infoText, List<String> inputDescription, List<List<T>> inputPossibilites) {
+	private <T> Pair<String, List<T>> showPopUp(String titleText, String infoText, List<String> inputDescription,
+			List<List<T>> inputPossibilites) {
 
 		Point position = MouseInfo.getPointerInfo().getLocation();
-		
+
 		Dialog<List<T>> dialog = new Dialog<>();
-		
-		//TextInputDialog dialog = new TextInputDialog("");
-		
+
+		// TextInputDialog dialog = new TextInputDialog("");
+
 		dialog.setX(position.getX());
 		dialog.setY(position.getY());
 
 		dialog.setTitle(titleText);
 		dialog.setHeaderText(infoText);
-		//dialog.setContentText(inputText);
+		// dialog.setContentText(inputText);
 
 		Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
 
 		// Add a custom icon.
 		stage.getIcons().add(new Image(pathToImages + "other/BEAST.png"));
-		
-		
-		
+
 		ButtonType buttonType = new ButtonType("OK", ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(buttonType, ButtonType.CANCEL);
-		
-		
+
 		GridPane grid = new GridPane();
-		
+
 		grid.setHgap(10);
 		grid.setVgap(10);
 		grid.setPadding(new Insets(20, 150, 10, 10));
-		
-		
-		//populate the grid with the choices
-		
+
+		// populate the grid with the choices
+
+		grid.add(new Label("name:"), 0, 0);
+
+		TextField nameField = new TextField();
+
+		grid.add(nameField, 1, 0);
+
+		List<ChoiceBox<T>> boxes = new ArrayList<ChoiceBox<T>>();
+
 		for (int i = 0; i < inputDescription.size(); i++) {
-			grid.add(new Label(inputDescription.get(i)), 0, i);
-			
+			grid.add(new Label(inputDescription.get(i)), 0, i + 1);
+
 			ChoiceBox<T> box = new ChoiceBox<T>(FXCollections.observableList(inputPossibilites.get(i)));
-			
+
+			boxes.add(box);
+
 			box.getSelectionModel().selectFirst();
-			
-			grid.add(box, 1, i);
+
+			grid.add(box, 1, i + 1);
 		}
-		
+
 		dialog.getDialogPane().setContent(grid);
 
-		// Traditional way to get the response value.
+		// wait for the user to select
 		Optional<List<T>> result = dialog.showAndWait();
 
 		if (result.isPresent()) {
-			return result.get();
+
+			String newName = nameField.getText();
+
+			if (isValidFileName(newName)) {
+
+				List<T> listToReturn = new ArrayList<T>();
+
+				for (Iterator<ChoiceBox<T>> iterator = boxes.iterator(); iterator.hasNext();) {
+					ChoiceBox<T> choice = (ChoiceBox<T>) iterator.next();
+					listToReturn.add(choice.getValue());
+				}
+
+				Pair<String, List<T>> toReturn = new Pair<String, List<T>>(newName, listToReturn);
+
+				return toReturn;
+
+			} else {
+				
+				setErrorText("file name not valid, try again");
+				return null;
+			}
 		} else {
 			return null;
 		}

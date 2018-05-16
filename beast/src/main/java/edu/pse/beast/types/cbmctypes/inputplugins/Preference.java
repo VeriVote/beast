@@ -294,4 +294,9 @@ public class Preference extends CBMCInputType {
 			return amountSeats;
 		}
 	}
+	
+	@Override
+	public String otherToString() {
+		return "Preference";
+	}
 }

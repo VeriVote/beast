@@ -128,4 +128,9 @@ public class InternalTypeContainer implements InOutType {
 	public InternalTypeContainer getInternalTypeContainer() {
 		return this;
 	}
+
+	@Override
+	public String otherToString() {
+		return "";
+	}
 }

@@ -233,4 +233,9 @@ public class Parliament extends CBMCOutputType {
 		
 		return toReturn;
 	}
+
+	@Override
+	public String otherToString() {
+		return "Parliament";
+	}
 }

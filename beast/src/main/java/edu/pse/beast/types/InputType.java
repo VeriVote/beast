@@ -37,6 +37,12 @@ public abstract class InputType implements InOutType{
 	public InputType() {
 		getHelper();
 	}
+	
+	
+	@Override
+	public String toString() {
+		return otherToString();
+	}
 
 	protected abstract void getHelper();
 
