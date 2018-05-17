@@ -22,7 +22,7 @@ import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
-import edu.pse.beast.types.cbmctypes.outputtypes.SingleCandidate;
+import edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
 import javafx.scene.Node;
 
 public class NewCodeArea extends SaveLoadCodeArea {

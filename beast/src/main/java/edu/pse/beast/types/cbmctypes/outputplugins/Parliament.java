@@ -1,4 +1,4 @@
-package edu.pse.beast.types.cbmctypes.outputtypes;
+package edu.pse.beast.types.cbmctypes.outputplugins;
 
 import java.util.Iterator;
 import java.util.List;

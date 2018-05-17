@@ -1,32 +1,26 @@
 package edu.pse.beast.types;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ServiceLoader;
 
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
-import edu.pse.beast.types.cbmctypes.inputplugins.Approval;
-import edu.pse.beast.types.cbmctypes.inputplugins.Preference;
-import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
-import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoiceStack;
-import edu.pse.beast.types.cbmctypes.inputplugins.WeightedApproval;
-import edu.pse.beast.types.cbmctypes.outputtypes.Parliament;
-import edu.pse.beast.types.cbmctypes.outputtypes.ParliamentStack;
-import edu.pse.beast.types.cbmctypes.outputtypes.SingleCandidate;
 
 public abstract class OutputType implements InOutType {
 
-	private static List<InOutType> outputTypes = new ArrayList<InOutType>();
-	
-	static { //TODO let it load dynamically WORKAROUND so far
-		outputTypes.add(new SingleCandidate());
-		outputTypes.add(new Parliament());
-		outputTypes.add(new ParliamentStack());
-	}
-	
-	public static List<InOutType> getOutputTypes() {
-		return outputTypes;
+	public static List<OutputType> getOutputTypes() {
+		ServiceLoader<OutputType> loader = ServiceLoader.load(OutputType.class);
+		
+		List<OutputType> types = new ArrayList<OutputType>();
+		
+		for (Iterator<OutputType> iterator = loader.iterator(); iterator.hasNext();) {
+			OutputType type = (OutputType) iterator.next();
+			types.add(type);
+		}
+		return types;
 	}
 	
 	@Override

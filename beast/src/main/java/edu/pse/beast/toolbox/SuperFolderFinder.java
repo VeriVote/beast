@@ -18,7 +18,7 @@ public final class SuperFolderFinder {
      * @return the location of the top folder containing beast
      */
     public static String getSuperFolder() {
-        if(!INITIALIZED || superFolder .length() == 0) {
+        if(!INITIALIZED || superFolder.length() == 0) {
             //the class is two "directories away from the super folder
             //counteract possible whitespace errors on windows
             File f = new File(SuperFolderFinder.class.getProtectionDomain().getCodeSource().getLocation().getPath());

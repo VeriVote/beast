@@ -1,5 +1,6 @@
 package edu.pse.beast.highlevel;
 
+import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -35,6 +36,7 @@ public class MainClass extends Application {
 	 *            not used
 	 */
 	public static void main(String[] args) {
+		
 		//new BEASTCommunicator();
 		//PSECentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
 		//communicator.setCentralObjectProvider(centralObjectProvider);

@@ -2,35 +2,30 @@ package edu.pse.beast.types;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ServiceLoader;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
-import edu.pse.beast.types.cbmctypes.inputplugins.Approval;
-import edu.pse.beast.types.cbmctypes.inputplugins.Preference;
-import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
-import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoiceStack;
-import edu.pse.beast.types.cbmctypes.inputplugins.WeightedApproval;
 
 public abstract class InputType implements InOutType{
 	
-	private static List<InOutType> inputTypes = new ArrayList<InOutType>();
-	
-	static { //TODO let it load dynamically WORKAROUND so far
-		inputTypes.add(new SingleChoice());
-		inputTypes.add(new Approval());
-		inputTypes.add(new Preference());
-		inputTypes.add(new SingleChoiceStack());
-		inputTypes.add(new WeightedApproval());
+	public static List<InputType> getInputTypes() {
+		ServiceLoader<InputType> loader = ServiceLoader.load(InputType.class);
+		
+		List<InputType> types = new ArrayList<InputType>();
+		
+		for (Iterator<InputType> iterator = loader.iterator(); iterator.hasNext();) {
+			InputType type = (InputType) iterator.next();
+			types.add(type);
+		}
+		
+		return types;
 	}
-	
-	public static List<InOutType> getInputTypes() {
-		return inputTypes;
-	}
-	
 	
 	protected CommonHelpMethods helper;
 	
@@ -40,7 +35,7 @@ public abstract class InputType implements InOutType{
 	
 	
 	@Override
-	public String toString() {
+	public final String toString() {
 		return otherToString();
 	}
 

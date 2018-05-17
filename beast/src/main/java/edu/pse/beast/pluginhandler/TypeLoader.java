@@ -11,9 +11,9 @@ import edu.pse.beast.types.cbmctypes.inputplugins.Preference;
 import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
 import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoiceStack;
 import edu.pse.beast.types.cbmctypes.inputplugins.WeightedApproval;
-import edu.pse.beast.types.cbmctypes.outputtypes.Parliament;
-import edu.pse.beast.types.cbmctypes.outputtypes.ParliamentStack;
-import edu.pse.beast.types.cbmctypes.outputtypes.SingleCandidate;
+import edu.pse.beast.types.cbmctypes.outputplugins.Parliament;
+import edu.pse.beast.types.cbmctypes.outputplugins.ParliamentStack;
+import edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
 
 public class TypeLoader {
 

@@ -1,8 +1,8 @@
 package edu.pse.beast.highlevel.javafx;
 
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -10,9 +10,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.fxmisc.flowless.VirtualizedScrollPane;
-
-import java.awt.MouseInfo;
-import java.awt.Point;
 
 import edu.pse.beast.codeareaJAVAFX.NewCodeArea;
 import edu.pse.beast.codeareaJAVAFX.NewPropertyCodeArea;
@@ -23,7 +20,7 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.electionSimulator.NewElectionSimulation;
 import edu.pse.beast.highlevel.BEASTCommunicator;
 import edu.pse.beast.toolbox.SuperFolderFinder;
-import edu.pse.beast.types.InOutType;
+import edu.pse.beast.toolbox.Triplet;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
@@ -36,11 +33,10 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -53,7 +49,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -62,7 +57,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.util.Pair;
 
 public class GUIController {
 
@@ -618,7 +612,7 @@ public class GUIController {
 
 	@FXML
 	public void removePropVar() {
-		
+
 		if (propertyToRemove != null) {
 			long time = System.currentTimeMillis();
 
@@ -825,52 +819,35 @@ public class GUIController {
 
 	@FXML
 	public void newElectionDescription(ActionEvent event) {
+		Triplet<String, InputType, OutputType> triplet = showPopUp("New Election Description",
+				"chose the new Election description", "input Type:", InputType.getInputTypes(), "output Type:",
+				OutputType.getOutputTypes());
 
-		List<List<InOutType>> types = new ArrayList<List<InOutType>>();
-
-		List<String> description = new ArrayList<String>();
-
-		types.add(InputType.getInputTypes());
-		description.add("input Type:");
-
-		types.add(OutputType.getOutputTypes());
-		description.add("output Type:");
-		
-		Pair<String, List<InOutType>> pair = showPopUp("New Election Description", "chose the new Election description",
-				description, types);
-
-		if (pair != null) {
-			codeArea.setNewElectionDescription(new ElectionDescription(pair.getKey(), (InputType) pair.getValue().get(0), (OutputType) pair.getValue().get(1), 0));
+		if (triplet != null) {
+			codeArea.setNewElectionDescription(
+					new ElectionDescription(triplet.first, triplet.second, triplet.third, 0));
 		}
 	}
 
 	@FXML
 	public void newProject(ActionEvent event) {
 
-		List<List<InOutType>> types = new ArrayList<List<InOutType>>();
+		Triplet<String, InputType, OutputType> triplet = showPopUp("New Election Description",
+				"chose the new Election description", "input Type:", InputType.getInputTypes(), "output Type:",
+				OutputType.getOutputTypes());
 
-		List<String> description = new ArrayList<String>();
-
-		types.add(InputType.getInputTypes());
-		description.add("input Type:");
-
-		types.add(OutputType.getOutputTypes());
-		description.add("output Type:");
-		
-		Pair<String, List<InOutType>> pair = showPopUp("New Project", "chose the new Election description",
-				description, types);
-
-		if (pair != null) {
-			codeArea.setNewElectionDescription(new ElectionDescription(pair.getKey(), (InputType) pair.getValue().get(0), (OutputType) pair.getValue().get(1), 0));
+		if (triplet != null) {
+			codeArea.setNewElectionDescription(
+					new ElectionDescription(triplet.first, triplet.second, triplet.third, 0));
+			newPropertyList(null);
+			newVotingInput(null);
 		}
-		
-		newPropertyList(null);
-		newVotingInput(null);
+
 	}
 
 	@FXML
 	public void newPropertyList(ActionEvent event) {
-		
+
 		root.getChildren().clear();
 		booleanExpEditor.clear();
 
@@ -1291,12 +1268,12 @@ public class GUIController {
 		resultNameField.setText(propertyItem.getPreAndPostPropertie().getName());
 	}
 
-	private <T> Pair<String, List<T>> showPopUp(String titleText, String infoText, List<String> inputDescription,
-			List<List<T>> inputPossibilites) {
+	private Triplet<String, InputType, OutputType> showPopUp(String titleText, String infoText,
+			String inTypeDescription, List<InputType> inTypes, String outTypeDescription, List<OutputType> outTypes) {
 
 		Point position = MouseInfo.getPointerInfo().getLocation();
 
-		Dialog<List<T>> dialog = new Dialog<>();
+		Dialog<String> dialog = new Dialog<>();
 
 		// TextInputDialog dialog = new TextInputDialog("");
 
@@ -1329,24 +1306,26 @@ public class GUIController {
 
 		grid.add(nameField, 1, 0);
 
-		List<ChoiceBox<T>> boxes = new ArrayList<ChoiceBox<T>>();
+		grid.add(new Label(inTypeDescription), 0, 1);
 
-		for (int i = 0; i < inputDescription.size(); i++) {
-			grid.add(new Label(inputDescription.get(i)), 0, i + 1);
+		ChoiceBox<InputType> inputType = new ChoiceBox<InputType>(FXCollections.observableList(inTypes));
+		
+		inputType.getSelectionModel().selectFirst();
 
-			ChoiceBox<T> box = new ChoiceBox<T>(FXCollections.observableList(inputPossibilites.get(i)));
+		grid.add(inputType, 1, 1);
 
-			boxes.add(box);
+		grid.add(new Label(outTypeDescription), 0, 2);
 
-			box.getSelectionModel().selectFirst();
+		ChoiceBox<OutputType> outputType = new ChoiceBox<OutputType>(FXCollections.observableList(outTypes));
 
-			grid.add(box, 1, i + 1);
-		}
+		outputType.getSelectionModel().selectFirst();
+		
+		grid.add(outputType, 1, 2);
 
 		dialog.getDialogPane().setContent(grid);
 
 		// wait for the user to select
-		Optional<List<T>> result = dialog.showAndWait();
+		Optional<String> result = dialog.showAndWait();
 
 		if (result.isPresent()) {
 
@@ -1354,19 +1333,13 @@ public class GUIController {
 
 			if (isValidFileName(newName)) {
 
-				List<T> listToReturn = new ArrayList<T>();
-
-				for (Iterator<ChoiceBox<T>> iterator = boxes.iterator(); iterator.hasNext();) {
-					ChoiceBox<T> choice = (ChoiceBox<T>) iterator.next();
-					listToReturn.add(choice.getValue());
-				}
-
-				Pair<String, List<T>> toReturn = new Pair<String, List<T>>(newName, listToReturn);
+				Triplet<String, InputType, OutputType> toReturn = new Triplet<String, InputType, OutputType>(newName,
+						inputType.getValue(), outputType.getValue());
 
 				return toReturn;
 
 			} else {
-				
+
 				setErrorText("file name not valid, try again");
 				return null;
 			}
