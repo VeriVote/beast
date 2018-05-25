@@ -6,7 +6,7 @@ import org.junit.Test;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
-import edu.pse.beast.saverloader.PreAndPostConditionsDescriptionSaverLoader;
+import edu.pse.beast.saverloader.PropertyDescriptionSaverLoader;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 
@@ -15,13 +15,13 @@ import edu.pse.beast.types.InternalTypeRep;
  * @author NikolaiLMS
  */
 public class PreAndPostConditionsDescriptionSaverLoaderTest {
-    private static PreAndPostConditionsDescriptionSaverLoader preAndPostConditionsDescriptionSaverLoader;
+    private static PropertyDescriptionSaverLoader preAndPostConditionsDescriptionSaverLoader;
     private static PreAndPostConditionsDescription description;
 
     @BeforeClass
     public static void setUpClass() {
         preAndPostConditionsDescriptionSaverLoader =
-                new PreAndPostConditionsDescriptionSaverLoader();
+                new PropertyDescriptionSaverLoader();
         FormalPropertiesDescription pre = new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
         FormalPropertiesDescription post = new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
         SymbolicVariableList list = new SymbolicVariableList();

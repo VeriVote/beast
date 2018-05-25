@@ -1,8 +1,5 @@
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.highlevel.ResultPresenterElement;
-import edu.pse.beast.toolbox.ErrorLogger;
-
 public class UnprocessedCBMCResult extends CBMCResult {
 
 	public UnprocessedCBMCResult() {

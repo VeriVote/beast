@@ -47,6 +47,7 @@
 						<Menu mnemonicParsing="false" text="%key.open">
 							<items>
 								<MenuItem mnemonicParsing="false" onAction="#openProject" text="%key.project" />
+                        <MenuItem mnemonicParsing="false" onAction="#openProperty" text="open prop" />
 								<MenuItem mnemonicParsing="false" onAction="#openElectionDescription" text="%key.electiondescription" />
 								<MenuItem mnemonicParsing="false" onAction="#openPropertyList" text="%key.propertylist" />
 								<MenuItem mnemonicParsing="false" onAction="#openVotingInput" text="%key.voteslist" />
@@ -56,6 +57,7 @@
 						<Menu mnemonicParsing="false" text="%key.save">
 							<items>
 								<MenuItem mnemonicParsing="false" onAction="#saveProject" text="%key.project" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveProperty" text="save Prop" />
 								<MenuItem mnemonicParsing="false" onAction="#saveElectionDescription" text="%key.electiondescription" />
 								<MenuItem mnemonicParsing="false" onAction="#savePropertyList" text="%key.propertylist" />
 								<MenuItem mnemonicParsing="false" onAction="#saveVotingInput" text="%key.voteslist" />

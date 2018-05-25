@@ -1,17 +1,10 @@
 package edu.pse.beast.highlevel;
 
-import java.net.URL;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import com.google.gson.GsonBuilder;
-
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.SuperFolderFinder;
-import edu.pse.beast.types.InputType;
-import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -42,19 +35,6 @@ public class MainClass extends Application {
 	 *            not used
 	 */
 	public static void main(String[] args) {
-		
-		SingleChoice a = new SingleChoice();
-		
-		System.out.println(a.getClass().getSimpleName());
-		
-		List<InputType> b = InputType.getInputTypes();
-		
-		for (Iterator iterator = b.iterator(); iterator.hasNext();) {
-			InputType inputType = (InputType) iterator.next();
-			System.out.println(inputType.getClass().getName());
-		}
-		
-		
 		//new BEASTCommunicator();
 		//PSECentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
 		//communicator.setCentralObjectProvider(centralObjectProvider);

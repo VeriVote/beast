@@ -8,8 +8,6 @@ import java.util.regex.Pattern;
 
 import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
-import edu.pse.beast.highlevel.ResultPresenterElement;
-import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.types.InternalTypeContainer;
 
 /**

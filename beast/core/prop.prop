@@ -1,0 +1,1 @@
+{"name":"default description","symbolicVariableList":{"symbolicVariableList":[],"listenerList":[]},"preConditionsDescription":{"code":"FOR_ALL_VOTERS(i): VOTES1(i) \u003d\u003d VOTES2(i);"},"postConditionsDescription":{"code":""}}

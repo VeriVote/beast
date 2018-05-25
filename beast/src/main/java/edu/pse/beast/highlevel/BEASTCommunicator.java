@@ -229,7 +229,7 @@ public class BEASTCommunicator {
      */
     public static boolean checkForErrors(ElectionDescription description, List<ParentTreeItem> properties) {
 		GUIController.setInfoText("searching for errors");
-		GUIController.getController().getBooleanExpEditor().saveProperty(); //save the currently opened property
+		GUIController.getController().getBooleanExpEditor().updatePropertyTextAreas(); //save the currently opened property
 		
 		description.setCode(GUIController.getController().getCodeArea().getText());
 

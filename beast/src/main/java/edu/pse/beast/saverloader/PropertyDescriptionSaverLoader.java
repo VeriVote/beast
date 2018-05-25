@@ -5,14 +5,10 @@
  */
 package edu.pse.beast.saverloader;
 
-import java.lang.reflect.Type;
-import java.util.List;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
-import edu.pse.beast.highlevel.javafx.ParentTreeItem;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 
 /**
  * Implements SaverLoader methods for creating saveStrings from
@@ -20,7 +16,7 @@ import edu.pse.beast.highlevel.javafx.ParentTreeItem;
  * 
  * @author lukas
  */
-public class PropertyListSaverLoader implements SaverLoader<List<ParentTreeItem>> {
+public class PropertyDescriptionSaverLoader implements SaverLoader<PreAndPostConditionsDescription> {
 
 	private static Gson saverLoader;
 
@@ -30,14 +26,12 @@ public class PropertyListSaverLoader implements SaverLoader<List<ParentTreeItem>
 	}
 
 	@Override
-	public List<ParentTreeItem> createFromSaveString(String toLoad) throws Exception {
-		return saverLoader.fromJson(toLoad, new TypeToken<List<ParentTreeItem>>(){}.getType());
+	public PreAndPostConditionsDescription createFromSaveString(String toLoad) throws Exception {
+		return saverLoader.fromJson(toLoad, PreAndPostConditionsDescription.class);
 	}
 
 	@Override
-	public String createSaveString(List<ParentTreeItem> toSave) {
-		
-		Type listType = new TypeToken<List<ParentTreeItem>>(){}.getType();
-		return saverLoader.toJson(toSave, listType);
+	public String createSaveString(PreAndPostConditionsDescription toSave) {
+		return saverLoader.toJson(toSave);
 	}
 }

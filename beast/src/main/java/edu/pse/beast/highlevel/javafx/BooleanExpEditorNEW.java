@@ -4,9 +4,10 @@ import java.util.Iterator;
 
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorGeneralErrorFinder;
 import edu.pse.beast.codeareaJAVAFX.NewPropertyCodeArea;
+import edu.pse.beast.codeareaJAVAFX.SaverLoader;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
-import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
+import edu.pse.beast.saverloader.PropertyDescriptionSaverLoader;
 import edu.pse.beast.types.InternalTypeContainer;
 import javafx.scene.control.TreeItem;
 
@@ -17,8 +18,15 @@ public class BooleanExpEditorNEW {
 	private PreAndPostConditionsDescription currentPropertyDescription;
 	private ParentTreeItem currentItem;
 
+	private final SaverLoader saverLoader;
+
+	private final PropertyDescriptionSaverLoader propSaverLoader = new PropertyDescriptionSaverLoader();
+
 	public BooleanExpEditorNEW(NewPropertyCodeArea preArea, NewPropertyCodeArea postArea,
 			PreAndPostConditionsDescription propDesc, ParentTreeItem currentItem) {
+
+		this.saverLoader = new SaverLoader("prop", "C:", "BEAST property description");
+
 		this.preArea = preArea;
 		this.postArea = postArea;
 		this.currentPropertyDescription = propDesc;
@@ -142,6 +150,11 @@ public class BooleanExpEditorNEW {
 		return currentPropertyDescription;
 	}
 
+	public void updatePropertyTextAreas() {
+		preArea.setDescription(currentPropertyDescription.getPreConditionsDescription());
+		postArea.setDescription(currentPropertyDescription.getPostConditionsDescription());
+	}
+
 	public void setCurrentPropertyDescription(ParentTreeItem propertyItem, boolean bringToFront) {
 
 		this.currentPropertyDescription = propertyItem.getPreAndPostPropertie();
@@ -149,8 +162,7 @@ public class BooleanExpEditorNEW {
 
 		this.removeAllVariables();
 
-		preArea.setDescription(currentPropertyDescription.getPreConditionsDescription());
-		postArea.setDescription(currentPropertyDescription.getPostConditionsDescription());
+		updatePropertyTextAreas();
 
 		for (Iterator<SymbolicVariable> iterator = currentPropertyDescription.getSymbolicVariableList()
 				.iterator(); iterator.hasNext();) {
@@ -160,23 +172,29 @@ public class BooleanExpEditorNEW {
 		}
 
 		if (bringToFront) {
-			GUIController.getController().getMainTabPane().getSelectionModel()
-					.select(GUIController.getController().getPropertyTab());
-
-			BooleanExpEditorGeneralErrorFinder.hasErrors(propertyItem); // checks if there are errors, and if there are
-			// displays them in the error tab
+			bringToFront();
 		}
 
 	}
-	
+
+	public void bringToFront() {
+		GUIController.getController().getMainTabPane().getSelectionModel()
+				.select(GUIController.getController().getPropertyTab());
+
+		if (currentItem != null) {
+			BooleanExpEditorGeneralErrorFinder.hasErrors(currentItem); // checks if there are errors, and if there are
+		}
+		// displays them in the error tab
+	}
+
 	public ParentTreeItem getCurrentItem() {
 		return currentItem;
 	}
-
-	public void saveProperty() {
-		preArea.saveDescription(null);
-		postArea.saveDescription(null);
-	}
+	//
+	// private void saveDescription() {
+	// preArea.saveDescription(null);
+	// postArea.saveDescription(null);
+	// }
 
 	/**
 	 * clears all fields of the editor
@@ -185,6 +203,41 @@ public class BooleanExpEditorNEW {
 		this.removeAllVariables();
 		this.preArea.clear();
 		this.postArea.clear();
+	}
+
+	public void saveProp() {
+
+		updatePropertyTextAreas();
+
+		String json = propSaverLoader.createSaveString(currentPropertyDescription);
+
+		saverLoader.save("", json);
+	}
+
+	public void loadProp() {
+
+		String json = saverLoader.load();
+
+		if (!json.equals("")) {
+
+			PreAndPostConditionsDescription newDescription = null;
+
+			try {
+				newDescription = propSaverLoader.createFromSaveString(json);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+			}
+
+			if (newDescription != null) {
+				currentPropertyDescription = newDescription;
+				preArea.replaceText(newDescription.getPreConditionsDescription().getCode());
+				postArea.replaceText(newDescription.getPostConditionsDescription().getCode());
+
+				GUIController.getController().setPropNameField(newDescription.getName());
+				bringToFront();
+			}
+
+		}
 	}
 
 }

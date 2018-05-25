@@ -10,6 +10,7 @@ import java.util.function.IntFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
@@ -25,8 +26,11 @@ import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
 import edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
 import javafx.scene.Node;
 
-public class NewCodeArea extends SaveLoadCodeArea {
+public class NewCodeArea extends CodeArea {
 
+	private final SaverLoader saverLoader;
+	
+	
 	private static final String[] KEYWORDS = new String[] { "auto", "break", "case", "const", "continue", "default",
 			"do", "else", "error", "const", "continue", "default", "do", "else", "enum", "extern", "for", "goto", "if",
 			"return", "signed", "sizeof", "static", "struct", "switch", "typedef", "union", "unsigned", "volatile",
@@ -64,7 +68,8 @@ public class NewCodeArea extends SaveLoadCodeArea {
 	private List<ElectionDescriptionChangeListener> listeners = new ArrayList<ElectionDescriptionChangeListener>();
 
 	public NewCodeArea() {
-		super(".elec", "C:", "BEAST election description");
+		
+		saverLoader = new SaverLoader(".elec", "C:", "BEAST election description");
 
 		ElectionDescription startElecDescription = new ElectionDescription("New description", new SingleChoice(),
 				new SingleCandidate(), 0);

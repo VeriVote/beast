@@ -698,7 +698,7 @@ public class GUIController {
 
 	@FXML
 	public void saveAsButton(ActionEvent event) {
-		codeArea.saveAs("test");
+		//codeArea.saveAs("test");
 	}
 
 	@FXML
@@ -862,6 +862,11 @@ public class GUIController {
 	public void openElectionDescription(ActionEvent event) {
 
 	}
+	
+	@FXML
+	public void openProperty(ActionEvent event) {
+		booleanExpEditor.loadProp();
+	}
 
 	@FXML
 	public void openProject(ActionEvent event) {
@@ -913,6 +918,11 @@ public class GUIController {
 
 	}
 
+	@FXML
+	public void saveProperty(ActionEvent event) {
+		booleanExpEditor.saveProp();
+	}
+	
 	@FXML
 	public void saveProject(ActionEvent event) {
 
@@ -1266,6 +1276,10 @@ public class GUIController {
 		booleanExpEditor.setCurrentPropertyDescription(propertyItem, bringToFront);
 		propNameField.setText(propertyItem.getPreAndPostPropertie().getName());
 		resultNameField.setText(propertyItem.getPreAndPostPropertie().getName());
+	}
+	
+	public void setPropNameField(String newText) {
+		propNameField.setText(newText);
 	}
 
 	private Triplet<String, InputType, OutputType> showPopUp(String titleText, String infoText,
