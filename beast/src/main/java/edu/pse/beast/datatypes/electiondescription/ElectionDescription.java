@@ -2,6 +2,7 @@ package edu.pse.beast.datatypes.electiondescription;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.datatypes.NameInterface;
@@ -40,6 +41,11 @@ public class ElectionDescription implements NameInterface {
     public List<String> getCode() {
         return code;
     }
+    
+
+	public String getCodeAsString() {
+		return String.join("\\n", code);
+	}
     
     /**
      * 
@@ -114,5 +120,20 @@ public class ElectionDescription implements NameInterface {
 
 	public void updateVotingDeclLine(String newVotingDeclLine) {
 		this.code.set(votingDeclLine, newVotingDeclLine);
+	}
+
+	public ElectionDescription getDeepCopy() {
+		ElectionDescription deepCopy = new ElectionDescription(name, container.getInputType(), container.getOutputType(), votingDeclLine);
+		
+		List<String> clonedCode = new ArrayList<String>();
+		
+		for (Iterator<String> iterator = code.iterator(); iterator.hasNext();) {
+			String line = (String) iterator.next();
+			clonedCode.add(line);
+		}
+		
+		deepCopy.setCode(clonedCode);
+		
+		return deepCopy;
 	}
 }

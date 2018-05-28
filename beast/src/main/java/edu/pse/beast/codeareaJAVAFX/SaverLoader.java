@@ -1,16 +1,12 @@
 package edu.pse.beast.codeareaJAVAFX;
 
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
-import org.fxmisc.richtext.CodeArea;
 
 import edu.pse.beast.highlevel.MainClass;
 import javafx.stage.FileChooser;
@@ -47,6 +43,8 @@ public class SaverLoader {
 			out = new PrintWriter(toSaveIn);
 
 			out.write(text);
+			
+			hasSaveFile = true;
 
 		} catch (IOException ioE) {
 			ioE.printStackTrace();
@@ -99,6 +97,10 @@ public class SaverLoader {
 	private static String readFile(File file, Charset encoding) throws IOException {
 		byte[] encoded = Files.readAllBytes(Paths.get(file.getPath()));
 		return new String(encoded, encoding);
+	}
+	
+	public void resetHasSaveFile() {
+		hasSaveFile = false;
 	}
 
 }

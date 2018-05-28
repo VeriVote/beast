@@ -174,6 +174,8 @@ public class BooleanExpEditorNEW {
 		if (bringToFront) {
 			bringToFront();
 		}
+		
+		saverLoader.resetHasSaveFile();
 
 	}
 
@@ -230,6 +232,9 @@ public class BooleanExpEditorNEW {
 
 			if (newDescription != null) {
 				currentPropertyDescription = newDescription;
+				
+				saverLoader.resetHasSaveFile();
+				
 				preArea.replaceText(newDescription.getPreConditionsDescription().getCode());
 				postArea.replaceText(newDescription.getPostConditionsDescription().getCode());
 

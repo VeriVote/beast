@@ -1,13 +1,16 @@
 package edu.pse.beast.types;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ServiceLoader;
 
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 
 public abstract class CommonHelpMethods {
-	
+
 	/**
 	 * extracts a two dimensional variable for the given checker from the output
 	 * list
@@ -52,4 +55,17 @@ public abstract class CommonHelpMethods {
 	 *         values that occured in the give list
 	 */
 	public abstract List<CBMCResultWrapperSingleArray> readOneDimVarLong(String name, List<String> toExtract);
+
+	public static List<CommonHelpMethods> getImplementations() {
+		ServiceLoader<CommonHelpMethods> loader = ServiceLoader.load(CommonHelpMethods.class);
+
+		List<CommonHelpMethods> implementations = new ArrayList<CommonHelpMethods>();
+
+		for (Iterator<CommonHelpMethods> iterator = loader.iterator(); iterator.hasNext();) {
+			CommonHelpMethods implementation = (CommonHelpMethods) iterator.next();
+			implementations.add(implementation);
+		}
+
+		return implementations;
+	}
 }

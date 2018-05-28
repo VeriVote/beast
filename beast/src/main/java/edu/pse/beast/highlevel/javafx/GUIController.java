@@ -860,7 +860,7 @@ public class GUIController {
 
 	@FXML
 	public void openElectionDescription(ActionEvent event) {
-
+		codeArea.loadElectionDescription();
 	}
 	
 	@FXML
@@ -895,7 +895,7 @@ public class GUIController {
 
 	@FXML
 	public void saveAsElectionDescription(ActionEvent event) {
-
+		codeArea.saveAsElectionDescription();
 	}
 
 	@FXML
@@ -915,7 +915,7 @@ public class GUIController {
 
 	@FXML
 	public void saveElectionDescription(ActionEvent event) {
-
+		codeArea.saveElectionDescription();
 	}
 
 	@FXML

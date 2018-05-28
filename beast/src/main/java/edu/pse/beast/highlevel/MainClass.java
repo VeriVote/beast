@@ -1,10 +1,12 @@
 package edu.pse.beast.highlevel;
 
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.SuperFolderFinder;
+import edu.pse.beast.types.CommonHelpMethods;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
