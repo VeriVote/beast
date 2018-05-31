@@ -890,7 +890,7 @@ public class GUIController {
 
 	@FXML
 	public void quitProgram(ActionEvent event) {
-
+		
 	}
 
 	@FXML
@@ -900,12 +900,12 @@ public class GUIController {
 
 	@FXML
 	public void saveAsProject(ActionEvent event) {
-
+		electionSimulation.saveAs();
 	}
 
 	@FXML
 	public void saveAsPropertyList(ActionEvent event) {
-
+		
 	}
 
 	@FXML
