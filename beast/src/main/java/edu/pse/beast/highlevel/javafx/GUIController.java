@@ -865,23 +865,25 @@ public class GUIController {
 	public void newProject(ActionEvent event) {
 
 		newElectionDescription(event);
-		
+
 		newVotingInput(event);
-		
+
 		newPropertyList(event);
-//		
-//		Triplet<String, InputType, OutputType> triplet = showPopUp("New Election Description",
-//				"chose the new Election description", "input Type:", InputType.getInputTypes(), "output Type:",
-//				OutputType.getOutputTypes());
-//
-//		if (triplet != null) {
-//			codeArea.setNewElectionDescription(
-//					new ElectionDescription(triplet.first, triplet.second, triplet.third, 0));
-//			newPropertyList(null);
-//			newVotingInput(null);
-//		}
-//		
-//		new
+		//
+		// Triplet<String, InputType, OutputType> triplet = showPopUp("New Election
+		// Description",
+		// "chose the new Election description", "input Type:",
+		// InputType.getInputTypes(), "output Type:",
+		// OutputType.getOutputTypes());
+		//
+		// if (triplet != null) {
+		// codeArea.setNewElectionDescription(
+		// new ElectionDescription(triplet.first, triplet.second, triplet.third, 0));
+		// newPropertyList(null);
+		// newVotingInput(null);
+		// }
+		//
+		// new
 
 	}
 
@@ -917,74 +919,78 @@ public class GUIController {
 	public void openPropertyList(ActionEvent event) {
 		File listFile = propertyListSaverLoader.showFileLoadDialog("");
 
-		String folderName = FilenameUtils.removeExtension(listFile.getName());
-		
-		File parent = new File(listFile.getParentFile() + "/" + folderName);
-
 		if (listFile != null) {
 
-			File[] directories = parent.listFiles(File::isDirectory);
+			String folderName = FilenameUtils.removeExtension(listFile.getName());
 
-			if (directories.length > 0) {
-				for (int i = 0; i < directories.length; i++) {
-					File currentDir = directories[i];
+			File parent = new File(listFile.getParentFile() + "/" + folderName);
 
-					String[] property = currentDir.list(new FilenameFilter() {
-						public boolean accept(File dir, String name) {
-							return name.endsWith(".prop");
-						}
-					});
+			if (listFile != null) {
 
-					if (property.length != 1) {
-						errorTextArea.setText("invalid property list save format in folder: " + currentDir.getName());
-						return;
-					}
+				File[] directories = parent.listFiles(File::isDirectory);
 
-					PreAndPostConditionsDescription prop = booleanExpEditor
-							.open(new File(currentDir.getPath() + "/" + property[0]));
+				if (directories.length > 0) {
+					for (int i = 0; i < directories.length; i++) {
+						File currentDir = directories[i];
 
-					String[] children = currentDir.list(new FilenameFilter() {
-						public boolean accept(File dir, String name) {
-							return name.endsWith(".child");
-						}
-					});
+						String[] property = currentDir.list(new FilenameFilter() {
+							public boolean accept(File dir, String name) {
+								return name.endsWith(".prop");
+							}
+						});
 
-					if (children.length != 3) {
-						errorTextArea.setText("invalid property list save format in folder: " + currentDir.getName());
-						return;
-					}
-
-					TreeItem<CustomTreeItem> treeItem = new TreeItem<CustomTreeItem>();
-					ParentTreeItem parentItem = new ParentTreeItem(prop, false, treeItem, false);
-					
-					treeItems.add(treeItem);
-					
-					properties.add(parentItem);
-					
-					root.getChildren().add(treeItem);
-					
-					for (int j = 0; j < children.length; j++) {
-						String json = childItemSaverLoader.load(new File(currentDir.getPath() + "/" + children[j]));
-
-						String[] splits = children[j].split("\\.");
-
-						String stringIndex = splits[splits.length - 2];
-
-						ChildTreeItemValues values = null;
-						try {
-							values = propertyListGSON.createFromSaveString(json);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+						if (property.length != 1) {
+							errorTextArea
+									.setText("invalid property list save format in folder: " + currentDir.getName());
 							return;
 						}
 
-						parentItem.addChild(values, Integer.parseInt(stringIndex));
-					}
+						PreAndPostConditionsDescription prop = booleanExpEditor
+								.open(new File(currentDir.getPath() + "/" + property[0]));
 
+						String[] children = currentDir.list(new FilenameFilter() {
+							public boolean accept(File dir, String name) {
+								return name.endsWith(".child");
+							}
+						});
 
-					if (parentItem.getCounter() != 3) {
-						System.out.println("fehler, ");
+						if (children.length != 3) {
+							errorTextArea
+									.setText("invalid property list save format in folder: " + currentDir.getName());
+							return;
+						}
+
+						TreeItem<CustomTreeItem> treeItem = new TreeItem<CustomTreeItem>();
+						ParentTreeItem parentItem = new ParentTreeItem(prop, false, treeItem, false);
+
+						treeItems.add(treeItem);
+
+						properties.add(parentItem);
+
+						root.getChildren().add(treeItem);
+
+						for (int j = 0; j < children.length; j++) {
+							String json = childItemSaverLoader.load(new File(currentDir.getPath() + "/" + children[j]));
+
+							String[] splits = children[j].split("\\.");
+
+							String stringIndex = splits[splits.length - 2];
+
+							ChildTreeItemValues values = null;
+							try {
+								values = propertyListGSON.createFromSaveString(json);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								return;
+							}
+
+							parentItem.addChild(values, Integer.parseInt(stringIndex));
+						}
+
+						if (parentItem.getCounter() != 3) {
+							System.out.println("fehler, ");
+						}
 					}
 				}
 			}

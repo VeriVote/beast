@@ -26,7 +26,7 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 	public BooleanExpEditorNEW(NewPropertyCodeArea preArea, NewPropertyCodeArea postArea,
 			PreAndPostConditionsDescription propDesc, ParentTreeItem currentItem) {
 
-		this.saverLoader = new SaverLoader(".prop", "C:", "BEAST property description");
+		this.saverLoader = new SaverLoader(".prop", "BEAST property description");
 
 		this.preArea = preArea;
 		this.postArea = postArea;

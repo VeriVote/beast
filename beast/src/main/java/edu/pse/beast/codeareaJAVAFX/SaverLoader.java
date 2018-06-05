@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import edu.pse.beast.highlevel.MainClass;
+import edu.pse.beast.toolbox.SuperFolderFinder;
 import javafx.stage.FileChooser;
 
 public class SaverLoader {
@@ -20,7 +21,7 @@ public class SaverLoader {
 	private final String fileExtensionDescription;
 
 	public SaverLoader(String fileEnding, String fileExtensionDescription) {
-		this.initialDir = System.getenv("SystemDrive");
+		this.initialDir = SuperFolderFinder.getSuperFolder() + "/projectFiles/";
 		this.fileEnding = fileEnding;
 		this.fileExtensionDescription = fileExtensionDescription;
 	}
@@ -76,6 +77,8 @@ public class SaverLoader {
 				.add(new FileChooser.ExtensionFilter(fileExtensionDescription, "*" + fileEnding));
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All (*.*)", "*.*"));
 
+		System.out.println("initalDir:" + initialDir);
+		
 		fileChooser.setInitialDirectory(new File(initialDir));
 		fileChooser.setInitialFileName(fileName + fileEnding);
 		File selectedFile = fileChooser.showSaveDialog(MainClass.getMainStage());
