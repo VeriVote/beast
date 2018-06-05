@@ -75,7 +75,7 @@ public class NewCodeArea extends CodeArea implements MenuBarInterface {
 
 	public NewCodeArea() {
 
-		saverLoader = new SaverLoader(".elec", "C:", "BEAST election description");
+		saverLoader = new SaverLoader(".elec", "BEAST election description");
 
 		ElectionDescription startElecDescription = new ElectionDescription("New description", new SingleChoice(),
 				new SingleCandidate(), 0);

@@ -304,13 +304,13 @@ public class GUIController {
 
 	private boolean nameFieldIsChangeable = false;
 
-	private SaverLoader propertyListSaverLoader = new SaverLoader(".propList", "C:", "BEAST list of properties");
+	private SaverLoader propertyListSaverLoader = new SaverLoader(".propList", "BEAST list of properties");
 
-	private SaverLoader childItemSaverLoader = new SaverLoader(".child", "C:", "BEAST child property item");
+	private SaverLoader childItemSaverLoader = new SaverLoader(".child", "BEAST child property item");
 
 	private ChildTreeItemSaverLoader propertyListGSON = new ChildTreeItemSaverLoader();
 
-	private SaverLoader projectSaverLoader = new SaverLoader(".proj", "C:", "BEAST project file");
+	private SaverLoader projectSaverLoader = new SaverLoader(".proj", "BEAST project file");
 
 	private ProjectSaverLoader projectGSON = new ProjectSaverLoader();
 
@@ -864,16 +864,24 @@ public class GUIController {
 	@FXML
 	public void newProject(ActionEvent event) {
 
-		Triplet<String, InputType, OutputType> triplet = showPopUp("New Election Description",
-				"chose the new Election description", "input Type:", InputType.getInputTypes(), "output Type:",
-				OutputType.getOutputTypes());
-
-		if (triplet != null) {
-			codeArea.setNewElectionDescription(
-					new ElectionDescription(triplet.first, triplet.second, triplet.third, 0));
-			newPropertyList(null);
-			newVotingInput(null);
-		}
+		newElectionDescription(event);
+		
+		newVotingInput(event);
+		
+		newPropertyList(event);
+//		
+//		Triplet<String, InputType, OutputType> triplet = showPopUp("New Election Description",
+//				"chose the new Election description", "input Type:", InputType.getInputTypes(), "output Type:",
+//				OutputType.getOutputTypes());
+//
+//		if (triplet != null) {
+//			codeArea.setNewElectionDescription(
+//					new ElectionDescription(triplet.first, triplet.second, triplet.third, 0));
+//			newPropertyList(null);
+//			newVotingInput(null);
+//		}
+//		
+//		new
 
 	}
 

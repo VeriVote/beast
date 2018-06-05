@@ -65,11 +65,11 @@ public class UnifiedNameContainer {
 	}
 
 	public static String getStruct_result() {
-		return map.get("struct_result");
+		return "struct " + map.get("struct_result");
 	}
 
 	public static String getStruct_stack_result() {
-		return map.get("stack_result");
+		return "struct " + map.get("stack_result");
 	}
 
 	public static String getResult_arr_name() {

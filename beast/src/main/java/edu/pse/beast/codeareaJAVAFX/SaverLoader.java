@@ -19,8 +19,8 @@ public class SaverLoader {
 	private final String fileEnding;
 	private final String fileExtensionDescription;
 
-	public SaverLoader(String fileEnding, String initialDir, String fileExtensionDescription) {
-		this.initialDir = initialDir;
+	public SaverLoader(String fileEnding, String fileExtensionDescription) {
+		this.initialDir = System.getenv("SystemDrive");
 		this.fileEnding = fileEnding;
 		this.fileExtensionDescription = fileExtensionDescription;
 	}

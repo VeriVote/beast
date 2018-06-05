@@ -37,7 +37,7 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener,
 		ElectionTypeContainer container, GridPane inputGridPane, GridPane voterGridPane, GridPane candidateGridPane) {
 			this.container = container;
 			
-			this.saverLoader = new SaverLoader(".elecIn", "C:", "Election Input Data");
+			this.saverLoader = new SaverLoader(".elecIn", "Election Input Data");
 			
 			this.inputGridPane = inputGridPane;
 			this.voterGridPane = voterGridPane;
