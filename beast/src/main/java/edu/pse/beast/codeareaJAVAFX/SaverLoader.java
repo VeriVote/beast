@@ -56,8 +56,22 @@ public class SaverLoader {
 	}
 
 	public void saveAs(String fileName, String text) {
-		FileChooser fileChooser = new FileChooser();
+		File selectedFile = showFileSaveDialog(fileName);
+		if (selectedFile != null) {
+			save(selectedFile, text);
+		}
+	}
+	
 
+	public void saveAs(File file, String text) {
+		if (file != null) {
+			save(file, text);
+		}
+	}
+	
+	public File showFileSaveDialog(String fileName) {
+		FileChooser fileChooser = new FileChooser();
+		
 		fileChooser.getExtensionFilters()
 				.add(new FileChooser.ExtensionFilter(fileExtensionDescription, "*" + fileEnding));
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All (*.*)", "*.*"));
@@ -65,19 +79,26 @@ public class SaverLoader {
 		fileChooser.setInitialDirectory(new File(initialDir));
 		fileChooser.setInitialFileName(fileName + fileEnding);
 		File selectedFile = fileChooser.showSaveDialog(MainClass.getMainStage());
-		if (selectedFile != null) {
-			save(selectedFile, text);
-		}
+		
+		return selectedFile;
 	}
-
-	public String load() {
+	
+	public File showFileLoadDialog(String fileName) {
 		FileChooser fileChooser = new FileChooser();
-		// fileChooser.setTitle("Load document");
-		fileChooser.setInitialDirectory(new File(initialDir));
+		
 		fileChooser.getExtensionFilters()
 				.add(new FileChooser.ExtensionFilter(fileExtensionDescription, "*" + fileEnding));
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All (*.*)", "*.*"));
+
+		fileChooser.setInitialDirectory(new File(initialDir));
+		fileChooser.setInitialFileName(fileName + fileEnding);
 		File selectedFile = fileChooser.showOpenDialog(MainClass.getMainStage());
+		
+		return selectedFile;
+	}
+
+	public String load() {
+		File selectedFile = showFileLoadDialog("");
 		if (selectedFile != null) {
 			return load(selectedFile);
 		}

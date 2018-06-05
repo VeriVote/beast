@@ -172,4 +172,8 @@ public class NEWRowOfValues {
 			parent.getInputGridPane().getChildren().remove(textField);
 		}
 	}
+
+	public void setValue(int x, String value) {
+		checkAndInsertValue(value, x);
+	}
 }

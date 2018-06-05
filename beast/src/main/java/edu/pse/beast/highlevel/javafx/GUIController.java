@@ -2,23 +2,32 @@ package edu.pse.beast.highlevel.javafx;
 
 import java.awt.MouseInfo;
 import java.awt.Point;
+import java.io.File;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FilenameUtils;
 import org.fxmisc.flowless.VirtualizedScrollPane;
+
+import com.sun.jna.platform.FileUtils;
 
 import edu.pse.beast.codeareaJAVAFX.NewCodeArea;
 import edu.pse.beast.codeareaJAVAFX.NewPropertyCodeArea;
+import edu.pse.beast.codeareaJAVAFX.SaverLoader;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.electionSimulator.NewElectionSimulation;
 import edu.pse.beast.highlevel.BEASTCommunicator;
+import edu.pse.beast.saverloader.ChildTreeItemSaverLoader;
+import edu.pse.beast.saverloader.ProjectSaverLoader;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.toolbox.Triplet;
 import edu.pse.beast.types.InputType;
@@ -63,6 +72,8 @@ public class GUIController {
 	private static GUIController controller;
 
 	private static List<ParentTreeItem> properties = new ArrayList<ParentTreeItem>();
+
+	private static List<TreeItem<CustomTreeItem>> treeItems = new ArrayList<TreeItem<CustomTreeItem>>();
 
 	private String pathToImages = "file:///" + SuperFolderFinder.getSuperFolder() + "/core/images/";
 
@@ -144,7 +155,7 @@ public class GUIController {
 	private Button deleteButton;
 
 	@FXML
-	private Button newProp;
+	private Button button;
 
 	@FXML
 	private Button loadProp;
@@ -292,6 +303,16 @@ public class GUIController {
 	private Stage mainStage;
 
 	private boolean nameFieldIsChangeable = false;
+
+	private SaverLoader propertyListSaverLoader = new SaverLoader(".propList", "C:", "BEAST list of properties");
+
+	private SaverLoader childItemSaverLoader = new SaverLoader(".child", "C:", "BEAST child property item");
+
+	private ChildTreeItemSaverLoader propertyListGSON = new ChildTreeItemSaverLoader();
+
+	private SaverLoader projectSaverLoader = new SaverLoader(".proj", "C:", "BEAST project file");
+
+	private ProjectSaverLoader projectGSON = new ProjectSaverLoader();
 
 	public GUIController(Stage mainStage) {
 		this.mainStage = mainStage;
@@ -617,10 +638,21 @@ public class GUIController {
 			long time = System.currentTimeMillis();
 
 			if ((time - lastClicked) < threshold) {
-				root.getChildren().remove(propertyToRemove);
-
+				removeProperty(propertyToRemove);
 				propertyToRemove = null;
 			}
+		}
+	}
+
+	public void removeProperty(TreeItem<CustomTreeItem> toRemove) {
+		properties.remove(toRemove.getValue());
+		root.getChildren().remove(toRemove);
+	}
+
+	private void removeAllProperties() {
+		for (Iterator<TreeItem<CustomTreeItem>> iterator = treeItems.iterator(); iterator.hasNext();) {
+			TreeItem<CustomTreeItem> treeItem = (TreeItem<CustomTreeItem>) iterator.next();
+			removeProperty(treeItem);
 		}
 	}
 
@@ -698,7 +730,7 @@ public class GUIController {
 
 	@FXML
 	public void saveAsButton(ActionEvent event) {
-		//codeArea.saveAs("test");
+		// codeArea.saveAs("test");
 	}
 
 	@FXML
@@ -848,8 +880,7 @@ public class GUIController {
 	@FXML
 	public void newPropertyList(ActionEvent event) {
 
-		root.getChildren().clear();
-		booleanExpEditor.clear();
+		removeAllProperties();
 
 	}
 
@@ -860,27 +891,101 @@ public class GUIController {
 
 	@FXML
 	public void openElectionDescription(ActionEvent event) {
-		codeArea.loadElectionDescription();
+		codeArea.open();
 	}
-	
+
 	@FXML
 	public void openProperty(ActionEvent event) {
-		booleanExpEditor.loadProp();
+		booleanExpEditor.open();
 	}
 
 	@FXML
 	public void openProject(ActionEvent event) {
 
+		removeAllProperties();
 	}
 
 	@FXML
 	public void openPropertyList(ActionEvent event) {
+		File listFile = propertyListSaverLoader.showFileLoadDialog("");
 
+		String folderName = FilenameUtils.removeExtension(listFile.getName());
+		
+		File parent = new File(listFile.getParentFile() + "/" + folderName);
+
+		if (listFile != null) {
+
+			File[] directories = parent.listFiles(File::isDirectory);
+
+			if (directories.length > 0) {
+				for (int i = 0; i < directories.length; i++) {
+					File currentDir = directories[i];
+
+					String[] property = currentDir.list(new FilenameFilter() {
+						public boolean accept(File dir, String name) {
+							return name.endsWith(".prop");
+						}
+					});
+
+					if (property.length != 1) {
+						errorTextArea.setText("invalid property list save format in folder: " + currentDir.getName());
+						return;
+					}
+
+					PreAndPostConditionsDescription prop = booleanExpEditor
+							.open(new File(currentDir.getPath() + "/" + property[0]));
+
+					String[] children = currentDir.list(new FilenameFilter() {
+						public boolean accept(File dir, String name) {
+							return name.endsWith(".child");
+						}
+					});
+
+					if (children.length != 3) {
+						errorTextArea.setText("invalid property list save format in folder: " + currentDir.getName());
+						return;
+					}
+
+					TreeItem<CustomTreeItem> treeItem = new TreeItem<CustomTreeItem>();
+					ParentTreeItem parentItem = new ParentTreeItem(prop, false, treeItem, false);
+					
+					treeItems.add(treeItem);
+					
+					properties.add(parentItem);
+					
+					root.getChildren().add(treeItem);
+					
+					for (int j = 0; j < children.length; j++) {
+						String json = childItemSaverLoader.load(new File(currentDir.getPath() + "/" + children[j]));
+
+						String[] splits = children[j].split("\\.");
+
+						String stringIndex = splits[splits.length - 2];
+
+						ChildTreeItemValues values = null;
+						try {
+							values = propertyListGSON.createFromSaveString(json);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+							return;
+						}
+
+						parentItem.addChild(values, Integer.parseInt(stringIndex));
+					}
+
+
+					if (parentItem.getCounter() != 3) {
+						System.out.println("fehler, ");
+					}
+				}
+			}
+		}
 	}
 
 	@FXML
 	public void openVotingInput(ActionEvent event) {
-
+		electionSimulation.open();
 	}
 
 	@FXML
@@ -890,39 +995,39 @@ public class GUIController {
 
 	@FXML
 	public void quitProgram(ActionEvent event) {
-		
+
 	}
 
 	@FXML
 	public void saveAsElectionDescription(ActionEvent event) {
-		codeArea.saveAsElectionDescription();
+		codeArea.saveAs();
 	}
 
 	@FXML
 	public void saveAsProject(ActionEvent event) {
-		electionSimulation.saveAs();
+
 	}
 
 	@FXML
 	public void saveAsPropertyList(ActionEvent event) {
-		
+		savePropertyList(event);
 	}
 
 	@FXML
 	public void saveAsVotingInput(ActionEvent event) {
-
+		electionSimulation.saveAs();
 	}
 
 	@FXML
 	public void saveElectionDescription(ActionEvent event) {
-		codeArea.saveElectionDescription();
+		codeArea.save();
 	}
 
 	@FXML
 	public void saveProperty(ActionEvent event) {
-		booleanExpEditor.saveProp();
+		booleanExpEditor.save();
 	}
-	
+
 	@FXML
 	public void saveProject(ActionEvent event) {
 
@@ -931,11 +1036,55 @@ public class GUIController {
 	@FXML
 	public void savePropertyList(ActionEvent event) {
 
+		if (properties.size() > 0) {
+
+			File listFile = propertyListSaverLoader.showFileSaveDialog("");
+
+			if (listFile != null) {
+
+				File folder = createFolderWithName(listFile);
+
+				propertyListSaverLoader.saveAs(new File(folder.getParentFile() + "/" + listFile.getName()), "");
+
+				String listFileContent = "";
+
+				int counter = 0;
+				for (Iterator<ParentTreeItem> iterator = properties.iterator(); iterator.hasNext();) {
+					ParentTreeItem parentItem = (ParentTreeItem) iterator.next();
+					String name = parentItem.getPreAndPostPropertie().getName();
+					File saveFolder = new File(folder + "/" + name + "_" + counter++);
+					saveFolder = createFolderWithName(saveFolder); // we want to save the parentTreeItem into this
+																	// folder
+					name = saveFolder.getName();
+
+					listFileContent = listFileContent + name;
+
+					booleanExpEditor.saveAs(parentItem.getPreAndPostPropertie(),
+							new File(saveFolder + "/" + parentItem.getText() + ".prop"));
+
+					List<ChildTreeItem> children = parentItem.getSubItems();
+
+					int sub_counter = 0;
+					for (Iterator<ChildTreeItem> childIterator = children.iterator(); childIterator.hasNext();) {
+						ChildTreeItem childItem = (ChildTreeItem) childIterator.next();
+						String saveString = propertyListGSON.createSaveString(childItem.getValues());
+						childItemSaverLoader.saveAs(
+								new File(saveFolder.getAbsolutePath() + "/" + sub_counter++ + ".child"), saveString);
+					}
+
+					if (iterator.hasNext()) {
+						listFileContent = listFileContent + "\n";
+					}
+				}
+			}
+		} else {
+			errorTextArea.setText("no property items to save exist");
+		}
 	}
 
 	@FXML
 	public void saveVotingInput(ActionEvent event) {
-
+		electionSimulation.save();
 	}
 
 	@FXML
@@ -1108,7 +1257,9 @@ public class GUIController {
 
 		TreeItem<CustomTreeItem> propRoot = new TreeItem<CustomTreeItem>();
 
-		properties.add(new ParentTreeItem(description, false, propRoot));
+		treeItems.add(propRoot);
+
+		properties.add(new ParentTreeItem(description, false, propRoot, true));
 
 		root.getChildren().add(propRoot);
 
@@ -1277,7 +1428,7 @@ public class GUIController {
 		propNameField.setText(propertyItem.getPreAndPostPropertie().getName());
 		resultNameField.setText(propertyItem.getPreAndPostPropertie().getName());
 	}
-	
+
 	public void setPropNameField(String newText) {
 		propNameField.setText(newText);
 	}
@@ -1323,7 +1474,7 @@ public class GUIController {
 		grid.add(new Label(inTypeDescription), 0, 1);
 
 		ChoiceBox<InputType> inputType = new ChoiceBox<InputType>(FXCollections.observableList(inTypes));
-		
+
 		inputType.getSelectionModel().selectFirst();
 
 		grid.add(inputType, 1, 1);
@@ -1333,7 +1484,7 @@ public class GUIController {
 		ChoiceBox<OutputType> outputType = new ChoiceBox<OutputType>(FXCollections.observableList(outTypes));
 
 		outputType.getSelectionModel().selectFirst();
-		
+
 		grid.add(outputType, 1, 2);
 
 		dialog.getDialogPane().setContent(grid);
@@ -1386,6 +1537,26 @@ public class GUIController {
 		Matcher matcher = pattern.matcher(text);
 		boolean isMatch = matcher.matches();
 		return isMatch;
+	}
+
+	private File createFolderWithName(File desiredFolderName) {
+		String origFileNameWithougExt = FilenameUtils.removeExtension(desiredFolderName.getAbsolutePath());
+
+		File finalListFile = new File(origFileNameWithougExt);
+
+		boolean success = false;
+		int counter = 1;
+
+		while (!success) {
+			success = (finalListFile).mkdirs();
+			if (!success) {
+				finalListFile = new File(origFileNameWithougExt + counter++);
+			}
+		}
+
+		// we successfully created the directory
+
+		return finalListFile;
 	}
 
 }

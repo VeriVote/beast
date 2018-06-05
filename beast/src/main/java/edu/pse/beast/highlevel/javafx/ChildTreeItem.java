@@ -1,6 +1,7 @@
 package edu.pse.beast.highlevel.javafx;
 
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.propertychecker.CBMCResult;
 import edu.pse.beast.propertychecker.Result;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -26,16 +27,27 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 	private ImageView statusIcon = new ImageView();
 	private boolean disabled = false;
 	private AnalysisStatus status = AnalysisStatus.NONE;
-	
+
 	protected Result result = null;
+
+	ChildTreeItem(ChildTreeItemValues values, ParentTreeItem parent) {
+		this.parent = parent;
+		this.checkBox.setSelected(values.checkBoxStatus);
+		this.propName = new Label(values.propertyName);
+		this.disabled = values.disabled;
+
+		init();
+	}
 
 	ChildTreeItem(String name, ParentTreeItem parent) {
 
 		this.parent = parent;
-
-		this.setAlignment(Pos.CENTER_LEFT);
-
 		propName = new Label(name);
+		init();
+	}
+
+	private void init() {
+		this.setAlignment(Pos.CENTER_LEFT);
 
 		checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> ov, Boolean oldValue, Boolean newValue) {
@@ -60,20 +72,22 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 	public boolean isSelected() {
 		return checkBox.isSelected();
 	}
-	
+
 	private void wasClicked() {
-		
+
 		parent.wasClicked(false);
-		
+
 		if (result != null && result.isFinished()) {
 			if (!result.isValid()) {
 			} else {
 				if (result.isSuccess()) {
 					GUIController.getController().getResultField().setText("ASSERTION HOLDS");
-					GUIController.getController().getMainTabPane().getSelectionModel().select(GUIController.getController().getResultTab());
+					GUIController.getController().getMainTabPane().getSelectionModel()
+							.select(GUIController.getController().getResultTab());
 				} else {
 					GUIController.getController().getResultField().setText(String.join("\n", result.getResult()));
-					GUIController.getController().getMainTabPane().getSelectionModel().select(GUIController.getController().getResultTab());								
+					GUIController.getController().getMainTabPane().getSelectionModel()
+							.select(GUIController.getController().getResultTab());
 				}
 			}
 		}
@@ -104,17 +118,17 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 	public Result getResult() {
 		return result;
 	}
-	
+
 	/**
-	 * notifies the child object that its
-	 * result object changed, so it has to update its gui
+	 * notifies the child object that its result object changed, so it has to update
+	 * its gui
 	 */
 	public void update() {
-		
+
 	}
 
 	public abstract void resetResult(Result result);
-	
+
 	public abstract AnalysisType getAnalysisType();
 
 	public PreAndPostConditionsDescription getPreAndPostProperties() {
@@ -122,23 +136,27 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 	}
 
 	public void setPresentable() {
-		
+
 		if (result != null) {
 			if (!result.isValid()) {
 				this.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
 			} else {
 				if (result.isSuccess()) {
-					this.setBackground(new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+					this.setBackground(
+							new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
 				} else {
 					this.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
 				}
 			}
 		}
-		
+
 	}
-	
+
 	public void resetPresentable() {
 		this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+	}
 
+	public ChildTreeItemValues getValues() {
+		return new ChildTreeItemValues(propName.getText(), checkBox.isSelected(), false, status, result);
 	}
 }

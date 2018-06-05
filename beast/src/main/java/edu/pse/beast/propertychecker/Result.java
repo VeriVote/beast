@@ -6,7 +6,9 @@
 package edu.pse.beast.propertychecker;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ServiceLoader;
 
 import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
@@ -47,6 +49,19 @@ public abstract class Result implements ResultInterface {
 	
 	protected ChildTreeItem owner;
 
+	public static List<Result> getResultTypes() {
+		ServiceLoader<Result> loader = ServiceLoader.load(Result.class);
+		
+		List<Result> types = new ArrayList<Result>();
+		
+		for (Iterator<Result> iterator = loader.iterator(); iterator.hasNext();) {
+			Result type = (Result) iterator.next();
+			types.add(type);
+		}
+		
+		return types;
+	}
+	
     public boolean isMarginComp() {
 		return isMarginComp;
 	}

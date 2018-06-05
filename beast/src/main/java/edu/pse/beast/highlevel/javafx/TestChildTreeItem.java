@@ -8,7 +8,9 @@ public class TestChildTreeItem extends ChildTreeItem {
 		super(name, parent);
 	}
 
-	
+	public TestChildTreeItem(ChildTreeItemValues values, ParentTreeItem parent) {
+		super(values, parent);
+	}
 
 	@Override
 	public void resetResult(Result result) {

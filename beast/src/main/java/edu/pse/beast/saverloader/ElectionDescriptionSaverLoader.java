@@ -4,12 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
+import edu.pse.beast.saverloader.adapter.CommonHelpMethodsAdapter;
+import edu.pse.beast.saverloader.adapter.InputTypeAdapter;
+import edu.pse.beast.saverloader.adapter.OutputTypeAdapter;
 import edu.pse.beast.types.CommonHelpMethods;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
-import edu.pse.beast.types.saverLoader.CommonHelpMethodsAdapter;
-import edu.pse.beast.types.saverLoader.InputTypeAdapter;
-import edu.pse.beast.types.saverLoader.OutputTypeAdapter;
 
 /**
  * 

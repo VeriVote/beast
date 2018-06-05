@@ -1,5 +1,6 @@
 package edu.pse.beast.highlevel.javafx;
 
+import java.io.File;
 import java.util.Iterator;
 
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorGeneralErrorFinder;
@@ -11,7 +12,7 @@ import edu.pse.beast.saverloader.PropertyDescriptionSaverLoader;
 import edu.pse.beast.types.InternalTypeContainer;
 import javafx.scene.control.TreeItem;
 
-public class BooleanExpEditorNEW {
+public class BooleanExpEditorNEW implements MenuBarInterface {
 
 	private NewPropertyCodeArea preArea;
 	private NewPropertyCodeArea postArea;
@@ -25,7 +26,7 @@ public class BooleanExpEditorNEW {
 	public BooleanExpEditorNEW(NewPropertyCodeArea preArea, NewPropertyCodeArea postArea,
 			PreAndPostConditionsDescription propDesc, ParentTreeItem currentItem) {
 
-		this.saverLoader = new SaverLoader("prop", "C:", "BEAST property description");
+		this.saverLoader = new SaverLoader(".prop", "C:", "BEAST property description");
 
 		this.preArea = preArea;
 		this.postArea = postArea;
@@ -206,9 +207,47 @@ public class BooleanExpEditorNEW {
 		this.preArea.clear();
 		this.postArea.clear();
 	}
+	
+	private PreAndPostConditionsDescription convert(String json) {
+		PreAndPostConditionsDescription newDescription = null;
+		
+		if (!json.equals("")) {
 
-	public void saveProp() {
+			try {
+				newDescription = propSaverLoader.createFromSaveString(json);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+			}
+			
+			return newDescription;
+		}
+		return null;
+	}
+	
+	public PreAndPostConditionsDescription open(File file) {
+		return convert(saverLoader.load(file));
+	}
 
+	@Override
+	public void open() {
+
+		PreAndPostConditionsDescription newDescription = convert(saverLoader.load());
+
+		if (newDescription != null) {
+			currentPropertyDescription = newDescription;
+			
+			saverLoader.resetHasSaveFile();
+			
+			preArea.replaceText(newDescription.getPreConditionsDescription().getCode());
+			postArea.replaceText(newDescription.getPostConditionsDescription().getCode());
+
+			GUIController.getController().setPropNameField(newDescription.getName());
+			bringToFront();
+		}
+	}
+	
+	@Override
+	public void save() {
 		updatePropertyTextAreas();
 
 		String json = propSaverLoader.createSaveString(currentPropertyDescription);
@@ -216,33 +255,55 @@ public class BooleanExpEditorNEW {
 		saverLoader.save("", json);
 	}
 
-	public void loadProp() {
+	@Override
+	public void saveAs() {
+		updatePropertyTextAreas();
 
-		String json = saverLoader.load();
+		String json = propSaverLoader.createSaveString(currentPropertyDescription);
 
-		if (!json.equals("")) {
+		saverLoader.saveAs("", json);
+	}
+	
+	public void saveAs(PreAndPostConditionsDescription description, File file) {
+		String json = propSaverLoader.createSaveString(description);
 
-			PreAndPostConditionsDescription newDescription = null;
+		saverLoader.saveAs(file, json);
+	}
 
-			try {
-				newDescription = propSaverLoader.createFromSaveString(json);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-			}
+	@Override
+	public void undo() {
+		// TODO Auto-generated method stub
+		
+	}
 
-			if (newDescription != null) {
-				currentPropertyDescription = newDescription;
-				
-				saverLoader.resetHasSaveFile();
-				
-				preArea.replaceText(newDescription.getPreConditionsDescription().getCode());
-				postArea.replaceText(newDescription.getPostConditionsDescription().getCode());
+	@Override
+	public void redo() {
+		// TODO Auto-generated method stub
+		
+	}
 
-				GUIController.getController().setPropNameField(newDescription.getName());
-				bringToFront();
-			}
+	@Override
+	public void cut() {
+		// TODO Auto-generated method stub
+		
+	}
 
-		}
+	@Override
+	public void copy() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void paste() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -22,6 +22,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.highlevel.javafx.MenuBarInterface;
 import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.types.InputType;
@@ -30,7 +31,7 @@ import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
 import edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
 import javafx.scene.Node;
 
-public class NewCodeArea extends CodeArea {
+public class NewCodeArea extends CodeArea implements MenuBarInterface {
 
 	private final SaverLoader saverLoader;
 
@@ -80,7 +81,7 @@ public class NewCodeArea extends CodeArea {
 				new SingleCandidate(), 0);
 
 		this.setNewElectionDescription(startElecDescription);
-		
+
 		saverLoader.resetHasSaveFile();
 
 		List<String> code = new ArrayList<String>();
@@ -180,7 +181,7 @@ public class NewCodeArea extends CodeArea {
 		this.replaceText(declarationString + "\n\n}");
 
 		this.setStyleSpans(0, computeHighlighting(this.getText()));
-		
+
 		saverLoader.resetHasSaveFile();
 	}
 
@@ -190,35 +191,24 @@ public class NewCodeArea extends CodeArea {
 		this.replaceText(newDescription.getCodeAsString());
 
 		System.out.println(newDescription.getCodeAsString());
-		
+
 		this.setStyleSpans(0, computeHighlighting(this.getText()));
-		
+
 		saverLoader.resetHasSaveFile();
 	}
 
-	public void saveElectionDescription() {
+	public void bringToFront() {
+		GUIController.getController().getMainTabPane().getSelectionModel()
+				.select(GUIController.getController().getCodeTab());
 
-		ElectionDescription toSave = elecDescription.getDeepCopy();
+		List<CodeError> errors = CVariableErrorFinder.findErrors(elecDescription.getDeepCopy().getCode());
 
-		String json = electionSaverLoader.createSaveString(toSave);
-
-		saverLoader.save("", json);
-	}
-	
-
-	public void saveAsElectionDescription() {
-
-		ElectionDescription toSave = elecDescription.getDeepCopy();
-
-		String json = electionSaverLoader.createSaveString(toSave);
-
-		saverLoader.saveAs("", json);
+		displayErrors(errors);
 	}
 
-	public void loadElectionDescription() {
+	@Override
+	public void open() {
 		String json = saverLoader.load();
-		
-		System.out.println("elec json: " + json);
 
 		if (!json.equals("")) {
 
@@ -239,12 +229,58 @@ public class NewCodeArea extends CodeArea {
 		}
 	}
 
-	public void bringToFront() {
-		GUIController.getController().getMainTabPane().getSelectionModel()
-				.select(GUIController.getController().getCodeTab());
+	@Override
+	public void save() {
+		ElectionDescription toSave = elecDescription.getDeepCopy();
 
-		List<CodeError> errors = CVariableErrorFinder.findErrors(elecDescription.getDeepCopy().getCode());
+		String json = electionSaverLoader.createSaveString(toSave);
 
-		displayErrors(errors);
+		saverLoader.save("", json);
+	}
+
+	@Override
+	public void saveAs() {
+
+		ElectionDescription toSave = elecDescription.getDeepCopy();
+
+		String json = electionSaverLoader.createSaveString(toSave);
+
+		saverLoader.saveAs("", json);
+	}
+
+	@Override
+	public void undo() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void redo() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void cut() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void copy() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void paste() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void delete() {
+		// TODO Auto-generated method stub
+
 	}
 }

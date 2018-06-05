@@ -150,6 +150,10 @@ public class ElectionSimulationModel extends Observable implements NameInterface
 		this.amountSeats = container.getInputType().vetAmountSeats(amountSeats);
 		updateVetting();
 	}
+	
+	public void setValue(int x, int y, String value) {
+		rows.get(y).setValue(x, value);
+	}
 
 	public List<NEWRowOfValues> getRows() {
 		return rows;

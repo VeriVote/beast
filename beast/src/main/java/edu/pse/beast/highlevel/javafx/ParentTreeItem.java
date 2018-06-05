@@ -28,13 +28,15 @@ public class ParentTreeItem extends CustomTreeItem {
 
 	private final TreeItem<CustomTreeItem> treeItemReference;
 	private boolean disabled;
+	private boolean initialized = false;
 
 	private ChildTreeItem checkItem;
 	private ChildTreeItem marginItem;
 	private ChildTreeItem testItem;
+	private int counter;
 
 	ParentTreeItem(PreAndPostConditionsDescription propDesc, boolean isSelected,
-			TreeItem<CustomTreeItem> treeItemReference) {
+			TreeItem<CustomTreeItem> treeItemReference, boolean createChildren) {
 
 		this.treeItemReference = treeItemReference;
 		this.propDesc = propDesc;
@@ -51,9 +53,17 @@ public class ParentTreeItem extends CustomTreeItem {
 		marginItem = new MarginChildTreeItem("Margin", this);
 		testItem = new TestChildTreeItem("Test", this);
 
-		subItems.add(checkItem);
-		subItems.add(marginItem);
-		subItems.add(testItem);
+		if (createChildren) {
+			subItems.add(checkItem);
+			subItems.add(marginItem);
+			subItems.add(testItem);
+
+			addChildrenToStage();
+		} else {
+			subItems.add(null);
+			subItems.add(null);
+			subItems.add(null);
+		}
 
 		checkAll.selectedProperty().addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> ov, Boolean oldValue, Boolean newValue) {
@@ -71,7 +81,9 @@ public class ParentTreeItem extends CustomTreeItem {
 		this.setSelected(isSelected);
 
 		this.treeItemReference.setValue(this);
+	}
 
+	public void addChildrenToStage() {
 		for (Iterator<ChildTreeItem> iterator = subItems.iterator(); iterator.hasNext();) {
 			CustomTreeItem item = (CustomTreeItem) iterator.next();
 			childTreeItems.add(new TreeItem<CustomTreeItem>(item));
@@ -79,6 +91,7 @@ public class ParentTreeItem extends CustomTreeItem {
 
 		this.treeItemReference.getChildren().addAll(childTreeItems);
 
+		initialized = true;
 	}
 
 	public void wasClicked(boolean bringToFront) {
@@ -86,15 +99,17 @@ public class ParentTreeItem extends CustomTreeItem {
 	}
 
 	private void checkBoxChanged(boolean state) {
-		for (Iterator<ChildTreeItem> iterator = subItems.iterator(); iterator.hasNext();) {
-			ChildTreeItem childTreeItem = (ChildTreeItem) iterator.next();
-			if (!disabled) {
-				childTreeItem.setSelected(state);
-			}
-			if (state) {
-				checkAll.setText("uncheck all");
-			} else {
-				checkAll.setText("check all");
+		if (initialized) {
+			for (Iterator<ChildTreeItem> iterator = subItems.iterator(); iterator.hasNext();) {
+				ChildTreeItem childTreeItem = (ChildTreeItem) iterator.next();
+				if (!disabled) {
+					childTreeItem.setSelected(state);
+				}
+				if (state) {
+					checkAll.setText("uncheck all");
+				} else {
+					checkAll.setText("check all");
+				}
 			}
 		}
 	}
@@ -152,15 +167,14 @@ public class ParentTreeItem extends CustomTreeItem {
 	public void setMarginStatus(AnalysisStatus status) {
 		marginItem.setStatus(status);
 	}
-	
+
 	public PreAndPostConditionsDescription getPreAndPostPropertie() {
 		return propDesc;
 	}
 
 	/**
-	 * notifies the parent, that at least one of the childrens 
-	 * result changed, so we have have to check all to update 
-	 * the GUI
+	 * notifies the parent, that at least one of the childrens result changed, so we
+	 * have have to check all to update the GUI
 	 */
 	public void update() {
 		for (Iterator<ChildTreeItem> iterator = subItems.iterator(); iterator.hasNext();) {
@@ -168,39 +182,70 @@ public class ParentTreeItem extends CustomTreeItem {
 			child.update();
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @return true, if at least one of the children has to be checked
 	 */
 	public boolean isChildSelected() {
 		boolean selected = false;
-		
+
 		for (Iterator<ChildTreeItem> iterator = subItems.iterator(); iterator.hasNext();) {
 			ChildTreeItem childItem = (ChildTreeItem) iterator.next();
 			selected = selected || childItem.isSelected();
 		}
-		
+
 		return selected;
 	}
 
 	public void addErrors(List<CodeError> combinedErrors) {
-		String errorText= "";
-		
-		
+		String errorText = "";
+
 		for (Iterator<CodeError> iterator = combinedErrors.iterator(); iterator.hasNext();) {
 			CodeError codeError = (CodeError) iterator.next();
 			String error = codeError.getLine() + " : " + codeError.getMsg() + "\n";
-			
+
 			errorText = errorText + error;
 		}
-		
+
 		GUIController.setErrorText(errorText);
-		
+
 	}
-	
+
 	public void setText(String text) {
 		propName.setText(text);
+	}
+
+	public String getText() {
+		return propName.getText();
+	}
+
+	public void addChild(ChildTreeItemValues values, int index) {
+
+		switch (index) {
+		case 0:
+			subItems.set(index, new CheckChildTreeItem(values, this));
+			break;
+		case 1:
+			subItems.set(index, new MarginChildTreeItem(values, this));
+			break;
+		case 2:
+			subItems.set(index, new TestChildTreeItem(values, this));
+			break;
+		default:
+			counter--;
+			break;
+		}
+		
+		counter++;
+		
+		if(counter == 3) {
+			addChildrenToStage();
+		}
+	}
+	
+	public int getCounter() {
+		return counter;
 	}
 
 }

@@ -9,6 +9,11 @@ public class MarginChildTreeItem extends ChildTreeItem {
 	}
 
 
+	public MarginChildTreeItem(ChildTreeItemValues values, ParentTreeItem parent) {
+		super(values, parent);
+	}
+
+
 	@Override
 	public void resetResult(Result result) {
 		super.setResult(result);

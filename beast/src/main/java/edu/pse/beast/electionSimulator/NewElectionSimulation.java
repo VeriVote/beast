@@ -4,16 +4,22 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CVariableErrorFinder;
+import edu.pse.beast.codearea.ErrorHandling.CodeError;
+import edu.pse.beast.codeareaJAVAFX.SaverLoader;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
+import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.electionSimulator.Model.ElectionSimulationModel;
 import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.highlevel.javafx.MenuBarInterface;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 import javafx.scene.layout.GridPane;
 
-public class NewElectionSimulation implements ElectionDescriptionChangeListener {
+public class NewElectionSimulation implements ElectionDescriptionChangeListener, MenuBarInterface {
 
 	private ElectionTypeContainer container;
 
@@ -22,10 +28,16 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener 
 	private GridPane inputGridPane;
 	private GridPane voterGridPane;
 	private GridPane candidateGridPane;
+
+	private SaverLoader saverLoader;
+	
+	private final String csvSeparator = ",";
 	
 	public NewElectionSimulation(
 		ElectionTypeContainer container, GridPane inputGridPane, GridPane voterGridPane, GridPane candidateGridPane) {
 			this.container = container;
+			
+			this.saverLoader = new SaverLoader(".elecIn", "C:", "Election Input Data");
 			
 			this.inputGridPane = inputGridPane;
 			this.voterGridPane = voterGridPane;
@@ -72,31 +84,6 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener 
 		model = new ElectionSimulationModel(container, inputGridPane, voterGridPane, candidateGridPane);
 		model.setAmountCandidates(1);
 		model.setAmountVoters(1);
-	}
-
-	public void save() {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void saveAs() {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void loadData() {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void undo() {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void redo() {
-		// TODO Auto-generated method stub
-
 	}
 
 	public String[][] getVotingData() {
@@ -195,5 +182,109 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener 
 	@Override
 	public void outputChanged(OutputType output) {
 		inputChanged(null);
+	}
+
+	@Override
+	public void open() {
+		reset();
+		
+		String input = saverLoader.load();
+
+		boolean init = false;
+		
+		if (!input.equals("")) {
+			
+			String[] lines = input.split("\n");
+			
+			for (int y = 0; y < lines.length; y++) {
+				String[] values = lines[y].split(csvSeparator);
+				
+				if(!init) {
+					GUIController.getController().getInputVoters().setText("" + lines.length);
+					GUIController.getController().getInputCandidates().setText("" + values.length);
+					GUIController.getController().getInputSeats().setText("" + 99999999);
+					init = true;
+				}
+
+				for (int x = 0; x < values.length; x++) {
+					model.setValue(x, y, values[x]);
+				}
+			}
+		}
+		bringToFront();
+	}
+	
+	public void bringToFront() {
+		GUIController.getController().getMainTabPane().getSelectionModel()
+				.select(GUIController.getController().getInputTab());
+	}
+
+	@Override
+	public void save() {
+		saverLoader.save("", generateSaveString());
+	}
+	
+	private String generateSaveString() {
+		String saveString = "";
+		
+		List<NEWRowOfValues> rows = model.getRows();
+		
+		for (Iterator<NEWRowOfValues> iterator = rows.iterator(); iterator.hasNext();) {
+			NEWRowOfValues row = (NEWRowOfValues) iterator.next();
+			for (Iterator<String> valueIterator = row.getValues().iterator(); valueIterator.hasNext();) {
+				String value = (String) valueIterator.next();
+				saveString = saveString + value;
+				if (valueIterator.hasNext()) { //another value will follow
+					saveString = saveString + csvSeparator;
+				}
+			}
+			
+			if(iterator.hasNext()) {
+				saveString = saveString + "\n";
+			}
+		}
+		
+		return saveString;
+	}
+
+	@Override
+	public void saveAs() {
+		saverLoader.saveAs("", generateSaveString());
+	}
+
+	@Override
+	public void undo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void redo() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void cut() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void copy() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void paste() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete() {
+		// TODO Auto-generated method stub
+		
 	}
 }
