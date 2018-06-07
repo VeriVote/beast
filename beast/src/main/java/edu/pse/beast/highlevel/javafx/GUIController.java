@@ -1045,6 +1045,51 @@ public class GUIController {
 	@FXML
 	public void saveProject(ActionEvent event) {
 
+		//if (properties.size() > 0) {
+
+			File listFile = propertyListSaverLoader.showFileSaveDialog("");
+
+			if (listFile != null) {
+
+				File folder = createFolderWithName(listFile);
+
+				propertyListSaverLoader.saveAs(new File(folder.getParentFile() + "/" + listFile.getName()), "");
+
+				String listFileContent = "";
+
+				int counter = 0;
+				for (Iterator<ParentTreeItem> iterator = properties.iterator(); iterator.hasNext();) {
+					ParentTreeItem parentItem = (ParentTreeItem) iterator.next();
+					String name = parentItem.getPreAndPostPropertie().getName();
+					File saveFolder = new File(folder + "/" + name + "_" + counter++);
+					saveFolder = createFolderWithName(saveFolder); // we want to save the parentTreeItem into this
+																	// folder
+					name = saveFolder.getName();
+
+					listFileContent = listFileContent + name;
+
+					booleanExpEditor.saveAs(parentItem.getPreAndPostPropertie(),
+							new File(saveFolder + "/" + parentItem.getText() + ".prop"));
+
+					List<ChildTreeItem> children = parentItem.getSubItems();
+
+					int sub_counter = 0;
+					for (Iterator<ChildTreeItem> childIterator = children.iterator(); childIterator.hasNext();) {
+						ChildTreeItem childItem = (ChildTreeItem) childIterator.next();
+						String saveString = propertyListGSON.createSaveString(childItem.getValues());
+						childItemSaverLoader.saveAs(
+								new File(saveFolder.getAbsolutePath() + "/" + sub_counter++ + ".child"), saveString);
+					}
+
+					if (iterator.hasNext()) {
+						listFileContent = listFileContent + "\n";
+					}
+				}
+			}
+		//} else {
+			//errorTextArea.setText("no property items to save exist");
+		//}
+		
 	}
 
 	@FXML
