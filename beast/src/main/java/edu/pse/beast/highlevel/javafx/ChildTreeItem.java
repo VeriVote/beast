@@ -3,6 +3,7 @@ package edu.pse.beast.highlevel.javafx;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.propertychecker.CBMCResult;
 import edu.pse.beast.propertychecker.Result;
+import edu.pse.beast.toolbox.ResultPresenter;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -85,6 +86,9 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 					GUIController.getController().getMainTabPane().getSelectionModel()
 							.select(GUIController.getController().getResultTab());
 				} else {
+					ResultPresenter.presentFailureExample(result);
+					
+					
 					GUIController.getController().getResultField().setText(String.join("\n", result.getResult()));
 					GUIController.getController().getMainTabPane().getSelectionModel()
 							.select(GUIController.getController().getResultTab());

@@ -94,7 +94,7 @@ public class BEASTCommunicator {
 	// for (int i = 0; i < resultPresented.length; i++) {
 	// ResultInterface result = resultList.get(i);
 	// if (result.readyToPresent() && !resultPresented[i]) {
-	 ResultPresenter resultPresenter = centralObjectProvider.getResultPresenter();
+	// ResultPresenter resultPresenter = centralObjectProvider.getResultPresenter();
 	// resultPresenter.presentResult(result, i);
 	// resultPresented[i] = true;
 	// numberOfPresentedResults++;
