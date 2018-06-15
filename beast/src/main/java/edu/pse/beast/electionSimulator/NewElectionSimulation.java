@@ -1,5 +1,6 @@
 package edu.pse.beast.electionSimulator;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -24,35 +25,35 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener,
 	private ElectionTypeContainer container;
 
 	private ElectionSimulationModel model;
-	
+
 	private GridPane inputGridPane;
 	private GridPane voterGridPane;
 	private GridPane candidateGridPane;
 
 	private SaverLoader saverLoader;
-	
+
 	private final String csvSeparator = ",";
-	
-	public NewElectionSimulation(
-		ElectionTypeContainer container, GridPane inputGridPane, GridPane voterGridPane, GridPane candidateGridPane) {
-			this.container = container;
-			
-			this.saverLoader = new SaverLoader(".elecIn", "Election Input Data");
-			
-			this.inputGridPane = inputGridPane;
-			this.voterGridPane = voterGridPane;
-			this.candidateGridPane = candidateGridPane;
-			
-			inputGridPane.setHgap(10);
-			inputGridPane.setVgap(10);
-			
-			voterGridPane.setHgap(10);
-			voterGridPane.setVgap(10);
-			
-			candidateGridPane.setHgap(10);
-			candidateGridPane.setVgap(10);
-			
-			model = new ElectionSimulationModel(container, inputGridPane, voterGridPane, candidateGridPane);	
+
+	public NewElectionSimulation(ElectionTypeContainer container, GridPane inputGridPane, GridPane voterGridPane,
+			GridPane candidateGridPane) {
+		this.container = container;
+
+		this.saverLoader = new SaverLoader(".elecIn", "Election Input Data");
+
+		this.inputGridPane = inputGridPane;
+		this.voterGridPane = voterGridPane;
+		this.candidateGridPane = candidateGridPane;
+
+		inputGridPane.setHgap(10);
+		inputGridPane.setVgap(10);
+
+		voterGridPane.setHgap(10);
+		voterGridPane.setVgap(10);
+
+		candidateGridPane.setHgap(10);
+		candidateGridPane.setVgap(10);
+
+		model = new ElectionSimulationModel(container, inputGridPane, voterGridPane, candidateGridPane);
 	}
 
 	public void updateContainer(ElectionTypeContainer container) {
@@ -75,12 +76,11 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener,
 		GUIController.getController().getInputVoters().setText("1");
 		GUIController.getController().getInputCandidates().setText("1");
 		GUIController.getController().getInputSeats().setText("1");
-		
+
 		inputGridPane.getChildren().clear();
 		voterGridPane.getChildren().clear();
 		candidateGridPane.getChildren().clear();
-				
-		
+
 		model = new ElectionSimulationModel(container, inputGridPane, voterGridPane, candidateGridPane);
 		model.setAmountCandidates(1);
 		model.setAmountVoters(1);
@@ -144,11 +144,11 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener,
 	public void numVotersChanged(int numVoters) {
 		model.setAmountVoters(numVoters);
 	}
-	
+
 	public void numCandidatesChanged(int numCandidates) {
 		model.setAmountCandidates(numCandidates);
 	}
-	
+
 	public void numSeatsChanged(int numSeats) {
 		model.setAmountSeats(numSeats);
 	}
@@ -156,21 +156,21 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener,
 	public String setAndVetVoterNumber(String toVet) {
 		int vetted = container.getInputType().vetAmountVoters(Integer.parseInt(toVet));
 		model.setAmountVoters(vetted);
-		
+
 		return "" + vetted;
 	}
-	
+
 	public String setAndVetCandidateNumber(String toVet) {
 		int vetted = container.getInputType().vetAmountCandidates(Integer.parseInt(toVet));
 		model.setAmountCandidates(vetted);
-		
+
 		return "" + vetted;
 	}
-	
+
 	public String setAndVetSeatNumber(String toVet) {
 		int vetted = container.getInputType().vetAmountSeats(Integer.parseInt(toVet));
 		model.setAmountSeats(vetted);
-		
+
 		return "" + vetted;
 	}
 
@@ -186,20 +186,26 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener,
 
 	@Override
 	public void open() {
-		reset();
-		
+
 		String input = saverLoader.load();
 
+		openInput(input, true);
+
+	}
+
+	private void openInput(String input, boolean bringToFront) {
+		reset();
+
 		boolean init = false;
-		
+
 		if (!input.equals("")) {
-			
+
 			String[] lines = input.split("\n");
-			
+
 			for (int y = 0; y < lines.length; y++) {
 				String[] values = lines[y].split(csvSeparator);
-				
-				if(!init) {
+
+				if (!init) {
 					GUIController.getController().getInputVoters().setText("" + lines.length);
 					GUIController.getController().getInputCandidates().setText("" + values.length);
 					GUIController.getController().getInputSeats().setText("" + 99999999);
@@ -211,9 +217,17 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener,
 				}
 			}
 		}
-		bringToFront();
+		if (bringToFront) {
+			bringToFront();
+		}
 	}
-	
+
+	public void open(File file) {
+		String input = saverLoader.load(file);
+		
+		openInput(input, false);
+	}
+
 	public void bringToFront() {
 		GUIController.getController().getMainTabPane().getSelectionModel()
 				.select(GUIController.getController().getInputTab());
@@ -223,27 +237,27 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener,
 	public void save() {
 		saverLoader.save("", generateSaveString());
 	}
-	
+
 	private String generateSaveString() {
 		String saveString = "";
-		
+
 		List<NEWRowOfValues> rows = model.getRows();
-		
+
 		for (Iterator<NEWRowOfValues> iterator = rows.iterator(); iterator.hasNext();) {
 			NEWRowOfValues row = (NEWRowOfValues) iterator.next();
 			for (Iterator<String> valueIterator = row.getValues().iterator(); valueIterator.hasNext();) {
 				String value = (String) valueIterator.next();
 				saveString = saveString + value;
-				if (valueIterator.hasNext()) { //another value will follow
+				if (valueIterator.hasNext()) { // another value will follow
 					saveString = saveString + csvSeparator;
 				}
 			}
-			
-			if(iterator.hasNext()) {
+
+			if (iterator.hasNext()) {
 				saveString = saveString + "\n";
 			}
 		}
-		
+
 		return saveString;
 	}
 
@@ -252,39 +266,43 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener,
 		saverLoader.saveAs("", generateSaveString());
 	}
 
+	public void saveAs(File file) {
+		saverLoader.save(file, generateSaveString());
+	}
+
 	@Override
 	public void undo() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void redo() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void cut() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void copy() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void paste() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void delete() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

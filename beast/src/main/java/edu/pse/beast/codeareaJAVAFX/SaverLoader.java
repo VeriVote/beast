@@ -22,6 +22,9 @@ public class SaverLoader {
 
 	public SaverLoader(String fileEnding, String fileExtensionDescription) {
 		this.initialDir = SuperFolderFinder.getSuperFolder() + "/projectFiles/";
+		
+		new File(initialDir).mkdirs(); //make sure, that the initial folder exists
+		
 		this.fileEnding = fileEnding;
 		this.fileExtensionDescription = fileExtensionDescription;
 	}
@@ -29,14 +32,31 @@ public class SaverLoader {
 	public void save(String fileName, String text) {
 		if (hasSaveFile) {
 			if (saveFile != null) {
-				save(saveFile, text);
+				saveToDisk(saveFile, text);
 			}
 		} else {
 			saveAs(fileName, text);
 		}
 	}
+	
+	public void save(File file, String text) {
+		if (hasSaveFile) {
+			if (saveFile != null) {
+				saveToDisk(saveFile, text);
+			}
+		} else {
+			saveAs(file, text);
+		}
+	}
 
-	public void save(File toSaveIn, String text) {
+
+	/**
+	 * Saves the given text in the given file.
+	 * Does NOT check if there already exists a previous save file
+	 * @param toSaveIn
+	 * @param text
+	 */
+	public void saveToDisk(File toSaveIn, String text) {
 
 		PrintWriter out = null;
 
@@ -59,14 +79,13 @@ public class SaverLoader {
 	public void saveAs(String fileName, String text) {
 		File selectedFile = showFileSaveDialog(fileName);
 		if (selectedFile != null) {
-			save(selectedFile, text);
+			saveToDisk(selectedFile, text);
 		}
 	}
-	
 
 	public void saveAs(File file, String text) {
 		if (file != null) {
-			save(file, text);
+			saveToDisk(file, text);
 		}
 	}
 	
@@ -76,8 +95,6 @@ public class SaverLoader {
 		fileChooser.getExtensionFilters()
 				.add(new FileChooser.ExtensionFilter(fileExtensionDescription, "*" + fileEnding));
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All (*.*)", "*.*"));
-
-		System.out.println("initalDir:" + initialDir);
 		
 		fileChooser.setInitialDirectory(new File(initialDir));
 		fileChooser.setInitialFileName(fileName + fileEnding);

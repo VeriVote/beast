@@ -44,7 +44,7 @@ public class ElectionDescription implements NameInterface {
     
 
 	public String getCodeAsString() {
-		return String.join("\\n", code);
+		return String.join("\n", code);
 	}
     
     /**

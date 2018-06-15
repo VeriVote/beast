@@ -15,8 +15,6 @@ import java.util.regex.Pattern;
 import org.apache.commons.io.FilenameUtils;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 
-import com.sun.jna.platform.FileUtils;
-
 import edu.pse.beast.codeareaJAVAFX.NewCodeArea;
 import edu.pse.beast.codeareaJAVAFX.NewPropertyCodeArea;
 import edu.pse.beast.codeareaJAVAFX.SaverLoader;
@@ -312,7 +310,7 @@ public class GUIController {
 
 	private SaverLoader projectSaverLoader = new SaverLoader(".proj", "BEAST project file");
 
-	private ProjectSaverLoader projectGSON = new ProjectSaverLoader();
+	// private ProjectSaverLoader projectGSON = new ProjectSaverLoader();
 
 	public GUIController(Stage mainStage) {
 		this.mainStage = mainStage;
@@ -680,6 +678,11 @@ public class GUIController {
 
 	}
 
+	public void checkFinished() {
+		startStopButton.setGraphic(new ImageView(pathToImages + "toolbar/start.png"));
+		running = false;
+	}
+	
 	// --------
 	// Icon Bar
 	@FXML
@@ -692,8 +695,7 @@ public class GUIController {
 			}
 		} else {
 			if (BEASTCommunicator.stopCheck()) {
-				startStopButton.setGraphic(new ImageView(pathToImages + "toolbar/start.png"));
-				running = false;
+				checkFinished();
 			}
 		}
 	}
@@ -904,6 +906,10 @@ public class GUIController {
 		codeArea.open();
 	}
 
+	private void openElectionDescription(File elecDescFile) {
+		codeArea.open(elecDescFile);
+	}
+
 	@FXML
 	public void openProperty(ActionEvent event) {
 		booleanExpEditor.open();
@@ -913,12 +919,42 @@ public class GUIController {
 	public void openProject(ActionEvent event) {
 
 		removeAllProperties();
+
+		File projectFile = projectSaverLoader.showFileLoadDialog("");
+
+		if (projectFile != null) {
+
+			String folderName = FilenameUtils.removeExtension(projectFile.getName());
+
+			File parent = new File(projectFile.getParentFile() + "/" + folderName);
+
+			if (parent != null) {
+
+				// load the election Description
+				File elecDescFile = new File(parent.getAbsolutePath() + "/" + "description.elec");
+				openElectionDescription(elecDescFile);
+
+				// load the propertyList
+				File propListFile = new File(parent.getAbsolutePath() + "/" + "propertyList.propList");
+				openPropertyList(propListFile);
+
+				// load the electionInput
+				File elecInputFile = new File(parent.getAbsolutePath() + "/" + "input.elecIn");
+				openVotingInput(elecInputFile);
+
+			}
+		}
+
 	}
 
 	@FXML
 	public void openPropertyList(ActionEvent event) {
 		File listFile = propertyListSaverLoader.showFileLoadDialog("");
 
+		openPropertyListFile(listFile);
+	}
+
+	private void openPropertyListFile(File listFile) {
 		if (listFile != null) {
 
 			String folderName = FilenameUtils.removeExtension(listFile.getName());
@@ -997,9 +1033,17 @@ public class GUIController {
 		}
 	}
 
+	private void openPropertyList(File propListFile) {
+		openPropertyListFile(propListFile);
+	}
+
 	@FXML
 	public void openVotingInput(ActionEvent event) {
 		electionSimulation.open();
+	}
+
+	public void openVotingInput(File file) {
+		electionSimulation.open(file);
 	}
 
 	@FXML
@@ -1024,7 +1068,7 @@ public class GUIController {
 
 	@FXML
 	public void saveAsPropertyList(ActionEvent event) {
-		savePropertyList(event);
+		savePropertyList(null, true, true);
 	}
 
 	@FXML
@@ -1045,66 +1089,50 @@ public class GUIController {
 	@FXML
 	public void saveProject(ActionEvent event) {
 
-		//if (properties.size() > 0) {
+		File projectFile = projectSaverLoader.showFileSaveDialog("");
 
-			File listFile = propertyListSaverLoader.showFileSaveDialog("");
+		if (projectFile != null) {
 
-			if (listFile != null) {
+			File folder = createFolderWithName(projectFile);
 
-				File folder = createFolderWithName(listFile);
+			projectSaverLoader.saveAs(new File(folder.getParentFile() + "/" + projectFile.getName()), "");
 
-				propertyListSaverLoader.saveAs(new File(folder.getParentFile() + "/" + listFile.getName()), "");
+			// save the electionDescription
+			saveAsElectionDescription(new File(folder.getPath() + "/" + "description.elec"));
 
-				String listFileContent = "";
+			// save the property list
+			savePropertyList(new File(folder.getPath() + "/" + "propertyList.propList"), false, true);
 
-				int counter = 0;
-				for (Iterator<ParentTreeItem> iterator = properties.iterator(); iterator.hasNext();) {
-					ParentTreeItem parentItem = (ParentTreeItem) iterator.next();
-					String name = parentItem.getPreAndPostPropertie().getName();
-					File saveFolder = new File(folder + "/" + name + "_" + counter++);
-					saveFolder = createFolderWithName(saveFolder); // we want to save the parentTreeItem into this
-																	// folder
-					name = saveFolder.getName();
+			// save election input
+			electionSimulation.saveAs(new File(folder.getPath() + "/" + "input.elecIn"));
+		}
+	}
 
-					listFileContent = listFileContent + name;
-
-					booleanExpEditor.saveAs(parentItem.getPreAndPostPropertie(),
-							new File(saveFolder + "/" + parentItem.getText() + ".prop"));
-
-					List<ChildTreeItem> children = parentItem.getSubItems();
-
-					int sub_counter = 0;
-					for (Iterator<ChildTreeItem> childIterator = children.iterator(); childIterator.hasNext();) {
-						ChildTreeItem childItem = (ChildTreeItem) childIterator.next();
-						String saveString = propertyListGSON.createSaveString(childItem.getValues());
-						childItemSaverLoader.saveAs(
-								new File(saveFolder.getAbsolutePath() + "/" + sub_counter++ + ".child"), saveString);
-					}
-
-					if (iterator.hasNext()) {
-						listFileContent = listFileContent + "\n";
-					}
-				}
-			}
-		//} else {
-			//errorTextArea.setText("no property items to save exist");
-		//}
-		
+	private void saveAsElectionDescription(File file) {
+		codeArea.saveAs(file);
 	}
 
 	@FXML
 	public void savePropertyList(ActionEvent event) {
+		savePropertyList(null, true, false);
+	}
 
+	private void savePropertyList(File listFile, boolean askUser, boolean saveAs) {
 		if (properties.size() > 0) {
 
-			File listFile = propertyListSaverLoader.showFileSaveDialog("");
+			if (askUser) {
+				listFile = propertyListSaverLoader.showFileSaveDialog("");
+			}
 
 			if (listFile != null) {
 
 				File folder = createFolderWithName(listFile);
 
-				propertyListSaverLoader.saveAs(new File(folder.getParentFile() + "/" + listFile.getName()), "");
-
+				if (saveAs) {
+					propertyListSaverLoader.saveAs(new File(folder.getParentFile() + "/" + listFile.getName()), "");
+				} else {
+					propertyListSaverLoader.save(new File(folder.getParentFile() + "/" + listFile.getName()), "");
+				}
 				String listFileContent = "";
 
 				int counter = 0;

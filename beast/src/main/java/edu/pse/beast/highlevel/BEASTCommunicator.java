@@ -139,6 +139,7 @@ public class BEASTCommunicator {
 		}
 
 		if (!checkForErrors(electionDesc, properties)) {
+			
 			GUIController.setInfoText("starting Check");
 			 
 			//TODO load the propertychecker 
@@ -173,7 +174,7 @@ public class BEASTCommunicator {
 							passedTimeSeconds = (double) elapsedTime / 1000000000.0;
 							timeString = createTimeString(passedTimeSeconds);
 
-							//GUIController.setInfoText("elapsed time " + df.format(passedTimeSeconds));
+							GUIController.setInfoText("elapsed time " + df.format(passedTimeSeconds));
 
 							try {
 								Thread.sleep(Math.max(0, 67 - (System.currentTimeMillis() - frameTime)));

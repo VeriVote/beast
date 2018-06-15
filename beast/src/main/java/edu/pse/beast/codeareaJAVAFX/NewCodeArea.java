@@ -1,5 +1,6 @@
 package edu.pse.beast.codeareaJAVAFX;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -190,8 +191,6 @@ public class NewCodeArea extends CodeArea implements MenuBarInterface {
 
 		this.replaceText(newDescription.getCodeAsString());
 
-		System.out.println(newDescription.getCodeAsString());
-
 		this.setStyleSpans(0, computeHighlighting(this.getText()));
 
 		saverLoader.resetHasSaveFile();
@@ -210,6 +209,10 @@ public class NewCodeArea extends CodeArea implements MenuBarInterface {
 	public void open() {
 		String json = saverLoader.load();
 
+		openJson(json, true);
+	}
+
+	private void openJson(String json, boolean bringToFront) {
 		if (!json.equals("")) {
 
 			ElectionDescription newDescription = null;
@@ -223,10 +226,17 @@ public class NewCodeArea extends CodeArea implements MenuBarInterface {
 			if (newDescription != null) {
 				setElectionDescription(newDescription);
 
-				bringToFront();
+				if (bringToFront) {
+					bringToFront();
+				}
 			}
 
 		}
+	}
+
+	public void open(File elecDescFile) {
+		String json = saverLoader.load(elecDescFile);
+		openJson(json, false);
 	}
 
 	@Override
@@ -246,6 +256,14 @@ public class NewCodeArea extends CodeArea implements MenuBarInterface {
 		String json = electionSaverLoader.createSaveString(toSave);
 
 		saverLoader.saveAs("", json);
+	}
+
+	public void saveAs(File file) {
+		ElectionDescription toSave = elecDescription.getDeepCopy();
+
+		String json = electionSaverLoader.createSaveString(toSave);
+
+		saverLoader.saveAs(file, json);
 	}
 
 	@Override
