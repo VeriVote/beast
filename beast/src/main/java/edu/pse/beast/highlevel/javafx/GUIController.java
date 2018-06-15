@@ -4,6 +4,7 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 
@@ -32,6 +34,7 @@ import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -517,11 +520,25 @@ public class GUIController {
 				while (true) {
 					long time = System.currentTimeMillis();
 
-					voterScrollPane.vvalueProperty().set(inputScrollPane.getVvalue());
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							voterScrollPane.vvalueProperty().set(inputScrollPane.getVvalue());
+						}
+					});
 
-					candidateScrollPane.hvalueProperty().set(inputScrollPane.getHvalue());
+					// voterScrollPane.vvalueProperty().set(inputScrollPane.getVvalue());
 
-					infoTextArea.setText("" + inputScrollPane.getHvalue() + "\n" + candidateScrollPane.getHvalue());
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							candidateScrollPane.hvalueProperty().set(inputScrollPane.getHvalue());
+						}
+					});
+					// candidateScrollPane.hvalueProperty().set(inputScrollPane.getHvalue());
+
+					// infoTextArea.setText("" + inputScrollPane.getHvalue() + "\n" +
+					// candidateScrollPane.getHvalue());
 
 					inputScrollPane.fireEvent(new Event(ScrollEvent.ANY));
 
@@ -679,10 +696,15 @@ public class GUIController {
 	}
 
 	public void checkFinished() {
-		startStopButton.setGraphic(new ImageView(pathToImages + "toolbar/start.png"));
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				startStopButton.setGraphic(new ImageView(pathToImages + "toolbar/start.png"));
+			}
+		});
 		running = false;
 	}
-	
+
 	// --------
 	// Icon Bar
 	@FXML
@@ -853,6 +875,9 @@ public class GUIController {
 
 	@FXML
 	public void newElectionDescription(ActionEvent event) {
+		
+		codeArea.resetSaveFile();
+		
 		Triplet<String, InputType, OutputType> triplet = showPopUp("New Election Description",
 				"chose the new Election description", "input Type:", InputType.getInputTypes(), "output Type:",
 				OutputType.getOutputTypes());
@@ -865,6 +890,8 @@ public class GUIController {
 
 	@FXML
 	public void newProject(ActionEvent event) {
+		
+		projectSaverLoader.resetHasSaveFile();
 
 		newElectionDescription(event);
 
@@ -892,6 +919,8 @@ public class GUIController {
 	@FXML
 	public void newPropertyList(ActionEvent event) {
 
+		propertyListSaverLoader.resetHasSaveFile();
+		
 		removeAllProperties();
 
 	}
@@ -955,6 +984,7 @@ public class GUIController {
 	}
 
 	private void openPropertyListFile(File listFile) {
+		projectSaverLoader.resetHasSaveFile();
 		if (listFile != null) {
 
 			String folderName = FilenameUtils.removeExtension(listFile.getName());
@@ -965,7 +995,7 @@ public class GUIController {
 
 				File[] directories = parent.listFiles(File::isDirectory);
 
-				if (directories.length > 0) {
+				if (directories != null && directories.length > 0) {
 					for (int i = 0; i < directories.length; i++) {
 						File currentDir = directories[i];
 
@@ -1062,13 +1092,8 @@ public class GUIController {
 	}
 
 	@FXML
-	public void saveAsProject(ActionEvent event) {
-
-	}
-
-	@FXML
 	public void saveAsPropertyList(ActionEvent event) {
-		savePropertyList(null, true, true);
+		savePropertyListFromFile(null, true, true);
 	}
 
 	@FXML
@@ -1088,12 +1113,17 @@ public class GUIController {
 
 	@FXML
 	public void saveProject(ActionEvent event) {
+		if (projectSaverLoader.hasSaveFile()) {
+			saveProjectFile(projectSaverLoader.getSaveFile());
+		} else {
+			saveAsProject(event);
+		}
+	}
 
-		File projectFile = projectSaverLoader.showFileSaveDialog("");
-
+	private void saveProjectFile(File projectFile) {
 		if (projectFile != null) {
 
-			File folder = createFolderWithName(projectFile);
+			File folder = createFolderWithName(projectFile, true);
 
 			projectSaverLoader.saveAs(new File(folder.getParentFile() + "/" + projectFile.getName()), "");
 
@@ -1101,11 +1131,18 @@ public class GUIController {
 			saveAsElectionDescription(new File(folder.getPath() + "/" + "description.elec"));
 
 			// save the property list
-			savePropertyList(new File(folder.getPath() + "/" + "propertyList.propList"), false, true);
+			savePropertyListFromFile(new File(folder.getPath() + "/" + "propertyList.propList"), false, true);
 
 			// save election input
 			electionSimulation.saveAs(new File(folder.getPath() + "/" + "input.elecIn"));
 		}
+	}
+
+	@FXML
+	public void saveAsProject(ActionEvent event) {
+		File projectFile = projectSaverLoader.showFileSaveDialog("");
+		saveProjectFile(projectFile);
+		projectSaverLoader.setSaveFile(projectFile);
 	}
 
 	private void saveAsElectionDescription(File file) {
@@ -1114,25 +1151,29 @@ public class GUIController {
 
 	@FXML
 	public void savePropertyList(ActionEvent event) {
-		savePropertyList(null, true, false);
+		savePropertyListFromFile(null, true, false);
 	}
 
-	private void savePropertyList(File listFile, boolean askUser, boolean saveAs) {
+	private void savePropertyListFromFile(File listFile, boolean askUser, boolean saveAs) {
 		if (properties.size() > 0) {
 
-			if (askUser) {
+			if (!saveAs && askUser) {
+				if (propertyListSaverLoader.hasSaveFile()) {
+					savePropertyListFromFile(propertyListSaverLoader.getSaveFile(), false, false);
+				} else {
+					savePropertyListFromFile(listFile, true, true);
+				}
+			} else if (saveAs && askUser) {
 				listFile = propertyListSaverLoader.showFileSaveDialog("");
+				savePropertyListFromFile(listFile, false, false);
 			}
 
 			if (listFile != null) {
 
-				File folder = createFolderWithName(listFile);
+				File folder = createFolderWithName(listFile, true);
 
-				if (saveAs) {
-					propertyListSaverLoader.saveAs(new File(folder.getParentFile() + "/" + listFile.getName()), "");
-				} else {
-					propertyListSaverLoader.save(new File(folder.getParentFile() + "/" + listFile.getName()), "");
-				}
+				propertyListSaverLoader.save(new File(folder.getParentFile() + "/" + listFile.getName()), "");
+
 				String listFileContent = "";
 
 				int counter = 0;
@@ -1140,7 +1181,7 @@ public class GUIController {
 					ParentTreeItem parentItem = (ParentTreeItem) iterator.next();
 					String name = parentItem.getPreAndPostPropertie().getName();
 					File saveFolder = new File(folder + "/" + name + "_" + counter++);
-					saveFolder = createFolderWithName(saveFolder); // we want to save the parentTreeItem into this
+					saveFolder = createFolderWithName(saveFolder, true); // we want to save the parentTreeItem into this
 																	// folder
 					name = saveFolder.getName();
 
@@ -1626,22 +1667,20 @@ public class GUIController {
 		return isMatch;
 	}
 
-	private File createFolderWithName(File desiredFolderName) {
+	private File createFolderWithName(File desiredFolderName, boolean clearFolder) {
 		String origFileNameWithougExt = FilenameUtils.removeExtension(desiredFolderName.getAbsolutePath());
 
 		File finalListFile = new File(origFileNameWithougExt);
 
-		boolean success = false;
-		int counter = 1;
-
-		while (!success) {
-			success = (finalListFile).mkdirs();
-			if (!success) {
-				finalListFile = new File(origFileNameWithougExt + counter++);
-			}
+		finalListFile.mkdirs();
+		
+		if(clearFolder) {
+			try {
+				FileUtils.cleanDirectory(finalListFile);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} 
 		}
-
-		// we successfully created the directory
 
 		return finalListFile;
 	}

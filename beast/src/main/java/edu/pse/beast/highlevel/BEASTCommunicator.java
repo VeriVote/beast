@@ -94,7 +94,7 @@ public class BEASTCommunicator {
 	// for (int i = 0; i < resultPresented.length; i++) {
 	// ResultInterface result = resultList.get(i);
 	// if (result.readyToPresent() && !resultPresented[i]) {
-	// ResultPresenter resultPresenter = centralObjectProvider.getResultPresenter();
+	 ResultPresenter resultPresenter = centralObjectProvider.getResultPresenter();
 	// resultPresenter.presentResult(result, i);
 	// resultPresented[i] = true;
 	// numberOfPresentedResults++;
@@ -141,6 +141,14 @@ public class BEASTCommunicator {
 		if (!checkForErrors(electionDesc, properties)) {
 			
 			GUIController.setInfoText("starting Check");
+			
+			for (Iterator<ParentTreeItem> iterator = properties.iterator(); iterator.hasNext();) {
+				ParentTreeItem parent = (ParentTreeItem) iterator.next();
+				for (Iterator<ChildTreeItem> childIterator = parent.getSubItems().iterator(); iterator.hasNext();) {
+					ChildTreeItem child = (ChildTreeItem) childIterator.next();
+					child.resetPresentable();
+				}
+			}
 			 
 			//TODO load the propertychecker 
 			
@@ -174,7 +182,7 @@ public class BEASTCommunicator {
 							passedTimeSeconds = (double) elapsedTime / 1000000000.0;
 							timeString = createTimeString(passedTimeSeconds);
 
-							GUIController.setInfoText("elapsed time " + df.format(passedTimeSeconds));
+							//GUIController.setInfoText("elapsed time " + df.format(passedTimeSeconds));
 
 							try {
 								Thread.sleep(Math.max(0, 67 - (System.currentTimeMillis() - frameTime)));
@@ -184,6 +192,8 @@ public class BEASTCommunicator {
 
 							frameTime = System.currentTimeMillis();
 
+							allDone = true;
+							
 							for (Iterator<ParentTreeItem> parentIterator = properties.iterator(); parentIterator
 									.hasNext();) {
 								ParentTreeItem parent = (ParentTreeItem) parentIterator.next();
@@ -197,7 +207,8 @@ public class BEASTCommunicator {
 							}
 						}
 						
-						GUIController.setInfoText("analysisEnded after" + timeString);
+						GUIController.setInfoText("analysis ended after " + timeString);
+						GUIController.getController().checkFinished();
 					}
 				});
 				waitForResultsThread.start();

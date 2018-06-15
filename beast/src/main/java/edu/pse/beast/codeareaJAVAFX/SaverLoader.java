@@ -144,4 +144,19 @@ public class SaverLoader {
 		hasSaveFile = false;
 	}
 
+	public boolean hasSaveFile() {
+		return hasSaveFile;
+	}
+
+	public File getSaveFile() {
+		return saveFile;
+	}
+
+	public void setSaveFile(File saveFile) {
+		if(saveFile.exists()) {
+			this.saveFile = saveFile;
+			this.hasSaveFile = true;			
+		}
+	}
+
 }

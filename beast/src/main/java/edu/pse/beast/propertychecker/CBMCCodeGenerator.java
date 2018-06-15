@@ -244,13 +244,13 @@ public class CBMCCodeGenerator {
 		code.add("#define assert2(x, y) __CPROVER_assert(x, y)");
 		code.add("#define assume(x) __CPROVER_assume(x)");
 		code.add("");
-		code.add("struct " + UnifiedNameContainer.getStruct_result() + " { unsigned int "
+		code.add(UnifiedNameContainer.getStruct_result() + " { unsigned int "
 				+ UnifiedNameContainer.getResult_arr_name() + "[" + UnifiedNameContainer.getSeats() + "]; };"); // add a result
 		// struct to be
 		// returned in case
 		// of a parliament
 
-		code.add("struct " + UnifiedNameContainer.getStruct_stack_result() + " { unsigned int "
+		code.add(UnifiedNameContainer.getStruct_stack_result() + " { unsigned int "
 				+ UnifiedNameContainer.getResult_arr_name() + "[" + UnifiedNameContainer.getSeats() + "]; };"); // add a result
 		// same for a stacked result for each party
 	}

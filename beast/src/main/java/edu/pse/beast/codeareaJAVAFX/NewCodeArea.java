@@ -301,4 +301,8 @@ public class NewCodeArea extends CodeArea implements MenuBarInterface {
 		// TODO Auto-generated method stub
 
 	}
+
+	public void resetSaveFile() {
+		this.saverLoader.resetHasSaveFile();
+	}
 }
