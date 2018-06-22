@@ -14,7 +14,7 @@ public class CheckChildTreeItem extends ChildTreeItem {
 
 	@Override
 	public void resetResult(Result result) {
-		super.setResult(result);
+		super.addResult(result);
 	}
 
 	@Override

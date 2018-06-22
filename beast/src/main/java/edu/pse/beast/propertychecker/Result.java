@@ -15,6 +15,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.javafx.ChildTreeItem;
+import edu.pse.beast.highlevel.javafx.ResultTreeItem;
 
 /**
  *
@@ -47,7 +48,7 @@ public abstract class Result implements ResultInterface {
 	protected List<List<String>> newVotes;
 	protected List<String> newWinner;
 	
-	protected ChildTreeItem owner;
+	protected transient ResultTreeItem owner;
 
 	public static List<Result> getResultTypes() {
 		ServiceLoader<Result> loader = ServiceLoader.load(Result.class);
@@ -365,7 +366,7 @@ public abstract class Result implements ResultInterface {
 		this.newWinner = newWinner;
 	}
 
-	public void setOwner(ChildTreeItem owner) {
+	public void setOwner(ResultTreeItem owner) {
 		this.owner = owner;
 	}
 }

@@ -26,10 +26,10 @@ public class ResultAdapter implements JsonSerializer<Result>, JsonDeserializer<R
       try {
       	
       	for (Iterator<Result> iterator = Result.getResultTypes().iterator(); iterator.hasNext();) {
-      		Result inType = (Result) iterator.next();
+      		Result result = (Result) iterator.next();
 				
-				if(inType.getClass().getSimpleName().equals(type)) {
-					return context.deserialize(element, Class.forName(inType.getClass().getName()));
+				if(result.getClass().getSimpleName().equals(type)) {
+					return context.deserialize(element, Class.forName(result.getClass().getName()));
 				}
 				
 			}

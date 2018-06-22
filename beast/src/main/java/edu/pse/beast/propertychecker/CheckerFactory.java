@@ -226,9 +226,7 @@ public abstract class CheckerFactory implements Runnable {
 								childItem.getResult().setNumCandidates(candidates);
 								childItem.getResult().setNumSeats(seats);
 								
-								System.out.println("lastResult " + lastResult);
-								
-								childItem.getResult().setResult(lastResult);
+								childItem.getResult().addResult(lastResult);
 								childItem.getResult().setValid();
 							} else {
 								childItem.getResult().setError(lastError);
@@ -342,10 +340,10 @@ public abstract class CheckerFactory implements Runnable {
 				childItem.getResult().setOrigVoting(GUIController.getController().getElectionSimulation().getVotingDataListofList());
 
 				if (hasMargin) {
-					childItem.getResult().setResult(currentlyRunning.getResultList());
+					childItem.getResult().addResult(currentlyRunning.getResultList());
 					childItem.getResult().setFinalMargin(margin);
 				} else {
-					childItem.getResult().setResult(null);
+					childItem.getResult().addResult(null);
 					childItem.getResult().setFinalMargin(-1);
 				}
 
@@ -482,10 +480,10 @@ public abstract class CheckerFactory implements Runnable {
 				childItem.getResult().setOrigVoting(GUIController.getController().getElectionSimulation().getVotingDataListofList());
 
 				if (hasMargin) {
-					childItem.getResult().setResult(currentlyRunning.getResultList());
+					childItem.getResult().addResult(currentlyRunning.getResultList());
 					childItem.getResult().setFinalMargin(margin);
 				} else {
-					childItem.getResult().setResult(null);
+					childItem.getResult().addResult(null);
 					childItem.getResult().setFinalMargin(-1);
 				}
 

@@ -16,7 +16,7 @@ public class MarginChildTreeItem extends ChildTreeItem {
 
 	@Override
 	public void resetResult(Result result) {
-		super.setResult(result);
+		super.addResult(result);
 	}
 
 	@Override

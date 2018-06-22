@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.types.CommonHelpMethods;
 import javafx.application.Application;

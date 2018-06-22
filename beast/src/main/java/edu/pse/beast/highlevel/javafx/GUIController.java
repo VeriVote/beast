@@ -1060,6 +1060,11 @@ public class GUIController {
 					}
 				}
 			}
+			
+			if (properties.size() > 0) {
+				setCurrentPropertyDescription(properties.get(0), false);
+			}
+			
 		}
 	}
 
@@ -1227,12 +1232,12 @@ public class GUIController {
 
 	@FXML
 	public void loadProperty(ActionEvent event) {
-		System.out.println("TODO LOAD PROPERTY");
+		openProperty(null);
 	}
 
 	@FXML
 	public void loadPropertyList(ActionEvent event) {
-		System.out.println("TODO LOAD PROPERTY LIST");
+		openPropertyList(new ActionEvent());
 	}
 
 	@FXML
@@ -1542,16 +1547,16 @@ public class GUIController {
 	}
 
 	public void setCurrentPropertyDescription(ParentTreeItem propertyItem, boolean bringToFront) {
-		if (nameFieldIsChangeable) {
+		if (nameFieldIsChangeable && !bringToFront) {
 			propNameButtonClicked(null); // try to save the text the user wrote
 		}
-
-		if (booleanExpEditor.getCurrentItem() == null) {
-			if (!nameFieldIsChangeable) {
-				propertyItem.setText(propNameField.getText());
-				propertyItem.getPreAndPostPropertie().setNewName(propNameField.getText());
-			}
-		}
+//
+//		if (booleanExpEditor.getCurrentItem() == null) {
+//			if (!nameFieldIsChangeable) {
+//				propertyItem.setText(propNameField.getText());
+//				propertyItem.getPreAndPostPropertie().setNewName(propNameField.getText());
+//			}
+//		}
 		booleanExpEditor.setCurrentPropertyDescription(propertyItem, bringToFront);
 		propNameField.setText(propertyItem.getPreAndPostPropertie().getName());
 		resultNameField.setText(propertyItem.getPreAndPostPropertie().getName());

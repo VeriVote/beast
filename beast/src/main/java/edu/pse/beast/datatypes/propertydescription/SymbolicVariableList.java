@@ -15,14 +15,14 @@ import edu.pse.beast.types.InternalTypeContainer;
  */
 public class SymbolicVariableList {
 
-	private final LinkedList<SymbolicVariable> symbolicVariableList;
-	private final List<VariableListListener> listenerList = new ArrayList<>();
+	private final LinkedList<SymbolicVariable> symbolicVariableList = new LinkedList<>();;
+	private transient final List<VariableListListener> listenerList = new ArrayList<VariableListListener>();
 
 	/**
 	 *
 	 */
 	public SymbolicVariableList() {
-		symbolicVariableList = new LinkedList<>();
+		
 	}
 
 	/**

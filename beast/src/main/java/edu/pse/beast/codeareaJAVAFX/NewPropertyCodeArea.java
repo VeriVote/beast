@@ -103,10 +103,6 @@ public class NewPropertyCodeArea extends CodeArea {
 	public void saveDescription(FormalPropertiesDescription newDescription) {
 		if (this.description != null) {
 			this.description.setCode(this.textProperty().getValue());
-		} else {
-			if (newDescription != null) {
-				newDescription.setCode(this.textProperty().getValue());
-			}
 		}
 	}
 }

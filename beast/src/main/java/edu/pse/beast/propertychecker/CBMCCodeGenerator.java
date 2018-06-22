@@ -275,7 +275,7 @@ public class CBMCCodeGenerator {
 
 		addVotesArrayAndElectInitialisation();
 
-		// the the PreProperties must be definied
+		// the the PreProperties must be defined
 		addPreProperties(preAST);
 
 		// now the Post Properties can be checked

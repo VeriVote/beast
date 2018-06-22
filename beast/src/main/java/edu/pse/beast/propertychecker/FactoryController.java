@@ -47,6 +47,8 @@ public class FactoryController implements Runnable {
 	private final ElectionDescription elecDesc;
 
 	private final List<ParentTreeItem> propertyParents;
+	
+	private List<Result> results = new ArrayList<Result>();
 
 	// /**
 	// *
@@ -163,13 +165,13 @@ public class FactoryController implements Runnable {
 					.hasNext();) {
 				ChildTreeItem child = (ChildTreeItem) childIterator.next();
 				
-				Result childResult = CheckerFactoryFactory.getMatchingResult(checkerID);
+				Result result = CheckerFactoryFactory.getMatchingResult(checkerID);
 				
-				childResult.setOwner(child);
+				result.setProperty(parentTreeItem.getPreAndPostPropertie());
 				
-				childResult.setProperty(parentTreeItem.getPreAndPostPropertie());
+				child.addResult(result);
 				
-				child.setResult(childResult);
+				results.add(result);
 			}
 		}
 
@@ -370,15 +372,13 @@ public class FactoryController implements Runnable {
 			// set all not finished results to finished, to indicate that they
 			// are
 			// ready to be presented
-
-			for (Iterator<ChildTreeItem> iterator = propertiesToCheck.iterator(); iterator.hasNext();) {
-				ChildTreeItem child = (ChildTreeItem) iterator.next();
-				if (!child.getResult().isFinished()) {
-					child.getResult().setTimeoutFlag();
-					child.update();
+			
+			for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
+				Result result = (Result) iterator.next();
+				if (!result.isFinished()) {
+					result.setTimeoutFlag();
 				}
 			}
-
 		}
 	}
 

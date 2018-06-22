@@ -49,7 +49,7 @@ public class ParentTreeItem extends CustomTreeItem {
 		this.getChildren().add(new Separator(Orientation.VERTICAL));
 		this.getChildren().add(checkAll);
 
-		checkItem = new CheckChildTreeItem("Check ", this);
+		checkItem = new CheckChildTreeItem("Verification ", this);
 		marginItem = new MarginChildTreeItem("Margin", this);
 		testItem = new TestChildTreeItem("Test", this);
 
@@ -153,11 +153,11 @@ public class ParentTreeItem extends CustomTreeItem {
 	}
 
 	public void setCheckResult(Result result) {
-		checkItem.setResult(result);
+		checkItem.addResult(result);
 	}
 
 	public void setMarginResult(Result result) {
-		marginItem.setResult(result);
+		marginItem.addResult(result);
 	}
 
 	public void setCheckStatus(AnalysisStatus status) {
@@ -173,7 +173,7 @@ public class ParentTreeItem extends CustomTreeItem {
 	}
 
 	/**
-	 * notifies the parent, that at least one of the childrens result changed, so we
+	 * notifies the parent, that at least one of the children's result changed, so we
 	 * have have to check all to update the GUI
 	 */
 	public void update() {
@@ -222,20 +222,24 @@ public class ParentTreeItem extends CustomTreeItem {
 
 	public void addChild(ChildTreeItemValues values, int index) {
 
+		ChildTreeItem child = null;
+		
 		switch (index) {
 		case 0:
-			subItems.set(index, new CheckChildTreeItem(values, this));
+			child = new CheckChildTreeItem(values, this);
 			break;
 		case 1:
-			subItems.set(index, new MarginChildTreeItem(values, this));
+			child = new MarginChildTreeItem(values, this);
 			break;
 		case 2:
-			subItems.set(index, new TestChildTreeItem(values, this));
+			child = new TestChildTreeItem(values, this);
 			break;
 		default:
 			counter--;
 			break;
 		}
+
+		subItems.set(index, child);
 		
 		counter++;
 		

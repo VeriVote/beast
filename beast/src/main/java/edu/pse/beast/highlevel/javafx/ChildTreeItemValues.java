@@ -1,5 +1,7 @@
 package edu.pse.beast.highlevel.javafx;
 
+import java.util.ArrayList;
+
 import edu.pse.beast.propertychecker.Result;
 
 public class ChildTreeItemValues {
@@ -9,14 +11,14 @@ public class ChildTreeItemValues {
 	public final boolean disabled;
 	public final AnalysisStatus status;
 	
-	public final Result result;
+	public final ArrayList<Result> results;
 	
-	public ChildTreeItemValues(String propertyName, boolean checkBoxStatus, boolean disabled, AnalysisStatus status, Result result) {
+	public ChildTreeItemValues(String propertyName, boolean checkBoxStatus, boolean disabled, AnalysisStatus status, ArrayList<Result> results) {
 		this.propertyName = propertyName;
 		this.checkBoxStatus = checkBoxStatus;
 		this.disabled = disabled;
 		this.status = status;
 		
-		this.result = result;
+		this.results = results;
 	}
 }

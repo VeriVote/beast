@@ -9,6 +9,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.datatypes.propertydescription.VariableListListener;
+import edu.pse.beast.saverloader.adapter.InputTypeAdapter;
+import edu.pse.beast.saverloader.adapter.VariableListListenerAdapter;
+import edu.pse.beast.types.InputType;
 
 /**
  * Implements SaverLoader methods for creating saveStrings from
@@ -22,6 +26,7 @@ public class PropertyDescriptionSaverLoader implements SaverLoader<PreAndPostCon
 
 	static { //here you have the chance to register typeAdapters
 		GsonBuilder builder = new GsonBuilder();
+		//builder.registerTypeAdapter(VariableListListener.class, new VariableListListenerAdapter());
 		saverLoader = builder.create();
 	}
 

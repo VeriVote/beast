@@ -10,8 +10,14 @@ import com.google.gson.GsonBuilder;
 
 import edu.pse.beast.highlevel.javafx.ChildTreeItemValues;
 import edu.pse.beast.propertychecker.Result;
+import edu.pse.beast.saverloader.adapter.CommonHelpMethodsAdapter;
+import edu.pse.beast.saverloader.adapter.InputTypeAdapter;
+import edu.pse.beast.saverloader.adapter.OutputTypeAdapter;
 import edu.pse.beast.saverloader.adapter.ResultAdapter;
 import edu.pse.beast.saverloader.adapter.SuperclassExclusionStrategy;
+import edu.pse.beast.types.CommonHelpMethods;
+import edu.pse.beast.types.InputType;
+import edu.pse.beast.types.OutputType;
 
 /**
  * Implements SaverLoader methods for creating saveStrings from
@@ -28,6 +34,9 @@ public class ChildTreeItemSaverLoader implements SaverLoader<ChildTreeItemValues
 		builder.addDeserializationExclusionStrategy(new SuperclassExclusionStrategy());
 		builder.addSerializationExclusionStrategy(new SuperclassExclusionStrategy());
 		builder.registerTypeAdapter(Result.class, new ResultAdapter());
+		builder.registerTypeAdapter(InputType.class, new InputTypeAdapter());
+		builder.registerTypeAdapter(OutputType.class, new OutputTypeAdapter());
+		builder.registerTypeAdapter(CommonHelpMethods.class, new CommonHelpMethodsAdapter());
 		saverLoader = builder.create();
 	}
 

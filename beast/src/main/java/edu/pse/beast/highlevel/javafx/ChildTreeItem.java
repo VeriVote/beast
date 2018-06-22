@@ -1,5 +1,9 @@
 package edu.pse.beast.highlevel.javafx;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.propertychecker.CBMCResult;
 import edu.pse.beast.propertychecker.Result;
@@ -28,14 +32,20 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 	private ImageView statusIcon = new ImageView();
 	private boolean disabled = false;
 	private AnalysisStatus status = AnalysisStatus.NONE;
-
-	protected Result result = null;
+	
+	protected ArrayList<ResultTreeItem> results = new ArrayList<ResultTreeItem>();
 
 	ChildTreeItem(ChildTreeItemValues values, ParentTreeItem parent) {
 		this.parent = parent;
 		this.checkBox.setSelected(values.checkBoxStatus);
 		this.propName = new Label(values.propertyName);
 		this.disabled = values.disabled;
+				
+		for (Iterator<Result> iterator = values.results.iterator(); iterator.hasNext();) {
+			Result result = (Result) iterator.next();
+
+			addResult(result);
+		}
 
 		init();
 	}
@@ -77,23 +87,9 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 	private void wasClicked() {
 
 		parent.wasClicked(false);
-
-		if (result != null && result.isFinished()) {
-			if (!result.isValid()) {
-			} else {
-				if (result.isSuccess()) {
-					GUIController.getController().getResultField().setText("ASSERTION HOLDS");
-					GUIController.getController().getMainTabPane().getSelectionModel()
-							.select(GUIController.getController().getResultTab());
-				} else {
-					ResultPresenter.presentFailureExample(result);
-					
-					
-					GUIController.getController().getResultField().setText(String.join("\n", result.getResult()));
-					GUIController.getController().getMainTabPane().getSelectionModel()
-							.select(GUIController.getController().getResultTab());
-				}
-			}
+		
+		if(results.size() > 0) {
+			results.get(results.size() - 1).wasClicked();
 		}
 	}
 
@@ -109,8 +105,12 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 		this.disabled = false;
 	}
 
-	public void setResult(Result result) {
-		this.result = result;
+	public void addResult(Result result) {
+		ResultTreeItem resultItem = new ResultTreeItem(result, this);
+		results.add(resultItem);
+		
+		this.getChildren().add(resultItem);
+
 		this.update();
 	}
 
@@ -119,9 +119,9 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 		checkBox.setText(status.toString());
 	}
 
-	public Result getResult() {
-		return result;
-	}
+//	public Result getResult() {
+//		return result;
+//	}
 
 	/**
 	 * notifies the child object that its result object changed, so it has to update
@@ -139,28 +139,35 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 		return parent.getPreAndPostPropertie();
 	}
 
-	public void setPresentable() {
-
-		if (result != null) {
-			if (!result.isValid()) {
-				this.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
-			} else {
-				if (result.isSuccess()) {
-					this.setBackground(
-							new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
-				} else {
-					this.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-				}
-			}
-		}
-
-	}
-
+//	public void setPresentable() {
+//
+//		if (result != null && result.isFinished()) {
+//			if (!result.isValid()) {
+//				this.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
+//			} else {
+//				if (result.isSuccess()) {
+//					this.setBackground(
+//							new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+//				} else {
+//					this.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+//				}
+//			}
+//		}
+//
+//	}
+//
 	public void resetPresentable() {
 		this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 	}
 
 	public ChildTreeItemValues getValues() {
-		return new ChildTreeItemValues(propName.getText(), checkBox.isSelected(), false, status, result);
+		ArrayList<Result> tmpList = new ArrayList<Result>();
+		
+		for (Iterator<ResultTreeItem> iterator = results.iterator(); iterator.hasNext();) {
+			ResultTreeItem result = (ResultTreeItem) iterator.next();
+			tmpList.add(result.getResult());
+		}
+		
+		return new ChildTreeItemValues(propName.getText(), checkBox.isSelected(), false, status, tmpList);
 	}
 }

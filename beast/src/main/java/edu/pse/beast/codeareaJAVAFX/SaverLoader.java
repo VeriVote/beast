@@ -153,7 +153,7 @@ public class SaverLoader {
 	}
 
 	public void setSaveFile(File saveFile) {
-		if(saveFile.exists()) {
+		if(saveFile != null && saveFile.exists()) {
 			this.saveFile = saveFile;
 			this.hasSaveFile = true;			
 		}

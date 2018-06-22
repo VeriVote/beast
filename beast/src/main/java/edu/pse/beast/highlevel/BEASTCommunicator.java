@@ -142,16 +142,8 @@ public class BEASTCommunicator {
 			
 			GUIController.setInfoText("starting Check");
 			
-			for (Iterator<ParentTreeItem> iterator = properties.iterator(); iterator.hasNext();) {
-				ParentTreeItem parent = (ParentTreeItem) iterator.next();
-				for (Iterator<ChildTreeItem> childIterator = parent.getSubItems().iterator(); iterator.hasNext();) {
-					ChildTreeItem child = (ChildTreeItem) childIterator.next();
-					child.resetPresentable();
-				}
-			}
-			 
-			//TODO load the propertychecker 
 			
+			//TODO load the propertychecker 
 			PropertyChecker checker = new PropertyChecker("CBMC");
 			
 			currentCheckers.add(checker);

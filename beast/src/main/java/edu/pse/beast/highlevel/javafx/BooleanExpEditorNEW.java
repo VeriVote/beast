@@ -216,7 +216,7 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 			try {
 				newDescription = propSaverLoader.createFromSaveString(json);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			
 			return newDescription;
