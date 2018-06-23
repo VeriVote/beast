@@ -119,7 +119,7 @@ public class CBMCCodeGenerator {
 	}
 
 	private void generateCodeCheck() {
-		addHeader();
+		code = addHeader(code);
 		addVoteSumFunc(false);
 		addVoteSumFunc(true);
 
@@ -193,7 +193,7 @@ public class CBMCCodeGenerator {
 
 		// add the headers CBMC needs;
 
-		addHeader();
+		code = addHeader(code);
 
 		// define some pre processor values
 		code.add("#ifndef " + UnifiedNameContainer.getVoter() + "\n #define " + UnifiedNameContainer.getVoter() + " "
@@ -231,8 +231,12 @@ public class CBMCCodeGenerator {
 		code.add("}");
 	}
 
-	// maybe add something that let's the user use imports
-	private void addHeader() {
+	/**
+	 * writes all lines of the header
+	 * @param code the list in which the header should be written
+	 * @return the finished header
+	 */
+	public static CodeArrayListBeautifier addHeader(CodeArrayListBeautifier code) {
 		code.add("#include <stdlib.h>");
 		code.add("#include <stdint.h>");
 		code.add("#include <assert.h>");
@@ -252,6 +256,7 @@ public class CBMCCodeGenerator {
 		code.add(UnifiedNameContainer.getStruct_stack_result() + " { unsigned int "
 				+ UnifiedNameContainer.getResult_arr_name() + "[" + UnifiedNameContainer.getSeats() + "]; };"); // add a result
 		// same for a stacked result for each party
+		return code;
 	}
 
 	/**
