@@ -114,10 +114,10 @@ public final class CheckerFactoryFactory {
 	// }
 
 	public static CheckerFactory getCheckerFactory(String checkerID, FactoryController controller,
-			ElectionDescription electionDesc, ChildTreeItem childTreeItem, ElectionCheckParameter parameter) {
+			ElectionDescription electionDesc, Result result, ElectionCheckParameter parameter) {
 
 		if (factories.keySet().contains(checkerID)) {
-			return factories.get(checkerID).getNewInstance(controller, electionDesc, childTreeItem, parameter);
+			return factories.get(checkerID).getNewInstance(controller, electionDesc, result, parameter);
 
 		} else {
 			ErrorLogger.log("The specified checkerID wasn't found");

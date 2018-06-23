@@ -14,6 +14,7 @@ import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.ResultInterface;
+import edu.pse.beast.highlevel.javafx.AnalysisType;
 import edu.pse.beast.highlevel.javafx.ChildTreeItem;
 import edu.pse.beast.highlevel.javafx.ResultTreeItem;
 
@@ -368,5 +369,9 @@ public abstract class Result implements ResultInterface {
 
 	public void setOwner(ResultTreeItem owner) {
 		this.owner = owner;
+	}
+
+	public AnalysisType getAnalysisType() {
+		return owner.getOwner().getAnalysisType();
 	}
 }

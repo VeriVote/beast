@@ -46,8 +46,8 @@ public class FactoryController implements Runnable {
 
 	private final ElectionDescription elecDesc;
 
-	private final List<ParentTreeItem> propertyParents;
-	
+	// private final List<ParentTreeItem> propertyParents;
+
 	private List<Result> results = new ArrayList<Result>();
 
 	// /**
@@ -154,28 +154,28 @@ public class FactoryController implements Runnable {
 		this.elecDesc = elecDesc;
 		this.parameter = electionCheckParameter;
 		this.checkerID = checkerID;
-		this.propertyParents = parentProperties;
 		this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
 
-		
-		//set the result objects for all the selected children
+		// set the result objects for all the selected children
 		for (Iterator<ParentTreeItem> parentIterator = parentProperties.iterator(); parentIterator.hasNext();) {
 			ParentTreeItem parentTreeItem = (ParentTreeItem) parentIterator.next();
 			for (Iterator<ChildTreeItem> childIterator = parentTreeItem.getSubItems().iterator(); childIterator
 					.hasNext();) {
 				ChildTreeItem child = (ChildTreeItem) childIterator.next();
-				
-				Result result = CheckerFactoryFactory.getMatchingResult(checkerID);
-				
-				result.setProperty(parentTreeItem.getPreAndPostPropertie());
-				
-				child.addResult(result);
-				
-				results.add(result);
+
+				if (child.isSelected()) {
+
+					Result result = CheckerFactoryFactory.getMatchingResult(checkerID);
+
+					result.setProperty(parentTreeItem.getPreAndPostPropertie());
+
+					child.addResult(result);
+
+					results.add(result);
+				}
 			}
 		}
 
-		
 		// if the user doesn't specify a concrete amount for concurrent
 		// checkers, we just set it to the thread amount of this pc
 		if (concurrentChecker <= 0) {
@@ -274,22 +274,7 @@ public class FactoryController implements Runnable {
 	@Override
 	public void run() {
 
-		List<ChildTreeItem> propertiesToCheck = new ArrayList<ChildTreeItem>();
-
-		// fill the list of properties
-
-		for (Iterator<ParentTreeItem> iterator = propertyParents.iterator(); iterator.hasNext();) {
-			ParentTreeItem parentItem = (ParentTreeItem) iterator.next();
-			for (Iterator<ChildTreeItem> childIterator = parentItem.getSubItems().iterator(); childIterator
-					.hasNext();) {
-				ChildTreeItem child = (ChildTreeItem) childIterator.next();
-				if (child.isSelected()) {
-					propertiesToCheck.add(child);
-				}
-			}
-		}
-
-		outerLoop: for (int i = 0; i < propertiesToCheck.size(); i++) {
+		outerLoop: for (int i = 0; i < results.size(); i++) {
 			innerLoop: while (!stopped) {
 				// if we can start more checkers (we haven't used our
 				// allowed pool completely), we can start a new one
@@ -300,7 +285,7 @@ public class FactoryController implements Runnable {
 					// results.get(i), propertiesToCheckAndMargin.get(i).getMarginStatus());
 
 					CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID, this, elecDesc,
-							propertiesToCheck.get(i), parameter);
+							results.get(i), parameter);
 
 					synchronized (this) {
 						currentlyRunning.add(factory);
@@ -372,7 +357,7 @@ public class FactoryController implements Runnable {
 			// set all not finished results to finished, to indicate that they
 			// are
 			// ready to be presented
-			
+
 			for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
 				Result result = (Result) iterator.next();
 				if (!result.isFinished()) {
@@ -459,5 +444,9 @@ public class FactoryController implements Runnable {
 			thisObject.stopChecking(false);
 		}
 
+	}
+
+	public List<Result> getResults() {
+		return results;
 	}
 }

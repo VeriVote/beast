@@ -32,7 +32,7 @@ public abstract class CheckerFactory implements Runnable {
 	private List<String> lastResult;
 	private List<String> lastError;
 
-	private ChildTreeItem childItem;
+	private Result result;
 
 	/**
 	 *
@@ -47,20 +47,18 @@ public abstract class CheckerFactory implements Runnable {
 	 * @param result
 	 *            the result object where the result has to be put in
 	 */
-	protected CheckerFactory(FactoryController controller, ElectionDescription electionDesc, ChildTreeItem childItem,
+	protected CheckerFactory(FactoryController controller, ElectionDescription electionDesc, Result result,
 			ElectionCheckParameter parameter) {
 
 		this.controller = controller;
 		this.electionDesc = electionDesc;
-		this.childItem = childItem;
+		this.result = result;
 		this.parameter = parameter;
 
 		// because we create a new instance with all variables null, we have to
 		// catch it here
-		if (childItem != null) {
-			if (childItem.getResult() != null) {
-				childItem.getResult().setElectionType(getElectionDescription());
-			}
+		if (result != null) {
+			result.setElectionType(getElectionDescription());
 		}
 	}
 
@@ -79,8 +77,8 @@ public abstract class CheckerFactory implements Runnable {
 	// // because we create a new instance with all variables null, we have to
 	// // // catch it here
 	// // if (result != null) {
-	// // childItem.getResult().setElectionType(getElectionDescription());
-	// // childItem.getResult().setProperty(postAndPrepPropDesc);
+	// // result.setElectionType(getElectionDescription());
+	// // result.setProperty(postAndPrepPropDesc);
 	// // }
 	// }
 
@@ -109,7 +107,7 @@ public abstract class CheckerFactory implements Runnable {
 
 		String[][] votingData = GUIController.getController().getVotingData();
 
-		switch (childItem.getAnalysisType()) {
+		switch (result.getAnalysisType()) {
 		case Check:
 			runCheck(advanced);
 			break;
@@ -133,12 +131,12 @@ public abstract class CheckerFactory implements Runnable {
 		{
 			finished = true;
 			if (lastResult != null) {
-				if (!childItem.getResult().isFinished()) {
+				if (!result.isFinished()) {
 					// we got here without any verification fails, so the
 					// property is fulfilled
-					childItem.getResult().setSuccess();
-					childItem.getResult().setValid();
-					childItem.getResult().setFinished();
+					result.setSuccess();
+					result.setValid();
+					result.setFinished();
 				} else {
 					ErrorLogger.log("The Result Object indicated a finished check, even though the "
 							+ "CheckerFactory was still running");
@@ -173,17 +171,16 @@ public abstract class CheckerFactory implements Runnable {
 					synchronized (this) {
 						if (!stopped) {
 
-							currentlyRunning = startProcessCheck(electionDesc, childItem.getPreAndPostProperties(),
+							currentlyRunning = startProcessCheck(electionDesc, result.getPropertyDesctiption(),
 									advanced, voters, candidates, seats, this);
 
 							// check if the creation was successfull
 							if (currentlyRunning == null) {
 								// the process creation failed
 								stopped = true;
-								childItem.getResult().setFinished();
-								childItem.getResult()
-										.setError("Couldn't start the process, please follow the instructions you "
-												+ "got shown on the screen before");
+								result.setFinished();
+								result.setError("Couldn't start the process, please follow the instructions you "
+										+ "got shown on the screen before");
 							}
 						}
 					}
@@ -199,7 +196,7 @@ public abstract class CheckerFactory implements Runnable {
 					}
 
 					if (stopped) {
-						childItem.getResult().setFinished();
+						result.setFinished();
 						break outerLoop;
 					} else { // if it got started normally
 								// the checker finished checking for these
@@ -222,16 +219,16 @@ public abstract class CheckerFactory implements Runnable {
 							finished = true;
 
 							if (checkAssertionFailure(lastResult)) {
-								childItem.getResult().setNumVoters(voters);
-								childItem.getResult().setNumCandidates(candidates);
-								childItem.getResult().setNumSeats(seats);
-								
-								childItem.getResult().addResult(lastResult);
-								childItem.getResult().setValid();
+								result.setNumVoters(voters);
+								result.setNumCandidates(candidates);
+								result.setNumSeats(seats);
+
+								result.setResult(lastResult);
+								result.setValid();
 							} else {
-								childItem.getResult().setError(lastError);
+								result.setError(lastError);
 							}
-							childItem.getResult().setFinished();
+							result.setFinished();
 
 							break outerLoop;
 						}
@@ -260,7 +257,7 @@ public abstract class CheckerFactory implements Runnable {
 				// childItem.getPreAndPostProperties(), advanced, numVoters, numCandidates,
 				// numSeats, this, margin, origResult, origData)
 
-				currentlyRunning = startProcessTest(electionDesc, childItem.getPreAndPostProperties(), advanced,
+				currentlyRunning = startProcessTest(electionDesc, result.getPropertyDesctiption(), advanced,
 						numVoters, numCandidates, numSeats, this, origData);
 
 				while (!finished && !stopped) {
@@ -331,20 +328,20 @@ public abstract class CheckerFactory implements Runnable {
 				// and false, if there is no margin
 
 				System.out.println("finished: hasFinalMargin: " + hasMargin + " || finalMargin = " + margin);
+				
+				result.setMarginComp(true);
 
-				childItem.getResult().setMarginComp(true);
+				result.setHasFinalMargin(hasMargin);
 
-				childItem.getResult().setHasFinalMargin(hasMargin);
-
-				childItem.getResult().setOrigWinner(origResult);
-				childItem.getResult().setOrigVoting(GUIController.getController().getElectionSimulation().getVotingDataListofList());
+				result.setOrigWinner(origResult);
+				result.setOrigVoting(GUIController.getController().getElectionSimulation().getVotingDataListofList());
 
 				if (hasMargin) {
-					childItem.getResult().addResult(currentlyRunning.getResultList());
-					childItem.getResult().setFinalMargin(margin);
+					result.setResult(currentlyRunning.getResultList());
+					result.setFinalMargin(margin);
 				} else {
-					childItem.getResult().addResult(null);
-					childItem.getResult().setFinalMargin(-1);
+					result.setResult(null);
+					result.setFinalMargin(-1);
 				}
 
 				List<List<String>> newVotes = new ArrayList<List<String>>();
@@ -356,11 +353,11 @@ public abstract class CheckerFactory implements Runnable {
 
 					newVotes = getElectionDescription().getContainer().getInputType().getNewVotes(lastFailedRun);
 
-					childItem.getResult().setNewVotes(newVotes);
-					childItem.getResult().setNewWinner(newResult);
+					result.setNewVotes(newVotes);
+					result.setNewWinner(newResult);
 
-					childItem.getResult().setValid();
-					childItem.getResult().setFinished();
+					result.setValid();
+					result.setFinished();
 					this.finished = true;
 
 					int count = 0;
@@ -386,7 +383,7 @@ public abstract class CheckerFactory implements Runnable {
 						count = count + 1;
 					}
 				}
-
+				result.setFinished();
 			}
 		}
 	}
@@ -401,7 +398,7 @@ public abstract class CheckerFactory implements Runnable {
 
 				// determine the winner of this input of votes
 
-				currentlyRunning = startProcessTest(electionDesc, childItem.getPreAndPostProperties(), advanced,
+				currentlyRunning = startProcessTest(electionDesc, result.getPropertyDesctiption(), advanced,
 						numVoters, numCandidates, numSeats, this, origData);
 
 				while (!finished && !stopped) {
@@ -421,7 +418,8 @@ public abstract class CheckerFactory implements Runnable {
 						lastResult);
 
 				int left = 0;
-				int right = GUIController.getController().getElectionSimulation().getNumVotingPoints(); // how many votes we have
+				int right = GUIController.getController().getElectionSimulation().getNumVotingPoints(); // how many
+																										// votes we have
 
 				if (right == 1) {
 					ErrorForUserDisplayer.displayError(
@@ -472,19 +470,19 @@ public abstract class CheckerFactory implements Runnable {
 
 				System.out.println("finished: hasFinalMargin: " + hasMargin + " || finalMargin = " + margin);
 
-				childItem.getResult().setMarginComp(true);
+				result.setMarginComp(true);
 
-				childItem.getResult().setHasFinalMargin(hasMargin);
+				result.setHasFinalMargin(hasMargin);
 
-				childItem.getResult().setOrigWinner(origResult);
-				childItem.getResult().setOrigVoting(GUIController.getController().getElectionSimulation().getVotingDataListofList());
+				result.setOrigWinner(origResult);
+				result.setOrigVoting(GUIController.getController().getElectionSimulation().getVotingDataListofList());
 
 				if (hasMargin) {
-					childItem.getResult().addResult(currentlyRunning.getResultList());
-					childItem.getResult().setFinalMargin(margin);
+					result.setResult(currentlyRunning.getResultList());
+					result.setFinalMargin(margin);
 				} else {
-					childItem.getResult().addResult(null);
-					childItem.getResult().setFinalMargin(-1);
+					result.setResult(null);
+					result.setFinalMargin(-1);
 				}
 
 				List<List<String>> newVotes = new ArrayList<List<String>>();
@@ -496,11 +494,11 @@ public abstract class CheckerFactory implements Runnable {
 
 					newVotes = getElectionDescription().getContainer().getInputType().getNewVotes(lastFailedRun);
 
-					childItem.getResult().setNewVotes(newVotes);
-					childItem.getResult().setNewWinner(newResult);
+					result.setNewVotes(newVotes);
+					result.setNewWinner(newResult);
 
-					childItem.getResult().setValid();
-					childItem.getResult().setFinished();
+					result.setValid();
+					result.setFinished();
 					this.finished = true;
 
 					int count = 0;
@@ -568,7 +566,7 @@ public abstract class CheckerFactory implements Runnable {
 	protected void checkMarginAndWait(int margin, List<String> origResult, String advanced, int numVoters,
 			int numCandidates, int numSeats, String[][] votingData) {
 
-		currentlyRunning = startProcessMargin(electionDesc, childItem.getPreAndPostProperties(), advanced, numVoters,
+		currentlyRunning = startProcessMargin(electionDesc, result.getPropertyDesctiption(), advanced, numVoters,
 				numCandidates, numSeats, this, margin, origResult, votingData);
 
 		while (!currentlyRunning.isFinished()) {
@@ -775,7 +773,7 @@ public abstract class CheckerFactory implements Runnable {
 	//
 
 	public abstract CheckerFactory getNewInstance(FactoryController controller, ElectionDescription electionDesc,
-			ChildTreeItem childTreeItem, ElectionCheckParameter parameter);
+			Result result, ElectionCheckParameter parameter);
 
 	//
 	// /**

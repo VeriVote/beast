@@ -49,8 +49,8 @@ public class CBMCProcessFactory extends CheckerFactory {
 	 *            the result object that the end result should be written to
 	 */
 	protected CBMCProcessFactory(FactoryController controller, ElectionDescription electionDesc,
-			ChildTreeItem childItem, ElectionCheckParameter parameter) {
-		super(controller, electionDesc, childItem, parameter);
+			Result result, ElectionCheckParameter parameter) {
+		super(controller, electionDesc, result, parameter);
 		os = determineOS();
 	}
 	//
@@ -306,8 +306,8 @@ public class CBMCProcessFactory extends CheckerFactory {
 
 	@Override
 	public CheckerFactory getNewInstance(FactoryController controller, ElectionDescription electionDesc,
-			ChildTreeItem childItem, ElectionCheckParameter parameter) {
-		return new CBMCProcessFactory(controller, electionDesc, childItem, parameter);
+			Result result, ElectionCheckParameter parameter) {
+		return new CBMCProcessFactory(controller, electionDesc, result, parameter);
 	}
 	//
 	// @Override

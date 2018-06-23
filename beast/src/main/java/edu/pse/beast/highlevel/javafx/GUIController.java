@@ -854,7 +854,6 @@ public class GUIController {
 
 	@FXML
 	public void maxVoter(ActionEvent event) {
-		System.out.println("test");
 		System.out.println(maxVoter.getText());
 	}
 

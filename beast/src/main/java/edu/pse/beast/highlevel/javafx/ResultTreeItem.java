@@ -2,7 +2,18 @@ package edu.pse.beast.highlevel.javafx;
 
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.ResultPresenter;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -13,9 +24,36 @@ public class ResultTreeItem extends CustomTreeItem {
 	private final Result result;
 	private final ChildTreeItem owner;
 	
+	private Label name = new Label("Result");
+	private Button button = new Button("delete");
+	private ImageView statusIcon = new ImageView();
+	
 	public ResultTreeItem(Result result, ChildTreeItem owner) {
 		this.result = result;
 		this.owner = owner;
+		
+		this.result.setOwner(this);
+		
+		init();
+	}
+	
+	private void init() {
+		this.setAlignment(Pos.CENTER_LEFT);
+		
+		button.setOnAction((event) -> {
+			owner.deleteResult(this);
+		});
+
+		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				wasClicked();
+			}
+		});
+
+		this.getChildren().add(name);
+		this.getChildren().add(new Separator(Orientation.VERTICAL));
+		this.getChildren().add(button);
 	}
 
 	public void wasClicked() {
@@ -56,6 +94,10 @@ public class ResultTreeItem extends CustomTreeItem {
 
 	public Result getResult() {
 		return result;
+	}
+
+	public ChildTreeItem getOwner() {
+		return owner;
 	}
 
 }

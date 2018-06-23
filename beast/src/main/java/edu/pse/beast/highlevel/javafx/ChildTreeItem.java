@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.openqa.selenium.remote.html5.AddApplicationCache;
+
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.propertychecker.CBMCResult;
 import edu.pse.beast.propertychecker.Result;
-import edu.pse.beast.toolbox.ResultPresenter;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
@@ -17,6 +17,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.control.TreeItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -31,10 +32,13 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 	private final ParentTreeItem parent;
 	private ImageView statusIcon = new ImageView();
 	private boolean disabled = false;
-	private AnalysisStatus status = AnalysisStatus.NONE;
+	
 	
 	protected ArrayList<ResultTreeItem> results = new ArrayList<ResultTreeItem>();
+	
+	private final List<TreeItem<CustomTreeItem>> resultTreeItems = new ArrayList<TreeItem<CustomTreeItem>>();
 
+	
 	ChildTreeItem(ChildTreeItemValues values, ParentTreeItem parent) {
 		this.parent = parent;
 		this.checkBox.setSelected(values.checkBoxStatus);
@@ -85,7 +89,6 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 	}
 
 	private void wasClicked() {
-
 		parent.wasClicked(false);
 		
 		if(results.size() > 0) {
@@ -110,14 +113,16 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 		results.add(resultItem);
 		
 		this.getChildren().add(resultItem);
+		
+		addChildrenToStage();
 
 		this.update();
 	}
-
-	public void setStatus(AnalysisStatus status) {
-		this.status = status;
-		checkBox.setText(status.toString());
-	}
+//
+//	public void setStatus(AnalysisStatus status) {
+//		this.status = status;
+//		checkBox.setText(status.toString());
+//	}
 
 //	public Result getResult() {
 //		return result;
@@ -168,6 +173,23 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 			tmpList.add(result.getResult());
 		}
 		
-		return new ChildTreeItemValues(propName.getText(), checkBox.isSelected(), false, status, tmpList);
+		return new ChildTreeItemValues(propName.getText(), checkBox.isSelected(), false, tmpList);
+	}
+	
+	public void addChildrenToStage() {
+		resultTreeItems.clear();
+		this.getTreeItemReference().getChildren().clear();
+		
+		for (Iterator<ResultTreeItem> iterator = results.iterator(); iterator.hasNext();) {
+			ResultTreeItem item = (ResultTreeItem) iterator.next();
+			resultTreeItems.add(new TreeItem<CustomTreeItem>(item));
+		}
+
+		this.getTreeItemReference().getChildren().addAll(resultTreeItems);
+	}
+
+	public void deleteResult(ResultTreeItem resultTreeItem) {
+		results.remove(resultTreeItem);
+		addChildrenToStage();
 	}
 }

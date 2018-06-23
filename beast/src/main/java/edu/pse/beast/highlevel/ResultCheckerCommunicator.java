@@ -5,6 +5,7 @@ import java.util.List;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.highlevel.javafx.ParentTreeItem;
+import edu.pse.beast.propertychecker.Result;
 
 /**
  * The ResultCheckerCommunicator starts and stops checks.
@@ -35,7 +36,7 @@ public interface ResultCheckerCommunicator {
      *            ElectionCheckParameter
      * @return array of ResultInterfaces
      */
-    public boolean checkPropertiesForDescription(ElectionDescription elecDescr,
+    public List<Result> checkPropertiesForDescription(ElectionDescription elecDescr,
     		List<ParentTreeItem> parentProperties, ElectionCheckParameter electionCheckParameter);
 //    
 //    /**

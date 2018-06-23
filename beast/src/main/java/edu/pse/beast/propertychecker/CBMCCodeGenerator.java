@@ -119,7 +119,6 @@ public class CBMCCodeGenerator {
 	}
 
 	private void generateCodeCheck() {
-
 		addHeader();
 		addVoteSumFunc(false);
 		addVoteSumFunc(true);

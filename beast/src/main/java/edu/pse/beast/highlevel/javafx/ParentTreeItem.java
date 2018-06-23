@@ -26,7 +26,6 @@ public class ParentTreeItem extends CustomTreeItem {
 	private final List<TreeItem<CustomTreeItem>> childTreeItems = new ArrayList<TreeItem<CustomTreeItem>>();
 	private final PreAndPostConditionsDescription propDesc;
 
-	private final TreeItem<CustomTreeItem> treeItemReference;
 	private boolean disabled;
 	private boolean initialized = false;
 
@@ -38,7 +37,8 @@ public class ParentTreeItem extends CustomTreeItem {
 	ParentTreeItem(PreAndPostConditionsDescription propDesc, boolean isSelected,
 			TreeItem<CustomTreeItem> treeItemReference, boolean createChildren) {
 
-		this.treeItemReference = treeItemReference;
+		this.setTreeItemReference(treeItemReference);
+		
 		this.propDesc = propDesc;
 
 		this.setAlignment(Pos.CENTER_LEFT);
@@ -80,16 +80,18 @@ public class ParentTreeItem extends CustomTreeItem {
 
 		this.setSelected(isSelected);
 
-		this.treeItemReference.setValue(this);
+		this.getTreeItemReference().setValue(this);
 	}
 
 	public void addChildrenToStage() {
 		for (Iterator<ChildTreeItem> iterator = subItems.iterator(); iterator.hasNext();) {
 			CustomTreeItem item = (CustomTreeItem) iterator.next();
-			childTreeItems.add(new TreeItem<CustomTreeItem>(item));
+			TreeItem<CustomTreeItem> reference = new TreeItem<CustomTreeItem>(item);
+			childTreeItems.add(reference);
+			item.setTreeItemReference(reference);
 		}
 
-		this.treeItemReference.getChildren().addAll(childTreeItems);
+		this.getTreeItemReference().getChildren().addAll(childTreeItems);
 
 		initialized = true;
 	}
@@ -161,11 +163,11 @@ public class ParentTreeItem extends CustomTreeItem {
 	}
 
 	public void setCheckStatus(AnalysisStatus status) {
-		checkItem.setStatus(status);
+		//checkItem.setStatus(status);
 	}
 
 	public void setMarginStatus(AnalysisStatus status) {
-		marginItem.setStatus(status);
+		//marginItem.setStatus(status);
 	}
 
 	public PreAndPostConditionsDescription getPreAndPostPropertie() {

@@ -16,6 +16,7 @@ import edu.pse.beast.highlevel.javafx.ChildTreeItem;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 import edu.pse.beast.propertychecker.PropertyChecker;
+import edu.pse.beast.propertychecker.Result;
 
 /**
  * The BEASTCommunicator coordinates all the other parts of BEAST and starts and
@@ -149,8 +150,8 @@ public class BEASTCommunicator {
 			currentCheckers.add(checker);
 						
 			// analysis gets started by CheckerCommunicator.checkPropertiesForDescription()
-			boolean started = checker.checkPropertiesForDescription(electionDesc, properties, parameter);
-			if (started) {
+			List<Result> results = checker.checkPropertiesForDescription(electionDesc, properties, parameter);
+			if (results != null) {
 
 				// Thread that checks for new presentable results every n milliseconds
 				Thread waitForResultsThread = new Thread(new Runnable() {
@@ -184,18 +185,12 @@ public class BEASTCommunicator {
 
 							frameTime = System.currentTimeMillis();
 
+							//check if all results are finished already
 							allDone = true;
 							
-							for (Iterator<ParentTreeItem> parentIterator = properties.iterator(); parentIterator
-									.hasNext();) {
-								ParentTreeItem parent = (ParentTreeItem) parentIterator.next();
-								for (Iterator<ChildTreeItem> childIterator = parent.getSubItems()
-										.iterator(); childIterator.hasNext();) {
-									ChildTreeItem child = (ChildTreeItem) childIterator.next();
-									if (child.isSelected()) {
-										allDone = allDone && child.getResult().isFinished();
-									}
-								}
+							for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
+								Result result = (Result) iterator.next();
+								allDone = allDone && result.isFinished();
 							}
 						}
 						
