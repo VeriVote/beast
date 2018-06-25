@@ -16,7 +16,7 @@ public class CandidateList extends CBMCOutputType {
 
 	@Override
 	public String getOutputString() {
-		return UnifiedNameContainer.getStruct_result();
+		return UnifiedNameContainer.getStruct_candidateList();
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class CandidateList extends CBMCOutputType {
 
 	@Override
 	public String[] extractResult(List<String> toExtract) {
-		return super.helper.readOneDimVarLong("new_result", toExtract).get(0).getArray();
+		return super.helper.readOneDimVarLong("" + UnifiedNameContainer.getNewResultName() + "", toExtract).get(0).getArray();
 	}
 
 	@Override
@@ -47,15 +47,15 @@ public class CandidateList extends CBMCOutputType {
 	@Override
 	public CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code) {
 		code.add("void verifyMain() {");
-		// code.add("int new_votes1[" + UnifiedNameContainer.getVoter() + "], diff[" + UnifiedNameContainer.getVoter() + "], total_diff, pos_diff;");
+		// code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" + UnifiedNameContainer.getVoter() + "], diff[" + UnifiedNameContainer.getVoter() + "], total_diff, pos_diff;");
 
 		code.addTab();
 
-		code.add("struct result tmp = " + UnifiedNameContainer.getVotingMethod() + "(new_votes1);");
+		code.add("struct result tmp = " + UnifiedNameContainer.getVotingMethod() + "(" + UnifiedNameContainer.getNewVotesName() + "1);");
 
 		code.add("unsigned int *tmp_result = tmp." + UnifiedNameContainer.getResult_arr_name() + ";");
 
-		code.add("unsigned int new_result1[" + UnifiedNameContainer.getSeats() + "];"); // create the array where the
+		code.add("unsigned int " + UnifiedNameContainer.getNewResultName() + "1[" + UnifiedNameContainer.getSeats() + "];"); // create the array where the
 		// new seats will get saved
 
 		code.add("for (int i = 0; i < " + UnifiedNameContainer.getSeats() + "; i++) {"); // iterate over the
@@ -64,7 +64,7 @@ public class CandidateList extends CBMCOutputType {
 		code.addTab();
 		// we do this, so our cbmc parser can read out the value of the
 		// array
-		code.add("new_result1[i] = tmp_result[i];");
+		code.add("" + UnifiedNameContainer.getNewResultName() + "1[i] = tmp_result[i];");
 		code.deleteTab();
 		code.add("}"); // close the for loop
 
@@ -72,7 +72,7 @@ public class CandidateList extends CBMCOutputType {
 		code.addTab();
 		// candidates /
 		// seats
-		code.add("assert(new_result1[i] == ORIG_RESULT[i]);");
+		code.add("assert(" + UnifiedNameContainer.getNewResultName() + "1[i] == " + UnifiedNameContainer.getOrigResultName() + "[i]);");
 		code.deleteTab();
 		code.add("}"); // end of the for loop
 
@@ -146,7 +146,7 @@ public class CandidateList extends CBMCOutputType {
 
 	@Override
 	public List<String> getNewResult(List<String> lastFailedRun) {
-		List<CBMCResultWrapperSingleArray> tmpResultOneDim = super.helper.readOneDimVarLong("new_result",
+		List<CBMCResultWrapperSingleArray> tmpResultOneDim = super.helper.readOneDimVarLong("" + UnifiedNameContainer.getNewResultName() + "",
 				lastFailedRun);
 
 		return tmpResultOneDim.get(0).getList();
@@ -159,9 +159,9 @@ public class CandidateList extends CBMCOutputType {
 
 	@Override
 	public void addVerifyOutput(CodeArrayListBeautifier code) {
-		code.add("struct result tmp_result = " + UnifiedNameContainer.getVotingMethod() + "(new_votes1);");
+		code.add("struct result tmp_result = " + UnifiedNameContainer.getVotingMethod() + "(" + UnifiedNameContainer.getNewVotesName() + "1);");
 
-		code.add("unsigned int new_result1[" + UnifiedNameContainer.getSeats() + "];"); // create the array where the
+		code.add("unsigned int " + UnifiedNameContainer.getNewResultName() + "1[" + UnifiedNameContainer.getSeats() + "];"); // create the array where the
 											// new seats will get saved
 
 		code.add("for (int i = 0; i < " + UnifiedNameContainer.getSeats() + "; i++) {"); // iterate over the
@@ -171,7 +171,7 @@ public class CandidateList extends CBMCOutputType {
 
 		// we do this, so our cbmc parser can read out the value of the
 		// array
-		code.add("new_result1[i] = tmp_result." + UnifiedNameContainer.getResult_arr_name() + "[i];");
+		code.add("" + UnifiedNameContainer.getNewResultName() + "1[i] = tmp_result." + UnifiedNameContainer.getResult_arr_name() + "[i];");
 
 		code.deleteTab();
 		code.add("}"); // close the for loop
@@ -182,7 +182,7 @@ public class CandidateList extends CBMCOutputType {
 													// their equality
 		code.addTab();
 
-		code.add("assert(new_result1[i] == ORIG_RESULT[i]);");
+		code.add("assert(" + UnifiedNameContainer.getNewResultName() + "1[i] == " + UnifiedNameContainer.getOrigResultName() + "[i]);");
 
 		code.deleteTab();
 		code.add("}"); // end of the for loop
@@ -193,7 +193,7 @@ public class CandidateList extends CBMCOutputType {
 		// first create the declaration of the array:
 		String declaration = "";
 
-		declaration = "int ORIG_RESULT[" + origResult.size() + "] = {";
+		declaration = "int " + UnifiedNameContainer.getOrigResultName() + "[" + origResult.size() + "] = {";
 		code.addTab();
 
 		code.add(declaration);

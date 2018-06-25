@@ -157,5 +157,10 @@ public abstract class InputType implements InOutType{
 	public abstract int getNumVotingPoints(String[][] votingData);
 
 	public abstract String getVoteDescriptionString(List<List<String>> origVotes);
-	
+
+	public abstract String getMaximalSize(int listDepth);
+
+	public abstract boolean hasVariableAsMinValue();
+
+	public abstract boolean hasVariableAsMaxValue();
 }

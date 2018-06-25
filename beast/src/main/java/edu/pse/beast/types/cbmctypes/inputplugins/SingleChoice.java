@@ -19,6 +19,8 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class SingleChoice extends CBMCInputType {
 
+	String[] sizes = {UnifiedNameContainer.getVoter()};
+	
 	@Override
 	public String getInputString() {
 		return "[" + UnifiedNameContainer.getVoter() + "]";
@@ -38,6 +40,23 @@ public class SingleChoice extends CBMCInputType {
 	public String getMaximalValue() {
 		return  UnifiedNameContainer.getCandidate();
 	}
+	
+
+	@Override
+	public String getMaximalSize(int listDepth) {
+		return sizes[listDepth];
+	}
+
+	@Override
+	public boolean hasVariableAsMinValue() {
+		return false;
+	}
+
+	@Override
+	public boolean hasVariableAsMaxValue() {
+		return true;
+	}
+	
 
 	@Override
 	public boolean isVotingForOneCandidate() {
@@ -50,7 +69,7 @@ public class SingleChoice extends CBMCInputType {
 		code.add("void verify() {");
 		code.addTab();
 		code.add("int total_diff = 0;");
-		code.add("int new_votes1[" + UnifiedNameContainer.getVoter() + "];");
+		code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" + UnifiedNameContainer.getVoter() + "];");
 		code.add("for (int i = 0; i < " + UnifiedNameContainer.getVoter() + "; i++) {"); // go over all voters
 		code.addTab();
 		code.add("int changed = nondet_int();"); // determine, if we want to
@@ -63,13 +82,13 @@ public class SingleChoice extends CBMCInputType {
 		code.addTab();
 		code.add("total_diff++;"); // if we changed the vote, we keep track
 									// of it
-		code.add("new_votes1[i] = !ORIG_VOTES[i];"); // flip the vote (0 ->
+		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i] = !ORIG_VOTES[i];"); // flip the vote (0 ->
 														// 1 |
 														// 1 -> 0)
 		code.deleteTab();
 		code.add("} else {");
 		code.addTab();
-		code.add("new_votes1[i] = ORIG_VOTES[i];");
+		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i] = ORIG_VOTES[i];");
 		code.deleteTab();
 		code.add("}");
 		code.deleteTab();
@@ -96,7 +115,7 @@ public class SingleChoice extends CBMCInputType {
 
 		for (Iterator<CBMCResultWrapperSingleArray> iterator = singleVotesList.iterator(); iterator.hasNext();) {
 			CBMCResultWrapperSingleArray cbmcResultWrapperSingleArray = (CBMCResultWrapperSingleArray) iterator.next();
-			toReturn.add(cbmcResultWrapperSingleArray.wrapInTwoDim(1, "new_votes", numberCandidates));
+			toReturn.add(cbmcResultWrapperSingleArray.wrapInTwoDim(1, "" + UnifiedNameContainer.getNewVotesName() + "", numberCandidates));
 		}
 
 		return toReturn.get(0);
@@ -161,7 +180,7 @@ public class SingleChoice extends CBMCInputType {
 //	@Override
 //	public void addMarginMainCheck(CodeArrayListBeautifier code, int margin,
 //			List<String> origResult) {
-//		code.add("int new_votes1[" + UnifiedNameContainer.getVoter() + "];");
+//		code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" + UnifiedNameContainer.getVoter() + "];");
 //		code.add("for (int i = 0; i < V; i++) {"); // go over all voters
 //		code.addTab();
 //		code.add("int changed = nondet_int();"); // determine, if we want to
@@ -174,13 +193,13 @@ public class SingleChoice extends CBMCInputType {
 //		code.addTab();
 //		code.add("total_diff++;"); // if we changed the vote, we keep track
 //									// of it
-//		code.add("new_votes1[i] = !ORIG_VOTES[i];"); // flip the vote (0 ->
+//		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i] = !ORIG_VOTES[i];"); // flip the vote (0 ->
 //														// 1 |
 //														// 1 -> 0)
 //		code.deleteTab();
 //		code.add("} else {");
 //		code.addTab();
-//		code.add("new_votes1[i] = ORIG_VOTES[i];");
+//		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i] = ORIG_VOTES[i];");
 //		code.deleteTab();
 //		code.add("}");
 //		code.deleteTab();
@@ -246,7 +265,7 @@ public class SingleChoice extends CBMCInputType {
 	public List<List<String>> getNewVotes(List<String> lastFailedRun) {
 		List<List<String>> toReturn = new ArrayList<List<String>>();
 		
-		toReturn.add(super.helper.readOneDimVarLong("new_votes", lastFailedRun).get(0).getList());
+		toReturn.add(super.helper.readOneDimVarLong("" + UnifiedNameContainer.getNewVotesName() + "", lastFailedRun).get(0).getList());
 		
 		return toReturn;
 	}
@@ -293,5 +312,4 @@ public class SingleChoice extends CBMCInputType {
 	public String otherToString() {
 		return "Single choice";
 	}
-	
 }

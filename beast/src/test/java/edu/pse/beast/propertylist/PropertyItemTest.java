@@ -39,7 +39,7 @@ public class PropertyItemTest {
 		PropertyItem it2 = new PropertyItem();
 		assertFalse(it1.equals(null));
 		assertFalse(it1.equals(it2));
-		it2.setDescriptionName(it1.getDescription().getName());
+		//it2.setDescriptionName(it1.getDescription().getName());
 		assertTrue(it1.equals(it2));
 	}
 

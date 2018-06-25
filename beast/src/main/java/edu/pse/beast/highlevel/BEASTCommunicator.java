@@ -135,7 +135,7 @@ public class BEASTCommunicator {
 		}
 		
 		if (!hasProperties) {
-			GUIController.setInfoText("no property selected (add string resouce loading later");
+			GUIController.setInfoText("no property selected (add string resouce loading later)");
 			return false;
 		}
 

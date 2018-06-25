@@ -421,7 +421,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String funcCallTemplate =
                 "unsigned int VARNAME = voteSumForCandidate" +
                 (unique ? "Unique" : "") +
-                "(votesNUM, CAND);";
+                "(votesNUM, " + UnifiedNameContainer.getVoter() + voteSumCounter + ", CAND);";
         String counter = "voteSumExp_" + voteSumCounter;
         voteSumCounter++;
         funcCallTemplate = funcCallTemplate.replaceAll("VARNAME", counter);

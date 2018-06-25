@@ -18,6 +18,8 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class Preference extends CBMCInputType {
 
+	String[] sizes = {UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate()};
+	
 	@Override
 	public String getInputString() {
 		return "[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "]";
@@ -39,8 +41,23 @@ public class Preference extends CBMCInputType {
 	}
 
 	@Override
+	public boolean hasVariableAsMinValue() {
+		return false;
+	}
+
+	@Override
+	public boolean hasVariableAsMaxValue() {
+		return true;
+	}
+
+	@Override
 	public boolean isVotingForOneCandidate() {
 		return false;
+	}
+	
+	@Override
+	public String getMaximalSize(int listDepth) {
+		return sizes[listDepth];
 	}
 
 	@Override
@@ -49,7 +66,7 @@ public class Preference extends CBMCInputType {
 		code.add("int total_diff = 0;");
 
 		// TODO fix
-		code.add("int new_votes1[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "];");
+		code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "];");
 
 		code.add("for (int i = 0; i < " + UnifiedNameContainer.getVoter() + "; i++) {"); // go over all voters
 		code.addTab();
@@ -66,8 +83,8 @@ public class Preference extends CBMCInputType {
 		code.addTab();
 		code.add("total_diff++;"); // if we changed the vote, we keep track
 									// of it
-		code.add("new_votes1[i][j] = nondet_int();");
-		code.add("assume(new_votes1[i][j] != ORIG_VOTES[i][j]);"); // set
+		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = nondet_int();");
+		code.add("assume(" + UnifiedNameContainer.getNewVotesName() + "1[i][j] != ORIG_VOTES[i][j]);"); // set
 																	// the
 																	// vote
 																	// to
@@ -75,12 +92,12 @@ public class Preference extends CBMCInputType {
 		// different
 		// from
 		// original
-		code.add("assume(0 <= new_votes1[i][j]);");
-		code.add("assume(new_votes1[i][j] <= 100);");
+		code.add("assume(0 <= " + UnifiedNameContainer.getNewVotesName() + "1[i][j]);");
+		code.add("assume(" + UnifiedNameContainer.getNewVotesName() + "1[i][j] <= 100);");
 		code.deleteTab();
 		code.add("} else {");
 		code.addTab();
-		code.add("new_votes1[i][j] = ORIG_VOTES[i][j];");
+		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = ORIG_VOTES[i][j];");
 		code.deleteTab();
 		code.add("}");
 		code.deleteTab();
@@ -101,7 +118,7 @@ public class Preference extends CBMCInputType {
 
 	@Override
 	public CBMCResultWrapperMultiArray extractVotesWrappedMulti(List<String> result, int numberCandidates) {
-		return super.helper.readTwoDimVarLong("new_votes", result).get(0);
+		return super.helper.readTwoDimVarLong("" + UnifiedNameContainer.getNewVotesName() + "", result).get(0);
 	}
 
 	@Override
@@ -159,7 +176,7 @@ public class Preference extends CBMCInputType {
 //	@Override
 //	public void addMarginMainCheck(CodeArrayListBeautifier code, int margin,
 //			List<String> origResult) {
-//		code.add("int new_votes1[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "];");
+//		code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "];");
 //
 //		code.add("for (int i = 0; i < V; i++) {"); // go over all voters
 //		code.addTab();
@@ -176,8 +193,8 @@ public class Preference extends CBMCInputType {
 //		code.addTab();
 //		code.add("total_diff++;"); // if we changed the vote, we keep track
 //									// of it
-//		code.add("new_votes1[i][j] = nondet_int();");
-//		code.add("assume(new_votes1[i][j] != ORIG_VOTES[i][j]);"); // set
+//		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = nondet_int();");
+//		code.add("assume(" + UnifiedNameContainer.getNewVotesName() + "1[i][j] != ORIG_VOTES[i][j]);"); // set
 //																	// the
 //																	// vote
 //																	// to
@@ -185,12 +202,12 @@ public class Preference extends CBMCInputType {
 //		// different
 //		// from
 //		// original
-//		code.add("assume(0 <= new_votes1[i][j]);");
-//		code.add("assume(new_votes1[i][j] <= 100);");
+//		code.add("assume(0 <= " + UnifiedNameContainer.getNewVotesName() + "1[i][j]);");
+//		code.add("assume(" + UnifiedNameContainer.getNewVotesName() + "1[i][j] <= 100);");
 //		code.deleteTab();
 //		code.add("} else {");
 //		code.addTab();
-//		code.add("new_votes1[i][j] = ORIG_VOTES[i][j];");
+//		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = ORIG_VOTES[i][j];");
 //		code.deleteTab();
 //		code.add("}");
 //		code.deleteTab();
@@ -254,7 +271,7 @@ public class Preference extends CBMCInputType {
 
 	@Override
 	public List<List<String>> getNewVotes(List<String> lastFailedRun) {
-		return super.helper.readTwoDimVarLong("new_votes", lastFailedRun).get(0).getList();
+		return super.helper.readTwoDimVarLong("" + UnifiedNameContainer.getNewVotesName() + "", lastFailedRun).get(0).getList();
 	}
 	
 	@Override

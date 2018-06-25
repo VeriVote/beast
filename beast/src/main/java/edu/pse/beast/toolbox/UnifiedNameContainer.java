@@ -24,9 +24,14 @@ public class UnifiedNameContainer {
 		map.put("votingMethod" , "voting");
 		map.put("struct_result" , "result");
 		map.put("stack_result" , "stack_result");
+		map.put("struct_candidateList", "candidateList_result");
 		map.put("result_arr_name" , "arr");
 		
 		map.put("votingArray" , "votes");
+		
+		map.put("new_result", "new_result");
+		map.put(("new_votes"), ("new_votes"));
+		map.put("orig_result", "ORIG_RESULT");
 	}
 
 	public static void addListener(NameChangeListener toAdd) {
@@ -67,6 +72,10 @@ public class UnifiedNameContainer {
 	public static String getStruct_result() {
 		return "struct " + map.get("struct_result");
 	}
+	
+	public static String getStruct_candidateList() {
+		return "struct" + map.get("struct_candidateList");
+	}
 
 	public static String getStruct_stack_result() {
 		return "struct " + map.get("stack_result");
@@ -74,6 +83,18 @@ public class UnifiedNameContainer {
 
 	public static String getResult_arr_name() {
 		return map.get("result_arr_name");
+	}
+	
+	public static String getNewResultName() {
+		return map.get("new_result");
+	}
+	
+	public static String getNewVotesName() {
+		return map.get("new_votes");
+	}
+	
+	public static String getOrigResultName() {
+		return map.get("ORIG_RESULT");
 	}
 
 	public static String getVotingArray() {

@@ -17,6 +17,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 
+import edu.pse.beast.codeareaJAVAFX.BoundedVarCodeArea;
 import edu.pse.beast.codeareaJAVAFX.NewCodeArea;
 import edu.pse.beast.codeareaJAVAFX.NewPropertyCodeArea;
 import edu.pse.beast.codeareaJAVAFX.SaverLoader;
@@ -184,6 +185,12 @@ public class GUIController {
 
 	@FXML // fx:id="consolePane"
 	private Tab consolePane;
+	
+	@FXML
+	private Tab boundVariablesTab;
+	
+	@FXML
+	private Tab booleanExpressionTab;
 
 	@FXML
 	private Tab informationPane;
@@ -278,6 +285,8 @@ public class GUIController {
 	private boolean running = false;
 
 	private NewCodeArea codeArea;
+	
+	private BoundedVarCodeArea boundedVarArea;
 
 	private NewPropertyCodeArea preArea;
 
@@ -476,7 +485,13 @@ public class GUIController {
 		VirtualizedScrollPane<NewPropertyCodeArea> VSPpost = new VirtualizedScrollPane<NewPropertyCodeArea>(postArea);
 
 		postPropertyPane.setContent(VSPpost);
+		
+		boundedVarArea = new BoundedVarCodeArea();
 
+		VirtualizedScrollPane<BoundedVarCodeArea> VSPbound = new VirtualizedScrollPane<BoundedVarCodeArea>(boundedVarArea);
+
+		boundVariablesTab.setContent(VSPbound);
+		
 		variableTreeView.setShowRoot(false);
 		TreeItem<String> symbVarRoot = new TreeItem<String>();
 		symbVarRoot.setExpanded(true);
@@ -493,7 +508,7 @@ public class GUIController {
 		symbVarRoot.getChildren().add(candidateItems);
 		symbVarRoot.getChildren().add(seatItems);
 
-		booleanExpEditor = new BooleanExpEditorNEW(preArea, postArea,
+		booleanExpEditor = new BooleanExpEditorNEW(preArea, postArea, boundedVarArea,
 				new PreAndPostConditionsDescription("default description"), null);
 
 		variableTreeView.getSelectionModel().selectedItemProperty()
@@ -809,7 +824,7 @@ public class GUIController {
 					propNameField.setEditable(false);
 					resultNameField.setText(text);
 
-					booleanExpEditor.getPropertyDescription().setNewName(text);
+					booleanExpEditor.getPropertyDescription().setName(text);
 
 					if (booleanExpEditor.getCurrentItem() != null) {
 						booleanExpEditor.getCurrentItem().setText(text);

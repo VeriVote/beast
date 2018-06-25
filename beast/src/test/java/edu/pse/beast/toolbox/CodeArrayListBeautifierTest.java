@@ -94,7 +94,7 @@ public class CodeArrayListBeautifierTest {
         arrayList.add("3");
         arrayList.add("test");
         CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
-        instance.addArrayList(arrayList);
+        instance.addList(arrayList);
         ArrayList<String> resultList = instance.getCodeArrayList();
         if (resultList.size() == arrayList.size()) {
             for (int i = 0; i < arrayList.size(); i++) {
@@ -104,6 +104,6 @@ public class CodeArrayListBeautifierTest {
         } else {
             fail("The ArrayLists are of a different size");
         }
-        instance.addArrayList(null);
+        instance.addList(null);
     }
 }

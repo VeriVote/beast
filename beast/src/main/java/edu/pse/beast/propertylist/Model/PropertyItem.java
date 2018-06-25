@@ -114,15 +114,15 @@ public class PropertyItem implements ResultPresenterElement {
 		this.description = descr;
 	}
 
-	public void setDescription(String newName, FormalPropertiesDescription preCond,
-			FormalPropertiesDescription postCond, SymbolicVariableList symVars) {
-		this.description = new PreAndPostConditionsDescription(newName, preCond, postCond, symVars);
-	}
+//	public void setDescription(String newName, FormalPropertiesDescription preCond,
+//			FormalPropertiesDescription postCond, SymbolicVariableList symVars) {
+//		this.description = new PreAndPostConditionsDescription(newName, preCond, postCond, symVars);
+//	}
 
-	public void setDescriptionName(String newName) {
-		this.description = new PreAndPostConditionsDescription(newName, this.description.getPreConditionsDescription(),
-				this.description.getPostConditionsDescription(), this.description.getSymVarList());
-	}
+//	public void setDescriptionName(String newName) {
+//		this.description = new PreAndPostConditionsDescription(newName, this.description.getPreConditionsDescription(),
+//				this.description.getPostConditionsDescription(), this.description.getSymVarList());
+//	}
 
 	public String getDescriptionName() {
 		return this.description.getName();

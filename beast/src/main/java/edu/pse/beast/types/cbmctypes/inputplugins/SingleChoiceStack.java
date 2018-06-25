@@ -18,6 +18,8 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class SingleChoiceStack extends CBMCInputType {
 	
+	String[] sizes = {UnifiedNameContainer.getCandidate()};
+	
 	@Override
 	public String getInputString() {
 		return "[" + UnifiedNameContainer.getCandidate() + "]";
@@ -37,6 +39,22 @@ public class SingleChoiceStack extends CBMCInputType {
 	public String getMaximalValue() {
 		return UnifiedNameContainer.getVoter();
 	}
+	
+
+	@Override
+	public String getMaximalSize(int listDepth) {
+		return sizes[listDepth];
+	}
+
+	@Override
+	public boolean hasVariableAsMinValue() {
+		return false;
+	}
+
+	@Override
+	public boolean hasVariableAsMaxValue() {
+		return true;
+	}
 
 	@Override
 	public boolean isVotingForOneCandidate() {
@@ -51,7 +69,7 @@ public class SingleChoiceStack extends CBMCInputType {
 			code.add("int total_diff = 0;");
 			code.add("int pos_diff = 0;");
 			
-			code.add("int new_votes1[" + UnifiedNameContainer.getCandidate() + "];");
+			code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" + UnifiedNameContainer.getCandidate() + "];");
 			code.add("int diff[" + UnifiedNameContainer.getCandidate() + "];");
 			
 			code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {"); // go over all voters
@@ -70,7 +88,7 @@ public class SingleChoiceStack extends CBMCInputType {
 			code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {"); // go over all voters
 			code.addTab();
 
-				code.add("new_votes1[i] = ORIG_VOTES[i] + diff[i];");
+				code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i] = ORIG_VOTES[i] + diff[i];");
 				code.add("if (0 < diff[i]) pos_diff += diff[i];");
 				code.add("total_diff += diff[i];");
 				
@@ -99,7 +117,7 @@ public class SingleChoiceStack extends CBMCInputType {
 
 		for (Iterator<CBMCResultWrapperSingleArray> iterator = singleVotesList.iterator(); iterator.hasNext();) {
 			CBMCResultWrapperSingleArray cbmcResultWrapperSingleArray = (CBMCResultWrapperSingleArray) iterator.next();
-			toReturn.add(cbmcResultWrapperSingleArray.wrapInTwoDim(1, "new_votes", numberCandidates));
+			toReturn.add(cbmcResultWrapperSingleArray.wrapInTwoDim(1, "" + UnifiedNameContainer.getNewVotesName() + "", numberCandidates));
 		}
 
 		return toReturn.get(0);
@@ -199,7 +217,7 @@ public class SingleChoiceStack extends CBMCInputType {
 	public List<List<String>> getNewVotes(List<String> lastFailedRun) {
 		List<List<String>> toReturn = new ArrayList<List<String>>();
 		
-		toReturn.add(super.helper.readOneDimVarLong("new_votes", lastFailedRun).get(0).getList());
+		toReturn.add(super.helper.readOneDimVarLong("" + UnifiedNameContainer.getNewVotesName() + "", lastFailedRun).get(0).getList());
 		
 		return toReturn;
 	}
@@ -250,5 +268,4 @@ public class SingleChoiceStack extends CBMCInputType {
 	public String otherToString() {
 		return "Single choice stack";
 	}
-	
 }

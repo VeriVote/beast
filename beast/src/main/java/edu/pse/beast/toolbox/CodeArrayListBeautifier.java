@@ -74,15 +74,16 @@ public class CodeArrayListBeautifier {
      *
      * @param arrayList the added ArrayList
      */
-    public void addArrayList(List<String> arrayList) {
-        if (arrayList != null) {
-            arrayList.forEach((singleItem) -> {
+    public void addList(List<String> list) {
+        if (list != null) {
+            list.forEach((singleItem) -> {
                 this.add(singleItem);
             });
         }
+
     }
 
 	public void addAll(List<String> votingResultCode) {
-		addArrayList(votingResultCode);
+		addList(votingResultCode);
 	}
 }

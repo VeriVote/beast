@@ -37,10 +37,7 @@ public class BooleanExpEditorGeneralErrorFinder {
 		
 		//pre cond error finder
 		
-		BooleanExpANTLRHandler preAntlrHandler = new BooleanExpANTLRHandler(property.getPreConditionsDescription().getCode());	
-		
-		
-		
+		BooleanExpANTLRHandler preAntlrHandler = new BooleanExpANTLRHandler(property.getPreConditionsDescription().getCode());
 		combinedErrors.addAll(BooleanExpEditorGrammarErrorFinder.getErrors(preAntlrHandler));
 		combinedErrors.addAll(BooleanExpEditorVariableErrorFinder.getErrors(preAntlrHandler, property.getSymVarList(), GUIController.getController().getCodeArea()));
 		
@@ -51,6 +48,9 @@ public class BooleanExpEditorGeneralErrorFinder {
 		combinedErrors.addAll(BooleanExpEditorGrammarErrorFinder.getErrors(postAntlrHandler));
 		combinedErrors.addAll(BooleanExpEditorVariableErrorFinder.getErrors(postAntlrHandler, property.getSymVarList(), GUIController.getController().getCodeArea()));
 
+		
+		//bounded variable error finder
+		
 		
 		return combinedErrors;
 		

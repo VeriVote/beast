@@ -13,12 +13,13 @@ import edu.pse.beast.datatypes.NameInterface;
  *
  * @author Niels
  */
-public class PreAndPostConditionsDescription implements NameInterface {
+public class PreAndPostConditionsDescription {
 
     private String name;
-    private SymbolicVariableList symbolicVariableList;
-    private FormalPropertiesDescription preConditionsDescription;
-    private FormalPropertiesDescription postConditionsDescription;
+    private final SymbolicVariableList symbolicVariableList;
+    private final FormalPropertiesDescription preConditionsDescription;
+    private final FormalPropertiesDescription postConditionsDescription;
+    private final FormalPropertiesDescription boundedVarDescription;
 
     /**
      *
@@ -29,20 +30,7 @@ public class PreAndPostConditionsDescription implements NameInterface {
         this.symbolicVariableList = new SymbolicVariableList();
         this.preConditionsDescription = new FormalPropertiesDescription("");
         this.postConditionsDescription = new FormalPropertiesDescription("");
-    }
-
-    /**
-     * Creator without a SymbolicVariableList
-     *
-     * @param name HAS to be UNIQUE in the context
-     * @param preDescr the preCondition Description of the Property
-     * @param postDescr the postCondition Description of the Property
-     */
-    public PreAndPostConditionsDescription(String name, FormalPropertiesDescription preDescr,
-            FormalPropertiesDescription postDescr) {
-        this.name = name;
-        this.preConditionsDescription = preDescr;
-        this.postConditionsDescription = postDescr;
+        this.boundedVarDescription = new FormalPropertiesDescription("");
     }
 
     /**
@@ -55,14 +43,14 @@ public class PreAndPostConditionsDescription implements NameInterface {
      */
     public PreAndPostConditionsDescription(String name,
             FormalPropertiesDescription preDescr,
-            FormalPropertiesDescription postDescr, SymbolicVariableList symbolicVariableList) {
+            FormalPropertiesDescription postDescr, FormalPropertiesDescription boundedVarDescription, SymbolicVariableList symbolicVariableList) {
         this.name = name;
         this.preConditionsDescription = preDescr;
         this.postConditionsDescription = postDescr;
+        this.boundedVarDescription = boundedVarDescription;
         this.symbolicVariableList = symbolicVariableList;
     }
 
-    @Override
     public String getName() {
         return this.name;
     }
@@ -89,14 +77,6 @@ public class PreAndPostConditionsDescription implements NameInterface {
 
     /**
      *
-     * @param symbolicVariableList the list, which is to be settled as new
-     */
-    public void setSymbolicVariableList(SymbolicVariableList symbolicVariableList) {
-        this.symbolicVariableList = symbolicVariableList;
-    }
-
-    /**
-     *
      * @return the postConditionsDescription
      */
     public FormalPropertiesDescription getPostConditionsDescription() {
@@ -110,25 +90,12 @@ public class PreAndPostConditionsDescription implements NameInterface {
     public FormalPropertiesDescription getPreConditionsDescription() {
         return preConditionsDescription;
     }
-
-    /**
-     *
-     * @param postConditionsDescription the new postConditionsDescription
-     */
-    public void setPostConditionsDescription(FormalPropertiesDescription postConditionsDescription) {
-        this.postConditionsDescription = postConditionsDescription;
+    
+    public FormalPropertiesDescription getBoundedVarDescription() {
+    	return boundedVarDescription;
     }
 
-    /**
-     *
-     * @param preConditionsDescription the new preConditionsDescription
-     */
-    public void setPreConditionsDescription(FormalPropertiesDescription preConditionsDescription) {
-        this.preConditionsDescription = preConditionsDescription;
-    }
-
-    @Override
-    public void setNewName(String newName) {
-        this.name = newName;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 }

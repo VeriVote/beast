@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.Iterator;
 
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorGeneralErrorFinder;
+import edu.pse.beast.codeareaJAVAFX.BoundedVarCodeArea;
 import edu.pse.beast.codeareaJAVAFX.NewPropertyCodeArea;
 import edu.pse.beast.codeareaJAVAFX.SaverLoader;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
@@ -16,6 +17,9 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 
 	private NewPropertyCodeArea preArea;
 	private NewPropertyCodeArea postArea;
+
+	private BoundedVarCodeArea boundedVarArea;
+
 	private PreAndPostConditionsDescription currentPropertyDescription;
 	private ParentTreeItem currentItem;
 
@@ -24,12 +28,15 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 	private final PropertyDescriptionSaverLoader propSaverLoader = new PropertyDescriptionSaverLoader();
 
 	public BooleanExpEditorNEW(NewPropertyCodeArea preArea, NewPropertyCodeArea postArea,
-			PreAndPostConditionsDescription propDesc, ParentTreeItem currentItem) {
+			BoundedVarCodeArea boundedVarArea, PreAndPostConditionsDescription propDesc, ParentTreeItem currentItem) {
 
 		this.saverLoader = new SaverLoader(".prop", "BEAST property description");
 
 		this.preArea = preArea;
 		this.postArea = postArea;
+
+		this.boundedVarArea = boundedVarArea;
+
 		this.currentPropertyDescription = propDesc;
 		this.currentItem = currentItem;
 	}
@@ -154,6 +161,7 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 	public void updatePropertyTextAreas() {
 		preArea.setDescription(currentPropertyDescription.getPreConditionsDescription());
 		postArea.setDescription(currentPropertyDescription.getPostConditionsDescription());
+		boundedVarArea.setDescription(currentPropertyDescription.getBoundedVarDescription());
 	}
 
 	public void setCurrentPropertyDescription(ParentTreeItem propertyItem, boolean bringToFront) {
@@ -175,7 +183,7 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 		if (bringToFront) {
 			bringToFront();
 		}
-		
+
 		saverLoader.resetHasSaveFile();
 
 	}
@@ -207,10 +215,10 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 		this.preArea.clear();
 		this.postArea.clear();
 	}
-	
+
 	private PreAndPostConditionsDescription convert(String json) {
 		PreAndPostConditionsDescription newDescription = null;
-		
+
 		if (!json.equals("")) {
 
 			try {
@@ -218,12 +226,12 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 			return newDescription;
 		}
 		return null;
 	}
-	
+
 	public PreAndPostConditionsDescription open(File file) {
 		return convert(saverLoader.load(file));
 	}
@@ -235,9 +243,9 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 
 		if (newDescription != null) {
 			currentPropertyDescription = newDescription;
-			
+
 			saverLoader.resetHasSaveFile();
-			
+
 			preArea.replaceText(newDescription.getPreConditionsDescription().getCode());
 			postArea.replaceText(newDescription.getPostConditionsDescription().getCode());
 
@@ -245,7 +253,7 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 			bringToFront();
 		}
 	}
-	
+
 	@Override
 	public void save() {
 		updatePropertyTextAreas();
@@ -263,7 +271,7 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 
 		saverLoader.saveAs("", json);
 	}
-	
+
 	public void saveAs(PreAndPostConditionsDescription description, File file) {
 		String json = propSaverLoader.createSaveString(description);
 
@@ -273,37 +281,37 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 	@Override
 	public void undo() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void redo() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void cut() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void copy() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void paste() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void delete() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

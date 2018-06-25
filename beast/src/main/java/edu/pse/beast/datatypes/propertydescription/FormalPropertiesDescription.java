@@ -5,6 +5,10 @@
  */
 package edu.pse.beast.datatypes.propertydescription;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  *
  * @author Holger
@@ -35,7 +39,10 @@ public class FormalPropertiesDescription {
     public void setCode(String code) {
         this.code = code;
     }
-//    public BooleanExpListNode getAST(){
-//        return astGenerator.generateFromSyntaxTree(code);
-//    }
+
+	public List<String> getCodeAsList() {
+		String[] split = code.split("\n");
+		
+		return Arrays.asList(split);
+	}
 }

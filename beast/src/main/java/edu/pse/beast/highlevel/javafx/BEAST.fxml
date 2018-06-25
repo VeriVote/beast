@@ -47,7 +47,7 @@
 						<Menu mnemonicParsing="false" text="%key.open">
 							<items>
 								<MenuItem mnemonicParsing="false" onAction="#openProject" text="%key.project" />
-                        <MenuItem mnemonicParsing="false" onAction="#openProperty" text="open prop" />
+                        <MenuItem mnemonicParsing="false" onAction="#openProperty" text="%key.property" />
 								<MenuItem mnemonicParsing="false" onAction="#openElectionDescription" text="%key.electiondescription" />
 								<MenuItem mnemonicParsing="false" onAction="#openPropertyList" text="%key.propertylist" />
 								<MenuItem mnemonicParsing="false" onAction="#openVotingInput" text="%key.voteslist" />
@@ -57,7 +57,7 @@
 						<Menu mnemonicParsing="false" text="%key.save">
 							<items>
 								<MenuItem mnemonicParsing="false" onAction="#saveProject" text="%key.project" />
-                        <MenuItem mnemonicParsing="false" onAction="#saveProperty" text="save Prop" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveProperty" text="%key.property" />
 								<MenuItem mnemonicParsing="false" onAction="#saveElectionDescription" text="%key.electiondescription" />
 								<MenuItem mnemonicParsing="false" onAction="#savePropertyList" text="%key.propertylist" />
 								<MenuItem mnemonicParsing="false" onAction="#saveVotingInput" text="%key.voteslist" />
@@ -280,53 +280,9 @@
 								<Tab fx:id="codePane" onSelectionChanged="#codePaneClicked" text="%key.code" />
 								<Tab fx:id="propertyPane" onSelectionChanged="#propertyPaneClicked" text="%key.property">
                            <content>
-                              <SplitPane dividerPositions="0.11125654450261781, 0.7" orientation="VERTICAL">
+                              <SplitPane dividerPositions="0.36394557823129253, 0.7006802721088435" orientation="VERTICAL">
                                 <items>
                                     <BorderPane>
-                                       <center>
-                                          <TreeView fx:id="variableTreeView" BorderPane.alignment="CENTER" />
-                                       </center>
-                                       <right>
-                                          <BorderPane BorderPane.alignment="CENTER">
-                                             <top>
-                                                <BorderPane BorderPane.alignment="CENTER">
-                                                   <left>
-                                                      <MenuButton fx:id="addSymbVarButton" alignment="CENTER" contentDisplay="BOTTOM" maxWidth="138.0" minWidth="138.0" mnemonicParsing="false" prefWidth="138.0" text="%key.add" BorderPane.alignment="CENTER">
-                                                        <items>
-                                                          <MenuItem mnemonicParsing="false" text="Name">
-                                                               <graphic>
-                                                                  <TextField fx:id="symbVarField" maxWidth="110.0" />
-                                                               </graphic>
-                                                            </MenuItem>
-                                                          <MenuItem mnemonicParsing="false" onAction="#addSymbVoter">
-                                                               <graphic>
-                                                                  <Label text="%key.addVoter" />
-                                                               </graphic>
-                                                            </MenuItem>
-                                                            <MenuItem mnemonicParsing="false" onAction="#addSymbCand">
-                                                               <graphic>
-                                                                  <Label text="%key.addCandidate" />
-                                                               </graphic>
-                                                            </MenuItem>
-                                                            <MenuItem mnemonicParsing="false" onAction="#addSymbSeat">
-                                                               <graphic>
-                                                                  <Label text="%key.addSeat" />
-                                                               </graphic>
-                                                            </MenuItem>
-                                                        </items>
-                                                      </MenuButton>
-                                                   </left>
-                                                </BorderPane>
-                                             </top>
-                                             <bottom>
-                                                <BorderPane BorderPane.alignment="CENTER">
-                                                   <left>
-                                                      <Button fx:id="removeSymbVarButton" alignment="CENTER" maxWidth="138.0" minWidth="138.0" mnemonicParsing="false" onAction="#removeSymbVar" prefWidth="138.0" text="%key.remove" BorderPane.alignment="CENTER" />
-                                                   </left>
-                                                </BorderPane>
-                                             </bottom>
-                                          </BorderPane>
-                                       </right>
                                        <top>
                                           <BorderPane BorderPane.alignment="CENTER">
                                              <right>
@@ -337,10 +293,76 @@
                                              </center>
                                           </BorderPane>
                                        </top>
+                                       <center>
+                                          <TabPane BorderPane.alignment="CENTER">
+                                             <tabs>
+                                                <Tab closable="false" text="Variables">
+                                                   <content>
+                                                      <BorderPane prefHeight="200.0" prefWidth="200.0">
+                                                         <center>
+                                                            <TreeView fx:id="variableTreeView" BorderPane.alignment="CENTER" />
+                                                         </center>
+                                                         <right>
+                                                            <BorderPane BorderPane.alignment="CENTER">
+                                                               <top>
+                                                                  <BorderPane BorderPane.alignment="CENTER">
+                                                                     <left>
+                                                                        <MenuButton fx:id="addSymbVarButton" alignment="CENTER" contentDisplay="BOTTOM" maxWidth="138.0" minWidth="138.0" mnemonicParsing="false" prefWidth="138.0" text="%key.add" BorderPane.alignment="CENTER">
+                                                                          <items>
+                                                                            <MenuItem mnemonicParsing="false" text="Name">
+                                                                                 <graphic>
+                                                                                    <TextField fx:id="symbVarField" maxWidth="110.0" />
+                                                                                 </graphic>
+                                                                              </MenuItem>
+                                                                            <MenuItem mnemonicParsing="false" onAction="#addSymbVoter">
+                                                                                 <graphic>
+                                                                                    <Label text="%key.addVoter" />
+                                                                                 </graphic>
+                                                                              </MenuItem>
+                                                                              <MenuItem mnemonicParsing="false" onAction="#addSymbCand">
+                                                                                 <graphic>
+                                                                                    <Label text="%key.addCandidate" />
+                                                                                 </graphic>
+                                                                              </MenuItem>
+                                                                              <MenuItem mnemonicParsing="false" onAction="#addSymbSeat">
+                                                                                 <graphic>
+                                                                                    <Label text="%key.addSeat" />
+                                                                                 </graphic>
+                                                                              </MenuItem>
+                                                                          </items>
+                                                                        </MenuButton>
+                                                                     </left>
+                                                                  </BorderPane>
+                                                               </top>
+                                                               <bottom>
+                                                                  <BorderPane BorderPane.alignment="CENTER">
+                                                                     <left>
+                                                                        <Button fx:id="removeSymbVarButton" alignment="CENTER" maxWidth="138.0" minWidth="138.0" mnemonicParsing="false" onAction="#removeSymbVar" prefWidth="138.0" text="%key.remove" BorderPane.alignment="CENTER" />
+                                                                     </left>
+                                                                  </BorderPane>
+                                                               </bottom>
+                                                            </BorderPane>
+                                                         </right>
+                                                      </BorderPane>
+                                                   </content>
+                                                </Tab>
+                                                <Tab fx:id="boundVariablesTab" closable="false" text="Voter Vars">
+                                                  <content>
+                                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                                  </content>
+                                                </Tab>
+                                                <Tab fx:id="booleanExpressionTab" closable="false" text="expressions">
+                                                  <content>
+                                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                                  </content>
+                                                </Tab>
+                                             </tabs>
+                                          </TabPane>
+                                       </center>
                                     </BorderPane>
                                     <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                        <children>
-                                          <TitledPane fx:id="prePropertyPane" animated="false" text="PreProperties" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <TitledPane fx:id="prePropertyPane" animated="false" layoutY="52.0" prefHeight="115.0" prefWidth="405.0" text="PreProperties" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane prefHeight="200.0" prefWidth="200.0">

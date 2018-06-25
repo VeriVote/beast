@@ -31,7 +31,7 @@ public class SingleCandidate extends CBMCOutputType {
 
 	@Override
 	public String[] extractResult(List<String> toExtract) {
-		String[] tmpArray = { "" + super.helper.readLongs("new_result", toExtract).get(0).getValue() };
+		String[] tmpArray = { "" + super.helper.readLongs("" + UnifiedNameContainer.getNewResultName() + "", toExtract).get(0).getValue() };
 		return tmpArray;
 	}
 
@@ -48,14 +48,14 @@ public class SingleCandidate extends CBMCOutputType {
 	@Override
 	public CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code) {
 		code.add("void verifyMain() {");
-		// code.add("int new_votes1[" + UnifiedNameContainer.getVoter() + "], diff[" + UnifiedNameContainer.getVoter() + "], total_diff, pos_diff;");
+		// code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" + UnifiedNameContainer.getVoter() + "], diff[" + UnifiedNameContainer.getVoter() + "], total_diff, pos_diff;");
 
 		code.addTab();
 
 		code.add("int total_diff = 0;");
 
-		code.add("int new_result1 = " + UnifiedNameContainer.getVotingMethod() + "(new_votes1);");
-		code.add("assert(new_result1 == ORIG_RESULT);");
+		code.add("int " + UnifiedNameContainer.getNewResultName() + "1 = " + UnifiedNameContainer.getVotingMethod() + "(" + UnifiedNameContainer.getNewVotesName() + "1);");
+		code.add("assert(" + UnifiedNameContainer.getNewResultName() + "1 == " + UnifiedNameContainer.getOrigResultName() + ");");
 
 		code.deleteTab();
 
@@ -109,7 +109,7 @@ public class SingleCandidate extends CBMCOutputType {
 
 	@Override
 	public List<String> getNewResult(List<String> lastFailedRun) {
-		List<CBMCResultWrapperLong> tmpResultLong = super.helper.readLongs("new_result", lastFailedRun);
+		List<CBMCResultWrapperLong> tmpResultLong = super.helper.readLongs("" + UnifiedNameContainer.getNewResultName() + "", lastFailedRun);
 
 		List<String> toReturn = new ArrayList<String>();
 		toReturn.add(tmpResultLong.get(0).getValue());
@@ -123,8 +123,8 @@ public class SingleCandidate extends CBMCOutputType {
 
 	@Override
 	public void addVerifyOutput(CodeArrayListBeautifier code) {
-		code.add("int new_result1 = " + UnifiedNameContainer.getVotingMethod() + "(new_votes1);");
-		code.add("assert(new_result1 == ORIG_RESULT);");
+		code.add("int " + UnifiedNameContainer.getNewResultName() + "1 = " + UnifiedNameContainer.getVotingMethod() + "(" + UnifiedNameContainer.getNewVotesName() + "1);");
+		code.add("assert(" + UnifiedNameContainer.getNewResultName() + "1 == " + UnifiedNameContainer.getOrigResultName() + ");");
 	}
 
 	@Override
@@ -132,7 +132,7 @@ public class SingleCandidate extends CBMCOutputType {
 		// just declare the variable as the result
 		String declaration = "";
 
-		declaration = "int ORIG_RESULT = " + origResult.get(0) + ";";
+		declaration = "int " + UnifiedNameContainer.getOrigResultName() + " = " + origResult.get(0) + ";";
 
 		code.add(declaration);
 	}
