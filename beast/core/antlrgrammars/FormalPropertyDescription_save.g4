@@ -1,26 +1,20 @@
-grammar FormalPropertyDescription;
+grammar FormalPropertyDescription_save;
 
 booleanExpList : booleanExpListElement*;
 
 booleanExpListElement : booleanExp ';';
 
-booleanExp : 	quantorExp | concatenationExp | binaryRelationExp | notExp | comparisonExp | OpenBracket booleanExp ClosedBracket;
+booleanExp : 	quantorExp | binaryRelationExp | notExp | comparisonExp | OpenBracket booleanExp ClosedBracket;
 
 binaryRelationExp : binaryRelationExp BinaryRelationSymbol booleanExp |
 					quantorExp BinaryRelationSymbol booleanExp |
 					notExp BinaryRelationSymbol booleanExp |
 					comparisonExp BinaryRelationSymbol booleanExp |	
-					
-					
-					Vote BinaryRelationSymbol concatenationExp|
-					
 			
 					'(' binaryRelationExp ')' BinaryRelationSymbol booleanExp |
 					'(' quantorExp ')' BinaryRelationSymbol booleanExp |
 					'(' notExp ')' BinaryRelationSymbol booleanExp |
 					'(' comparisonExp ')' BinaryRelationSymbol booleanExp; 		
-					
-concatenationExp :	Vote Concatenate Vote;
 
 quantorExp : Quantor passSymbVar ':' booleanExp; 	
 
@@ -75,10 +69,6 @@ Mult : '*'|'/';
 
 Add : '+'|'-';
 
-Concatenate : '++';
-
-Intersect : 'INTERSECT';
-
 Vote : 'VOTES' Integer;
 
 Elect : 'ELECT' Integer;
@@ -93,10 +83,6 @@ OpenBracket : '(';
 
 Quantor : 	'FOR_ALL_VOTERS' | 'FOR_ALL_CANDIDATES' | 'FOR_ALL_SEATS' |
 			'EXISTS_ONE_VOTER' | 'EXISTS_ONE_CANDIDATE' | 'EXISTS_ONE_SEAT';
-			
-Split :		'SPLIT';
-
-Permutation : 'PERM';
 
 ComparisonSymbol : '==' | '!=' | '<=' | '>=' | '<' | '>';
 
