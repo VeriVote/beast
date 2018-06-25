@@ -51,14 +51,14 @@ public class CandidateList extends CBMCOutputType {
 
 		code.addTab();
 
-		code.add("struct result tmp = " + UnifiedNameContainer.getVotingMethod() + "(" + UnifiedNameContainer.getNewVotesName() + "1);");
+		code.add("struct " + UnifiedNameContainer.getStruct_candidateList() + " tmp = " + UnifiedNameContainer.getVotingMethod() + "(" + UnifiedNameContainer.getNewVotesName() + "1);");
 
 		code.add("unsigned int *tmp_result = tmp." + UnifiedNameContainer.getResult_arr_name() + ";");
 
-		code.add("unsigned int " + UnifiedNameContainer.getNewResultName() + "1[" + UnifiedNameContainer.getSeats() + "];"); // create the array where the
+		code.add("unsigned int " + UnifiedNameContainer.getNewResultName() + "1[" + UnifiedNameContainer.getCandidate() + "];"); // create the array where the
 		// new seats will get saved
 
-		code.add("for (int i = 0; i < " + UnifiedNameContainer.getSeats() + "; i++) {"); // iterate over the
+		code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {"); // iterate over the
 		// seat array, and
 		// fill it
 		code.addTab();
@@ -68,7 +68,7 @@ public class CandidateList extends CBMCOutputType {
 		code.deleteTab();
 		code.add("}"); // close the for loop
 
-		code.add("for (int i = 0; i < " + UnifiedNameContainer.getSeats() + "; i++) {"); // iterate over all
+		code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {"); // iterate over all
 		code.addTab();
 		// candidates /
 		// seats
@@ -85,13 +85,13 @@ public class CandidateList extends CBMCOutputType {
 
 	@Override
 	public CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code, int voteNumber) {
-		String temp = "struct result tmp" + voteNumber + " = " + UnifiedNameContainer.getVotingMethod() + "(votes" + voteNumber + ");";
+		String temp = "struct " + UnifiedNameContainer.getStruct_candidateList() + " tmp" + voteNumber + " = " + UnifiedNameContainer.getVotingMethod() + "(votes" + voteNumber + ");";
 		code.add(temp);
-		String tempElect = "unsigned int *tempElect" + voteNumber + " = tmp" + voteNumber + "." + UnifiedNameContainer.getResult_arr_name() +";";
+		String tempElect = "unsigned int *tempElect" + voteNumber + " = tmp" + voteNumber + "." + UnifiedNameContainer.getStruct_candidateList() +";";
 		code.add(tempElect);
-		String electX = "unsigned int elect" + voteNumber + "[" + UnifiedNameContainer.getSeats() + "];";
+		String electX = "unsigned int elect" + voteNumber + "[" + UnifiedNameContainer.getCandidate() + "];";
 		code.add(electX);
-		String forLoop = "for (int electLoop = 0; electLoop < " + UnifiedNameContainer.getSeats() + "; electLoop++) {";
+		String forLoop = "for (int electLoop = 0; electLoop < " + UnifiedNameContainer.getCandidate() + "; electLoop++) {";
 		code.add(forLoop);
 		code.addTab();
 		code.add("elect" + voteNumber + "[electLoop] = tempElect" + voteNumber + "[electLoop];");
@@ -103,7 +103,7 @@ public class CandidateList extends CBMCOutputType {
 
 	@Override
 	public String getCArrayType() {
-		return "[" + UnifiedNameContainer.getSeats() + "]";
+		return "[" + UnifiedNameContainer.getCandidate() + "]";
 	}
 
 	@Override
@@ -111,13 +111,13 @@ public class CandidateList extends CBMCOutputType {
 		code.add("int main() {");
 		code.addTab();
 
-		String temp = "struct result tmp" + voteNumber + " = " + UnifiedNameContainer.getVotingMethod() + "(ORIG_VOTES);";
+		String temp = "struct " + UnifiedNameContainer.getStruct_candidateList() + " tmp" + voteNumber + " = " + UnifiedNameContainer.getVotingMethod() + "(ORIG_VOTES);";
 		code.add(temp);
-		String tempElect = "unsigned int *tempElect" + voteNumber + " = tmp" + voteNumber + "." + UnifiedNameContainer.getResult_arr_name() + ";";
+		String tempElect = "unsigned int *tempElect" + voteNumber + " = tmp" + voteNumber + "." + UnifiedNameContainer.getStruct_candidateList() + ";";
 		code.add(tempElect);
-		String electX = "unsigned int elect" + voteNumber + "[" + UnifiedNameContainer.getSeats() + "];";
+		String electX = "unsigned int elect" + voteNumber + "[" + UnifiedNameContainer.getCandidate() + "];";
 		code.add(electX);
-		String forLoop = "for (int electLoop = 0; electLoop < " + UnifiedNameContainer.getSeats() + "; electLoop++) {";
+		String forLoop = "for (int electLoop = 0; electLoop < " + UnifiedNameContainer.getCandidate() + "; electLoop++) {";
 		code.add(forLoop);
 		code.addTab();
 		code.add("elect" + voteNumber + "[electLoop] = tempElect" + voteNumber + "[electLoop];");
@@ -159,12 +159,12 @@ public class CandidateList extends CBMCOutputType {
 
 	@Override
 	public void addVerifyOutput(CodeArrayListBeautifier code) {
-		code.add("struct result tmp_result = " + UnifiedNameContainer.getVotingMethod() + "(" + UnifiedNameContainer.getNewVotesName() + "1);");
+		code.add("struct " + UnifiedNameContainer.getStruct_candidateList() + " tmp_result = " + UnifiedNameContainer.getVotingMethod() + "(" + UnifiedNameContainer.getNewVotesName() + "1);");
 
-		code.add("unsigned int " + UnifiedNameContainer.getNewResultName() + "1[" + UnifiedNameContainer.getSeats() + "];"); // create the array where the
+		code.add("unsigned int " + UnifiedNameContainer.getNewResultName() + "1[" + UnifiedNameContainer.getCandidate() + "];"); // create the array where the
 											// new seats will get saved
 
-		code.add("for (int i = 0; i < " + UnifiedNameContainer.getSeats() + "; i++) {"); // iterate over the
+		code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {"); // iterate over the
 													// seat array, and
 													// fill it
 		code.addTab();
@@ -176,7 +176,7 @@ public class CandidateList extends CBMCOutputType {
 		code.deleteTab();
 		code.add("}"); // close the for loop
 
-		code.add("for (int i = 0; i < " + UnifiedNameContainer.getSeats() + "; i++) {"); // iterate over all
+		code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {"); // iterate over all
 													// candidates /
 													// seats and assert
 													// their equality
@@ -236,6 +236,6 @@ public class CandidateList extends CBMCOutputType {
 
 	@Override
 	public String otherToString() {
-		return "Parliament";
+		return "Candidate List";
 	}
 }
