@@ -2,27 +2,63 @@ grammar FormalPropertyDescription;
 
 booleanExpList : booleanExpListElement*;
 
-booleanExpListElement : booleanExp ';';
+booleanExpListElement : booleanExp ';' |
 
-booleanExp : 	quantorExp | concatenationExp | binaryRelationExp | notExp | comparisonExp | OpenBracket booleanExp ClosedBracket;
+//new part 0
+						votingListChangeExp ';'|
+						votingTupelChangeExp ';' |
+						candidateListChangeExp ';';
+//end new part 0
+
+//new part 1
+votingListChangeExp : Vote ValueAssign votingListChangeContent;
+
+votingListChangeContent : concatenationExp | permutationExp; //expressions that make changes to the voting lists used
+
+votingTupelChangeExp: tuple ValueAssign splitExp;
+
+candidateListChangeExp: Elect ValueAssign intersectExp;
+
+//end new part1
+
+booleanExp : 	quantorExp | concatenationExp | splitExp | binaryRelationExp | notExp | comparisonExp | OpenBracket booleanExp ClosedBracket;
 
 binaryRelationExp : binaryRelationExp BinaryRelationSymbol booleanExp |
 					quantorExp BinaryRelationSymbol booleanExp |
 					notExp BinaryRelationSymbol booleanExp |
 					comparisonExp BinaryRelationSymbol booleanExp |	
+					concatenationExp BinaryRelationSymbol booleanExp|
 					
-					
-					Vote BinaryRelationSymbol concatenationExp|
 					
 			
 					'(' binaryRelationExp ')' BinaryRelationSymbol booleanExp |
 					'(' quantorExp ')' BinaryRelationSymbol booleanExp |
 					'(' notExp ')' BinaryRelationSymbol booleanExp |
-					'(' comparisonExp ')' BinaryRelationSymbol booleanExp; 		
-					
-concatenationExp :	Vote Concatenate Vote;
+					'(' comparisonExp ')' BinaryRelationSymbol booleanExp |
+					'(' concatenationExp ')' BinaryRelationSymbol booleanExp; 		
+		
+//new part 2	
 
-quantorExp : Quantor passSymbVar ':' booleanExp; 	
+voteEquivalents : Vote | permutationExp | concatenationExp; //all types that are equivalent to "Vote" (e.g the function returns "Vote")
+			
+concatenationExp :	'(' voteEquivalents Concatenate voteEquivalents ')';
+
+splitExp : 	Split '(' voteEquivalents ')';
+
+permutationExp: Permutation '(' voteEquivalents ')';
+
+intersectExp: Intersect '(' intersectContent ')';
+
+intersectContent : Elect | intersectExp;
+
+tuple :	'(' Vote tupleContent ')';
+
+tupleContent : ',' Vote | ',' Vote tupleContent;
+
+//end new part 2
+
+quantorExp : Quantor passSymbVar ':' booleanExp;
+ 	
 
 notExp : '!' booleanExp;
 
@@ -53,7 +89,7 @@ electExp :  Elect passType*;
 
 voteExp : Vote passType*;
 
-passType: passSymbVar|passByPos;
+passType : passSymbVar|passByPos;
 
 constantExp : 'V' | 'C' | 'S';
 
@@ -94,9 +130,13 @@ OpenBracket : '(';
 Quantor : 	'FOR_ALL_VOTERS' | 'FOR_ALL_CANDIDATES' | 'FOR_ALL_SEATS' |
 			'EXISTS_ONE_VOTER' | 'EXISTS_ONE_CANDIDATE' | 'EXISTS_ONE_SEAT';
 			
+//new part 3
 Split :		'SPLIT';
 
 Permutation : 'PERM';
+
+ValueAssign : '<-';
+//end new part 3
 
 ComparisonSymbol : '==' | '!=' | '<=' | '>=' | '<' | '>';
 
