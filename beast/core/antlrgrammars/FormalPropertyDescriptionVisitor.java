@@ -1,4 +1,4 @@
-// Generated from FormalPropertyDescription.g4 by ANTLR 4.5.2
+// Generated from FormalPropertyDescription.g4 by ANTLR 4.7.1
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -22,6 +22,30 @@ public interface FormalPropertyDescriptionVisitor<T> extends ParseTreeVisitor<T>
 	 */
 	T visitBooleanExpListElement(FormalPropertyDescriptionParser.BooleanExpListElementContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#votingListChangeExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVotingListChangeExp(FormalPropertyDescriptionParser.VotingListChangeExpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#votingListChangeContent}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVotingListChangeContent(FormalPropertyDescriptionParser.VotingListChangeContentContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#votingTupelChangeExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVotingTupelChangeExp(FormalPropertyDescriptionParser.VotingTupelChangeExpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#candidateListChangeExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCandidateListChangeExp(FormalPropertyDescriptionParser.CandidateListChangeExpContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#booleanExp}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -33,6 +57,54 @@ public interface FormalPropertyDescriptionVisitor<T> extends ParseTreeVisitor<T>
 	 * @return the visitor result
 	 */
 	T visitBinaryRelationExp(FormalPropertyDescriptionParser.BinaryRelationExpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#voteEquivalents}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVoteEquivalents(FormalPropertyDescriptionParser.VoteEquivalentsContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#concatenationExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConcatenationExp(FormalPropertyDescriptionParser.ConcatenationExpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#splitExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSplitExp(FormalPropertyDescriptionParser.SplitExpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#permutationExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPermutationExp(FormalPropertyDescriptionParser.PermutationExpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#intersectExp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntersectExp(FormalPropertyDescriptionParser.IntersectExpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#intersectContent}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntersectContent(FormalPropertyDescriptionParser.IntersectContentContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#tuple}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTuple(FormalPropertyDescriptionParser.TupleContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#tupleContent}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTupleContent(FormalPropertyDescriptionParser.TupleContentContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link FormalPropertyDescriptionParser#quantorExp}.
 	 * @param ctx the parse tree

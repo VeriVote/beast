@@ -1,4 +1,5 @@
-package edu.pse.beast.toolbox.antlr.booleanexp;// Generated from FormalPropertyDescription.g4 by ANTLR 4.5.2
+package edu.pse.beast.toolbox.antlr.booleanexp;
+// Generated from FormalPropertyDescription.g4 by ANTLR 4.7.1
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -27,6 +28,46 @@ public interface FormalPropertyDescriptionListener extends ParseTreeListener {
 	 */
 	void exitBooleanExpListElement(FormalPropertyDescriptionParser.BooleanExpListElementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#votingListChangeExp}.
+	 * @param ctx the parse tree
+	 */
+	void enterVotingListChangeExp(FormalPropertyDescriptionParser.VotingListChangeExpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#votingListChangeExp}.
+	 * @param ctx the parse tree
+	 */
+	void exitVotingListChangeExp(FormalPropertyDescriptionParser.VotingListChangeExpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#votingListChangeContent}.
+	 * @param ctx the parse tree
+	 */
+	void enterVotingListChangeContent(FormalPropertyDescriptionParser.VotingListChangeContentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#votingListChangeContent}.
+	 * @param ctx the parse tree
+	 */
+	void exitVotingListChangeContent(FormalPropertyDescriptionParser.VotingListChangeContentContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#votingTupelChangeExp}.
+	 * @param ctx the parse tree
+	 */
+	void enterVotingTupelChangeExp(FormalPropertyDescriptionParser.VotingTupelChangeExpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#votingTupelChangeExp}.
+	 * @param ctx the parse tree
+	 */
+	void exitVotingTupelChangeExp(FormalPropertyDescriptionParser.VotingTupelChangeExpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#candidateListChangeExp}.
+	 * @param ctx the parse tree
+	 */
+	void enterCandidateListChangeExp(FormalPropertyDescriptionParser.CandidateListChangeExpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#candidateListChangeExp}.
+	 * @param ctx the parse tree
+	 */
+	void exitCandidateListChangeExp(FormalPropertyDescriptionParser.CandidateListChangeExpContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#booleanExp}.
 	 * @param ctx the parse tree
 	 */
@@ -46,6 +87,86 @@ public interface FormalPropertyDescriptionListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitBinaryRelationExp(FormalPropertyDescriptionParser.BinaryRelationExpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#voteEquivalents}.
+	 * @param ctx the parse tree
+	 */
+	void enterVoteEquivalents(FormalPropertyDescriptionParser.VoteEquivalentsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#voteEquivalents}.
+	 * @param ctx the parse tree
+	 */
+	void exitVoteEquivalents(FormalPropertyDescriptionParser.VoteEquivalentsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#concatenationExp}.
+	 * @param ctx the parse tree
+	 */
+	void enterConcatenationExp(FormalPropertyDescriptionParser.ConcatenationExpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#concatenationExp}.
+	 * @param ctx the parse tree
+	 */
+	void exitConcatenationExp(FormalPropertyDescriptionParser.ConcatenationExpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#splitExp}.
+	 * @param ctx the parse tree
+	 */
+	void enterSplitExp(FormalPropertyDescriptionParser.SplitExpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#splitExp}.
+	 * @param ctx the parse tree
+	 */
+	void exitSplitExp(FormalPropertyDescriptionParser.SplitExpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#permutationExp}.
+	 * @param ctx the parse tree
+	 */
+	void enterPermutationExp(FormalPropertyDescriptionParser.PermutationExpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#permutationExp}.
+	 * @param ctx the parse tree
+	 */
+	void exitPermutationExp(FormalPropertyDescriptionParser.PermutationExpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#intersectExp}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntersectExp(FormalPropertyDescriptionParser.IntersectExpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#intersectExp}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntersectExp(FormalPropertyDescriptionParser.IntersectExpContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#intersectContent}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntersectContent(FormalPropertyDescriptionParser.IntersectContentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#intersectContent}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntersectContent(FormalPropertyDescriptionParser.IntersectContentContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#tuple}.
+	 * @param ctx the parse tree
+	 */
+	void enterTuple(FormalPropertyDescriptionParser.TupleContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#tuple}.
+	 * @param ctx the parse tree
+	 */
+	void exitTuple(FormalPropertyDescriptionParser.TupleContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#tupleContent}.
+	 * @param ctx the parse tree
+	 */
+	void enterTupleContent(FormalPropertyDescriptionParser.TupleContentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#tupleContent}.
+	 * @param ctx the parse tree
+	 */
+	void exitTupleContent(FormalPropertyDescriptionParser.TupleContentContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#quantorExp}.
 	 * @param ctx the parse tree

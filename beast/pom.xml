@@ -86,7 +86,7 @@
 		<dependency>
 			<groupId>org.antlr</groupId>
 			<artifactId>antlr4</artifactId>
-			<version>4.6</version>
+			<version>4.7.1</version>
 			<classifier>complete</classifier>
 		</dependency>
 		<dependency>

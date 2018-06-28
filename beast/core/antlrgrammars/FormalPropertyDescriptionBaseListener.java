@@ -1,4 +1,4 @@
-// Generated from FormalPropertyDescription.g4 by ANTLR 4.5.2
+// Generated from FormalPropertyDescription.g4 by ANTLR 4.7.1
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -39,6 +39,54 @@ public class FormalPropertyDescriptionBaseListener implements FormalPropertyDesc
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterVotingListChangeExp(FormalPropertyDescriptionParser.VotingListChangeExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVotingListChangeExp(FormalPropertyDescriptionParser.VotingListChangeExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVotingListChangeContent(FormalPropertyDescriptionParser.VotingListChangeContentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVotingListChangeContent(FormalPropertyDescriptionParser.VotingListChangeContentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVotingTupelChangeExp(FormalPropertyDescriptionParser.VotingTupelChangeExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVotingTupelChangeExp(FormalPropertyDescriptionParser.VotingTupelChangeExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCandidateListChangeExp(FormalPropertyDescriptionParser.CandidateListChangeExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCandidateListChangeExp(FormalPropertyDescriptionParser.CandidateListChangeExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterBooleanExp(FormalPropertyDescriptionParser.BooleanExpContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -58,6 +106,102 @@ public class FormalPropertyDescriptionBaseListener implements FormalPropertyDesc
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitBinaryRelationExp(FormalPropertyDescriptionParser.BinaryRelationExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVoteEquivalents(FormalPropertyDescriptionParser.VoteEquivalentsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVoteEquivalents(FormalPropertyDescriptionParser.VoteEquivalentsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterConcatenationExp(FormalPropertyDescriptionParser.ConcatenationExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitConcatenationExp(FormalPropertyDescriptionParser.ConcatenationExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSplitExp(FormalPropertyDescriptionParser.SplitExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSplitExp(FormalPropertyDescriptionParser.SplitExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPermutationExp(FormalPropertyDescriptionParser.PermutationExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPermutationExp(FormalPropertyDescriptionParser.PermutationExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIntersectExp(FormalPropertyDescriptionParser.IntersectExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIntersectExp(FormalPropertyDescriptionParser.IntersectExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterIntersectContent(FormalPropertyDescriptionParser.IntersectContentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitIntersectContent(FormalPropertyDescriptionParser.IntersectContentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTuple(FormalPropertyDescriptionParser.TupleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTuple(FormalPropertyDescriptionParser.TupleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTupleContent(FormalPropertyDescriptionParser.TupleContentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTupleContent(FormalPropertyDescriptionParser.TupleContentContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -27,7 +27,7 @@ binaryRelationExp : binaryRelationExp BinaryRelationSymbol booleanExp |
 					quantorExp BinaryRelationSymbol booleanExp |
 					notExp BinaryRelationSymbol booleanExp |
 					comparisonExp BinaryRelationSymbol booleanExp |	
-					concatenationExp BinaryRelationSymbol booleanExp|
+//					concatenationExp BinaryRelationSymbol booleanExp|
 					
 					
 			
@@ -35,19 +35,21 @@ binaryRelationExp : binaryRelationExp BinaryRelationSymbol booleanExp |
 					'(' quantorExp ')' BinaryRelationSymbol booleanExp |
 					'(' notExp ')' BinaryRelationSymbol booleanExp |
 					'(' comparisonExp ')' BinaryRelationSymbol booleanExp |
-					'(' concatenationExp ')' BinaryRelationSymbol booleanExp; 		
+//					'(' concatenationExp ')' BinaryRelationSymbol booleanExp
+					; 		
 		
 //new part 2	
 
 voteEquivalents : Vote | permutationExp | concatenationExp; //all types that are equivalent to "Vote" (e.g the function returns "Vote")
 			
-concatenationExp :	'(' voteEquivalents Concatenate voteEquivalents ')';
+concatenationExp :	'(' voteEquivalents Concatenate voteEquivalents ')' |
+					 voteEquivalents Concatenate voteEquivalents;
 
 splitExp : 	Split '(' voteEquivalents ')';
 
 permutationExp: Permutation '(' voteEquivalents ')';
 
-intersectExp: Intersect '(' intersectContent ')';
+intersectExp: Intersect '(' intersectContent ',' intersectContent ')';
 
 intersectContent : Elect | intersectExp;
 

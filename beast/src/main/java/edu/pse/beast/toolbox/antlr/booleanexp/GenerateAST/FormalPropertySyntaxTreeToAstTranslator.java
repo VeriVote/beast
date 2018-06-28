@@ -403,5 +403,218 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
     public void exitEveryRule(ParserRuleContext prc) {
 
     }
+    
+    
+    //new part here: 
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void enterVotingListChangeExp(FormalPropertyDescriptionParser.VotingListChangeExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void exitVotingListChangeExp(FormalPropertyDescriptionParser.VotingListChangeExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void enterVotingListChangeContent(FormalPropertyDescriptionParser.VotingListChangeContentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void exitVotingListChangeContent(FormalPropertyDescriptionParser.VotingListChangeContentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void enterVotingTupelChangeExp(FormalPropertyDescriptionParser.VotingTupelChangeExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void exitVotingTupelChangeExp(FormalPropertyDescriptionParser.VotingTupelChangeExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void enterCandidateListChangeExp(FormalPropertyDescriptionParser.CandidateListChangeExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void exitCandidateListChangeExp(FormalPropertyDescriptionParser.CandidateListChangeExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void enterVoteEquivalents(FormalPropertyDescriptionParser.VoteEquivalentsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void exitVoteEquivalents(FormalPropertyDescriptionParser.VoteEquivalentsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void enterConcatenationExp(FormalPropertyDescriptionParser.ConcatenationExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void exitConcatenationExp(FormalPropertyDescriptionParser.ConcatenationExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void enterSplitExp(FormalPropertyDescriptionParser.SplitExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void exitSplitExp(FormalPropertyDescriptionParser.SplitExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void enterPermutationExp(FormalPropertyDescriptionParser.PermutationExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void exitPermutationExp(FormalPropertyDescriptionParser.PermutationExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void enterIntersectExp(FormalPropertyDescriptionParser.IntersectExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void exitIntersectExp(FormalPropertyDescriptionParser.IntersectExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void enterIntersectContent(FormalPropertyDescriptionParser.IntersectContentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void exitIntersectContent(FormalPropertyDescriptionParser.IntersectContentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void enterTuple(FormalPropertyDescriptionParser.TupleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void exitTuple(FormalPropertyDescriptionParser.TupleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void enterTupleContent(FormalPropertyDescriptionParser.TupleContentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void enterTypeByPosExp(FormalPropertyDescriptionParser.TypeByPosExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void exitTypeByPosExp(FormalPropertyDescriptionParser.TypeByPosExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void enterVoterByPosExp(FormalPropertyDescriptionParser.VoterByPosExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void enterCandByPosExp(FormalPropertyDescriptionParser.CandByPosExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void enterSeatByPosExp(FormalPropertyDescriptionParser.SeatByPosExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void enterInteger(FormalPropertyDescriptionParser.IntegerContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void enterPassType(FormalPropertyDescriptionParser.PassTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void exitPassType(FormalPropertyDescriptionParser.PassTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void enterPassPosition(FormalPropertyDescriptionParser.PassPositionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void exitPassPosition(FormalPropertyDescriptionParser.PassPositionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void enterPassByPos(FormalPropertyDescriptionParser.PassByPosContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 *
+	 */
+	@Override public void exitPassByPos(FormalPropertyDescriptionParser.PassByPosContext ctx) { }
 
 }
