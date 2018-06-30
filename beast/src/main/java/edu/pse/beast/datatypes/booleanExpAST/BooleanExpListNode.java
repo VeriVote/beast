@@ -27,7 +27,9 @@ public class BooleanExpListNode {
     }
 
     public void setMaxVoteLevel(int maxVoteLevel) {
-        this.maxVoteLevel = maxVoteLevel;
+    	if (maxVoteLevel > this.maxVoteLevel) {
+    		this.maxVoteLevel = maxVoteLevel;
+    	}
     }
     
     public int getMaxVoteLevel() {

@@ -1,0 +1,1 @@
+{"name":"new Property","symbolicVariableList":{"symbolicVariableList":[]},"preConditionsDescription":{"code":"(VOTES1, VOTES2) <- SPLIT(VOTES3);"},"postConditionsDescription":{"code":""},"boundedVarDescription":{"code":""}}

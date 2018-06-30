@@ -8,7 +8,7 @@ booleanExpListElement : booleanExp ';' |
 						votingListChangeExp ';'|
 						votingTupelChangeExp ';' |
 						candidateListChangeExp ';';
-//end new part 0
+//end new part 0 
 
 //new part 1
 votingListChangeExp : Vote ValueAssign votingListChangeContent;

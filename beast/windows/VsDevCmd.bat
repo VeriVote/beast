@@ -1,1 +1,1 @@
-call "D:\nicht SSD Programme\Microsoft Visual Studio 14.0\Common7\Tools\VsDevCMD.bat"
+call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat""

@@ -64,7 +64,7 @@ public class CBMCCodeGenerator {
 		this.preAndPostCondDesc = PreAndPostConditionsDescription;
 		code = new CodeArrayListBeautifier();
 		electionDesc.getContainer();
-		this.visitor = new CBMCCodeGenerationVisitor();
+		this.visitor = new CBMCCodeGenerationVisitor(electionDesc.getContainer());
 		new CCodeHelper();
 		generateCodeCheck();
 
@@ -87,7 +87,7 @@ public class CBMCCodeGenerator {
 		this.preAndPostCondDesc = preAndPostCondDesc;
 		code = new CodeArrayListBeautifier();
 		electionDesc.getContainer();
-		this.visitor = new CBMCCodeGenerationVisitor();
+		this.visitor = new CBMCCodeGenerationVisitor(electionDesc.getContainer());
 		new CCodeHelper();
 		this.margin = margin;
 		this.origResult = origResult;
@@ -105,7 +105,7 @@ public class CBMCCodeGenerator {
 		this.preAndPostCondDesc = preAndPostCondDesc;
 		code = new CodeArrayListBeautifier();
 		electionDesc.getContainer();
-		this.visitor = new CBMCCodeGenerationVisitor();
+		this.visitor = new CBMCCodeGenerationVisitor(electionDesc.getContainer());
 		new CCodeHelper();
 
 		generateCodeTest(votingData);
@@ -124,6 +124,8 @@ public class CBMCCodeGenerator {
 		code = addHeader(code);
 		addVoteSumFunc(false);
 		addVoteSumFunc(true);
+
+		addOtherFunctions();
 
 		code.add("//Code of the user");
 		ArrayList<String> electionDescriptionCode = new ArrayList<>();
@@ -232,6 +234,202 @@ public class CBMCCodeGenerator {
 	}
 
 	/**
+	 * other functions needed for the check
+	 */
+	private void addOtherFunctions() {
+		// split array functions
+
+		code.add("//split array");
+		code.add("");
+		code.add("//get splits cuts through an array of size max");
+		code.add("unsigned int *getRandomSplitLines(unsigned int splits, unsigned int max) {");
+		code.add("	unsigned int *split_arr = malloc(splits * sizeof(*split_arr));");
+		code.add("	");
+		code.add("	if (splits == 1) {");
+		code.add("		unsigned int next_split = nondet_uint();");
+		code.add("		assume(next_split >= 0);");
+		code.add("		assume(next_split <= (max / 2));");
+		code.add("		");
+		code.add("		split_arr[0] = next_split;");
+		code.add("	} else {");
+		code.add("		unsigned int last_split = 0;");
+		code.add("		for (int i = 0; i < splits; i++) {");
+		code.add("			");
+		code.add("			unsigned int next_split = nondet_uint();");
+		code.add("			assume(next_split >= last_split);");
+		code.add("			assume(next_split <= max);");
+		code.add("			");
+		code.add("					");
+		code.add("		unsigned int debugHier =max + 1;");
+		code.add("			");
+		code.add("			split_arr[i] = next_split;");
+		code.add("			last_split = next_split;");
+		code.add("		}");
+		code.add("		");
+		code.add("		unsigned int *splitLines;");
+		code.add("		splitLines = split_arr;");
+		code.add("		");
+		code.add("		for (int i = 0; i < splits; i++) {");
+		code.add("			unsigned int debugrandom = splitLines[i];");
+		code.add("		}");
+		code.add("	}");
+		code.add("	return split_arr;");
+		code.add("}");
+		code.add("");
+		code.add("//start is inclusive, stop is exclusive");
+		code.add("struct vote_single split(unsigned int votes[V], unsigned int start, unsigned int stop) {");
+		code.add("	static unsigned int sub_arr[V];");
+		code.add("	");
+		code.add("	for(int i = 0; i < V; i++) { //set all to C in the beginning");
+		code.add("		sub_arr[i] = C;");
+		code.add("	}");
+		code.add("	");
+		code.add("	if(start == stop) { //the sub array should be empty");
+		code.add("		struct vote_single toReturn;");
+		code.add("		");
+		code.add("		for (int i = 0; i < V; i++) {");
+		code.add("			toReturn.arr[i] = sub_arr[i];");
+		code.add("		}");
+		code.add("		");
+		code.add("		return toReturn;");
+		code.add("	} else {");
+		code.add("");
+		code.add("		for (int i = 0; i < V; i++) {");
+		code.add("			if ((i >= start) && (i < stop)) {");
+		code.add("				sub_arr[i - start] = votes[i];");
+		code.add("			}");
+		code.add("		}");
+		code.add("	");
+		code.add("		//struct vote_single toReturn = {sub_arr};");
+		code.add("		");
+		code.add("		struct vote_single toReturn;");
+		code.add("		");
+		code.add("		for (int i = 0; i < V; i++) {");
+		code.add("			toReturn.arr[i] = sub_arr[i];");
+		code.add("		}");
+		code.add("		");
+		code.add("		return toReturn;");
+		code.add("	}");
+		code.add("}");
+		code.add("");
+		code.add("//start is inclusive, stop is exclusive");
+		code.add("//used for 2 dim arrays");
+		code.add("struct vote_double split(unsigned int votes[V][C], unsigned int start, unsigned int stop) {");
+		code.add("	static unsigned int sub_arr[V];");
+		code.add("	");
+		code.add("	for(int i = 0; i < V; i++) { //set all to C in the beginning");
+		code.add("		for(int j = 0; j < C; j++) {");
+		code.add("			sub_arr[i][j] = C;");
+		code.add("		}");
+		code.add("	}");
+		code.add("	");
+		code.add("	if(start == stop) { //the sub array should be empty");
+		code.add("		struct vote_double toReturn;");
+		code.add("		");
+		code.add("		for (int i = 0; i < V; i++) {");
+		code.add("			for(int j = 0; j < V; j++) {");
+		code.add("				toReturn.arr[i][j] = sub_arr[i][j];");
+		code.add("			}");
+		code.add("		}");
+		code.add("		");
+		code.add("		return toReturn;");
+		code.add("	} else {");
+		code.add("");
+		code.add("		for (int i = 0; i < V; i++) {");
+		code.add("			if ((i >= start) && (i < stop)) {");
+		code.add("				for(int j = 0; j < C; j++) {");
+		code.add("					sub_arr[i - start][j] = votes[i][j];");
+		code.add("				}");
+		code.add("			}");
+		code.add("		}");
+		code.add("		");
+		code.add("		struct vote_double toReturn;");
+		code.add("		");
+		code.add("		for (int i = 0; i < V; i++) {");
+		code.add("			for(int j = 0; j < V; j++) {");
+		code.add("				toReturn.arr[i][j] = sub_arr[i][j];");
+		code.add("			}");
+		code.add("		}");
+		code.add("		");
+		code.add("		return toReturn;");
+		code.add("	}");
+		code.add("}");
+		code.add("}}");
+		// end split array functions
+
+		// concatination
+
+		code.add(
+				"struct vote_single concat(unsigned int votesOne[V], unsigned int sizeOne, unsigned int votesTwo[V], unsigned int sizeTwo) {");
+		code.add("	static unsigned int sub_arr[V];");
+		code.add("	");
+		code.add("	for(int i = 0; i < V; i++) { //set all to C in the beginning");
+		code.add("		sub_arr[i] = C;");
+		code.add("	}");
+		code.add("	");
+		code.add("	for(int i = 0; i < sizeOne; i++) { //limit the size to the upper bound V");
+		code.add("		if (i < V) {");
+		code.add("			sub_arr[i] = votesOne[i];");
+		code.add("		}");
+		code.add("	}");
+		code.add("	");
+		code.add("	for(int i = 0; i < sizeTwo; i++) { //limit the size to the upper bound V");
+		code.add("		if (sizeOne + i < V) {");
+		code.add("			sub_arr[sizeOne + i] = votesTwo[i];");
+		code.add("		}");
+		code.add("	}");
+		code.add("	");
+		code.add("	struct vote_single toReturn;");
+		code.add("		");
+		code.add("	for (int i = 0; i < V; i++) {");
+		code.add("		toReturn.arr[i] = sub_arr[i];");
+		code.add("	}");
+		code.add("		");
+		code.add("	return toReturn;");
+		code.add("	");
+		code.add("}");
+		code.add("");
+		code.add(
+				"struct vote_double concat(unsigned int votesOne[V][C], unsigned int sizeOne, unsigned int votesTwo[V], unsigned int sizeTwo) {");
+		code.add("	static unsigned int sub_arr[V];");
+		code.add("	");
+		code.add("	for(int i = 0; i < V; i++) { //set all to C in the beginning");
+		code.add("		for(int j = 0; j < C; j++) {");
+		code.add("			sub_arr[i][j] = C;");
+		code.add("		}");
+		code.add("	}");
+		code.add("	");
+		code.add("	for(int i = 0; i < sizeOne; i++) { //limit the size to the upper bound V");
+		code.add("		for(int j = 0; j < C; j++) {");
+		code.add("			if (i < V) {");
+		code.add("				sub_arr[i][j] = votesOne[i][j];");
+		code.add("			}");
+		code.add("		}");
+		code.add("	}");
+		code.add("	");
+		code.add("	for(int i = 0; i < sizeTwo; i++) { //limit the size to the upper bound V");
+		code.add("		for(int j = 0; j < C; j++) {");
+		code.add("			if (sizeTwo + i < V) {");
+		code.add("				sub_arr[i][j] = votesTwo[i][j];");
+		code.add("			}");
+		code.add("		}");
+		code.add("	}");
+		code.add("	");
+		code.add("	struct vote_double toReturn;");
+		code.add("		");
+		code.add("	for (int i = 0; i < V; i++) {");
+		code.add("		for (int j = 0; j < C; j++) {");
+		code.add("			toReturn.arr[i][j] = sub_arr[i][j];");
+		code.add("		}");
+		code.add("	}");
+		code.add("		");
+		code.add("	return toReturn;");
+		code.add("}");
+
+		// end concatination
+	}
+
+	/**
 	 * writes all lines of the header
 	 * 
 	 * @param code
@@ -258,7 +456,11 @@ public class CBMCCodeGenerator {
 
 		code.add(UnifiedNameContainer.getStruct_stack_result() + " { unsigned int "
 				+ UnifiedNameContainer.getResult_arr_name() + "[" + UnifiedNameContainer.getSeats() + "]; };"); // add a
-																												// result
+
+		code.add("struct vote_single { unsigned int arr[V]; };");
+		code.add("struct vote_double { unsigned int arr[V][C]; };"); // TODO make them use the UnifiedNameContainer
+
+		// result
 		// same for a stacked result for each party
 		return code;
 	}
@@ -277,7 +479,7 @@ public class CBMCCodeGenerator {
 		BooleanExpListNode postAST = generateAST(preAndPostCondDesc.getPostConditionsDescription().getCode());
 
 		initializeNumberOfTimesVoted(preAST, postAST);
-		
+
 		// init all voting vars for the voters
 		for (int i = 1; i <= numberOfTimesVoted; i++) {
 			code.add("unsigned int " + UnifiedNameContainer.getVoter() + i + " = " + UnifiedNameContainer.getVoter()
@@ -439,7 +641,8 @@ public class CBMCCodeGenerator {
 
 			for (int i = 0; i < electionDesc.getContainer().getInputType().getDimension(); i++) {
 				String currentFor = forTemplate.replaceAll("COUNTER", "counter_" + listDepth);
-				currentFor = currentFor.replaceAll("UPPER", electionDesc.getContainer().getInputType().getMaximalSize(listDepth) + voteNumber);
+				currentFor = currentFor.replaceAll("UPPER",
+						electionDesc.getContainer().getInputType().getMaximalSize(listDepth) + voteNumber);
 				code.add(currentFor);
 				code.addTab();
 				listDepth++;
@@ -449,13 +652,13 @@ public class CBMCCodeGenerator {
 			if (electionDesc.getContainer().getInputType().hasVariableAsMinValue()) {
 				min = min + voteNumber;
 			}
-			
+
 			String max = "" + electionDesc.getContainer().getInputType().getMaximalValue();
 
 			if (electionDesc.getContainer().getInputType().hasVariableAsMaxValue()) {
 				max = max + voteNumber;
 			}
-			
+
 			String votesElement = "votes" + voteNumber;
 			for (int i = 0; i < listDepth; ++i) {
 				votesElement += "[COUNTER]".replace("COUNTER", "counter_" + i);

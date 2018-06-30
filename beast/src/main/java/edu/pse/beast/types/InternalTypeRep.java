@@ -38,5 +38,9 @@ public enum InternalTypeRep {
     /**
      * NullType
      */
-    NULL    
+    NULL,
+    /**
+     * A tupel with at least 2 voting arrays in it
+     */
+    TUPEL
 }

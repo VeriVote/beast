@@ -18,6 +18,12 @@ import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.ConstantExp;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.IntegerNode;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.VoteSumForCandExp;
+import edu.pse.beast.propertychecker.ConcatenationExpNode;
+import edu.pse.beast.propertychecker.PermutationExpNode;
+import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.CandidateListChangeExpNode;
+import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.VoteEquivalentsNode;
+import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.VotingListChangeExpNode;
+import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.VotingTupelChangeExpNode;
 
 /**
  *
@@ -25,7 +31,6 @@ import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes
  *
  */
 public interface BooleanExpNodeVisitor {
-
 
     /**
      *
@@ -112,4 +117,16 @@ public interface BooleanExpNodeVisitor {
     void visitBinaryIntegerValuedNode(BinaryIntegerValuedNode binaryIntegerValuedNode);
 
     void visitAtPosNode(AtPosExp atPosExp);
+    
+	void visitVotingTupleChangeNode(VotingTupelChangeExpNode votingTupelChangeExp);
+	
+	void visitVotingListChangeNode(VotingListChangeExpNode node);
+
+	void visitCandidateListChangeExpNode(CandidateListChangeExpNode candidateListChangeExpNode);
+
+	void visitVoteEquivalentsNode(VoteEquivalentsNode voteEquivalentsNode);
+
+	void visitConcatenationExpNode(ConcatenationExpNode concatenationExpNode);
+
+	void visitPermutationExpNode(PermutationExpNode permutationExpNode);
 }

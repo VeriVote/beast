@@ -1,5 +1,5 @@
-package edu.pse.beast.toolbox.antlr.booleanexp;
 // Generated from FormalPropertyDescription.g4 by ANTLR 4.7.1
+package edu.pse.beast.toolbox.antlr.booleanexp;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
