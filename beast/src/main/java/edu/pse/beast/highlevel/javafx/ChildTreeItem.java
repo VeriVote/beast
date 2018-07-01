@@ -10,6 +10,7 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.propertychecker.Result;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -39,12 +40,16 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 	private final List<TreeItem<CustomTreeItem>> resultTreeItems = new ArrayList<TreeItem<CustomTreeItem>>();
 
 	
-	ChildTreeItem(ChildTreeItemValues values, ParentTreeItem parent) {
+	ChildTreeItem(ChildTreeItemValues values, ParentTreeItem parent, TreeItem<CustomTreeItem> treeItemReference) {
 		this.parent = parent;
 		this.checkBox.setSelected(values.checkBoxStatus);
 		this.propName = new Label(values.propertyName);
 		this.disabled = values.disabled;
 				
+		this.setTreeItemReference(treeItemReference);
+		
+		treeItemReference.setValue(this);
+		
 		for (Iterator<Result> iterator = values.results.iterator(); iterator.hasNext();) {
 			Result result = (Result) iterator.next();
 
@@ -54,10 +59,14 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 		init();
 	}
 
-	ChildTreeItem(String name, ParentTreeItem parent) {
+	ChildTreeItem(String name, ParentTreeItem parent, TreeItem<CustomTreeItem> treeItemReference) {
 
 		this.parent = parent;
 		propName = new Label(name);
+		this.setTreeItemReference(treeItemReference);
+		
+		treeItemReference.setValue(this);
+		
 		init();
 	}
 
@@ -112,7 +121,11 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 		ResultTreeItem resultItem = new ResultTreeItem(result, this);
 		results.add(resultItem);
 		
-		this.getChildren().add(resultItem);
+		TreeItem<CustomTreeItem> reference = new TreeItem<CustomTreeItem>(resultItem);
+		
+		this.getTreeItemReference().getChildren().add(reference);
+		
+		//this.getChildren().add(resultItem);
 		
 		addChildrenToStage();
 
@@ -178,10 +191,22 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 	
 	public void addChildrenToStage() {
 		resultTreeItems.clear();
+		
+		TreeItem<CustomTreeItem> item2 = this.getTreeItemReference();
+		
+		item2.isExpanded();
+		
+		ObservableList<TreeItem<CustomTreeItem>> children2 = item2.getChildren();
+		
+		children2.size();
+		
 		this.getTreeItemReference().getChildren().clear();
+		
+		
 		
 		for (Iterator<ResultTreeItem> iterator = results.iterator(); iterator.hasNext();) {
 			ResultTreeItem item = (ResultTreeItem) iterator.next();
+			item.setPresentable();
 			resultTreeItems.add(new TreeItem<CustomTreeItem>(item));
 		}
 

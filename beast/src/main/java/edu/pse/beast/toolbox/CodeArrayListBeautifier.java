@@ -31,11 +31,7 @@ public class CodeArrayListBeautifier {
      *
      * @param addedString the String which is added to the ArrayList
      */
-    public void add(String addedString) {
-    	if (addedString.contains("{")) {
-    		numberOfTabs++;
-    	}
-    	
+    public void add(String addedString) {    	
     	if (addedString.contains("}")) {
     		Math.max(0, numberOfTabs--);
     	}
@@ -48,6 +44,10 @@ public class CodeArrayListBeautifier {
             }
             code.add(tabbed + addedString);
         }
+        
+    	if (addedString.contains("{")) {
+    		numberOfTabs++;
+    	}
     }
 
     /**

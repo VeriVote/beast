@@ -8,10 +8,12 @@ public class ConcatenationExpNode extends BooleanExpressionNode {
 
 	public final ConcatenationExpContext concatenationExpContext;
 	public final String voteOutput;
+	public final String voteOutoutLength;
 
-	public ConcatenationExpNode(ConcatenationExpContext concatenationExpContext, String voteOutput) {
+	public ConcatenationExpNode(ConcatenationExpContext concatenationExpContext, String voteOutput, String voteOutoutLength) {
 		this.concatenationExpContext = concatenationExpContext;
 		this.voteOutput = voteOutput;
+		this.voteOutoutLength = voteOutoutLength;
 	}
 
 	@Override

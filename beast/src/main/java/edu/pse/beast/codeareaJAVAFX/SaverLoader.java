@@ -66,6 +66,8 @@ public class SaverLoader {
 			out.write(text);
 			
 			hasSaveFile = true;
+			
+			saveFile = toSaveIn;
 
 		} catch (IOException ioE) {
 			ioE.printStackTrace();

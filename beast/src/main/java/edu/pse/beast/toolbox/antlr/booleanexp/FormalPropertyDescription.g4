@@ -21,12 +21,15 @@ candidateListChangeExp: Elect ValueAssign intersectExp;
 
 //end new part1
 
-booleanExp : 	quantorExp | concatenationExp | splitExp | binaryRelationExp | notExp | comparisonExp | OpenBracket booleanExp ClosedBracket;
+booleanExp : 	quantorExp | notEmptyExp | intersectExp | binaryRelationExp | notExp | comparisonExp | OpenBracket booleanExp ClosedBracket;
 
 binaryRelationExp : binaryRelationExp BinaryRelationSymbol booleanExp |
 					quantorExp BinaryRelationSymbol booleanExp |
 					notExp BinaryRelationSymbol booleanExp |
 					comparisonExp BinaryRelationSymbol booleanExp |	
+					
+					notEmptyExp BinaryRelationSymbol booleanExp |
+					intersectExp BinaryRelationSymbol booleanExp |
 //					concatenationExp BinaryRelationSymbol booleanExp|
 					
 					
@@ -35,10 +38,17 @@ binaryRelationExp : binaryRelationExp BinaryRelationSymbol booleanExp |
 					'(' quantorExp ')' BinaryRelationSymbol booleanExp |
 					'(' notExp ')' BinaryRelationSymbol booleanExp |
 					'(' comparisonExp ')' BinaryRelationSymbol booleanExp |
-//					'(' concatenationExp ')' BinaryRelationSymbol booleanExp
+					
+					'(' notEmptyExp ')' BinaryRelationSymbol booleanExp
+					'(' intersectExp ')' BinaryRelationSymbol booleanExp
 					; 		
 		
 //new part 2	
+
+notEmptyExp :		NotEmpty '(' notEmptyContent ')';
+
+
+notEmptyContent	: Elect | intersectExp;
 
 voteEquivalents : Vote | permutationExp | concatenationExp; //all types that are equivalent to "Vote" (e.g the function returns "Vote")
 			
@@ -121,6 +131,8 @@ Intersect : 'INTERSECT';
 Vote : 'VOTES' Integer;
 
 Elect : 'ELECT' Integer;
+
+NotEmpty: 'NOTEMPTY';
 
 Votesum : 'VOTE_SUM_FOR_CANDIDATE' Integer;
 

@@ -277,7 +277,7 @@ public class CBMCCodeGenerator {
 		code.add("}");
 		code.add("");
 		code.add("//start is inclusive, stop is exclusive");
-		code.add("struct vote_single split(unsigned int votes[V], unsigned int start, unsigned int stop) {");
+		code.add("struct vote_single splitOne(unsigned int votes[V], unsigned int start, unsigned int stop) {");
 		code.add("	static unsigned int sub_arr[V];");
 		code.add("	");
 		code.add("	for(int i = 0; i < V; i++) { //set all to C in the beginning");
@@ -314,8 +314,8 @@ public class CBMCCodeGenerator {
 		code.add("");
 		code.add("//start is inclusive, stop is exclusive");
 		code.add("//used for 2 dim arrays");
-		code.add("struct vote_double split(unsigned int votes[V][C], unsigned int start, unsigned int stop) {");
-		code.add("	static unsigned int sub_arr[V];");
+		code.add("struct vote_double splitTwo(unsigned int votes[V][C], unsigned int start, unsigned int stop) {");
+		code.add("	static unsigned int sub_arr[V][C];");
 		code.add("	");
 		code.add("	for(int i = 0; i < V; i++) { //set all to C in the beginning");
 		code.add("		for(int j = 0; j < C; j++) {");
@@ -354,13 +354,13 @@ public class CBMCCodeGenerator {
 		code.add("		return toReturn;");
 		code.add("	}");
 		code.add("}");
-		code.add("}}");
+		code.add("");
 		// end split array functions
 
 		// concatination
 
 		code.add(
-				"struct vote_single concat(unsigned int votesOne[V], unsigned int sizeOne, unsigned int votesTwo[V], unsigned int sizeTwo) {");
+				"struct vote_single concatOne(unsigned int votesOne[V], unsigned int sizeOne, unsigned int votesTwo[V][C], unsigned int sizeTwo) {");
 		code.add("	static unsigned int sub_arr[V];");
 		code.add("	");
 		code.add("	for(int i = 0; i < V; i++) { //set all to C in the beginning");
@@ -390,8 +390,8 @@ public class CBMCCodeGenerator {
 		code.add("}");
 		code.add("");
 		code.add(
-				"struct vote_double concat(unsigned int votesOne[V][C], unsigned int sizeOne, unsigned int votesTwo[V], unsigned int sizeTwo) {");
-		code.add("	static unsigned int sub_arr[V];");
+				"struct vote_double concatTwo(unsigned int votesOne[V][C], unsigned int sizeOne, unsigned int votesTwo[V][C], unsigned int sizeTwo) {");
+		code.add("	static unsigned int sub_arr[V][C];");
 		code.add("	");
 		code.add("	for(int i = 0; i < V; i++) { //set all to C in the beginning");
 		code.add("		for(int j = 0; j < C; j++) {");
@@ -427,6 +427,103 @@ public class CBMCCodeGenerator {
 		code.add("}");
 
 		// end concatination
+		
+
+		//permutation code start
+
+		code.add("struct vote_single permutateOne(unsigned int votes[V], unsigned int length) {");
+		code.add("	static unsigned int sub_arr[V];");
+		code.add("	");
+		code.add("	static unsigned int already_used_arr[V];");
+		code.add("		");
+		code.add("	for(int i = 0; i < V; i++) { //set all to C in the beginning");
+		code.add("		sub_arr[i] = C;");
+		code.add("	}");
+		code.add("	");
+		code.add("	");
+		code.add("	for(int i = 0; i < length; i++) {");
+		code.add("		unsigned int new_index = nondet_uint();");
+		code.add("		assume((new_index >= 0) && (new_index < length));");
+		code.add("		");
+		code.add("		for(int j = 0; j < i; j++) {");
+		code.add("			assume(new_index != already_used_arr[j]);");
+		code.add("		}");
+		code.add("		");
+		code.add("		already_used_arr[i] = new_index;");
+		code.add("		");
+		code.add("		sub_arr[new_index] = votes[i];");
+		code.add("	}");
+		code.add("	");
+		code.add("	struct vote_single toReturn;");
+		code.add("		");
+		code.add("	for (int i = 0; i < V; i++) {");
+		code.add("		toReturn.arr[i] = sub_arr[i];");
+		code.add("	}");
+		code.add("		");
+		code.add("	return toReturn;");
+		code.add("	");
+		code.add("}");
+		code.add("");
+		code.add("struct vote_double permutateTwo(unsigned int votes[V][C], unsigned int length) {");
+		code.add("	static unsigned int sub_arr[V][C];");
+		code.add("	");
+		code.add("	static unsigned int already_used_arr[V];");
+		code.add("		");
+		code.add("	for(int i = 0; i < V; i++) { //set all to C in the beginning");
+		code.add("		for(int j = 0; j < C; j++) {");
+		code.add("			sub_arr[i][j] = C;");
+		code.add("		}");
+		code.add("	}");
+		code.add("	");
+		code.add("	");
+		code.add("	for(int i = 0; i < length; i++) {");
+		code.add("		unsigned int new_index = nondet_uint();");
+		code.add("		assume((new_index >= 0) && (new_index < length));");
+		code.add("		");
+		code.add("		for(int j = 0; j < i; j++) {");
+		code.add("			assume(new_index != already_used_arr[j]);");
+		code.add("		}");
+		code.add("		");
+		code.add("		already_used_arr[i] = new_index;");
+		code.add("		");
+		code.add("		for(int j = 0; j < i; j++) {");
+		code.add("			sub_arr[new_index][j] = votes[i][j];");
+		code.add("		}");
+		code.add("	}");
+		code.add("	");
+		code.add("	struct vote_double toReturn;");
+		code.add("		");
+		code.add("	for (int i = 0; i < V; i++) {");
+		code.add("		for(int j = 0; j < C; j++) {");
+		code.add("			toReturn.arr[i][j] = sub_arr[i][j];");
+		code.add("		}");
+		code.add("	}");
+		code.add("		");
+		code.add("	return toReturn;");
+		code.add("}");
+		
+		//permutation end
+		
+		//intersect start
+		
+		code.add("struct stack_result intersect(struct stack_result one, struct stack_result two) {");
+		code.add("	static struct stack_result toReturn;");
+		code.add("	");
+		code.add("	for (int i = 0; i < C; i++) {");
+		code.add("		toReturn.arr[i] = 0;");
+		code.add("	}");
+		code.add("	");
+		code.add("	for (int i = 0; i < C; i++) {");
+		code.add("		if (one.arr[i] && two.arr[i]) {");
+		code.add("			toReturn.arr[i] = 1;");
+		code.add("		}");
+		code.add("	}");
+		code.add("	");
+		code.add("	return toReturn;");
+		code.add("}");
+		
+		//intersect end
+		
 	}
 
 	/**
@@ -455,11 +552,15 @@ public class CBMCCodeGenerator {
 		// of a parliament
 
 		code.add(UnifiedNameContainer.getStruct_stack_result() + " { unsigned int "
-				+ UnifiedNameContainer.getResult_arr_name() + "[" + UnifiedNameContainer.getSeats() + "]; };"); // add a
+				+ UnifiedNameContainer.getResult_arr_name() + "[" + UnifiedNameContainer.getCandidate() + "]; };"); // add a
 
 		code.add("struct vote_single { unsigned int arr[V]; };");
 		code.add("struct vote_double { unsigned int arr[V][C]; };"); // TODO make them use the UnifiedNameContainer
 
+		code.add(UnifiedNameContainer.getStruct_candidateList() + " { unsigned int "
+				+ UnifiedNameContainer.getResult_arr_name() + "[" + UnifiedNameContainer.getCandidate() + "]; };"); // add a
+
+		
 		// result
 		// same for a stacked result for each party
 		return code;
@@ -509,6 +610,12 @@ public class CBMCCodeGenerator {
 
 		// the the PreProperties must be defined
 		addPreProperties(preAST);
+		
+		//now hold all the elections
+		for (int i = 1; i <= numberOfTimesVoted; i++) {
+			code.add("//election number: " + i);
+			code = electionDesc.getContainer().getOutputType().addVotesArrayAndInit(code, i);
+		}
 
 		// now the Post Properties can be checked
 		addPostProperties(postAST);
@@ -681,7 +788,6 @@ public class CBMCCodeGenerator {
 				code.add("}");
 			}
 
-			code = electionDesc.getContainer().getOutputType().addVotesArrayAndInit(code, voteNumber);
 			code.add("");
 		}
 

@@ -49,9 +49,11 @@ public class ParentTreeItem extends CustomTreeItem {
 		this.getChildren().add(new Separator(Orientation.VERTICAL));
 		this.getChildren().add(checkAll);
 
-		checkItem = new CheckChildTreeItem("Verification ", this);
-		marginItem = new MarginChildTreeItem("Margin", this);
-		testItem = new TestChildTreeItem("Test", this);
+		TreeItem<CustomTreeItem> test = new TreeItem<CustomTreeItem>();
+	
+		checkItem = new CheckChildTreeItem("Verification ", this, new TreeItem<CustomTreeItem>());
+		marginItem = new MarginChildTreeItem("Margin", this, new TreeItem<CustomTreeItem>());
+		testItem = new TestChildTreeItem("Test", this, new TreeItem<CustomTreeItem>());
 
 		if (createChildren) {
 			subItems.add(checkItem);
@@ -86,9 +88,11 @@ public class ParentTreeItem extends CustomTreeItem {
 	public void addChildrenToStage() {
 		for (Iterator<ChildTreeItem> iterator = subItems.iterator(); iterator.hasNext();) {
 			CustomTreeItem item = (CustomTreeItem) iterator.next();
-			TreeItem<CustomTreeItem> reference = new TreeItem<CustomTreeItem>(item);
-			childTreeItems.add(reference);
-			item.setTreeItemReference(reference);
+			//TreeItem<CustomTreeItem> reference = new TreeItem<CustomTreeItem>(item);
+			
+			
+			
+			childTreeItems.add(item.getTreeItemReference());
 		}
 
 		this.getTreeItemReference().getChildren().addAll(childTreeItems);
@@ -228,13 +232,13 @@ public class ParentTreeItem extends CustomTreeItem {
 		
 		switch (index) {
 		case 0:
-			child = new CheckChildTreeItem(values, this);
+			child = new CheckChildTreeItem(values, this, new TreeItem<CustomTreeItem>());
 			break;
 		case 1:
-			child = new MarginChildTreeItem(values, this);
+			child = new MarginChildTreeItem(values, this, new TreeItem<CustomTreeItem>());
 			break;
 		case 2:
-			child = new TestChildTreeItem(values, this);
+			child = new TestChildTreeItem(values, this, new TreeItem<CustomTreeItem>());
 			break;
 		default:
 			counter--;

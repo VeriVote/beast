@@ -1,6 +1,5 @@
 package edu.pse.beast.datatypes.propertydescription;
 
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -22,7 +21,7 @@ public class SymbolicVariableList {
 	 *
 	 */
 	public SymbolicVariableList() {
-		
+
 	}
 
 	/**
@@ -42,6 +41,21 @@ public class SymbolicVariableList {
 		} else {
 			ErrorLogger.log("Tried to add a Variable without an id or without a type to a SymbolicVariableList");
 		}
+	}
+
+	/**
+	 *
+	 * @param id
+	 *            id of the variable
+	 * @param internalTypeContainer
+	 *            the type of the added variable
+	 */
+	public synchronized void addSymbolicVariable(SymbolicVariable var) {
+		symbolicVariableList.add(var);
+		listenerList.forEach((listener) -> {
+			listener.addedVar(var);
+		});
+
 	}
 
 	/**
@@ -152,6 +166,18 @@ public class SymbolicVariableList {
 		symbolicVariableList.forEach((var) -> {
 			listener.removedVar(var);
 		});
+	}
+
+	public void clearList() {
+		symbolicVariableList.clear();
+	}
+
+	public void addSymbolicVariableList(SymbolicVariableList allSymbolicVariables) {
+		for (Iterator<SymbolicVariable> iterator = allSymbolicVariables.getSymbolicVariables().iterator(); iterator
+				.hasNext();) {
+			SymbolicVariable var = (SymbolicVariable) iterator.next();
+			this.addSymbolicVariable(var);
+		}
 	}
 
 	/**

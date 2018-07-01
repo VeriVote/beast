@@ -19,6 +19,10 @@ import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.IntegerNode;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.VoteSumForCandExp;
 import edu.pse.beast.propertychecker.ConcatenationExpNode;
+import edu.pse.beast.propertychecker.IntersectContentNode;
+import edu.pse.beast.propertychecker.IntersectExpNode;
+import edu.pse.beast.propertychecker.NotEmptyContentNode;
+import edu.pse.beast.propertychecker.NotEmptyExpressionNode;
 import edu.pse.beast.propertychecker.PermutationExpNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.CandidateListChangeExpNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.VoteEquivalentsNode;
@@ -129,4 +133,12 @@ public interface BooleanExpNodeVisitor {
 	void visitConcatenationExpNode(ConcatenationExpNode concatenationExpNode);
 
 	void visitPermutationExpNode(PermutationExpNode permutationExpNode);
+
+	void visitIntersectExpNode(IntersectExpNode intersectExpNode);
+
+	void visitIntersectContentNode(IntersectContentNode intersectContentNode);
+
+	void visitNotEmptyExpNode(NotEmptyExpressionNode notEmptyExpressionNode);
+
+	void visitNotEmptyContentNode(NotEmptyContentNode notEmptyContentNode);
 }

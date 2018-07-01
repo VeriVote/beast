@@ -8,10 +8,12 @@ public class VoteEquivalentsNode extends BooleanExpressionNode {
 	
 	public final VoteEquivalentsContext voteEquivalentsContext;
 	public final String toOutput;
+	public final String voteOutputLength;
 
-	public VoteEquivalentsNode(VoteEquivalentsContext voteEquivalentsContext, String toOutput) {
+	public VoteEquivalentsNode(VoteEquivalentsContext voteEquivalentsContext, String toOutput, String voteOutputLength) {
 		this.voteEquivalentsContext = voteEquivalentsContext;
 		this.toOutput = toOutput;
+		this.voteOutputLength = voteOutputLength;
 	}
 
 	@Override

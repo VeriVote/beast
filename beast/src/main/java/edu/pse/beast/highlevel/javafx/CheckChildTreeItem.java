@@ -1,15 +1,16 @@
 package edu.pse.beast.highlevel.javafx;
 
 import edu.pse.beast.propertychecker.Result;
+import javafx.scene.control.TreeItem;
 
 public class CheckChildTreeItem extends ChildTreeItem {
 
-	CheckChildTreeItem(ChildTreeItemValues values, ParentTreeItem parent) {
-		super(values, parent);
+	CheckChildTreeItem(ChildTreeItemValues values, ParentTreeItem parent, TreeItem<CustomTreeItem> treeItemReference) {
+		super(values, parent, treeItemReference);
 	}
 
-	CheckChildTreeItem(String name, ParentTreeItem parent) {
-		super(name, parent);
+	CheckChildTreeItem(String name, ParentTreeItem parent, TreeItem<CustomTreeItem> treeItemReference) {
+		super(name, parent, treeItemReference);
 	}
 
 	@Override

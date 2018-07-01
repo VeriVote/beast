@@ -1,16 +1,17 @@
 package edu.pse.beast.highlevel.javafx;
 
 import edu.pse.beast.propertychecker.Result;
+import javafx.scene.control.TreeItem;
 
 public class MarginChildTreeItem extends ChildTreeItem {
 
-	MarginChildTreeItem(String name, ParentTreeItem parent) {
-		super(name, parent);
+	MarginChildTreeItem(String name, ParentTreeItem parent, TreeItem<CustomTreeItem> treeItemReference) {
+		super(name, parent, treeItemReference);
 	}
 
 
-	public MarginChildTreeItem(ChildTreeItemValues values, ParentTreeItem parent) {
-		super(values, parent);
+	public MarginChildTreeItem(ChildTreeItemValues values, ParentTreeItem parent, TreeItem<CustomTreeItem> treeItemReference) {
+		super(values, parent, treeItemReference);
 	}
 
 

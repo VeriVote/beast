@@ -112,6 +112,30 @@ public class FormalPropertyDescriptionBaseListener implements FormalPropertyDesc
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterNotEmptyExp(FormalPropertyDescriptionParser.NotEmptyExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNotEmptyExp(FormalPropertyDescriptionParser.NotEmptyExpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterNotEmptyContent(FormalPropertyDescriptionParser.NotEmptyContentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitNotEmptyContent(FormalPropertyDescriptionParser.NotEmptyContentContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterVoteEquivalents(FormalPropertyDescriptionParser.VoteEquivalentsContext ctx) { }
 	/**
 	 * {@inheritDoc}

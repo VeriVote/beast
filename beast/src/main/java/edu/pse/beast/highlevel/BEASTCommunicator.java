@@ -228,7 +228,7 @@ public class BEASTCommunicator {
      */
     public static boolean checkForErrors(ElectionDescription description, List<ParentTreeItem> properties) {
 		GUIController.setInfoText("searching for errors");
-		GUIController.getController().getBooleanExpEditor().updatePropertyTextAreas(); //save the currently opened property
+		GUIController.getController().getBooleanExpEditor().savePropertyTextAreasIntoDescription(); //save the currently opened property
 
 		List<CodeError> codeErrors = CVariableErrorFinder.findErrors(description.getCode());
 		

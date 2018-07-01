@@ -605,6 +605,10 @@ public class GUIController {
 				voterGridPane, candidateGridPane);
 
 		this.addInputNumberEnforcer(inputVoterField, ""); // update all numbers for the input fields
+		
+		addTreeItem(new PreAndPostConditionsDescription("new Property"));
+		
+		properties.get(0).wasClicked(false);
 
 	}
 
@@ -936,6 +940,12 @@ public class GUIController {
 		propertyListSaverLoader.resetHasSaveFile();
 		
 		removeAllProperties();
+		
+		if(event != null) {
+			addTreeItem(new PreAndPostConditionsDescription("new Property"));
+			properties.get(0).wasClicked(false);
+			
+		}
 
 	}
 
@@ -999,7 +1009,11 @@ public class GUIController {
 
 	private void openPropertyListFile(File listFile) {
 		projectSaverLoader.resetHasSaveFile();
+		
+		
 		if (listFile != null) {
+			
+			removeAllProperties();
 
 			String folderName = FilenameUtils.removeExtension(listFile.getName());
 
@@ -1175,7 +1189,7 @@ public class GUIController {
 
 	private void savePropertyListFromFile(File listFile, boolean askUser, boolean saveAs) {
 		if (properties.size() > 0) {
-
+			
 			if (!saveAs && askUser) {
 				if (propertyListSaverLoader.hasSaveFile()) {
 					savePropertyListFromFile(propertyListSaverLoader.getSaveFile(), false, false);

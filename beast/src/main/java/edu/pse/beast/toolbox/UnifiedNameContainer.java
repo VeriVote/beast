@@ -74,7 +74,7 @@ public class UnifiedNameContainer {
 	}
 	
 	public static String getStruct_candidateList() {
-		return "struct" + map.get("struct_candidateList");
+		return "struct " + map.get("struct_candidateList");
 	}
 
 	public static String getStruct_stack_result() {
