@@ -20,13 +20,13 @@ public class NewPropertyCodeArea extends CodeArea {
 
 	private static final String[] COMPARISON = new String[] { "==", "\\!\\=", "\\<\\=", "\\>\\=", "\\<", "\\>" };
 
-	private static final String[] RELATION = new String[] { "&&", "\\|\\|", "==>", "<==>" };
+	private static final String[] RELATION = new String[] { "&&", "\\|\\|", "==>", "<==>", "<--", "\\+\\+"};
 
 	private static final String[] MAKROS = new String[] { "VOTES", "ELECT", "VOTE_SUM_FOR_CANDIDATE",
 			"VOTE_SUM_FOR_UNIQUE_CANDIDATE" };
 
 	private static final String[] QUANTORS = new String[] { "FOR_ALL_VOTERS", "FOR_ALL_CANDIDATES", "FOR_ALL_SEATS",
-			"EXISTS_ONE_VOTER", "EXISTS_ONE_CANDIDATE", "EXISTS_ONE_SEAT" };
+			"EXISTS_ONE_VOTER", "EXISTS_ONE_CANDIDATE", "EXISTS_ONE_SEAT", "PERM", "SPLIT", "INTERSECT", "NOTEMPTY" };
 
 	private static final String OPERATORS_PATTERN = "(" + String.join("|", OPERATORS) + ")";
 	private static final String COMPARISON_PATTERN = "(" + String.join("|", COMPARISON) + ")";

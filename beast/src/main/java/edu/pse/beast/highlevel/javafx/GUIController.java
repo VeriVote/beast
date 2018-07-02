@@ -27,8 +27,8 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.electionSimulator.NewElectionSimulation;
 import edu.pse.beast.highlevel.BEASTCommunicator;
+import edu.pse.beast.options.OptionsNew;
 import edu.pse.beast.saverloader.ChildTreeItemSaverLoader;
-import edu.pse.beast.saverloader.ProjectSaverLoader;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.toolbox.Triplet;
 import edu.pse.beast.types.InputType;
@@ -185,10 +185,10 @@ public class GUIController {
 
 	@FXML // fx:id="consolePane"
 	private Tab consolePane;
-	
+
 	@FXML
 	private Tab boundVariablesTab;
-	
+
 	@FXML
 	private Tab booleanExpressionTab;
 
@@ -285,7 +285,7 @@ public class GUIController {
 	private boolean running = false;
 
 	private NewCodeArea codeArea;
-	
+
 	private BoundedVarCodeArea boundedVarArea;
 
 	private NewPropertyCodeArea preArea;
@@ -321,6 +321,8 @@ public class GUIController {
 	private ChildTreeItemSaverLoader propertyListGSON = new ChildTreeItemSaverLoader();
 
 	private SaverLoader projectSaverLoader = new SaverLoader(".proj", "BEAST project file");
+
+	private OptionsSaverLoader optionSaverLoader = new OptionsSaverLoader(".opt", "BEAST option file");
 
 	// private ProjectSaverLoader projectGSON = new ProjectSaverLoader();
 
@@ -485,13 +487,14 @@ public class GUIController {
 		VirtualizedScrollPane<NewPropertyCodeArea> VSPpost = new VirtualizedScrollPane<NewPropertyCodeArea>(postArea);
 
 		postPropertyPane.setContent(VSPpost);
-		
+
 		boundedVarArea = new BoundedVarCodeArea();
 
-		VirtualizedScrollPane<BoundedVarCodeArea> VSPbound = new VirtualizedScrollPane<BoundedVarCodeArea>(boundedVarArea);
+		VirtualizedScrollPane<BoundedVarCodeArea> VSPbound = new VirtualizedScrollPane<BoundedVarCodeArea>(
+				boundedVarArea);
 
 		boundVariablesTab.setContent(VSPbound);
-		
+
 		variableTreeView.setShowRoot(false);
 		TreeItem<String> symbVarRoot = new TreeItem<String>();
 		symbVarRoot.setExpanded(true);
@@ -605,9 +608,9 @@ public class GUIController {
 				voterGridPane, candidateGridPane);
 
 		this.addInputNumberEnforcer(inputVoterField, ""); // update all numbers for the input fields
-		
+
 		addTreeItem(new PreAndPostConditionsDescription("new Property"));
-		
+
 		properties.get(0).wasClicked(false);
 
 	}
@@ -681,6 +684,10 @@ public class GUIController {
 	public void removeProperty(TreeItem<CustomTreeItem> toRemove) {
 		properties.remove(toRemove.getValue());
 		root.getChildren().remove(toRemove);
+
+		// reset the property fields
+		GUIController.getController().resultNameField.setText("no property selected");
+		GUIController.getController().getResultField().setText(""); // reset the result field
 	}
 
 	private void removeAllProperties() {
@@ -893,9 +900,9 @@ public class GUIController {
 
 	@FXML
 	public void newElectionDescription(ActionEvent event) {
-		
+
 		codeArea.resetSaveFile();
-		
+
 		Triplet<String, InputType, OutputType> triplet = showPopUp("New Election Description",
 				"chose the new Election description", "input Type:", InputType.getInputTypes(), "output Type:",
 				OutputType.getOutputTypes());
@@ -908,7 +915,7 @@ public class GUIController {
 
 	@FXML
 	public void newProject(ActionEvent event) {
-		
+
 		projectSaverLoader.resetHasSaveFile();
 
 		newElectionDescription(event);
@@ -938,14 +945,17 @@ public class GUIController {
 	public void newPropertyList(ActionEvent event) {
 
 		propertyListSaverLoader.resetHasSaveFile();
-		
+
 		removeAllProperties();
-		
-		if(event != null) {
-			addTreeItem(new PreAndPostConditionsDescription("new Property"));
+
+		if (event != null) {
+			addProperty(new PreAndPostConditionsDescription("new Property"));
 			properties.get(0).wasClicked(false);
-			
+
 		}
+
+		GUIController.getController().resultNameField.setText("no property selected");
+		GUIController.getController().getResultField().setText(""); // reset the result field
 
 	}
 
@@ -971,11 +981,11 @@ public class GUIController {
 	@FXML
 	public void openProject(ActionEvent event) {
 
-		removeAllProperties();
-
 		File projectFile = projectSaverLoader.showFileLoadDialog("");
 
 		if (projectFile != null) {
+
+			removeAllProperties();
 
 			String folderName = FilenameUtils.removeExtension(projectFile.getName());
 
@@ -995,6 +1005,10 @@ public class GUIController {
 				File elecInputFile = new File(parent.getAbsolutePath() + "/" + "input.elecIn");
 				openVotingInput(elecInputFile);
 
+				// load the options
+				File optionsFile = new File(parent.getAbsolutePath() + "/" + "options.opt");
+				openOptions(optionsFile);
+
 			}
 		}
 
@@ -1009,10 +1023,9 @@ public class GUIController {
 
 	private void openPropertyListFile(File listFile) {
 		projectSaverLoader.resetHasSaveFile();
-		
-		
+
 		if (listFile != null) {
-			
+
 			removeAllProperties();
 
 			String folderName = FilenameUtils.removeExtension(listFile.getName());
@@ -1088,11 +1101,11 @@ public class GUIController {
 					}
 				}
 			}
-			
+
 			if (properties.size() > 0) {
 				setCurrentPropertyDescription(properties.get(0), false);
 			}
-			
+
 		}
 	}
 
@@ -1106,7 +1119,9 @@ public class GUIController {
 	}
 
 	public void openVotingInput(File file) {
-		electionSimulation.open(file);
+		if (file.exists()) {
+			electionSimulation.open(file);
+		}
 	}
 
 	@FXML
@@ -1168,6 +1183,9 @@ public class GUIController {
 
 			// save election input
 			electionSimulation.saveAs(new File(folder.getPath() + "/" + "input.elecIn"));
+
+			// save the options
+			saveOptions(new File(folder.getPath() + "/" + "options.opt"));
 		}
 	}
 
@@ -1189,7 +1207,7 @@ public class GUIController {
 
 	private void savePropertyListFromFile(File listFile, boolean askUser, boolean saveAs) {
 		if (properties.size() > 0) {
-			
+
 			if (!saveAs && askUser) {
 				if (propertyListSaverLoader.hasSaveFile()) {
 					savePropertyListFromFile(propertyListSaverLoader.getSaveFile(), false, false);
@@ -1215,7 +1233,7 @@ public class GUIController {
 					String name = parentItem.getPreAndPostPropertie().getName();
 					File saveFolder = new File(folder + "/" + name + "_" + counter++);
 					saveFolder = createFolderWithName(saveFolder, true); // we want to save the parentTreeItem into this
-																	// folder
+					// folder
 					name = saveFolder.getName();
 
 					listFileContent = listFileContent + name;
@@ -1243,6 +1261,59 @@ public class GUIController {
 		}
 	}
 
+	private void saveOptions(File file) {
+		OptionsNew toSave = new OptionsNew();
+
+		toSave = fillOptionObject(toSave);
+
+		String json = optionSaverLoader.createSaveString(toSave);
+
+		optionSaverLoader.save(file, json);
+	}
+
+	private void openOptions(File file) {
+
+		if (file.exists()) {
+			String jsonToLoad = optionSaverLoader.load(file);
+
+			OptionsNew options = null;
+
+			try {
+				options = optionSaverLoader.createFromSaveString(jsonToLoad);
+			} catch (Exception e) {
+				// do nothing
+			}
+
+			if (options != null) {
+				setOptions(options);
+			}
+		}
+	}
+
+	private void setOptions(OptionsNew options) {
+		this.minVoter.setText("" + options.minVoters);
+		this.maxVoter.setText("" + options.maxVoters);
+
+		this.minCandidates.setText("" + options.minCandidates);
+		this.maxCandidates.setText("" + options.maxCandidates);
+
+		this.minSeats.setText("" + options.minSeats);
+		this.maxSeats.setText("" + options.maxSeats);
+	}
+
+	private OptionsNew fillOptionObject(OptionsNew options) {
+		options.minVoters = Integer.parseInt(minVoter.getText());
+		options.maxVoters = Integer.parseInt(maxVoter.getText());
+
+		options.minCandidates = Integer.parseInt(minCandidates.getText());
+		options.maxCandidates = Integer.parseInt(maxCandidates.getText());
+
+		options.minSeats = Integer.parseInt(minSeats.getText());
+		options.maxSeats = Integer.parseInt(maxSeats.getText());
+
+		return options;
+	}
+
 	@FXML
 	public void saveVotingInput(ActionEvent event) {
 		electionSimulation.save();
@@ -1255,7 +1326,7 @@ public class GUIController {
 
 	@FXML
 	public void newProperty(ActionEvent event) {
-		addTreeItem(new PreAndPostConditionsDescription("new Property"));
+		addProperty(new PreAndPostConditionsDescription("new Property"));
 	}
 
 	@FXML
@@ -1578,13 +1649,13 @@ public class GUIController {
 		if (nameFieldIsChangeable && !bringToFront) {
 			propNameButtonClicked(null); // try to save the text the user wrote
 		}
-//
-//		if (booleanExpEditor.getCurrentItem() == null) {
-//			if (!nameFieldIsChangeable) {
-//				propertyItem.setText(propNameField.getText());
-//				propertyItem.getPreAndPostPropertie().setNewName(propNameField.getText());
-//			}
-//		}
+		//
+		// if (booleanExpEditor.getCurrentItem() == null) {
+		// if (!nameFieldIsChangeable) {
+		// propertyItem.setText(propNameField.getText());
+		// propertyItem.getPreAndPostPropertie().setNewName(propNameField.getText());
+		// }
+		// }
 		booleanExpEditor.setCurrentPropertyDescription(propertyItem, bringToFront);
 		propNameField.setText(propertyItem.getPreAndPostPropertie().getName());
 		resultNameField.setText(propertyItem.getPreAndPostPropertie().getName());
@@ -1706,16 +1777,20 @@ public class GUIController {
 		File finalListFile = new File(origFileNameWithougExt);
 
 		finalListFile.mkdirs();
-		
-		if(clearFolder) {
+
+		if (clearFolder) {
 			try {
 				FileUtils.cleanDirectory(finalListFile);
 			} catch (IOException e) {
 				e.printStackTrace();
-			} 
+			}
 		}
 
 		return finalListFile;
+	}
+
+	public void addProperty(PreAndPostConditionsDescription prop) {
+		addTreeItem(prop);
 	}
 
 }

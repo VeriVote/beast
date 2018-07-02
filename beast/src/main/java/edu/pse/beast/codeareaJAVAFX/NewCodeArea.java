@@ -268,14 +268,12 @@ public class NewCodeArea extends CodeArea implements MenuBarInterface {
 
 	@Override
 	public void undo() {
-		// TODO Auto-generated method stub
-
+		super.undo();
 	}
 
 	@Override
 	public void redo() {
-		// TODO Auto-generated method stub
-
+		super.redo();
 	}
 
 	@Override
@@ -286,19 +284,16 @@ public class NewCodeArea extends CodeArea implements MenuBarInterface {
 
 	@Override
 	public void copy() {
-		// TODO Auto-generated method stub
-
+		super.copy();
 	}
 
 	@Override
 	public void paste() {
-		// TODO Auto-generated method stub
-
+		super.paste();
 	}
 
 	@Override
 	public void delete() {
-		// TODO Auto-generated method stub
 
 	}
 

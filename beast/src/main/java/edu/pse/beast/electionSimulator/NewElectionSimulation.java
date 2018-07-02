@@ -223,9 +223,10 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener,
 	}
 
 	public void open(File file) {
-		String input = saverLoader.load(file);
-		
-		openInput(input, false);
+		if (file.exists()) {
+			String input = saverLoader.load(file);
+			openInput(input, false);
+		}
 	}
 
 	public void bringToFront() {

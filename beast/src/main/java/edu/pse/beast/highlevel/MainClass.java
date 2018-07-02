@@ -48,7 +48,7 @@ public class MainClass extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		
-		Locale local = Locale.getDefault();
+		Locale local = Locale.ENGLISH;
 		
 		mainStage = stage;
 		

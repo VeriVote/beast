@@ -292,6 +292,9 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 		PreAndPostConditionsDescription newDescription = convert(saverLoader.load());
 
 		if (newDescription != null) {
+			
+			GUIController.getController().addProperty(newDescription);
+			
 			currentPropertyDescription = newDescription;
 
 			saverLoader.resetHasSaveFile();

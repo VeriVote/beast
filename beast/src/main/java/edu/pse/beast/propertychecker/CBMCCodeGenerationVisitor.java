@@ -689,11 +689,19 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
 		code.add("unsigned int " + splits + " = " + (tupelVotes.size() - 1) + ";"); // determine how many splits we need
 
+		String tmpLines = "tmp_Lines" + getTmpIndex();
+
+		code.add("unsigned int *" + tmpLines + ";");
+		code.add(tmpLines + " = getRandomSplitLines(" + splits + ", " + voteInputSize + ");");
+
 		String splitLines = "splitLines" + getTmpIndex();
-
+		
 		code.add("unsigned int *" + splitLines + ";");
-		code.add(splitLines + " = getRandomSplitLines(" + splits + ", " + voteInputSize + ");");
-
+		
+		code.add("for (int i = 0; i <= " + splits + "; i++) {");
+		code.add(splitLines + "[i] = " + tmpLines + "[i];");
+		code.add("}");
+		
 		int tupelSize = tupelVotes.size();
 
 		String lastSplit = "last_split" + getTmpIndex();
