@@ -5,12 +5,15 @@
  */
 package edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST;
 
+import java.util.List;
 import java.util.Stack;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.tree.TerminalNode;
+
+import com.sun.jna.platform.win32.OaIdl.VARKIND;
 
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpConstant;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
@@ -22,6 +25,7 @@ import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.EquivalencyNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.ForAllNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.ImplicationNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.IntegerComparisonNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.IntersectTypeExpNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.LogicalAndNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.LogicalOrNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.NotNode;
@@ -38,9 +42,13 @@ import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.IntegerValuedExpression;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.VoteSumForCandExp;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
+import edu.pse.beast.propertychecker.IntersectExpNode;
+import edu.pse.beast.propertychecker.NotEmptyExpressionNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionBaseListener;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.BooleanExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.BooleanExpListContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntersectExpContext;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
@@ -55,10 +63,11 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 	private BooleanExpListNode generated;
 	private InputType inputType;
 	private OutputType resType;
-	private int maxElectExp = 0;
 	private int maxVoteExp = 0;
 	private int currentHighestElect = 0;
 	private BooleanExpScopehandler scopeHandler;
+	
+	private boolean hadBinaryBefore = false;
 
 	// Stacks
 	private Stack<BooleanExpressionNode> nodeStack;
@@ -80,17 +89,10 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 			maxVoteExp = number;
 		}
 	}
-	
-	private void setNewMaxElect(int number) {
-		if (number > maxElectExp) {
-			maxElectExp = number;
-		}
-	}
 
 	@Override
 	public void enterBooleanExpList(FormalPropertyDescriptionParser.BooleanExpListContext ctx) {
 		generated = new BooleanExpListNode();
-		maxElectExp = 0;
 		maxVoteExp = 0;
 		expStack = new Stack<>();
 		nodeStack = new Stack<>();
@@ -104,13 +106,15 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 	@Override
 	public void enterBooleanExpListElement(FormalPropertyDescriptionParser.BooleanExpListElementContext ctx) {
 		currentHighestElect = 0;
+		this.hadBinaryBefore = false;
 	}
 
 	@Override
 	public void exitBooleanExpListElement(FormalPropertyDescriptionParser.BooleanExpListElementContext ctx) {
+		
 		generated.addNode(nodeStack.pop(), currentHighestElect);
 		
-		setNewMaxElect(currentHighestElect);
+		setNewMaxVote(currentHighestElect);
 	}
 
 	@Override
@@ -120,16 +124,24 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 
 	@Override
 	public void exitBooleanExp(FormalPropertyDescriptionParser.BooleanExpContext ctx) {
-
+		if (ctx.notEmptyExp() != null) {
+			NotEmptyExpressionNode node = new NotEmptyExpressionNode(ctx.notEmptyExp(), !hadBinaryBefore);
+			
+			//FALLS FEHLER
+			
+			nodeStack.add(node);
+		}
 	}
 
 	@Override
 	public void enterBinaryRelationExp(FormalPropertyDescriptionParser.BinaryRelationExpContext ctx) {
+		this.hadBinaryBefore = true;
 	}
 
 	@Override
 	public void exitBinaryRelationExp(FormalPropertyDescriptionParser.BinaryRelationExpContext ctx) {
 		String symbol = ctx.BinaryRelationSymbol().toString();
+		
 		BooleanExpressionNode rhs = nodeStack.pop();
 		BooleanExpressionNode lhs = nodeStack.pop();
 
@@ -192,14 +204,29 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 
 	@Override
 	public void enterComparisonExp(FormalPropertyDescriptionParser.ComparisonExpContext ctx) {
+
 	}
 
 	@Override
 	public void exitComparisonExp(FormalPropertyDescriptionParser.ComparisonExpContext ctx) {
 		String comparisonSymbolString = ctx.ComparisonSymbol().getText();
 		ComparisonSymbol comparisonSymbol = new ComparisonSymbol(comparisonSymbolString);
-		TypeExpression rhs = expStack.pop();
-		TypeExpression lhs = expStack.pop();
+		
+		TypeExpression lhs;
+		TypeExpression rhs;
+
+		if (ctx.typeExp(1).getChild(0) instanceof IntersectExpContext) { //the right arguments 
+			rhs = new IntersectTypeExpNode(resType, (IntersectExpContext) ctx.typeExp(1).getChild(0));
+		} else {
+			rhs = expStack.pop();
+		}
+		
+		if (ctx.typeExp(0).getChild(0) instanceof IntersectExpContext) { //the left argument
+			lhs = new IntersectTypeExpNode(resType, (IntersectExpContext) ctx.typeExp(0).getChild(0));
+		} else {
+			lhs = expStack.pop();
+		}
+		
 		if (lhs.getInternalTypeContainer().getInternalType() == InternalTypeRep.INTEGER) {
 			IntegerComparisonNode node = new IntegerComparisonNode(lhs, rhs, comparisonSymbol);
 			nodeStack.add(node);
@@ -504,7 +531,7 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 		
 		int number = Integer.parseInt(electNumber);
 		
-		setNewMaxElect(number);
+		setNewMaxVote(number);
 		
 		scopeHandler.enterNewScope();
 		String id = ctx.Elect().getText();
@@ -626,6 +653,8 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 	 */
 	@Override
 	public void exitIntersectExp(FormalPropertyDescriptionParser.IntersectExpContext ctx) {
+	//	IntersectExpNode node = new IntersectExpNode(ctx, "dies ist ein test");
+	//	nodeStack.add(node);
 	}
 
 	/**
@@ -651,9 +680,8 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 			
 			int number = Integer.parseInt(electNumber);
 			
-			setNewMaxElect(number);
+			setNewMaxVote(number);
 		}
-		
 		
 	}
 
@@ -806,6 +834,12 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 	 */
 	@Override public void exitNotEmptyExp(FormalPropertyDescriptionParser.NotEmptyExpContext ctx) {
 		
+		NotEmptyExpressionNode node = new NotEmptyExpressionNode(ctx, !hadBinaryBefore);
+		
+		//FALLS FEHLER
+		
+		nodeStack.add(node);
+		
 	}
 	/**
 	 * {@inheritDoc}
@@ -828,7 +862,7 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 			
 			int number = Integer.parseInt(electNumber);
 			
-			setNewMaxElect(number);
+			setNewMaxVote(number);
 		}
 	}
 

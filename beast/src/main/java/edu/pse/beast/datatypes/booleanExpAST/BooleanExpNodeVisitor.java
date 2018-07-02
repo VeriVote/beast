@@ -6,6 +6,7 @@ import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.EquivalencyNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.ForAllNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.ImplicationNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.IntegerComparisonNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.IntersectTypeExpNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.LogicalAndNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.LogicalOrNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.NotNode;
@@ -141,4 +142,6 @@ public interface BooleanExpNodeVisitor {
 	void visitNotEmptyExpNode(NotEmptyExpressionNode notEmptyExpressionNode);
 
 	void visitNotEmptyContentNode(NotEmptyContentNode notEmptyContentNode);
+
+	void visitIntersectTypeExpNode(IntersectTypeExpNode intersectTypeExpNode);
 }

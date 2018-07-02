@@ -13,6 +13,7 @@ import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BooleanExpressionNode;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
@@ -42,7 +43,7 @@ public class CBMCCodeGenerator {
 	private final PreAndPostConditionsDescription preAndPostCondDesc;
 	private final FormalPropertySyntaxTreeToAstTranslator translator;
 	private final CBMCCodeGenerationVisitor visitor;
-	private int numberOfTimesVoted; // this number should be the number of
+	private int numberOfTimesVoted; // this number should be the number of vote we want to perform
 	private int margin;
 	private List<String> origResult;
 	// private boolean isTest;
@@ -506,8 +507,8 @@ public class CBMCCodeGenerator {
 		
 		//intersect start
 		
-		code.add("struct stack_result intersect(struct stack_result one, struct stack_result two) {");
-		code.add("	static struct stack_result toReturn;");
+		code.add("struct candidateList_result intersect(struct candidateList_result one, struct candidateList_result two) {");
+		code.add("	static struct candidateList_result toReturn;");
 		code.add("	");
 		code.add("	for (int i = 0; i < C; i++) {");
 		code.add("		toReturn.arr[i] = 0;");
@@ -708,6 +709,7 @@ public class CBMCCodeGenerator {
 
 		code.add("");
 		visitor.setToPostConditionMode();
+		
 		postAST.getBooleanExpressions().forEach((booleanExpressionLists) -> {
 			booleanExpressionLists.forEach((booleanNode) -> {
 				code.addList(visitor.generateCode(booleanNode));

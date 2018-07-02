@@ -1,0 +1,1 @@
+{"name":"new Property","symbolicVariableList":{"symbolicVariableList":[]},"preConditionsDescription":{"code":""},"postConditionsDescription":{"code":"INTERSECT(ELECT2, ELECT3) \u003d\u003d INTERSECT(ELECT2, ELECT3);"},"boundedVarDescription":{"code":""}}

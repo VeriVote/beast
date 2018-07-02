@@ -17,6 +17,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.FormalExpErrorFinderTreeListener;
+import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 
@@ -145,7 +146,7 @@ public class SymbolicVariableListTest {
     @Test
     public void testAddListener() {
         System.out.println("addListener");
-        VariableListListener listener = new FormalExpErrorFinderTreeListener(null, null);
+        VariableListListener listener = new FormalExpErrorFinderTreeListener(null, null, GUIController.getController().getElectionDescription());
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.addListener(listener);
         String id = "test";

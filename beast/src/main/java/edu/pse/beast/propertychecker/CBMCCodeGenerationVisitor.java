@@ -6,7 +6,6 @@
 package edu.pse.beast.propertychecker;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
@@ -20,6 +19,7 @@ import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.EquivalencyNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.ForAllNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.ImplicationNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.IntegerComparisonNode;
+import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.IntersectTypeExpNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.LogicalAndNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.LogicalOrNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.NotNode;
@@ -40,9 +40,9 @@ import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.ConcatenationExpContext;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntersectContentContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntersectExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.PermutationExpContext;
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.TupleContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteEquivalentsContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VotingListChangeContentContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.CandidateListChangeExpNode;
@@ -89,6 +89,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
 	private final ElectionTypeContainer electionTypeContainer;
 
+	private boolean post;
+
 	/**
 	 * this creates the visitor You should create 1 and only 1 visitor for every c.
 	 * file you want to make you have to set it to pre- or post-property mode in
@@ -131,6 +133,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 	 */
 	public void setToPreConditionMode() {
 		assumeOrAssert = "assume";
+		this.post = false;
 	}
 
 	/**
@@ -139,6 +142,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 	 */
 	public void setToPostConditionMode() {
 		assumeOrAssert = "assert";
+		this.post = true;
 	}
 
 	/**
@@ -343,6 +347,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 				.isList(); cont = cont.getListedType()) {
 			listlvl++;
 		}
+
+		code.add("//comparison left side");
+
 		node.getLHSBooleanExpNode().getVisited(this);
 		int lhslistLevel = listlvl;
 
@@ -351,6 +358,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 				.isList(); cont = cont.getListedType()) {
 			listlvl++;
 		}
+
+		code.add("//comparison right side:");
 
 		node.getRHSBooleanExpNode().getVisited(this);
 		int rhslistLevel = listlvl;
@@ -390,31 +399,121 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 					break;
 				}
 			}
-			String loop = "for(unsigned int VAR = 0; VAR < MAX && BOOL; ++VAR) {";
+			String loop = "for(unsigned int VAR = 0; BOOL && VAR < MAX; ++VAR) {";
 			loop = loop.replaceAll("VAR", countingVar);
 			loop = loop.replaceAll("MAX", max);
 			loop = loop.replaceAll("BOOL", varName);
 			code.add(loop);
-			code.addTab();
 			cont = cont.getListedType();
 		}
-		String rhs = variableNames.pop();
-		String lhs = variableNames.pop();
-		internCode = varName + " = " + lhs;
-		for (int i = 0; i < lhslistLevel; ++i) {
-			internCode += "[VAR]".replace("VAR", counter.get(i));
+
+		String lhs;
+		String rhs;
+
+		// if (node.getRHSBooleanExpNode() instanceof IntersectTypeExpNode) {
+		// IntersectTypeExpNode rightNode = (IntersectTypeExpNode)
+		// node.getRHSBooleanExpNode();
+		//
+		// IntersectExpContext context = rightNode.context;
+		//
+		// String voteInputOne = "tmp_elect" + getTmpIndex();
+		//
+		// code.add(electionTypeContainer.getOutputType().getOutputString() + " " +
+		// voteInputOne + ";"); // create the
+		// // var
+		//
+		// String voteInputTwo = "tmp_elect" + getTmpIndex();
+		//
+		// code.add(electionTypeContainer.getOutputType().getOutputString() + " " +
+		// voteInputTwo + ";"); // create the
+		// // var
+		//
+		// rhs = "tmp_elect" + getTmpIndex();
+		//
+		// code.add(electionTypeContainer.getOutputType().getOutputString() + " " + rhs
+		// + ";"); // create the var
+		//
+		// intersectHelpMethod(context.intersectContent(0), voteInputOne,
+		// context.intersectContent(1), voteInputTwo,
+		// rhs);
+		//
+		// rhs = rhs + ".arr";
+		//
+		// } else {
+		// rhs = variableNames.pop();
+		// }
+		//
+		// if (node.getLHSBooleanExpNode() instanceof IntersectTypeExpNode) {
+		// IntersectTypeExpNode leftNode = (IntersectTypeExpNode)
+		// node.getLHSBooleanExpNode();
+		//
+		// IntersectExpContext context = leftNode.context;
+		//
+		// String voteInputOne = "tmp_elect" + getTmpIndex();
+		//
+		// code.add(electionTypeContainer.getOutputType().getOutputString() + " " +
+		// voteInputOne + ";"); // create the
+		// // var
+		//
+		// String voteInputTwo = "tmp_elect" + getTmpIndex();
+		//
+		// code.add(electionTypeContainer.getOutputType().getOutputString() + " " +
+		// voteInputTwo + ";"); // create the
+		// // var
+		//
+		// lhs = "tmp_elect" + getTmpIndex();
+		//
+		// code.add(electionTypeContainer.getOutputType().getOutputString() + " " + lhs
+		// + ";"); // create the var
+		//
+		// intersectHelpMethod(context.intersectContent(0), voteInputOne,
+		// context.intersectContent(1), voteInputTwo,
+		// lhs);
+		//
+		// lhs = lhs + ".arr";
+		//
+		// } else {
+		// lhs = variableNames.pop();
+		// }
+
+		rhs = variableNames.pop();
+
+		lhs = variableNames.pop();
+
+		setToPostConditionMode();
+
+		if (!post) {
+			internCode = varName + " = " + lhs;
+			for (int i = 0; i < lhslistLevel; ++i) {
+				internCode += "[VAR]".replace("VAR", counter.get(i));
+			}
+			internCode += " " + node.getComparisonSymbol().getCStringRep() + " ";
+			internCode += rhs;
+			for (int i = 0; i < rhslistLevel; ++i) {
+				internCode += "[VAR]".replace("VAR", counter.get(i));
+			}
+			code.add(internCode + ";");
+			for (int i = 0; i < maxListLevel; ++i) {
+				code.add("}");
+			}
+			testIfLast();
+		} else {
+
+			internCode = varName + " = " + lhs;
+			for (int i = 0; i < lhslistLevel; ++i) {
+				internCode += ".arr[VAR]".replace("VAR", counter.get(i));
+			}
+			internCode += " " + node.getComparisonSymbol().getCStringRep() + " ";
+			internCode += rhs;
+			for (int i = 0; i < rhslistLevel; ++i) {
+				internCode += ".arr[VAR]".replace("VAR", counter.get(i));
+			}
+			code.add(internCode + ";");
+			for (int i = 0; i < maxListLevel; ++i) {
+				code.add("}");
+			}
+			testIfLast();
 		}
-		internCode += " " + node.getComparisonSymbol().getCStringRep() + " ";
-		internCode += rhs;
-		for (int i = 0; i < rhslistLevel; ++i) {
-			internCode += "[VAR]".replace("VAR", counter.get(i));
-		}
-		code.add(internCode + ";");
-		for (int i = 0; i < maxListLevel; ++i) {
-			code.deleteTab();
-			code.add("}");
-		}
-		testIfLast();
 	}
 
 	@Override
@@ -606,27 +705,29 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
 			for (int i = 0; i < tupelSize - 1; i++) { // split the array and extract the votes for all but one tupel
 														// element
-				
+
 				String tmp = "tmp" + getTmpIndex();
 
-				code.add("struct vote_single " + tmp + " = splitOne( " + voteInput + ", " + lastSplit + ", " + splitLines + "["
-						+ i + "]);");
-				
+				code.add("struct vote_single " + tmp + " = splitOne( " + voteInput + ", " + lastSplit + ", "
+						+ splitLines + "[" + i + "]);");
+
 				code.add("for(int i = 0; i < V; i++) {");
 				code.add("	" + tupelVotes.get(i).toLowerCase() + "[i] = " + tmp + ".arr[i];");
 				code.add("}");
 
 				// set the size value for this array to its new size:
 
-				code.add("V" + tupelVotes.get(i).substring("votes".length()) + " = " + splitLines + "[" + i + "] - " + lastSplit + ";");
+				code.add("V" + tupelVotes.get(i).substring("votes".length()) + " = " + splitLines + "[" + i + "] - "
+						+ lastSplit + ";");
 
 				code.add(lastSplit + " = " + splitLines + "[" + i + "];");
 			}
 
 			String tmp = "tmp" + getTmpIndex();
-			
-			code.add("struct vote_single " + tmp + " = splitOne( " + voteInput + ", " + lastSplit + ", " + voteInputSize + ");"); // TODO is V
-																										// correct
+
+			code.add("struct vote_single " + tmp + " = splitOne( " + voteInput + ", " + lastSplit + ", " + voteInputSize
+					+ ");"); // TODO is V
+			// correct
 
 			code.add("for(int i = 0; i < V; i++) {");
 			code.add("	" + tupelVotes.get(tupelSize - 1).toLowerCase() + "[i] = " + tmp + ".arr[i];");
@@ -637,27 +738,30 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
 			for (int i = 0; i < tupelSize - 1; i++) { // split the array and extract the votes for all but one tupel
 														// element
-				code.add("struct vote_double tmp = splitTwo( " + voteInput + ", " + lastSplit + ", " + splitLines + "[" + i + "]);");
+				String tmp = "tmp" + getTmpIndex();
+
+				code.add("struct vote_double " + tmp + " = splitTwo( " + voteInput + ", " + lastSplit + ", "
+						+ splitLines + "[" + i + "]);");
 
 				code.add("for(int i = 0; i < V; i++) {");
-				code.add("	for(int j = 0; j < C; i++) {");
-				code.add("	" + tupelVotes.get(i).toLowerCase() + "[i][j] = tmp.arr[i][j];");
+				code.add("	for(int j = 0; j < C; j++) {");
+				code.add("	" + tupelVotes.get(i).toLowerCase() + "[i][j] = " + tmp + ".arr[i][j];");
 				code.add("	}");
 				code.add("}");
-
-				// set the size value for this array to its new size:
-
-				code.add("V" + tupelVotes.get(i).substring("votes".length()) + " = ");
 
 				code.add(lastSplit + " = " + splitLines + "[" + i + "];");
 			}
 
-			code.add("struct vote_double tmp = splitTwo( " + voteInput + ", " + lastSplit + ", V);"); // TODO is V correct
-																								// here?
+			String tmp = "tmp" + getTmpIndex();
+
+			code.add("struct vote_double " + tmp + " = splitTwo( " + voteInput + ", " + lastSplit + ", " + voteInputSize
+					+ ");"); // TODO is V
+			// correct
+			// here?
 
 			code.add("for(int i = 0; i < V; i++) {");
-			code.add("	for(int j = 0; j < C; i++) {");
-			code.add("	" + tupelVotes.get(tupelSize - 1).toLowerCase() + "[i][j] = tmp.arr[i][j];");
+			code.add("	for(int j = 0; j < C; j++) {");
+			code.add("	" + tupelVotes.get(tupelSize - 1).toLowerCase() + "[i][j] = " + tmp + ".arr[i][j];");
 			code.add("	}");
 			code.add("}");
 		}
@@ -744,25 +848,50 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
 		code.add(electionTypeContainer.getOutputType().getOutputString() + " " + voteInputOne + ";"); // create the var
 
-		IntersectContentNode intersectContentNodeOne = new IntersectContentNode(context.intersectContent(0),
-				voteInputOne);
+		String voteInputTwo = "tmp_elect" + getTmpIndex();
 
-		intersectContentNodeOne.getVisited(this);
+		code.add(electionTypeContainer.getOutputType().getOutputString() + " " + voteInputTwo + ";"); // create the var
+
+		intersectHelpMethod(context.intersectContent(0), voteInputOne, context.intersectContent(1), voteInputTwo,
+				node.voteOutput);
+
+		// we now have both inputs saved in their variables
+
+	}
+
+	@Override
+	public void visitIntersectTypeExpNode(IntersectTypeExpNode node) {
+
+		String voteInputOne = "tmp_elect" + getTmpIndex();
+
+		code.add(electionTypeContainer.getOutputType().getOutputString() + " " + voteInputOne + ";"); // create the var
 
 		String voteInputTwo = "tmp_elect" + getTmpIndex();
 
 		code.add(electionTypeContainer.getOutputType().getOutputString() + " " + voteInputTwo + ";"); // create the var
 
-		IntersectContentNode intersectContentNodeTwo = new IntersectContentNode(context.intersectContent(0),
-				voteInputTwo);
+		String toOutputTo = "tmp_output" + getTmpIndex();
+
+		code.add(electionTypeContainer.getOutputType().getOutputString() + " " + toOutputTo + ";"); // create the var
+
+		intersectHelpMethod(node.context.intersectContent(0), voteInputOne, node.context.intersectContent(1),
+				voteInputTwo, toOutputTo);
+
+		variableNames.push(toOutputTo);
+	}
+
+	private void intersectHelpMethod(IntersectContentContext contextOne, String voteInputOne,
+			IntersectContentContext contextTwo, String voteInputTwo, String toOutputTo) {
+
+		IntersectContentNode intersectContentNodeOne = new IntersectContentNode(contextOne, voteInputOne);
+
+		intersectContentNodeOne.getVisited(this);
+
+		IntersectContentNode intersectContentNodeTwo = new IntersectContentNode(contextTwo, voteInputTwo);
 
 		intersectContentNodeTwo.getVisited(this);
 
-		// we now have both inputs saved in their variables
-
-		String toSaveInto = node.voteOutput;
-
-		code.add(toSaveInto + " = intersect(" + voteInputOne + ", " + voteInputTwo + ");");
+		code.add(toOutputTo + " = intersect(" + voteInputOne + ", " + voteInputTwo + ");");
 
 	}
 
@@ -772,8 +901,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 		String voteInput = "tmp_elect" + getTmpIndex();
 
 		code.add(electionTypeContainer.getOutputType().getOutputString() + " " + voteInput + ";"); // create the var
-
-		voteInput = voteInput + ".arr";
 
 		if (node.intersectContentContext.Elect() != null) {
 			code.add(voteInput + " = " + node.intersectContentContext.Elect().getText().toLowerCase() + ";");
@@ -790,7 +917,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 		String toOutputTo = node.voteOutput;
 
 		code.add("for(int i = 0; i < C; i++) {");
-		code.add(toOutputTo + " = " + voteInput + "[i];");
+		code.add(toOutputTo + ".arr[i] = " + voteInput + ".arr[i];");
 		code.add("}");
 	}
 
@@ -829,14 +956,14 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
 		} else { // we just have a simple vote
 			voteInput = node.voteEquivalentsContext.Vote().getText().toLowerCase();
-			
+
 			voteInputSize = "V" + node.voteEquivalentsContext.Vote().getText().substring("VOTES".length());
 		}
 
 		// now a created voting array is saved in "voteInput"
 
 		String voteToSaveInto = node.toOutput;
-		
+
 		String voteOutputLength = node.voteOutputLength;
 
 		// TODO extract this logic into InputType
@@ -851,7 +978,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 			code.add("	}");
 			code.add("}");
 		}
-		
+
 		code.add(voteOutputLength + " = " + voteInputSize + ";");
 		// we fullfilled the task of writing the result of the lower var into the given
 		// output var
@@ -862,7 +989,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 	public void visitConcatenationExpNode(ConcatenationExpNode node) {
 		int offset = 0;
 
-		if (node.concatenationExpContext.getChild(0).getText().equals('(')) { // we have to skip one child if we start
+		if (node.concatenationExpContext.getChild(0).getText().equals("(")) { // we have to skip one child if we start
 																				// with "("
 			offset = 1;
 			System.out.println("hat eine klammer!!");
@@ -1000,7 +1127,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
 			code.add("for(int i = 0; i < V; i++) {");
 			code.add("for(int j = 0; j < C; j++) {");
-			code.add(toSaveInto + "[i] = " + tmp + ".arr[i][j];");
+			code.add(toSaveInto + "[i][j] = " + tmp + ".arr[i][j];");
 			code.add("}");
 			code.add("}");
 
@@ -1008,52 +1135,56 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 		}
 
 	}
-	
+
 	@Override
 	public void visitNotEmptyExpNode(NotEmptyExpressionNode node) {
-		String isEmpty = "is_empty" + getTmpIndex();
-		
-		variableNames.push(isEmpty); //we will save the result in this var. 0 for false, everything else for true
-		
+		String notEmpty = "not_empty" + getTmpIndex();
+
+		code.add("unsigned int " + notEmpty + ";");
+
+		variableNames.push(notEmpty); // we will save the result in this var. 0 for false, everything else for true
+
 		String subResult = "tmp_bool" + getTmpIndex();
-		
-		code.add("unsigned int " + subResult + ";");
-		
+
+		code.add("unsigned int " + subResult + " = 0;");
+
 		NotEmptyContentNode notEmptyNode = new NotEmptyContentNode(node.context.notEmptyContent(), subResult);
-		
+
 		notEmptyNode.getVisited(this);
-		
-		//the result is now saved in votingInput
-		
-		code.add(isEmpty + " = " + subResult + ";");
-		
+
+		// the result is now saved in votingInput
+
+		code.add(notEmpty + " = " + subResult + ";");
+
+		if (node.isTop) {
+			code.add(assumeOrAssert + "(" + notEmpty + ");");
+		}
 	}
-	
+
 	@Override
 	public void visitNotEmptyContentNode(NotEmptyContentNode node) {
-		
+
 		String subResult = "tmp_elect" + getTmpIndex();
 
-		
-		if (node.context.intersectExp() != null) { //we have an intersect beneath
+		code.add(electionTypeContainer.getOutputType().getOutputString() + " " + subResult + ";"); // create the var
 
-			code.add(electionTypeContainer.getOutputType().getOutputString() + " " + subResult + ";"); // create the var
+		if (node.context.intersectExp() != null) { // we have an intersect beneath
 
 			IntersectExpNode intersectNode = new IntersectExpNode(node.context.intersectExp(), subResult);
 
 			intersectNode.getVisited(this);
-			
-		} else { //we only have an elect
-			code.add(subResult + " = " + node.context.Elect().getText().toLowerCase());
+
+		} else { // we only have an elect
+			code.add(subResult + " = " + node.context.Elect().getText().toLowerCase() + ";");
 		}
-		
+
 		String toReturn = node.votingOutput;
-		
-		//the value is now saved in subResult
-		
-		code.add("for(int i = 0; i < C; i++) { "); 
-		code.add(toReturn + ".arr[i] += " + subResult + ".arr[i];");
+
+		// the value is now saved in subResult
+
+		code.add("for(int i = 0; i < C; i++) { ");
+		code.add(toReturn + " += " + subResult + ".arr[i];");
 		code.add("}");
 	}
- 
+
 }

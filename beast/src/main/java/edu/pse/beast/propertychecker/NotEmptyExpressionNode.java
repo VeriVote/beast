@@ -7,9 +7,11 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.No
 public class NotEmptyExpressionNode extends BooleanExpressionNode {
 
 	public final NotEmptyExpContext context;
+	public final boolean isTop;
 	
-	public NotEmptyExpressionNode(NotEmptyExpContext context) {
+	public NotEmptyExpressionNode(NotEmptyExpContext context, boolean isTop) {
 		this.context = context;
+		this.isTop = isTop;
 	}
 	
 	@Override

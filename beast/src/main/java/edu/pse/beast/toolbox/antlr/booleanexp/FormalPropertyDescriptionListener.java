@@ -88,6 +88,16 @@ public interface FormalPropertyDescriptionListener extends ParseTreeListener {
 	 */
 	void exitBinaryRelationExp(FormalPropertyDescriptionParser.BinaryRelationExpContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#addedContentExp}.
+	 * @param ctx the parse tree
+	 */
+	void enterAddedContentExp(FormalPropertyDescriptionParser.AddedContentExpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FormalPropertyDescriptionParser#addedContentExp}.
+	 * @param ctx the parse tree
+	 */
+	void exitAddedContentExp(FormalPropertyDescriptionParser.AddedContentExpContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link FormalPropertyDescriptionParser#notEmptyExp}.
 	 * @param ctx the parse tree
 	 */

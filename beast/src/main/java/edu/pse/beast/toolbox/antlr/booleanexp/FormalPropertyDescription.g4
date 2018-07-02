@@ -39,11 +39,13 @@ binaryRelationExp : binaryRelationExp BinaryRelationSymbol booleanExp |
 					'(' notExp ')' BinaryRelationSymbol booleanExp |
 					'(' comparisonExp ')' BinaryRelationSymbol booleanExp |
 					
-					'(' notEmptyExp ')' BinaryRelationSymbol booleanExp
+					'(' notEmptyExp ')' BinaryRelationSymbol booleanExp |
 					'(' intersectExp ')' BinaryRelationSymbol booleanExp
 					; 		
 		
 //new part 2	
+
+addedContentExp : notEmptyExp | intersectExp;
 
 notEmptyExp :		NotEmpty '(' notEmptyContent ')';
 
@@ -77,7 +79,7 @@ notExp : '!' booleanExp;
 
 comparisonExp : typeExp ComparisonSymbol typeExp;
 
-typeExp : electExp | voteExp | numberExpression | symbolicVarExp | typeByPosExp;
+typeExp : electExp | voteExp | numberExpression | symbolicVarExp | typeByPosExp | intersectExp;
 
 numberExpression : 	'(' numberExpression ')' |
 			numberExpression Mult numberExpression |
