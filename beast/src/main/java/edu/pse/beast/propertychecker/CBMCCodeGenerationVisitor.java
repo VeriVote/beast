@@ -399,6 +399,14 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 					break;
 				}
 			}
+			
+			
+			//TODO this is just a hotfix because it used V when it should have used C
+			//TODO for candidate lists
+			//TODO maybe extract this to the voting types
+			if (electionTypeContainer.getOutputType() instanceof CandidateList) {
+				max = UnifiedNameContainer.getCandidate();
+			}
 			String loop = "for(unsigned int VAR = 0; BOOL && VAR < MAX; ++VAR) {";
 			loop = loop.replaceAll("VAR", countingVar);
 			loop = loop.replaceAll("MAX", max);
@@ -696,7 +704,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
 		String splitLines = "splitLines" + getTmpIndex();
 		
-		code.add("unsigned int *" + splitLines + ";");
+		code.add("unsigned int " + splitLines + "[" + splits + "];");
 		
 		code.add("for (int i = 0; i <= " + splits + "; i++) {");
 		code.add(splitLines + "[i] = " + tmpLines + "[i];");
@@ -756,6 +764,12 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 				code.add("	" + tupelVotes.get(i).toLowerCase() + "[i][j] = " + tmp + ".arr[i][j];");
 				code.add("	}");
 				code.add("}");
+				
+				// set the size value for this array to its new size:
+
+				code.add("V" + tupelVotes.get(i).substring("votes".length()) + " = " + splitLines + "[" + i + "] - "
+						+ lastSplit + ";");
+
 
 				code.add(lastSplit + " = " + splitLines + "[" + i + "];");
 			}

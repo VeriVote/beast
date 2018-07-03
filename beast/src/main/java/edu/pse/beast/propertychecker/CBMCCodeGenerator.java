@@ -260,8 +260,7 @@ public class CBMCCodeGenerator {
 		code.add("			assume(next_split >= last_split);");
 		code.add("			assume(next_split <= max);");
 		code.add("			");
-		code.add("					");
-		code.add("		unsigned int debugHier =max + 1;");
+		code.add("			");
 		code.add("			");
 		code.add("			split_arr[i] = next_split;");
 		code.add("			last_split = next_split;");
@@ -487,7 +486,7 @@ public class CBMCCodeGenerator {
 		code.add("		");
 		code.add("		already_used_arr[i] = new_index;");
 		code.add("		");
-		code.add("		for(int j = 0; j < i; j++) {");
+		code.add("		for(int j = 0; j < C; j++) {");
 		code.add("			sub_arr[new_index][j] = votes[i][j];");
 		code.add("		}");
 		code.add("	}");

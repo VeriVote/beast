@@ -692,6 +692,9 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 	 */
 	@Override
 	public void enterTuple(FormalPropertyDescriptionParser.TupleContext ctx) {
+		String votenumber = ctx.Vote().getText().substring("VOTES".length());
+		int number = Integer.parseInt(votenumber);
+		setNewMaxVote(number);
 	}
 
 	/**
@@ -710,6 +713,9 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
 	 */
 	@Override
 	public void enterTupleContent(FormalPropertyDescriptionParser.TupleContentContext ctx) {
+		String votenumber = ctx.Vote().getText().substring("VOTES".length());
+		int number = Integer.parseInt(votenumber);
+		setNewMaxVote(number);
 	}
 
 	/**
