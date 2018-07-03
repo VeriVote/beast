@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openqa.selenium.remote.html5.AddApplicationCache;
-
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.propertychecker.Result;
 import javafx.beans.value.ChangeListener;
