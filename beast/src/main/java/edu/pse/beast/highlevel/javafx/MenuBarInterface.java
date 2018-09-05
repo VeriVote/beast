@@ -11,4 +11,6 @@ public interface MenuBarInterface {
 	void copy();
 	void paste();
 	void delete();
+	
+	void autoComplete();
 }

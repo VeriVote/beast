@@ -7,8 +7,6 @@ package edu.pse.beast.datatypes.propertydescription;
 
 import java.util.List;
 
-import edu.pse.beast.datatypes.NameInterface;
-
 /**
  *
  * @author Niels

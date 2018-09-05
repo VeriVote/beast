@@ -1,8 +1,13 @@
 package edu.pse.beast.codeareaJAVAFX;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.IntFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,9 +18,11 @@ import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
+import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.toolbox.Triplet;
 import javafx.scene.Node;
 
-public class NewPropertyCodeArea extends CodeArea {
+public class NewPropertyCodeArea extends AutoCompletionCodeArea {
 	private static final String[] OPERATORS = new String[] { "\\*", "/", "\\+", "-" };
 
 	private static final String[] COMPARISON = new String[] { "==", "\\!\\=", "\\<\\=", "\\>\\=", "\\<", "\\>" };
@@ -44,10 +51,17 @@ public class NewPropertyCodeArea extends CodeArea {
 					+ RELATION_PATTERN + ")" + "|(?<MAKROS>" + MAKROS_PATTERN + ")" + "|(?<QUANTORS>" + QUANTORS_PATTERN
 					+ ")" + "|(?<PAREN>" + PAREN_PATTERN + ")" + "|(?<SEMICOLON>" + SEMICOLON_PATTERN + ")");
 
+	
+	private static Set<String> recommendations = new TreeSet<String>();
+	
+	
 	private FormalPropertiesDescription description;
 
 	public NewPropertyCodeArea() {
 
+		// add all standard recommendations
+		recommendations.addAll(Arrays.asList(MAKROS));
+		
 		String stylesheet = this.getClass().getResource("propertyAreaSyntaxHighlight.css").toExternalForm();
 
 		this.getStylesheets().add(stylesheet);
@@ -104,5 +118,80 @@ public class NewPropertyCodeArea extends CodeArea {
 		if (this.description != null) {
 			this.description.setCode(this.textProperty().getValue());
 		}
+	}
+	
+	private Triplet<List<String>, Integer, Integer> getCompletions() {
+		String completeText = this.getText();
+
+		int prefixEnd = caretPositionProperty().getValue();
+		int prefixStart = prefixEnd;
+		
+		String prefix = "";
+
+		
+		
+		if (prefixEnd > 0) {
+			for (int i = prefixEnd - 1; i >= 0; i--) {
+
+				char tmp = completeText.charAt(i);
+
+				if (tmp == ' ' | ("" + tmp).matches(",|;|\\.|\\(|\\)|\\{|\\}|\\|/|\\+|-|\\*")
+						| ("" + tmp).matches("\\p{Cntrl}")) {
+
+					if (!prefix.matches("([A-Za-z]+[A-Za-z0-9]*)")) {
+						prefix = "";
+					}
+					break;
+				} else {
+					prefix = tmp + prefix;
+
+					prefixStart = i;
+				}
+
+			}
+		} else
+
+		{
+			prefix = "";
+		}
+
+		completeText = completeText.replaceAll("\\p{Cntrl}", " "); // replace control characters by whitespaces
+		completeText = completeText.replaceAll(",|;|\\.|\\(|\\)|\\{|\\}|\\|/|\\+|-|\\*", " ");
+		completeText = completeText.replaceAll("\\s+", " ");
+
+		Set<String> possibilities = new TreeSet<String>(recommendations);
+		
+		possibilities.addAll(GUIController.getController().getBooleanExpEditor().getSymbolicVariableNames());
+
+		String[] split = completeText.split(" "); // split on whitespaces to extract the words
+
+		for (int i = 0; i < split.length; i++) {
+			if (split[i].matches("([A-Za-z]+[A-Za-z0-9]*)")) {
+				possibilities.add(split[i]);
+			}
+		}
+
+		List<String> possibleList = new ArrayList<String>();
+
+		if (prefix.equals("")) {
+			possibleList.addAll(possibilities);
+		} else { // we already have started a word, so we have to filter out all non fitting
+					// words
+			for (Iterator<String> iterator = possibilities.iterator(); iterator.hasNext();) {
+				String str = (String) iterator.next();
+				if (str != null && str.toLowerCase().startsWith(prefix.toLowerCase())) {
+					possibleList.add(str);
+				}
+
+			}
+
+		}
+
+		return new Triplet<List<String>, Integer, Integer>(possibleList, prefixStart, prefixEnd);
+	}
+
+	public void autoComplete() {
+		Triplet<List<String>, Integer, Integer> completion = getCompletions();
+		processAutocompletion(completion.first, completion.second, completion.third);
 	}
 }

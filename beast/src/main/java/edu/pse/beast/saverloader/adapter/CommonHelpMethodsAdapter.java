@@ -13,7 +13,6 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 import edu.pse.beast.types.CommonHelpMethods;
-import edu.pse.beast.types.InputType;
 
 public class CommonHelpMethodsAdapter implements JsonSerializer<CommonHelpMethods>, JsonDeserializer<CommonHelpMethods> {
 

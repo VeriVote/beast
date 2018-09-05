@@ -5,13 +5,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CVariableErrorFinder;
-import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.codeareaJAVAFX.SaverLoader;
-import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.electionSimulator.Model.ElectionSimulationModel;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.MenuBarInterface;
@@ -305,5 +301,10 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener,
 	public void delete() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void autoComplete() {
+		//do nothing
 	}
 }

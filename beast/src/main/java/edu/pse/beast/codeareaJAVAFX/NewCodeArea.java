@@ -7,32 +7,32 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.IntFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 
-import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorGeneralErrorFinder;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CVariableErrorFinder;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.MenuBarInterface;
 import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
 import edu.pse.beast.toolbox.CCodeHelper;
+import edu.pse.beast.toolbox.Triplet;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
 import edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
 import javafx.scene.Node;
 
-public class NewCodeArea extends CodeArea implements MenuBarInterface {
+public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterface {
 
 	private final SaverLoader saverLoader;
 
@@ -70,11 +70,18 @@ public class NewCodeArea extends CodeArea implements MenuBarInterface {
 			+ "|(?<SEMICOLON>" + SEMICOLON_PATTERN + ")" + "|(?<STRING>" + STRING_PATTERN + ")" + "|(?<COMMENT>"
 			+ COMMENT_PATTERN + ")");
 
+	private static Set<String> recommendations = new TreeSet<String>();
+
 	private ElectionDescription elecDescription;
 
 	private List<ElectionDescriptionChangeListener> listeners = new ArrayList<ElectionDescriptionChangeListener>();
 
 	public NewCodeArea() {
+
+		// add all standard recommendations
+		recommendations.addAll(Arrays.asList(KEYWORDS));
+		recommendations.addAll(Arrays.asList(PREPROCESSOR));
+		recommendations.addAll(Arrays.asList(DATATYPES));
 
 		saverLoader = new SaverLoader(".elec", "BEAST election description");
 
@@ -299,5 +306,79 @@ public class NewCodeArea extends CodeArea implements MenuBarInterface {
 
 	public void resetSaveFile() {
 		this.saverLoader.resetHasSaveFile();
+	}
+
+	private Triplet<List<String>, Integer, Integer> getCompletions() {
+		String completeText = this.getText();
+
+		int prefixEnd = caretPositionProperty().getValue();
+		int prefixStart = prefixEnd;
+		
+		String prefix = "";
+
+		
+		
+		if (prefixEnd > 0) {
+			for (int i = prefixEnd - 1; i >= 0; i--) {
+
+				char tmp = completeText.charAt(i);
+
+				if (tmp == ' ' | ("" + tmp).matches(",|;|\\.|\\(|\\)|\\{|\\}|\\|/|\\+|-|\\*")
+						| ("" + tmp).matches("\\p{Cntrl}")) {
+
+					if (!prefix.matches("([A-Za-z]+[A-Za-z0-9]*)")) {
+						prefix = "";
+					}
+					break;
+				} else {
+					prefix = tmp + prefix;
+
+					prefixStart = i;
+				}
+
+			}
+		} else
+
+		{
+			prefix = "";
+		}
+
+		completeText = completeText.replaceAll("\\p{Cntrl}", " "); // replace control characters by whitespaces
+		completeText = completeText.replaceAll(",|;|\\.|\\(|\\)|\\{|\\}|\\|/|\\+|-|\\*", " ");
+		completeText = completeText.replaceAll("\\s+", " ");
+
+		Set<String> possibilities = new TreeSet<String>(recommendations);
+
+		String[] split = completeText.split(" "); // split on whitespaces to extract the words
+
+		for (int i = 0; i < split.length; i++) {
+			if (split[i].matches("([A-Za-z]+[A-Za-z0-9]*)")) {
+				possibilities.add(split[i]);
+			}
+		}
+
+		List<String> possibleList = new ArrayList<String>();
+
+		if (prefix.equals("")) {
+			possibleList.addAll(possibilities);
+		} else { // we already have started a word, so we have to filter out all non fitting
+					// words
+			for (Iterator<String> iterator = possibilities.iterator(); iterator.hasNext();) {
+				String str = (String) iterator.next();
+				if (str != null && str.toLowerCase().startsWith(prefix.toLowerCase())) {
+					possibleList.add(str);
+				}
+
+			}
+
+		}
+
+		return new Triplet<List<String>, Integer, Integer>(possibleList, prefixStart, prefixEnd);
+	}
+
+	@Override
+	public void autoComplete() {
+		Triplet<List<String>, Integer, Integer> completion = getCompletions();
+		processAutocompletion(completion.first, completion.second, completion.third);
 	}
 }

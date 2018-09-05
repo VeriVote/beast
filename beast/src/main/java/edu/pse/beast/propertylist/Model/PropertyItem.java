@@ -4,9 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import edu.pse.beast.datatypes.FailureExample;
-import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.highlevel.ResultPresenterElement;
 import edu.pse.beast.propertychecker.Result;
 

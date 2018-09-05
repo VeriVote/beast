@@ -1,6 +1,5 @@
 package edu.pse.beast.codeareaJAVAFX;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,25 +15,17 @@ import org.fxmisc.richtext.LineNumberFactory;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 
-import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorGeneralErrorFinder;
-import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CVariableErrorFinder;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
-import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
-import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.MenuBarInterface;
-import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
-import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
-import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
-import edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
 import javafx.scene.Node;
 
-public class BoundedVarCodeArea extends CodeArea implements MenuBarInterface {
-	
+public class BoundedVarCodeArea extends AutoCompletionCodeArea implements MenuBarInterface {
+
 	private static final String[] KEYWORDS = new String[] { "auto", "break", "case", "const", "continue", "default",
 			"do", "else", "error", "const", "continue", "default", "do", "else", "enum", "extern", "for", "goto", "if",
 			"return", "signed", "sizeof", "static", "struct", "switch", "typedef", "union", "unsigned", "volatile",
@@ -66,7 +57,7 @@ public class BoundedVarCodeArea extends CodeArea implements MenuBarInterface {
 			+ PAREN_PATTERN + ")" + "|(?<BRACE>" + BRACE_PATTERN + ")" + "|(?<BRACKET>" + BRACKET_PATTERN + ")"
 			+ "|(?<SEMICOLON>" + SEMICOLON_PATTERN + ")" + "|(?<STRING>" + STRING_PATTERN + ")" + "|(?<COMMENT>"
 			+ COMMENT_PATTERN + ")");
-	
+
 	private List<ElectionDescriptionChangeListener> listeners = new ArrayList<ElectionDescriptionChangeListener>();
 
 	private FormalPropertiesDescription description;
@@ -150,7 +141,7 @@ public class BoundedVarCodeArea extends CodeArea implements MenuBarInterface {
 	public void addListener(ElectionDescriptionChangeListener listener) {
 		listeners.add(listener);
 	}
-	
+
 	/**
 	 * sets the description for this property code are (either pre or post prop
 	 * description)
@@ -170,7 +161,7 @@ public class BoundedVarCodeArea extends CodeArea implements MenuBarInterface {
 			this.description.setCode(this.textProperty().getValue());
 		}
 	}
-	
+
 	@Override
 	public void undo() {
 		// TODO Auto-generated method stub
@@ -210,18 +201,23 @@ public class BoundedVarCodeArea extends CodeArea implements MenuBarInterface {
 	@Override
 	public void open() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void save() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void saveAs() {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public void autoComplete() {
+		System.out.println("wird das hier gebraucht?");
 	}
 }

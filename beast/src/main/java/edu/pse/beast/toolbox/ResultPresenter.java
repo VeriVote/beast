@@ -3,7 +3,6 @@ package edu.pse.beast.toolbox;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.JButton;
 import javax.swing.JTextPane;
 
 import edu.pse.beast.datatypes.FailureExample;

@@ -2,14 +2,11 @@ package edu.pse.beast.highlevel.javafx;
 
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.ResultPresenter;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;

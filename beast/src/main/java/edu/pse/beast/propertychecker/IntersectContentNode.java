@@ -3,7 +3,6 @@ package edu.pse.beast.propertychecker;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BooleanExpressionNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntersectContentContext;
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntersectExpContext;
 
 public class IntersectContentNode extends BooleanExpressionNode {
 

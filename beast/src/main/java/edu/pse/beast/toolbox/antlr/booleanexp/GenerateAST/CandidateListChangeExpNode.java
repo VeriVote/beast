@@ -5,8 +5,6 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BooleanExpressionNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntersectExpContext;
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.SplitExpContext;
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.TupleContext;
 
 public class CandidateListChangeExpNode extends BooleanExpressionNode {
 
