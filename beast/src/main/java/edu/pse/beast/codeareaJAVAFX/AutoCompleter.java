@@ -12,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class AutoCompleter {
 
@@ -25,7 +26,10 @@ public class AutoCompleter {
 
 	public AutoCompleter() {
 
-		autoCompletionStage.setTitle("Autocompletion Window");
+		autoCompletionStage.initStyle(StageStyle.UNDECORATED);
+		
+		
+		
 		// autoCompletionStage.initModality(Modality.APPLICATION_MODAL);
 
 		VBox box = new VBox();
@@ -33,7 +37,7 @@ public class AutoCompleter {
 
 		box.getChildren().add(list);
 		
-		autoCompletionStage.getIcons().add(new Image("file:///" + SuperFolderFinder.getSuperFolder() + "/core/images/other/autocomplete.png"));
+		//autoCompletionStage.getIcons().add(new Image("file:///" + SuperFolderFinder.getSuperFolder() + "/core/images/other/autocomplete.png"));
 
 
 
