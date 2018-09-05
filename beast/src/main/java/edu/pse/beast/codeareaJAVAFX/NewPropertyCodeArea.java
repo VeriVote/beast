@@ -54,6 +54,13 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea {
 	
 	private static Set<String> recommendations = new TreeSet<String>();
 	
+//	
+//	private static final String[] MAKROS = new String[] { "VOTES", "ELECT", "VOTE_SUM_FOR_CANDIDATE",
+//	"VOTE_SUM_FOR_UNIQUE_CANDIDATE" };
+//
+//private static final String[] QUANTORS = new String[] { "FOR_ALL_VOTERS", "FOR_ALL_CANDIDATES", "FOR_ALL_SEATS",
+//	"EXISTS_ONE_VOTER", "EXISTS_ONE_CANDIDATE", "EXISTS_ONE_SEAT", "PERM", "SPLIT", "INTERSECT", "NOTEMPTY" };
+	
 	
 	private FormalPropertiesDescription description;
 
@@ -61,6 +68,8 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea {
 
 		// add all standard recommendations
 		recommendations.addAll(Arrays.asList(MAKROS));
+		
+		recommendations.addAll(Arrays.asList(QUANTORS));
 		
 		String stylesheet = this.getClass().getResource("propertyAreaSyntaxHighlight.css").toExternalForm();
 
