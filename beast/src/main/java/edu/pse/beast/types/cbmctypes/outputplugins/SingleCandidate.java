@@ -108,11 +108,11 @@ public class SingleCandidate extends CBMCOutputType {
 	}
 
 	@Override
-	public List<String> getNewResult(List<String> lastFailedRun) {
+	public List<String> getNewResult(List<String> lastFailedRun, int index) {
 		List<CBMCResultWrapperLong> tmpResultLong = super.helper.readLongs("" + UnifiedNameContainer.getNewResultName() + "", lastFailedRun);
 
 		List<String> toReturn = new ArrayList<String>();
-		toReturn.add(tmpResultLong.get(0).getValue());
+		toReturn.add(tmpResultLong.get(index).getValue());
 		return toReturn;
 	}
 	

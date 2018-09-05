@@ -145,11 +145,11 @@ public class Parliament extends CBMCOutputType {
 	}
 
 	@Override
-	public List<String> getNewResult(List<String> lastFailedRun) {
+	public List<String> getNewResult(List<String> lastFailedRun, int index) {
 		List<CBMCResultWrapperSingleArray> tmpResultOneDim = super.helper.readOneDimVarLong("" + UnifiedNameContainer.getNewResultName() + "",
 				lastFailedRun);
 
-		return tmpResultOneDim.get(0).getList();
+		return tmpResultOneDim.get(index).getList();
 	}
 
 	@Override

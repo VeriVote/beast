@@ -83,7 +83,7 @@ public abstract class OutputType implements InOutType {
 
 	public abstract List<String> getCodeToRunMargin(List<String> origResult, List<String> lastResult);
 
-	public abstract List<String> getNewResult(List<String> lastFailedRun);
+	public abstract List<String> getNewResult(List<String> lastFailedRun, int index);
 
 	public abstract InternalTypeContainer getInternalTypeContainer();
 

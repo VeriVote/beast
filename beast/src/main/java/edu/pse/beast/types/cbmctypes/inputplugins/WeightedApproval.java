@@ -270,8 +270,8 @@ public class WeightedApproval extends CBMCInputType {
 	}
 
 	@Override
-	public List<List<String>> getNewVotes(List<String> lastFailedRun) {
-		return super.helper.readTwoDimVarLong("" + UnifiedNameContainer.getNewVotesName() + "", lastFailedRun).get(0).getList();
+	public List<List<String>> getNewVotes(List<String> lastFailedRun, int index) {
+		return super.helper.readTwoDimVarLong("" + UnifiedNameContainer.getNewVotesName() + "", lastFailedRun).get(index).getList();
 	}
 	
 	@Override
@@ -315,5 +315,11 @@ public class WeightedApproval extends CBMCInputType {
 	@Override
 	public String otherToString() {
 		return "Weighted Approval";
+	}
+
+	
+	@Override
+	public List<List<String>> getVotingArray(List<String> lastFailedRun, int index) {
+		return super.helper.readTwoDimVarLong("votes", lastFailedRun).get(index).getList();
 	}
 }

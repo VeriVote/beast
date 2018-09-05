@@ -144,7 +144,7 @@ public abstract class InputType implements InOutType{
 
 	public abstract void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique);
 
-	public abstract List<List<String>> getNewVotes(List<String> lastFailedRun);
+	public abstract List<List<String>> getNewVotes(List<String> lastFailedRun, int index);
 
 	public abstract InternalTypeContainer getInternalTypeContainer();
 
@@ -163,4 +163,7 @@ public abstract class InputType implements InOutType{
 	public abstract boolean hasVariableAsMinValue();
 
 	public abstract boolean hasVariableAsMaxValue();
+
+
+	public abstract List<List<String>> getVotingArray(List<String> lastFailedRun, int index);
 }

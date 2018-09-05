@@ -30,6 +30,12 @@ public class SingleChoice extends CBMCInputType {
 	public String getInputIDinFile() {
 		return "SINGLE_CHOICE";
 	}
+	
+	
+	@Override
+	public List<List<String>> getVotingArray(List<String> lastFailedRun, int index) {
+		return super.helper.readTwoDimVarLong("votes", lastFailedRun).get(index).getList();
+	}
 
 	@Override
 	public String getMinimalValue() {
@@ -262,10 +268,10 @@ public class SingleChoice extends CBMCInputType {
 	}
 
 	@Override
-	public List<List<String>> getNewVotes(List<String> lastFailedRun) {
+	public List<List<String>> getNewVotes(List<String> lastFailedRun, int index) {
 		List<List<String>> toReturn = new ArrayList<List<String>>();
 		
-		toReturn.add(super.helper.readOneDimVarLong("" + UnifiedNameContainer.getNewVotesName() + "", lastFailedRun).get(0).getList());
+		toReturn.add(super.helper.readOneDimVarLong("" + UnifiedNameContainer.getNewVotesName() + "", lastFailedRun).get(index).getList());
 		
 		return toReturn;
 	}

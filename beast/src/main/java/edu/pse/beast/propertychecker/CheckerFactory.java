@@ -349,9 +349,9 @@ public abstract class CheckerFactory implements Runnable {
 
 				if (hasMargin) {
 
-					newResult = getElectionDescription().getContainer().getOutputType().getNewResult(lastFailedRun);
+					newResult = getElectionDescription().getContainer().getOutputType().getNewResult(lastFailedRun, 0);
 
-					newVotes = getElectionDescription().getContainer().getInputType().getNewVotes(lastFailedRun);
+					newVotes = getElectionDescription().getContainer().getInputType().getNewVotes(lastFailedRun, 0);
 
 					result.setNewVotes(newVotes);
 					result.setNewWinner(newResult);
@@ -490,9 +490,9 @@ public abstract class CheckerFactory implements Runnable {
 
 				if (hasMargin) {
 
-					newResult = getElectionDescription().getContainer().getOutputType().getNewResult(lastFailedRun);
+					newResult = getElectionDescription().getContainer().getOutputType().getNewResult(lastFailedRun, 0);
 
-					newVotes = getElectionDescription().getContainer().getInputType().getNewVotes(lastFailedRun);
+					newVotes = getElectionDescription().getContainer().getInputType().getNewVotes(lastFailedRun, 0);
 
 					result.setNewVotes(newVotes);
 					result.setNewWinner(newResult);
