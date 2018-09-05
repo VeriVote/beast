@@ -16,7 +16,10 @@ import java.util.regex.Pattern;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.fxmisc.flowless.VirtualizedScrollPane;
+import org.fxmisc.wellbehaved.event.InputMap;
+import org.fxmisc.wellbehaved.event.Nodes;
 
+import edu.pse.beast.codeareaJAVAFX.AutoCompleter;
 import edu.pse.beast.codeareaJAVAFX.BoundedVarCodeArea;
 import edu.pse.beast.codeareaJAVAFX.NewCodeArea;
 import edu.pse.beast.codeareaJAVAFX.NewPropertyCodeArea;
@@ -80,6 +83,8 @@ public class GUIController {
 	private String pathToImages = "file:///" + SuperFolderFinder.getSuperFolder() + "/core/images/";
 
 	private static TreeItem<CustomTreeItem> root;
+
+	private MenuBarInterface focusedMainTab;
 
 	private List<TabClass> mainWindowTabs = new ArrayList<TabClass>();
 
@@ -284,6 +289,8 @@ public class GUIController {
 
 	private boolean running = false;
 
+	private AutoCompleter autoComplete = new AutoCompleter();
+	
 	private NewCodeArea codeArea;
 
 	private BoundedVarCodeArea boundedVarArea;
@@ -292,6 +299,8 @@ public class GUIController {
 
 	private NewPropertyCodeArea postArea;
 
+	private ResultArea resultArea = new ResultArea();
+	
 	private BooleanExpEditorNEW booleanExpEditor;
 
 	private double scrollbarPadding = 15;
@@ -566,6 +575,28 @@ public class GUIController {
 
 					}
 				}
+			}
+		});
+
+		mainTabPane.getSelectionModel().select(codePane);
+		focusedMainTab = codeArea;
+
+		mainTabPane.getSelectionModel().selectedItemProperty().addListener((ov, oldTab, newTab) -> {
+
+			autoComplete.reset();
+			
+			if (newTab.equals(codePane)) {
+				focusedMainTab = codeArea;
+				System.out.println("code area tab");
+			} else if (newTab.equals(propertyPane)) {
+				focusedMainTab = booleanExpEditor;
+				System.out.println("property tab");
+			} else if (newTab.equals(resultPane)) {
+				focusedMainTab = resultArea;
+				System.out.println("result tab");
+			} else if (newTab.equals(inputPane)) {
+				focusedMainTab = electionSimulation;
+				System.out.println("input tab");
 			}
 		});
 
@@ -1375,15 +1406,13 @@ public class GUIController {
 
 	/**
 	 * 
-	 * @param field
-	 *            the field which shall be enforced
-	 * @param partnerField
-	 *            the partner field, which is supposed to be not bigger / smaller
-	 *            than the main field
-	 * @param sign
-	 *            a sign to show if the field has to be bigger or smaller than the
-	 *            other one. e.g a sign of 1 means field <= partnerField, a sign of
-	 *            (-1) would mean field => partner field
+	 * @param field        the field which shall be enforced
+	 * @param partnerField the partner field, which is supposed to be not bigger /
+	 *                     smaller than the main field
+	 * @param sign         a sign to show if the field has to be bigger or smaller
+	 *                     than the other one. e.g a sign of 1 means field <=
+	 *                     partnerField, a sign of (-1) would mean field => partner
+	 *                     field
 	 */
 	private void addNumberEnforcer(TextField field, TextField partnerField, int sign) {
 		if (sign == 0) {
@@ -1791,6 +1820,21 @@ public class GUIController {
 
 	public void addProperty(PreAndPostConditionsDescription prop) {
 		addTreeItem(prop);
+	}
+
+	public void setShortcutsToConsume(InputMap<Event> shortcutsToConsume) {
+		Nodes.addInputMap(codeArea, shortcutsToConsume);
+		Nodes.addInputMap(preArea, shortcutsToConsume);
+		Nodes.addInputMap(postArea, shortcutsToConsume);
+		// TODO maybe add more areas later
+	}
+
+	public MenuBarInterface getFocusedArea() {
+		return focusedMainTab;
+	}
+
+	public AutoCompleter getAutoCompleter() {
+		return autoComplete;
 	}
 
 }

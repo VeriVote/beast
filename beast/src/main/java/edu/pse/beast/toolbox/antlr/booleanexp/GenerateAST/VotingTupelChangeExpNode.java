@@ -4,7 +4,6 @@ import edu.pse.beast.datatypes.booleanExpAST.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BooleanExpressionNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.SplitExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.TupleContext;
-import edu.pse.beast.types.InOutType;
 
 public class VotingTupelChangeExpNode extends BooleanExpressionNode {
 

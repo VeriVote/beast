@@ -12,7 +12,6 @@ import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.highlevel.javafx.ChildTreeItem;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 import edu.pse.beast.propertychecker.PropertyChecker;

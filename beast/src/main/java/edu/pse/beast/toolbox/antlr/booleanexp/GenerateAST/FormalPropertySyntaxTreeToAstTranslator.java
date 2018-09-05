@@ -5,15 +5,12 @@
  */
 package edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST;
 
-import java.util.List;
 import java.util.Stack;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.tree.TerminalNode;
-
-import com.sun.jna.platform.win32.OaIdl.VARKIND;
 
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpConstant;
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
@@ -42,11 +39,9 @@ import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.IntegerValuedExpression;
 import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.VoteSumForCandExp;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
-import edu.pse.beast.propertychecker.IntersectExpNode;
 import edu.pse.beast.propertychecker.NotEmptyExpressionNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionBaseListener;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.BooleanExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.BooleanExpListContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntersectExpContext;
 import edu.pse.beast.types.InputType;

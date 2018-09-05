@@ -1,7 +1,6 @@
 package edu.pse.beast.saverloader.adapter;
 
 import java.lang.reflect.Type;
-import java.util.Iterator;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;

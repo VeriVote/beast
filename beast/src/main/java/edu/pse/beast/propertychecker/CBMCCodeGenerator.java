@@ -6,16 +6,13 @@
 package edu.pse.beast.propertychecker;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import edu.pse.beast.datatypes.booleanExpAST.BooleanExpListNode;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BooleanExpressionNode;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.highlevel.javafx.GUIController;

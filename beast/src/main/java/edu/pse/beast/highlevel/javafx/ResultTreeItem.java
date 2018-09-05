@@ -6,16 +6,18 @@ import java.util.List;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.ResultPresenter;
+<<<<<<< HEAD
 import edu.pse.beast.types.cbmctypes.inputplugins.Preference;
 import edu.pse.beast.types.cbmctypes.outputplugins.CandidateList;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+=======
+>>>>>>> 952234c780a1d855a46f1f19a6c823de77b96130
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.image.ImageView;

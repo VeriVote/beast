@@ -1,20 +1,28 @@
 package edu.pse.beast.highlevel;
 
-import java.util.Iterator;
+import static javafx.scene.input.KeyCombination.SHORTCUT_ANY;
+import static org.fxmisc.wellbehaved.event.EventPattern.anyOf;
+import static org.fxmisc.wellbehaved.event.EventPattern.keyPressed;
+
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import org.fxmisc.wellbehaved.event.InputMap;
+
 import edu.pse.beast.highlevel.javafx.GUIController;
-import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.SuperFolderFinder;
-import edu.pse.beast.types.CommonHelpMethods;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -25,7 +33,7 @@ import javafx.stage.WindowEvent;
  * @author Jonas
  */
 public class MainClass extends Application {
-	
+
 	private static Stage mainStage;
 
 	/**
@@ -34,55 +42,100 @@ public class MainClass extends Application {
 	 * high level interfaces you have to create a new implementation of
 	 * CentralObjectProvider and replace PSECentralObjectProvider with it here.
 	 *
-	 * @param args
-	 *            not used
+	 * @param args not used
 	 */
 	public static void main(String[] args) {
-		//new BEASTCommunicator();
-		//PSECentralObjectProvider centralObjectProvider = new PSECentralObjectProvider(communicator);
-		//communicator.setCentralObjectProvider(centralObjectProvider);
+		// new BEASTCommunicator();
+		// PSECentralObjectProvider centralObjectProvider = new
+		// PSECentralObjectProvider(communicator);
+		// communicator.setCentralObjectProvider(centralObjectProvider);
 		launch(args);
 
 	}
 
 	@Override
 	public void start(Stage stage) throws Exception {
-		
+
 		Locale local = Locale.ENGLISH;
-		
+
 		mainStage = stage;
-		
+
 		try {
 			GUIController controller = new GUIController(mainStage);
-			
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("javafx/BEAST.fxml"), ResourceBundle.getBundle("edu.pse.beast.highlevel.javafx.bundles.LangBundle", local));
-			
-			//Parent root = FXMLLoader.load(getClass().getResource("javafx/BEAST.fxml"), ResourceBundle.getBundle("edu.pse.beast.highlevel.javafx.bundles.LangBundle", local));
-			
+
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("javafx/BEAST.fxml"),
+					ResourceBundle.getBundle("edu.pse.beast.highlevel.javafx.bundles.LangBundle", local));
+
+			// Parent root = FXMLLoader.load(getClass().getResource("javafx/BEAST.fxml"),
+			// ResourceBundle.getBundle("edu.pse.beast.highlevel.javafx.bundles.LangBundle",
+			// local));
+
 			loader.setController(controller);
-			
+
 			Parent root = loader.load();
-			
+
 			Scene scene = new Scene(root, 1000, 600);
 			stage.setTitle("BEAST");
-			stage.getIcons().add(new Image("file:///" + SuperFolderFinder.getSuperFolder() + "/core/images/other/BEAST.png"));
+			stage.getIcons()
+					.add(new Image("file:///" + SuperFolderFinder.getSuperFolder() + "/core/images/other/BEAST.png"));
 			stage.setScene(scene);
-			
+
 			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			    @Override
-			    public void handle(WindowEvent t) {
-			        Platform.exit();
-			        System.exit(0);
-			    }
+				@Override
+				public void handle(WindowEvent t) {
+					Platform.exit();
+					System.exit(0);
+				}
 			});
+
+			// specify the short cuts the progam should ignore
+			InputMap<Event> shortcutsToConsume = InputMap.consume(anyOf(
+					// prevent selection via (CTRL + ) SHIFT + [LEFT, UP, DOWN]
+//					keyPressed(KeyCode.S, KeyCombination.CONTROL_DOWN, SHORTCUT_ANY), // ignore the save shortcut
+//					keyPressed(KeyCode.S, KeyCombination.CONTROL_DOWN, KeyCombination.SHIFT_DOWN, SHORTCUT_ANY),
+//					keyPressed(KeyCode.O, KeyCombination.CONTROL_DOWN, SHORTCUT_ANY) // ignore the save shortcut
+			));
+
+			controller.setShortcutsToConsume(shortcutsToConsume);
+
+			final KeyCombination saveCombination = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN, SHORTCUT_ANY);
+
+			final KeyCombination saveAllCombination = new KeyCodeCombination(KeyCode.S, KeyCombination.SHIFT_DOWN, KeyCombination.CONTROL_DOWN);
 			
+			final KeyCombination openCombination = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
+			
+			final KeyCombination autoCompletionCombination = new KeyCodeCombination(KeyCode.SPACE, KeyCombination.CONTROL_DOWN);
+			
+
+			scene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+				@Override
+				public void handle(KeyEvent event) {
+					
+					if (saveCombination.match(event)) {
+                        controller.getFocusedArea().save();
+                    }
+					
+					if (saveAllCombination.match(event)) {
+                        controller.saveProject(null);
+                    }
+					
+					if (openCombination.match(event)) {
+						controller.openButton(null);
+                    }
+					
+					if (autoCompletionCombination.match(event)) {
+						controller.getFocusedArea().autoComplete();
+                    }
+				}
+			});
+
 			stage.show();
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static Stage getMainStage() {
 		return mainStage;
 	}
