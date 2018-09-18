@@ -106,6 +106,12 @@ public class MainClass extends Application {
 			
 			final KeyCombination autoCompletionCombination = new KeyCodeCombination(KeyCode.SPACE, KeyCombination.CONTROL_DOWN);
 			
+			//final KeyCombination copyCombination = new KeyCodeCombination(KeyCode.C, KeyCombination.CONTROL_DOWN);
+			
+			final KeyCombination pasteCombination = new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN);
+			
+			final KeyCombination cutCombination = new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_DOWN);
+			
 
 			scene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
 				@Override
@@ -125,6 +131,18 @@ public class MainClass extends Application {
 					
 					if (autoCompletionCombination.match(event)) {
 						controller.getFocusedArea().autoComplete();
+                    }
+					
+					//if (copyCombination.match(event)) {
+					//	controller.getFocusedArea().copy();
+					//}
+					
+					if (pasteCombination.match(event)) {
+						controller.getFocusedArea().paste();
+                    }
+					
+					if (cutCombination.match(event)) {
+						controller.getFocusedArea().cut();
                     }
 				}
 			});
