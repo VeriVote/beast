@@ -87,9 +87,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
 	private int lockedLineEnd = 10;
 
-	private int lockedBraceStart;
-
-	private int lockedBraceEnd;
+	private int lockedBracePos;;
 
 	public NewCodeArea() {
 
@@ -134,10 +132,20 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
 		final KeyCombination bracketLeftCombination = new KeyCodeCombination(KeyCode.OPEN_BRACKET); // [
 
-		
-		
 		this.addEventFilter(KeyEvent.KEY_TYPED, event -> {
-			System.out.println("typed: " + event.getCharacter());
+
+			event.consume();
+
+			char[] values = event.getCharacter().toCharArray();
+
+			if (values.length != 1) {
+				return;
+			} else if (Character.getNumericValue(values[0]) == -1) {
+				return;
+			} else {
+				System.out.println("insert");
+				lockedLineSaveInsertText(event.getCharacter(), false, false);
+			}
 		});
 
 		this.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
@@ -146,11 +154,19 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
 		this.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 
+			event.consume();
+			if (true) {
+				return;
+			}
+
 			System.out.println("pressed");
 
 			System.out.println("text: " + event.getText());
 
 			boolean remove = false;
+			
+			boolean delete = false;
+			
 			String replacement = "";
 
 			if (selectAllCombination.match(event)) { // we just want to select all
@@ -169,7 +185,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 				replacement = event.getText();
 			}
 
-			lockedLineSaveInsertText(replacement, remove);
+			lockedLineSaveInsertText(replacement, remove, false);
 
 			event.consume();
 
@@ -183,7 +199,19 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
 	}
 
-	private void lockedLineSaveInsertText(String replacement, boolean delete) {
+	private void lockedLineSaveInsertText(String replacement, boolean delete, boolean remove) {
+		if (delete && remove) {
+			System.err.println("you cant delete and remove at the same time");
+		}
+		
+		if (delete || remove) {
+			replacement = "";
+		}
+		
+		if (delete) {
+			
+		}
+		
 		IndexRange selectionRange = this.getSelection();
 
 		int selectionStart = selectionRange.getStart();
@@ -199,27 +227,19 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 			selectionEnd = this.getCaretPosition();
 		}
 
-		boolean NotOverlapping = (((selectionEnd < lockedLineStart) || (lockedLineEnd < selectionStart)) // to test the
-																											// function
-																											// head
-				&& ((selectionEnd <= lockedBraceStart) || (lockedBraceEnd <= selectionStart))); // to test the locked
-																								// brace
+		boolean NotOverlapping = ((selectionEnd <= lockedLineStart) || (lockedLineEnd < selectionStart))
+				&& (((selectionEnd < lockedBracePos) || (lockedBracePos < selectionStart)));
 
 		if (NotOverlapping) {
+			if (selectionLength == 0 && delete) {
+				
+			}
+			
+			
 			this.replaceText(selectionStart, selectionEnd, replacement);
 
-			lockedBraceStart++;
-			lockedBraceEnd++;
-		} else {
-			System.out.println("overlaps");
+			lockedBracePos++;
 		}
-
-		// } else {
-		// this.insertText(this.getCaretPosition(), replacement);
-		// }
-
-		System.out.println("start: " + selectionRange.getStart());
-		System.out.println("end: " + selectionRange.getEnd());
 	}
 
 	private boolean updateLockedLines(int inputPosition, int inputSize) {
@@ -231,11 +251,9 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 				if (inputPosition <= lockedLineStart) { // we have to shift all of them
 					lockedLineStart = lockedLineStart + inputSize;
 					lockedLineEnd = lockedLineEnd + inputSize;
-					lockedBraceStart = lockedBraceStart + inputSize;
-					lockedBraceEnd = lockedBraceEnd + inputSize;
-				} else if (inputPosition <= lockedBraceStart) { // we only have to shift the last brace
-					lockedBraceStart = lockedBraceStart + inputSize;
-					lockedBraceEnd = lockedBraceEnd + inputSize;
+					lockedBracePos = lockedBracePos + inputSize;
+				} else if (inputPosition <= lockedBracePos) { // we only have to shift the last brace
+					lockedBracePos = lockedBracePos + inputSize;
 				} else {
 					// do nothing
 				}
@@ -334,9 +352,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
 		this.replaceText(declarationString + "\n\n}");
 
-		lockedBraceStart = lockedLineEnd + 2;
-
-		lockedBraceEnd = lockedBraceStart + 1;
+		lockedBracePos = lockedLineEnd + 2;
 
 		this.setStyleSpans(0, computeHighlighting(this.getText()));
 
