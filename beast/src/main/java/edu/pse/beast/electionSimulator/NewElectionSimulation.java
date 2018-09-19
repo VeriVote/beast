@@ -69,9 +69,6 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener,
 	 * resets all fields and returns the view back to its original state
 	 */
 	public void reset() {
-		GUIController.getController().getInputVoters().setText("1");
-		GUIController.getController().getInputCandidates().setText("1");
-		GUIController.getController().getInputSeats().setText("1");
 
 		inputGridPane.getChildren().clear();
 		voterGridPane.getChildren().clear();
@@ -80,6 +77,10 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener,
 		model = new ElectionSimulationModel(container, inputGridPane, voterGridPane, candidateGridPane);
 		model.setAmountCandidates(1);
 		model.setAmountVoters(1);
+		
+		GUIController.getController().getInputVoters().setText("1");
+		GUIController.getController().getInputCandidates().setText("1");
+		GUIController.getController().getInputSeats().setText("1");
 	}
 
 	public String[][] getVotingData() {

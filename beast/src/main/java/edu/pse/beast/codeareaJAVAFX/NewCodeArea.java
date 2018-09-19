@@ -168,7 +168,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 					break;
 
 				case "{":
-					replacement = "{\n\n})";
+					replacement = "{\n\n}";
 					break;
 
 				default:
@@ -357,7 +357,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 		// if (selectionEnd - selectionStart > 0) { // we have a selected range
 		// // find out, if the selected range overlaps with a locked line anywhere
 
-		boolean NotOverlapping = ((selectionEnd <= lockedLineStart) || (lockedLineEnd <= selectionStart))
+		boolean NotOverlapping = ((selectionEnd < lockedLineStart) || (lockedLineEnd <= selectionStart))
 				&& (((selectionEnd <= lockedBracePos) || (lockedBracePos < selectionStart)));
 
 		if (NotOverlapping) {
@@ -379,22 +379,35 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 			lockedLineEnd = lockedLineEnd + lengthChange;
 
 			lockedBracePos = lockedBracePos + lengthChange;
-
-			System.out.println("all changed: " + lengthChange);
 		} else if (changePosition <= lockedBracePos) {
 			lockedBracePos = lockedBracePos + lengthChange;
-			System.out.println("brace changed: " + lengthChange);
 		} else {
-			System.out.println("no change " + lengthChange);
 			// don't increase anything
 		}
+		
+		test();
 	}
 
 	private void test() {
+		
+		System.out.println("test");
 
-		Set<String> style = Collections.singleton("fx-background-color: green");
-
+		Set<String> style = Collections.singleton("-fx-background-fill: blue;");
+		
+		
+		//this.setStyle(paragraph, style);
+		//this.setStyle(value);
+		//this.setStyle("-fx-background-color: blue;");
+		
 		this.setStyle(lockedLineStart, lockedLineEnd, style);
+		
+		
+		System.out.println("start: " + lockedLineStart);
+		
+		System.out.println("end: " + lockedLineEnd);
+		
+		//this.setStyle(lockedLineStart, lockedLineEnd, style);
+		//this.setStyle(lockedBracePos, lockedBracePos + 1,  style);
 	}
 
 	private static StyleSpans<Collection<String>> computeHighlighting(String text) {
@@ -471,11 +484,11 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 		if (newDescription.isNew()) {
 			String declarationString = CCodeHelper.generateDeclString(newDescription.getContainer());
 
-			lockedLineStart = 0;
+			lockedLineStart = 1;
 
-			lockedLineEnd = declarationString.length();
+			lockedLineEnd = lockedLineStart + declarationString.length();
 
-			this.replaceText(declarationString + "\n\n}");
+			this.replaceText("\n" + declarationString + "\n\n}");
 			
 			lockedBracePos = lockedLineEnd + 2;
 			
