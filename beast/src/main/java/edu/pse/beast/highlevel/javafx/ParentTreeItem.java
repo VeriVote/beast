@@ -9,19 +9,21 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.propertychecker.Result;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TreeItem;
-import javafx.scene.input.MouseEvent;
 
 public class ParentTreeItem extends CustomTreeItem {
 
 	private Label propName;
 	private CheckBox checkAll = new CheckBox("check all");
+	
 	private final List<ChildTreeItem> subItems = new ArrayList<ChildTreeItem>();
 	private final List<TreeItem<CustomTreeItem>> childTreeItems = new ArrayList<TreeItem<CustomTreeItem>>();
 	private final PreAndPostConditionsDescription propDesc;
@@ -48,8 +50,6 @@ public class ParentTreeItem extends CustomTreeItem {
 		this.getChildren().add(propName);
 		this.getChildren().add(new Separator(Orientation.VERTICAL));
 		this.getChildren().add(checkAll);
-
-		TreeItem<CustomTreeItem> test = new TreeItem<CustomTreeItem>();
 	
 		checkItem = new CheckChildTreeItem("Verification ", this, new TreeItem<CustomTreeItem>());
 		marginItem = new MarginChildTreeItem("Margin", this, new TreeItem<CustomTreeItem>());
@@ -70,13 +70,6 @@ public class ParentTreeItem extends CustomTreeItem {
 		checkAll.selectedProperty().addListener(new ChangeListener<Boolean>() {
 			public void changed(ObservableValue<? extends Boolean> ov, Boolean oldValue, Boolean newValue) {
 				checkBoxChanged(newValue);
-			}
-		});
-
-		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				wasClicked(true);
 			}
 		});
 

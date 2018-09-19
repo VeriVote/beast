@@ -1,6 +1,12 @@
 package edu.pse.beast.codeareaJAVAFX;
 
+import java.awt.HeadlessException;
+import java.awt.Toolkit;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -14,10 +20,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.fxmisc.richtext.LineNumberFactory;
+import org.fxmisc.richtext.model.PlainTextChange;
 import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
+import org.reactfx.collection.LiveList;
 
-import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.Antlr.CParser.SelectionStatementContext;
 import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CVariableErrorFinder;
 import edu.pse.beast.codearea.ErrorHandling.CodeError;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
@@ -31,7 +38,6 @@ import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
 import edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
-import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.IndexRange;
 import javafx.scene.input.KeyCode;
@@ -87,7 +93,24 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
 	private int lockedLineEnd = 10;
 
-	private int lockedBracePos;;
+	private int lockedBracePos;
+
+	final KeyCombination selectAllCombination = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN); // select
+																												// all
+
+	final KeyCombination backspaceCombination = new KeyCodeCombination(KeyCode.BACK_SPACE); // backspace
+
+	final KeyCombination deleteCombination = new KeyCodeCombination(KeyCode.DELETE); // delete
+
+	final KeyCombination enterCombination = new KeyCodeCombination(KeyCode.ENTER); // enter
+
+	final KeyCombination undoCombination = new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN); // undo
+
+	final KeyCombination redoCombination = new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN); // redo
+
+	final KeyCombination pasteCombination = new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN); // paste
+
+	final KeyCombination cutCombination = new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_DOWN); // paste
 
 	public NewCodeArea() {
 
@@ -99,7 +122,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 		saverLoader = new SaverLoader(".elec", "BEAST election description");
 
 		ElectionDescription startElecDescription = new ElectionDescription("New description", new SingleChoice(),
-				new SingleCandidate(), 0);
+				new SingleCandidate(), 0, 0, 0, 0, true);
 
 		this.setNewElectionDescription(startElecDescription);
 
@@ -119,79 +142,85 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
 		this.setParagraphGraphicFactory(lineNumbers);
 
-		final KeyCombination selectAllCombination = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN); // select
-																													// all
-
-		final KeyCombination backspaceCombination = new KeyCodeCombination(KeyCode.BACK_SPACE); // backspace
-
-		final KeyCombination deleteCombination = new KeyCodeCombination(KeyCode.DELETE); // delete
-
-		final KeyCombination paranLeftCombination = new KeyCodeCombination(KeyCode.LEFT_PARENTHESIS); // (
-
-		final KeyCombination braceLeftCombination = new KeyCodeCombination(KeyCode.BRACELEFT); // {
-
-		final KeyCombination bracketLeftCombination = new KeyCodeCombination(KeyCode.OPEN_BRACKET); // [
-
 		this.addEventFilter(KeyEvent.KEY_TYPED, event -> {
 
-			event.consume();
+			if (event != null) {
+				event.consume();
+			}
+			;
 
-			char[] values = event.getCharacter().toCharArray();
+			String replacement = "";
 
-			if (values.length != 1) {
-				return;
-			} else if (Character.getNumericValue(values[0]) == -1) {
+			String value = (event.getCharacter()).replaceAll("\\p{Cntrl}", "");
+
+			if (value.length() != 1) {
 				return;
 			} else {
-				System.out.println("insert");
-				lockedLineSaveInsertText(event.getCharacter(), false, false);
+
+				replacement = value;
+
+				switch (value) {
+				case "(":
+					replacement = "()";
+					break;
+
+				case "[":
+					replacement = "[]";
+					break;
+
+				case "{":
+					replacement = "{\n\n})";
+					break;
+
+				default:
+					break;
+				}
+
+				lockedLineSaveInsertText(replacement, false, false);
 			}
 		});
 
 		this.addEventFilter(KeyEvent.KEY_RELEASED, event -> {
-			event.consume();
+			if (event != null) {
+				event.consume();
+			}
+			;
 		});
 
 		this.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 
-			event.consume();
-			if (true) {
-				return;
-			}
-
-			System.out.println("pressed");
-
-			System.out.println("text: " + event.getText());
-
-			boolean remove = false;
-			
-			boolean delete = false;
-			
-			String replacement = "";
-
 			if (selectAllCombination.match(event)) { // we just want to select all
 				this.selectAll();
-			} else if (backspaceCombination.match(event) || deleteCombination.match(event)) {
-				remove = true;
-			} else if (paranLeftCombination.match(event)) {
-				replacement = "()";
-			} else if (braceLeftCombination.match(event)) {
-				replacement = "{\n\n}";
-			} else if (bracketLeftCombination.match(event)) {
-				replacement = "[]";
-			} else if (event.getCode() == KeyCode.UNDEFINED) {
-				return; // ignore all other special key presses
-			} else {
-				replacement = event.getText();
+				if (event != null) {
+					event.consume();
+				}
+				;
+			} else if (backspaceCombination.match(event)) {
+				lockedLineSaveInsertText("", true, false);
+				if (event != null) {
+					event.consume();
+				}
+				;
+			} else if (deleteCombination.match(event)) {
+				delete(event);
+			} else if (enterCombination.match(event)) {
+				lockedLineSaveInsertText("\n", false, false);
+				if (event != null) {
+					event.consume();
+				}
+			} else if (pasteCombination.match(event)) {
+
+				paste(event);
+
+			} else if (cutCombination.match(event)) {
+
+				cut(event);
 			}
-
-			lockedLineSaveInsertText(replacement, remove, false);
-
-			event.consume();
-
 		});
 
-		this.richChanges().filter(ch -> !ch.getInserted().equals(ch.getRemoved())).subscribe(change -> {
+		this.richChanges().filter(ch -> !ch.getInserted().equals(ch.getRemoved())).subscribe(change ->
+
+		{
 			this.setStyleSpans(0, computeHighlighting(this.getText()));
 			elecDescription.setCode(this.getText());
 		});
@@ -199,19 +228,103 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
 	}
 
-	private void lockedLineSaveInsertText(String replacement, boolean delete, boolean remove) {
-		if (delete && remove) {
-			System.err.println("you cant delete and remove at the same time");
+	/**
+	 * @param event
+	 */
+	private void delete(KeyEvent event) {
+		lockedLineSaveInsertText("", false, true);
+		if (event != null) {
+			event.consume();
 		}
-		
-		if (delete || remove) {
-			replacement = "";
+		;
+	}
+
+	/**
+	 * @param event
+	 */
+	private void paste(KeyEvent event) {
+		String clipboardText = "";
+
+		try {
+			clipboardText = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+		} catch (HeadlessException e) {
+			return;
+		} catch (UnsupportedFlavorException e) {
+			return;
+		} catch (IOException e) {
+			return;
 		}
-		
-		if (delete) {
-			
+
+		lockedLineSaveInsertText(clipboardText, false, false);
+
+		if (event != null) {
+			event.consume();
 		}
-		
+		;
+	}
+
+	/**
+	 * @param event
+	 */
+	private void cut(KeyEvent event) {
+		String selectedText = this.getSelectedText();
+
+		boolean isValid = lockedLineSaveInsertText("", true, false);
+
+		if (isValid) {
+			StringSelection selection = new StringSelection(selectedText);
+			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, selection);
+		}
+		if (event != null) {
+			event.consume();
+		}
+	}
+
+	/**
+	 * @param event
+	 */
+	private void redo(KeyEvent event) {
+		LiveList<?> redoList = this.getUndoManager().nextRedoProperty().asList();
+
+		if (redoList.size() == 1) {
+			List<?> list = (List<?>) redoList.get(0);
+
+			PlainTextChange change = (PlainTextChange) list.get(0);
+
+			System.out.println("redo length:  " + change.getNetLength());
+
+			updateLockedLineNumber(change.getRemovalEnd(), change.getRemoved().length());
+
+		} else {
+			if (event != null) {
+				event.consume();
+			}
+		}
+	}
+
+	/**
+	 * @param event
+	 */
+	private void undo(KeyEvent event) {
+		LiveList<?> undoList = this.getUndoManager().nextUndoProperty().asList();
+
+		if (undoList.size() == 1) {
+			List<?> list = (List<?>) undoList.get(0);
+
+			PlainTextChange change = (PlainTextChange) list.get(0);
+
+			updateLockedLineNumber(change.getInsertionEnd(), -1 * change.getNetLength());
+
+		} else {
+			if (event != null) {
+				event.consume();
+			}
+			;
+		}
+	}
+
+	private boolean lockedLineSaveInsertText(String replacement, boolean backspace, boolean delete) {
+
 		IndexRange selectionRange = this.getSelection();
 
 		int selectionStart = selectionRange.getStart();
@@ -219,51 +332,62 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
 		int selectionLength = selectionEnd - selectionStart;
 
-		// if (selectionEnd - selectionStart > 0) { // we have a selected range
-		// // find out, if the selected range overlaps with a locked line anywhere
-
 		if (selectionLength == 0) {
 			selectionStart = this.getCaretPosition();
 			selectionEnd = this.getCaretPosition();
 		}
 
-		boolean NotOverlapping = ((selectionEnd <= lockedLineStart) || (lockedLineEnd < selectionStart))
-				&& (((selectionEnd < lockedBracePos) || (lockedBracePos < selectionStart)));
+		if (backspace && delete) {
+			return false;
+		}
+
+		if (backspace || delete) {
+			replacement = "";
+		}
+
+		if (selectionLength == 0) { // update the values
+			if (backspace) {
+				selectionStart = Math.max(0, selectionStart - 1);
+				selectionLength = selectionEnd - selectionStart;
+			} else if (delete) {
+				selectionEnd = Math.min(this.getText().length(), selectionEnd + 1);
+				selectionLength = selectionEnd - selectionStart;
+			}
+		}
+
+		// if (selectionEnd - selectionStart > 0) { // we have a selected range
+		// // find out, if the selected range overlaps with a locked line anywhere
+
+		boolean NotOverlapping = ((selectionEnd <= lockedLineStart) || (lockedLineEnd <= selectionStart))
+				&& (((selectionEnd <= lockedBracePos) || (lockedBracePos < selectionStart)));
 
 		if (NotOverlapping) {
-			if (selectionLength == 0 && delete) {
-				
-			}
-			
-			
 			this.replaceText(selectionStart, selectionEnd, replacement);
 
-			lockedBracePos++;
-		}
-	}
+			int lengthChange = replacement.length() - selectionLength;
 
-	private boolean updateLockedLines(int inputPosition, int inputSize) {
-		if (inputSize > 0) {
-			if (inputPosition > lockedLineStart && inputPosition < lockedLineEnd) {
-				// the input is in the locked line, therefore it shouldn't be included
-				return false;
-			} else {
-				if (inputPosition <= lockedLineStart) { // we have to shift all of them
-					lockedLineStart = lockedLineStart + inputSize;
-					lockedLineEnd = lockedLineEnd + inputSize;
-					lockedBracePos = lockedBracePos + inputSize;
-				} else if (inputPosition <= lockedBracePos) { // we only have to shift the last brace
-					lockedBracePos = lockedBracePos + inputSize;
-				} else {
-					// do nothing
-				}
-				return true;
-			}
-		} else if (inputSize < 0) {
-			System.out.println("still have to find out in case of deletions");
+			updateLockedLineNumber(selectionEnd, lengthChange);
+
 			return true;
 		} else {
 			return false;
+		}
+	}
+
+	private void updateLockedLineNumber(int changePosition, int lengthChange) {
+		if (changePosition <= lockedLineStart) {
+			lockedLineStart = lockedLineStart + lengthChange;
+			lockedLineEnd = lockedLineEnd + lengthChange;
+
+			lockedBracePos = lockedBracePos + lengthChange;
+
+			System.out.println("all changed: " + lengthChange);
+		} else if (changePosition <= lockedBracePos) {
+			lockedBracePos = lockedBracePos + lengthChange;
+			System.out.println("brace changed: " + lengthChange);
+		} else {
+			System.out.println("no change " + lengthChange);
+			// don't increase anything
 		}
 	}
 
@@ -342,36 +466,57 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 	}
 
 	public void setNewElectionDescription(ElectionDescription newDescription) {
+		
 		this.elecDescription = newDescription;
+		
+		if (newDescription.isNew()) {
+			String declarationString = CCodeHelper.generateDeclString(newDescription.getContainer());
 
-		String declarationString = CCodeHelper.generateDeclString(newDescription.getContainer());
+			lockedLineStart = 0;
 
-		lockedLineStart = 0;
+			lockedLineEnd = declarationString.length();
 
-		lockedLineEnd = declarationString.length();
+			this.replaceText(declarationString + "\n\n}");
+			
+			lockedBracePos = lockedLineEnd + 2;
+			
+			this.elecDescription.setNotNew();
+		} else {
 
-		this.replaceText(declarationString + "\n\n}");
+			this.replaceText(newDescription.getCodeAsString());
+			
+			lockedLineStart = newDescription.getLockedLineStart();
+			
+			lockedLineEnd = newDescription.getLockedLineEnd();
+			
+			lockedBracePos = newDescription.getLockedBracePos();
 
-		lockedBracePos = lockedLineEnd + 2;
+			this.setStyleSpans(0, computeHighlighting(this.getText()));
 
+			saverLoader.resetHasSaveFile();
+		}
+
+		this.elecDescription.setLockedPositions(lockedLineStart, lockedLineEnd, lockedBracePos);
+		
 		this.setStyleSpans(0, computeHighlighting(this.getText()));
 
 		saverLoader.resetHasSaveFile();
 
-		updateLockedLines(0, 0);
+		this.getUndoManager().forgetHistory(); // force the undo manager to not be able to return to previous text
+		// or delete the locked lines
 
 		test();
 	}
 
-	public void setElectionDescription(ElectionDescription newDescription) {
-		this.elecDescription = newDescription;
-
-		this.replaceText(newDescription.getCodeAsString());
-
-		this.setStyleSpans(0, computeHighlighting(this.getText()));
-
-		saverLoader.resetHasSaveFile();
-	}
+//	public void setElectionDescription(ElectionDescription newDescription) {
+//		this.elecDescription = newDescription;
+//
+//		this.replaceText(newDescription.getCodeAsString());
+//
+//		this.setStyleSpans(0, computeHighlighting(this.getText()));
+//
+//		saverLoader.resetHasSaveFile();
+//	}
 
 	public void bringToFront() {
 		GUIController.getController().getMainTabPane().getSelectionModel()
@@ -401,7 +546,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 			}
 
 			if (newDescription != null) {
-				setElectionDescription(newDescription);
+				setNewElectionDescription(newDescription);
 
 				if (bringToFront) {
 					bringToFront();
@@ -445,18 +590,19 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
 	@Override
 	public void undo() {
+		undo(null);
 		super.undo();
 	}
 
 	@Override
 	public void redo() {
+		redo(null);
 		super.redo();
 	}
 
 	@Override
 	public void cut() {
-		// TODO Auto-generated method stub
-
+		cut(null);
 	}
 
 	@Override
@@ -466,12 +612,12 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
 	@Override
 	public void paste() {
-		super.paste();
+		this.paste(null);
 	}
 
 	@Override
 	public void delete() {
-
+		this.delete(null);
 	}
 
 	public void resetSaveFile() {

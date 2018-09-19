@@ -130,7 +130,7 @@ public class CCodeHelper {
 			ElectionTemplateHandler templateHandler, StringResourceLoader stringResourceLoader) {
 
 		ElectionDescription description = new ElectionDescription(name, container.getInputType(),
-				container.getOutputType(), 2);
+				container.getOutputType(), 2, 0, 0, 0, true);
 		ArrayList<String> code = new ArrayList<>();
 		String inputIdInFile = container.getInputType().getInputIDinFile();
 		String outputIdInFile = container.getOutputType().getOutputIDinFile();

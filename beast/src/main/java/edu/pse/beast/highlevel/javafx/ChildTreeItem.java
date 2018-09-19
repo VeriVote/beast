@@ -13,6 +13,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -37,6 +38,7 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 	
 	private final List<TreeItem<CustomTreeItem>> resultTreeItems = new ArrayList<TreeItem<CustomTreeItem>>();
 
+	private Button showCBMC = new Button("C");
 	
 	ChildTreeItem(ChildTreeItemValues values, ParentTreeItem parent, TreeItem<CustomTreeItem> treeItemReference) {
 		this.parent = parent;
@@ -88,7 +90,28 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 
 		this.getChildren().add(checkBox);
 		this.getChildren().add(new Separator(Orientation.VERTICAL));
+		this.getChildren().add(showCBMC);
+		this.getChildren().add(new Separator(Orientation.VERTICAL));
 		this.getChildren().add(propName);
+		
+
+		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (results.size() > 0) {
+					Result currentResult = results.get(results.size() - 1).getResult();
+					
+					List<String> res = currentResult.getResult();
+					
+					for (Iterator iterator = res.iterator(); iterator.hasNext();) {
+						String string = (String) iterator.next();
+						System.out.println(string);
+					}
+					
+				}
+				
+			}
+		});
 	}
 
 	public boolean isSelected() {

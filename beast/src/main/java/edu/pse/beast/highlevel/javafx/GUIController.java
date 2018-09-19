@@ -187,6 +187,9 @@ public class GUIController {
 
 	@FXML // fx:id="errorPane"
 	private Tab errorPane;
+	
+	@FXML
+	private Tab cbmcPane;
 
 	@FXML // fx:id="consolePane"
 	private Tab consolePane;
@@ -223,6 +226,9 @@ public class GUIController {
 
 	@FXML
 	private TextArea errorTextArea;
+	
+	@FXML
+	private TextArea cbmcTextArea;
 
 	@FXML
 	private TreeView<CustomTreeItem> treeView;
@@ -651,6 +657,11 @@ public class GUIController {
 	public void errorPaneClicked(Event event) {
 
 	}
+	
+	@FXML
+	public void cbmcPaneClicked(Event event) {
+		
+	}
 
 	@FXML
 	public void inputPaneClicked(Event event) {
@@ -781,47 +792,47 @@ public class GUIController {
 
 	@FXML
 	public void copyButton(ActionEvent event) {
-
+		getFocusedArea().copy();
 	}
 
 	@FXML
 	public void undoButton(ActionEvent event) {
-
+		getFocusedArea().undo();
 	}
 
 	@FXML
 	public void cutButton(ActionEvent event) {
-
+		getFocusedArea().cut();
 	}
 
 	@FXML
 	public void openButton(ActionEvent event) {
-
+		getFocusedArea().open();
 	}
 
 	@FXML
 	public void pasteButton(ActionEvent event) {
-
+		getFocusedArea().paste();
 	}
 
 	@FXML
 	public void redoButton(ActionEvent event) {
-
+		getFocusedArea().redo();
 	}
 
 	@FXML
 	public void saveAsButton(ActionEvent event) {
-		// codeArea.saveAs("test");
+		getFocusedArea().saveAs();
 	}
 
 	@FXML
 	public void saveButton(ActionEvent event) {
-
+		getFocusedArea().save();
 	}
 
 	@FXML
 	public void deleteButton(ActionEvent event) {
-
+		getFocusedArea().delete();
 	}
 
 	// text manipulation menu buttons
@@ -940,7 +951,7 @@ public class GUIController {
 
 		if (triplet != null) {
 			codeArea.setNewElectionDescription(
-					new ElectionDescription(triplet.first, triplet.second, triplet.third, 0));
+					new ElectionDescription(triplet.first, triplet.second, triplet.third, 0, 0, 0, 0, true));
 		}
 	}
 
