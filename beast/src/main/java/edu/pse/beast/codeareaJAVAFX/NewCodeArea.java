@@ -147,7 +147,6 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 			if (event != null) {
 				event.consume();
 			}
-			;
 
 			String replacement = "";
 
@@ -628,5 +627,10 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 	public void autoComplete() {
 		Triplet<List<String>, Integer, Integer> completion = getCompletions(recommendations);
 		processAutocompletion(completion.first, completion.second, completion.third);
+	}
+
+	@Override
+	public void insertAutoCompletion(int start, int end, String toInsert) {
+		lockedLineSaveInsertText(toInsert, false, false);
 	}
 }

@@ -44,16 +44,14 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
 		this.end = end;
 
 		if (content.size() == 1) { // there is only one element, so the user probably want that one
-			insertAutoCompletion(content.get(0));
+			insertAutoCompletion(start, end, content.get(0));
 		} else {
 			GUIController.getController().getAutoCompleter().showAutocompletionWindows(position.x, position.y, content,
 					this);
 		}
 	}
 
-	public void insertAutoCompletion(String toInsert) {
-		replaceText(start, end, toInsert);
-	}
+	public abstract void insertAutoCompletion(int start, int end, String toInsert);
 
 	protected Triplet<List<String>, Integer, Integer> getCompletions(Set<String> recommendations) {
 		String completeText = this.getText();
@@ -130,5 +128,9 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
 		}
 
 		return new Triplet<List<String>, Integer, Integer>(possibleList, prefixStart, prefixEnd);
+	}
+
+	public void insertHiddenAutoCompletion(String toInsert) {
+		insertAutoCompletion(start, end, toInsert);
 	}
 }

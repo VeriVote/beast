@@ -220,4 +220,9 @@ public class BoundedVarCodeArea extends AutoCompletionCodeArea implements MenuBa
 	public void autoComplete() {
 		System.out.println("wird das hier gebraucht?");
 	}
+
+	@Override
+	public void insertAutoCompletion(int start, int end, String toInsert) {
+		replaceText(start, end, toInsert);
+	}
 }

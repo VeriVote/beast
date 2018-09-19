@@ -78,7 +78,7 @@ public class AutoCompleter {
 	private void notifyCaller() {
 		synchronized (this) {
 			if (caller != null && list.getSelectionModel().getSelectedItem() != null) {
-				caller.insertAutoCompletion(list.getSelectionModel().getSelectedItem());
+				caller.insertHiddenAutoCompletion(list.getSelectionModel().getSelectedItem());
 			}
 		}
 		reset();

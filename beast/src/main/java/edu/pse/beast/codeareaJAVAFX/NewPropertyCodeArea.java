@@ -129,4 +129,9 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea {
 		Triplet<List<String>, Integer, Integer> completion = getCompletions(recommendations);
 		processAutocompletion(completion.first, completion.second, completion.third);
 	}
+
+	@Override
+	public void insertAutoCompletion(int start, int end, String toInsert) {
+		replaceText(start, end, toInsert);
+	}
 }
