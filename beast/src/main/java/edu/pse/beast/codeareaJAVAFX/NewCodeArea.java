@@ -34,6 +34,7 @@ import edu.pse.beast.highlevel.javafx.MenuBarInterface;
 import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.Triplet;
+import edu.pse.beast.toolbox.Tuple;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
@@ -95,6 +96,10 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
 	private int lockedBracePos;
 
+	private int amountTabs = 0;
+
+	private int spacesPerTab = 4;
+
 	final KeyCombination selectAllCombination = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN); // select
 																												// all
 
@@ -111,6 +116,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 	final KeyCombination pasteCombination = new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN); // paste
 
 	final KeyCombination cutCombination = new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_DOWN); // paste
+
+	final KeyCombination tabulatorCombination = new KeyCodeCombination(KeyCode.TAB); // tab key
 
 	public NewCodeArea() {
 
@@ -152,6 +159,9 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
 			String value = (event.getCharacter()).replaceAll("\\p{Cntrl}", "");
 
+			System.out.println("value: " + event.getCharacter());
+			System.out.println(value.equals("\t"));
+
 			if (value.length() != 1) {
 				return;
 			} else {
@@ -175,7 +185,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 					break;
 				}
 
-				lockedLineSaveInsertText(replacement, false, false);
+				lockedLineSafeInsertText(replacement, false, false, null);
 			}
 		});
 
@@ -188,22 +198,22 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
 		this.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
 
+			System.out.println(event.getCode());
+
 			if (selectAllCombination.match(event)) { // we just want to select all
 				this.selectAll();
 				if (event != null) {
 					event.consume();
 				}
-				;
 			} else if (backspaceCombination.match(event)) {
-				lockedLineSaveInsertText("", true, false);
+				lockedLineSafeInsertText("", true, false, null);
 				if (event != null) {
 					event.consume();
 				}
-				;
 			} else if (deleteCombination.match(event)) {
 				delete(event);
 			} else if (enterCombination.match(event)) {
-				lockedLineSaveInsertText("\n", false, false);
+				lockedLineSafeInsertText("\n", false, false, null);
 				if (event != null) {
 					event.consume();
 				}
@@ -214,6 +224,14 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 			} else if (cutCombination.match(event)) {
 
 				cut(event);
+			} else 
+			if (tabulatorCombination.match(event)) {
+				String whitespaces = new String(new char[spacesPerTab]).replace("\0", " ");
+				lockedLineSafeInsertText(whitespaces, false, false, null);
+				
+				if (event != null) {
+					event.consume();
+				}
 			}
 		});
 
@@ -231,7 +249,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 	 * @param event
 	 */
 	private void delete(KeyEvent event) {
-		lockedLineSaveInsertText("", false, true);
+		lockedLineSafeInsertText("", false, true, null);
 		if (event != null) {
 			event.consume();
 		}
@@ -254,7 +272,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 			return;
 		}
 
-		lockedLineSaveInsertText(clipboardText, false, false);
+		lockedLineSafeInsertText(clipboardText, false, false, null);
 
 		if (event != null) {
 			event.consume();
@@ -268,7 +286,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 	private void cut(KeyEvent event) {
 		String selectedText = this.getSelectedText();
 
-		boolean isValid = lockedLineSaveInsertText("", true, false);
+		boolean isValid = lockedLineSafeInsertText("", true, false, null);
 
 		if (isValid) {
 			StringSelection selection = new StringSelection(selectedText);
@@ -322,12 +340,39 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 		}
 	}
 
-	private boolean lockedLineSaveInsertText(String replacement, boolean backspace, boolean delete) {
+	/**
+	 * tries to insert text into this text pane. It wont override locked lines
+	 * 
+	 * @param replacement
+	 *            the text to be inserted
+	 * @param backspace
+	 *            if the backspace key was pressed
+	 * @param delete
+	 *            if the delete key was pressed
+	 * @param tuple
+	 *            alternative variable to set the bounds where text should be
+	 *            replaced. If it is null, the area to replace will be infered from
+	 *            the curser or the marked area
+	 * @return
+	 */
+	private boolean lockedLineSafeInsertText(String replacement, boolean backspace, boolean delete,
+			Tuple<Integer, Integer> tuple) {
 
-		IndexRange selectionRange = this.getSelection();
+		int selectionStart = 0;
+		int selectionEnd = 0;
 
-		int selectionStart = selectionRange.getStart();
-		int selectionEnd = selectionRange.getEnd();
+		if (tuple != null) {
+
+			selectionStart = tuple.x;
+			selectionEnd = tuple.y;
+
+		} else {
+			IndexRange selectionRange = this.getSelection();
+
+			selectionStart = selectionRange.getStart();
+			selectionEnd = selectionRange.getEnd();
+
+		}
 
 		int selectionLength = selectionEnd - selectionStart;
 
@@ -368,6 +413,14 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 			updateLockedLineNumber(selectionEnd, lengthChange);
 
 			return true;
+		} else if (selectionEnd == lockedLineStart && (replacement.endsWith("\n") || backspace || delete)) {
+			this.replaceText(selectionStart, selectionEnd, replacement);
+
+			int lengthChange = replacement.length() - selectionLength;
+
+			updateLockedLineNumber(selectionEnd, lengthChange);
+
+			return true;
 		} else {
 			return false;
 		}
@@ -384,30 +437,22 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 		} else {
 			// don't increase anything
 		}
-		
+
 		test();
 	}
 
 	private void test() {
-		
-		System.out.println("test");
 
 		Set<String> style = Collections.singleton("-fx-background-fill: blue;");
-		
-		
-		//this.setStyle(paragraph, style);
-		//this.setStyle(value);
-		//this.setStyle("-fx-background-color: blue;");
-		
+
+		// this.setStyle(paragraph, style);
+		// this.setStyle(value);
+		// this.setStyle("-fx-background-color: blue;");
+
 		this.setStyle(lockedLineStart, lockedLineEnd, style);
-		
-		
-		System.out.println("start: " + lockedLineStart);
-		
-		System.out.println("end: " + lockedLineEnd);
-		
-		//this.setStyle(lockedLineStart, lockedLineEnd, style);
-		//this.setStyle(lockedBracePos, lockedBracePos + 1,  style);
+
+		// this.setStyle(lockedLineStart, lockedLineEnd, style);
+		// this.setStyle(lockedBracePos, lockedBracePos + 1, style);
 	}
 
 	private static StyleSpans<Collection<String>> computeHighlighting(String text) {
@@ -478,29 +523,29 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 	}
 
 	public void setNewElectionDescription(ElectionDescription newDescription) {
-		
+
 		this.elecDescription = newDescription;
-		
+
 		if (newDescription.isNew()) {
 			String declarationString = CCodeHelper.generateDeclString(newDescription.getContainer());
 
-			lockedLineStart = 1;
+			lockedLineStart = 0;
 
 			lockedLineEnd = lockedLineStart + declarationString.length();
 
-			this.replaceText("\n" + declarationString + "\n\n}");
-			
-			lockedBracePos = lockedLineEnd + 2;
-			
+			this.replaceText(declarationString + "\n\n}");
+
+			lockedBracePos = this.getText().length() - 1;
+
 			this.elecDescription.setNotNew();
 		} else {
 
 			this.replaceText(newDescription.getCodeAsString());
-			
+
 			lockedLineStart = newDescription.getLockedLineStart();
-			
+
 			lockedLineEnd = newDescription.getLockedLineEnd();
-			
+
 			lockedBracePos = newDescription.getLockedBracePos();
 
 			this.setStyleSpans(0, computeHighlighting(this.getText()));
@@ -509,7 +554,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 		}
 
 		this.elecDescription.setLockedPositions(lockedLineStart, lockedLineEnd, lockedBracePos);
-		
+
 		this.setStyleSpans(0, computeHighlighting(this.getText()));
 
 		saverLoader.resetHasSaveFile();
@@ -520,15 +565,15 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 		test();
 	}
 
-//	public void setElectionDescription(ElectionDescription newDescription) {
-//		this.elecDescription = newDescription;
-//
-//		this.replaceText(newDescription.getCodeAsString());
-//
-//		this.setStyleSpans(0, computeHighlighting(this.getText()));
-//
-//		saverLoader.resetHasSaveFile();
-//	}
+	// public void setElectionDescription(ElectionDescription newDescription) {
+	// this.elecDescription = newDescription;
+	//
+	// this.replaceText(newDescription.getCodeAsString());
+	//
+	// this.setStyleSpans(0, computeHighlighting(this.getText()));
+	//
+	// saverLoader.resetHasSaveFile();
+	// }
 
 	public void bringToFront() {
 		GUIController.getController().getMainTabPane().getSelectionModel()
@@ -644,6 +689,6 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
 	@Override
 	public void insertAutoCompletion(int start, int end, String toInsert) {
-		lockedLineSaveInsertText(toInsert, false, false);
+		lockedLineSafeInsertText(toInsert, false, false, new Tuple<Integer, Integer>(start, end));
 	}
 }
