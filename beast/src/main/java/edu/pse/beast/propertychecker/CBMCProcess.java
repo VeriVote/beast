@@ -2,6 +2,8 @@ package edu.pse.beast.propertychecker;
 
 import java.io.File;
 
+import edu.pse.beast.highlevel.javafx.ChildTreeItem;
+
 public abstract class CBMCProcess extends Checker {
 
     // this is the last line in the cbmc output, if the verification was
@@ -21,8 +23,8 @@ public abstract class CBMCProcess extends Checker {
      * @param toCheck the file to check with cbmc
      * @param parent the parent CheckerFactory, that has to be notified about finished checking
      */
-    public CBMCProcess(int voters, int candidates, int seats, String advanced, File toCheck, CheckerFactory parent) {
-        super(voters, candidates, seats, advanced, toCheck, parent);
+    public CBMCProcess(int voters, int candidates, int seats, String advanced, File toCheck, CheckerFactory parent, Result result) {
+        super(voters, candidates, seats, advanced, toCheck, parent, result);
     }
     
     @Override

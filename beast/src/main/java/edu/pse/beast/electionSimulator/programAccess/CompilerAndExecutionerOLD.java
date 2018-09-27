@@ -3,6 +3,7 @@ package edu.pse.beast.electionSimulator.programAccess;
 import java.util.List;
 
 import edu.pse.beast.propertychecker.OperatingSystems;
+import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
 
@@ -14,13 +15,13 @@ import edu.pse.beast.toolbox.ErrorLogger;
  * @author Lukas
  *
  */
-public final class CompilerAndExecutioner {
+public final class CompilerAndExecutionerOLD {
 
     private static SystemSpecificCompilerAndExecutioner specificComAndExe = null;
 
     private static boolean initialized = false;
 
-    private CompilerAndExecutioner() {
+    private CompilerAndExecutionerOLD() {
         
     }
     
@@ -56,11 +57,11 @@ public final class CompilerAndExecutioner {
      *            the code to check
      * @return a list of codeErros
      */
-    public static List<String> compileAndRun(List<String> toCheck) {
+    public static List<String> compileAndRun(List<String> toCheck, Result result) {
         if (!initialized) {
             init();
         }
-        return specificComAndExe.runAnalysis(toCheck);
+        return specificComAndExe.runAnalysis(toCheck, result);
     }
 
     /**

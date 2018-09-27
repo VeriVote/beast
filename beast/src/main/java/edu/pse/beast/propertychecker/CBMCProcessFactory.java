@@ -7,6 +7,7 @@ import java.util.List;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.highlevel.javafx.ChildTreeItem;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
@@ -586,7 +587,7 @@ public class CBMCProcessFactory extends CheckerFactory {
 	@Override
 	protected Checker startProcessCheck(ElectionDescription electionDesc,
 			PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
-			CheckerFactory parent) {
+			CheckerFactory parent, Result result) {
 
 		String userOptions = advanced.trim().replaceAll(" +", " ");
 
@@ -603,10 +604,10 @@ public class CBMCProcessFactory extends CheckerFactory {
 
 		switch (os) {
 		case Linux:
-			startedChecker = new LinuxProcess(voters, candidates, seats, userOptions, toCheck, parent);
+			startedChecker = new LinuxProcess(voters, candidates, seats, userOptions, toCheck, parent, result);
 			break;
 		case Windows:
-			startedChecker = new WindowsProcess(voters, candidates, seats, userOptions, toCheck, parent);
+			startedChecker = new WindowsProcess(voters, candidates, seats, userOptions, toCheck, parent, result);
 			break;
 		case Mac:
 			ErrorForUserDisplayer.displayError(
@@ -623,7 +624,7 @@ public class CBMCProcessFactory extends CheckerFactory {
 	@Override
 	protected Checker startProcessMargin(ElectionDescription electionDesc,
 			PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
-			CheckerFactory parent, int margin, List<String> origResult, String[][] votingData) {
+			CheckerFactory parent, int margin, List<String> origResult, String[][] votingData, Result result) {
 		String userOptions = advanced.trim().replaceAll(" +", " ");
 
 		// remove all unnecessary whitespaces
@@ -635,10 +636,10 @@ public class CBMCProcessFactory extends CheckerFactory {
 
 		switch (os) {
 		case Linux:
-			startedChecker = new LinuxProcess(voters, candidates, seats, userOptions, toCheck, parent);
+			startedChecker = new LinuxProcess(voters, candidates, seats, userOptions, toCheck, parent, result);
 			break;
 		case Windows:
-			startedChecker = new WindowsProcess(voters, candidates, seats, userOptions, toCheck, parent);
+			startedChecker = new WindowsProcess(voters, candidates, seats, userOptions, toCheck, parent, result);
 			break;
 		case Mac:
 			ErrorForUserDisplayer.displayError(
@@ -655,7 +656,7 @@ public class CBMCProcessFactory extends CheckerFactory {
 	@Override
 	protected Checker startProcessTest(ElectionDescription electionDesc,
 			PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
-			CheckerFactory parent, String[][] votingData) {
+			CheckerFactory parent, String[][] votingData, Result result) {
 
 		String userOptions = advanced.trim().replaceAll(" +", " ");
 
@@ -670,10 +671,10 @@ public class CBMCProcessFactory extends CheckerFactory {
 
 		switch (os) {
 		case Linux:
-			startedChecker = new LinuxProcess(voters, candidates, seats, userOptions, toCheck, parent);
+			startedChecker = new LinuxProcess(voters, candidates, seats, userOptions, toCheck, parent, result);
 			break;
 		case Windows:
-			startedChecker = new WindowsProcess(voters, candidates, seats, userOptions, toCheck, parent);
+			startedChecker = new WindowsProcess(voters, candidates, seats, userOptions, toCheck, parent, result);
 			break;
 		case Mac:
 			ErrorForUserDisplayer.displayError(

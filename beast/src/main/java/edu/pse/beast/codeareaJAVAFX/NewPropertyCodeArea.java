@@ -15,10 +15,15 @@ import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
+import edu.pse.beast.highlevel.javafx.BooleanExpEditorNEW;
+import edu.pse.beast.highlevel.javafx.MenuBarInterface;
 import edu.pse.beast.toolbox.Triplet;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
+import javafx.scene.control.IndexRange;
 
-public class NewPropertyCodeArea extends AutoCompletionCodeArea {
+public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuBarInterface {
 	private static final String[] OPERATORS = new String[] { "\\*", "/", "\\+", "-" };
 
 	private static final String[] COMPARISON = new String[] { "==", "\\!\\=", "\\<\\=", "\\>\\=", "\\<", "\\>" };
@@ -60,8 +65,22 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea {
 	
 	private FormalPropertiesDescription description;
 
-	public NewPropertyCodeArea() {
+	private BooleanExpEditorNEW parent;
 
+	public NewPropertyCodeArea() {
+		
+		NewPropertyCodeArea reference = this;
+
+		this.focusedProperty().addListener(new ChangeListener<Boolean>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if (newValue != null && newValue) {
+					parent.setFocused(reference);
+				}
+			}
+		});
+		
 		// add all standard recommendations
 		recommendations.addAll(Arrays.asList(MAKROS));
 		
@@ -133,5 +152,59 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea {
 	@Override
 	public void insertAutoCompletion(int start, int end, String toInsert) {
 		replaceText(start, end, toInsert);
+	}
+
+	@Override
+	public void open() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void save() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void saveAs() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void undo() {
+		super.undo();
+	}
+
+	@Override
+	public void redo() {
+		super.redo();
+	}
+
+	@Override
+	public void cut() {
+		super.cut();
+	}
+
+	@Override
+	public void copy() {
+		super.copy();
+	}
+
+	@Override
+	public void paste() {
+		super.paste();
+	}
+
+	@Override
+	public void delete() {
+		IndexRange selectionRange = this.getSelection();
+		
+		this.replaceText(selectionRange, "");
+	}
+
+	public void setParent(BooleanExpEditorNEW parent) {
+		this.parent = parent;
 	}
 }

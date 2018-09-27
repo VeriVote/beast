@@ -374,21 +374,6 @@
                               </SplitPane>
                            </content>
 								</Tab>
-								<Tab fx:id="resultPane" onSelectionChanged="#resultPaneClicked" text="%key.result">
-                           <content>
-                              <BorderPane>
-                                 <center>
-                                    <TextArea fx:id="solutionField" editable="false" text="&#10;" BorderPane.alignment="CENTER" />
-                                 </center>
-                                 <top>
-                                    <BorderPane BorderPane.alignment="CENTER">
-                                       <top>
-                                          <TextField fx:id="resultNameField" editable="false" text="no property" BorderPane.alignment="CENTER" />
-                                       </top>
-                                    </BorderPane>
-                                 </top>
-                              </BorderPane>
-                           </content></Tab>
 								<Tab fx:id="inputPane" onSelectionChanged="#inputPaneClicked" text="%key.voteslist">
 									<content>
 										<AnchorPane>
@@ -487,6 +472,38 @@
                                  </children></AnchorPane>
 									</content>
 								</Tab>
+								<Tab fx:id="resultPane" onSelectionChanged="#resultPaneClicked" text="%key.result">
+                           <content>
+                              <BorderPane>
+                                 <center>
+                                    <TextArea fx:id="solutionField" editable="false" text="&#10;" BorderPane.alignment="CENTER" />
+                                 </center>
+                                 <top>
+                                    <BorderPane BorderPane.alignment="CENTER">
+                                       <center>
+                                          <TextField fx:id="resultNameField" editable="false" text="no property" BorderPane.alignment="CENTER" />
+                                       </center>
+                                       <top>
+                                          <MenuBar BorderPane.alignment="CENTER">
+                                            <menus>
+                                              <Menu mnemonicParsing="false">
+                                                   <graphic>
+                                                      <MenuButton fx:id="displayFormat" mnemonicParsing="false" text="Display Format">
+                                                         <items>
+                                                            <MenuItem mnemonicParsing="false" onAction="#consoleOutputClicked" text="CBMC Output" />
+                                                            <MenuItem mnemonicParsing="false" onAction="#consoleErrorClicked" text="CBMC Error" />
+                                                            <MenuItem mnemonicParsing="false" onAction="#previousResultsClicked" text="Previous results" />
+                                                            <MenuItem mnemonicParsing="false" onAction="#resultClicked" text="Result" />
+                                                         </items></MenuButton>
+                                                   </graphic>
+                                              </Menu>
+                                            </menus>
+                                          </MenuBar>
+                                       </top>
+                                    </BorderPane>
+                                 </top>
+                              </BorderPane>
+                           </content></Tab>
 							</tabs>
 						</TabPane>
 						<TabPane fx:id="subTabPane" tabClosingPolicy="UNAVAILABLE">
@@ -512,14 +529,6 @@
 										<AnchorPane>
                                  <children>
                                     <TextArea fx:id="errorTextArea" editable="false" prefHeight="90.0" prefWidth="382.0" text="Dies sind die Errors&#10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                 </children></AnchorPane>
-									</content>
-								</Tab>
-								<Tab fx:id="cbmcPane" onSelectionChanged="#cbmcPaneClicked" text="CBMC console">
-									<content>
-										<AnchorPane>
-                                 <children>
-                                    <TextArea fx:id="cbmcTextArea" editable="false" prefHeight="90.0" prefWidth="382.0" text="No CBMC output selected;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children></AnchorPane>
 									</content>
 								</Tab>

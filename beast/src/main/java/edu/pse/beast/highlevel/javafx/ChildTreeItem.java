@@ -13,7 +13,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -32,24 +31,21 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 	private final ParentTreeItem parent;
 	private ImageView statusIcon = new ImageView();
 	private boolean disabled = false;
-	
-	
+
 	protected ArrayList<ResultTreeItem> results = new ArrayList<ResultTreeItem>();
-	
+
 	private final List<TreeItem<CustomTreeItem>> resultTreeItems = new ArrayList<TreeItem<CustomTreeItem>>();
 
-	private Button showCBMC = new Button("C");
-	
 	ChildTreeItem(ChildTreeItemValues values, ParentTreeItem parent, TreeItem<CustomTreeItem> treeItemReference) {
 		this.parent = parent;
 		this.checkBox.setSelected(values.checkBoxStatus);
 		this.propName = new Label(values.propertyName);
 		this.disabled = values.disabled;
-				
+
 		this.setTreeItemReference(treeItemReference);
-		
+
 		treeItemReference.setValue(this);
-		
+
 		for (Iterator<Result> iterator = values.results.iterator(); iterator.hasNext();) {
 			Result result = (Result) iterator.next();
 
@@ -64,9 +60,9 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 		this.parent = parent;
 		propName = new Label(name);
 		this.setTreeItemReference(treeItemReference);
-		
+
 		treeItemReference.setValue(this);
-		
+
 		init();
 	}
 
@@ -90,28 +86,8 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 
 		this.getChildren().add(checkBox);
 		this.getChildren().add(new Separator(Orientation.VERTICAL));
-		this.getChildren().add(showCBMC);
-		this.getChildren().add(new Separator(Orientation.VERTICAL));
 		this.getChildren().add(propName);
-		
 
-		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent event) {
-				if (results.size() > 0) {
-					Result currentResult = results.get(results.size() - 1).getResult();
-					
-					List<String> res = currentResult.getResult();
-					
-					for (Iterator iterator = res.iterator(); iterator.hasNext();) {
-						String string = (String) iterator.next();
-						System.out.println(string);
-					}
-					
-				}
-				
-			}
-		});
 	}
 
 	public boolean isSelected() {
@@ -120,8 +96,8 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 
 	private void wasClicked() {
 		parent.wasClicked(false);
-		
-		if(results.size() > 0) {
+
+		if (results.size() > 0) {
 			results.get(results.size() - 1).wasClicked();
 		}
 	}
@@ -141,26 +117,26 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 	public void addResult(Result result) {
 		ResultTreeItem resultItem = new ResultTreeItem(result, this);
 		results.add(resultItem);
-		
+
 		TreeItem<CustomTreeItem> reference = new TreeItem<CustomTreeItem>(resultItem);
-		
+
 		this.getTreeItemReference().getChildren().add(reference);
-		
-		//this.getChildren().add(resultItem);
-		
+
+		// this.getChildren().add(resultItem);
+
 		addChildrenToStage();
 
 		this.update();
 	}
-//
-//	public void setStatus(AnalysisStatus status) {
-//		this.status = status;
-//		checkBox.setText(status.toString());
-//	}
+	//
+	// public void setStatus(AnalysisStatus status) {
+	// this.status = status;
+	// checkBox.setText(status.toString());
+	// }
 
-//	public Result getResult() {
-//		return result;
-//	}
+	// public Result getResult() {
+	// return result;
+	// }
 
 	/**
 	 * notifies the child object that its result object changed, so it has to update
@@ -178,53 +154,54 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 		return parent.getPreAndPostPropertie();
 	}
 
-//	public void setPresentable() {
-//
-//		if (result != null && result.isFinished()) {
-//			if (!result.isValid()) {
-//				this.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
-//			} else {
-//				if (result.isSuccess()) {
-//					this.setBackground(
-//							new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
-//				} else {
-//					this.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-//				}
-//			}
-//		}
-//
-//	}
-//
+	// public void setPresentable() {
+	//
+	// if (result != null && result.isFinished()) {
+	// if (!result.isValid()) {
+	// this.setBackground(new Background(new BackgroundFill(Color.YELLOW,
+	// CornerRadii.EMPTY, Insets.EMPTY)));
+	// } else {
+	// if (result.isSuccess()) {
+	// this.setBackground(
+	// new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY,
+	// Insets.EMPTY)));
+	// } else {
+	// this.setBackground(new Background(new BackgroundFill(Color.RED,
+	// CornerRadii.EMPTY, Insets.EMPTY)));
+	// }
+	// }
+	// }
+	//
+	// }
+	//
 	public void resetPresentable() {
 		this.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 	}
 
 	public ChildTreeItemValues getValues() {
 		ArrayList<Result> tmpList = new ArrayList<Result>();
-		
+
 		for (Iterator<ResultTreeItem> iterator = results.iterator(); iterator.hasNext();) {
 			ResultTreeItem result = (ResultTreeItem) iterator.next();
 			tmpList.add(result.getResult());
 		}
-		
+
 		return new ChildTreeItemValues(propName.getText(), checkBox.isSelected(), false, tmpList);
 	}
-	
+
 	public void addChildrenToStage() {
 		resultTreeItems.clear();
-		
+
 		TreeItem<CustomTreeItem> item2 = this.getTreeItemReference();
-		
+
 		item2.isExpanded();
-		
+
 		ObservableList<TreeItem<CustomTreeItem>> children2 = item2.getChildren();
-		
+
 		children2.size();
-		
+
 		this.getTreeItemReference().getChildren().clear();
-		
-		
-		
+
 		for (Iterator<ResultTreeItem> iterator = results.iterator(); iterator.hasNext();) {
 			ResultTreeItem item = (ResultTreeItem) iterator.next();
 			item.setPresentable();

@@ -91,6 +91,16 @@ public class GUIController {
 	private List<TabClass> bottomWindowTabs = new ArrayList<TabClass>();
 
 	private NewElectionSimulation electionSimulation;
+	
+	private ResultPresentationType presentationType = ResultPresentationType.result;
+	
+	public enum ResultPresentationType {
+		output,
+		error,
+		previous,
+		result
+	}
+	
 
 	@FXML // fx:id="maxVoter"
 	private TextField maxVoter;
@@ -187,12 +197,12 @@ public class GUIController {
 
 	@FXML // fx:id="errorPane"
 	private Tab errorPane;
-	
-	@FXML
-	private Tab cbmcPane;
 
 	@FXML // fx:id="consolePane"
 	private Tab consolePane;
+	
+	@FXML
+	private MenuButton displayFormat;
 
 	@FXML
 	private Tab boundVariablesTab;
@@ -226,9 +236,6 @@ public class GUIController {
 
 	@FXML
 	private TextArea errorTextArea;
-	
-	@FXML
-	private TextArea cbmcTextArea;
 
 	@FXML
 	private TreeView<CustomTreeItem> treeView;
@@ -294,6 +301,8 @@ public class GUIController {
 	// private Button removeVarButton;
 
 	private boolean running = false;
+	
+	private ResultPresenter resultPresenter = new ResultPresenter();
 
 	private AutoCompleter autoComplete = new AutoCompleter();
 	
@@ -593,16 +602,12 @@ public class GUIController {
 			
 			if (newTab.equals(codePane)) {
 				focusedMainTab = codeArea;
-				System.out.println("code area tab");
 			} else if (newTab.equals(propertyPane)) {
 				focusedMainTab = booleanExpEditor;
-				System.out.println("property tab");
 			} else if (newTab.equals(resultPane)) {
 				focusedMainTab = resultArea;
-				System.out.println("result tab");
 			} else if (newTab.equals(inputPane)) {
 				focusedMainTab = electionSimulation;
-				System.out.println("input tab");
 			}
 		});
 
@@ -626,21 +631,6 @@ public class GUIController {
 			}
 		});
 
-		// voterScrollPane.addEventHandler(ScrollEvent.ANY, new EventHandler<Event>() {
-		// @Override
-		// public void handle(Event event) { // synchronize the scrolling
-		// voterScrollPane.vvalueProperty().set(inputScrollPane.getVvalue());
-		// }
-		// });
-		//
-		// candidateScrollPane.addEventHandler(ScrollEvent.ANY, new
-		// EventHandler<Event>() {
-		// @Override
-		// public void handle(Event event) { // synchronize the scrolling
-		// candidateScrollPane.hvalueProperty().set(inputScrollPane.getHvalue());
-		// }
-		// });
-
 		electionSimulation = new NewElectionSimulation(codeArea.getElectionDescription().getContainer(), inputGridPane,
 				voterGridPane, candidateGridPane);
 
@@ -657,11 +647,6 @@ public class GUIController {
 	public void errorPaneClicked(Event event) {
 
 	}
-	
-	@FXML
-	public void cbmcPaneClicked(Event event) {
-		
-	}
 
 	@FXML
 	public void inputPaneClicked(Event event) {
@@ -675,7 +660,39 @@ public class GUIController {
 
 	@FXML
 	public void resultPaneClicked(Event event) {
-
+		this.presentationType = ResultPresentationType.result;
+	}
+	
+	@FXML
+	public void consoleOutputClicked(Event event) {
+		this.presentationType = ResultPresentationType.output;
+		
+		this.displayFormat.setText(presentationType.name());
+	}
+	
+	@FXML
+	public void consoleErrorClicked(Event event) {
+		this.presentationType = ResultPresentationType.error;
+		
+		this.displayFormat.setText(presentationType.name());
+	}
+	
+	@FXML
+	public void previousResultsClicked(Event event) {
+		this.presentationType = ResultPresentationType.previous;
+		
+		this.displayFormat.setText(presentationType.name());
+	}
+	
+	@FXML
+	public void resultClicked(Event event) {
+		this.presentationType = ResultPresentationType.result;
+		
+		this.displayFormat.setText(presentationType.name());
+	}
+	
+	public ResultPresentationType getPresentationType() {
+		return this.presentationType;
 	}
 
 	// ------------
@@ -1846,6 +1863,10 @@ public class GUIController {
 
 	public AutoCompleter getAutoCompleter() {
 		return autoComplete;
+	}
+	
+	public ResultPresenter getResultPresenter() {
+		return resultPresenter;
 	}
 
 }

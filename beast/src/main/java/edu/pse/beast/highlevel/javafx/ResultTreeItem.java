@@ -5,7 +5,6 @@ import java.util.List;
 
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
-import edu.pse.beast.toolbox.ResultPresenter;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -58,21 +57,8 @@ public class ResultTreeItem extends CustomTreeItem {
 	}
 
 	public void wasClicked() {
-		if (result != null && result.isFinished()) {
-			if (!result.isValid()) {
-			} else {
-				if (result.isSuccess()) {
-					GUIController.getController().getResultField().setText("ASSERTION HOLDS");
-					GUIController.getController().getMainTabPane().getSelectionModel()
-							.select(GUIController.getController().getResultTab());
-				} else {
-					ResultPresenter.presentFailureExample(result);
-
-					GUIController.getController().getResultField().setText(String.join("\n", presentResult()));
-					GUIController.getController().getMainTabPane().getSelectionModel()
-							.select(GUIController.getController().getResultTab());
-				}
-			}
+		if (result != null) {
+			GUIController.getController().getResultPresenter().setResult(result);
 		}
 	}
 

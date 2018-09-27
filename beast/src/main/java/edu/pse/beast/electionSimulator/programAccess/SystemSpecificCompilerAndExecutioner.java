@@ -11,6 +11,8 @@ import java.util.concurrent.CountDownLatch;
 
 import org.apache.commons.io.FileUtils;
 
+import edu.pse.beast.highlevel.javafx.ChildTreeItem;
+import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
@@ -44,11 +46,10 @@ public abstract class SystemSpecificCompilerAndExecutioner {
 		}
 	}
 
-	public List<String> runAnalysis(List<String> code) {
+	public List<String> runAnalysis(List<String> code, Result resultToStoreIn) {
 		
 	    //array that returns the result
 	    List<String> toReturn = new ArrayList<String>();
-	    
 	    
 		List<String> result = new ArrayList<String>();
 
@@ -91,6 +92,10 @@ public abstract class SystemSpecificCompilerAndExecutioner {
 			ThreadedBufferedReader errReader = new ThreadedBufferedReader(
 					new BufferedReader(new InputStreamReader(process.getErrorStream())), errors, latch, false);
 
+			resultToStoreIn.setLastTmpResult(result);
+			resultToStoreIn.setLastTmpResult(errors);
+			
+			
 			// wait for the process to finish;
 			try {
 				process.waitFor();

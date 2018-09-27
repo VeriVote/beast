@@ -7,6 +7,7 @@ import java.util.List;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.highlevel.javafx.ChildTreeItem;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
@@ -106,17 +107,19 @@ public abstract class CheckerFactory implements Runnable {
 
 		String[][] votingData = GUIController.getController().getVotingData();
 
+		result.setStarted();
+		
 		switch (result.getAnalysisType()) {
 		case Check:
-			runCheck(advanced);
+			runCheck(advanced, result);
 			break;
 
 		case Margin:
-			runMargin(advanced, numVotes, numCandidates, numSeats, votingData);
+			runMargin(advanced, numVotes, numCandidates, numSeats, votingData, result);
 			break;
 
 		case Test:
-			runTest(advanced, numVotes, numCandidates, numSeats, votingData);
+			runTest(advanced, numVotes, numCandidates, numSeats, votingData, result);
 			break;
 
 		default:
@@ -156,7 +159,7 @@ public abstract class CheckerFactory implements Runnable {
 	/**
 	 * @param advanced
 	 */
-	private void runCheck(String advanced) {
+	private void runCheck(String advanced, Result result) {		
 		outerLoop: for (Iterator<Integer> voteIterator = parameter.getAmountVoters().iterator(); voteIterator
 				.hasNext();) {
 			int voters = (int) voteIterator.next();
@@ -171,7 +174,7 @@ public abstract class CheckerFactory implements Runnable {
 						if (!stopped) {
 
 							currentlyRunning = startProcessCheck(electionDesc, result.getPropertyDesctiption(),
-									advanced, voters, candidates, seats, this);
+									advanced, voters, candidates, seats, this, result);
 
 							// check if the creation was successfull
 							if (currentlyRunning == null) {
@@ -240,7 +243,7 @@ public abstract class CheckerFactory implements Runnable {
 	/**
 	 * @param advanced
 	 */
-	private void runMargin(String advanced, int numVoters, int numCandidates, int numSeats, String[][] origData) {
+	private void runMargin(String advanced, int numVoters, int numCandidates, int numSeats, String[][] origData, Result result) {
 		synchronized (this) {
 
 			if (!stopped) {
@@ -257,7 +260,7 @@ public abstract class CheckerFactory implements Runnable {
 				// numSeats, this, margin, origResult, origData)
 
 				currentlyRunning = startProcessTest(electionDesc, result.getPropertyDesctiption(), advanced,
-						numVoters, numCandidates, numSeats, this, origData);
+						numVoters, numCandidates, numSeats, this, origData, result);
 
 				while (!finished && !stopped) {
 					try {
@@ -296,10 +299,9 @@ public abstract class CheckerFactory implements Runnable {
 					// calculate the margin to check
 					margin = (int) (left + Math.floor((float) (right - left) / 2));
 
-					checkMarginAndWait(margin, origResult, advanced, numVoters, numCandidates, numSeats, origData);
+					checkMarginAndWait(margin, origResult, advanced, numVoters, numCandidates, numSeats, origData, result);
 
-					System.out.println(
-							"finished for margin " + margin + " result: " + currentlyRunning.checkAssertionSuccess());
+					result.addStatusString("finished for margin " + margin + " result: " + currentlyRunning.checkAssertionSuccess());
 
 					if (currentlyRunning.checkAssertionSuccess()) {
 						left = margin + 1;
@@ -317,7 +319,7 @@ public abstract class CheckerFactory implements Runnable {
 				// so far we haven't found an upper bound for the
 				// margin, so we have to check the last computated margin now:
 				if (!hasUpperBound) {
-					checkMarginAndWait(margin, origResult, advanced, numVoters, numCandidates, numSeats, origData);
+					checkMarginAndWait(margin, origResult, advanced, numVoters, numCandidates, numSeats, origData, result);
 					hasMargin = currentlyRunning.checkAssertionFailure();
 					if (hasMargin) {
 						lastFailedRun = lastResult;
@@ -326,7 +328,7 @@ public abstract class CheckerFactory implements Runnable {
 				// hasMargin now is true, if there is an upper bound,
 				// and false, if there is no margin
 
-				System.out.println("finished: hasFinalMargin: " + hasMargin + " || finalMargin = " + margin);
+				result.addStatusString("finished: hasFinalMargin: " + hasMargin + " || finalMargin = " + margin);
 				
 				result.setMarginComp(true);
 
@@ -390,7 +392,7 @@ public abstract class CheckerFactory implements Runnable {
 	/**
 	 * @param advanced
 	 */
-	private void runTest(String advanced, int numVoters, int numCandidates, int numSeats, String[][] origData) {
+	private void runTest(String advanced, int numVoters, int numCandidates, int numSeats, String[][] origData, Result result) {
 		synchronized (this) {
 
 			if (!stopped) {
@@ -398,7 +400,7 @@ public abstract class CheckerFactory implements Runnable {
 				// determine the winner of this input of votes
 
 				currentlyRunning = startProcessTest(electionDesc, result.getPropertyDesctiption(), advanced,
-						numVoters, numCandidates, numSeats, this, origData);
+						numVoters, numCandidates, numSeats, this, origData, result);
 
 				while (!finished && !stopped) {
 					try {
@@ -437,7 +439,7 @@ public abstract class CheckerFactory implements Runnable {
 					// calculate the margin to check
 					margin = (int) (left + Math.floor((float) (right - left) / 2));
 
-					checkMarginAndWait(margin, origResult, advanced, numVoters, numCandidates, numSeats, origData);
+					checkMarginAndWait(margin, origResult, advanced, numVoters, numCandidates, numSeats, origData, result);
 
 					System.out.println(
 							"finished for margin " + margin + " result: " + currentlyRunning.checkAssertionSuccess());
@@ -458,7 +460,7 @@ public abstract class CheckerFactory implements Runnable {
 				// so far we haven't found an upper bound for the
 				// margin, so we have to check the last computated margin now:
 				if (!hasUpperBound) {
-					checkMarginAndWait(margin, origResult, advanced, numVoters, numCandidates, numSeats, origData);
+					checkMarginAndWait(margin, origResult, advanced, numVoters, numCandidates, numSeats, origData, result);
 					hasMargin = currentlyRunning.checkAssertionFailure();
 					if (hasMargin) {
 						lastFailedRun = lastResult;
@@ -563,10 +565,10 @@ public abstract class CheckerFactory implements Runnable {
 	 * @param advanced
 	 */
 	protected void checkMarginAndWait(int margin, List<String> origResult, String advanced, int numVoters,
-			int numCandidates, int numSeats, String[][] votingData) {
+			int numCandidates, int numSeats, String[][] votingData, Result result) {
 
 		currentlyRunning = startProcessMargin(electionDesc, result.getPropertyDesctiption(), advanced, numVoters,
-				numCandidates, numSeats, this, margin, origResult, votingData);
+				numCandidates, numSeats, this, margin, origResult, votingData, result);
 
 		while (!currentlyRunning.isFinished()) {
 			try {
@@ -600,7 +602,7 @@ public abstract class CheckerFactory implements Runnable {
 	 */
 	protected abstract Checker startProcessCheck(ElectionDescription electionDesc,
 			PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
-			CheckerFactory parent);
+			CheckerFactory parent, Result result);
 
 	/**
 	 * starts a new Checker with the given parameters. Implementation depends on the
@@ -625,7 +627,7 @@ public abstract class CheckerFactory implements Runnable {
 	 */
 	protected abstract Checker startProcessMargin(ElectionDescription electionDesc,
 			PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
-			CheckerFactory parent, int margin, List<String> origResult, String[][] origData);
+			CheckerFactory parent, int margin, List<String> origResult, String[][] origData, Result result);
 
 	/**
 	 * starts a new Checker with the given parameters. Implementation depends on the
@@ -650,7 +652,7 @@ public abstract class CheckerFactory implements Runnable {
 	 */
 	protected abstract Checker startProcessTest(ElectionDescription electionDesc,
 			PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
-			CheckerFactory parent, String[][] origData);
+			CheckerFactory parent, String[][] origData, Result result);
 
 	// /**
 	// * starts a new Checker with the given parameters. Implementation depends

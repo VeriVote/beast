@@ -24,10 +24,15 @@ import edu.pse.beast.highlevel.javafx.ResultTreeItem;
 public abstract class Result implements ResultInterface {
 
 	protected FailureExample failureExample = null;
+	private boolean wasStarted = false;
     private boolean valid = false;
     private boolean finished = false;
     private List<String> result;
     private List<String> error;
+    
+    private List<String> lastTmpResult;
+    private List<String> lastTmpError;
+    
     private boolean timeOut = false;
     private boolean success = false;
     private boolean hasSubResult = false;
@@ -49,6 +54,7 @@ public abstract class Result implements ResultInterface {
 	protected List<String> newWinner;
 	
 	protected transient ResultTreeItem owner;
+	private List<String> statusStrings;
 
 	public static List<Result> getResultTypes() {
 		ServiceLoader<Result> loader = ServiceLoader.load(Result.class);
@@ -143,6 +149,10 @@ public abstract class Result implements ResultInterface {
     public void setFinished() {
         finished = true;
         owner.setPresentable();
+    }
+    
+    public void setStarted() {
+    	wasStarted = true;
     }
 
     /**
@@ -372,5 +382,33 @@ public abstract class Result implements ResultInterface {
 
 	public AnalysisType getAnalysisType() {
 		return owner.getOwner().getAnalysisType();
+	}
+
+	public boolean wasStarted() {
+		return wasStarted;
+	}
+	
+	public void setLastTmpResult(List<String> tmpResult) {
+		this.lastTmpResult = tmpResult;
+	}
+	
+	public List<String> getLastTmpResult() {
+		return this.lastTmpResult;
+	}
+	
+	public void setLastTmpError(List<String> tmpError) {
+		this.lastTmpError = tmpError;
+	}
+	
+	public List<String> getLastTmpError() {
+		return this.lastTmpError;
+	}
+	
+	public void addStatusString(String statusToAdd) {
+		this.statusStrings.add(statusToAdd);
+	}
+	
+	public List<String> getStatusStrings() {
+		return this.statusStrings;
 	}
 }

@@ -49,6 +49,8 @@ public class FactoryController implements Runnable {
 	// private final List<ParentTreeItem> propertyParents;
 
 	private List<Result> results = new ArrayList<Result>();
+	
+	private List<ChildTreeItem> treeItems = new ArrayList<ChildTreeItem>();
 
 	// /**
 	// *
@@ -170,6 +172,8 @@ public class FactoryController implements Runnable {
 					result.setProperty(parentTreeItem.getPreAndPostPropertie());
 
 					child.addResult(result);
+					
+					treeItems.add(child);
 
 					results.add(result);
 				}

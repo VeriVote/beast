@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
+import edu.pse.beast.highlevel.javafx.ChildTreeItem;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.ThreadedBufferedReader;
 
@@ -25,13 +26,15 @@ public abstract class Checker implements Runnable {
 	private final CheckerFactory parent;
 	private final long POLLINGINTERVAL = 1000;
 
-	private final List<String> result = new ArrayList<String>();
+	private final List<String> output = new ArrayList<String>();
 	private final List<String> errors = new ArrayList<String>();
-
+	
+	private final Result result;
+	
 	private boolean finished = false;
 	private boolean success = false;
 	private volatile boolean interrupted = false;
-
+	
 	/**
 	 * This class describes the highest abstract layer of a checker. The task of
 	 * a checker is to check a vote for the given properties and then return the
@@ -51,7 +54,7 @@ public abstract class Checker implements Runnable {
 	 *            the parent checkerfactory that has to be notified about
 	 *            finished checking
 	 */
-	public Checker(int voters, int candidates, int seats, String advanced, File toCheck, CheckerFactory parent) {
+	public Checker(int voters, int candidates, int seats, String advanced, File toCheck, CheckerFactory parent, Result result) {
 		this.voters = voters;
 		this.candidates = candidates;
 		this.seats = seats;
@@ -59,7 +62,9 @@ public abstract class Checker implements Runnable {
 
 		this.toCheck = toCheck;
 		this.parent = parent;
-
+		
+		this.result = result;
+		
 		new Thread(this, "Checker").start();
 	}
 
@@ -70,10 +75,15 @@ public abstract class Checker implements Runnable {
 		if (process != null) {
 			CountDownLatch latch = new CountDownLatch(2);
 			ThreadedBufferedReader outReader = new ThreadedBufferedReader(
-					new BufferedReader(new InputStreamReader(process.getInputStream())), result, latch, true);
+					new BufferedReader(new InputStreamReader(process.getInputStream())), output, latch, true);
 			ThreadedBufferedReader errReader = new ThreadedBufferedReader(
 					new BufferedReader(new InputStreamReader(process.getErrorStream())), errors, latch, false);
-
+			
+			
+			result.setLastTmpResult(output);
+			result.setLastTmpError(errors);
+			//result
+			
 			polling: while (!interrupted || !finished) {
 				if (!process.isAlive() && !interrupted) {
 					if (process.exitValue() == 0) {
@@ -109,7 +119,7 @@ public abstract class Checker implements Runnable {
 			ErrorLogger.log("Process couldn't be started");
 		}
 		
-		parent.notifyThatFinished(result, errors);
+		parent.notifyThatFinished(output, errors);
 	}
 
 	/**
@@ -117,7 +127,7 @@ public abstract class Checker implements Runnable {
 	 * @return the list that contains the output of the checker
 	 */
 	public List<String> getResultList() {
-		return result;
+		return output;
 	}
 
 	/**

@@ -16,6 +16,7 @@ import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinNT;
 
+import edu.pse.beast.highlevel.javafx.ChildTreeItem;
 import edu.pse.beast.propertychecker.jna.Win32Process;
 import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
@@ -57,8 +58,8 @@ public class WindowsProcess extends CBMCProcess {
      *            finished checking
      */
     public WindowsProcess(int voters, int candidates, int seats, String advanced, File toCheck,
-            CheckerFactory parent) {
-        super(voters, candidates, seats, advanced, toCheck, parent);
+            CheckerFactory parent, Result result) {
+        super(voters, candidates, seats, advanced, toCheck, parent, result);
     }
 
     @Override

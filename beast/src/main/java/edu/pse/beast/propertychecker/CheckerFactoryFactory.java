@@ -7,6 +7,7 @@ import java.util.Map;
 
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
+import edu.pse.beast.highlevel.javafx.ChildTreeItem;
 import edu.pse.beast.toolbox.ErrorLogger;
 
 public final class CheckerFactoryFactory {

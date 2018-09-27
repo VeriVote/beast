@@ -15,6 +15,7 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.saverloader.PropertyDescriptionSaverLoader;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 
@@ -35,10 +36,15 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 	private final ObservableList<TreeItem<String>> symbolicVoterVariableList;
 	private final ObservableList<TreeItem<String>> symbolicCandidateVariableList;
 	private final ObservableList<TreeItem<String>> symbolicSeatVariableList;
+	private NewPropertyCodeArea focusedPane;
 
 	public BooleanExpEditorNEW(NewPropertyCodeArea preArea, NewPropertyCodeArea postArea,
 			BoundedVarCodeArea boundedVarArea, PreAndPostConditionsDescription propDesc, ParentTreeItem currentItem) {
 
+		
+		preArea.setParent(this);
+		postArea.setParent(this);
+		
 		this.saverLoader = new SaverLoader(".prop", "BEAST property description");
 
 		this.preArea = preArea;
@@ -337,38 +343,44 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 
 	@Override
 	public void undo() {
-		// TODO Auto-generated method stub
-
+		if (focusedPane != null) {
+			focusedPane.undo();
+		}
 	}
 
 	@Override
 	public void redo() {
-		// TODO Auto-generated method stub
-
+		if (focusedPane != null) {
+			focusedPane.redo();
+		}
 	}
 
 	@Override
 	public void cut() {
-		// TODO Auto-generated method stub
-
+		if (focusedPane != null) {
+			focusedPane.cut();
+		}
 	}
 
 	@Override
 	public void copy() {
-		// TODO Auto-generated method stub
-
+		if (focusedPane != null) {
+			focusedPane.copy();
+		}
 	}
 
 	@Override
 	public void paste() {
-		// TODO Auto-generated method stub
-
+		if (focusedPane != null) {
+			focusedPane.paste();
+		}
 	}
 
 	@Override
 	public void delete() {
-		// TODO Auto-generated method stub
-
+		if (focusedPane != null) {
+			focusedPane.delete();
+		}
 	}
 
 	@Override
@@ -401,6 +413,10 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 		
 		
 		return toReturn;
+	}
+
+	public void setFocused(NewPropertyCodeArea pane) {
+		this.focusedPane = pane;
 	}
 
 }
