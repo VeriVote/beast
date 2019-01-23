@@ -95,7 +95,7 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
     @Override
     public void mouseMoved(MouseEvent e) {
         Point pt = new Point(e.getX(), e.getY());
-        int pos = pane.viewToModel(pt);
+        int pos = pane.viewToModel2D(pt);
         if(pos == JTextPaneToolbox.getText(pane).length()) {
             pane.setToolTipText(null);
             //errorPopupMenu.setVisible(false);

@@ -1,9 +1,10 @@
 package edu.pse.beast.electionSimulator.Model;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Observable;
 
 import edu.pse.beast.datatypes.NameInterface;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
@@ -12,9 +13,11 @@ import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
-public class ElectionSimulationModel extends Observable implements NameInterface {
+public class ElectionSimulationModel implements NameInterface {
 
 	private String name;
+
+	private PropertyChangeSupport support;
 
 	private List<NEWRowOfValues> rows = new ArrayList<NEWRowOfValues>();
 
@@ -45,12 +48,21 @@ public class ElectionSimulationModel extends Observable implements NameInterface
 
 	public ElectionSimulationModel(ElectionTypeContainer container, GridPane inputGridPane, GridPane voterGridPane,
 			GridPane candidateGridPane) {
+	    this.support = new PropertyChangeSupport(this);
 		this.container = container;
 
 		this.inputGridPane = inputGridPane;
 		this.voterGridPane = voterGridPane;
 		this.candidateGridPane = candidateGridPane;
 	}
+
+	public void addPropertyChangeListener(PropertyChangeListener pcl) {
+	    this.support.addPropertyChangeListener(pcl);
+	}
+
+	public void removePropertyChangeListener(PropertyChangeListener pcl) {
+        this.support.removePropertyChangeListener(pcl);
+    }
 
 	private void addRow() {
 		if (currentRows == maxRows) {
@@ -92,6 +104,7 @@ public class ElectionSimulationModel extends Observable implements NameInterface
 
 	@Override
 	public void setNewName(String newName) {
+	    this.support.firePropertyChange("news", this.name, newName);
 		this.name = newName;
 	}
 
