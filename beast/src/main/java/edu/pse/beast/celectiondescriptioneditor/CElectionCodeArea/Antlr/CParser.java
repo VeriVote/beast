@@ -373,16 +373,23 @@ public class CParser extends Parser {
 		@Override public int getRuleIndex() { return RULE_genericSelection; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CListener ) ((CListener)listener).enterGenericSelection(this);
+			if ( listener instanceof CListener ) {
+			    ((CListener) listener).enterGenericSelection(this);
+			}
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CListener ) ((CListener)listener).exitGenericSelection(this);
+			if ( listener instanceof CListener ) {
+			    ((CListener) listener).exitGenericSelection(this);
+			}
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CVisitor ) return ((CVisitor<? extends T>)visitor).visitGenericSelection(this);
-			else return visitor.visitChildren(this);
+			if ( visitor instanceof CVisitor ) {
+			    return ((CVisitor<? extends T>) visitor).visitGenericSelection(this);
+			} else {
+			    return visitor.visitChildren(this);
+			}
 		}
 	}
 

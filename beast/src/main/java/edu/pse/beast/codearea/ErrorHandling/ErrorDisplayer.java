@@ -30,7 +30,7 @@ import edu.pse.beast.toolbox.Tuple;
 public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMotionListener {
     protected JTextPane pane;
     private SquigglePainter painter;
-    private ArrayList<Tuple<Integer,Integer>> absPosToMsg;
+    private ArrayList<Tuple<Integer, Integer>> absPosToMsg;
     private ArrayList<String> msges;
     protected StringResourceLoader currentStringResLoader;
     private ArrayList<Object> highLights = new ArrayList<>();    
@@ -59,14 +59,18 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         absPosToMsg = new ArrayList<>();
         msges = new ArrayList<>();
         
-        for(Object o : highLights) pane.getHighlighter().removeHighlight(o);
+        for (Object o : highLights) {
+            pane.getHighlighter().removeHighlight(o);
+        }
         pane.repaint();
     }
     
     protected void showError(CodeError er, String msg) {
         int startpos = er.getStartPos();
         int endpos = er.getEndPos();
-        if(startpos == endpos) endpos++;
+        if (startpos == endpos) {
+            endpos++;
+        }
         absPosToMsg.add(new Tuple<>(startpos, endpos));
         msges.add(msg);
         try {
@@ -101,10 +105,13 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
             //errorPopupMenu.setVisible(false);
             return;
         }
-        if(Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 &&
-                Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 && errorPopupMenu.isVisible()) return;
-        for(int i = 0; i < absPosToMsg.size(); ++i) {
-            if(absPosToMsg.get(i).x <= pos && absPosToMsg.get(i).y >= pos) {
+        if (Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 &&
+                Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 &&
+                errorPopupMenu.isVisible()) {
+            return;
+        }
+        for (int i = 0; i < absPosToMsg.size(); ++i) {
+            if (absPosToMsg.get(i).x <= pos && absPosToMsg.get(i).y >= pos) {
                 pane.setToolTipText(msges.get(i));
                 //errorPopupMenu.getErrorItem().setText(msges.get(i));
                 //errorPopupMenu.show(pane, e.getX(), e.getY() + 20);

@@ -22,20 +22,20 @@ import edu.pse.beast.toolbox.TimeOutNotifier;
  */
 public class FactoryController implements Runnable {
 
-	/**
-	 * gives access to the factorycontroller for the shutdown hook.
-	 */
-	protected FactoryController thisObject = this;
+    private static final long POLLINGINTERVAL = 1000;
 
-	// private final ParameterSource parmSrc;
-	// private final List<Result> results;
-	private final TimeOutNotifier notifier;
+    /**
+     * gives access to the factorycontroller for the shutdown hook.
+     */
+    protected FactoryController thisObject = this;
+
+    // private final ParameterSource parmSrc;
+    // private final List<Result> results;
+    private final TimeOutNotifier notifier;
 
 	// private final List<ParentTreeItem> propertyParents;
 
 	List<ChildTreeItem> propertiesToCheck = new ArrayList<ChildTreeItem>();
-
-	private final long POLLINGINTERVAL = 1000;
 
 	private List<CheckerFactory> currentlyRunning;
 	private final String checkerID;
@@ -161,8 +161,9 @@ public class FactoryController implements Runnable {
 		// set the result objects for all the selected children
 		for (Iterator<ParentTreeItem> parentIterator = parentProperties.iterator(); parentIterator.hasNext();) {
 			ParentTreeItem parentTreeItem = (ParentTreeItem) parentIterator.next();
-			for (Iterator<ChildTreeItem> childIterator = parentTreeItem.getSubItems().iterator(); childIterator
-					.hasNext();) {
+			for (Iterator<ChildTreeItem> childIterator
+			        = parentTreeItem.getSubItems().iterator();
+			        childIterator.hasNext();) {
 				ChildTreeItem child = (ChildTreeItem) childIterator.next();
 
 				if (child.isSelected()) {
@@ -288,8 +289,9 @@ public class FactoryController implements Runnable {
 					// electionDescSrc, propertiesToCheck.get(i).getDescription(), parameter,
 					// results.get(i), propertiesToCheckAndMargin.get(i).getMarginStatus());
 
-					CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID, this, elecDesc,
-							results.get(i), parameter);
+					CheckerFactory factory
+					= CheckerFactoryFactory.getCheckerFactory(checkerID, this, elecDesc,
+					                                          results.get(i), parameter);
 
 					synchronized (this) {
 						currentlyRunning.add(factory);

@@ -23,10 +23,10 @@ import javafx.util.Callback;
  
 public class TreeViewSample extends Application {
  
-    private final Node rootIcon = 
-        new ImageView(new Image(getClass().getResourceAsStream("root.png")));
-    private final Image depIcon = 
-        new Image(getClass().getResourceAsStream("department.png"));
+    private final Node rootIcon
+    = new ImageView(new Image(getClass().getResourceAsStream("root.png")));
+    private final Image depIcon
+    = new Image(getClass().getResourceAsStream("department.png"));
     List<Employee> employees = Arrays.<Employee>asList(
             new Employee("Ethan Williams", "Sales Department"),
             new Employee("Emma Jones", "Sales Department"),
@@ -155,7 +155,7 @@ public class TreeViewSample extends Application {
         }
     }
  
-    public static class Employee {
+    public static final class Employee {
  
         private final SimpleStringProperty name;
         private final SimpleStringProperty department;

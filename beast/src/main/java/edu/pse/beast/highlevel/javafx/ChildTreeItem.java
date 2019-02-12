@@ -26,11 +26,11 @@ import javafx.scene.paint.Color;
 
 public abstract class ChildTreeItem extends CustomTreeItem {
 
-	private Label propName;
-	private CheckBox checkBox = new CheckBox();
-	private final ParentTreeItem parent;
-	private ImageView statusIcon = new ImageView();
-	private boolean disabled = false;
+    private Label propName;
+    private CheckBox checkBox = new CheckBox();
+    private final ParentTreeItem parent;
+    private ImageView statusIcon = new ImageView();
+    private boolean disabled = false;
 
 	protected ArrayList<ResultTreeItem> results = new ArrayList<ResultTreeItem>();
 
@@ -106,7 +106,7 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 	 * sets the value of the checkbox, while disabling the listener for the checkbox
 	 * beforehand, and reenabling it afterwards
 	 * 
-	 * @param state
+	 * @param state new checkbox value
 	 */
 	public void setSelected(boolean state) {
 		this.disabled = true;

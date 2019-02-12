@@ -17,13 +17,13 @@ import edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
 
 public class TypeLoader {
 
-	private static List<InputType> availableInTypes = new ArrayList<InputType>();
+    private static List<InputType> availableInTypes = new ArrayList<InputType>();
 
-	private static List<OutputType> availableOutTypes = new ArrayList<OutputType>();
-	
-	public static boolean init = false;
+    private static List<OutputType> availableOutTypes = new ArrayList<OutputType>();
 
-	public static void loadTypes() { //TODO load add ons too
+    public static boolean init = false;
+
+    public static void loadTypes() { // TODO load add-ons, too
 		availableInTypes.add(new SingleChoice());
 		availableInTypes.add(new Approval());
 		availableInTypes.add(new Preference());
@@ -38,35 +38,35 @@ public class TypeLoader {
 	}
 
 	public static List<InputType> getAvailableInputTypes() {
-		if(!init) {
+		if (!init) {
 			loadTypes();
 		}
 		return availableInTypes;
 	}
 
 	public static List<OutputType> getAvailableOutputTypes() {
-		if(!init) {
+		if (!init) {
 			loadTypes();
 		}
 		return availableOutTypes;
 	}
 
 	public static InputType getStandartInputType() {
-		if(!init) {
+		if (!init) {
 			loadTypes();
 		}
 		return availableInTypes.get(0);
 	}
 
 	public static OutputType getStandartOutputType() {
-		if(!init) {
+		if (!init) {
 			loadTypes();
 		}
 		return availableOutTypes.get(0);
 	}
 
 	public static InputType getInByID(String id) {
-		if(!init) {
+		if (!init) {
 			loadTypes();
 		}
 		for (Iterator<InputType> iterator = availableInTypes.iterator(); iterator.hasNext();) {
@@ -79,7 +79,7 @@ public class TypeLoader {
 	}
 
 	public static OutputType getOutByID(String id) {
-		if(!init) {
+		if (!init) {
 			loadTypes();
 		}
 		for (Iterator<OutputType> iterator = availableOutTypes.iterator(); iterator.hasNext();) {

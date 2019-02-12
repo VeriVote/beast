@@ -16,7 +16,7 @@ import javafx.beans.value.ObservableValue;
 
 public abstract class AutoCompletionCodeArea extends CodeArea {
 
-	private int start;
+    private int start;
 	private int end;
 
 	public final String specialCharacterRegex = ",|;|\\.|\\(|\\)|\\{|\\}|\\[|\\|\\|/|\\+|-|\\*";
@@ -46,14 +46,15 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
 		if (content.size() == 1) { // there is only one element, so the user probably want that one
 			insertAutoCompletion(start, end, content.get(0));
 		} else {
-			GUIController.getController().getAutoCompleter().showAutocompletionWindows(position.x, position.y, content,
-					this);
+			GUIController.getController().getAutoCompleter()
+			.showAutocompletionWindows(position.x, position.y, content, this);
 		}
 	}
 
 	public abstract void insertAutoCompletion(int start, int end, String toInsert);
 
-	protected Triplet<List<String>, Integer, Integer> getCompletions(Set<String> recommendations) {
+	protected Triplet<List<String>, Integer, Integer>
+	        getCompletions(Set<String> recommendations) {
 		String completeText = this.getText();
 
 		int prefixEnd = caretPositionProperty().getValue();
@@ -66,8 +67,9 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
 
 				char tmp = completeText.charAt(i);
 
-				if (tmp == ' ' | ("" + tmp).matches(specialCharacterRegex) | ("" + tmp).matches("\\p{Cntrl}")) {
-
+				if (tmp == ' ' |
+				        ("" + tmp).matches(specialCharacterRegex) |
+				        ("" + tmp).matches("\\p{Cntrl}")) {
 					if (!prefix.matches("([A-Za-z]+[A-Za-z0-9]*)")) {
 						prefix = "";
 					}

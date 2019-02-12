@@ -40,7 +40,9 @@ public abstract class ToolbarHandler {
 
         private int findInarr(String s) {
             for (int i = 0; i < standardIdOrder.length; i++) {
-                if(standardIdOrder[i].equals(s)) return i;
+                if (standardIdOrder[i].equals(s)) {
+                    return i;
+                }
             }
             return standardIdOrder.length;
         }
@@ -58,7 +60,7 @@ public abstract class ToolbarHandler {
         this.buttons = new JButton[actionIdsAndListener.length];
         this.toolbar = toolbar;
         
-        for(int i = 0; i < actionIdsAndListener.length; ++i) {
+        for (int i = 0; i < actionIdsAndListener.length; ++i) {
             String id = actionIdsAndListener[i].getId();
             JButton currentButton = new JButton();
             currentButton.addActionListener(actionIdsAndListener[i].getListener());
@@ -78,7 +80,7 @@ public abstract class ToolbarHandler {
     }
     
     private void updateToolbar() {
-        for(int i = 0; i < actionIdsAndListener.length; ++i) {
+        for (int i = 0; i < actionIdsAndListener.length; ++i) {
             String id = actionIdsAndListener[i].getId();
             buttons[i].setToolTipText(stringRes.getStringFromID(id));            
         }

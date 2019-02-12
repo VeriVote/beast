@@ -27,16 +27,16 @@ import edu.pse.beast.toolbox.ThreadedBufferedReader;
  */
 public abstract class SystemSpecificErrorChecker {
 
-	/**
-	 * Taken from "org.apache.commons.io.FileUtils" Lists files in a directory,
-	 * asserting that the supplied directory satisfies exists and is a directory
-	 * 
-	 * @param directory
-	 *            The directory to list
-	 * @return The files in the directory, never null.
-	 * @throws IOException
-	 *             if an I/O error occurs
-	 */
+    /**
+     * Taken from "org.apache.commons.io.FileUtils" Lists files in a directory,
+     * asserting that the supplied directory satisfies exists and is a directory
+     *
+     * @param directory
+     *            The directory to list
+     * @return The files in the directory, never null.
+     * @throws IOException
+     *             if an I/O error occurs
+     */
 	private static File[] verifiedListFiles(File directory) throws IOException {
 		if (!directory.exists()) {
 			throw new IllegalArgumentException(directory + " does not exist");
@@ -105,6 +105,7 @@ public abstract class SystemSpecificErrorChecker {
 	 * 
 	 * @param toCheck
 	 *            the code to check
+	 * @param lineOffset line offset
 	 * @return all errors found in a list
 	 */
 	public List<CodeError> checkCodeForErrors(List<String> toCheck, int lineOffset) {
@@ -163,7 +164,7 @@ public abstract class SystemSpecificErrorChecker {
 			// deletes the temporary file, so it doesn't clog up the filesystem
 			
 			
-			if(GUIController.getController().getDeleteTmpFiles()) {
+			if (GUIController.getController().getDeleteTmpFiles()) {
 				cFile.delete();
 				batFile.delete();
 			}
