@@ -10,7 +10,7 @@
 //import javax.swing.JPanel;
 //import javax.swing.JTabbedPane;
 //
-//import edu.pse.beast.saverloader.OptionSaverLoader.OptionsSaverLoaderInterface;
+//import edu.pse.beast.saverloader.optionsaverloader.OptionsSaverLoaderInterface;
 //import edu.pse.beast.stringresource.StringResourceLoader;
 //
 ///**

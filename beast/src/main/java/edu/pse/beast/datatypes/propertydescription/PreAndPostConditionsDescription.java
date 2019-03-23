@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.pse.beast.datatypes.propertydescription;
 
 import java.util.List;
@@ -40,8 +35,10 @@ public class PreAndPostConditionsDescription {
      * @param symbolicVariableList the symbolicVariableList
      */
     public PreAndPostConditionsDescription(String name,
-            FormalPropertiesDescription preDescr,
-            FormalPropertiesDescription postDescr, FormalPropertiesDescription boundedVarDescription, SymbolicVariableList symbolicVariableList) {
+                                           FormalPropertiesDescription preDescr,
+                                           FormalPropertiesDescription postDescr,
+                                           FormalPropertiesDescription boundedVarDescription,
+                                           SymbolicVariableList symbolicVariableList) {
         this.name = name;
         this.preConditionsDescription = preDescr;
         this.postConditionsDescription = postDescr;

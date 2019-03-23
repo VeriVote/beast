@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.pse.beast.propertychecker;
 
 import java.util.ArrayList;
@@ -12,28 +7,28 @@ import java.util.Stack;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.TerminalNodeImpl;
 
-import edu.pse.beast.datatypes.booleanExpAST.BooleanExpNodeVisitor;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BooleanExpressionNode;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.ComparisonNode;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.EquivalencyNode;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.ForAllNode;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.ImplicationNode;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.IntegerComparisonNode;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.IntersectTypeExpNode;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.LogicalAndNode;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.LogicalOrNode;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.NotNode;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.QuantorNode;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.ThereExistsNode;
-import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.AccessValueNode;
-import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.AtPosExp;
-import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.ElectExp;
-import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.SymbolicVarExp;
-import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.VoteExp;
-import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.BinaryIntegerValuedNode;
-import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.ConstantExp;
-import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.IntegerNode;
-import edu.pse.beast.datatypes.booleanExpAST.otherValuedNodes.integerValuedNodes.VoteSumForCandExp;
+import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressionNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ComparisonNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.EquivalencyNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ForAllNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ImplicationNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.IntegerComparisonNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.IntersectTypeExpNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.LogicalAndNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.LogicalOrNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.NotNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.QuantorNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ThereExistsNode;
+import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.AccessValueNode;
+import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.AtPosExp;
+import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.ElectExp;
+import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.SymbolicVarExp;
+import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.VoteExp;
+import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.BinaryIntegerValuedNode;
+import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.ConstantExp;
+import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.IntegerNode;
+import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.VoteSumForCandExp;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
@@ -45,10 +40,10 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.In
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.PermutationExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteEquivalentsContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VotingListChangeContentContext;
-import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.CandidateListChangeExpNode;
-import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.VoteEquivalentsNode;
-import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.VotingListChangeExpNode;
-import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.VotingTupelChangeExpNode;
+import edu.pse.beast.toolbox.antlr.booleanexp.generateast.CandidateListChangeExpNode;
+import edu.pse.beast.toolbox.antlr.booleanexp.generateast.VoteEquivalentsNode;
+import edu.pse.beast.toolbox.antlr.booleanexp.generateast.VotingListChangeExpNode;
+import edu.pse.beast.toolbox.antlr.booleanexp.generateast.VotingTupelChangeExpNode;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.cbmctypes.outputplugins.CandidateList;
 

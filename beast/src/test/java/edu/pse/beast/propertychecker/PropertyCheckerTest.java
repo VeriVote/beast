@@ -4,7 +4,7 @@
 //import java.util.List;
 //import java.util.concurrent.TimeUnit;
 //
-//import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
+//import edu.pse.beast.celectiondescriptioneditor.electiontemplates.ElectionTemplateHandler;
 //import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 //import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 //import edu.pse.beast.datatypes.electiondescription.ElectionDescription;

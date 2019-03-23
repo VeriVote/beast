@@ -1,21 +1,16 @@
-///*
-// * To change this license header, choose License Headers in Project Properties.
-// * To change this template file, choose Tools | Templates
-// * and open the template in the editor.
-// */
 //package edu.pse.beast.booleanexpeditor;
 //
 //import java.util.ArrayList;
 //
-//import edu.pse.beast.booleanexpeditor.View.BooleanExpEditorWindow;
-//import edu.pse.beast.booleanexpeditor.View.BooleanExpEditorWindowStarter;
-//import edu.pse.beast.booleanexpeditor.View.ErrorWindow;
-//import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeArea;
-//import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeAreaBuilder;
-//import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.CodeAreaFocusListener;
-//import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpErrorDisplayer;
+//import edu.pse.beast.booleanexpeditor.view.BooleanExpEditorWindow;
+//import edu.pse.beast.booleanexpeditor.view.BooleanExpEditorWindowStarter;
+//import edu.pse.beast.booleanexpeditor.view.ErrorWindow;
+//import edu.pse.beast.booleanexpeditor.booleanexpcodearea.BooleanExpCodeArea;
+//import edu.pse.beast.booleanexpeditor.booleanexpcodearea.BooleanExpCodeAreaBuilder;
+//import edu.pse.beast.booleanexpeditor.booleanexpcodearea.CodeAreaFocusListener;
+//import edu.pse.beast.booleanexpeditor.booleanexpcodearea.errorfinder.BooleanExpErrorDisplayer;
 //import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
-//import edu.pse.beast.codearea.ErrorHandling.CodeError;
+//import edu.pse.beast.codearea.errorhandling.CodeError;
 //import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 //import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 //import edu.pse.beast.highlevel.DisplaysStringsToUser;
@@ -50,7 +45,6 @@
 //    private final ArrayList<Character> userActionChars = new ArrayList<>();
 //    private ObjectRefsForBuilder objectRefsForBuilder;
 //    private PropertyList propertyListController;
-//
 //
 //    /**
 //     * Constructor
@@ -347,5 +341,4 @@
 //    public BooleanExpCodeArea getPostConditionCodeArea() {
 //        return postConditionCodeArea;
 //    }
-//    
 //}

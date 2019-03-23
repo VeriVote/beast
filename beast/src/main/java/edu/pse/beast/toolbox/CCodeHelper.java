@@ -2,7 +2,7 @@ package edu.pse.beast.toolbox;
 
 import java.util.ArrayList;
 
-import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
+import edu.pse.beast.celectiondescriptioneditor.electiontemplates.ElectionTemplateHandler;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.stringresource.StringResourceLoader;

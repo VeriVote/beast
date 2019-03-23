@@ -1,25 +1,20 @@
-///*
-// * To change this license header, choose License Headers in Project Properties.
-// * To change this template file, choose Tools | Templates
-// * and open the template in the editor.
-// */
 //package edu.pse.beast.codearea;
 //
 //import javax.swing.JScrollPane;
 //import javax.swing.JTextPane;
 //
-//import edu.pse.beast.codearea.ActionAdder.TextChangedActionAdder;
-//import edu.pse.beast.codearea.Actionlist.Actionlist;
-//import edu.pse.beast.codearea.Autocompletion.AutocompletionController;
-//import edu.pse.beast.codearea.ErrorHandling.ErrorController;
-//import edu.pse.beast.codearea.ErrorHandling.ErrorDisplayer;
-//import edu.pse.beast.codearea.InputToCode.CodeInputHandler;
-//import edu.pse.beast.codearea.InputToCode.OpenCloseCharList;
-//import edu.pse.beast.codearea.InputToCode.ShortcutHandler;
-//import edu.pse.beast.codearea.InputToCode.UserInputHandler;
-//import edu.pse.beast.codearea.InputToCode.UserInsertToCode;
-//import edu.pse.beast.codearea.SyntaxHL.SyntaxHL;
-//import edu.pse.beast.codearea.UserActions.CodeAreaUserActions;
+//import edu.pse.beast.codearea.actionadder.TextChangedActionAdder;
+//import edu.pse.beast.codearea.actionlist.Actionlist;
+//import edu.pse.beast.codearea.autocompletion.AutocompletionController;
+//import edu.pse.beast.codearea.errorhandling.ErrorController;
+//import edu.pse.beast.codearea.errorhandling.ErrorDisplayer;
+//import edu.pse.beast.codearea.codeinput.CodeInputHandler;
+//import edu.pse.beast.codearea.codeinput.OpenCloseCharList;
+//import edu.pse.beast.codearea.codeinput.ShortcutHandler;
+//import edu.pse.beast.codearea.codeinput.UserInputHandler;
+//import edu.pse.beast.codearea.codeinput.UserInsertToCode;
+//import edu.pse.beast.codearea.syntaxhighlighting.SyntaxHL;
+//import edu.pse.beast.codearea.useractions.CodeAreaUserActions;
 //import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 //
 ///**

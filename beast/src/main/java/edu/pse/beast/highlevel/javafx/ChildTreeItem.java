@@ -151,7 +151,7 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 	public abstract AnalysisType getAnalysisType();
 
 	public PreAndPostConditionsDescription getPreAndPostProperties() {
-		return parent.getPreAndPostPropertie();
+		return parent.getPreAndPostProperties();
 	}
 
 	// public void setPresentable() {

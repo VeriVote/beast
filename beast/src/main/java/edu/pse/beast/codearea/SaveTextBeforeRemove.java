@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.pse.beast.codearea;
 
 import java.awt.event.KeyEvent;
@@ -13,8 +8,8 @@ import java.util.logging.Logger;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 
-import edu.pse.beast.codearea.ActionAdder.ActionlistListener;
-import edu.pse.beast.codearea.Actionlist.Actionlist;
+import edu.pse.beast.codearea.actionadder.ActionlistListener;
+import edu.pse.beast.codearea.actionlist.Actionlist;
 
 /**
  * This class saves the text of a styled document before a removed event is

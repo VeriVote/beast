@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.pse.beast.toolbox.antlr.booleanexp;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -13,8 +8,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.BooleanExpScope;
-import edu.pse.beast.toolbox.antlr.booleanexp.GenerateAST.FormalPropertySyntaxTreeToAstTranslator;
+import edu.pse.beast.toolbox.antlr.booleanexp.generateast.BooleanExpScope;
+import edu.pse.beast.toolbox.antlr.booleanexp.generateast.FormalPropertySyntaxTreeToAstTranslator;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 

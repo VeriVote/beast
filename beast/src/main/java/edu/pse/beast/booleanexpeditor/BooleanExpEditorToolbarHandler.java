@@ -1,6 +1,6 @@
 //package edu.pse.beast.booleanexpeditor;
 //
-//import edu.pse.beast.booleanexpeditor.View.BooleanExpEditorWindow;
+//import edu.pse.beast.booleanexpeditor.view.BooleanExpEditorWindow;
 //import edu.pse.beast.highlevel.DisplaysStringsToUser;
 //import edu.pse.beast.stringresource.StringLoaderInterface;
 //import edu.pse.beast.stringresource.StringResourceLoader;
@@ -14,7 +14,6 @@
 // * @author NikolaiLMS
 // */
 //public class BooleanExpEditorToolbarHandler extends ToolbarHandler implements DisplaysStringsToUser {
-//
 //    /**
 //     * Constructor
 //     * @param window the BooleanExpEditorWindow containing the ToolBar this class handles

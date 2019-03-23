@@ -1,12 +1,7 @@
-///*
-// * To change this license header, choose License Headers in Project Properties.
-// * To change this template file, choose Tools | Templates
-// * and open the template in the editor.
-// */
 //package edu.pse.beast.toolbox;
 //
 //import edu.pse.beast.options.OptionsInterface;
-//import edu.pse.beast.options.ParametereditorOptions.LanguageOptions;
+//import edu.pse.beast.options.parametereditoroptions.LanguageOptions;
 //import edu.pse.beast.saverloader.SaverLoaderInterface;
 //import edu.pse.beast.stringresource.StringLoaderInterface;
 //

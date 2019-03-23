@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.pse.beast.toolbox;
 
 import java.util.ArrayList;
@@ -31,23 +26,22 @@ public class CodeArrayListBeautifier {
      *
      * @param addedString the String which is added to the ArrayList
      */
-    public void add(String addedString) {    	
-    	if (addedString.contains("}")) {
-    		Math.max(0, numberOfTabs--);
-    	}
-    	
-    	
+    public void add(String addedString) {
         if (addedString != null) {
+            if (addedString.contains("}")) {
+                Math.max(0, numberOfTabs--);
+            }
+
             String tabbed = "";
             for (int i = 0; i < numberOfTabs; i++) {
                 tabbed += "\t";
             }
             code.add(tabbed + addedString);
+
+            if (addedString.contains("{")) {
+                numberOfTabs++;
+            }
         }
-        
-    	if (addedString.contains("{")) {
-    		numberOfTabs++;
-    	}
     }
 
     /**

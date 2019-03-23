@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.pse.beast.codearea;
 
 import java.awt.Color;
@@ -16,9 +11,9 @@ import javax.swing.event.CaretListener;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
 
-import edu.pse.beast.codearea.InputToCode.JTextPaneToolbox;
-import edu.pse.beast.codearea.InputToCode.OpenCloseChar;
-import edu.pse.beast.codearea.InputToCode.OpenCloseCharList;
+import edu.pse.beast.codearea.codeinput.JTextPaneToolbox;
+import edu.pse.beast.codearea.codeinput.OpenCloseChar;
+import edu.pse.beast.codearea.codeinput.OpenCloseCharList;
 
 /**
  * This class highlights open/close chars as well as their counterparts 

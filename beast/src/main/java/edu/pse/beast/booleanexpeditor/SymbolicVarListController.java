@@ -12,7 +12,7 @@
 //import javax.swing.JRadioButton;
 //import javax.swing.JTextField;
 //
-//import edu.pse.beast.booleanexpeditor.View.BooleanExpEditorWindow;
+//import edu.pse.beast.booleanexpeditor.view.BooleanExpEditorWindow;
 //import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 //import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 //import edu.pse.beast.highlevel.DisplaysStringsToUser;
@@ -112,7 +112,6 @@
 //    public SymbolicVariableList getSymbolicVariableList() {
 //        return symbolicVariableList;
 //    }
-//
 //
 //    private class RemoveVarActionListener implements ActionListener {
 //        @Override

@@ -1,8 +1,3 @@
-///*
-// * To change this license header, choose License Headers in Project Properties.
-// * To change this template file, choose Tools | Templates
-// * and open the template in the editor.
-// */
 //package edu.pse.beast.datatypes;
 //
 //import static org.junit.Assert.assertEquals;
@@ -11,7 +6,7 @@
 //
 //import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 //import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-//import edu.pse.beast.propertylist.Model.PLModel;
+//import edu.pse.beast.propertylist.model.PLModel;
 //
 ///**
 // *

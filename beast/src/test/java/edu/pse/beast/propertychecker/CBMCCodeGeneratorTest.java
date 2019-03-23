@@ -1,8 +1,3 @@
-///*
-// * To change this license header, choose License Headers in Project Properties.
-// * To change this template file, choose Tools | Templates
-// * and open the template in the editor.
-// */
 //package edu.pse.beast.propertychecker;
 //
 //import static org.junit.Assert.assertTrue;
@@ -11,7 +6,7 @@
 //
 //import org.junit.Test;
 //
-//import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
+//import edu.pse.beast.celectiondescriptioneditor.electiontemplates.ElectionTemplateHandler;
 //import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 //import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 //import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;

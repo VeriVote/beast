@@ -5,14 +5,14 @@
 //import java.util.ArrayList;
 //
 //import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
-//import edu.pse.beast.propertylist.Model.PLModel;
-//import edu.pse.beast.propertylist.UserActions.LoadPropertyList;
-//import edu.pse.beast.propertylist.UserActions.NewPropertyList;
-//import edu.pse.beast.propertylist.UserActions.OpenSimulationWindow;
-//import edu.pse.beast.propertylist.UserActions.SaveAsPropertyList;
-//import edu.pse.beast.propertylist.UserActions.SavePropertyList;
-//import edu.pse.beast.propertylist.UserActions.UndoChangesPropertyList;
-//import edu.pse.beast.propertylist.View.PropertyListWindow;
+//import edu.pse.beast.propertylist.model.PLModel;
+//import edu.pse.beast.propertylist.useractions.LoadPropertyList;
+//import edu.pse.beast.propertylist.useractions.NewPropertyList;
+//import edu.pse.beast.propertylist.useractions.OpenSimulationWindow;
+//import edu.pse.beast.propertylist.useractions.SaveAsPropertyList;
+//import edu.pse.beast.propertylist.useractions.SavePropertyList;
+//import edu.pse.beast.propertylist.useractions.UndoChangesPropertyList;
+//import edu.pse.beast.propertylist.view.PropertyListWindow;
 //import edu.pse.beast.saverloader.FileChooser;
 //import edu.pse.beast.saverloader.PropertyListSaverLoader;
 //import edu.pse.beast.toolbox.ActionIdAndListener;

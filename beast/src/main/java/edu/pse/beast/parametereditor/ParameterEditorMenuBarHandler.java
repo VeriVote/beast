@@ -2,7 +2,7 @@
 //
 //import java.util.ArrayList;
 //
-//import edu.pse.beast.parametereditor.View.ParameterEditorWindow;
+//import edu.pse.beast.parametereditor.view.ParameterEditorWindow;
 //import edu.pse.beast.stringresource.StringLoaderInterface;
 //import edu.pse.beast.stringresource.StringResourceLoader;
 //import edu.pse.beast.toolbox.ActionIdAndListener;

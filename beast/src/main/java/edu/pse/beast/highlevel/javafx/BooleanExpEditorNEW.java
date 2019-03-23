@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.BooleanExpEditorGeneralErrorFinder;
-import edu.pse.beast.codeareaJAVAFX.BoundedVarCodeArea;
-import edu.pse.beast.codeareaJAVAFX.NewPropertyCodeArea;
-import edu.pse.beast.codeareaJAVAFX.SaverLoader;
+import edu.pse.beast.booleanexpeditor.booleanexpcodearea.errorfinder.BooleanExpEditorGeneralErrorFinder;
+import edu.pse.beast.codeareajavafx.BoundedVarCodeArea;
+import edu.pse.beast.codeareajavafx.NewPropertyCodeArea;
+import edu.pse.beast.codeareajavafx.SaverLoader;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
@@ -203,7 +203,7 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 
 		savePropertyTextAreasIntoDescription();
 
-		this.currentPropertyDescription = propertyItem.getPreAndPostPropertie();
+		this.currentPropertyDescription = propertyItem.getPreAndPostProperties();
 		this.currentItem = propertyItem;
 
 		this.removeAllVariables();

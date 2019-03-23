@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers file Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template file the editor.
- */
 package edu.pse.beast.stringresource;
 
 import java.io.File;

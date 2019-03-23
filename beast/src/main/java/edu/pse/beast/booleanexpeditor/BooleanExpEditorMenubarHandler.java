@@ -2,7 +2,7 @@
 //
 //import java.util.ArrayList;
 //
-//import edu.pse.beast.booleanexpeditor.View.BooleanExpEditorWindow;
+//import edu.pse.beast.booleanexpeditor.view.BooleanExpEditorWindow;
 //import edu.pse.beast.highlevel.DisplaysStringsToUser;
 //import edu.pse.beast.stringresource.StringLoaderInterface;
 //import edu.pse.beast.toolbox.ActionIdAndListener;

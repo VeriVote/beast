@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.pse.beast.codearea.ErrorHandling.CodeError;
+import edu.pse.beast.codearea.errorhandling.CodeError;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.propertychecker.Result;
 import javafx.beans.value.ChangeListener;
@@ -167,7 +167,7 @@ public class ParentTreeItem extends CustomTreeItem {
 		//marginItem.setStatus(status);
 	}
 
-	public PreAndPostConditionsDescription getPreAndPostPropertie() {
+	public PreAndPostConditionsDescription getPreAndPostProperties() {
 		return propDesc;
 	}
 

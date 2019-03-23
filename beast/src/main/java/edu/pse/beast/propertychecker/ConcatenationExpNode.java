@@ -1,7 +1,7 @@
 package edu.pse.beast.propertychecker;
 
-import edu.pse.beast.datatypes.booleanExpAST.BooleanExpNodeVisitor;
-import edu.pse.beast.datatypes.booleanExpAST.BooleanValuedNodes.BooleanExpressionNode;
+import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressionNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.ConcatenationExpContext;
 
 public class ConcatenationExpNode extends BooleanExpressionNode {

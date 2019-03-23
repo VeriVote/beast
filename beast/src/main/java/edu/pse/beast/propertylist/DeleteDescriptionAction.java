@@ -1,8 +1,8 @@
 //package edu.pse.beast.propertylist;
 //
 //import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
-//import edu.pse.beast.propertylist.Model.PLModel;
-//import edu.pse.beast.propertylist.Model.PropertyItem;
+//import edu.pse.beast.propertylist.model.PLModel;
+//import edu.pse.beast.propertylist.model.PropertyItem;
 //
 ///**
 // * Class to perform and undo deletions from the property list.

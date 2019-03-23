@@ -1,8 +1,3 @@
-///*
-// * To change this license header, choose License Headers in Project Properties.
-// * To change this template file, choose Tools | Templates
-// * and open the template in the editor.
-// */
 //package edu.pse.beast.celectiondescriptioneditor;
 //
 //import java.util.ArrayList;
@@ -11,12 +6,12 @@
 //
 //import javax.swing.text.BadLocationException;
 //
-//import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
-//import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeAreaBuilder;
-//import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CErrorDisplayer;
-//import edu.pse.beast.celectiondescriptioneditor.View.CCodeEditorWindow;
-//import edu.pse.beast.celectiondescriptioneditor.View.ErrorWindow;
-//import edu.pse.beast.codearea.ErrorHandling.CodeError;
+//import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.CElectionCodeArea;
+//import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.CElectionCodeAreaBuilder;
+//import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling.CErrorDisplayer;
+//import edu.pse.beast.celectiondescriptioneditor.view.CCodeEditorWindow;
+//import edu.pse.beast.celectiondescriptioneditor.view.ErrorWindow;
+//import edu.pse.beast.codearea.errorhandling.CodeError;
 //import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 //import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 //import edu.pse.beast.highlevel.BEASTCommunicator;

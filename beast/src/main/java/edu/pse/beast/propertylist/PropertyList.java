@@ -1,8 +1,3 @@
-///*
-// * To change this license header, choose License Headers in Project Properties.
-// * To change this template file, choose Tools | Templates
-// * and open the template in the editor.
-// */
 //package edu.pse.beast.propertylist;
 //
 //import java.awt.Frame;
@@ -18,10 +13,10 @@
 //import edu.pse.beast.highlevel.ResultInterface;
 //import edu.pse.beast.highlevel.ResultPresenter;
 //import edu.pse.beast.propertychecker.Result;
-//import edu.pse.beast.propertylist.Model.PLModel;
-//import edu.pse.beast.propertylist.Model.PropertyItem;
-//import edu.pse.beast.propertylist.View.ListItem;
-//import edu.pse.beast.propertylist.View.PropertyListWindow;
+//import edu.pse.beast.propertylist.model.PLModel;
+//import edu.pse.beast.propertylist.model.PropertyItem;
+//import edu.pse.beast.propertylist.view.ListItem;
+//import edu.pse.beast.propertylist.view.PropertyListWindow;
 //import edu.pse.beast.saverloader.FileChooser;
 //
 ///**

@@ -16,11 +16,11 @@
 //import org.junit.Before;
 //import org.junit.Test;
 //
-//import edu.pse.beast.Gui.GuiTestHelper;
+//import edu.pse.beast.gui.GuiTestHelper;
 //import edu.pse.beast.datatypes.Project;
 //import edu.pse.beast.parametereditor.ParameterEditor;
 //import edu.pse.beast.propertylist.PropertyList;
-//import edu.pse.beast.propertylist.Model.PropertyItem;
+//import edu.pse.beast.propertylist.model.PropertyItem;
 //import edu.pse.beast.saverloader.ProjectSaverLoader;
 //
 //public class HighLevelPropertycheckerTest {

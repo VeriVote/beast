@@ -3,7 +3,7 @@ package edu.pse.beast.toolbox;
 import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.electionSimulator.InputDataDescription;
+import edu.pse.beast.electionsimulator.InputDataDescription;
 import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 
 /**

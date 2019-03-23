@@ -4,7 +4,7 @@
 //import java.util.Observable;
 //import java.util.Observer;
 //
-//import edu.pse.beast.propertylist.Model.PLModel;
+//import edu.pse.beast.propertylist.model.PLModel;
 //
 ///**
 // * Handles saves before change in the property list.

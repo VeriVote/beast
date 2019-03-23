@@ -12,9 +12,9 @@
 //import edu.pse.beast.highlevel.CentralObjectProvider;
 //import edu.pse.beast.highlevel.PSECentralObjectProvider;
 //import edu.pse.beast.options.OptionsInterface;
-//import edu.pse.beast.options.ParametereditorOptions.LanguageOptions;
+//import edu.pse.beast.options.parametereditoroptions.LanguageOptions;
 //import edu.pse.beast.parametereditor.ParameterEditor;
-//import edu.pse.beast.propertylist.Model.PLModel;
+//import edu.pse.beast.propertylist.model.PLModel;
 //import edu.pse.beast.saverloader.SaverLoaderInterface;
 //import edu.pse.beast.stringresource.StringLoaderInterface;
 //import edu.pse.beast.toolbox.ObjectRefsForBuilder;

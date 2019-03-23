@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.pse.beast.stringresource;
 
 import java.util.HashMap;
@@ -49,11 +44,16 @@ public class StringResourceLoader {
      * @return the String with the id
      */
     public String getStringFromID(String id) {
-    	
-        String get = idsToString.get(id.toLowerCase());
-        
+        final String get;
+        if (id != null) {
+            get = idsToString.get(id.toLowerCase());
+        } else {
+            get = null;
+        }
         if (get == null) {
-            ErrorLogger.log("this Id was not found in a Stringfile: " + id.toLowerCase());
+            ErrorLogger.log(
+                    "this Id was not found in a Stringfile: "
+                            + (id != null ? id.toLowerCase() : null));
         }
         return get;
     }
@@ -81,6 +81,6 @@ public class StringResourceLoader {
      * @return true if it contains the id
      */
     public boolean containsId(String id) {
-        return idsToString.containsKey(id.toLowerCase());
+        return id != null && idsToString.containsKey(id.toLowerCase());
     }
 }

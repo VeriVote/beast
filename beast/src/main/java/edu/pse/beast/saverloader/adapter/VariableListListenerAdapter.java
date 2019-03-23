@@ -11,7 +11,7 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.errorFinder.FormalExpErrorFinderTreeListener;
+import edu.pse.beast.booleanexpeditor.booleanexpcodearea.errorfinder.FormalExpErrorFinderTreeListener;
 import edu.pse.beast.datatypes.propertydescription.VariableListListener;
 
 public class VariableListListenerAdapter  implements JsonSerializer<VariableListListener>, JsonDeserializer<VariableListListener> {

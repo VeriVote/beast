@@ -19,16 +19,16 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.wellbehaved.event.InputMap;
 import org.fxmisc.wellbehaved.event.Nodes;
 
-import edu.pse.beast.codeareaJAVAFX.AutoCompleter;
-import edu.pse.beast.codeareaJAVAFX.BoundedVarCodeArea;
-import edu.pse.beast.codeareaJAVAFX.NewCodeArea;
-import edu.pse.beast.codeareaJAVAFX.NewPropertyCodeArea;
-import edu.pse.beast.codeareaJAVAFX.SaverLoader;
+import edu.pse.beast.codeareajavafx.AutoCompleter;
+import edu.pse.beast.codeareajavafx.BoundedVarCodeArea;
+import edu.pse.beast.codeareajavafx.NewCodeArea;
+import edu.pse.beast.codeareajavafx.NewPropertyCodeArea;
+import edu.pse.beast.codeareajavafx.SaverLoader;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.electionSimulator.NewElectionSimulation;
+import edu.pse.beast.electionsimulator.NewElectionSimulation;
 import edu.pse.beast.highlevel.BEASTCommunicator;
 import edu.pse.beast.options.OptionsNew;
 import edu.pse.beast.saverloader.ChildTreeItemSaverLoader;
@@ -1289,7 +1289,7 @@ public class GUIController {
 				int counter = 0;
 				for (Iterator<ParentTreeItem> iterator = properties.iterator(); iterator.hasNext();) {
 					ParentTreeItem parentItem = (ParentTreeItem) iterator.next();
-					String name = parentItem.getPreAndPostPropertie().getName();
+					String name = parentItem.getPreAndPostProperties().getName();
 					File saveFolder = new File(folder + "/" + name + "_" + counter++);
 					saveFolder = createFolderWithName(saveFolder, true); // we want to save the parentTreeItem into this
 					// folder
@@ -1297,7 +1297,7 @@ public class GUIController {
 
 					listFileContent = listFileContent + name;
 
-					booleanExpEditor.saveAs(parentItem.getPreAndPostPropertie(),
+					booleanExpEditor.saveAs(parentItem.getPreAndPostProperties(),
 							new File(saveFolder + "/" + parentItem.getText() + ".prop"));
 
 					List<ChildTreeItem> children = parentItem.getSubItems();
@@ -1714,8 +1714,8 @@ public class GUIController {
 		// }
 		// }
 		booleanExpEditor.setCurrentPropertyDescription(propertyItem, bringToFront);
-		propNameField.setText(propertyItem.getPreAndPostPropertie().getName());
-		resultNameField.setText(propertyItem.getPreAndPostPropertie().getName());
+		propNameField.setText(propertyItem.getPreAndPostProperties().getName());
+		resultNameField.setText(propertyItem.getPreAndPostProperties().getName());
 	}
 
 	public void setPropNameField(String newText) {

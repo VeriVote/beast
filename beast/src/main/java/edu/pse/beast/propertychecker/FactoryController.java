@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.pse.beast.propertychecker;
 
 import java.util.ArrayList;
@@ -170,7 +165,7 @@ public class FactoryController implements Runnable {
 
 					Result result = CheckerFactoryFactory.getMatchingResult(checkerID);
 
-					result.setProperty(parentTreeItem.getPreAndPostPropertie());
+					result.setProperty(parentTreeItem.getPreAndPostProperties());
 
 					child.addResult(result);
 					

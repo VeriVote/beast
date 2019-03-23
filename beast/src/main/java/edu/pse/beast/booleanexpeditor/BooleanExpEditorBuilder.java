@@ -4,27 +4,27 @@
 //import java.awt.event.ActionListener;
 //import java.util.ArrayList;
 //
-//import edu.pse.beast.booleanexpeditor.UserActions.AddConstUserAction;
-//import edu.pse.beast.booleanexpeditor.UserActions.AddMakroUserAction;
-//import edu.pse.beast.booleanexpeditor.UserActions.BooleanExpEditorConst;
-//import edu.pse.beast.booleanexpeditor.UserActions.BooleanExpEditorMakro;
-//import edu.pse.beast.booleanexpeditor.UserActions.CopyUserAction;
-//import edu.pse.beast.booleanexpeditor.UserActions.CutUserAction;
-//import edu.pse.beast.booleanexpeditor.UserActions.LoadPropsUserAction;
-//import edu.pse.beast.booleanexpeditor.UserActions.NewPropsUserAction;
-//import edu.pse.beast.booleanexpeditor.UserActions.PasteUserAction;
-//import edu.pse.beast.booleanexpeditor.UserActions.PresentOptionsBoolUserAction;
-//import edu.pse.beast.booleanexpeditor.UserActions.RedoBoolUserAction;
-//import edu.pse.beast.booleanexpeditor.UserActions.SaveAsPropsUserAction;
-//import edu.pse.beast.booleanexpeditor.UserActions.SavePropsUserAction;
-//import edu.pse.beast.booleanexpeditor.UserActions.ShowHelpUserAction;
-//import edu.pse.beast.booleanexpeditor.UserActions.StaticErrorFindingUserAction;
-//import edu.pse.beast.booleanexpeditor.UserActions.UndoBoolUserAction;
-//import edu.pse.beast.booleanexpeditor.View.BooleanExpEditorWindow;
-//import edu.pse.beast.booleanexpeditor.View.ErrorWindow;
-//import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeArea;
-//import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.BooleanExpCodeAreaBuilder;
-//import edu.pse.beast.booleanexpeditor.booleanExpCodeArea.CodeAreaFocusListener;
+//import edu.pse.beast.booleanexpeditor.useractions.AddConstUserAction;
+//import edu.pse.beast.booleanexpeditor.useractions.AddMakroUserAction;
+//import edu.pse.beast.booleanexpeditor.useractions.BooleanExpEditorConst;
+//import edu.pse.beast.booleanexpeditor.useractions.BooleanExpEditorMakro;
+//import edu.pse.beast.booleanexpeditor.useractions.CopyUserAction;
+//import edu.pse.beast.booleanexpeditor.useractions.CutUserAction;
+//import edu.pse.beast.booleanexpeditor.useractions.LoadPropsUserAction;
+//import edu.pse.beast.booleanexpeditor.useractions.NewPropsUserAction;
+//import edu.pse.beast.booleanexpeditor.useractions.PasteUserAction;
+//import edu.pse.beast.booleanexpeditor.useractions.PresentOptionsBoolUserAction;
+//import edu.pse.beast.booleanexpeditor.useractions.RedoBoolUserAction;
+//import edu.pse.beast.booleanexpeditor.useractions.SaveAsPropsUserAction;
+//import edu.pse.beast.booleanexpeditor.useractions.SavePropsUserAction;
+//import edu.pse.beast.booleanexpeditor.useractions.ShowHelpUserAction;
+//import edu.pse.beast.booleanexpeditor.useractions.StaticErrorFindingUserAction;
+//import edu.pse.beast.booleanexpeditor.useractions.UndoBoolUserAction;
+//import edu.pse.beast.booleanexpeditor.view.BooleanExpEditorWindow;
+//import edu.pse.beast.booleanexpeditor.view.ErrorWindow;
+//import edu.pse.beast.booleanexpeditor.booleanexpcodearea.BooleanExpCodeArea;
+//import edu.pse.beast.booleanexpeditor.booleanexpcodearea.BooleanExpCodeAreaBuilder;
+//import edu.pse.beast.booleanexpeditor.booleanexpcodearea.CodeAreaFocusListener;
 //import edu.pse.beast.celectiondescriptioneditor.CElectionDescriptionEditor;
 //import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 //import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
@@ -41,7 +41,6 @@
 // * @author Nikolai
 // */
 //public class BooleanExpEditorBuilder {
-//
 //    /**
 //     * An array of Strings encompassing the HeaderIds for the Menu.
 //     */
@@ -79,7 +78,6 @@
 //        //creation of ErrorWindow object
 //        ErrorWindow errorWindow = new ErrorWindow(window.getErrorTextPane(), objectRefsForBuilder.getStringIF());
 //
-//
 //        //creation of BooleanExpCodeAreas objects using the JTextPanes from the BooleanExpEditorWindow instance "window"
 //        BooleanExpCodeAreaBuilder codeAreaBuilder = new BooleanExpCodeAreaBuilder();
 //        BooleanExpCodeArea preConditionCodeArea = codeAreaBuilder
@@ -93,7 +91,6 @@
 //                                                window.getPostConditionScrollPane(),
 //                                                symbolicVariableList, ceditor);
 //
-//        
 //        // create ChangeHandler
 //        ChangeHandler changeHandler = new ChangeHandler(preConditionCodeArea.getPane(),
 //                postConditionCodeArea.getPane(), symbolicVariableList);
@@ -124,9 +121,7 @@
 //
 //        editor.setToolBarHandler(toolBarHandler);
 //        editor.setMenuBarHandler(menuBarHandler);
-//        
 //        objectRefsForBuilder.getLanguageOpts().addStringDisplayer(editor);
-//
 //        return editor;
 //    }
 //
@@ -149,7 +144,6 @@
 //        fileList.add(createFromUserAction(load));
 //        fileList.add(createFromUserAction(save));
 //        fileList.add(createFromUserAction(saveAs));
-//
 //
 //        ArrayList<ActionIdAndListener> editList = new ArrayList<>();
 //        UserAction undo = createUndoUserAction(editor);
@@ -232,8 +226,6 @@
 //        created.add(codeList);
 //        created.add(constantsList);
 //        created.add(makroList);
-//
-//
 //        return created;
 //    }
 //

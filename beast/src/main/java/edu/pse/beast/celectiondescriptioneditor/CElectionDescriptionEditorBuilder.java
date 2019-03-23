@@ -1,8 +1,3 @@
-///*
-// * To change this license header, choose License Headers in Project Properties.
-// * To change this template file, choose Tools | Templates
-// * and open the template in the editor.
-// */
 //package edu.pse.beast.celectiondescriptioneditor;
 //
 //import java.awt.event.ActionEvent;
@@ -13,24 +8,24 @@
 //
 //import javax.swing.text.BadLocationException;
 //
-//import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeArea;
-//import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.CElectionCodeAreaBuilder;
-//import edu.pse.beast.celectiondescriptioneditor.CElectionCodeArea.ErrorHandling.CErrorDisplayer;
-//import edu.pse.beast.celectiondescriptioneditor.ElectionTemplates.ElectionTemplateHandler;
-//import edu.pse.beast.celectiondescriptioneditor.UserActions.ElectionCopyUserAction;
-//import edu.pse.beast.celectiondescriptioneditor.UserActions.ElectionCutUserAction;
-//import edu.pse.beast.celectiondescriptioneditor.UserActions.ElectionPasteUserAction;
-//import edu.pse.beast.celectiondescriptioneditor.UserActions.ElectionRedoUserAction;
-//import edu.pse.beast.celectiondescriptioneditor.UserActions.ElectionUndoUserAction;
-//import edu.pse.beast.celectiondescriptioneditor.UserActions.LoadElectionUserAction;
-//import edu.pse.beast.celectiondescriptioneditor.UserActions.NewElectionUserAction;
-//import edu.pse.beast.celectiondescriptioneditor.UserActions.PresentOptionsUserAction;
-//import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveAsElectionUserAction;
-//import edu.pse.beast.celectiondescriptioneditor.UserActions.SaveElectionUserAction;
-//import edu.pse.beast.celectiondescriptioneditor.UserActions.StaticErrorFindingUserAction;
-//import edu.pse.beast.celectiondescriptioneditor.View.CCodeEditorWindow;
-//import edu.pse.beast.celectiondescriptioneditor.View.CEditorWindowStarter;
-//import edu.pse.beast.celectiondescriptioneditor.View.ErrorWindow;
+//import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.CElectionCodeArea;
+//import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.CElectionCodeAreaBuilder;
+//import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling.CErrorDisplayer;
+//import edu.pse.beast.celectiondescriptioneditor.electiontemplates.ElectionTemplateHandler;
+//import edu.pse.beast.celectiondescriptioneditor.useractions.ElectionCopyUserAction;
+//import edu.pse.beast.celectiondescriptioneditor.useractions.ElectionCutUserAction;
+//import edu.pse.beast.celectiondescriptioneditor.useractions.ElectionPasteUserAction;
+//import edu.pse.beast.celectiondescriptioneditor.useractions.ElectionRedoUserAction;
+//import edu.pse.beast.celectiondescriptioneditor.useractions.ElectionUndoUserAction;
+//import edu.pse.beast.celectiondescriptioneditor.useractions.LoadElectionUserAction;
+//import edu.pse.beast.celectiondescriptioneditor.useractions.NewElectionUserAction;
+//import edu.pse.beast.celectiondescriptioneditor.useractions.PresentOptionsUserAction;
+//import edu.pse.beast.celectiondescriptioneditor.useractions.SaveAsElectionUserAction;
+//import edu.pse.beast.celectiondescriptioneditor.useractions.SaveElectionUserAction;
+//import edu.pse.beast.celectiondescriptioneditor.useractions.StaticErrorFindingUserAction;
+//import edu.pse.beast.celectiondescriptioneditor.view.CCodeEditorWindow;
+//import edu.pse.beast.celectiondescriptioneditor.view.CEditorWindowStarter;
+//import edu.pse.beast.celectiondescriptioneditor.view.ErrorWindow;
 //import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 //import edu.pse.beast.pluginhandler.TypeLoader;
 //import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;

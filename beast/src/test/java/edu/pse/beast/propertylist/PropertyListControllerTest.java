@@ -13,8 +13,8 @@
 //
 //import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
 //import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-//import edu.pse.beast.propertylist.Model.PLModel;
-//import edu.pse.beast.propertylist.Model.PropertyItem;
+//import edu.pse.beast.propertylist.model.PLModel;
+//import edu.pse.beast.propertylist.model.PropertyItem;
 //
 ///**
 // * Tests the commands for changing the PropertyList.
