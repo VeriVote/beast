@@ -142,14 +142,14 @@ public class FormalExpErrorFinderTreeListener
     }
 
     @Override
-    public void enterQuantorExp(FormalPropertyDescriptionParser.QuantorExpContext ctx) {
-        String quantorTypeString = ctx.Quantor().getText();
+    public void enterQuantifierExp(FormalPropertyDescriptionParser.QuantifierExpContext ctx) {
+        String quantifierTypeString = ctx.Quantifier().getText();
         InternalTypeContainer varType = null;
-        if (quantorTypeString.contains("VOTER")) {
+        if (quantifierTypeString.contains("VOTER")) {
             varType = new InternalTypeContainer(InternalTypeRep.VOTER);
-        } else if (quantorTypeString.contains("CANDIDATE")) {
+        } else if (quantifierTypeString.contains("CANDIDATE")) {
             varType = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
-        } else if (quantorTypeString.contains("SEAT")) {
+        } else if (quantifierTypeString.contains("SEAT")) {
             varType = new InternalTypeContainer(InternalTypeRep.SEAT);
         }
         scopeHandler.enterNewScope();
@@ -158,7 +158,7 @@ public class FormalExpErrorFinderTreeListener
     }
 
     @Override
-    public void exitQuantorExp(FormalPropertyDescriptionParser.QuantorExpContext ctx) {
+    public void exitQuantifierExp(FormalPropertyDescriptionParser.QuantifierExpContext ctx) {
         scopeHandler.exitScope();
     }
 

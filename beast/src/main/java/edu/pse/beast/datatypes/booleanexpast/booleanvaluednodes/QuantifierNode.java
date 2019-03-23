@@ -7,16 +7,16 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
  * @author Holger
  *
  */
-public abstract class QuantorNode extends BooleanExpressionNode {
+public abstract class QuantifierNode extends BooleanExpressionNode {
     private final SymbolicVariable declSymbVar;
     private final BooleanExpressionNode followingNode;
 
     /**
      *
-     * @param declSymbVar   the symbolic variable of this quantor
-     * @param followingNode the following node of this quantor
+     * @param declSymbVar   the symbolic variable of this quantifier
+     * @param followingNode the following node of this quantifier
      */
-    public QuantorNode(SymbolicVariable declSymbVar, BooleanExpressionNode followingNode) {
+    public QuantifierNode(SymbolicVariable declSymbVar, BooleanExpressionNode followingNode) {
         this.declSymbVar = declSymbVar;
         this.followingNode = followingNode;
     }
@@ -27,7 +27,7 @@ public abstract class QuantorNode extends BooleanExpressionNode {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        QuantorNode that = (QuantorNode) o;
+        QuantifierNode that = (QuantifierNode) o;
         if (declSymbVar != null ? !declSymbVar.equals(that.declSymbVar) : that.declSymbVar != null)
             return false;
         return followingNode != null ? followingNode.equals(that.followingNode) : that.followingNode == null;

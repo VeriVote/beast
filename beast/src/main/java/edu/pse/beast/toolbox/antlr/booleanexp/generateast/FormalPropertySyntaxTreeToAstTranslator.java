@@ -21,7 +21,7 @@ import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.IntersectTypeExp
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.LogicalAndNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.LogicalOrNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.NotNode;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.QuantorNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.QuantifierNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ThereExistsNode;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.AtPosExp;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.ElectExp;
@@ -144,14 +144,14 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
     }
 
     @Override
-    public void enterQuantorExp(FormalPropertyDescriptionParser.QuantorExpContext ctx) {
-        String quantorTypeString = ctx.Quantor().getText();
+    public void enterQuantifierExp(FormalPropertyDescriptionParser.QuantifierExpContext ctx) {
+        String quantifierTypeString = ctx.Quantifier().getText();
         InternalTypeContainer varType = null;
-        if (quantorTypeString.contains("VOTER")) {
+        if (quantifierTypeString.contains("VOTER")) {
             varType = new InternalTypeContainer(InternalTypeRep.VOTER);
-        } else if (quantorTypeString.contains("CANDIDATE")) {
+        } else if (quantifierTypeString.contains("CANDIDATE")) {
             varType = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
-        } else if (quantorTypeString.contains("SEAT")) {
+        } else if (quantifierTypeString.contains("SEAT")) {
             varType = new InternalTypeContainer(InternalTypeRep.SEAT);
         }
         scopeHandler.enterNewScope();
@@ -160,14 +160,14 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
     }
 
     @Override
-    public void exitQuantorExp(FormalPropertyDescriptionParser.QuantorExpContext ctx) {
-        String quantorType = ctx.Quantor().getText();
+    public void exitQuantifierExp(FormalPropertyDescriptionParser.QuantifierExpContext ctx) {
+        String quantifierType = ctx.Quantifier().getText();
 
-        QuantorNode node = null;
+        QuantifierNode node = null;
 
-        if (quantorType.contains("FOR_ALL")) {
+        if (quantifierType.contains("FOR_ALL")) {
             node = new ForAllNode(((SymbolicVarExp) expStack.pop()).getSymbolicVar(), nodeStack.pop());
-        } else if (quantorType.contains("EXISTS_ONE")) {
+        } else if (quantifierType.contains("EXISTS_ONE")) {
             node = new ThereExistsNode(((SymbolicVarExp) expStack.pop()).getSymbolicVar(), nodeStack.pop());
         }
 

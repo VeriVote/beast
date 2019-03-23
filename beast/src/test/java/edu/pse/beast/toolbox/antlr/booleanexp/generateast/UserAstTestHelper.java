@@ -25,9 +25,9 @@ public class UserAstTestHelper {
 //    }
 //
 //    @Test
-//    public void quantorAstTest() {
+//    public void quantifierAstTest() {
 //        String temp = "QUANT(var) : var == var;";
-//        List<String> quantors = Arrays.asList("FOR_ALL_", "EXISTS_ONE_");
+//        List<String> quantifiers = Arrays.asList("FOR_ALL_", "EXISTS_ONE_");
 //        List<List<String>> types = Arrays.asList(
 //                Arrays.asList("VOTERS", "CANDIDATES", "SEATS"),
 //                Arrays.asList("VOTER", "CANDIDATE", "SEAT"));
@@ -36,12 +36,12 @@ public class UserAstTestHelper {
 //                "\tfollowing: \t==\n" +
 //                "\t\tlhs: SymbVar: {id var, type: VARTYPE}\n" +
 //                "\t\trhs: SymbVar: {id var, type: VARTYPE}\n";
-//        for (int i = 0; i < quantors.size(); i++) {
+//        for (int i = 0; i < quantifiers.size(); i++) {
 //            int pos = i;
 //            int loop = 0;
 //            for (int j = 0; j < types.get(i).size(); j++) {
-//                String quantor = quantors.get(pos) + types.get(i).get(j);
-//                String code = temp.replace("QUANT", quantor);
+//                String quantifier = quantifiers.get(pos) + types.get(i).get(j);
+//                String code = temp.replace("QUANT", quantifier);
 //                BooleanExpListNode ast = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
 //                        code,
 //                        new SymbolicVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE)));

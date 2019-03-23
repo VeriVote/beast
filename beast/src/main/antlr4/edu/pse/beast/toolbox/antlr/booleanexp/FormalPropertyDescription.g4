@@ -21,10 +21,10 @@ candidateListChangeExp: Elect ValueAssign intersectExp;
 
 //end new part1
 
-booleanExp : 	quantorExp | notEmptyExp | intersectExp | binaryRelationExp | notExp | comparisonExp | OpenBracket booleanExp ClosedBracket;
+booleanExp : 	quantifierExp | notEmptyExp | intersectExp | binaryRelationExp | notExp | comparisonExp | OpenBracket booleanExp ClosedBracket;
 
 binaryRelationExp : binaryRelationExp BinaryRelationSymbol booleanExp |
-					quantorExp BinaryRelationSymbol booleanExp |
+					quantifierExp BinaryRelationSymbol booleanExp |
 					notExp BinaryRelationSymbol booleanExp |
 					comparisonExp BinaryRelationSymbol booleanExp |
 
@@ -35,7 +35,7 @@ binaryRelationExp : binaryRelationExp BinaryRelationSymbol booleanExp |
 
 
 					'(' binaryRelationExp ')' BinaryRelationSymbol booleanExp |
-					'(' quantorExp ')' BinaryRelationSymbol booleanExp |
+					'(' quantifierExp ')' BinaryRelationSymbol booleanExp |
 					'(' notExp ')' BinaryRelationSymbol booleanExp |
 					'(' comparisonExp ')' BinaryRelationSymbol booleanExp |
 
@@ -72,7 +72,7 @@ tupleContent : ',' Vote | ',' Vote tupleContent;
 
 //end new part 2
 
-quantorExp : Quantor passSymbVar ':' booleanExp;
+quantifierExp : Quantifier passSymbVar ':' booleanExp;
 
 
 notExp : '!' booleanExp;
@@ -144,7 +144,7 @@ ClosedBracket : ')';
 
 OpenBracket : '(';
 
-Quantor : 	'FOR_ALL_VOTERS' | 'FOR_ALL_CANDIDATES' | 'FOR_ALL_SEATS' |
+Quantifier : 'FOR_ALL_VOTERS' | 'FOR_ALL_CANDIDATES' | 'FOR_ALL_SEATS' |
 			'EXISTS_ONE_VOTER' | 'EXISTS_ONE_CANDIDATE' | 'EXISTS_ONE_SEAT';
 
 //new part 3

@@ -8,11 +8,11 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
  * @author Holger
  *
  */
-public class ForAllNode extends QuantorNode {
+public class ForAllNode extends QuantifierNode {
     /**
      *
-     * @param declSymbVar   the symbolic variable of this quantor
-     * @param followingNode the following node of this quantor
+     * @param declSymbVar   the symbolic variable of this quantifier
+     * @param followingNode the following node of this quantifier
      */
     public ForAllNode(SymbolicVariable declSymbVar, BooleanExpressionNode followingNode) {
         super(declSymbVar, followingNode);

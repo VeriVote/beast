@@ -18,7 +18,7 @@ import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.IntersectTypeExp
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.LogicalAndNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.LogicalOrNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.NotNode;
-import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.QuantorNode;
+import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.QuantifierNode;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.ThereExistsNode;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.AccessValueNode;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.AtPosExp;
@@ -248,7 +248,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         testIfLast();
     }
 
-    private String getMaxString(QuantorNode node) {
+    private String getMaxString(QuantifierNode node) {
         String max;
         switch (node.getDeclaredSymbolicVar().getInternalTypeContainer().getInternalType()) {
         case VOTER:

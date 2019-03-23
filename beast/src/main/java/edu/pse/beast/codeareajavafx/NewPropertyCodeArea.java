@@ -33,7 +33,7 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
     private static final String[] MAKROS = new String[] {"VOTES", "ELECT", "VOTE_SUM_FOR_CANDIDATE",
                                                          "VOTE_SUM_FOR_UNIQUE_CANDIDATE" };
 
-    private static final String[] QUANTORS =
+    private static final String[] QUANTIFIERS =
             new String[] {"FOR_ALL_VOTERS", "FOR_ALL_CANDIDATES", "FOR_ALL_SEATS",
                           "EXISTS_ONE_VOTER", "EXISTS_ONE_CANDIDATE", "EXISTS_ONE_SEAT",
                           "PERM", "SPLIT", "INTERSECT", "NOTEMPTY"};
@@ -44,14 +44,14 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
 
     private static final String MAKROS_PATTERN = "\\b("
             + String.join("|", Arrays.stream(MAKROS).map(s -> s + "[0-9]+").toArray(String[]::new)) + ")\\b";
-    private static final String QUANTORS_PATTERN = "\\b(" + String.join("|", QUANTORS) + ")\\b";
+    private static final String QUANTORS_PATTERN = "\\b(" + String.join("|", QUANTIFIERS) + ")\\b";
 
     private static final String PAREN_PATTERN = "\\(|\\)";
     private static final String SEMICOLON_PATTERN = "\\;";
 
     private static final Pattern PATTERN = Pattern.compile(
             "(?<OPERATORS>" + OPERATORS_PATTERN + ")" + "|(?<COMPARISON>" + COMPARISON_PATTERN + ")" + "|(?<RELATION>"
-                    + RELATION_PATTERN + ")" + "|(?<MAKROS>" + MAKROS_PATTERN + ")" + "|(?<QUANTORS>" + QUANTORS_PATTERN
+                    + RELATION_PATTERN + ")" + "|(?<MAKROS>" + MAKROS_PATTERN + ")" + "|(?<QUANTIFIERS>" + QUANTORS_PATTERN
                     + ")" + "|(?<PAREN>" + PAREN_PATTERN + ")" + "|(?<SEMICOLON>" + SEMICOLON_PATTERN + ")");
 
     private static Set<String> recommendations = new TreeSet<String>();
@@ -59,7 +59,7 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
 //  private static final String[] MAKROS = new String[] { "VOTES", "ELECT", "VOTE_SUM_FOR_CANDIDATE",
 //  "VOTE_SUM_FOR_UNIQUE_CANDIDATE" };
 //
-//private static final String[] QUANTORS = new String[] { "FOR_ALL_VOTERS", "FOR_ALL_CANDIDATES", "FOR_ALL_SEATS",
+//private static final String[] QUANTIFIERS = new String[] { "FOR_ALL_VOTERS", "FOR_ALL_CANDIDATES", "FOR_ALL_SEATS",
 //  "EXISTS_ONE_VOTER", "EXISTS_ONE_CANDIDATE", "EXISTS_ONE_SEAT", "PERM", "SPLIT", "INTERSECT", "NOTEMPTY" };
     private FormalPropertiesDescription description;
 
@@ -77,7 +77,7 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
         });
         // add all standard recommendations
         recommendations.addAll(Arrays.asList(MAKROS));
-        recommendations.addAll(Arrays.asList(QUANTORS));
+        recommendations.addAll(Arrays.asList(QUANTIFIERS));
         String stylesheet = this.getClass().getResource("propertyAreaSyntaxHighlight.css").toExternalForm();
 
         this.getStylesheets().add(stylesheet);
@@ -98,7 +98,7 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
                     : matcher.group("COMPARISON") != null ? "comparison"
                             : matcher.group("RELATION") != null ? "relation"
                                     : matcher.group("MAKROS") != null ? "makros"
-                                            : matcher.group("QUANTORS") != null ? "quantors"
+                                            : matcher.group("QUANTIFIERS") != null ? "quantifiers"
                                                     : matcher.group("PAREN") != null ? "paren"
                                                             : matcher.group("SEMICOLON") != null ? "semicolon" : null;
             /* never happens */ assert styleClass != null;
