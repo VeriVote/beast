@@ -8,7 +8,7 @@ booleanExpListElement : booleanExp ';' |
 						votingListChangeExp ';'|
 						votingTupelChangeExp ';' |
 						candidateListChangeExp ';';
-//end new part 0 
+//end new part 0
 
 //new part 1
 votingListChangeExp : Vote ValueAssign votingListChangeContent;
@@ -26,24 +26,24 @@ booleanExp : 	quantorExp | notEmptyExp | intersectExp | binaryRelationExp | notE
 binaryRelationExp : binaryRelationExp BinaryRelationSymbol booleanExp |
 					quantorExp BinaryRelationSymbol booleanExp |
 					notExp BinaryRelationSymbol booleanExp |
-					comparisonExp BinaryRelationSymbol booleanExp |	
-					
+					comparisonExp BinaryRelationSymbol booleanExp |
+
 					notEmptyExp BinaryRelationSymbol booleanExp |
 					intersectExp BinaryRelationSymbol booleanExp |
 //					concatenationExp BinaryRelationSymbol booleanExp|
-					
-					
-			
+
+
+
 					'(' binaryRelationExp ')' BinaryRelationSymbol booleanExp |
 					'(' quantorExp ')' BinaryRelationSymbol booleanExp |
 					'(' notExp ')' BinaryRelationSymbol booleanExp |
 					'(' comparisonExp ')' BinaryRelationSymbol booleanExp |
-					
+
 					'(' notEmptyExp ')' BinaryRelationSymbol booleanExp |
 					'(' intersectExp ')' BinaryRelationSymbol booleanExp
-					; 		
-		
-//new part 2	
+					;
+
+//new part 2
 
 addedContentExp : notEmptyExp | intersectExp;
 
@@ -53,7 +53,7 @@ notEmptyExp :		NotEmpty '(' notEmptyContent ')';
 notEmptyContent	: Elect | intersectExp;
 
 voteEquivalents : Vote | permutationExp | concatenationExp; //all types that are equivalent to "Vote" (e.g the function returns "Vote")
-			
+
 concatenationExp :	'(' voteEquivalents Concatenate voteEquivalents ')'
 					| Vote Concatenate voteEquivalents
 					| permutationExp Concatenate voteEquivalents;
@@ -73,7 +73,7 @@ tupleContent : ',' Vote | ',' Vote tupleContent;
 //end new part 2
 
 quantorExp : Quantor passSymbVar ':' booleanExp;
- 	
+
 
 notExp : '!' booleanExp;
 
@@ -83,7 +83,7 @@ typeExp : electExp | voteExp | numberExpression | symbolicVarExp | typeByPosExp 
 
 numberExpression : 	'(' numberExpression ')' |
 			numberExpression Mult numberExpression |
-			numberExpression Add numberExpression |			
+			numberExpression Add numberExpression |
 			voteSumExp |
 			voteSumUniqueExp |
 			constantExp |
@@ -146,7 +146,7 @@ OpenBracket : '(';
 
 Quantor : 	'FOR_ALL_VOTERS' | 'FOR_ALL_CANDIDATES' | 'FOR_ALL_SEATS' |
 			'EXISTS_ONE_VOTER' | 'EXISTS_ONE_CANDIDATE' | 'EXISTS_ONE_SEAT';
-			
+
 //new part 3
 Split :		'SPLIT';
 
@@ -157,10 +157,10 @@ ValueAssign : '<-';
 
 ComparisonSymbol : '==' | '!=' | '<=' | '>=' | '<' | '>';
 
-BinaryRelationSymbol : '&&' | '||' | '==>' | '<==>';		
-			
+BinaryRelationSymbol : '&&' | '||' | '==>' | '<==>';
+
 Integer : Digit+;
-			
+
 // same rules as C
 
 Identifier
@@ -197,12 +197,12 @@ fragment
 HexQuad
     :   HexadecimalDigit HexadecimalDigit HexadecimalDigit HexadecimalDigit
     ;
-	
+
 fragment
 HexadecimalDigit
     :   [0-9a-fA-F]
     ;
-	
+
 Whitespace
     :   [ \t]+
         -> skip
