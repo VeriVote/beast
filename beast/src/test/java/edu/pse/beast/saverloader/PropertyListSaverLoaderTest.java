@@ -60,7 +60,8 @@
 //        assert (recreatedPLModel.getPropertyList().get(0).getTestStatus().equals(true));
 //
 //        // check SymbolicVariableList for integrity
-//        SymbolicVariableList recreatedList = recreatedPLModel.getPropertyList().get(1).getDescription().getSymVarList();
+//        SymbolicVariableList recreatedList =
+//            recreatedPLModel.getPropertyList().get(1).getDescription().getSymVarList();
 //        assert (recreatedList.getSymbolicVariables().get(0).getId().equals("voter1"));
 //        assert (recreatedList.getSymbolicVariables().get(0).getInternalTypeContainer().getInternalType().
 //                equals(InternalTypeRep.VOTER));

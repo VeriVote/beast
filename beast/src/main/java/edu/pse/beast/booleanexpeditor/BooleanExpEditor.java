@@ -93,7 +93,8 @@
 //    }
 //
 //    /**
-//     * Setter to set the ToolBarHandler object of this class, can't be passed in constructor because the toolbarHandler
+//     * Setter to set the ToolBarHandler object of this class, cannot be passed in
+//     * constructor because of toolbarHandler
 //     * depends on a BooleanExpEditor.
 //     * @param toolBarHandler the BooleanExpEditorToolbarHandler object to be set
 //     */
@@ -102,7 +103,8 @@
 //    }
 //
 //    /**
-//     * Setter to set the MenuBarHandler object of this class, can't be passed in constructor because the menuBarHandler
+//     * Setter to set the MenuBarHandler object of this class, cannot be passed in
+//     * constructor because of menuBarHandler
 //     * depends on a BooleanExpEditor.
 //     * @param menuBarHandler the BooleanExpEditorMenubarHandler object to be set
 //     */
@@ -191,10 +193,10 @@
 ////        cEditor.removeListener(preConditionCodeArea.getVariableErrorFinder());
 ////        cEditor.removeListener(postConditionCodeArea.getVariableErrorFinder());
 ////
-////        symbolicVarListController.getSymbolicVariableList().removeListener(preConditionCodeArea.getVariableErrorFinder().
-////                getLis());
-////        symbolicVarListController.getSymbolicVariableList().removeListener(postConditionCodeArea.getVariableErrorFinder().
-////                getLis());
+////        symbolicVarListController.getSymbolicVariableList().removeListener(
+////            preConditionCodeArea.getVariableErrorFinder().getLis());
+////        symbolicVarListController.getSymbolicVariableList().removeListener(
+////            postConditionCodeArea.getVariableErrorFinder().getLis());
 //
 //        preConditionCodeArea.getErrorCtrl().stopThread();
 //        postConditionCodeArea.getErrorCtrl().stopThread();
@@ -219,18 +221,24 @@
 ////        cEditor.addListener(preConditionCodeArea.getVariableErrorFinder());
 ////        cEditor.addListener(postConditionCodeArea.getVariableErrorFinder());
 ////
-////        postConditionCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getContainer().getInputType());
-////        postConditionCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getContainer().getOutputType());
+////        postConditionCodeArea.getVariableErrorFinder().inputChanged(
+////            cEditor.getElectionDescription().getContainer().getInputType());
+////        postConditionCodeArea.getVariableErrorFinder().outputChanged(
+////            cEditor.getElectionDescription().getContainer().getOutputType());
 ////
-////        preConditionCodeArea.getVariableErrorFinder().inputChanged(cEditor.getElectionDescription().getContainer().getInputType());
-////        preConditionCodeArea.getVariableErrorFinder().outputChanged(cEditor.getElectionDescription().getContainer().getOutputType());
+////        preConditionCodeArea.getVariableErrorFinder().inputChanged(
+////            cEditor.getElectionDescription().getContainer().getInputType());
+////        preConditionCodeArea.getVariableErrorFinder().outputChanged(
+////            cEditor.getElectionDescription().getContainer().getOutputType());
 //
 //        preConditionCodeArea.getPane().addFocusListener(codeAreaFocusListener);
 //        postConditionCodeArea.getPane().addFocusListener(codeAreaFocusListener);
 //        codeAreaFocusListener.addNewCodeAreas(preConditionCodeArea, postConditionCodeArea);
 //
-//        preConditionCodeArea.getPane().setText(preAndPostConditionsDescription.getPreConditionsDescription().getCode());
-//        postConditionCodeArea.getPane().setText(preAndPostConditionsDescription.getPostConditionsDescription().getCode());
+//        preConditionCodeArea.getPane().setText(
+//            preAndPostConditionsDescription.getPreConditionsDescription().getCode());
+//        postConditionCodeArea.getPane().setText(
+//            preAndPostConditionsDescription.getPostConditionsDescription().getCode());
 //
 //        this.findErrorsAndDisplayThem();
 //        this.window.setWindowTitle(preAndPostConditionsDescription.getName());

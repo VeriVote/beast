@@ -15,9 +15,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 public abstract class AutoCompletionCodeArea extends CodeArea {
+    public final String specialCharacterRegex = ",|;|\\.|\\(|\\)|\\{|\\}|\\[|\\|\\|/|\\+|-|\\*";
+
     private int start;
     private int end;
-    public final String specialCharacterRegex = ",|;|\\.|\\(|\\)|\\{|\\}|\\[|\\|\\|/|\\+|-|\\*";
 
     public AutoCompletionCodeArea() {
         this.focusedProperty().addListener(new ChangeListener<Boolean>() {

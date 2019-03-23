@@ -91,9 +91,9 @@ public class MainClass extends Application {
             // specify the short cuts the progam should ignore
             InputMap<Event> shortcutsToConsume = InputMap.consume(anyOf(
             // prevent selection via (CTRL + ) SHIFT + [LEFT, UP, DOWN]
-//					keyPressed(KeyCode.S, KeyCombination.CONTROL_DOWN, SHORTCUT_ANY), // ignore the save shortcut
-//					keyPressed(KeyCode.S, KeyCombination.CONTROL_DOWN, KeyCombination.SHIFT_DOWN, SHORTCUT_ANY),
-//					keyPressed(KeyCode.O, KeyCombination.CONTROL_DOWN, SHORTCUT_ANY) // ignore the save shortcut
+//          keyPressed(KeyCode.S, KeyCombination.CONTROL_DOWN, SHORTCUT_ANY), // ignore the save shortcut
+//          keyPressed(KeyCode.S, KeyCombination.CONTROL_DOWN, KeyCombination.SHIFT_DOWN, SHORTCUT_ANY),
+//          keyPressed(KeyCode.O, KeyCombination.CONTROL_DOWN, SHORTCUT_ANY) // ignore the save shortcut
             ));
 
             controller.setShortcutsToConsume(shortcutsToConsume);

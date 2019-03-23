@@ -23,7 +23,7 @@
 //     *                             this toolbars Buttons
 //     */
 //    BooleanExpEditorToolbarHandler(BooleanExpEditorWindow window, ImageResourceProvider imageRes,
-//                                          StringResourceLoader stringRes, ActionIdAndListener[] actionIdsAndListener) {
+//                                   StringResourceLoader stringRes, ActionIdAndListener[] actionIdsAndListener) {
 //        super(imageRes, stringRes, actionIdsAndListener, window.getToolbar());
 //    }
 //

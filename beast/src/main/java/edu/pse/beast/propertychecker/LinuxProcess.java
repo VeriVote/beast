@@ -14,10 +14,10 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
 
 public class LinuxProcess extends CBMCProcess {
 
-    private final String RELATIVEPATHTOCBMC64 = "/linux/cbmcLin/cbmc";
+    private static final String RELATIVEPATHTOCBMC64 = "/linux/cbmcLin/cbmc";
 
     // the time in milliseconds to wait for the termination of the process on linux
-    private final long WAITINGTIME = 3000;
+    private static final long WAITINGTIME = 3000;
 
     private final String enableUserInclude = "-I";
     private final String userIncludeFolder = "/core/user_includes/";

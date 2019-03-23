@@ -6,11 +6,11 @@ public abstract class CBMCProcess extends Checker {
 
     // this is the last line in the cbmc output, if the verification was
     // successful
-    private final String SUCCESSLINE = "VERIFICATION SUCCESSFUL";
+    private static final String SUCCESSLINE = "VERIFICATION SUCCESSFUL";
 
     // this is the last line in the cbmc output, if the assertion
     // failed
-    private final String FAILURELINE = "VERIFICATION FAILED";
+    private static final String FAILURELINE = "VERIFICATION FAILED";
 
     /**
      * creates a new CBMCProcess that is a super class for the system specific
@@ -23,9 +23,10 @@ public abstract class CBMCProcess extends Checker {
      * @param toCheck    the file to check with cbmc
      * @param parent     the parent CheckerFactory, that has to be notified about
      *                   finished checking
+     * @param result     the result
      */
-    public CBMCProcess(int voters, int candidates, int seats, String advanced, File toCheck, CheckerFactory parent,
-            Result result) {
+    public CBMCProcess(int voters, int candidates, int seats, String advanced,
+                       File toCheck, CheckerFactory parent, Result result) {
         super(voters, candidates, seats, advanced, toCheck, parent, result);
     }
 

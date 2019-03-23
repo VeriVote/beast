@@ -10,7 +10,7 @@ import edu.pse.beast.codearea.errorhandling.CodeError;
  */
 public class CCodeErrorFactory {
 
-    private static final String IDS[] = { "compilererror", "antlr" };
+    private static final String IDS[] = {"compilererror", "antlr"};
 
     /**
      * wraps the error from the compiler into a CodeError Object. If information for

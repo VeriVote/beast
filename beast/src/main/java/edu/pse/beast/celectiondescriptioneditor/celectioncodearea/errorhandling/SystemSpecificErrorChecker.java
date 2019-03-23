@@ -27,6 +27,26 @@ import edu.pse.beast.toolbox.ThreadedBufferedReader;
  */
 public abstract class SystemSpecificErrorChecker {
 
+    private final String pathToTempFolder = "/core/c_tempfiles/";
+
+
+    /**
+     * constructor creates an error checker that compiles the c code and passes it
+     * on to a system specific compiler
+     */
+    public SystemSpecificErrorChecker() {
+        // clear the folder where the files that get checked get saved to, because
+        // sometimes they
+        // persist from the last time BEAST was run
+        try {
+            final String dummy = "dummy.file";
+            cleanDirectory(new File(SuperFolderFinder.getSuperFolder() + pathToTempFolder), dummy);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Taken from "org.apache.commons.io.FileUtils" Lists files in a directory,
      * asserting that the supplied directory satisfies exists and is a directory
@@ -74,25 +94,6 @@ public abstract class SystemSpecificErrorChecker {
 
         if (null != exception) {
             throw exception;
-        }
-    }
-
-    private final String pathToTempFolder = "/core/c_tempfiles/";
-
-    /**
-     * constructor creates an error checker that compiles the c code and passes it
-     * on to a system specific compiler
-     */
-    public SystemSpecificErrorChecker() {
-        // clear the folder where the files that get checked get saved to, because
-        // sometimes they
-        // persist from the last time BEAST was run
-        try {
-            final String dummy = "dummy.file";
-            cleanDirectory(new File(SuperFolderFinder.getSuperFolder() + pathToTempFolder), dummy);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
     }
 
@@ -189,8 +190,10 @@ public abstract class SystemSpecificErrorChecker {
      * 
      * @param result     the result list from the previously started process
      * @param errors     the error list from the previously started process
-     * @param lineOffset
+     * @param lineOffset line offset
      * @return a list of all found code errors in the list
      */
-    protected abstract List<CodeError> parseError(List<String> result, List<String> errors, int lineOffset);
+    protected abstract List<CodeError> parseError(List<String> result,
+                                                  List<String> errors,
+                                                  int lineOffset);
 }

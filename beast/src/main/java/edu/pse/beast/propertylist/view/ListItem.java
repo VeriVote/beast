@@ -68,7 +68,7 @@
 //     * @param prop The PropertyItem to be viewed
 //     */
 //    public ListItem(PropertyList controller, PLModel model, PropertyItem prop) {
-//    	this.setLayout(layout);
+//      this.setLayout(layout);
 //
 //      layout.setAutoCreateGaps(true);
 //      layout.setAutoCreateContainerGaps(true);
@@ -94,7 +94,8 @@
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
 //                Point pos = showResult.getLocationOnScreen();
-//                resWindow.setLocation((int) pos.getX() - 30, (int) pos.getY() - 35); // good alignment for the result window
+//                // good alignment for the result window
+//                resWindow.setLocation((int) pos.getX() - 30, (int) pos.getY() - 35);
 //                resWindow.getShowResult().setBackground(presentColor());
 //                passMessageToResultWindow();
 //                resWindow.setVisible(true);
@@ -112,13 +113,13 @@
 //            }
 //        });
 //        name.addFocusListener(new FocusListener() { // change name as well when focus was lost
-//			@Override
-//			public void focusGained(FocusEvent fe) {}
+//      @Override
+//      public void focusGained(FocusEvent fe) {}
 //
-//			@Override
-//			public void focusLost(FocusEvent fe) {
-//				controller.changeName(prop, name.getText());
-//			}
+//      @Override
+//      public void focusLost(FocusEvent fe) {
+//        controller.changeName(prop, name.getText());
+//      }
 //        });
 //
 //        testStatus.setText("Check");
@@ -174,27 +175,27 @@
 //        });
 //
 //        layout.setHorizontalGroup(
-//        		   layout.createSequentialGroup()
-//        		      .addComponent(showResult)
-//        		      .addComponent(name)
-//        		      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//        		           .addComponent(changeButton)
-//        		           .addComponent(testStatus))
-//        		      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-//           		           .addComponent(deleteButton)
-//           		           .addComponent(marginComputation))
-//        		);
-//        		layout.setVerticalGroup(
-//        		   layout.createSequentialGroup()
-//        		      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-//        		           .addComponent(showResult)
-//        		           .addComponent(name)
-//        		           .addComponent(changeButton)
-//        		           .addComponent(deleteButton))
-//        		      .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-//           		           .addComponent(testStatus)
-//           		           .addComponent(marginComputation))
-//        		);
+//               layout.createSequentialGroup()
+//                  .addComponent(showResult)
+//                  .addComponent(name)
+//                  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                       .addComponent(changeButton)
+//                       .addComponent(testStatus))
+//                  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//                          .addComponent(deleteButton)
+//                          .addComponent(marginComputation))
+//            );
+//            layout.setVerticalGroup(
+//               layout.createSequentialGroup()
+//                  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+//                       .addComponent(showResult)
+//                       .addComponent(name)
+//                       .addComponent(changeButton)
+//                       .addComponent(deleteButton))
+//                  .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+//                          .addComponent(testStatus)
+//                          .addComponent(marginComputation))
+//            );
 //    }
 //
 //    @Override
@@ -272,7 +273,7 @@
 //        }
 //    }
 //
-//	public void setMarginComputationBoxVisible(boolean visible) {
-//		marginComputation.setVisible(visible);
-//	}
+//  public void setMarginComputationBoxVisible(boolean visible) {
+//    marginComputation.setVisible(visible);
+//  }
 //}

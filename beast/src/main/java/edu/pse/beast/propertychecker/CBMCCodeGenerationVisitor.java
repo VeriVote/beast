@@ -713,7 +713,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                         + splitLines + "[" + i + "]);");
 
                 code.add("for(int i = 0; i < V; i++) {");
-                code.add("	" + tupelVotes.get(i).toLowerCase() + "[i] = " + tmp + ".arr[i];");
+                code.add("  " + tupelVotes.get(i).toLowerCase() + "[i] = " + tmp + ".arr[i];");
                 code.add("}");
 
                 // set the size value for this array to its new size:
@@ -731,7 +731,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             // correct
 
             code.add("for(int i = 0; i < V; i++) {");
-            code.add("	" + tupelVotes.get(tupelSize - 1).toLowerCase() + "[i] = " + tmp + ".arr[i];");
+            code.add("  " + tupelVotes.get(tupelSize - 1).toLowerCase() + "[i] = " + tmp + ".arr[i];");
             code.add("}");
 
         } else { // we have 2 dim
@@ -745,9 +745,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                         + splitLines + "[" + i + "]);");
 
                 code.add("for(int i = 0; i < V; i++) {");
-                code.add("	for(int j = 0; j < C; j++) {");
-                code.add("	" + tupelVotes.get(i).toLowerCase() + "[i][j] = " + tmp + ".arr[i][j];");
-                code.add("	}");
+                code.add("  for(int j = 0; j < C; j++) {");
+                code.add("  " + tupelVotes.get(i).toLowerCase() + "[i][j] = " + tmp + ".arr[i][j];");
+                code.add("  }");
                 code.add("}");
 
                 // set the size value for this array to its new size:
@@ -766,9 +766,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             // here?
 
             code.add("for(int i = 0; i < V; i++) {");
-            code.add("	for(int j = 0; j < C; j++) {");
-            code.add("	" + tupelVotes.get(tupelSize - 1).toLowerCase() + "[i][j] = " + tmp + ".arr[i][j];");
-            code.add("	}");
+            code.add("  for(int j = 0; j < C; j++) {");
+            code.add("  " + tupelVotes.get(tupelSize - 1).toLowerCase() + "[i][j] = " + tmp + ".arr[i][j];");
+            code.add("  }");
             code.add("}");
         }
         // finished the split
@@ -812,9 +812,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             code.add("}");
         } else { // we have two dimensions
             code.add("for(int i = 0; i < V; i++) {");
-            code.add("	for(int j = 0; j < C; j++) {");
+            code.add("  for(int j = 0; j < C; j++) {");
             code.add(voteToSaveInto + "[i][j] = " + voteInput + "[i][j];");
-            code.add("	}");
+            code.add("  }");
             code.add("}");
         }
 
@@ -979,9 +979,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             code.add("}");
         } else { // we have two dimensions
             code.add("for(int i = 0; i < V; i++) {");
-            code.add("	for(int j = 0; j < C; j++) {");
+            code.add("  for(int j = 0; j < C; j++) {");
             code.add(voteToSaveInto + "[i][j] = " + voteInput + "[i][j];");
-            code.add("	}");
+            code.add("  }");
             code.add("}");
         }
 

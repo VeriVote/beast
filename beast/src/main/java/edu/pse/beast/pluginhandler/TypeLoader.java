@@ -17,11 +17,11 @@ import edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
 
 public class TypeLoader {
 
+    public static boolean init = false;
+
     private static List<InputType> availableInTypes = new ArrayList<InputType>();
 
     private static List<OutputType> availableOutTypes = new ArrayList<OutputType>();
-
-    public static boolean init = false;
 
     public static void loadTypes() { // TODO load add-ons, too
         availableInTypes.add(new SingleChoice());
@@ -90,5 +90,4 @@ public class TypeLoader {
         }
         return null;
     }
-
 }

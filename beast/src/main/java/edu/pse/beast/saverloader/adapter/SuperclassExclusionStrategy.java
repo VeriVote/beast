@@ -40,7 +40,7 @@ public class SuperclassExclusionStrategy implements ExclusionStrategy {
     private Field getField(Class<?> theClass, String fieldName) {
         try {
             return theClass.getDeclaredField(fieldName);
-        } catch (Exception e) {
+        } catch (NoSuchFieldException | SecurityException e) {
             return null;
         }
     }

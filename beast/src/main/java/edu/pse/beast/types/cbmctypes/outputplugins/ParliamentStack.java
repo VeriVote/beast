@@ -244,7 +244,7 @@ public class ParliamentStack extends CBMCOutputType {
             try {
                 toReturn = toReturn + GUIController.getController().getElectionSimulation().getPartyName(index) + ": "
                         + currentValue + ", ";
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 toReturn = toReturn + index + ": " + currentValue + ", ";
             }
 

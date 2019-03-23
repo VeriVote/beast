@@ -24,19 +24,17 @@
 // * @author Justin
 // */
 //public class TestHelper {
-//	private CentralObjectProvider centralObjectProvider;
-//	private ObjectRefsForBuilder refs;
-//	
-//	public TestHelper() {
-//		OptionsInterface optionsInterface = new OptionsInterface();
-//        StringLoaderInterface stringIf = new StringLoaderInterface("en"); 
+//    private CentralObjectProvider centralObjectProvider;
+//    private ObjectRefsForBuilder refs;
+//
+//    public TestHelper() {
+//        OptionsInterface optionsInterface = new OptionsInterface();
+//        StringLoaderInterface stringIf = new StringLoaderInterface("en");
 //        SaverLoaderInterface saverLoaderIF = new SaverLoaderInterface();
 //        LanguageOptions langOpts = optionsInterface.getLanguageOptions(stringIf);
-//        refs = new ObjectRefsForBuilder(
-//                optionsInterface, stringIf, 
-//                langOpts, saverLoaderIF);
-//	}
-//
+//        refs = new ObjectRefsForBuilder(optionsInterface, stringIf,
+//                                        langOpts, saverLoaderIF);
+//    }
 //
 //    public void startNewBEASTInstance() throws InterruptedException {
 //        BEASTCommunicator communicator = new BEASTCommunicator();
@@ -61,29 +59,32 @@
 //    public PropertyList getPropListOfCurrentInstance() {
 //        return (PropertyList) (centralObjectProvider.getPreAndPostConditionsSource());
 //    }
-//    
+//
 //    public PropertyList getPropertyList() {
-//    	CElectionDescriptionEditor cElectionEditor = new CElectionDescriptionEditorBuilder().createCElectionDescriptionEditor(refs);
-//    	BooleanExpEditor booleanExpEditor = new BooleanExpEditorBuilder().createBooleanExpEditorObject(refs, cElectionEditor);
-//    	return new PropertyList(new PLModel(), booleanExpEditor, null);
+//        CElectionDescriptionEditor cElectionEditor =
+//            new CElectionDescriptionEditorBuilder().createCElectionDescriptionEditor(refs);
+//        BooleanExpEditor booleanExpEditor =
+//            new BooleanExpEditorBuilder().createBooleanExpEditorObject(refs, cElectionEditor);
+//        return new PropertyList(new PLModel(), booleanExpEditor, null);
 //    }
 //
 //    public BooleanExpEditor getBooleanExpEditor() {
-//
-//        CElectionDescriptionEditor cElectionEditor = new CElectionDescriptionEditorBuilder().createCElectionDescriptionEditor(refs);
+//        CElectionDescriptionEditor cElectionEditor =
+//            new CElectionDescriptionEditorBuilder().createCElectionDescriptionEditor(refs);
 //        return new BooleanExpEditorBuilder().createBooleanExpEditorObject(refs, cElectionEditor);
-//        
+//
 //        /* Just what you need
 //        cElectionEditor = new CElectionDescriptionEditorBuilder().createCElectionDescriptionEditor(refs);
-//        booleanExpEditor = new BooleanExpEditorBuilder().createBooleanExpEditorObject(refs, cElectionEditor);        
+//        booleanExpEditor = new BooleanExpEditorBuilder().createBooleanExpEditorObject(refs, cElectionEditor);
 //        propertyList = new PropertyListBuilder().createPropertyList(refs, booleanExpEditor);
 //        checkerCommunicator = new PropertyChecker("cbmc"); //this must be done via the checkerfactory at some point
-//        paramEd = new ParameterEditorBuilder().createParameterEditor(refs, cElectionEditor,
-//                booleanExpEditor, propertyList, this);
+//        paramEd =
+//            new ParameterEditorBuilder().createParameterEditor(refs, cElectionEditor,
+//                                                               booleanExpEditor, propertyList, this);
 //        paramEd.addCheckListener(communicator);
-//        langOpts.reapply();*/
+//        langOpts.reapply(); */
 //    }
-//    
+//
 //    public void performKeystrokesConcurrently(int[] strokes, long timeBefore, long timeBetween) {
 //        Thread t = new Thread(() -> {
 //            try {
@@ -99,15 +100,15 @@
 //        });
 //        t.start();
 //    }
-//    
+//
 //    public void performShortcut(int key, long timeoutafter) throws InterruptedException {
 //        Robot r = null;
-//		try {
-//			r = new Robot();
-//		} catch (AWTException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+//        try {
+//            r = new Robot();
+//        } catch (AWTException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
 //        r.keyPress(KeyEvent.VK_CONTROL);
 //        r.keyPress(key);
 //        r.keyRelease(key);
@@ -117,12 +118,12 @@
 //
 //    public void performKeystrokes(int[] keys, long waittimeBetweenStrokes) throws InterruptedException {
 //        Robot r = null;
-//		try {
-//			r = new Robot();
-//		} catch (AWTException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+//        try {
+//            r = new Robot();
+//        } catch (AWTException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
 //        for (int i = 0; i < keys.length; i++) {
 //            r.keyPress(keys[i]);
 //            r.keyRelease(keys[i]);

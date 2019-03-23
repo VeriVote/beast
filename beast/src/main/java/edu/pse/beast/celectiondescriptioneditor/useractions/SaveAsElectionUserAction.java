@@ -21,9 +21,9 @@
 //        ElectionDescription currentlyLoaded = electionDescriptionEditor.getElectionDescription();
 //        if (electionDescriptionEditor.getFileChooser().saveObject(currentlyLoaded, true)) {
 //            electionDescriptionEditor.getChangeHandler().updatePreValue();
-//            electionDescriptionEditor.getView().setWindowTitle(electionDescriptionEditor.getElectionDescription().getName());
+//            electionDescriptionEditor.getView()
+//            .setWindowTitle(electionDescriptionEditor.getElectionDescription().getName());
 //            electionDescriptionEditor.findErrorsAndDisplayThem();
 //        }
 //    }
-//
 //}

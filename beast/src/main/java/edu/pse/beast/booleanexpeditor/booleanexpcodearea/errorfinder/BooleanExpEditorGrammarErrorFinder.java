@@ -20,9 +20,9 @@ import edu.pse.beast.codearea.errorhandling.CodeError;
  *
  * @author Nikolai
  */
-public class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListener {
-    private final ArrayList<CodeError> errors = new ArrayList<>();
+public final class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListener {
     private static BooleanExpEditorGrammarErrorFinder finder;
+    private final ArrayList<CodeError> errors = new ArrayList<>();
 
     private BooleanExpEditorGrammarErrorFinder(BooleanExpANTLRHandler antlrHandler) {
         antlrHandler.getParser().addErrorListener(this);

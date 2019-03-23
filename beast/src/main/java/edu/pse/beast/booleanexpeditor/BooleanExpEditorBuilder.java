@@ -78,7 +78,8 @@
 //        //creation of ErrorWindow object
 //        ErrorWindow errorWindow = new ErrorWindow(window.getErrorTextPane(), objectRefsForBuilder.getStringIF());
 //
-//        //creation of BooleanExpCodeAreas objects using the JTextPanes from the BooleanExpEditorWindow instance "window"
+//        //creation of BooleanExpCodeAreas objects using the JTextPanes from the
+//        // BooleanExpEditorWindow instance "window"
 //        BooleanExpCodeAreaBuilder codeAreaBuilder = new BooleanExpCodeAreaBuilder();
 //        BooleanExpCodeArea preConditionCodeArea = codeAreaBuilder
 //                .createBooleanExpCodeAreaObject(objectRefsForBuilder,
@@ -96,7 +97,8 @@
 //                postConditionCodeArea.getPane(), symbolicVariableList);
 //
 //        //create CodeAreaFocusListener
-//        CodeAreaFocusListener codeAreaFocusListener = new CodeAreaFocusListener(preConditionCodeArea, postConditionCodeArea);
+//        CodeAreaFocusListener codeAreaFocusListener =
+//            new CodeAreaFocusListener(preConditionCodeArea, postConditionCodeArea);
 //
 //        //create FileChooser
 //        FileChooser fileChooser = new FileChooser(
@@ -210,7 +212,8 @@
 //
 //        ArrayList<ActionIdAndListener> constantsList = new ArrayList<>();
 //        UserAction votersConstant = createConstantUserAction("Voters", UnifiedNameContainer.getVoterKey(), editor);
-//        UserAction candidatesConstant = createConstantUserAction("Candidates", UnifiedNameContainer.getCandidateKey(), editor);
+//        UserAction candidatesConstant =
+//            createConstantUserAction("Candidates", UnifiedNameContainer.getCandidateKey(), editor);
 //        UserAction seatsConstant = createConstantUserAction("Seats", UnifiedNameContainer.getSeatsKey(), editor);
 //        constantsList.add(createFromUserAction(votersConstant));
 //        constantsList.add(createFromUserAction(candidatesConstant));

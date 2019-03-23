@@ -27,8 +27,8 @@ public class SyntaxHLCompositeFilter extends DocumentFilter {
 
     /**
      *
-     * @param textPane
-     * @param regexAndColorList
+     * @param textPane the text pane
+     * @param regexAndColorList the regex and color list
      */
     public SyntaxHLCompositeFilter(JTextPane textPane, ArrayList<RegexAndColor> regexAndColorList) {
         this.regexAndColorList = regexAndColorList;

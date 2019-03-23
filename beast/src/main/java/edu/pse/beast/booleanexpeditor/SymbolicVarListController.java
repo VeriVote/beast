@@ -74,8 +74,9 @@
 //    private void updateJlist() {
 //        jListModel.clear();
 //        for (SymbolicVariable symbolicVariable : symbolicVariableList.getSymbolicVariables()) {
-//                jListModel.addElement(stringLoaderInterface.getBooleanExpEditorStringResProvider().
-//                        getBooleanExpEditorSymbVarListRes().getStringFromID(symbolicVariable.getInternalTypeContainer().
+//            jListModel.addElement(stringLoaderInterface.getBooleanExpEditorStringResProvider().
+//                getBooleanExpEditorSymbVarListRes().getStringFromID(
+//                    symbolicVariable.getInternalTypeContainer().
 //                        getInternalType().toString()) + " " + symbolicVariable.getId());
 //        }
 //    }

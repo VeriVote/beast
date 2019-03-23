@@ -24,7 +24,8 @@
 //     * @param window The view of PropertyList
 //     */
 //    public PropertyListMenuBarHandler(String[] headingIds,
-//            ArrayList<ArrayList<ActionIdAndListener>> actionIDAndListener, StringResourceLoader resLoader, PropertyListWindow window) {
+//                                      ArrayList<ArrayList<ActionIdAndListener>> actionIDAndListener,
+//                                      StringResourceLoader resLoader, PropertyListWindow window) {
 //        super(headingIds, actionIDAndListener, resLoader);
 //        this.window = window;
 //        this.window.setJMenuBar(createdMenuBar);
@@ -35,5 +36,4 @@
 //        updateStringResLoader(stringResIF.getPropertyListStringResProvider().getMenuStringRes());
 //        window.setJMenuBar(createdMenuBar);
 //    }
-//
 //}

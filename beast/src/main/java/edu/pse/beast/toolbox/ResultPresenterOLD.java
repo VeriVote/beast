@@ -254,53 +254,53 @@ public class ResultPresenterOLD {
         return text;
     }
 
-//	public static void presentSuccess() {
-//		erasePane();
-//		appendPane(srl.getStringFromID("successMessage"));
-//		packFrame();
-//	}
+//  public static void presentSuccess() {
+//    erasePane();
+//    appendPane(srl.getStringFromID("successMessage"));
+//    packFrame();
+//  }
 
-//	public static void presentTimeOut() {
-//		erasePane();
-//		appendPane(srl.getStringFromID("timeoutMessage"));
-//		packFrame();
-//	}
+//  public static void presentTimeOut() {
+//    erasePane();
+//    appendPane(srl.getStringFromID("timeoutMessage"));
+//    packFrame();
+//  }
 
-//	public static void presentCancel() {
-//		erasePane();
-//		appendPane(srl.getStringFromID("cancelMessage"));
-//		packFrame();
-//	}
+//  public static void presentCancel() {
+//    erasePane();
+//    appendPane(srl.getStringFromID("cancelMessage"));
+//    packFrame();
+//  }
 //
-//	public static void resetResult() {
-//		erasePane();
-//		result.setText(srl.getStringFromID("noResultYet"));
-//		packFrame();
-//	}
+//  public static void resetResult() {
+//    erasePane();
+//    result.setText(srl.getStringFromID("noResultYet"));
+//    packFrame();
+//  }
 
-//	// getter and setter
-//	public JButton getShowResult() {
-//		return showResult;
-//	}
+//  // getter and setter
+//  public JButton getShowResult() {
+//    return showResult;
+//  }
 //
-//	public FailureExample getExample() {
-//		return example;
-//	}
+//  public FailureExample getExample() {
+//    return example;
+//  }
 //
-//	public static void setExample(FailureExample example) {
-//		this.example = example;
-//	}
+//  public static void setExample(FailureExample example) {
+//    this.example = example;
+//  }
 //
-//	private static void setShowResult(JButton showResult) {
-//		this.showResult = showResult;
-//	}
+//  private static void setShowResult(JButton showResult) {
+//    this.showResult = showResult;
+//  }
 //
-//	private JButton getExport() {
-//		return export;
-//	}
+//  private JButton getExport() {
+//    return export;
+//  }
 //
-//	private static void setExport(JButton export) {
-//		this.export = export;
-//	}
+//  private static void setExport(JButton export) {
+//    this.export = export;
+//  }
 
 }

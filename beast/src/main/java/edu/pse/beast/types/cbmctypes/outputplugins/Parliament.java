@@ -238,7 +238,7 @@ public class Parliament extends CBMCOutputType {
             try {
                 toReturn = toReturn + GUIController.getController().getElectionSimulation()
                         .getPartyName(Integer.parseInt(currentValue)) + ", ";
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 toReturn = toReturn + currentValue + ", ";
             }
         }

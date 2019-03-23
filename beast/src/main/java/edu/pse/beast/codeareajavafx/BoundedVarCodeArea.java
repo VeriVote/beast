@@ -54,10 +54,10 @@ public class BoundedVarCodeArea extends AutoCompletionCodeArea implements MenuBa
     }
 
     /**
-     * sets the description for this property code are (either pre or post prop
+     * sets the description for this property code area (either pre or post prop
      * description)
      *
-     * @param description
+     * @param description the description
      */
     public void setDescription(FormalPropertiesDescription description) {
         saveDescription(description);

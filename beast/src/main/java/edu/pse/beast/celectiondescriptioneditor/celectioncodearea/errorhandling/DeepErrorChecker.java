@@ -55,6 +55,7 @@ public final class DeepErrorChecker {
      * checks the given list of c code (one entry per line) for errors
      * 
      * @param toCheck the code to check
+     * @param lineOffset line offset
      * @return a list of codeErros
      */
     public static List<CodeError> checkCodeForErrors(List<String> toCheck, int lineOffset) {

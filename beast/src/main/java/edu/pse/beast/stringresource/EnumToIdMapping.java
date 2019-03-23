@@ -14,7 +14,7 @@
 //    private EnumToIdMapping() {}
 //
 //    public static String getIdStringForEnumString(String enumString) {
-//        if(enumStringsToIds == null) createEnumStringsToIds();
+//        if (enumStringsToIds == null) createEnumStringsToIds();
 //        return enumStringsToIds.get(enumString);
 //    }
 //
@@ -26,7 +26,7 @@
 //    public static String getIDInFile(ElectionTypeContainer.ElectionInputTypeIds id) {
 //        return getIdStringForEnumString(id.toString());
 //    }
-//    
+//
 //    /**
 //     * used to get the string for the output type
 //     * @param id the input type id
@@ -38,8 +38,8 @@
 //
 //    public static String getEnumStringFromIdInFile(String idInFile) {
 //        for (Map.Entry<String, String> e:
-//             enumStringsToIds.entrySet()) {
-//            if(e.getValue().equals(idInFile))
+//                 enumStringsToIds.entrySet()) {
+//            if (e.getValue().equals(idInFile))
 //                return e.getKey();
 //        }
 //        return null;
@@ -51,18 +51,14 @@
 //    }
 //
 //    private static void createElectionTypeStringMapping() {
-//    	
-//    	ElectionInputTypeIds[] inTypes = ElectionTypeContainer.ElectionInputTypeIds.values();
-//    	
-//    	for (int i = 0; i < inTypes.length; i++) {
-//			enumStringsToIds.put(inTypes[i].toString(), inTypes[i].toString());
-//		}
-//    	
-//    	ElectionOutputTypeIds[] outTypes = ElectionTypeContainer.ElectionOutputTypeIds.values();
+//        ElectionInputTypeIds[] inTypes = ElectionTypeContainer.ElectionInputTypeIds.values();
+//        for (int i = 0; i < inTypes.length; i++) {
+//            enumStringsToIds.put(inTypes[i].toString(), inTypes[i].toString());
+//        }
 //
-//    	
-//    	for (int i = 0; i < outTypes.length; i++) {
-//			enumStringsToIds.put(outTypes[i].toString(), outTypes[i].toString());
-//		}
+//        ElectionOutputTypeIds[] outTypes = ElectionTypeContainer.ElectionOutputTypeIds.values();
+//        for (int i = 0; i < outTypes.length; i++) {
+//            enumStringsToIds.put(outTypes[i].toString(), outTypes[i].toString());
+//        }
 //    }
 //}

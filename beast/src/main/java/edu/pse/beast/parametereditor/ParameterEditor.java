@@ -21,7 +21,6 @@
 // * @author Jonas
 // */
 //public class ParameterEditor implements ParameterSource, DisplaysStringsToUser {
-//
 //    private final ParameterEditorWindow window;
 //    private final CElectionDescriptionEditor cElectionDescriptionEditor;
 //    private final PropertyList propertyList;
@@ -164,7 +163,6 @@
 //        }
 //    }
 //
-//    
 //    /**
 //     * Toggles whether the ParameterEditor reacts to user input other than stopping
 //     * an analysis (to not interrupt an analysis)
@@ -225,24 +223,23 @@
 //        currentlyLoadedProject = project;
 //        getView().setWindowTitle(project.getName());
 //        window.displayText("", false, "");
-//
 //    }
 //
 //    @Override
 //    public void updateStringRes(StringLoaderInterface stringResIF) {
-//        fileChooser.updateStringRessourceLoader(stringResIF.getParameterEditorStringResProvider().getOtherStringRes());
+//        fileChooser.updateStringRessourceLoader(
+//            stringResIF.getParameterEditorStringResProvider().getOtherStringRes());
 //    }
-//    
+//
 //    public void setVoterAmount(int amount) {
 //        voterHandler.setMinAndMax(amount, amount);
 //    }
-//    
+//
 //    public void setCandidateAmount(int amount) {
 //        candHandler.setMinAndMax(amount, amount);
 //    }
-//    
+//
 //    public void setSeatAmount(int amount) {
-//    	
 //        seatHandler.setMinAndMax(amount, amount);
 //    }
 //}

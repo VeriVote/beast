@@ -44,7 +44,8 @@ public class CVariableErrorFinder {
         seperated.add("struct stack_result { unsigned int arr[" + UnifiedNameContainer.getCandidate() + "]; };");
 
         seperated.add(UnifiedNameContainer.getStruct_candidateList() + " { unsigned int "
-                + UnifiedNameContainer.getResult_arr_name() + "[" + UnifiedNameContainer.getCandidate() + "]; };"); // add
+                + UnifiedNameContainer.getResult_arr_name() + "["
+                + UnifiedNameContainer.getCandidate() + "]; };"); // add
                                                                                                                     // a
 
         seperated.add("void assume(int x) {}");

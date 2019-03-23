@@ -26,9 +26,9 @@
 //    public void perform() {
 //        //controller.setMarginComputationBoxVisible(!simulationWindow.isOpen());
 //        if (simulationWindow.isOpen()) {
-//        	simulationWindow.close();
+//          simulationWindow.close();
 //        } else {
-//        	simulationWindow.open();
+//          simulationWindow.open();
 //        }
 //    }
 //}

@@ -40,7 +40,9 @@ public final class CompilerAndExecutionerOLD {
             break;
         case Mac:
             ErrorForUserDisplayer.displayError(
-                    "MacOS is not supported yet, to simulate specific elections, extend the \"SystemSpecificCompilerandExecutioner\" .");
+                    "MacOS is not supported yet. "
+                    + "To simulate specific elections, "
+                    + "extend the \"SystemSpecificCompilerandExecutioner\" .");
             break;
         default:
             ErrorLogger.log("Warning, your OS couldn't be determined or is not supported yet.");
@@ -53,6 +55,7 @@ public final class CompilerAndExecutionerOLD {
      * checks the given list of c code (one entry per line) for errors
      *
      * @param toCheck the code to check
+     * @param result the result
      * @return a list of codeErros
      */
     public static List<String> compileAndRun(List<String> toCheck, Result result) {

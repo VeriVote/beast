@@ -27,7 +27,6 @@
 // */
 //public class PropertyList implements PreAndPostConditionsDescriptionSource,
 //        ResultPresenter, Runnable {
-//
 //    private PLModel model;
 //    private PropertyListWindow view;
 //    private BooleanExpEditor editor;
@@ -47,10 +46,10 @@
 //        this.model = model;
 //        this.editor = editor;
 //        view = new PropertyListWindow(this, model);
-//        
+//
 //        setChangeHandler(new PLChangeHandler(model));
 //        actionList = new LinkedList<DeleteDescriptionAction>();
-//        
+//
 //        model.initialize();
 //        this.fileChooser = fileChooser;
 //    }
@@ -60,19 +59,18 @@
 //     * @param model Only needs the model for testing purposes
 //     */
 //    public PropertyList(PLModel model) {
-//    	this(model, null, null);
+//        this(model, null, null);
 //    }
-//    
+//
 //    /**
 //     * Another Test constructor
 //     * @param model Needs the model for testing purposes
 //     * @param editor And the editor
 //     */
 //    public PropertyList(PLModel model, BooleanExpEditor editor) {
-//    	this(model, editor, null);
+//        this(model, editor, null);
 //    }
 //
-//    
 //    /**
 //     * Displays the view.
 //     */
@@ -83,7 +81,7 @@
 //    @Override
 //    public void run() {
 //    }
-//    
+//
 //    /**
 //     * Changes the name of the property.
 //     * @param prop The property you want to change
@@ -119,10 +117,10 @@
 //     * @param prop The property to delete
 //     */
 //    public void deleteProperty(PropertyItem prop) {
-//    	DeleteDescriptionAction act = new DeleteDescriptionAction(model, prop, editor);
-//    	if (act.perform()) {
-//    		actionList.add(act);
-//    	}
+//        DeleteDescriptionAction act = new DeleteDescriptionAction(model, prop, editor);
+//        if (act.perform()) {
+//            actionList.add(act);
+//        }
 //    }
 //
 //    /**
@@ -130,7 +128,7 @@
 //     * @param prop The property to add
 //     */
 //    public void addDescription(PropertyItem prop) {
-//    	model.addDescription(prop);
+//        model.addDescription(prop);
 //    }
 //
 //    /**
@@ -139,21 +137,21 @@
 //    public void addNewProperty() {
 //        model.addNewProperty(editor);
 //    }
-//    
+//
 //    /**
 //     * Resets the whole list.
 //     */
-//	public void setNewList() {
-//		model.setNewList();
-//	}
-//	
+//    public void setNewList() {
+//        model.setNewList();
+//    }
+//
 //    /**
 //     * Returns the list of property items in the list
 //     * @return An array list with the property items
 //     */
-//	public ArrayList<PropertyItem> getList() {
-//		return model.getPropertyList();
-//	}
+//    public ArrayList<PropertyItem> getList() {
+//        return model.getPropertyList();
+//    }
 //
 //    @Override
 //    public boolean isCorrect() {
@@ -211,10 +209,10 @@
 //        return result;
 //    }
 //    
-//	@Override
-//	public List<PropertyAndMarginBool> getPreAndPostPropertiesDescriptionsCheckAndMargin() {
-//		editor.updatePreAndPostConditionObject();
-//		ArrayList<PropertyAndMarginBool> result = new ArrayList<PropertyAndMarginBool>();
+//    @Override
+//    public List<PropertyAndMarginBool> getPreAndPostPropertiesDescriptionsCheckAndMargin() {
+//        editor.updatePreAndPostConditionObject();
+//        ArrayList<PropertyAndMarginBool> result = new ArrayList<PropertyAndMarginBool>();
 //        ArrayList<PropertyItem> from = model.getPropertyList();
 //        for (PropertyItem prop : from) {
 //            if (prop.getTestStatus()) {
@@ -225,37 +223,32 @@
 //            }
 //        }
 //        return result;
-//	}
-//	
+//  }
 //
-////	@Override
-////	public List<Integer> referenceResult(List<Result> results) {
-////		editor.updatePreAndPostConditionObject();
-////		ArrayList<PropertyAndMarginBool> result = new ArrayList<PropertyAndMarginBool>();
-////        ArrayList<PropertyItem> from = model.getPropertyList();
-////        
-////        int currentResult = 0; //we start from result 0;
-////        
-////        for (PropertyItem prop : from) {
-////            if (prop.getTestStatus()) {
-////            	//save a reference to the "parent" object
-////            	Result parent = results.get(currentResult);
+////  @Override
+////  public List<Integer> referenceResult(List<Result> results) {
+////      editor.updatePreAndPostConditionObject();
+////      ArrayList<PropertyAndMarginBool> result = new ArrayList<PropertyAndMarginBool>();
+////      ArrayList<PropertyItem> from = model.getPropertyList();
 ////
-////            	currentResult++; //increase the pointer to the next result object to look at
-////            	
-////                if (prop.getMarginStatus()) { //if we now have a second object on this property:
-////                	
-////                	parent.addSubResult(results.get(currentResult));
-////                	
-////                	currentResult++;
-////                }
-////            } else
-////            if (prop.getMarginStatus()) {
-////                currentResult++;
-////            }
-////        }
-////		return null;
-////	}
+////      int currentResult = 0; //we start from result 0;
+////      for (PropertyItem prop : from) {
+////          if (prop.getTestStatus()) {
+////              // save a reference to the "parent" object
+////              Result parent = results.get(currentResult);
+////
+////              currentResult++; //increase the pointer to the next result object to look at
+////              if (prop.getMarginStatus()) { //if we now have a second object on this property:
+////                  parent.addSubResult(results.get(currentResult));
+////                  currentResult++;
+////              }
+////          } else
+////              if (prop.getMarginStatus()) {
+////                  currentResult++;
+////              }
+////          }
+////          return null;
+////  }
 //
 //    @Override
 //    public void presentResult(ResultInterface res, Integer index) {
@@ -272,17 +265,17 @@
 //     * @return The DeleteDescriptionAction that was lastly performed
 //     */
 //    public DeleteDescriptionAction getLastAction() {
-//    	if (actionList.isEmpty()) {
-//    		return null;
-//    	}
-//    	return actionList.removeLast();
+//      if (actionList.isEmpty()) {
+//        return null;
+//      }
+//      return actionList.removeLast();
 //    }
 //    
 //    /**
 //     * Resets the delete action list (e.g. do it when a new list is loaded).
 //     */
 //    public void resetActionList() {
-//    	actionList = new LinkedList<DeleteDescriptionAction>();
+//      actionList = new LinkedList<DeleteDescriptionAction>();
 //    }
 //    
 //    
@@ -330,20 +323,20 @@
 //     * Returns the editor for boolean expressions.
 //     * @return The editor object
 //     */
-//	public BooleanExpEditor getEditor() {
-//		return editor;
-//	}
+//  public BooleanExpEditor getEditor() {
+//    return editor;
+//  }
 //
-//	public void setMarginStatus(PropertyItem prop, boolean newStatus) {
-//		model.setMarginStatus(prop, newStatus);
-//	}
+//  public void setMarginStatus(PropertyItem prop, boolean newStatus) {
+//    model.setMarginStatus(prop, newStatus);
+//  }
 //
-//	public void setMarginComputationBoxVisible(boolean visible) {
-//		view.setShowsMarginBox(visible);
-//		List<ListItem> items = view.getList();
-//		for (Iterator iterator = items.iterator(); iterator.hasNext();) {
-//			ListItem listItem = (ListItem) iterator.next();
-//			listItem.setMarginComputationBoxVisible(visible);
-//		}
-//	}
+//  public void setMarginComputationBoxVisible(boolean visible) {
+//    view.setShowsMarginBox(visible);
+//    List<ListItem> items = view.getList();
+//    for (Iterator iterator = items.iterator(); iterator.hasNext();) {
+//      ListItem listItem = (ListItem) iterator.next();
+//      listItem.setMarginComputationBoxVisible(visible);
+//    }
+//  }
 //}

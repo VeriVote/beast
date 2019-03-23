@@ -41,7 +41,7 @@ public class OpenCloseCharHighlighter implements CaretListener {
     @Override
     public void caretUpdate(CaretEvent ce) {
         removeAllHighlights();
-        char surroundingChars[] = { ' ', ' ' };
+        char surroundingChars[] = {' ', ' '};
         try {
             surroundingChars[0] = JTextPaneToolbox.getCharToTheLeftOfCaret(pane).charAt(0);
             surroundingChars[1] = JTextPaneToolbox.getCharToTheRightOfCaret(pane).charAt(0);

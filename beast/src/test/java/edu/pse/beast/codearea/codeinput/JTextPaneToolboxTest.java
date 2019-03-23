@@ -75,7 +75,7 @@ public class JTextPaneToolboxTest {
         JTextPane pane = new JTextPane();
         pane.setText("12\n\n34\n5\n6");
         ArrayList<Integer> linesBetween = JTextPaneToolbox.getLinesBetween(pane, 0, 5);
-        int lines[] = { 0, 1, 2 };
+        int lines[] = {0, 1, 2};
         assertEquals(lines.length, linesBetween.size());
         for (int i = 0; i < lines.length; i++) {
             assertEquals(lines[i], (int) linesBetween.get(i));

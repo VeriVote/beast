@@ -21,91 +21,86 @@
 // * @author Justin
 // */
 //public class PropertyListControllerTest {
-//	
-//	static PropertyList list;
-//	static BooleanExpEditor editor;
+//    static PropertyList list;
+//    static BooleanExpEditor editor;
 //
-//	@BeforeClass
-//	public static void setUpBeforeClass() throws Exception {
-//		TestHelper helper = new TestHelper();
-//		//helper.startNewBEASTInstance();
-//		//list = helper.getPropertyList();
-//		
-//		editor = helper.getBooleanExpEditor();
-//		list = new PropertyList(new PLModel(), editor);
-//	}
+//    @BeforeClass
+//    public static void setUpBeforeClass() throws Exception {
+//        TestHelper helper = new TestHelper();
+//        //helper.startNewBEASTInstance();
+//        //list = helper.getPropertyList();
 //
-//	@AfterClass
-//	public static void tearDownAfterClass() throws Exception {
-//	}
+//        editor = helper.getBooleanExpEditor();
+//        list = new PropertyList(new PLModel(), editor);
+//    }
 //
-//	@Before
-//	public void setUp() throws Exception {
-//		list.addNewProperty();
-//		list.addNewProperty();
-//		list.addNewProperty();
-//	}
+//    @AfterClass
+//    public static void tearDownAfterClass() throws Exception {
+//    }
 //
-//	@After
-//	public void tearDown() throws Exception {
-//		list.setNewList();
-//	}
+//    @Before
+//    public void setUp() throws Exception {
+//        list.addNewProperty();
+//        list.addNewProperty();
+//        list.addNewProperty();
+//    }
 //
-//	@Test
-//	public void changeNameTest() {
-//		PropertyItem item = list.getList().get(0);
-//		editor.letUserEditPreAndPostConditions(item.getDescription(), false);
-//		list.changeName(item, "testname");
-//		
-//		assertEquals(item.getDescription().getName(), "testname");
-//		
-//		assertFalse(list.changeName(list.getList().get(1), "testname"));
-//	}
-//	
-//	@Test
-//	public void changeTestStatusTest() {
-//		boolean before = list.getList().get(0).getTestStatus();
-//		list.setTestStatus(list.getList().get(0), !before);
-//		assertEquals(list.getList().get(0).getTestStatus(), !before);
-//	}
-//	
-//	@Test
-//	public void deleteItemTest() {
-//		list.deleteProperty(list.getList().get(0));
-//		assertEquals(list.getList().size(), 2);
-//		//assertFalse(list.deleteProperty(null));
-//		list.deleteProperty(list.getList().get(1));
-//		assertEquals(list.getList().size(), 1);
-//	}
-//	
-//	@Test
-//	public void addDescriptionTest() {
-//		PropertyItem item = new PropertyItem();
-//		item.setDescriptionName("testname");
-//		list.addDescription(item);
-//		assertEquals(list.getList().size(), 4);
-//		
-//		list.addDescription(item);
-//		assertEquals(list.getList().get(3), item);
-//	}
-//	
-//	@Test
-//	public void addPropertyTest() {
-//		list.addNewProperty();
-//		assertEquals(list.getList().size(), 4);
-//	}
-//	
-//	@Test
-//	public void editPropertyTest() {
-//		list.editProperty(list.getList().get(1));
-//	}
-//	
-//	@Test
-//	public void getTestedList() {
-//		list.getList().get(0).setTestStatus(true);
-//		ArrayList<PreAndPostConditionsDescription> testedlist = list.getPreAndPostConditionsDescriptionsCheck();
-//		assertEquals(testedlist.size(), 1);
-//	}
-//	
+//    @After
+//    public void tearDown() throws Exception {
+//        list.setNewList();
+//    }
 //
+//    @Test
+//    public void changeNameTest() {
+//        PropertyItem item = list.getList().get(0);
+//        editor.letUserEditPreAndPostConditions(item.getDescription(), false);
+//        list.changeName(item, "testname");
+//
+//        assertEquals(item.getDescription().getName(), "testname");
+//        assertFalse(list.changeName(list.getList().get(1), "testname"));
+//    }
+//
+//    @Test
+//    public void changeTestStatusTest() {
+//        boolean before = list.getList().get(0).getTestStatus();
+//        list.setTestStatus(list.getList().get(0), !before);
+//        assertEquals(list.getList().get(0).getTestStatus(), !before);
+//    }
+//
+//    @Test
+//    public void deleteItemTest() {
+//        list.deleteProperty(list.getList().get(0));
+//        assertEquals(list.getList().size(), 2);
+//        //assertFalse(list.deleteProperty(null));
+//        list.deleteProperty(list.getList().get(1));
+//        assertEquals(list.getList().size(), 1);
+//    }
+//
+//    @Test
+//    public void addDescriptionTest() {
+//        PropertyItem item = new PropertyItem();
+//        item.setDescriptionName("testname");
+//        list.addDescription(item);
+//        assertEquals(list.getList().size(), 4);
+//        list.addDescription(item);
+//        assertEquals(list.getList().get(3), item);
+//  }
+//
+//    @Test
+//    public void addPropertyTest() {
+//        list.addNewProperty();
+//        assertEquals(list.getList().size(), 4);
+//    }
+//
+//    @Test
+//    public void editPropertyTest() {
+//        list.editProperty(list.getList().get(1));
+//    }
+//
+//    @Test
+//    public void getTestedList() {
+//        list.getList().get(0).setTestStatus(true);
+//        ArrayList<PreAndPostConditionsDescription> testedlist = list.getPreAndPostConditionsDescriptionsCheck();
+//        assertEquals(testedlist.size(), 1);
+//    }
 //}

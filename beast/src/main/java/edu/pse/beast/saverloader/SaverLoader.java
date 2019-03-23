@@ -20,7 +20,7 @@ public interface SaverLoader<T> {
      * Creates a String from a given object, that can then be saved to a file and
      * later given to createFromSaveString() to retrieve the saved object.
      *
-     * @param object the Object to save
+     * @param toSave the Object to save
      * @return the saveString
      */
     String createSaveString(T toSave);

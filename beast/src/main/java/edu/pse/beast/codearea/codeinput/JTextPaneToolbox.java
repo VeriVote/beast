@@ -122,7 +122,7 @@ public class JTextPaneToolbox {
      * @param start the starting position
      * @param end   the last abs pos
      * @return the line numbers between the abs pos start and end
-     * @throws BadLocationException
+     * @throws BadLocationException when location does not exist
      */
     public static ArrayList<Integer> getLinesBetween(JTextPane pane, int start, int end) throws BadLocationException {
         int startingline = transformToLineNumber(pane, start);
@@ -193,7 +193,7 @@ public class JTextPaneToolbox {
      * finds the absolute position of the beginning of the word in which the current
      * caret position is: "asd 12|asd asd" returns 3
      *
-     * @param pane
+     * @param pane the text pane
      * @return the absolute position of the beginning of the word on which the caret
      *         is centered
      */

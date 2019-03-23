@@ -10,34 +10,32 @@
 // *
 // */
 //public class DeleteDescriptionAction {
-//	PLModel model;
-//	PropertyItem item;
-//	BooleanExpEditor editor;
+//    PLModel model;
+//    PropertyItem item;
+//    BooleanExpEditor editor;
 //
-//	/**
-//	 * Constructor
-//	 * @param model The data model of the property list
-//	 * @param item The deleted property item
-//	 */
-//	public DeleteDescriptionAction(PLModel model, PropertyItem item, BooleanExpEditor editor) {
-//		this.model = model;
-//		this.item = item;
-//		this.editor = editor;
-//	}
+//    /**
+//     * Constructor
+//     * @param model The data model of the property list
+//     * @param item The deleted property item
+//     */
+//    public DeleteDescriptionAction(PLModel model, PropertyItem item, BooleanExpEditor editor) {
+//        this.model = model;
+//        this.item = item;
+//        this.editor = editor;
+//  }
 //
-//	
-//	/**
-//	 * Deletes the property.
-//	 */
-//	public boolean perform() {
-//		return model.deleteProperty(item, editor);
-//	}
+//  /**
+//   * Deletes the property.
+//   */
+//  public boolean perform() {
+//      return model.deleteProperty(item, editor);
+//  }
 //
-//	/**
-//	 * Undo the deletion of the property.
-//	 */
-//	public void undo() {
-//		model.addDescription(item);
-//	}
-//
+//  /**
+//   * Undo the deletion of the property.
+//   */
+//  public void undo() {
+//      model.addDescription(item);
+//  }
 //}

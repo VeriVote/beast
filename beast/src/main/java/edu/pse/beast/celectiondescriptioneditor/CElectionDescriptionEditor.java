@@ -33,7 +33,8 @@
 // *
 // * @author Holger Klein
 // */
-//public class CElectionDescriptionEditor implements ElectionDescriptionSource, DisplaysStringsToUser, NameChangeListener {
+//public class CElectionDescriptionEditor implements
+//    ElectionDescriptionSource, DisplaysStringsToUser, NameChangeListener {
 //
 //    private CElectionCodeArea codeArea;
 //    private ElectionDescription currentDescription;
@@ -83,7 +84,7 @@
 //        this.stringLoaderInterface = stringLoaderInterface;
 //        this.fileChooser = fileChooser;
 //        this.refs = refs;
-//        
+//
 //        UnifiedNameContainer.addListener(this);
 //    }
 //
@@ -101,7 +102,7 @@
 //
 //    /**
 //     * adds an user action
-//     * 
+//     *
 //     * @param c
 //     *            the character
 //     * @param ac
@@ -121,17 +122,15 @@
 //        code = Arrays.asList(lines);
 //        currentDescription.setCode(code);
 //    }
-//    
+//
 //    private void updateDecLine(String votingDeclLine) {
-//    	
-//    	currentDescription.setVotingDeclLine(codeArea.getFirstLockedLine());
-//    	currentDescription.updateVotingDeclLine(votingDeclLine);
-//    	
-//    	try {
-//			codeArea.replaceVotingDecline(currentDescription.getCode());
-//		} catch (BadLocationException e) {
-//			e.printStackTrace();
-//		}
+//        currentDescription.setVotingDeclLine(codeArea.getFirstLockedLine());
+//        currentDescription.updateVotingDeclLine(votingDeclLine);
+//        try {
+//            codeArea.replaceVotingDecline(currentDescription.getCode());
+//        } catch (BadLocationException e) {
+//            e.printStackTrace();
+//        }
 //    }
 //
 //    /**
@@ -145,7 +144,7 @@
 //
 //    /**
 //     * sets the election editor menu bar handler
-//     * 
+//     *
 //     * @param cElectionEditorMenubarHandler
 //     *            the reference to the handler
 //     */
@@ -339,8 +338,11 @@
 //                stringLoaderInterface.getCElectionEditorStringResProvider().getMenuStringRes());
 //    }
 //
-//	@Override
-//	public void notifyNameChange() {
-//		updateDecLine(CCodeHelper.generateDeclString(BEASTCommunicator.getCentralObjectProvider().getElectionDescriptionSource().getElectionDescription().getContainer()));
-//	}
+//  @Override
+//  public void notifyNameChange() {
+//    updateDecLine(CCodeHelper.generateDeclString(
+//                      BEASTCommunicator.getCentralObjectProvider().getElectionDescriptionSource()
+//                      .getElectionDescription().getContainer())
+//                 );
+//  }
 //}

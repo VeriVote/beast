@@ -27,7 +27,6 @@
 // * @author Holger-Desktop
 // */
 //public class UserInsertToCode implements CaretListener, StoppedTypingContinuouslyListener {
-//    
 //    private JTextPane pane;
 //    private StyledDocument styledDoc;
 //    private OpenCloseCharList openCloseCharList;
@@ -41,7 +40,7 @@
 //    private StoppedTypingContinuouslyMessager stoppedTypingContMsger;
 //    private boolean dontTypeClosingChar;
 //    private LockedLinesDisplay lockedLinesDisplay;
-//    
+//
 //    public UserInsertToCode(JTextPane pane, OpenCloseCharList openCloseCharList,
 //            SaveTextBeforeRemove saveBeforeRemove) {
 //        this.pane = pane;
@@ -51,7 +50,7 @@
 //        this.saveBeforeRemove = saveBeforeRemove;
 //        setupObjects();
 //    }    
-//    
+//
 //    private void setupObjects() {
 //        stoppedTypingContMsger = new StoppedTypingContinuouslyMessager(pane);
 //        stoppedTypingContMsger.addListener(this);
@@ -66,7 +65,7 @@
 //    public SaveTextBeforeRemove getSaveBeforeRemove() {
 //        return saveBeforeRemove;
 //    }
-//    
+//
 //    /**
 //     * inserts a linebreak at the current caret position. Depending on the
 //     * position, this can have different effects. Between two curly braces,
@@ -79,8 +78,9 @@
 //     * gets added at the caretposition which should be valid
 //     */
 //    public void insertNewline() throws BadLocationException {  
-//        currentInserter.insertNewlineAtCurrentPosition(pane, tabInserter, 
-//                lineBeginningTabsHandler, currentCaretPosition);               
+//        currentInserter.insertNewlineAtCurrentPosition(pane, tabInserter,
+//                                                       lineBeginningTabsHandler,
+//                                                       currentCaretPosition);
 //        newlineInserterChooser.getNewlineInserter();
 //    }
 //
@@ -154,7 +154,7 @@
 //        }        
 //    }
 //
-//    
+//
 //    private boolean isLineContainingCaretPosLocked() {
 //        return lockedLines.isLineLocked(JTextPaneToolbox.transformToLineNumber(pane, pane.getCaretPosition()));
 //    }
@@ -187,7 +187,7 @@
 //            styledDoc.insertString(currentCaretPosition, Character.toString(insertChar), null);
 //        }
 //    }
-//    
+//
 //    /**
 //     * lock the supplied line from editing
 //     * @param line the line to be locked, starting at 0
@@ -196,14 +196,14 @@
 //        lockedLines.lockLine(line);        
 //        this.currentInserter = this.newlineInserterChooser.getNewlineInserter();        
 //    }
-//    
+//
 //    /** 
 //     * unlocks the supplied line from editing
 //     * @param line the line to be unlocked, starting at 0
 //     */
 //    public void unlockLine(int line) {
-//    	lockedLines.unlockLine(line);
-//    	this.currentInserter = this.newlineInserterChooser.getNewlineInserter();  
+//      lockedLines.unlockLine(line);
+//      this.currentInserter = this.newlineInserterChooser.getNewlineInserter();
 //    }
 //
 //    /**
@@ -220,7 +220,7 @@
 //        currentCaretPosition = ce.getDot();
 //        currentInserter = newlineInserterChooser.getNewlineInserter();        
 //    }
-//    
+//
 //    /**
 //     * changes the current caret position so it is at the end of the line it is currently
 //     * one
@@ -255,8 +255,6 @@
 //            return;
 //        }
 //
-//
-//            
 //        try {
 //            if (isLineContainingCaretPosLocked() && !isFollowingLineNotEmpty()) {
 //                return;
@@ -271,7 +269,6 @@
 //            pane.getStyledDocument().remove(currentCaretPosition, 1);
 //        } catch (BadLocationException ex) {
 //        }
-//        
 //    }
 //
 //    private boolean isFollowingLineNotEmpty() throws BadLocationException {
@@ -345,8 +342,10 @@
 //    private boolean selectionIncludesLockedLines() {
 //        if(pane.getSelectedText() == null) return false;
 //        try {
-//            ArrayList<Integer> lines = JTextPaneToolbox.getLinesBetween(pane, pane.getSelectionStart(), pane.getSelectionEnd());
-//            for(int i : lines) {
+//            ArrayList<Integer> lines =
+//                JTextPaneToolbox.getLinesBetween(pane, pane.getSelectionStart(),
+//                                                 pane.getSelectionEnd());
+//            for (int i : lines) {
 //                if(lockedLines.isLineLocked(i)) return true;
 //            }
 //            return false;
@@ -375,26 +374,20 @@
 //     * @throws BadLocationException
 //     */
 //    public void updateVotingDeclLine(List<String> code) throws BadLocationException {
-//    	pane.setCaretPosition(0);
-//    	
-//    	List<Integer> linesToRelock = lockedLines.getLockedLines();
-//    	
-//    	lockedLines.unlockAll();
-//    	
-//    	styledDoc.remove(0, styledDoc.getLength()); // clear the whole document
-//    	
-//    	int offset = 0;
-//    	
-//    	for (Iterator<String> iterator = code.iterator(); iterator.hasNext();) {
-//			String string = (String) iterator.next();
-//			styledDoc.insertString(offset, string + "\n", null);
-//			offset = offset + string.length();
-//		}
-//    	
-//    	for (Iterator<Integer> iterator = linesToRelock.iterator(); iterator.hasNext();) {
-//			Integer integer = (Integer) iterator.next();
-//			lockedLines.lockLine(integer);
-//		}
+//        pane.setCaretPosition(0);
+//        List<Integer> linesToRelock = lockedLines.getLockedLines();
+//        lockedLines.unlockAll();
+//        styledDoc.remove(0, styledDoc.getLength()); // clear the whole document
+//        int offset = 0;
+//
+//        for (Iterator<String> iterator = code.iterator(); iterator.hasNext();) {
+//            String string = (String) iterator.next();
+//            styledDoc.insertString(offset, string + "\n", null);
+//            offset = offset + string.length();
+//        }
+//        for (Iterator<Integer> iterator = linesToRelock.iterator(); iterator.hasNext();) {
+//            Integer integer = (Integer) iterator.next();
+//            lockedLines.lockLine(integer);
+//        }
 //    }
-//    
 //}

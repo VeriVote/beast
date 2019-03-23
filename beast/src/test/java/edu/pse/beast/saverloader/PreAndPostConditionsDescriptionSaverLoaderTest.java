@@ -36,13 +36,14 @@ public class PreAndPostConditionsDescriptionSaverLoaderTest {
      * Tests the PreAndPostConditionsDescriptionSaverLoader by creating a saveString
      * from a PreAndPostConditionsDescription object, then recreating that object
      * from the saveString and checking it for integrity.
+     * @throws Exception String caused an exception
      */
     @Test
     public void testCreateFromSaveString() throws Exception {
         String saveString = preAndPostConditionsDescriptionSaverLoader.createSaveString(description);
-        PreAndPostConditionsDescription recreatedPreAndPostConditionsDescription = (PreAndPostConditionsDescription) preAndPostConditionsDescriptionSaverLoader
+        PreAndPostConditionsDescription recreatedPreAndPostConditionsDescription =
+            (PreAndPostConditionsDescription) preAndPostConditionsDescriptionSaverLoader
                 .createFromSaveString(saveString);
-
         assert (recreatedPreAndPostConditionsDescription.getName().equals("description1"));
 
         // check FormalPropertiesDescriptions for integrity

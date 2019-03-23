@@ -13,6 +13,11 @@ import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 
 public abstract class InputType implements InOutType {
+    protected CommonHelpMethods helper;
+
+    public InputType() {
+        getHelper();
+    }
 
     public static List<InputType> getInputTypes() {
         ServiceLoader<InputType> loader = ServiceLoader.load(InputType.class);
@@ -25,12 +30,6 @@ public abstract class InputType implements InOutType {
         }
 
         return types;
-    }
-
-    protected CommonHelpMethods helper;
-
-    public InputType() {
-        getHelper();
     }
 
     @Override

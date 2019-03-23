@@ -10,7 +10,8 @@ import edu.pse.beast.types.InOutType;
  */
 public class ElectExp extends AccessValueNode {
     /**
-     * @param accesVar
+     * @param type     type
+     * @param accesVar accessing variable
      * @param count    the count of this vote expression
      */
     public ElectExp(InOutType type, TypeExpression[] accesVar, int count) {

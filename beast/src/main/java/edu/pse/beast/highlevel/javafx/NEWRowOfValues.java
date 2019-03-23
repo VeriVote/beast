@@ -128,12 +128,12 @@ public class NEWRowOfValues {
         return getAmountVoters();
     }
 //
-//	private synchronized void addValueEnforcer(TextField field, int index) {
-//		System.out.println(field.getText());
-//		String vettedValue = this.container.getInputType().vetValue(field.getText(), container, this);
-//		field.setText(vettedValue);
-//		values.set(index, vettedValue);
-//	}
+//  private synchronized void addValueEnforcer(TextField field, int index) {
+//    System.out.println(field.getText());
+//    String vettedValue = this.container.getInputType().vetValue(field.getText(), container, this);
+//    field.setText(vettedValue);
+//    values.set(index, vettedValue);
+//  }
 
     public void setCandidates(int amountCandidates) {
 

@@ -10,6 +10,11 @@ import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 
 public abstract class OutputType implements InOutType {
+    protected CommonHelpMethods helper;
+
+    public OutputType() {
+        getHelper();
+    }
 
     public static List<OutputType> getOutputTypes() {
         ServiceLoader<OutputType> loader = ServiceLoader.load(OutputType.class);
@@ -26,12 +31,6 @@ public abstract class OutputType implements InOutType {
     @Override
     public String toString() {
         return otherToString();
-    }
-
-    protected CommonHelpMethods helper;
-
-    public OutputType() {
-        getHelper();
     }
 
     protected abstract void getHelper();

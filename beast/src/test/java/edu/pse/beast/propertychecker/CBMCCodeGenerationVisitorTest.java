@@ -311,7 +311,10 @@ public class CBMCCodeGenerationVisitorTest {
 //
 //    @Test
 //    public void testCandidateWithMostApprovalWins() {
-//        String expression = "(FOR_ALL_CANDIDATES(i) : ((i != c) ==> (VOTE_SUM_FOR_CANDIDATE1(c) > VOTE_SUM_FOR_CANDIDATE1(i)))) ==> ELECT1 == c;";
+//        String expression =
+//            "(FOR_ALL_CANDIDATES(i) : ((i != c) "
+//            + "==> (VOTE_SUM_FOR_CANDIDATE1(c) > VOTE_SUM_FOR_CANDIDATE1(i)))) "
+//            + "==> ELECT1 == c;";
 //        String expected = "unsigned int forAll_0 = 1;\n" +
 //                "for(unsigned int i = 0; i < C && forAll_0; i++) {\n" +
 //                "\tunsigned int comparison_0 = 1;\n" +

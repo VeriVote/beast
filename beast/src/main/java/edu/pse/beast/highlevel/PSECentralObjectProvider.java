@@ -76,8 +76,8 @@
 //        this.checkerCommunicator = checkerCommunicator;
 //    }
 //
-//	@Override
-//	public CElectionDescriptionEditor getCElectionEditor() {
-//		return cElectionEditor;
-//	}
+//  @Override
+//  public CElectionDescriptionEditor getCElectionEditor() {
+//    return cElectionEditor;
+//  }
 //}

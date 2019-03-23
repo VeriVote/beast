@@ -23,20 +23,24 @@ public class ElectionTemplateHandler {
      */
     public ElectionTemplateHandler() {
 //        inputTypes.add(new ElectionTypeContainer(
-//                new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER),
+//                new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE),
+//                                          InternalTypeRep.VOTER),
 //                ElectionTypeContainer.ElectionInputTypeIds.SINGLE_CHOICE));
 //        inputTypes.add(new ElectionTypeContainer(
-//                new InternalTypeContainer(new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.INTEGER),
-//                        InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER),
+//                new InternalTypeContainer(new InternalTypeContainer(
+//                    new InternalTypeContainer(InternalTypeRep.INTEGER),
+//                    InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER),
 //                ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE));
 //
 //        inputTypes.add(new ElectionTypeContainer(
-//                new InternalTypeContainer(new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.INTEGER),
-//                        InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER),
+//                new InternalTypeContainer(new InternalTypeContainer(
+//                    new InternalTypeContainer(InternalTypeRep.INTEGER),
+//                    InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER),
 //                ElectionTypeContainer.ElectionInputTypeIds.APPROVAL));
 //
 //        inputTypes.add(new ElectionTypeContainer(
-//                new InternalTypeContainer(new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.INTEGER),
+//                new InternalTypeContainer(new InternalTypeContainer(
+//                    new InternalTypeContainer(InternalTypeRep.INTEGER),
 //                        InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER),
 //                ElectionTypeContainer.ElectionInputTypeIds.WEIGHTED_APPROVAL));
 //

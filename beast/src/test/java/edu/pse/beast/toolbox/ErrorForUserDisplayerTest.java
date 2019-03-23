@@ -9,7 +9,7 @@ public class ErrorForUserDisplayerTest {
     /**
      * a small main class Test for the ErrorForUserDisplayer
      *
-     * @param args
+     * @param args arguments
      */
     public static void main(String args[]) {
         ErrorForUserDisplayer.displayError("hi");

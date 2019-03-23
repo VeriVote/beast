@@ -12,6 +12,14 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
 
     private static final long serialVersionUID = 1L;
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel beastLabel;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel versionLabel;
+    private javax.swing.JLabel versionNumber;
+
+    // End of variables declaration//GEN-END:variables
+
     /**
      * Creates new form VersionWindow
      */
@@ -30,7 +38,7 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
 
         versionLabel = new javax.swing.JLabel();
         versionNumber = new javax.swing.JLabel();
-        BEASTLabel = new javax.swing.JLabel();
+        beastLabel = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setResizable(false);
@@ -39,7 +47,7 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
 
         versionNumber.setText("0.1");
 
-        BEASTLabel.setText("Bounded Election Attribute Structuring Tool");
+        beastLabel.setText("Bounded Election Attribute Structuring Tool");
 
         jLabel1.setText("B.E.A.S.T.");
 
@@ -56,17 +64,17 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
                         layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(BEASTLabel).addContainerGap()));
+                                .addComponent(beastLabel).addContainerGap()));
         layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup().addContainerGap().addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(BEASTLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED).addComponent(beastLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(versionLabel).addComponent(versionNumber))
                         .addContainerGap(31, Short.MAX_VALUE)));
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    } // </editor-fold>//GEN-END:initComponents
 
     /**
      * @param args the command line arguments
@@ -111,13 +119,6 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel BEASTLabel;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel versionLabel;
-    private javax.swing.JLabel versionNumber;
-
-    // End of variables declaration//GEN-END:variables
     /**
      * Setter for version of BEAST
      * 

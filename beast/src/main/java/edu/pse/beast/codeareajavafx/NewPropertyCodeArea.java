@@ -24,17 +24,19 @@ import javafx.scene.Node;
 import javafx.scene.control.IndexRange;
 
 public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuBarInterface {
-    private static final String[] OPERATORS = new String[] { "\\*", "/", "\\+", "-" };
+    private static final String[] OPERATORS = new String[] {"\\*", "/", "\\+", "-"};
 
-    private static final String[] COMPARISON = new String[] { "==", "\\!\\=", "\\<\\=", "\\>\\=", "\\<", "\\>" };
+    private static final String[] COMPARISON = new String[] {"==", "\\!\\=", "\\<\\=", "\\>\\=", "\\<", "\\>"};
 
-    private static final String[] RELATION = new String[] { "&&", "\\|\\|", "==>", "<==>", "<--", "\\+\\+" };
+    private static final String[] RELATION = new String[] {"&&", "\\|\\|", "==>", "<==>", "<--", "\\+\\+"};
 
-    private static final String[] MAKROS = new String[] { "VOTES", "ELECT", "VOTE_SUM_FOR_CANDIDATE",
-            "VOTE_SUM_FOR_UNIQUE_CANDIDATE" };
+    private static final String[] MAKROS = new String[] {"VOTES", "ELECT", "VOTE_SUM_FOR_CANDIDATE",
+                                                         "VOTE_SUM_FOR_UNIQUE_CANDIDATE" };
 
-    private static final String[] QUANTORS = new String[] { "FOR_ALL_VOTERS", "FOR_ALL_CANDIDATES", "FOR_ALL_SEATS",
-            "EXISTS_ONE_VOTER", "EXISTS_ONE_CANDIDATE", "EXISTS_ONE_SEAT", "PERM", "SPLIT", "INTERSECT", "NOTEMPTY" };
+    private static final String[] QUANTORS =
+            new String[] {"FOR_ALL_VOTERS", "FOR_ALL_CANDIDATES", "FOR_ALL_SEATS",
+                          "EXISTS_ONE_VOTER", "EXISTS_ONE_CANDIDATE", "EXISTS_ONE_SEAT",
+                          "PERM", "SPLIT", "INTERSECT", "NOTEMPTY"};
 
     private static final String OPERATORS_PATTERN = "(" + String.join("|", OPERATORS) + ")";
     private static final String COMPARISON_PATTERN = "(" + String.join("|", COMPARISON) + ")";
@@ -54,11 +56,11 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
 
     private static Set<String> recommendations = new TreeSet<String>();
 //
-//	private static final String[] MAKROS = new String[] { "VOTES", "ELECT", "VOTE_SUM_FOR_CANDIDATE",
-//	"VOTE_SUM_FOR_UNIQUE_CANDIDATE" };
+//  private static final String[] MAKROS = new String[] { "VOTES", "ELECT", "VOTE_SUM_FOR_CANDIDATE",
+//  "VOTE_SUM_FOR_UNIQUE_CANDIDATE" };
 //
 //private static final String[] QUANTORS = new String[] { "FOR_ALL_VOTERS", "FOR_ALL_CANDIDATES", "FOR_ALL_SEATS",
-//	"EXISTS_ONE_VOTER", "EXISTS_ONE_CANDIDATE", "EXISTS_ONE_SEAT", "PERM", "SPLIT", "INTERSECT", "NOTEMPTY" };
+//  "EXISTS_ONE_VOTER", "EXISTS_ONE_CANDIDATE", "EXISTS_ONE_SEAT", "PERM", "SPLIT", "INTERSECT", "NOTEMPTY" };
     private FormalPropertiesDescription description;
 
     private BooleanExpEditorNEW parent;
@@ -109,10 +111,10 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
     }
 
     /**
-     * sets the description for this property code are (either pre or post prop
+     * sets the description for this property codearea (either pre or post prop
      * description)
      *
-     * @param description
+     * @param description the description
      */
     public void setDescription(FormalPropertiesDescription description) {
         saveDescription(description);

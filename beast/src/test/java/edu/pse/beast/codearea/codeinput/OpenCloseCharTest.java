@@ -33,6 +33,7 @@ public class OpenCloseCharTest {
 
     /**
      * Test of insertIntoDocument method, of class OpenCloseChar.
+     * @throws Exception exception
      */
     @Test
     public void testInsertIntoDocument() throws Exception {

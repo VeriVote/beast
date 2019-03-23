@@ -55,7 +55,6 @@ public class LockedLinesHandlerTest {
         pane.getStyledDocument().insertString(0, text, null);
         lockedLinesHandler.lockLine(1);
         assertTrue(lockedLinesHandler.isLineLocked(1));
-        ;
         pane.getStyledDocument().insertString(0, "\n", null);
         assertFalse(lockedLinesHandler.isLineLocked(1));
         assertTrue(lockedLinesHandler.isLineLocked(2));

@@ -15,6 +15,15 @@ import edu.pse.beast.toolbox.FileSaver;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
 public class CBMCProcessFactory extends CheckerFactory {
+    // this is the last line in the cbmc output, if the verification was
+    // successful
+    private static final String SUCCESSLINE = "VERIFICATION SUCCESSFUL";
+
+    // this is the last line in the cbmc output, if the assertion
+    // failed
+    private static final String FAILURELINE = "VERIFICATION FAILED";
+
+    private static final String PATH_TO_TEMP_FOLDER = "/core/generated_c_files/";
 
     private final OperatingSystems os;
 
@@ -22,30 +31,19 @@ public class CBMCProcessFactory extends CheckerFactory {
     // created, but the file that is already there will be reused
     private File toCheck = null;
 
-    // this is the last line in the cbmc output, if the verification was
-    // successful
-    private final String SUCCESSLINE = "VERIFICATION SUCCESSFUL";
-
-    // this is the last line in the cbmc output, if the assertion
-    // failed
-    private final String FAILURELINE = "VERIFICATION FAILED";
-
-    private final String pathToTempFolder = "/core/generated_c_files/";
-
     /**
      * creates a new CBMC checker factory, that determines what operating system you
      * 
      * @param controller          the controller that controls this processfactory
      *                            and that has to be reported to, if all the
      *                            checking for this file has finished
-     * @param electionDescSrc     the source that describes the election
-     * @param postAndPrepPropDesc the source that describes the specific property
-     * @param parameter           the source that describes all other parameters
+     * @param electionDesc        the source that describes the election
      * @param result              the result object that the end result should be
      *                            written to
+     * @param parameter           the source that describes all other parameters
      */
-    protected CBMCProcessFactory(FactoryController controller, ElectionDescription electionDesc, Result result,
-            ElectionCheckParameter parameter) {
+    protected CBMCProcessFactory(FactoryController controller, ElectionDescription electionDesc,
+                                 Result result, ElectionCheckParameter parameter) {
         super(controller, electionDesc, result, parameter);
         os = determineOS();
     }
@@ -301,8 +299,8 @@ public class CBMCProcessFactory extends CheckerFactory {
     }
 
     @Override
-    public CheckerFactory getNewInstance(FactoryController controller, ElectionDescription electionDesc, Result result,
-            ElectionCheckParameter parameter) {
+    public CheckerFactory getNewInstance(FactoryController controller, ElectionDescription electionDesc,
+                                         Result result, ElectionCheckParameter parameter) {
         return new CBMCProcessFactory(controller, electionDesc, result, parameter);
     }
     //
@@ -323,7 +321,7 @@ public class CBMCProcessFactory extends CheckerFactory {
      * creates a new c-Code file that then can be used by all the underlying
      * checkers to check it with cbmc
      * 
-     * @param electionDescSrc     the source that describes the election
+     * @param electionDesc        the source that describes the election
      * @param postAndPrepPropDesc the property that this specific processfactory
      *                            should check
      * @return a file that contains the generated code from the two above variables
@@ -338,7 +336,7 @@ public class CBMCProcessFactory extends CheckerFactory {
 
         ArrayList<String> code = generator.getCode();
 
-        String absolutePath = SuperFolderFinder.getSuperFolder() + pathToTempFolder;
+        String absolutePath = SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER;
 
         File file = new File(new File(absolutePath), FileLoader.getNewUniqueName(absolutePath) + ".c");
 
@@ -357,23 +355,27 @@ public class CBMCProcessFactory extends CheckerFactory {
      * creates a new c-Code file that then can be used by all the underlying
      * checkers to check it with cbmc
      * 
-     * @param electionDescSrc     the source that describes the election
+     * @param electionDesc        the source that describes the election
      * @param postAndPrepPropDesc the property that this specific processfactory
      *                            should check
+     * @param margin              the margin
+     * @param origResult          original result
+     * @param inputData           input data
      * @return a file that contains the generated code from the two above variables
      */
     public File createCodeFileMargin(ElectionDescription electionDesc,
-            PreAndPostConditionsDescription postAndPrepPropDesc, int margin, List<String> origResult,
-            String[][] inputData) {
+                                     PreAndPostConditionsDescription postAndPrepPropDesc,
+                                     int margin, List<String> origResult, String[][] inputData) {
 
         // create a code generator, that creates a code file for this call only
         // one time in this factory factory;
-        CBMCCodeGenerator generator = new CBMCCodeGenerator(electionDesc, postAndPrepPropDesc, margin, origResult,
-                inputData);
+        CBMCCodeGenerator generator =
+                new CBMCCodeGenerator(electionDesc, postAndPrepPropDesc, margin,
+                                      origResult, inputData);
 
         ArrayList<String> code = generator.getCode();
 
-        String absolutePath = SuperFolderFinder.getSuperFolder() + pathToTempFolder;
+        String absolutePath = SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER;
 
         File file = new File(new File(absolutePath), FileLoader.getNewUniqueName(absolutePath) + ".c");
 
@@ -392,26 +394,26 @@ public class CBMCProcessFactory extends CheckerFactory {
      * creates a new c-Code file that then can be used by all the underlying
      * checkers to check it with cbmc
      * 
-     * @param electionDescSrc     the source that describes the election
+     * @param electionDesc        the source that describes the election
      * @param postAndPrepPropDesc the property that this specific processfactory
      *                            should check
+     * @param inputData           input data
      * @return a file that contains the generated code from the two above variables
      */
     public File createCodeFileTest(ElectionDescription electionDesc,
             PreAndPostConditionsDescription postAndPrepPropDesc, String[][] inputData) {
-
         // create a code generator, that creates a code file for this call only
         // one time in this factory factory;
         CBMCCodeGenerator generator = new CBMCCodeGenerator(electionDesc, postAndPrepPropDesc, inputData);
 
         ArrayList<String> code = generator.getCode();
 
-        String absolutePath = SuperFolderFinder.getSuperFolder() + pathToTempFolder;
+        String absolutePath = SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER;
 
         File file = new File(new File(absolutePath), FileLoader.getNewUniqueName(absolutePath) + ".c");
 
         if (file.getParentFile() == null) {
-            ErrorLogger.log("Can't find a parent to your file!");
+            ErrorLogger.log("Cannot find a parent to your file!");
         } else if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
         }
@@ -579,11 +581,10 @@ public class CBMCProcessFactory extends CheckerFactory {
 
     @Override
     protected Checker startProcessCheck(ElectionDescription electionDesc,
-            PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
-            CheckerFactory parent, Result result) {
-
+                                        PreAndPostConditionsDescription postAndPrepPropDesc,
+                                        String advanced, int voters, int candidates,
+                                        int seats, CheckerFactory parent, Result result) {
         String userOptions = advanced.trim().replaceAll(" +", " ");
-
         // remove all unnecessary whitespaces
 
         // create the file in which the code is saved if it doesn't exist
@@ -604,7 +605,8 @@ public class CBMCProcessFactory extends CheckerFactory {
             break;
         case Mac:
             ErrorForUserDisplayer.displayError(
-                    "MacOS is not supported yet, please implement the class CBMCProcess and add it then here in the "
+                    "MacOS is not supported yet, please implement the "
+                            + "class CBMCProcess and add it then here in the "
                             + "CBMCProcessFactory to be created");
             break;
         default:
@@ -616,10 +618,11 @@ public class CBMCProcessFactory extends CheckerFactory {
 
     @Override
     protected Checker startProcessMargin(ElectionDescription electionDesc,
-            PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
-            CheckerFactory parent, int margin, List<String> origResult, String[][] votingData, Result result) {
+                                         PreAndPostConditionsDescription postAndPrepPropDesc,
+                                         String advanced, int voters, int candidates, int seats,
+                                         CheckerFactory parent, int margin, List<String> origResult,
+                                         String[][] votingData, Result result) {
         String userOptions = advanced.trim().replaceAll(" +", " ");
-
         // remove all unnecessary whitespaces
 
         // create the file in which the code is saved
@@ -648,11 +651,10 @@ public class CBMCProcessFactory extends CheckerFactory {
 
     @Override
     protected Checker startProcessTest(ElectionDescription electionDesc,
-            PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
-            CheckerFactory parent, String[][] votingData, Result result) {
-
+                                       PreAndPostConditionsDescription postAndPrepPropDesc,
+                                       String advanced, int voters, int candidates, int seats,
+                                       CheckerFactory parent, String[][] votingData, Result result) {
         String userOptions = advanced.trim().replaceAll(" +", " ");
-
         // remove all unnecessary whitespaces
 
         // create the file in which the code is saved
@@ -676,8 +678,6 @@ public class CBMCProcessFactory extends CheckerFactory {
         default:
             ErrorLogger.log("Warning, your OS couldn't be determined or is not supported yet.");
         }
-
         return startedChecker;
     }
-
 }

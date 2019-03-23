@@ -48,98 +48,96 @@ public class FactoryController implements Runnable {
     private List<ChildTreeItem> treeItems = new ArrayList<ChildTreeItem>();
 
     // /**
-    // *
-    // * @param electionDescSrc
-    // * the source for the election descriptions
-    // * @param preAndPostConditionDescrSrc
-    // * the properties to be checked
-    // * @param parmSrc
-    // * the parameter
-    // * @param checkerID
-    // * the ID of the checker that should be used
-    // * @param concurrentChecker
-    // * the amount of concurrent checker to be used
-    // */
-    // public FactoryController(ElectionDescriptionSource electionDescSrc,
-    // PreAndPostConditionsDescriptionSource preAndPostConditionDescrSrc,
-    // ParameterSource parmSrc, String checkerID,
-    // int concurrentChecker) {
+    //  *
+    //  * @param electionDescSrc
+    //  * the source for the election descriptions
+    //  * @param preAndPostConditionDescrSrc
+    //  * the properties to be checked
+    //  * @param parmSrc
+    //  * the parameter
+    //  * @param checkerID
+    //  * the ID of the checker that should be used
+    //  * @param concurrentChecker
+    //  * the amount of concurrent checker to be used
+    //  **/
+    //  public FactoryController(ElectionDescriptionSource electionDescSrc,
+    //                           PreAndPostConditionsDescriptionSource preAndPostConditionDescrSrc,
+    //                           ParameterSource parmSrc, String checkerID,
+    //                           int concurrentChecker) {
+    //      // add a shutdown hook, so all the checker are stopped properly so they
+    //      // do not clog the host pc
+    //      Runtime.getRuntime().addShutdownHook(new FactoryEnder());
     //
-    // // add a shutdown hook so all the checker are stopped properly so they
-    // // don't clog the host pc
-    // Runtime.getRuntime().addShutdownHook(new FactoryEnder());
+    //      this.electionDescSrc = electionDescSrc;
+    //      this.preAndPostConditionDescrSrc = preAndPostConditionDescrSrc;
+    //      // this.parmSrc = parmSrc;
+    //      this.checkerID = checkerID;
+    //      this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
     //
-    // this.electionDescSrc = electionDescSrc;
-    // this.preAndPostConditionDescrSrc = preAndPostConditionDescrSrc;
-    // //this.parmSrc = parmSrc;
-    // this.checkerID = checkerID;
-    // this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
+    //      // get a list of result objects that fit for the specified checkerID
+    //      this.results = CheckerFactoryFactory.getMatchingResult(checkerID,
+    //      preAndPostConditionDescrSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size());
     //
-    // // get a list of result objects that fit for the specified checkerID
-    // this.results = CheckerFactoryFactory.getMatchingResult(checkerID,
-    // preAndPostConditionDescrSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size());
+    //      // if the user doesn't specify a specific amount for concurrent
+    //      // checkers, we just set it to the thread amount of this computer
+    //      if (concurrentChecker <= 0) {
+    //          this.concurrentChecker = Runtime.getRuntime().availableProcessors();
+    //      } else {
+    //          this.concurrentChecker = concurrentChecker;
+    //      }
+    //      // start the factorycontroller
+    //      new Thread(this, "FactoryController").start();
     //
-    // // if the user doesn't specify a specific amount for concurrent
-    // // checkers, we just set it to the thread amount of this computer
-    // if (concurrentChecker <= 0) {
-    // this.concurrentChecker = Runtime.getRuntime().availableProcessors();
-    // } else {
-    // this.concurrentChecker = concurrentChecker;
-    // }
-    //
-    // // start the factorycontroller
-    // new Thread(this, "FactoryController").start();
-    //
-    // // if the user wishes for a timeout, we activate it here
-    // if (parmSrc.getParameter().getTimeout().isActive()) {
-    // notifier = new TimeOutNotifier(this,
-    // parmSrc.getParameter().getTimeout().getDuration());
-    // } else {
-    // notifier = null;
-    // }
+    //      // if the user wishes for a timeout, we activate it here
+    //      if (parmSrc.getParameter().getTimeout().isActive()) {
+    //          notifier = new TimeOutNotifier(this,
+    //          parmSrc.getParameter().getTimeout().getDuration());
+    //      } else {
+    //          notifier = null;
+    //      }
     // }
     //
     // public FactoryController(File toCheck, ParameterSource parmSrc, String
-    // checkerID, int concurrentChecker) {
-    // // add a shutdown hook so all the checker are stopped properly so they
-    // // don't clog the host pc
-    // Runtime.getRuntime().addShutdownHook(new FactoryEnder());
+    //                          checkerID, int concurrentChecker) {
+    //     // add a shutdown hook, so all the checkers are stopped properly so they
+    //     // do not clog the host pc
+    //     Runtime.getRuntime().addShutdownHook(new FactoryEnder());
     //
-    // this.fromFile = true;
+    //     this.fromFile = true;
     //
-    // //this.parmSrc = parmSrc;
-    // this.checkerID = checkerID;
-    // this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
+    //     // this.parmSrc = parmSrc;
+    //     this.checkerID = checkerID;
+    //     this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
     //
-    // // we don't need these if we start with a file already
-    // this.preAndPostConditionDescrSrc = null;
-    // this.electionDescSrc = null;
+    //     // we don't need these if we start with a file already
+    //     this.preAndPostConditionDescrSrc = null;
+    //     this.electionDescSrc = null;
     //
-    // // get a list of result objects that fit for the specified checkerID
-    // // because we have no preAndPostConditions we only need ONE result
-    // this.results = CheckerFactoryFactory.getMatchingUnprocessedResult(checkerID,
-    // preAndPostConditionDescrSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size());
+    //     // get a list of result objects that fit for the specified checkerID
+    //     // because we have no preAndPostConditions we only need ONE result
+    //     this.results = CheckerFactoryFactory.getMatchingUnprocessedResult(checkerID,
+    //     preAndPostConditionDescrSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size());
     //
-    // preAndPostConditionDescrSrc.referenceResult(this.results);
+    //     preAndPostConditionDescrSrc.referenceResult(this.results);
     //
-    // // if the user doesn't specify a concrete amount for concurrent
-    // // checkers, we just set it to the thread amount of this pc
-    // if (concurrentChecker <= 0) {
-    // this.concurrentChecker = Runtime.getRuntime().availableProcessors();
-    // } else {
-    // this.concurrentChecker = concurrentChecker;
-    // }
+    //     // if the user does not specify a concrete amount for concurrent
+    //     // checkers, we just set it to the thread amount of this pc
+    //     if (concurrentChecker <= 0) {
+    //         this.concurrentChecker = Runtime.getRuntime().availableProcessors();
+    //     } else {
+    //         this.concurrentChecker = concurrentChecker;
+    //     }
     //
-    // // start the factorycontroller
-    // new Thread(this, "FactoryController").start();
+    //     // start the factorycontroller
+    //     new Thread(this, "FactoryController").start();
     //
-    // // if the user wishes for a timeout, we activate it here
-    // if (parmSrc.getParameter().getTimeout().isActive()) {
-    // notifier = new TimeOutNotifier(this,
-    // parmSrc.getParameter().getTimeout().getDuration());
-    // } else {
-    // notifier = null;
-    // }
+    //     // if the user wishes for a timeout, we activate it here
+    //     if (parmSrc.getParameter().getTimeout().isActive()) {
+    //         notifier = new TimeOutNotifier(this,
+    //         parmSrc.getParameter().getTimeout().getDuration());
+    //     } else {
+    //         notifier = null;
+    //     }
     // }
 
     public FactoryController(ElectionDescription elecDesc, List<ParentTreeItem> parentProperties,
@@ -272,7 +270,6 @@ public class FactoryController implements Runnable {
      */
     @Override
     public void run() {
-
         outerLoop: for (int i = 0; i < results.size(); i++) {
             innerLoop: while (!stopped) {
                 // if we can start more checkers (we haven't used our
@@ -343,7 +340,6 @@ public class FactoryController implements Runnable {
      * @param timeOut if it is true, the checking was stopped because of a timeout;
      */
     public synchronized void stopChecking(boolean timeOut) {
-
         if (!stopped) {
             this.stopped = true;
             // send a signal to all currently running Checkers so they will stop
@@ -355,7 +351,6 @@ public class FactoryController implements Runnable {
             // set all not finished results to finished, to indicate that they
             // are
             // ready to be presented
-
             for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
                 Result result = (Result) iterator.next();
                 if (!result.isFinished()) {
@@ -384,49 +379,44 @@ public class FactoryController implements Runnable {
     }
 
     // /**
-    // *
-    // * @return a NEW list with all the results objects. This list is used
-    // * nowhere in the propertychecker, so you can remove parts out of it
-    // * as you want.
-    // */
+    //  *
+    //  * @return a NEW list with all the results objects. This list is used
+    //  * nowhere in the propertychecker, so you can remove parts out of it
+    //  * as you want.
+    //  **/
     // public List<ResultInterface> getResults() {
-    // if (results == null) {
-    //
-    // ErrorLogger.log("Result objects couldn't be created.");
-    // return null;
-    //
-    // } else {
-    //
-    // List<ResultInterface> toReturn = new ArrayList<ResultInterface>();
-    //
-    // for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
-    // Result result = (Result) iterator.next();
-    // toReturn.add(result);
-    // }
-    //
-    // return toReturn;
-    // }
+    //     if (results == null) {
+    //         ErrorLogger.log("Result objects couldn't be created.");
+    //         return null;
+    //     } else {
+    //         List<ResultInterface> toReturn = new ArrayList<ResultInterface>();
+    //         for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
+    //             Result result = (Result) iterator.next();
+    //             toReturn.add(result);
+    //         }
+    //         return toReturn;
+    //     }
     // }
 
     // public List<UnprocessedCBMCResult> getUnprocessedResults() {
-    // if (results == null) {
+    //     if (results == null) {
+    //         ErrorLogger.log("Result objects couldn't be created.");
+    //         return null;
+    //     } else {
+    //         List<UnprocessedCBMCResult> toReturn =
+    //             new ArrayList<UnprocessedCBMCResult>();
     //
-    // ErrorLogger.log("Result objects couldn't be created.");
-    // return null;
-    //
-    // } else {
-    //
-    // List<UnprocessedCBMCResult> toReturn = new
-    // ArrayList<UnprocessedCBMCResult>();
-    //
-    // for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
-    // UnprocessedCBMCResult result = (UnprocessedCBMCResult) iterator.next();
-    // toReturn.add(result);
+    //         for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
+    //             UnprocessedCBMCResult result = (UnprocessedCBMCResult) iterator.next();
+    //             toReturn.add(result);
+    //         }
+    //         return toReturn;
+    //     }
     // }
-    //
-    // return toReturn;
-    // }
-    // }
+
+    public List<Result> getResults() {
+        return results;
+    }
 
     /**
      * This Class is there for the shutDownHook It is used, so if the program has a
@@ -441,10 +431,5 @@ public class FactoryController implements Runnable {
         public void run() {
             thisObject.stopChecking(false);
         }
-
-    }
-
-    public List<Result> getResults() {
-        return results;
     }
 }

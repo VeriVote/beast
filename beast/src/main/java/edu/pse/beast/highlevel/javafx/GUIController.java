@@ -80,9 +80,9 @@ public class GUIController {
 
     private static List<TreeItem<CustomTreeItem>> treeItems = new ArrayList<TreeItem<CustomTreeItem>>();
 
-    private String pathToImages = "file:///" + SuperFolderFinder.getSuperFolder() + "/core/images/";
-
     private static TreeItem<CustomTreeItem> root;
+
+    private String pathToImages = "file:///" + SuperFolderFinder.getSuperFolder() + "/core/images/";
 
     private MenuBarInterface focusedMainTab;
 
@@ -119,8 +119,8 @@ public class GUIController {
     @FXML // fx:id="timeOut"
     private TextField timeOut;
 
-    @FXML // fx:id="TimeUnitChoice"
-    private ChoiceBox<TimeUnit> TimeUnitChoice;
+    @FXML // fx:id="timeUnitChoice"
+    private ChoiceBox<TimeUnit> timeUnitChoice;
 
     @FXML // fx:id="processes"
     private TextField processes;
@@ -370,10 +370,10 @@ public class GUIController {
 
         // populate boxes
         // add the time units you can choose
-        TimeUnitChoice.getItems().add(TimeUnit.SECONDS);
-        TimeUnitChoice.getItems().add(TimeUnit.MINUTES);
-        TimeUnitChoice.getItems().add(TimeUnit.HOURS);
-        TimeUnitChoice.setValue(TimeUnit.SECONDS);
+        timeUnitChoice.getItems().add(TimeUnit.SECONDS);
+        timeUnitChoice.getItems().add(TimeUnit.MINUTES);
+        timeUnitChoice.getItems().add(TimeUnit.HOURS);
+        timeUnitChoice.setValue(TimeUnit.SECONDS);
 
         // add listener
         addNumberEnforcer(minVoter, maxVoter, 1);
@@ -492,28 +492,28 @@ public class GUIController {
 
         codeArea = new NewCodeArea();
 
-        VirtualizedScrollPane<NewCodeArea> VSP = new VirtualizedScrollPane<NewCodeArea>(codeArea);
+        VirtualizedScrollPane<NewCodeArea> vsp = new VirtualizedScrollPane<NewCodeArea>(codeArea);
 
-        codePane.setContent(VSP);
+        codePane.setContent(vsp);
 
         preArea = new NewPropertyCodeArea();
 
-        VirtualizedScrollPane<NewPropertyCodeArea> VSPpre = new VirtualizedScrollPane<NewPropertyCodeArea>(preArea);
+        VirtualizedScrollPane<NewPropertyCodeArea> vspPre = new VirtualizedScrollPane<NewPropertyCodeArea>(preArea);
 
-        prePropertyPane.setContent(VSPpre);
+        prePropertyPane.setContent(vspPre);
 
         postArea = new NewPropertyCodeArea();
 
-        VirtualizedScrollPane<NewPropertyCodeArea> VSPpost = new VirtualizedScrollPane<NewPropertyCodeArea>(postArea);
+        VirtualizedScrollPane<NewPropertyCodeArea> vspPost = new VirtualizedScrollPane<NewPropertyCodeArea>(postArea);
 
-        postPropertyPane.setContent(VSPpost);
+        postPropertyPane.setContent(vspPost);
 
         boundedVarArea = new BoundedVarCodeArea();
 
-        VirtualizedScrollPane<BoundedVarCodeArea> VSPbound = new VirtualizedScrollPane<BoundedVarCodeArea>(
+        VirtualizedScrollPane<BoundedVarCodeArea> vspBound = new VirtualizedScrollPane<BoundedVarCodeArea>(
                 boundedVarArea);
 
-        boundVariablesTab.setContent(VSPbound);
+        boundVariablesTab.setContent(vspBound);
 
         variableTreeView.setShowRoot(false);
         TreeItem<String> symbVarRoot = new TreeItem<String>();
@@ -1298,12 +1298,12 @@ public class GUIController {
 
                     List<ChildTreeItem> children = parentItem.getSubItems();
 
-                    int sub_counter = 0;
+                    int subCounter = 0;
                     for (Iterator<ChildTreeItem> childIterator = children.iterator(); childIterator.hasNext();) {
                         ChildTreeItem childItem = (ChildTreeItem) childIterator.next();
                         String saveString = propertyListGSON.createSaveString(childItem.getValues());
                         childItemSaverLoader.saveAs(
-                                new File(saveFolder.getAbsolutePath() + "/" + sub_counter++ + ".child"), saveString);
+                                new File(saveFolder.getAbsolutePath() + "/" + subCounter++ + ".child"), saveString);
                     }
 
                     if (iterator.hasNext()) {
@@ -1484,7 +1484,7 @@ public class GUIController {
         TimeOut time = new TimeOut(TimeUnit.SECONDS, 0);
 
         if (!timeOut.getText().equals("")) {
-            time = new TimeOut(TimeUnitChoice.getValue(), Integer.parseInt(timeOut.getText()));
+            time = new TimeOut(timeUnitChoice.getValue(), Integer.parseInt(timeOut.getText()));
             numberProcesses = Integer.parseInt(processes.getText());
         }
 

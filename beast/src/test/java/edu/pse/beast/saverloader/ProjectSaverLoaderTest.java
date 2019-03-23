@@ -37,14 +37,17 @@
 //    public static void setUpClass() {
 //        projectSaverLoader = new ProjectSaverLoader();
 //        ElectionTemplateHandler electionTemplateHandler = new ElectionTemplateHandler();
-//        ElectionDescription electionDescription = new ElectionDescription("testDescription", new WeightedApproval(), new SingleCandidate(), 2);
+//        ElectionDescription electionDescription =
+//            new ElectionDescription("testDescription", new WeightedApproval(), new SingleCandidate(), 2);
 //        ArrayList<String> code = new ArrayList<String>();
 //        code.add("sdfgokdffg");
 //        code.add("sdkofgdfg");
 //        electionDescription.setCode(code);
 //
-//        FormalPropertiesDescription pre = new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
-//        FormalPropertiesDescription post = new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
+//        FormalPropertiesDescription pre =
+//            new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
+//        FormalPropertiesDescription post =
+//            new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
 //        SymbolicVariableList list = new SymbolicVariableList();
 //        list.addSymbolicVariable("voter1", new InternalTypeContainer(InternalTypeRep.VOTER));
 //        list.addSymbolicVariable("voter2", new InternalTypeContainer(InternalTypeRep.VOTER));

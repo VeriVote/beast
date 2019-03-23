@@ -10,8 +10,8 @@ import java.util.ArrayList;
  */
 public class OpenCloseCharList {
     private ArrayList<OpenCloseChar> openCloseChars = new ArrayList<OpenCloseChar>();
-    private Character[] openChars = { '{', '[', '(', '"' };
-    private Character[] closeChars = { '}', ']', ')', '"' };
+    private Character[] openChars = {'{', '[', '(', '"'};
+    private Character[] closeChars = {'}', ']', ')', '"'};
 
     public OpenCloseCharList() {
         initializeOpenCloseChars();

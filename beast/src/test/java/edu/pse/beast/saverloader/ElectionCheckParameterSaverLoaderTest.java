@@ -21,9 +21,12 @@ public class ElectionCheckParameterSaverLoaderTest {
 
     @BeforeClass
     public static void setUpClass() {
-        electionCheckParameter = new ElectionCheckParameter(Arrays.asList(new Integer[] { 1, 2 }),
-                Arrays.asList(new Integer[] { 1, 2 }), Arrays.asList(new Integer[] { 1, 2 }), 1, 1, 1,
-                new TimeOut(TimeUnit.HOURS, (long) 3.2), 4, "-- unwind 6");
+        electionCheckParameter =
+            new ElectionCheckParameter(
+                Arrays.asList(new Integer[] {1, 2}),
+                              Arrays.asList(new Integer[] {1, 2}),
+                              Arrays.asList(new Integer[] {1, 2}),
+                              1, 1, 1, new TimeOut(TimeUnit.HOURS, (long) 3.2), 4, "-- unwind 6");
     }
 
     /**
@@ -37,8 +40,8 @@ public class ElectionCheckParameterSaverLoaderTest {
     public void testCreateFromSaveString() throws Exception {
         String saveString = ElectionCheckParameterSaverLoader.createSaveString(electionCheckParameter);
 
-        ElectionCheckParameter recreatedElectionCheckParameter = (ElectionCheckParameter) ElectionCheckParameterSaverLoader
-                .createFromSaveString(saveString);
+        ElectionCheckParameter recreatedElectionCheckParameter =
+            (ElectionCheckParameter) ElectionCheckParameterSaverLoader.createFromSaveString(saveString);
 
         assert (recreatedElectionCheckParameter.getAmountCandidates().get(0).equals(1));
         assert (recreatedElectionCheckParameter.getAmountCandidates().get(1).equals(2));

@@ -44,7 +44,8 @@
 //        return new CElectionEditorOptions(editor, ccodeAreaOpts);
 //    }
 //
-//    private static CElectionCodeAreaOptions loadCElectionCodeAreaOps(CElectionCodeArea area, LinkedList<String> saveString) {
+//    private static CElectionCodeAreaOptions loadCElectionCodeAreaOps(CElectionCodeArea area,
+//                                                                     LinkedList<String> saveString) {
 //        CodeAreaOptions codeAreaOpts = loadCodeAreaOpts(area, saveString);
 //        CElectionCodeAreaOptions created = new CElectionCodeAreaOptions(area, codeAreaOpts);
 //        return created;
@@ -101,7 +102,9 @@
 //    public static void saveOpt(Options opt) {
 //        ArrayList<String> saveString = new ArrayList<>();
 //        saveOptRec(opt, saveString);
-//        FileSaver.writeStringLinesToFile(saveString, new File(SuperFolderFinder.getSuperFolder() + "/core/option_saves/" + opt.getId() + ".txt"));
+//        FileSaver.writeStringLinesToFile(saveString,
+//                                         new File(SuperFolderFinder.getSuperFolder()
+//                                                  + "/core/option_saves/" + opt.getId() + ".txt"));
 //    }
 //
 //    private static void saveOptRec(Options opt, ArrayList<String> saveString) {

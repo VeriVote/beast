@@ -76,15 +76,20 @@ public class CAntlrHandler {
      * @return the string of type literals
      */
     public String[] getTypeLiterals() {
-        return new String[] { "void", "char", "short", "int", "long", "float", "double", "signed", "unsigned", "_Bool",
-                "_Complex", "__m128", "__m128d", "__m128i" };
+        return new String[] {
+                "void", "char", "short", "int", "long", "float",
+                "double", "signed", "unsigned", "_Bool",
+                "_Complex", "__m128", "__m128d", "__m128i"
+                };
     }
 
     /**
      * @return the string of control literals
      */
     public String[] getControllLiterals() {
-        return new String[] { "if", "else", "do", "while", "break", "switch", "continue", "default", "case", "return",
+        return new String[] {
+                "if", "else", "do", "while", "break", "switch",
+                "continue", "default", "case", "return",
                 "for" };
     }
 

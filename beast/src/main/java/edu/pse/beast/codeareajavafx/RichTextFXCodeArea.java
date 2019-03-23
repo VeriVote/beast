@@ -14,12 +14,16 @@ import org.fxmisc.richtext.model.StyleSpansBuilder;
 import javafx.scene.Node;
 
 public class RichTextFXCodeArea extends CodeArea {
-    private static final String[] KEYWORDS = new String[] { "abstract", "assert", "boolean", "break", "byte", "case",
-            "catch", "char", "class", "const", "continue", "default", "do", "double", "else", "enum", "extends",
-            "final", "finally", "float", "for", "goto", "if", "implements", "import", "instanceof", "int", "interface",
-            "long", "native", "new", "package", "private", "protected", "public", "return", "short", "static",
-            "strictfp", "super", "switch", "synchronized", "this", "throw", "throws", "transient", "try", "void",
-            "volatile", "while" };
+    private static final String[] KEYWORDS = new String[] {
+            "abstract", "assert", "boolean", "break", "byte", "case",
+            "catch", "char", "class", "const", "continue", "default",
+            "do", "double", "else", "enum", "extends", "final",
+            "finally", "float", "for", "goto", "if", "implements",
+            "import", "instanceof", "int", "interface", "long",
+            "native", "new", "package", "private", "protected",
+            "public", "return", "short", "static", "strictfp",
+            "super", "switch", "synchronized", "this", "throw",
+            "throws", "transient", "try", "void", "volatile", "while" };
 
     private static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
     private static final String PAREN_PATTERN = "\\(|\\)";
@@ -36,13 +40,27 @@ public class RichTextFXCodeArea extends CodeArea {
 
     public RichTextFXCodeArea() {
         String sampleCode = String.join("\n",
-                new String[] { "package com.example;", "", "import java.util.*;", "",
-                        "public class Foo extends Bar implements Baz {", "", "    /*", "     * multi-line comment",
-                        "     */", "    public static void main(String[] args) {", "        // single-line comment",
-                        "        for(String arg: args) {", "            if(arg.length() != 0)",
-                        "                System.out.println(arg);", "            else",
-                        "                System.err.println(\"Warning: empty string as argument\");", "        }",
-                        "    }", "", "}" });
+                new String[] {
+                        "package com.example;",
+                        "",
+                        "import java.util.*;",
+                        "",
+                        "public class Foo extends Bar implements Baz {",
+                        "",
+                        "    /*",
+                        "     * multi-line comment",
+                        "     */",
+                        "    public static void main(String[] args) {",
+                        "        // single-line comment",
+                        "        for(String arg: args) {",
+                        "            if(arg.length() != 0)",
+                        "                System.out.println(arg);",
+                        "            else",
+                        "                System.err.println(\"Warning: empty string as argument\");",
+                        "        }",
+                        "    }",
+                        "",
+                        "}" });
         String stylesheet = this.getClass().getResource("codeAreaJAVAFXStyleSheet.css").toExternalForm();
         this.getStylesheets().add(stylesheet);
         // IntFunction<String> format = (digits -> " %" + digits + "d ");

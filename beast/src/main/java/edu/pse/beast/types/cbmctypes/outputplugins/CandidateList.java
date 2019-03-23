@@ -145,11 +145,8 @@ public class CandidateList extends CBMCOutputType {
 
     @Override
     public List<String> getCodeToRunMargin(List<String> origResult, List<String> lastResult) {
-
         List<CBMCResultWrapperSingleArray> tmpResultOneDim = super.helper.readOneDimVarLong("elect", lastResult);
-
         origResult = tmpResultOneDim.get(0).getList();
-
         return origResult;
     }
 
@@ -157,7 +154,6 @@ public class CandidateList extends CBMCOutputType {
     public List<String> getNewResult(List<String> lastFailedRun, int index) {
         List<CBMCResultWrapperSingleArray> tmpResultOneDim = super.helper
                 .readOneDimVarLong("" + UnifiedNameContainer.getNewResultName() + "", lastFailedRun);
-
         return tmpResultOneDim.get(index).getList();
     }
 
@@ -237,7 +233,7 @@ public class CandidateList extends CBMCOutputType {
             try {
                 toReturn = toReturn + GUIController.getController().getElectionSimulation()
                         .getPartyName(Integer.parseInt(currentValue)) + ", ";
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 toReturn = toReturn + currentValue + ", ";
             }
         }

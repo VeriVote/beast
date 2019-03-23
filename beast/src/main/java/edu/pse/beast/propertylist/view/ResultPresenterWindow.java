@@ -37,10 +37,12 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
 public class ResultPresenterWindow extends JFrame {
 
     private static final long serialVersionUID = 1L;
+
+    StringResourceLoader srl;
+
     private JButton showResult;
     private JButton export;
     private JTextPane result;
-    StringResourceLoader srl;
     private FailureExample example;
 
     private final String pathToEye = "/core/images/other/eye.png";
@@ -54,7 +56,7 @@ public class ResultPresenterWindow extends JFrame {
     }
 
     /**
-     * @param sli
+     * @param sli string loader interface
      */
     public ResultPresenterWindow(StringLoaderInterface sli) {
         PropertyListStringResProvider provider = sli.getPropertyListStringResProvider();

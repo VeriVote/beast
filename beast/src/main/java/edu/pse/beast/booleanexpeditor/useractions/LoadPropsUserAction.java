@@ -7,8 +7,8 @@
 //import edu.pse.beast.toolbox.UserAction;
 //
 ///**
-// * UserAction subclass responsible loading a PostAndPreConditionsDescription object from the file system into the editor
-// * /propertylist.
+// * UserAction subclass responsible for loading a PostAndPreConditionsDescription object from
+// * the file system into the editor/propertylist.
 // * @author NikolaiLMS
 // */
 //public class LoadPropsUserAction extends UserAction {

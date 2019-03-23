@@ -26,18 +26,16 @@ public class PropertyItem implements ResultPresenterElement {
     private boolean willBeMarginComputed;
     private Result result;
 
-    public Result getResult() {
-        return result;
-    }
-
     /**
      * Constructor for the class
      *
-     * @param descr      The property description to add to the property item
-     * @param testStatus Sets whether the property will be analyzed in the next
-     *                   check
+     * @param descr                The property description to add to the property item
+     * @param testStatus           Sets whether the property will be analyzed in the next
+     *                             check
+     * @param willBeMarginComputed whether the margin will be computed
      */
-    public PropertyItem(PreAndPostConditionsDescription descr, boolean testStatus, boolean willBeMarginComputed) {
+    public PropertyItem(PreAndPostConditionsDescription descr, boolean testStatus,
+                        boolean willBeMarginComputed) {
         description = descr;
         willBeTested = testStatus;
 
@@ -61,6 +59,10 @@ public class PropertyItem implements ResultPresenterElement {
      */
     public PropertyItem() {
         this(new PreAndPostConditionsDescription(UUID.randomUUID().toString()), false, false);
+    }
+
+    public Result getResult() {
+        return result;
     }
 
     @Override
@@ -110,15 +112,15 @@ public class PropertyItem implements ResultPresenterElement {
         this.description = descr;
     }
 
-//	public void setDescription(String newName, FormalPropertiesDescription preCond,
-//			FormalPropertiesDescription postCond, SymbolicVariableList symVars) {
-//		this.description = new PreAndPostConditionsDescription(newName, preCond, postCond, symVars);
-//	}
+//  public void setDescription(String newName, FormalPropertiesDescription preCond,
+//      FormalPropertiesDescription postCond, SymbolicVariableList symVars) {
+//    this.description = new PreAndPostConditionsDescription(newName, preCond, postCond, symVars);
+//  }
 
-//	public void setDescriptionName(String newName) {
-//		this.description = new PreAndPostConditionsDescription(newName, this.description.getPreConditionsDescription(),
-//				this.description.getPostConditionsDescription(), this.description.getSymVarList());
-//	}
+//  public void setDescriptionName(String newName) {
+//    this.description = new PreAndPostConditionsDescription(newName, this.description.getPreConditionsDescription(),
+//        this.description.getPostConditionsDescription(), this.description.getSymVarList());
+//  }
 
     public String getDescriptionName() {
         return this.description.getName();

@@ -6,12 +6,12 @@ public class UnprocessedCBMCResult extends CBMCResult {
         super(false);
     }
 //
-//	@Override
-//	public void presentTo(ResultPresenterElement presenter) {
-//		// we dont have to present this result, because it will get used
-//		// internally
-//		ErrorLogger.log("There was an attempt to present an UnprocessedResult. This should + " + "never happen");
-//	}
+//  @Override
+//  public void presentTo(ResultPresenterElement presenter) {
+//    // we dont have to present this result, because it will get used
+//    // internally
+//    ErrorLogger.log("There was an attempt to present an UnprocessedResult. This should + " + "never happen");
+//  }
 
     // returns the new Votes as a CBMCWrappedMultiArray
     public CBMCResultWrapperMultiArray getNewVotesWrappedMulti() {

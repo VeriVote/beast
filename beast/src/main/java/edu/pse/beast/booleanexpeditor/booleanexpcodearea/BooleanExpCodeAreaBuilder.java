@@ -37,7 +37,7 @@
 //        BooleanExpErrorDisplayer errorDisplayer = new BooleanExpErrorDisplayer(textPane, objectRefs.getStringIF());
 //        CodeArea tempCodeArea = super.createCodeArea(textPane, scrollPane, objectRefs, errorDisplayer);
 //        BooleanExpANTLRHandler antlrHandler = null;
-//	      try {
+//        try {
 //            antlrHandler =
 //                new BooleanExpANTLRHandler(
 //                    textPane.getStyledDocument().getText(

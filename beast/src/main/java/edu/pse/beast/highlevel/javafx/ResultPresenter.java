@@ -6,32 +6,26 @@ import edu.pse.beast.propertychecker.Result;
 
 public class ResultPresenter implements Runnable {
 
+    private static final long SLEEPTIME = 100;
+
     private Result result;
 
     private boolean running;
 
     private Thread currentThread = null;
 
-    private static final long SLEEPTIME = 100;
-
     public void setResult(Result result) {
-
         if (currentThread != null) {
             this.running = false;
             currentThread.interrupt();
         }
         this.result = result;
-
         this.running = false;
-
         this.running = true;
-
         new Thread(this).start();
-
     }
 
     private void tmp() {
-
         if (result != null && result.isFinished()) {
             if (!result.isValid()) {
             } else {
@@ -116,5 +110,4 @@ public class ResultPresenter implements Runnable {
             }
         }
     }
-
 }

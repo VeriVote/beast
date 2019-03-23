@@ -21,7 +21,7 @@ public class BooleanExpANTLRHandler {
     /**
      * Constructor
      *
-     * @param styledDocument the StyledDocument instance to analyze
+     * @param input the StyledDocument instance to analyze
      */
     public BooleanExpANTLRHandler(String input) {
         this.input = input;
@@ -60,11 +60,13 @@ public class BooleanExpANTLRHandler {
      *         Used for SyntaxHL.
      */
     public String[] getMakroRegex() {
-        return new String[] { "VOTER_AT_POS\\([0-9]+\\)", "CAND_AT_POS\\([0-9]+\\)", "SEAT_AT_POS\\([0-9]+\\)",
+        return new String[] {
+                "VOTER_AT_POS\\([0-9]+\\)", "CAND_AT_POS\\([0-9]+\\)", "SEAT_AT_POS\\([0-9]+\\)",
                 "FOR_ALL_VOTERS\\([a-zA-Z_]*\\)", "FOR_ALL_CANDIDATES\\([a-zA-Z_]*\\)", "FOR_ALL_SEATS\\([a-zA-Z_]*\\)",
                 "EXISTS_ONE_VOTER\\([a-zA-Z_]*\\)", "EXISTS_ONE_CANDIDATE\\([a-zA-Z_]*\\)",
                 "EXISTS_ONE_SEAT\\([a-zA-Z_]*\\)", "VOTE_SUM_FOR_CANDIDATE[0-9]+\\([a-zA-Z_]*\\)",
-                "VOTE_SUM_FOR_UNIQUE_CANDIDATE[0-9]+\\([a-zA-Z_]*\\)" };
+                "VOTE_SUM_FOR_UNIQUE_CANDIDATE[0-9]+\\([a-zA-Z_]*\\)"
+                };
     }
 
     /**
@@ -74,7 +76,7 @@ public class BooleanExpANTLRHandler {
      *         comparison symbols. Used for SyntaxHL.
      */
     public String[] getComparisonSymbols() {
-        return new String[] { "==", "!=", ">=", "<=", ">", "<" };
+        return new String[] {"==", "!=", ">=", "<=", ">", "<"};
     }
 
     /**
@@ -84,7 +86,7 @@ public class BooleanExpANTLRHandler {
      *         operators. Used for SyntaxHL.
      */
     public String[] getLogicalOperators() {
-        return new String[] { "==>", "<==>", "&&", "||" };
+        return new String[] {"==>", "<==>", "&&", "||"};
     }
 
     /**

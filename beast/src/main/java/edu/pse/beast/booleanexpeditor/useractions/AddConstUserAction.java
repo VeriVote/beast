@@ -18,8 +18,8 @@
 //     * @param booleanExpEditor the BooleanExpEditor object this UserAction belongs to
 //     * @param id the ID of this UserAction
 //     */
-//    public AddConstUserAction(String id, BooleanExpEditorConst booleanExpEditorConst, BooleanExpEditor booleanExpEditor)
-//    {
+//    public AddConstUserAction(String id, BooleanExpEditorConst booleanExpEditorConst,
+//                              BooleanExpEditor booleanExpEditor) {
 //        super("numberOf" + id);
 //        this.booleanExpEditor = booleanExpEditor;
 //        this.booleanExpEditorConst = booleanExpEditorConst;

@@ -18,7 +18,7 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class SingleChoiceStack extends CBMCInputType {
 
-    String[] sizes = { UnifiedNameContainer.getCandidate() };
+    String[] sizes = {UnifiedNameContainer.getCandidate()};
 
     @Override
     public String getInputString() {

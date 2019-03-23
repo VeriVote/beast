@@ -13,30 +13,29 @@
 // * @author Justin
 // */
 //public class PropertyListBuilderTest {
-//	static TestHelper helper;
+//    static TestHelper helper;
 //
-//	@BeforeClass
-//	public static void setUpBeforeClass() throws Exception {
-//		helper = new TestHelper();
-//	}
+//    @BeforeClass
+//    public static void setUpBeforeClass() throws Exception {
+//        helper = new TestHelper();
+//    }
 //
-//	@AfterClass
-//	public static void tearDownAfterClass() throws Exception {
-//	}
+//    @AfterClass
+//    public static void tearDownAfterClass() throws Exception {
+//    }
 //
-//	@Before
-//	public void setUp() throws Exception {
-//		helper.startNewBEASTInstance();
-//	}
+//    @Before
+//    public void setUp() throws Exception {
+//        helper.startNewBEASTInstance();
+//    }
 //
-//	@After
-//	public void tearDown() throws Exception {
-//	}
+//    @After
+//    public void tearDown() throws Exception {
+//    }
 //
-//	@Test
-//	public void test() {
-//		PropertyList list = helper.getPropertyList();
-//		assertNotNull(list);
-//	}
-//
+//    @Test
+//    public void test() {
+//        PropertyList list = helper.getPropertyList();
+//        assertNotNull(list);
+//    }
 //}

@@ -72,7 +72,7 @@ public class AutoCompleter {
         list.setItems(FXCollections.observableList(content)); // set the items that are supposed to be displayed in the
                                                               // window
         autoCompletionStage.show();
-        autoCompletionStage.requestFocus();// put this window on top
+        autoCompletionStage.requestFocus(); // put this window on top
     }
 
     public synchronized void reset() {

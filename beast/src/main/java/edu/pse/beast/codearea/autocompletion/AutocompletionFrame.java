@@ -13,6 +13,12 @@ public class AutocompletionFrame extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1L;
 
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList<String> jList1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JScrollPane jScrollPane1;
+    // End of variables declaration//GEN-END:variables
+
     /**
      * Creates new form AutocompletionFrame
      */
@@ -53,12 +59,12 @@ public class AutocompletionFrame extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE));
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    } // </editor-fold>//GEN-END:initComponents
 
-    private void formKeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_formKeyPressed
+    private void formKeyPressed(java.awt.event.KeyEvent evt) { // GEN-FIRST:event_formKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE)
             setVisible(false);
-    }// GEN-LAST:event_formKeyPressed
+    } // GEN-LAST:event_formKeyPressed
 
     /**
      * @param args the command line arguments
@@ -111,14 +117,7 @@ public class AutocompletionFrame extends javax.swing.JFrame {
         jList1.setModel(model);
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JScrollPane jScrollPane1;
-    // End of variables declaration//GEN-END:variables
-
     public JList<String> getjList1() {
         return jList1;
     }
-
 }

@@ -25,7 +25,8 @@
 //    @Override
 //    public void perform() {
 //        if (cElectionDescriptionEditor.getChangeHandler().hasChanged()) {
-//            if (!cElectionDescriptionEditor.getFileChooser().openSaveChangesDialog(cElectionDescriptionEditor.getElectionDescription())) {
+//            if (!cElectionDescriptionEditor.getFileChooser().openSaveChangesDialog(
+//                    cElectionDescriptionEditor.getElectionDescription())) {
 //                return;
 //            }
 //        }
@@ -39,7 +40,5 @@
 //                Logger.getLogger(NewElectionUserAction.class.getName()).log(Level.SEVERE, null, e);
 //            }
 //        }
-//
 //    }
-//    
 //}

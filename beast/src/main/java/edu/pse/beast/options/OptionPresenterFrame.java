@@ -170,15 +170,15 @@
 //        layout.setVerticalGroup(
 //            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 //            .addGroup(layout.createSequentialGroup()
-//                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
-//                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+//                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE,
+//                              305, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
+//                                 javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 //                .addComponent(jButton1))
 //        );
 //
 //        pack();
-//    }// </editor-fold>//GEN-END:initComponents
-//
-// 
+//    } // </editor-fold>//GEN-END:initComponents
 //
 //    // Variables declaration - do not modify//GEN-BEGIN:variables
 //    private javax.swing.JButton jButton1;
@@ -190,7 +190,8 @@
 //     */
 //    public JTabbedPane getjTabbedPane1() {
 //        return jTabbedPane1;
-//    }    
+//    }
+//
 //    /**
 //     * Getter for JButton
 //     * @return JButton
@@ -198,6 +199,4 @@
 //    public JButton getjButton1() {
 //        return jButton1;
 //    }
-//    
-//    
 //}

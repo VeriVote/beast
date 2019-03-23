@@ -4,50 +4,50 @@
 }
 
 .preprocessor {
-	-fx-fill: red;
-	-fx-font-weight: bold;
+   -fx-fill: red;
+   -fx-font-weight: bold;
 }
 
 .method {
-	-fx-fill: firebrick;
-	-fx-font-weight: bold;
+   -fx-fill: firebrick;
+   -fx-font-weight: bold;
 }
 
 .datatype {
-	-fx-fill: blue;
+   -fx-fill: blue;
 }
 
 .include {
-	-fx-fill: orange
+   -fx-fill: orange
 }
 
 .paren {
-    -fx-fill: firebrick;
-    -fx-font-weight: bold;
+   -fx-fill: firebrick;
+   -fx-font-weight: bold;
 }
 
 .brace {
-    -fx-fill: teal;
-    -fx-font-weight: bold;
+   -fx-fill: teal;
+   -fx-font-weight: bold;
 }
 
 .bracket {
-    -fx-fill: darkgreen;
-    -fx-font-weight: bold;
+   -fx-fill: darkgreen;
+   -fx-font-weight: bold;
 }
 
 .semicolon {
-    -fx-font-weight: bold;
+   -fx-font-weight: bold;
 }
 
 .pointer {
-	-fx-fill: red;
+   -fx-fill: red;
 }
 
 .string {
-    -fx-fill: blue;
+   -fx-fill: blue;
 }
 
 .comment {
-	-fx-fill: cadetblue;
+   -fx-fill: cadetblue;
 }

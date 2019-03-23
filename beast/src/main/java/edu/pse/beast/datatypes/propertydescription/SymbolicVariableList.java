@@ -14,8 +14,8 @@ import edu.pse.beast.types.InternalTypeContainer;
  */
 public class SymbolicVariableList {
 
-    private final LinkedList<SymbolicVariable> symbolicVariableList = new LinkedList<>();;
-    private transient final List<VariableListListener> listenerList = new ArrayList<VariableListListener>();
+    private final LinkedList<SymbolicVariable> symbolicVariableList = new LinkedList<>();
+    private final transient List<VariableListListener> listenerList = new ArrayList<VariableListListener>();
 
     /**
      *

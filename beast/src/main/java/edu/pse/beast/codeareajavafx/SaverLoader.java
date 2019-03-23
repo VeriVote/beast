@@ -50,8 +50,8 @@ public class SaverLoader {
      * Saves the given text in the given file. Does NOT check if there already
      * exists a previous save file
      * 
-     * @param toSaveIn
-     * @param text
+     * @param toSaveIn given file
+     * @param text given text
      */
     public void saveToDisk(File toSaveIn, String text) {
         PrintWriter out = null;

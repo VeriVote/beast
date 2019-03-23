@@ -19,7 +19,7 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class SingleChoice extends CBMCInputType {
 
-    String[] sizes = { UnifiedNameContainer.getVoter() };
+    String[] sizes = {UnifiedNameContainer.getVoter()};
 
     @Override
     public String getInputString() {
@@ -181,36 +181,36 @@ public class SingleChoice extends CBMCInputType {
         return toReturn;
     }
 
-//	@Override
-//	public void addMarginMainCheck(CodeArrayListBeautifier code, int margin,
-//			List<String> origResult) {
-//		code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" + UnifiedNameContainer.getVoter() + "];");
-//		code.add("for (int i = 0; i < V; i++) {"); // go over all voters
-//		code.addTab();
-//		code.add("int changed = nondet_int();"); // determine, if we want to
-//													// changed votes for
-//													// this
-//													// voter
-//		code.add("assume(0 <= changed);");
-//		code.add("assume(changed <= 1);");
-//		code.add("if(changed) {");
-//		code.addTab();
-//		code.add("total_diff++;"); // if we changed the vote, we keep track
-//									// of it
-//		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i] = !ORIG_VOTES[i];"); // flip the vote (0 ->
-//														// 1 |
-//														// 1 -> 0)
-//		code.deleteTab();
-//		code.add("} else {");
-//		code.addTab();
-//		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i] = ORIG_VOTES[i];");
-//		code.deleteTab();
-//		code.add("}");
-//		code.deleteTab();
-//		code.add("}");
-//		code.add("assume(total_diff <= MARGIN);"); // no more changes than
-//													// margin allows
-//	}
+//  @Override
+//  public void addMarginMainCheck(CodeArrayListBeautifier code, int margin,
+//      List<String> origResult) {
+//    code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" + UnifiedNameContainer.getVoter() + "];");
+//    code.add("for (int i = 0; i < V; i++) {"); // go over all voters
+//    code.addTab();
+//    code.add("int changed = nondet_int();"); // determine, if we want to
+//                          // changed votes for
+//                          // this
+//                          // voter
+//    code.add("assume(0 <= changed);");
+//    code.add("assume(changed <= 1);");
+//    code.add("if(changed) {");
+//    code.addTab();
+//    code.add("total_diff++;"); // if we changed the vote, we keep track
+//                  // of it
+//    code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i] = !ORIG_VOTES[i];"); // flip the vote (0 ->
+//                            // 1 |
+//                            // 1 -> 0)
+//    code.deleteTab();
+//    code.add("} else {");
+//    code.addTab();
+//    code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i] = ORIG_VOTES[i];");
+//    code.deleteTab();
+//    code.add("}");
+//    code.deleteTab();
+//    code.add("}");
+//    code.add("assume(total_diff <= MARGIN);"); // no more changes than
+//                          // margin allows
+//  }
 
     @Override
     public List<String> getVotingResultCode(String[][] votingData) {

@@ -65,7 +65,7 @@ public class StoppedTypingContinuouslyMessager implements KeyListener, CaretList
 
     private void msgAllListener(int newCaretPos) {
         for (StoppedTypingContinuouslyListener l : listener) {
-            l.StoppedTypingContinuously(newCaretPos);
+            l.stoppedTypingContinuously(newCaretPos);
         }
     }
 }

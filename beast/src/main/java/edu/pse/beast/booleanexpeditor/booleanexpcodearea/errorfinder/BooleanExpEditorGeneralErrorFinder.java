@@ -12,7 +12,7 @@ import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 public class BooleanExpEditorGeneralErrorFinder {
     /**
      *
-     * @param parentTreeItem
+     * @param parentTreeItem parent tree item
      * @return true, if there are errors, else false
      */
     public static boolean hasErrors(ParentTreeItem parentTreeItem) {

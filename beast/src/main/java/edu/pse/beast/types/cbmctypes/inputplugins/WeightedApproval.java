@@ -18,7 +18,7 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class WeightedApproval extends CBMCInputType {
 
-    String[] sizes = { UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate() };
+    String[] sizes = {UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate()};
 
     @Override
     public String getInputString() {
@@ -174,50 +174,52 @@ public class WeightedApproval extends CBMCInputType {
         return super.wrongInputTypeArray(amountCandidates, amountVoters);
     }
 
-//	@Override
-//	public void addMarginMainCheck(CodeArrayListBeautifier code, int margin,
-//			List<String> origResult) {
-//		code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "];");
+//  @Override
+//  public void addMarginMainCheck(CodeArrayListBeautifier code, int margin,
+//      List<String> origResult) {
+//    code.add("int " + UnifiedNameContainer.getNewVotesName() + "1["
+//             + UnifiedNameContainer.getVoter() + "]["
+//             + UnifiedNameContainer.getCandidate() + "];");
 //
-//		code.add("for (int i = 0; i < V; i++) {"); // go over all voters
-//		code.addTab();
-//		code.add("for (int j = 0; i < C; i++) {"); // go over all candidates
-//		code.addTab();
-//		code.add("int changed = nondet_int();"); // determine, if we want to
-//													// changed votes for
-//													// this
-//													// voter - candidate
-//													// pair
-//		code.add("assume(0 <= changed);");
-//		code.add("assume(changed <= 1);");
-//		code.add("if(changed) {");
-//		code.addTab();
-//		code.add("total_diff++;"); // if we changed the vote, we keep track
-//									// of it
-//		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = nondet_int();");
-//		code.add("assume(" + UnifiedNameContainer.getNewVotesName() + "1[i][j] != ORIG_VOTES[i][j]);"); // set
-//																	// the
-//																	// vote
-//																	// to
-//		// (0-100), but
-//		// different
-//		// from
-//		// original
-//		code.add("assume(0 <= " + UnifiedNameContainer.getNewVotesName() + "1[i][j]);");
-//		code.add("assume(" + UnifiedNameContainer.getNewVotesName() + "1[i][j] <= 100);");
-//		code.deleteTab();
-//		code.add("} else {");
-//		code.addTab();
-//		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = ORIG_VOTES[i][j];");
-//		code.deleteTab();
-//		code.add("}");
-//		code.deleteTab();
-//		code.add("}");
-//		code.deleteTab();
-//		code.add("}"); // end of the double for loop
-//		code.add("assume(total_diff <= MARGIN);"); // no more changes than
-//													// margin allows
-//	}
+//    code.add("for (int i = 0; i < V; i++) {"); // go over all voters
+//    code.addTab();
+//    code.add("for (int j = 0; i < C; i++) {"); // go over all candidates
+//    code.addTab();
+//    code.add("int changed = nondet_int();"); // determine, if we want to
+//                          // changed votes for
+//                          // this
+//                          // voter - candidate
+//                          // pair
+//    code.add("assume(0 <= changed);");
+//    code.add("assume(changed <= 1);");
+//    code.add("if(changed) {");
+//    code.addTab();
+//    code.add("total_diff++;"); // if we changed the vote, we keep track
+//                  // of it
+//    code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = nondet_int();");
+//    code.add("assume(" + UnifiedNameContainer.getNewVotesName() + "1[i][j] != ORIG_VOTES[i][j]);"); // set
+//                                  // the
+//                                  // vote
+//                                  // to
+//    // (0-100), but
+//    // different
+//    // from
+//    // original
+//    code.add("assume(0 <= " + UnifiedNameContainer.getNewVotesName() + "1[i][j]);");
+//    code.add("assume(" + UnifiedNameContainer.getNewVotesName() + "1[i][j] <= 100);");
+//    code.deleteTab();
+//    code.add("} else {");
+//    code.addTab();
+//    code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = ORIG_VOTES[i][j];");
+//    code.deleteTab();
+//    code.add("}");
+//    code.deleteTab();
+//    code.add("}");
+//    code.deleteTab();
+//    code.add("}"); // end of the double for loop
+//    code.add("assume(total_diff <= MARGIN);"); // no more changes than
+//                          // margin allows
+//  }
 
     @Override
     public List<String> getVotingResultCode(String[][] votingData) {

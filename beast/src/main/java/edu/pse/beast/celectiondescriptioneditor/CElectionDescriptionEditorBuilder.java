@@ -115,16 +115,13 @@
 //        ElectionTemplateHandler templateHandler = new ElectionTemplateHandler();
 //
 //        try {
-//        	
-//        	InputType inType = TypeLoader.getStandartInputType();
-//        	
-//        	OutputType outType = TypeLoader.getStandartOutputType();
-//        	
-//        	ElectionTypeContainer container = new ElectionTypeContainer(inType, outType);
-//        	
+//            InputType inType = TypeLoader.getStandartInputType();
+//            OutputType outType = TypeLoader.getStandartOutputType();
+//            ElectionTypeContainer container = new ElectionTypeContainer(inType, outType);
+//
 //            editor.loadElectionDescription(new CCodeHelper().generateElectionDescription(container,
-//                    "new_election", templateHandler,
-//                    objRefsForBuilder.getStringIF().getCElectionEditorStringResProvider().getElectionStringRes()));
+//                      "new_election", templateHandler,
+//                      objRefsForBuilder.getStringIF().getCElectionEditorStringResProvider().getElectionStringRes()));
 //        } catch (BadLocationException ex) {
 //            Logger.getLogger(CElectionDescriptionEditorBuilder.class.getName()).log(Level.SEVERE, null, ex);
 //        }
@@ -191,7 +188,8 @@
 //        return new NewElectionUserAction(editor);
 //    }
 //
-//    private SaveElectionUserAction createSaveElectionUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
+//    private SaveElectionUserAction
+//        createSaveElectionUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
 //        return new SaveElectionUserAction(cElectionDescriptionEditor);
 //    }
 //
@@ -200,11 +198,13 @@
 //        return new SaveAsElectionUserAction(cElectionDescriptionEditor);
 //    }
 //
-//    private LoadElectionUserAction createLoadElectionUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
+//    private LoadElectionUserAction
+//        createLoadElectionUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
 //        return new LoadElectionUserAction(cElectionDescriptionEditor);
 //    }
 //
-//    private ElectionCopyUserAction createElectionCopyUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
+//    private ElectionCopyUserAction
+//        createElectionCopyUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
 //        return new ElectionCopyUserAction(cElectionDescriptionEditor);
 //    }
 //
@@ -217,11 +217,13 @@
 //        return new ElectionPasteUserAction(cElectionDescriptionEditor);
 //    }
 //
-//    private ElectionRedoUserAction createElectionRedoUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
+//    private ElectionRedoUserAction
+//        createElectionRedoUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
 //        return new ElectionRedoUserAction(cElectionDescriptionEditor);
 //    }
 //
-//    private ElectionUndoUserAction createElectionUndoUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
+//    private ElectionUndoUserAction
+//        createElectionUndoUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
 //        return new ElectionUndoUserAction(cElectionDescriptionEditor);
 //    }
 //

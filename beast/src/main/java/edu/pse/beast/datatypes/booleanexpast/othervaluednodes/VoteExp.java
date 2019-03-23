@@ -12,7 +12,7 @@ public class VoteExp extends AccessValueNode {
     /**
      *
      * @param type  the internal type
-     *
+     * @param accessingVars accessing variables
      * @param count the count of this vote
      */
     public VoteExp(InOutType type, TypeExpression[] accessingVars, int count) {

@@ -39,21 +39,22 @@
 //     */
 //    public PropertyList createPropertyList(ObjectRefsForBuilder refs, BooleanExpEditor booleanExpEditor) {
 //        PLModel model = new PLModel();
-//        FileChooser fileChooser = new FileChooser(refs.getStringIF().getPropertyListStringResProvider().getOtherStringRes(),
-//                new PropertyListSaverLoader(), null);
+//        FileChooser fileChooser =
+//            new FileChooser(refs.getStringIF().getPropertyListStringResProvider().getOtherStringRes(),
+//                            new PropertyListSaverLoader(), null);
 //        controller = new PropertyList(model, booleanExpEditor, fileChooser);
 //        booleanExpEditor.setPropertyListController(controller);
 //
 //        window = controller.getView();
 //        //window.updateStringRes(refs.getStringIF());
 //
-//		PropertyListMenuBarHandler menuBarHandler = new PropertyListMenuBarHandler(menuHeadingIds,
+//    PropertyListMenuBarHandler menuBarHandler = new PropertyListMenuBarHandler(menuHeadingIds,
 //                createActionIdAndListenerListForMenuHandler(),
 //                refs.getStringIF().getPropertyListStringResProvider().getMenuStringRes(), window);
 //
 //        ImageResourceProvider imageRes = ImageResourceProvider.getToolbarImages();
 //
-//		PropertyListToolbarHandler toolbarHandler = new PropertyListToolbarHandler(imageRes,
+//    PropertyListToolbarHandler toolbarHandler = new PropertyListToolbarHandler(imageRes,
 //                refs.getStringIF().getPropertyListStringResProvider().getToolbarTipStringRes(),
 //                createActionIdAndListenerListForToolbarHandler(), window.getToolbar(), window);
 //

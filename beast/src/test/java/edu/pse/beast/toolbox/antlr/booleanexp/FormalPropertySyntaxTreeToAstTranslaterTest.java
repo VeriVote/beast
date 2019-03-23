@@ -49,7 +49,8 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
         declaredVar.addTypeForId("v", new InternalTypeContainer(InternalTypeRep.VOTER));
 
 //        String exp = "ELECT2(c) == VOTES2(v);";      
-//        BooleanExpListNode created = translater.generateFromSyntaxTree(createFromString(exp), inputType, output, declaredVar);
+//        BooleanExpListNode created =
+//            translater.generateFromSyntaxTree(createFromString(exp), inputType, output, declaredVar);
 
         declaredVar = new BooleanExpScope();
     }

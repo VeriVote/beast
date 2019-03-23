@@ -51,7 +51,7 @@ public class JTextPaneTestFrame extends javax.swing.JFrame {
                         .addContainerGap(88, Short.MAX_VALUE)));
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    } // </editor-fold>//GEN-END:initComponents
 
     public javax.swing.JTextPane getTextPane() {
         return jTextPane1;

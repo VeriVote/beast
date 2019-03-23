@@ -43,14 +43,15 @@ import javax.swing.text.Utilities;
  * a JScrollPane.
  */
 public class TextLineNumber extends JPanel implements CaretListener, DocumentListener, PropertyChangeListener {
+    public static final float LEFT = 0.0f;
+    public static final float CENTER = 0.5f;
+    public static final float RIGHT = 1.0f;
+
     private static final long serialVersionUID = 1L;
-    public final static float LEFT = 0.0f;
-    public final static float CENTER = 0.5f;
-    public final static float RIGHT = 1.0f;
 
-    private final static Border OUTER = new MatteBorder(0, 0, 0, 2, Color.GRAY);
+    private static final Border OUTER = new MatteBorder(0, 0, 0, 2, Color.GRAY);
 
-    private final static int HEIGHT = Integer.MAX_VALUE - 1000000;
+    private static final int HEIGHT = Integer.MAX_VALUE - 1000000;
 
     // Text component this TextTextLineNumber component is in sync with
 
@@ -215,7 +216,7 @@ public class TextLineNumber extends JPanel implements CaretListener, DocumentLis
      * <li>TextLineNumber.RIGHT (default)
      * </ul>
      * 
-     * @param currentLineForeground the Color used to render the current line
+     * @param digitAlignment the Color used to render the current line
      */
     public void setDigitAlignment(float digitAlignment) {
         this.digitAlignment = digitAlignment > 1.0f ? 1.0f : digitAlignment < 0.0f ? -1.0f : digitAlignment;

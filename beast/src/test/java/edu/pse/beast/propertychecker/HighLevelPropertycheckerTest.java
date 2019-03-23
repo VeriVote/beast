@@ -24,175 +24,114 @@
 //import edu.pse.beast.saverloader.ProjectSaverLoader;
 //
 //public class HighLevelPropertycheckerTest {
+//    GuiTestHelper helper = new GuiTestHelper();
+//    private long waittime = 2000;
+//    @Before
+//    public void setUp() throws InterruptedException {
+//        helper.startNewBEASTInstance();
+//    }
 //
-//	GuiTestHelper helper = new GuiTestHelper();
+//    @Test
+//    public void testCBMCCheck() throws InterruptedException {
+//        ParameterEditor parameterEditor = helper.getParamEditorOfCurrentInstace();
+//        Thread.sleep(waittime);
+//        String pathToProject = "./src/test/testfiles/SingleChoiceAnonymity.beast";
+//        Thread.sleep(waittime);
+//        ProjectSaverLoader projectSaverLoader = new ProjectSaverLoader();
+//        Thread.sleep(waittime);
+//        Project loadedProject = (Project) projectSaverLoader.createFromSaveString(readProject(pathToProject));
+//        Thread.sleep(waittime);
+//        parameterEditor.loadProject(loadedProject);
+//        Thread.sleep(waittime);
+//        Thread.sleep(waittime);
+//        Thread.sleep(waittime);
+//        PropertyList propList = helper.getPropListOfCurrentInstance();
+//        Thread.sleep(waittime);
+//        List<PropertyItem> list = propList.getList();
 //
-//	private long waittime = 2000;
-//	
-//	@Before
-//	public void setUp() throws InterruptedException {
-//		helper.startNewBEASTInstance();
-//	}
+//        for (Iterator<PropertyItem> iterator = list.iterator(); iterator.hasNext();) {
+//            // the first example should not be zero, because there the assertion fails
+//            PropertyItem propertyItem = (PropertyItem) iterator.next();
+//            assertNotNull(propertyItem.getExample());
+//            // the second example should lead to null, because the assetion holds
+//            propertyItem = (PropertyItem) iterator.next();
+//            assertNull(propertyItem.getExample());
+//        }
+//        helper.endInstance();
+//    }
 //
-//	@Test
-//	public void testCBMCCheck() throws InterruptedException {
-//		
-//		ParameterEditor parameterEditor = helper.getParamEditorOfCurrentInstace();
+//    @Test
+//    public void testCheckAbort() throws InterruptedException {
+//        ParameterEditor parameterEditor = helper.getParamEditorOfCurrentInstace();
+//        Thread.sleep(waittime);
+//        String pathToProject = "./src/test/testfiles/SingleChoiceAnonymity.beast";
+//        Thread.sleep(waittime);
+//        ProjectSaverLoader projectSaverLoader = new ProjectSaverLoader();
+//        Thread.sleep(waittime);
+//        Project loadedProject = (Project) projectSaverLoader.createFromSaveString(readProject(pathToProject));
+//        Thread.sleep(waittime);
+//        parameterEditor.loadProject(loadedProject);
+//        Thread.sleep(waittime);
+//        Thread.sleep(waittime);
+//        PropertyList propList = helper.getPropListOfCurrentInstance();
+//        Thread.sleep(waittime);
+//        List<PropertyItem> list = propList.getList();
 //
-//		
-//		Thread.sleep(waittime);
-//		
-//		String pathToProject = "./src/test/testfiles/SingleChoiceAnonymity.beast";
+//        for (Iterator<PropertyItem> iterator = list.iterator(); iterator.hasNext();) {
+//            // the first example should not be zero, because there the assertion fails
+//            PropertyItem propertyItem = (PropertyItem) iterator.next();
+//            assertNull(propertyItem.getExample());
+//            // the second example should lead to null, because the assetion holds
+//            propertyItem = (PropertyItem) iterator.next();
+//            assertNull(propertyItem.getExample());
+//        }
+//        helper.endInstance();
+//    }
 //
-//		Thread.sleep(waittime);
-//		
-//		ProjectSaverLoader projectSaverLoader = new ProjectSaverLoader();
+//    @Test
+//    public void testCBMCCheckTimeOut() throws InterruptedException {
+//        ParameterEditor parameterEditor = helper.getParamEditorOfCurrentInstace();
+//        String pathToProject = "./src/test/testfiles/timeoutTest.beast";
+//        ProjectSaverLoader projectSaverLoader = new ProjectSaverLoader();
+//        Project loadedProject = (Project) projectSaverLoader.createFromSaveString(readProject(pathToProject));
+//        parameterEditor.loadProject(loadedProject);
+//        boolean running = true;
+//        while (running) {
+//            if (parameterEditor.getReacts()) {
+//                running = false;
+//            } else {
+//                Thread.sleep(1000);
+//            }
+//        }
 //
-//		Thread.sleep(waittime);
-//		
-//		Project loadedProject = (Project) projectSaverLoader.createFromSaveString(readProject(pathToProject));
+//        PropertyList propList = helper.getPropListOfCurrentInstance();
+//        List<PropertyItem> list = propList.getList();
+//        for (Iterator<PropertyItem> iterator = list.iterator(); iterator.hasNext();) {
+//            PropertyItem propertyItem = (PropertyItem) iterator.next();
+//            assertNull(propertyItem.getExample());
+//        }
+//        helper.endInstance();
+//    }
 //
-//		Thread.sleep(waittime);
-//		
-//		parameterEditor.loadProject(loadedProject);
+//    private String readProject(String pathToProject) throws InterruptedException {
+//        // create a new saveString that contains a beast-project
+//        File selectedFile = new File(pathToProject);
+//        BufferedReader inputReader = null;
 //
-//		Thread.sleep(waittime);
+//        String toReturn = "";
 //
-//		Thread.sleep(waittime);
-//
-//		Thread.sleep(waittime);
-//		
-//		PropertyList propList = helper.getPropListOfCurrentInstance();
-//
-//		Thread.sleep(waittime);
-//		
-//		List<PropertyItem> list = propList.getList();
-//
-//		
-//		
-//		for (Iterator<PropertyItem> iterator = list.iterator(); iterator.hasNext();) {
-//			//the first example shouldn't be zero, because there the assertion fails
-//			PropertyItem propertyItem = (PropertyItem) iterator.next();
-//			assertNotNull(propertyItem.getExample());
-//			//the second example should lead to null, because the assetion holds
-//			propertyItem = (PropertyItem) iterator.next();
-//			assertNull(propertyItem.getExample());
-//		}
-//
-//		helper.endInstance();
-//
-//	}
-//	
-//	@Test
-//	public void testCheckAbort() throws InterruptedException {
-//		
-//		ParameterEditor parameterEditor = helper.getParamEditorOfCurrentInstace();
-//
-//		Thread.sleep(waittime);
-//		
-//		String pathToProject = "./src/test/testfiles/SingleChoiceAnonymity.beast";
-//
-//		Thread.sleep(waittime);
-//		
-//		ProjectSaverLoader projectSaverLoader = new ProjectSaverLoader();
-//
-//		Thread.sleep(waittime);
-//		
-//		Project loadedProject = (Project) projectSaverLoader.createFromSaveString(readProject(pathToProject));
-//
-//		Thread.sleep(waittime);
-//		
-//		parameterEditor.loadProject(loadedProject);
-//
-//		Thread.sleep(waittime);
-//
-//		Thread.sleep(waittime);
-//		
-//		PropertyList propList = helper.getPropListOfCurrentInstance();
-//
-//		Thread.sleep(waittime);
-//		
-//		List<PropertyItem> list = propList.getList();
-//
-//		
-//		
-//		for (Iterator<PropertyItem> iterator = list.iterator(); iterator.hasNext();) {
-//			//the first example shouldn't be zero, because there the assertion fails
-//			PropertyItem propertyItem = (PropertyItem) iterator.next();
-//			assertNull(propertyItem.getExample());
-//			//the second example should lead to null, because the assetion holds
-//			propertyItem = (PropertyItem) iterator.next();
-//			assertNull(propertyItem.getExample());
-//		}
-//
-//		helper.endInstance();
-//
-//	}
-//
-//	@Test
-//	public void testCBMCCheckTimeOut() throws InterruptedException {
-//
-//
-//		ParameterEditor parameterEditor = helper.getParamEditorOfCurrentInstace();
-//
-//		String pathToProject = "./src/test/testfiles/timeoutTest.beast";
-//
-//		ProjectSaverLoader projectSaverLoader = new ProjectSaverLoader();
-//
-//		Project loadedProject = (Project) projectSaverLoader.createFromSaveString(readProject(pathToProject));
-//
-//		parameterEditor.loadProject(loadedProject);
-//
-//		boolean running = true;
-//		while (running) {
-//			if (parameterEditor.getReacts()) {
-//				running = false;
-//			} else {
-//				Thread.sleep(1000);
-//			}
-//
-//		}
-//
-//		PropertyList propList = helper.getPropListOfCurrentInstance();
-//
-//		List<PropertyItem> list = propList.getList();
-//
-//		for (Iterator<PropertyItem> iterator = list.iterator(); iterator.hasNext();) {
-//			PropertyItem propertyItem = (PropertyItem) iterator.next();
-//			assertNull(propertyItem.getExample());
-//		}
-//
-//		helper.endInstance();
-//
-//	}
-//
-//	private String readProject(String pathToProject) throws InterruptedException {
-//
-//		// create a new saveString that contains a beast-project
-//
-//		File selectedFile = new File(pathToProject);
-//		BufferedReader inputReader = null;
-//
-//		String toReturn = "";
-//
-//		try {
-//			inputReader = new BufferedReader(new InputStreamReader(new FileInputStream(selectedFile), "UTF8"));
-//		} catch (UnsupportedEncodingException e) {
-//
-//		} catch (FileNotFoundException e) {
-//
-//		}
-//		String sCurrentLine;
-//		try {
-//			while ((sCurrentLine = inputReader.readLine()) != null) {
-//				toReturn += (sCurrentLine + "\n");
-//			}
-//		} catch (IOException e) {
-//
-//		}
-//
-//		return toReturn;
-//
-//	}
-//
+//        try {
+//            inputReader = new BufferedReader(new InputStreamReader(new FileInputStream(selectedFile), "UTF8"));
+//        } catch (UnsupportedEncodingException e) {
+//        } catch (FileNotFoundException e) {
+//        }
+//        String sCurrentLine;
+//        try {
+//            while ((sCurrentLine = inputReader.readLine()) != null) {
+//                toReturn += (sCurrentLine + "\n");
+//            }
+//        } catch (IOException e) {
+//        }
+//        return toReturn;
+//    }
 //}

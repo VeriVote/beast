@@ -7,7 +7,7 @@ package edu.pse.beast.codearea.codeinput;
  * @author Holger-Desktop
  */
 public interface LockedLinesListener {
-    public void lockedLine(int lineNumber);
+    void lockedLine(int lineNumber);
 
-    public void unlockedLine(int lineNumber);
+    void unlockedLine(int lineNumber);
 }

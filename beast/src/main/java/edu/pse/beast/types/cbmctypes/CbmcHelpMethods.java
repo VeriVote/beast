@@ -15,13 +15,13 @@ public class CbmcHelpMethods extends CommonHelpMethods {
 
     private final String segmentEnder = "-----------------------------------";
 
-//	// this is the last line in the cbmc output, if the verification was
-//	// successful
-//	private final String SUCCESSLINE = "VERIFICATION SUCCESSFUL";
+//  // this is the last line in the cbmc output, if the verification was
+//  // successful
+//  private final String SUCCESSLINE = "VERIFICATION SUCCESSFUL";
 //
-//	// this is the last line in the cbmc output, if the assertion
-//	// failed
-//	private final String FAILURELINE = "VERIFICATION FAILED";
+//  // this is the last line in the cbmc output, if the assertion
+//  // failed
+//  private final String FAILURELINE = "VERIFICATION FAILED";
 
     @Override
     public Long readSymbolicVariable(String name, List<String> toExtract) {

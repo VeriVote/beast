@@ -37,7 +37,6 @@
 // * @author Holger-Desktop
 // */
 //public class ParameterEditorBuilder {
-//    
 //    private ParameterEditor editor;
 //    private ParameterEditorWindow window;
 //    private final String[] menuHeadingIds = {"fileMenu", "projectMenu", "editorMenu", "showHideWindowsMenu"};
@@ -65,20 +64,21 @@
 //                null);
 //        editor = new ParameterEditor(cElectionDescriptionEditor, propertyList, window, fileChooser);
 //        ParameterEditorMenuBarHandler menuBarHandler = new ParameterEditorMenuBarHandler(menuHeadingIds,
-//                createActionIdAndListenerListForMenuHandler(cElectionDescriptionEditor, booleanExpEditor, propertyList,
-//                        refs.getStringIF().getParameterEditorStringResProvider().getOtherStringRes(),
-//                        saverLoaderInterface.getProjectSaverLoader(), refs, centralObjectProvider),                
-//                refs.getStringIF().getParameterEditorStringResProvider().getMenuStringRes(), window);
-//        
+//                createActionIdAndListenerListForMenuHandler(
+//                    cElectionDescriptionEditor, booleanExpEditor, propertyList,
+//                    refs.getStringIF().getParameterEditorStringResProvider().getOtherStringRes(),
+//                    saverLoaderInterface.getProjectSaverLoader(), refs, centralObjectProvider),
+//                refs.getStringIF().getParameterEditorStringResProvider().getMenuStringRes(),
+//                window);
+//
 //        ImageResourceProvider imageRes = ImageResourceProvider.getToolbarImages();
-//        
+//
 //        ParameterEditorToolbarHandler toolbarHandler = new ParameterEditorToolbarHandler(imageRes,
 //                refs.getStringIF().getParameterEditorStringResProvider().getToolbarTipStringRes(),
 //                createActionIdAndListenerListForToolbarHandler(cElectionDescriptionEditor, propertyList,
 //                        refs.getStringIF().getParameterEditorStringResProvider().getOtherStringRes(),
 //                        saverLoaderInterface.getProjectSaverLoader()), window.getToolbar(), window);
 //
-//        
 //        refs.getLanguageOpts().addStringDisplayer(menuBarHandler);
 //        refs.getLanguageOpts().addStringDisplayer(toolbarHandler);
 //        refs.getLanguageOpts().addStringDisplayer(window);        
@@ -104,9 +104,12 @@
 //        ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
 //
 //        UserAction save = createSaveProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoader);
-//        UserAction save_as = createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList, stringResourceLoader,
-//                saverLoader);
-//        UserAction load = createLoadProjectUserAction(cElectionDescriptionEditor, propertyList, stringResourceLoader, saverLoader);
+//        UserAction save_as =
+//            createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList,
+//                                          stringResourceLoader, saverLoader);
+//        UserAction load =
+//            createLoadProjectUserAction(cElectionDescriptionEditor, propertyList,
+//                                        stringResourceLoader, saverLoader);
 //        UserAction start = createStartCheckUserAction();
 //        UserAction stop = createAbortCheckUserAction();
 //        UserAction options = createOptionsUserAction(refs, centralObjectProvider);
@@ -118,7 +121,6 @@
 //        fileList.add(createFromUserAction(load));
 //        fileList.add(createFromUserAction(save));
 //        fileList.add(createFromUserAction(save_as));
-//
 //
 //        ArrayList<ActionIdAndListener> projectList = new ArrayList<>();
 //        projectList.add(createFromUserAction(start));
@@ -136,8 +138,6 @@
 //        created.add(projectList);
 //        created.add(editorList);
 //        created.add(showHideWindowsList);
-//        
-//        
 //        return created;
 //    }
 //    /**
@@ -153,10 +153,13 @@
 //            PropertyList propertyList, StringResourceLoader stringResourceLoader, SaverLoader saverLoader) {
 //        ActionIdAndListener[] created = new ActionIdAndListener[5];
 //
-//        UserAction load = createLoadProjectUserAction(cElectionDescriptionEditor, propertyList, stringResourceLoader, saverLoader);
+//        UserAction load =
+//            createLoadProjectUserAction(cElectionDescriptionEditor, propertyList,
+//                                        stringResourceLoader, saverLoader);
 //        UserAction save = createSaveProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoader);
-//        UserAction save_as = createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList, stringResourceLoader,
-//                saverLoader);
+//        UserAction save_as =
+//            createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList,
+//                                          stringResourceLoader, saverLoader);
 //        UserAction start = createStartCheckUserAction();
 //        UserAction stop = createAbortCheckUserAction();
 //
@@ -175,7 +178,8 @@
 //    }
 //
 //    private UserAction createSaveProjectAsUserAction(CElectionDescriptionEditor cElectionDescriptionEditor,
-//                                                     PropertyList propertyList, StringResourceLoader stringResourceLoader,
+//                                                     PropertyList propertyList,
+//                                                     StringResourceLoader stringResourceLoader,
 //                                                     SaverLoader saverLoader) {
 //        return new SaveProjectAsUserAction(propertyList, cElectionDescriptionEditor, editor, stringResourceLoader);
 //    }
@@ -192,10 +196,13 @@
 //    private UserAction createAbortCheckUserAction() {
 //        return new AbortCheckUserAction(editor);
 //    }
-//    
-//    private UserAction createOptionsUserAction(ObjectRefsForBuilder refs, PSECentralObjectProvider centralObjectProvider) {
+//
+//    private UserAction createOptionsUserAction(ObjectRefsForBuilder refs,
+//                                               PSECentralObjectProvider centralObjectProvider) {
 //        return new OptionsUserAction(
-//                refs.getOptionIF().getParameterEditorOptions(refs.getLanguageOpts(), editor, centralObjectProvider), editor, refs.getOptionIF().getOptionPresenter(refs));
+//                refs.getOptionIF().getParameterEditorOptions(refs.getLanguageOpts(), editor,
+//                                                             centralObjectProvider), editor,
+//                                                             refs.getOptionIF().getOptionPresenter(refs));
 //    }
 //
 //    private UserAction createShowPropertyListUserAction(JFrame propertyListWindow) {

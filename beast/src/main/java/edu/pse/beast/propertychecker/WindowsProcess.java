@@ -27,7 +27,7 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.WindowsOStoolbox;
 
 public class WindowsProcess extends CBMCProcess {
-    private long WAITINGTIMEFORTERMINATION = 8000;
+    private final static long WAITINGTIMEFORTERMINATION = 8000;
 
     private final String relativePathToCBMC32 = "/windows/cbmcWIN/cbmc.exe";
     private final String relativePathToCBMC64 = "/windows/cbmcWIN/cbmc64.exe";

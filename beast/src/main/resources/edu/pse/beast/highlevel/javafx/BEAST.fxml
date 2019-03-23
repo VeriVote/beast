@@ -31,102 +31,102 @@
 <?import javafx.scene.text.Text?>
 
 <VBox prefHeight="532.0" prefWidth="545.0" stylesheets="@../javafx/style.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
-	<children>
-		<MenuBar VBox.vgrow="NEVER">
-			<menus>
-				<Menu mnemonicParsing="false" text="%key.file">
-					<items>
-						<Menu mnemonicParsing="false" text="%key.new">
-							<items>
-								<MenuItem mnemonicParsing="false" onAction="#newProject" text="%key.project" />
-								<MenuItem mnemonicParsing="false" onAction="#newElectionDescription" text="%key.electiondescription" />
-								<MenuItem mnemonicParsing="false" onAction="#newPropertyList" text="%key.propertylist" />
-								<MenuItem mnemonicParsing="false" onAction="#newVotingInput" text="%key.voteslist" />
-							</items>
-						</Menu>
-						<Menu mnemonicParsing="false" text="%key.open">
-							<items>
-								<MenuItem mnemonicParsing="false" onAction="#openProject" text="%key.project" />
+  <children>
+    <MenuBar VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="%key.file">
+          <items>
+            <Menu mnemonicParsing="false" text="%key.new">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#newProject" text="%key.project" />
+                <MenuItem mnemonicParsing="false" onAction="#newElectionDescription" text="%key.electiondescription" />
+                <MenuItem mnemonicParsing="false" onAction="#newPropertyList" text="%key.propertylist" />
+                <MenuItem mnemonicParsing="false" onAction="#newVotingInput" text="%key.voteslist" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="%key.open">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#openProject" text="%key.project" />
                         <MenuItem mnemonicParsing="false" onAction="#openProperty" text="%key.property" />
-								<MenuItem mnemonicParsing="false" onAction="#openElectionDescription" text="%key.electiondescription" />
-								<MenuItem mnemonicParsing="false" onAction="#openPropertyList" text="%key.propertylist" />
-								<MenuItem mnemonicParsing="false" onAction="#openVotingInput" text="%key.voteslist" />
-							</items>
-						</Menu>
-						<SeparatorMenuItem mnemonicParsing="false" />
-						<Menu mnemonicParsing="false" text="%key.save">
-							<items>
-								<MenuItem mnemonicParsing="false" onAction="#saveProject" text="%key.project" />
+                <MenuItem mnemonicParsing="false" onAction="#openElectionDescription" text="%key.electiondescription" />
+                <MenuItem mnemonicParsing="false" onAction="#openPropertyList" text="%key.propertylist" />
+                <MenuItem mnemonicParsing="false" onAction="#openVotingInput" text="%key.voteslist" />
+              </items>
+            </Menu>
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <Menu mnemonicParsing="false" text="%key.save">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#saveProject" text="%key.project" />
                         <MenuItem mnemonicParsing="false" onAction="#saveProperty" text="%key.property" />
-								<MenuItem mnemonicParsing="false" onAction="#saveElectionDescription" text="%key.electiondescription" />
-								<MenuItem mnemonicParsing="false" onAction="#savePropertyList" text="%key.propertylist" />
-								<MenuItem mnemonicParsing="false" onAction="#saveVotingInput" text="%key.voteslist" />
-							</items>
-						</Menu>
-						<Menu mnemonicParsing="false" text="%key.save_as">
-							<items>
-								<MenuItem mnemonicParsing="false" onAction="#saveAsProject" text="%key.project" />
-								<MenuItem mnemonicParsing="false" onAction="#saveAsElectionDescription" text="%key.electiondescription" />
-								<MenuItem mnemonicParsing="false" onAction="#saveAsPropertyList" text="%key.propertylist" />
-								<MenuItem mnemonicParsing="false" onAction="#saveAsVotingInput" text="%key.voteslist" />
-							</items>
-						</Menu>
-						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" onAction="#quitProgram" text="%key.quit" />
-					</items>
-				</Menu>
-				<Menu mnemonicParsing="false" text="%key.edit">
-					<items>
-						<MenuItem mnemonicParsing="false" onAction="#undo" text="%key.undo" />
-						<MenuItem mnemonicParsing="false" onAction="#redo" text="%key.redo" />
-						<SeparatorMenuItem mnemonicParsing="false" />
-						<MenuItem mnemonicParsing="false" onAction="#cut" text="%key.cut" />
-						<MenuItem mnemonicParsing="false" onAction="#copy" text="%key.copy" />
-						<MenuItem mnemonicParsing="false" onAction="#paste" text="%key.paste" />
-						<MenuItem mnemonicParsing="false" onAction="#delete" text="%key.delete" />
-					</items>
-				</Menu>
-				<Menu mnemonicParsing="false" text="%key.parameters">
-					<items>
-						<Menu mnemonicParsing="false" text="%key.timeout">
-							<items>
-								<MenuItem mnemonicParsing="false">
-									<graphic>
-										<HBox>
-											<children>
-												<VBox>
-													<children>
-														<TextField fx:id="timeOut" alignment="CENTER_RIGHT" onAction="#timeOut" prefWidth="50.0" />
-													</children>
-												</VBox>
-												<ChoiceBox fx:id="TimeUnitChoice" />
-											</children>
-										</HBox>
-									</graphic>
-								</MenuItem>
-							</items>
-						</Menu>
-						<Menu mnemonicParsing="false" text="%key.num_processes">
-							<items>
-								<MenuItem mnemonicParsing="false" text="%key.processes">
-									<graphic>
-										<TextField fx:id="processes" alignment="CENTER_RIGHT" onAction="#processes" prefWidth="50.0" />
-									</graphic>
-								</MenuItem>
-							</items>
-						</Menu>
-						<Menu mnemonicParsing="false" text="Solveroptionen">
-							<items>
-								<Menu mnemonicParsing="false" text="Solver auswahl">
+                <MenuItem mnemonicParsing="false" onAction="#saveElectionDescription" text="%key.electiondescription" />
+                <MenuItem mnemonicParsing="false" onAction="#savePropertyList" text="%key.propertylist" />
+                <MenuItem mnemonicParsing="false" onAction="#saveVotingInput" text="%key.voteslist" />
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="%key.save_as">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#saveAsProject" text="%key.project" />
+                <MenuItem mnemonicParsing="false" onAction="#saveAsElectionDescription" text="%key.electiondescription" />
+                <MenuItem mnemonicParsing="false" onAction="#saveAsPropertyList" text="%key.propertylist" />
+                <MenuItem mnemonicParsing="false" onAction="#saveAsVotingInput" text="%key.voteslist" />
+              </items>
+            </Menu>
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" onAction="#quitProgram" text="%key.quit" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="%key.edit">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#undo" text="%key.undo" />
+            <MenuItem mnemonicParsing="false" onAction="#redo" text="%key.redo" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" onAction="#cut" text="%key.cut" />
+            <MenuItem mnemonicParsing="false" onAction="#copy" text="%key.copy" />
+            <MenuItem mnemonicParsing="false" onAction="#paste" text="%key.paste" />
+            <MenuItem mnemonicParsing="false" onAction="#delete" text="%key.delete" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="%key.parameters">
+          <items>
+            <Menu mnemonicParsing="false" text="%key.timeout">
+              <items>
+                <MenuItem mnemonicParsing="false">
+                  <graphic>
+                    <HBox>
+                      <children>
+                        <VBox>
+                          <children>
+                            <TextField fx:id="timeOut" alignment="CENTER_RIGHT" onAction="#timeOut" prefWidth="50.0" />
+                          </children>
+                        </VBox>
+                        <ChoiceBox fx:id="timeUnitChoice" />
+                      </children>
+                    </HBox>
+                  </graphic>
+                </MenuItem>
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="%key.num_processes">
+              <items>
+                <MenuItem mnemonicParsing="false" text="%key.processes">
+                  <graphic>
+                    <TextField fx:id="processes" alignment="CENTER_RIGHT" onAction="#processes" prefWidth="50.0" />
+                  </graphic>
+                </MenuItem>
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Solveroptionen">
+              <items>
+                <Menu mnemonicParsing="false" text="Solverauswahl">
                            <items>
                               <MenuItem mnemonicParsing="false">
                                  <graphic>
-      										<ChoiceBox fx:id="solverChoice" />
+                          <ChoiceBox fx:id="solverChoice" />
                                  </graphic>
                               </MenuItem>
                            </items>
-								</Menu>
-								<Menu mnemonicParsing="false" text="%key.advanced">
+                </Menu>
+                <Menu mnemonicParsing="false" text="%key.advanced">
                            <items>
                               <MenuItem mnemonicParsing="false">
                                  <graphic>
@@ -134,7 +134,7 @@
                                  </graphic>
                               </MenuItem>
                            </items>
-								</Menu>
+                </Menu>
                         <Menu mnemonicParsing="false" text="%key.bounds">
                            <items>
                               <MenuItem mnemonicParsing="false">
@@ -144,58 +144,58 @@
                               </MenuItem>
                            </items>
                         </Menu>
-							</items>
-						</Menu>
-					</items>
-				</Menu>
-            <Menu mnemonicParsing="false" text="%key.verificationBounds">
-              <items>
-						<Menu mnemonicParsing="false" text="%key.voters">
-							<items>
-								<MenuItem mnemonicParsing="false" text="%key.minimum">
-									<graphic>
-										<TextField fx:id="minVoter" alignment="CENTER_RIGHT" onAction="#minVoter" prefWidth="50.0" text="1" />
-									</graphic>
-								</MenuItem>
-								<MenuItem mnemonicParsing="false" text="%key.maximum">
-									<graphic>
-										<TextField fx:id="maxVoter" alignment="CENTER_RIGHT" onAction="#maxVoter" prefWidth="50.0" text="1" />
-									</graphic>
-								</MenuItem>
-							</items>
-						</Menu>
-						<Menu mnemonicParsing="false" text="%key.candidates">
-							<items>
-								<MenuItem mnemonicParsing="false" text="%key.minimum">
-									<graphic>
-										<TextField fx:id="minCandidates" alignment="CENTER_RIGHT" onAction="#minCandidates" prefWidth="50.0" text="1" />
-									</graphic>
-								</MenuItem>
-								<MenuItem mnemonicParsing="false" text="%key.maximum">
-									<graphic>
-										<TextField fx:id="maxCandidates" alignment="CENTER_RIGHT" onAction="#maxCandidates" prefWidth="50.0" text="1" />
-									</graphic>
-								</MenuItem>
-							</items>
-						</Menu>
-						<Menu mnemonicParsing="false" text="%key.seats">
-							<items>
-								<MenuItem mnemonicParsing="false" text="%key.minimum">
-									<graphic>
-										<TextField fx:id="minSeats" alignment="CENTER_RIGHT" onAction="#minSeats" prefWidth="50.0" text="1" />
-									</graphic>
-								</MenuItem>
-								<MenuItem mnemonicParsing="false" text="%key.maximum">
-									<graphic>
-										<TextField fx:id="maxSeats" alignment="CENTER_RIGHT" onAction="#maxSeats" prefWidth="50.0" text="1" />
-									</graphic>
-								</MenuItem>
-							</items>
-						</Menu>
               </items>
             </Menu>
-				<Menu mnemonicParsing="false" text="%key.options">
-					<items>
+          </items>
+        </Menu>
+            <Menu mnemonicParsing="false" text="%key.verificationBounds">
+              <items>
+            <Menu mnemonicParsing="false" text="%key.voters">
+              <items>
+                <MenuItem mnemonicParsing="false" text="%key.minimum">
+                  <graphic>
+                    <TextField fx:id="minVoter" alignment="CENTER_RIGHT" onAction="#minVoter" prefWidth="50.0" text="1" />
+                  </graphic>
+                </MenuItem>
+                <MenuItem mnemonicParsing="false" text="%key.maximum">
+                  <graphic>
+                    <TextField fx:id="maxVoter" alignment="CENTER_RIGHT" onAction="#maxVoter" prefWidth="50.0" text="1" />
+                  </graphic>
+                </MenuItem>
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="%key.candidates">
+              <items>
+                <MenuItem mnemonicParsing="false" text="%key.minimum">
+                  <graphic>
+                    <TextField fx:id="minCandidates" alignment="CENTER_RIGHT" onAction="#minCandidates" prefWidth="50.0" text="1" />
+                  </graphic>
+                </MenuItem>
+                <MenuItem mnemonicParsing="false" text="%key.maximum">
+                  <graphic>
+                    <TextField fx:id="maxCandidates" alignment="CENTER_RIGHT" onAction="#maxCandidates" prefWidth="50.0" text="1" />
+                  </graphic>
+                </MenuItem>
+              </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="%key.seats">
+              <items>
+                <MenuItem mnemonicParsing="false" text="%key.minimum">
+                  <graphic>
+                    <TextField fx:id="minSeats" alignment="CENTER_RIGHT" onAction="#minSeats" prefWidth="50.0" text="1" />
+                  </graphic>
+                </MenuItem>
+                <MenuItem mnemonicParsing="false" text="%key.maximum">
+                  <graphic>
+                    <TextField fx:id="maxSeats" alignment="CENTER_RIGHT" onAction="#maxSeats" prefWidth="50.0" text="1" />
+                  </graphic>
+                </MenuItem>
+              </items>
+            </Menu>
+              </items>
+            </Menu>
+        <Menu mnemonicParsing="false" text="%key.options">
+          <items>
                   <MenuItem mnemonicParsing="false" text="%key.constantName" />
                   <Menu mnemonicParsing="false" text="%key.miscOptions">
                     <items>
@@ -206,49 +206,49 @@
                         </MenuItem>
                     </items>
                   </Menu>
-					</items>
-				</Menu>
-				<Menu mnemonicParsing="false" text="%key.help">
-					<items>
-						<MenuItem fx:id="helpButton" mnemonicParsing="false" onAction="#helpClicked" text="%key.about" />
-					</items>
-				</Menu>
-			</menus>
-		</MenuBar>
-		<ToolBar prefHeight="40.0" prefWidth="200.0">
-			<items>
-				<Button id="startStopButton" fx:id="startStopButton" mnemonicParsing="false" onAction="#startStopPressed" text="">
-					<tooltip>
-						<Tooltip text="%key.start" />
-					</tooltip>
-				</Button>
-				<Separator prefWidth="20.0" />
-				<Button id="openButton" fx:id="openButton" mnemonicParsing="false" onAction="#openButton" text="">
-					<tooltip>
-						<Tooltip text="%key.open" />
-					</tooltip>
-				</Button>
-				<Button id="saveButton" fx:id="saveButton" mnemonicParsing="false" onAction="#saveButton" text="">
-					<tooltip>
-						<Tooltip text="%key.save" />
-					</tooltip>
-				</Button>
-				<Button id="saveAsButton" fx:id="saveAsButton" mnemonicParsing="false" onAction="#saveAsButton" text="">
-					<tooltip>
-						<Tooltip text="%key.save_as" />
-					</tooltip>
-				</Button>
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="%key.help">
+          <items>
+            <MenuItem fx:id="helpButton" mnemonicParsing="false" onAction="#helpClicked" text="%key.about" />
+          </items>
+        </Menu>
+      </menus>
+    </MenuBar>
+    <ToolBar prefHeight="40.0" prefWidth="200.0">
+      <items>
+        <Button id="startStopButton" fx:id="startStopButton" mnemonicParsing="false" onAction="#startStopPressed" text="">
+          <tooltip>
+            <Tooltip text="%key.start" />
+          </tooltip>
+        </Button>
+        <Separator prefWidth="20.0" />
+        <Button id="openButton" fx:id="openButton" mnemonicParsing="false" onAction="#openButton" text="">
+          <tooltip>
+            <Tooltip text="%key.open" />
+          </tooltip>
+        </Button>
+        <Button id="saveButton" fx:id="saveButton" mnemonicParsing="false" onAction="#saveButton" text="">
+          <tooltip>
+            <Tooltip text="%key.save" />
+          </tooltip>
+        </Button>
+        <Button id="saveAsButton" fx:id="saveAsButton" mnemonicParsing="false" onAction="#saveAsButton" text="">
+          <tooltip>
+            <Tooltip text="%key.save_as" />
+          </tooltip>
+        </Button>
             <Separator prefWidth="20.0" />
-				<Button id="undoButton" fx:id="undoButton" mnemonicParsing="false" onAction="#undoButton" text="">
-					<tooltip>
-						<Tooltip text="%key.undo" />
-					</tooltip>
-				</Button>
-				<Button id="redoButton" fx:id="redoButton" mnemonicParsing="false" onAction="#redoButton" text="">
-					<tooltip>
-						<Tooltip text="%key.redo" />
-					</tooltip>
-				</Button>
+        <Button id="undoButton" fx:id="undoButton" mnemonicParsing="false" onAction="#undoButton" text="">
+          <tooltip>
+            <Tooltip text="%key.undo" />
+          </tooltip>
+        </Button>
+        <Button id="redoButton" fx:id="redoButton" mnemonicParsing="false" onAction="#redoButton" text="">
+          <tooltip>
+            <Tooltip text="%key.redo" />
+          </tooltip>
+        </Button>
             <Button id="redoButton" fx:id="cutButton" mnemonicParsing="false" onAction="#cutButton" text="">
                <tooltip>
                   <Tooltip text="%key.cut" />
@@ -269,16 +269,16 @@
                   <Tooltip text="%key.delete" />
                </tooltip>
             </Button>
-			</items>
-		</ToolBar>
-		<SplitPane dividerPositions="0.7513812154696132" focusTraversable="true" VBox.vgrow="ALWAYS">
-			<items>
-				<SplitPane dividerPositions="0.7" orientation="VERTICAL">
-					<items>
-						<TabPane fx:id="mainTabPane" prefHeight="200.0" prefWidth="195.0" tabClosingPolicy="UNAVAILABLE">
-							<tabs>
-								<Tab fx:id="codePane" onSelectionChanged="#codePaneClicked" text="%key.code" />
-								<Tab fx:id="propertyPane" onSelectionChanged="#propertyPaneClicked" text="%key.property">
+      </items>
+    </ToolBar>
+    <SplitPane dividerPositions="0.7513812154696132" focusTraversable="true" VBox.vgrow="ALWAYS">
+      <items>
+        <SplitPane dividerPositions="0.7" orientation="VERTICAL">
+          <items>
+            <TabPane fx:id="mainTabPane" prefHeight="200.0" prefWidth="195.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab fx:id="codePane" onSelectionChanged="#codePaneClicked" text="%key.code" />
+                <Tab fx:id="propertyPane" onSelectionChanged="#propertyPaneClicked" text="%key.property">
                            <content>
                               <SplitPane dividerPositions="0.36394557823129253, 0.7006802721088435" orientation="VERTICAL">
                                 <items>
@@ -373,10 +373,10 @@
                                 </items>
                               </SplitPane>
                            </content>
-								</Tab>
-								<Tab fx:id="inputPane" onSelectionChanged="#inputPaneClicked" text="%key.voteslist">
-									<content>
-										<AnchorPane>
+                </Tab>
+                <Tab fx:id="inputPane" onSelectionChanged="#inputPaneClicked" text="%key.voteslist">
+                  <content>
+                    <AnchorPane>
                                  <children>
                                     <BorderPane prefHeight="292.6666666666667" prefWidth="415.3333333333333" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <top>
@@ -470,9 +470,9 @@
                                        </center>
                                     </BorderPane>
                                  </children></AnchorPane>
-									</content>
-								</Tab>
-								<Tab fx:id="resultPane" onSelectionChanged="#resultPaneClicked" text="%key.result">
+                  </content>
+                </Tab>
+                <Tab fx:id="resultPane" onSelectionChanged="#resultPaneClicked" text="%key.result">
                            <content>
                               <BorderPane>
                                  <center>
@@ -504,10 +504,10 @@
                                  </top>
                               </BorderPane>
                            </content></Tab>
-							</tabs>
-						</TabPane>
-						<TabPane fx:id="subTabPane" tabClosingPolicy="UNAVAILABLE">
-							<tabs>
+              </tabs>
+            </TabPane>
+            <TabPane fx:id="subTabPane" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
                         <Tab fx:id="informationPane" text="Information">
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -516,26 +516,26 @@
                                  </children></AnchorPane>
                           </content>
                         </Tab>
-								<Tab fx:id="consolePane" onSelectionChanged="#consolePaneClicked" text="Console">
-									<content>
-										<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                <Tab fx:id="consolePane" onSelectionChanged="#consolePaneClicked" text="Console">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
                                     <TextArea fx:id="consoleTextArea" editable="false" prefHeight="90.0" prefWidth="382.0" text="Dies ist die Konsole&#10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children></AnchorPane>
-									</content>
-								</Tab>
-								<Tab fx:id="errorPane" onSelectionChanged="#errorPaneClicked" text="Errors">
-									<content>
-										<AnchorPane>
+                  </content>
+                </Tab>
+                <Tab fx:id="errorPane" onSelectionChanged="#errorPaneClicked" text="Errors">
+                  <content>
+                    <AnchorPane>
                                  <children>
                                     <TextArea fx:id="errorTextArea" editable="false" prefHeight="90.0" prefWidth="382.0" text="Dies sind die Errors&#10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                  </children></AnchorPane>
-									</content>
-								</Tab>
-							</tabs>
-						</TabPane>
-					</items>
-				</SplitPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+          </items>
+        </SplitPane>
             <BorderPane>
                <bottom>
                   <ToolBar BorderPane.alignment="CENTER">
@@ -565,7 +565,7 @@
                   <TreeView fx:id="treeView" BorderPane.alignment="CENTER" />
                </center>
             </BorderPane>
-			</items>
-		</SplitPane>
-	</children>
+      </items>
+    </SplitPane>
+  </children>
 </VBox>

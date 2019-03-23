@@ -47,17 +47,22 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 
 public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterface {
-    private final SaverLoader saverLoader;
-    private final ElectionDescriptionSaverLoader electionSaverLoader = new ElectionDescriptionSaverLoader();
-
-    private static final String[] KEYWORDS = new String[] { "auto", "break", "case", "const", "continue", "default",
-            "do", "else", "error", "const", "continue", "default", "do", "else", "enum", "extern", "for", "goto", "if",
-            "return", "signed", "sizeof", "static", "struct", "switch", "typedef", "union", "unsigned", "volatile",
+    private static final String[] KEYWORDS =
+            new String[] {
+                    "auto", "break", "case", "const", "continue", "default",
+                    "do", "else", "error", "const", "continue", "default",
+                    "do", "else", "enum", "extern", "for", "goto", "if",
+            "return", "signed", "sizeof", "static", "struct", "switch",
+            "typedef", "union", "unsigned", "volatile",
             "while" };
-    private static final String[] PREPROCESSOR = new String[] { "#define", "#elif", "#endif", "#ifdef", "#ifndef",
-            "#include" };
-    private static final String[] DATATYPES = new String[] { "char", "double", "enum", "float", "int", "long",
-            "register", "void" };
+    private static final String[] PREPROCESSOR =
+            new String[] {
+                    "#define", "#elif", "#endif", "#ifdef", "#ifndef", "#include"
+                    };
+    private static final String[] DATATYPES =
+            new String[] {
+                    "char", "double", "enum", "float", "int", "long", "register", "void"
+                    };
     private static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
     private static final String PREPROCESSOR_PATTERN = "(" + String.join("|", PREPROCESSOR) + ")";
     private static final String DATATYPE_PATTERN = "(" + String.join("|", DATATYPES) + ")";
@@ -80,6 +85,30 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
             + COMMENT_PATTERN + ")");
 
     private static Set<String> recommendations = new TreeSet<String>();
+
+    final KeyCombination selectAllCombination =
+            new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN); // select
+    // all
+    final KeyCombination backspaceCombination =
+            new KeyCodeCombination(KeyCode.BACK_SPACE); // backspace
+    final KeyCombination deleteCombination =
+            new KeyCodeCombination(KeyCode.DELETE); // delete
+    final KeyCombination enterCombination =
+            new KeyCodeCombination(KeyCode.ENTER); // enter
+    final KeyCombination undoCombination =
+            new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN); // undo
+    final KeyCombination redoCombination =
+            new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN); // redo
+    final KeyCombination pasteCombination =
+            new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN); // paste
+    final KeyCombination cutCombination =
+            new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_DOWN); // paste
+    final KeyCombination tabulatorCombination =
+            new KeyCodeCombination(KeyCode.TAB); // tab key
+
+    private final SaverLoader saverLoader;
+    private final ElectionDescriptionSaverLoader electionSaverLoader = new ElectionDescriptionSaverLoader();
+
     private ElectionDescription elecDescription;
     private List<ElectionDescriptionChangeListener> listeners = new ArrayList<ElectionDescriptionChangeListener>();
     private int lockedLineStart = 0;
@@ -87,16 +116,6 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     private int lockedBracePos;
     private int amountTabs = 0;
     private int spacesPerTab = 4;
-    final KeyCombination selectAllCombination = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN); // select
-                                                                                                                // all
-    final KeyCombination backspaceCombination = new KeyCodeCombination(KeyCode.BACK_SPACE); // backspace
-    final KeyCombination deleteCombination = new KeyCodeCombination(KeyCode.DELETE); // delete
-    final KeyCombination enterCombination = new KeyCodeCombination(KeyCode.ENTER); // enter
-    final KeyCombination undoCombination = new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN); // undo
-    final KeyCombination redoCombination = new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN); // redo
-    final KeyCombination pasteCombination = new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN); // paste
-    final KeyCombination cutCombination = new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_DOWN); // paste
-    final KeyCombination tabulatorCombination = new KeyCodeCombination(KeyCode.TAB); // tab key
 
     public NewCodeArea() {
         // add all standard recommendations
@@ -149,7 +168,6 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
             if (event != null) {
                 event.consume();
             }
-            ;
         });
 
         this.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
@@ -199,7 +217,6 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         if (event != null) {
             event.consume();
         }
-        ;
     }
 
     /**
@@ -220,7 +237,6 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         if (event != null) {
             event.consume();
         }
-        ;
     }
 
     /**
@@ -268,7 +284,6 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
             if (event != null) {
                 event.consume();
             }
-            ;
         }
     }
 
@@ -320,9 +335,9 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         // if (selectionEnd - selectionStart > 0) { // we have a selected range
         // // find out, if the selected range overlaps with a locked line anywhere
 
-        boolean NotOverlapping = ((selectionEnd < lockedLineStart) || (lockedLineEnd <= selectionStart))
+        boolean notOverlapping = ((selectionEnd < lockedLineStart) || (lockedLineEnd <= selectionStart))
                 && (((selectionEnd <= lockedBracePos) || (lockedBracePos < selectionStart)));
-        if (NotOverlapping) {
+        if (notOverlapping) {
             this.replaceText(selectionStart, selectionEnd, replacement);
             int lengthChange = replacement.length() - selectionLength;
             updateLockedLineNumber(selectionEnd, lengthChange);
@@ -365,25 +380,31 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         int lastKwEnd = 0;
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
         while (matcher.find()) {
-            String styleClass = matcher.group("KEYWORD") != null ? "keyword"
-                    : matcher.group("PREPROCESSOR") != null ? "preprocessor"
-                            : matcher.group("METHOD") != null ? "method"
-                                    : matcher.group("DATATYPE") != null ? "datatype"
-                                            : matcher.group("POINTER") != null ? "pointer"
-                                                    : matcher.group("INCLUDE") != null ? "include"
-                                                            : matcher.group("PAREN") != null ? "paren"
-                                                                    : matcher.group("BRACE") != null ? "brace"
-                                                                            : matcher.group("BRACKET") != null
-                                                                                    ? "bracket"
-                                                                                    : matcher.group("SEMICOLON") != null
-                                                                                            ? "semicolon"
-                                                                                            : matcher.group(
-                                                                                                    "STRING") != null
-                                                                                                            ? "string"
-                                                                                                            : matcher
-                                                                                                                    .group("COMMENT") != null
-                                                                                                                            ? "comment"
-                                                                                                                            : null;
+            String styleClass = matcher.group("KEYWORD") != null
+                ? "keyword"
+                        : matcher.group("PREPROCESSOR") != null
+                        ? "preprocessor"
+                            : matcher.group("METHOD") != null
+                            ? "method"
+                                : matcher.group("DATATYPE") != null
+                                ? "datatype"
+                                    : matcher.group("POINTER") != null
+                                    ? "pointer"
+                                        : matcher.group("INCLUDE") != null
+                                        ? "include"
+                                            : matcher.group("PAREN") != null
+                                            ? "paren"
+                                               : matcher.group("BRACE") != null
+                                               ? "brace"
+                                                   : matcher.group("BRACKET") != null
+                                                   ? "bracket"
+                                                       : matcher.group("SEMICOLON") != null
+                                                       ? "semicolon"
+                                                           : matcher.group("STRING") != null
+                                                           ? "string"
+                                                               : matcher.group("COMMENT") != null
+                                                               ? "comment"
+                                                                   : null;
             /* never happens */ assert styleClass != null;
             spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
             spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());

@@ -198,7 +198,7 @@
 //    }
 //    
 //    public void replaceVotingDecline(List<String> code) throws BadLocationException {
-//    	insertToCode.updateVotingDeclLine(code);
+//      insertToCode.updateVotingDeclLine(code);
 //    }
 //
 //    /**

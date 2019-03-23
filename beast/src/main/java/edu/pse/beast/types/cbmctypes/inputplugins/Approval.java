@@ -18,7 +18,7 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class Approval extends CBMCInputType {
 
-    String[] sizes = { UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate() };
+    String[] sizes = {UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate()};
 
     @Override
     public String getInputString() {

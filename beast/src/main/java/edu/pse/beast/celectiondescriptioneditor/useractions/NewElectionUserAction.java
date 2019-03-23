@@ -34,7 +34,8 @@
 //                this,
 //                templateHandler,
 //                editor.getStringInterface().getCElectionEditorStringResProvider().getElectionStringRes(),
-//                editor.getStringInterface().getCElectionEditorStringResProvider().getElectionStringRes().getStringFromID("emptyNameTextFieldError"));
+//                editor.getStringInterface().getCElectionEditorStringResProvider().getElectionStringRes()
+//                .getStringFromID("emptyNameTextFieldError"));
 //        electionTemplateDialog.setDefaultCloseOperation(ElectionTemplateChooser.DISPOSE_ON_CLOSE);
 //        electionTemplateDialog.setVisible(true);
 //    }
@@ -44,7 +45,8 @@
 //        try {
 //            ElectionDescription description = cCodeHelper.generateElectionDescription(
 //                    container, name, 
-//                    templateHandler, editor.getStringInterface().getCElectionEditorStringResProvider().getElectionStringRes());
+//                    templateHandler, editor.getStringInterface().getCElectionEditorStringResProvider()
+//                    .getElectionStringRes());
 //            editor.letUserEditElectionDescription(description);
 //            editor.getFileChooser().setHasBeenSaved(false);
 //        } catch (BadLocationException ex) {
