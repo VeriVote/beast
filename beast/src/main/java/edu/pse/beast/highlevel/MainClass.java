@@ -2,7 +2,7 @@ package edu.pse.beast.highlevel;
 
 import static javafx.scene.input.KeyCombination.SHORTCUT_ANY;
 import static org.fxmisc.wellbehaved.event.EventPattern.anyOf;
-import static org.fxmisc.wellbehaved.event.EventPattern.keyPressed;
+// import static org.fxmisc.wellbehaved.event.EventPattern.keyPressed;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

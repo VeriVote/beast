@@ -9,16 +9,16 @@ import javax.swing.JFrame;
 public class WindowStarter implements Runnable {
     JFrame frame;
 
-    public WindowStarter(JFrame frame){
-        this.frame = frame;
+    public WindowStarter(JFrame frame) {
+	this.frame = frame;
     }
 
     public void show() {
-        java.awt.EventQueue.invokeLater(this);
+	java.awt.EventQueue.invokeLater(this);
     }
 
     @Override
     public void run() {
-        frame.setVisible(true);
+	frame.setVisible(true);
     }
 }

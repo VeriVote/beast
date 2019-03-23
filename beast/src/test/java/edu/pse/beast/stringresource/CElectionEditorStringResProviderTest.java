@@ -16,18 +16,17 @@ public class CElectionEditorStringResProviderTest {
      * sets up the testclass
      */
     public CElectionEditorStringResProviderTest() {
-        instance = new CElectionEditorStringResProvider("test");
+	instance = new CElectionEditorStringResProvider("test");
     }
 
     /**
-     * Test of getMenuStringRes method, of class
-     * CElectionEditorStringResProvider.
+     * Test of getMenuStringRes method, of class CElectionEditorStringResProvider.
      */
     @Test
     public void testGetMenuStringRes() {
-        System.out.println("getMenuStringRes");
-        StringResourceLoader result = instance.getMenuStringRes();
-        assertEquals("Datei", result.getStringFromID("file"));
+	System.out.println("getMenuStringRes");
+	StringResourceLoader result = instance.getMenuStringRes();
+	assertEquals("Datei", result.getStringFromID("file"));
     }
 
     /**
@@ -36,20 +35,19 @@ public class CElectionEditorStringResProviderTest {
      */
     @Test
     public void testGetToolbarTipStringRes() {
-        System.out.println("getToolbarTipStringRes");
-        StringResourceLoader result = instance.getToolbarTipStringRes();
-        assertEquals("Speichern", result.getStringFromID("save"));
+	System.out.println("getToolbarTipStringRes");
+	StringResourceLoader result = instance.getToolbarTipStringRes();
+	assertEquals("Speichern", result.getStringFromID("save"));
     }
 
     /**
-     * Test of getCErrorStringRes method, of class
-     * CElectionEditorStringResProvider.
+     * Test of getCErrorStringRes method, of class CElectionEditorStringResProvider.
      */
     @Test
     public void testGetCErrorStringRes() {
-        System.out.println("getCErrorStringRes");
-        StringResourceLoader result = instance.getCErrorStringRes();
-        assertEquals("Zeile", result.getStringFromID("line"));
+	System.out.println("getCErrorStringRes");
+	StringResourceLoader result = instance.getCErrorStringRes();
+	assertEquals("Zeile", result.getStringFromID("line"));
 
     }
 
@@ -58,9 +56,9 @@ public class CElectionEditorStringResProviderTest {
      */
     @Test
     public void testInitialize() {
-        System.out.println("initialize");
-        instance.initialize();
-        this.testGetCErrorStringRes();
+	System.out.println("initialize");
+	instance.initialize();
+	this.testGetCErrorStringRes();
     }
 
     /**
@@ -69,9 +67,9 @@ public class CElectionEditorStringResProviderTest {
      */
     @Test
     public void testGetElectionStringRes() {
-        System.out.println("getElectionStringRes");
-        StringResourceLoader result = instance.getElectionStringRes();
-        assertEquals("Erstellen", result.getStringFromID("create"));
+	System.out.println("getElectionStringRes");
+	StringResourceLoader result = instance.getElectionStringRes();
+	assertEquals("Erstellen", result.getStringFromID("create"));
     }
 
 }

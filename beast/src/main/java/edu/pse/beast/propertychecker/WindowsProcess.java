@@ -16,7 +16,6 @@ import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.WinNT;
 
-import edu.pse.beast.highlevel.javafx.ChildTreeItem;
 import edu.pse.beast.propertychecker.jna.Win32Process;
 import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;

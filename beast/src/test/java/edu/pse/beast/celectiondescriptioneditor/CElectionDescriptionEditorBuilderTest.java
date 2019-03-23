@@ -10,28 +10,28 @@ import org.junit.BeforeClass;
  * @author Holger-Desktop
  */
 public class CElectionDescriptionEditorBuilderTest {
-    
+
     public CElectionDescriptionEditorBuilderTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
 
-    public static void main(String[] args) {    
-        
+    public static void main(String[] args) {
+
     }
-    
+
 }

@@ -11,7 +11,6 @@ import java.util.concurrent.CountDownLatch;
 
 import org.apache.commons.io.FileUtils;
 
-import edu.pse.beast.highlevel.javafx.ChildTreeItem;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.FileLoader;

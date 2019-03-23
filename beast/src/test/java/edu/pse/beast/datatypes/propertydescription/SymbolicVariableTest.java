@@ -19,8 +19,8 @@ public class SymbolicVariableTest {
      * sets up the test
      */
     public SymbolicVariableTest() {
-        InternalTypeContainer cont = new InternalTypeContainer(InternalTypeRep.INTEGER);
-        this.instance = new SymbolicVariable("testId", cont);
+	InternalTypeContainer cont = new InternalTypeContainer(InternalTypeRep.INTEGER);
+	this.instance = new SymbolicVariable("testId", cont);
     }
 
     /**
@@ -28,9 +28,9 @@ public class SymbolicVariableTest {
      */
     @Test
     public void testGetId() {
-        System.out.println("getId");
-        String result = instance.getId();
-        assertEquals("testId", result);
+	System.out.println("getId");
+	String result = instance.getId();
+	assertEquals("testId", result);
     }
 
     /**
@@ -38,10 +38,10 @@ public class SymbolicVariableTest {
      */
     @Test
     public void testGetInternalTypeContainer() {
-        System.out.println("getInternalTypeContainer");
-        InternalTypeContainer result = instance.getInternalTypeContainer();
-        assertEquals(InternalTypeRep.INTEGER, result.getInternalType());
-        assert (!result.isList());
+	System.out.println("getInternalTypeContainer");
+	InternalTypeContainer result = instance.getInternalTypeContainer();
+	assertEquals(InternalTypeRep.INTEGER, result.getInternalType());
+	assert (!result.isList());
     }
 
 }

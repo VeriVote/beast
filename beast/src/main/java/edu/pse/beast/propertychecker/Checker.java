@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-import edu.pse.beast.highlevel.javafx.ChildTreeItem;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.ThreadedBufferedReader;
 

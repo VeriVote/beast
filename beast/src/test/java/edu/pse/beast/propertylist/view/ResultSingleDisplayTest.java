@@ -6,29 +6,30 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 
 /**
- * Shows a failure example where the election is Single-Choice and one seat is allocated.
+ * Shows a failure example where the election is Single-Choice and one seat is
+ * allocated.
+ *
  * @author Justin
  */
 public class ResultSingleDisplayTest {
-	ResultPresenterWindow win;
+    ResultPresenterWindow win;
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {
+    }
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
+    @AfterClass
+    public static void tearDownAfterClass() throws Exception {
+    }
 
-	@Before
-	public void setUp() throws Exception {
-	}
+    @Before
+    public void setUp() throws Exception {
+    }
 
-	@After
-	public void tearDown() throws Exception {
-		win.dispose();
-	}
-
+    @After
+    public void tearDown() throws Exception {
+	win.dispose();
+    }
 
 //	@Test
 //	public void testSingleArrayFailureExample() throws InterruptedException {

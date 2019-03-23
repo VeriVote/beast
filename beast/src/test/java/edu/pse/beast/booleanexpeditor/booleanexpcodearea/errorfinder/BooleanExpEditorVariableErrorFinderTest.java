@@ -33,10 +33,10 @@
 //    public BooleanExpEditorVariableErrorFinderTest() {
 //        pane = new JTextPane();
 //        try {
-//			aNTLRHandler = new BooleanExpANTLRHandler(pane.getStyledDocument().getText(0, 0));
-//		} catch (BadLocationException e) {
-//			e.printStackTrace();
-//		}
+//          aNTLRHandler = new BooleanExpANTLRHandler(pane.getStyledDocument().getText(0, 0));
+//      } catch (BadLocationException e) {
+//          e.printStackTrace();
+//      }
 //        varList = new SymbolicVariableList();
 //        stringRes = new StringLoaderInterface("en").getBooleanExpEditorStringResProvider().getBooleanExpErrorStringRes();
 //    }
@@ -219,11 +219,10 @@
 //        scopehandler.addVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
 //
 //        String exp = "VOTES1()()()()()   209435 unsdfjgkvn ::::: ()()() ==> ==> && dsjfnb daf9gu 34t8z23r (c) == asdasdasd    c";
-//
 //        pane.setText(exp);
 //
-////        finder = new BooleanExpEditorVariableErrorFinder(aNTLRHandler, varList, input, res);
+//        // finder = new BooleanExpEditorVariableErrorFinder(aNTLRHandler, varList, input, res);
 //
-////        ArrayList<CodeError> errs = finder.getErrors();
+//        // ArrayList<CodeError> errs = finder.getErrors();
 //    }
 //}

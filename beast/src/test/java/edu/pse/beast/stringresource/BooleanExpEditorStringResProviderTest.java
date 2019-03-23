@@ -16,18 +16,17 @@ public class BooleanExpEditorStringResProviderTest {
      * sets up the testclass
      */
     public BooleanExpEditorStringResProviderTest() {
-        instance = new BooleanExpEditorStringResProvider("test");
+	instance = new BooleanExpEditorStringResProvider("test");
     }
 
     /**
-     * Test of getMenuStringRes method, of class
-     * BooleanExpEditorStringResProvider.
+     * Test of getMenuStringRes method, of class BooleanExpEditorStringResProvider.
      */
     @Test
     public void testGetMenuStringRes() {
-        System.out.println("getMenuStringRes");
-        StringResourceLoader result = instance.getMenuStringRes();
-        assertEquals("Datei", result.getStringFromID("fileMenu"));
+	System.out.println("getMenuStringRes");
+	StringResourceLoader result = instance.getMenuStringRes();
+	assertEquals("Datei", result.getStringFromID("fileMenu"));
     }
 
     /**
@@ -36,9 +35,9 @@ public class BooleanExpEditorStringResProviderTest {
      */
     @Test
     public void testGetBooleanExpEditorSymbVarListRes() {
-        System.out.println("getBooleanExpEditorSymbVarListRes");
-        StringResourceLoader result = instance.getBooleanExpEditorSymbVarListRes();
-        assertEquals("Wähler", result.getStringFromID("VOTER"));
+	System.out.println("getBooleanExpEditorSymbVarListRes");
+	StringResourceLoader result = instance.getBooleanExpEditorSymbVarListRes();
+	assertEquals("Wähler", result.getStringFromID("VOTER"));
 
     }
 
@@ -48,9 +47,9 @@ public class BooleanExpEditorStringResProviderTest {
      */
     @Test
     public void testGetToolbarTipStringRes() {
-        System.out.println("getToolbarTipStringRes");
-        StringResourceLoader result = instance.getToolbarTipStringRes();
-        assertEquals("Neue Eigenschaft", result.getStringFromID("new"));
+	System.out.println("getToolbarTipStringRes");
+	StringResourceLoader result = instance.getToolbarTipStringRes();
+	assertEquals("Neue Eigenschaft", result.getStringFromID("new"));
     }
 
     /**
@@ -59,9 +58,9 @@ public class BooleanExpEditorStringResProviderTest {
      */
     @Test
     public void testGetBooleanExpErrorStringRes() {
-        System.out.println("getBooleanExpErrorStringRes");
-        StringResourceLoader result = instance.getBooleanExpErrorStringRes();
-        assertEquals("Fehler", result.getStringFromID("error"));
+	System.out.println("getBooleanExpErrorStringRes");
+	StringResourceLoader result = instance.getBooleanExpErrorStringRes();
+	assertEquals("Fehler", result.getStringFromID("error"));
     }
 
     /**
@@ -70,9 +69,9 @@ public class BooleanExpEditorStringResProviderTest {
      */
     @Test
     public void testGetBooleanExpEditorWindowStringRes() {
-        System.out.println("getBooleanExpEditorWindowStringRes");
-        StringResourceLoader result = instance.getBooleanExpEditorWindowStringRes();
-        assertEquals("Eigenschafteneditor", result.getStringFromID("windowTitle"));
+	System.out.println("getBooleanExpEditorWindowStringRes");
+	StringResourceLoader result = instance.getBooleanExpEditorWindowStringRes();
+	assertEquals("Eigenschafteneditor", result.getStringFromID("windowTitle"));
     }
 
     /**
@@ -80,9 +79,9 @@ public class BooleanExpEditorStringResProviderTest {
      */
     @Test
     public void testInitialize() {
-        System.out.println("initialize");
-        instance.initialize();
-        this.testGetBooleanExpEditorSymbVarListRes();
+	System.out.println("initialize");
+	instance.initialize();
+	this.testGetBooleanExpEditorSymbVarListRes();
     }
 
 }

@@ -10,6 +10,7 @@ import edu.pse.beast.saverloader.staticsaverloaders.TimeOutSaverLoader;
 
 /**
  * JUnit Testclass for saverloader.StaticSaverLoaders.TimeOutSaverLoader.
+ *
  * @author NikolaiLMS
  */
 public class TimeOutSaverLoaderTest {
@@ -17,18 +18,18 @@ public class TimeOutSaverLoaderTest {
 
     @BeforeClass
     public static void setUpClass() {
-        timeOut = new TimeOut(TimeUnit.HOURS, (long) 3.2);
+	timeOut = new TimeOut(TimeUnit.HOURS, (long) 3.2);
     }
 
     /**
-     * Tests the TimeOutSaverLoader by creating a saveString from a TimeOut object, then recreating
-     * that object from the saveString and checking its integrity.
+     * Tests the TimeOutSaverLoader by creating a saveString from a TimeOut object,
+     * then recreating that object from the saveString and checking its integrity.
      */
     @Test
     public void testSaverLoader() {
-        String saveString = TimeOutSaverLoader.createSaveString(timeOut);
-        TimeOut recreatedTimeOut = TimeOutSaverLoader.createFromSaveString(saveString);
-        assert (recreatedTimeOut.getDuration() == 10800000);
-        assert (recreatedTimeOut.getOrigUnit().equals(TimeUnit.HOURS));
+	String saveString = TimeOutSaverLoader.createSaveString(timeOut);
+	TimeOut recreatedTimeOut = TimeOutSaverLoader.createFromSaveString(saveString);
+	assert (recreatedTimeOut.getDuration() == 10800000);
+	assert (recreatedTimeOut.getOrigUnit().equals(TimeUnit.HOURS));
     }
 }

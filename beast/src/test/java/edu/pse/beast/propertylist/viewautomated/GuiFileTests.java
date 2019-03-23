@@ -1,4 +1,3 @@
-package edu.pse.beast.propertylist.viewautomated;
 //package edu.pse.beast.propertylist.viewautomated;
 //
 //import static org.junit.Assert.assertEquals;

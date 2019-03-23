@@ -16,7 +16,7 @@ public class PropertyListStringResProviderTest {
      * sets up the testclass
      */
     public PropertyListStringResProviderTest() {
-        this.instance = new PropertyListStringResProvider("test");
+	this.instance = new PropertyListStringResProvider("test");
     }
 
     /**
@@ -24,9 +24,9 @@ public class PropertyListStringResProviderTest {
      */
     @Test
     public void testGetMenuStringRes() {
-        System.out.println("getMenuStringRes");
-        StringResourceLoader result = instance.getMenuStringRes();
-        assertEquals("Ergebnis anzeigen", result.getStringFromID("showResult"));
+	System.out.println("getMenuStringRes");
+	StringResourceLoader result = instance.getMenuStringRes();
+	assertEquals("Ergebnis anzeigen", result.getStringFromID("showResult"));
 
     }
 
@@ -36,9 +36,9 @@ public class PropertyListStringResProviderTest {
      */
     @Test
     public void testGetToolbarTipStringRes() {
-        System.out.println("getToolbarTipStringRes");
-        StringResourceLoader result = instance.getToolbarTipStringRes();
-        assertEquals("Neu", result.getStringFromID("addNew"));
+	System.out.println("getToolbarTipStringRes");
+	StringResourceLoader result = instance.getToolbarTipStringRes();
+	assertEquals("Neu", result.getStringFromID("addNew"));
 
     }
 
@@ -47,9 +47,9 @@ public class PropertyListStringResProviderTest {
      */
     @Test
     public void testGetOtherStringRes() {
-        System.out.println("getOtherStringRes");
-        StringResourceLoader result = instance.getOtherStringRes();
-        assertEquals("Stimmenauszählung", result.getStringFromID("electionpoints"));
+	System.out.println("getOtherStringRes");
+	StringResourceLoader result = instance.getOtherStringRes();
+	assertEquals("Stimmenauszählung", result.getStringFromID("electionpoints"));
 
     }
 
@@ -58,9 +58,9 @@ public class PropertyListStringResProviderTest {
      */
     @Test
     public void testInitialize() {
-        System.out.println("initialize");
-        instance.initialize();
-        this.testGetMenuStringRes();
+	System.out.println("initialize");
+	instance.initialize();
+	this.testGetMenuStringRes();
     }
 
 }

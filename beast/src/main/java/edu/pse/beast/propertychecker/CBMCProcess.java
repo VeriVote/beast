@@ -2,8 +2,6 @@ package edu.pse.beast.propertychecker;
 
 import java.io.File;
 
-import edu.pse.beast.highlevel.javafx.ChildTreeItem;
-
 public abstract class CBMCProcess extends Checker {
 
     // this is the last line in the cbmc output, if the verification was

@@ -14,35 +14,36 @@ import edu.pse.beast.propertylist.model.PropertyItem;
 
 /**
  * Tests equality of PropertyItems.
+ *
  * @author Justin
  */
 public class PropertyItemTest {
 
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception {
+    }
 
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
+    @AfterClass
+    public static void tearDownAfterClass() throws Exception {
+    }
 
-	@Before
-	public void setUp() throws Exception {
-	}
+    @Before
+    public void setUp() throws Exception {
+    }
 
-	@After
-	public void tearDown() throws Exception {
-	}
+    @After
+    public void tearDown() throws Exception {
+    }
 
-	@Ignore("Test needs to be updated after changes.")
-	@Test
-	public void testItemEquality() {
-		PropertyItem it1 = new PropertyItem();
-		PropertyItem it2 = new PropertyItem();
-		assertFalse(it1.equals(null));
-		assertFalse(it1.equals(it2));
-		//it2.setDescriptionName(it1.getDescription().getName());
-		assertTrue(it1.equals(it2));
-	}
+    @Ignore("Test needs to be updated after changes.")
+    @Test
+    public void testItemEquality() {
+	PropertyItem it1 = new PropertyItem();
+	PropertyItem it2 = new PropertyItem();
+	assertFalse(it1.equals(null));
+	assertFalse(it1.equals(it2));
+	// it2.setDescriptionName(it1.getDescription().getName());
+	assertTrue(it1.equals(it2));
+    }
 
 }
