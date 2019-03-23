@@ -30,8 +30,8 @@ public class WindowsCompilerAndRunner extends SystemSpecificCompilerAndExecution
     // specify anything
     private final String compileAllIncludesInFolder = "*.c";
 
-	@Override
-	protected Process compileCfile(File toCheck) {
+    @Override
+    protected Process compileCfile(File toCheck) {
 
         String vsCmd = null;
 
@@ -93,15 +93,15 @@ public class WindowsCompilerAndRunner extends SystemSpecificCompilerAndExecution
             }
         }
         return startedProcess;
-	}
+    }
 
     @Override
     protected Process runWithData(String toRun, File dataFile) {
         Process startedProcess = null;
-        //Windows wants one big String to call programs
+        // Windows wants one big String to call programs
         String callString = "";
         callString = toRun + ".exe";
-        //the absolute path to the file that holds
+        // the absolute path to the file that holds
         callString = callString + " " + dataFile.getAbsolutePath();
 
         ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", callString);
@@ -113,5 +113,5 @@ public class WindowsCompilerAndRunner extends SystemSpecificCompilerAndExecution
             e.printStackTrace();
         }
         return startedProcess;
-	}
+    }
 }

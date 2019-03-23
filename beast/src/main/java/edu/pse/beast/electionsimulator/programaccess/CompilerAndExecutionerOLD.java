@@ -25,25 +25,25 @@ public final class CompilerAndExecutionerOLD {
     }
 
     /**
-     * Creates a new checker, that first of all determines its operating system
-     * and then creates the correlating one
+     * Creates a new checker, that first of all determines its operating system and
+     * then creates the correlating one
      */
     private static void init() {
         OperatingSystems os = determineOS();
 
         switch (os) {
-            case Linux:
-                specificComAndExe = new LinuxCompilerAndRunner();
+        case Linux:
+            specificComAndExe = new LinuxCompilerAndRunner();
             break;
-            case Windows:
-                specificComAndExe = new WindowsCompilerAndRunner();
+        case Windows:
+            specificComAndExe = new WindowsCompilerAndRunner();
             break;
-            case Mac:
-                ErrorForUserDisplayer.displayError(
-                        "MacOS is not supported yet, to simulate specific elections, extend the \"SystemSpecificCompilerandExecutioner\" .");
-                break;
-            default:
-                ErrorLogger.log("Warning, your OS couldn't be determined or is not supported yet.");
+        case Mac:
+            ErrorForUserDisplayer.displayError(
+                    "MacOS is not supported yet, to simulate specific elections, extend the \"SystemSpecificCompilerandExecutioner\" .");
+            break;
+        default:
+            ErrorLogger.log("Warning, your OS couldn't be determined or is not supported yet.");
         }
 
         initialized = true;
@@ -52,8 +52,7 @@ public final class CompilerAndExecutionerOLD {
     /**
      * checks the given list of c code (one entry per line) for errors
      *
-     * @param toCheck
-     *            the code to check
+     * @param toCheck the code to check
      * @return a list of codeErros
      */
     public static List<String> compileAndRun(List<String> toCheck, Result result) {
@@ -65,6 +64,7 @@ public final class CompilerAndExecutionerOLD {
 
     /**
      * determines the operating system that this program is running on.
+     * 
      * @return the OperatingSystem as the enum
      */
     private static OperatingSystems determineOS() {

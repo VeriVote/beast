@@ -39,15 +39,15 @@ public class OpenCloseCharListTest {
      */
     @Test
     public void testIsOpenChar() {
-	System.out.println("isOpenChar");
+        System.out.println("isOpenChar");
 
-	OpenCloseCharList instance = new OpenCloseCharList();
-	boolean result = instance.isOpenChar('{');
-	assertTrue(result);
-	result = instance.isOpenChar('(');
-	assertTrue(result);
-	result = instance.isOpenChar('"');
-	assertTrue(result);
+        OpenCloseCharList instance = new OpenCloseCharList();
+        boolean result = instance.isOpenChar('{');
+        assertTrue(result);
+        result = instance.isOpenChar('(');
+        assertTrue(result);
+        result = instance.isOpenChar('"');
+        assertTrue(result);
     }
 
     /**
@@ -55,12 +55,12 @@ public class OpenCloseCharListTest {
      */
     @Test
     public void testGetOpenCloseChar() {
-	System.out.println("getOpenCloseChar");
+        System.out.println("getOpenCloseChar");
 
-	OpenCloseCharList instance = new OpenCloseCharList();
+        OpenCloseCharList instance = new OpenCloseCharList();
 
-	OpenCloseChar result = instance.getOpenCloseChar('{');
-	assertEquals('{', result.getOpen());
-	assertEquals('}', result.getClose());
+        OpenCloseChar result = instance.getOpenCloseChar('{');
+        assertEquals('{', result.getOpen());
+        assertEquals('}', result.getClose());
     }
 }

@@ -9,8 +9,9 @@ import javax.swing.JTextPane;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
- * This useraction takes the selected string in the given textpane and
- * copies it to the clipboard
+ * This useraction takes the selected string in the given textpane and copies it
+ * to the clipboard
+ *
  * @author Holger-Desktop
  */
 public class CopyUserAction extends UserAction {

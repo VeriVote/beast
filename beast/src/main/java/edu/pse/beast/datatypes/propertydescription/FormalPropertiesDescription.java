@@ -10,14 +10,14 @@ import java.util.List;
 public class FormalPropertiesDescription {
 
     private String code;
-   
+
     /**
-     * @param code the code of the FormalPropertyDescription 
+     * @param code the code of the FormalPropertyDescription
      */
     public FormalPropertiesDescription(String code) {
         this.code = code;
     }
-    
+
     /**
      * 
      * @return the code of the FormalPropertyDescription
@@ -27,16 +27,16 @@ public class FormalPropertiesDescription {
     }
 
     /**
-     * /**
-     * @param code the code of the FormalPropertyDescription 
+     *
+     * @param code the code of the FormalPropertyDescription
      */
     public void setCode(String code) {
         this.code = code;
     }
 
-	public List<String> getCodeAsList() {
-		String[] split = code.split("\n");
-		
-		return Arrays.asList(split);
-	}
+    public List<String> getCodeAsList() {
+        String[] split = code.split("\n");
+
+        return Arrays.asList(split);
+    }
 }

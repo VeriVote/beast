@@ -12,158 +12,166 @@ import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 
-public abstract class InputType implements InOutType{
-	
-	public static List<InputType> getInputTypes() {
-		ServiceLoader<InputType> loader = ServiceLoader.load(InputType.class);
-		
-		List<InputType> types = new ArrayList<InputType>();
-		
-		for (Iterator<InputType> iterator = loader.iterator(); iterator.hasNext();) {
-			InputType type = (InputType) iterator.next();
-			types.add(type);
-		}
-		
-		return types;
-	}
-	
-	protected CommonHelpMethods helper;
-	
-	public InputType() {
-		getHelper();
-	}
-	
-	
-	@Override
-	public final String toString() {
-		return otherToString();
-	}
+public abstract class InputType implements InOutType {
 
-	protected abstract void getHelper();
+    public static List<InputType> getInputTypes() {
+        ServiceLoader<InputType> loader = ServiceLoader.load(InputType.class);
 
-	/**
-	 * returns a String containing the shape of the input object
-	 * e.g "[" + UnifiedNameContainer.getVoter() + "]" for single choice 
-	 * @return
-	 */
-	public abstract String getInputString();
+        List<InputType> types = new ArrayList<InputType>();
 
-	/**
-	 * 
-	 * @return the ID used by this type in the String resources
-	 */
-	public abstract String getInputIDinFile();
+        for (Iterator<InputType> iterator = loader.iterator(); iterator.hasNext();) {
+            InputType type = (InputType) iterator.next();
+            types.add(type);
+        }
 
-	/**
-	 * 
-	 * @param container 
-	 * @return the minimal value a voter can assign
-	 */
-	public abstract String getMinimalValue();
+        return types;
+    }
 
-	/**
-	 * 
-	 * @param container 
-	 * @return the maximal value a voter can assign
-	 */
-	public abstract String getMaximalValue();
+    protected CommonHelpMethods helper;
 
-	/**
-	 * 
-	 * @return true, if one voter can only vote for one candidate
-	 */
-	public abstract boolean isVotingForOneCandidate();
+    public InputType() {
+        getHelper();
+    }
 
-	/**
-	 * adds the headers needed for the specified checker
-	 * @param code the list to which the headers should be added to
-	 * @return the list containing the additions
-	 */
-	public abstract void addCheckerSpecificHeaders(CodeArrayListBeautifier code);
+    @Override
+    public final String toString() {
+        return otherToString();
+    }
 
-	/**
-	 * adds the verify method to the code list
-	 * @param code the list with the previous code
-	 * @param multiOut boolean, whether we have a single output candidate or a struct
-	 */
-	public abstract void addVerifyMethod(CodeArrayListBeautifier code, OutputType outType);
+    protected abstract void getHelper();
 
-	/**
-	 * 
-	 * @return true, if the input is two dimensional, else false
-	 */
-	public abstract boolean isTwoDim();
+    /**
+     * returns a String containing the shape of the input object e.g "[" +
+     * UnifiedNameContainer.getVoter() + "]" for single choice
+     * 
+     * @return
+     */
+    public abstract String getInputString();
 
-	/**
-	 * extracts the voting data out of the given list of strings into a wrapper
-	 * @param result the result of the computation from which the values will be extracted
-	 * @return a wrapper which contains the values
-	 */
-	public abstract CBMCResultWrapperMultiArray extractVotesWrappedMulti(List<String> result, int numberCandidates);
+    /**
+     * 
+     * @return the ID used by this type in the String resources
+     */
+    public abstract String getInputIDinFile();
 
-	/**
-	 * vets a value to determine if it is legal for the input type, or not
-	 * @param newValue
-	 * @param container
-	 * @param newRowOfValues 
-	 * @return
-	 */
-	public abstract String vetValue(String newValue, ElectionTypeContainer container, NEWRowOfValues newRowOfValues);
+    /**
+     * 
+     * @param container
+     * @return the minimal value a voter can assign
+     */
+    public abstract String getMinimalValue();
 
-	public abstract List<CBMCResultWrapperMultiArray> readVoteList(List<String> toExtract);
+    /**
+     * 
+     * @param container
+     * @return the maximal value a voter can assign
+     */
+    public abstract String getMaximalValue();
 
-	public abstract List<CBMCResultWrapperSingleArray> readSingleVoteList(List<String> toExtract);
-	
-	public String[] wrongInputTypeArray(int amountCandidates, int amountVoters) {
-		String [] toReturn = new String[amountCandidates];
-		Arrays.fill(toReturn, "wrong input type");
-		return toReturn;
-	}
+    /**
+     * 
+     * @return true, if one voter can only vote for one candidate
+     */
+    public abstract boolean isVotingForOneCandidate();
 
-	public abstract String[] getVotePoints(String[][] votes, int amountCandidates, int amountVoters);
+    /**
+     * adds the headers needed for the specified checker
+     * 
+     * @param code the list to which the headers should be added to
+     * @return the list containing the additions
+     */
+    public abstract void addCheckerSpecificHeaders(CodeArrayListBeautifier code);
 
-	public abstract String[] getVotePoints(String[] votes, int amountCandidates, int amountVoters);
+    /**
+     * adds the verify method to the code list
+     * 
+     * @param code     the list with the previous code
+     * @param multiOut boolean, whether we have a single output candidate or a
+     *                 struct
+     */
+    public abstract void addVerifyMethod(CodeArrayListBeautifier code, OutputType outType);
 
-	//public abstract void addMarginMainCheck(CodeArrayListBeautifier code, int margin, List<String> origResult);
-	
-	public abstract List<String> getVotingResultCode(String[][] votingData);
+    /**
+     * 
+     * @return true, if the input is two dimensional, else false
+     */
+    public abstract boolean isTwoDim();
 
-	/**
-	 * 
-	 * @return the dimension of the array which holds the votes (e.g 1 for single choice, 2 for approval)
-	 */
-	public abstract int getDimension();
+    /**
+     * extracts the voting data out of the given list of strings into a wrapper
+     * 
+     * @param result the result of the computation from which the values will be
+     *               extracted
+     * @return a wrapper which contains the values
+     */
+    public abstract CBMCResultWrapperMultiArray extractVotesWrappedMulti(List<String> result, int numberCandidates);
 
-	/**
-	 * so far only used for preference voting
-	 * @param code
-	 * @param voteNumber
-	 * @return
-	 */
-	public abstract void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, int voteNumber);
+    /**
+     * vets a value to determine if it is legal for the input type, or not
+     * 
+     * @param newValue
+     * @param container
+     * @param newRowOfValues
+     * @return
+     */
+    public abstract String vetValue(String newValue, ElectionTypeContainer container, NEWRowOfValues newRowOfValues);
 
-	public abstract void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique);
+    public abstract List<CBMCResultWrapperMultiArray> readVoteList(List<String> toExtract);
 
-	public abstract List<List<String>> getNewVotes(List<String> lastFailedRun, int index);
+    public abstract List<CBMCResultWrapperSingleArray> readSingleVoteList(List<String> toExtract);
 
-	public abstract InternalTypeContainer getInternalTypeContainer();
+    public String[] wrongInputTypeArray(int amountCandidates, int amountVoters) {
+        String[] toReturn = new String[amountCandidates];
+        Arrays.fill(toReturn, "wrong input type");
+        return toReturn;
+    }
 
-	public abstract int vetAmountCandidates(int amountCandidates);
+    public abstract String[] getVotePoints(String[][] votes, int amountCandidates, int amountVoters);
 
-	public abstract int vetAmountVoters(int amountVoters);
-	
-	public abstract int vetAmountSeats(int amountSeats);
+    public abstract String[] getVotePoints(String[] votes, int amountCandidates, int amountVoters);
 
-	public abstract int getNumVotingPoints(String[][] votingData);
+    // public abstract void addMarginMainCheck(CodeArrayListBeautifier code, int
+    // margin, List<String> origResult);
 
-	public abstract String getVoteDescriptionString(List<List<String>> origVotes);
+    public abstract List<String> getVotingResultCode(String[][] votingData);
 
-	public abstract String getMaximalSize(int listDepth);
+    /**
+     * 
+     * @return the dimension of the array which holds the votes (e.g 1 for single
+     *         choice, 2 for approval)
+     */
+    public abstract int getDimension();
 
-	public abstract boolean hasVariableAsMinValue();
+    /**
+     * so far only used for preference voting
+     * 
+     * @param code
+     * @param voteNumber
+     * @return
+     */
+    public abstract void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, int voteNumber);
 
-	public abstract boolean hasVariableAsMaxValue();
+    public abstract void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique);
 
+    public abstract List<List<String>> getNewVotes(List<String> lastFailedRun, int index);
 
-	public abstract List<List<String>> getVotingArray(List<String> lastFailedRun, int index);
+    public abstract InternalTypeContainer getInternalTypeContainer();
+
+    public abstract int vetAmountCandidates(int amountCandidates);
+
+    public abstract int vetAmountVoters(int amountVoters);
+
+    public abstract int vetAmountSeats(int amountSeats);
+
+    public abstract int getNumVotingPoints(String[][] votingData);
+
+    public abstract String getVoteDescriptionString(List<List<String>> origVotes);
+
+    public abstract String getMaximalSize(int listDepth);
+
+    public abstract boolean hasVariableAsMinValue();
+
+    public abstract boolean hasVariableAsMaxValue();
+
+    public abstract List<List<String>> getVotingArray(List<String> lastFailedRun, int index);
 }

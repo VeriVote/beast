@@ -5,22 +5,23 @@ import javafx.scene.control.TreeItem;
 
 public class TestChildTreeItem extends ChildTreeItem {
 
-	TestChildTreeItem(String name, ParentTreeItem parent, TreeItem<CustomTreeItem> treeItemReference) {
-		super(name, parent, treeItemReference);
-	}
+    TestChildTreeItem(String name, ParentTreeItem parent, TreeItem<CustomTreeItem> treeItemReference) {
+        super(name, parent, treeItemReference);
+    }
 
-	public TestChildTreeItem(ChildTreeItemValues values, ParentTreeItem parent, TreeItem<CustomTreeItem> treeItemReference) {
-		super(values, parent, treeItemReference);
-	}
+    public TestChildTreeItem(ChildTreeItemValues values, ParentTreeItem parent,
+            TreeItem<CustomTreeItem> treeItemReference) {
+        super(values, parent, treeItemReference);
+    }
 
-	@Override
-	public void resetResult(Result result) {
-		super.addResult(result);
-	}
+    @Override
+    public void resetResult(Result result) {
+        super.addResult(result);
+    }
 
-	@Override
-	public AnalysisType getAnalysisType() {
-		return AnalysisType.Test;
-	}
-	
+    @Override
+    public AnalysisType getAnalysisType() {
+        return AnalysisType.Test;
+    }
+
 }

@@ -16,7 +16,7 @@ public class ParameterEditorStringResProviderTest {
      * initializes the testclass
      */
     public ParameterEditorStringResProviderTest() {
-	this.instance = new ParameterEditorStringResProvider("test");
+        this.instance = new ParameterEditorStringResProvider("test");
     }
 
     /**
@@ -24,9 +24,9 @@ public class ParameterEditorStringResProviderTest {
      */
     @Test
     public void testGetMenuStringRes() {
-	System.out.println("getMenuStringRes");
-	StringResourceLoader result = instance.getMenuStringRes();
-	assertEquals("Neues Projekt", result.getStringFromID("new"));
+        System.out.println("getMenuStringRes");
+        StringResourceLoader result = instance.getMenuStringRes();
+        assertEquals("Neues Projekt", result.getStringFromID("new"));
     }
 
     /**
@@ -35,9 +35,9 @@ public class ParameterEditorStringResProviderTest {
      */
     @Test
     public void testGetToolbarTipStringRes() {
-	System.out.println("getToolbarTipStringRes");
-	StringResourceLoader result = instance.getToolbarTipStringRes();
-	assertEquals("Stoppe Analyse", result.getStringFromID("stop"));
+        System.out.println("getToolbarTipStringRes");
+        StringResourceLoader result = instance.getToolbarTipStringRes();
+        assertEquals("Stoppe Analyse", result.getStringFromID("stop"));
 
     }
 
@@ -46,9 +46,9 @@ public class ParameterEditorStringResProviderTest {
      */
     @Test
     public void testGetOtherStringRes() {
-	System.out.println("getOtherStringRes");
-	StringResourceLoader result = instance.getOtherStringRes();
-	assertEquals("Dauer", result.getStringFromID("timeout"));
+        System.out.println("getOtherStringRes");
+        StringResourceLoader result = instance.getOtherStringRes();
+        assertEquals("Dauer", result.getStringFromID("timeout"));
     }
 
     /**
@@ -56,9 +56,9 @@ public class ParameterEditorStringResProviderTest {
      */
     @Test
     public void testInitialize() {
-	System.out.println("initialize");
-	instance.initialize();
-	this.testGetMenuStringRes();
+        System.out.println("initialize");
+        instance.initialize();
+        this.testGetMenuStringRes();
     }
 
 }

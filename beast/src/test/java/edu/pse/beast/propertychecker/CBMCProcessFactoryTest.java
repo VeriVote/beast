@@ -15,32 +15,32 @@ public class CBMCProcessFactoryTest {
 
     @Before
     public void setup() {
-	prosFac = new CBMCProcessFactory(null, null, null, null);
+        prosFac = new CBMCProcessFactory(null, null, null, null);
     }
 
     @Test
     public void successSuccesTest() {
-	List<String> toTest = new ArrayList<String>();
-	toTest.add("VERIFICATION SUCCESSFUL");
+        List<String> toTest = new ArrayList<String>();
+        toTest.add("VERIFICATION SUCCESSFUL");
 
-	assertTrue(prosFac.checkAssertionSuccess(toTest));
+        assertTrue(prosFac.checkAssertionSuccess(toTest));
     }
 
     @Test
     public void failureSuccesTest() {
-	List<String> toTest = new ArrayList<String>();
-	toTest.add("VERIFICATION FAILED");
+        List<String> toTest = new ArrayList<String>();
+        toTest.add("VERIFICATION FAILED");
 
-	assertTrue(prosFac.checkAssertionFailure(toTest));
+        assertTrue(prosFac.checkAssertionFailure(toTest));
     }
 
     @Test
     public void succesFailureTest() {
-	assertFalse(prosFac.checkAssertionSuccess(null));
+        assertFalse(prosFac.checkAssertionSuccess(null));
     }
 
     @Test
     public void failFailureTest() {
-	assertFalse(prosFac.checkAssertionFailure(null));
+        assertFalse(prosFac.checkAssertionFailure(null));
     }
 }

@@ -22,12 +22,12 @@ public final class DeepErrorChecker {
     private static boolean initialized = false;
 
     private DeepErrorChecker() {
-        
+
     }
-    
+
     /**
-     * creates a new checker, that first of all determines its operating system
-     * and then creates the correlating one
+     * creates a new checker, that first of all determines its operating system and
+     * then creates the correlating one
      */
     private static void init() {
         OperatingSystems os = determineOS();
@@ -54,8 +54,7 @@ public final class DeepErrorChecker {
     /**
      * checks the given list of c code (one entry per line) for errors
      * 
-     * @param toCheck
-     *            the code to check
+     * @param toCheck the code to check
      * @return a list of codeErros
      */
     public static List<CodeError> checkCodeForErrors(List<String> toCheck, int lineOffset) {

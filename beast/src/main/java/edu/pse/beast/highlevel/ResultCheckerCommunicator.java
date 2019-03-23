@@ -9,7 +9,7 @@ import edu.pse.beast.propertychecker.Result;
 
 /**
  * The ResultCheckerCommunicator starts and stops checks.
- * 
+ *
  * @author Niels
  */
 public interface ResultCheckerCommunicator {
@@ -28,16 +28,15 @@ public interface ResultCheckerCommunicator {
 
     /**
      * Starts checks.
-     * @param electSrc
-     *            ElectionDescriptionSource
-     * @param preAndPostSrc
-     *            PreAndPostConditionsDescription
-     * @param parameter
-     *            ElectionCheckParameter
+     *
+     * @param electSrc      ElectionDescriptionSource
+     * @param preAndPostSrc PreAndPostConditionsDescription
+     * @param parameter     ElectionCheckParameter
      * @return array of ResultInterfaces
      */
     public List<Result> checkPropertiesForDescription(ElectionDescription elecDescr,
-    		List<ParentTreeItem> parentProperties, ElectionCheckParameter electionCheckParameter);
+            List<ParentTreeItem> parentProperties, ElectionCheckParameter electionCheckParameter);
+
 //    
 //    /**
 //     * starts the check for a give file
@@ -49,6 +48,7 @@ public interface ResultCheckerCommunicator {
 //    
     /**
      * Stops checks.
+     *
      * @return false if unable to abort check
      */
     boolean abortChecking();

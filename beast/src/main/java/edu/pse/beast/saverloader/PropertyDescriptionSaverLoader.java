@@ -13,21 +13,22 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
  */
 public class PropertyDescriptionSaverLoader implements SaverLoader<PreAndPostConditionsDescription> {
 
-	private static Gson saverLoader;
+    private static Gson saverLoader;
 
-	static { //here you have the chance to register typeAdapters
-		GsonBuilder builder = new GsonBuilder();
-		//builder.registerTypeAdapter(VariableListListener.class, new VariableListListenerAdapter());
-		saverLoader = builder.create();
-	}
+    static { // here you have the chance to register typeAdapters
+        GsonBuilder builder = new GsonBuilder();
+        // builder.registerTypeAdapter(VariableListListener.class, new
+        // VariableListListenerAdapter());
+        saverLoader = builder.create();
+    }
 
-	@Override
-	public PreAndPostConditionsDescription createFromSaveString(String toLoad) throws Exception {
-		return saverLoader.fromJson(toLoad, PreAndPostConditionsDescription.class);
-	}
+    @Override
+    public PreAndPostConditionsDescription createFromSaveString(String toLoad) throws Exception {
+        return saverLoader.fromJson(toLoad, PreAndPostConditionsDescription.class);
+    }
 
-	@Override
-	public String createSaveString(PreAndPostConditionsDescription toSave) {
-		return saverLoader.toJson(toSave);
-	}
+    @Override
+    public String createSaveString(PreAndPostConditionsDescription toSave) {
+        return saverLoader.toJson(toSave);
+    }
 }

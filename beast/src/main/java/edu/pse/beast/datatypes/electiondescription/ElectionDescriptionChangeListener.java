@@ -9,5 +9,6 @@ import edu.pse.beast.types.OutputType;
  */
 public interface ElectionDescriptionChangeListener {
     public void inputChanged(InputType input);
+
     public void outputChanged(OutputType output);
 }

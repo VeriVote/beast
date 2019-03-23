@@ -45,16 +45,16 @@ public class CodeArrayListBeautifier {
     }
 
     /**
-     * adds another tab to the indenting. If you add another String after this
-     * it will be indeted one more time
+     * adds another tab to the indenting. If you add another String after this it
+     * will be indeted one more time
      */
     public void addTab() {
         numberOfTabs++;
     }
 
     /**
-     * Decreases the number of tabs by one. If the Tabcount is allready 0 it
-     * will no longer decrease it.
+     * Decreases the number of tabs by one. If the Tabcount is allready 0 it will no
+     * longer decrease it.
      */
     public void deleteTab() {
         if (numberOfTabs > 0) {
@@ -86,7 +86,7 @@ public class CodeArrayListBeautifier {
 
     }
 
-	public void addAll(List<String> votingResultCode) {
-		addList(votingResultCode);
-	}
+    public void addAll(List<String> votingResultCode) {
+        addList(votingResultCode);
+    }
 }

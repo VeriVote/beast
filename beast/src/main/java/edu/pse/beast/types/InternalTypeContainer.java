@@ -11,24 +11,22 @@ public class InternalTypeContainer implements InOutType {
     private final InternalTypeContainer listedType;
 
     /**
-     * if the container is a list, say of votes, then the access type is the type
-     * of symbolic var which can be used to access elements of the list. Ex:
-     * Every voter elects one candidate: VOTES1(v) <-- acesstype would be VOTER
-     * Every voter lists candidates by preference: VOTES1(v)(c) <--- acesstype c
-     * would be Candidate This var is also used to determine the size of the
-     * list: type size VOTER V CANDIDATE C SEAT S
+     * if the container is a list, say of votes, then the access type is the type of
+     * symbolic var which can be used to access elements of the list. Ex: Every
+     * voter elects one candidate: VOTES1(v) <-- acesstype would be VOTER Every
+     * voter lists candidates by preference: VOTES1(v)(c) <--- acesstype c would be
+     * Candidate This var is also used to determine the size of the list: type size
+     * VOTER V CANDIDATE C SEAT S
      */
     private final InternalTypeRep accesTypeIfList;
 
     /**
      * Constructor for a listed TypeContainer
      *
-     * @param listedType sets the Type of the listelements
+     * @param listedType      sets the Type of the listelements
      * @param accesTypeIfList sets the Accestype for the Listelements
      */
-    public InternalTypeContainer(
-            InternalTypeContainer listedType,
-            InternalTypeRep accesTypeIfList) {
+    public InternalTypeContainer(InternalTypeContainer listedType, InternalTypeRep accesTypeIfList) {
         this.isList = true;
         this.listedType = listedType;
         this.accesTypeIfList = accesTypeIfList;
@@ -108,24 +106,29 @@ public class InternalTypeContainer implements InOutType {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj)
+            return true;
+        if (obj == null || getClass() != obj.getClass())
+            return false;
 
         InternalTypeContainer other = (InternalTypeContainer) obj;
 
-        if (accesTypeIfList != other.accesTypeIfList) return false;
-        if (internalType != other.internalType) return false;
-        if (isList != other.isList) return false;
+        if (accesTypeIfList != other.accesTypeIfList)
+            return false;
+        if (internalType != other.internalType)
+            return false;
+        if (isList != other.isList)
+            return false;
         return listedType != null ? listedType.equals(other.listedType) : other.listedType == null;
     }
 
-	@Override
-	public InternalTypeContainer getInternalTypeContainer() {
-		return this;
-	}
+    @Override
+    public InternalTypeContainer getInternalTypeContainer() {
+        return this;
+    }
 
-	@Override
-	public String otherToString() {
-		return "";
-	}
+    @Override
+    public String otherToString() {
+        return "";
+    }
 }

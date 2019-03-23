@@ -9,9 +9,11 @@ public class TimeOutNotifier implements Runnable {
     private final Thread interrupterThread;
 
     /**
-     * This class is used for notifying FactoryController that a set amount of time has passed
+     * This class is used for notifying FactoryController that a set amount of time
+     * has passed
+     *
      * @param toInterrupt the FactoryController to interrupt
-     * @param timeOut the time to wait before sending the interrupt message
+     * @param timeOut     the time to wait before sending the interrupt message
      */
     public TimeOutNotifier(FactoryController toInterrupt, long timeOut) {
         this.toInterrupt = toInterrupt;
@@ -33,7 +35,7 @@ public class TimeOutNotifier implements Runnable {
             }
         }
         if (!disabled) {
-            //now stop the checking of the factory controller
+            // now stop the checking of the factory controller
             toInterrupt.stopChecking(true);
         }
     }

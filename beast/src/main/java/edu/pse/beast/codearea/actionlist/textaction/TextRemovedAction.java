@@ -9,14 +9,15 @@ import javax.swing.text.StyledDocument;
 import edu.pse.beast.codearea.actionlist.Action;
 
 /**
- * This class represents the act of removing text from a Styleddocument
- * and makes it possible to undo this action
+ * This class represents the act of removing text from a Styleddocument and
+ * makes it possible to undo this action
+ *
  * @author Holger-Desktop
  */
 public class TextRemovedAction implements Action {
     private final TextDelta td;
     private final StyledDocument doc;
-    
+
     public TextRemovedAction(TextDelta td, StyledDocument doc) {
         this.doc = doc;
         this.td = td;
@@ -37,6 +38,6 @@ public class TextRemovedAction implements Action {
             doc.remove(td.getOffset(), td.getText().length());
         } catch (BadLocationException ex) {
             Logger.getLogger(TextAddedAction.class.getName()).log(Level.SEVERE, null, ex);
-        }        
+        }
     }
 }

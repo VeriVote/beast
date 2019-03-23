@@ -20,402 +20,400 @@ import javafx.scene.control.TreeItem;
 
 public class BooleanExpEditorNEW implements MenuBarInterface {
 
-	private NewPropertyCodeArea preArea;
-	private NewPropertyCodeArea postArea;
+    private NewPropertyCodeArea preArea;
+    private NewPropertyCodeArea postArea;
 
-	private BoundedVarCodeArea boundedVarArea;
+    private BoundedVarCodeArea boundedVarArea;
 
-	private PreAndPostConditionsDescription currentPropertyDescription;
-	private ParentTreeItem currentItem;
+    private PreAndPostConditionsDescription currentPropertyDescription;
+    private ParentTreeItem currentItem;
 
-	private final SaverLoader saverLoader;
+    private final SaverLoader saverLoader;
 
-	private final PropertyDescriptionSaverLoader propSaverLoader = new PropertyDescriptionSaverLoader();
+    private final PropertyDescriptionSaverLoader propSaverLoader = new PropertyDescriptionSaverLoader();
 
-	private final ObservableList<TreeItem<String>> symbolicVoterVariableList;
-	private final ObservableList<TreeItem<String>> symbolicCandidateVariableList;
-	private final ObservableList<TreeItem<String>> symbolicSeatVariableList;
-	private NewPropertyCodeArea focusedPane;
+    private final ObservableList<TreeItem<String>> symbolicVoterVariableList;
+    private final ObservableList<TreeItem<String>> symbolicCandidateVariableList;
+    private final ObservableList<TreeItem<String>> symbolicSeatVariableList;
+    private NewPropertyCodeArea focusedPane;
 
-	public BooleanExpEditorNEW(NewPropertyCodeArea preArea, NewPropertyCodeArea postArea,
-			BoundedVarCodeArea boundedVarArea, PreAndPostConditionsDescription propDesc, ParentTreeItem currentItem) {
+    public BooleanExpEditorNEW(NewPropertyCodeArea preArea, NewPropertyCodeArea postArea,
+            BoundedVarCodeArea boundedVarArea, PreAndPostConditionsDescription propDesc, ParentTreeItem currentItem) {
 
-		
-		preArea.setParent(this);
-		postArea.setParent(this);
-		
-		this.saverLoader = new SaverLoader(".prop", "BEAST property description");
+        preArea.setParent(this);
+        postArea.setParent(this);
 
-		this.preArea = preArea;
-		this.postArea = postArea;
+        this.saverLoader = new SaverLoader(".prop", "BEAST property description");
 
-		this.boundedVarArea = boundedVarArea;
+        this.preArea = preArea;
+        this.postArea = postArea;
 
-		this.currentPropertyDescription = propDesc;
-		this.currentItem = currentItem;
+        this.boundedVarArea = boundedVarArea;
 
-		this.symbolicVoterVariableList = GUIController.getController().getVoterTreeItems().getChildren();
+        this.currentPropertyDescription = propDesc;
+        this.currentItem = currentItem;
 
-		symbolicCandidateVariableList = GUIController.getController().getCandidateTreeItems().getChildren();
+        this.symbolicVoterVariableList = GUIController.getController().getVoterTreeItems().getChildren();
 
-		symbolicSeatVariableList = GUIController.getController().getSeatTreeItems().getChildren();
-	}
+        symbolicCandidateVariableList = GUIController.getController().getCandidateTreeItems().getChildren();
 
-	public boolean containsVarName(String name) {
-		boolean contains = false;
+        symbolicSeatVariableList = GUIController.getController().getSeatTreeItems().getChildren();
+    }
 
-		for (Iterator<SymbolicVariable> iterator = currentPropertyDescription.getSymbolicVariableList()
-				.iterator(); iterator.hasNext();) {
-			SymbolicVariable variable = (SymbolicVariable) iterator.next();
-			contains = contains || (variable.getId().equals(name));
-		}
+    public boolean containsVarName(String name) {
+        boolean contains = false;
 
-		return contains;
-	}
+        for (Iterator<SymbolicVariable> iterator = currentPropertyDescription.getSymbolicVariableList()
+                .iterator(); iterator.hasNext();) {
+            SymbolicVariable variable = (SymbolicVariable) iterator.next();
+            contains = contains || (variable.getId().equals(name));
+        }
 
-	public synchronized void addSymbVar(InternalTypeContainer container, String toAdd, boolean fromExisting) {
-		if (!toAdd.equals("")) {
+        return contains;
+    }
 
-			GUIController.getController().getVariableNameField().setText("");
+    public synchronized void addSymbVar(InternalTypeContainer container, String toAdd, boolean fromExisting) {
+        if (!toAdd.equals("")) {
 
-			adding: if ((!containsVarName(toAdd))) {
+            GUIController.getController().getVariableNameField().setText("");
 
-				if (!fromExisting) {
+            adding: if ((!containsVarName(toAdd))) {
 
-					TreeItem<String> newItem = new TreeItem<String>(toAdd);
+                if (!fromExisting) {
 
-					switch (container.getInternalType()) {
-					case VOTER:
-						symbolicVoterVariableList.add(newItem);
-						break;
+                    TreeItem<String> newItem = new TreeItem<String>(toAdd);
 
-					case CANDIDATE:
-						symbolicCandidateVariableList.add(newItem);
-						break;
+                    switch (container.getInternalType()) {
+                    case VOTER:
+                        symbolicVoterVariableList.add(newItem);
+                        break;
 
-					case SEAT:
-						symbolicSeatVariableList.add(newItem);
-						break;
+                    case CANDIDATE:
+                        symbolicCandidateVariableList.add(newItem);
+                        break;
 
-					default:
-						break adding;
-					}
-				} else {
-					currentPropertyDescription.getSymbolicVariableList().add(new SymbolicVariable(toAdd, container));
-				}
-			}
-		}
-	}
+                    case SEAT:
+                        symbolicSeatVariableList.add(newItem);
+                        break;
 
-	public void removeVariable(String name) {
-		for (Iterator<SymbolicVariable> iterator = currentPropertyDescription.getSymbolicVariableList()
-				.iterator(); iterator.hasNext();) {
-			SymbolicVariable variable = (SymbolicVariable) iterator.next();
-			if (variable.getId().equals(name)) {
-				switch (variable.getInternalTypeContainer().getInternalType()) {
-				case VOTER:
+                    default:
+                        break adding;
+                    }
+                } else {
+                    currentPropertyDescription.getSymbolicVariableList().add(new SymbolicVariable(toAdd, container));
+                }
+            }
+        }
+    }
 
-					for (Iterator<TreeItem<String>> treeItemIterator = symbolicVoterVariableList
-							.iterator(); treeItemIterator.hasNext();) {
-						TreeItem<String> item = (TreeItem<String>) treeItemIterator.next();
+    public void removeVariable(String name) {
+        for (Iterator<SymbolicVariable> iterator = currentPropertyDescription.getSymbolicVariableList()
+                .iterator(); iterator.hasNext();) {
+            SymbolicVariable variable = (SymbolicVariable) iterator.next();
+            if (variable.getId().equals(name)) {
+                switch (variable.getInternalTypeContainer().getInternalType()) {
+                case VOTER:
 
-						if (item.getValue().equals(name)) {
-							treeItemIterator.remove();
-						}
+                    for (Iterator<TreeItem<String>> treeItemIterator = symbolicVoterVariableList
+                            .iterator(); treeItemIterator.hasNext();) {
+                        TreeItem<String> item = (TreeItem<String>) treeItemIterator.next();
 
-					}
+                        if (item.getValue().equals(name)) {
+                            treeItemIterator.remove();
+                        }
 
-					break;
+                    }
 
-				case CANDIDATE:
-					for (Iterator<TreeItem<String>> treeItemIterator = symbolicCandidateVariableList
-							.iterator(); treeItemIterator.hasNext();) {
-						TreeItem<String> item = (TreeItem<String>) treeItemIterator.next();
+                    break;
 
-						if (item.getValue().equals(name)) {
-							treeItemIterator.remove();
-						}
+                case CANDIDATE:
+                    for (Iterator<TreeItem<String>> treeItemIterator = symbolicCandidateVariableList
+                            .iterator(); treeItemIterator.hasNext();) {
+                        TreeItem<String> item = (TreeItem<String>) treeItemIterator.next();
 
-					}
-					break;
+                        if (item.getValue().equals(name)) {
+                            treeItemIterator.remove();
+                        }
 
-				case SEAT:
-					for (Iterator<TreeItem<String>> treeItemIterator = symbolicSeatVariableList
-							.iterator(); treeItemIterator.hasNext();) {
-						TreeItem<String> item = (TreeItem<String>) treeItemIterator.next();
+                    }
+                    break;
 
-						if (item.getValue().equals(name)) {
-							treeItemIterator.remove();
-						}
+                case SEAT:
+                    for (Iterator<TreeItem<String>> treeItemIterator = symbolicSeatVariableList
+                            .iterator(); treeItemIterator.hasNext();) {
+                        TreeItem<String> item = (TreeItem<String>) treeItemIterator.next();
 
-					}
-					break;
+                        if (item.getValue().equals(name)) {
+                            treeItemIterator.remove();
+                        }
 
-				default:
-					break;
-				}
-				iterator.remove();
-			}
-		}
-	}
+                    }
+                    break;
 
-	public void removeAllVariables() {
+                default:
+                    break;
+                }
+                iterator.remove();
+            }
+        }
+    }
 
-		symbolicVoterVariableList.clear();
+    public void removeAllVariables() {
 
-		symbolicCandidateVariableList.clear();
+        symbolicVoterVariableList.clear();
 
-		symbolicSeatVariableList.clear();
-	}
+        symbolicCandidateVariableList.clear();
 
-	public NewPropertyCodeArea getPrePropertyArea() {
-		return preArea;
-	}
+        symbolicSeatVariableList.clear();
+    }
 
-	public NewPropertyCodeArea getPostPropertyArea() {
-		return postArea;
-	}
+    public NewPropertyCodeArea getPrePropertyArea() {
+        return preArea;
+    }
 
-	public PreAndPostConditionsDescription getPropertyDescription() {
-		return currentPropertyDescription;
-	}
+    public NewPropertyCodeArea getPostPropertyArea() {
+        return postArea;
+    }
 
-	public void savePropertyTextAreasIntoDescription() {
-		currentPropertyDescription.getPreConditionsDescription().setCode(preArea.getText());
-		currentPropertyDescription.getPostConditionsDescription().setCode(postArea.getText());
-		currentPropertyDescription.getBoundedVarDescription().setCode(boundedVarArea.getText());
+    public PreAndPostConditionsDescription getPropertyDescription() {
+        return currentPropertyDescription;
+    }
 
-		currentPropertyDescription.getSymbolicVariableList().clear();
+    public void savePropertyTextAreasIntoDescription() {
+        currentPropertyDescription.getPreConditionsDescription().setCode(preArea.getText());
+        currentPropertyDescription.getPostConditionsDescription().setCode(postArea.getText());
+        currentPropertyDescription.getBoundedVarDescription().setCode(boundedVarArea.getText());
 
-		currentPropertyDescription.getSymVarList().clearList();
+        currentPropertyDescription.getSymbolicVariableList().clear();
 
-		currentPropertyDescription.getSymVarList().addSymbolicVariableList(getAllSymbolicVariables());
-	}
+        currentPropertyDescription.getSymVarList().clearList();
 
-	public void updatePropertyTextAreas(PreAndPostConditionsDescription description) {
-		preArea.setDescription(description.getPreConditionsDescription());
-		postArea.setDescription(description.getPostConditionsDescription());
-		boundedVarArea.setDescription(description.getBoundedVarDescription());
-	}
+        currentPropertyDescription.getSymVarList().addSymbolicVariableList(getAllSymbolicVariables());
+    }
 
-	public void setCurrentPropertyDescription(ParentTreeItem propertyItem, boolean bringToFront) {
+    public void updatePropertyTextAreas(PreAndPostConditionsDescription description) {
+        preArea.setDescription(description.getPreConditionsDescription());
+        postArea.setDescription(description.getPostConditionsDescription());
+        boundedVarArea.setDescription(description.getBoundedVarDescription());
+    }
 
-		savePropertyTextAreasIntoDescription();
+    public void setCurrentPropertyDescription(ParentTreeItem propertyItem, boolean bringToFront) {
 
-		this.currentPropertyDescription = propertyItem.getPreAndPostProperties();
-		this.currentItem = propertyItem;
+        savePropertyTextAreasIntoDescription();
 
-		this.removeAllVariables();
+        this.currentPropertyDescription = propertyItem.getPreAndPostProperties();
+        this.currentItem = propertyItem;
 
-		updatePropertyTextAreas(currentPropertyDescription);
+        this.removeAllVariables();
 
-		for (Iterator<SymbolicVariable> iterator = currentPropertyDescription.getSymbolicVariableList()
-				.iterator(); iterator.hasNext();) {
-			SymbolicVariable variable = (SymbolicVariable) iterator.next();
+        updatePropertyTextAreas(currentPropertyDescription);
 
-			this.addSymbVar(variable.getInternalTypeContainer(), variable.getId(), true);
-		}
+        for (Iterator<SymbolicVariable> iterator = currentPropertyDescription.getSymbolicVariableList()
+                .iterator(); iterator.hasNext();) {
+            SymbolicVariable variable = (SymbolicVariable) iterator.next();
 
-		if (bringToFront) {
-			bringToFront();
-		}
+            this.addSymbVar(variable.getInternalTypeContainer(), variable.getId(), true);
+        }
 
-		saverLoader.resetHasSaveFile();
+        if (bringToFront) {
+            bringToFront();
+        }
 
-	}
+        saverLoader.resetHasSaveFile();
 
-	public void bringToFront() {
-		GUIController.getController().getMainTabPane().getSelectionModel()
-				.select(GUIController.getController().getPropertyTab());
+    }
 
-		if (currentItem != null) {
-			BooleanExpEditorGeneralErrorFinder.hasErrors(currentItem); // checks if there are errors, and if there are
-		}
-		// displays them in the error tab
-	}
+    public void bringToFront() {
+        GUIController.getController().getMainTabPane().getSelectionModel()
+                .select(GUIController.getController().getPropertyTab());
 
-	public ParentTreeItem getCurrentItem() {
-		return currentItem;
-	}
-	//
-	// private void saveDescription() {
-	// preArea.saveDescription(null);
-	// postArea.saveDescription(null);
-	// }
+        if (currentItem != null) {
+            BooleanExpEditorGeneralErrorFinder.hasErrors(currentItem); // checks if there are errors, and if there are
+        }
+        // displays them in the error tab
+    }
 
-	/**
-	 * clears all fields of the editor
-	 */
-	public void clear() {
-		this.removeAllVariables();
-		this.preArea.clear();
-		this.postArea.clear();
-	}
+    public ParentTreeItem getCurrentItem() {
+        return currentItem;
+    }
+    //
+    // private void saveDescription() {
+    // preArea.saveDescription(null);
+    // postArea.saveDescription(null);
+    // }
 
-	private PreAndPostConditionsDescription convert(String json) {
-		PreAndPostConditionsDescription newDescription = null;
+    /**
+     * clears all fields of the editor
+     */
+    public void clear() {
+        this.removeAllVariables();
+        this.preArea.clear();
+        this.postArea.clear();
+    }
 
-		if (!json.equals("")) {
+    private PreAndPostConditionsDescription convert(String json) {
+        PreAndPostConditionsDescription newDescription = null;
 
-			try {
-				newDescription = propSaverLoader.createFromSaveString(json);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+        if (!json.equals("")) {
 
-			return newDescription;
-		}
-		return null;
-	}
+            try {
+                newDescription = propSaverLoader.createFromSaveString(json);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-	private SymbolicVariableList getAllSymbolicVariables() {
-		SymbolicVariableList toReturn = new SymbolicVariableList();
+            return newDescription;
+        }
+        return null;
+    }
 
-		for (Iterator<TreeItem<String>> iterator = symbolicVoterVariableList.iterator(); iterator.hasNext();) {
-			TreeItem<String> voter = (TreeItem<String>) iterator.next();
-			toReturn.addSymbolicVariable(voter.getValue(), new InternalTypeContainer(InternalTypeRep.VOTER));
-		}
+    private SymbolicVariableList getAllSymbolicVariables() {
+        SymbolicVariableList toReturn = new SymbolicVariableList();
 
-		for (Iterator<TreeItem<String>> iterator = symbolicCandidateVariableList.iterator(); iterator.hasNext();) {
-			TreeItem<String> candidate = (TreeItem<String>) iterator.next();
-			toReturn.addSymbolicVariable(candidate.getValue(), new InternalTypeContainer(InternalTypeRep.CANDIDATE));
-		}
+        for (Iterator<TreeItem<String>> iterator = symbolicVoterVariableList.iterator(); iterator.hasNext();) {
+            TreeItem<String> voter = (TreeItem<String>) iterator.next();
+            toReturn.addSymbolicVariable(voter.getValue(), new InternalTypeContainer(InternalTypeRep.VOTER));
+        }
 
-		for (Iterator<TreeItem<String>> iterator = symbolicSeatVariableList.iterator(); iterator.hasNext();) {
-			TreeItem<String> seat = (TreeItem<String>) iterator.next();
-			toReturn.addSymbolicVariable(seat.getValue(), new InternalTypeContainer(InternalTypeRep.SEAT));
-		}
+        for (Iterator<TreeItem<String>> iterator = symbolicCandidateVariableList.iterator(); iterator.hasNext();) {
+            TreeItem<String> candidate = (TreeItem<String>) iterator.next();
+            toReturn.addSymbolicVariable(candidate.getValue(), new InternalTypeContainer(InternalTypeRep.CANDIDATE));
+        }
 
-		return toReturn;
-	}
+        for (Iterator<TreeItem<String>> iterator = symbolicSeatVariableList.iterator(); iterator.hasNext();) {
+            TreeItem<String> seat = (TreeItem<String>) iterator.next();
+            toReturn.addSymbolicVariable(seat.getValue(), new InternalTypeContainer(InternalTypeRep.SEAT));
+        }
 
-	public PreAndPostConditionsDescription open(File file) {
-		return convert(saverLoader.load(file));
-	}
+        return toReturn;
+    }
 
-	@Override
-	public void open() {
+    public PreAndPostConditionsDescription open(File file) {
+        return convert(saverLoader.load(file));
+    }
 
-		PreAndPostConditionsDescription newDescription = convert(saverLoader.load());
+    @Override
+    public void open() {
 
-		if (newDescription != null) {
+        PreAndPostConditionsDescription newDescription = convert(saverLoader.load());
 
-			GUIController.getController().addProperty(newDescription);
-
-			currentPropertyDescription = newDescription;
-
-			saverLoader.resetHasSaveFile();
-
-			preArea.replaceText(newDescription.getPreConditionsDescription().getCode());
-			postArea.replaceText(newDescription.getPostConditionsDescription().getCode());
-
-			GUIController.getController().setPropNameField(newDescription.getName());
-			bringToFront();
-		}
-	}
-
-	@Override
-	public void save() {
-		savePropertyTextAreasIntoDescription();
-
-		String json = propSaverLoader.createSaveString(currentPropertyDescription);
-
-		saverLoader.save("", json);
-	}
-
-	@Override
-	public void saveAs() {
-		savePropertyTextAreasIntoDescription();
-
-		String json = propSaverLoader.createSaveString(currentPropertyDescription);
-
-		saverLoader.saveAs("", json);
-	}
-
-	public void saveAs(PreAndPostConditionsDescription description, File file) {
-		savePropertyTextAreasIntoDescription();
-
-		String json = propSaverLoader.createSaveString(description);
-
-		saverLoader.saveAs(file, json);
-	}
-
-	@Override
-	public void undo() {
-		if (focusedPane != null) {
-			focusedPane.undo();
-		}
-	}
-
-	@Override
-	public void redo() {
-		if (focusedPane != null) {
-			focusedPane.redo();
-		}
-	}
-
-	@Override
-	public void cut() {
-		if (focusedPane != null) {
-			focusedPane.cut();
-		}
-	}
-
-	@Override
-	public void copy() {
-		if (focusedPane != null) {
-			focusedPane.copy();
-		}
-	}
-
-	@Override
-	public void paste() {
-		if (focusedPane != null) {
-			focusedPane.paste();
-		}
-	}
-
-	@Override
-	public void delete() {
-		if (focusedPane != null) {
-			focusedPane.delete();
-		}
-	}
-
-	@Override
-	public void autoComplete() {
-
-		if (preArea.focusedProperty().get()) {
-			preArea.autoComplete();
-		} else if (postArea.focusedProperty().get()) {
-			postArea.autoComplete();
-		}
-	}
-	
-	public List<String> getSymbolicVariableNames() {
-		List<String> toReturn = new ArrayList<String>();
-		
-		for (Iterator<TreeItem<String>> iterator = symbolicVoterVariableList.iterator(); iterator.hasNext();) {
-			TreeItem<String> item = (TreeItem<String>) iterator.next();
-			toReturn.add(item.getValue());
-		}
-		
-		for (Iterator<TreeItem<String>> iterator = symbolicVoterVariableList.iterator(); iterator.hasNext();) {
-			TreeItem<String> item = (TreeItem<String>) iterator.next();
-			toReturn.add(item.getValue());
-		}
-		
-		for (Iterator<TreeItem<String>> iterator = symbolicVoterVariableList.iterator(); iterator.hasNext();) {
-			TreeItem<String> item = (TreeItem<String>) iterator.next();
-			toReturn.add(item.getValue());
-		}
-		
-		
-		return toReturn;
-	}
-
-	public void setFocused(NewPropertyCodeArea pane) {
-		this.focusedPane = pane;
-	}
+        if (newDescription != null) {
+
+            GUIController.getController().addProperty(newDescription);
+
+            currentPropertyDescription = newDescription;
+
+            saverLoader.resetHasSaveFile();
+
+            preArea.replaceText(newDescription.getPreConditionsDescription().getCode());
+            postArea.replaceText(newDescription.getPostConditionsDescription().getCode());
+
+            GUIController.getController().setPropNameField(newDescription.getName());
+            bringToFront();
+        }
+    }
+
+    @Override
+    public void save() {
+        savePropertyTextAreasIntoDescription();
+
+        String json = propSaverLoader.createSaveString(currentPropertyDescription);
+
+        saverLoader.save("", json);
+    }
+
+    @Override
+    public void saveAs() {
+        savePropertyTextAreasIntoDescription();
+
+        String json = propSaverLoader.createSaveString(currentPropertyDescription);
+
+        saverLoader.saveAs("", json);
+    }
+
+    public void saveAs(PreAndPostConditionsDescription description, File file) {
+        savePropertyTextAreasIntoDescription();
+
+        String json = propSaverLoader.createSaveString(description);
+
+        saverLoader.saveAs(file, json);
+    }
+
+    @Override
+    public void undo() {
+        if (focusedPane != null) {
+            focusedPane.undo();
+        }
+    }
+
+    @Override
+    public void redo() {
+        if (focusedPane != null) {
+            focusedPane.redo();
+        }
+    }
+
+    @Override
+    public void cut() {
+        if (focusedPane != null) {
+            focusedPane.cut();
+        }
+    }
+
+    @Override
+    public void copy() {
+        if (focusedPane != null) {
+            focusedPane.copy();
+        }
+    }
+
+    @Override
+    public void paste() {
+        if (focusedPane != null) {
+            focusedPane.paste();
+        }
+    }
+
+    @Override
+    public void delete() {
+        if (focusedPane != null) {
+            focusedPane.delete();
+        }
+    }
+
+    @Override
+    public void autoComplete() {
+
+        if (preArea.focusedProperty().get()) {
+            preArea.autoComplete();
+        } else if (postArea.focusedProperty().get()) {
+            postArea.autoComplete();
+        }
+    }
+
+    public List<String> getSymbolicVariableNames() {
+        List<String> toReturn = new ArrayList<String>();
+
+        for (Iterator<TreeItem<String>> iterator = symbolicVoterVariableList.iterator(); iterator.hasNext();) {
+            TreeItem<String> item = (TreeItem<String>) iterator.next();
+            toReturn.add(item.getValue());
+        }
+
+        for (Iterator<TreeItem<String>> iterator = symbolicVoterVariableList.iterator(); iterator.hasNext();) {
+            TreeItem<String> item = (TreeItem<String>) iterator.next();
+            toReturn.add(item.getValue());
+        }
+
+        for (Iterator<TreeItem<String>> iterator = symbolicVoterVariableList.iterator(); iterator.hasNext();) {
+            TreeItem<String> item = (TreeItem<String>) iterator.next();
+            toReturn.add(item.getValue());
+        }
+
+        return toReturn;
+    }
+
+    public void setFocused(NewPropertyCodeArea pane) {
+        this.focusedPane = pane;
+    }
 
 }

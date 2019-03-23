@@ -10,6 +10,7 @@ public class ComparisonSymbol {
 
     /**
      * Constructor
+     *
      * @param cStringRepresentation the representation of this symbol in C
      */
     public ComparisonSymbol(String cStringRepresentation) {

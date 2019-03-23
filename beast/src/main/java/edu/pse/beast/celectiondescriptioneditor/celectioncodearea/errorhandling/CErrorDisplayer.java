@@ -20,7 +20,8 @@ public class CErrorDisplayer extends ErrorDisplayer {
 
     /**
      * constructor
-     * @param pane the pane the errors get shown in
+     *
+     * @param pane        the pane the errors get shown in
      * @param stringResIF the string resource interface
      */
     public CErrorDisplayer(JTextPane pane, StringLoaderInterface stringResIF) {
@@ -37,6 +38,7 @@ public class CErrorDisplayer extends ErrorDisplayer {
 
     /**
      * creates a message to the user detailing an error
+     *
      * @param er the code Error to be turned into a readable form
      * @return the code error, formatted to a string
      */

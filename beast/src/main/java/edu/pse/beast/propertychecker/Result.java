@@ -18,16 +18,16 @@ import edu.pse.beast.highlevel.javafx.ResultTreeItem;
  */
 public abstract class Result implements ResultInterface {
 
-	protected FailureExample failureExample = null;
-	private boolean wasStarted = false;
+    protected FailureExample failureExample = null;
+    private boolean wasStarted = false;
     private boolean valid = false;
     private boolean finished = false;
     private List<String> result;
     private List<String> error;
-    
+
     private List<String> lastTmpResult;
     private List<String> lastTmpError;
-    
+
     private boolean timeOut = false;
     private boolean success = false;
     private boolean hasSubResult = false;
@@ -39,38 +39,38 @@ public abstract class Result implements ResultInterface {
     private boolean forcefulleStopped;
     private boolean hasMargin = false;
     private int finalMargin = -1;
-    
+
     private Result subResult = null;
     private boolean isMarginComp = false;
-    
-	protected List<List<String>> origVoting;
-	protected List<String> origWinner;
-	protected List<List<String>> newVotes;
-	protected List<String> newWinner;
-	
-	protected transient ResultTreeItem owner;
-	private List<String> statusStrings;
 
-	public static List<Result> getResultTypes() {
-		ServiceLoader<Result> loader = ServiceLoader.load(Result.class);
-		
-		List<Result> types = new ArrayList<Result>();
-		
-		for (Iterator<Result> iterator = loader.iterator(); iterator.hasNext();) {
-			Result type = (Result) iterator.next();
-			types.add(type);
-		}
-		
-		return types;
-	}
-	
+    protected List<List<String>> origVoting;
+    protected List<String> origWinner;
+    protected List<List<String>> newVotes;
+    protected List<String> newWinner;
+
+    protected transient ResultTreeItem owner;
+    private List<String> statusStrings;
+
+    public static List<Result> getResultTypes() {
+        ServiceLoader<Result> loader = ServiceLoader.load(Result.class);
+
+        List<Result> types = new ArrayList<Result>();
+
+        for (Iterator<Result> iterator = loader.iterator(); iterator.hasNext();) {
+            Result type = (Result) iterator.next();
+            types.add(type);
+        }
+
+        return types;
+    }
+
     public boolean isMarginComp() {
-		return isMarginComp;
-	}
+        return isMarginComp;
+    }
 
-	public void setMarginComp(boolean isMarginComp) {
-		this.isMarginComp = isMarginComp;
-	}
+    public void setMarginComp(boolean isMarginComp) {
+        this.isMarginComp = isMarginComp;
+    }
 
     /**
      * 
@@ -129,7 +129,7 @@ public abstract class Result implements ResultInterface {
     public boolean isSuccess() {
         return success;
     }
-    
+
     /**
      * 
      * @return true, if the process was stopped by the user or a timeout, else false
@@ -145,14 +145,14 @@ public abstract class Result implements ResultInterface {
         finished = true;
         owner.setPresentable();
     }
-    
+
     public void setStarted() {
-    	wasStarted = true;
+        wasStarted = true;
     }
 
     /**
-     * to be set when the checking was completed and there were no errors during
-     * the checking
+     * to be set when the checking was completed and there were no errors during the
+     * checking
      */
     public void setValid() {
         valid = true;
@@ -177,9 +177,8 @@ public abstract class Result implements ResultInterface {
     /**
      * sets the result of this object, so it can be displayed later.
      * 
-     * @param result
-     *            the result of the check that should be stored in this result
-     *            object
+     * @param result the result of the check that should be stored in this result
+     *               object
      */
     public void setResult(List<String> result) {
         this.result = result;
@@ -188,9 +187,8 @@ public abstract class Result implements ResultInterface {
     /**
      * sets the error of this object, so it can be displayed later.
      * 
-     * @param error
-     *            the error of the check that should be stored in this result
-     *            object
+     * @param error the error of the check that should be stored in this result
+     *              object
      */
     public void setError(List<String> error) {
         this.error = error;
@@ -199,16 +197,16 @@ public abstract class Result implements ResultInterface {
     /**
      * sets a single line as the error output
      * 
-     * @param errorLine
-     *            the error to log
+     * @param errorLine the error to log
      */
     public void setError(String errorLine) {
         this.error = new ArrayList<String>();
         this.error.add(errorLine);
     }
-    
+
     /**
      * sets the property that this result contains the result from
+     * 
      * @param property
      */
     public void setProperty(PreAndPostConditionsDescription property) {
@@ -249,8 +247,7 @@ public abstract class Result implements ResultInterface {
 
     /**
      * 
-     * @param numVoters
-     *            the amount of voters to be set
+     * @param numVoters the amount of voters to be set
      */
     public void setNumVoters(int numVoters) {
         this.numVoters = numVoters;
@@ -258,8 +255,7 @@ public abstract class Result implements ResultInterface {
 
     /**
      * 
-     * @param numSeats
-     *            the amount of seats to be set
+     * @param numSeats the amount of seats to be set
      */
     public void setNumSeats(int numSeats) {
         this.numSeats = numSeats;
@@ -267,8 +263,7 @@ public abstract class Result implements ResultInterface {
 
     /**
      * 
-     * @param numCandidates
-     *            the amount of candidates to be set
+     * @param numCandidates the amount of candidates to be set
      */
     public void setNumCandidates(int numCandidates) {
         this.numCandidates = numCandidates;
@@ -276,134 +271,136 @@ public abstract class Result implements ResultInterface {
 
     /**
      * 
-     * @param electionTypeContainer
-     *            the electiontype to be set
+     * @param electionTypeContainer the electiontype to be set
      */
     public void setElectionType(ElectionDescription electionDescription) {
         this.electionDescription = electionDescription;
     }
 
     /**
-     * sets the result to forcefully stop, to indicate
-     * that it was stopped by the user or a timeout
+     * sets the result to forcefully stop, to indicate that it was stopped by the
+     * user or a timeout
      */
     public void setForcefullyStopped() {
         this.forcefulleStopped = true;
     }
+
     public void setFinalMargin(int margin) {
-    	this.finalMargin = margin;
+        this.finalMargin = margin;
     }
-    
+
     public int getFinalMargin() {
-    	return finalMargin;
+        return finalMargin;
     }
-    
+
     public void setHasFinalMargin(boolean b) {
-    	this.hasMargin = b;
+        this.hasMargin = b;
     }
-    
+
     public boolean hasFinalMargin() {
-    	return hasMargin;
+        return hasMargin;
     }
-    
+
     public void addSubResult(Result subResult) {
-    	this.hasSubResult = true;
-    	this.subResult = subResult;
+        this.hasSubResult = true;
+        this.subResult = subResult;
     }
-    
+
     public PreAndPostConditionsDescription getPropertyDesctiption() {
-    	return property;
+        return property;
     }
-    
+
     public boolean hasSubResult() {
-    	return this.hasSubResult;
+        return this.hasSubResult;
     }
-    
+
     public Result getSubResult() {
-    	return subResult;
+        return subResult;
     }
 
     /**
      * checks if the assertion holds
+     * 
      * @return true, if the assertion holds, else false
      */
     public abstract boolean checkAssertionSuccess();
 
     /**
      * checks if the assertion doesn't hold
+     * 
      * @return true, if the assertion failed, else false
      */
     public abstract boolean checkAssertionFailure();
 
     public FailureExample getFailureExample() {
-    	return failureExample;
+        return failureExample;
     }
 
-	public List<List<String>> getOrigVoting() {
-		return origVoting;
-	}
+    public List<List<String>> getOrigVoting() {
+        return origVoting;
+    }
 
-	public void setOrigVoting(List<List<String>> origVoting) {
-		this.origVoting = origVoting;
-	}
+    public void setOrigVoting(List<List<String>> origVoting) {
+        this.origVoting = origVoting;
+    }
 
-	public List<String> getOrigWinner() {
-		return origWinner;
-	}
+    public List<String> getOrigWinner() {
+        return origWinner;
+    }
 
-	public void setOrigWinner(List<String> origWinner) {
-		this.origWinner = origWinner;
-	}
+    public void setOrigWinner(List<String> origWinner) {
+        this.origWinner = origWinner;
+    }
 
-	public List<List<String>> getNewVotes() {
-		return newVotes;
-	}
+    public List<List<String>> getNewVotes() {
+        return newVotes;
+    }
 
-	public void setNewVotes(List<List<String>> newVotes) {
-		this.newVotes = newVotes;
-	}
+    public void setNewVotes(List<List<String>> newVotes) {
+        this.newVotes = newVotes;
+    }
 
-	public List<String> getNewWinner() {
-		return newWinner;
-	}
+    public List<String> getNewWinner() {
+        return newWinner;
+    }
 
-	public void setNewWinner(List<String> newWinner) {
-		this.newWinner = newWinner;
-	}
+    public void setNewWinner(List<String> newWinner) {
+        this.newWinner = newWinner;
+    }
 
-	public void setOwner(ResultTreeItem owner) {
-		this.owner = owner;
-	}
+    public void setOwner(ResultTreeItem owner) {
+        this.owner = owner;
+    }
 
-	public AnalysisType getAnalysisType() {
-		return owner.getOwner().getAnalysisType();
-	}
+    public AnalysisType getAnalysisType() {
+        return owner.getOwner().getAnalysisType();
+    }
 
-	public boolean wasStarted() {
-		return wasStarted;
-	}
-	
-	public void setLastTmpResult(List<String> tmpResult) {
-		this.lastTmpResult = tmpResult;
-	}
-	
-	public List<String> getLastTmpResult() {
-		return this.lastTmpResult;
-	}
-	
-	public void setLastTmpError(List<String> tmpError) {
-		this.lastTmpError = tmpError;
-	}
-	
-	public List<String> getLastTmpError() {
-		return this.lastTmpError;
-	}
-	
-	public void addStatusString(String statusToAdd) {
-		this.statusStrings.add(statusToAdd);
-	}
-	
-	public List<String> getStatusStrings() {
-		return this.statusStrings;
-	}
+    public boolean wasStarted() {
+        return wasStarted;
+    }
+
+    public void setLastTmpResult(List<String> tmpResult) {
+        this.lastTmpResult = tmpResult;
+    }
+
+    public List<String> getLastTmpResult() {
+        return this.lastTmpResult;
+    }
+
+    public void setLastTmpError(List<String> tmpError) {
+        this.lastTmpError = tmpError;
+    }
+
+    public List<String> getLastTmpError() {
+        return this.lastTmpError;
+    }
+
+    public void addStatusString(String statusToAdd) {
+        this.statusStrings.add(statusToAdd);
+    }
+
+    public List<String> getStatusStrings() {
+        return this.statusStrings;
+    }
 }

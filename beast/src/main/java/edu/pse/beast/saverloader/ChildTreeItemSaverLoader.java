@@ -22,26 +22,26 @@ import edu.pse.beast.types.OutputType;
  */
 public class ChildTreeItemSaverLoader implements SaverLoader<ChildTreeItemValues> {
 
-	private static Gson saverLoader;
+    private static Gson saverLoader;
 
-	static { // here you have the chance to register typeAdapters
-		GsonBuilder builder = new GsonBuilder();
-		builder.addDeserializationExclusionStrategy(new SuperclassExclusionStrategy());
-		builder.addSerializationExclusionStrategy(new SuperclassExclusionStrategy());
-		builder.registerTypeAdapter(Result.class, new ResultAdapter());
-		builder.registerTypeAdapter(InputType.class, new InputTypeAdapter());
-		builder.registerTypeAdapter(OutputType.class, new OutputTypeAdapter());
-		builder.registerTypeAdapter(CommonHelpMethods.class, new CommonHelpMethodsAdapter());
-		saverLoader = builder.create();
-	}
+    static { // here you have the chance to register typeAdapters
+        GsonBuilder builder = new GsonBuilder();
+        builder.addDeserializationExclusionStrategy(new SuperclassExclusionStrategy());
+        builder.addSerializationExclusionStrategy(new SuperclassExclusionStrategy());
+        builder.registerTypeAdapter(Result.class, new ResultAdapter());
+        builder.registerTypeAdapter(InputType.class, new InputTypeAdapter());
+        builder.registerTypeAdapter(OutputType.class, new OutputTypeAdapter());
+        builder.registerTypeAdapter(CommonHelpMethods.class, new CommonHelpMethodsAdapter());
+        saverLoader = builder.create();
+    }
 
-	@Override
-	public ChildTreeItemValues createFromSaveString(String toLoad) throws Exception {
-		return saverLoader.fromJson(toLoad, ChildTreeItemValues.class);
-	}
+    @Override
+    public ChildTreeItemValues createFromSaveString(String toLoad) throws Exception {
+        return saverLoader.fromJson(toLoad, ChildTreeItemValues.class);
+    }
 
-	@Override
-	public String createSaveString(ChildTreeItemValues childTreeItemValues) {
-		return saverLoader.toJson(childTreeItemValues, ChildTreeItemValues.class);
-	}
+    @Override
+    public String createSaveString(ChildTreeItemValues childTreeItemValues) {
+        return saverLoader.toJson(childTreeItemValues, ChildTreeItemValues.class);
+    }
 }

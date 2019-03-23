@@ -14,7 +14,7 @@ public class VoteSumForCandExp extends IntegerValuedExpression {
     private final boolean unique;
 
     /**
-     *  @param voteArrNum the number of the vote array
+     * @param voteArrNum the number of the vote array
      *
      */
     public VoteSumForCandExp(int voteArrNum, TypeExpression acessingVar, boolean unique) {
@@ -38,9 +38,8 @@ public class VoteSumForCandExp extends IntegerValuedExpression {
 
     @Override
     public String getTreeString(int depth) {
-        return "Votesum" + (unique ? "Unique" : "") + " " + voteArrNum + "\n" +
-                "\t\t\t\t\t\t\t\t\t\t".substring(0,depth + 1 ) +
-                "var " + acessingVar.getTreeString(depth + 1);
+        return "Votesum" + (unique ? "Unique" : "") + " " + voteArrNum + "\n"
+                + "\t\t\t\t\t\t\t\t\t\t".substring(0, depth + 1) + "var " + acessingVar.getTreeString(depth + 1);
     }
 
     /**
@@ -61,13 +60,18 @@ public class VoteSumForCandExp extends IntegerValuedExpression {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        if (!super.equals(o))
+            return false;
         VoteSumForCandExp that = (VoteSumForCandExp) o;
 
-        if (unique != that.unique) return false;
-        if (voteArrNum != that.voteArrNum) return false;
+        if (unique != that.unique)
+            return false;
+        if (voteArrNum != that.voteArrNum)
+            return false;
         return acessingVar != null ? acessingVar.equals(that.acessingVar) : that.acessingVar == null;
     }
 

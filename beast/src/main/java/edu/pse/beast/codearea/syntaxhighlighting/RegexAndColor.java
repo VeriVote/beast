@@ -7,8 +7,9 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
 /**
- * Class encapsulating a regular Expression in a String object and a color in an AttributeSet object.
- * Used for the SyntaxHL in the codeareas.
+ * Class encapsulating a regular Expression in a String object and a color in an
+ * AttributeSet object. Used for the SyntaxHL in the codeareas.
+ *
  * @author NikolaiLMS
  */
 public class RegexAndColor {
@@ -18,12 +19,13 @@ public class RegexAndColor {
     public RegexAndColor(String regEx, Color color) {
         StyleContext styleContext = StyleContext.getDefaultStyleContext();
         this.regEx = regEx;
-        this.attributeSetForColor = styleContext.addAttribute(styleContext.getEmptySet(),
-                StyleConstants.Foreground, color);
+        this.attributeSetForColor = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Foreground,
+                color);
     }
 
     /**
      * Getter
+     *
      * @return the String containing the regex
      */
     public String getRegEx() {
@@ -32,6 +34,7 @@ public class RegexAndColor {
 
     /**
      * Getter
+     *
      * @return the AttributeSet containing the color
      */
     public AttributeSet getAttributeSet() {

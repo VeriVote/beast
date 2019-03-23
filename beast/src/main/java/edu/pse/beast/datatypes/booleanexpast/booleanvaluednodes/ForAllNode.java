@@ -11,7 +11,7 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 public class ForAllNode extends QuantorNode {
     /**
      *
-     * @param declSymbVar the symbolic variable of this quantor
+     * @param declSymbVar   the symbolic variable of this quantor
      * @param followingNode the following node of this quantor
      */
     public ForAllNode(SymbolicVariable declSymbVar, BooleanExpressionNode followingNode) {
@@ -25,8 +25,8 @@ public class ForAllNode extends QuantorNode {
 
     @Override
     public String getTreeString(int depth) {
-        return "ForAll: Declared var: " + getDeclaredSymbolicVar().getId() + "\n" +
-                "\t\t\t\t\t\t\t\t\t\t\t\t".substring(0,depth + 1) + "following: " +
-                getFollowingExpNode().getTreeString(depth + 1);
+        return "ForAll: Declared var: " + getDeclaredSymbolicVar().getId() + "\n"
+                + "\t\t\t\t\t\t\t\t\t\t\t\t".substring(0, depth + 1) + "following: "
+                + getFollowingExpNode().getTreeString(depth + 1);
     }
 }

@@ -11,8 +11,7 @@ public abstract class AccessValueNode extends TypeExpression {
     private final TypeExpression[] accessingVars;
     private final int count;
 
-    protected AccessValueNode(InOutType type,
-                              TypeExpression[] accessingVars, int count) {
+    protected AccessValueNode(InOutType type, TypeExpression[] accessingVars, int count) {
         super(type);
         this.accessingVars = accessingVars;
         this.count = count;
@@ -28,10 +27,13 @@ public abstract class AccessValueNode extends TypeExpression {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         AccessValueNode that = (AccessValueNode) o;
-        if (count != that.count) return false;
+        if (count != that.count)
+            return false;
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
         return Arrays.equals(accessingVars, that.accessingVars);
     }

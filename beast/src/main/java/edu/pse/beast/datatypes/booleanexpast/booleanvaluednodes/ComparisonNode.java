@@ -16,14 +16,12 @@ public class ComparisonNode extends BooleanExpressionNode {
 
     /**
      *
-     * @param lhsTypeExp the lhsExpression
-     * @param rhsTypeExp the rhsExpression
-     * @param comparisonSymbol the symbol that describes this comparision (for example <, >, == )
+     * @param lhsTypeExp       the lhsExpression
+     * @param rhsTypeExp       the rhsExpression
+     * @param comparisonSymbol the symbol that describes this comparision (for
+     *                         example <, >, == )
      */
-    public ComparisonNode(
-            TypeExpression lhsTypeExp,
-            TypeExpression rhsTypeExp,
-            ComparisonSymbol comparisonSymbol) {
+    public ComparisonNode(TypeExpression lhsTypeExp, TypeExpression rhsTypeExp, ComparisonSymbol comparisonSymbol) {
         this.lhsTypeExp = lhsTypeExp;
         this.rhsTypeExp = rhsTypeExp;
         this.comparisonSymbol = comparisonSymbol;
@@ -60,12 +58,17 @@ public class ComparisonNode extends BooleanExpressionNode {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         ComparisonNode that = (ComparisonNode) o;
-        if (lhsTypeExp != null ? !lhsTypeExp.equals(that.lhsTypeExp) : that.lhsTypeExp != null) return false;
-        if (rhsTypeExp != null ? !rhsTypeExp.equals(that.rhsTypeExp) : that.rhsTypeExp != null) return false;
-        return comparisonSymbol != null ? comparisonSymbol.equals(that.comparisonSymbol) : that.comparisonSymbol == null;
+        if (lhsTypeExp != null ? !lhsTypeExp.equals(that.lhsTypeExp) : that.lhsTypeExp != null)
+            return false;
+        if (rhsTypeExp != null ? !rhsTypeExp.equals(that.rhsTypeExp) : that.rhsTypeExp != null)
+            return false;
+        return comparisonSymbol != null ? comparisonSymbol.equals(that.comparisonSymbol)
+                : that.comparisonSymbol == null;
     }
 
     @Override

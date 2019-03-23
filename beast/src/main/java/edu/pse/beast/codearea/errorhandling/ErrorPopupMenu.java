@@ -10,6 +10,7 @@ import javax.swing.JTextPane;
 
 /**
  * This class is a simple popupmenu which displays an error message
+ *
  * @author Holger-Desktop
  */
 public class ErrorPopupMenu extends JPopupMenu implements KeyListener {
@@ -17,14 +18,13 @@ public class ErrorPopupMenu extends JPopupMenu implements KeyListener {
     private JMenuItem errorItem;
     private JTextPane pane;
 
-    public ErrorPopupMenu(JTextPane pane){
+    public ErrorPopupMenu(JTextPane pane) {
         errorItem = new JMenuItem("");
         errorItem.setBackground(Color.white);
         add(errorItem);
         errorItem.addKeyListener(this);
         this.addKeyListener(this);
     }
-
 
     public JMenuItem getErrorItem() {
         return errorItem;

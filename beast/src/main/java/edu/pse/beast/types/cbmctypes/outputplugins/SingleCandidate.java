@@ -14,146 +14,154 @@ import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
 public class SingleCandidate extends CBMCOutputType {
 
-	@Override
-	public String getOutputString() {
-		return "unsigned int";
-	}
+    @Override
+    public String getOutputString() {
+        return "unsigned int";
+    }
 
-	@Override
-	public String getOutputIDinFile() {
-		return "CAND_OR_UNDEF";
-	}
+    @Override
+    public String getOutputIDinFile() {
+        return "CAND_OR_UNDEF";
+    }
 
-	@Override
-	public boolean isOutputOneCandidate() {
-		return true;
-	}
+    @Override
+    public boolean isOutputOneCandidate() {
+        return true;
+    }
 
-	@Override
-	public String[] extractResult(List<String> toExtract) {
-		String[] tmpArray = { "" + super.helper.readLongs("" + UnifiedNameContainer.getNewResultName() + "", toExtract).get(0).getValue() };
-		return tmpArray;
-	}
+    @Override
+    public String[] extractResult(List<String> toExtract) {
+        String[] tmpArray = { "" + super.helper.readLongs("" + UnifiedNameContainer.getNewResultName() + "", toExtract)
+                .get(0).getValue() };
+        return tmpArray;
+    }
 
-	@Override
-	public List<CBMCResultWrapperSingleArray> readSeatList(List<String> toExtract) {
-		return null;
-	}
+    @Override
+    public List<CBMCResultWrapperSingleArray> readSeatList(List<String> toExtract) {
+        return null;
+    }
 
-	@Override
-	public List<CBMCResultWrapperLong> readElect(List<String> toExtract) {
-		return super.helper.readLongs("elect", toExtract);
-	}
+    @Override
+    public List<CBMCResultWrapperLong> readElect(List<String> toExtract) {
+        return super.helper.readLongs("elect", toExtract);
+    }
 
-	@Override
-	public CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code) {
-		code.add("void verifyMain() {");
-		// code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" + UnifiedNameContainer.getVoter() + "], diff[" + UnifiedNameContainer.getVoter() + "], total_diff, pos_diff;");
+    @Override
+    public CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code) {
+        code.add("void verifyMain() {");
+        // code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" +
+        // UnifiedNameContainer.getVoter() + "], diff[" +
+        // UnifiedNameContainer.getVoter() + "], total_diff, pos_diff;");
 
-		code.addTab();
+        code.addTab();
 
-		code.add("int total_diff = 0;");
+        code.add("int total_diff = 0;");
 
-		code.add("int " + UnifiedNameContainer.getNewResultName() + "1 = " + UnifiedNameContainer.getVotingMethod() + "(" + UnifiedNameContainer.getNewVotesName() + "1);");
-		code.add("assert(" + UnifiedNameContainer.getNewResultName() + "1 == " + UnifiedNameContainer.getOrigResultName() + ");");
+        code.add("int " + UnifiedNameContainer.getNewResultName() + "1 = " + UnifiedNameContainer.getVotingMethod()
+                + "(" + UnifiedNameContainer.getNewVotesName() + "1);");
+        code.add("assert(" + UnifiedNameContainer.getNewResultName() + "1 == "
+                + UnifiedNameContainer.getOrigResultName() + ");");
 
-		code.deleteTab();
+        code.deleteTab();
 
-		code.add("}"); // end of the function
+        code.add("}"); // end of the function
 
-		return code;
-	}
+        return code;
+    }
 
-	@Override
-	public CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code, int voteNumber) {
-		String electX = "unsigned int elect" + voteNumber;
-		electX = electX + getCArrayType();
-		code.add(electX + ";");
-		code.add("elect" + voteNumber + " = " + UnifiedNameContainer.getVotingMethod() + "(votes" + voteNumber + ");");
+    @Override
+    public CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code, int voteNumber) {
+        String electX = "unsigned int elect" + voteNumber;
+        electX = electX + getCArrayType();
+        code.add(electX + ";");
+        code.add("elect" + voteNumber + " = " + UnifiedNameContainer.getVotingMethod() + "(votes" + voteNumber + ");");
 
-		return code;
-	}
+        return code;
+    }
 
-	@Override
-	public String getCArrayType() {
-		return ""; //we have a single candidate, so no array
-	}
+    @Override
+    public String getCArrayType() {
+        return ""; // we have a single candidate, so no array
+    }
 
-	@Override
-	public CodeArrayListBeautifier addMarginMainTest(CodeArrayListBeautifier code, int voteNumber) {
-		code.add("int main() {");
-		code.addTab();
+    @Override
+    public CodeArrayListBeautifier addMarginMainTest(CodeArrayListBeautifier code, int voteNumber) {
+        code.add("int main() {");
+        code.addTab();
 
-		code.add("int elect1 = " + UnifiedNameContainer.getVotingMethod() + "(ORIG_VOTES);"); // we just have a
-		// single int as
-		// the winner
+        code.add("int elect1 = " + UnifiedNameContainer.getVotingMethod() + "(ORIG_VOTES);"); // we just have a
+        // single int as
+        // the winner
 
-		// add an assertion that always fails, so we can extract the trace
-		code.add("assert(0);");
+        // add an assertion that always fails, so we can extract the trace
+        code.add("assert(0);");
 
-		code.deleteTab();
+        code.deleteTab();
 
-		code.add("}");
+        code.add("}");
 
-		return code;
-	}
+        return code;
+    }
 
-	@Override
-	public List<String> getCodeToRunMargin(List<String> origResult, List<String> lastResult) {
-		List<CBMCResultWrapperLong> tmpResultLong = super.helper.readLongs("elect", lastResult);
+    @Override
+    public List<String> getCodeToRunMargin(List<String> origResult, List<String> lastResult) {
+        List<CBMCResultWrapperLong> tmpResultLong = super.helper.readLongs("elect", lastResult);
 
-		origResult.add(tmpResultLong.get(0).getValue());
+        origResult.add(tmpResultLong.get(0).getValue());
 
-		return origResult;
-	}
+        return origResult;
+    }
 
-	@Override
-	public List<String> getNewResult(List<String> lastFailedRun, int index) {
-		List<CBMCResultWrapperLong> tmpResultLong = super.helper.readLongs("" + UnifiedNameContainer.getNewResultName() + "", lastFailedRun);
+    @Override
+    public List<String> getNewResult(List<String> lastFailedRun, int index) {
+        List<CBMCResultWrapperLong> tmpResultLong = super.helper
+                .readLongs("" + UnifiedNameContainer.getNewResultName() + "", lastFailedRun);
 
-		List<String> toReturn = new ArrayList<String>();
-		toReturn.add(tmpResultLong.get(index).getValue());
-		return toReturn;
-	}
-	
-	@Override
-	public InternalTypeContainer getInternalTypeContainer() {
-		return new InternalTypeContainer(InternalTypeRep.INTEGER);
-	}
+        List<String> toReturn = new ArrayList<String>();
+        toReturn.add(tmpResultLong.get(index).getValue());
+        return toReturn;
+    }
 
-	@Override
-	public void addVerifyOutput(CodeArrayListBeautifier code) {
-		code.add("int " + UnifiedNameContainer.getNewResultName() + "1 = " + UnifiedNameContainer.getVotingMethod() + "(" + UnifiedNameContainer.getNewVotesName() + "1);");
-		code.add("assert(" + UnifiedNameContainer.getNewResultName() + "1 == " + UnifiedNameContainer.getOrigResultName() + ");");
-	}
+    @Override
+    public InternalTypeContainer getInternalTypeContainer() {
+        return new InternalTypeContainer(InternalTypeRep.INTEGER);
+    }
 
-	@Override
-	public void addLastResultAsCode(CodeArrayListBeautifier code, List<String> origResult) {
-		// just declare the variable as the result
-		String declaration = "";
+    @Override
+    public void addVerifyOutput(CodeArrayListBeautifier code) {
+        code.add("int " + UnifiedNameContainer.getNewResultName() + "1 = " + UnifiedNameContainer.getVotingMethod()
+                + "(" + UnifiedNameContainer.getNewVotesName() + "1);");
+        code.add("assert(" + UnifiedNameContainer.getNewResultName() + "1 == "
+                + UnifiedNameContainer.getOrigResultName() + ");");
+    }
 
-		declaration = "int " + UnifiedNameContainer.getOrigResultName() + " = " + origResult.get(0) + ";";
+    @Override
+    public void addLastResultAsCode(CodeArrayListBeautifier code, List<String> origResult) {
+        // just declare the variable as the result
+        String declaration = "";
 
-		code.add(declaration);
-	}
+        declaration = "int " + UnifiedNameContainer.getOrigResultName() + " = " + origResult.get(0) + ";";
 
-	@Override
-	public String getResultDescriptionString(List<String> result) {
-		
-		String toReturn = "winner: ";
-		
-		try {
-			toReturn = GUIController.getController().getElectionSimulation().getPartyName(Integer.parseInt(result.get(0)));
-		} catch (Exception e) {
-			toReturn = result.get(0);
-		}
-		
-		return toReturn;
-	}
-	
+        code.add(declaration);
+    }
 
-	@Override
-	public String otherToString() {
-		return "Single candidate";
-	}
+    @Override
+    public String getResultDescriptionString(List<String> result) {
+
+        String toReturn = "winner: ";
+
+        try {
+            toReturn = GUIController.getController().getElectionSimulation()
+                    .getPartyName(Integer.parseInt(result.get(0)));
+        } catch (Exception e) {
+            toReturn = result.get(0);
+        }
+
+        return toReturn;
+    }
+
+    @Override
+    public String otherToString() {
+        return "Single candidate";
+    }
 }

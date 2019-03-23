@@ -13,30 +13,33 @@ public class SymbolicVariable {
 
     /**
      * creates a new SymbolicVariable
-     * @param id the id of the new variabele
+     *
+     * @param id              the id of the new variabele
      * @param internalTypeRep the Type of the new variable
      */
     public SymbolicVariable(String id, InternalTypeContainer internalTypeRep) {
         this.id = id;
         this.internalTypeContainer = internalTypeRep;
     }
+
     /**
-     * 
-     * @return the Id of the variable 
+     *
+     * @return the Id of the variable
      */
     public String getId() {
         return id;
     }
+
     /**
-     * 
-     * @return the type of the Variable 
+     *
+     * @return the type of the Variable
      */
     public InternalTypeContainer getInternalTypeContainer() {
         return internalTypeContainer;
     }
-    
+
     @Override
     public SymbolicVariable clone() {
-    	return new SymbolicVariable(id, internalTypeContainer);
+        return new SymbolicVariable(id, internalTypeContainer);
     }
 }

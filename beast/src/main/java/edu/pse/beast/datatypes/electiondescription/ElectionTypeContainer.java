@@ -5,6 +5,7 @@ import edu.pse.beast.types.OutputType;
 
 /**
  * Datatype for the Input and Output of an Election
+ *
  * @author Lukas
  *
  */
@@ -13,14 +14,14 @@ public class ElectionTypeContainer {
     private OutputType outType;
 //    private ElectionInputTypeIds inID;
 //    private ElectionOutputTypeIds outID;
-    
+
 //    public static enum ElectionInputTypeIds {
 //        SINGLE_CHOICE,
 //        PREFERENCE,
 //        APPROVAL,
 //        WEIGHTED_APPROVAL
 //    }
-    
+
 //    public static enum ElectionOutputTypeIds {
 //        CAND_OR_UNDEF,
 //        CAND_PER_SEAT
@@ -36,17 +37,17 @@ public class ElectionTypeContainer {
 //        this.lowerBound = lowerBound;
 //        this.upperBound = upperBound;
 //    }
-    
+
     /**
      * Constructor
+     *
      * @param type the type of this election
      */
     public ElectionTypeContainer(InputType inType, OutputType outType) {
-    	this.inType = inType;
-    	this.outType = outType;
+        this.inType = inType;
+        this.outType = outType;
     }
 
-    
 //    /**
 //     * 
 //     * @return the type of this election
@@ -64,18 +65,18 @@ public class ElectionTypeContainer {
     }
 
     /**
-    *
-    * @return the id of this output typecontainer
-    */
-   public OutputType getOutputType() {
-       return outType;
-   }
+     *
+     * @return the id of this output typecontainer
+     */
+    public OutputType getOutputType() {
+        return outType;
+    }
 
-	public void setInput(InputType inputType) {
-		this.inType = inputType;
-	}
+    public void setInput(InputType inputType) {
+        this.inType = inputType;
+    }
 
-	public void setOutput(OutputType outputType) {
-		this.outType = outputType;
-	}
+    public void setOutput(OutputType outputType) {
+        this.outType = outputType;
+    }
 }

@@ -15,172 +15,163 @@ import edu.pse.beast.types.OutputType;
  *
  */
 public class ElectionDescription implements NameInterface {
-	private String name;
-	private List<String> code = new ArrayList<String>();
-	private ElectionTypeContainer container;
-	private int votingDeclLine;
+    private String name;
+    private List<String> code = new ArrayList<String>();
+    private ElectionTypeContainer container;
+    private int votingDeclLine;
 
-	private int lockedLineStart = 0;
-	private int lockedLineEnd = 0;
-	private int lockedBracePos = 0;
-	
-	private boolean isNew = false;
+    private int lockedLineStart = 0;
+    private int lockedLineEnd = 0;
+    private int lockedBracePos = 0;
 
-	/**
-	 * 
-	 * @param name
-	 *            the name of the description
-	 * @param inputType
-	 *            the input type
-	 * @param outputType
-	 *            the output type
-	 * @param votingDeclLine
-	 *            the votingDeclerationLine
-	 */
-	public ElectionDescription(String name, InputType inputType, OutputType outputType, int votingDeclLine,
-			int lockedLineStart, int lockedLineEnd, int lockedBrace, boolean isNew) {
-		this.name = name;
-		this.container = new ElectionTypeContainer(inputType, outputType);
-		this.votingDeclLine = votingDeclLine;
-		this.lockedLineStart = lockedLineStart;
-		this.lockedLineEnd = lockedLineEnd;
-		this.lockedBracePos = lockedBrace;
-		
-		this.isNew = isNew;
-	}
+    private boolean isNew = false;
 
-	/**
-	 * 
-	 * @return code of this description;
-	 */
-	public List<String> getCode() {
-		return code;
-	}
+    /**
+     * 
+     * @param name           the name of the description
+     * @param inputType      the input type
+     * @param outputType     the output type
+     * @param votingDeclLine the votingDeclerationLine
+     */
+    public ElectionDescription(String name, InputType inputType, OutputType outputType, int votingDeclLine,
+            int lockedLineStart, int lockedLineEnd, int lockedBrace, boolean isNew) {
+        this.name = name;
+        this.container = new ElectionTypeContainer(inputType, outputType);
+        this.votingDeclLine = votingDeclLine;
+        this.lockedLineStart = lockedLineStart;
+        this.lockedLineEnd = lockedLineEnd;
+        this.lockedBracePos = lockedBrace;
 
-	public String getCodeAsString() {
-		return String.join("\n", code);
-	}
+        this.isNew = isNew;
+    }
 
-	/**
-	 * 
-	 * @return the name of the Description
-	 */
-	public String getName() {
-		return name;
-	}
+    /**
+     * 
+     * @return code of this description;
+     */
+    public List<String> getCode() {
+        return code;
+    }
 
-	/**
-	 * 
-	 * @return the votingDescriptionLine of this description
-	 */
-	public int getVotingDeclLine() {
-		return votingDeclLine;
-	}
+    public String getCodeAsString() {
+        return String.join("\n", code);
+    }
 
-	/**
-	 * 
-	 * @return the outputType of this description
-	 */
-	public ElectionTypeContainer getContainer() {
-		return container;
-	}
+    /**
+     * 
+     * @return the name of the Description
+     */
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * 
-	 * @param code
-	 *            of this description
-	 */
-	public void setCode(List<String> code) {
-		this.code = code;
-	}
+    /**
+     * 
+     * @return the votingDescriptionLine of this description
+     */
+    public int getVotingDeclLine() {
+        return votingDeclLine;
+    }
 
-	/**
-	 * 
-	 * @param code
-	 *            of this description
-	 */
-	public void setCode(String code) {
-		String[] split = code.split("\n");
+    /**
+     * 
+     * @return the outputType of this description
+     */
+    public ElectionTypeContainer getContainer() {
+        return container;
+    }
 
-		this.code = new ArrayList<>(Arrays.asList(split));
-	}
+    /**
+     * 
+     * @param code of this description
+     */
+    public void setCode(List<String> code) {
+        this.code = code;
+    }
 
-	/**
-	 * 
-	 * @param name
-	 *            of this description
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * 
+     * @param code of this description
+     */
+    public void setCode(String code) {
+        String[] split = code.split("\n");
 
-	/**
-	 * 
-	 * @param votingDeclLine
-	 *            of this description
-	 */
-	public void setVotingDeclLine(int votingDeclLine) {
-		this.votingDeclLine = votingDeclLine;
-	}
+        this.code = new ArrayList<>(Arrays.asList(split));
+    }
 
-	/**
-	 * 
-	 * @param outputType
-	 *            of this description
-	 */
-	public void setContainer(ElectionTypeContainer newContainer) {
-		this.container = newContainer;
-	}
+    /**
+     * 
+     * @param name of this description
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	@Override
-	public void setNewName(String newName) {
-		setName(newName);
-	}
+    /**
+     * 
+     * @param votingDeclLine of this description
+     */
+    public void setVotingDeclLine(int votingDeclLine) {
+        this.votingDeclLine = votingDeclLine;
+    }
 
-	public void updateVotingDeclLine(String newVotingDeclLine) {
-		this.code.set(votingDeclLine, newVotingDeclLine);
-	}
+    /**
+     * 
+     * @param outputType of this description
+     */
+    public void setContainer(ElectionTypeContainer newContainer) {
+        this.container = newContainer;
+    }
 
-	public ElectionDescription getDeepCopy() {
-		ElectionDescription deepCopy = new ElectionDescription(name, container.getInputType(),
-				container.getOutputType(), votingDeclLine, lockedLineStart, lockedLineEnd, lockedBracePos, isNew);
+    @Override
+    public void setNewName(String newName) {
+        setName(newName);
+    }
 
-		List<String> clonedCode = new ArrayList<String>();
+    public void updateVotingDeclLine(String newVotingDeclLine) {
+        this.code.set(votingDeclLine, newVotingDeclLine);
+    }
 
-		for (Iterator<String> iterator = code.iterator(); iterator.hasNext();) {
-			String line = (String) iterator.next();
-			clonedCode.add(line);
-		}
+    public ElectionDescription getDeepCopy() {
+        ElectionDescription deepCopy = new ElectionDescription(name, container.getInputType(),
+                container.getOutputType(), votingDeclLine, lockedLineStart, lockedLineEnd, lockedBracePos, isNew);
 
-		deepCopy.setCode(clonedCode);
+        List<String> clonedCode = new ArrayList<String>();
 
-		return deepCopy;
-	}
+        for (Iterator<String> iterator = code.iterator(); iterator.hasNext();) {
+            String line = (String) iterator.next();
+            clonedCode.add(line);
+        }
 
-	public boolean isNew() {
-		return isNew;
-	}
+        deepCopy.setCode(clonedCode);
 
-	public int getLockedLineStart() {
-		return lockedLineStart;
-	}
-	
-	public int getLockedLineEnd() {
-		return lockedLineEnd;
-	}
-	
-	public int getLockedBracePos() {
-		return lockedBracePos;
-	}
-	
-	public void setNotNew() {
-		this.isNew = false;
-	}
-	
-	public void setLockedPositions(int lockedLineStart, int lockedLineEnd, int lockedBracePos) {
-		this.lockedLineStart = lockedLineStart;
-		this.lockedLineEnd = lockedLineEnd;
-		this.lockedBracePos = lockedBracePos;
-	}
+        return deepCopy;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public int getLockedLineStart() {
+        return lockedLineStart;
+    }
+
+    public int getLockedLineEnd() {
+        return lockedLineEnd;
+    }
+
+    public int getLockedBracePos() {
+        return lockedBracePos;
+    }
+
+    public void setNotNew() {
+        this.isNew = false;
+    }
+
+    public void setLockedPositions(int lockedLineStart, int lockedLineEnd, int lockedBracePos) {
+        this.lockedLineStart = lockedLineStart;
+        this.lockedLineEnd = lockedLineEnd;
+        this.lockedBracePos = lockedBracePos;
+    }
 
 }

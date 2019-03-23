@@ -18,8 +18,9 @@ import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.Tuple;
 
 /**
- * This abstract class implements error displaying functionallity common to
- * all specialized error display subclasses
+ * This abstract class implements error displaying functionallity common to all
+ * specialized error display subclasses
+ *
  * @author Holger-Desktop
  */
 public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMotionListener {
@@ -28,9 +29,9 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
     private SquigglePainter painter;
     private ArrayList<Tuple<Integer, Integer>> absPosToMsg;
     private ArrayList<String> msges;
-    private ArrayList<Object> highLights = new ArrayList<>();    
+    private ArrayList<Object> highLights = new ArrayList<>();
     private ErrorPopupMenu errorPopupMenu;
-    
+
     public ErrorDisplayer(JTextPane pane, StringResourceLoader currentStringResLoader) {
         absPosToMsg = new ArrayList<>();
         msges = new ArrayList<>();
@@ -38,28 +39,28 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         ToolTipManager.sharedInstance().setDismissDelay(10000);
         this.pane = pane;
         pane.addMouseMotionListener(this);
-        this.painter = new SquigglePainter(Color.red);  
+        this.painter = new SquigglePainter(Color.red);
         this.currentStringResLoader = currentStringResLoader;
         errorPopupMenu = new ErrorPopupMenu(pane);
     }
 
-
     /**
-     * removes all previously shown errors and thus gets
-     * ready to show the newly found ones. This method
-     * must be overwritten by subclasses to do anything useful
+     * removes all previously shown errors and thus gets ready to show the newly
+     * found ones. This method must be overwritten by subclasses to do anything
+     * useful
+     *
      * @param errors the errors to be presented
      */
     public void showErrors(ArrayList<CodeError> errors) {
         absPosToMsg = new ArrayList<>();
         msges = new ArrayList<>();
-        
+
         for (Object o : highLights) {
             pane.getHighlighter().removeHighlight(o);
         }
         pane.repaint();
     }
-    
+
     protected void showError(CodeError er, String msg) {
         int startpos = er.getStartPos();
         int endpos = er.getEndPos();
@@ -74,7 +75,7 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
             Logger.getLogger(ErrorDisplayer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     private String getPosString(CodeError er) {
         String template = "ERROR: ERRNO, LINE: LINO, CHAR: POSNO";
         template = template.replace("ERROR", currentStringResLoader.getStringFromID("error"));
@@ -87,8 +88,9 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
     }
 
     /**
-     * checks if the mouse position is over a part of the code which contains an error.
-     * if so, it displays a popupmenu with the error message
+     * checks if the mouse position is over a part of the code which contains an
+     * error. if so, it displays a popupmenu with the error message
+     *
      * @param e
      */
     @Override
@@ -97,31 +99,28 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         int pos = pane.viewToModel2D(pt);
         if (pos == JTextPaneToolbox.getText(pane).length()) {
             pane.setToolTipText(null);
-            //errorPopupMenu.setVisible(false);
+            // errorPopupMenu.setVisible(false);
             return;
         }
         if (Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10
-                && Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10
-                && errorPopupMenu.isVisible()) {
+                && Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 && errorPopupMenu.isVisible()) {
             return;
         }
         for (int i = 0; i < absPosToMsg.size(); ++i) {
             if (absPosToMsg.get(i).x <= pos && absPosToMsg.get(i).y >= pos) {
                 pane.setToolTipText(msges.get(i));
-                //errorPopupMenu.getErrorItem().setText(msges.get(i));
-                //errorPopupMenu.show(pane, e.getX(), e.getY() + 20);
+                // errorPopupMenu.getErrorItem().setText(msges.get(i));
+                // errorPopupMenu.show(pane, e.getX(), e.getY() + 20);
                 return;
             }
         }
         pane.setToolTipText(null);
-        /*if(errorPopupMenu.isVisible()) {            
-            errorPopupMenu.setVisible(false);
-        }*/
-    }
-    
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        
+        /*
+         * if(errorPopupMenu.isVisible()) { errorPopupMenu.setVisible(false); }
+         */
     }
 
+    @Override
+    public void mouseDragged(MouseEvent e) {
+    }
 }

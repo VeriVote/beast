@@ -11,7 +11,7 @@ import edu.pse.beast.types.InOutType;
 public class VoteExp extends AccessValueNode {
     /**
      *
-     * @param type the internal type
+     * @param type  the internal type
      *
      * @param count the count of this vote
      */

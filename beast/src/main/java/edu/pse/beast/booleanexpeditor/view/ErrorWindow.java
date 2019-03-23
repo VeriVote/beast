@@ -10,6 +10,7 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
 
 /**
  * Controller of the JTextPane for displaying errors in a BooleanExpEditorWindow
+ *
  * @author Nikolai
  */
 public class ErrorWindow {
@@ -22,7 +23,8 @@ public class ErrorWindow {
 
     /**
      * Constructor
-     * @param textPane JTextPane for ErrorWindow
+     *
+     * @param textPane              JTextPane for ErrorWindow
      * @param stringLoaderInterface stringLoaderInterface to load needed Strings
      */
     public ErrorWindow(JTextPane textPane, StringLoaderInterface stringLoaderInterface) {
@@ -33,16 +35,15 @@ public class ErrorWindow {
     /**
      * Method to display ArrayList of Errors in the ErrorWindow.
      *
-     * @param preConditionErrors An ArrayList<CodeError> instance with all the
-     * CodeErrors from the preCondition textpane
-     * @param postConditionErrors An ArrayList<CodeError> instance with all the
-     * CodeErrors from the postCondition textpane
-     * @param booleanExpErrorDisplayer the ErrorDisplayer that creates the
-     * messages given CodeError objects
+     * @param preConditionErrors       An ArrayList<CodeError> instance with all the
+     *                                 CodeErrors from the preCondition textpane
+     * @param postConditionErrors      An ArrayList<CodeError> instance with all the
+     *                                 CodeErrors from the postCondition textpane
+     * @param booleanExpErrorDisplayer the ErrorDisplayer that creates the messages
+     *                                 given CodeError objects
      */
-    public void displayErrors(ArrayList<CodeError> preConditionErrors,
-                              ArrayList<CodeError> postConditionErrors,
-                              BooleanExpErrorDisplayer booleanExpErrorDisplayer) {
+    public void displayErrors(ArrayList<CodeError> preConditionErrors, ArrayList<CodeError> postConditionErrors,
+            BooleanExpErrorDisplayer booleanExpErrorDisplayer) {
         int numberOfErrors = postConditionErrors.size() + preConditionErrors.size();
         String errorsAsString = errorString + ": " + numberOfErrors + "\n";
 
@@ -53,7 +54,8 @@ public class ErrorWindow {
 
         for (int i = 0; i < postConditionErrors.size(); i++) {
             errorsAsString += i + 1 + ": " + booleanExpErrorDisplayer.createMsg(postConditionErrors.get(i)) + " ("
-                    + lineString + " " + postConditionErrors.get(i).getLine() + ", " + postConditionsString + ")" + "\n";
+                    + lineString + " " + postConditionErrors.get(i).getLine() + ", " + postConditionsString + ")"
+                    + "\n";
         }
 
         textPane.setText(errorsAsString);
@@ -65,13 +67,13 @@ public class ErrorWindow {
      * @param stringLoaderInterface the new stringLoaderInterface
      */
     public void updateStringRes(StringLoaderInterface stringLoaderInterface) {
-        errorString = stringLoaderInterface.getBooleanExpEditorStringResProvider().
-                getBooleanExpErrorStringRes().getStringFromID("error");
-        lineString = stringLoaderInterface.getBooleanExpEditorStringResProvider().
-                getBooleanExpErrorStringRes().getStringFromID("line");
-        preConditionsString = stringLoaderInterface.getBooleanExpEditorStringResProvider().
-                getBooleanExpErrorStringRes().getStringFromID("preConditions");
-        postConditionsString = stringLoaderInterface.getBooleanExpEditorStringResProvider().
-                getBooleanExpErrorStringRes().getStringFromID("postConditions");
+        errorString = stringLoaderInterface.getBooleanExpEditorStringResProvider().getBooleanExpErrorStringRes()
+                .getStringFromID("error");
+        lineString = stringLoaderInterface.getBooleanExpEditorStringResProvider().getBooleanExpErrorStringRes()
+                .getStringFromID("line");
+        preConditionsString = stringLoaderInterface.getBooleanExpEditorStringResProvider().getBooleanExpErrorStringRes()
+                .getStringFromID("preConditions");
+        postConditionsString = stringLoaderInterface.getBooleanExpEditorStringResProvider()
+                .getBooleanExpErrorStringRes().getStringFromID("postConditions");
     }
 }

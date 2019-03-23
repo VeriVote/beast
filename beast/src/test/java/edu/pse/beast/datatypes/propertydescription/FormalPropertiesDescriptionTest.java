@@ -15,11 +15,11 @@ public class FormalPropertiesDescriptionTest {
      */
     @Test
     public void testGetCode() {
-	System.out.println("getCode");
-	FormalPropertiesDescription instance = new FormalPropertiesDescription("test");
-	String expResult = "test";
-	String result = instance.getCode();
-	assertEquals(expResult, result);
+        System.out.println("getCode");
+        FormalPropertiesDescription instance = new FormalPropertiesDescription("test");
+        String expResult = "test";
+        String result = instance.getCode();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -27,12 +27,12 @@ public class FormalPropertiesDescriptionTest {
      */
     @Test
     public void testSetCode() {
-	System.out.println("setCode");
-	String code = "test";
-	FormalPropertiesDescription instance = new FormalPropertiesDescription(null);
-	instance.setCode(code);
-	String result = instance.getCode();
-	assertEquals("test", result);
+        System.out.println("setCode");
+        String code = "test";
+        FormalPropertiesDescription instance = new FormalPropertiesDescription(null);
+        instance.setCode(code);
+        String result = instance.getCode();
+        assertEquals("test", result);
     }
 
 }

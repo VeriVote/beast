@@ -3,6 +3,7 @@ package edu.pse.beast.toolbox.antlr.booleanexp.generateast;
 import java.util.ArrayList;
 
 import edu.pse.beast.types.InternalTypeContainer;
+
 /**
  *
  * @author Holger-Desktop
@@ -17,16 +18,16 @@ public class BooleanExpScope {
     }
 
     public InternalTypeContainer getTypeForId(String id) {
-        for(int i = 0; i < names.size(); ++i) {
-            if(names.get(i).equals(id))
+        for (int i = 0; i < names.size(); ++i) {
+            if (names.get(i).equals(id))
                 return types.get(i);
         }
         return null;
     }
 
     public void remove(String id) {
-        for(int i = 0; i < names.size(); ++i) {
-            if(names.get(i).equals(id)) {
+        for (int i = 0; i < names.size(); ++i) {
+            if (names.get(i).equals(id)) {
                 names.remove(i);
                 types.remove(i);
             }

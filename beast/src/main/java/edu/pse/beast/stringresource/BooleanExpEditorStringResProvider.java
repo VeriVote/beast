@@ -63,8 +63,8 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
     }
 
     /**
-     * Initializes all attributes. Loads all StringResourceLoaders with the filenames.
-     * The superclass provides the functions for this process
+     * Initializes all attributes. Loads all StringResourceLoaders with the
+     * filenames. The superclass provides the functions for this process
      */
     @Override
     protected final void initialize() {

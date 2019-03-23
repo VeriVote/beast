@@ -7,6 +7,7 @@ import javax.swing.event.ChangeListener;
 /**
  * The SingleValueSpinnerHandler handles all user inputs on the ParameterEditor
  * which use one JSpinner.
+ *
  * @author Jonas
  */
 public class SingleValueSpinnerHandler implements ChangeListener {
@@ -14,9 +15,10 @@ public class SingleValueSpinnerHandler implements ChangeListener {
     private Integer valBefore;
     private boolean reacts;
     private boolean hasChanged;
-    
+
     /**
      * Constructor
+     *
      * @param spinner corresponding JSpinner
      */
     public SingleValueSpinnerHandler(JSpinner spinner) {
@@ -24,16 +26,20 @@ public class SingleValueSpinnerHandler implements ChangeListener {
         valBefore = getValue();
         setHasChanged(false);
     }
+
     /**
      * Getter for the value of the JSpinner
+     *
      * @return Integer of the value
      */
     public Integer getValue() {
         return Integer.parseInt(spinner.getValue().toString());
     }
+
     /**
-     * Setter for the value of the JSpinner. Only allows values positive integers
-     * up to 10000.
+     * Setter for the value of the JSpinner. Only allows values positive integers up
+     * to 10000.
+     *
      * @param val new value
      */
     public void setValue(Integer val) {
@@ -54,23 +60,30 @@ public class SingleValueSpinnerHandler implements ChangeListener {
             setValue(valBefore);
         }
     }
+
     /**
-     * Toggles whether the value stored reacts to user input
-     * (to not interrupt checks).
+     * Toggles whether the value stored reacts to user input (to not interrupt
+     * checks).
+     *
      * @param reacts whether it reacts
      */
     protected void setReacts(boolean reacts) {
         this.reacts = reacts;
     }
+
     /**
-     * Returns whether the value of the JSpinners was changed since last time saving.
+     * Returns whether the value of the JSpinners was changed since last time
+     * saving.
+     *
      * @return hasChanged
      */
     protected boolean hasChanged() {
         return hasChanged;
     }
+
     /**
      * Sets whether the value of the JSpinners was changed since last time saving.
+     *
      * @param hasChanged whether it changed
      */
     protected void setHasChanged(boolean hasChanged) {

@@ -10,12 +10,11 @@ import java.util.Iterator;
 public class WindowsOStoolbox {
 
     private static final String RELATIVEPATHTOVSCMD = "/windows/VsDevCmd.bat";
-    
-    
+
     /**
      * 
-     * @return the String that should lead to a vsDevCMD which is required to
-     *         run cbmc on windows
+     * @return the String that should lead to a vsDevCMD which is required to run
+     *         cbmc on windows
      * @throws IOException in case the VScmd couldn't be found this gets thrown
      */
     public static String getVScmdPath() throws IOException {
@@ -46,10 +45,11 @@ public class WindowsOStoolbox {
                 }
             }
 
-            ErrorForUserDisplayer.displayError("The progam was unable to find a Developer Command Prompt for Visual Studio. \n"
-                    + " Please install it if you haven't and search for the vsCMD.bat in it! \n"
-                    + " Please copy the .bat to the folder /windows/ in your BEST install directory"
-                    + "(named \"VsDevCmd.bat\") so it can be found automatically.");
+            ErrorForUserDisplayer
+                    .displayError("The progam was unable to find a Developer Command Prompt for Visual Studio. \n"
+                            + " Please install it if you haven't and search for the vsCMD.bat in it! \n"
+                            + " Please copy the .bat to the folder /windows/ in your BEST install directory"
+                            + "(named \"VsDevCmd.bat\") so it can be found automatically.");
 
             return "The progam was unable to find a Developer Command Prompt for Visual Studio. Look at the error log";
         }

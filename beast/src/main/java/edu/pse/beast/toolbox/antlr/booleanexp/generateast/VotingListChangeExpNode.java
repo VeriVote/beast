@@ -8,15 +8,16 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Vo
 
 public class VotingListChangeExpNode extends BooleanExpressionNode {
     public final TerminalNode vote;
-	public final VotingListChangeContentContext votingListChangeContent;
+    public final VotingListChangeContentContext votingListChangeContent;
 
-	public VotingListChangeExpNode(TerminalNode vote, VotingListChangeContentContext votingListChangeContent) {
-		this.vote = vote;
-		this.votingListChangeContent = votingListChangeContent;
-	}
+    public VotingListChangeExpNode(TerminalNode vote, VotingListChangeContentContext votingListChangeContent) {
+        this.vote = vote;
+        this.votingListChangeContent = votingListChangeContent;
+    }
 
-	/**
+    /**
      * visits this node
+     *
      * @param visitor the visitor that visits
      */
     public void getVisited(BooleanExpNodeVisitor visitor) {

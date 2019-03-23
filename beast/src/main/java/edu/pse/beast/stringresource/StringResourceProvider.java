@@ -20,8 +20,8 @@ public abstract class StringResourceProvider {
     protected String languageId;
 
     /**
-     * The constructor doesn't call initialize. If you make a subclass you have
-     * to call it yourself
+     * The constructor doesn't call initialize. If you make a subclass you have to
+     * call it yourself
      *
      * @param languageId the language. Choose "de" for german
      */
@@ -69,11 +69,9 @@ public abstract class StringResourceProvider {
     }
 
     /**
-     * This method is used to initialize the StringResourceLoaders of the
-     * subclasses
+     * This method is used to initialize the StringResourceLoaders of the subclasses
      *
-     * @param moduleName the Name of the txt File without the language or the
-     * path
+     * @param moduleName the Name of the txt File without the language or the path
      * @return returns the StringResourceLoader
      */
     protected final StringResourceLoader getStringResourceLoaderFromModuleName(String moduleName) {

@@ -16,13 +16,14 @@ public class LanguageOptions extends Options {
     private StringLoaderInterface sli;
     private List<DisplaysStringsToUser> stringDisplays = new ArrayList<>();
     private LanguageOptionElement langOptElem;
+
     /**
      * Constructor
-     * @param sli the string loader interface
+     *
+     * @param sli             the string loader interface
      * @param stringResLoader StringResourceLoader
      */
-    public LanguageOptions(StringLoaderInterface sli,
-            StringResourceLoader stringResLoader) {
+    public LanguageOptions(StringLoaderInterface sli, StringResourceLoader stringResLoader) {
         super("lang_opts");
         this.sli = sli;
         String chosenLang = stringResLoader.getStringFromID("lang");
@@ -41,7 +42,9 @@ public class LanguageOptions extends Options {
     }
 
     /**
-     * Method with which Builder classes can add classes implementing DisplaysStringsToUser to the stringDisplays list.
+     * Method with which Builder classes can add classes implementing
+     * DisplaysStringsToUser to the stringDisplays list.
+     *
      * @param dis the class implementing DisplaysStringsToUser
      */
     public void addStringDisplayer(DisplaysStringsToUser dis) {
@@ -51,7 +54,7 @@ public class LanguageOptions extends Options {
     @Override
     protected void reapplySpecialized() {
         sli.setLanguage(langOptElem.getChosenOption());
-        for(DisplaysStringsToUser dis : stringDisplays) {
+        for (DisplaysStringsToUser dis : stringDisplays) {
             dis.updateStringRes(sli);
         }
     }

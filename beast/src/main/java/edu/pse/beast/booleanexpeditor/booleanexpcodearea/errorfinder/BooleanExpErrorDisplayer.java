@@ -9,18 +9,19 @@ import edu.pse.beast.codearea.errorhandling.ErrorDisplayer;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 
 /**
- * Class for displaying CodeErrors found in the BooleanExpEditor dynamically, triggered by mouse hovering.
+ * Class for displaying CodeErrors found in the BooleanExpEditor dynamically,
+ * triggered by mouse hovering.
+ *
  * @author Holger-Desktop
  */
 public class BooleanExpErrorDisplayer extends ErrorDisplayer {
     /**
      * Constructor
-     * @param pane the JTextPane to display the errors in
+     *
+     * @param pane        the JTextPane to display the errors in
      * @param stringResIF the String
      */
-    public BooleanExpErrorDisplayer(
-            JTextPane pane,
-            StringLoaderInterface stringResIF) {
+    public BooleanExpErrorDisplayer(JTextPane pane, StringLoaderInterface stringResIF) {
         super(pane, stringResIF.getBooleanExpEditorStringResProvider().getBooleanExpErrorStringRes());
     }
 
@@ -33,7 +34,9 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
     }
 
     /**
-     * Creates meaningful message in form of String based on a given CodeError object.
+     * Creates meaningful message in form of String based on a given CodeError
+     * object.
+     *
      * @param codeError the CodeError object
      * @return the message
      */
@@ -68,7 +71,7 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
             String template = getTemplateString("wrong_var_passed_to_votesum");
             template = template.replace("GIVENTYPE", codeError.getExtraInfo("var_type"));
             return template;
-        }  else if (codeError.getId().equals("wrong_var_passed_to_votesum_unique")) {
+        } else if (codeError.getId().equals("wrong_var_passed_to_votesum_unique")) {
             String template = getTemplateString("wrong_var_passed_to_votesum_unique");
             template = template.replace("GIVENTYPE", codeError.getExtraInfo("var_type"));
             return template;
@@ -85,7 +88,6 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
 
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
-        this.currentStringResLoader =
-                stringResIF.getBooleanExpEditorStringResProvider().getBooleanExpErrorStringRes();
+        this.currentStringResLoader = stringResIF.getBooleanExpEditorStringResProvider().getBooleanExpErrorStringRes();
     }
 }

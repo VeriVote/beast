@@ -12,8 +12,9 @@ public class SpacesPerTabOptionElement extends OptionElement {
 
     /**
      * Constructor
+     *
      * @param choosableOptions the choosable options
-     * @param numberTabs the number of spaces per tab
+     * @param numberTabs       the number of spaces per tab
      */
     public SpacesPerTabOptionElement(List<String> choosableOptions, String numberTabs) {
         super("spaces_per_tab", choosableOptions);
@@ -22,6 +23,7 @@ public class SpacesPerTabOptionElement extends OptionElement {
 
     /**
      * Getter
+     *
      * @return the chosen number of tabs
      */
     public int getNumberTabs() {

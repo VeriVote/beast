@@ -17,7 +17,7 @@ import edu.pse.beast.codearea.errorhandling.ErrorFinder;
 
 /**
  * This class uses antlr to find syntax errors in the C code
- * 
+ *
  * @author Holger-Desktop
  */
 public class CGrammarErrorFinder implements ErrorFinder, ANTLRErrorListener {
@@ -26,7 +26,7 @@ public class CGrammarErrorFinder implements ErrorFinder, ANTLRErrorListener {
 
     /**
      * constructor
-     * 
+     *
      * @param antlrHandler the handle to AntLR used for error finding
      */
     public CGrammarErrorFinder(CAntlrHandler antlrHandler) {

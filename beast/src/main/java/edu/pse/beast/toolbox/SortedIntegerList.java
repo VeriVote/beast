@@ -44,8 +44,7 @@ public class SortedIntegerList {
     }
 
     /**
-     * @param index
-     *            the position of the integer to be returned
+     * @param index the position of the integer to be returned
      * @return the integer at position index
      */
     public int get(int index) {
@@ -60,11 +59,9 @@ public class SortedIntegerList {
     }
 
     /**
-     * adds the supplied integer to container while making sure it remains
-     * sorted
+     * adds the supplied integer to container while making sure it remains sorted
      * 
-     * @param i
-     *            the integer added to container
+     * @param i the integer added to container
      */
     public void add(int i) {
         container.add(i);
@@ -91,10 +88,8 @@ public class SortedIntegerList {
      * removes all integers value between to supplied borders from container,
      * including lo but excluding hi
      * 
-     * @param lo
-     *            the starting number for removal
-     * @param hi
-     *            the ceiling for removal
+     * @param lo the starting number for removal
+     * @param hi the ceiling for removal
      */
     public void removeBetween(int lo, int hi) {
         int i = 0;
@@ -107,8 +102,7 @@ public class SortedIntegerList {
     }
 
     /**
-     * @param num
-     *            the number to be compared to
+     * @param num the number to be compared to
      * @return the biggest integer smaller or equal to than the num
      */
     public int getBiggestSmallerOrEqual(int num) {
@@ -122,10 +116,8 @@ public class SortedIntegerList {
     /**
      * subtracts subtract from all saved numbers bigger than start
      * 
-     * @param start
-     *            defines the exclusive lower bound
-     * @param subtract
-     *            number to be substracted from all elements > start
+     * @param start    defines the exclusive lower bound
+     * @param subtract number to be substracted from all elements > start
      */
     public void subtractIfBigger(int start, int subtract, SortedIntegerListCalleeFunction func) {
         int i = 0;
@@ -133,7 +125,8 @@ public class SortedIntegerList {
             ++i;
         }
         for (; i < container.size(); ++i) {
-            if(func != null) func.changedNumber(container.get(i), container.get(i) - subtract);
+            if (func != null)
+                func.changedNumber(container.get(i), container.get(i) - subtract);
             container.set(i, container.get(i) - subtract);
         }
     }
@@ -141,10 +134,8 @@ public class SortedIntegerList {
     /**
      * adds add to all numbers bigger than startc
      * 
-     * @param start
-     *            defines the exclusive lower bound
-     * @param add
-     *            number to be substracted from all elements > start
+     * @param start defines the exclusive lower bound
+     * @param add   number to be substracted from all elements > start
      */
     public void addIfBigger(int start, int add, SortedIntegerListCalleeFunction func) {
         int i = 0;
@@ -152,7 +143,8 @@ public class SortedIntegerList {
             ++i;
         }
         for (; i < container.size(); ++i) {
-            if(func != null) func.changedNumber(container.get(i), container.get(i) + add);            
+            if (func != null)
+                func.changedNumber(container.get(i), container.get(i) + add);
             container.set(i, container.get(i) + add);
         }
     }
@@ -160,10 +152,8 @@ public class SortedIntegerList {
     /**
      * uses binary search to quickly determine whether container contains i
      * 
-     * @param i
-     *            the value to be searched for
-     * @return true, if the the container contains the number "i", false
-     *         otherwise
+     * @param i the value to be searched for
+     * @return true, if the the container contains the number "i", false otherwise
      */
     public boolean contains(int i) {
         return Arrays.binarySearch(container.toArray(), i) >= 0;
@@ -171,15 +161,13 @@ public class SortedIntegerList {
 
     /**
      * 
-     * @param i
-     *            the value of the number to get the position of
-     * @return index of the search key, if it is contained in the array;
-     *         otherwise, (-(insertion point) - 1). The insertion point is
-     *         defined as the point at which the key would be inserted into the
-     *         array: the index of the first element greater than the key, or
-     *         a.length if all elements in the array are less than the specified
-     *         key. Note that this guarantees that the return value will be >= 0
-     *         if and only if the key is found.
+     * @param i the value of the number to get the position of
+     * @return index of the search key, if it is contained in the array; otherwise,
+     *         (-(insertion point) - 1). The insertion point is defined as the point
+     *         at which the key would be inserted into the array: the index of the
+     *         first element greater than the key, or a.length if all elements in
+     *         the array are less than the specified key. Note that this guarantees
+     *         that the return value will be >= 0 if and only if the key is found.
      */
     public int getPositionOf(int i) {
         return Arrays.binarySearch(container.toArray(), i);
@@ -187,8 +175,7 @@ public class SortedIntegerList {
 
     /**
      * 
-     * @param num
-     *            the exclusive upper bound of the check
+     * @param num the exclusive upper bound of the check
      * @return the amount of elements that are smaller than num
      */
     public int getAmountBefore(int num) {
@@ -226,12 +213,12 @@ public class SortedIntegerList {
         }
         return s;
     }
-    
-    public List<Integer> getCopiedList() {
-    	List<Integer> toReturn = new ArrayList<Integer>();
-    	Collections.copy(toReturn, container);
 
-    	return toReturn;
+    public List<Integer> getCopiedList() {
+        List<Integer> toReturn = new ArrayList<Integer>();
+        Collections.copy(toReturn, container);
+
+        return toReturn;
     }
 
 }

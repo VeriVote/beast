@@ -28,7 +28,7 @@ public class SaverLoaderHelper {
     public Map<String, String> parseSaveString(String saveFile) {
         Map<String, String> attrNameToContent = new HashMap<>();
         currentSaveString = saveFile;
-        try{
+        try {
             while (currentSaveString.length() > 0) {
                 int len = getNumberAndRemoveNumberPartFromString();
                 String attr = getAttrFromStringAndRemoveIt(len);
@@ -37,9 +37,9 @@ public class SaverLoaderHelper {
                 attrNameToContent.put(attr, cont);
             }
         } catch (StringIndexOutOfBoundsException ex) {
-            //if the string gets loaded from the file it ends with a \n which
-            //causes the load algorithm to throw a StringIndexOutOfBoundsException
-            //this exception can safely be ignored
+            // if the string gets loaded from the file it ends with a \n which
+            // causes the load algorithm to throw a StringIndexOutOfBoundsException
+            // this exception can safely be ignored
         }
         return attrNameToContent;
     }

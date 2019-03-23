@@ -12,8 +12,8 @@ public class ErrorForUserDisplayerTest {
      * @param args
      */
     public static void main(String args[]) {
-	ErrorForUserDisplayer.displayError("hi");
-	ErrorForUserDisplayer.displayError("hi again");
-	ErrorForUserDisplayer.displayError("hi again2");
+        ErrorForUserDisplayer.displayError("hi");
+        ErrorForUserDisplayer.displayError("hi again");
+        ErrorForUserDisplayer.displayError("hi again2");
     }
 }

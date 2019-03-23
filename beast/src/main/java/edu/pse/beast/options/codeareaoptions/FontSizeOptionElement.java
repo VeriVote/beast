@@ -12,8 +12,9 @@ public class FontSizeOptionElement extends OptionElement {
 
     /**
      * Constructor
+     *
      * @param choosableOptions the choosable options
-     * @param chosenSize the chosen size
+     * @param chosenSize       the chosen size
      */
     public FontSizeOptionElement(List<String> choosableOptions, String chosenSize) {
         super("fontsize", choosableOptions);
@@ -22,6 +23,7 @@ public class FontSizeOptionElement extends OptionElement {
 
     /**
      * Getter
+     *
      * @return the current font size
      */
     public int getsize() {

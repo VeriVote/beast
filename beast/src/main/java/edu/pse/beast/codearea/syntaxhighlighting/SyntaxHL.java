@@ -17,8 +17,7 @@ public class SyntaxHL {
     /**
      * Constructor
      * 
-     * @param textPane
-     *            JTextPane the filter should be applied to
+     * @param textPane JTextPane the filter should be applied to
      */
     public SyntaxHL(JTextPane textPane) {
         this.textPane = textPane;
@@ -27,9 +26,8 @@ public class SyntaxHL {
     /**
      * Creates a new SyntaxHlCompositeFilter and gives it to the textpane
      * 
-     * @param regexAndColorList
-     *            the list of RegexAndColor elements containint the information
-     *            for syntaxHL
+     * @param regexAndColorList the list of RegexAndColor elements containint the
+     *                          information for syntaxHL
      */
     public void updateFilter(ArrayList<RegexAndColor> regexAndColorList) {
         ((AbstractDocument) textPane.getStyledDocument())

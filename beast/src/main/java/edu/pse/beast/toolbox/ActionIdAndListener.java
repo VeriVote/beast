@@ -9,17 +9,17 @@ import java.awt.event.ActionListener;
 public class ActionIdAndListener {
     private final String id;
     private final ActionListener listener;
-    
+
     /**
      * 
-     * @param id the id
+     * @param id       the id
      * @param listener the listener to be save here
      */
     public ActionIdAndListener(String id, ActionListener listener) {
         this.listener = listener;
         this.id = id;
     }
-    
+
     /**
      * 
      * @return the id
@@ -27,7 +27,7 @@ public class ActionIdAndListener {
     public String getId() {
         return this.id;
     }
-    
+
     /**
      * 
      * @return the listener that got saved here
@@ -38,8 +38,6 @@ public class ActionIdAndListener {
 
     @Override
     public String toString() {
-        return "ActionIdAndListener{"
-                + "id='" + id + '\''
-                + '}';
+        return "ActionIdAndListener{" + "id='" + id + '\'' + '}';
     }
 }

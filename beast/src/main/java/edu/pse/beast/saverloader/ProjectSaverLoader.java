@@ -13,22 +13,22 @@ import edu.pse.beast.toolbox.Project;
  */
 public class ProjectSaverLoader implements SaverLoader<Project> {
 
-	private static Gson saverLoader;
+    private static Gson saverLoader;
 
-	static { //here you have the chance to register typeAdapters
-		GsonBuilder builder = new GsonBuilder();
-		saverLoader = builder.create();
-	}
+    static { // here you have the chance to register typeAdapters
+        GsonBuilder builder = new GsonBuilder();
+        saverLoader = builder.create();
+    }
 
-	@Override
-	public Project createFromSaveString(String toLoad) throws Exception { //TODO
-		System.out.println("TODO: save string project");
-		return saverLoader.fromJson(toLoad, Project.class);
-	}
+    @Override
+    public Project createFromSaveString(String toLoad) throws Exception { // TODO
+        System.out.println("TODO: save string project");
+        return saverLoader.fromJson(toLoad, Project.class);
+    }
 
-	@Override
-	public String createSaveString(Project toSave) { //TODO
-		System.out.println("TODO: save string project");
-		return saverLoader.toJson(toSave);
-	}
+    @Override
+    public String createSaveString(Project toSave) { // TODO
+        System.out.println("TODO: save string project");
+        return saverLoader.toJson(toSave);
+    }
 }

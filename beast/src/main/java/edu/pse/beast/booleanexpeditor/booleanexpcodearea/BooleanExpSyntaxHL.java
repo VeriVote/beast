@@ -7,16 +7,19 @@ import edu.pse.beast.codearea.syntaxhighlighting.RegexAndColor;
 import edu.pse.beast.codearea.syntaxhighlighting.SyntaxHL;
 
 /**
- * Class that updates the DocumentFilter of the JTextPanes StyledDocuments in BooleanExpEditor responsible for
- * syntax highlighting.
- * Needs to be refactored if custom colors for syntax highlighting should be available.
+ * Class that updates the DocumentFilter of the JTextPanes StyledDocuments in
+ * BooleanExpEditor responsible for syntax highlighting. Needs to be refactored
+ * if custom colors for syntax highlighting should be available.
+ *
  * @author NikolaiLMS
  */
 public class BooleanExpSyntaxHL {
     /**
      * Constructor
-     * @param antlrHandler the BooleanExpANTLRHandler, provides regular expressions StringLists.
-     * @param syntaxHL the BooleanExpEditorCodeAreas SyntaxHL class.
+     *
+     * @param antlrHandler the BooleanExpANTLRHandler, provides regular expressions
+     *                     StringLists.
+     * @param syntaxHL     the BooleanExpEditorCodeAreas SyntaxHL class.
      */
     public BooleanExpSyntaxHL(BooleanExpANTLRHandler antlrHandler, SyntaxHL syntaxHL) {
         ArrayList<RegexAndColor> regexAndColorList = new ArrayList<>();
@@ -29,8 +32,8 @@ public class BooleanExpSyntaxHL {
         for (String s : antlrHandler.getMakroRegex()) {
             regexAndColorList.add(new RegexAndColor(s, Color.BLUE));
         }
-        regexAndColorList.add(new RegexAndColor("(ELECT[0-9]+\\([a-zA-Z_]*\\))|(VOTES[0-9]+\\([a-zA-Z_]*\\))",
-                Color.GREEN.darker()));
+        regexAndColorList.add(
+                new RegexAndColor("(ELECT[0-9]+\\([a-zA-Z_]*\\))|(VOTES[0-9]+\\([a-zA-Z_]*\\))", Color.GREEN.darker()));
         syntaxHL.updateFilter(regexAndColorList);
     }
 }

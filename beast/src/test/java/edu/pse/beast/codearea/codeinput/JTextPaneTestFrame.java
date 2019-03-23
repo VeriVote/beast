@@ -19,7 +19,7 @@ public class JTextPaneTestFrame extends javax.swing.JFrame {
      * Creates new form JTextPaneTestFrame
      */
     public JTextPaneTestFrame() {
-	initComponents();
+        initComponents();
     }
 
     /**
@@ -31,33 +31,33 @@ public class JTextPaneTestFrame extends javax.swing.JFrame {
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-	jScrollPane1 = new javax.swing.JScrollPane();
-	jTextPane1 = new javax.swing.JTextPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextPane1 = new javax.swing.JTextPane();
 
-	setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-	jScrollPane1.setViewportView(jTextPane1);
+        jScrollPane1.setViewportView(jTextPane1);
 
-	javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-	getContentPane().setLayout(layout);
-	layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		.addGroup(layout.createSequentialGroup().addContainerGap()
-			.addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
-			.addContainerGap()));
-	layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-		.addGroup(layout
-			.createSequentialGroup().addContainerGap().addComponent(jScrollPane1,
-				javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
-			.addContainerGap(88, Short.MAX_VALUE)));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup().addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                        .addContainerGap()));
+        layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout
+                        .createSequentialGroup().addContainerGap().addComponent(jScrollPane1,
+                                javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(88, Short.MAX_VALUE)));
 
-	pack();
+        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     public javax.swing.JTextPane getTextPane() {
-	return jTextPane1;
+        return jTextPane1;
     }
 
     public JScrollPane getScrollPane() {
-	return jScrollPane1;
+        return jScrollPane1;
     }
 }

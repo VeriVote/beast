@@ -28,34 +28,33 @@ public final class FileLoader {
     /**
      *
      * @param file the file that will be read
-     * @return A LinkedList of String elements which are in the same order as in
-     * the file
-     * @throws FileNotFoundException if the file is not found it throws an
-     * exception
-     * @throws IOException throws Exception
+     * @return A LinkedList of String elements which are in the same order as in the
+     *         file
+     * @throws FileNotFoundException if the file is not found it throws an exception
+     * @throws IOException           throws Exception
      */
     public static LinkedList<String> loadFileAsString(File file) throws FileNotFoundException, IOException {
 
         LinkedList<String> stringlist;
         InputStream inputStream = new FileInputStream(file);
-                BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-            stringlist = new LinkedList<>();
-            String line;
+        BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+        stringlist = new LinkedList<>();
+        String line;
 
+        line = br.readLine();
+        while (line != null) {
+            stringlist.add(line);
             line = br.readLine();
-            while (line != null) {
-                stringlist.add(line);
-                line = br.readLine();
-            }
-            br.close();
-        
+        }
+        br.close();
+
         return stringlist;
     }
 
     /**
      * @param toRead the File you want to read
      * @return the image, if it was possible to read it. In case it couldn't be
-     * read, the method returns null
+     *         read, the method returns null
      */
     public static BufferedImage loadFileAsImage(File toRead) {
         BufferedImage toReturn = null;
@@ -70,10 +69,12 @@ public final class FileLoader {
 
     /**
      * creates a new Name inside a directory
-     * @param pathToDir the path of the directory you want the new unique String to be created in 
+     * 
+     * @param pathToDir the path of the directory you want the new unique String to
+     *                  be created in
      * @return the unique String
      */
-    public static synchronized  String getNewUniqueName(String pathToDir) {
+    public static synchronized String getNewUniqueName(String pathToDir) {
         ArrayList<String> usedNames = new ArrayList<>();
 
         File folder = new File(pathToDir.replace("\"", ""));
@@ -99,23 +100,24 @@ public final class FileLoader {
         SecureRandom random = new SecureRandom();
         return new java.math.BigInteger(wordSize, random).toString(32);
     }
-    
+
     /**
      * returns all files that end with the specified String that are in this folder
+     * 
      * @param pathToDir the path to the folder
-     * @param endsWith the String 
+     * @param endsWith  the String
      */
     public static List<String> listAllFilesFromFolder(String pathToDir, String endsWith) {
         ArrayList<String> foundFiles = new ArrayList<>();
-        
+
         File folder = new File(pathToDir.replace("\"", ""));
-        
+
         File[] listOfFiles = folder.listFiles();
-        
+
         if (listOfFiles != null) {
-            for (File file : listOfFiles) {    
+            for (File file : listOfFiles) {
                 if (file.isFile() && file.getName().endsWith(endsWith)) {
-                    //surround it with quotes in case there are spaces in there
+                    // surround it with quotes in case there are spaces in there
                     foundFiles.add("\"" + file.getAbsolutePath() + "\"");
                 }
             }

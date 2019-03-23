@@ -18,12 +18,12 @@ public class CodeArrayListBeautifierTest {
      */
     @Test
     public void testAdd() {
-	System.out.println("add");
-	String e = "test";
-	CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
-	instance.add(e);
-	assertEquals("test", (instance.getCodeArrayList().get(0)));
-	instance.add(null);
+        System.out.println("add");
+        String e = "test";
+        CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
+        instance.add(e);
+        assertEquals("test", (instance.getCodeArrayList().get(0)));
+        instance.add(null);
     }
 
     /**
@@ -31,13 +31,13 @@ public class CodeArrayListBeautifierTest {
      */
     @Test
     public void testAddTab() {
-	System.out.println("addTab");
-	System.out.println("add");
-	String e = "test";
-	CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
-	instance.addTab();
-	instance.add(e);
-	assertEquals("\t" + "test", (instance.getCodeArrayList().get(0)));
+        System.out.println("addTab");
+        System.out.println("add");
+        String e = "test";
+        CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
+        instance.addTab();
+        instance.add(e);
+        assertEquals("\t" + "test", (instance.getCodeArrayList().get(0)));
     }
 
     /**
@@ -45,25 +45,25 @@ public class CodeArrayListBeautifierTest {
      */
     @Test
     public void testDeleteTab() {
-	System.out.println("deleteTab");
-	String e = "test";
-	CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
-	instance.addTab();
+        System.out.println("deleteTab");
+        String e = "test";
+        CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
+        instance.addTab();
 
-	instance.deleteTab();
-	instance.add(e);
-	assertEquals("test", (instance.getCodeArrayList().get(0)));
+        instance.deleteTab();
+        instance.add(e);
+        assertEquals("test", (instance.getCodeArrayList().get(0)));
 
-	instance.deleteTab();
-	e = "test2";
-	instance.add(e);
-	assertEquals("test2", (instance.getCodeArrayList().get(1)));
+        instance.deleteTab();
+        e = "test2";
+        instance.add(e);
+        assertEquals("test2", (instance.getCodeArrayList().get(1)));
 
-	e = "test3";
-	instance.addTab();
-	instance.add(e);
-	instance.deleteTab();
-	assertEquals("\t" + "test3", (instance.getCodeArrayList().get(2)));
+        e = "test3";
+        instance.addTab();
+        instance.add(e);
+        instance.deleteTab();
+        assertEquals("\t" + "test3", (instance.getCodeArrayList().get(2)));
     }
 
     /**
@@ -71,11 +71,11 @@ public class CodeArrayListBeautifierTest {
      */
     @Test
     public void testGetCodeArrayList() {
-	System.out.println("getCodeArrayList");
-	String e = "test";
-	CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
-	instance.add(e);
-	assertEquals("test", (instance.getCodeArrayList().get(0)));
+        System.out.println("getCodeArrayList");
+        String e = "test";
+        CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
+        instance.add(e);
+        assertEquals("test", (instance.getCodeArrayList().get(0)));
     }
 
     /**
@@ -83,22 +83,22 @@ public class CodeArrayListBeautifierTest {
      */
     @Test
     public void testAddArrayList() {
-	System.out.println("addArrayList");
-	ArrayList<String> arrayList = new ArrayList<>();
-	arrayList.add("2");
-	arrayList.add("3");
-	arrayList.add("test");
-	CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
-	instance.addList(arrayList);
-	ArrayList<String> resultList = instance.getCodeArrayList();
-	if (resultList.size() == arrayList.size()) {
-	    for (int i = 0; i < arrayList.size(); i++) {
-		assertEquals(resultList.get(i), arrayList.get(i));
-	    }
-	    // TODO review the generated test code and remove the default call to fail.
-	} else {
-	    fail("The ArrayLists are of a different size");
-	}
-	instance.addList(null);
+        System.out.println("addArrayList");
+        ArrayList<String> arrayList = new ArrayList<>();
+        arrayList.add("2");
+        arrayList.add("3");
+        arrayList.add("test");
+        CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
+        instance.addList(arrayList);
+        ArrayList<String> resultList = instance.getCodeArrayList();
+        if (resultList.size() == arrayList.size()) {
+            for (int i = 0; i < arrayList.size(); i++) {
+                assertEquals(resultList.get(i), arrayList.get(i));
+            }
+            // TODO review the generated test code and remove the default call to fail.
+        } else {
+            fail("The ArrayLists are of a different size");
+        }
+        instance.addList(null);
     }
 }

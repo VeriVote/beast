@@ -19,24 +19,22 @@ public class StringResourceLoader {
     /**
      *
      * @param stringRes a Linked List with the correct format. Id : string
-     * @throws ArrayIndexOutOfBoundsException if the list is not correctly
-     * formatted
+     * @throws ArrayIndexOutOfBoundsException if the list is not correctly formatted
      */
     public StringResourceLoader(LinkedList<String> stringRes) throws ArrayIndexOutOfBoundsException {
         idsToString = new HashMap<>();
-        
+
         for (Iterator<String> iterator = stringRes.iterator(); iterator.hasNext();) {
-			String line = (String) iterator.next();
-			
-			
-			if (line.length() != 0) {
+            String line = (String) iterator.next();
+
+            if (line.length() != 0) {
                 String[] split = line.split(":", 2);
                 String id = split[0].trim();
                 String displayedText = split[1].trim();
 
                 idsToString.put(id.toLowerCase(), displayedText);
             }
-		}
+        }
     }
 
     /**
@@ -51,18 +49,17 @@ public class StringResourceLoader {
             get = null;
         }
         if (get == null) {
-            ErrorLogger.log(
-                    "this Id was not found in a Stringfile: "
-                            + (id != null ? id.toLowerCase() : null));
+            ErrorLogger.log("this Id was not found in a Stringfile: " + (id != null ? id.toLowerCase() : null));
         }
         return get;
     }
 
     /**
      * if multiple keys have the same Value only the first key is returned
+     * 
      * @param s the String for which you want to know the Id
      * @return if the String is not found null is returned, otherwise the id is
-     * returned
+     *         returned
      */
     public String getIdForString(String s) {
         if (idsToString.containsValue(s)) {

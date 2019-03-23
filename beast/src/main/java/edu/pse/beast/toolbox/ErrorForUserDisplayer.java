@@ -11,17 +11,16 @@ public final class ErrorForUserDisplayer {
     }
 
     /**
-     * displays the message on the users screen. if multiple messages are
-     * displayed the method will only return when all messages are read.
+     * displays the message on the users screen. if multiple messages are displayed
+     * the method will only return when all messages are read.
      *
      * @param message the message to be displayed
      */
     public static void displayError(String message) {
         increment();
 
-        JOptionPane.showMessageDialog(new JFrame(), message, "Error",
-                JOptionPane.ERROR_MESSAGE);
-        
+        JOptionPane.showMessageDialog(new JFrame(), message, "Error", JOptionPane.ERROR_MESSAGE);
+
         decrement();
 
         while (true) {

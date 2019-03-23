@@ -12,121 +12,121 @@ import javafx.scene.control.TextField;
 
 public class NEWRowOfValues {
 
-	private double elementHeight;
-	private double elementWidth;
+    private double elementHeight;
+    private double elementWidth;
 
-	private int rowIndex;
+    private int rowIndex;
 
-	private ArrayList<String> values;
-	private ArrayList<TextField> fields;
+    private ArrayList<String> values;
+    private ArrayList<TextField> fields;
 
-	private ElectionTypeContainer container;
+    private ElectionTypeContainer container;
 
-	private int amountOfCandidates = 0;
-	private ElectionSimulationModel parent;
-	private boolean disabled;
+    private int amountOfCandidates = 0;
+    private ElectionSimulationModel parent;
+    private boolean disabled;
 
-	public NEWRowOfValues(ElectionSimulationModel parent, ElectionTypeContainer container, int amountOfCandidates,
-			int rowIndex, double elementWidth, double elementHeight) {
-		this.parent = parent;
-		this.container = container;
-		this.rowIndex = rowIndex;
+    public NEWRowOfValues(ElectionSimulationModel parent, ElectionTypeContainer container, int amountOfCandidates,
+            int rowIndex, double elementWidth, double elementHeight) {
+        this.parent = parent;
+        this.container = container;
+        this.rowIndex = rowIndex;
 
-		this.elementWidth = elementWidth;
-		this.elementHeight = elementHeight;
-		values = new ArrayList<>(amountOfCandidates);
-		fields = new ArrayList<>(amountOfCandidates);
+        this.elementWidth = elementWidth;
+        this.elementHeight = elementHeight;
+        values = new ArrayList<>(amountOfCandidates);
+        fields = new ArrayList<>(amountOfCandidates);
 
-		this.setCandidates(amountOfCandidates);
-	}
+        this.setCandidates(amountOfCandidates);
+    }
 
-	public synchronized void addColumn() {
-		if (values.size() == amountOfCandidates) {
-			values.add("0");
-		}
+    public synchronized void addColumn() {
+        if (values.size() == amountOfCandidates) {
+            values.add("0");
+        }
 
-		TextField field = new TextField(values.get(amountOfCandidates));
+        TextField field = new TextField(values.get(amountOfCandidates));
 
-		field.setMinSize(elementWidth, elementHeight);
-		field.setMaxSize(elementWidth, elementHeight);
-		field.setPrefSize(elementWidth, elementHeight);
+        field.setMinSize(elementWidth, elementHeight);
+        field.setMaxSize(elementWidth, elementHeight);
+        field.setPrefSize(elementWidth, elementHeight);
 
-		fields.add(field);
+        fields.add(field);
 
-		field.textProperty().addListener(new ChangeListener<String>() {
-			
-			int position = fields.indexOf(field);;
-			
-			@Override
-			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				Platform.runLater(() -> {
-					checkAndInsertValue(newValue, position);
-				});
-			}
-		});
+        field.textProperty().addListener(new ChangeListener<String>() {
 
-		amountOfCandidates++;
-		update();
-	}
+            int position = fields.indexOf(field);;
 
-	public synchronized void removeColumn() {
-		if (fields.size() > 0) {
-			amountOfCandidates--;
-		}
-		update();
-	}
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                Platform.runLater(() -> {
+                    checkAndInsertValue(newValue, position);
+                });
+            }
+        });
 
-	public void update() {
-		if (!disabled) {
-			for (Iterator<TextField> iterator = fields.iterator(); iterator.hasNext();) {
-				TextField textField = (TextField) iterator.next();
-				parent.getInputGridPane().getChildren().remove(textField);
-			}
+        amountOfCandidates++;
+        update();
+    }
 
-			for (int i = 0; i < amountOfCandidates; i++) {
-				TextField field = fields.get(i);
-				field.setText(values.get(i));
-				parent.getInputGridPane().add(field, i, rowIndex);
-			}
-		}
-	}
+    public synchronized void removeColumn() {
+        if (fields.size() > 0) {
+            amountOfCandidates--;
+        }
+        update();
+    }
 
-	private void checkAndInsertValue(String newValue, int position) {
-		String vettedValue = container.getInputType().vetValue(newValue, container, this);
-		
-		values.set(position, vettedValue);
+    public void update() {
+        if (!disabled) {
+            for (Iterator<TextField> iterator = fields.iterator(); iterator.hasNext();) {
+                TextField textField = (TextField) iterator.next();
+                parent.getInputGridPane().getChildren().remove(textField);
+            }
 
-		if (position < fields.size()) {
-			fields.get(position).setText(vettedValue);
-		}
-		update();
-	}
+            for (int i = 0; i < amountOfCandidates; i++) {
+                TextField field = fields.get(i);
+                field.setText(values.get(i));
+                parent.getInputGridPane().add(field, i, rowIndex);
+            }
+        }
+    }
 
-	// getter and setter
-	public ArrayList<String> getValues() {
-		return values;
-	}
+    private void checkAndInsertValue(String newValue, int position) {
+        String vettedValue = container.getInputType().vetValue(newValue, container, this);
 
-	public void setValues(ArrayList<String> values) {
-		this.values = values;
-	}
+        values.set(position, vettedValue);
 
-	public void setContainer(ElectionTypeContainer container) {
-		this.container = container;
+        if (position < fields.size()) {
+            fields.get(position).setText(vettedValue);
+        }
+        update();
+    }
 
-		for (int i = 0; i < values.size(); i++) {
-			checkAndInsertValue("0", i);
-		}
+    // getter and setter
+    public ArrayList<String> getValues() {
+        return values;
+    }
 
-	}
+    public void setValues(ArrayList<String> values) {
+        this.values = values;
+    }
 
-	public int getAmountCandidates() {
-		return amountOfCandidates;
-	}
+    public void setContainer(ElectionTypeContainer container) {
+        this.container = container;
 
-	public int getAmountVoters() {
-		return getAmountVoters();
-	}
+        for (int i = 0; i < values.size(); i++) {
+            checkAndInsertValue("0", i);
+        }
+
+    }
+
+    public int getAmountCandidates() {
+        return amountOfCandidates;
+    }
+
+    public int getAmountVoters() {
+        return getAmountVoters();
+    }
 //
 //	private synchronized void addValueEnforcer(TextField field, int index) {
 //		System.out.println(field.getText());
@@ -135,45 +135,45 @@ public class NEWRowOfValues {
 //		values.set(index, vettedValue);
 //	}
 
-	public void setCandidates(int amountCandidates) {
+    public void setCandidates(int amountCandidates) {
 
-		if (this.amountOfCandidates < amountCandidates) {
-			while (this.amountOfCandidates < amountCandidates) {
-				addColumn();
-			}
-		} else if (this.amountOfCandidates > amountCandidates) {
-			while (this.amountOfCandidates > amountCandidates) {
-				removeColumn();
-			}
-		}
-		this.amountOfCandidates = amountCandidates;
-		updateVetting();
-	}
+        if (this.amountOfCandidates < amountCandidates) {
+            while (this.amountOfCandidates < amountCandidates) {
+                addColumn();
+            }
+        } else if (this.amountOfCandidates > amountCandidates) {
+            while (this.amountOfCandidates > amountCandidates) {
+                removeColumn();
+            }
+        }
+        this.amountOfCandidates = amountCandidates;
+        updateVetting();
+    }
 
-	/**
-	 * vetts all numbers in the fields again, in case they are dependant of a
-	 * variable that was changed
-	 */
-	public void updateVetting() {
-		for (int i = 0; i < values.size(); i++) {
-			checkAndInsertValue(values.get(i), i);
-		}
-	}
+    /**
+     * vetts all numbers in the fields again, in case they are dependant of a
+     * variable that was changed
+     */
+    public void updateVetting() {
+        for (int i = 0; i < values.size(); i++) {
+            checkAndInsertValue(values.get(i), i);
+        }
+    }
 
-	public void enable() {
-		this.disabled = false;
-		update();
-	}
+    public void enable() {
+        this.disabled = false;
+        update();
+    }
 
-	public void disable() {
-		this.disabled = true;
-		for (Iterator<TextField> iterator = fields.iterator(); iterator.hasNext();) {
-			TextField textField = (TextField) iterator.next();
-			parent.getInputGridPane().getChildren().remove(textField);
-		}
-	}
+    public void disable() {
+        this.disabled = true;
+        for (Iterator<TextField> iterator = fields.iterator(); iterator.hasNext();) {
+            TextField textField = (TextField) iterator.next();
+            parent.getInputGridPane().getChildren().remove(textField);
+        }
+    }
 
-	public void setValue(int x, String value) {
-		checkAndInsertValue(value, x);
-	}
+    public void setValue(int x, String value) {
+        checkAndInsertValue(value, x);
+    }
 }

@@ -6,5 +6,6 @@ package edu.pse.beast.datatypes.propertydescription;
  */
 public interface VariableListListener {
     public void addedVar(SymbolicVariable var);
+
     public void removedVar(SymbolicVariable var);
 }

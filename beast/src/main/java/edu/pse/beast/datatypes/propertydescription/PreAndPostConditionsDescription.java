@@ -29,16 +29,14 @@ public class PreAndPostConditionsDescription {
     /**
      * Creator with a SymbolicVariableList
      *
-     * @param name name of the PreAndPostConditionsDescription
-     * @param preDescr The preConditionDescription
-     * @param postDescr The postConditionDescription
+     * @param name                 name of the PreAndPostConditionsDescription
+     * @param preDescr             The preConditionDescription
+     * @param postDescr            The postConditionDescription
      * @param symbolicVariableList the symbolicVariableList
      */
-    public PreAndPostConditionsDescription(String name,
-                                           FormalPropertiesDescription preDescr,
-                                           FormalPropertiesDescription postDescr,
-                                           FormalPropertiesDescription boundedVarDescription,
-                                           SymbolicVariableList symbolicVariableList) {
+    public PreAndPostConditionsDescription(String name, FormalPropertiesDescription preDescr,
+            FormalPropertiesDescription postDescr, FormalPropertiesDescription boundedVarDescription,
+            SymbolicVariableList symbolicVariableList) {
         this.name = name;
         this.preConditionsDescription = preDescr;
         this.postConditionsDescription = postDescr;
@@ -57,9 +55,9 @@ public class PreAndPostConditionsDescription {
     public List<SymbolicVariable> getSymbolicVariableList() {
         return symbolicVariableList.getSymbolicVariables();
     }
-    
+
     public List<SymbolicVariable> getSymbolicVariablesCloned() {
-    	return symbolicVariableList.getSymbolicVariablesCloned();
+        return symbolicVariableList.getSymbolicVariablesCloned();
     }
 
     /**
@@ -85,12 +83,12 @@ public class PreAndPostConditionsDescription {
     public FormalPropertiesDescription getPreConditionsDescription() {
         return preConditionsDescription;
     }
-    
+
     public FormalPropertiesDescription getBoundedVarDescription() {
-    	return boundedVarDescription;
+        return boundedVarDescription;
     }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 }

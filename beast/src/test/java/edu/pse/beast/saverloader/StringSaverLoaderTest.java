@@ -15,7 +15,7 @@ public class StringSaverLoaderTest {
 
     @BeforeClass
     public static void setUpClass() {
-	testString = "a fsfdgfd gfdko gfd gfd" + "g\fdgdfg\n\n???>>>><<>><";
+        testString = "a fsfdgfd gfdko gfd gfd" + "g\fdgdfg\n\n???>>>><<>><";
     }
 
     /**
@@ -24,8 +24,8 @@ public class StringSaverLoaderTest {
      */
     @Test
     public void testSaverLoader() {
-	String saveString = StringSaverLoader.createSaveString(testString);
-	String recreatedString = StringSaverLoader.createFromSaveString(saveString);
-	assert (recreatedString.equals(testString));
+        String saveString = StringSaverLoader.createSaveString(testString);
+        String recreatedString = StringSaverLoader.createFromSaveString(saveString);
+        assert (recreatedString.equals(testString));
     }
 }

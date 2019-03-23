@@ -29,7 +29,8 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
     private StringResourceLoader currentResourceLoader;
 
     private class MenuHeadingSorter implements Comparator<String> {
-        private String[] standardIdOrder = {"file", "edit", "code"};
+        private String[] standardIdOrder = { "file", "edit", "code" };
+
         @Override
         public int compare(String lhs, String rhs) {
             Integer lhsPos = findInarr(lhs);
@@ -39,19 +40,18 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
 
         private int findInarr(String s) {
             for (int i = 0; i < standardIdOrder.length; i++) {
-                if(s.contains(standardIdOrder[i])) return i;
+                if (s.contains(standardIdOrder[i]))
+                    return i;
             }
             return standardIdOrder.length;
         }
     }
+
     /**
      * 
-     * @param headingIds
-     *            the id of the heading
-     * @param actionIDAndListener
-     *            the IDandListener
-     * @param resLoader
-     *            the resourceLoader
+     * @param headingIds          the id of the heading
+     * @param actionIDAndListener the IDandListener
+     * @param resLoader           the resourceLoader
      */
     public MenuBarHandler(String[] headingIds, ArrayList<ArrayList<ActionIdAndListener>> actionIDAndListener,
             StringResourceLoader resLoader) {
@@ -72,8 +72,7 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
 
     /**
      * 
-     * @param resLoader
-     *            the resourceLoader
+     * @param resLoader the resourceLoader
      */
     protected void updateStringResLoader(StringResourceLoader resLoader) {
         this.currentResourceLoader = resLoader;

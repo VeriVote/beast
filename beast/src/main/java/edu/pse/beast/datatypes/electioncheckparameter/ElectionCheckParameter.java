@@ -16,21 +16,23 @@ public class ElectionCheckParameter {
     private final TimeOut timeOut;
     private final Integer processes;
     private final String argument;
-	private final int marginVotes;
-	private final int marginCandidates;
-	private final int marginSeats;
+    private final int marginVotes;
+    private final int marginCandidates;
+    private final int marginSeats;
 
     /**
      * 
-     * @param amountVoters the list that specifies the range of voters
+     * @param amountVoters     the list that specifies the range of voters
      * @param amountCandidates the list that specifies the range of candidates
-     * @param amountSeats the list that specifies the range of seats
-     * @param timeOut the timeout that specifies how long the checker should run
-     * @param processes max number of processes of the checker
-     * @param argument the arguments given by the user
+     * @param amountSeats      the list that specifies the range of seats
+     * @param timeOut          the timeout that specifies how long the checker
+     *                         should run
+     * @param processes        max number of processes of the checker
+     * @param argument         the arguments given by the user
      */
-    public ElectionCheckParameter(List<Integer> amountVoters, List<Integer> amountCandidates, 
-            List<Integer> amountSeats, int marginVotes, int marginCandidates, int marginSeats, TimeOut timeOut, Integer processes, String argument) {
+    public ElectionCheckParameter(List<Integer> amountVoters, List<Integer> amountCandidates, List<Integer> amountSeats,
+            int marginVotes, int marginCandidates, int marginSeats, TimeOut timeOut, Integer processes,
+            String argument) {
         this.amountVoters = amountVoters;
         this.amountCandidates = amountCandidates;
         this.amountSeats = amountSeats;
@@ -41,7 +43,7 @@ public class ElectionCheckParameter {
         this.processes = processes;
         this.argument = argument;
     }
-    
+
     /**
      * 
      * @return the list that specifies the range of voters
@@ -49,7 +51,7 @@ public class ElectionCheckParameter {
     public List<Integer> getAmountVoters() {
         return amountVoters;
     }
-    
+
     /**
      * 
      * @return the list that specifies the range of candidates
@@ -57,7 +59,7 @@ public class ElectionCheckParameter {
     public List<Integer> getAmountCandidates() {
         return amountCandidates;
     }
-    
+
     /**
      * 
      * @return the list that specifies the range of seats
@@ -65,7 +67,7 @@ public class ElectionCheckParameter {
     public List<Integer> getAmountSeats() {
         return amountSeats;
     }
-    
+
     /**
      * 
      * @return the timeout that specifies how long the checker should run
@@ -73,7 +75,7 @@ public class ElectionCheckParameter {
     public TimeOut getTimeout() {
         return timeOut;
     }
-    
+
     /**
      *
      * @return the amount of processes the user wishes to run at the same time
@@ -81,31 +83,31 @@ public class ElectionCheckParameter {
     public Integer getProcesses() {
         return processes;
     }
-    
+
     /**
      * 
-     * @return the String that defines the advanced options 
+     * @return the String that defines the advanced options
      */
     public String getArgument() {
         return argument;
     }
 
-	public int getMarginVotes() {
-		return marginVotes;
-	}
-	
-	public int getMarginCandidates() {
-		return marginCandidates;
-	}
-	
-	public int getMarginSeats() {
-		return marginSeats;
-	}
+    public int getMarginVotes() {
+        return marginVotes;
+    }
 
-	public int getNumVotingPoints() {
-		
-		System.out.println("TODO getNumVotingPoints in electionCheckParameters");
-		
-		return GUIController.getController().getElectionSimulation().getNumVotingPoints();
-	}
+    public int getMarginCandidates() {
+        return marginCandidates;
+    }
+
+    public int getMarginSeats() {
+        return marginSeats;
+    }
+
+    public int getNumVotingPoints() {
+
+        System.out.println("TODO getNumVotingPoints in electionCheckParameters");
+
+        return GUIController.getController().getElectionSimulation().getNumVotingPoints();
+    }
 }

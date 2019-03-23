@@ -16,7 +16,7 @@ public class FormalPropertySaverLoaderTest {
 
     @BeforeClass
     public static void setUpClass() {
-	description = new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
+        description = new FormalPropertiesDescription("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
     }
 
     /**
@@ -28,10 +28,10 @@ public class FormalPropertySaverLoaderTest {
      */
     @Test
     public void testCreateFromSaveString() throws Exception {
-	String saveString = FormalPropertySaverLoader.createSaveString(description);
-	FormalPropertiesDescription recreatedFormalPropertiesDescription = FormalPropertySaverLoader
-		.createFromSaveString(saveString);
+        String saveString = FormalPropertySaverLoader.createSaveString(description);
+        FormalPropertiesDescription recreatedFormalPropertiesDescription = FormalPropertySaverLoader
+                .createFromSaveString(saveString);
 
-	assert (recreatedFormalPropertiesDescription.getCode().equals("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD"));
+        assert (recreatedFormalPropertiesDescription.getCode().equals("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD"));
     }
 }

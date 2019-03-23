@@ -2,8 +2,8 @@ package edu.pse.beast.types;
 
 public interface InOutType {
 
-	InternalTypeContainer getInternalTypeContainer();
+    InternalTypeContainer getInternalTypeContainer();
 
-	String otherToString();
-	
+    String otherToString();
+
 }

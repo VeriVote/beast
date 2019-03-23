@@ -1,4 +1,3 @@
-//
 //package edu.pse.beast.options;
 //
 //import java.awt.BorderLayout;

@@ -27,7 +27,7 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
     // this flag prohibits that file are creates by the compiler and
     // only the syntax is checked
     private final String findMissingReturnOption = "-Wreturn-type";
-    
+
     // we want to compile to a specific name, so we can delete the file
     // then later on
     private final String setOutputFileName = "-o ";
@@ -51,10 +51,10 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
     public Process checkCodeFileForErrors(File toCheck) {
 
         String nameOfOutFile = toCheck.getName().replace(".c", ".out");
-        
+
         File outFile = new File(toCheck.getParentFile(), nameOfOutFile);
 
-        String compileToThis =  setOutputFileName + outFile.getAbsolutePath();
+        String compileToThis = setOutputFileName + outFile.getAbsolutePath();
 
         String userIncludeAndPath = enableUserInclude + SuperFolderFinder.getSuperFolder() + userIncludeFolder;
 
@@ -88,9 +88,9 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
         ProcessBuilder prossBuild = new ProcessBuilder(arguments.toArray(new String[0]));
 
         Map<String, String> environment = prossBuild.environment();
-        
-        environment.put("LC_ALL", "C"); //set the language for the following call to english
-        
+
+        environment.put("LC_ALL", "C"); // set the language for the following call to english
+
         try {
             // start the process
             startedProcess = prossBuild.start();
@@ -138,8 +138,7 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
                             varName = message.split("‘")[1].split("’")[0];
                         }
 
-                        codeErrors.add(
-                                CCodeErrorFactory.generateCompilerError(lineNumber, linePos, varName, message));
+                        codeErrors.add(CCodeErrorFactory.generateCompilerError(lineNumber, linePos, varName, message));
 
                     } catch (NumberFormatException e) {
                         ErrorLogger.log("can't parse the current error line from gcc");
@@ -176,29 +175,29 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
                 // line and the position and the error
 
                 String[] splittedLine = line.split(":");
-                
+
                 if (splittedLine.length >= 4)
-                
-                try {
 
-                    // the output has the form"FILENANE:LINE:COLUMN
-                    // warning:control reaches..."
+                    try {
 
-                    lineNumber = Integer.parseInt(line.split(":")[1]);
+                        // the output has the form"FILENANE:LINE:COLUMN
+                        // warning:control reaches..."
 
-                    linePos = Integer.parseInt(line.split(":")[2]);
+                        lineNumber = Integer.parseInt(line.split(":")[1]);
 
-                    if (message.contains("‘") && message.contains("’")) {
-                        varName = message.split("‘")[1].split("’")[0];
+                        linePos = Integer.parseInt(line.split(":")[2]);
+
+                        if (message.contains("‘") && message.contains("’")) {
+                            varName = message.split("‘")[1].split("’")[0];
+                        }
+
+                        message = line.split("warning:")[1];
+
+                        codeErrors.add(CCodeErrorFactory.generateCompilerError(lineNumber, linePos, varName, message));
+
+                    } catch (NumberFormatException e) {
+                        ErrorLogger.log("can't parse the current error line from gcc");
                     }
-
-                    message = line.split("warning:")[1];
-
-                    codeErrors.add(CCodeErrorFactory.generateCompilerError(lineNumber, linePos, varName, message));
-
-                } catch (NumberFormatException e) {
-                    ErrorLogger.log("can't parse the current error line from gcc");
-                }
             }
         }
         return codeErrors;

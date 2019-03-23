@@ -18,7 +18,7 @@ public class TimeOutSaverLoaderTest {
 
     @BeforeClass
     public static void setUpClass() {
-	timeOut = new TimeOut(TimeUnit.HOURS, (long) 3.2);
+        timeOut = new TimeOut(TimeUnit.HOURS, (long) 3.2);
     }
 
     /**
@@ -27,9 +27,9 @@ public class TimeOutSaverLoaderTest {
      */
     @Test
     public void testSaverLoader() {
-	String saveString = TimeOutSaverLoader.createSaveString(timeOut);
-	TimeOut recreatedTimeOut = TimeOutSaverLoader.createFromSaveString(saveString);
-	assert (recreatedTimeOut.getDuration() == 10800000);
-	assert (recreatedTimeOut.getOrigUnit().equals(TimeUnit.HOURS));
+        String saveString = TimeOutSaverLoader.createSaveString(timeOut);
+        TimeOut recreatedTimeOut = TimeOutSaverLoader.createFromSaveString(saveString);
+        assert (recreatedTimeOut.getDuration() == 10800000);
+        assert (recreatedTimeOut.getOrigUnit().equals(TimeUnit.HOURS));
     }
 }

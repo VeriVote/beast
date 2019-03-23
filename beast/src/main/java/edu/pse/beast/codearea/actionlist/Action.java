@@ -6,5 +6,6 @@ package edu.pse.beast.codearea.actionlist;
  */
 public interface Action {
     public void undo();
+
     public void redo();
 }

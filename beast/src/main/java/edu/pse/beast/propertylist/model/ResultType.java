@@ -2,6 +2,7 @@ package edu.pse.beast.propertylist.model;
 
 /**
  * Gives the result type of the property analysis
+ *
  * @author Justin
  */
 public enum ResultType {
@@ -36,7 +37,8 @@ public enum ResultType {
     FAILURE,
 
     /**
-     * The analysis revealed that the election description does not fulfill the property.
+     * The analysis revealed that the election description does not fulfill the
+     * property.
      */
     FAILUREEXAMPLE
 }

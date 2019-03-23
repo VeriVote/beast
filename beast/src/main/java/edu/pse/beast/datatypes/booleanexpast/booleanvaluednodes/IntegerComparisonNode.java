@@ -11,10 +11,10 @@ public class IntegerComparisonNode extends ComparisonNode {
     /**
      * @param lhsTypeExp       the lhsExpression
      * @param rhsTypeExp       the rhsExpression
-     * @param comparisonSymbol the symbol that describes this comparision (for example <, >, == )
+     * @param comparisonSymbol the symbol that describes this comparision (for
+     *                         example <, >, == )
      */
-    public IntegerComparisonNode(
-            TypeExpression lhsTypeExp, TypeExpression rhsTypeExp,
+    public IntegerComparisonNode(TypeExpression lhsTypeExp, TypeExpression rhsTypeExp,
             ComparisonSymbol comparisonSymbol) {
         super(lhsTypeExp, rhsTypeExp, comparisonSymbol);
     }
@@ -26,11 +26,11 @@ public class IntegerComparisonNode extends ComparisonNode {
 
     @Override
     public String getTreeString(int depth) {
-            StringBuilder b = new StringBuilder();
-            String tabs = "\t\t\t\t\t\t\t\t\t\t\t".substring(0, depth);
-            b.append(tabs + "IntegerComparisonNode: Symbol " + comparisonSymbol.getCStringRep() + "\n");
-            b.append(tabs + "\t" + "lhs: " + lhsTypeExp.getTreeString(depth + 1));
-            b.append(tabs + "\t" + "rhs: " + rhsTypeExp.getTreeString(depth + 1));
-            return b.toString();
+        StringBuilder b = new StringBuilder();
+        String tabs = "\t\t\t\t\t\t\t\t\t\t\t".substring(0, depth);
+        b.append(tabs + "IntegerComparisonNode: Symbol " + comparisonSymbol.getCStringRep() + "\n");
+        b.append(tabs + "\t" + "lhs: " + lhsTypeExp.getTreeString(depth + 1));
+        b.append(tabs + "\t" + "rhs: " + rhsTypeExp.getTreeString(depth + 1));
+        return b.toString();
     }
 }

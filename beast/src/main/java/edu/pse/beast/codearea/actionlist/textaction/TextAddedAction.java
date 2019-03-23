@@ -11,13 +11,14 @@ import edu.pse.beast.codearea.actionlist.Action;
 /**
  * This class represents the act of adding text to a Styleddocument and makes
  * undoing this action possible
+ *
  * @author Holger-Desktop
  */
 public class TextAddedAction implements Action {
-    
+
     private final TextDelta td;
     private final StyledDocument doc;
-    
+
     public TextAddedAction(TextDelta td, StyledDocument doc) {
         this.doc = doc;
         this.td = td;
@@ -39,7 +40,5 @@ public class TextAddedAction implements Action {
         } catch (BadLocationException ex) {
             Logger.getLogger(TextAddedAction.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
-    
 }

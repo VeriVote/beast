@@ -13,7 +13,7 @@ import edu.pse.beast.types.InternalTypeContainer;
  */
 public class BooleanExpErrorFactory {
 
-    private static final String[] ERRORIDS = {"antlr", "var_not_decl", "too_many_vars_passed", "wrong_var_type_passed",
+    private static final String[] ERRORIDS = { "antlr", "var_not_decl", "too_many_vars_passed", "wrong_var_type_passed",
             "incomparable_types", "incomparable_list_sizes", "wrong_var_passed_to_votesum",
             "number_must_be_greater_0" };
 
@@ -28,8 +28,7 @@ public class BooleanExpErrorFactory {
     /**
      * creates an error when a variable was not created
      *
-     * @param ctx
-     *            the context* of the symbolic variable expression
+     * @param ctx the context* of the symbolic variable expression
      * @return the error object that describes the problem
      */
     public static CodeError createVarNotDeclaredErr(FormalPropertyDescriptionParser.SymbolicVarExpContext ctx) {
@@ -41,12 +40,9 @@ public class BooleanExpErrorFactory {
     /**
      * creates an antlr error
      *
-     * @param line
-     *            the line the error is in
-     * @param charInline
-     *            the amount of characters in the line
-     * @param msg
-     *            the message to be displayed
+     * @param line       the line the error is in
+     * @param charInline the amount of characters in the line
+     * @param msg        the message to be displayed
      * @return the error that describes contains the information given to this
      *         function
      */
@@ -59,8 +55,7 @@ public class BooleanExpErrorFactory {
     /**
      * creates an error when too many variables are passed
      *
-     * @param ctx
-     *            the context of the symbolic variable expression
+     * @param ctx the context of the symbolic variable expression
      * @return the errorobject that describes the problem
      */
     public static CodeError createTooManyVarsPassedError(FormalPropertyDescriptionParser.PassTypeContext ctx) {
@@ -73,12 +68,9 @@ public class BooleanExpErrorFactory {
     /**
      * creates an error when a wrong variable was passed
      *
-     * @param cont
-     *            the internal type
-     * @param ctx
-     *            the context of the symbolic variable expression
-     * @param currentVarExp
-     *            the current variable expression
+     * @param cont          the internal type
+     * @param ctx           the context of the symbolic variable expression
+     * @param currentVarExp the current variable expression
      * @return the code error that describes the problem
      */
     static CodeError createWrongVarTypePassed(InternalTypeContainer cont,
@@ -95,12 +87,9 @@ public class BooleanExpErrorFactory {
     /**
      * creates an error when two not comparable things are being compared
      *
-     * @param ctx
-     *            the context of the symbolic variable expression
-     * @param lhsCont
-     *            the left hand side content
-     * @param rhsCont
-     *            the right hand side content
+     * @param ctx     the context of the symbolic variable expression
+     * @param lhsCont the left hand side content
+     * @param rhsCont the right hand side content
      * @return the error that describes the problem
      */
     static CodeError createCantCompareDifferentListLevels(FormalPropertyDescriptionParser.ComparisonExpContext ctx,
@@ -114,12 +103,9 @@ public class BooleanExpErrorFactory {
     /**
      * creates an error when two incomparable things get compared
      *
-     * @param ctx
-     *            the comparison context
-     * @param lhsCont
-     *            the left hand side content
-     * @param rhsCont
-     *            the right hand side content
+     * @param ctx     the comparison context
+     * @param lhsCont the left hand side content
+     * @param rhsCont the right hand side content
      * @return the code error
      */
     static CodeError createCantCompareTypes(FormalPropertyDescriptionParser.ComparisonExpContext ctx,
@@ -133,10 +119,8 @@ public class BooleanExpErrorFactory {
     /**
      * create code error for a wront war to votesum
      *
-     * @param ctx
-     *            the sum expression contect
-     * @param passedType
-     *            the passed type
+     * @param ctx        the sum expression contect
+     * @param passedType the passed type
      * @return the code error
      */
     static CodeError createWrongVarToVotesumError(FormalPropertyDescriptionParser.VoteSumExpContext ctx,
@@ -149,14 +133,11 @@ public class BooleanExpErrorFactory {
     /**
      * create code error for a wront war to votesum
      *
-     * @param ctx
-     *            the sum expression contect
-     * @param passedType
-     *            the passed type
+     * @param ctx        the sum expression contect
+     * @param passedType the passed type
      * @return the code error
      */
-    static CodeError createWrongVarToVotesumError(
-            FormalPropertyDescriptionParser.VoteSumUniqueExpContext ctx,
+    static CodeError createWrongVarToVotesumError(FormalPropertyDescriptionParser.VoteSumUniqueExpContext ctx,
             InternalTypeContainer passedType) {
         CodeError err = generateStandardError(ctx, "wrong_var_passed_to_votesum_unique");
         err.setExtraInfo("var_type", passedType.getInternalType().toString());
@@ -164,11 +145,10 @@ public class BooleanExpErrorFactory {
     }
 
     /**
-     * create the error that indicates that a number must be greater than zero
-     * for a votesum
+     * create the error that indicates that a number must be greater than zero for a
+     * votesum
      *
-     * @param ctx
-     *            the vote sum expression context
+     * @param ctx the vote sum expression context
      * @return the code error
      */
     static CodeError createNumberMustBeGreaterZeroVotesum(ParserRuleContext ctx) {
@@ -179,8 +159,7 @@ public class BooleanExpErrorFactory {
     /**
      * creates an error if an "elect" value is smaller than zero
      *
-     * @param ctx
-     *            the election expression context
+     * @param ctx the election expression context
      * @return the code error
      */
     static CodeError createNumberMustBeGreaterZeroElect(FormalPropertyDescriptionParser.ElectExpContext ctx) {
@@ -191,8 +170,7 @@ public class BooleanExpErrorFactory {
     /**
      * creates an error if an "votes" value is smaller than zero
      *
-     * @param ctx
-     *            the vote expression context
+     * @param ctx the vote expression context
      * @return the code error
      */
     static CodeError createNumberMustBeGreaterZeroVotes(FormalPropertyDescriptionParser.VoteExpContext ctx) {

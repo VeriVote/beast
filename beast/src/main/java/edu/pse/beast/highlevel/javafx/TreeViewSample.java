@@ -20,32 +20,24 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
- 
+
 public class TreeViewSample extends Application {
- 
-    private final Node rootIcon
-    = new ImageView(new Image(getClass().getResourceAsStream("root.png")));
-    private final Image depIcon
-    = new Image(getClass().getResourceAsStream("department.png"));
-    List<Employee> employees = Arrays.<Employee>asList(
-            new Employee("Ethan Williams", "Sales Department"),
-            new Employee("Emma Jones", "Sales Department"),
-            new Employee("Michael Brown", "Sales Department"),
-            new Employee("Anna Black", "Sales Department"),
-            new Employee("Rodger York", "Sales Department"),
-            new Employee("Susan Collins", "Sales Department"),
-            new Employee("Mike Graham", "IT Support"),
-            new Employee("Judy Mayer", "IT Support"),
-            new Employee("Gregory Smith", "IT Support"),
+
+    private final Node rootIcon = new ImageView(new Image(getClass().getResourceAsStream("root.png")));
+    private final Image depIcon = new Image(getClass().getResourceAsStream("department.png"));
+    List<Employee> employees = Arrays.<Employee>asList(new Employee("Ethan Williams", "Sales Department"),
+            new Employee("Emma Jones", "Sales Department"), new Employee("Michael Brown", "Sales Department"),
+            new Employee("Anna Black", "Sales Department"), new Employee("Rodger York", "Sales Department"),
+            new Employee("Susan Collins", "Sales Department"), new Employee("Mike Graham", "IT Support"),
+            new Employee("Judy Mayer", "IT Support"), new Employee("Gregory Smith", "IT Support"),
             new Employee("Jacob Smith", "Accounts Department"),
             new Employee("Isabella Johnson", "Accounts Department"));
-    TreeItem<String> rootNode = 
-        new TreeItem<String>("MyCompany Human Resources", rootIcon);
- 
+    TreeItem<String> rootNode = new TreeItem<String>("MyCompany Human Resources", rootIcon);
+
     public static void main(String[] args) {
         Application.launch(args);
     }
- 
+
     @Override
     public void start(Stage stage) {
         rootNode.setExpanded(true);
@@ -53,52 +45,49 @@ public class TreeViewSample extends Application {
             TreeItem<String> empLeaf = new TreeItem<String>(employee.getName());
             boolean found = false;
             for (TreeItem<String> depNode : rootNode.getChildren()) {
-                if (depNode.getValue().contentEquals(employee.getDepartment())){
+                if (depNode.getValue().contentEquals(employee.getDepartment())) {
                     depNode.getChildren().add(empLeaf);
                     found = true;
                     break;
                 }
             }
             if (!found) {
-                TreeItem<String> depNode = new TreeItem<String>(
-                    employee.getDepartment(), 
-                    new ImageView(depIcon)
-                );
+                TreeItem<String> depNode = new TreeItem<String>(employee.getDepartment(), new ImageView(depIcon));
                 rootNode.getChildren().add(depNode);
                 depNode.getChildren().add(empLeaf);
             }
         }
- 
+
         stage.setTitle("Tree View Sample");
         VBox box = new VBox();
         final Scene scene = new Scene(box, 400, 300);
         scene.setFill(Color.LIGHTGRAY);
- 
+
         TreeView<String> treeView = new TreeView<String>(rootNode);
         treeView.setEditable(true);
-        treeView.setCellFactory(new Callback<TreeView<String>,TreeCell<String>>(){
+        treeView.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
             @Override
             public TreeCell<String> call(TreeView<String> p) {
                 return new TextFieldTreeCellImpl();
             }
         });
- 
+
         box.getChildren().add(treeView);
         stage.setScene(scene);
         stage.show();
     }
- 
+
     private final class TextFieldTreeCellImpl extends TreeCell<String> {
- 
+
         private TextField textField;
- 
+
         public TextFieldTreeCellImpl() {
         }
- 
+
         @Override
         public void startEdit() {
             super.startEdit();
- 
+
             if (textField == null) {
                 createTextField();
             }
@@ -106,18 +95,18 @@ public class TreeViewSample extends Application {
             setGraphic(textField);
             textField.selectAll();
         }
- 
+
         @Override
         public void cancelEdit() {
             super.cancelEdit();
             setText((String) getItem());
             setGraphic(getTreeItem().getGraphic());
         }
- 
+
         @Override
         public void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
- 
+
             if (empty) {
                 setText(null);
                 setGraphic(null);
@@ -134,11 +123,11 @@ public class TreeViewSample extends Application {
                 }
             }
         }
- 
+
         private void createTextField() {
             textField = new TextField(getString());
             textField.setOnKeyReleased(new EventHandler<KeyEvent>() {
- 
+
                 @Override
                 public void handle(KeyEvent t) {
                     if (t.getCode() == KeyCode.ENTER) {
@@ -149,34 +138,34 @@ public class TreeViewSample extends Application {
                 }
             });
         }
- 
+
         private String getString() {
             return getItem() == null ? "" : getItem().toString();
         }
     }
- 
+
     public static final class Employee {
- 
+
         private final SimpleStringProperty name;
         private final SimpleStringProperty department;
- 
+
         private Employee(String name, String department) {
             this.name = new SimpleStringProperty(name);
             this.department = new SimpleStringProperty(department);
         }
- 
+
         public String getName() {
             return name.get();
         }
- 
+
         public void setName(String fName) {
             name.set(fName);
         }
- 
+
         public String getDepartment() {
             return department.get();
         }
- 
+
         public void setDepartment(String fName) {
             department.set(fName);
         }

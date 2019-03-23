@@ -6,15 +6,18 @@ import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 
 /**
- * Implements static methods for creating saveStrings from SymbolicVarList objects and vice versa.
- * Methods are static due to convenience.
+ * Implements static methods for creating saveStrings from SymbolicVarList
+ * objects and vice versa. Methods are static due to convenience.
+ *
  * @author Holger-Desktop
  */
 public class SymbolicVarListSaverLoader {
 
     /**
-     * Creates a String from a given SymbolicVariableList, that can then be saved to a file and later given to
-     * createFromSaveString() to retrieve the saved object.
+     * Creates a String from a given SymbolicVariableList, that can then be saved to
+     * a file and later given to createFromSaveString() to retrieve the saved
+     * object.
+     *
      * @param list the SymbolicVariableList
      * @return the saveString
      */
@@ -27,13 +30,14 @@ public class SymbolicVarListSaverLoader {
         return created;
     }
 
-
     private static String createSaveStringForVar(SymbolicVariable var) {
         return "id: " + var.getId() + " type: " + var.getInternalTypeContainer().getInternalType().toString();
     }
 
     /**
-     * Creates a SymbolicVariableList object from a given, by createSaveString() generated, saveString
+     * Creates a SymbolicVariableList object from a given, by createSaveString()
+     * generated, saveString
+     *
      * @param s the SaveString
      * @return the SymbolicVariableList object
      */
@@ -48,7 +52,8 @@ public class SymbolicVarListSaverLoader {
     }
 
     private static void createSymbVarFromSaveString(String s, SymbolicVariableList list) {
-        if (s == null || s.length() == 0) return;
+        if (s == null || s.length() == 0)
+            return;
 
         String[] data = s.split(" ");
         String id = data[2];

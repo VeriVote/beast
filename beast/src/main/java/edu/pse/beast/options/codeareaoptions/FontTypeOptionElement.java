@@ -10,8 +10,9 @@ import edu.pse.beast.options.OptionElement;
 public class FontTypeOptionElement extends OptionElement {
     /**
      * Constructor
+     *
      * @param choosableOptions the choosable options
-     * @param chosenType the chosen type
+     * @param chosenType       the chosen type
      */
     public FontTypeOptionElement(List<String> choosableOptions, String chosenType) {
         super("fonttype", choosableOptions);

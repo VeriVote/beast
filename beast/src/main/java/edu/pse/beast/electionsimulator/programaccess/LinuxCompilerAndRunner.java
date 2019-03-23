@@ -44,16 +44,15 @@ public class LinuxCompilerAndRunner extends SystemSpecificCompilerAndExecutioner
     // if gcc finds that a function is missing, it gets displayed like this:
     private final String gccMissingFuctionFound = "warning: implicit declaration of function";
 
+    @Override
+    protected Process compileCfile(File toCheck) {
 
-	@Override
-	protected Process compileCfile(File toCheck) {
-
-		//the name of the file
+        // the name of the file
         String nameOfOutFile = toCheck.getName().replace(".c", ".out");
 
         File outFile = new File(toCheck.getParentFile(), nameOfOutFile);
 
-        String compileToThis =  setOutputFileName + outFile.getAbsolutePath();
+        String compileToThis = setOutputFileName + outFile.getAbsolutePath();
 
         String userIncludeAndPath = enableUserInclude + SuperFolderFinder.getSuperFolder() + userIncludeFolder;
 
@@ -93,25 +92,25 @@ public class LinuxCompilerAndRunner extends SystemSpecificCompilerAndExecutioner
             e.printStackTrace();
         }
         return startedProcess;
-	}
+    }
 
     @Override
     protected Process runWithData(String toRun, File dataFile) {
-	    Process startedProcess = null;
+        Process startedProcess = null;
 
-		//the list where the arguments for the call get saved in
-		List<String> arguments = new ArrayList<String>();
+        // the list where the arguments for the call get saved in
+        List<String> arguments = new ArrayList<String>();
 
-		//on linux, our executable ends with .out
-		toRun = toRun + ".out";
+        // on linux, our executable ends with .out
+        toRun = toRun + ".out";
 
-		//this argument calls the generated program
-		arguments.add("./" + toRun);
+        // this argument calls the generated program
+        arguments.add("./" + toRun);
 
-		//the absolute path to the file that holds
-		arguments.add(dataFile.getAbsolutePath());
+        // the absolute path to the file that holds
+        arguments.add(dataFile.getAbsolutePath());
 
-		ProcessBuilder prossBuild = new ProcessBuilder(arguments.toArray(new String[0]));
+        ProcessBuilder prossBuild = new ProcessBuilder(arguments.toArray(new String[0]));
 
         try {
             // start the process
@@ -121,5 +120,5 @@ public class LinuxCompilerAndRunner extends SystemSpecificCompilerAndExecutioner
         }
 
         return startedProcess;
-	}
+    }
 }

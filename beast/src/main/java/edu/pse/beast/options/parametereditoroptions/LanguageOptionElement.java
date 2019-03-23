@@ -10,7 +10,7 @@ import edu.pse.beast.options.OptionElement;
 public class LanguageOptionElement extends OptionElement {
     /**
      * @param choosableOptions the choosable options
-     * @param chosenLangID the chosen language ID
+     * @param chosenLangID     the chosen language ID
      */
     public LanguageOptionElement(List<String> choosableOptions, String chosenLangID) {
         super("lang", choosableOptions);

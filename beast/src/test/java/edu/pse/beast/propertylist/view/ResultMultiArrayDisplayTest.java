@@ -28,7 +28,7 @@ public class ResultMultiArrayDisplayTest {
 
     @After
     public void tearDown() throws Exception {
-	win.dispose();
+        win.dispose();
     }
 
 //	@Test

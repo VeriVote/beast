@@ -1,4 +1,3 @@
-//
 //package edu.pse.beast.parametereditor;
 //
 //import java.util.List;

@@ -14,7 +14,7 @@ public class StringLoaderInterfaceTest {
      * Test setup
      */
     public StringLoaderInterfaceTest() {
-	this.instance = new StringLoaderInterface("test");
+        this.instance = new StringLoaderInterface("test");
     }
 
     /**
@@ -23,9 +23,9 @@ public class StringLoaderInterfaceTest {
      */
     @Test
     public void testGetPropertyListStringResProvider() {
-	System.out.println("getPropertyListStringResProvider");
-	PropertyListStringResProvider result = instance.getPropertyListStringResProvider();
-	assert (result != null);
+        System.out.println("getPropertyListStringResProvider");
+        PropertyListStringResProvider result = instance.getPropertyListStringResProvider();
+        assert (result != null);
     }
 
     /**
@@ -34,9 +34,9 @@ public class StringLoaderInterfaceTest {
      */
     @Test
     public void testGetBooleanExpEditorStringResProvider() {
-	System.out.println("getBooleanExpEditorStringResProvider");
-	BooleanExpEditorStringResProvider result = instance.getBooleanExpEditorStringResProvider();
-	assert (result != null);
+        System.out.println("getBooleanExpEditorStringResProvider");
+        BooleanExpEditorStringResProvider result = instance.getBooleanExpEditorStringResProvider();
+        assert (result != null);
     }
 
     /**
@@ -45,9 +45,9 @@ public class StringLoaderInterfaceTest {
      */
     @Test
     public void testGetCElectionEditorStringResProvider() {
-	System.out.println("getCElectionEditorStringResProvider");
-	CElectionEditorStringResProvider result = instance.getCElectionEditorStringResProvider();
-	assert (result != null);
+        System.out.println("getCElectionEditorStringResProvider");
+        CElectionEditorStringResProvider result = instance.getCElectionEditorStringResProvider();
+        assert (result != null);
     }
 
     /**
@@ -56,9 +56,9 @@ public class StringLoaderInterfaceTest {
      */
     @Test
     public void testGetParameterEditorStringResProvider() {
-	System.out.println("getParameterEditorStringResProvider");
-	ParameterEditorStringResProvider result = instance.getParameterEditorStringResProvider();
-	assert (result != null);
+        System.out.println("getParameterEditorStringResProvider");
+        ParameterEditorStringResProvider result = instance.getParameterEditorStringResProvider();
+        assert (result != null);
     }
 
     /**
@@ -66,9 +66,9 @@ public class StringLoaderInterfaceTest {
      */
     @Test
     public void testGetOptionStringResProvider() {
-	System.out.println("getOptionStringResProvider");
-	OptionStringResProvider result = instance.getOptionStringResProvider();
-	assert (result != null);
+        System.out.println("getOptionStringResProvider");
+        OptionStringResProvider result = instance.getOptionStringResProvider();
+        assert (result != null);
     }
 
     /**
@@ -76,9 +76,9 @@ public class StringLoaderInterfaceTest {
      */
     @Test
     public void testSetLanguage() {
-	System.out.println("setLanguage");
-	instance.setLanguage("test");
-	// if there isn't an error message this should be correct
+        System.out.println("setLanguage");
+        instance.setLanguage("test");
+        // if there isn't an error message this should be correct
     }
 
 }

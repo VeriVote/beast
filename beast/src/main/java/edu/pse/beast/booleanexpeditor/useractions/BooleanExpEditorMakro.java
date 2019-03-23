@@ -2,6 +2,7 @@ package edu.pse.beast.booleanexpeditor.useractions;
 
 /**
  * This class models Makros for the BooleanExpEditor.
+ *
  * @author NikolaiLMS
  */
 public class BooleanExpEditorMakro {
@@ -10,6 +11,7 @@ public class BooleanExpEditorMakro {
 
     /**
      * Constructor
+     *
      * @param makro the makro in form of a String
      */
     public BooleanExpEditorMakro(String makro) {

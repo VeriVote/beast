@@ -6,54 +6,51 @@ import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 
 /**
- * Implements static methods for creating saveStrings from ElectionCheckParameter objects and vice versa.
+ * Implements static methods for creating saveStrings from
+ * ElectionCheckParameter objects and vice versa.
+ *
  * @author NikolaiLMS
  */
 public class ElectionCheckParameterSaverLoader {
 
     /**
-     * Creates a String from a given ElectionCheckParameter, that can then be saved to a file and later given to
-     * createFromSaveString() to retrieve the saved object.
+     * Creates a String from a given ElectionCheckParameter, that can then be saved
+     * to a file and later given to createFromSaveString() to retrieve the saved
+     * object.
+     *
      * @param electionCheckParameter the ElectionCheckParameter
      * @return the saveString
      */
     public static String createSaveString(ElectionCheckParameter electionCheckParameter) {
-        String amountVotersMin = "<amountVotersMin>\n"
-                + electionCheckParameter.getAmountVoters().get(0)
+        String amountVotersMin = "<amountVotersMin>\n" + electionCheckParameter.getAmountVoters().get(0)
                 + "\n</amountVotersMin>\n";
         String amountVotersMax = "<amountVotersMax>\n"
-                + electionCheckParameter.getAmountVoters().get(
-                        electionCheckParameter.getAmountVoters().size() - 1)
+                + electionCheckParameter.getAmountVoters().get(electionCheckParameter.getAmountVoters().size() - 1)
                 + "\n</amountVotersMax>\n";
-        String amountCandidatesMin = "<amountCandidatesMin>\n"
-                + electionCheckParameter.getAmountCandidates().get(0)
+        String amountCandidatesMin = "<amountCandidatesMin>\n" + electionCheckParameter.getAmountCandidates().get(0)
                 + "\n</amountCandidatesMin>\n";
-        String amountCandidatesMax = "<amountCandidatesMax>\n"
-                + electionCheckParameter.getAmountCandidates().get(
-                        electionCheckParameter.getAmountCandidates().size() - 1)
-                + "\n</amountCandidatesMax>\n";
-        String amountSeatsMin = "<amountSeatsMin>\n"
-                + electionCheckParameter.getAmountSeats().get(0)
+        String amountCandidatesMax = "<amountCandidatesMax>\n" + electionCheckParameter.getAmountCandidates()
+                .get(electionCheckParameter.getAmountCandidates().size() - 1) + "\n</amountCandidatesMax>\n";
+        String amountSeatsMin = "<amountSeatsMin>\n" + electionCheckParameter.getAmountSeats().get(0)
                 + "\n</amountSeatsMin>\n";
         String amountSeatsMax = "<amountSeatsMax>\n"
-                + electionCheckParameter.getAmountSeats().get(
-                        electionCheckParameter.getAmountSeats().size() - 1)
+                + electionCheckParameter.getAmountSeats().get(electionCheckParameter.getAmountSeats().size() - 1)
                 + "\n</amountSeatsMax>\n";
-        String timeout = "<timeout>\n" + TimeOutSaverLoader.createSaveString(
-                electionCheckParameter.getTimeout()) + "\n</timeout>\n";
-        String processes = "<processes>\n"
-                + electionCheckParameter.getProcesses() + "\n</processes>\n";
-        String argument = "<argument>\n"
-                + electionCheckParameter.getArgument() + "\n</argument>\n";
+        String timeout = "<timeout>\n" + TimeOutSaverLoader.createSaveString(electionCheckParameter.getTimeout())
+                + "\n</timeout>\n";
+        String processes = "<processes>\n" + electionCheckParameter.getProcesses() + "\n</processes>\n";
+        String argument = "<argument>\n" + electionCheckParameter.getArgument() + "\n</argument>\n";
         return (amountVotersMin + amountVotersMax + amountCandidatesMin + amountCandidatesMax + amountSeatsMin
                 + amountSeatsMax + timeout + processes + argument);
     }
 
     /**
      * Creates an Object from a given, by createSaveString() generated, saveString
+     *
      * @param s the SaveString
      * @return the Object
-     * @throws ArrayIndexOutOfBoundsException if the saveString does not contain a valid format
+     * @throws ArrayIndexOutOfBoundsException if the saveString does not contain a
+     *                                        valid format
      */
     public static Object createFromSaveString(String s) throws ArrayIndexOutOfBoundsException {
         String split[] = s.split("\n</amountVotersMin>\n");
@@ -86,6 +83,7 @@ public class ElectionCheckParameterSaverLoader {
         int processes = Integer.parseInt(split[0].replace("<processes>\n", ""));
         split = split[1].split("\n</argument>\n");
         String argument = split[0].replace("<argument>\n", "");
-        return new ElectionCheckParameter(amountVoters, amountCandidates, amountSeats,1,1,1, timeout, processes, argument);
+        return new ElectionCheckParameter(amountVoters, amountCandidates, amountSeats, 1, 1, 1, timeout, processes,
+                argument);
     }
 }

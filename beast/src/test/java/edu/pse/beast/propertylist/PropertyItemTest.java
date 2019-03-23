@@ -38,12 +38,12 @@ public class PropertyItemTest {
     @Ignore("Test needs to be updated after changes.")
     @Test
     public void testItemEquality() {
-	PropertyItem it1 = new PropertyItem();
-	PropertyItem it2 = new PropertyItem();
-	assertFalse(it1.equals(null));
-	assertFalse(it1.equals(it2));
-	// it2.setDescriptionName(it1.getDescription().getName());
-	assertTrue(it1.equals(it2));
+        PropertyItem it1 = new PropertyItem();
+        PropertyItem it2 = new PropertyItem();
+        assertFalse(it1.equals(null));
+        assertFalse(it1.equals(it2));
+        // it2.setDescriptionName(it1.getDescription().getName());
+        assertTrue(it1.equals(it2));
     }
 
 }

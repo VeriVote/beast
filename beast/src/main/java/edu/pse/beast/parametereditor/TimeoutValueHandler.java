@@ -12,8 +12,9 @@ import javax.swing.event.ChangeListener;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 
 /**
- * The TimeoutValueHandler handles all user inputs on the ParameterEditor
- * which change the TimeOut using one JSpinner and one JComboBox.
+ * The TimeoutValueHandler handles all user inputs on the ParameterEditor which
+ * change the TimeOut using one JSpinner and one JComboBox.
+ *
  * @author Jonas
  */
 public class TimeoutValueHandler implements ChangeListener, ActionListener {
@@ -25,8 +26,9 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
 
     /**
      * Constructor
+     *
      * @param timeoutSpinner JSpinner for the timeout value
-     * @param timeoutUnit JComboBox for the timeout unit
+     * @param timeoutUnit    JComboBox for the timeout unit
      */
     public TimeoutValueHandler(JSpinner timeoutSpinner, JComboBox<String> timeoutUnit) {
         this.timeoutSpinner = timeoutSpinner;
@@ -35,8 +37,10 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
         timeoutBefore = getTimeout();
         setHasChanged(false);
     }
+
     /**
      * Getter for the timeout
+     *
      * @return TimeOut
      */
     public TimeOut getTimeout() {
@@ -48,26 +52,28 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
             timeoutInt = Integer.parseInt(timeoutSpinner.getValue().toString());
         }
         switch (timeoutUnit.getSelectedIndex()) {
-            case 0:
-                timeOut = new TimeOut(TimeUnit.SECONDS, timeoutInt.longValue());
-                break;
-            case 1:
-                timeOut = new TimeOut(TimeUnit.MINUTES, timeoutInt.longValue());
-                break;
-            case 2:
-                timeOut = new TimeOut(TimeUnit.HOURS, timeoutInt.longValue());
-                break;
-            case 3:
-                timeOut = new TimeOut(TimeUnit.DAYS, timeoutInt.longValue());
-                break;
-            default:
-                break;
+        case 0:
+            timeOut = new TimeOut(TimeUnit.SECONDS, timeoutInt.longValue());
+            break;
+        case 1:
+            timeOut = new TimeOut(TimeUnit.MINUTES, timeoutInt.longValue());
+            break;
+        case 2:
+            timeOut = new TimeOut(TimeUnit.HOURS, timeoutInt.longValue());
+            break;
+        case 3:
+            timeOut = new TimeOut(TimeUnit.DAYS, timeoutInt.longValue());
+            break;
+        default:
+            break;
         }
         return timeOut;
     }
+
     /**
      * Setter for the timeout. Determines if the desired timeout is allowed and
      * adjusts the spinner and combobox accordingly.
+     *
      * @param to new TimeOut
      */
     public void setValue(TimeOut to) {
@@ -79,48 +85,49 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
             }
             setHasChanged(true);
             switch (to.getOrigUnit()) {
-                case SECONDS:
-                    timeoutUnit.setSelectedIndex(0);
-                    break;
-                case MINUTES:
-                    timeoutUnit.setSelectedIndex(1);
-                    break;
-                case HOURS:
-                    timeoutUnit.setSelectedIndex(2);
-                    break;
-                case DAYS:
-                    timeoutUnit.setSelectedIndex(3);
-                    break;
-                default:
-                    System.err.println("Timeout kann nicht auf diesen Wert gesetzt werden.");
-                    break;
+            case SECONDS:
+                timeoutUnit.setSelectedIndex(0);
+                break;
+            case MINUTES:
+                timeoutUnit.setSelectedIndex(1);
+                break;
+            case HOURS:
+                timeoutUnit.setSelectedIndex(2);
+                break;
+            case DAYS:
+                timeoutUnit.setSelectedIndex(3);
+                break;
+            default:
+                System.err.println("Timeout kann nicht auf diesen Wert gesetzt werden.");
+                break;
             }
             timeoutBefore = getTimeout();
         } else {
-            timeoutSpinner.setValue(timeoutBefore.getOrigUnit().convert(timeoutBefore.getDuration(),
-                    TimeUnit.MILLISECONDS));
+            timeoutSpinner
+                    .setValue(timeoutBefore.getOrigUnit().convert(timeoutBefore.getDuration(), TimeUnit.MILLISECONDS));
             switch (timeoutBefore.getOrigUnit()) {
-                case SECONDS:
-                    timeoutUnit.setSelectedIndex(0);
-                    break;
-                case MINUTES:
-                    timeoutUnit.setSelectedIndex(1);
-                    break;
-                case HOURS:
-                    timeoutUnit.setSelectedIndex(2);
-                    break;
-                case DAYS:
-                    timeoutUnit.setSelectedIndex(3);
-                    break;
-                default:
-                    System.err.println("Timeout kann nicht auf diesen Wert gesetzt werden.");
-                    break;
+            case SECONDS:
+                timeoutUnit.setSelectedIndex(0);
+                break;
+            case MINUTES:
+                timeoutUnit.setSelectedIndex(1);
+                break;
+            case HOURS:
+                timeoutUnit.setSelectedIndex(2);
+                break;
+            case DAYS:
+                timeoutUnit.setSelectedIndex(3);
+                break;
+            default:
+                System.err.println("Timeout kann nicht auf diesen Wert gesetzt werden.");
+                break;
             }
         }
     }
+
     /**
-     * Toggles whether the timeout reacts to user input
-     * (to not interrupt checks)
+     * Toggles whether the timeout reacts to user input (to not interrupt checks)
+     *
      * @param reacts whether it reacts
      */
     void setReacts(boolean reacts) {
@@ -136,15 +143,19 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
     public void actionPerformed(ActionEvent e) {
         setValue(getTimeout());
     }
+
     /**
      * Returns whether the TimeOut was changed since last time saving.
+     *
      * @return hasChanged
      */
     protected boolean hasChanged() {
         return hasChanged;
     }
+
     /**
      * Sets whether the TimeOut was changed since last time saving.
+     *
      * @param hasChanged whether it changed
      */
     protected void setHasChanged(boolean hasChanged) {

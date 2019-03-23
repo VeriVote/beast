@@ -22,8 +22,7 @@ public class AtPosExp extends TypeExpression {
 
     @Override
     public String getTreeString(int depth) {
-        return "atpos\n" + "\t\t\t\t\t\t\t\t\t\t".substring(0, depth + 1)
-                + "int "
+        return "atpos\n" + "\t\t\t\t\t\t\t\t\t\t".substring(0, depth + 1) + "int "
                 + integerValuedExpression.getTreeString(depth + 1);
     }
 
@@ -33,11 +32,12 @@ public class AtPosExp extends TypeExpression {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         AtPosExp atPosExp = (AtPosExp) o;
-        return integerValuedExpression != null
-                ? integerValuedExpression.equals(atPosExp.integerValuedExpression)
+        return integerValuedExpression != null ? integerValuedExpression.equals(atPosExp.integerValuedExpression)
                 : atPosExp.integerValuedExpression == null;
     }
 }
