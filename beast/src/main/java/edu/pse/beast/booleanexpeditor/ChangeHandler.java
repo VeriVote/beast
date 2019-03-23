@@ -11,7 +11,7 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
  * Class for checking whether the loaded PreAndPostConditionsDescription object
  * has been modified since it was loaded.
  *
- * @author NikolaiLMS
+ * @author Nikolai Schnell
  */
 public class ChangeHandler {
     private LinkedList<SymbolicVariable> preSymbolicVariableList;

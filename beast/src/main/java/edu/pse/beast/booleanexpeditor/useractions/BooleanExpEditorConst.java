@@ -6,7 +6,7 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
  * This class models constants for the BooleanExpEditor, namely the number of
  * voters "V", the number of candidates "C" and the number of seats "S".
  *
- * @author NikolaiLMS
+ * @author Nikolai Schnell
  */
 public class BooleanExpEditorConst {
     private final String constant;

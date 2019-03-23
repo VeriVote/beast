@@ -10,7 +10,7 @@ import edu.pse.beast.types.InternalTypeContainer;
 
 /**
  *
- * @author Niels
+ * @author Niels Hanselmann
  */
 public class SymbolicVariableList {
 

@@ -9,7 +9,7 @@ import edu.pse.beast.types.InternalTypeRep;
  * Implements static methods for creating saveStrings from SymbolicVarList
  * objects and vice versa. Methods are static due to convenience.
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class SymbolicVarListSaverLoader {
 

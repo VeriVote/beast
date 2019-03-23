@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by holger on 12.03.17.
+ * @author Holger Klein
  */
 public class SaverLoaderHelper {
     private String currentSaveString;

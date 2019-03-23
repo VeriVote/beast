@@ -12,7 +12,7 @@ import edu.pse.beast.types.InternalTypeRep;
 /**
  * JUnit Testclass for saverloader.PreAndPostConditionsDescription.
  *
- * @author NikolaiLMS
+ * @author Nikolai Schnell
  */
 public class PreAndPostConditionsDescriptionSaverLoaderTest {
     private static PropertyDescriptionSaverLoader preAndPostConditionsDescriptionSaverLoader;

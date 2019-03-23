@@ -13,7 +13,7 @@
 // * {
 // *     |
 // * }
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class BetweenCurlyBracesNewlineInserter implements NewlineInserter {
 //    private StandardNewlineInserter standInserter;

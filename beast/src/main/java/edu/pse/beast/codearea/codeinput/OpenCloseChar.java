@@ -7,7 +7,7 @@ import javax.swing.text.BadLocationException;
  * This class is utilized by userinserttocode to automatically close chars which
  * have a closing complements, such as { and }
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class OpenCloseChar {
     private final char open;

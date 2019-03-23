@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class WindowStarter implements Runnable {
     JFrame frame;

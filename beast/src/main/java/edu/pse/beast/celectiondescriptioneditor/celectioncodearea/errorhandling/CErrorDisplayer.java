@@ -14,7 +14,7 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
  * them. As such, it mainly creates error messages, depending on the codeerrors
  * id
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class CErrorDisplayer extends ErrorDisplayer {
 

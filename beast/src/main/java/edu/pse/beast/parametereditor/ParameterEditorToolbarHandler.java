@@ -11,7 +11,7 @@
 //import edu.pse.beast.toolbox.ToolbarHandler;
 ///**
 // * The ParameterEditorToolbarHandler creates the toolbar for the ParameterEditor.
-// * @author Jonas
+// * @author Jonas Wohnig
 // */
 //public class ParameterEditorToolbarHandler extends ToolbarHandler implements DisplaysStringsToUser {
 //    private final ParameterEditorWindow window;

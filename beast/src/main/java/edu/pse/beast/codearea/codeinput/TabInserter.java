@@ -12,7 +12,7 @@
 // * Handles inserting and removing tabs in a given jtextpane. This is because
 // * the pane cannot by itself add tabs as spaces.
 // * TODO: make it so amount of spaces per tab can be changed after code generation
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class TabInserter {
 //    private JTextPane pane; 

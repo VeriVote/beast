@@ -10,7 +10,7 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
  * This class uses an external compiler (either gcc on linux or cl on windows)
  * to find errors in the c code
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class CVariableErrorFinder {
 

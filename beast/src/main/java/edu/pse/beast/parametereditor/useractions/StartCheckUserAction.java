@@ -4,7 +4,7 @@
 //import edu.pse.beast.toolbox.UserAction;
 ///**
 // * UserAction for starting a check
-// * @author Jonas
+// * @author Jonas Wohnig
 // */
 //public class StartCheckUserAction extends UserAction {
 //    private final ParameterEditor editor;

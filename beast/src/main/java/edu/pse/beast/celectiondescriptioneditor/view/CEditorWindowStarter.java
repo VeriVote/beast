@@ -2,7 +2,7 @@
 //
 ///**
 // * starts a CCodeEditorWindow
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class CEditorWindowStarter implements Runnable {
 //    

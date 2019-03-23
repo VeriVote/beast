@@ -11,7 +11,7 @@ import edu.pse.beast.types.OutputType;
 /**
  * This class handles all available ElectionTypeContainer for input and output.
  * 
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class ElectionTemplateHandler {
 

@@ -2,7 +2,7 @@ package edu.pse.beast.datatypes.booleanexpast;
 
 /**
  *
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public class ComparisonSymbol {

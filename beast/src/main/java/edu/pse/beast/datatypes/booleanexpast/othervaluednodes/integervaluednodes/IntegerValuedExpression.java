@@ -6,7 +6,7 @@ import edu.pse.beast.types.InternalTypeRep;
 
 /**
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public abstract class IntegerValuedExpression extends TypeExpression {
 

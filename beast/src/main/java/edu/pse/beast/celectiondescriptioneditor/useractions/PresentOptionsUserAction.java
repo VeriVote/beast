@@ -6,7 +6,7 @@
 //
 ///**
 // *
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class PresentOptionsUserAction extends UserAction {
 //    private CElectionEditorOptions options;

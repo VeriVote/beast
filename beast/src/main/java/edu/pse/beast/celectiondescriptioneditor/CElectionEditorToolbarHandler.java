@@ -11,7 +11,7 @@
 // * creates and updates the toolbar of a celectiondescriptioneditor. It also
 // * links the useractions to the buttons
 // * 
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class CElectionEditorToolbarHandler extends ToolbarHandler implements DisplaysStringsToUser {
 //    private final CCodeEditorWindow cgui;

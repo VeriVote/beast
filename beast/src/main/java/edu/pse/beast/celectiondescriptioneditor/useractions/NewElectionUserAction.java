@@ -14,7 +14,7 @@
 //import edu.pse.beast.toolbox.UserAction;
 ///**
 // *
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class NewElectionUserAction extends UserAction {
 //

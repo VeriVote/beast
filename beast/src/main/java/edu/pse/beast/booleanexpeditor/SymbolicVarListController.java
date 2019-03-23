@@ -22,7 +22,7 @@
 //
 ///**
 // * Controller of the symbolic variable JList and its related JButtons in BooleanExpressionWindow.
-// * @author Nikolai
+// * @author Nikolai Schnell
 // */
 //public class SymbolicVarListController implements DisplaysStringsToUser {
 //    private final JList<String> jList;

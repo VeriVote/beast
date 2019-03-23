@@ -53,7 +53,7 @@ import edu.pse.beast.types.cbmctypes.outputplugins.CandidateList;
  * the code. to get the generated code, you have to use the method generateCode
  * You also have to set it either to Pre- or PostConditionMode.
  *
- * @author Niels
+ * @author Niels Hanselmann
  */
 public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 

@@ -28,7 +28,7 @@
 // * for words not yet contained in the autocompletion possibillities. The reasoning
 // * is that the user, expecially when writing code, might wanna retype the
 // * same thing many times
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class AutocompletionController implements KeyListener, AncestorListener, MouseListener {
 //    private final JTextPane pane;

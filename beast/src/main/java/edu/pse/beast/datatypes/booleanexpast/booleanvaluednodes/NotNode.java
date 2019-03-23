@@ -4,7 +4,7 @@ import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 
 /**
  *
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public class NotNode extends BooleanExpressionNode {

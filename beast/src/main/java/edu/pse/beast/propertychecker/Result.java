@@ -14,10 +14,9 @@ import edu.pse.beast.highlevel.javafx.ResultTreeItem;
 
 /**
  *
- * @author Niels & Lukas
+ * @author Niels Hanselmann, Lukas Stapelbroek
  */
 public abstract class Result implements ResultInterface {
-
     protected FailureExample failureExample = null;
     private boolean wasStarted = false;
     private boolean valid = false;

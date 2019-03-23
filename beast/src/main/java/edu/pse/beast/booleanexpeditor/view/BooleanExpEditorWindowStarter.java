@@ -2,7 +2,7 @@
 //
 ///**
 // * Starts the given BooleanExpEditorWindow Class in a new thread.
-// * @author Nikolai
+// * @author Nikolai Schnell
 // */
 //public class BooleanExpEditorWindowStarter implements Runnable {
 //    private final BooleanExpEditorWindow window;

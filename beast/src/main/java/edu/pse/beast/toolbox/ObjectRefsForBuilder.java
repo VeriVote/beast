@@ -11,15 +11,15 @@
 // * OptionsInterface
 // * StringLoaderInterface
 // * SaverLoaderInterface
-// * @author Holger-Desktop & Lukas
+// *
+// * @author Holger Klein, Lukas Stapelbroek
 // */
 //public class ObjectRefsForBuilder {
-//
 //    private final OptionsInterface optionsIF;
 //    private final StringLoaderInterface stringIF;
 //    private final LanguageOptions languageOpts;
 //    private final SaverLoaderInterface saverLoaderIF;
-//    
+//
 //    /**
 //     * Constructor
 //     * @param optionsIF the optionsInterface
@@ -34,7 +34,7 @@
 //        this.languageOpts = languageOpts;
 //        this.saverLoaderIF = saverLoaderIF;
 //    }
-//    
+//
 //    /**
 //     * 
 //     * @return the optionsInterface
@@ -42,7 +42,7 @@
 //    public OptionsInterface getOptionIF() {
 //        return optionsIF;
 //    }
-//    
+//
 //    /**
 //     * 
 //     * @return the stringloaderinterface
@@ -50,7 +50,7 @@
 //    public StringLoaderInterface getStringIF() {
 //        return stringIF;
 //    }
-//    
+//
 //    /**
 //     * 
 //     * @return the languageOptionsInterface
@@ -58,14 +58,12 @@
 //    public LanguageOptions getLanguageOpts() {
 //        return languageOpts;
 //    }
-//    
+//
 //    /**
 //     * 
 //     * @return the saverloaderinterface
 //     */
 //    public SaverLoaderInterface getSaverLoaderIF() {
 //        return saverLoaderIF;
-//    }
-//
-//    
+//    }   
 //}

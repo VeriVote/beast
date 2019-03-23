@@ -14,7 +14,7 @@
 ///**
 // * JUnit Testclass for saverloader.ElectionDescriptionSaverLoader.
 // *
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class ElectionDescriptionSaverLoaderTest {
 //  @Test

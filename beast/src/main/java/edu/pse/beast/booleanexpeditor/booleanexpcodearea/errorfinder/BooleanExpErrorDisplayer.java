@@ -12,7 +12,7 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
  * Class for displaying CodeErrors found in the BooleanExpEditor dynamically,
  * triggered by mouse hovering.
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class BooleanExpErrorDisplayer extends ErrorDisplayer {
     /**

@@ -6,7 +6,7 @@ import edu.pse.beast.toolbox.UserAction;
 /**
  * this useraction asks the given actionlist to redo the last action
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class RedoLastUserAction extends UserAction {
     private Actionlist list;

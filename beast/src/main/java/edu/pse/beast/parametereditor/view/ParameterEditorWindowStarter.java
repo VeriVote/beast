@@ -2,7 +2,7 @@
 //
 ///**
 // * The ParameterEditorWindowStarter is used to open the ParameterEditorWindow.
-// * @author Jonas
+// * @author Jonas Wohnig
 // */
 //public class ParameterEditorWindowStarter implements Runnable {
 //    private final ParameterEditorWindow window = new ParameterEditorWindow();

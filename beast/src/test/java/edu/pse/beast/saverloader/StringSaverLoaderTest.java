@@ -8,7 +8,7 @@ import edu.pse.beast.saverloader.staticsaverloaders.StringSaverLoader;
 /**
  * JUnit Testclass for saverloader.StaticSaverLoaders.StringSaverLoader.
  *
- * @author NikolaiLMS
+ * @author Nikolai Schnell
  */
 public class StringSaverLoaderTest {
     private static String testString;

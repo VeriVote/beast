@@ -5,7 +5,7 @@
 //
 ///**
 // * UserAction subclass responsible for pasting text in BooleanExpEditorCodeAreas.
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class PasteUserAction extends UserAction {
 //    private final BooleanExpEditor editor;

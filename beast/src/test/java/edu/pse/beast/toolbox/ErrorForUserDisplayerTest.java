@@ -2,7 +2,7 @@ package edu.pse.beast.toolbox;
 
 /**
  *
- * @author Niels
+ * @author Niels Hanselmann
  */
 public class ErrorForUserDisplayerTest {
 

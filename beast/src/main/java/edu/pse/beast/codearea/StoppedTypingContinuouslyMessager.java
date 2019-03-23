@@ -14,7 +14,7 @@ import javax.swing.event.CaretListener;
  * newline, or the caret position changed by more than + 1. It also occurs if
  * the user deletes text
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class StoppedTypingContinuouslyMessager implements KeyListener, CaretListener {
 

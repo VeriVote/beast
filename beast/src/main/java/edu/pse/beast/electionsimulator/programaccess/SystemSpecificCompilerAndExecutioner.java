@@ -22,7 +22,7 @@ import edu.pse.beast.toolbox.ThreadedBufferedReader;
  * this is the superclass for system specific error checkers that gets
  * implemented for the needed operating systems
  *
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public abstract class SystemSpecificCompilerAndExecutioner {

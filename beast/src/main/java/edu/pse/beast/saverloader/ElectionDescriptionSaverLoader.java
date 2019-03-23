@@ -12,9 +12,8 @@ import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 
 /**
- * 
- * @author lukas
  *
+ * @author Lukas Stapelbroek
  */
 public class ElectionDescriptionSaverLoader implements SaverLoader<ElectionDescription> {
     private static Gson saverLoader;
@@ -36,5 +35,4 @@ public class ElectionDescriptionSaverLoader implements SaverLoader<ElectionDescr
     public String createSaveString(ElectionDescription toSave) {
         return saverLoader.toJson(toSave);
     }
-
 }

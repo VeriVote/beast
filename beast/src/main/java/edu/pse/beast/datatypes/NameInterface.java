@@ -4,7 +4,7 @@ package edu.pse.beast.datatypes;
  * Interface used by saverloader.FileChooser that allows it to change and
  * receive the Names of given objects.
  *
- * @author NikolaiLMS
+ * @author Nikolai Schnell
  */
 public interface NameInterface {
 

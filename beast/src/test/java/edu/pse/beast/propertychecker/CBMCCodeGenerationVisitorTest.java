@@ -1,10 +1,9 @@
 package edu.pse.beast.propertychecker;
 
 /**
- * Created by holger on 08.03.17.
+ * @author Holger Klein
  */
 public class CBMCCodeGenerationVisitorTest {
-
 //    private CBMCCodeGenerationVisitor visitor = new CBMCCodeGenerationVisitor();
 //
 //    private String listToString(List<String> c) {
@@ -368,5 +367,4 @@ public class CBMCCodeGenerationVisitorTest {
 //        String actual = listToString(c);
 //        Assert.assertEquals(expected, actual);
 //    }
-
 }

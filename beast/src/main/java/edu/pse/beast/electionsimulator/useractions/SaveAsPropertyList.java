@@ -5,7 +5,7 @@
 //
 ///**
 // * Lets the user save the PropertyList with a given filename.
-// * @author Justin
+// * @author Justin Hecht
 // */
 //public class SaveAsPropertyList extends UserAction {
 //

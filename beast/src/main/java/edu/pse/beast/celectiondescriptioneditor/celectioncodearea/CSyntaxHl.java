@@ -10,7 +10,7 @@
 ///**
 // * Sets the regular expressions to be highlighted by a syntaxhighlighter for the c
 // * programming language.
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class CSyntaxHl {
 //

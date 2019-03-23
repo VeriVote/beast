@@ -8,7 +8,7 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
  * The PreAndPostConditionsDescriptionSource provides access to the description
  * of pre- and postconditions for the election check.
  *
- * @author Jonas
+ * @author Jonas Wohnig
  */
 public interface PreAndPostConditionsDescriptionSource {
 

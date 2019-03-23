@@ -5,7 +5,7 @@ import java.util.Arrays;
 import edu.pse.beast.types.InOutType;
 
 /**
- * Created by holger on 09.03.17.
+ * @author Holger Klein
  */
 public abstract class AccessValueNode extends TypeExpression {
     private final TypeExpression[] accessingVars;

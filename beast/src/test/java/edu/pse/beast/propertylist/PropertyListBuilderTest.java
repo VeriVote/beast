@@ -10,7 +10,7 @@
 //
 ///**
 // * Test the builder for PropertyList.
-// * @author Justin
+// * @author Justin Hecht
 // */
 //public class PropertyListBuilderTest {
 //    static TestHelper helper;

@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class CodeAreaBuilderTest {
     public CodeAreaBuilderTest() {

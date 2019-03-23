@@ -46,7 +46,7 @@ import edu.pse.beast.types.OutputType;
 
 /**
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescriptionBaseListener {
 

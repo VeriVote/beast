@@ -10,7 +10,7 @@ import javax.swing.text.StyleContext;
  * Class encapsulating a regular Expression in a String object and a color in an
  * AttributeSet object. Used for the SyntaxHL in the codeareas.
  *
- * @author NikolaiLMS
+ * @author Nikolai Schnell
  */
 public class RegexAndColor {
     private String regEx;

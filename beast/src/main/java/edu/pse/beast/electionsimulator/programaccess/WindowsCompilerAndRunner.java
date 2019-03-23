@@ -14,7 +14,7 @@ import edu.pse.beast.toolbox.WindowsOStoolbox;
  * this is the windows specific implementation to check code. It uses cl.exe
  * from the c++ pack for visual studio to check the code for errors
  *
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public class WindowsCompilerAndRunner extends SystemSpecificCompilerAndExecutioner {

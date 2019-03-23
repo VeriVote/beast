@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * A parent class with which Options can be presented.
  *
- * @author Lukas
+ * @author Lukas Stapelbroek
  */
 public abstract class Options {
 

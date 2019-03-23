@@ -7,7 +7,7 @@
 ///**
 // * Responsible for adding BooleanExpEditorMakro objects to the last focused BooleanExpEditorCodeArea.
 // * Subclass of UserAction.
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class AddMakroUserAction extends UserAction {
 //    private final BooleanExpEditorMakro makro;

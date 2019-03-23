@@ -4,7 +4,7 @@ package edu.pse.beast.toolbox;
  * This interface is implemented by all classes which represent actions the user
  * can perform which cannot be undone
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public abstract class UserAction {
     private final String id;

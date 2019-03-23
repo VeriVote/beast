@@ -7,7 +7,7 @@ import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
  * FormalPropertiesDescription objects and vice versa. Methods are static due to
  * convenience.
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class FormalPropertySaverLoader {
 

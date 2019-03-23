@@ -34,7 +34,7 @@
 ///**
 // * The ParameterEditorBuilder builds a ParameterEditor and provides the references
 // * to other parts of BEAST for it.
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class ParameterEditorBuilder {
 //    private ParameterEditor editor;

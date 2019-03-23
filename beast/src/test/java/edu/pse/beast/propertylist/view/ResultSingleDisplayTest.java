@@ -9,7 +9,7 @@ import org.junit.BeforeClass;
  * Shows a failure example where the election is Single-Choice and one seat is
  * allocated.
  *
- * @author Justin
+ * @author Justin Hecht
  */
 public class ResultSingleDisplayTest {
     ResultPresenterWindow win;

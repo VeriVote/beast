@@ -10,8 +10,7 @@ import edu.pse.beast.highlevel.javafx.ParentTreeItem;
  * class that contains all properties of a project, used to save and load
  * projects
  *
- * @author lukas
- *
+ * @author Lukas Stapelbroek
  */
 public class Project {
 

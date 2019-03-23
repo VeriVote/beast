@@ -12,7 +12,7 @@ import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CLexer;
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser;
 
 /**
- * @author NikolaiLMS
+ * @author Nikolai Schnell
  */
 public class ANTLRTest {
 

@@ -18,7 +18,7 @@
 //
 ///**
 // * Tests the commands for changing the PropertyList.
-// * @author Justin
+// * @author Justin Hecht
 // */
 //public class PropertyListControllerTest {
 //    static PropertyList list;

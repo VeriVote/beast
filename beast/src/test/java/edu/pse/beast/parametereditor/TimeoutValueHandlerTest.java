@@ -14,7 +14,7 @@ import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 
 /**
  *
- * @author Jonas
+ * @author Jonas Wohnig
  */
 public class TimeoutValueHandlerTest {
 

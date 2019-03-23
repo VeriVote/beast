@@ -14,7 +14,7 @@
 //
 ///**
 // * A JFrame subclass in with which OptionElement objects can be presented to the user.
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class OptionPresenterFrame extends javax.swing.JFrame {
 //

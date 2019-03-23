@@ -11,7 +11,7 @@ import edu.pse.beast.codearea.syntaxhighlighting.SyntaxHL;
  * BooleanExpEditor responsible for syntax highlighting. Needs to be refactored
  * if custom colors for syntax highlighting should be available.
  *
- * @author NikolaiLMS
+ * @author Nikolai Schnell
  */
 public class BooleanExpSyntaxHL {
     /**

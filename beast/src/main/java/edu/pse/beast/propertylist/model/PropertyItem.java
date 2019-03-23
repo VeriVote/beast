@@ -14,7 +14,7 @@ import edu.pse.beast.propertychecker.Result;
  * result of the property analysis. Also the counter example of the analysis is
  * stored here.
  *
- * @author Justin
+ * @author Justin Hecht
  */
 public class PropertyItem implements ResultPresenterElement {
 

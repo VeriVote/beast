@@ -12,7 +12,7 @@ import edu.pse.beast.types.InternalTypeRep;
  * JUnit Testclass for
  * saverloader.StaticSaverLoaders.SymbolicVarListSaverLoader.
  *
- * @author NikolaiLMS
+ * @author Nikolai Schnell
  */
 public class SymbolicVarListSaverLoaderTest {
     private static SymbolicVariableList symbolicVariableList;

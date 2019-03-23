@@ -11,7 +11,7 @@ import edu.pse.beast.types.OutputType;
 
 /**
  * 
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public class ElectionDescription implements NameInterface {

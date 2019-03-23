@@ -11,7 +11,7 @@
 //import edu.pse.beast.toolbox.RepaintThread;
 //
 ///**
-// * @author Holger
+// * @author Holger Klein
 // */
 //public class CCodeEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
 //

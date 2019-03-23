@@ -24,7 +24,7 @@
 // * One of its main functions is to make sure locked lines dont get changed.
 // * It also uses several other classes to provide functionallity such as
 // * closing brackets and insert newlines
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class UserInsertToCode implements CaretListener, StoppedTypingContinuouslyListener {
 //    private JTextPane pane;

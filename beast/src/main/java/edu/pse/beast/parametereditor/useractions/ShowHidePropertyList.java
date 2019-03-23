@@ -9,7 +9,7 @@
 //
 ///**
 // * UserAction to toggle visibility of the PropertyList window
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class ShowHidePropertyList extends UserAction {
 //    private final JFrame propertyListWindow;

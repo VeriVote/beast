@@ -6,7 +6,7 @@
 //
 ///**
 // *
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class SaveElectionUserAction extends UserAction {
 //    private final CElectionDescriptionEditor cElectionDescriptionEditor;

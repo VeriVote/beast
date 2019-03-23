@@ -10,7 +10,7 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
- * Created by holger on 14.03.17.
+ * @author Holger Klein
  */
 public class ShowHelpUserAction extends UserAction implements DisplaysStringsToUser {
     private String pathToHelpFile;

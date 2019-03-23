@@ -38,7 +38,7 @@
 //
 ///**
 // * Builder Class to create BooleanExpEditor Object.
-// * @author Nikolai
+// * @author Nikolai Schnell
 // */
 //public class BooleanExpEditorBuilder {
 //    /**

@@ -13,7 +13,7 @@ import edu.pse.beast.types.InternalTypeRep;
  * This class contains functionallity to generate C Code from internal data
  * structurs
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class CCodeHelper {
 

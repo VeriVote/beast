@@ -10,7 +10,7 @@
 //
 ///**
 // * Handles menu events for PropertyList.
-// * @author Justin
+// * @author Justin Hecht
 // */
 //public class PropertyListMenuBarHandler extends MenuBarHandler {
 //

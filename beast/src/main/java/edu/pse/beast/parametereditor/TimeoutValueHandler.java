@@ -15,7 +15,7 @@ import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
  * The TimeoutValueHandler handles all user inputs on the ParameterEditor which
  * change the TimeOut using one JSpinner and one JComboBox.
  *
- * @author Jonas
+ * @author Jonas Wohnig
  */
 public class TimeoutValueHandler implements ChangeListener, ActionListener {
     private final JSpinner timeoutSpinner;

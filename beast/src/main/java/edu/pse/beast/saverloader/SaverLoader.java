@@ -3,7 +3,7 @@ package edu.pse.beast.saverloader;
 /**
  * Interface that allows the FileChooser to polymorphically save and load files.
  *
- * @author NikolaiLMS
+ * @author Nikolai Schnell
  */
 public interface SaverLoader<T> {
 

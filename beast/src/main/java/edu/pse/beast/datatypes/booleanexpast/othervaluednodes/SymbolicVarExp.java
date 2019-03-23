@@ -6,7 +6,7 @@ import edu.pse.beast.types.InternalTypeContainer;
 
 /**
  *
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public class SymbolicVarExp extends TypeExpression {

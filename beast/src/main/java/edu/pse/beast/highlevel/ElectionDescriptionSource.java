@@ -6,7 +6,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
  * The ElectionDescriptionSource is an interface to the package that handles the
  * ElectionDescription given by the user.
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public interface ElectionDescriptionSource {
     /**

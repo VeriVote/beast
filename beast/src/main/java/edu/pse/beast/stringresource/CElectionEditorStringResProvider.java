@@ -3,7 +3,7 @@ package edu.pse.beast.stringresource;
 /**
  * Class that Manages all StringResources for the CElectionEditor
  *
- * @author Niels
+ * @author Niels Hanselmann
  */
 public class CElectionEditorStringResProvider extends StringResourceProvider {
 

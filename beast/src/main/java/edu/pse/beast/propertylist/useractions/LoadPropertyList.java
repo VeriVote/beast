@@ -6,7 +6,7 @@
 //
 ///**
 // * Loads a new property list.
-// * @author Justin
+// * @author Justin Hecht
 // */
 //public class LoadPropertyList extends UserAction {
 //

@@ -10,7 +10,7 @@
 //
 ///**
 // * UserAction for saving a project at a certain path
-// * @author Jonas
+// * @author Jonas Wohnig
 // */
 //public class SaveProjectAsUserAction extends UserAction {
 //    private final PropertyList propertyList;

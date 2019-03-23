@@ -14,7 +14,7 @@
 //import edu.pse.beast.codearea.codeinput.UserInsertToCode;
 ///**
 // *
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class InputToCodeTestClass {
 //

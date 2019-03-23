@@ -11,7 +11,7 @@
 // * creates and updates the menubar of a celectiondescriptioneditor. It also
 // * links the useractions to the menuitems
 // * 
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class CElectionEditorMenubarHandler extends MenuBarHandler {
 //

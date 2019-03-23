@@ -4,7 +4,7 @@ import org.junit.After;
 
 /**
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class NewlineTest {
     @After

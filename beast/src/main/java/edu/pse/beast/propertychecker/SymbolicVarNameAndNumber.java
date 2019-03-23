@@ -2,7 +2,7 @@ package edu.pse.beast.propertychecker;
 
 /**
  *
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public class SymbolicVarNameAndNumber {

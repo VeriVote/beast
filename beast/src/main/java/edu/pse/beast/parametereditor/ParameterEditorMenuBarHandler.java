@@ -9,7 +9,7 @@
 //import edu.pse.beast.toolbox.MenuBarHandler;
 ///**
 // * The ParameterEditorMenuBarHandler creates the menubar for the ParameterEditor.
-// * @author Jonas
+// * @author Jonas Wohnig
 // */
 //public class ParameterEditorMenuBarHandler extends MenuBarHandler {
 //    private final ParameterEditorWindow window;

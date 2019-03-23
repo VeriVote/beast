@@ -6,7 +6,7 @@ import edu.pse.beast.stringresource.StringResourceLoader;
 
 /**
  *
- * @author Jonas
+ * @author Jonas Wohnig
  */
 public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
 

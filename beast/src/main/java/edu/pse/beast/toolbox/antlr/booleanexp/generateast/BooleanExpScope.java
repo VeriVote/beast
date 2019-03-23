@@ -6,7 +6,7 @@ import edu.pse.beast.types.InternalTypeContainer;
 
 /**
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class BooleanExpScope {
     private final ArrayList<String> names = new ArrayList<>();

@@ -14,7 +14,7 @@
 //
 ///**
 // *
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class ElectionTemplateChooser extends javax.swing.JFrame {
 //

@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  *
- * @author Niels
+ * @author Niels Hanselmann
  */
 public class CodeArrayListBeautifier {
 

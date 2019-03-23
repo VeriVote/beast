@@ -21,7 +21,7 @@
 // * This class builds a codearea and inititalizes all the classes needed by the
 // * codearea.
 // *
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class CodeAreaBuilder {
 //

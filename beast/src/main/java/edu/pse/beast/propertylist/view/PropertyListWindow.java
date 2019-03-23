@@ -35,7 +35,7 @@
 ///**
 // * This class is the view of PropertyList.
 // *
-// * @author Justin
+// * @author Justin Hecht
 // */
 //public class PropertyListWindow extends JFrame implements DisplaysStringsToUser, Observer {
 //

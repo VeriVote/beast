@@ -7,7 +7,7 @@
 // * FocusListener given to the JTextPanes of the BooleanExpEditorWindow JFrame.
 // * getLastFocused returns the CodeArea belonging to the last focused JTextPane.
 // * Implements FocusListener so it can be applied to the JTextPanes of the CodeAreas.
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class CodeAreaFocusListener implements FocusListener {
 //    private BooleanExpCodeArea lastFocused;

@@ -8,7 +8,7 @@ import edu.pse.beast.codearea.actionadder.ActionlistListener;
  * This class saves actions which can be undone and redone. It provides
  * functionallity to undo and redo these actions in the right order
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class Actionlist {
     private final ArrayList<Action> lastPerformed = new ArrayList<>();

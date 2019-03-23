@@ -10,7 +10,7 @@ import edu.pse.beast.propertychecker.Result;
 /**
  * The ResultCheckerCommunicator starts and stops checks.
  *
- * @author Niels
+ * @author Niels Hanselmann
  */
 public interface ResultCheckerCommunicator {
 //    /**

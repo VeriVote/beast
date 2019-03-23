@@ -6,7 +6,7 @@ import edu.pse.beast.types.OutputType;
 /**
  * Datatype for the Input and Output of an Election
  *
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public class ElectionTypeContainer {

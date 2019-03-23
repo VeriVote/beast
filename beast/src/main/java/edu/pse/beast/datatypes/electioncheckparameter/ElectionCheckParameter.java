@@ -6,7 +6,7 @@ import edu.pse.beast.highlevel.javafx.GUIController;
 
 /**
  * 
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public class ElectionCheckParameter {

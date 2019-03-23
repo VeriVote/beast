@@ -22,7 +22,7 @@
 //
 ///**
 // *
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class BooleanExpEditorVariableErrorFinderTest {
 //    private BooleanExpANTLRHandler aNTLRHandler;

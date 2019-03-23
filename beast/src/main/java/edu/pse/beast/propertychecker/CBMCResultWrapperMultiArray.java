@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * This class wraps a two dimensional array that cbmc has put out
  * 
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public class CBMCResultWrapperMultiArray {

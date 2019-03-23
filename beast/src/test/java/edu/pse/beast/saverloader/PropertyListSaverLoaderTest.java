@@ -14,7 +14,7 @@
 //
 ///**
 // * JUnit Testclass for saverloader.PropertyListSaverLoader.
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class PropertyListSaverLoaderTest {
 //    private static PLModel plModel;

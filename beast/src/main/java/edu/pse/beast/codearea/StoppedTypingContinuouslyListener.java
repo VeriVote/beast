@@ -2,7 +2,7 @@ package edu.pse.beast.codearea;
 
 /**
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public interface StoppedTypingContinuouslyListener {
     void stoppedTypingContinuously(int newPos);

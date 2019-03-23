@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 /**
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class CodeError {
     private int line;

@@ -3,7 +3,7 @@ package edu.pse.beast.stringresource;
 /**
  * Class that Manages all StringResources for the ParameterEditor
  *
- * @author Niels
+ * @author Niels Hanselmann
  */
 public class ParameterEditorStringResProvider extends StringResourceProvider {
 

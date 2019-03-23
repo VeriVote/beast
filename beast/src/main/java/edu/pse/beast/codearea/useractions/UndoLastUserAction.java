@@ -6,7 +6,7 @@ import edu.pse.beast.toolbox.UserAction;
 /**
  * this useraction asks the given actionlist to undo the last action
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class UndoLastUserAction extends UserAction {
     private Actionlist list;

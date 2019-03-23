@@ -18,7 +18,7 @@
 //
 ///**
 // * Builder class to create a BooleanExpCodeArea object.
-// * @author Nikolai
+// * @author Nikolai Schnell
 // */
 //public class BooleanExpCodeAreaBuilder extends CodeAreaBuilder {
 //    /**

@@ -4,7 +4,7 @@ import java.io.File;
 
 /**
  * 
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public final class SuperFolderFinder {

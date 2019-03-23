@@ -7,7 +7,7 @@
 //
 ///**
 // * The ArgumentHandler deals with the user input of additional arguments for CBMC.
-// * @author Jonas
+// * @author Jonas Wohnig
 // */
 //public class ArgumentHandler implements ChangeListener {
 //    private final JTextField input;

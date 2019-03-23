@@ -8,7 +8,7 @@ import edu.pse.beast.propertychecker.Result;
  * Element which is specifically used to display a result of a check to the
  * user.
  *
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public interface ResultPresenterElement {

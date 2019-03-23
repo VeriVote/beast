@@ -5,7 +5,7 @@ import edu.pse.beast.types.InOutType;
 
 /**
  *
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public class VoteExp extends AccessValueNode {

@@ -14,7 +14,7 @@ import java.util.List;
  * takes advantage of the list being sorted, such as removebetween. It is mainly
  * used by the codearea to keep track of linebreaks
  * 
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class SortedIntegerList {
     /**

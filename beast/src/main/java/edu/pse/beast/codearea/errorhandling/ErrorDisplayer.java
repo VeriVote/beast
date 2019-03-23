@@ -21,7 +21,7 @@ import edu.pse.beast.toolbox.Tuple;
  * This abstract class implements error displaying functionallity common to all
  * specialized error display subclasses
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMotionListener {
     protected JTextPane pane;

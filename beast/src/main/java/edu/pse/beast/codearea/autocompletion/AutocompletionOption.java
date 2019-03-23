@@ -15,7 +15,7 @@
 // * JTextPane. It also provides functionality to move the cartet position
 // * afterwards
 // *
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class AutocompletionOption {
 //

@@ -6,7 +6,7 @@
 //import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 //
 ///**
-// * Created by holger on 12.03.17.
+// * @author Holger Klein
 // */
 //public class EnumToIdMapping {
 //    private static Map<String, String> enumStringsToIds;

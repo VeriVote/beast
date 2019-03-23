@@ -13,7 +13,7 @@
 ///**
 // * Highlights locked lines with a gray background. It listens to 
 // * locked and unlocked messages from the lockedlineshandler
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class LockedLinesDisplay implements LockedLinesListener {
 //    private JTextPane pane; 

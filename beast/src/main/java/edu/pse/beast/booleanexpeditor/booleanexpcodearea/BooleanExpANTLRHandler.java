@@ -11,7 +11,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
  * styledDocument. Used by BooleanExpEditorVariableErrorFinder and
  * BooleanExpEditorGrammarErrorFinder.
  *
- * @author Nikolai
+ * @author Nikolai Schnell
  */
 public class BooleanExpANTLRHandler {
     private String input;

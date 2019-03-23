@@ -14,7 +14,7 @@ import org.antlr.v4.runtime.tree.ParseTree;
  * This class provides easy access to a parsetree of the currently displayed
  * code in the supplied JTextPane. It uses an antlr C grammar
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class CAntlrHandler {
     private JTextPane pane;

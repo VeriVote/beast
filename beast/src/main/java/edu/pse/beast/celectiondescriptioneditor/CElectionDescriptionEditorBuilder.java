@@ -42,7 +42,7 @@
 // * This class creates a celectiondescriptioneditor object and all useractions
 // * which can be performed on this object
 // * 
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class CElectionDescriptionEditorBuilder {
 //

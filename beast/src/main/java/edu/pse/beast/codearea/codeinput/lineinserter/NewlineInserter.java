@@ -9,7 +9,7 @@
 ///**
 // * This interface is implemented by all classes which insert linebreaks
 // * in different ways
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public interface NewlineInserter {
 //    public void insertNewlineAtCurrentPosition(

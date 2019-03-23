@@ -12,7 +12,7 @@ import edu.pse.beast.toolbox.ErrorLogger;
  * program can check for deeper errors in the code, that we couldn't find on our
  * own.
  *
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public final class CompilerAndExecutionerOLD {

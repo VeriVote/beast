@@ -19,7 +19,7 @@
 ///**
 // * This class creates TextRemoved and TextAddedActions and adds them to the
 // * supplied Actionlist
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class TextChangedActionAdder implements 
 //        ActionlistListener, 

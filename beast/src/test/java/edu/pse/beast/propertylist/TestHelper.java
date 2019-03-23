@@ -21,7 +21,7 @@
 //
 ///**
 // * Builds modules needed for testing.
-// * @author Justin
+// * @author Justin Hecht
 // */
 //public class TestHelper {
 //    private CentralObjectProvider centralObjectProvider;

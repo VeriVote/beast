@@ -2,7 +2,7 @@ package edu.pse.beast.types;
 
 /**
  *
- * @author Niels
+ * @author Niels Hanselmann
  */
 public class InternalTypeContainer implements InOutType {
 

@@ -14,10 +14,9 @@ import edu.pse.beast.propertychecker.SymbolicVarNameAndNumber;
  * This class provides the result presenter with the necessary data about the
  * counterexample.
  * 
- * @author Justin & Lukas
+ * @author Justin Hecht, Lukas Stapelbroek
  */
 public class FailureExample {
-
     private final ElectionDescription electionDescription;
 
     private final List<CBMCResultWrapperSingleArray> votes;
@@ -136,7 +135,7 @@ public class FailureExample {
     }
 
     /**
-     * 
+     *
      * @return true, if only "one seat" (read, a candidate) is going to be elected,
      *         in case of a voting for a parliament, it returns false
      */
@@ -145,8 +144,8 @@ public class FailureExample {
     }
 
     /**
-     * saves a candidate symbolic variable in the list
-     * 
+     * Saves a candidate symbolic variable in the list.
+     *
      * @param name
      * @param number
      */
@@ -155,8 +154,8 @@ public class FailureExample {
     }
 
     /**
-     * saves a seat symbolic variable in the list
-     * 
+     * Saves a seat symbolic variable in the list.
+     *
      * @param name
      * @param number
      */
@@ -165,8 +164,8 @@ public class FailureExample {
     }
 
     /**
-     * saves a voter symbolic variable in the list
-     * 
+     * Saves a voter symbolic variable in the list.
+     *
      * @param name
      * @param number
      */
@@ -255,5 +254,4 @@ public class FailureExample {
     public void setOrigVoting(List<List<String>> origVoting) {
         this.origVotes = origVoting;
     }
-
 }

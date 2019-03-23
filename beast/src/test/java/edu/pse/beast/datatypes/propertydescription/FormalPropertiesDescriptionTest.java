@@ -6,7 +6,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Niels
+ * @author Niels Hanselmann
  */
 public class FormalPropertiesDescriptionTest {
 

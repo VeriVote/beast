@@ -7,7 +7,7 @@ import javax.swing.JList;
 
 /**
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class AutocompletionFrame extends javax.swing.JFrame {
 

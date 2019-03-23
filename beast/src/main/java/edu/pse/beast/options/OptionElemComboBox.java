@@ -5,7 +5,7 @@ import javax.swing.JComboBox;
 /**
  * A JComboBox to which OptionElement subclasses can be added.
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class OptionElemComboBox extends JComboBox<String> {
     private static final long serialVersionUID = 1L;

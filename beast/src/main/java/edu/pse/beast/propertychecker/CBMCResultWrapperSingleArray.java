@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * 
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public class CBMCResultWrapperSingleArray {

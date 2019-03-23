@@ -11,7 +11,7 @@ import javax.swing.JTextPane;
 /**
  * This class is a simple popupmenu which displays an error message
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class ErrorPopupMenu extends JPopupMenu implements KeyListener {
     private static final long serialVersionUID = 1L;

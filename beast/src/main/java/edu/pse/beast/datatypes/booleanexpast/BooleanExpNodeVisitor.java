@@ -31,7 +31,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.generateast.VotingTupelChangeExpNo
 
 /**
  *
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public interface BooleanExpNodeVisitor {

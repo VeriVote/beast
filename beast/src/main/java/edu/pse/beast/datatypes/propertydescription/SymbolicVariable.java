@@ -5,7 +5,7 @@ import edu.pse.beast.types.InternalTypeContainer;
 //import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 /**
  *
- * @author Niels
+ * @author Niels Hanselmann
  */
 public class SymbolicVariable {
     private final String id;

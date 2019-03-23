@@ -26,7 +26,7 @@ import edu.pse.beast.types.InternalTypeContainer;
  * a main method (including the FormalProperty), important IncludingCode and the
  * votingMethod (the ElectionDescription).
  *
- * @author Niels
+ * @author Niels Hanselmann
  */
 public class CBMCCodeGenerator {
 

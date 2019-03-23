@@ -14,7 +14,7 @@ import org.junit.Test;
 /**
  * Shows an error message for a property.
  *
- * @author Justin
+ * @author Justin Hecht
  */
 public class ErrorDisplayTest {
 

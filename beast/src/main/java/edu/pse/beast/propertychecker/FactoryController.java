@@ -13,10 +13,9 @@ import edu.pse.beast.toolbox.TimeOutNotifier;
 
 /**
  *
- * @author Niels & Lukas
+ * @author Niels Hanselmann, Lukas Stapelbroek
  */
 public class FactoryController implements Runnable {
-
     private static final long POLLINGINTERVAL = 1000;
 
     /**
@@ -272,7 +271,7 @@ public class FactoryController implements Runnable {
     public void run() {
         outerLoop: for (int i = 0; i < results.size(); i++) {
             innerLoop: while (!stopped) {
-                // if we can start more checkers (we haven't used our
+                // if we can start more checkers (we have not used our
                 // allowed pool completely), we can start a new one
                 if (currentlyRunning.size() < concurrentChecker) {
                     // CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID,
@@ -423,7 +422,7 @@ public class FactoryController implements Runnable {
      * chance of cleaning up, it still has a chance of messaging all checkers to
      * stop running
      * 
-     * @author Lukas
+     * @author Lukas Stapelbroek
      *
      */
     public class FactoryEnder extends Thread {

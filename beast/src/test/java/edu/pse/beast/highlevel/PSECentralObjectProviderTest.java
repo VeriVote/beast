@@ -6,7 +6,7 @@
 //
 ///**
 // *
-// * @author Jonas
+// * @author Jonas Wohnig
 // */
 //public class PSECentralObjectProviderTest {
 //    

@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * This class creates all available chars with a corresponding open or closing
  * char
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class OpenCloseCharList {
     private ArrayList<OpenCloseChar> openCloseChars = new ArrayList<OpenCloseChar>();

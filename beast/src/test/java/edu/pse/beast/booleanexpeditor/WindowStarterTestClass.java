@@ -4,7 +4,7 @@
 //
 ///**
 // * Class to test creation of BooleanExpEditor object and displaying of its BooleanExpEditorWindow object.
-// * @author Nikolai
+// * @author Nikolai Schnell
 // */
 //public class WindowStarterTestClass {
 //    public static void main(String[] args) {

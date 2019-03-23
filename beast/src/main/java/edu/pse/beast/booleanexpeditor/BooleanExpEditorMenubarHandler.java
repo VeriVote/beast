@@ -10,7 +10,7 @@
 //
 ///**
 // * MenuBarHandler for the BooleanExpEditor, inherits from edu.pse.beast.toolbox.MenuBarHandler.
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class BooleanExpEditorMenubarHandler extends MenuBarHandler implements DisplaysStringsToUser {
 //    private final BooleanExpEditorWindow window;

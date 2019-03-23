@@ -17,7 +17,7 @@ import javax.imageio.ImageIO;
 
 /**
  *
- * @author Niels
+ * @author Niels Hanselmann
  */
 public final class FileLoader {
 

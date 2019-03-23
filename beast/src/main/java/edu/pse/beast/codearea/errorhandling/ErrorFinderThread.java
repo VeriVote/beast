@@ -11,7 +11,7 @@
 // * supplied errorfinderlist to find all errors in the code. If it finds errors,
 // * it notifies the given ErrorController of this fact. It will run until another
 // * thread calls the stop method. 
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class ErrorFinderThread implements Runnable {
 //    private volatile boolean keepRunning = true;

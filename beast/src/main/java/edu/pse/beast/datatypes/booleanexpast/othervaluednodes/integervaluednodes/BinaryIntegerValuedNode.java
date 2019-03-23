@@ -3,7 +3,7 @@ package edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednode
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 
 /**
- * Created by holger on 08.03.17.
+ * @author Holger Klein
  */
 public class BinaryIntegerValuedNode extends IntegerValuedExpression {
 

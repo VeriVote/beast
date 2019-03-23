@@ -7,7 +7,7 @@
 ///**
 // * This class is used by the userinputhandler to pass user input to the 
 // * right methods of userinserttocode
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class CodeInputHandler {
 //

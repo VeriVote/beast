@@ -29,7 +29,7 @@
 //
 ///**
 // * Represents the view for a PropertyItem.
-// * @author Justin
+// * @author Justin Hecht
 // */
 //public class ListItem extends JPanel implements DisplaysStringsToUser {
 //    private static final long serialVersionUID = 1L;

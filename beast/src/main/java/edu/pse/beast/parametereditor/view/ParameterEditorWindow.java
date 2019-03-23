@@ -21,7 +21,7 @@
 // * Window which takes all the user input for the parameters used by CBMC. It is
 // * also the central window for BEAST which starts and stops checks.
 // *
-// * @author Jonas
+// * @author Jonas Wohnig
 // */
 //public class ParameterEditorWindow extends javax.swing.JFrame
 //        implements DisplaysStringsToUser, CheckStatusDisplay {

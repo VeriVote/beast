@@ -4,7 +4,7 @@ package edu.pse.beast.highlevel;
  * Interface for displaying the Status of the ongoing Analysis. Currently
  * implemented by ParameterEditorWindow.
  *
- * @author NikolaiLMS
+ * @author Nikolai Schnell
  */
 public interface CheckStatusDisplay {
 

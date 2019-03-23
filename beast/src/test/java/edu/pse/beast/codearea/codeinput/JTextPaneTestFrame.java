@@ -4,7 +4,7 @@ import javax.swing.JScrollPane;
 
 /**
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class JTextPaneTestFrame extends javax.swing.JFrame {
 

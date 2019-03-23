@@ -20,7 +20,7 @@ import edu.pse.beast.codearea.codeinput.OpenCloseCharList;
  * Example: The caret is either left or right of a '{'. It will highlight the
  * bracket as well as the corresponding '}' if it exists.
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class OpenCloseCharHighlighter implements CaretListener {
 

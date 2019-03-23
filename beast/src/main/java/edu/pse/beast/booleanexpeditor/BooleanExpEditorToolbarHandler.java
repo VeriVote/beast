@@ -11,7 +11,7 @@
 ///**
 // * Class that extends ToolbarHandler.
 // * Its purpose is the handling of a BooleanExpEditorWindows toolbar.
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class BooleanExpEditorToolbarHandler extends ToolbarHandler implements DisplaysStringsToUser {
 //    /**

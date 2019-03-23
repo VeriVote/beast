@@ -2,7 +2,7 @@
 //
 ///**
 // *
-// * @author Niels
+// * @author Niels Hanselmann
 // */
 //public class InternalTypeContainer {
 //

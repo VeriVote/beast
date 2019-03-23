@@ -5,7 +5,7 @@
 //
 ///**
 // * UserAction subclass responsible for redoing the last undone action in the last focused BooleanExpEditorCodeArea.
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class RedoBoolUserAction extends UserAction {
 //    private final BooleanExpEditor editor;

@@ -9,7 +9,7 @@
 //
 ///**
 // * UserAction to toggle visibility of the CElectionEditor window
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class ShowHideCElectionEditor extends UserAction {
 //    private final JFrame cElectionEditorWindow;

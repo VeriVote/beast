@@ -5,7 +5,7 @@ import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.TypeExpression;
 
 /**
  *
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public class VoteSumForCandExp extends IntegerValuedExpression {

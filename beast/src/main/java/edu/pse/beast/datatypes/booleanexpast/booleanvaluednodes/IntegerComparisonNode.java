@@ -5,13 +5,13 @@ import edu.pse.beast.datatypes.booleanexpast.ComparisonSymbol;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.TypeExpression;
 
 /**
- * Created by holger on 08.03.17.
+ * @author Holger Klein
  */
 public class IntegerComparisonNode extends ComparisonNode {
     /**
      * @param lhsTypeExp       the lhsExpression
      * @param rhsTypeExp       the rhsExpression
-     * @param comparisonSymbol the symbol that describes this comparision (for
+     * @param comparisonSymbol the symbol that describes this comparison (for
      *                         example <, >, == )
      */
     public IntegerComparisonNode(TypeExpression lhsTypeExp, TypeExpression rhsTypeExp,

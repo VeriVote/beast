@@ -14,7 +14,7 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
  * Class for finding type-errors in symbolic variable usage in the
  * BooleanExpression(s) of the CodeArea this class is an attribute of.
  *
- * @author Nikolai
+ * @author Nikolai Schnell
  */
 public class BooleanExpEditorVariableErrorFinder {
     public static ArrayList<CodeError> getErrors(BooleanExpANTLRHandler antlrHandler, SymbolicVariableList list,

@@ -15,7 +15,7 @@ import edu.pse.beast.types.InternalTypeRep;
 
 /**
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class FormalPropertySyntaxTreeToAstTranslaterTest {
 

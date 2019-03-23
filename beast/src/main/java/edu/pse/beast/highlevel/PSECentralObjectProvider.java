@@ -7,7 +7,7 @@
 ///**
 // * The PSECentralObjectProvider creates and provides access to all instances of
 // * classes that implement high level interfaces used to run BEAST.
-// * @author Jonas
+// * @author Jonas Wohnig
 // */
 //public class PSECentralObjectProvider implements CentralObjectProvider {
 //    

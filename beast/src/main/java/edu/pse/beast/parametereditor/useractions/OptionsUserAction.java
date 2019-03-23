@@ -7,7 +7,7 @@
 //
 ///**
 // * UserAction for changing options
-// * @author Jonas
+// * @author Jonas Wohnig
 // */
 //public class OptionsUserAction extends UserAction {
 //    private final ParametereditorOptions opts;

@@ -16,7 +16,7 @@
 // * to first create a simple codearea and use this to instantiate most fields of
 // * the celectioncodearea
 // * 
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class CElectionCodeAreaBuilder extends CodeAreaBuilder {
 //

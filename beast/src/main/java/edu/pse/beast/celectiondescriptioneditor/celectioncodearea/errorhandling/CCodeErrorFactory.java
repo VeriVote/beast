@@ -6,7 +6,7 @@ import edu.pse.beast.codearea.errorhandling.CodeError;
  * This class is used by the Cerrorfinder. It generates coderrors from the given
  * information
  *
- * @author holger
+ * @author Holger Klein
  */
 public class CCodeErrorFactory {
 

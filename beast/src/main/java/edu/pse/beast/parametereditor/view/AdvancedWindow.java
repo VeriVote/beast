@@ -6,7 +6,7 @@
 //
 ///**
 // * Window that takes user input for additional arguments for CBMC
-// * @author Jonas
+// * @author Jonas Wohnig
 // */
 //public class AdvancedWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
 //    private static final long serialVersionUID = 1L;

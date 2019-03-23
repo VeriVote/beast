@@ -8,7 +8,7 @@ import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
  * The ParameterSource provides access to the parameters for checking the
  * election.
  *
- * @author Jonas
+ * @author Jonas Wohnig
  */
 public interface ParameterSource {
     /**

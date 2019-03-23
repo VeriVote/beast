@@ -6,7 +6,7 @@
 //
 ///**
 // *
-// * @author Niels
+// * @author Niels Hanselmann
 // */
 //public class Project implements NameInterface {
 //    private String name = "NewProject";

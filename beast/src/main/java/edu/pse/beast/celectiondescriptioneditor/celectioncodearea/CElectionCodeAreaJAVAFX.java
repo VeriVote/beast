@@ -13,7 +13,7 @@
 // * This is the class which inherits from codearea to create a codearea more
 // * suited towards writing c code.
 // *
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class CElectionCodeAreaJAVAFX extends CodeArea {
 //

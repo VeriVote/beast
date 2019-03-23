@@ -23,7 +23,7 @@
 ///**
 // * Builds the property list components and returns the controller of property
 // * list.
-// * @author Justin
+// * @author Justin Hecht
 // */
 //public class PropertyListBuilder {
 //

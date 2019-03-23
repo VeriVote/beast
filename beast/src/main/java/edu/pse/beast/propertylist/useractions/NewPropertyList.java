@@ -5,7 +5,7 @@
 //
 ///**
 // * Adds new properties to PropertyList.
-// * @author Justin
+// * @author Justin Hecht
 // */
 //public class NewPropertyList extends UserAction {
 //

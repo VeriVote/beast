@@ -5,7 +5,7 @@
 //
 ///**
 // *
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class StaticErrorFindingUserAction extends UserAction {
 //    private final CElectionDescriptionEditor electionDescriptionEditor;

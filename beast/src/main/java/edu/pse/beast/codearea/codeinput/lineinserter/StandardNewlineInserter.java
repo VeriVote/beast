@@ -8,7 +8,7 @@
 //
 ///**
 // *
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class StandardNewlineInserter implements NewlineInserter {
 //        

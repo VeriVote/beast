@@ -5,7 +5,7 @@ import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes
 import edu.pse.beast.types.InternalTypeContainer;
 
 /**
- * Created by holger on 09.03.17.
+ * @author Holger Klein
  */
 public class AtPosExp extends TypeExpression {
     private final IntegerValuedExpression integerValuedExpression;

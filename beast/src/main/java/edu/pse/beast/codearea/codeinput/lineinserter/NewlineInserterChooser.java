@@ -11,7 +11,7 @@
 ///**
 // * This class chooses the right newlineinserter implementation based on the chars
 // * surrounding the caret position of the given pane. 
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class NewlineInserterChooser {
 //    private JTextPane pane;

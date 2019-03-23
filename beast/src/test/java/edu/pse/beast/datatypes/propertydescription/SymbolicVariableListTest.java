@@ -18,7 +18,7 @@ import edu.pse.beast.types.InternalTypeRep;
 
 /**
  *
- * @author Niels
+ * @author Niels Hanselmann
  */
 public class SymbolicVariableListTest {
 

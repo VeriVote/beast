@@ -7,7 +7,7 @@ import javax.swing.JTextPane;
  * given line by the amount of open curly braces in lines before. This is
  * sufficient for 99% of cases
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class CurlyBracesLineBeginningTabHandler implements LineBeginningTabsHandler {
     private JTextPane pane;

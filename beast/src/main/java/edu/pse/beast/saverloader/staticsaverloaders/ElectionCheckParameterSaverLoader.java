@@ -9,7 +9,7 @@ import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
  * Implements static methods for creating saveStrings from
  * ElectionCheckParameter objects and vice versa.
  *
- * @author NikolaiLMS
+ * @author Nikolai Schnell
  */
 public class ElectionCheckParameterSaverLoader {
 

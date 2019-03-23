@@ -4,7 +4,7 @@ package edu.pse.beast.stringresource;
  * This class manages all StringResProviders and therefore all acces to all
  * Strings the User gets to see.
  *
- * @author Niels
+ * @author Niels Hanselmann
  */
 public class StringLoaderInterface {
 

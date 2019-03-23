@@ -5,7 +5,7 @@
 //
 ///**
 // * UserAction for stopping a check
-// * @author Jonas
+// * @author Jonas Wohnig
 // */
 //public class AbortCheckUserAction extends UserAction {
 //    private final ParameterEditor editor;

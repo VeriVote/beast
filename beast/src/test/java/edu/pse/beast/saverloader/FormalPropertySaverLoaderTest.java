@@ -9,7 +9,7 @@ import edu.pse.beast.saverloader.staticsaverloaders.FormalPropertySaverLoader;
 /**
  * JUnit Testclass for saverloader.StaticSaverLoaders.FormalPropertySaverLoader.
  *
- * @author NikolaiLMS
+ * @author Nikolai Schnell
  */
 public class FormalPropertySaverLoaderTest {
     private static FormalPropertiesDescription description;

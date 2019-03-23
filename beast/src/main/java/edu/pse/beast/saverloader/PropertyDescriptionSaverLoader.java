@@ -9,10 +9,9 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
  * Implements SaverLoader methods for creating saveStrings from
  * PreAndPostConditionsDescription objects and vice versa.
  * 
- * @author lukas
+ * @author Lukas Stapelbroek
  */
 public class PropertyDescriptionSaverLoader implements SaverLoader<PreAndPostConditionsDescription> {
-
     private static Gson saverLoader;
 
     static { // here you have the chance to register typeAdapters

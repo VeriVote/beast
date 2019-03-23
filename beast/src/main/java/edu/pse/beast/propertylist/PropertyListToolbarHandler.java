@@ -12,7 +12,7 @@
 //
 ///**
 // * Handles tool-bar events for PropertyList.
-// * @author Justin
+// * @author Justin Hecht
 // */
 //public class PropertyListToolbarHandler extends ToolbarHandler 
 //        implements DisplaysStringsToUser {

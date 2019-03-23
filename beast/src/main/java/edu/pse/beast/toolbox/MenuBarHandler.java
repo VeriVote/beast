@@ -13,7 +13,7 @@ import edu.pse.beast.stringresource.StringResourceLoader;
 
 /**
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public abstract class MenuBarHandler implements DisplaysStringsToUser {
 

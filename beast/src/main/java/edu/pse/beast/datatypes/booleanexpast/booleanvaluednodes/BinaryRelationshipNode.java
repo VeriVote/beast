@@ -2,7 +2,7 @@ package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
 
 /**
  *
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public abstract class BinaryRelationshipNode extends BooleanExpressionNode {

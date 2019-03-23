@@ -23,7 +23,7 @@
 // * Class acts as controller for everything related to the property list. Returns
 // * the list of properties descriptions, presents results and starts the view.
 // *
-// * @author Justin
+// * @author Justin Hecht
 // */
 //public class PropertyList implements PreAndPostConditionsDescriptionSource,
 //        ResultPresenter, Runnable {

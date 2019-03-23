@@ -3,7 +3,7 @@ package edu.pse.beast.booleanexpeditor.useractions;
 /**
  * This class models Makros for the BooleanExpEditor.
  *
- * @author NikolaiLMS
+ * @author Nikolai Schnell
  */
 public class BooleanExpEditorMakro {
 

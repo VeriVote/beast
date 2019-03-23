@@ -2,7 +2,7 @@ package edu.pse.beast.codearea.actionlist.textaction;
 
 /**
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class TextDelta {
     private final int offset;

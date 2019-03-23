@@ -12,7 +12,7 @@ import edu.pse.beast.codearea.actionlist.Action;
  * This class represents the act of adding text to a Styleddocument and makes
  * undoing this action possible
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class TextAddedAction implements Action {
 

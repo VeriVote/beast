@@ -15,7 +15,7 @@ import edu.pse.beast.propertylist.model.PropertyItem;
 /**
  * Tests equality of PropertyItems.
  *
- * @author Justin
+ * @author Justin Hecht
  */
 public class PropertyItemTest {
 

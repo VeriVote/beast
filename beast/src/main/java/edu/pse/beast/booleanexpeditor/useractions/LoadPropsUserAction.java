@@ -9,7 +9,7 @@
 ///**
 // * UserAction subclass responsible for loading a PostAndPreConditionsDescription object from
 // * the file system into the editor/propertylist.
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class LoadPropsUserAction extends UserAction {
 //

@@ -17,7 +17,7 @@
 //
 ///**
 // *
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class NewlineInserterTest {
 //    private JTextPane pane;

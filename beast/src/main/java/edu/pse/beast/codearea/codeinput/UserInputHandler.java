@@ -11,7 +11,7 @@
 // * (if left ctrl is down). 
 // * If the input is best handled by the JTextPane, however, such as the arrow keys,
 // * it simply ignores it.
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class UserInputHandler implements KeyListener {
 //    private JTextPane pane;

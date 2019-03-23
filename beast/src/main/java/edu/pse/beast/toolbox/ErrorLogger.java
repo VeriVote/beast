@@ -2,7 +2,7 @@ package edu.pse.beast.toolbox;
 
 /**
  *
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public class ErrorLogger {

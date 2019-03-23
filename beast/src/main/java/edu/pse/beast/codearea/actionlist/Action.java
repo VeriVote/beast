@@ -2,7 +2,7 @@ package edu.pse.beast.codearea.actionlist;
 
 /**
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public interface Action {
     void undo();

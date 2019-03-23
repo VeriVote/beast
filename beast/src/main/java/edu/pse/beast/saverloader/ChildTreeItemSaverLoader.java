@@ -17,11 +17,10 @@ import edu.pse.beast.types.OutputType;
 /**
  * Implements SaverLoader methods for creating saveStrings from
  * PreAndPostConditionsDescription objects and vice versa.
- * 
- * @author lukas
+ *
+ * @author Lukas Stapelbroek
  */
 public class ChildTreeItemSaverLoader implements SaverLoader<ChildTreeItemValues> {
-
     private static Gson saverLoader;
 
     static { // here you have the chance to register typeAdapters

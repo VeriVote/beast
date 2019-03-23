@@ -5,7 +5,7 @@ package edu.pse.beast.saverloader.staticsaverloaders;
  * versa. Replaces certain characters to ensure custom userinputs not Methods
  * are static due to convenience.
  *
- * @author NikolaiLMS
+ * @author Nikolai Schnell
  */
 public class StringSaverLoader {
 

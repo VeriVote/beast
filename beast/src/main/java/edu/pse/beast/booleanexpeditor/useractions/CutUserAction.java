@@ -5,7 +5,7 @@
 //
 ///**
 // * UserAction subclass responsible for cutting text in the last focused BooleanExpEditorCodeAreas.
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class CutUserAction extends UserAction {
 //    private final BooleanExpEditor editor;

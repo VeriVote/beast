@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * means that once the first error finder finds and error, letting the latteer
  * ones search is unecessary
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class ErrorFinderList {
     private ArrayList<ErrorFinder> errorFinderList = new ArrayList<>();

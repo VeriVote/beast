@@ -4,7 +4,7 @@
 ///**
 // * The CentralObjectProvider provides access to the interfaces for the packages used 
 // * to run BEAST for the BEASTCommunicator.
-// * @author Jonas
+// * @author Jonas Wohnig
 // */
 //public interface CentralObjectProvider {
 //    /**

@@ -1,10 +1,9 @@
 package edu.pse.beast.toolbox.antlr.booleanexp.generateast;
 
 /**
- * Created by holger on 14.03.17.
+ * @author Holger Klein
  */
 public class UserAstTestHelper {
-
 //
 //    @Test
 //    public void testBinaryOtherExpAST() {
@@ -73,5 +72,4 @@ public class UserAstTestHelper {
 //                "\t\trhs: Integer: 2\n";
 //        Assert.assertEquals(expString, astString);
 //    }
-
 }

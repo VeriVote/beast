@@ -9,7 +9,7 @@ import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 
 /**
  *
- * @author Niels
+ * @author Niels Hanselmann
  */
 public class PropertyChecker implements ResultCheckerCommunicator {
     private FactoryController factoryController;

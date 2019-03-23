@@ -13,7 +13,7 @@ import edu.pse.beast.toolbox.ErrorLogger;
 
 /**
  *
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public abstract class CheckerFactory implements Runnable {

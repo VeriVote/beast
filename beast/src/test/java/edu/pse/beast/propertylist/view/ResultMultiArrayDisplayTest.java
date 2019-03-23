@@ -9,7 +9,7 @@ import org.junit.BeforeClass;
  * Shows a failure example where there is a list of votings and multiple seats
  * are allocated.
  *
- * @author Justin
+ * @author Justin Hecht
  */
 public class ResultMultiArrayDisplayTest {
     ResultPresenterWindow win;

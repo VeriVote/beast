@@ -12,7 +12,7 @@ import edu.pse.beast.codearea.actionlist.Action;
  * This class represents the act of removing text from a Styleddocument and
  * makes it possible to undo this action
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class TextRemovedAction implements Action {
     private final TextDelta td;

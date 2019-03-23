@@ -9,7 +9,7 @@
 //
 ///**
 // * UserAction to toggle visibility of the BooleanExpEditor window
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class ShowHideBooleanExpEditor extends UserAction {
 //    private final JFrame booleanExpEditorWindow;

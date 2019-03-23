@@ -6,7 +6,7 @@
 //
 ///**
 // * UserAction subclass presenting CodeArea options to the user.
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class PresentOptionsBoolUserAction extends UserAction {
 //

@@ -21,7 +21,7 @@ import edu.pse.beast.propertychecker.Result;
  * The BEASTCommunicator coordinates all the other parts of BEAST and starts and
  * stops the test of an election for the desired properties.
  *
- * @author Jonas
+ * @author Jonas Wohnig
  */
 public class BEASTCommunicator {
 

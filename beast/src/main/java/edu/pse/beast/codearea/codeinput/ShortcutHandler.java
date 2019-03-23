@@ -8,7 +8,7 @@ import edu.pse.beast.toolbox.UserAction;
 /**
  * This class links chosrtcuts to useraction.
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class ShortcutHandler {
 

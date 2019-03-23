@@ -9,7 +9,7 @@ import edu.pse.beast.types.InternalTypeContainer;
 
 /**
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class BooleanExpErrorFactory {
 

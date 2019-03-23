@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 
 /**
  *
- * @author Holger-Desktop & Lukas
+ * @author Holger Klein, Lukas Stapelbroek
  */
 public class ActionIdAndListener {
     private final String id;

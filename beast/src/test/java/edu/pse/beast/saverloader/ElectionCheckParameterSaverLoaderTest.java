@@ -14,7 +14,7 @@ import edu.pse.beast.saverloader.staticsaverloaders.ElectionCheckParameterSaverL
  * JUnit Testclass for
  * saverloader.StaticSaverLoaders.ElectionCheckParameterSaverLoader.
  *
- * @author NikolaiLMS
+ * @author Nikolai Schnell
  */
 public class ElectionCheckParameterSaverLoaderTest {
     private static ElectionCheckParameter electionCheckParameter;

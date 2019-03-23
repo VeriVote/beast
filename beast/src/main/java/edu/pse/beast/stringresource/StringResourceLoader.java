@@ -10,7 +10,7 @@ import edu.pse.beast.toolbox.ErrorLogger;
 
 /**
  *
- * @author Niels
+ * @author Niels Hanselmann
  */
 public class StringResourceLoader {
 

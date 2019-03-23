@@ -18,7 +18,7 @@
 ///**
 // * The ParameterEditor is the central class that coordinates everything associated
 // * with the ParameterEditorWindow and the communication with high level.
-// * @author Jonas
+// * @author Jonas Wohnig
 // */
 //public class ParameterEditor implements ParameterSource, DisplaysStringsToUser {
 //    private final ParameterEditorWindow window;

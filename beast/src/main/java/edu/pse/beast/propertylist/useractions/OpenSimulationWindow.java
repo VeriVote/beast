@@ -6,7 +6,7 @@
 //
 ///**
 // * Loads a new property list.
-// * @author Lukas
+// * @author Lukas Stapelbroek
 // */
 //public class OpenSimulationWindow extends UserAction {
 //    private final ElectionSimulation simulationWindow = new ElectionSimulation();

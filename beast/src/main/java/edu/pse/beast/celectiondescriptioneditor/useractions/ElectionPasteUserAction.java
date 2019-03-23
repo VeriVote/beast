@@ -4,7 +4,7 @@
 //import edu.pse.beast.toolbox.UserAction;
 //
 ///**
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class ElectionPasteUserAction extends UserAction {
 //

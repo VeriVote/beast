@@ -8,7 +8,7 @@
 ///**
 // * This class creates all useractions which can be performed on a simple
 // * codearea
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class CodeAreaUserActions {
 //    private CodeArea area;

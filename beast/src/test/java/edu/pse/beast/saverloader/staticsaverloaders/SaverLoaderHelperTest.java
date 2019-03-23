@@ -7,10 +7,9 @@ import java.util.Map;
 import org.junit.Test;
 
 /**
- * Created by holger on 12.03.17.
+ * @author Holger Klein
  */
 public class SaverLoaderHelperTest {
-
     private SaverLoaderHelper h = new SaverLoaderHelper();
 
     @Test

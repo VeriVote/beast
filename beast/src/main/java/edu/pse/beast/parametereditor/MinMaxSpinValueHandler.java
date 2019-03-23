@@ -10,7 +10,7 @@ import javax.swing.event.ChangeListener;
  * The MinMaxSpinValueHandler handles all user inputs on the ParameterEditor
  * which set a minimum and a maximum for a value using two JSpinners.
  *
- * @author Jonas
+ * @author Jonas Wohnig
  */
 public class MinMaxSpinValueHandler implements ChangeListener {
 

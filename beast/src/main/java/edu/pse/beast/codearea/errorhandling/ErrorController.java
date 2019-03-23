@@ -9,7 +9,7 @@
 // * and error displays. Whenever the concurrently running error finder find 
 // * a new error, it receives a message. It then asks the injected error
 // * displayer to display the codeerror on the pane.
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class ErrorController {
 //    private ErrorFinderList errorFinderList;

@@ -3,7 +3,7 @@
 ///**
 // * Represents the InternalType of the Variables
 // *
-// * @author Niels
+// * @author Niels Hanselmann
 // */
 //public enum InternalTypeRep {
 ////    /**

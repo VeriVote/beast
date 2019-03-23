@@ -7,7 +7,7 @@ import org.junit.BeforeClass;
 
 /**
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class CElectionDescriptionEditorBuilderTest {
 

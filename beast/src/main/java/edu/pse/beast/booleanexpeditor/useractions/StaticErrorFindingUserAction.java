@@ -5,7 +5,7 @@
 //
 ///**
 // * UserAction subclass responsible for static error finding in the BooleanExpEditor.
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class StaticErrorFindingUserAction extends UserAction {
 //

@@ -2,7 +2,7 @@ package edu.pse.beast.codearea.actionadder;
 
 /**
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public interface ActionlistListener {
     void undoingAction();

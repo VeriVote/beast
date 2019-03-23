@@ -9,7 +9,7 @@ import javax.swing.text.AbstractDocument;
  * Instances of this class are able to apply syntax highlighting to the given
  * JTextPane
  * 
- * @author NikolaiLMS
+ * @author Nikolai Schnell
  */
 public class SyntaxHL {
     private JTextPane textPane;

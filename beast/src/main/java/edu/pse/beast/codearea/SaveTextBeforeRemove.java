@@ -20,7 +20,7 @@ import edu.pse.beast.codearea.actionlist.Actionlist;
  * the actionlist so it can save the text when an action is about to be undone /
  * redone
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
     private JTextPane pane;

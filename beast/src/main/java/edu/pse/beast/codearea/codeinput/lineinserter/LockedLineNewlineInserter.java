@@ -10,7 +10,7 @@
 ///**
 // * Inesrts newlines into locked lines by inserting it at their beginning,
 // * thus shifting the entire line down by one
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class LockedLineNewlineInserter implements NewlineInserter {
 //    

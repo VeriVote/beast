@@ -8,7 +8,7 @@
 //
 ///**
 // * Handles saves before change in the property list.
-// * @author Justin
+// * @author Justin Hecht
 // *
 // */
 //public class PLChangeHandler implements Observer {

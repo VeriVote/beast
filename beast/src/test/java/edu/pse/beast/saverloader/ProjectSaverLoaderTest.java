@@ -27,7 +27,7 @@
 //
 ///**
 // * JUnit Testclass for saverloader.ProjectSaverLoader.
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class ProjectSaverLoaderTest {
 //    private static Project project;

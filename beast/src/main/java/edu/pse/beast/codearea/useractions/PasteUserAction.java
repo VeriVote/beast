@@ -16,7 +16,7 @@
 ///**
 // * this useraction asks the given codearea to insert the currently copied string
 // * at the current position
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class PasteUserAction extends UserAction {
 //    private CodeArea codeArea;

@@ -11,7 +11,7 @@ import javax.swing.text.BadLocationException;
  * This class is a collection of useful functionallity often needed when working
  * with JTextPanes.
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class JTextPaneToolbox {
 

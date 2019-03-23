@@ -6,7 +6,7 @@ import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressio
 
 /**
  *
- * @author Lukas, Holger
+ * @author Lukas Stapelbroek, Holger Klein
  *
  */
 public class BooleanExpListNode {

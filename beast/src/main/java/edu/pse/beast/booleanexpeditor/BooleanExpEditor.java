@@ -23,7 +23,7 @@
 ///**
 // * The main class of this package that serves as an interface to the outside.
 // * Main "Controller" as part of the MVC-Pattern.
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class BooleanExpEditor implements DisplaysStringsToUser {
 //    private final BooleanExpEditorWindow window;

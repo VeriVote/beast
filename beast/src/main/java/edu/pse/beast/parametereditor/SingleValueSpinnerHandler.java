@@ -8,7 +8,7 @@ import javax.swing.event.ChangeListener;
  * The SingleValueSpinnerHandler handles all user inputs on the ParameterEditor
  * which use one JSpinner.
  *
- * @author Jonas
+ * @author Jonas Wohnig
  */
 public class SingleValueSpinnerHandler implements ChangeListener {
     private final JSpinner spinner;

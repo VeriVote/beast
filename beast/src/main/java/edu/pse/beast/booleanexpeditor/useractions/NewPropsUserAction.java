@@ -9,7 +9,7 @@
 ///**
 // * UserAction subclass responsible for creating a new PreAndPostConditionsDescription object
 // * and loading it into the editor and propertylist.
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class NewPropsUserAction extends UserAction {
 //    private final BooleanExpEditor booleanExpEditor;

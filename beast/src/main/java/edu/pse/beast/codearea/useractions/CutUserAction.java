@@ -15,7 +15,7 @@
 // * This useraction takes the selected text in a given codearea and copies it
 // * to the clipboard and aks the codearea to replace the selection by the
 // * empty string
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class CutUserAction extends UserAction  {
 //    private CodeArea codeArea;

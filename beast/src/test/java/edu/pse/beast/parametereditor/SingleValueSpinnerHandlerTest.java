@@ -8,7 +8,7 @@ import org.junit.Test;
 
 /**
  *
- * @author Jonas
+ * @author Jonas Wohnig
  */
 public class SingleValueSpinnerHandlerTest {
 

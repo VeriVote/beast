@@ -11,7 +11,7 @@ import java.util.concurrent.CountDownLatch;
  * stopped from the outside. When it finishes normally, it also counts down a
  * latch to notify other waiting threads.
  * 
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public class ThreadedBufferedReader implements Runnable {

@@ -7,8 +7,8 @@
 ///**
 // * This class uses the OptionPresenterFrame class to present given option objects
 // * to the user and thus give him the possiblity of changing settings.
-// * @author Holger
 // *
+// * @author Holger Klein
 // */
 //public final class OptionPresenter implements DisplaysStringsToUser {
 //    

@@ -1,7 +1,7 @@
 package edu.pse.beast.toolbox.antlr.booleanexp.generateast;
 
 /**
- * Created by holger on 08.03.17.
+ * @author Holger Klein
  */
 public class FormalPropertySyntaxTreeToAstTranslatorTest {
 //    private FormalPropertySyntaxTreeToAstTranslator translator = new FormalPropertySyntaxTreeToAstTranslator();

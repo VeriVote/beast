@@ -11,7 +11,7 @@
 // * JTExtPane for words the user wrote in it and supplying these words to 
 // * the given autocompletioncontroller so the controller can present these
 // * options to the user
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class FindWordsConcurrently implements Runnable {
 //    private final ArrayList<String> words = new ArrayList<>();

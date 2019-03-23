@@ -3,7 +3,7 @@ package edu.pse.beast.propertychecker;
 /**
  * This class saves a long value from CBMC, including the name
  *
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public class CBMCResultWrapperLong {

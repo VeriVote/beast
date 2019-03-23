@@ -23,7 +23,7 @@ import edu.pse.beast.toolbox.SortedIntegerList;
  * the line before it locked Every time a line gets locked/unlocked, it messages
  * all registered LockedLinesListener of this fact
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class LockedLinesHandler implements DocumentListener {
 

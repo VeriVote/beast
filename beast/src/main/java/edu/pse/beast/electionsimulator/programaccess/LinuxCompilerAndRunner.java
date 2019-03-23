@@ -13,7 +13,7 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
  * the linux implementation for checking the code This implementation uses gcc
  * for checking
  *
- * @author Lukas
+ * @author Lukas Stapelbroek
  *
  */
 public class LinuxCompilerAndRunner extends SystemSpecificCompilerAndExecutioner {

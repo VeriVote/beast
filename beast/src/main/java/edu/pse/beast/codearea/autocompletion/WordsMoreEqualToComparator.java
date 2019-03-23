@@ -6,7 +6,7 @@
 // * This comparator is used by the autocompletioncontroller to sort all
 // * autocompletionoptions by how similar they are to the beginning of the
 // * word the user already typed
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class WordsMoreEqualToComparator implements Comparator<AutocompletionOption>{
 //    private final String compareWord;

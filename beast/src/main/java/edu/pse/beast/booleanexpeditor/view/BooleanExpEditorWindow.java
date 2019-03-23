@@ -13,7 +13,7 @@
 //
 ///**
 // * The JFrame that serves as the View for the booleanexpeditor Package.
-// * @author Nikolai
+// * @author Nikolai Schnell
 // */
 //public class BooleanExpEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
 //    private static final long serialVersionUID = 1L;

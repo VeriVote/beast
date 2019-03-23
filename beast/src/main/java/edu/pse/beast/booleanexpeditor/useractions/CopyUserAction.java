@@ -5,7 +5,7 @@
 //
 ///**
 // * UserAction subclass responsible for copying text in the last focused BooleanExpEditorCodeArea.
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class CopyUserAction extends UserAction {
 //

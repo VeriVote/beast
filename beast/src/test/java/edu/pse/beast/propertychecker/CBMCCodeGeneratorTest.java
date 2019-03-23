@@ -21,7 +21,7 @@
 // * different parts of the CodeGeneration. Hence if a test fails, first check if you
 // * didn't change a String that separated the different parts of the Code before.
 // *
-// * @author Niels
+// * @author Niels Hanselmann
 // *
 // */
 //public class CBMCCodeGeneratorTest {

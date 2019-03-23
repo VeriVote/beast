@@ -18,7 +18,7 @@ import edu.pse.beast.codearea.errorhandling.CodeError;
  * BooleanExpGrammar.g in the BooleanExpression(s) of the CodeArea this class is
  * an attribute of.
  *
- * @author Nikolai
+ * @author Nikolai Schnell
  */
 public final class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListener {
     private static BooleanExpEditorGrammarErrorFinder finder;

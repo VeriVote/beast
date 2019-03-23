@@ -6,7 +6,7 @@
 //
 ///**
 // * Class extending CodeArea Class of package codearea and giving it extra functionality specific to BooleanExpEditor.
-// * @author Nikolai
+// * @author Nikolai Schnell
 // */
 //public class BooleanExpCodeArea extends CodeArea {
 //    private final BooleanExpANTLRHandler antlrHandler;

@@ -6,7 +6,7 @@
 //
 ///**
 // * Class to perform and undo deletions from the property list.
-// * @author Justin
+// * @author Justin Hecht
 // *
 // */
 //public class DeleteDescriptionAction {

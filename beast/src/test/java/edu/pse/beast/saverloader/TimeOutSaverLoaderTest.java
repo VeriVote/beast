@@ -11,7 +11,7 @@ import edu.pse.beast.saverloader.staticsaverloaders.TimeOutSaverLoader;
 /**
  * JUnit Testclass for saverloader.StaticSaverLoaders.TimeOutSaverLoader.
  *
- * @author NikolaiLMS
+ * @author Nikolai Schnell
  */
 public class TimeOutSaverLoaderTest {
     private static TimeOut timeOut;

@@ -11,7 +11,7 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
 /**
  * Controller of the JTextPane for displaying errors in a BooleanExpEditorWindow
  *
- * @author Nikolai
+ * @author Nikolai Schnell
  */
 public class ErrorWindow {
 

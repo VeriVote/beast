@@ -30,7 +30,7 @@ import javafx.stage.WindowEvent;
  * The MainClass creates an CentralObjectProvider which creates all other parts
  * of the program and with it a BEASTCommunicator which coordinates them.
  *
- * @author Jonas
+ * @author Jonas Wohnig
  */
 public class MainClass extends Application {
 

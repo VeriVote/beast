@@ -10,7 +10,7 @@
 //
 ///**
 // * UserAction for loading a project
-// * @author Jonas
+// * @author Jonas Wohnig
 // */
 //public class LoadProjectUserAction extends UserAction {
 //    private final PropertyList propertyList;

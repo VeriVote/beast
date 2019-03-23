@@ -5,7 +5,7 @@
 //
 ///**
 // * UserAction subclass responsible for saving Properties whithout forcing a save dialog.
-// * @author NikolaiLMS
+// * @author Nikolai Schnell
 // */
 //public class SavePropsUserAction extends UserAction {
 //    private final BooleanExpEditor editor;

@@ -10,7 +10,7 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
 
 /**
  *
- * @author Niels
+ * @author Niels Hanselmann
  */
 public abstract class StringResourceProvider {
 

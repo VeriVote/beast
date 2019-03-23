@@ -11,7 +11,7 @@
 //
 ///**
 // *
-// * @author Holger-Desktop
+// * @author Holger Klein
 // */
 //public class LoadElectionUserAction extends UserAction {
 //

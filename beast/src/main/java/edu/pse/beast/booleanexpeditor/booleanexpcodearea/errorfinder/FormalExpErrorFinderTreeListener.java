@@ -51,7 +51,7 @@ import edu.pse.beast.types.OutputType;
 
 /**
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class FormalExpErrorFinderTreeListener
         implements FormalPropertyDescriptionListener, VariableListListener, ElectionDescriptionChangeListener {

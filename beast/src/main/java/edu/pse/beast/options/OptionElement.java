@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * A parent class representing an Option.
  *
- * @author Lukas
+ * @author Lukas Stapelbroek
  */
 public abstract class OptionElement {
 

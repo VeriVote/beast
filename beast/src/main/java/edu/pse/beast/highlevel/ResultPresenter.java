@@ -3,7 +3,7 @@ package edu.pse.beast.highlevel;
 /**
  * The ResultPresenter presents results to the user.
  *
- * @author Jonas & Justin
+ * @author Jonas Wohnig, Justin Hecht
  */
 public interface ResultPresenter {
     /**

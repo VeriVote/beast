@@ -18,7 +18,7 @@ import edu.pse.beast.codearea.actionlist.Actionlist;
 
 /**
  *
- * @author Holger-Desktop
+ * @author Holger Klein
  */
 public class LockedLinesHandlerTest {
     private LockedLinesHandler lockedLinesHandler;
