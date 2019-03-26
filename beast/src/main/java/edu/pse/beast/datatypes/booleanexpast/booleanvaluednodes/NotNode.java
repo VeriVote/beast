@@ -41,11 +41,15 @@ public class NotNode extends BooleanExpressionNode {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (o == null || getClass() != o.getClass())
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
+        }
         NotNode notNode = (NotNode) o;
-        return followingNode != null ? followingNode.equals(notNode.followingNode) : notNode.followingNode == null;
+        return followingNode != null
+                ? followingNode.equals(notNode.followingNode)
+                        : notNode.followingNode == null;
     }
 }

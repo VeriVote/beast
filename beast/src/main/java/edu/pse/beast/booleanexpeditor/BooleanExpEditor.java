@@ -48,18 +48,28 @@
 //
 //    /**
 //     * Constructor
-//     * @param preConditionCodeArea the initial BooleanExpCodeArea object for the preConditions
-//     * @param postConditionCodeArea the initial BooleanExpCodeArea object for the postConditions
-//     * @param window the View this class forms the controller to
-//     * @param symbolicVarListController the controller for the SymbolicVarList displayed in window
-//     * @param errorWindow the controller for the TextPane displaying Errors in pre- and postconditions
-//     * @param changeHandler ChangeHandler
-//     * @param codeAreaFocusListener CodeAreaFocusListener
-//     * @param preAndPostConditionsDescription the initial PreAndPostConditionsDescription object
-//     * @param codeAreaBuilder the BuilderClass for building BooleanExpCodeAreas
-//     * @param objectRefsForBuilder the ObjectRefsForBuilder object, used for creating new BooleanExpCodeAreas
-//     * @param cEditor the CElectionDescriptionEditor object, used for error finding based on the currently loaded
-//     *                ElectionDescription and its inputs/outputs
+//     * @param preConditionCodeArea            the initial BooleanExpCodeArea
+//     *                                        object for the preConditions
+//     * @param postConditionCodeArea           the initial BooleanExpCodeArea
+//     *                                        object for the postConditions
+//     * @param window                          the view this class forms the
+//     *                                        controller to
+//     * @param symbolicVarListController       the controller for the SymbolicVarList
+//     *                                        displayed in window
+//     * @param errorWindow                     the controller for the TextPane displaying
+//     *                                        errors in pre- and postconditions
+//     * @param changeHandler                   ChangeHandler
+//     * @param codeAreaFocusListener           CodeAreaFocusListener
+//     * @param preAndPostConditionsDescription the initial PreAndPostConditionsDescription
+//     *                                        object
+//     * @param codeAreaBuilder                 the BuilderClass for building
+//     *                                        BooleanExpCodeAreas
+//     * @param objectRefsForBuilder            the ObjectRefsForBuilder object,
+//     *                                        used for creating new BooleanExpCodeAreas
+//     * @param cEditor                         the CElectionDescriptionEditor object,
+//     *                                        used for error finding based on
+//     *                                        the currently loaded
+//     *                                        ElectionDescription and its inputs/outputs
 //     * @param fileChooser the FileChooser object used for saving and loading files
 //     */
 //    BooleanExpEditor(BooleanExpCodeArea preConditionCodeArea,
@@ -140,8 +150,10 @@
 //        symbolicVarListController.updateStringRes(stringLoaderInterface);
 //        menuBarHandler.updateStringRes(stringLoaderInterface);
 //        toolBarHandler.updateStringRes(stringLoaderInterface);
-//        fileChooser.updateStringRessourceLoader(stringLoaderInterface.getBooleanExpEditorStringResProvider()
-//                .getBooleanExpEditorWindowStringRes());
+//        fileChooser.updateStringRessourceLoader(
+//                stringLoaderInterface.getBooleanExpEditorStringResProvider()
+//                .getBooleanExpEditorWindowStringRes()
+//        );
 //    }
 //
 //    /**
@@ -157,13 +169,16 @@
 //
 //    /**
 //     * Loads and displays the given PreAndPostConditionsDescription Object.
-//     * @param preAndPostConditionsDescription The PreAndPostConditionsDescription Object
-//     * @param loadedFromPropertyList boolean that is used to know whether the object is loaded from the propertylist,
-//     *                               or from inside the editor, used for SaveBeforeChange handling
+//     * @param preAndPostConditionsDescription the PreAndPostConditionsDescription object
+//     * @param loadedFromPropertyList          boolean that is used to know whether
+//     *                                        the object is loaded from the property list,
+//     *                                        or from inside the editor, used for
+//     *                                        SaveBeforeChange handling
 //     * @return a boolean stating the success of the loading
 //     */
-//    public boolean letUserEditPreAndPostConditions(PreAndPostConditionsDescription preAndPostConditionsDescription,
-//                                                   boolean loadedFromPropertyList) {
+//    public boolean letUserEditPreAndPostConditions(
+//                        PreAndPostConditionsDescription preAndPostConditionsDescription,
+//                        boolean loadedFromPropertyList) {
 //        if (!this.loadedFromPropertyList && changeHandler.hasChanged()) {
 //            if (fileChooser.openSaveChangesDialog(getCurrentlyLoadedPreAndPostCondition())) {
 //                loadNewProperties(preAndPostConditionsDescription);
@@ -181,14 +196,18 @@
 //
 //    /**
 //     * Loads the given PreAndPostConditions object into the BooleanExpEditor
-//     * @param preAndPostConditionsDescription the PreAndPostConditions object that should be loaded in the editor
+//     * @param preAndPostConditionsDescription the PreAndPostConditions object
+//     *                                        that should be loaded in the editor
 //     */
-//    public void loadNewProperties(PreAndPostConditionsDescription preAndPostConditionsDescription) {
+//    public void loadNewProperties(PreAndPostConditionsDescription
+//                                      preAndPostConditionsDescription) {
 //        updatePreAndPostConditionObject();
 //        currentlyLoadedPreAndPostCondition = preAndPostConditionsDescription;
-//        symbolicVarListController.setSymbVarList(preAndPostConditionsDescription.getSymbolicVariableList());
+//        symbolicVarListController.setSymbVarList(
+//            preAndPostConditionsDescription.getSymbolicVariableList());
 //        window.setNewTextpanes();
-//        changeHandler.addNewTextPanes(window.getPreConditionTextPane(), window.getPostConditionTextPane());
+//        changeHandler.addNewTextPanes(window.getPreConditionTextPane(),
+//                                      window.getPostConditionTextPane());
 ////
 ////        cEditor.removeListener(preConditionCodeArea.getVariableErrorFinder());
 ////        cEditor.removeListener(postConditionCodeArea.getVariableErrorFinder());
@@ -203,14 +222,21 @@
 //
 //        preConditionCodeArea.getAutoComplCtrl().stopThread();
 //        postConditionCodeArea.getAutoComplCtrl().stopThread();
-//        
-//        preConditionCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
-//                window.getPreConditionTextPane(), window.getPreConditionScrollPane(),
-//                symbolicVarListController.getSymbolicVariableList(), cEditor);
-//        postConditionCodeArea = codeAreaBuilder.createBooleanExpCodeAreaObject(objectRefsForBuilder,
-//                window.getPostConditionTextPane(), window.getPostConditionScrollPane(),
-//                symbolicVarListController.getSymbolicVariableList(), cEditor);
-//
+//        preConditionCodeArea =
+//            codeAreaBuilder.createBooleanExpCodeAreaObject(
+//                objectRefsForBuilder, window.getPreConditionTextPane(),
+//                window.getPreConditionScrollPane(),
+//                symbolicVarListController.getSymbolicVariableList(),
+//                cEditor
+//            );
+//        postConditionCodeArea =
+//            codeAreaBuilder.createBooleanExpCodeAreaObject(
+//                objectRefsForBuilder,
+//                window.getPostConditionTextPane(),
+//                window.getPostConditionScrollPane(),
+//                symbolicVarListController.getSymbolicVariableList(),
+//                cEditor
+//            );
 //        for (int i = 0; i < userActions.size(); i++) {
 //            UserAction get = userActions.get(i);
 //            char c = userActionChars.get(i);
@@ -243,11 +269,13 @@
 //        this.findErrorsAndDisplayThem();
 //        this.window.setWindowTitle(preAndPostConditionsDescription.getName());
 //        changeHandler.updatePreValues();
-//        objectRefsForBuilder.getOptionIF().getBooleanExpEditorOptions(this, objectRefsForBuilder).reapply();
+//        objectRefsForBuilder.getOptionIF()
+//            .getBooleanExpEditorOptions(this, objectRefsForBuilder).reapply();
 //    }
 //
 //    /**
-//     * Method for checking if the currently loaded PreAndPostConditionsDescription Object contains errors.
+//     * Method for checking whether the currently loaded
+//     * PreAndPostConditionsDescription Object contains errors.
 //     * @return true if there are no errors, false otherwise
 //     */
 //    public boolean isCorrect() {
@@ -255,8 +283,8 @@
 //    }
 //
 //    /**
-//     * Updates the currentlyLoadedPreAndPostCondition object (model) according to the current state of the
-//     * BooleanExpEditorWindow (View).
+//     * Updates the currentlyLoadedPreAndPostCondition object (model)
+//     * according to the current state of the BooleanExpEditorWindow (View).
 //     */
 //    public void updatePreAndPostConditionObject() {
 //        currentlyLoadedPreAndPostCondition.setPreConditionsDescription(
@@ -268,7 +296,8 @@
 //    }
 //
 //    /**
-//     * Getter, used by Copy, Paste, Cut, Redo and Undo UserActions, to get the last focused CodeArea.
+//     * Getter, used by Copy, Paste, Cut, Redo and Undo UserActions,
+//     * to get the last focused CodeArea.
 //     * @return the CodeAreaFocusListener instance of this class
 //     */
 //    public CodeAreaFocusListener getCodeAreaFocusListener() {
@@ -284,8 +313,9 @@
 //    }
 //
 //    /**
-//     * Getter, used by SaveProps/SaveAsProps/LoadProps and NewProps UserActions, to check whether the used wants to
-//     * save if changes have been made since last save/load.
+//     * Getter, used by SaveProps/SaveAsProps/LoadProps and NewProps
+//     * UserActions, to check whether the used wants to save if changes have
+//     * been made since last save/load.
 //     * @return the ChangeHandler
 //     */
 //    public ChangeHandler getChangeHandler() {
@@ -293,7 +323,8 @@
 //    }
 //
 //    /**
-//     * Getter, used by SaveProps/SaveAsProps/LoadProps and NewProps UserActions to load and save files containing
+//     * Getter, used by SaveProps/SaveAsProps/LoadProps and NewProps
+//     * UserActions to load and save files containing
 //     * PreAndPostConditionsDescription objects.
 //     * @return the FileChooser
 //     */
@@ -319,7 +350,8 @@
 //    }
 //
 //    /**
-//     * Getter for the PropertyListController, used when new Property is created to add it to the PropertyList.
+//     * Getter for the PropertyListController, used when new Property
+//     * is created to add it to the PropertyList.
 //     * @return propertyListController
 //     */
 //    public PropertyList getPropertyListController() {

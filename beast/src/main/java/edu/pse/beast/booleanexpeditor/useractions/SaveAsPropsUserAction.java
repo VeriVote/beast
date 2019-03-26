@@ -25,10 +25,13 @@
 //
 //    @Override
 //    public void perform() {
-//        PreAndPostConditionsDescription currentlyLoaded = editor.getCurrentlyLoadedPreAndPostCondition();
+//        PreAndPostConditionsDescription currentlyLoaded =
+//            editor.getCurrentlyLoadedPreAndPostCondition();
 //        if (fileChooser.saveObject(currentlyLoaded, true)) {
 //            editor.getChangeHandler().updatePreValues();
-//            editor.getView().setWindowTitle(editor.getCurrentlyLoadedPreAndPostCondition().getName());
+//            editor.getView().setWindowTitle(
+//                editor.getCurrentlyLoadedPreAndPostCondition().getName()
+//            );
 //            editor.findErrorsAndDisplayThem();
 //        }
 //    }

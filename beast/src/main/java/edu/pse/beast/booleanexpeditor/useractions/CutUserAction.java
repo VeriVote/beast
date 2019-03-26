@@ -21,6 +21,7 @@
 //
 //    @Override
 //    public void perform() {
-//        editor.getCodeAreaFocusListener().getLastFocused().getUserActionList().getActionById("cut").perform();
+//        editor.getCodeAreaFocusListener().getLastFocused()
+//        .getUserActionList().getActionById("cut").perform();
 //    }
 //}

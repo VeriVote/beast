@@ -53,5 +53,4 @@ public interface PreAndPostConditionsDescriptionSource {
 //   * @return
 //   */
 //  public List<Integer> referenceResult(List<Result> results);
-//    
 }

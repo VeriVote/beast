@@ -10,10 +10,11 @@
 ///**
 // * creates and updates the toolbar of a celectiondescriptioneditor. It also
 // * links the useractions to the buttons
-// * 
+// *
 // * @author Holger Klein
 // */
-//public class CElectionEditorToolbarHandler extends ToolbarHandler implements DisplaysStringsToUser {
+//public class CElectionEditorToolbarHandler
+//        extends ToolbarHandler implements DisplaysStringsToUser {
 //    private final CCodeEditorWindow cgui;
 //
 //    /**
@@ -23,15 +24,20 @@
 //     * @param stringif the string interface
 //     * @param cgui the c editor gui
 //     */
-//    public CElectionEditorToolbarHandler(ActionIdAndListener[] actionIdAndListener, ImageResourceProvider imageRes,
-//            StringLoaderInterface stringif, CCodeEditorWindow cgui) {
-//        super(imageRes, stringif.getCElectionEditorStringResProvider().getToolbarTipStringRes(), actionIdAndListener,
-//                cgui.getToolBar());
+//    public CElectionEditorToolbarHandler(ActionIdAndListener[] actionIdAndListener,
+//                                         ImageResourceProvider imageRes,
+//                                         StringLoaderInterface stringif,
+//                                         CCodeEditorWindow cgui) {
+//        super(imageRes,
+//              stringif.getCElectionEditorStringResProvider().getToolbarTipStringRes(),
+//              actionIdAndListener,
+//              cgui.getToolBar());
 //        this.cgui = cgui;
 //    }
 //
 //    @Override
 //    public void updateStringRes(StringLoaderInterface stringResIF) {
-//        updateTooltips(stringResIF.getCElectionEditorStringResProvider().getToolbarTipStringRes());
+//        updateTooltips(stringResIF.getCElectionEditorStringResProvider()
+//                       .getToolbarTipStringRes());
 //    }
 //}

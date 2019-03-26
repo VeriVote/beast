@@ -12,7 +12,7 @@ import org.junit.BeforeClass;
  * @author Justin Hecht
  */
 public class ResultMultiArrayDisplayTest {
-    ResultPresenterWindow win;
+    private ResultPresenterWindow win;
 
     @BeforeClass
     public static void setUpBeforeClass() throws Exception {

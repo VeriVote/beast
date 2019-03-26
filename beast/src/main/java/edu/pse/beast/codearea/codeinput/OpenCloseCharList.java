@@ -19,16 +19,19 @@ public class OpenCloseCharList {
 
     public boolean isOpenChar(char c) {
         for (int i = 0; i < openCloseChars.size(); ++i) {
-            if (openCloseChars.get(i).getOpen() == c)
+            if (openCloseChars.get(i).getOpen() == c) {
                 return true;
+            }
         }
         return false;
     }
 
     public OpenCloseChar getOpenCloseChar(char c) {
         for (int i = 0; i < openCloseChars.size(); ++i) {
-            if (openCloseChars.get(i).getOpen() == c || openCloseChars.get(i).getClose() == c)
+            if (openCloseChars.get(i).getOpen() == c
+                    || openCloseChars.get(i).getClose() == c) {
                 return openCloseChars.get(i);
+            }
         }
         return null;
     }
@@ -41,8 +44,9 @@ public class OpenCloseCharList {
 
     public boolean isCloseChar(char c) {
         for (int i = 0; i < openCloseChars.size(); ++i) {
-            if (openCloseChars.get(i).getClose() == c)
+            if (openCloseChars.get(i).getClose() == c) {
                 return true;
+            }
         }
         return false;
     }

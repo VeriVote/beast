@@ -16,7 +16,7 @@ public class PropertyChecker implements ResultCheckerCommunicator {
     private final String checkerID;
 
     /**
-     * 
+     *
      * @param checkerID the ID for the checker to be used
      */
     public PropertyChecker(String checkerID) {

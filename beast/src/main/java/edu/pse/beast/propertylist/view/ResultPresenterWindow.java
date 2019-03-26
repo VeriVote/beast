@@ -35,8 +35,8 @@ import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
 public class ResultPresenterWindow extends JFrame {
-
     private static final long serialVersionUID = 1L;
+    private static final String PATH_TO_EYE = "/core/images/other/eye.png";
 
     StringResourceLoader srl;
 
@@ -45,8 +45,7 @@ public class ResultPresenterWindow extends JFrame {
     private JTextPane result;
     private FailureExample example;
 
-    private final String pathToEye = "/core/images/other/eye.png";
-    private final ImageIcon eyeIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToEye);
+    private final ImageIcon eyeIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + PATH_TO_EYE);
 
     /**
      *

@@ -5,23 +5,28 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import edu.pse.beast.codearea.errorhandling.CodeError;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.TypeExpression;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
+import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.*;
 import edu.pse.beast.types.InternalTypeContainer;
 
 /**
  *
  * @author Holger Klein
  */
-public class BooleanExpErrorFactory {
+public final class BooleanExpErrorFactory {
+    private static final String[] ERROR_IDS =
+        {
+        "antlr", "var_not_decl", "too_many_vars_passed", "wrong_var_type_passed",
+        "incomparable_types", "incomparable_list_sizes", "wrong_var_passed_to_votesum",
+        "number_must_be_greater_0"
+        };
 
-    private static final String[] ERRORIDS =
-        {"antlr", "var_not_decl", "too_many_vars_passed", "wrong_var_type_passed",
-         "incomparable_types", "incomparable_list_sizes", "wrong_var_passed_to_votesum",
-         "number_must_be_greater_0" };
+    private BooleanExpErrorFactory() {}
 
     private static int getErrorNum(String id) {
-        for (int i = 0; i < ERRORIDS.length; ++i) {
-            if (ERRORIDS[i].equals(id))
+        for (int i = 0; i < ERROR_IDS.length; ++i) {
+            if (ERROR_IDS[i].equals(id)) {
                 return i;
+            }
         }
         return -1;
     }
@@ -32,7 +37,8 @@ public class BooleanExpErrorFactory {
      * @param ctx the context* of the symbolic variable expression
      * @return the error object that describes the problem
      */
-    public static CodeError createVarNotDeclaredErr(FormalPropertyDescriptionParser.SymbolicVarExpContext ctx) {
+    public static CodeError
+                createVarNotDeclaredErr(SymbolicVarExpContext ctx) {
         CodeError err = generateStandardError(ctx, "var_not_decl");
         err.setExtraInfo("var_name", ctx.Identifier().getText());
         return err;
@@ -59,7 +65,7 @@ public class BooleanExpErrorFactory {
      * @param ctx the context of the symbolic variable expression
      * @return the errorobject that describes the problem
      */
-    public static CodeError createTooManyVarsPassedError(FormalPropertyDescriptionParser.PassTypeContext ctx) {
+    public static CodeError createTooManyVarsPassedError(PassTypeContext ctx) {
 
         CodeError err = generateStandardError(ctx, "too_many_vars_passed");
         err.setExtraInfo("var_name", ctx.getText());
@@ -80,8 +86,10 @@ public class BooleanExpErrorFactory {
         CodeError err = generateStandardError(ctx, "wrong_var_type_passed");
 
         err.setExtraInfo("var_name", ctx.getText());
-        err.setExtraInfo("passed_type", currentVarExp.getInternalTypeContainer().getInternalType().toString());
-        err.setExtraInfo("expected_type", cont.getAccesTypeIfList().toString());
+        err.setExtraInfo(
+            "passed_type",
+            currentVarExp.getInternalTypeContainer().getInternalType().toString());
+        err.setExtraInfo("expected_type", cont.getAccessTypeIfList().toString());
         return err;
     }
 
@@ -93,7 +101,7 @@ public class BooleanExpErrorFactory {
      * @param rhsCont the right hand side content
      * @return the error that describes the problem
      */
-    static CodeError createCantCompareDifferentListLevels(FormalPropertyDescriptionParser.ComparisonExpContext ctx,
+    static CodeError createCantCompareDifferentListLevels(ComparisonExpContext ctx,
             InternalTypeContainer lhsCont, InternalTypeContainer rhsCont) {
         CodeError err = generateStandardError(ctx, "incomparable_list_sizes");
         err.setExtraInfo("lhs_list_size", String.valueOf(lhsCont.getListLvl()));
@@ -109,7 +117,7 @@ public class BooleanExpErrorFactory {
      * @param rhsCont the right hand side content
      * @return the code error
      */
-    static CodeError createCantCompareTypes(FormalPropertyDescriptionParser.ComparisonExpContext ctx,
+    static CodeError createCantCompareTypes(ComparisonExpContext ctx,
             InternalTypeContainer lhsCont, InternalTypeContainer rhsCont) {
         CodeError err = generateStandardError(ctx, "incomparable_types");
         err.setExtraInfo("lhs_type", lhsCont.getInternalType().toString());
@@ -124,7 +132,7 @@ public class BooleanExpErrorFactory {
      * @param passedType the passed type
      * @return the code error
      */
-    static CodeError createWrongVarToVotesumError(FormalPropertyDescriptionParser.VoteSumExpContext ctx,
+    static CodeError createWrongVarToVotesumError(VoteSumExpContext ctx,
             InternalTypeContainer passedType) {
         CodeError err = generateStandardError(ctx, "wrong_var_passed_to_votesum");
         err.setExtraInfo("var_type", passedType.getInternalType().toString());
@@ -138,7 +146,7 @@ public class BooleanExpErrorFactory {
      * @param passedType the passed type
      * @return the code error
      */
-    static CodeError createWrongVarToVotesumError(FormalPropertyDescriptionParser.VoteSumUniqueExpContext ctx,
+    static CodeError createWrongVarToVotesumError(VoteSumUniqueExpContext ctx,
             InternalTypeContainer passedType) {
         CodeError err = generateStandardError(ctx, "wrong_var_passed_to_votesum_unique");
         err.setExtraInfo("var_type", passedType.getInternalType().toString());
@@ -163,7 +171,7 @@ public class BooleanExpErrorFactory {
      * @param ctx the election expression context
      * @return the code error
      */
-    static CodeError createNumberMustBeGreaterZeroElect(FormalPropertyDescriptionParser.ElectExpContext ctx) {
+    static CodeError createNumberMustBeGreaterZeroElect(ElectExpContext ctx) {
         CodeError err = generateStandardError(ctx, "number_must_be_greater_0");
         return err;
     }
@@ -174,7 +182,7 @@ public class BooleanExpErrorFactory {
      * @param ctx the vote expression context
      * @return the code error
      */
-    static CodeError createNumberMustBeGreaterZeroVotes(FormalPropertyDescriptionParser.VoteExpContext ctx) {
+    static CodeError createNumberMustBeGreaterZeroVotes(VoteExpContext ctx) {
         CodeError err = generateStandardError(ctx, "number_must_be_greater_0");
         return err;
     }

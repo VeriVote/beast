@@ -5,13 +5,12 @@
 // * @author Holger Klein
 // */
 //public class CEditorWindowStarter implements Runnable {
-//    
 //    private final CCodeEditorWindow window = new CCodeEditorWindow();
-//    
+//
 //    public CCodeEditorWindow getGUIWindow() {
 //        return window;
 //    }
-//    
+//
 //    public void start() {
 //        /* Create and display the form */
 //        java.awt.EventQueue.invokeLater(this);

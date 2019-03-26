@@ -34,7 +34,7 @@
     candidate always wins regardless of the votes cast. Thus, the postcondition always leads to counterexamples being
     found - if the preconditions can be satisfied.
     To see that this is the case, enter "2 != 2;" as a precondition. If you start an analysis now, you will find
-    that it does NOT find a counterexample. This is because it couldn't find a single example which satisfied
+    that it does NOT find a counterexample. This is because it could not find a single example which satisfied
     the first expression - 2 != 2 - for obvious reasons.
     To get a taste of the different ways one can set preconditions to change the votes cast, delete this expression.
     Then, write as a precondition: "VOTES1(VOTER_AT_POS(0)) == CAND_AT_POS(2);" and run an analysis. If you check
@@ -77,7 +77,7 @@
     desired position, starting at 0. It works analogously for candidates
     and seats: CAND_AT_POS and SEAT_AT_POS. Notice the abbreviation used: CAND instead of CANDIDATE. This saves typing
     and also highlights the word can which is a nice morale boost every time one writes this construct.
-    It is VERY IMPORTANT to note that the error checker doesn't check bounds on these passed numbers.
+    It is VERY IMPORTANT to note that the error checker does not check bounds on these passed numbers.
     This means that if the user types VOTER_AT_POS(5), yet tests the property for less than five voters,
     the resulting behaviour is undefined. Instead of a simple integer, any legal expression which
     results in an integer, such as sums involving constants
@@ -120,7 +120,7 @@
         <li>Greater than or equal: >=</li>
     </ul>
     When using greater/lesser comparisons with voters, candidates or seats what's compared is their placement. So,
-    VOTER_AT_POS(0) < VOTER_AT_POS(1) would be true, whereas CAND_AT_POS(5) >= CAND_AT_POS(6) wouldn't be.
+    VOTER_AT_POS(0) < VOTER_AT_POS(1) would be true, whereas CAND_AT_POS(5) >= CAND_AT_POS(6) would not be.
     <h2 id="quantifiers">Quantifiers</h2>
     May times, one wants to define a property which should hold for all or at least one Voter,Candidate or Seat.
     This can be accomplished using quantifiers.

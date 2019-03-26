@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.google.gson.JsonSyntaxException;
+
 import edu.pse.beast.booleanexpeditor.booleanexpcodearea.errorfinder.BooleanExpEditorGeneralErrorFinder;
 import edu.pse.beast.codeareajavafx.BoundedVarCodeArea;
 import edu.pse.beast.codeareajavafx.NewPropertyCodeArea;
@@ -258,7 +260,7 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 
             try {
                 newDescription = propSaverLoader.createFromSaveString(json);
-            } catch (Exception e) {
+            } catch (JsonSyntaxException e) {
                 e.printStackTrace();
             }
 
@@ -415,5 +417,4 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
     public void setFocused(NewPropertyCodeArea pane) {
         this.focusedPane = pane;
     }
-
 }

@@ -34,8 +34,9 @@ public class Actionlist {
      */
     public void undoLast() {
         msgAllListenerStarted();
-        if (lastPerformed.isEmpty())
+        if (lastPerformed.isEmpty()) {
             return;
+        }
         Action latestAcc = lastPerformed.get(lastPerformed.size() - 1);
         lastPerformed.remove(lastPerformed.size() - 1);
         latestAcc.undo();
@@ -48,8 +49,9 @@ public class Actionlist {
      */
     public void redoLast() {
         msgAllListenerStarted();
-        if (lastUndone.isEmpty())
+        if (lastUndone.isEmpty()) {
             return;
+        }
         Action latestUndoneAcc = lastUndone.get(lastUndone.size() - 1);
         lastUndone.remove(lastUndone.size() - 1);
         latestUndoneAcc.redo();
@@ -76,12 +78,14 @@ public class Actionlist {
     }
 
     private void msgAllListenerStarted() {
-        for (ActionlistListener ad : listener)
+        for (ActionlistListener ad : listener) {
             ad.undoingAction();
+        }
     }
 
     private void msgAllListenerEnded() {
-        for (ActionlistListener ad : listener)
+        for (ActionlistListener ad : listener) {
             ad.finishedUndoingAction();
+        }
     }
 }

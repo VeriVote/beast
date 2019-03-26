@@ -38,15 +38,18 @@
 //     * @param loader the loader for the string resources
 //     * @param emptyNameTextFieldError error that gets shown when the string is empty
 //     */
-//    public ElectionTemplateChooser(NewElectionUserAction action, ElectionTemplateHandler electionTemplateHandler,
-//            StringResourceLoader loader, String emptyNameTextFieldError) {
+//    public ElectionTemplateChooser(NewElectionUserAction action,
+//                                   ElectionTemplateHandler electionTemplateHandler,
+//                                   StringResourceLoader loader,
+//                                   String emptyNameTextFieldError) {
 //        initComponents();
 //
 //        createButton.setText(loader.getStringFromID("create"));
 //
 //        createButton.addActionListener((ae) -> {
 //            if (nameField.getText().equals("")) {
-//                JOptionPane.showMessageDialog(null, emptyNameTextFieldError, "", JOptionPane.OK_OPTION);
+//                JOptionPane.showMessageDialog(null, emptyNameTextFieldError,
+//                                              "", JOptionPane.OK_OPTION);
 //            } else {
 //              ElectionTypeContainer container =
 //                  new ElectionTypeContainer(
@@ -59,12 +62,14 @@
 //            }
 //        });
 //
-//        for (Iterator<InputType> iterator = TypeLoader.getAvailableInputTypes().iterator(); iterator.hasNext();) {
+//        for (Iterator<InputType> iterator = TypeLoader.getAvailableInputTypes().iterator();
+//                iterator.hasNext();) {
 //          InputType inType = (InputType) iterator.next();
 //      inputList.addItem(inType.getInputIDinFile());
 //    }
 //
-//        for (Iterator<OutputType> iterator = TypeLoader.getAvailableOutputTypes().iterator(); iterator.hasNext();) {
+//        for (Iterator<OutputType> iterator = TypeLoader.getAvailableOutputTypes().iterator();
+//                iterator.hasNext();) {
 //          OutputType inType = (OutputType) iterator.next();
 //      resultList.addItem(inType.getOutputIDinFile());
 //    }
@@ -101,7 +106,8 @@
 //
 //    javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
 //    getContentPane().setLayout(layout);
-//    layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//    layout.setHorizontalGroup(
+//            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 //        .addGroup(layout.createSequentialGroup().addGroup(layout
 //            .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 //            .addGroup(layout.createSequentialGroup().addComponent(jLabel2)
@@ -111,7 +117,8 @@
 //            .addGroup(layout.createSequentialGroup().addComponent(jLabel1)
 //                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
 //                .addComponent(inputList, javax.swing.GroupLayout.PREFERRED_SIZE,
-//                    javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+//                    javax.swing.GroupLayout.DEFAULT_SIZE,
+//                    javax.swing.GroupLayout.PREFERRED_SIZE)))
 //            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 //                .addGroup(layout.createSequentialGroup().addGap(0, 252, Short.MAX_VALUE)
 //                    .addComponent(createButton))
@@ -119,18 +126,28 @@
 //                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 //                    .addComponent(nameField)))
 //            .addContainerGap()));
-//    layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout
-//        .createSequentialGroup().addContainerGap()
-//        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(jLabel1)
-//            .addComponent(inputList, javax.swing.GroupLayout.PREFERRED_SIZE,
-//                javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-//            .addComponent(name).addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE,
-//                javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-//        .addGap(32, 32, 32)
-//        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(jLabel2)
-//            .addComponent(createButton).addComponent(resultList, javax.swing.GroupLayout.PREFERRED_SIZE,
-//                javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-//        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+//    layout.setVerticalGroup(
+//            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//        .addGroup(layout.createSequentialGroup().addContainerGap()
+//            .addGroup(
+//                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+//                .addComponent(jLabel1).addComponent(
+//                    inputList, javax.swing.GroupLayout.PREFERRED_SIZE,
+//                    javax.swing.GroupLayout.DEFAULT_SIZE,
+//                    javax.swing.GroupLayout.PREFERRED_SIZE)
+//                .addComponent(name).addComponent(
+//                    nameField, javax.swing.GroupLayout.PREFERRED_SIZE,
+//                    javax.swing.GroupLayout.DEFAULT_SIZE,
+//                    javax.swing.GroupLayout.PREFERRED_SIZE))
+//                .addGap(32, 32, 32)
+//            .addGroup(
+//                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+//                    .addComponent(jLabel2).addComponent(createButton)
+//                    .addComponent(
+//                        resultList, javax.swing.GroupLayout.PREFERRED_SIZE,
+//                        javax.swing.GroupLayout.DEFAULT_SIZE,
+//                        javax.swing.GroupLayout.PREFERRED_SIZE)
+//            ).addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 //
 //    pack();
 //  } // </editor-fold>//GEN-END:initComponents

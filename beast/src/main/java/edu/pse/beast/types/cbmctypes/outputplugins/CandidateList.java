@@ -16,7 +16,7 @@ public class CandidateList extends CBMCOutputType {
 
     @Override
     public String getOutputString() {
-        return UnifiedNameContainer.getStruct_candidateList();
+        return UnifiedNameContainer.getStructCandidateList();
     }
 
     @Override
@@ -54,10 +54,10 @@ public class CandidateList extends CBMCOutputType {
 
         code.addTab();
 
-        code.add(UnifiedNameContainer.getStruct_candidateList() + " tmp = " + UnifiedNameContainer.getVotingMethod()
+        code.add(UnifiedNameContainer.getStructCandidateList() + " tmp = " + UnifiedNameContainer.getVotingMethod()
                 + "(" + UnifiedNameContainer.getNewVotesName() + "1);");
 
-        code.add("unsigned int *tmp_result = tmp." + UnifiedNameContainer.getResult_arr_name() + ";");
+        code.add("unsigned int *tmp_result = tmp." + UnifiedNameContainer.getResultArrName() + ";");
 
         code.add("unsigned int " + UnifiedNameContainer.getNewResultName() + "1[" + UnifiedNameContainer.getCandidate()
                 + "];"); // create the array where the
@@ -91,10 +91,10 @@ public class CandidateList extends CBMCOutputType {
 
     @Override
     public CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code, int voteNumber) {
-        String temp = UnifiedNameContainer.getStruct_candidateList() + " tmp" + voteNumber + " = "
+        String temp = UnifiedNameContainer.getStructCandidateList() + " tmp" + voteNumber + " = "
                 + UnifiedNameContainer.getVotingMethod() + "(votes" + voteNumber + ");";
         code.add(temp);
-        String electX = UnifiedNameContainer.getStruct_candidateList() + " elect" + voteNumber + ";";
+        String electX = UnifiedNameContainer.getStructCandidateList() + " elect" + voteNumber + ";";
         code.add(electX);
         String forLoop = "for (int electLoop = 0; electLoop < " + UnifiedNameContainer.getCandidate()
                 + "; electLoop++) {";
@@ -117,11 +117,11 @@ public class CandidateList extends CBMCOutputType {
         code.add("int main() {");
         code.addTab();
 
-        String temp = "struct " + UnifiedNameContainer.getStruct_candidateList() + " tmp" + voteNumber + " = "
+        String temp = "struct " + UnifiedNameContainer.getStructCandidateList() + " tmp" + voteNumber + " = "
                 + UnifiedNameContainer.getVotingMethod() + "(ORIG_VOTES);";
         code.add(temp);
         String tempElect = "unsigned int *tempElect" + voteNumber + " = tmp" + voteNumber + "."
-                + UnifiedNameContainer.getStruct_candidateList() + ";";
+                + UnifiedNameContainer.getStructCandidateList() + ";";
         code.add(tempElect);
         String electX = "unsigned int elect" + voteNumber + "[" + UnifiedNameContainer.getCandidate() + "];";
         code.add(electX);
@@ -164,7 +164,7 @@ public class CandidateList extends CBMCOutputType {
 
     @Override
     public void addVerifyOutput(CodeArrayListBeautifier code) {
-        code.add("struct " + UnifiedNameContainer.getStruct_candidateList() + " tmp_result = "
+        code.add("struct " + UnifiedNameContainer.getStructCandidateList() + " tmp_result = "
                 + UnifiedNameContainer.getVotingMethod() + "(" + UnifiedNameContainer.getNewVotesName() + "1);");
 
         code.add("unsigned int " + UnifiedNameContainer.getNewResultName() + "1[" + UnifiedNameContainer.getCandidate()
@@ -179,7 +179,7 @@ public class CandidateList extends CBMCOutputType {
         // we do this, so our cbmc parser can read out the value of the
         // array
         code.add("" + UnifiedNameContainer.getNewResultName() + "1[i] = tmp_result."
-                + UnifiedNameContainer.getResult_arr_name() + "[i];");
+                + UnifiedNameContainer.getResultArrName() + "[i];");
 
         code.deleteTab();
         code.add("}"); // close the for loop

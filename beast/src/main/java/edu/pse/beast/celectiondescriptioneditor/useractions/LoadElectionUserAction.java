@@ -21,7 +21,7 @@
 //        super("load");
 //        this.cElectionDescriptionEditor = cElectionDescriptionEditor;
 //    }
-//    
+//
 //    @Override
 //    public void perform() {
 //        if (cElectionDescriptionEditor.getChangeHandler().hasChanged()) {
@@ -37,7 +37,8 @@
 //                cElectionDescriptionEditor.loadElectionDescription(loadedElectionDescription);
 //                cElectionDescriptionEditor.getFileChooser().setHasBeenSaved(true);
 //            } catch (BadLocationException e) {
-//                Logger.getLogger(NewElectionUserAction.class.getName()).log(Level.SEVERE, null, e);
+//                Logger.getLogger(NewElectionUserAction.class.getName())
+//                .log(Level.SEVERE, null, e);
 //            }
 //        }
 //    }

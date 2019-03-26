@@ -27,7 +27,14 @@ import edu.pse.beast.toolbox.ThreadedBufferedReader;
  */
 public abstract class SystemSpecificCompilerAndExecutioner {
 
-    private final String pathToTempFolder = "/core/c_tempfiles/";
+    private static final String PATH_TO_TEMP_FOLDER = "/core/c_tempfiles/";
+
+    private static final String DATA_FILE_ENDING = ".votingdata";
+    private static final String C_FILE_ENDING = ".c";
+    private static final String OBJECT_FILE_ENDING = ".obj";
+    private static final String BAT_FILE_ENDING = ".bat";
+    private static final String EXE_FILE_ENDING = ".exe";
+    private static final String OUT_FILE_ENDING = ".out";
 
     /**
      * constructor creates an error checker that compiles the c code and passes it
@@ -38,7 +45,8 @@ public abstract class SystemSpecificCompilerAndExecutioner {
         // because sometimes they
         // persist from the last time BEAST was run
         try {
-            FileUtils.cleanDirectory(new File(SuperFolderFinder.getSuperFolder() + pathToTempFolder));
+            FileUtils.cleanDirectory(
+                    new File(SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -50,37 +58,40 @@ public abstract class SystemSpecificCompilerAndExecutioner {
         List<String> toReturn = new ArrayList<String>();
         List<String> result = new ArrayList<String>();
         List<String> errors = new ArrayList<String>();
-        String absolutePath = SuperFolderFinder.getSuperFolder() + pathToTempFolder;
+        String absolutePath = SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER;
         String pathToNewFile = absolutePath + FileLoader.getNewUniqueName(absolutePath);
-        File dataFile = new File(pathToNewFile + ".votingdata");
+        File dataFile = new File(pathToNewFile + DATA_FILE_ENDING);
 
         // create two links to files, so in case an object file gets created we
         // can delete it afterwards too
-        File cFile = new File(pathToNewFile + ".c");
-        File objFile = new File(pathToNewFile + ".obj");
+        File cFile = new File(pathToNewFile + C_FILE_ENDING);
+        File objFile = new File(pathToNewFile + OBJECT_FILE_ENDING);
 
         // on windows we have to create a .bat file, so we create a reference to
         // the file
         // that will be created, to delete it afterwards
-        File batFile = new File(pathToNewFile + ".bat");
+        File batFile = new File(pathToNewFile + BAT_FILE_ENDING);
 
         // on windows a .exe file will be created
         // here it will be created, to be delete it afterwards
-        File exeFile = new File(pathToNewFile + ".exe");
+        File exeFile = new File(pathToNewFile + EXE_FILE_ENDING);
 
         // the file that gets created on linux that can then get called later
-        File outFile = new File(pathToNewFile + ".out");
+        File outFile = new File(pathToNewFile + OUT_FILE_ENDING);
 
         // write the code to the file
         FileSaver.writeStringLinesToFile(code, cFile);
-        Process process = compileCfile(cFile);
+        Process process = compileCFile(cFile);
 
         if (process != null) {
             CountDownLatch latch = new CountDownLatch(2);
-            ThreadedBufferedReader outReader = new ThreadedBufferedReader(
-                    new BufferedReader(new InputStreamReader(process.getInputStream())), result, latch, false);
+            ThreadedBufferedReader outReader =
+                new ThreadedBufferedReader(
+                    new BufferedReader(new InputStreamReader(process.getInputStream())),
+                    result, latch, false);
             ThreadedBufferedReader errReader = new ThreadedBufferedReader(
-                    new BufferedReader(new InputStreamReader(process.getErrorStream())), errors, latch, false);
+                    new BufferedReader(new InputStreamReader(process.getErrorStream())),
+                    errors, latch, false);
 
             resultToStoreIn.setLastTmpResult(result);
             resultToStoreIn.setLastTmpResult(errors);
@@ -102,12 +113,16 @@ public abstract class SystemSpecificCompilerAndExecutioner {
 
             if (programProcess != null) {
                 latch = new CountDownLatch(2);
-                outReader = new ThreadedBufferedReader(
-                        new BufferedReader(new InputStreamReader(programProcess.getInputStream())), result, latch,
-                        false);
-                errReader = new ThreadedBufferedReader(
-                        new BufferedReader(new InputStreamReader(programProcess.getErrorStream())), errors, latch,
-                        false);
+                outReader =
+                    new ThreadedBufferedReader(
+                        new BufferedReader(
+                            new InputStreamReader(programProcess.getInputStream())),
+                        result, latch, false);
+                errReader =
+                    new ThreadedBufferedReader(
+                        new BufferedReader(
+                            new InputStreamReader(programProcess.getErrorStream())),
+                        errors, latch, false);
 
                 // wait for the process to finish;
                 try {
@@ -142,16 +157,16 @@ public abstract class SystemSpecificCompilerAndExecutioner {
                     toReturn.add(winner);
                 }
             } else {
-                ErrorLogger.log("Couldn't compile the source file");
-                // deletes the temporary file, so it doesn't clog up the filesystem
+                ErrorLogger.log("Could not compile the source file");
+                // deletes the temporary file, so it does not clog up the filesystem
             }
             outReader.finish();
             errReader.finish();
         } else {
-            ErrorLogger.log("Couldn't compile the source file");
-            // deletes the temporary file, so it doesn't clog up the filesystem
+            ErrorLogger.log("Could not compile the source file");
+            // deletes the temporary file, so it does not clog up the filesystem
         }
-        // deletes the temporary file, so it doesn't clog up the filesystem
+        // deletes the temporary file, so it does not clog up the filesystem
         cFile.delete();
         objFile.delete();
         batFile.delete();
@@ -167,14 +182,14 @@ public abstract class SystemSpecificCompilerAndExecutioner {
      * @param toCheck the file to check
      * @return a process that is currently checking the file
      */
-    protected abstract Process compileCfile(File toCheck);
+    protected abstract Process compileCFile(File toCheck);
 
     /**
      *
-     * @param toRun a String that describes what name the file to run will have. The
-     *              implementation will have to add the OS specific file ending
-     * @param data  the data to be used by the program
-     * @return the running Process that is right now running
+     * @param toRun     a String that describes what name the file to run will have. The
+     *                  implementation will have to add the OS specific file ending.
+     * @param dataFile  the data to be used by the program.
+     * @return the running process that is running right now.
      */
     protected abstract Process runWithData(String toRun, File dataFile);
 }

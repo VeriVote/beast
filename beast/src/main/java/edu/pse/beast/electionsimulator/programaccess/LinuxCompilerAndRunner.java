@@ -19,57 +19,53 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
 public class LinuxCompilerAndRunner extends SystemSpecificCompilerAndExecutioner {
 
     // program that is to be used for checking
-    private final String compilerString = "gcc";
+    private static final String COMPILER_STRING = "gcc";
 
     // this flag prohibits that file are creates by the compiler and
     // only the syntax is checked
-    private final String findMissingReturnOption = "-Wreturn-type";
+    private static final String FIND_MISSING_RETURN_OPTION = "-Wreturn-type";
 
     // we want to compile to a specific name, so we can delete the file
     // then later on
-    private final String setOutputFileName = "-o ";
+    private static final String SET_OUTPUT_FILE_NAME = "-o ";
 
-    private final String enableUserInclude = "-I/";
-    private final String userIncludeFolder = "/core/user_includes/";
+    private static final String ENABLE_USER_INCLUDE = "-I/";
+    private static final String USER_INCLUDE_FOLDER = "/core/user_includes/";
 
-    // we want to compile all available c files, so the user doesn't have to
+    // we want to compile all available c files, so the user does not need to
     // specify anything
-    private final String cFileEnder = ".c";
+    private static final String C_FILE_ENDING = ".c";
 
-    // if gcc finds, that a return is missing, it prints out this error message.
-    // The error then
-    // stands in the format: "FILENANE:LINE:COLUMN warning:control reaches..."
-    private final String gccMissingReturnFound = "warning: control reaches end of non-void function";
-
-    // if gcc finds that a function is missing, it gets displayed like this:
-    private final String gccMissingFuctionFound = "warning: implicit declaration of function";
+    private static final String OUT_FILE_ENDING = ".out";
 
     @Override
-    protected Process compileCfile(File toCheck) {
-
+    protected Process compileCFile(File toCheck) {
         // the name of the file
-        String nameOfOutFile = toCheck.getName().replace(".c", ".out");
+        final String nameOfOutFile = toCheck.getName().replace(C_FILE_ENDING, OUT_FILE_ENDING);
 
-        File outFile = new File(toCheck.getParentFile(), nameOfOutFile);
+        final File outFile = new File(toCheck.getParentFile(), nameOfOutFile);
 
-        String compileToThis = setOutputFileName + outFile.getAbsolutePath();
+        final String compileToThis = SET_OUTPUT_FILE_NAME + outFile.getAbsolutePath();
 
-        String userIncludeAndPath = enableUserInclude + SuperFolderFinder.getSuperFolder() + userIncludeFolder;
+        final String userIncludeAndPath =
+                ENABLE_USER_INCLUDE + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER;
 
         // get all Files from the form "*.c" so we can include them into cbmc,
-        List<String> allFiles = FileLoader.listAllFilesFromFolder(
-                "\"" + SuperFolderFinder.getSuperFolder() + userIncludeFolder + "\"", cFileEnder);
+        List<String> allFiles =
+                FileLoader.listAllFilesFromFolder(
+                        "\"" + SuperFolderFinder.getSuperFolder()
+                        + USER_INCLUDE_FOLDER + "\"", C_FILE_ENDING);
 
         Process startedProcess = null;
 
         List<String> arguments = new ArrayList<String>();
 
         // add the arguments needed for the call
-        arguments.add(compilerString);
+        arguments.add(COMPILER_STRING);
 
         arguments.add(userIncludeAndPath);
 
-        arguments.add(findMissingReturnOption);
+        arguments.add(FIND_MISSING_RETURN_OPTION);
 
         // add the path to the created file that should be checked
         arguments.add(toCheck.getAbsolutePath());
@@ -102,7 +98,7 @@ public class LinuxCompilerAndRunner extends SystemSpecificCompilerAndExecutioner
         List<String> arguments = new ArrayList<String>();
 
         // on linux, our executable ends with .out
-        toRun = toRun + ".out";
+        toRun = toRun + OUT_FILE_ENDING;
 
         // this argument calls the generated program
         arguments.add("./" + toRun);
@@ -118,7 +114,6 @@ public class LinuxCompilerAndRunner extends SystemSpecificCompilerAndExecutioner
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return startedProcess;
     }
 }

@@ -14,7 +14,7 @@
 // * Handles tool-bar events for PropertyList.
 // * @author Justin Hecht
 // */
-//public class PropertyListToolbarHandler extends ToolbarHandler 
+//public class PropertyListToolbarHandler extends ToolbarHandler
 //        implements DisplaysStringsToUser {
 //
 //    private PropertyListWindow window;
@@ -33,7 +33,6 @@
 //        this.setWindow(window);
 //    }
 //
-//    
 //    public PropertyListWindow getWindow() {
 //            return window;
 //    }
@@ -46,5 +45,4 @@
 //    public void updateStringRes(StringLoaderInterface stringResIF) {
 //        updateTooltips(stringResIF.getPropertyListStringResProvider().getToolbarTipStringRes());
 //    }
-//
 //}

@@ -39,7 +39,8 @@
 //public class ParameterEditorBuilder {
 //    private ParameterEditor editor;
 //    private ParameterEditorWindow window;
-//    private final String[] menuHeadingIds = {"fileMenu", "projectMenu", "editorMenu", "showHideWindowsMenu"};
+//    private static final String[] MENU_HEADING_IDS =
+//        {"fileMenu", "projectMenu", "editorMenu", "showHideWindowsMenu"};
 //    /**
 //     * Creates the ParameterEditor
 //     * @param refs contains all important references for the builder
@@ -63,7 +64,7 @@
 //                new ProjectSaverLoader(),
 //                null);
 //        editor = new ParameterEditor(cElectionDescriptionEditor, propertyList, window, fileChooser);
-//        ParameterEditorMenuBarHandler menuBarHandler = new ParameterEditorMenuBarHandler(menuHeadingIds,
+//        ParameterEditorMenuBarHandler menuBarHandler = new ParameterEditorMenuBarHandler(MENU_HEADING_IDS,
 //                createActionIdAndListenerListForMenuHandler(
 //                    cElectionDescriptionEditor, booleanExpEditor, propertyList,
 //                    refs.getStringIF().getParameterEditorStringResProvider().getOtherStringRes(),
@@ -81,7 +82,7 @@
 //
 //        refs.getLanguageOpts().addStringDisplayer(menuBarHandler);
 //        refs.getLanguageOpts().addStringDisplayer(toolbarHandler);
-//        refs.getLanguageOpts().addStringDisplayer(window);        
+//        refs.getLanguageOpts().addStringDisplayer(window);
 //        refs.getLanguageOpts().addStringDisplayer(editor);
 //        windowStarter.start();
 //        editor.setReacts(true);

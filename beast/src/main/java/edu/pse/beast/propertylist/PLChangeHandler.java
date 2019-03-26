@@ -22,13 +22,12 @@
 //        model.addObserver(this);
 //    }
 //
-//    
+//
 //    @Override
 //    public void update(Observable o, Object arg) {
 //        this.setChangedSinceSave(true);
 //    }
 //
-//    
 //    // getter and setter
 //    public boolean hasChanged() {
 //        return hasChanged;
@@ -37,5 +36,4 @@
 //    public void setChangedSinceSave(boolean changedSinceSave) {
 //        this.hasChanged = changedSinceSave;
 //    }
-//
 //}

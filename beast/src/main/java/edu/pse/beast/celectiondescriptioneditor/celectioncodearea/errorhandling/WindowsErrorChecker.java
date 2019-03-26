@@ -17,23 +17,25 @@ import edu.pse.beast.toolbox.WindowsOStoolbox;
 
 /**
  * this is the windows specific implementation to check code. It uses cl.exe
- * from the c++ pack for visual studio to check the code for errors
- * 
+ * from the C++ pack for visual studio to check the code for errors.
+ *
  * @author Lukas Stapelbroek
  *
  */
 public class WindowsErrorChecker extends SystemSpecificErrorChecker {
 
     // the compiler we use on windows, because it is also needed by cbmc
-    private final String compilerString = "cl.exe";
+    private static final String COMPILER_STRING = "cl.exe";
+
+    private static final String CMD_STRING = "cmd.exe";
 
     // used to enable includes from the users own written classes
-    private final String enableUserInclude = "/I";
-    private final String userIncludeFolder = "/core/user_includes/";
+    private static final String ENABLE_USER_INCLUDE = "/I";
+    private static final String USER_INCLUDE_FOLDER = "/core/user_includes/";
 
-    // we want to compile all available c files, so the user doesn't have to
+    // we want to compile all available c files, so the user does not need to
     // specify anything
-    private final String compileAllIncludesInFolder = "*.c";
+    private static final String COMPILE_ALL_INCLUDES_IN_FOLDER = "*.c";
 
     @Override
     public Process checkCodeFileForErrors(File toCheck) {
@@ -42,13 +44,15 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
 
         Process startedProcess = null;
 
-        String userIncludeAndPath = enableUserInclude + "\"" + SuperFolderFinder.getSuperFolder() + userIncludeFolder
-                + "\"";
+        String userIncludeAndPath =
+                ENABLE_USER_INCLUDE + "\"" + SuperFolderFinder.getSuperFolder()
+                + USER_INCLUDE_FOLDER + "\"";
 
         // we have to compile all includes that the user puts in that folder, in
         // case some of them are needed
-        String compileAllIncludesInIncludePath = "\"" + SuperFolderFinder.getSuperFolder() + userIncludeFolder
-                + compileAllIncludesInFolder + "\"";
+        String compileAllIncludesInIncludePath =
+                "\"" + SuperFolderFinder.getSuperFolder()
+                + USER_INCLUDE_FOLDER + COMPILE_ALL_INCLUDES_IN_FOLDER + "\"";
 
         // try to get the vsCMD
         try {
@@ -59,37 +63,44 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
 
         if (vsCmd == null) {
             ErrorForUserDisplayer.displayError(
-                    "The program \"VsDevCmd.bat\" couldn't be found. It is required to run this program, so "
-                            + "please supply it with it. \n"
-                            + " To do so, download the Visual Studio Community Version, install it (including "
-                            + "the C++ pack). \n "
-                            + "Then, search for the VsDevCmd.bat in it, and copy and paste it into the foler "
-                            + "/windows/ in the BEAST installation folder.");
+                "The program \"VsDevCmd.bat\" could not be found. "
+                + "It is required to run this program, so "
+                + "please supply it with it. \n"
+                + " To do so, download the Visual Studio Community Version, "
+                + "install it (including the C++ pack). \n "
+                + "Then, search for the VsDevCmd.bat in it, and copy and paste "
+                + "it into the foler /windows/ in the BEAST installation folder.");
             return null;
         } else {
 
-            // because windows is weird the whole call that will get placed
-            // inside
-            // VScmd has to be in one giant string. Put the created file in the
-            // output directory, so
-            // it can be deleted afterwards
-            String clExeCall = "\"" + vsCmd + "\"" + " & " + compilerString + " " + userIncludeAndPath + " "
-                    + ("\"" + toCheck.getAbsolutePath() + "\"") + " " + (" /Fo" + toCheck.getParent() + "\\ ")
-                    + (" /Fe" + toCheck.getParent() + "\\ ") + compileAllIncludesInIncludePath;
+            // Since Windows is weird, the whole call that will get placed
+            // inside VScmd has to be in one giant string. Put the created
+            // file in the output directory, such that it can be deleted
+            // afterwards.
+            String clExeCall =
+                "\"" + vsCmd + "\"" + " & "
+                + COMPILER_STRING + " " + userIncludeAndPath + " "
+                + ("\"" + toCheck.getAbsolutePath() + "\"") + " "
+                + (" /Fo" + toCheck.getParent() + "\\ ")
+                + (" /Fe" + toCheck.getParent() + "\\ ")
+                + compileAllIncludesInIncludePath;
 
             List<String> callInList = new ArrayList<String>();
 
             callInList.add(clExeCall);
 
-            File batFile = new File(toCheck.getParent() + "\\" + toCheck.getName().replace(".c", ".bat"));
+            File batFile =
+                new File(toCheck.getParent() + "\\"
+                         + toCheck.getName().replace(".c", ".bat"));
 
             FileSaver.writeStringLinesToFile(callInList, batFile);
 
-            // this call starts a new VScmd instance and lets cl.exe (the
-            // compiler) run in it
+            // This call starts a new VScmd instance and let's cl.exe (the
+            // compiler) run in it.
             // ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c",
             // clExeCall);
-            ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", batFile.getAbsolutePath());
+            ProcessBuilder prossBuild =
+                new ProcessBuilder(CMD_STRING, "/c", batFile.getAbsolutePath());
 
             try {
                 startedProcess = prossBuild.start();
@@ -101,44 +112,41 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
     }
 
     @Override
-    protected List<CodeError> parseError(List<String> result, List<String> errors, int lineOffset) {
+    protected List<CodeError> parseError(List<String> result,
+                                         List<String> errors,
+                                         int lineOffset) {
         List<CodeError> codeErrors = new ArrayList<CodeError>();
 
-        // errors are displayed like "(LINENUMBER)" where linenumber is a whole
+        // errors are displayed like "(LINENUMBER)" where line number is a whole
         // number
         Pattern lineExtractor = Pattern.compile("((.*)(\\([0-9]*\\))(.*))");
 
         // cl.exe prints out the results in the result list
         for (Iterator<String> iterator = result.iterator(); iterator.hasNext();) {
             String line = (String) iterator.next();
-
             Matcher linesMatcher = lineExtractor.matcher(line);
-
             int lineNumber = -1;
-
             String varName = "";
-
             String message = "";
-
             if (linesMatcher.find()) {
                 try {
-
-                    // we want the first occurance of such a "linenumber"
-                    // indentifier, so we don't have to worry
+                    // we want the first occurrence of such a "line number"
+                    // identifier, so we do not need to worry
                     // about code injection from strings or such
                     // then we split at "(" and ")" to extract the number
-                    lineNumber = Integer.parseInt(linesMatcher.group(1).split("\\(")[1].split("\\)")[0]) - lineOffset;
-
+                    lineNumber =
+                        Integer.parseInt(
+                            linesMatcher.group(1).split("\\(")[1]
+                                .split("\\)")[0]
+                        ) - lineOffset;
                     // get the error message here by splitting at a common
                     // (error/warning C[ERRORNUMBER]) identifier
                     String[] varAndMessage = line.split("([a-zA-Z]+ C[0-9]+:)");
-
                     // String msg = line.substring(line.lastIndexOf(":"));
                     // to prevent exceptions
                     if (varAndMessage.length > 1) {
                         String toSplit = varAndMessage[1];
-
-                        // the variable and compilermessage is between ":"'s, so
+                        // the variable and compiler message is between ":"'s, so
                         // we split there.
                         if (toSplit.contains(":")) {
                             varName = toSplit.split(":")[0].replaceAll("\"", "");
@@ -147,15 +155,15 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
                             message = toSplit;
                         }
                     }
-
-                    codeErrors.add(CCodeErrorFactory.generateCompilerError(lineNumber, -1, varName, message));
-
+                    codeErrors.add(
+                        CCodeErrorFactory.generateCompilerError(lineNumber,
+                                                                -1, varName,
+                                                                message));
                 } catch (NumberFormatException e) {
-                    ErrorLogger.log("can't parse the current error line from cl.exe");
+                    ErrorLogger.log("cannot parse the current error line from cl.exe");
                 }
             } else if (line.contains(" : error LNK")) {
                 String[] splittedArray = line.split(":");
-
                 if (splittedArray.length >= 2) {
                     String subString = splittedArray[2];
                     codeErrors.add(CCodeErrorFactory.generateCompilerError(-1, -1, "", subString));

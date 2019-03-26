@@ -13,12 +13,12 @@ public abstract class Options {
     /**
      * the list of suboptions that are saved by this object
      */
-    protected List<Options> subOptions = new ArrayList<>();
+    private List<Options> subOptions = new ArrayList<>();
 
     /**
      * the option elements that are saved by this object
      */
-    protected List<OptionElement> optElements = new ArrayList<>();
+    private List<OptionElement> optElements = new ArrayList<>();
     private final String id;
 
     /**
@@ -76,16 +76,17 @@ public abstract class Options {
     }
 
     /**
-     * Gets called when an option got changed and reapplies it where it is used.
+     * Gets called when an option got changed and re-applies it where it is used.
      */
     public void reapply() {
         reapplySpecialized();
-        for (Options opt : subOptions)
+        for (Options opt : subOptions) {
             opt.reapply();
+        }
     }
 
     /**
-     * reapplies the specialized options
+     * re-applies the specialized options
      */
     protected abstract void reapplySpecialized();
 }

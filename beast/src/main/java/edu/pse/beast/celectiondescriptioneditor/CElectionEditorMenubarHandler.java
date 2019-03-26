@@ -10,7 +10,7 @@
 ///**
 // * creates and updates the menubar of a celectiondescriptioneditor. It also
 // * links the useractions to the menuitems
-// * 
+// *
 // * @author Holger Klein
 // */
 //public class CElectionEditorMenubarHandler extends MenuBarHandler {
@@ -25,15 +25,19 @@
 //     * @param stringif the string interface
 //     */
 //    public CElectionEditorMenubarHandler(String[] headingIds, CCodeEditorWindow cgui,
-//            ArrayList<ArrayList<ActionIdAndListener>> actionIdAndListener, StringLoaderInterface stringif) {
-//        super(headingIds, actionIdAndListener, stringif.getCElectionEditorStringResProvider().getMenuStringRes());
+//                                         ArrayList<ArrayList<ActionIdAndListener>>
+//                                             actionIdAndListener,
+//                                         StringLoaderInterface stringif) {
+//        super(headingIds, actionIdAndListener,
+//              stringif.getCElectionEditorStringResProvider().getMenuStringRes());
 //        this.cgui = cgui;
 //        this.cgui.setMenuBar(createdMenuBar);
 //    }
 //
 //    @Override
 //    public void updateStringRes(StringLoaderInterface stringResIF) {
-//        updateStringResLoader(stringResIF.getCElectionEditorStringResProvider().getMenuStringRes());
+//        updateStringResLoader(stringResIF.getCElectionEditorStringResProvider()
+//                              .getMenuStringRes());
 //        cgui.setMenuBar(createdMenuBar);
 //    }
 //}

@@ -19,6 +19,8 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.wellbehaved.event.InputMap;
 import org.fxmisc.wellbehaved.event.Nodes;
 
+import com.google.gson.JsonSyntaxException;
+
 import edu.pse.beast.codeareajavafx.AutoCompleter;
 import edu.pse.beast.codeareajavafx.BoundedVarCodeArea;
 import edu.pse.beast.codeareajavafx.NewCodeArea;
@@ -85,10 +87,6 @@ public class GUIController {
     private String pathToImages = "file:///" + SuperFolderFinder.getSuperFolder() + "/core/images/";
 
     private MenuBarInterface focusedMainTab;
-
-    private List<TabClass> mainWindowTabs = new ArrayList<TabClass>();
-
-    private List<TabClass> bottomWindowTabs = new ArrayList<TabClass>();
 
     private NewElectionSimulation electionSimulation;
 
@@ -1141,7 +1139,7 @@ public class GUIController {
                             ChildTreeItemValues values = null;
                             try {
                                 values = propertyListGSON.createFromSaveString(json);
-                            } catch (Exception e) {
+                            } catch (JsonSyntaxException e) {
                                 // TODO Auto-generated catch block
                                 e.printStackTrace();
                                 return;
@@ -1335,7 +1333,7 @@ public class GUIController {
 
             try {
                 options = optionSaverLoader.createFromSaveString(jsonToLoad);
-            } catch (Exception e) {
+            } catch (JsonSyntaxException e) {
                 // do nothing
             }
 
@@ -1429,7 +1427,7 @@ public class GUIController {
     }
 
     /**
-     * 
+     *
      * @param field        the field which shall be enforced
      * @param partnerField the partner field, which is supposed to be not bigger /
      *                     smaller than the main field

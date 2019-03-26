@@ -8,7 +8,7 @@ import javax.swing.text.AbstractDocument;
 /**
  * Instances of this class are able to apply syntax highlighting to the given
  * JTextPane
- * 
+ *
  * @author Nikolai Schnell
  */
 public class SyntaxHL {
@@ -16,7 +16,7 @@ public class SyntaxHL {
 
     /**
      * Constructor
-     * 
+     *
      * @param textPane JTextPane the filter should be applied to
      */
     public SyntaxHL(JTextPane textPane) {
@@ -25,7 +25,7 @@ public class SyntaxHL {
 
     /**
      * Creates a new SyntaxHlCompositeFilter and gives it to the textpane
-     * 
+     *
      * @param regexAndColorList the list of RegexAndColor elements containint the
      *                          information for syntaxHL
      */

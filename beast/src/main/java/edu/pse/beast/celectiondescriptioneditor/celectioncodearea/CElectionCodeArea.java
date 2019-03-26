@@ -5,12 +5,14 @@
 //import javax.swing.text.BadLocationException;
 //
 //import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CAntlrHandler;
-//import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling.CGrammarErrorFinder;
-//import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling.CVariableErrorFinder;
+//import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling
+//        .CGrammarErrorFinder;
+//import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling
+//        .CVariableErrorFinder;
 //import edu.pse.beast.codearea.CodeArea;
 //
 ///**
-// * This is the class which inherits from codearea to create a codearea more
+// * This is the class which inherits from code area to create a code area more
 // * suited towards writing c code.
 // *
 // * @author Holger Klein
@@ -47,7 +49,6 @@
 //                s += "\n";
 //            }
 //        }
-//
 //        pane.setText(s);
 //        actionList.clear();
 //    }

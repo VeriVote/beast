@@ -34,13 +34,18 @@
 //
 //    @Test
 //    public void resultFailure() {
-//        PropertyChecker checker = (PropertyChecker) CheckerFactoryFactory.getMatchingResult("nicht_cbmc", 1);
+//        PropertyChecker checker =
+//            (PropertyChecker)
+//                CheckerFactoryFactory.getMatchingResult("nicht_cbmc", 1);
 //        assertNull(checker);
 //    }
 //
 //    @Test
 //    public void createCheckerfactorySuccess() {
-//        CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory("cbmc", null, null, null, null, null, false);
+//        CheckerFactory factory =
+//            CheckerFactoryFactory.getCheckerFactory("cbmc", null, null,
+//                                                    null, null, null,
+//                                                    false);
 //        assertNotNull(factory);
 //        assertTrue(factory instanceof CBMCProcessFactory);
 //    }
@@ -48,7 +53,9 @@
 //    @Test
 //    public void createCheckerfactoryFailure() {
 //        CheckerFactory factory =
-//            CheckerFactoryFactory.getCheckerFactory("nicht_cbmc", null, null, null, null, null, false);
+//            CheckerFactoryFactory.getCheckerFactory("nicht_cbmc", null,
+//                                                    null, null, null,
+//                                                    null, false);
 //        assertNull(factory);
 //    }
 //}

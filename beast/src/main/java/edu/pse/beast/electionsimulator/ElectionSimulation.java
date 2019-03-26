@@ -23,8 +23,10 @@
 //import edu.pse.beast.types.InputType;
 //import edu.pse.beast.types.OutputType;
 //
-//public class ElectionSimulation implements Runnable, ActionListener, ComponentListener, AdjustmentListener,
-//    MouseWheelListener, ElectionDescriptionChangeListener {
+//public class ElectionSimulation
+//                implements Runnable, ActionListener,
+//                           ComponentListener, AdjustmentListener,
+//                           MouseWheelListener, ElectionDescriptionChangeListener {
 //
 //  private static ElectionTypeContainer container;
 //
@@ -57,8 +59,9 @@
 //
 //  public void init() {
 //      // this.centralObjectProvider = centralObjectProvider;
-//      // ElectionSimulation.container = centralObjectProvider.getElectionDescriptionSource().getElectionDescription()
-//      //          .getContainer();
+//      // ElectionSimulation.container =
+//      //     centralObjectProvider.getElectionDescriptionSource()
+//      //     .getElectionDescription() .getContainer();
 //      // ElectionSimulation.model = new ElectionSimulationModel(container);
 //      // ElectionSimulation.view = new ElectionSimulationWindow(sli, container, this, model);
 //      //
@@ -215,8 +218,9 @@
 //   * models which are used
 //   */
 //  private void electionTypeChanged() {
-////    ElectionSimulation.container = centralObjectProvider.getElectionDescriptionSource().getElectionDescription()
-////        .getContainer();
+////    ElectionSimulation.container =
+////        centralObjectProvider.getElectionDescriptionSource()
+////        .getElectionDescription().getContainer();
 ////    model.changeContainer(container);
 //  }
 //
@@ -319,7 +323,8 @@
 //  }
 //
 //  public static int getNumSeats() {
-//    return BEASTCommunicator.getCentralObjectProvider().getParameterSrc().getParameter().getAmountSeats().get(0);
+//    return BEASTCommunicator.getCentralObjectProvider()
+//           .getParameterSrc().getParameter().getAmountSeats().get(0);
 //  }
 //
 //  public static Modes getMode() {

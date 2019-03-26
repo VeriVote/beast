@@ -28,7 +28,8 @@ public class ChangeHandler {
      * @param symbolicVariableList SymbolicVariableList of a newly loaded or saved
      *                             PreAndPostConditionsDescription object.
      */
-    public ChangeHandler(JTextPane prePane, JTextPane postPane, SymbolicVariableList symbolicVariableList) {
+    public ChangeHandler(JTextPane prePane, JTextPane postPane,
+                         SymbolicVariableList symbolicVariableList) {
         this.symbolicVariableList = symbolicVariableList;
         this.prePane = prePane;
         this.postPane = postPane;
@@ -54,7 +55,8 @@ public class ChangeHandler {
      */
     public void updatePreValues() {
         preString = prePane.getText() + postPane.getText();
-        preSymbolicVariableList = new LinkedList<SymbolicVariable>(symbolicVariableList.getSymbolicVariables());
+        preSymbolicVariableList =
+            new LinkedList<SymbolicVariable>(symbolicVariableList.getSymbolicVariables());
     }
 
     /**

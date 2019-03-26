@@ -10,14 +10,13 @@ import edu.pse.beast.codearea.errorhandling.ErrorDisplayer;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 
 /**
- * This class prepares CodeErrors so its parent class Errordisplayer can display
- * them. As such, it mainly creates error messages, depending on the codeerrors
+ * This class prepares CodeErrors so its parent class error displayer can display
+ * them. As such, it mainly creates error messages, depending on the code errors
  * id
  *
  * @author Holger Klein
  */
 public class CErrorDisplayer extends ErrorDisplayer {
-
     /**
      * constructor
      *
@@ -68,7 +67,7 @@ public class CErrorDisplayer extends ErrorDisplayer {
 
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
-        this.currentStringResLoader = stringResIF.getCElectionEditorStringResProvider().getCErrorStringRes();
+        this.currentStringResLoader =
+                stringResIF.getCElectionEditorStringResProvider().getCErrorStringRes();
     }
-
 }

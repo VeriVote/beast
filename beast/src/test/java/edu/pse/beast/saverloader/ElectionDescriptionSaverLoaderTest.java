@@ -26,10 +26,15 @@
 //        electionTemplateHandler.getStandardInput().getInputType(),
 //        electionTemplateHandler.getStandardResult().getOutputType(), 2);
 //    desc.setCode(
-//          Arrays.asList("//line1", "//line2",
-//                        "unsigned int voting(unsigned int votes[" + UnifiedNameContainer.getVoter() + "]) {",
-//                        "return 0;", "}")
-//      );
+//          Arrays.asList(
+//              "//line1",
+//              "//line2",
+//              "unsigned int voting(unsigned int votes["
+//                  + UnifiedNameContainer.getVoter() + "]) {",
+//              "return 0;",
+//              "}"
+//          )
+//    );
 //    String save = s.createSaveString(desc);
 //    ElectionDescription loadedDesc = (ElectionDescription) s.createFromSaveString(save);
 //    assertEquals("desc", loadedDesc.getName());
@@ -54,10 +59,13 @@
 //        electionTemplateHandler.getStandardInput().getInputType(),
 //        electionTemplateHandler.getStandardResult().getOutputType(), 2);
 //
-//    desc.setCode(Arrays.asList("//Single-choice: Wähler stimmt jeweils für einen Kandidaten",
+//    desc.setCode(Arrays.asList(
+//        "//Single-choice: Wähler stimmt jeweils für einen Kandidaten",
 //        "//Kandidat oder unentschieden: Ein gewählter Kandidat oder unentschieden",
-//              "unsigned int voting(unsigned int votes[" + UnifiedNameContainer.getVoter() + "]) {",
-//              "return 0;", "} "));
+//        "unsigned int voting(unsigned int votes[" + UnifiedNameContainer.getVoter() + "]) {",
+//        "return 0;",
+//        "} "
+//    ));
 //    String save = s.createSaveString(desc);
 //    ElectionDescription loadedDesc = (ElectionDescription) s.createFromSaveString(save);
 //    assertEquals("desc", loadedDesc.getName());

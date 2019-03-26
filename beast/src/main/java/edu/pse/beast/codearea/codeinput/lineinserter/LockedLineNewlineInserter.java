@@ -13,17 +13,13 @@
 // * @author Holger Klein
 // */
 //public class LockedLineNewlineInserter implements NewlineInserter {
-//    
-//  
 //    @Override
 //    public void insertNewlineAtCurrentPosition(
 //            JTextPane pane, TabInserter tabInserter,
 //            LineBeginningTabsHandler beginningTabsHandler,
 //            int pos) throws BadLocationException {
-//            
-//            int lineBeginning = pos - JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, pos);
-//            
+//            int lineBeginning =
+//                pos - JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, pos);
 //            pane.getStyledDocument().insertString(lineBeginning, "\n", null);
 //    }
-//    
 //}

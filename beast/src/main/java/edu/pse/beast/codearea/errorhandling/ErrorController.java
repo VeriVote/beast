@@ -6,7 +6,7 @@
 //
 ///**
 // * This class facillitates communication between the various error finders
-// * and error displays. Whenever the concurrently running error finder find 
+// * and error displays. Whenever the concurrently running error finder find
 // * a new error, it receives a message. It then asks the injected error
 // * displayer to display the codeerror on the pane.
 // * @author Holger Klein
@@ -18,7 +18,7 @@
 //    private boolean changed = false;
 //    private int currentCaretPos;
 //    private ErrorFinderThread t;
-//    
+//
 //    public ErrorController(JTextPane pane,
 //            ErrorDisplayer displayer) {
 //        this.pane = pane;
@@ -26,14 +26,14 @@
 //        this.displayer = displayer;
 //        t = new ErrorFinderThread(errorFinderList, pane, this);
 //    }
-//    
+//
 //    /**
-//     * stops the concurrently running errorfinder
+//     * stops the concurrently running error finder
 //     */
 //    public void stopThread() {
 //        t.stop();
 //    }
-//    
+//
 //    public void addErrorFinder(ErrorFinder finder) {
 //        errorFinderList.add(finder);
 //    }

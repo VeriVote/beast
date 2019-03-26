@@ -54,15 +54,15 @@ public class InternalTypeContainerTest {
     }
 
     /**
-     * Test of getAccesTypeIfList method, of class InternalTypeContainer.
+     * Test of getAccessTypeIfList method, of class InternalTypeContainer.
      */
     @Test
-    public void testGetAccesTypeIfList() {
-        System.out.println("getAccesTypeIfList");
+    public void testGetAccessTypeIfList() {
+        System.out.println("getAccessTypeIfList");
         InternalTypeContainer test = new InternalTypeContainer(InternalTypeRep.INTEGER);
         InternalTypeContainer instance = new InternalTypeContainer(test, InternalTypeRep.SEAT);
         InternalTypeRep expResult = InternalTypeRep.SEAT;
-        InternalTypeRep result = instance.getAccesTypeIfList();
+        InternalTypeRep result = instance.getAccessTypeIfList();
         assertEquals(expResult, result);
     }
 
@@ -79,5 +79,4 @@ public class InternalTypeContainerTest {
         result = instance.getListLvl();
         assertEquals(1, result);
     }
-
 }

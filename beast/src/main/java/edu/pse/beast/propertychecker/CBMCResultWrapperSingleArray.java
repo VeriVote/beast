@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
+ *
  * @author Lukas Stapelbroek
  *
  */
@@ -15,7 +15,7 @@ public class CBMCResultWrapperSingleArray {
 
     /**
      * creates a new wrapper
-     * 
+     *
      * @param mainIndex the index of this variable (for example votes1 has the main
      *                  index of 1)
      * @param name      the name of this variable (for example votes1 has the name
@@ -28,7 +28,7 @@ public class CBMCResultWrapperSingleArray {
 
     /**
      * adds a variable to this 2 dim array-wrapper
-     * 
+     *
      * @param index the index (the index of the array)
      * @param toAdd the value to add at this position
      */
@@ -47,7 +47,7 @@ public class CBMCResultWrapperSingleArray {
      * returns the two dimensional list that is saved here. Only use this if you
      * really need it, because there is also and method that creates an array from
      * these, which makes sure that there are no empty parts in the lists
-     * 
+     *
      * @return the list that describes this variable
      */
     public List<String> getList() {
@@ -55,7 +55,7 @@ public class CBMCResultWrapperSingleArray {
     }
 
     /**
-     * 
+     *
      * @return returns the main index (for example votes1 has the mainIndex of 1)
      */
     public int getMainIndex() {
@@ -63,7 +63,7 @@ public class CBMCResultWrapperSingleArray {
     }
 
     /**
-     * 
+     *
      * @return the name of the var (for example votes1 has the name votes)
      */
     public String getName() {
@@ -71,7 +71,7 @@ public class CBMCResultWrapperSingleArray {
     }
 
     /**
-     * 
+     *
      * @return the array that this wrapper represents. It has the same values and
      *         size as the array that the c-program that cbmc analyzed had inside
      */
@@ -82,7 +82,6 @@ public class CBMCResultWrapperSingleArray {
         } else {
             toReturn = new String[0];
         }
-
         for (int i = 0; i < toReturn.length; i++) {
             if (list.size() >= i && list.get(i) != null) {
                 toReturn[i] = list.get(i);
@@ -94,21 +93,19 @@ public class CBMCResultWrapperSingleArray {
     }
 
     /**
-     * 
+     * @param index the index of the variable
+     * @param name the name of the variable
+     * @param amountCandidates the amount of candidates
      * @return wraps the single array into an array in the two dimensional format.
      *         This is specifically targeted for the single_choice option, so the
      *         result will be a sparse array in which only one entry in each row
-     *         will be one, every other entry will be zero
+     *         will be one, every other entry will be zero.
      */
     public CBMCResultWrapperMultiArray wrapInTwoDim(int index, String name, int amountCandidates) {
-
         CBMCResultWrapperMultiArray twoDimArr = new CBMCResultWrapperMultiArray(index, name);
-
         String[] asArray = getArray();
-
         for (int i = 0; i < asArray.length; i++) {
             long currentCandidate = Long.parseLong(asArray[i]);
-
             if (currentCandidate == 0L) {
                 // add 0 to the last candidate position, so the whole row will be zeros
                 twoDimArr.addTo(i, amountCandidates - 1, "0");
@@ -116,7 +113,6 @@ public class CBMCResultWrapperSingleArray {
                 twoDimArr.addTo(i, (int) (currentCandidate - 1), "1");
             }
         }
-
         return twoDimArr;
     }
 }

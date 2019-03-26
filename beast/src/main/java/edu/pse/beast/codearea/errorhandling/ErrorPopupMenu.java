@@ -9,14 +9,13 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextPane;
 
 /**
- * This class is a simple popupmenu which displays an error message
+ * This class is a simple popup menu which displays an error message
  *
  * @author Holger Klein
  */
 public class ErrorPopupMenu extends JPopupMenu implements KeyListener {
     private static final long serialVersionUID = 1L;
     private JMenuItem errorItem;
-    private JTextPane pane;
 
     public ErrorPopupMenu(JTextPane pane) {
         errorItem = new JMenuItem("");

@@ -4,7 +4,8 @@
 //import edu.pse.beast.toolbox.UserAction;
 //
 ///**
-// * UserAction subclass responsible for redoing the last undone action in the last focused BooleanExpEditorCodeArea.
+// * UserAction subclass responsible for redoing the last undone action
+// * in the last focused BooleanExpEditorCodeArea.
 // * @author Nikolai Schnell
 // */
 //public class UndoBoolUserAction extends UserAction {
@@ -21,6 +22,7 @@
 //
 //    @Override
 //    public void perform() {
-//        editor.getCodeAreaFocusListener().getLastFocused().getUserActionList().getActionById("undo").perform();
+//        editor.getCodeAreaFocusListener().getLastFocused().getUserActionList()
+//        .getActionById("undo").perform();
 //    }
 //}

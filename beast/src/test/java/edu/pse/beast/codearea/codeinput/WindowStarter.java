@@ -7,7 +7,7 @@ import javax.swing.JFrame;
  * @author Holger Klein
  */
 public class WindowStarter implements Runnable {
-    JFrame frame;
+    private JFrame frame;
 
     public WindowStarter(JFrame frame) {
         this.frame = frame;

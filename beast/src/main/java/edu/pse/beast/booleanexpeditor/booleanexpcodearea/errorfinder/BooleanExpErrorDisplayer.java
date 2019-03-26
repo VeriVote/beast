@@ -22,7 +22,9 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
      * @param stringResIF the String
      */
     public BooleanExpErrorDisplayer(JTextPane pane, StringLoaderInterface stringResIF) {
-        super(pane, stringResIF.getBooleanExpEditorStringResProvider().getBooleanExpErrorStringRes());
+        super(pane,
+              stringResIF.getBooleanExpEditorStringResProvider()
+              .getBooleanExpErrorStringRes());
     }
 
     @Override
@@ -88,6 +90,8 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
 
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
-        this.currentStringResLoader = stringResIF.getBooleanExpEditorStringResProvider().getBooleanExpErrorStringRes();
+        this.currentStringResLoader =
+                stringResIF.getBooleanExpEditorStringResProvider()
+                .getBooleanExpErrorStringRes();
     }
 }

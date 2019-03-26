@@ -18,7 +18,9 @@ public class PropertyCombiner extends TabClass {
     private boolean hasSaveFile = false;
     private File saveFile = null;
 
-    public PropertyCombiner(Tab associatedTab, String fileEnding, String initialDir, String fileExtensionDescription) {
+    public PropertyCombiner(Tab associatedTab, String fileEnding,
+                            String initialDir,
+                            String fileExtensionDescription) {
         super(associatedTab);
         this.fileEnding = fileEnding;
         this.initialDir = initialDir;
@@ -56,10 +58,11 @@ public class PropertyCombiner extends TabClass {
                 fileExtensionDescription + " (*" + fileEnding + ")", "*." + fileEnding));
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All (*.*)", "*.*"));
 //
-//        fileChooser.selectedExtensionFilterProperty()
-//        fileChooser.setSelectedExtensionFilter(
-//                new FileChooser.ExtensionFilter("Extension", "*" + fileEnding));
-//        fileChooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
+//      fileChooser.selectedExtensionFilterProperty()
+//      fileChooser.setSelectedExtensionFilter(
+//              new FileChooser.ExtensionFilter("Extension", "*" + fileEnding));
+//      fileChooser.setSelectedExtensionFilter(
+//          new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
         // fileChooser.setTitle("Save document");
         fileChooser.setInitialDirectory(new File(initialDir));
         fileChooser.setInitialFileName(fileName + fileEnding);
@@ -73,15 +76,17 @@ public class PropertyCombiner extends TabClass {
         FileChooser fileChooser = new FileChooser();
         // fileChooser.setTitle("Load document");
         fileChooser.setInitialDirectory(new File(initialDir));
-        fileChooser
-                .setSelectedExtensionFilter(new FileChooser.ExtensionFilter("Arbitrary RTFX file", "*" + fileEnding));
+        fileChooser.setSelectedExtensionFilter(
+            new FileChooser.ExtensionFilter("Arbitrary RTFX file",
+                                            "*" + fileEnding));
         File selectedFile = fileChooser.showOpenDialog(MainClass.getMainStage());
         if (selectedFile != null) {
             load(selectedFile, preCodeArea, postCodeArea);
         }
     }
 
-    public void load(File toLoadFrom, NewPropertyCodeArea preCodeArea, NewPropertyCodeArea postCodeArea) {
+    public void load(File toLoadFrom, NewPropertyCodeArea preCodeArea,
+                     NewPropertyCodeArea postCodeArea) {
         try {
             FileInputStream fis = new FileInputStream(toLoadFrom);
             DataInputStream dis = new DataInputStream(fis);

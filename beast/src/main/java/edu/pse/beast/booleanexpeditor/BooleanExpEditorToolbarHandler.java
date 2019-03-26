@@ -13,22 +13,33 @@
 // * Its purpose is the handling of a BooleanExpEditorWindows toolbar.
 // * @author Nikolai Schnell
 // */
-//public class BooleanExpEditorToolbarHandler extends ToolbarHandler implements DisplaysStringsToUser {
+//public class BooleanExpEditorToolbarHandler
+//            extends ToolbarHandler implements DisplaysStringsToUser {
 //    /**
 //     * Constructor
-//     * @param window the BooleanExpEditorWindow containing the ToolBar this class handles
-//     * @param imageRes the ImageResourceProvider that provides the images necessary for the toolbar buttons
-//     * @param stringRes the StringResourceLoader that provides the String necessary for the ToolTips of the toolbar
-//     * @param actionIdsAndListener the Array of ActionIdAndListeners that contains UserActions and ActionListeners for
-//     *                             this toolbars Buttons
+//     * @param window               the BooleanExpEditorWindow containing
+//     *                             the ToolBar which this class handles
+//     * @param imageRes             the ImageResourceProvider that provides
+//     *                             the images necessary for the tool-bar buttons
+//     * @param stringRes            the StringResourceLoader that provides
+//     *                             the String necessary for the ToolTips
+//     *                             of the tool-bar
+//     * @param actionIdsAndListener the array of ActionIdAndListeners that
+//     *                             contains UserActions and ActionListeners
+//     *                             for this tool-bar's Buttons
 //     */
-//    BooleanExpEditorToolbarHandler(BooleanExpEditorWindow window, ImageResourceProvider imageRes,
-//                                   StringResourceLoader stringRes, ActionIdAndListener[] actionIdsAndListener) {
+//    BooleanExpEditorToolbarHandler(BooleanExpEditorWindow window,
+//                                   ImageResourceProvider imageRes,
+//                                   StringResourceLoader stringRes,
+//                                   ActionIdAndListener[] actionIdsAndListener) {
 //        super(imageRes, stringRes, actionIdsAndListener, window.getToolbar());
 //    }
 //
 //    @Override
 //    public void updateStringRes(StringLoaderInterface stringResIF) {
-//        updateTooltips(stringResIF.getBooleanExpEditorStringResProvider().getToolbarTipStringRes());
+//        updateTooltips(
+//            stringResIF.getBooleanExpEditorStringResProvider()
+//            .getToolbarTipStringRes()
+//        );
 //    }
 //}

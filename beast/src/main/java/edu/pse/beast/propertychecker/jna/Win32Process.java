@@ -31,9 +31,10 @@ public class Win32Process {
                 0x0800 | /* PROCESS_SUSPEND_RESUME */
                 0x0001 | /* PROCESS_TERMINATE */
                 0x00100000 /* SYNCHRONIZE */, false, pid);
-        if (handle == null)
+        if (handle == null) {
             throw new IOException("OpenProcess failed: "
                     + Kernel32Util.formatMessageFromLastErrorCode(Kernel32.INSTANCE.GetLastError()));
+        }
         this.pid = pid;
     }
 

@@ -5,8 +5,10 @@
 //import javax.swing.text.BadLocationException;
 //
 //import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CAntlrHandler;
-//import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling.CGrammarErrorFinder;
-//import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling.CVariableErrorFinder;
+//import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling
+//        .CGrammarErrorFinder;
+//import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling
+//        .CVariableErrorFinder;
 //import edu.pse.beast.codearea.CodeArea;
 //
 ///**
@@ -50,7 +52,6 @@
 //                s += "\n";
 //            }
 //        }
-//
 //        pane.setText(s);
 //        actionList.clear();
 //    }

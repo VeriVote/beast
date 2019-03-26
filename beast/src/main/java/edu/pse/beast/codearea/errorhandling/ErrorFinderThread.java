@@ -10,7 +10,7 @@
 // * This class implements the runnable intrerface and continuously asks the
 // * supplied errorfinderlist to find all errors in the code. If it finds errors,
 // * it notifies the given ErrorController of this fact. It will run until another
-// * thread calls the stop method. 
+// * thread calls the stop method.
 // * @author Holger Klein
 // */
 //public class ErrorFinderThread implements Runnable {
@@ -22,7 +22,7 @@
 //    private JTextPane pane;
 //    private String lastCode;
 //    private ErrorController c;
-//    
+//
 //    public ErrorFinderThread(ErrorFinderList l, JTextPane pane, ErrorController c) {
 //        this.l = l;
 //        this.pane = pane;
@@ -35,7 +35,7 @@
 //    public void stop() {
 //        keepRunning = false;
 //    }
-//    
+//
 //    @Override
 //    public void run() {
 //        try {
@@ -55,11 +55,10 @@
 //            c.foundNewErrors(lastFoundErrors);
 //        }
 //    }
-//    
+//
 //    public ArrayList<CodeError> getLastFoundErrors() {
 //        return lastFoundErrors;
 //    }
-//    
 //
 //    public void pauseChecking() {
 //        pause = true;

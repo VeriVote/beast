@@ -15,7 +15,7 @@
 //        super("save");
 //        this.cElectionDescriptionEditor = cElectionDescriptionEditor;
 //    }
-//    
+//
 //    @Override
 //    public void perform() {
 //        if (cElectionDescriptionEditor.getFileChooser().saveObject(
@@ -27,5 +27,4 @@
 //            cElectionDescriptionEditor.findErrorsAndDisplayThem();
 //        }
 //    }
-//    
 //}

@@ -51,7 +51,7 @@ public final class CheckerFactoryFactory {
 
     /**
      * is used to get a list of all available checkers
-     * 
+     *
      * @return a list of all available checkers
      */
     public static List<String> getAvailableCheckerIDs() {
@@ -59,24 +59,24 @@ public final class CheckerFactoryFactory {
     }
 
     /**
-     * creates a propertychecker for the given ID
-     * 
+     * Creates a property checker for the given ID
+     *
      * @param checkerID the ID for the PropertyChecker
      * @return the by the ID specified PropertyChecker, if the ID is found, or null,
-     *         if it isn't found
+     *         if it is not found
      */
     public static PropertyChecker createPropertyChecker(String checkerID) {
 
         if (factories.keySet().contains(checkerID)) {
             return new PropertyChecker(checkerID);
         } else {
-            ErrorLogger.log("The specified checkerID wasn't found");
+            ErrorLogger.log("The specified checkerID was not found");
             return null;
         }
     }
 
     // /**
-    // * this method returns a new checkerfactory to produce checkers
+    // * this method returns a new checker factory to produce checkers
     // *
     // * @param checkerID
     // * the id
@@ -106,19 +106,22 @@ public final class CheckerFactoryFactory {
     // parameter, result, isMargin);
     //
     // } else {
-    // ErrorLogger.log("The specified checkerID wasn't found");
+    // ErrorLogger.log("The specified checkerID was not found");
     // return null;
     // }
     // }
 
-    public static CheckerFactory getCheckerFactory(String checkerID, FactoryController controller,
-            ElectionDescription electionDesc, Result result, ElectionCheckParameter parameter) {
+    public static CheckerFactory getCheckerFactory(String checkerID,
+                                                   FactoryController controller,
+                                                   ElectionDescription electionDesc,
+                                                   Result result,
+                                                   ElectionCheckParameter parameter) {
 
         if (factories.keySet().contains(checkerID)) {
             return factories.get(checkerID).getNewInstance(controller, electionDesc, result, parameter);
 
         } else {
-            ErrorLogger.log("The specified checkerID wasn't found");
+            ErrorLogger.log("The specified checkerID was not found");
             return null;
         }
     }
@@ -127,8 +130,7 @@ public final class CheckerFactoryFactory {
      * creates a specified amount of result objects that fit for the checkerID
      *
      * @param checkerID the ID for the checker
-     * @param amount    the amount of result objects
-     * @return a list of the specified result objects with the lenght of "amount",
+     * @return a list of the specified result objects with the length of "amount",
      *         null else
      */
     public static Result getMatchingResult(String checkerID) {
@@ -136,19 +138,17 @@ public final class CheckerFactoryFactory {
             return factories.get(checkerID).getMatchingResult();
 
         } else {
-            ErrorLogger.log("The specified checkerID wasn't found");
+            ErrorLogger.log("The specified checkerID was not found");
             return null;
         }
     }
 
-    public static List<Result> getMatchingUnprocessedResult(String checkerID, int amount) {
-
+    public static List<Result> getMatchingUnprocessedResult(String checkerID,
+                                                            int amount) {
         List<Result> results = new ArrayList<Result>();
-
         for (int i = 0; i < amount; i++) {
             results.add(new UnprocessedCBMCResult());
         }
-
         return results;
     }
 }

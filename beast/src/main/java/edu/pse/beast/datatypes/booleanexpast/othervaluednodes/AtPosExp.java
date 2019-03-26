@@ -10,7 +10,8 @@ import edu.pse.beast.types.InternalTypeContainer;
 public class AtPosExp extends TypeExpression {
     private final IntegerValuedExpression integerValuedExpression;
 
-    public AtPosExp(InternalTypeContainer container, IntegerValuedExpression integerValuedExpression) {
+    public AtPosExp(InternalTypeContainer container,
+                    IntegerValuedExpression integerValuedExpression) {
         super(container);
         this.integerValuedExpression = integerValuedExpression;
     }
@@ -32,12 +33,15 @@ public class AtPosExp extends TypeExpression {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (o == null || getClass() != o.getClass())
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
+        }
         AtPosExp atPosExp = (AtPosExp) o;
-        return integerValuedExpression != null ? integerValuedExpression.equals(atPosExp.integerValuedExpression)
+        return integerValuedExpression != null
+                ? integerValuedExpression.equals(atPosExp.integerValuedExpression)
                 : atPosExp.integerValuedExpression == null;
     }
 }

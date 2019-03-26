@@ -41,12 +41,12 @@
 ///**
 // * This class creates a celectiondescriptioneditor object and all useractions
 // * which can be performed on this object
-// * 
+// *
 // * @author Holger Klein
 // */
 //public class CElectionDescriptionEditorBuilder {
 //
-//    private final String[] menuHeadingIds = {"file", "edit", "editor", "code" };
+//    private static final String[] MENU_HEADING_IDS = {"file", "edit", "editor", "code" };
 //    private CElectionCodeAreaBuilder codeAreaBuilder;
 //    private UserAction newAcc;
 //    private UserAction load;
@@ -62,18 +62,21 @@
 //
 //    /**
 //     * creates a CElectionDescriptionEditor object and returns it
-//     * 
+//     *
 //     * @param objRefsForBuilder
 //     *            the references to interfaces needed to build objects
 //     * @return the created editor
 //     */
-//    public CElectionDescriptionEditor createCElectionDescriptionEditor(ObjectRefsForBuilder objRefsForBuilder) {
+//    public CElectionDescriptionEditor
+//            createCElectionDescriptionEditor(ObjectRefsForBuilder objRefsForBuilder) {
 //        CEditorWindowStarter starter = new CEditorWindowStarter();
 //        CCodeEditorWindow window = starter.getGUIWindow();
 //        window.updateStringRes(objRefsForBuilder.getStringIF());
 //
 //        // create new ErrorWindow
-//        ErrorWindow errorWindow = new ErrorWindow(window.getErrorPane(), objRefsForBuilder.getStringIF());
+//        ErrorWindow errorWindow =
+//            new ErrorWindow(window.getErrorPane(),
+//                            objRefsForBuilder.getStringIF());
 //        codeAreaBuilder = new CElectionCodeAreaBuilder(objRefsForBuilder);
 //
 //        // codeAreaObject.setSyntaxHLRegexAndColorList()
@@ -82,9 +85,12 @@
 //                new CErrorDisplayer(window.getCodeArea(), objRefsForBuilder.getStringIF()));
 //
 //        // create FileChooser
-//        FileChooser fileChooser = new FileChooser(
-//                objRefsForBuilder.getStringIF().getCElectionEditorStringResProvider().getMenuStringRes(),
-//                new ElectionDescriptionSaverLoader(), window);
+//        FileChooser fileChooser =
+//            new FileChooser(
+//                objRefsForBuilder.getStringIF()
+//                .getCElectionEditorStringResProvider().getMenuStringRes(),
+//                new ElectionDescriptionSaverLoader(),
+//                window);
 //
 //        // create new ChangeHandler
 //        CElectionDescriptionEditorChangeHandler cElectionDescriptionEditorChangeHandler
@@ -92,23 +98,37 @@
 //                codeArea.getPane());
 //
 //        // create new CElectionEditor
-//        CElectionDescriptionEditor editor = new CElectionDescriptionEditor(codeArea, window, codeAreaBuilder,
-//                errorWindow, cElectionDescriptionEditorChangeHandler, objRefsForBuilder.getStringIF(), fileChooser,
-//                objRefsForBuilder);
+//        CElectionDescriptionEditor editor =
+//            new CElectionDescriptionEditor(codeArea, window,
+//                                           codeAreaBuilder,
+//                                           errorWindow,
+//                                           cElectionDescriptionEditorChangeHandler,
+//                                           objRefsForBuilder.getStringIF(),
+//                                           fileChooser, objRefsForBuilder);
 //
-//        CElectionEditorMenubarHandler menuBarHandler = new CElectionEditorMenubarHandler(menuHeadingIds, window,
-//                createActionIdAndListenerList(objRefsForBuilder, editor), objRefsForBuilder.getStringIF());
+//        CElectionEditorMenubarHandler menuBarHandler =
+//            new CElectionEditorMenubarHandler(
+//                MENU_HEADING_IDS,
+//                window,
+//                createActionIdAndListenerList(objRefsForBuilder,
+//                                              editor),
+//                objRefsForBuilder.getStringIF());
 //
 //        // toolbar: new load save save_as copy cut paste undo redo
-//        ActionIdAndListener[] idAndListener = {createFromUserAction(newAcc), createFromUserAction(load),
-//                createFromUserAction(save), createFromUserAction(saveAs), createFromUserAction(undo),
-//                createFromUserAction(redo), createFromUserAction(cut), createFromUserAction(copy),
-//                createFromUserAction(paste) };
+//        ActionIdAndListener[] idAndListener =
+//        {
+//            createFromUserAction(newAcc), createFromUserAction(load),
+//            createFromUserAction(save), createFromUserAction(saveAs),
+//            createFromUserAction(undo), createFromUserAction(redo),
+//            createFromUserAction(cut), createFromUserAction(copy),
+//            createFromUserAction(paste)
+//        };
 //
 //        ImageResourceProvider imageRes = ImageResourceProvider.getToolbarImages();
 //
-//        CElectionEditorToolbarHandler toolbarHandler = new CElectionEditorToolbarHandler(idAndListener, imageRes,
-//                objRefsForBuilder.getStringIF(), window);
+//        CElectionEditorToolbarHandler toolbarHandler =
+//            new CElectionEditorToolbarHandler(idAndListener, imageRes,
+//                                              objRefsForBuilder.getStringIF(), window);
 //
 //        starter.start();
 //
@@ -119,11 +139,17 @@
 //            OutputType outType = TypeLoader.getStandartOutputType();
 //            ElectionTypeContainer container = new ElectionTypeContainer(inType, outType);
 //
-//            editor.loadElectionDescription(new CCodeHelper().generateElectionDescription(container,
-//                      "new_election", templateHandler,
-//                      objRefsForBuilder.getStringIF().getCElectionEditorStringResProvider().getElectionStringRes()));
+//            editor.loadElectionDescription(
+//                new CCodeHelper().generateElectionDescription(
+//                    container, "new_election", templateHandler,
+//                    objRefsForBuilder.getStringIF()
+//                    .getCElectionEditorStringResProvider()
+//                    .getElectionStringRes()
+//                )
+//            );
 //        } catch (BadLocationException ex) {
-//            Logger.getLogger(CElectionDescriptionEditorBuilder.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(CElectionDescriptionEditorBuilder.class.getName())
+//            .log(Level.SEVERE, null, ex);
 //        }
 //        objRefsForBuilder.getLanguageOpts().addStringDisplayer(editor);
 //
@@ -208,7 +234,9 @@
 //        return new ElectionCopyUserAction(cElectionDescriptionEditor);
 //    }
 //
-//    private ElectionCutUserAction createElectionCutUserAction(CElectionDescriptionEditor cElectionDescriptionEditor) {
+//    private ElectionCutUserAction
+//                createElectionCutUserAction(
+//                    CElectionDescriptionEditor cElectionDescriptionEditor) {
 //        return new ElectionCutUserAction(cElectionDescriptionEditor);
 //    }
 //
@@ -235,7 +263,8 @@
 //    }
 //
 //    // code
-//    private StaticErrorFindingUserAction createStaticErrorFindingUserAction(CElectionDescriptionEditor editor) {
+//    private StaticErrorFindingUserAction
+//                createStaticErrorFindingUserAction(CElectionDescriptionEditor editor) {
 //        return new StaticErrorFindingUserAction(editor);
 //    }
 //

@@ -36,27 +36,27 @@ public abstract class OutputType implements InOutType {
     protected abstract void getHelper();
 
     /**
-     * 
+     *
      * @return A string which describes the output type of the election in C. e.g
      *         "struct result"
      */
     public abstract String getOutputString();
 
     /**
-     * 
+     *
      * @return the ID this output type uses in the string resources
      */
     public abstract String getOutputIDinFile();
 
     /**
-     * 
+     *
      * @return true, if the output is just one candidate
      */
     public abstract boolean isOutputOneCandidate();
 
     /**
      * extracts the result from the given list
-     * 
+     *
      * @param toExtract the list from which the result will be extracted
      * @return an array with the Result
      */
@@ -73,13 +73,12 @@ public abstract class OutputType implements InOutType {
     public abstract String getCArrayType();
 
     /**
-     * returns the code with the added line of the marginmaintest method. The method
-     * has to end with an assertion that lets cbmc fail, so we can extract the
-     * result
-     * 
-     * @param code
-     * @param voteNumber
-     * @return
+     * returns the code with the added line of the margin main test method. The method
+     * must end with an assertion that let's cbmc fail, so we can extract the result.
+     *
+     * @param code       the code
+     * @param voteNumber the vote number
+     * @return the beautified code
      */
     public abstract CodeArrayListBeautifier addMarginMainTest(CodeArrayListBeautifier code, int voteNumber);
 

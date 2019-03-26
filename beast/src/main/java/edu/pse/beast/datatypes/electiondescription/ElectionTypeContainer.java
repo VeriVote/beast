@@ -31,7 +31,8 @@ public class ElectionTypeContainer {
 //     * Constructor
 //     * @param type the type of this election
 //     */
-//    public ElectionTypeContainer(InputType inType, OutputType outType, int lowerBound, int upperBound) {
+//    public ElectionTypeContainer(InputType inType, OutputType outType,
+//                                 int lowerBound, int upperBound) {
 //        this.inType = inType;
 //        this.outType = outType;
 //        this.lowerBound = lowerBound;
@@ -41,7 +42,8 @@ public class ElectionTypeContainer {
     /**
      * Constructor
      *
-     * @param type the type of this election
+     * @param inType the inType of this election
+     * @param outType the outType of this election
      */
     public ElectionTypeContainer(InputType inType, OutputType outType) {
         this.inType = inType;
@@ -49,7 +51,7 @@ public class ElectionTypeContainer {
     }
 
 //    /**
-//     * 
+//     *
 //     * @return the type of this election
 //     */
 //    public InternalTypeContainer getType() {

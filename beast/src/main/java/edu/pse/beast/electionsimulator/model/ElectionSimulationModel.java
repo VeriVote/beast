@@ -46,8 +46,10 @@ public class ElectionSimulationModel implements NameInterface {
 
     private double elementHeight = 25;
 
-    public ElectionSimulationModel(ElectionTypeContainer container, GridPane inputGridPane, GridPane voterGridPane,
-            GridPane candidateGridPane) {
+    public ElectionSimulationModel(ElectionTypeContainer container,
+                                   GridPane inputGridPane,
+                                   GridPane voterGridPane,
+                                   GridPane candidateGridPane) {
         this.support = new PropertyChangeSupport(this);
         this.container = container;
 
@@ -66,8 +68,11 @@ public class ElectionSimulationModel implements NameInterface {
 
     private void addRow() {
         if (currentRows == maxRows) {
-            NEWRowOfValues toAdd = new NEWRowOfValues(this, container, this.getAmountCandidates(), currentRows,
-                    elementWidth, elementHeight);
+            NEWRowOfValues toAdd =
+                    new NEWRowOfValues(this, container,
+                                       this.getAmountCandidates(),
+                                       currentRows,
+                                       elementWidth, elementHeight);
             rows.add(toAdd);
 
             TextField newVoter = new TextField("V" + currentRows);

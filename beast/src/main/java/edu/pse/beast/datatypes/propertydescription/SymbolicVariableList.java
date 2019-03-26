@@ -14,8 +14,10 @@ import edu.pse.beast.types.InternalTypeContainer;
  */
 public class SymbolicVariableList {
 
-    private final LinkedList<SymbolicVariable> symbolicVariableList = new LinkedList<>();
-    private final transient List<VariableListListener> listenerList = new ArrayList<VariableListListener>();
+    private final LinkedList<SymbolicVariable> symbolicVariableList =
+            new LinkedList<>();
+    private final transient List<VariableListListener> listenerList =
+            new ArrayList<VariableListListener>();
 
     /**
      *
@@ -29,7 +31,9 @@ public class SymbolicVariableList {
      * @param id                    id of the variable
      * @param internalTypeContainer the type of the added variable
      */
-    public synchronized void addSymbolicVariable(String id, InternalTypeContainer internalTypeContainer) {
+    public synchronized void addSymbolicVariable(String id,
+                                                 InternalTypeContainer
+                                                     internalTypeContainer) {
         if (id != null && internalTypeContainer != null) {
             SymbolicVariable var = new SymbolicVariable(id, internalTypeContainer);
             symbolicVariableList.add(var);
@@ -37,14 +41,14 @@ public class SymbolicVariableList {
                 listener.addedVar(var);
             });
         } else {
-            ErrorLogger.log("Tried to add a Variable without an id or without a type to a SymbolicVariableList");
+            ErrorLogger.log("Tried to add a variable without an id or "
+                            + "without a type to a symbolic variable list");
         }
     }
 
     /**
      *
-     * @param id                    id of the variable
-     * @param internalTypeContainer the type of the added variable
+     * @param var the symbolic variable
      */
     public synchronized void addSymbolicVariable(SymbolicVariable var) {
         symbolicVariableList.add(var);
@@ -56,7 +60,7 @@ public class SymbolicVariableList {
 
     /**
      * @param id id which is to be tested
-     * @return true if the var Id is not allready used
+     * @return true if the variable id is not already used
      */
     public synchronized boolean isVarIDAllowed(String id) {
         boolean varAllowed = true;
@@ -163,21 +167,25 @@ public class SymbolicVariableList {
     }
 
     public void addSymbolicVariableList(SymbolicVariableList allSymbolicVariables) {
-        for (Iterator<SymbolicVariable> iterator = allSymbolicVariables.getSymbolicVariables().iterator(); iterator
-                .hasNext();) {
+        for (Iterator<SymbolicVariable> iterator =
+                allSymbolicVariables.getSymbolicVariables().iterator();
+                iterator.hasNext();) {
             SymbolicVariable var = (SymbolicVariable) iterator.next();
             this.addSymbolicVariable(var);
         }
     }
 
     /**
-     * 
+     *
      * @return a clone of the symbVarList
      */
     private synchronized List<SymbolicVariable> cloneSymbVars() {
-        List<SymbolicVariable> clonedSymbVariables = new LinkedList<SymbolicVariable>();
-        for (Iterator<SymbolicVariable> iterator = symbolicVariableList.iterator(); iterator.hasNext();) {
-            SymbolicVariable symbolicVariable = (SymbolicVariable) iterator.next();
+        List<SymbolicVariable> clonedSymbVariables =
+                new LinkedList<SymbolicVariable>();
+        for (Iterator<SymbolicVariable> iterator = symbolicVariableList.iterator();
+                iterator.hasNext();) {
+            SymbolicVariable symbolicVariable =
+                    (SymbolicVariable) iterator.next();
             clonedSymbVariables.add(symbolicVariable.clone());
         }
         return clonedSymbVariables;

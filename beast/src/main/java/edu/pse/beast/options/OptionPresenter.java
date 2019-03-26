@@ -11,7 +11,6 @@
 // * @author Holger Klein
 // */
 //public final class OptionPresenter implements DisplaysStringsToUser {
-//    
 //    private StringResourceLoader srl;
 //    /**
 //     * Constructor
@@ -20,21 +19,19 @@
 //    public OptionPresenter(StringResourceLoader srl) {
 //        this.srl = srl;
 //    }
-//    
+//
 //    /**
 //     * Presents options to the user
 //     * @param opt the options to be presented
 //     */
 //    public void presentOptionsToUser(Options opt) {
 //        OptionPresenterFrame frame = new OptionPresenterFrame(
-//                opt, srl);        
-//        frame.setVisible(true);        
-//    }    
+//                opt, srl);
+//        frame.setVisible(true);
+//    }
 //
 //    @Override
 //    public void updateStringRes(StringLoaderInterface stringResIF) {
 //        this.srl = stringResIF.getOptionStringResProvider().getOptionStringRes();
 //    }
-//    
-//
 //}

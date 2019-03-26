@@ -14,7 +14,8 @@ public abstract class BinaryRelationshipNode extends BooleanExpressionNode {
      * @param lhsExpNode the lhs node
      * @param rhsExpNode the rhs node
      */
-    public BinaryRelationshipNode(BooleanExpressionNode lhsExpNode, BooleanExpressionNode rhsExpNode) {
+    public BinaryRelationshipNode(BooleanExpressionNode lhsExpNode,
+                                  BooleanExpressionNode rhsExpNode) {
         this.lhsExpNode = lhsExpNode;
         this.rhsExpNode = rhsExpNode;
     }
@@ -37,13 +38,20 @@ public abstract class BinaryRelationshipNode extends BooleanExpressionNode {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (o == null || getClass() != o.getClass())
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
+        }
         BinaryRelationshipNode that = (BinaryRelationshipNode) o;
-        if (lhsExpNode != null ? !lhsExpNode.equals(that.lhsExpNode) : that.lhsExpNode != null)
+        if (lhsExpNode != null
+                ? !lhsExpNode.equals(that.lhsExpNode)
+                        : that.lhsExpNode != null) {
             return false;
-        return rhsExpNode != null ? rhsExpNode.equals(that.rhsExpNode) : that.rhsExpNode == null;
+        }
+        return rhsExpNode != null
+                ? rhsExpNode.equals(that.rhsExpNode)
+                        : that.rhsExpNode == null;
     }
 }

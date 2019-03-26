@@ -19,7 +19,7 @@
 //import edu.pse.beast.codearea.codeinput.lineinserter.NewlineInserterChooser;
 //
 ///**
-// * This class is responsible for translating input from the user into code 
+// * This class is responsible for translating input from the user into code
 // * visible in the given JTextPane. It is used by the class CodeInputHandler.
 // * One of its main functions is to make sure locked lines dont get changed.
 // * It also uses several other classes to provide functionallity such as
@@ -45,11 +45,11 @@
 //            SaveTextBeforeRemove saveBeforeRemove) {
 //        this.pane = pane;
 //        this.pane.addCaretListener(this);
-//        this.styledDoc = pane.getStyledDocument(); 
-//        this.openCloseCharList = openCloseCharList; 
+//        this.styledDoc = pane.getStyledDocument();
+//        this.openCloseCharList = openCloseCharList;
 //        this.saveBeforeRemove = saveBeforeRemove;
 //        setupObjects();
-//    }    
+//    }
 //
 //    private void setupObjects() {
 //        stoppedTypingContMsger = new StoppedTypingContinuouslyMessager(pane);
@@ -58,7 +58,7 @@
 //        this.lockedLines = new LockedLinesHandler(this.pane, saveBeforeRemove);
 //        this.lineBeginningTabsHandler = new CurlyBracesLineBeginningTabHandler(pane);
 //        this.newlineInserterChooser = new NewlineInserterChooser(pane, lockedLines);
-//        this.currentInserter = this.newlineInserterChooser.getNewlineInserter();       
+//        this.currentInserter = this.newlineInserterChooser.getNewlineInserter();
 //        this.lockedLinesDisplay = new LockedLinesDisplay(pane, lockedLines);
 //    }
 //
@@ -67,17 +67,17 @@
 //    }
 //
 //    /**
-//     * inserts a linebreak at the current caret position. Depending on the
+//     * inserts a line break at the current caret position. Depending on the
 //     * position, this can have different effects. Between two curly braces,
-//     * it will add two linebreaks:
+//     * it will add two line breaks:
 //     * {|} <-- before, the | represents the caret
 //     * {
 //     *     | <---after
 //     * }
-//     * @throws BadLocationException should never happen since the linebreak
-//     * gets added at the caretposition which should be valid
+//     * @throws BadLocationException should never happen since the line break
+//     * gets added at the caret position which should be valid
 //     */
-//    public void insertNewline() throws BadLocationException {  
+//    public void insertNewline() throws BadLocationException {
 //        currentInserter.insertNewlineAtCurrentPosition(pane, tabInserter,
 //                                                       lineBeginningTabsHandler,
 //                                                       currentCaretPosition);
@@ -85,12 +85,12 @@
 //    }
 //
 //    /**
-//     * inserts the given string at the current caret position unless it is in 
+//     * inserts the given string at the current caret position unless it is in
 //     * a locked line
-//     * @param string the string to be inserted 
+//     * @param string the string to be inserted
 //     */
 //    public void insertString(String string) {
-//        if(selectionIncludesLockedLines()) return;       
+//        if(selectionIncludesLockedLines()) return;
 //        try {
 //            if (isLineContainingCaretPosLocked()) {
 //                return;
@@ -101,7 +101,9 @@
 //                    int selectionStart = pane.getSelectionStart();
 //                    int selectionEnd = pane.getSelectionEnd();
 //                    try {
-//                        pane.getStyledDocument().remove(selectionStart, selectionEnd - selectionStart);
+//                        pane.getStyledDocument().remove(selectionStart,
+//                                                        selectionEnd
+//                                                        - selectionStart);
 //                        pane.getStyledDocument().insertString(selectionStart, string, null);
 //                    } catch (BadLocationException e) {
 //                        e.printStackTrace();
@@ -112,51 +114,52 @@
 //            e.printStackTrace();
 //        }
 //    }
-//    
+//
 //    /**
 //     * removes a tab at the current caret position of the line isnt locked and
 //     * there are only spaces left of the caret position in the line
-//     * @throws BadLocationException 
+//     * @throws BadLocationException
 //     */
 //    public void removeTab() throws BadLocationException {
-//        if(selectionIncludesLockedLines()) return;       
-//        if(isLineContainingCaretPosLocked()) return; 
+//        if(selectionIncludesLockedLines()) return;
+//        if(isLineContainingCaretPosLocked()) return;
 //        if(pane.getSelectedText() != null) {
-//            ArrayList<Integer> selectedLines = 
+//            ArrayList<Integer> selectedLines =
 //                JTextPaneToolbox.getLinesBetween(pane, pane.getSelectionStart(),
 //                        pane.getSelectionEnd());
 //            for(int line : selectedLines) {
 //                int firstCharPos = JTextPaneToolbox.getFirstCharPosInLine(pane, line);
 //                saveBeforeRemove.save();
 //                tabInserter.removeTabAtPos(firstCharPos);
-//            }            
-//        } else {            
-//            tabInserter.removeTabAtPos(currentCaretPosition);  
+//            }
+//        } else {
+//            tabInserter.removeTabAtPos(currentCaretPosition);
 //        }
 //    }
 //
 //    /**
 //     * inserts a tab at the current position of the line isnt locked
-//     * @throws BadLocationException 
+//     * @throws BadLocationException
 //     */
 //    public void insertTab() throws BadLocationException {
-//        if(selectionIncludesLockedLines()) return;       
-//        if(isLineContainingCaretPosLocked()) return; 
+//        if(selectionIncludesLockedLines()) return;
+//        if(isLineContainingCaretPosLocked()) return;
 //        if(pane.getSelectedText() != null) {
-//            ArrayList<Integer> selectedLines = 
+//            ArrayList<Integer> selectedLines =
 //                JTextPaneToolbox.getLinesBetween(pane, pane.getSelectionStart(),
 //                        pane.getSelectionEnd());
 //            for(int line : selectedLines) {
 //                tabInserter.insertTabAtPos(JTextPaneToolbox.getLineBeginning(pane, line));
 //            }
 //        } else {
-//            tabInserter.insertTabAtPos(currentCaretPosition);            
-//        }        
+//            tabInserter.insertTabAtPos(currentCaretPosition);
+//        }
 //    }
 //
 //
 //    private boolean isLineContainingCaretPosLocked() {
-//        return lockedLines.isLineLocked(JTextPaneToolbox.transformToLineNumber(pane, pane.getCaretPosition()));
+//        return lockedLines.isLineLocked(
+//            JTextPaneToolbox.transformToLineNumber(pane, pane.getCaretPosition()));
 //    }
 //
 //    /**
@@ -164,7 +167,7 @@
 //     * if the char has a corresponding closing char, such as { having }, the
 //     * corresponding closing char is also inserted
 //     * @param insertChar the char to be inserted
-//     * @throws BadLocationException 
+//     * @throws BadLocationException
 //     */
 //    public void insertChar(char insertChar) throws BadLocationException {
 //        if(selectionIncludesLockedLines()) return;
@@ -178,7 +181,7 @@
 //            OpenCloseChar occ = openCloseCharList.getOpenCloseChar(insertChar);
 //            dontTypeClosingChar = true;
 //            occ.insertIntoDocument(pane, currentCaretPosition);
-//            dontTypeClosingChar = true;                        
+//            dontTypeClosingChar = true;
 //        } else if(dontTypeClosingChar && openCloseCharList.isCloseChar(insertChar)) {
 //            dontTypeClosingChar = false;
 //            pane.setCaretPosition(currentCaretPosition + 1);
@@ -193,11 +196,11 @@
 //     * @param line the line to be locked, starting at 0
 //     */
 //    public void lockLine(int line) {
-//        lockedLines.lockLine(line);        
-//        this.currentInserter = this.newlineInserterChooser.getNewlineInserter();        
+//        lockedLines.lockLine(line);
+//        this.currentInserter = this.newlineInserterChooser.getNewlineInserter();
 //    }
 //
-//    /** 
+//    /**
 //     * unlocks the supplied line from editing
 //     * @param line the line to be unlocked, starting at 0
 //     */
@@ -218,7 +221,7 @@
 //    @Override
 //    public void caretUpdate(CaretEvent ce) {
 //        currentCaretPosition = ce.getDot();
-//        currentInserter = newlineInserterChooser.getNewlineInserter();        
+//        currentInserter = newlineInserterChooser.getNewlineInserter();
 //    }
 //
 //    /**
@@ -245,13 +248,13 @@
 //     * removed instead
 //     */
 //    public void removeToTheRight() {
-//        if(selectionIncludesLockedLines()) return;
-//        if(!isCaretInEmptyLine() && isCaretAtEndOfLine()) {
-//            if(isTheFollowingLineLocked()) {
+//        if (selectionIncludesLockedLines()) return;
+//        if (!isCaretInEmptyLine() && isCaretAtEndOfLine()) {
+//            if (isTheFollowingLineLocked()) {
 //                return;
 //            }
-//        } 
-//        if(!isCaretAtEndOfLine() && isLineContainingCaretPosLocked()) {
+//        }
+//        if (!isCaretAtEndOfLine() && isLineContainingCaretPosLocked()) {
 //            return;
 //        }
 //
@@ -281,14 +284,17 @@
 //    }
 //
 //    private boolean isCaretInEmptyLine() {
-//        return isCaretAtEndOfLine() && 
-//                JTextPaneToolbox.getCharToTheLeftOfCaret(pane).equals("\n");
+//        return isCaretAtEndOfLine()
+//               && JTextPaneToolbox.getCharToTheLeftOfCaret(pane).equals("\n");
 //    }
 //
 //    private boolean isTheFollowingLineLocked() {
-//        return lockedLines.isLineLocked(JTextPaneToolbox.transformToLineNumber(pane, currentCaretPosition) + 1);
+//        return lockedLines.isLineLocked(
+//                    JTextPaneToolbox.transformToLineNumber(pane,
+//                                                           currentCaretPosition)
+//                    + 1);
 //    }
-//    
+//
 //    /**
 //     * removes one char to the left of the current caret position if it doesnt
 //     * change a locked line. If more text is selected, all the selecte text gets
@@ -367,7 +373,7 @@
 //    public TabInserter getTabInserter() {
 //        return tabInserter;
 //    }
-//    
+//
 //    /**
 //     * updates the whole pane to the newest description
 //     * @param code the code that will be shown in the editor

@@ -11,11 +11,11 @@ import edu.pse.beast.types.InOutType;
 public class ElectExp extends AccessValueNode {
     /**
      * @param type     type
-     * @param accesVar accessing variable
+     * @param accessVar accessing variable
      * @param count    the count of this vote expression
      */
-    public ElectExp(InOutType type, TypeExpression[] accesVar, int count) {
-        super(type, accesVar, count);
+    public ElectExp(InOutType type, TypeExpression[] accessVar, int count) {
+        super(type, accessVar, count);
     }
 
     @Override

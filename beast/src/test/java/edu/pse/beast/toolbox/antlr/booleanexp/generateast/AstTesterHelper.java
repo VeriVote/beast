@@ -11,7 +11,8 @@ import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressio
 /**
  * @author Holger Klein
  */
-public class AstTesterHelper {
+public final class AstTesterHelper {
+    private AstTesterHelper() {}
 
     public static void areTheSame(BooleanExpListNode lhs, BooleanExpListNode rhs) {
         assertEquals(lhs.getHighestElect(), rhs.getHighestElect());
@@ -23,16 +24,19 @@ public class AstTesterHelper {
         }
     }
 
-    private static void areTheSame(List<BooleanExpressionNode> lhsList, List<BooleanExpressionNode> rhsList) {
+    private static void areTheSame(List<BooleanExpressionNode> lhsList,
+                                   List<BooleanExpressionNode> rhsList) {
         assertEquals(lhsList.size(), rhsList.size());
         for (int i = 0; i < lhsList.size(); i++) {
             areTheSame(lhsList.get(i), rhsList.get(i));
         }
     }
 
-    private static void areTheSame(BooleanExpressionNode lhsNode, BooleanExpressionNode rhsNode) {
+    private static void areTheSame(BooleanExpressionNode lhsNode,
+                                   BooleanExpressionNode rhsNode) {
         if (!lhsNode.equals(rhsNode)) {
-            System.out.println("expected: " + lhsNode.toString() + " actual: " + rhsNode.toString());
+            System.out.println("expected: " + lhsNode.toString()
+                               + " actual: " + rhsNode.toString());
         }
         assertTrue(lhsNode.equals(rhsNode));
     }

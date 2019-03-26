@@ -33,15 +33,19 @@
 //
 //    /**
 //     * Builds all relevant components.
-//     * @param refs A reference to the objects that are important for the builder such as string loaders and the like
+//     * @param refs             A reference to the objects that are important for the builder
+//     *                         such as string loaders and the like
 //     * @param booleanExpEditor A reference to the editor for boolean expressions
-//     * @return Returns the controller class of PropertyList
+//     * @return                 Returns the controller class of PropertyList
 //     */
-//    public PropertyList createPropertyList(ObjectRefsForBuilder refs, BooleanExpEditor booleanExpEditor) {
+//    public PropertyList createPropertyList(ObjectRefsForBuilder refs,
+//                                           BooleanExpEditor booleanExpEditor) {
 //        PLModel model = new PLModel();
 //        FileChooser fileChooser =
-//            new FileChooser(refs.getStringIF().getPropertyListStringResProvider().getOtherStringRes(),
-//                            new PropertyListSaverLoader(), null);
+//            new FileChooser(refs.getStringIF()
+//                            .getPropertyListStringResProvider().getOtherStringRes(),
+//                            new PropertyListSaverLoader(),
+//                            null);
 //        controller = new PropertyList(model, booleanExpEditor, fileChooser);
 //        booleanExpEditor.setPropertyListController(controller);
 //
@@ -58,18 +62,16 @@
 //                refs.getStringIF().getPropertyListStringResProvider().getToolbarTipStringRes(),
 //                createActionIdAndListenerListForToolbarHandler(), window.getToolbar(), window);
 //
-//        
-//
 //        refs.getLanguageOpts().addStringDisplayer(window);
 //        refs.getLanguageOpts().addStringDisplayer(menuBarHandler);
 //        refs.getLanguageOpts().addStringDisplayer(toolbarHandler);
 //        //refs.getLanguageOpts().addStringDisplayer(controller);
-//        
+//
 //        controller.start();
 //        return controller;
 //    }
 //
-//    
+//
 //    private ArrayList<ArrayList<ActionIdAndListener>>
 //            createActionIdAndListenerListForMenuHandler() {
 //        ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
@@ -136,7 +138,7 @@
 //    private UndoChangesPropertyList createUndoChangesPropertyList() {
 //        return new UndoChangesPropertyList((PropertyList) controller);
 //    }
-//    
+//
 //    private OpenSimulationWindow createOpenSimulation() {
 //        return new OpenSimulationWindow((PropertyList) controller);
 //    }
@@ -149,5 +151,4 @@
 //            }
 //        });
 //    }
-//
 //}

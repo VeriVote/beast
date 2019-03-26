@@ -22,7 +22,6 @@ import javax.imageio.ImageIO;
 public final class FileLoader {
 
     private FileLoader() {
-
     }
 
     /**
@@ -34,26 +33,23 @@ public final class FileLoader {
      * @throws IOException           throws Exception
      */
     public static LinkedList<String> loadFileAsString(File file) throws FileNotFoundException, IOException {
-
         LinkedList<String> stringlist;
         InputStream inputStream = new FileInputStream(file);
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
         stringlist = new LinkedList<>();
         String line;
-
         line = br.readLine();
         while (line != null) {
             stringlist.add(line);
             line = br.readLine();
         }
         br.close();
-
         return stringlist;
     }
 
     /**
      * @param toRead the File you want to read
-     * @return the image, if it was possible to read it. In case it couldn't be
+     * @return the image, if it was possible to read it. In case it could not be
      *         read, the method returns null
      */
     public static BufferedImage loadFileAsImage(File toRead) {
@@ -61,25 +57,24 @@ public final class FileLoader {
         try {
             toReturn = ImageIO.read(toRead);
         } catch (IOException e) {
-            ErrorLogger.log("The specified file: " + toRead.getAbsolutePath() + " couldn't be loaded");
+            ErrorLogger.log("The specified file: "
+                            + toRead.getAbsolutePath()
+                            + " could not be loaded");
         }
-
         return toReturn;
     }
 
     /**
      * creates a new Name inside a directory
-     * 
+     *
      * @param pathToDir the path of the directory you want the new unique String to
      *                  be created in
      * @return the unique String
      */
     public static synchronized String getNewUniqueName(String pathToDir) {
         ArrayList<String> usedNames = new ArrayList<>();
-
         File folder = new File(pathToDir.replace("\"", ""));
         File[] listOfFiles = folder.listFiles();
-
         if (listOfFiles != null) {
             for (File file : listOfFiles) {
                 if (file.isFile()) {
@@ -87,12 +82,10 @@ public final class FileLoader {
                 }
             }
         }
-
         String newName = getRandomName(100);
         while (usedNames.contains(newName)) {
             newName = getRandomName(100);
         }
-
         return newName;
     }
 
@@ -103,17 +96,14 @@ public final class FileLoader {
 
     /**
      * returns all files that end with the specified String that are in this folder
-     * 
+     *
      * @param pathToDir the path to the folder
      * @param endsWith  the String
      */
     public static List<String> listAllFilesFromFolder(String pathToDir, String endsWith) {
         ArrayList<String> foundFiles = new ArrayList<>();
-
         File folder = new File(pathToDir.replace("\"", ""));
-
         File[] listOfFiles = folder.listFiles();
-
         if (listOfFiles != null) {
             for (File file : listOfFiles) {
                 if (file.isFile() && file.getName().endsWith(endsWith)) {

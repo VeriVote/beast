@@ -26,18 +26,17 @@ import javafx.scene.control.Tooltip;
  * I18N utility class..
  *
  * @author P.J. Meisch (pj.meisch@sothawo.com).
- * 
+ *
  *         taken from:
  *         https://www.sothawo.com/2016/09/how-to-implement-a-javafx-ui-where-the-language-can-be-changed-dynamically/
  */
 public final class Internationalization {
-
     /** the current selected Locale. */
-    private static final ObjectProperty<Locale> locale;
+    private static final ObjectProperty<Locale> LOCALE;
 
     static {
-        locale = new SimpleObjectProperty<>(getDefaultLocale());
-        locale.addListener((observable, oldValue, newValue) -> Locale.setDefault(newValue));
+        LOCALE = new SimpleObjectProperty<>(getDefaultLocale());
+        LOCALE.addListener((observable, oldValue, newValue) -> Locale.setDefault(newValue));
     }
 
     /**
@@ -50,7 +49,7 @@ public final class Internationalization {
     }
 
     /**
-     * get the default locale. This is the systems default if contained in the
+     * get the default LOCALE. This is the systems default if contained in the
      * supported locales, english otherwise.
      *
      * @return
@@ -61,7 +60,7 @@ public final class Internationalization {
     }
 
     public static Locale getLocale() {
-        return locale.get();
+        return LOCALE.get();
     }
 
     public static void setLocale(Locale locale) {
@@ -70,12 +69,12 @@ public final class Internationalization {
     }
 
     public static ObjectProperty<Locale> localeProperty() {
-        return locale;
+        return LOCALE;
     }
 
     /**
      * gets the string with the given key from the resource bundle for the current
-     * locale and uses it as first argument to MessageFormat.format, passing in the
+     * LOCALE and uses it as first argument to MessageFormat.format, passing in the
      * optional args and returning the result.
      *
      * @param key  message key
@@ -92,10 +91,11 @@ public final class Internationalization {
      * key
      *
      * @param key key
+     * @param args arguments
      * @return String binding
      */
     public static StringBinding createStringBinding(final String key, Object... args) {
-        return Bindings.createStringBinding(() -> get(key, args), locale);
+        return Bindings.createStringBinding(() -> get(key, args), LOCALE);
     }
 
     /**
@@ -106,7 +106,7 @@ public final class Internationalization {
      * @return StringBinding
      */
     public static StringBinding createStringBinding(Callable<String> func) {
-        return Bindings.createStringBinding(func, locale);
+        return Bindings.createStringBinding(func, LOCALE);
     }
 
     /**
@@ -146,5 +146,4 @@ public final class Internationalization {
         tooltip.textProperty().bind(createStringBinding(key, args));
         return tooltip;
     }
-
 }

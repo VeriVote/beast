@@ -15,7 +15,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 public abstract class AutoCompletionCodeArea extends CodeArea {
-    public final String specialCharacterRegex = ",|;|\\.|\\(|\\)|\\{|\\}|\\[|\\|\\|/|\\+|-|\\*";
+    private static final String CONTROL_CHARACTERS = "\\p{Cntrl}";
+    private static final String WORD = "([A-Za-z]+[A-Za-z0-9]*)";
+    private static final String WHITESPACE = " ";
+
+    public static final String SPECIAL_CHARACTER_REGEX =
+            ",|;|\\.|\\(|\\)|\\{|\\}|\\[|\\|\\|/|\\+|-|\\*";
 
     private int start;
     private int end;
@@ -23,7 +28,8 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
     public AutoCompletionCodeArea() {
         this.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void changed(ObservableValue<? extends Boolean> ov, Boolean onHidden, Boolean onShown) {
+            public void changed(ObservableValue<? extends Boolean> ov,
+                                Boolean onHidden, Boolean onShown) {
                 if (onShown) {
                     GUIController.getController().getAutoCompleter().reset();
                 }
@@ -36,21 +42,25 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
                 (int) this.getCaretBounds().get().getMaxY() + 4);
     }
 
-    public void processAutocompletion(List<String> content, Integer start, Integer end) {
+    public void processAutocompletion(List<String> content,
+                                      Integer start,
+                                      Integer end) {
         Tuple<Integer, Integer> position = getAbsolutCaretPosition();
         this.start = start;
         this.end = end;
         if (content.size() == 1) { // there is only one element, so the user probably want that one
             insertAutoCompletion(start, end, content.get(0));
         } else {
-            GUIController.getController().getAutoCompleter().showAutocompletionWindows(position.x, position.y, content,
-                    this);
+            GUIController.getController().getAutoCompleter()
+            .showAutoCompletionWindows(position.x, position.y, content, this);
         }
     }
 
-    public abstract void insertAutoCompletion(int start, int end, String toInsert);
+    public abstract void insertAutoCompletion(int start, int end,
+                                              String toInsert);
 
-    protected Triplet<List<String>, Integer, Integer> getCompletions(Set<String> recommendations) {
+    protected Triplet<List<String>, Integer, Integer>
+                getCompletions(Set<String> recommendations) {
         String completeText = this.getText();
         int prefixEnd = caretPositionProperty().getValue();
         int prefixStart = prefixEnd;
@@ -60,8 +70,10 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
             for (int i = prefixEnd - 1; i >= 0; i--) {
                 char tmp = completeText.charAt(i);
 
-                if (tmp == ' ' | ("" + tmp).matches(specialCharacterRegex) | ("" + tmp).matches("\\p{Cntrl}")) {
-                    if (!prefix.matches("([A-Za-z]+[A-Za-z0-9]*)")) {
+                if (tmp == ' '
+                        | ("" + tmp).matches(SPECIAL_CHARACTER_REGEX)
+                        | ("" + tmp).matches(CONTROL_CHARACTERS)) {
+                    if (!prefix.matches(WORD)) {
                         prefix = "";
                     }
                     break;
@@ -80,16 +92,19 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
             completeText = builder.toString();
         }
 
-        completeText = completeText.replaceAll("\\p{Cntrl}", " "); // replace control characters by whitespaces
-        completeText = completeText.replaceAll(specialCharacterRegex, " ");
-        completeText = completeText.replaceAll("\\s+", " ");
+        completeText = completeText.replaceAll(CONTROL_CHARACTERS, WHITESPACE);
+        completeText = completeText.replaceAll(SPECIAL_CHARACTER_REGEX, WHITESPACE);
+        completeText = completeText.replaceAll("\\s+", WHITESPACE);
 
         Set<String> possibilities = new TreeSet<String>(recommendations);
-        possibilities.addAll(GUIController.getController().getBooleanExpEditor().getSymbolicVariableNames());
-        String[] split = completeText.split(" "); // split on whitespaces to extract the words
+        possibilities.addAll(
+                GUIController.getController().getBooleanExpEditor().getSymbolicVariableNames()
+        );
+        // split on white spaces to extract the words
+        String[] split = completeText.split(WHITESPACE);
 
         for (int i = 0; i < split.length; i++) {
-            if (split[i].matches("([A-Za-z]+[A-Za-z0-9]*)")) {
+            if (split[i].matches(WORD)) {
                 possibilities.add(split[i]);
             }
         }

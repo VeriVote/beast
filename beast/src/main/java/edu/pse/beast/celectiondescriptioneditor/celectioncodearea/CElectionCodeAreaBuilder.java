@@ -12,10 +12,10 @@
 //import edu.pse.beast.toolbox.ObjectRefsForBuilder;
 //
 ///**
-// * creates a celectioncodearea object. It uses its parent class Codeareabuilder
-// * to first create a simple codearea and use this to instantiate most fields of
-// * the celectioncodearea
-// * 
+// * creates a c-election code area object. It uses its parent class code area builder
+// * to first create a simple cod earea and use this to instantiate most fields of
+// * the c-election code area
+// *
 // * @author Holger Klein
 // */
 //public class CElectionCodeAreaBuilder extends CodeAreaBuilder {
@@ -24,7 +24,7 @@
 //
 //    /**
 //     * constructor
-//     * 
+//     *
 //     * @param objectRefsForBuilder
 //     *            the reference for all the builders needed
 //     */
@@ -33,8 +33,8 @@
 //    }
 //
 //    /**
-//     * creates and returns a celectioncodearea
-//     * 
+//     * creates and returns a c-election code area
+//     *
 //     * @param codeArea
 //     *            the JTextPane used to display text and communicate with the
 //     *            user
@@ -45,8 +45,9 @@
 //     *            created by the cerrorfinders
 //     * @return the created celectioncodearea
 //     */
-//    public CElectionCodeArea createCElectionCodeArea(JTextPane codeArea, JScrollPane codeAreaScrollPane,
-//            CErrorDisplayer displayer) {
+//    public CElectionCodeArea createCElectionCodeArea(JTextPane codeArea,
+//                                                     JScrollPane codeAreaScrollPane,
+//                                                     CErrorDisplayer displayer) {
 //        CElectionCodeArea created = new CElectionCodeArea(
 //                createCodeArea(codeArea, codeAreaScrollPane, refs, displayer));
 //        refs.getLanguageOpts().addStringDisplayer(displayer);
@@ -70,5 +71,4 @@
 //        }
 //        return created;
 //    }
-//
 //}

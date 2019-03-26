@@ -10,7 +10,7 @@
 //
 ///**
 // * This class chooses the right newlineinserter implementation based on the chars
-// * surrounding the caret position of the given pane. 
+// * surrounding the caret position of the given pane.
 // * @author Holger Klein
 // */
 //public class NewlineInserterChooser {
@@ -19,26 +19,26 @@
 //    private LockedLineNewlineInserter lockedInserter = new LockedLineNewlineInserter();
 //    private BetweenCurlyBracesNewlineInserter curlyBracesInserter;
 //    private LockedLinesHandler lockedLinesHandler;
-//    
+//
 //    public NewlineInserterChooser(JTextPane pane, LockedLinesHandler lockedLinesHandler) {
 //        this.pane = pane;
 //        this.lockedLinesHandler = lockedLinesHandler;
 //        this.curlyBracesInserter = new BetweenCurlyBracesNewlineInserter(standardInserter);
 //    }
-//    
+//
 //    /**
-//     * finds the right implementation of newlineinserter depending on the chars 
+//     * finds the right implementation of newlineinserter depending on the characters
 //     * surrounding the panes currentcaretpositin. If the lines is locked,
 //     * it returns lockedlinenewlineinserter. If the caret is between
 //     * {}, it returns betweencurlybracesnewlineinserter. If it is none
 //     * of the above, it returns standardnewlineinserter
-//     * @return 
+//     * @return new line inserter
 //     */
 //    public NewlineInserter getNewlineInserter() {
 //        NewlineInserter found = chooseNewlineInserter();
 //        return findMoreSpecializedInserter(found);
-//    }   
-//    
+//    }
+//
 //    protected NewlineInserter findMoreSpecializedInserter(NewlineInserter current) {
 //        return current;
 //    }
@@ -47,11 +47,13 @@
 //        int lineNumber = absPosToLineNumber(pane.getCaretPosition());
 //        if(lockedLinesHandler.isLineLocked(lineNumber)) {
 //            try {
-//                if(pane.getStyledDocument().getText(pane.getCaretPosition(), 1).equals("\n")) {                    
+//                if (pane.getStyledDocument().getText(pane.getCaretPosition(), 1)
+//                        .equals("\n")) {
 //                    return standardInserter;
 //                }
 //            } catch (BadLocationException ex) {
-//                Logger.getLogger(NewlineInserterChooser.class.getName()).log(Level.SEVERE, null, ex);
+//                Logger.getLogger(NewlineInserterChooser.class.getName())
+//                .log(Level.SEVERE, null, ex);
 //            }
 //            return lockedInserter;
 //        }
@@ -60,11 +62,11 @@
 //            if(isCurlyBracesSurround(surroundingChars)) {
 //                return curlyBracesInserter;
 //            }
-//        } catch (BadLocationException ex) {                 
+//        } catch (BadLocationException ex) {
 //        }
-//        return standardInserter;       
+//        return standardInserter;
 //    }
-//    
+//
 //    private int absPosToLineNumber(int caretPosition) {
 //        int line = 0;
 //        String code = pane.getText();
@@ -74,11 +76,11 @@
 //        }
 //        return line;
 //    }
-//    
+//
 //    private String findSurroundingChars() throws BadLocationException {
 //        int pos = pane.getCaretPosition();
 //        if(pos == 0) {
-//            return pane.getText(pos, 1);            
+//            return pane.getText(pos, 1);
 //        } else if(pos == pane.getText().length()) {
 //            return pane.getText(pos - 1, 1);
 //        } else {
@@ -89,8 +91,4 @@
 //    private boolean isCurlyBracesSurround(String surroundingChars) {
 //        return surroundingChars.equals("{}");
 //    }
-//
-//    
-//    
-//    
 //}

@@ -15,14 +15,14 @@
 // * @author Holger Klein
 // */
 //public class TabInserter {
-//    private JTextPane pane; 
+//    private JTextPane pane;
 //    private SortedIntegerList tabPositions = new SortedIntegerList();
-//    private int spacesPerTab = 8;   
-//    
+//    private int spacesPerTab = 8;
+//
 //    public TabInserter(JTextPane pane) {
 //        this.pane = pane;
 //    }
-//    
+//
 //    /**
 //     * inserts the required amount of spaces to move the caret psoition
 //     * to the next multiple of the amount of spaces per tab
@@ -31,22 +31,18 @@
 //     */
 //    public void insertTabAtPos(int pos) throws BadLocationException {
 //        int distToLineBeginning = JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, pos);
-//        
 //        int nextTabPos = 0;
-//        
-//        while(nextTabPos <= distToLineBeginning) {
+//
+//        while (nextTabPos <= distToLineBeginning) {
 //            nextTabPos += spacesPerTab;
-//        }     
+//        }
 //        int distToNextTabPos = nextTabPos - distToLineBeginning;
-//                 
 //        String spacesToInsert = "";
-//        
 //        for(int i = 0; i < distToNextTabPos; ++i) spacesToInsert += " ";
 //        pane.getStyledDocument().insertString(pos, spacesToInsert, null);
-//        
 //        tabPositions.add(pos);
 //    }
-//    
+//
 //    /**
 //     * removes a tab at the position if there is nothing but spaces to the left
 //     * of it
@@ -66,11 +62,11 @@
 //            Logger.getLogger(TabInserter.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
-//        
+//
 //    public int getSpacesPerTab() {
 //        return spacesPerTab;
 //    }
-// 
+//
 //    private boolean onlySpacesBetweenPosAndLinesBeginning(int pos) {
 //        int distToLineBeginning = JTextPaneToolbox.getDistanceToClosestLineBeginning(pane, pos);
 //        String spaces = "";
@@ -78,7 +74,10 @@
 //            spaces += " ";
 //        }
 //        try {
-//            return pane.getStyledDocument().getText(pos - distToLineBeginning, distToLineBeginning).equals(spaces);
+//            return pane.getStyledDocument()
+//                       .getText(pos - distToLineBeginning,
+//                                distToLineBeginning)
+//                   .equals(spaces);x
 //        } catch (BadLocationException ex) {
 //            return false;
 //        }
@@ -87,5 +86,4 @@
 //    public void setAmountSpacesPerTab(int numberTabs) {
 //        this.spacesPerTab = numberTabs;
 //    }
-//    
 //}

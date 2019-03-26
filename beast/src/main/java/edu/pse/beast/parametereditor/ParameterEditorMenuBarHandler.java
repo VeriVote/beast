@@ -21,7 +21,7 @@
 //     * @param window ParameterEditorWindow
 //     */
 //    public ParameterEditorMenuBarHandler(String[] headingIds,
-//    ArrayList<ArrayList<ActionIdAndListener>> actionIDAndListener, 
+//    ArrayList<ArrayList<ActionIdAndListener>> actionIDAndListener,
 //    StringResourceLoader resLoader, ParameterEditorWindow window) {
 //        super(headingIds, actionIDAndListener, resLoader);
 //                this.window = window;
@@ -32,5 +32,4 @@
 //        updateStringResLoader(stringResIF.getParameterEditorStringResProvider().getMenuStringRes());
 //        window.setJMenuBar(createdMenuBar);
 //    }
-//    
 //}

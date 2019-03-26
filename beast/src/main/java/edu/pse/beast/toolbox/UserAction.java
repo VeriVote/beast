@@ -10,7 +10,7 @@ public abstract class UserAction {
     private final String id;
 
     /**
-     * 
+     *
      * @param id the identification
      */
     public UserAction(String id) {
@@ -18,7 +18,7 @@ public abstract class UserAction {
     }
 
     /**
-     * 
+     *
      * @return the identification
      */
     public String getId() {

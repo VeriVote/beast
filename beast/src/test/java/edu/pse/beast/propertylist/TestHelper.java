@@ -53,7 +53,9 @@
 //    }
 //
 //    public BooleanExpEditor getBooleanExpEditorOfCurrentInstance() {
-//        return ((PropertyList) (centralObjectProvider.getPreAndPostConditionsSource())).getEditor();
+//        return ((PropertyList)
+//                    (centralObjectProvider.getPreAndPostConditionsSource())
+//               ).getEditor();
 //    }
 //
 //    public PropertyList getPropListOfCurrentInstance() {
@@ -74,13 +76,18 @@
 //        return new BooleanExpEditorBuilder().createBooleanExpEditorObject(refs, cElectionEditor);
 //
 //        /* Just what you need
-//        cElectionEditor = new CElectionDescriptionEditorBuilder().createCElectionDescriptionEditor(refs);
-//        booleanExpEditor = new BooleanExpEditorBuilder().createBooleanExpEditorObject(refs, cElectionEditor);
+//        cElectionEditor =
+//            new CElectionDescriptionEditorBuilder().createCElectionDescriptionEditor(refs);
+//        booleanExpEditor =
+//            new BooleanExpEditorBuilder()
+//                .createBooleanExpEditorObject(refs, cElectionEditor);
 //        propertyList = new PropertyListBuilder().createPropertyList(refs, booleanExpEditor);
-//        checkerCommunicator = new PropertyChecker("cbmc"); //this must be done via the checkerfactory at some point
+//        // this must be done via the checker factory at some point
+//        checkerCommunicator = new PropertyChecker("cbmc");
 //        paramEd =
 //            new ParameterEditorBuilder().createParameterEditor(refs, cElectionEditor,
-//                                                               booleanExpEditor, propertyList, this);
+//                                                               booleanExpEditor,
+//                                                               propertyList, this);
 //        paramEd.addCheckListener(communicator);
 //        langOpts.reapply(); */
 //    }
@@ -116,7 +123,8 @@
 //        Thread.sleep(timeoutafter);
 //    }
 //
-//    public void performKeystrokes(int[] keys, long waittimeBetweenStrokes) throws InterruptedException {
+//    public void performKeystrokes(int[] keys,
+//                                  long waittimeBetweenStrokes) throws InterruptedException {
 //        Robot r = null;
 //        try {
 //            r = new Robot();

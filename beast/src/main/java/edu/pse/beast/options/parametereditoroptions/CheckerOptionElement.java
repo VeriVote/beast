@@ -16,10 +16,11 @@ public class CheckerOptionElement extends OptionElement {
      */
     public CheckerOptionElement(List<String> choosableOptions, String chosen) {
         super("checker", choosableOptions);
-        if (chosen == null)
+        if (chosen == null) {
             handleSelection(choosableOptions.get(0));
-        else
+        } else {
             handleSelection(chosen);
+        }
     }
 
     @Override

@@ -29,15 +29,16 @@ public interface ResultCheckerCommunicator {
     /**
      * Starts checks.
      *
-     * @param electSrc      ElectionDescriptionSource
-     * @param preAndPostSrc PreAndPostConditionsDescription
-     * @param parameter     ElectionCheckParameter
+     * @param electDescr             election description
+     * @param parentProperties       properties
+     * @param electionCheckParameter election check parameter
      * @return array of ResultInterfaces
      */
-    public List<Result> checkPropertiesForDescription(ElectionDescription elecDescr,
-            List<ParentTreeItem> parentProperties, ElectionCheckParameter electionCheckParameter);
+    public List<Result> checkPropertiesForDescription(ElectionDescription electDescr,
+                                                      List<ParentTreeItem> parentProperties,
+                                                      ElectionCheckParameter electionCheckParameter);
 
-//    
+//
 //    /**
 //     * starts the check for a give file
 //     * @param toCheck the file to check
@@ -45,7 +46,7 @@ public interface ResultCheckerCommunicator {
 //     * @return a single unprocessedResult
 //     */
 //    public UnprocessedCBMCResult checkFile(File toCheck, ElectionDescription elecDescr, ParameterSource params);
-//    
+//
     /**
      * Stops checks.
      *

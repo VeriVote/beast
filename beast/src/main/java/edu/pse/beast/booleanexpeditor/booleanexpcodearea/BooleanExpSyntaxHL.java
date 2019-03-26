@@ -14,6 +14,9 @@ import edu.pse.beast.codearea.syntaxhighlighting.SyntaxHL;
  * @author Nikolai Schnell
  */
 public class BooleanExpSyntaxHL {
+    private static final String REGEX =
+            "(ELECT[0-9]+\\([a-zA-Z_]*\\))|(VOTES[0-9]+\\([a-zA-Z_]*\\))";
+
     /**
      * Constructor
      *
@@ -29,11 +32,11 @@ public class BooleanExpSyntaxHL {
         for (String s : antlrHandler.getLogicalOperators()) {
             regexAndColorList.add(new RegexAndColor(s, Color.RED));
         }
-        for (String s : antlrHandler.getMakroRegex()) {
+        for (String s : antlrHandler.getMacroRegex()) {
             regexAndColorList.add(new RegexAndColor(s, Color.BLUE));
         }
         regexAndColorList.add(
-                new RegexAndColor("(ELECT[0-9]+\\([a-zA-Z_]*\\))|(VOTES[0-9]+\\([a-zA-Z_]*\\))", Color.GREEN.darker()));
+                new RegexAndColor(REGEX, Color.GREEN.darker()));
         syntaxHL.updateFilter(regexAndColorList);
     }
 }

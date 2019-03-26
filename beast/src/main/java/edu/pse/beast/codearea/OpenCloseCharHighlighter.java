@@ -23,14 +23,14 @@ import edu.pse.beast.codearea.codeinput.OpenCloseCharList;
  * @author Holger Klein
  */
 public class OpenCloseCharHighlighter implements CaretListener {
-
     private final OpenCloseCharList charList;
     private final JTextPane pane;
     private final DefaultHighlighter highlighter;
     private final DefaultHighlighter.DefaultHighlightPainter hPainter;
     private final ArrayList<Object> addedHls = new ArrayList<>();
 
-    public OpenCloseCharHighlighter(OpenCloseCharList charList, JTextPane pane) {
+    public OpenCloseCharHighlighter(OpenCloseCharList charList,
+                                    JTextPane pane) {
         this.charList = charList;
         this.pane = pane;
         pane.addCaretListener(this);
@@ -49,8 +49,9 @@ public class OpenCloseCharHighlighter implements CaretListener {
         }
         for (int i = 0; i < surroundingChars.length; i++) {
             char c = surroundingChars[i];
-            if (c == ' ')
+            if (c == ' ') {
                 continue;
+            }
             if (charList.isOpenChar(c)) {
                 highlightChar(ce.getDot() + i);
                 highlightCorrespondingCloseChar(ce.getDot() + i, charList.getOpenCloseChar(c));
@@ -71,11 +72,11 @@ public class OpenCloseCharHighlighter implements CaretListener {
         pos -= 2;
         for (; pos >= 0 && lvl > 0; --pos) {
             char c = code.charAt(pos);
-            if (c == close)
+            if (c == close) {
                 lvl++;
-            else if (c == open)
+            } else if (c == open) {
                 lvl--;
-
+            }
         }
         if (lvl == 0) {
             highlightChar(pos + 2);
@@ -90,10 +91,11 @@ public class OpenCloseCharHighlighter implements CaretListener {
 
         for (; pos < code.length() && lvl > 0; ++pos) {
             char c = code.charAt(pos);
-            if (c == open)
+            if (c == open) {
                 lvl++;
-            else if (c == close)
+            } else if (c == close) {
                 lvl--;
+            }
         }
         if (lvl == 0) {
             highlightChar(pos);
@@ -109,8 +111,8 @@ public class OpenCloseCharHighlighter implements CaretListener {
     }
 
     private void removeAllHighlights() {
-        for (Object o : addedHls)
+        for (Object o : addedHls) {
             highlighter.removeHighlight(o);
+        }
     }
-
 }

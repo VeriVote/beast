@@ -101,21 +101,30 @@
 //                .addContainerGap()
 //                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 //                    .addGroup(layout.createSequentialGroup()
-//                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                        .addGroup(
+//                                layout.createParallelGroup(
+//                                    javax.swing.GroupLayout.Alignment.LEADING)
 //                            .addGroup(layout.createSequentialGroup()
 //                                .addComponent(symbVarLabel)
-//                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+//                                .addPreferredGap(
+//                                     javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 //                                .addComponent(addSymVarButton)
-//                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+//                                .addPreferredGap(
+//                                    javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 //                                .addComponent(removeSymVarButton))
 //                            .addComponent(preConditionLabel))
 //                        .addGap(147, 193, Short.MAX_VALUE))
 //                    .addGroup(layout.createSequentialGroup()
-//                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                        .addGroup(
+//                                layout.createParallelGroup(
+//                                    javax.swing.GroupLayout.Alignment.LEADING)
 //                            .addComponent(errorScrollPane)
-//                            .addComponent(postConditionScrollPane, javax.swing.GroupLayout.Alignment.TRAILING)
-//                            .addComponent(preConditionScrollPane, javax.swing.GroupLayout.Alignment.TRAILING)
-//                            .addComponent(symVarScrollPane, javax.swing.GroupLayout.Alignment.TRAILING)
+//                            .addComponent(postConditionScrollPane,
+//                                          javax.swing.GroupLayout.Alignment.TRAILING)
+//                            .addComponent(preConditionScrollPane,
+//                                          javax.swing.GroupLayout.Alignment.TRAILING)
+//                            .addComponent(symVarScrollPane,
+//                                          javax.swing.GroupLayout.Alignment.TRAILING)
 //                            .addGroup(layout.createSequentialGroup()
 //                                .addComponent(postConditionLabel)
 //                                .addGap(0, 0, Short.MAX_VALUE)))
@@ -263,5 +272,4 @@
 //        postConditionTextPane = new JTextPane();
 //        postConditionScrollPane.setViewportView(postConditionTextPane);
 //    }
-//
 //}

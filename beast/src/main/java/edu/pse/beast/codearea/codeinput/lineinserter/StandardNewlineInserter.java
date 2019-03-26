@@ -11,24 +11,18 @@
 // * @author Holger Klein
 // */
 //public class StandardNewlineInserter implements NewlineInserter {
-//        
+//
 //    @Override
 //    public void insertNewlineAtCurrentPosition(
 //            JTextPane pane, TabInserter tabInserter,
 //            LineBeginningTabsHandler beginningTabsHandler,
 //            int pos) throws BadLocationException {
-//        
 //        pane.getStyledDocument().insertString(pos, "\n", null);
-//        
 //        int newLinePos = pos + 1;
-//        
+//
 //        int tabs = beginningTabsHandler.getTabsForLine(newLinePos);
-//        
-//        for(int i = 0; i < tabs; ++i) {
+//        for (int i = 0; i < tabs; ++i) {
 //            tabInserter.insertTabAtPos(newLinePos + i * tabInserter.getSpacesPerTab());
-//        }      
-//        
-//        
+//        }
 //    }
-//    
 //}

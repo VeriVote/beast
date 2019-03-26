@@ -25,6 +25,8 @@ import org.fxmisc.richtext.model.StyleSpans;
 import org.fxmisc.richtext.model.StyleSpansBuilder;
 import org.reactfx.collection.LiveList;
 
+import com.google.gson.JsonSyntaxException;
+
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling.CVariableErrorFinder;
 import edu.pse.beast.codearea.errorhandling.CodeError;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
@@ -48,26 +50,29 @@ import javafx.scene.input.KeyEvent;
 
 public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterface {
     private static final String[] KEYWORDS =
-            new String[] {
-                    "auto", "break", "case", "const", "continue", "default",
-                    "do", "else", "error", "const", "continue", "default",
-                    "do", "else", "enum", "extern", "for", "goto", "if",
-            "return", "signed", "sizeof", "static", "struct", "switch",
-            "typedef", "union", "unsigned", "volatile",
-            "while" };
+    {
+        "auto", "break", "case", "const", "continue", "default",
+        "do", "else", "error", "const", "continue", "default",
+        "do", "else", "enum", "extern", "for", "goto", "if",
+        "return", "signed", "sizeof", "static", "struct", "switch",
+        "typedef", "union", "unsigned", "volatile", "while"
+    };
     private static final String[] PREPROCESSOR =
-            new String[] {
-                    "#define", "#elif", "#endif", "#ifdef", "#ifndef", "#include"
-                    };
+    {
+        "#define", "#elif", "#endif", "#ifdef", "#ifndef", "#include"
+    };
     private static final String[] DATATYPES =
-            new String[] {
-                    "char", "double", "enum", "float", "int", "long", "register", "void"
-                    };
+    {
+        "char", "double", "enum", "float", "int", "long", "register", "void"
+    };
     private static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
     private static final String PREPROCESSOR_PATTERN = "(" + String.join("|", PREPROCESSOR) + ")";
     private static final String DATATYPE_PATTERN = "(" + String.join("|", DATATYPES) + ")";
     private static final String POINTER_PATTERN = "\\b("
-            + String.join("|", Arrays.stream(DATATYPES).map(s -> "\\*[\\s]*" + s).toArray(String[]::new)) + ")\\b";
+            + String.join("|", Arrays.stream(DATATYPES).map(s
+                ->
+                "\\*[\\s]*" + s).toArray(String[]::new))
+            + ")\\b";
     private static final String METHOD_PATTERN = "[\\w]+[\\s]*\\(";
     private static final String INCLUDE_PATTERN = "[.]*include[\\s]+[<|\"].+\\.[\\w]*[>|\"]";
     private static final String PAREN_PATTERN = "\\(|\\)";
@@ -77,12 +82,34 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     private static final String STRING_PATTERN = "\"([^\"\\\\]|\\\\.)*\"";
     private static final String COMMENT_PATTERN = "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/";
 
-    private static final Pattern PATTERN = Pattern.compile("(?<KEYWORD>" + KEYWORD_PATTERN + ")" + "|(?<PREPROCESSOR>"
-            + PREPROCESSOR_PATTERN + ")" + "|(?<DATATYPE>" + DATATYPE_PATTERN + ")" + "|(?<POINTER>" + POINTER_PATTERN
-            + ")" + "|(?<METHOD>" + METHOD_PATTERN + ")" + "|(?<INCLUDE>" + INCLUDE_PATTERN + ")" + "|(?<PAREN>"
-            + PAREN_PATTERN + ")" + "|(?<BRACE>" + BRACE_PATTERN + ")" + "|(?<BRACKET>" + BRACKET_PATTERN + ")"
-            + "|(?<SEMICOLON>" + SEMICOLON_PATTERN + ")" + "|(?<STRING>" + STRING_PATTERN + ")" + "|(?<COMMENT>"
-            + COMMENT_PATTERN + ")");
+    private static final String KEYWORD_STRING = "KEYWORD";
+    private static final String PREPROCESSOR_STRING = "PREPROCESSOR";
+    private static final String DATATYPE_STRING = "DATATYPE";
+    private static final String POINTER_STRING = "POINTER";
+    private static final String METHOD_STRING = "METHOD";
+    private static final String INCLUDE_STRING = "INCLUDE";
+    private static final String PAREN_STRING = "PAREN";
+    private static final String BRACE_STRING = "BRACE";
+    private static final String BRACKET_STRING = "BRACKET";
+    private static final String SEMICOLON_STRING = "SEMICOLON";
+    private static final String STRING_STRING = "STRING";
+    private static final String COMMENT_STRING = "COMMENT";
+
+    private static final Pattern PATTERN = Pattern.compile(
+            "(?<" + KEYWORD_STRING + ">" + KEYWORD_PATTERN + ")"
+            + "|(?<" + PREPROCESSOR_STRING + ">" + PREPROCESSOR_PATTERN + ")"
+            + "|(?<" + DATATYPE_STRING + ">" + DATATYPE_PATTERN + ")"
+            + "|(?<" + POINTER_STRING + ">" + POINTER_PATTERN + ")"
+            + "|(?<" + METHOD_STRING  + ">" + METHOD_PATTERN + ")"
+            + "|(?<" + INCLUDE_STRING + ">" + INCLUDE_PATTERN + ")"
+            + "|(?<" + PAREN_STRING + ">" + PAREN_PATTERN + ")"
+            + "|(?<" + BRACE_STRING + ">" + BRACE_PATTERN + ")"
+            + "|(?<" + BRACKET_STRING + ">" + BRACKET_PATTERN + ")"
+            + "|(?<" + SEMICOLON_STRING + ">" + SEMICOLON_PATTERN + ")"
+            + "|(?<" + STRING_STRING + ">" + STRING_PATTERN + ")"
+            + "|(?<" + COMMENT_STRING + ">" + COMMENT_PATTERN + ")");
+
+    private static final String RESOURCE = "codeAreaSyntaxHighlight.css";
 
     private static Set<String> recommendations = new TreeSet<String>();
 
@@ -107,14 +134,16 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
             new KeyCodeCombination(KeyCode.TAB); // tab key
 
     private final SaverLoader saverLoader;
-    private final ElectionDescriptionSaverLoader electionSaverLoader = new ElectionDescriptionSaverLoader();
+    private final ElectionDescriptionSaverLoader electionSaverLoader =
+            new ElectionDescriptionSaverLoader();
 
     private ElectionDescription elecDescription;
-    private List<ElectionDescriptionChangeListener> listeners = new ArrayList<ElectionDescriptionChangeListener>();
+    private List<ElectionDescriptionChangeListener> listeners =
+            new ArrayList<ElectionDescriptionChangeListener>();
     private int lockedLineStart = 0;
     private int lockedLineEnd = 10;
     private int lockedBracePos;
-    private int amountTabs = 0;
+    // private int amountTabs = 0;
     private int spacesPerTab = 4;
 
     public NewCodeArea() {
@@ -123,15 +152,17 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         recommendations.addAll(Arrays.asList(PREPROCESSOR));
         recommendations.addAll(Arrays.asList(DATATYPES));
         saverLoader = new SaverLoader(".elec", "BEAST election description");
-        ElectionDescription startElecDescription = new ElectionDescription("New description", new SingleChoice(),
-                new SingleCandidate(), 0, 0, 0, 0, true);
+        ElectionDescription startElecDescription =
+                new ElectionDescription("New description", new SingleChoice(),
+                                        new SingleCandidate(), 0, 0, 0, 0, true);
         this.setNewElectionDescription(startElecDescription);
         saverLoader.resetHasSaveFile();
         List<String> code = new ArrayList<String>();
         code.add("");
         // code.add(source.getContainer().getInputType().);
         String sampleCode = "";
-        String stylesheet = this.getClass().getResource("codeAreaSyntaxHighlight.css").toExternalForm();
+        String stylesheet =
+                this.getClass().getResource(RESOURCE).toExternalForm();
         this.getStylesheets().add(stylesheet);
         IntFunction<Node> lineNumbers = LineNumberFactory.get(this);
         this.setParagraphGraphicFactory(lineNumbers);
@@ -202,10 +233,12 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
             }
         });
 
-        this.richChanges().filter(ch -> !ch.getInserted().equals(ch.getRemoved())).subscribe(change -> {
-            this.setStyleSpans(0, computeHighlighting(this.getText()));
-            elecDescription.setCode(this.getText());
-        });
+        this.richChanges().filter(ch
+            -> !ch.getInserted().equals(ch.getRemoved())).subscribe(
+                change -> {
+                    this.setStyleSpans(0, computeHighlighting(this.getText()));
+                    elecDescription.setCode(this.getText());
+                });
         this.replaceText(0, 0, sampleCode);
     }
 
@@ -225,7 +258,10 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     private void paste(KeyEvent event) {
         String clipboardText = "";
         try {
-            clipboardText = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+            clipboardText =
+                    (String)
+                        Toolkit.getDefaultToolkit()
+                        .getSystemClipboard().getData(DataFlavor.stringFlavor);
         } catch (HeadlessException e) {
             return;
         } catch (UnsupportedFlavorException e) {
@@ -295,7 +331,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
      * @param delete      if the delete key was pressed
      * @param tuple       alternative variable to set the bounds where text should
      *                    be replaced. If it is null, the area to replace will be
-     *                    infered from the curser or the marked area
+     *                    inferred from the cursor or the marked area
      * @return
      */
     private boolean lockedLineSafeInsertText(String replacement, boolean backspace, boolean delete,
@@ -335,14 +371,16 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         // if (selectionEnd - selectionStart > 0) { // we have a selected range
         // // find out, if the selected range overlaps with a locked line anywhere
 
-        boolean notOverlapping = ((selectionEnd < lockedLineStart) || (lockedLineEnd <= selectionStart))
+        boolean notOverlapping =
+                ((selectionEnd < lockedLineStart) || (lockedLineEnd <= selectionStart))
                 && (((selectionEnd <= lockedBracePos) || (lockedBracePos < selectionStart)));
         if (notOverlapping) {
             this.replaceText(selectionStart, selectionEnd, replacement);
             int lengthChange = replacement.length() - selectionLength;
             updateLockedLineNumber(selectionEnd, lengthChange);
             return true;
-        } else if (selectionEnd == lockedLineStart && (replacement.endsWith("\n") || backspace || delete)) {
+        } else if (selectionEnd == lockedLineStart
+                && (replacement.endsWith("\n") || backspace || delete)) {
             this.replaceText(selectionStart, selectionEnd, replacement);
             int lengthChange = replacement.length() - selectionLength;
             updateLockedLineNumber(selectionEnd, lengthChange);
@@ -360,7 +398,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         } else if (changePosition <= lockedBracePos) {
             lockedBracePos = lockedBracePos + lengthChange;
         } else {
-            // don't increase anything
+            // do not increase anything
         }
         test();
     }
@@ -380,31 +418,32 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         int lastKwEnd = 0;
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
         while (matcher.find()) {
-            String styleClass = matcher.group("KEYWORD") != null
-                ? "keyword"
-                        : matcher.group("PREPROCESSOR") != null
-                        ? "preprocessor"
-                            : matcher.group("METHOD") != null
-                            ? "method"
-                                : matcher.group("DATATYPE") != null
-                                ? "datatype"
-                                    : matcher.group("POINTER") != null
-                                    ? "pointer"
-                                        : matcher.group("INCLUDE") != null
-                                        ? "include"
-                                            : matcher.group("PAREN") != null
-                                            ? "paren"
-                                               : matcher.group("BRACE") != null
-                                               ? "brace"
-                                                   : matcher.group("BRACKET") != null
-                                                   ? "bracket"
-                                                       : matcher.group("SEMICOLON") != null
-                                                       ? "semicolon"
-                                                           : matcher.group("STRING") != null
-                                                           ? "string"
-                                                               : matcher.group("COMMENT") != null
-                                                               ? "comment"
-                                                                   : null;
+            String styleClass =
+                matcher.group(KEYWORD_STRING) != null
+                ? KEYWORD_STRING.toLowerCase()
+                    : matcher.group(PREPROCESSOR_STRING) != null
+                    ? PREPROCESSOR_STRING.toLowerCase()
+                        : matcher.group(METHOD_STRING) != null
+                        ? METHOD_STRING.toLowerCase()
+                            : matcher.group(DATATYPE_STRING) != null
+                            ? DATATYPE_STRING.toLowerCase()
+                                : matcher.group(POINTER_STRING) != null
+                                ? POINTER_STRING.toLowerCase()
+                                    : matcher.group(INCLUDE_STRING) != null
+                                    ? INCLUDE_STRING.toLowerCase()
+                                        : matcher.group(PAREN_STRING) != null
+                                        ? PAREN_STRING.toLowerCase()
+                                            : matcher.group(BRACE_STRING) != null
+                                            ? BRACE_STRING.toLowerCase()
+                                                : matcher.group(BRACKET_STRING) != null
+                                                ? BRACKET_STRING.toLowerCase()
+                                                    : matcher.group(SEMICOLON_STRING) != null
+                                                    ? SEMICOLON_STRING.toLowerCase()
+                                                        : matcher.group(STRING_STRING) != null
+                                                        ? STRING_STRING.toLowerCase()
+                                                            : matcher.group(COMMENT_STRING) != null
+                                                            ? COMMENT_STRING.toLowerCase()
+                                                                : null;
             /* never happens */ assert styleClass != null;
             spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
             spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
@@ -416,7 +455,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
     /**
      *
-     * @return a deep copy of the election description, which doesn't update when
+     * @return a deep copy of the election description, which does not update when
      *         the text field gets another input
      */
     public ElectionDescription getElectionDescription() {
@@ -427,14 +466,18 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         String toDisplay = "";
         for (Iterator<CodeError> iterator = codeErrors.iterator(); iterator.hasNext();) {
             CodeError codeError = (CodeError) iterator.next();
-            toDisplay = toDisplay + "line: " + codeError.getLine() + "| Message: " + codeError.getMsg() + "\n";
+            toDisplay +=
+                    "line: " + codeError.getLine()
+                    + "| Message: " + codeError.getMsg() + "\n";
         }
         GUIController.setErrorText(toDisplay);
     }
 
     public void createNew(InputType newIn, OutputType newOut) {
-        for (Iterator<ElectionDescriptionChangeListener> iterator = listeners.iterator(); iterator.hasNext();) {
-            ElectionDescriptionChangeListener listener = (ElectionDescriptionChangeListener) iterator.next();
+        for (Iterator<ElectionDescriptionChangeListener> iterator = listeners.iterator();
+                iterator.hasNext();) {
+            ElectionDescriptionChangeListener listener =
+                    (ElectionDescriptionChangeListener) iterator.next();
             listener.inputChanged(newIn);
             listener.outputChanged(newOut);
         }
@@ -447,7 +490,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     public void setNewElectionDescription(ElectionDescription newDescription) {
         this.elecDescription = newDescription;
         if (newDescription.isNew()) {
-            String declarationString = CCodeHelper.generateDeclString(newDescription.getContainer());
+            String declarationString =
+                    CCodeHelper.generateDeclString(newDescription.getContainer());
             lockedLineStart = 0;
             lockedLineEnd = lockedLineStart + declarationString.length();
             this.replaceText(declarationString + "\n\n}");
@@ -464,7 +508,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         this.elecDescription.setLockedPositions(lockedLineStart, lockedLineEnd, lockedBracePos);
         this.setStyleSpans(0, computeHighlighting(this.getText()));
         saverLoader.resetHasSaveFile();
-        this.getUndoManager().forgetHistory(); // force the undo manager to not be able to return to previous text
+        // force the undo manager to not be able to return to previous text
+        this.getUndoManager().forgetHistory();
         // or delete the locked lines
         test();
     }
@@ -482,7 +527,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     public void bringToFront() {
         GUIController.getController().getMainTabPane().getSelectionModel()
                 .select(GUIController.getController().getCodeTab());
-        List<CodeError> errors = CVariableErrorFinder.findErrors(elecDescription.getDeepCopy().getCode());
+        List<CodeError> errors =
+                CVariableErrorFinder.findErrors(elecDescription.getDeepCopy().getCode());
         displayErrors(errors);
     }
 
@@ -497,7 +543,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
             ElectionDescription newDescription = null;
             try {
                 newDescription = electionSaverLoader.createFromSaveString(json);
-            } catch (Exception e) {
+            } catch (JsonSyntaxException e) {
                 System.err.println(e.getMessage());
             }
             if (newDescription != null) {

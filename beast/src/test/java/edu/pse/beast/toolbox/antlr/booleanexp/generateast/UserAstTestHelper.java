@@ -14,9 +14,14 @@ public class UserAstTestHelper {
 //        String formula = "c COMPARE c;";
 //        comparisonSymbols.forEach(
 //                symb -> {
-//                    BooleanExpListNode ast = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
+//                    BooleanExpListNode ast =
+//                        FormalPropertySyntaxTreeToAstTranslatorTest.translate(
 //                            formula.replace("COMPARE", symb),
-//                            new SymbolicVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE)));
+//                            new SymbolicVariable(
+//                                "c",
+//                                new InternalTypeContainer(InternalTypeRep.CANDIDATE)
+//                            )
+//                        );
 //                    String astRep = ast.getTreeString();
 //                    Assert.assertEquals(expTemplate.replace("COMPARE", symb), astRep);
 //                }
@@ -41,9 +46,14 @@ public class UserAstTestHelper {
 //            for (int j = 0; j < types.get(i).size(); j++) {
 //                String quantifier = quantifiers.get(pos) + types.get(i).get(j);
 //                String code = temp.replace("QUANT", quantifier);
-//                BooleanExpListNode ast = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
+//                BooleanExpListNode ast =
+//                    FormalPropertySyntaxTreeToAstTranslatorTest.translate(
 //                        code,
-//                        new SymbolicVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE)));
+//                        new SymbolicVariable(
+//                            "c",
+//                            new InternalTypeContainer(InternalTypeRep.CANDIDATE)
+//                        )
+//                    );
 //                String expStr = exp.replace("QUANT", expQuant[pos]);
 //                expStr = expStr.replaceAll("VARTYPE", types.get(1).get(j));
 //                Assert.assertEquals(expStr, ast.getTreeString());

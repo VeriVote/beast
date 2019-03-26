@@ -19,8 +19,10 @@ public class RegexAndColor {
     public RegexAndColor(String regEx, Color color) {
         StyleContext styleContext = StyleContext.getDefaultStyleContext();
         this.regEx = regEx;
-        this.attributeSetForColor = styleContext.addAttribute(styleContext.getEmptySet(), StyleConstants.Foreground,
-                color);
+        this.attributeSetForColor =
+            styleContext.addAttribute(styleContext.getEmptySet(),
+                                      StyleConstants.Foreground,
+                                      color);
     }
 
     /**

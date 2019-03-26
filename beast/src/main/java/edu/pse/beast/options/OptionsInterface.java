@@ -27,18 +27,21 @@
 //  //  private DeleteCFilesOptions deleteFilesOptions;
 //
 //    /**
-//     * Getter for the BooleanExpEditorOptions 
-//     * 
+//     * Getter for the BooleanExpEditorOptions
+//     *
 //     * @param editor
 //     *            BooleanExpEditor
 //     * @param refs
 //     *            ObjectRefsForBuilder
 //     * @return BooleanExpEditorOptions
 //     */
-//    public BooleanExpEditorOptions getBooleanExpEditorOptions(BooleanExpEditor editor, ObjectRefsForBuilder refs) {
+//    public BooleanExpEditorOptions
+//                getBooleanExpEditorOptions(BooleanExpEditor editor,
+//                                           ObjectRefsForBuilder refs) {
 //        if (booleanExpEditorOptions == null) {
 //            try {
-//                booleanExpEditorOptions = OptionsSaverLoaderInterface.loadBooleanExpEditorOpts(editor);
+//                booleanExpEditorOptions =
+//                    OptionsSaverLoaderInterface.loadBooleanExpEditorOpts(editor);
 //            } catch (IOException ex) {
 //                ex.printStackTrace();
 //                booleanExpEditorOptions = new BooleanExpEditorOptions(editor);
@@ -49,7 +52,7 @@
 //
 //    /**
 //     * Getter for the CElectionEditorOptions
-//     * 
+//     *
 //     * @param editor
 //     *            the CElectionEditor
 //     * @return CElectionEditorOptions
@@ -67,7 +70,7 @@
 //
 //    /**
 //     * Getter for the ParametereditorOptions
-//     * 
+//     *
 //     * @param langOpts
 //     *            LanguageOptions
 //     * @param editor
@@ -76,12 +79,16 @@
 //     *            PSECentralObjectProvider
 //     * @return ParametereditorOptions
 //     */
-//    public ParametereditorOptions getParameterEditorOptions(LanguageOptions langOpts, ParameterEditor editor
-//            /*PSECentralObjectProvider centralObjectProvider*/) {
+//    public ParametereditorOptions
+//                getParameterEditorOptions(LanguageOptions langOpts,
+//                                          ParameterEditor editor
+//                                          /*PSECentralObjectProvider centralObjectProvider*/) {
 //        if (parametereditorOptions == null) {
 //            try {
-//                parametereditorOptions = OptionsSaverLoaderInterface.loadParameterEditorOpts(langOpts, editor,
-//                        centralObjectProvider);
+//                parametereditorOptions =
+//                    OptionsSaverLoaderInterface
+//                        .loadParameterEditorOpts(langOpts, editor,
+//                                                 centralObjectProvider);
 //            } catch (IOException e) {
 //            }
 //        }
@@ -90,7 +97,7 @@
 //
 //    /**
 //     * Getter for the LanguageOptions
-//     * 
+//     *
 //     * @param stringIf
 //     *            StringLoaderInterface
 //     * @return LanguageOptions
@@ -108,14 +115,16 @@
 //
 //    /**
 //     * Getter for the OptionPresenter
-//     * 
+//     *
 //     * @param refs
 //     *            ObjectRefsForBuilder
 //     * @return OptionPresenter
 //     */
 //    public OptionPresenter getOptionPresenter(ObjectRefsForBuilder refs) {
 //        if (presenter == null) {
-//            presenter = new OptionPresenter(refs.getStringIF().getOptionStringResProvider().getOptionStringRes());
+//            presenter =
+//                new OptionPresenter(refs.getStringIF()
+//                                    .getOptionStringResProvider().getOptionStringRes());
 //            refs.getLanguageOpts().addStringDisplayer(presenter);
 //        }
 //        return presenter;

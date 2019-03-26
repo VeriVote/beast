@@ -7,7 +7,7 @@ package edu.pse.beast.propertylist.model;
  */
 public enum ResultType {
     /**
-     * The property hasn't been analyzed yet.
+     * The property has not been analyzed yet.
      */
     UNTESTED,
 
@@ -32,7 +32,7 @@ public enum ResultType {
     SUCCESS,
 
     /**
-     * The analysis couldn't be done because there was an error.
+     * The analysis could not be done because there was an error.
      */
     FAILURE,
 

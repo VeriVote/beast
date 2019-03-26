@@ -17,7 +17,6 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TreeItem;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -29,7 +28,7 @@ public abstract class ChildTreeItem extends CustomTreeItem {
     private Label propName;
     private CheckBox checkBox = new CheckBox();
     private final ParentTreeItem parent;
-    private ImageView statusIcon = new ImageView();
+    // private ImageView statusIcon = new ImageView();
     private boolean disabled = false;
 
     protected ArrayList<ResultTreeItem> results = new ArrayList<ResultTreeItem>();
@@ -105,7 +104,7 @@ public abstract class ChildTreeItem extends CustomTreeItem {
     /**
      * sets the value of the checkbox, while disabling the listener for the checkbox
      * beforehand, and reenabling it afterwards
-     * 
+     *
      * @param state new checkbox value
      */
     public void setSelected(boolean state) {

@@ -18,7 +18,7 @@
 //
 //public class GuiFileTests {
 //
-//  private final long wait = 500;
+//  private static final long WAIT = 500;
 //  TestHelper helper = new TestHelper();
 //
 //  @BeforeClass
@@ -45,11 +45,11 @@
 //
 //    JMenuBar bar = (JMenuBar) view.getMainMenuBar();
 //    view.setVisible(true);
-//    Thread.sleep(wait);
+//    Thread.sleep(WAIT);
 //    bar.getMenu(0).doClick();
-//    Thread.sleep(wait);
+//    Thread.sleep(WAIT);
 //    //bar.getMenu(0).getItem(0).doClick();
-//    Thread.sleep(wait);
+//    Thread.sleep(WAIT);
 //  }*/
 //
 //  @Test
@@ -62,7 +62,7 @@
 //
 //    //view.getAddNewButton().doClick();
 //    //view.getAddNewButton().doClick();
-//    Thread.sleep(wait);
+//    Thread.sleep(WAIT);
 //
 //    JButton newList = (JButton) view.getToolbar().getComponentAtIndex(0);
 //
@@ -75,7 +75,7 @@
 //
 //    newList.doClick();
 //
-//    Thread.sleep(wait);
+//    Thread.sleep(WAIT);
 //
 //    assertEquals(proli.getModel().getName(), "New PropertyList");
 //
@@ -97,7 +97,7 @@
 //
 //
 //
-//    //Thread.sleep(wait);
+//    //Thread.sleep(WAIT);
 //
 //
 //
@@ -106,6 +106,6 @@
 //    /*Object[] opts = opt.getOptions();
 //    JButton no = (JButton) opts[2];
 //    no.doClick();
-//    Thread.sleep(wait);*/
+//    Thread.sleep(WAIT);*/
 //  }
 //}

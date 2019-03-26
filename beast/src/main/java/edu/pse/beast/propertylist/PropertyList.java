@@ -34,7 +34,7 @@
 //    private LinkedList<DeleteDescriptionAction> actionList;
 //    private FileChooser fileChooser;
 //    private boolean editorWasVisible = false;
-//    
+//
 //    /**
 //     * Constructor
 //     * @param model The data model of the property list.
@@ -185,7 +185,8 @@
 //
 //    @Override
 //    public ArrayList<PreAndPostConditionsDescription> getPreAndPostConditionsDescriptionsCheck() {
-//        ArrayList<PreAndPostConditionsDescription> result = new ArrayList<PreAndPostConditionsDescription>();
+//        ArrayList<PreAndPostConditionsDescription> result =
+//            new ArrayList<PreAndPostConditionsDescription>();
 //        ArrayList<PropertyItem> from = model.getPropertyList();
 //        editor.updatePreAndPostConditionObject();
 //        for (PropertyItem prop : from) {
@@ -195,10 +196,12 @@
 //        }
 //        return result;
 //    }
-//    
+//
 //    @Override
-//    public ArrayList<PreAndPostConditionsDescription> getPreAndPostConditionsDescriptionsMargin() {
-//        ArrayList<PreAndPostConditionsDescription> result = new ArrayList<PreAndPostConditionsDescription>();
+//    public ArrayList<PreAndPostConditionsDescription>
+//                getPreAndPostConditionsDescriptionsMargin() {
+//        ArrayList<PreAndPostConditionsDescription> result =
+//            new ArrayList<PreAndPostConditionsDescription>();
 //        ArrayList<PropertyItem> from = model.getPropertyList();
 //        editor.updatePreAndPostConditionObject();
 //        for (PropertyItem prop : from) {
@@ -208,7 +211,7 @@
 //        }
 //        return result;
 //    }
-//    
+//
 //    @Override
 //    public List<PropertyAndMarginBool> getPreAndPostPropertiesDescriptionsCheckAndMargin() {
 //        editor.updatePreAndPostConditionObject();
@@ -259,7 +262,7 @@
 //    public void resetResults() {
 //        model.resetResults();
 //    }
-//    
+//
 //    /**
 //     * Returns the last delete action.
 //     * @return The DeleteDescriptionAction that was lastly performed
@@ -270,15 +273,14 @@
 //      }
 //      return actionList.removeLast();
 //    }
-//    
+//
 //    /**
 //     * Resets the delete action list (e.g. do it when a new list is loaded).
 //     */
 //    public void resetActionList() {
 //      actionList = new LinkedList<DeleteDescriptionAction>();
 //    }
-//    
-//    
+//
 //    // getter and setter follow
 //    /**
 //     * Returns the data model.
@@ -314,11 +316,11 @@
 //    public void setChangeHandler(PLChangeHandler changeHandler) {
 //        this.changeHandler = changeHandler;
 //    }
-//    
+//
 //    public FileChooser getFileChooser() {
 //        return fileChooser;
 //    }
-//    
+//
 //    /**
 //     * Returns the editor for boolean expressions.
 //     * @return The editor object

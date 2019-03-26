@@ -178,7 +178,7 @@ public class ParentTreeItem extends CustomTreeItem {
     }
 
     /**
-     * 
+     *
      * @return true, if at least one of the children has to be checked
      */
     public boolean isChildSelected() {

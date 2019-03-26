@@ -9,8 +9,6 @@
 // * @author Jonas Wohnig
 // */
 //public class PSECentralObjectProviderTest {
-//    
-//    
 //    /**
 //     * Test the creation of all objects by the class PSECentralObjectProvider.
 //     */
@@ -21,7 +19,8 @@
 //        ElectionDescriptionSource resultEDS = instance.getElectionDescriptionSource();
 //        assertNotEquals(failResultEDS, resultEDS);
 //        PreAndPostConditionsDescriptionSource failResultPNP = null;
-//        PreAndPostConditionsDescriptionSource resultPNP = instance.getPreAndPostConditionsSource();
+//        PreAndPostConditionsDescriptionSource resultPNP =
+//            instance.getPreAndPostConditionsSource();
 //        assertNotEquals(failResultPNP, resultPNP);
 //        ResultCheckerCommunicator failResultRCC = null;
 //        ResultCheckerCommunicator resultRCC = instance.getResultCheckerCommunicator();
@@ -36,5 +35,4 @@
 //        CheckStatusDisplay resultCSD = instance.getCheckStatusDisplay();
 //        assertNotEquals(failResultCSD, resultCSD);
 //    }
-//    
 //}

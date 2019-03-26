@@ -5,7 +5,7 @@ import java.util.List;
 import edu.pse.beast.highlevel.javafx.GUIController;
 
 /**
- * 
+ *
  * @author Lukas Stapelbroek
  *
  */
@@ -21,18 +21,27 @@ public class ElectionCheckParameter {
     private final int marginSeats;
 
     /**
-     * 
+     *
      * @param amountVoters     the list that specifies the range of voters
      * @param amountCandidates the list that specifies the range of candidates
      * @param amountSeats      the list that specifies the range of seats
+     * @param marginVotes      the amount of votes for the computed margin
+     * @param marginCandidates the amount of candidates for the computed margin
+     * @param marginSeats      the amount of seats for the computed margin
      * @param timeOut          the timeout that specifies how long the checker
      *                         should run
      * @param processes        max number of processes of the checker
      * @param argument         the arguments given by the user
      */
-    public ElectionCheckParameter(List<Integer> amountVoters, List<Integer> amountCandidates, List<Integer> amountSeats,
-            int marginVotes, int marginCandidates, int marginSeats, TimeOut timeOut, Integer processes,
-            String argument) {
+    public ElectionCheckParameter(List<Integer> amountVoters,
+                                  List<Integer> amountCandidates,
+                                  List<Integer> amountSeats,
+                                  int marginVotes,
+                                  int marginCandidates,
+                                  int marginSeats,
+                                  TimeOut timeOut,
+                                  Integer processes,
+                                  String argument) {
         this.amountVoters = amountVoters;
         this.amountCandidates = amountCandidates;
         this.amountSeats = amountSeats;
@@ -45,7 +54,7 @@ public class ElectionCheckParameter {
     }
 
     /**
-     * 
+     *
      * @return the list that specifies the range of voters
      */
     public List<Integer> getAmountVoters() {
@@ -53,7 +62,7 @@ public class ElectionCheckParameter {
     }
 
     /**
-     * 
+     *
      * @return the list that specifies the range of candidates
      */
     public List<Integer> getAmountCandidates() {
@@ -61,7 +70,7 @@ public class ElectionCheckParameter {
     }
 
     /**
-     * 
+     *
      * @return the list that specifies the range of seats
      */
     public List<Integer> getAmountSeats() {
@@ -69,7 +78,7 @@ public class ElectionCheckParameter {
     }
 
     /**
-     * 
+     *
      * @return the timeout that specifies how long the checker should run
      */
     public TimeOut getTimeout() {
@@ -85,7 +94,7 @@ public class ElectionCheckParameter {
     }
 
     /**
-     * 
+     *
      * @return the String that defines the advanced options
      */
     public String getArgument() {
@@ -105,9 +114,7 @@ public class ElectionCheckParameter {
     }
 
     public int getNumVotingPoints() {
-
         System.out.println("TODO getNumVotingPoints in electionCheckParameters");
-
         return GUIController.getController().getElectionSimulation().getNumVotingPoints();
     }
 }

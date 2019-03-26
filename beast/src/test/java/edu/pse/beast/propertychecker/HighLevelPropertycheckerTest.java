@@ -39,7 +39,9 @@
 //        Thread.sleep(waittime);
 //        ProjectSaverLoader projectSaverLoader = new ProjectSaverLoader();
 //        Thread.sleep(waittime);
-//        Project loadedProject = (Project) projectSaverLoader.createFromSaveString(readProject(pathToProject));
+//        Project loadedProject =
+//            (Project)
+//                projectSaverLoader.createFromSaveString(readProject(pathToProject));
 //        Thread.sleep(waittime);
 //        parameterEditor.loadProject(loadedProject);
 //        Thread.sleep(waittime);
@@ -68,7 +70,9 @@
 //        Thread.sleep(waittime);
 //        ProjectSaverLoader projectSaverLoader = new ProjectSaverLoader();
 //        Thread.sleep(waittime);
-//        Project loadedProject = (Project) projectSaverLoader.createFromSaveString(readProject(pathToProject));
+//        Project loadedProject =
+//            (Project)
+//                projectSaverLoader.createFromSaveString(readProject(pathToProject));
 //        Thread.sleep(waittime);
 //        parameterEditor.loadProject(loadedProject);
 //        Thread.sleep(waittime);
@@ -93,7 +97,9 @@
 //        ParameterEditor parameterEditor = helper.getParamEditorOfCurrentInstace();
 //        String pathToProject = "./src/test/testfiles/timeoutTest.beast";
 //        ProjectSaverLoader projectSaverLoader = new ProjectSaverLoader();
-//        Project loadedProject = (Project) projectSaverLoader.createFromSaveString(readProject(pathToProject));
+//        Project loadedProject =
+//            (Project)
+//                projectSaverLoader.createFromSaveString(readProject(pathToProject));
 //        parameterEditor.loadProject(loadedProject);
 //        boolean running = true;
 //        while (running) {
@@ -121,7 +127,13 @@
 //        String toReturn = "";
 //
 //        try {
-//            inputReader = new BufferedReader(new InputStreamReader(new FileInputStream(selectedFile), "UTF8"));
+//            inputReader =
+//                new BufferedReader(
+//                    new InputStreamReader(
+//                        new FileInputStream(selectedFile),
+//                        "UTF8"
+//                    )
+//                );
 //        } catch (UnsupportedEncodingException e) {
 //        } catch (FileNotFoundException e) {
 //        }

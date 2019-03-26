@@ -17,7 +17,7 @@
 // */
 //public class BetweenCurlyBracesNewlineInserter implements NewlineInserter {
 //    private StandardNewlineInserter standInserter;
-//    
+//
 //    public BetweenCurlyBracesNewlineInserter(StandardNewlineInserter standInserter) {
 //        this.standInserter = standInserter;
 //    }
@@ -27,10 +27,13 @@
 //            JTextPane pane, TabInserter tabInserter,
 //            LineBeginningTabsHandler beginningTabsHandler,
 //            int pos) throws BadLocationException {
-//        standInserter.insertNewlineAtCurrentPosition(pane, tabInserter, beginningTabsHandler, pos);
+//        standInserter.insertNewlineAtCurrentPosition(pane,
+//                                                     tabInserter,
+//                                                     beginningTabsHandler,
+//                                                     pos);
 //        pane.setCaretPosition(pos);
-//        standInserter.insertNewlineAtCurrentPosition(pane, tabInserter, beginningTabsHandler, pos);
-//        
-//    }    
-//
+//        standInserter.insertNewlineAtCurrentPosition(pane, tabInserter,
+//                                                     beginningTabsHandler,
+//                                                     pos);
+//    }
 //}

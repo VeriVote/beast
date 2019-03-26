@@ -24,7 +24,6 @@ public class TimeOutNotifier implements Runnable {
 
     @Override
     public void run() {
-
         while (System.currentTimeMillis() < endTime && !disabled) {
             try {
                 Thread.sleep(endTime - System.currentTimeMillis());
@@ -41,7 +40,7 @@ public class TimeOutNotifier implements Runnable {
     }
 
     /**
-     * disables the notifier so it doesn't interrupt later by accident
+     * disables the notifier so it does not interrupt later by accident
      */
     public void disable() {
         disabled = true;
@@ -49,5 +48,4 @@ public class TimeOutNotifier implements Runnable {
             interrupterThread.interrupt();
         }
     }
-
 }

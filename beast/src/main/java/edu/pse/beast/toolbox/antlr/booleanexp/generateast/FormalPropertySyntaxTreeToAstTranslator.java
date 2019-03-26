@@ -257,11 +257,11 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         if (currentHighestElect < number) {
             currentHighestElect = number;
         }
-        int amtAcessingTypes = ctx.passType().size();
-        TypeExpression[] accessingVars = new TypeExpression[amtAcessingTypes];
+        int amtAccessingTypes = ctx.passType().size();
+        TypeExpression[] accessingVars = new TypeExpression[amtAccessingTypes];
 
-        for (int i = 0; i < amtAcessingTypes; ++i) {
-            accessingVars[amtAcessingTypes - i - 1] = expStack.pop();
+        for (int i = 0; i < amtAccessingTypes; ++i) {
+            accessingVars[amtAccessingTypes - i - 1] = expStack.pop();
         }
 
         ElectExp expNode = new ElectExp(resType, accessingVars, number);
@@ -279,10 +279,10 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         int number = Integer.valueOf(numberString);
         setNewMaxVote(number);
 
-        int amtAcessingTypes = ctx.passType().size();
-        TypeExpression[] accessingVars = new TypeExpression[amtAcessingTypes];
-        for (int i = 0; i < amtAcessingTypes; ++i) {
-            accessingVars[amtAcessingTypes - i - 1] = expStack.pop();
+        int amtAccessingTypes = ctx.passType().size();
+        TypeExpression[] accessingVars = new TypeExpression[amtAccessingTypes];
+        for (int i = 0; i < amtAccessingTypes; ++i) {
+            accessingVars[amtAccessingTypes - i - 1] = expStack.pop();
         }
 
         VoteExp expNode = new VoteExp(inputType, accessingVars, number);

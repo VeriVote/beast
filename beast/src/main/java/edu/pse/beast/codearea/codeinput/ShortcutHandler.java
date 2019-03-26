@@ -37,8 +37,9 @@ public class ShortcutHandler {
 
     public Integer getMappedcharFor(String id) {
         for (Integer i : shortcutMap.keySet()) {
-            if (shortcutMap.get(i).getId() == id)
+            if (shortcutMap.get(i).getId() == id) {
                 return i;
+            }
         }
         return -1;
     }

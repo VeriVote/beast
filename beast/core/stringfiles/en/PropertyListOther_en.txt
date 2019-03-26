@@ -11,11 +11,11 @@ election : Election
 votes : Votes
 elected : Elected
 draw : Draw
-noResultYet : We don't have a result yet.
+noResultYet : We do not have a result yet.
 successMessage : The given election description does fulfill the given property.
 timeoutMessage : The analysis was timed out.
 cancelMessage : The analysis was stopped by the user.
-failureMessage : The analysis couldn't be done because there was an error. Following the original error message.
+failureMessage : The analysis could not be done because there was an error. Following the original error message.
 failureExampleMessage : The given property is not fulfilled. The failure occurred with this election result.
 single_choice : Single-Choice
 approval : Approval
@@ -47,13 +47,13 @@ detailsViewButtonToolTipText : Details
 fileSizeHeaderText : Size
 fileDateHeaderText : Last modified
 fileApproveRegex : (.)+\.list
-fileDescription : BEAST-Propertylist-File (*.list)
+fileDescription : BEAST-Propertylist file (*.list)
 objectCouldNotBeConvertedToString : Was not able to convert property list into a string to save.
-objectCouldNotBeSavedError : Object couldn't be saved.
-inputOutputErrorOpen : The File either does not exist or you don't have the necessary rights.
-invalidFileFormatErrorMessage : The given file is not of a valid BEAST-Propertylist-Format.
+objectCouldNotBeSavedError : Object could not be saved.
+inputOutputErrorOpen : The File either does not exist or you do not have the necessary rights.
+invalidFileFormatErrorMessage : The given file is not of a valid BEAST-Propertylist format.
 wrongEncodingError : The property list contains wrong encoded characters.
-inputOutputErrorSave : The folder, in which you want to save, does not exist or you don't have the necessary rights.
+inputOutputErrorSave : The folder, in which you want to save, does not exist or you do not have the necessary rights.
 wrongFileNameError : The given name does not correspond to the regular expression '[_a-zA-Z0-9\-\.\s]+'.
 fileSuffix : .list
 saveChanges : Save changes to '

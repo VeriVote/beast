@@ -11,7 +11,7 @@ import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.ThreadedBufferedReader;
 
 public abstract class Checker implements Runnable {
-    private static final long POLLINGINTERVAL = 1000;
+    private static final long POLLING_INTERVAL = 1000;
 
     /**
      * the process that this chcker runs
@@ -38,7 +38,7 @@ public abstract class Checker implements Runnable {
      * This class describes the highest abstract layer of a checker. The task of a
      * checker is to check a vote for the given properties and then return the
      * result.
-     * 
+     *
      * @param voters     the amount of voters to check with
      * @param candidates the amount of candidates to check with
      * @param seats      the amoutn of seats to check with
@@ -95,7 +95,7 @@ public abstract class Checker implements Runnable {
                     break polling;
                 }
                 try {
-                    Thread.sleep(POLLINGINTERVAL);
+                    Thread.sleep(POLLING_INTERVAL);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -109,14 +109,14 @@ public abstract class Checker implements Runnable {
 
             finished = true;
         } else {
-            ErrorLogger.log("Process couldn't be started");
+            ErrorLogger.log("Process could not be started");
         }
 
         parent.notifyThatFinished(output, errors);
     }
 
     /**
-     * 
+     *
      * @return the list that contains the output of the checker
      */
     public List<String> getResultList() {
@@ -124,7 +124,7 @@ public abstract class Checker implements Runnable {
     }
 
     /**
-     * 
+     *
      * @return the list that contains the errors that were returned by the checker
      */
     public List<String> getErrorList() {
@@ -132,7 +132,7 @@ public abstract class Checker implements Runnable {
     }
 
     /**
-     * 
+     *
      * @return true, if the property is satisfied, false, if it is violated
      */
     public boolean isSuccess() {
@@ -140,7 +140,7 @@ public abstract class Checker implements Runnable {
     }
 
     /**
-     * 
+     *
      * @return true, when the checking has finished, false else
      */
     public boolean isFinished() {
@@ -157,15 +157,15 @@ public abstract class Checker implements Runnable {
     /**
      * used to filter out arguments that can be used on some plattforms, but would
      * crash the checker on others
-     * 
+     *
      * @param toSanitize the string to be sanitized
-     * @return that string, with all occurencen of all forbidden words removed
+     * @return that string, with all occurrences of all forbidden words removed
      */
     protected abstract String sanitizeArguments(String toSanitize);
 
     /**
-     * creates the process, which is run in a seperate thread
-     * 
+     * creates the process, which is run in a separate thread
+     *
      * @param voters     the amount of voters to check with
      * @param candidates the amount of candidates to check with
      * @param seats      the amoutn of seats to check with

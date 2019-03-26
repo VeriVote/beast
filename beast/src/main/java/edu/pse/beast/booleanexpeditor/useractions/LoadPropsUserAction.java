@@ -38,14 +38,16 @@
 //
 //    @Override
 //    public void perform() {
-//        if (booleanExpEditor.getChangeHandler().hasChanged() && booleanExpEditor.getLoadedFromPropertyList()) {
+//        if (booleanExpEditor.getChangeHandler().hasChanged()
+//                && booleanExpEditor.getLoadedFromPropertyList()) {
 //            if (!booleanExpEditor.getFileChooser().openSaveChangesDialog(booleanExpEditor.
 //                    getCurrentlyLoadedPreAndPostCondition())) {
 //                return;
 //            }
 //        }
-//        PreAndPostConditionsDescription loadedPreAndPostConditionsDescription
-//                = (PreAndPostConditionsDescription) booleanExpEditor.getFileChooser().loadObject();
+//        PreAndPostConditionsDescription loadedPreAndPostConditionsDescription =
+//                (PreAndPostConditionsDescription)
+//                    booleanExpEditor.getFileChooser().loadObject();
 //        if (loadedPreAndPostConditionsDescription != null) {
 //            booleanExpEditor.loadNewProperties(loadedPreAndPostConditionsDescription);
 //            booleanExpEditor.getPropertyListController().addDescription(new PropertyItem(
@@ -57,8 +59,9 @@
 //     * Method used by PropertyListWindow
 //     */
 //    public void loadIntoPropertyList() {
-//        PreAndPostConditionsDescription loadedPreAndPostConditionsDescription
-//                = (PreAndPostConditionsDescription) booleanExpEditor.getFileChooser().loadObject();
+//        PreAndPostConditionsDescription loadedPreAndPostConditionsDescription =
+//                (PreAndPostConditionsDescription)
+//                    booleanExpEditor.getFileChooser().loadObject();
 //        if (loadedPreAndPostConditionsDescription != null) {
 //            booleanExpEditor.loadNewProperties(loadedPreAndPostConditionsDescription);
 //            propertyList.addDescription(new PropertyItem(loadedPreAndPostConditionsDescription));

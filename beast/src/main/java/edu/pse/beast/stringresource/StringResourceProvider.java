@@ -13,17 +13,16 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
  * @author Niels Hanselmann
  */
 public abstract class StringResourceProvider {
-
     /**
-     * languageId. Choose "de" for german
+     * languageId. Choose "de" for German
      */
     protected String languageId;
 
     /**
-     * The constructor doesn't call initialize. If you make a subclass you have to
+     * The constructor does not call initialize. If you make a subclass you have to
      * call it yourself
      *
-     * @param languageId the language. Choose "de" for german
+     * @param languageId the language. Choose "de" for German
      */
     public StringResourceProvider(String languageId) {
         this.languageId = languageId;
@@ -31,7 +30,7 @@ public abstract class StringResourceProvider {
 
     /**
      *
-     * @param languageId the language. Choose "de" for german
+     * @param languageId the language. Choose "de" for German
      */
     public void changeLanguage(String languageId) {
         this.languageId = languageId;
@@ -53,7 +52,7 @@ public abstract class StringResourceProvider {
     }
 
     /**
-     * reports Error to the class file toolbox
+     * reports Error to the class file tool-box
      *
      * @param file that has the wrongFormat
      */
@@ -63,7 +62,6 @@ public abstract class StringResourceProvider {
     }
 
     private void fileNotFound(File file) {
-
         ErrorLogger.log("The file " + file.getName() + " can not be found");
         ErrorLogger.log("The file should be in this directory " + file.getAbsolutePath());
     }
@@ -93,5 +91,4 @@ public abstract class StringResourceProvider {
         }
         return null;
     }
-
 }

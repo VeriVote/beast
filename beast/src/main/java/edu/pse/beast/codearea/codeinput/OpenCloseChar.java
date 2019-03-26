@@ -4,8 +4,8 @@ import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 
 /**
- * This class is utilized by userinserttocode to automatically close chars which
- * have a closing complements, such as { and }
+ * This class is utilized for user-inserted code to automatically close
+ * characters which have a closing complements, such as { and }.
  *
  * @author Holger Klein
  */
@@ -27,14 +27,14 @@ public class OpenCloseChar {
     }
 
     /**
-     * the open char is inserted into the given pane at the given pos. It also
-     * automatically inserts the closing char and centers the caret pos between them
+     * The open char is inserted into the given pane at the given position. It also
+     * automatically inserts the closing char and centers the caret position between them
      * asd | becomes asd {|}
      *
      * @param pane the JTextPane in which the open and close chars should be
-     *             isnerted
+     *             inserted
      * @param pos  the position at which the chars should be inserted
-     * @throws BadLocationException if the position isn't valid
+     * @throws BadLocationException if the position is not valid
      */
     public void insertIntoDocument(JTextPane pane, int pos) throws BadLocationException {
         String stringToInsert = Character.toString(open) + Character.toString(close);

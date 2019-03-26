@@ -16,11 +16,17 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
  *
  * @author Nikolai Schnell
  */
-public class BooleanExpEditorVariableErrorFinder {
-    public static ArrayList<CodeError> getErrors(BooleanExpANTLRHandler antlrHandler, SymbolicVariableList list,
-            NewCodeArea codeArea) {
-        FormalExpErrorFinderTreeListener listener = new FormalExpErrorFinderTreeListener(list, codeArea,
-                codeArea.getElectionDescription());
+public final class BooleanExpEditorVariableErrorFinder {
+    private BooleanExpEditorVariableErrorFinder() {}
+
+    public static ArrayList<CodeError> getErrors(BooleanExpANTLRHandler antlrHandler,
+                                                 SymbolicVariableList list,
+                                                 NewCodeArea codeArea) {
+        FormalExpErrorFinderTreeListener listener =
+                new FormalExpErrorFinderTreeListener(
+                    list, codeArea,
+                    codeArea.getElectionDescription()
+                );
         ParseTree tree = antlrHandler.getParseTree();
         ParseTreeWalker walker = new ParseTreeWalker();
         try {

@@ -63,8 +63,8 @@
 //  private JButton addNewButton = new JButton();
 //  private JButton addCreatedButton = new JButton();
 //
-//  private final String pathToAdd = "/core/images/other/add.png";
-//  private final ImageIcon addIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + pathToAdd);
+//  private static final String PATH_TO_ADD = "/core/images/other/add.png";
+//  private final ImageIcon addIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + PATH_TO_ADD);
 //
 //  /**
 //   * Constructor
@@ -170,7 +170,7 @@
 //   * rejected.
 //   *
 //   * @param prop
-//   *            The PropertyItem that couldn't be changed
+//   *            The PropertyItem that could not be changed
 //   */
 //  public void rejectNameChange(PropertyItem prop) {
 //    controller.changeName(prop, prop.getDescription().getName());

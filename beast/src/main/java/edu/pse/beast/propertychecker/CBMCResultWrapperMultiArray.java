@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * This class wraps a two dimensional array that cbmc has put out
- * 
+ *
  * @author Lukas Stapelbroek
  *
  */
@@ -17,7 +17,7 @@ public class CBMCResultWrapperMultiArray {
 
     /**
      * creates a new wrapper
-     * 
+     *
      * @param mainIndex the index of this variable (for example votes1 has the main
      *                  index of 1)
      * @param name      the name of this variable (for example votes1 has the name
@@ -30,7 +30,7 @@ public class CBMCResultWrapperMultiArray {
 
     /**
      * adds a variable to this 2 dim array-wrapper
-     * 
+     *
      * @param firstIndex  the first index (the first index of the array)
      * @param secondIndex the second index (the second index of the array)
      * @param toAdd       the value to add at this position
@@ -48,7 +48,7 @@ public class CBMCResultWrapperMultiArray {
     }
 
     /**
-     * 
+     *
      * @return returns the main index (for example votes1 has the mainIndex of 1)
      */
     public int getMainIndex() {
@@ -56,7 +56,7 @@ public class CBMCResultWrapperMultiArray {
     }
 
     /**
-     * 
+     *
      * @return the name of the var (for example votes1 has the name votes)
      */
     public String getName() {
@@ -67,7 +67,7 @@ public class CBMCResultWrapperMultiArray {
      * returns the two dimensional list that is saved here. Only use this if you
      * really need it, because there is also and method that creates an array from
      * these, which makes sure that there are no empty parts in the lists
-     * 
+     *
      * @return the list that describes this variable
      */
     public List<List<String>> getList() {
@@ -77,7 +77,7 @@ public class CBMCResultWrapperMultiArray {
     /**
      * this array consists of an array of long arrays. This method lets you add to
      * an underlying sub "array" / list
-     * 
+     *
      * @param list         the list to
      * @param indexToAddAt the index that determines where to add the value
      * @param toAdd        the value to add
@@ -94,7 +94,7 @@ public class CBMCResultWrapperMultiArray {
     }
 
     /**
-     * 
+     *
      * @return the array that this wrapper represents. It has the same values and
      *         size as the array that the c-program that cbmc analyzed had inside
      */

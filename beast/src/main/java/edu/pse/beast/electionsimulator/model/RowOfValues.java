@@ -33,8 +33,11 @@
 //
 //  private boolean locked = false;
 //
-//  public RowOfValues(ElectionSimulationModel parent, ElectionTypeContainer container, int amountOfCandidates,
-//      int elementWidth, int elementHeight, int widthMultiplier) {
+//  public RowOfValues(ElectionSimulationModel parent,
+//                     ElectionTypeContainer container,
+//                     int amountOfCandidates,
+//                     int elementWidth, int elementHeight,
+//                     int widthMultiplier) {
 //    this.container = container;
 //    this.elementWidth = elementWidth;
 //    this.elementHeight = elementHeight;

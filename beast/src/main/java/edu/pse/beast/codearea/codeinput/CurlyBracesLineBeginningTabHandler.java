@@ -23,14 +23,17 @@ public class CurlyBracesLineBeginningTabHandler implements LineBeginningTabsHand
         for (int pos = caretPos - 1; pos >= 0; --pos) {
             if (code.charAt(pos) == '{') {
                 ++amt;
-                while (pos >= 0 && code.charAt(pos) != '\n')
+                while (pos >= 0 && code.charAt(pos) != '\n') {
                     --pos;
-            } else if (code.charAt(pos) == '}')
+                }
+            } else if (code.charAt(pos) == '}') {
                 --amt;
+            }
         }
 
-        if (caretPos < code.length() && code.charAt(caretPos) == '}')
+        if (caretPos < code.length() && code.charAt(caretPos) == '}') {
             --amt;
+        }
         return amt;
     }
 }

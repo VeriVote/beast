@@ -1,11 +1,14 @@
 //package edu.pse.beast.booleanexpeditor.booleanexpcodearea;
 //
-//import edu.pse.beast.booleanexpeditor.booleanexpcodearea.errorfinder.BooleanExpEditorGrammarErrorFinder;
-//import edu.pse.beast.booleanexpeditor.booleanexpcodearea.errorfinder.BooleanExpEditorVariableErrorFinder;
+//import edu.pse.beast.booleanexpeditor.booleanexpcodearea.errorfinder
+//        .BooleanExpEditorGrammarErrorFinder;
+//import edu.pse.beast.booleanexpeditor.booleanexpcodearea.errorfinder
+//        .BooleanExpEditorVariableErrorFinder;
 //import edu.pse.beast.codearea.CodeArea;
 //
 ///**
-// * Class extending CodeArea Class of package codearea and giving it extra functionality specific to BooleanExpEditor.
+// * Class extending CodeArea Class of package code area and giving it
+// * extra functionality specific to BooleanExpEditor.
 // * @author Nikolai Schnell
 // */
 //public class BooleanExpCodeArea extends CodeArea {

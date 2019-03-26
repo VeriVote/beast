@@ -22,7 +22,7 @@
 //
 //    @Override
 //    public void perform() {
-//        editor.getCodeAreaFocusListener().getLastFocused().getUserActionList().getActionById("copy").perform();
+//        editor.getCodeAreaFocusListener().getLastFocused()
+//        .getUserActionList().getActionById("copy").perform();
 //    }
-//
 //}

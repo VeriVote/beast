@@ -9,7 +9,7 @@ public class TimeOut {
 
     /**
      * Creates a new TimeOut. Internally it saves the time in milliseconds.
-     * 
+     *
      * @param unit     the unit for the input time. For reference
      *                 {@link java.util.concurrent.TimeUnit}
      * @param duration the duration how long the timeout is in the specified unit.
@@ -35,7 +35,7 @@ public class TimeOut {
     }
 
     /**
-     * 
+     *
      * @return the duration of the timeout in milliseconds
      */
     public long getDuration() {
@@ -43,7 +43,7 @@ public class TimeOut {
     }
 
     /**
-     * 
+     *
      * @return the unit with which the unit was given, so it might be used for
      *         saving in plain text again.
      */
@@ -52,7 +52,7 @@ public class TimeOut {
     }
 
     /**
-     * 
+     *
      * @return true, when the timeout
      */
     public boolean isActive() {

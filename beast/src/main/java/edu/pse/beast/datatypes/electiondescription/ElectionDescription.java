@@ -10,7 +10,7 @@ import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 
 /**
- * 
+ *
  * @author Lukas Stapelbroek
  *
  */
@@ -27,14 +27,24 @@ public class ElectionDescription implements NameInterface {
     private boolean isNew = false;
 
     /**
-     * 
-     * @param name           the name of the description
-     * @param inputType      the input type
-     * @param outputType     the output type
-     * @param votingDeclLine the votingDeclerationLine
+     *
+     * @param name            the name of the description
+     * @param inputType       the input type
+     * @param outputType      the output type
+     * @param votingDeclLine  the votingDeclerationLine
+     * @param lockedLineStart start of locked line
+     * @param lockedLineEnd   end of locked line
+     * @param lockedBrace     locked brace
+     * @param isNew           isNew
      */
-    public ElectionDescription(String name, InputType inputType, OutputType outputType, int votingDeclLine,
-            int lockedLineStart, int lockedLineEnd, int lockedBrace, boolean isNew) {
+    public ElectionDescription(String name,
+                               InputType inputType,
+                               OutputType outputType,
+                               int votingDeclLine,
+                               int lockedLineStart,
+                               int lockedLineEnd,
+                               int lockedBrace,
+                               boolean isNew) {
         this.name = name;
         this.container = new ElectionTypeContainer(inputType, outputType);
         this.votingDeclLine = votingDeclLine;
@@ -46,7 +56,7 @@ public class ElectionDescription implements NameInterface {
     }
 
     /**
-     * 
+     *
      * @return code of this description;
      */
     public List<String> getCode() {
@@ -58,7 +68,7 @@ public class ElectionDescription implements NameInterface {
     }
 
     /**
-     * 
+     *
      * @return the name of the Description
      */
     public String getName() {
@@ -66,7 +76,7 @@ public class ElectionDescription implements NameInterface {
     }
 
     /**
-     * 
+     *
      * @return the votingDescriptionLine of this description
      */
     public int getVotingDeclLine() {
@@ -74,7 +84,7 @@ public class ElectionDescription implements NameInterface {
     }
 
     /**
-     * 
+     *
      * @return the outputType of this description
      */
     public ElectionTypeContainer getContainer() {
@@ -82,7 +92,7 @@ public class ElectionDescription implements NameInterface {
     }
 
     /**
-     * 
+     *
      * @param code of this description
      */
     public void setCode(List<String> code) {
@@ -90,7 +100,7 @@ public class ElectionDescription implements NameInterface {
     }
 
     /**
-     * 
+     *
      * @param code of this description
      */
     public void setCode(String code) {
@@ -100,7 +110,7 @@ public class ElectionDescription implements NameInterface {
     }
 
     /**
-     * 
+     *
      * @param name of this description
      */
     public void setName(String name) {
@@ -108,7 +118,7 @@ public class ElectionDescription implements NameInterface {
     }
 
     /**
-     * 
+     *
      * @param votingDeclLine of this description
      */
     public void setVotingDeclLine(int votingDeclLine) {
@@ -116,8 +126,8 @@ public class ElectionDescription implements NameInterface {
     }
 
     /**
-     * 
-     * @param outputType of this description
+     *
+     * @param newContainer type container of this description
      */
     public void setContainer(ElectionTypeContainer newContainer) {
         this.container = newContainer;
@@ -133,18 +143,17 @@ public class ElectionDescription implements NameInterface {
     }
 
     public ElectionDescription getDeepCopy() {
-        ElectionDescription deepCopy = new ElectionDescription(name, container.getInputType(),
-                container.getOutputType(), votingDeclLine, lockedLineStart, lockedLineEnd, lockedBracePos, isNew);
-
+        ElectionDescription deepCopy =
+            new ElectionDescription(name, container.getInputType(),
+                                    container.getOutputType(),
+                                    votingDeclLine, lockedLineStart,
+                                    lockedLineEnd, lockedBracePos, isNew);
         List<String> clonedCode = new ArrayList<String>();
-
         for (Iterator<String> iterator = code.iterator(); iterator.hasNext();) {
             String line = (String) iterator.next();
             clonedCode.add(line);
         }
-
         deepCopy.setCode(clonedCode);
-
         return deepCopy;
     }
 
@@ -168,10 +177,11 @@ public class ElectionDescription implements NameInterface {
         this.isNew = false;
     }
 
-    public void setLockedPositions(int lockedLineStart, int lockedLineEnd, int lockedBracePos) {
+    public void setLockedPositions(int lockedLineStart,
+                                   int lockedLineEnd,
+                                   int lockedBracePos) {
         this.lockedLineStart = lockedLineStart;
         this.lockedLineEnd = lockedLineEnd;
         this.lockedBracePos = lockedBracePos;
     }
-
 }

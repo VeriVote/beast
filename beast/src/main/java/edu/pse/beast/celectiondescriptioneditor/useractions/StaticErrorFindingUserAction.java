@@ -14,7 +14,7 @@
 //        super("staticErrorFinding");
 //        this.electionDescriptionEditor = electionDescriptionEditor;
 //    }
-//    
+//
 //    @Override
 //    public void perform() {
 //        electionDescriptionEditor.findErrorsAndDisplayThem();

@@ -11,20 +11,20 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.types.InternalTypeContainer;
 
 /**
- * 
+ *
  * @author Lukas Stapelbroek
  *
  */
 public class CBMCResult extends Result {
-    private static final String SEGMENT_ENDER = "-----------------------------------";
+    private static final String SEGMENT_END = "-----------------------------------";
 
     // this is the last line in the cbmc output, if the verification was
     // successful
-    private static final String SUCCESSLINE = "VERIFICATION SUCCESSFUL";
+    private static final String SUCCESS_LINE = "VERIFICATION SUCCESSFUL";
 
     // this is the last line in the cbmc output, if the assertion
     // failed
-    private static final String FAILURELINE = "VERIFICATION FAILED";
+    private static final String FAILURE_LINE = "VERIFICATION FAILED";
 
     private boolean createsExample = true;
 
@@ -46,7 +46,7 @@ public class CBMCResult extends Result {
 
     /**
      * this method creates a failure example from the given output from cbmc
-     * 
+     *
      * @return a failure example that show how the voters voted and who won then
      */
     private FailureExample createFailureExample() {
@@ -55,10 +55,10 @@ public class CBMCResult extends Result {
             FailureExample toReturn = null;
 
             if (getResult() != null && getElectionDescription() != null) {
-                // define these arrays, because switch case doesn't let me reassign
+                // define these arrays, because switch case does not let me reassign
                 // the
                 // same name,
-                // and i am a bit worried, that they won't get created properly;
+                // and i am a bit worried, that they will not get created properly;
                 List<CBMCResultWrapperMultiArray> votesList = getElectionDescription().getContainer().getInputType()
                         .readVoteList(getResult());
                 List<CBMCResultWrapperSingleArray> singleVotesList = getElectionDescription().getContainer()
@@ -136,15 +136,15 @@ public class CBMCResult extends Result {
 ////            break;
 ////          default:
 ////            ErrorForUserDisplayer.displayError(
-////                "This votingtype you are using hasn't been implemented yet to be displayed. "
+////                "This voting type you are using has not been implemented yet to be displayed. "
 ////                    + "Please do so in the class CBMC_Result");
 ////            this.setError(
-////                "This votingtype hasn't been implemented yet please do so in the class CBMC_Result");
+////                "This voting type has not been implemented yet please do so in the class CBMC_Result");
 ////            return null;
 ////          }
 //
 //        } else {
-//          // read the elect value, because here we dont work with seats
+//          // read the elect value, because here we do not work with seats
 //          List<CBMCResultWrapperLong> elect = readLongs("elect", getResult());
 //
 //          switch (getElectionDescription().getInputType().getInputID()) {
@@ -183,10 +183,10 @@ public class CBMCResult extends Result {
 //            break;
 //          default:
 //            ErrorForUserDisplayer.displayError(
-//                "This votingtype you are using hasn't been implemented yet to be displaye. "
+//                "This voting type you are using has not been implemented yet to be displayed. "
 //                    + "Please do so in the class CBMC_Result");
 //            this.setError(
-//                "This votingtype hasn't been implemented yet please do so in the class CBMC_Result");
+//                "This voting type has not been implemented yet please do so in the class CBMC_Result");
 //            return null;
 //
 //          }
@@ -204,7 +204,7 @@ public class CBMCResult extends Result {
                     String name = symbolicVariable.getId();
                     if (!internalType.isList()) {
                         // extract the value of "name" in the result
-                        // if it is null, the variable couldn't be found
+                        // if it is null, the variable could not be found
                         Long extracted = readSymbolicVariable(name, getResult());
                         if (extracted != null) {
                             long number = (long) extracted;
@@ -213,7 +213,7 @@ public class CBMCResult extends Result {
                                 toReturn.addSymbolicVoters(name, number);
                                 break;
                             case CANDIDATE:
-                                toReturn.addSymbolicCadidate(name, number);
+                                toReturn.addSymbolicCandidate(name, number);
                                 break;
                             case SEAT:
                                 toReturn.addSymbolicSeat(name, number);
@@ -250,7 +250,7 @@ public class CBMCResult extends Result {
         Long toReturn = null;
         Pattern correctChecker = Pattern.compile("(\\b" + name + "=[0-9]+u*)(.*)");
         Iterator<String> iterator = toExtract.iterator();
-        String line = mergeLinesToOne(iterator, SEGMENT_ENDER);
+        String line = mergeLinesToOne(iterator, SEGMENT_END);
         while (line.length() > 0) {
             Matcher checkerMatcher = correctChecker.matcher(line);
             if (checkerMatcher.find()) {
@@ -259,14 +259,14 @@ public class CBMCResult extends Result {
                 // parse the binary value to a long
                 toReturn = Long.parseLong(valueAsString, 2);
             }
-            line = mergeLinesToOne(iterator, SEGMENT_ENDER);
+            line = mergeLinesToOne(iterator, SEGMENT_END);
         }
         return toReturn;
     }
 
     /**
      * extracts a long variable out of the output from cbmc
-     * 
+     *
      * @param name      the name of the variable
      * @param toExtract all the lines that should get checked, it they contain the
      *                  searched var
@@ -277,8 +277,8 @@ public class CBMCResult extends Result {
         Pattern correctChecker = Pattern.compile("(\\b" + name + "[0-9]+=[0-9]+u*)(.*)");
         Pattern longExtractor = Pattern.compile("(\\b" + name + "[0-9]+)(.*)");
         Iterator<String> iterator = toExtract.iterator();
-        String line = mergeLinesToOne(iterator, SEGMENT_ENDER);
-        line = mergeLinesToOne(iterator, SEGMENT_ENDER);
+        String line = mergeLinesToOne(iterator, SEGMENT_END);
+        line = mergeLinesToOne(iterator, SEGMENT_END);
         while (line.length() > 0) {
             Matcher checkerMatcher = correctChecker.matcher(line);
             if (checkerMatcher.find()) {
@@ -290,7 +290,7 @@ public class CBMCResult extends Result {
                     int electIndex = Integer.parseInt(number);
                     // split at the "(" and ")" to extract the bit value
                     String valueAsString = line.split("\\(")[1].split("\\)")[0];
-                    // prase the binary value to a long
+                    // parse the binary value to a long
                     String value = "" + Long.parseLong(valueAsString, 2);
                     boolean added = false;
                     for (Iterator<CBMCResultWrapperLong> innerIterator = toReturn.iterator(); innerIterator
@@ -307,112 +307,84 @@ public class CBMCResult extends Result {
                     }
                 }
             }
-            line = mergeLinesToOne(iterator, SEGMENT_ENDER);
+            line = mergeLinesToOne(iterator, SEGMENT_END);
         }
         return toReturn;
     }
 
     /**
      * this method is used to extract
-     * 
+     *
      * @param name      the name of the saved variable
      * @param toExtract the string list to extract the variable out of
      * @return a list of all variables with a matching name with their index and
-     *         values that occured in the give list
+     *         values that occurred in the give list
      */
     protected List<CBMCResultWrapperSingleArray> readOneDimVar(String name, List<String> toExtract) {
         List<CBMCResultWrapperSingleArray> list = new ArrayList<CBMCResultWrapperSingleArray>();
-
         // this pattern searches for words of the form
         // "votesNUMBER[NUMBER]" where "NUMBER" can by any positive
         // number. Also, the next character has to be an equals sign
         Pattern votesExtractor = null;
-
         Iterator<String> iterator = toExtract.iterator();
-        String line = mergeLinesToOne(iterator, SEGMENT_ENDER);
-
+        String line = mergeLinesToOne(iterator, SEGMENT_END);
         while (line.length() > 0) {
-
             if (line.contains("[")) {
-
                 // pattern that checks for a pattern like
                 // "votesNUMBER[NUMBER(letters)] = ...."
                 votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+\\[[0-9]+[a-zA-Z]*\\])(=.*)");
-
                 Matcher votesMatcher = votesExtractor.matcher(line);
-
                 if (votesMatcher.find()) {
                     String newLine = votesMatcher.group(1);
-
                     // find out the number of this votes array
                     int mainIndex = Integer.parseInt(newLine.split("=")[0].split(name)[1].split("\\[")[0]);
-
                     // get the first index for this array value
                     int arrayIndex = Integer
                             .parseInt((newLine.split("\\[")[1].split("\\]")[0]).replaceAll("[^\\d.]", ""));
-
                     // split at the "(" and ")" to extract the value
                     String valueAsString = line.split("\\(")[1].split("\\)")[0];
-
                     String value = "" + Long.parseLong(valueAsString, 2);
-
                     boolean added = false;
-
                     for (Iterator<CBMCResultWrapperSingleArray> innerIterator = list.iterator(); innerIterator
                             .hasNext();) {
                         CBMCResultWrapperSingleArray wrapper = (CBMCResultWrapperSingleArray) innerIterator.next();
-
                         if (wrapper.getMainIndex() == mainIndex) {
                             wrapper.addTo(arrayIndex, value);
                             added = true;
                         }
                     }
-
                     if (!added) {
                         list.add(new CBMCResultWrapperSingleArray(mainIndex, name));
                         list.get(list.size() - 1).addTo(arrayIndex, value);
                     }
-
                 }
             } else if (line.contains("{")) {
-
                 // pattern that checks for a pattern like "votesNUMBER = {..."
                 votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+)=(\\{[^\\{|\\}]*\\})");
-
                 Matcher votesMatcher = votesExtractor.matcher(line);
-
                 if (votesMatcher.find()) {
                     String newLine = votesMatcher.group(1);
-
                     // find out the number of this votes array
                     int mainIndex = Integer.parseInt(newLine.split("=")[0].split(name)[1]);
-
                     String values = line.split("\\(")[1].split("\\)")[0];
-
-                    // strip away whitespaces and the double braces that
+                    // strip away white spaces and the double braces that
                     // represent
                     // the whole array
                     // also remove all opening braces
                     values = values.replaceAll(" +", "").replaceAll("\\{+", "").replace("}", "}");
-
                     String[] subValueArray = values.split("\\}")[0].split(",");
-
                     for (int i = 0; i < subValueArray.length; i++) {
                         if (!subValueArray[i].equals("")) {
-
                             boolean added = false;
-
                             for (Iterator<CBMCResultWrapperSingleArray> innerIterator = list.iterator(); innerIterator
                                     .hasNext();) {
                                 CBMCResultWrapperSingleArray wrapper = (CBMCResultWrapperSingleArray) innerIterator
                                         .next();
-
                                 if (wrapper.getMainIndex() == mainIndex) {
                                     wrapper.addTo(i, "" + Long.parseLong(subValueArray[i], 2));
                                     added = true;
                                 }
                             }
-
                             if (!added) {
                                 list.add(new CBMCResultWrapperSingleArray(mainIndex, name));
                                 list.get(list.size() - 1).addTo(i, "" + Long.parseLong(subValueArray[i], 2));
@@ -421,15 +393,15 @@ public class CBMCResult extends Result {
                     }
                 }
             }
-            line = mergeLinesToOne(iterator, SEGMENT_ENDER);
+            line = mergeLinesToOne(iterator, SEGMENT_END);
         }
         return list;
     }
 
     /**
-     * reads a two dimensional variables that matches a given name from the cbmc
+     * reads a two-dimensional variables that matches a given name from the cbmc
      * output and puts it in a wrapper object
-     * 
+     *
      * @param name      the name of the variables to search for
      * @param toExtract the list to extract the variables out
      * @return the finished list with all variables stored in
@@ -438,8 +410,7 @@ public class CBMCResult extends Result {
         List<CBMCResultWrapperMultiArray> list = new ArrayList<CBMCResultWrapperMultiArray>();
         Pattern votesExtractor = null;
         Iterator<String> iterator = toExtract.iterator();
-        String line = mergeLinesToOne(iterator, SEGMENT_ENDER);
-
+        String line = mergeLinesToOne(iterator, SEGMENT_END);
         while (line.length() > 0) {
             if (line.contains("[")) {
                 // this pattern searches for words of the form
@@ -450,7 +421,6 @@ public class CBMCResult extends Result {
                 Matcher votesMatcher = votesExtractor.matcher(line);
                 if (votesMatcher.find()) {
                     String newLine = votesMatcher.group(1);
-
                     // find out the number of this votes array
                     int mainIndex = Integer.parseInt(newLine.split("=")[0].split(name)[1].split("\\[")[0]);
                     // get the first index for this array value
@@ -485,8 +455,7 @@ public class CBMCResult extends Result {
                     // find out the number of this votes array
                     int mainIndex = Integer.parseInt(newLine.split("=")[0].split(name)[1]);
                     String values = line.split("\\(")[1].split("\\)")[0];
-
-                    // strip away whitespaces and the double braces that
+                    // strip away white spaces and the double braces that
                     // represent
                     // the whole array
                     // also remove all opening braces
@@ -516,13 +485,13 @@ public class CBMCResult extends Result {
                     }
                 }
             }
-            line = mergeLinesToOne(iterator, SEGMENT_ENDER);
+            line = mergeLinesToOne(iterator, SEGMENT_END);
         }
         return list;
     }
 
     /**
-     * 
+     *
      * @param toMerge
      * @param regexToEndAt
      * @return
@@ -533,7 +502,7 @@ public class CBMCResult extends Result {
         while (notEnded) {
             if (toMerge.hasNext()) {
                 String nextLine = toMerge.next();
-                // add the next line, sepearated by a whitespace
+                // add the next line, separated by a whitespace
                 toReturn = toReturn + " " + nextLine;
                 if (nextLine.contains(regexToEndAt)) {
                     // we found the end of the segment
@@ -553,7 +522,7 @@ public class CBMCResult extends Result {
     @Override
     public boolean checkAssertionSuccess() {
         if (super.getResult() != null && super.getResult().size() > 0) {
-            return super.getResult().get(super.getResult().size() - 1).contains(SUCCESSLINE);
+            return super.getResult().get(super.getResult().size() - 1).contains(SUCCESS_LINE);
         } else {
             return false;
         }
@@ -562,7 +531,7 @@ public class CBMCResult extends Result {
     @Override
     public boolean checkAssertionFailure() {
         if (super.getResult() != null && super.getResult().size() > 0) {
-            return super.getResult().get(super.getResult().size() - 1).contains(FAILURELINE);
+            return super.getResult().get(super.getResult().size() - 1).contains(FAILURE_LINE);
         } else {
             return false;
         }

@@ -2,6 +2,7 @@ package edu.pse.beast.saverloader;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.saverloader.adapter.CommonHelpMethodsAdapter;
@@ -27,7 +28,7 @@ public class ElectionDescriptionSaverLoader implements SaverLoader<ElectionDescr
     }
 
     @Override
-    public ElectionDescription createFromSaveString(String toLoad) {
+    public ElectionDescription createFromSaveString(String toLoad) throws JsonSyntaxException {
         return saverLoader.fromJson(toLoad, ElectionDescription.class);
     }
 

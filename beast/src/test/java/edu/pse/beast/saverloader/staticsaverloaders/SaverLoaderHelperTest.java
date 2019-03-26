@@ -22,7 +22,8 @@ public class SaverLoaderHelperTest {
     public void testParsesSaveString() {
         Map<String, String> m = h.parseSaveString("4 name4 Jack");
         assertEquals("Jack", m.get("name"));
-        m = h.parseSaveString(h.getStringForAttr("name", "Monica") + h.getStringForAttr("age", "14"));
+        m = h.parseSaveString(h.getStringForAttr("name", "Monica")
+                              + h.getStringForAttr("age", "14"));
         assertEquals("Monica", m.get("name"));
         assertEquals("14", m.get("age"));
     }

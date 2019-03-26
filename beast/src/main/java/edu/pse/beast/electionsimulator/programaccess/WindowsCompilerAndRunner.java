@@ -20,30 +20,28 @@ import edu.pse.beast.toolbox.WindowsOStoolbox;
 public class WindowsCompilerAndRunner extends SystemSpecificCompilerAndExecutioner {
 
     // the compiler we use on windows, because it is also needed by cbmc
-    private final String compilerString = "cl.exe";
+    private static final String COMPILER_STRING = "cl.exe";
 
     // used to enable includes from the users own written classes
-    private final String enableUserInclude = "/I";
-    private final String userIncludeFolder = "/core/user_includes/";
+    private static final String ENABLE_USER_INCLUDE = "/I";
+    private static final String USER_INCLUDE_FOLDER = "/core/user_includes/";
 
-    // we want to compile all available c files, so the user doesn't have to
+    // we want to compile all available c files, so the user does not need to
     // specify anything
-    private final String compileAllIncludesInFolder = "*.c";
+    private static final String COMPILE_ALL_INCLUDES_IN_FOLDER = "*.c";
 
     @Override
-    protected Process compileCfile(File toCheck) {
-
+    protected Process compileCFile(File toCheck) {
         String vsCmd = null;
-
         Process startedProcess = null;
-
-        String userIncludeAndPath = enableUserInclude + "\"" + SuperFolderFinder.getSuperFolder() + userIncludeFolder
-                + "\"";
-
-        // we have to compile all includes that the user puts in that folder, in
+        String userIncludeAndPath =
+                ENABLE_USER_INCLUDE + "\"" + SuperFolderFinder.getSuperFolder()
+                + USER_INCLUDE_FOLDER + "\"";
+        // we must compile all includes that the user puts in that folder, in
         // case some of them are needed
-        String compileAllIncludesInIncludePath = "\"" + SuperFolderFinder.getSuperFolder() + userIncludeFolder
-                + compileAllIncludesInFolder + "\"";
+        String compileAllIncludesInIncludePath =
+                "\"" + SuperFolderFinder.getSuperFolder()
+                + USER_INCLUDE_FOLDER + COMPILE_ALL_INCLUDES_IN_FOLDER + "\"";
 
         // try to get the vsCMD
         try {
@@ -54,37 +52,42 @@ public class WindowsCompilerAndRunner extends SystemSpecificCompilerAndExecution
 
         if (vsCmd == null) {
             ErrorForUserDisplayer.displayError(
-                    "The program \"VsDevCmd.bat\" couldn't be found. It is required to run this program, so "
+                    "The program \"VsDevCmd.bat\" could not be found. "
+                            + "It is required to run this program, so "
                             + "please supply it with it. \n"
-                            + " To do so, download the Visual Studio Community Version, install it (including "
-                            + "the C++ pack). \n "
-                            + "Then, search for the VsDevCmd.bat in it, and copy and paste it into the foler "
+                            + " To do so, download the Visual Studio Community Version, "
+                            + "install it (including  the C++ pack). \n "
+                            + "Then, search for the VsDevCmd.bat in it, "
+                            + "and copy and paste it into the folder "
                             + "/windows/ in the BEAST installation folder.");
             return null;
         } else {
-
             // because windows is weird the whole call that will get placed
             // inside
             // VScmd has to be in one giant string. Put the created file in the
             // output directory, so
             // it can be deleted afterwards
-            String clExeCall = "\"" + vsCmd + "\"" + " & " + compilerString + " " + userIncludeAndPath + " "
-                    + ("\"" + toCheck.getAbsolutePath() + "\"") + " " + (" /Fo" + toCheck.getParent() + "\\ ")
-                    + (" /Fe" + toCheck.getParent() + "\\ ") + compileAllIncludesInIncludePath;
+            String clExeCall =
+                    "\"" + vsCmd + "\""
+                    + " & " + COMPILER_STRING + " " + userIncludeAndPath + " "
+                    + ("\"" + toCheck.getAbsolutePath() + "\"") + " "
+                    + (" /Fo" + toCheck.getParent() + "\\ ")
+                    + (" /Fe" + toCheck.getParent() + "\\ ")
+                    + compileAllIncludesInIncludePath;
 
             List<String> callInList = new ArrayList<String>();
-
             callInList.add(clExeCall);
-
-            File batFile = new File(toCheck.getParent() + "\\" + toCheck.getName().replace(".c", ".bat"));
-
+            File batFile =
+                    new File(toCheck.getParent() + "\\"
+                             + toCheck.getName().replace(".c", ".bat"));
             FileSaver.writeStringLinesToFile(callInList, batFile);
 
             // this call starts a new VScmd instance and lets cl.exe (the
             // compiler) run in it
             // ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c",
             // clExeCall);
-            ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", batFile.getAbsolutePath());
+            ProcessBuilder prossBuild =
+                    new ProcessBuilder("cmd.exe", "/c", batFile.getAbsolutePath());
 
             try {
                 startedProcess = prossBuild.start();

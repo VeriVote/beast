@@ -11,7 +11,7 @@ public class ActionIdAndListener {
     private final ActionListener listener;
 
     /**
-     * 
+     *
      * @param id       the id
      * @param listener the listener to be save here
      */
@@ -21,7 +21,7 @@ public class ActionIdAndListener {
     }
 
     /**
-     * 
+     *
      * @return the id
      */
     public String getId() {
@@ -29,7 +29,7 @@ public class ActionIdAndListener {
     }
 
     /**
-     * 
+     *
      * @return the listener that got saved here
      */
     public ActionListener getListener() {

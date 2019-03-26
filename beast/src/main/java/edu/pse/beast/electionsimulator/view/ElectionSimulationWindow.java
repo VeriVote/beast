@@ -104,7 +104,9 @@
 //      modeListBox.setSelectedIndex(3);
 //      modeListBox.addActionListener(this);
 //
-//      horizontalScroll = new JScrollBar(JScrollBar.HORIZONTAL, 0, 1, 0, model.getAmountCandidates());
+//      horizontalScroll =
+//      new JScrollBar(JScrollBar.HORIZONTAL, 0, 1, 0,
+//                     model.getAmountCandidates());
 //      verticalScroll = new JScrollBar(JScrollBar.VERTICAL, 0, 1, 0, model.getAmountVoters());
 //
 //      //  menuBar = new JMenuBar();
@@ -145,15 +147,21 @@
 //
 //    this.add(toolBar);
 //
-//      // fieldsPerWidth = (this.getWidth() - 2 * (borderMarginSmall)) / (2 *  model.getWidthMultiplier());
-//      // fieldsPerHeight = (this.getHeight() - 2 * (borderMarginSmall * 2)) / (2 * heightMultiplier);
+//    // fieldsPerWidth =
+//    //     (this.getWidth() - 2 * (borderMarginSmall))
+//    //         / (2 *  model.getWidthMultiplier());
+//    // fieldsPerHeight =
+//    //     (this.getHeight() - 2 * (borderMarginSmall * 2))
+//    //         / (2 * heightMultiplier);
 //
-//      // addCandidate = new JButton("+C");
-//      // addVoter = new JButton("+V");
-//      // removeCandidate = new JButton("-C");
-//      // removeVoter = new JButton("-V");
-//      // horizontalScroll = new JScrollBar(JScrollBar.HORIZONTAL, 0, 1, 0, model.getAmountCandidates());
-//      // verticalScroll = new JScrollBar(JScrollBar.VERTICAL, 0, 1, 0, amountVoters);
+//    // addCandidate = new JButton("+C");
+//    // addVoter = new JButton("+V");
+//    // removeCandidate = new JButton("-C");
+//    // removeVoter = new JButton("-V");
+//    // horizontalScroll =
+//    //     new JScrollBar(JScrollBar.HORIZONTAL, 0, 1, 0,
+//    //                    model.getAmountCandidates());
+//    // verticalScroll = new JScrollBar(JScrollBar.VERTICAL, 0, 1, 0, amountVoters);
 //
 //    model.getCandidates().add(new JTextField("C1"));
 //    model.getVoters().add(new JTextField("V1"));
@@ -251,7 +259,8 @@
 //                                               - model.getScrollBarWidth() / 2)))),
 //              model.getScrollBarWidth());
 //          horizontalScroll.setValues(model.getHorizontalOffset(), 1, 0,
-//                                     (model.getAmountCandidates() - 1) * model.getElementWidth() * 2);
+//                                     (model.getAmountCandidates() - 1)
+//                                         * model.getElementWidth() * 2);
 //          this.add(horizontalScroll);
 //    } else {
 //        model.setHorizontalOffset(0);
@@ -274,7 +283,8 @@
 //    }
 //
 //      addCandidate.setBounds(
-//          ((model.getAmountCandidates() + 2) *  model.getWidthMultiplier() - model.getHorizontalOffset()),
+//          ((model.getAmountCandidates() + 2) *  model.getWidthMultiplier()
+//              - model.getHorizontalOffset()),
 //          model.getBorderMarginSmall(), model.getElementWidth(),
 //          model.getElementHeight());
 //      this.add(addCandidate);
@@ -353,8 +363,12 @@
 //  }
 //
 ////    public void componentResized(ComponentEvent e) {
-////        fieldsPerWidth = (int) ((this.getWidth() - 2 * (borderMarginSmall)) / (1.25 *  model.getWidthMultiplier()));
-////        fieldsPerHeight = (int) ((this.getHeight() - 2 * (borderMarginSmall)) / (1.25 * heightMultiplier));
+////        fieldsPerWidth =
+////            (int) ((this.getWidth() - 2 * (borderMarginSmall))
+////                       / (1.25 *  model.getWidthMultiplier()));
+////        fieldsPerHeight =
+////            (int) ((this.getHeight() - 2 * (borderMarginSmall))
+////                       / (1.25 * heightMultiplier));
 ////
 ////        updateRows();
 ////        update();
@@ -378,7 +392,9 @@
 ////        }
 ////        this.remove(candidates.get(candidates.size() - 1));
 ////        candidates.remove(candidates.size() - 1);
-////        horizontalOffset = Math.min(horizontalOffset, (amountCandidates -1) * model.getElementWidth() * 2);
+////        horizontalOffset =
+////            Math.min(horizontalOffset,
+////                     (amountCandidates -1) * model.getElementWidth() * 2);
 ////      }
 ////        } else if (e.getSource() == addVoter) {
 ////            amountVoters++;
@@ -398,7 +414,9 @@
 ////        rows.remove(rows.size() - 1);
 ////        this.remove(voters.get(voters.size() - 1));
 ////        voters.remove(voters.size() - 1);
-////        verticalOffset = Math.min(verticalOffset, (amountVoters - 1) * model.getElementHeight() * 2);
+////        verticalOffset =
+////            Math.min(verticalOffset,
+////                    (amountVoters - 1) * model.getElementHeight() * 2);
 ////      }
 ////    }
 ////    update();

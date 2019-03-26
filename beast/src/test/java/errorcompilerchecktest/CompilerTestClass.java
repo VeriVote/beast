@@ -7,9 +7,8 @@ import java.util.List;
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling.DeepErrorChecker;
 import edu.pse.beast.codearea.errorhandling.CodeError;
 
-public class CompilerTestClass {
-
-    public CompilerTestClass() {
+public final class CompilerTestClass {
+    private CompilerTestClass() {
         ArrayList<String> list = new ArrayList<String>();
 
         // String location = "/Beast/core/c_tempfiles/qbg5bq3g53ndi52q7oc.c";
@@ -20,9 +19,12 @@ public class CompilerTestClass {
 
         for (Iterator<CodeError> iterator = toTest.iterator(); iterator.hasNext();) {
             CodeError codeError = (CodeError) iterator.next();
-            System.out.println("line: " + codeError.getLine() + " | posinline " + codeError.getPosInLine()
-                    + " | varname: " + codeError.getExtraInfo("varname") + " | message: "
-                    + codeError.getExtraInfo("msg") + " | errortype: " + codeError.getId());
+            System.out.println(
+                    "line: " + codeError.getLine()
+                    + " | posinline " + codeError.getPosInLine()
+                    + " | varname: " + codeError.getExtraInfo("varname")
+                    + " | message: " + codeError.getExtraInfo("msg")
+                    + " | errortype: " + codeError.getId());
         }
     }
 

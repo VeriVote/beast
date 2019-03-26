@@ -24,8 +24,8 @@
 //                Math.abs(lhsS.length() - compareWord.length()),
 //                Math.abs(rhsS.length() - compareWord.length()));
 //        return Integer.compare(rhsScore, lhsScore);
-//    }   
-//    
+//    }
+//
 //    private int similarityCode(String s) {
 //        int score = 0;
 //        for(int i = 0; i < s.length() && i <  compareWord.length(); ++i) {
@@ -35,5 +35,4 @@
 //        }
 //        return score;
 //    }
-//    
 //}

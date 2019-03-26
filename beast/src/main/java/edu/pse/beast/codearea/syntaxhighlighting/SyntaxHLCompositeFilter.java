@@ -22,8 +22,10 @@ public class SyntaxHLCompositeFilter extends DocumentFilter {
     private JTextPane textPane;
     private ArrayList<RegexAndColor> regexAndColorList;
     private StyleContext styleContext = StyleContext.getDefaultStyleContext();
-    private AttributeSet blackAttributeSet = styleContext.addAttribute(styleContext.getEmptySet(),
-            StyleConstants.Foreground, Color.BLACK);
+    private AttributeSet blackAttributeSet =
+        styleContext.addAttribute(styleContext.getEmptySet(),
+                                  StyleConstants.Foreground,
+                                  Color.BLACK);
 
     /**
      *
@@ -49,7 +51,8 @@ public class SyntaxHLCompositeFilter extends DocumentFilter {
     }
 
     @Override
-    public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attributeSet)
+    public void replace(FilterBypass fb, int offset, int length,
+                        String text, AttributeSet attributeSet)
             throws BadLocationException {
         super.replace(fb, offset, length, text, attributeSet);
         handleTextChanged();
@@ -76,21 +79,30 @@ public class SyntaxHLCompositeFilter extends DocumentFilter {
 
     private void updateTextStyles() {
         // Remove old syntax HL
-        textPane.getStyledDocument().setCharacterAttributes(0, textPane.getText().length(), blackAttributeSet, true);
+        textPane.getStyledDocument()
+            .setCharacterAttributes(0, textPane.getText().length(),
+                                    blackAttributeSet, true);
         // iterate over different groups of tokens and format them
         for (RegexAndColor iter : regexAndColorList) {
             // Look for tokens and highlight them
             Matcher matcher = null;
             try {
-                matcher = buildPattern(iter.getRegEx())
-                        .matcher(textPane.getStyledDocument().getText(0, textPane.getStyledDocument().getLength()));
+                matcher =
+                    buildPattern(iter.getRegEx()).matcher(
+                        textPane.getStyledDocument()
+                        .getText(0,
+                                 textPane.getStyledDocument().getLength()));
             } catch (BadLocationException e) {
                 e.printStackTrace();
             }
             while (matcher.find()) {
                 // Change the color of recognized tokens
-                textPane.getStyledDocument().setCharacterAttributes(matcher.start(), matcher.end() - matcher.start(),
-                        iter.getAttributeSet(), false);
+                textPane.getStyledDocument()
+                    .setCharacterAttributes(matcher.start(),
+                                            matcher.end()
+                                            - matcher.start(),
+                                            iter.getAttributeSet(),
+                                            false);
             }
         }
     }

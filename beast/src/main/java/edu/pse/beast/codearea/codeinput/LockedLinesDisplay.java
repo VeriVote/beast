@@ -11,17 +11,17 @@
 //import javax.swing.text.DefaultHighlighter.DefaultHighlightPainter;
 //
 ///**
-// * Highlights locked lines with a gray background. It listens to 
-// * locked and unlocked messages from the lockedlineshandler
+// * Highlights locked lines with a gray background. It listens to
+// * locked and unlocked messages from the locked lines handler
 // * @author Holger Klein
 // */
 //public class LockedLinesDisplay implements LockedLinesListener {
-//    private JTextPane pane; 
+//    private JTextPane pane;
 //    private LockedLinesHandler lockedLinesHandler;
 //    private DefaultHighlighter highlighter;
 //    private DefaultHighlightPainter hPainter;
 //    private HashMap<Integer, Object> highlights = new HashMap<>();
-//    
+//
 //    public LockedLinesDisplay(JTextPane pane, LockedLinesHandler lockedLinesHandler) {
 //        this.pane = pane;
 //        lockedLinesHandler.addLockedLinesListener(this);
@@ -33,9 +33,12 @@
 //    public void lockedLine(int lineNumber) {
 //        int lineStart = JTextPaneToolbox.getLineBeginning(pane, lineNumber);
 //        int lineEnd = JTextPaneToolbox.getClosestLineBeginningAfter(pane, lineStart);
-//       
+//
 //        try {
-//            highlights.put(lineNumber, highlighter.addHighlight(lineStart, lineEnd - 1, hPainter));
+//            highlights.put(lineNumber,
+//                           highlighter.addHighlight(lineStart,
+//                                                    lineEnd - 1,
+//                                                    hPainter));
 //        } catch (BadLocationException ex) {
 //            Logger.getLogger(LockedLinesDisplay.class.getName()).log(Level.SEVERE, null, ex);
 //        }

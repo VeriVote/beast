@@ -42,7 +42,8 @@ import javax.swing.text.Utilities;
  * This class was designed to be used as a component added to the row header of
  * a JScrollPane.
  */
-public class TextLineNumber extends JPanel implements CaretListener, DocumentListener, PropertyChangeListener {
+public class TextLineNumber extends JPanel
+                implements CaretListener, DocumentListener, PropertyChangeListener {
     public static final float LEFT = 0.0f;
     public static final float CENTER = 0.5f;
     public static final float RIGHT = 1.0f;
@@ -215,11 +216,14 @@ public class TextLineNumber extends JPanel implements CaretListener, DocumentLis
      * <li>TextLineNumber.CENTER
      * <li>TextLineNumber.RIGHT (default)
      * </ul>
-     * 
+     *
      * @param digitAlignment the Color used to render the current line
      */
     public void setDigitAlignment(float digitAlignment) {
-        this.digitAlignment = digitAlignment > 1.0f ? 1.0f : digitAlignment < 0.0f ? -1.0f : digitAlignment;
+        this.digitAlignment =
+                digitAlignment > 1.0f
+                ? 1.0f : digitAlignment < 0.0f ? -1.0f
+                    : digitAlignment;
     }
 
     /**
@@ -284,7 +288,9 @@ public class TextLineNumber extends JPanel implements CaretListener, DocumentLis
 
         Rectangle2D clip = g.getClipBounds();
         int rowStartOffset = component.viewToModel2D(new Point2D.Double(0, clip.getY()));
-        int endOffset = component.viewToModel2D(new Point2D.Double(0, clip.getY() + clip.getHeight()));
+        int endOffset =
+            component.viewToModel2D(new Point2D.Double(0, clip.getY()
+                                                          + clip.getHeight()));
 
         while (rowStartOffset <= endOffset) {
             try {
@@ -308,7 +314,7 @@ public class TextLineNumber extends JPanel implements CaretListener, DocumentLis
                 // Move to the next row
 
                 rowStartOffset = Utilities.getRowEnd(component, rowStartOffset) + 1;
-            } catch (Exception e) {
+            } catch (BadLocationException e) {
                 break;
             }
         }
@@ -321,12 +327,8 @@ public class TextLineNumber extends JPanel implements CaretListener, DocumentLis
     private boolean isCurrentLine(int rowStartOffset) {
         int caretPosition = component.getCaretPosition();
         Element root = component.getDocument().getDefaultRootElement();
-
-        if (root.getElementIndex(rowStartOffset) == root.getElementIndex(caretPosition)) {
-            return true;
-        } else {
-            return false;
-        }
+        return root.getElementIndex(rowStartOffset)
+                == root.getElementIndex(caretPosition);
     }
 
     /*
@@ -355,9 +357,9 @@ public class TextLineNumber extends JPanel implements CaretListener, DocumentLis
     /*
      * Determine the Y offset for the current row
      */
-    private int getOffsetY(int rowStartOffset, FontMetrics fontMetrics) throws BadLocationException {
+    private int getOffsetY(int rowStartOffset,
+                           FontMetrics fontMetrics) throws BadLocationException {
         // Get the bounding rectangle of the row
-
         Rectangle2D r = component.modelToView2D(rowStartOffset);
         double lineHeight = fontMetrics.getHeight();
         final Double y = r.getY() + r.getHeight();
@@ -365,7 +367,6 @@ public class TextLineNumber extends JPanel implements CaretListener, DocumentLis
 
         // The text needs to be positioned above the bottom of the bounding
         // rectangle based on the descent of the font(s) contained on the row.
-
         if (Double.compare(r.getHeight(), lineHeight) == 0) {
             // default font is being used
             descent = fontMetrics.getDescent();
@@ -373,30 +374,24 @@ public class TextLineNumber extends JPanel implements CaretListener, DocumentLis
             if (fonts == null) {
                 fonts = new HashMap<String, FontMetrics>();
             }
-
             Element root = component.getDocument().getDefaultRootElement();
             int index = root.getElementIndex(rowStartOffset);
             Element line = root.getElement(index);
-
             for (int i = 0; i < line.getElementCount(); i++) {
                 Element child = line.getElement(i);
                 AttributeSet as = child.getAttributes();
                 String fontFamily = (String) as.getAttribute(StyleConstants.FontFamily);
                 Integer fontSize = (Integer) as.getAttribute(StyleConstants.FontSize);
                 String key = fontFamily + fontSize;
-
                 FontMetrics fm = fonts.get(key);
-
                 if (fm == null) {
                     Font font = new Font(fontFamily, Font.PLAIN, fontSize);
                     fm = component.getFontMetrics(font);
                     fonts.put(key, fm);
                 }
-
                 descent = Math.max(descent, fm.getDescent());
             }
         }
-
         return y.intValue() - descent;
     }
 
@@ -406,13 +401,11 @@ public class TextLineNumber extends JPanel implements CaretListener, DocumentLis
     @Override
     public void caretUpdate(CaretEvent e) {
         // Get the line the caret is positioned on
-
         int caretPosition = component.getCaretPosition();
         Element root = component.getDocument().getDefaultRootElement();
         int currentLine = root.getElementIndex(caretPosition);
 
         // Need to repaint so the correct line number can be highlighted
-
         if (lastLine != currentLine) {
             repaint();
             lastLine = currentLine;
@@ -444,7 +437,6 @@ public class TextLineNumber extends JPanel implements CaretListener, DocumentLis
     private void documentChanged() {
         // View of the component has not been updated at the time
         // the DocumentEvent is fired
-
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -452,14 +444,14 @@ public class TextLineNumber extends JPanel implements CaretListener, DocumentLis
                     int endPos = component.getDocument().getLength();
                     Rectangle2D rect = component.modelToView2D(endPos);
                     Double y = rect != null ? rect.getCenterY() : null;
-
                     if (rect != null && y.intValue() != lastHeight) {
                         setPreferredWidth();
                         repaint();
                         lastHeight = y.intValue();
                     }
                 } catch (BadLocationException ex) {
-                    /* nothing to do */ }
+                    /* nothing to do */
+                }
             }
         });
     }

@@ -24,7 +24,6 @@
 // * @author Holger Klein
 // */
 //public class CodeAreaBuilder {
-//
 //    /**
 //     * creates a codearea object
 //     *
@@ -37,45 +36,33 @@
 //     */
 //    public CodeArea createCodeArea(JTextPane codeArea, JScrollPane codeAreaScroll,
 //                                   ObjectRefsForBuilder refs, ErrorDisplayer errorDisplayer) {
-//        //simply create all necessary objects        
+//        //simply create all necessary objects
 //        OpenCloseCharList occL = new OpenCloseCharList();
-//
 //        ShortcutHandler shortcutHandler = new ShortcutHandler();
-//
 //        Actionlist actionList = new Actionlist();
-//
 //        SaveTextBeforeRemove textBeforeRemove = new SaveTextBeforeRemove(codeArea, actionList);
-//
 //        UserInsertToCode insertToCode = new UserInsertToCode(codeArea, occL, textBeforeRemove);
-//
 //        CodeInputHandler codeInputHandler = new CodeInputHandler(insertToCode);
-//
 //        UserInputHandler userInputHandler =
 //                new UserInputHandler(codeArea, codeInputHandler, shortcutHandler);
-//
 //        TextLineNumber tln = new TextLineNumber(codeArea);
 //        codeAreaScroll.setRowHeaderView(tln);
 //        StoppedTypingContinuouslyMessager stoppedTypingContinuouslyMessager
 //                = new StoppedTypingContinuouslyMessager(codeArea);
 //        ErrorController error = new ErrorController(
 //                codeArea, errorDisplayer);
-//
-//        AutocompletionController autocompletion = new AutocompletionController(codeArea, insertToCode);
-//
+//        AutocompletionController autocompletion =
+//            new AutocompletionController(codeArea, insertToCode);
 //        TextChangedActionAdder actionAdder =
 //                new TextChangedActionAdder(codeArea, actionList, textBeforeRemove);
-//
 //        SyntaxHL syntaxHL = new SyntaxHL(codeArea);
-//
 //        CodeArea created =
 //                new CodeArea(codeArea, tln, userInputHandler, insertToCode, actionList, error,
 //                             autocompletion, syntaxHL, stoppedTypingContinuouslyMessager);
 //        CodeAreaUserActions userActions = new CodeAreaUserActions(created);
 //        created.setUserActionList(userActions);
-//
 //        shortcutHandler.addAction('z', userActions.getActionById("undo"));
 //        shortcutHandler.addAction('r', userActions.getActionById("redo"));
 //        return created;
 //    }
-//
 //}

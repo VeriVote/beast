@@ -10,13 +10,12 @@
 // * @author Jonas Wohnig
 // */
 //public class PSECentralObjectProvider implements CentralObjectProvider {
-//    
 ////    private final ParameterEditor paramEd;
 ////    private final PropertyList propertyList;
 ////    private final BooleanExpEditor booleanExpEditor;
 ////    private final CElectionDescriptionEditor cElectionEditor;
 ////    private ResultCheckerCommunicator checkerCommunicator;
-//    
+//
 //    /**
 //     * Constructor that creates instances of the classes that implement high level
 //     * interfaces via their builders.
@@ -26,10 +25,13 @@
 //    public PSECentralObjectProvider(BEASTCommunicator communicator) {
 //        //All data needed to create the instances are created.
 //        //The instances themselves are created.
-//        //cElectionEditor = new CElectionDescriptionEditorBuilder().createCElectionDescriptionEditor(refs);
-//        //booleanExpEditor = new BooleanExpEditorBuilder().createBooleanExpEditorObject(refs, cElectionEditor);        
+//        //cElectionEditor =
+//        //    new CElectionDescriptionEditorBuilder().createCElectionDescriptionEditor(refs);
+//        //booleanExpEditor =
+//        //    new BooleanExpEditorBuilder().createBooleanExpEditorObject(refs, cElectionEditor);
 //        //propertyList = new PropertyListBuilder().createPropertyList(refs, booleanExpEditor);
-//        //checkerCommunicator = new PropertyChecker("CBMC"); //this must be done via the checkerfactory at some point
+//        // this must be done via the checker factory at some point
+//        //checkerCommunicator = new PropertyChecker("CBMC");
 //        //paramEd = new ParameterEditorBuilder().createParameterEditor(refs, cElectionEditor,
 //         //       booleanExpEditor, propertyList, this);
 //    }
@@ -63,7 +65,7 @@
 //    public CheckStatusDisplay getCheckStatusDisplay() {
 //        return paramEd.getView();
 //    }
-//    
+//
 //    public ParameterEditor getParameterEditor() {
 //        return paramEd;
 //    }

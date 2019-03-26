@@ -42,13 +42,13 @@ fileSizeHeaderText : Size
 fileDateHeaderText : Last modified
 fileApproveRegex : (.)+\.beast
 fileDescription : BEAST-Project-File (*.beast)
-objectCouldNotBeConvertedToString : Couldn't convert project into a String.
+objectCouldNotBeConvertedToString : Could not convert project into a String.
 objectCouldNotBeSavedError : Was not able to save Object.
-inputOutputErrorOpen : The File either does not exist or you don't have the necessary rights.
-invalidFileFormatErrorMessage : The chosen file doesn't have the right BEAST-Project format.
+inputOutputErrorOpen : The File either does not exist or you do not have the necessary rights.
+invalidFileFormatErrorMessage : The chosen file does not have the right BEAST-Project format.
 wrongEncodingError : The project contains false encoded characters.
-inputOutputErrorSave : The folder, in which you want to save, doesn't exist or you don't have the necessary rights.
-wrongFileNameError : The given name doesn't match the regular expression '[_a-zA-Z0-9\-\.\s]+'.
+inputOutputErrorSave : The folder, in which you want to save, does not exist or you do not have the necessary rights.
+wrongFileNameError : The given name does not match the regular expression '[_a-zA-Z0-9\-\.\s]+'.
 fileSuffix : .beast
 saveChanges : Save changes to '
 saveChangesSuffix : '?

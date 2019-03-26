@@ -1,8 +1,8 @@
 package edu.pse.beast.stringresource;
 
 /**
- * This class manages all StringResProviders and therefore all acces to all
- * Strings the User gets to see.
+ * This class manages all StringResProviders and therefore all
+ * access to all Strings the user gets to see.
  *
  * @author Niels Hanselmann
  */

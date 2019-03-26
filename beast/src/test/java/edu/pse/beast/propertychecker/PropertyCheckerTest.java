@@ -27,10 +27,12 @@
 //    public void testWhole() {
 //
 //        ElectionTypeContainer inputType =
-//                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.WEIGHTED_APPROVAL);
+//                new ElectionTemplateHandler().getById(
+//                    ElectionTypeContainer.ElectionInputTypeIds.WEIGHTED_APPROVAL);
 //        ElectionTypeContainer outputType = new ElectionTemplateHandler().getStandardResult();
 //
-//        ElectionDescription electionDescription = new ElectionDescription("name", inputType, outputType, 0);
+//        ElectionDescription electionDescription =
+//            new ElectionDescription("name", inputType, outputType, 0);
 //        ArrayList<String> userCode = new ArrayList<>();
 //        userCode.add("votingcode");
 //        userCode.add("abalsdf");
@@ -47,11 +49,18 @@
 //        FormalPropertiesDescription postDescr = new FormalPropertiesDescription(post);
 //
 //        PreAndPostConditionsDescription preAndPostConditionsDescription =
-//                new PreAndPostConditionsDescription("name", preDescr, postDescr, symbolicVariableList);
+//                new PreAndPostConditionsDescription("name", preDescr,
+//                                                    postDescr, symbolicVariableList);
 //
 //        SymbolicVariableList symVariableList = new SymbolicVariableList();
-//        symVariableList.addSymbolicVariable("u", new InternalTypeContainer(InternalTypeRep.VOTER));
-//        symVariableList.addSymbolicVariable("w", new InternalTypeContainer(InternalTypeRep.VOTER));
+//        symVariableList.addSymbolicVariable(
+//                "u",
+//                new InternalTypeContainer(InternalTypeRep.VOTER)
+//        );
+//        symVariableList.addSymbolicVariable(
+//                "w",
+//                new InternalTypeContainer(InternalTypeRep.VOTER)
+//        );
 //        // symVariableList.addSymbolicVariable("i", new
 //        // InternalTypeContainer(InternalTypeRep.VOTER));
 //
@@ -59,12 +68,14 @@
 //
 //        PropertyChecker propCheck = CheckerFactoryFactory.createPropertyChecker("cbmc");
 //
-//  //      implElectionDescriptionSource eSrc = new implElectionDescriptionSource(electionDescription);
+////      implElectionDescriptionSource eSrc =
+////          new implElectionDescriptionSource(electionDescription);
 //
-//        List<PreAndPostConditionsDescription> tmp = new ArrayList<PreAndPostConditionsDescription>();
+//        List<PreAndPostConditionsDescription> tmp =
+//            new ArrayList<PreAndPostConditionsDescription>();
 //        tmp.add(preAndPostConditionsDescription);
 //
-//  //      implPropertyDescriptionSource pSrc = new implPropertyDescriptionSource(tmp);
+////      implPropertyDescriptionSource pSrc = new implPropertyDescriptionSource(tmp);
 //
 //        List<Integer> amountVoters = new ArrayList<Integer>();
 //        amountVoters.add(10);
@@ -75,23 +86,25 @@
 //        List<Integer> amountSeats = new ArrayList<Integer>();
 //        amountSeats.add(4);
 //
-//        ElectionCheckParameter ecp = new ElectionCheckParameter(amountVoters, amountCandidates, amountSeats,
-//                new TimeOut(TimeUnit.MINUTES, 2), 8, "--trace;--unwind 105");
+//        ElectionCheckParameter ecp =
+//            new ElectionCheckParameter(amountVoters, amountCandidates,
+//                                       amountSeats, new TimeOut(TimeUnit.MINUTES, 2),
+//                                       8, "--trace;--unwind 105");
 //
-//     //   implParameterSource parmSrc = new implParameterSource(ecp);
+////      implParameterSource parmSrc = new implParameterSource(ecp);
 //
 //        System.out.println(":::::::::::::::::::::::::::::::::::::::::::::");
 //
-//    //    List<ResultInterface> resultate = propCheck.checkPropertiesForDescription(eSrc, pSrc, parmSrc);
-//
+////      List<ResultInterface> result =
+//            propCheck.checkPropertiesForDescription(eSrc, pSrc, parmSrc);
 //        boolean loop = false;
-//
 //        while (!loop) {
 //            loop = true;
-//    //        for (Iterator<ResultInterface> iterator = resultate.iterator(); iterator.hasNext();) {
-//    //            ResultInterface resultInterface = (ResultInterface) iterator.next();
-//    //            loop = loop && resultInterface.readyToPresent();
-//    //        }
+////          for (Iterator<ResultInterface> iterator = result.iterator();
+////                   iterator.hasNext();) {
+////              ResultInterface resultInterface = (ResultInterface) iterator.next();
+////              loop = loop && resultInterface.readyToPresent();
+////          }
 //
 //            try {
 //                Thread.sleep(1000);
@@ -105,18 +118,15 @@
 //        System.out.println("======================================");
 //        System.out.println("______________________________________");
 //
-//  //      for (Iterator<ResultInterface> iterator = resultate.iterator(); iterator.hasNext();) {
+//  //      for (Iterator<ResultInterface> iterator = result.iterator(); iterator.hasNext();) {
 //   //         ResultInterface resultInterface = (ResultInterface) iterator.next();
 //   //         resultInterface.presentTo(null);
 //    //    }
-//        
 //        System.out.println("::::::::::::::::::::::::::::::::::::::::::");
-//        
-////        for (Iterator iterator = ((Result)resultate.get(0)).getResult().iterator(); iterator.hasNext();) {
+////        for (Iterator iterator = ((Result)result.get(0)).getResult().iterator();
+////                 iterator.hasNext();) {
 ////            String line = (String) iterator.next();
 ////            System.out.println(line);
-////        }      
-//
-//        
+////        }
 //    }
 //}

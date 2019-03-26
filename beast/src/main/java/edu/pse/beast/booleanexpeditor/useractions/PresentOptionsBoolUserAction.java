@@ -18,7 +18,8 @@
 //     * @param options the BooleanExpEditorOptions object
 //     * @param presenter the OptionPresenter object
 //     */
-//    public PresentOptionsBoolUserAction(BooleanExpEditorOptions options, OptionPresenter presenter) {
+//    public PresentOptionsBoolUserAction(BooleanExpEditorOptions options,
+//                                        OptionPresenter presenter) {
 //        super("options");
 //        this.options = options;
 //        this.presenter = presenter;

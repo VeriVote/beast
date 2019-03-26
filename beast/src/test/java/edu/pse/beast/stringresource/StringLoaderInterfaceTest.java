@@ -78,7 +78,6 @@ public class StringLoaderInterfaceTest {
     public void testSetLanguage() {
         System.out.println("setLanguage");
         instance.setLanguage("test");
-        // if there isn't an error message this should be correct
+        // if there is no error message, this should be correct
     }
-
 }

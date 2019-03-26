@@ -6,7 +6,7 @@ import edu.pse.beast.propertychecker.Result;
 
 public class ResultPresenter implements Runnable {
 
-    private static final long SLEEPTIME = 100;
+    private static final long SLEEP_TIME = 100;
 
     private Result result;
 
@@ -53,57 +53,47 @@ public class ResultPresenter implements Runnable {
         } else {
 
             while (running) {
-
                 // do all the printing
                 String output = "";
-
                 switch (GUIController.getController().getPresentationType()) {
                 case output:
                     if (result.getLastTmpResult() != null) {
                         output = String.join("\n", result.getLastTmpResult());
                     }
                     break;
-
                 case error:
                     if (result.getLastTmpError() != null) {
                         output = String.join("\n", result.getLastTmpError());
-                        break;
                     }
+                    break;
                 case previous:
                     if (result.getStatusStrings() != null) {
-                        output = output + " LAST RESULTS :\n_________________\n";
-
+                        output += " LAST RESULTS :\n_________________\n";
                         List<String> lastResults = result.getStatusStrings();
-
                         for (int i = 0; i < lastResults.size(); i++) {
-                            output = output + i + ": " + lastResults.get(i) + "\n_________________\n";
+                            output += i + ": "
+                                      + lastResults.get(i)
+                                      + "\n_________________\n";
                         }
                     }
                     break;
-
                 case result:
-
                     if (result.isFinished()) {
                         System.out.println("fix printing results");
                     } else {
                         output = "result not finished yet!";
                     }
-
                     break;
-
                 default:
                     break;
                 }
-
                 GUIController.getController().getResultField().setText(output);
-
                 if (result.isFinished()) {
                     running = false;
                 }
-
                 if (running) {
                     try {
-                        Thread.sleep(SLEEPTIME);
+                        Thread.sleep(SLEEP_TIME);
                     } catch (InterruptedException e) {
                     }
                 }

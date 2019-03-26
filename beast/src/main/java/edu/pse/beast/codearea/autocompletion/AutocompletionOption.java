@@ -10,9 +10,9 @@
 //import edu.pse.beast.codearea.codeinput.UserInsertToCode;
 //
 ///**
-// * This class represents an autocompletion option. Once the user chooses a
-// * specific option, this class will insert its insertstring into the given
-// * JTextPane. It also provides functionality to move the cartet position
+// * This class represents an auto completion option. Once the user chooses a
+// * specific option, this class will insert its insert string into the given
+// * JTextPane. It also provides functionality to move the caret position
 // * afterwards
 // *
 // * @author Holger Klein
@@ -35,7 +35,8 @@
 //    }
 //
 //    public boolean equals(AutocompletionOption other) {
-//        return other.similarString.equals(similarString) && other.insertString.equals(insertString);
+//        return other.similarString.equals(similarString)
+//               && other.insertString.equals(insertString);
 //    }
 //
 //    public String getInsertString() {
@@ -47,13 +48,13 @@
 //    }
 //
 //    /**
-//     * inserts the given string, char by char, into the inserttocode thus
+//     * inserts the given string, char by char, into the insert-to-code thus
 //     * ensuring that all chars are entered correctly
 //     *
 //     * @param pane the pane in which the string will be inserted
 //     * @param caretPosition the caretposition at which the string should be
 //     * inserted
-//     * @param insertToCode the insertToCode which controlls translateing input
+//     * @param insertToCode the insertToCode which controlls translating input
 //     * into code
 //     */
 //    void insertInto(JTextPane pane, int caretPosition, UserInsertToCode insertToCode) {
@@ -72,11 +73,9 @@
 //                    insertToCode.insertChar(insertString.charAt(i));
 //                }
 //            }
-//
 //            pane.setCaretPosition(pane.getCaretPosition() + moveCaretAfter);
 //        } catch (BadLocationException ex) {
 //            Logger.getLogger(AutocompletionOption.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
-//
 //}

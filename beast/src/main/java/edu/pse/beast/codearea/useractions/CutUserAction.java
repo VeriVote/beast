@@ -34,7 +34,8 @@
 //        } catch (BadLocationException ex) {
 //            Logger.getLogger(CutUserAction.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-//        StringSelection stringSelection = new StringSelection(codeArea.getPane().getSelectedText());
+//        StringSelection stringSelection =
+//            new StringSelection(codeArea.getPane().getSelectedText());
 //        clipboard.setContents(stringSelection, null);
 //        codeArea.insertString("");
 //    }

@@ -15,7 +15,6 @@
 // */
 //public class CCodeEditorWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
 //
-//
 //    private static final long serialVersionUID = 1L;
 //
 //    /**
@@ -45,23 +44,23 @@
 //        setMinimumSize(new java.awt.Dimension(700, 600));
 //        setPreferredSize(new java.awt.Dimension(700, 600));
 //        Thread t = new Thread(new RepaintThread(this));
-//        t.start();        
+//        t.start();
 //    }
 //
 //    public JTextPane getCodeArea() {
 //        return jTextPane1;
 //    }
-//    
+//
 //    public JScrollPane getCodeAreaScrollPane() {
 //        return jScrollPane3;
 //    }
-//    
+//
 //    public void setMenuBar(JMenuBar menuBar) {
 //        setJMenuBar(menuBar);
 //        this.menuBar = menuBar;
 //        if(isVisible()) {
 //            setVisible(false);
-//            setVisible(true);            
+//            setVisible(true);
 //        }
 //    }
 //
@@ -142,7 +141,8 @@
 //        layout.setHorizontalGroup(
 //            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 //            .addComponent(jScrollPane3)
-//            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 715, Short.MAX_VALUE)
+//            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE,
+//                          715, Short.MAX_VALUE)
 //            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE,
 //                          javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 //        );
@@ -151,7 +151,8 @@
 //            .addGroup(layout.createSequentialGroup()
 //                .addComponent(jToolBar1)
 //                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-//                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+//                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE,
+//                              372, Short.MAX_VALUE)
 //                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 //                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180,
 //                              javax.swing.GroupLayout.PREFERRED_SIZE))

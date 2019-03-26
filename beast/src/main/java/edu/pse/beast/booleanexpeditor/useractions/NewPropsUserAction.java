@@ -25,7 +25,8 @@
 //
 //    /**
 //     * Method that
-//     * @return s an empty PreAndPostConditionsDescription object that can be loaded into the editor/propertylist.
+//     * @return s an empty PreAndPostConditionsDescription object that
+//     *         can be loaded into the editor/propertylist.
 //     */
 //    public static PreAndPostConditionsDescription createEmptyPreAndPostConditionObject() {
 //        FormalPropertiesDescription preDesc = new FormalPropertiesDescription("");
@@ -37,7 +38,9 @@
 //
 //    @Override
 //    public void perform() {
-//        if (booleanExpEditor.letUserEditPreAndPostConditions(createEmptyPreAndPostConditionObject(), false)) {
+//        if (booleanExpEditor.letUserEditPreAndPostConditions(
+//                createEmptyPreAndPostConditionObject(),
+//                false)) {
 //            booleanExpEditor.getFileChooser().setHasBeenSaved(false);
 //            booleanExpEditor.getPropertyListController().addNewProperty();
 //        }

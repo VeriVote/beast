@@ -16,7 +16,7 @@ public class Parliament extends CBMCOutputType {
 
     @Override
     public String getOutputString() {
-        return UnifiedNameContainer.getStruct_result();
+        return UnifiedNameContainer.getStructResult();
     }
 
     @Override
@@ -57,7 +57,7 @@ public class Parliament extends CBMCOutputType {
         code.add("struct result tmp = " + UnifiedNameContainer.getVotingMethod() + "("
                 + UnifiedNameContainer.getNewVotesName() + "1);");
 
-        code.add("unsigned int *tmp_result = tmp." + UnifiedNameContainer.getResult_arr_name() + ";");
+        code.add("unsigned int *tmp_result = tmp." + UnifiedNameContainer.getResultArrName() + ";");
 
         code.add("unsigned int " + UnifiedNameContainer.getNewResultName() + "1[" + UnifiedNameContainer.getSeats()
                 + "];"); // create the array where the
@@ -95,7 +95,7 @@ public class Parliament extends CBMCOutputType {
                 + voteNumber + ");";
         code.add(temp);
         String tempElect = "unsigned int *tempElect" + voteNumber + " = tmp" + voteNumber + "."
-                + UnifiedNameContainer.getResult_arr_name() + ";";
+                + UnifiedNameContainer.getResultArrName() + ";";
         code.add(tempElect);
         String electX = "unsigned int elect" + voteNumber + "[" + UnifiedNameContainer.getSeats() + "];";
         code.add(electX);
@@ -123,7 +123,7 @@ public class Parliament extends CBMCOutputType {
                 + "(ORIG_VOTES);";
         code.add(temp);
         String tempElect = "unsigned int *tempElect" + voteNumber + " = tmp" + voteNumber + "."
-                + UnifiedNameContainer.getResult_arr_name() + ";";
+                + UnifiedNameContainer.getResultArrName() + ";";
         code.add(tempElect);
         String electX = "unsigned int elect" + voteNumber + "[" + UnifiedNameContainer.getSeats() + "];";
         code.add(electX);
@@ -184,7 +184,7 @@ public class Parliament extends CBMCOutputType {
         // we do this, so our cbmc parser can read out the value of the
         // array
         code.add("" + UnifiedNameContainer.getNewResultName() + "1[i] = tmp_result."
-                + UnifiedNameContainer.getResult_arr_name() + "[i];");
+                + UnifiedNameContainer.getResultArrName() + "[i];");
 
         code.deleteTab();
         code.add("}"); // close the for loop

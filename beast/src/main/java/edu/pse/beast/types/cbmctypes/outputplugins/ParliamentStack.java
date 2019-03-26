@@ -16,7 +16,7 @@ public class ParliamentStack extends CBMCOutputType {
 
     @Override
     public String getOutputString() {
-        return UnifiedNameContainer.getStruct_stack_result();
+        return UnifiedNameContainer.getStructStackResult();
     }
 
     @Override
@@ -188,7 +188,7 @@ public class ParliamentStack extends CBMCOutputType {
         // we do this, so our cbmc parser can read out the value of the
         // array
         code.add("" + UnifiedNameContainer.getNewResultName() + "1[i] = tmp_result."
-                + UnifiedNameContainer.getResult_arr_name() + "[i];");
+                + UnifiedNameContainer.getResultArrName() + "[i];");
 
         code.deleteTab();
         code.add("}"); // close the for loop

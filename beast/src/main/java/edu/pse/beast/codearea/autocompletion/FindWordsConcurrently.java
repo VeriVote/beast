@@ -8,8 +8,8 @@
 //
 ///**
 // *This class implements the runnable interface to continuously scan the given
-// * JTExtPane for words the user wrote in it and supplying these words to 
-// * the given autocompletioncontroller so the controller can present these
+// * JTextPane for words the user wrote in it and supplying these words to
+// * the given auto-completion controller so the controller can present these
 // * options to the user
 // * @author Holger Klein
 // */
@@ -22,7 +22,7 @@
 //        this.pane = pane;
 //        this.controller = controller;
 //    }
-//    
+//
 //    public void stop() {
 //        run = false;
 //    }
@@ -30,14 +30,13 @@
 //    public ArrayList<String> getWords() {
 //        return words;
 //    }
-//        
+//
 //    @Override
 //    public void run() {
 //        while(run) {
 //            try {
 //                Thread.sleep(5000);
 //            } catch (InterruptedException ex) {
-//                
 //            }
 //            String code = JTextPaneToolbox.getText(pane);
 //            String w = "";
@@ -56,5 +55,4 @@
 //            }
 //        }
 //    }
-//    
 //}

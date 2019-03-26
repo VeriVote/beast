@@ -15,7 +15,9 @@ public class CodeError {
     private int endPos;
     private HashMap<String, String> extraInfo = new HashMap<>();
 
-    public CodeError(int line, int posInLine, String id, int errorNumber, int startPos, int endPos) {
+    public CodeError(int line, int posInLine,
+                     String id, int errorNumber,
+                     int startPos, int endPos) {
         this.line = line;
         this.posInLine = posInLine;
         this.id = id;
@@ -67,5 +69,4 @@ public class CodeError {
     public void setEndPos(int endPos) {
         this.endPos = endPos;
     }
-
 }

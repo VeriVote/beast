@@ -3,8 +3,6 @@ package edu.pse.beast.toolbox;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.JTextPane;
-
 import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.propertychecker.Result;
@@ -14,7 +12,7 @@ import edu.pse.beast.stringresource.StringResourceLoader;
 
 public class ResultPresenterOLD {
     private static StringResourceLoader srl;
-    private static JTextPane result;
+    // private static JTextPane result;
     private static String text;
 
     static {
@@ -129,12 +127,12 @@ public class ResultPresenterOLD {
         appendLine("================================");
         appendLine("");
 
-        List<List<String>> origVotes = marginResult.getOrigVoting();
+        final List<List<String>> origVotes = marginResult.getOrigVoting();
 
         appendLine("====original Votes====");
         appendLine("");
 
-        String toAppend = container.getInputType().getVoteDescriptionString(marginResult.getOrigVoting());
+        String toAppend = container.getInputType().getVoteDescriptionString(origVotes);
 
         appendPane(toAppend);
 

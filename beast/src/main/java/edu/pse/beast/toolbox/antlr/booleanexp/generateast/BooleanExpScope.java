@@ -19,8 +19,9 @@ public class BooleanExpScope {
 
     public InternalTypeContainer getTypeForId(String id) {
         for (int i = 0; i < names.size(); ++i) {
-            if (names.get(i).equals(id))
+            if (names.get(i).equals(id)) {
                 return types.get(i);
+            }
         }
         return null;
     }

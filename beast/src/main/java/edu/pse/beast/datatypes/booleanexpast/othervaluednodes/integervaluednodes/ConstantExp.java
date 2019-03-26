@@ -37,14 +37,19 @@ public class ConstantExp extends IntegerValuedExpression {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (o == null || getClass() != o.getClass())
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
-        if (!super.equals(o))
+        }
+        if (!super.equals(o)) {
             return false;
+        }
         ConstantExp that = (ConstantExp) o;
-        return constant != null ? constant.equals(that.constant) : that.constant == null;
+        return constant != null
+                ? constant.equals(that.constant)
+                        : that.constant == null;
     }
 
     @Override

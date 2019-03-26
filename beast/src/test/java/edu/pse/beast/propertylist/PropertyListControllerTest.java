@@ -100,7 +100,8 @@
 //    @Test
 //    public void getTestedList() {
 //        list.getList().get(0).setTestStatus(true);
-//        ArrayList<PreAndPostConditionsDescription> testedlist = list.getPreAndPostConditionsDescriptionsCheck();
-//        assertEquals(testedlist.size(), 1);
+//        ArrayList<PreAndPostConditionsDescription> testedList =
+//            list.getPreAndPostConditionsDescriptionsCheck();
+//        assertEquals(testedList.size(), 1);
 //    }
 //}

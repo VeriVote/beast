@@ -1,3 +1,4 @@
+package edu.pse.beast.booleanexpeditor.useractions;
 //package edu.pse.beast.booleanexpeditor.useractions;
 //
 //import edu.pse.beast.booleanexpeditor.BooleanExpEditor;
@@ -5,29 +6,31 @@
 //
 //
 ///**
-// * Responsible for adding BooleanExpEditorMakro objects to the last focused BooleanExpEditorCodeArea.
+// * Responsible for adding BooleanExpEditorMacro objects to the last
+// * focused BooleanExpEditorCodeArea.
 // * Subclass of UserAction.
 // * @author Nikolai Schnell
 // */
-//public class AddMakroUserAction extends UserAction {
-//    private final BooleanExpEditorMakro makro;
+//public class AddMacroUserAction extends UserAction {
+//    private final BooleanExpEditorMacro macro;
 //    private final BooleanExpEditor booleanExpEditor;
 //
 //    /**
 //     * Constructor
-//     * @param makro the BooleanExpEditorMakro object this UserAction adds
+//     * @param macro the BooleanExpEditorMacro object this UserAction adds
 //     * @param booleanExpEditor the BooleanExpEditor object this UserAction belongs to
 //     * @param id the ID of this UserAction
 //     */
-//    public AddMakroUserAction(String id, BooleanExpEditorMakro makro, BooleanExpEditor booleanExpEditor) {
+//    public AddMacroUserAction(String id, BooleanExpEditorMacro macro,
+//                              BooleanExpEditor booleanExpEditor) {
 //        super(id);
-//        this.makro = makro;
+//        this.macro = macro;
 //        this.booleanExpEditor = booleanExpEditor;
 //    }
 //
 //    @Override
 //    public void perform() {
 //        booleanExpEditor.getCodeAreaFocusListener().getLastFocused().
-//                insertString(makro.toString());
+//                insertString(macro.toString());
 //    }
 //}

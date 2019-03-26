@@ -32,6 +32,7 @@ public class FormalPropertySaverLoaderTest {
         FormalPropertiesDescription recreatedFormalPropertiesDescription = FormalPropertySaverLoader
                 .createFromSaveString(saveString);
 
-        assert (recreatedFormalPropertiesDescription.getCode().equals("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD"));
+        assert (recreatedFormalPropertiesDescription.getCode()
+                .equals("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD"));
     }
 }

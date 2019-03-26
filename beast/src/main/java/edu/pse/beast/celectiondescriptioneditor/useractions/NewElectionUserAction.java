@@ -21,20 +21,22 @@
 //    private final CElectionDescriptionEditor editor;
 //    private final ElectionTemplateHandler templateHandler = new ElectionTemplateHandler();
 //    private final CCodeHelper cCodeHelper = new CCodeHelper();
-//    
+//
 //    public NewElectionUserAction(
 //            CElectionDescriptionEditor editor) {
 //        super("new");
 //        this.editor = editor;
 //    }
-//    
+//
 //    @Override
 //    public void perform() {
 //        ElectionTemplateChooser electionTemplateDialog = new ElectionTemplateChooser(
 //                this,
 //                templateHandler,
-//                editor.getStringInterface().getCElectionEditorStringResProvider().getElectionStringRes(),
-//                editor.getStringInterface().getCElectionEditorStringResProvider().getElectionStringRes()
+//                editor.getStringInterface()
+//                .getCElectionEditorStringResProvider().getElectionStringRes(),
+//                editor.getStringInterface()
+//                .getCElectionEditorStringResProvider().getElectionStringRes()
 //                .getStringFromID("emptyNameTextFieldError"));
 //        electionTemplateDialog.setDefaultCloseOperation(ElectionTemplateChooser.DISPOSE_ON_CLOSE);
 //        electionTemplateDialog.setVisible(true);
@@ -43,9 +45,11 @@
 //    public void create(ElectionTypeContainer container,
 //                       String name) {
 //        try {
-//            ElectionDescription description = cCodeHelper.generateElectionDescription(
-//                    container, name, 
-//                    templateHandler, editor.getStringInterface().getCElectionEditorStringResProvider()
+//            ElectionDescription description =
+//                cCodeHelper.generateElectionDescription(
+//                    container, name, templateHandler,
+//                    editor.getStringInterface()
+//                    .getCElectionEditorStringResProvider()
 //                    .getElectionStringRes());
 //            editor.letUserEditElectionDescription(description);
 //            editor.getFileChooser().setHasBeenSaved(false);

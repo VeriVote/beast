@@ -21,11 +21,15 @@ public class CBMCCodeGenerationVisitorTest {
 //                + "unsigned int integer_comp_0 = integerVar_0 == integerVar_2;\n"
 //                + "assume(integer_comp_0);\n";
 //        visitor.setToPreConditionMode();
-//        BooleanExpressionNode n
-//                = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
+//        BooleanExpressionNode n =
+//                FormalPropertySyntaxTreeToAstTranslatorTest.translate(
 //                        expression,
-//                        new SymbolicVariable("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE))).
-//                        getBooleanExpressions().get(0).get(0);
+//                        new SymbolicVariable(
+//                            "c",
+//                            new InternalTypeContainer(
+//                                InternalTypeRep.CANDIDATE)
+//                        )
+//                ).getBooleanExpressions().get(0).get(0);
 //
 //        List<String> c = visitor.generateCode(n);
 //        String actual = listToString(c);
@@ -172,12 +176,12 @@ public class CBMCCodeGenerationVisitorTest {
 //        String expected = "unsigned int comparison_0 = 1;\n"
 //                + "comparison_0 = votes1[" + UnifiedNameContainer.getVoter() + "] == c;\n"
 //                + "assume(comparison_0);\n";
-//        BooleanExpressionNode n
-//                = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
+//        BooleanExpressionNode n =
+//                FormalPropertySyntaxTreeToAstTranslatorTest.translate(
 //                        expression,
 //                        Arrays.asList(
-//                                new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
-//                                new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER))
+//                            new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
+//                            new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER))
 //                )
 //                .   getBooleanExpressions().get(0).get(0);
 //        visitor.setToPreConditionMode();
@@ -192,12 +196,12 @@ public class CBMCCodeGenerationVisitorTest {
 //        String expected = "unsigned int comparison_0 = 1;\n"
 //                + "comparison_0 = elect1 == c;\n"
 //                + "assume(comparison_0);\n";
-//        BooleanExpressionNode n
-//                = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
+//        BooleanExpressionNode n =
+//                FormalPropertySyntaxTreeToAstTranslatorTest.translate(
 //                        expression,
 //                        Arrays.asList(
-//                                new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
-//                                new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER))
+//                            new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
+//                            new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER))
 //                )
 //                .getBooleanExpressions().get(1).get(0);
 //        visitor.setToPreConditionMode();
@@ -260,13 +264,14 @@ public class CBMCCodeGenerationVisitorTest {
 //                "\t}\n" +
 //                "}\n" +
 //                "assume(comparison_0);\n";
-//        BooleanExpressionNode n
-//                = FormalPropertySyntaxTreeToAstTranslatorTest.translate(
-//                expression,
-//                Arrays.asList(
-//                        new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
-//                        new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER)),
-//                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE)
+//        BooleanExpressionNode n =
+//                FormalPropertySyntaxTreeToAstTranslatorTest.translate(
+//                        expression,
+//                        Arrays.asList(
+//                            new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
+//                            new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER)),
+//                        new ElectionTemplateHandler().getById(
+//                            ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE)
 //        ).getBooleanExpressions().get(0).get(0);
 //
 //        visitor.setToPreConditionMode();
@@ -299,7 +304,8 @@ public class CBMCCodeGenerationVisitorTest {
 //                Arrays.asList(
 //                        new Tuple<String, InternalTypeRep>("w", InternalTypeRep.VOTER),
 //                        new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER)),
-//                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.WEIGHTED_APPROVAL)
+//                new ElectionTemplateHandler().getById(
+//                    ElectionTypeContainer.ElectionInputTypeIds.WEIGHTED_APPROVAL)
 //        ).getBooleanExpressions().get(0).get(0);
 //
 //        visitor.setToPreConditionMode();
@@ -334,7 +340,8 @@ public class CBMCCodeGenerationVisitorTest {
 //                Arrays.asList(
 //                        new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
 //                        new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER)),
-//                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.APPROVAL)
+//                new ElectionTemplateHandler().getById(
+//                    ElectionTypeContainer.ElectionInputTypeIds.APPROVAL)
 //        ).getBooleanExpressions().get(1).get(0);
 //
 //        visitor.setToPreConditionMode();
@@ -358,8 +365,10 @@ public class CBMCCodeGenerationVisitorTest {
 //                Arrays.asList(
 //                        new Tuple<String, InternalTypeRep>("c", InternalTypeRep.CANDIDATE),
 //                        new Tuple<String, InternalTypeRep>("v", InternalTypeRep.VOTER)),
-//                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.APPROVAL),
-//                new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionOutputTypeIds.CAND_PER_SEAT)
+//                new ElectionTemplateHandler().getById(
+//                    ElectionTypeContainer.ElectionInputTypeIds.APPROVAL),
+//                new ElectionTemplateHandler().getById(
+//                    ElectionTypeContainer.ElectionOutputTypeIds.CAND_PER_SEAT)
 //        ).getBooleanExpressions().get(2).get(0);
 //
 //        visitor.setToPreConditionMode();

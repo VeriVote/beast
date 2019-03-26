@@ -1,7 +1,7 @@
 package edu.pse.beast.toolbox;
 
 /**
- * 
+ *
  * @author taken with small changes from Vitaly Zinchenko
  *         (https://stackoverflow.com/a/32484678)
  *

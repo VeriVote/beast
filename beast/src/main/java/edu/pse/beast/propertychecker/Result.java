@@ -72,8 +72,8 @@ public abstract class Result implements ResultInterface {
     }
 
     /**
-     * 
-     * @return if the result is in a state that it can be presented
+     *
+     * @return whether the result is in a state that it can be presented.
      */
     @Override
     public boolean readyToPresent() {
@@ -81,16 +81,16 @@ public abstract class Result implements ResultInterface {
     }
 
     /**
-     * 
-     * @return if the result is valid (the checking finished normally and wasn't
-     *         stopped by something else)
+     *
+     * @return whether the result is valid (the checking finished normally and
+     *         was not stopped by something else).
      */
     public boolean isValid() {
         return valid;
     }
 
     /**
-     * 
+     *
      * @return if the result is ready yet
      */
     public boolean isFinished() {
@@ -98,7 +98,7 @@ public abstract class Result implements ResultInterface {
     }
 
     /**
-     * 
+     *
      * @return the result List
      */
     public List<String> getResult() {
@@ -106,7 +106,7 @@ public abstract class Result implements ResultInterface {
     }
 
     /**
-     * 
+     *
      * @return the error list
      */
     public List<String> getError() {
@@ -114,23 +114,23 @@ public abstract class Result implements ResultInterface {
     }
 
     /**
-     * 
-     * @return if the result didn't finish because of a timeout
+     *
+     * @return if the result did not finish because of a timeout
      */
     public boolean isTimedOut() {
         return timeOut;
     }
 
     /**
-     * 
-     * @return if the checking was successfull
+     *
+     * @return whether the checking was successful
      */
     public boolean isSuccess() {
         return success;
     }
 
     /**
-     * 
+     *
      * @return true, if the process was stopped by the user or a timeout, else false
      */
     public boolean isFocefullyStopped() {
@@ -158,7 +158,7 @@ public abstract class Result implements ResultInterface {
     }
 
     /**
-     * 
+     *
      */
     public void setSuccess() {
         success = true;
@@ -175,7 +175,7 @@ public abstract class Result implements ResultInterface {
 
     /**
      * sets the result of this object, so it can be displayed later.
-     * 
+     *
      * @param result the result of the check that should be stored in this result
      *               object
      */
@@ -185,7 +185,7 @@ public abstract class Result implements ResultInterface {
 
     /**
      * sets the error of this object, so it can be displayed later.
-     * 
+     *
      * @param error the error of the check that should be stored in this result
      *              object
      */
@@ -195,7 +195,7 @@ public abstract class Result implements ResultInterface {
 
     /**
      * sets a single line as the error output
-     * 
+     *
      * @param errorLine the error to log
      */
     public void setError(String errorLine) {
@@ -204,16 +204,16 @@ public abstract class Result implements ResultInterface {
     }
 
     /**
-     * sets the property that this result contains the result from
-     * 
-     * @param property
+     * Sets the property that this result contains the result from.
+     *
+     * @param property the property.
      */
     public void setProperty(PreAndPostConditionsDescription property) {
         this.property = property;
     }
 
     /**
-     * 
+     *
      * @return the amount of votes for which the verification failed
      */
     public int getNumVoters() {
@@ -221,7 +221,7 @@ public abstract class Result implements ResultInterface {
     }
 
     /**
-     * 
+     *
      * @return the amount of seats for which the verification failed
      */
     public int getNumSeats() {
@@ -229,7 +229,7 @@ public abstract class Result implements ResultInterface {
     }
 
     /**
-     * 
+     *
      * @return the amount of candidates for which the verification failed
      */
     public int getNumCandidates() {
@@ -237,7 +237,7 @@ public abstract class Result implements ResultInterface {
     }
 
     /**
-     * 
+     *
      * @return the election type
      */
     public ElectionDescription getElectionDescription() {
@@ -245,7 +245,7 @@ public abstract class Result implements ResultInterface {
     }
 
     /**
-     * 
+     *
      * @param numVoters the amount of voters to be set
      */
     public void setNumVoters(int numVoters) {
@@ -253,7 +253,7 @@ public abstract class Result implements ResultInterface {
     }
 
     /**
-     * 
+     *
      * @param numSeats the amount of seats to be set
      */
     public void setNumSeats(int numSeats) {
@@ -261,7 +261,7 @@ public abstract class Result implements ResultInterface {
     }
 
     /**
-     * 
+     *
      * @param numCandidates the amount of candidates to be set
      */
     public void setNumCandidates(int numCandidates) {
@@ -269,8 +269,8 @@ public abstract class Result implements ResultInterface {
     }
 
     /**
-     * 
-     * @param electionTypeContainer the electiontype to be set
+     *
+     * @param electionDescription the election type to be set
      */
     public void setElectionType(ElectionDescription electionDescription) {
         this.electionDescription = electionDescription;
@@ -319,14 +319,14 @@ public abstract class Result implements ResultInterface {
 
     /**
      * checks if the assertion holds
-     * 
-     * @return true, if the assertion holds, else false
+     *
+     * @return true if the assertion holds, else false
      */
     public abstract boolean checkAssertionSuccess();
 
     /**
-     * checks if the assertion doesn't hold
-     * 
+     * checks if the assertion does not hold
+     *
      * @return true, if the assertion failed, else false
      */
     public abstract boolean checkAssertionFailure();

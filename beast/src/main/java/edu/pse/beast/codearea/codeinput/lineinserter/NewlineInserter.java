@@ -15,5 +15,5 @@
 //    public void insertNewlineAtCurrentPosition(
 //            JTextPane pane, TabInserter tabInserter,
 //            LineBeginningTabsHandler tabsHandler,
-//            int pos) throws BadLocationException;    
+//            int pos) throws BadLocationException;
 //}

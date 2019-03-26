@@ -6,7 +6,7 @@
 //import edu.pse.beast.stringresource.StringLoaderInterface;
 //
 ///**
-// * This holds references to all interfaces needed by the several builder classes 
+// * This holds references to all interfaces needed by the several builder classes
 // * in this project. These references are:
 // * OptionsInterface
 // * StringLoaderInterface
@@ -36,7 +36,7 @@
 //    }
 //
 //    /**
-//     * 
+//     *
 //     * @return the optionsInterface
 //     */
 //    public OptionsInterface getOptionIF() {
@@ -44,7 +44,7 @@
 //    }
 //
 //    /**
-//     * 
+//     *
 //     * @return the stringloaderinterface
 //     */
 //    public StringLoaderInterface getStringIF() {
@@ -52,7 +52,7 @@
 //    }
 //
 //    /**
-//     * 
+//     *
 //     * @return the languageOptionsInterface
 //     */
 //    public LanguageOptions getLanguageOpts() {
@@ -60,10 +60,10 @@
 //    }
 //
 //    /**
-//     * 
+//     *
 //     * @return the saverloaderinterface
 //     */
 //    public SaverLoaderInterface getSaverLoaderIF() {
 //        return saverLoaderIF;
-//    }   
+//    }
 //}

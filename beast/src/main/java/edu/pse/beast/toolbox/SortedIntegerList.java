@@ -8,12 +8,12 @@ import java.util.List;
 
 /**
  * This class is simple wrapper around a sorted ArrayList (or other type of
- * sortable list) of Integers. Since working with lists of ints is confusing due
+ * sortable list) of Integers. Since working with lists of integers is confusing due
  * to the functions for deleting an element and deleting at an index having the
- * exact same format for them. This class also adds some funcitonallity which
- * takes advantage of the list being sorted, such as removebetween. It is mainly
- * used by the codearea to keep track of linebreaks
- * 
+ * exact same format for them. This class also adds some functionality which
+ * takes advantage of the list being sorted, such as remove between. It is mainly
+ * used by the code area to keep track of line breaks
+ *
  * @author Holger Klein
  */
 public class SortedIntegerList {
@@ -60,7 +60,7 @@ public class SortedIntegerList {
 
     /**
      * adds the supplied integer to container while making sure it remains sorted
-     * 
+     *
      * @param i the integer added to container
      */
     public void add(int i) {
@@ -70,7 +70,7 @@ public class SortedIntegerList {
 
     /**
      * removes the supplied integer from container.
-     * 
+     *
      * @param number the integer to be removed
      */
     public void remove(int number) {
@@ -87,7 +87,7 @@ public class SortedIntegerList {
     /**
      * removes all integers value between to supplied borders from container,
      * including lo but excluding hi
-     * 
+     *
      * @param lo the starting number for removal
      * @param hi the ceiling for removal
      */
@@ -115,9 +115,9 @@ public class SortedIntegerList {
 
     /**
      * subtracts subtract from all saved numbers bigger than start
-     * 
+     *
      * @param start    defines the exclusive lower bound
-     * @param subtract number to be substracted from all elements > start
+     * @param subtract number to be subtracted from all elements > start
      */
     public void subtractIfBigger(int start, int subtract, SortedIntegerListCalleeFunction func) {
         int i = 0;
@@ -125,33 +125,36 @@ public class SortedIntegerList {
             ++i;
         }
         for (; i < container.size(); ++i) {
-            if (func != null)
+            if (func != null) {
                 func.changedNumber(container.get(i), container.get(i) - subtract);
+            }
             container.set(i, container.get(i) - subtract);
         }
     }
 
     /**
-     * adds add to all numbers bigger than startc
-     * 
+     * adds add to all numbers bigger than start
+     *
      * @param start defines the exclusive lower bound
-     * @param add   number to be substracted from all elements > start
+     * @param add   number to be subtracted from all elements > start
      */
-    public void addIfBigger(int start, int add, SortedIntegerListCalleeFunction func) {
+    public void addIfBigger(int start, int add,
+                            SortedIntegerListCalleeFunction func) {
         int i = 0;
         while (i < container.size() && container.get(i) <= start) {
             ++i;
         }
         for (; i < container.size(); ++i) {
-            if (func != null)
+            if (func != null) {
                 func.changedNumber(container.get(i), container.get(i) + add);
+            }
             container.set(i, container.get(i) + add);
         }
     }
 
     /**
      * uses binary search to quickly determine whether container contains i
-     * 
+     *
      * @param i the value to be searched for
      * @return true, if the the container contains the number "i", false otherwise
      */
@@ -160,7 +163,7 @@ public class SortedIntegerList {
     }
 
     /**
-     * 
+     *
      * @param i the value of the number to get the position of
      * @return index of the search key, if it is contained in the array; otherwise,
      *         (-(insertion point) - 1). The insertion point is defined as the point
@@ -174,7 +177,7 @@ public class SortedIntegerList {
     }
 
     /**
-     * 
+     *
      * @param num the exclusive upper bound of the check
      * @return the amount of elements that are smaller than num
      */
@@ -194,7 +197,7 @@ public class SortedIntegerList {
     }
 
     /**
-     * 
+     *
      * @return this List in array form
      */
     public int[] getArr() {
@@ -220,5 +223,4 @@ public class SortedIntegerList {
 
         return toReturn;
     }
-
 }

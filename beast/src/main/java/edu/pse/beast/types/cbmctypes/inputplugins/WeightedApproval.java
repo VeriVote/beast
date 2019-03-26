@@ -17,12 +17,13 @@ import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class WeightedApproval extends CBMCInputType {
-
-    String[] sizes = {UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate()};
+    private String[] sizes =
+        {UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate()};
 
     @Override
     public String getInputString() {
-        return "[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "]";
+        return "[" + UnifiedNameContainer.getVoter() + "]["
+                + UnifiedNameContainer.getCandidate() + "]";
     }
 
     @Override
@@ -65,12 +66,15 @@ public class WeightedApproval extends CBMCInputType {
         code.add("void verify() {");
         code.add("int total_diff = 0;");
 
-        code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" + UnifiedNameContainer.getVoter() + "]["
+        code.add("int " + UnifiedNameContainer.getNewVotesName()
+                + "1[" + UnifiedNameContainer.getVoter() + "]["
                 + UnifiedNameContainer.getCandidate() + "];");
 
-        code.add("for (int i = 0; i < " + UnifiedNameContainer.getVoter() + "; i++) {"); // go over all voters
+        code.add("for (int i = 0; i < " + UnifiedNameContainer.getVoter()
+                 + "; i++) {"); // go over all voters
         code.addTab();
-        code.add("for (int j = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {"); // go over all candidates
+        code.add("for (int j = 0; i < " + UnifiedNameContainer.getCandidate()
+                 + "; i++) {"); // go over all candidates
         code.addTab();
         code.add("int changed = nondet_int();"); // determine, if we want to
                                                  // changed votes for
@@ -84,14 +88,9 @@ public class WeightedApproval extends CBMCInputType {
         code.add("total_diff++;"); // if we changed the vote, we keep track
                                    // of it
         code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = nondet_int();");
-        code.add("assume(" + UnifiedNameContainer.getNewVotesName() + "1[i][j] != ORIG_VOTES[i][j]);"); // set
-                                                                                                        // the
-                                                                                                        // vote
-                                                                                                        // to
-        // (0-100), but
-        // different
-        // from
-        // original
+        // set the vote to (0-100), but different from original
+        code.add("assume(" + UnifiedNameContainer.getNewVotesName()
+                + "1[i][j] != ORIG_VOTES[i][j]);");
         code.add("assume(0 <= " + UnifiedNameContainer.getNewVotesName() + "1[i][j]);");
         code.add("assume(" + UnifiedNameContainer.getNewVotesName() + "1[i][j] <= 100);");
         code.deleteTab();
@@ -118,12 +117,17 @@ public class WeightedApproval extends CBMCInputType {
     }
 
     @Override
-    public CBMCResultWrapperMultiArray extractVotesWrappedMulti(List<String> result, int numberCandidates) {
-        return super.helper.readTwoDimVarLong("" + UnifiedNameContainer.getNewVotesName() + "", result).get(0);
+    public CBMCResultWrapperMultiArray extractVotesWrappedMulti(List<String> result,
+                                                                int numberCandidates) {
+        return super.helper.readTwoDimVarLong(
+                "" + UnifiedNameContainer.getNewVotesName() + "", result)
+                .get(0);
     }
 
     @Override
-    public String vetValue(String newValue, ElectionTypeContainer container, NEWRowOfValues rowOfValues) {
+    public String vetValue(String newValue,
+                           ElectionTypeContainer container,
+                           NEWRowOfValues rowOfValues) {
         int number;
 
         try {
@@ -197,14 +201,9 @@ public class WeightedApproval extends CBMCInputType {
 //    code.add("total_diff++;"); // if we changed the vote, we keep track
 //                  // of it
 //    code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = nondet_int();");
-//    code.add("assume(" + UnifiedNameContainer.getNewVotesName() + "1[i][j] != ORIG_VOTES[i][j]);"); // set
-//                                  // the
-//                                  // vote
-//                                  // to
-//    // (0-100), but
-//    // different
-//    // from
-//    // original
+//    // set the vote to (0-100), but different from original
+//    code.add("assume(" + UnifiedNameContainer.getNewVotesName()
+//             + "1[i][j] != ORIG_VOTES[i][j]);");
 //    code.add("assume(0 <= " + UnifiedNameContainer.getNewVotesName() + "1[i][j]);");
 //    code.add("assume(" + UnifiedNameContainer.getNewVotesName() + "1[i][j] <= 100);");
 //    code.deleteTab();
@@ -242,13 +241,12 @@ public class WeightedApproval extends CBMCInputType {
             if (i < votingData.length - 1) {
                 toReturn.add(tmp + ",");
             } else {
-                toReturn.add(tmp); // the last entry doesn't need a
-                                   // trailing comma
+                // the last entry does not need a trailing comma
+                toReturn.add(tmp);
             }
         }
-
-        toReturn.add("};"); // close the array declaration)
-
+        // close the array declaration
+        toReturn.add("};");
         return toReturn;
     }
 
@@ -265,7 +263,8 @@ public class WeightedApproval extends CBMCInputType {
     public void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique) {
         code.add("unsigned int candSum = arr[i][candidate];");
         if (unique) {
-            code.add("for(unsigned int j = 0; j < " + UnifiedNameContainer.getCandidate() + "; ++i) {");
+            code.add("for(unsigned int j = 0; j < "
+                    + UnifiedNameContainer.getCandidate() + "; ++i) {");
             code.add("if(j != candidate && arr[i][j] >= candSum) candSum = 0;");
             code.add("}");
         }
@@ -274,14 +273,17 @@ public class WeightedApproval extends CBMCInputType {
 
     @Override
     public List<List<String>> getNewVotes(List<String> lastFailedRun, int index) {
-        return super.helper.readTwoDimVarLong("" + UnifiedNameContainer.getNewVotesName() + "", lastFailedRun)
+        return super.helper.readTwoDimVarLong(
+                "" + UnifiedNameContainer.getNewVotesName() + "", lastFailedRun)
                 .get(index).getList();
     }
 
     @Override
     public InternalTypeContainer getInternalTypeContainer() {
-        return new InternalTypeContainer(new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.INTEGER),
-                InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
+        return new InternalTypeContainer(
+            new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.INTEGER),
+                                      InternalTypeRep.CANDIDATE),
+            InternalTypeRep.VOTER);
     }
 
     @Override

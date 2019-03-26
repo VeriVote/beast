@@ -154,7 +154,7 @@ $.widget = function( name, base, prototype ) {
 
 		// TODO: remove support for widgetEventPrefix
 		// always use the name + a colon as the prefix, e.g., draggable:start
-		// don't prefix for widgets that aren't DOM-based
+		// do not prefix for widgets that are not DOM-based
 		widgetEventPrefix: existingConstructor ? ( basePrototype.widgetEventPrefix || name ) : name
 	}, proxiedPrototype, {
 		constructor: constructor,
@@ -206,7 +206,7 @@ $.widget.extend = function( target ) {
 					target[ key ] = $.isPlainObject( target[ key ] ) ?
 						$.widget.extend( {}, target[ key ], value ) :
 
-						// Don't extend strings, arrays, etc. with objects
+						// Do not extend strings, arrays, etc. with objects
 						$.widget.extend( {}, value );
 
 				// Copy everything else by reference
@@ -393,7 +393,7 @@ $.Widget.prototype = {
 
 		if ( arguments.length === 0 ) {
 
-			// Don't return a reference to the internal hash
+			// Do not return a reference to the internal hash
 			return $.widget.extend( {}, this.options );
 		}
 
@@ -469,7 +469,7 @@ $.Widget.prototype = {
 			elements = $( currentElements.get() );
 			this._removeClass( currentElements, classKey );
 
-			// We don't use _addClass() here, because that uses this.options.classes
+			// We do not use _addClass() here, because that uses this.options.classes
 			// for generating the string of classes. We want to use the value passed in from
 			// _setOption(), this is the new value of the classes option which was passed to
 			// _setOption(). We pass this value directly to _classes().
@@ -886,7 +886,7 @@ var widgetsAccordion = $.widget( "ui.accordion", {
 		this._addClass( "ui-accordion", "ui-widget ui-helper-reset" );
 		this.element.attr( "role", "tablist" );
 
-		// Don't allow collapsible: false and active: false / null
+		// Do not allow collapsable: false and active: false / null
 		if ( !options.collapsible && ( options.active === false || options.active == null ) ) {
 			options.active = 0;
 		}
@@ -987,7 +987,7 @@ var widgetsAccordion = $.widget( "ui.accordion", {
 		this.element.attr( "aria-disabled", value );
 
 		// Support: IE8 Only
-		// #5332 / #6059 - opacity doesn't cascade to positioned elements in IE
+		// #5332 / #6059 - opacity does not cascade to positioned elements in IE
 		// so we need to add the disabled class to the headers and panels
 		this._toggleClass( null, "ui-state-disabled", !!value );
 		this._toggleClass( this.headers.add( this.headers.next() ), null, "ui-state-disabled",

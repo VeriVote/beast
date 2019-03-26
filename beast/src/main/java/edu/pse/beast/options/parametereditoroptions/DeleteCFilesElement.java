@@ -8,10 +8,11 @@ public class DeleteCFilesElement extends OptionElement {
 
     public DeleteCFilesElement(List<String> choosableOptions, String chosenDeleteCID) {
         super("delete_file", choosableOptions);
-        if (chosenDeleteCID == null)
+        if (chosenDeleteCID == null) {
             handleSelection(choosableOptions.get(0));
-        else
+        } else {
             handleSelection(chosenDeleteCID);
+        }
     }
 
     @Override

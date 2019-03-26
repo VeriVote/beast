@@ -49,14 +49,22 @@ public final class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListe
     }
 
     @Override
-    public void reportAmbiguity(Parser parser, DFA dfa, int i, int i1, boolean bln, BitSet bitset, ATNConfigSet atncs) {
+    public void reportAmbiguity(Parser parser, DFA dfa,
+                                int i, int i1, boolean bln,
+                                BitSet bitset,
+                                ATNConfigSet atncs) {
     }
 
     @Override
-    public void reportAttemptingFullContext(Parser parser, DFA dfa, int i, int i1, BitSet bitset, ATNConfigSet atncs) {
+    public void reportAttemptingFullContext(Parser parser, DFA dfa,
+                                            int i, int i1,
+                                            BitSet bitset,
+                                            ATNConfigSet atncs) {
     }
 
     @Override
-    public void reportContextSensitivity(Parser parser, DFA dfa, int i, int i1, int i2, ATNConfigSet atncs) {
+    public void reportContextSensitivity(Parser parser, DFA dfa,
+                                         int i, int i1, int i2,
+                                         ATNConfigSet atncs) {
     }
 }

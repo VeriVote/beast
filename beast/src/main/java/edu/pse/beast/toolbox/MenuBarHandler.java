@@ -16,6 +16,10 @@ import edu.pse.beast.stringresource.StringResourceLoader;
  * @author Holger Klein
  */
 public abstract class MenuBarHandler implements DisplaysStringsToUser {
+    private static final String[] STANDARD_ID_ORDER =
+    {
+        "file", "edit", "code"
+    };
 
     /**
      * the JMenuBar
@@ -28,33 +32,15 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
     private final ArrayList<ArrayList<JMenuItem>> createdItems = new ArrayList<>();
     private StringResourceLoader currentResourceLoader;
 
-    private class MenuHeadingSorter implements Comparator<String> {
-        private String[] standardIdOrder = { "file", "edit", "code" };
-
-        @Override
-        public int compare(String lhs, String rhs) {
-            Integer lhsPos = findInarr(lhs);
-            int rhsPos = findInarr(rhs);
-            return lhsPos.compareTo(rhsPos);
-        }
-
-        private int findInarr(String s) {
-            for (int i = 0; i < standardIdOrder.length; i++) {
-                if (s.contains(standardIdOrder[i]))
-                    return i;
-            }
-            return standardIdOrder.length;
-        }
-    }
-
     /**
-     * 
+     *
      * @param headingIds          the id of the heading
      * @param actionIDAndListener the IDandListener
      * @param resLoader           the resourceLoader
      */
-    public MenuBarHandler(String[] headingIds, ArrayList<ArrayList<ActionIdAndListener>> actionIDAndListener,
-            StringResourceLoader resLoader) {
+    public MenuBarHandler(String[] headingIds,
+                          ArrayList<ArrayList<ActionIdAndListener>> actionIDAndListener,
+                          StringResourceLoader resLoader) {
         Arrays.sort(headingIds, new MenuHeadingSorter());
         this.headingIds = headingIds;
         this.actionIDAndListener = actionIDAndListener;
@@ -63,7 +49,7 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
     }
 
     /**
-     * 
+     *
      * @return the created Menu bar
      */
     public JMenuBar getCreatedMenuBar() {
@@ -71,7 +57,7 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
     }
 
     /**
-     * 
+     *
      * @param resLoader the resourceLoader
      */
     protected void updateStringResLoader(StringResourceLoader resLoader) {
@@ -81,25 +67,40 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
 
     private void createMenuBar() {
         createdMenuBar = new JMenuBar();
-
         createdMenus = new JMenu[headingIds.length];
-
         for (int i = 0; i < headingIds.length; ++i) {
             JMenu currentMenu = new JMenu(currentResourceLoader.getStringFromID(headingIds[i]));
             createdMenus[i] = currentMenu;
-
             createdItems.add(new ArrayList<>());
             for (int j = 0; j < actionIDAndListener.get(i).size(); ++j) {
                 ActionIdAndListener currentAccIdAndL = actionIDAndListener.get(i).get(j);
                 String currentAcId = currentAccIdAndL.getId();
-                JMenuItem currentItem = new JMenuItem(currentResourceLoader.getStringFromID(currentAcId));
+                JMenuItem currentItem =
+                        new JMenuItem(currentResourceLoader.getStringFromID(currentAcId));
                 currentItem.addActionListener(currentAccIdAndL.getListener());
                 createdItems.get(i).add(currentItem);
-
                 currentMenu.add(currentItem);
             }
             createdMenuBar.add(currentMenu);
         }
     }
 
+
+    private class MenuHeadingSorter implements Comparator<String> {
+        @Override
+        public int compare(String lhs, String rhs) {
+            Integer lhsPos = findInarr(lhs);
+            int rhsPos = findInarr(rhs);
+            return lhsPos.compareTo(rhsPos);
+        }
+
+        private int findInarr(String s) {
+            for (int i = 0; i < STANDARD_ID_ORDER.length; i++) {
+                if (s.contains(STANDARD_ID_ORDER[i])) {
+                    return i;
+                }
+            }
+            return STANDARD_ID_ORDER.length;
+        }
+    }
 }

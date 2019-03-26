@@ -15,7 +15,7 @@
 // * @author Holger Klein
 // */
 //public class GuiTestCEditor {
-//    private final long waittime = 500;
+//    private static final long WAIT_TIME = 500;
 //    GuiTestHelper helper = new GuiTestHelper();
 //
 //    @Before
@@ -25,7 +25,8 @@
 //
 //    @Test
 //    public void testSaveAndLoadFile() throws InterruptedException {
-//        CElectionDescriptionEditor electionDescriptionEditor = helper.getCEditorOfCurrentInstace();
+//        CElectionDescriptionEditor electionDescriptionEditor =
+//            helper.getCEditorOfCurrentInstace();
 //        electionDescriptionEditor.setVisible(true);
 //        int[] keys = {
 //                KeyEvent.VK_N, //name
@@ -40,7 +41,7 @@
 //                KeyEvent.VK_TAB,
 //                KeyEvent.VK_ENTER
 //        };
-//        helper.performKeystrokesConcurrently(tabAndEnter, waittime,100);
+//        helper.performKeystrokesConcurrently(tabAndEnter, WAIT_TIME, 100);
 //        helper.clickMenuItemInCEditor(0, 3, 50);
 //        createdfile.delete();
 //        helper.endInstance();
@@ -48,15 +49,19 @@
 //
 //    @Test
 //    public void testCreateNewfileCEditor() throws InterruptedException {
-////        CElectionDescriptionEditor electionDescriptionEditor = helper.getCEditorOfCurrentInstace();
-////        ElectionDescription electionDescription = electionDescriptionEditor.getElectionDescription();
+////        CElectionDescriptionEditor electionDescriptionEditor =
+////            helper.getCEditorOfCurrentInstace();
+////        ElectionDescription electionDescription =
+////            electionDescriptionEditor.getElectionDescription();
 ////        Assert.assertEquals(electionDescription.getInputType().getInputID(),
 ////                ElectionTypeContainer.ElectionInputTypeIds.SINGLE_CHOICE);
 ////        electionDescriptionEditor.setVisible(true);
-////        helper.clickMenuItemInCEditor(0,0,waittime);
+////        helper.clickMenuItemInCEditor(0, 0, WAIT_TIME);
 ////
 ////        int[] keys = {
-////                KeyEvent.VK_DOWN, KeyEvent.VK_DOWN, KeyEvent.VK_ENTER, //choose new election input
+////                KeyEvent.VK_DOWN,
+////                KeyEvent.VK_DOWN,
+////                KeyEvent.VK_ENTER, //choose new election input
 ////                KeyEvent.VK_TAB, //switch to name field
 ////                KeyEvent.VK_N, //type new name
 ////                KeyEvent.VK_ENTER //clicks apply

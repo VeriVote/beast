@@ -62,15 +62,15 @@ public class AutoCompleter {
         reset();
     }
 
-    public synchronized void showAutocompletionWindows(int x, int y, List<String> content,
+    public synchronized void showAutoCompletionWindows(int x, int y, List<String> content,
             AutoCompletionCodeArea caller) {
         this.caller = caller;
 
         autoCompletionStage.setX(x);
         autoCompletionStage.setY(y);
 
-        list.setItems(FXCollections.observableList(content)); // set the items that are supposed to be displayed in the
-                                                              // window
+        // set the items that are supposed to be displayed in the window
+        list.setItems(FXCollections.observableList(content));
         autoCompletionStage.show();
         autoCompletionStage.requestFocus(); // put this window on top
     }

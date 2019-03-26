@@ -26,8 +26,8 @@
 //import edu.pse.beast.toolbox.UserAction;
 //
 ///**
-// * This class is the interface/fassade class for the CElectionDescriptionEditor
-// * interface. It provides access to the most important functionallity of this
+// * This class is the interface/facade class for the CElectionDescriptionEditor
+// * interface. It provides access to the most important functionality of this
 // * package to other classes without having to know which particular classes
 // * implement said functionality
 // *
@@ -42,7 +42,8 @@
 //    private final CElectionCodeAreaBuilder builder;
 //    private final ErrorWindow errorWindow;
 //    private final CElectionDescriptionEditorChangeHandler changeHandler;
-//    private final ArrayList<ElectionDescriptionChangeListener> descriptionChangeListeners = new ArrayList<>();
+//    private final ArrayList<ElectionDescriptionChangeListener> descriptionChangeListeners =
+//        new ArrayList<>();
 //    private CElectionEditorMenubarHandler menubarHandler;
 //    private CElectionEditorToolbarHandler toolbarHandler;
 //    private StringLoaderInterface stringLoaderInterface;
@@ -54,7 +55,7 @@
 //
 //    /**
 //     * constructor for the election description editor
-//     * 
+//     *
 //     * @param codeArea
 //     *            the code area
 //     * @param gui
@@ -72,10 +73,15 @@
 //     * @param refs
 //     *            the references for the builder
 //     */
-//    public CElectionDescriptionEditor(CElectionCodeArea codeArea, CCodeEditorWindow gui,
-//            CElectionCodeAreaBuilder builder, ErrorWindow errorWindow,
-//            CElectionDescriptionEditorChangeHandler cElectionDescriptionEditorChangeHandler,
-//            StringLoaderInterface stringLoaderInterface, FileChooser fileChooser, ObjectRefsForBuilder refs) {
+//    public CElectionDescriptionEditor(CElectionCodeArea codeArea,
+//                                      CCodeEditorWindow gui,
+//                                      CElectionCodeAreaBuilder builder,
+//                                      ErrorWindow errorWindow,
+//                                      CElectionDescriptionEditorChangeHandler
+//                                          cElectionDescriptionEditorChangeHandler,
+//                                      StringLoaderInterface stringLoaderInterface,
+//                                      FileChooser fileChooser,
+//                                      ObjectRefsForBuilder refs) {
 //        this.codeArea = codeArea;
 //        this.window = gui;
 //        this.builder = builder;
@@ -84,15 +90,14 @@
 //        this.stringLoaderInterface = stringLoaderInterface;
 //        this.fileChooser = fileChooser;
 //        this.refs = refs;
-//
 //        UnifiedNameContainer.addListener(this);
 //    }
 //
 //    /**
-//     * returns the electiondescription in the state currently visible to the
+//     * returns the election description in the state currently visible to the
 //     * user
 //     *
-//     * @return the electiondesciprion as it is currently edited by the user
+//     * @return the election desciprion as it is currently edited by the user
 //     */
 //    @Override
 //    public ElectionDescription getElectionDescription() {
@@ -138,8 +143,11 @@
 //     * listed in the error window
 //     */
 //    public void findErrorsAndDisplayThem() {
-//        ArrayList<CodeError> errors = codeArea.getErrorCtrl().getErrorFinderList().getErrors();
-//        errorWindow.displayErrors(errors, (CErrorDisplayer) codeArea.getErrorCtrl().getDisplayer());
+//        ArrayList<CodeError> errors =
+//            codeArea.getErrorCtrl().getErrorFinderList().getErrors();
+//        errorWindow.displayErrors(errors,
+//                                  (CErrorDisplayer)
+//                                      codeArea.getErrorCtrl().getDisplayer());
 //    }
 //
 //    /**
@@ -148,17 +156,19 @@
 //     * @param cElectionEditorMenubarHandler
 //     *            the reference to the handler
 //     */
-//    public void setcElectionEditorMenubarHandler(CElectionEditorMenubarHandler cElectionEditorMenubarHandler) {
+//    public void setcElectionEditorMenubarHandler(CElectionEditorMenubarHandler
+//                                                     cElectionEditorMenubarHandler) {
 //        this.menubarHandler = cElectionEditorMenubarHandler;
 //    }
 //
 //    /**
 //     * sets the election editor toolbar handler
-//     * 
+//     *
 //     * @param cElectionEditorToolbarHandler
 //     *            the election editor toolbar handler
 //     */
-//    public void setcElectionEditorToolbarHandler(CElectionEditorToolbarHandler cElectionEditorToolbarHandler) {
+//    public void setcElectionEditorToolbarHandler(CElectionEditorToolbarHandler
+//                                                     cElectionEditorToolbarHandler) {
 //        this.toolbarHandler = cElectionEditorToolbarHandler;
 //    }
 //
@@ -198,16 +208,17 @@
 //    }
 //
 //    /**
-//     * presents the given electiondescription to the user so he can edit it,
+//     * presents the given election description to the user so he can edit it,
 //     * prompting him to save the current description before doing so
 //     *
 //     * @param description
 //     *            the description to be shown to the user
-//     * @return true if the desciprion was updates, false otherwise
+//     * @return true if the description was updates, false otherwise
 //     * @throws BadLocationException
 //     *             in case of a bad location
 //     */
-//    public boolean letUserEditElectionDescription(ElectionDescription description) throws BadLocationException {
+//    public boolean letUserEditElectionDescription(ElectionDescription description)
+//                throws BadLocationException {
 //        if (changeHandler.hasChanged()) {
 //            if (fileChooser.openSaveChangesDialog(getElectionDescription())) {
 //                loadElectionDescription(description);
@@ -223,25 +234,29 @@
 //    }
 //
 //    /**
-//     * creates a new celectiocodearea object in which to display the given
-//     * electiondescription. Does not ask the user to save the current desciprion
+//     * creates a new c-election code area object in which to display the given
+//     * election description. Does not ask the user to save the current description
 //     * before doing sos
 //     *
 //     * @param description
 //     *            the description to be displayed in the
-//     *            celectiondesciprioncodearea
+//     *            c-election description code area
 //     * @throws BadLocationException
 //     *             in case of a bad location
 //     */
-//    public void loadElectionDescription(ElectionDescription description) throws BadLocationException {
+//    public void loadElectionDescription(ElectionDescription description)
+//                    throws BadLocationException {
 //        this.currentDescription = description;
 //        window.setNewCodeArea();
 //
 //        codeArea.getErrorCtrl().stopThread();
 //        codeArea.getAutoComplCtrl().stopThread();
 //
-//        codeArea = builder.createCElectionCodeArea(window.getCodeArea(), window.getCodeAreaScrollPane(),
-//                new CErrorDisplayer(window.getCodeArea(), stringLoaderInterface));
+//        codeArea =
+//            builder.createCElectionCodeArea(window.getCodeArea(),
+//                                            window.getCodeAreaScrollPane(),
+//                                            new CErrorDisplayer(window.getCodeArea(),
+//                                                                stringLoaderInterface));
 //        for (int i = 0; i < userActions.size(); i++) {
 //            UserAction get = userActions.get(i);
 //            char c = userActionChars.get(i);
@@ -281,7 +296,7 @@
 //
 //    /**
 //     * adds the listener to this editor
-//     * 
+//     *
 //     * @param l
 //     *            this listener to add
 //     */
@@ -291,7 +306,7 @@
 //
 //    /**
 //     * remove the listener from this editor
-//     * 
+//     *
 //     * @param l
 //     *            the listener to remove
 //     */
@@ -300,10 +315,10 @@
 //    }
 //
 //    /**
-//     * turns the editor visible or invisble
-//     * 
+//     * turns the editor visible or invisible
+//     *
 //     * @param vis
-//     *            true, if it should be visible, false, if invisble
+//     *            true, if it should be visible, false, if invisible
 //     */
 //    public void setVisible(boolean vis) {
 //        window.setVisible(vis);
@@ -311,7 +326,7 @@
 //
 //    /**
 //     * gives the reference to the file chooser
-//     * 
+//     *
 //     * @return the file chooser
 //     */
 //    public FileChooser getFileChooser() {
@@ -320,7 +335,7 @@
 //
 //    /**
 //     * gives the reference to the stringloader interface
-//     * 
+//     *
 //     * @return the stringloader interface
 //     */
 //    public StringLoaderInterface getStringInterface() {

@@ -37,14 +37,18 @@
 //    }
 //
 //    public BooleanExpEditor getBooleanExpEditorOfCurrentInstance() {
-//        return ((PropertyList) (centralObjectProvider.getPreAndPostConditionsSource())).getEditor();
+//        return ((PropertyList)
+//                    (centralObjectProvider.getPreAndPostConditionsSource()))
+//               .getEditor();
 //    }
 //
 //    public PropertyList getPropListOfCurrentInstance() {
 //        return (PropertyList) (centralObjectProvider.getPreAndPostConditionsSource());
 //    }
 //
-//    public void clickMenuItemInCEditor(int subMenu, int item, long waittime) throws InterruptedException {
+//    public void clickMenuItemInCEditor(int subMenu,
+//                                       int item,
+//                                       long waittime) throws InterruptedException {
 //        JMenuBar menuBar = getCEditorOfCurrentInstace().getView().getMainMenuBar();
 //        Thread.sleep(waittime);
 //        menuBar.getMenu(subMenu).doClick();
@@ -58,7 +62,9 @@
 //        ed.getView().dispose();
 //    }
 //
-//    public void performKeystrokesConcurrently(int[] strokes, long timeBefore, long timeBetween) {
+//    public void performKeystrokesConcurrently(int[] strokes,
+//                                              long timeBefore,
+//                                              long timeBetween) {
 //        Thread t = new Thread(() -> {
 //            try {
 //                Thread.sleep(timeBefore);
@@ -74,7 +80,8 @@
 //        t.start();
 //    }
 //
-//    public void performShortcut(int key, long timeoutafter) throws InterruptedException {
+//    public void performShortcut(int key,
+//                                long timeoutafter) throws InterruptedException {
 //        Robot r = null;
 //        try {
 //            r = new Robot();
@@ -89,7 +96,8 @@
 //        Thread.sleep(timeoutafter);
 //    }
 //
-//    public void performKeystrokes(int[] keys, long waittimeBetweenStrokes) throws InterruptedException {
+//    public void performKeystrokes(int[] keys,
+//                                  long waittimeBetweenStrokes) throws InterruptedException {
 //        Robot r = null;
 //        try {
 //            r = new Robot();

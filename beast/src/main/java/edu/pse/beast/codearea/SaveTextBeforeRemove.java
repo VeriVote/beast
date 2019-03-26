@@ -15,9 +15,9 @@ import edu.pse.beast.codearea.actionlist.Actionlist;
  * This class saves the text of a styled document before a removed event is
  * triggered. This is needed because the remove event does not carry the
  * information of which text was removed. This info is needed eg by the
- * textchangedactionadder. It listens to keystrokes such as backspace which
+ * text changed action adder. It listens to keystrokes such as backspace which
  * indicate that text is about to be removed from the pane. It also listens to
- * the actionlist so it can save the text when an action is about to be undone /
+ * the action list so it can save the text when an action is about to be undone /
  * redone
  *
  * @author Holger Klein
@@ -31,7 +31,7 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
      * @param pane       The JTextPane of whose StyledDocument the text should be
      *                   saved before remove commands
      * @param actionlist the actionlist which performs redo and undo action in the
-     *                   pane. This is needed to save before the actionlist redos or
+     *                   pane. This is needed to save before the actionlist re-does or
      *                   undoes actions which remove text from the pane
      */
     public SaveTextBeforeRemove(JTextPane pane, Actionlist actionlist) {
@@ -82,7 +82,9 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
                 || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE
                 || (ke.isShiftDown() && ke.getKeyChar() == KeyEvent.VK_TAB)) {
             try {
-                prevText = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
+                prevText =
+                    pane.getStyledDocument()
+                    .getText(0, pane.getStyledDocument().getLength());
             } catch (BadLocationException ex) {
                 Logger.getLogger(SaveTextBeforeRemove.class.getName()).log(Level.SEVERE, null, ex);
             }

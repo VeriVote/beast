@@ -17,12 +17,13 @@ import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class Approval extends CBMCInputType {
-
-    String[] sizes = {UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate()};
+    private String[] sizes =
+        {UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate()};
 
     @Override
     public String getInputString() {
-        return "[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "]";
+        return "[" + UnifiedNameContainer.getVoter() + "]["
+                + UnifiedNameContainer.getCandidate() + "]";
     }
 
     @Override
@@ -69,27 +70,23 @@ public class Approval extends CBMCInputType {
     public void addVerifyMethod(CodeArrayListBeautifier code, OutputType outType) {
         code.add("void verify() {");
         code.add("int total_diff = 0;");
-
         code.add("int " + UnifiedNameContainer.getNewVotesName() + "1" + getInputString() + ";");
-
-        code.add("for (int i = 0; i < V; i++) {"); // go over all voters
+        // go over all voters
+        code.add("for (int i = 0; i < V; i++) {");
         code.addTab();
-        code.add("for (int j = 0; i < C; i++) {"); // go over all candidates
+        // go over all candidates
+        code.add("for (int j = 0; i < C; i++) {");
         code.addTab();
-        code.add("int changed = nondet_int();"); // determine, if we want to
-                                                 // changed votes for
-                                                 // this
-                                                 // voter - candidate
-                                                 // pair
+        // determine, if we want to changed votes for this "voter - candidate" pair
+        code.add("int changed = nondet_int();");
         code.add("assume(0 <= changed);");
         code.add("assume(changed <= 1);");
         code.add("if(changed) {");
         code.addTab();
-        code.add("total_diff++;"); // if we changed the vote, we keep track
-                                   // of it
-        code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = !ORIG_VOTES[i][j];"); // flip the vote
-                                                                                                // (0 -> 1 |
-        // 1 -> 0)
+        // if we changed the vote, we keep track of it
+        code.add("total_diff++;");
+        // flip the vote (0 -> 1 | 1 -> 0)
+        code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = !ORIG_VOTES[i][j];");
         code.deleteTab();
         code.add("} else {");
         code.addTab();
@@ -99,13 +96,12 @@ public class Approval extends CBMCInputType {
         code.deleteTab();
         code.add("}");
         code.deleteTab();
-        code.add("}"); // end of the double for loop
-        code.add("assume(total_diff <= MARGIN);"); // no more changes than
-                                                   // margin allows
-
+        code.add("}"); // end of the double for-loop
+        // no more changes than margin allows
+        code.add("assume(total_diff <= MARGIN);");
         outType.addVerifyOutput(code);
-
-        code.add("}"); // end of the function
+        // end of the function
+        code.add("}");
     }
 
     @Override
@@ -114,21 +110,20 @@ public class Approval extends CBMCInputType {
     }
 
     @Override
-    public CBMCResultWrapperMultiArray extractVotesWrappedMulti(List<String> result, int numberCandidates) {
-        return super.helper.readTwoDimVarLong("" + UnifiedNameContainer.getNewVotesName() + "", result).get(0);
+    public CBMCResultWrapperMultiArray extractVotesWrappedMulti(List<String> result,
+                                                                int numberCandidates) {
+        return super.helper.readTwoDimVarLong("" + UnifiedNameContainer.getNewVotesName()
+                                              + "", result).get(0);
     }
 
     @Override
     public String vetValue(String newValue, ElectionTypeContainer container, NEWRowOfValues row) {
-
         int number;
-
         try {
             number = Integer.parseInt(newValue);
         } catch (NumberFormatException e) {
             return "0";
         }
-
         if (number != 0 && number != 1) {
             newValue = "0";
         }
@@ -199,11 +194,8 @@ public class Approval extends CBMCInputType {
 
     @Override
     public List<String> getVotingResultCode(String[][] votingData) {
-
         List<String> toReturn = new ArrayList<String>();
-
         toReturn.add("int ORIG_VOTES[" + votingData.length + "][" + votingData[0].length + "] = {");
-
         for (int i = 0; i < votingData.length; i++) {
             String tmp = "";
             for (int j = 0; j < votingData[i].length; j++) {
@@ -213,18 +205,16 @@ public class Approval extends CBMCInputType {
                     tmp = tmp + votingData[i][j];
                 }
             }
-
             tmp = "{" + tmp + "}";
             if (i < votingData.length - 1) {
                 toReturn.add(tmp + ",");
             } else {
-                toReturn.add(tmp); // the last entry doesn't need a
-                                   // trailing comma
+                // the last entry does not need a trailing comma
+                toReturn.add(tmp);
             }
         }
-
-        toReturn.add("};"); // close the array declaration)
-
+        // close the array declaration
+        toReturn.add("};");
         return toReturn;
     }
 
@@ -235,7 +225,6 @@ public class Approval extends CBMCInputType {
 
     @Override
     public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, int voteNumber) {
-
     }
 
     @Override
@@ -251,14 +240,17 @@ public class Approval extends CBMCInputType {
 
     @Override
     public List<List<String>> getNewVotes(List<String> lastFailedRun, int index) {
-        return super.helper.readTwoDimVarLong("" + UnifiedNameContainer.getNewVotesName() + "", lastFailedRun)
+        return super.helper.readTwoDimVarLong("" + UnifiedNameContainer.getNewVotesName()
+                                              + "", lastFailedRun)
                 .get(index).getList();
     }
 
     @Override
     public InternalTypeContainer getInternalTypeContainer() {
-        return new InternalTypeContainer(new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.INTEGER),
-                InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
+        return new InternalTypeContainer(
+            new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.INTEGER),
+                                      InternalTypeRep.CANDIDATE),
+            InternalTypeRep.VOTER);
     }
 
     @Override

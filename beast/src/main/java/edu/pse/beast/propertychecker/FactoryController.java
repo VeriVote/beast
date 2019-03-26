@@ -16,7 +16,7 @@ import edu.pse.beast.toolbox.TimeOutNotifier;
  * @author Niels Hanselmann, Lukas Stapelbroek
  */
 public class FactoryController implements Runnable {
-    private static final long POLLINGINTERVAL = 1000;
+    private static final long POLLING_INTERVAL = 1000;
 
     /**
      * gives access to the factorycontroller for the shutdown hook.
@@ -77,14 +77,14 @@ public class FactoryController implements Runnable {
     //      this.results = CheckerFactoryFactory.getMatchingResult(checkerID,
     //      preAndPostConditionDescrSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size());
     //
-    //      // if the user doesn't specify a specific amount for concurrent
+    //      // if the user does not specify a specific amount for concurrent
     //      // checkers, we just set it to the thread amount of this computer
     //      if (concurrentChecker <= 0) {
     //          this.concurrentChecker = Runtime.getRuntime().availableProcessors();
     //      } else {
     //          this.concurrentChecker = concurrentChecker;
     //      }
-    //      // start the factorycontroller
+    //      // start the factory controller
     //      new Thread(this, "FactoryController").start();
     //
     //      // if the user wishes for a timeout, we activate it here
@@ -108,7 +108,7 @@ public class FactoryController implements Runnable {
     //     this.checkerID = checkerID;
     //     this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
     //
-    //     // we don't need these if we start with a file already
+    //     // we do not need these if we start with a file already
     //     this.preAndPostConditionDescrSrc = null;
     //     this.electionDescSrc = null;
     //
@@ -140,11 +140,11 @@ public class FactoryController implements Runnable {
     // }
 
     public FactoryController(ElectionDescription elecDesc, List<ParentTreeItem> parentProperties,
-            ElectionCheckParameter electionCheckParameter, String checkerID, int concurrentChecker) {
+                             ElectionCheckParameter electionCheckParameter, String checkerID,
+                             int concurrentChecker) {
         // add a shutdown hook so all the checker are stopped properly so they
-        // don't clog the host pc
+        // do not clog the host pc
         Runtime.getRuntime().addShutdownHook(new FactoryEnder());
-
         this.elecDesc = elecDesc;
         this.parameter = electionCheckParameter;
         this.checkerID = checkerID;
@@ -156,31 +156,24 @@ public class FactoryController implements Runnable {
             for (Iterator<ChildTreeItem> childIterator = parentTreeItem.getSubItems().iterator(); childIterator
                     .hasNext();) {
                 ChildTreeItem child = (ChildTreeItem) childIterator.next();
-
                 if (child.isSelected()) {
-
                     Result result = CheckerFactoryFactory.getMatchingResult(checkerID);
-
                     result.setProperty(parentTreeItem.getPreAndPostProperties());
-
                     child.addResult(result);
-
                     treeItems.add(child);
-
                     results.add(result);
                 }
             }
         }
 
-        // if the user doesn't specify a concrete amount for concurrent
+        // if the user does not specify a concrete amount for concurrent
         // checkers, we just set it to the thread amount of this pc
         if (concurrentChecker <= 0) {
             this.concurrentChecker = Runtime.getRuntime().availableProcessors();
         } else {
             this.concurrentChecker = concurrentChecker;
         }
-
-        // start the factorycontroller
+        // start the factory controller
         new Thread(this, "FactoryController").start();
 
         // if the user wishes for a timeout, we activate it here
@@ -202,7 +195,7 @@ public class FactoryController implements Runnable {
     //
     // outerLoop: for (int i = 0; i < propertiesToCheckAndMargin.size(); i++) {
     // innerLoop: while (!stopped) {
-    // // if we can start more checkers (we haven't used our
+    // // if we can start more checkers (we have not used our
     // // allowed pool completely), we can start a new one
     // if (currentlyRunning.size() < concurrentChecker) {
     // CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID,
@@ -223,7 +216,7 @@ public class FactoryController implements Runnable {
     // // was started, or else we have to wait when there
     // // is more allowed space in our thread pool
     // try {
-    // Thread.sleep(POLLINGINTERVAL);
+    // Thread.sleep(POLLING_INTERVAL);
     // } catch (InterruptedException e) {
     // e.printStackTrace();
     // }
@@ -237,7 +230,7 @@ public class FactoryController implements Runnable {
     //
     // while (currentlyRunning.size() > 0) {
     // try {
-    // Thread.sleep(POLLINGINTERVAL);
+    // Thread.sleep(POLLING_INTERVAL);
     // } catch (InterruptedException e) {
     // ErrorLogger.log("Was interrupted while waiting for the last processes to
     // finish \n"
@@ -249,7 +242,7 @@ public class FactoryController implements Runnable {
     // // wait for the last running threads to finish
     // while (currentlyRunning.size() > 0) {
     // try {
-    // Thread.sleep(POLLINGINTERVAL);
+    // Thread.sleep(POLLING_INTERVAL);
     // } catch (InterruptedException e) {
     // ErrorLogger.log("Was interrupted while waiting for the last processes to
     // finish \n"
@@ -295,7 +288,7 @@ public class FactoryController implements Runnable {
                     // was started, or else we have to wait when there
                     // is more allowed space in our thread pool
                     try {
-                        Thread.sleep(POLLINGINTERVAL);
+                        Thread.sleep(POLLING_INTERVAL);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -309,7 +302,7 @@ public class FactoryController implements Runnable {
 
         while (currentlyRunning.size() > 0) {
             try {
-                Thread.sleep(POLLINGINTERVAL);
+                Thread.sleep(POLLING_INTERVAL);
             } catch (InterruptedException e) {
                 ErrorLogger.log("Was interrupted while waiting for the last processes to finish \n"
                         + "The waiting will still continue. To stop the factory properly, call \"stopChecking()\" !");
@@ -319,7 +312,7 @@ public class FactoryController implements Runnable {
         // wait for the last running threads to finish
         while (currentlyRunning.size() > 0) {
             try {
-                Thread.sleep(POLLINGINTERVAL);
+                Thread.sleep(POLLING_INTERVAL);
             } catch (InterruptedException e) {
                 ErrorLogger.log("Was interrupted while waiting for the last processes to finish \n"
                         + "The waiting will still continue. To stop the factory properly, call \"stopChecking()\" !");
@@ -334,7 +327,7 @@ public class FactoryController implements Runnable {
 
     /**
      * tells the controller to stop checking. It stops all currently running
-     * Checkers and doesn't start new ones.
+     * Checkers and does not start new ones.
      *
      * @param timeOut if it is true, the checking was stopped because of a timeout;
      */
@@ -346,7 +339,6 @@ public class FactoryController implements Runnable {
                 CheckerFactory toStop = (CheckerFactory) iterator.next();
                 toStop.stopChecking();
             }
-
             // set all not finished results to finished, to indicate that they
             // are
             // ready to be presented
@@ -380,12 +372,12 @@ public class FactoryController implements Runnable {
     // /**
     //  *
     //  * @return a NEW list with all the results objects. This list is used
-    //  * nowhere in the propertychecker, so you can remove parts out of it
+    //  * nowhere in the property checker, so you can remove parts out of it
     //  * as you want.
     //  **/
     // public List<ResultInterface> getResults() {
     //     if (results == null) {
-    //         ErrorLogger.log("Result objects couldn't be created.");
+    //         ErrorLogger.log("Result objects could not be created.");
     //         return null;
     //     } else {
     //         List<ResultInterface> toReturn = new ArrayList<ResultInterface>();
@@ -399,7 +391,7 @@ public class FactoryController implements Runnable {
 
     // public List<UnprocessedCBMCResult> getUnprocessedResults() {
     //     if (results == null) {
-    //         ErrorLogger.log("Result objects couldn't be created.");
+    //         ErrorLogger.log("Result objects could not be created.");
     //         return null;
     //     } else {
     //         List<UnprocessedCBMCResult> toReturn =
@@ -421,7 +413,7 @@ public class FactoryController implements Runnable {
      * This Class is there for the shutDownHook It is used, so if the program has a
      * chance of cleaning up, it still has a chance of messaging all checkers to
      * stop running
-     * 
+     *
      * @author Lukas Stapelbroek
      *
      */

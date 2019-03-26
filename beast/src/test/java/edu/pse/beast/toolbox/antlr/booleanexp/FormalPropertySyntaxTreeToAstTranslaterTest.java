@@ -41,27 +41,37 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
     @Test
     public void testCreateASTComparison() {
         new FormalPropertySyntaxTreeToAstTranslator();
-        new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
-        new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.CANDIDATE);
+        new InternalTypeContainer(
+            new InternalTypeContainer(InternalTypeRep.CANDIDATE),
+            InternalTypeRep.VOTER
+        );
+        new InternalTypeContainer(
+            new InternalTypeContainer(InternalTypeRep.CANDIDATE),
+            InternalTypeRep.CANDIDATE
+        );
 
         BooleanExpScope declaredVar = new BooleanExpScope();
         declaredVar.addTypeForId("c", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
         declaredVar.addTypeForId("v", new InternalTypeContainer(InternalTypeRep.VOTER));
 
-//        String exp = "ELECT2(c) == VOTES2(v);";      
+//        String exp = "ELECT2(c) == VOTES2(v);";
 //        BooleanExpListNode created =
-//            translater.generateFromSyntaxTree(createFromString(exp), inputType, output, declaredVar);
-
+//            translater.generateFromSyntaxTree(createFromString(exp),
+//                                              inputType, output,
+//                                              declaredVar);
         declaredVar = new BooleanExpScope();
     }
 
     @Test
     public void testCreateAST() {
-        String exp = "FOR_ALL_VOTERS(v) : EXISTS_ONE_CANDIDATE(c) : VOTES1(v) == c && VOTES1(v) == c;";
-        FormalPropertyDescriptionLexer lexer = new FormalPropertyDescriptionLexer(new ANTLRInputStream(exp));
+        String exp =
+            "FOR_ALL_VOTERS(v) : "
+            + "EXISTS_ONE_CANDIDATE(c) : "
+            + "VOTES1(v) == c && VOTES1(v) == c;";
+        FormalPropertyDescriptionLexer lexer =
+            new FormalPropertyDescriptionLexer(new ANTLRInputStream(exp));
         CommonTokenStream tokenS = new CommonTokenStream(lexer);
         new FormalPropertyDescriptionParser(tokenS);
         new FormalPropertySyntaxTreeToAstTranslator();
     }
-
 }

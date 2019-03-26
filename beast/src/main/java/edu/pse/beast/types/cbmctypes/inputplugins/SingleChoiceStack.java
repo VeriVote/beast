@@ -17,8 +17,7 @@ import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class SingleChoiceStack extends CBMCInputType {
-
-    String[] sizes = {UnifiedNameContainer.getCandidate()};
+    private String[] sizes = {UnifiedNameContainer.getCandidate()};
 
     @Override
     public String getInputString() {
@@ -69,27 +68,24 @@ public class SingleChoiceStack extends CBMCInputType {
     public void addVerifyMethod(CodeArrayListBeautifier code, OutputType outType) {
         code.add("void verify() {");
         code.addTab();
-
         code.add("int total_diff = 0;");
         code.add("int pos_diff = 0;");
-
-        code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" + UnifiedNameContainer.getCandidate() + "];");
+        code.add("int " + UnifiedNameContainer.getNewVotesName()
+                + "1[" + UnifiedNameContainer.getCandidate() + "];");
         code.add("int diff[" + UnifiedNameContainer.getCandidate() + "];");
-
-        code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {"); // go over all voters
+        // go over all voters
+        code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {");
         code.addTab();
-
         code.add("diff[i] = nondet_int();");
-
         code.add("assume(-1 * MARGIN <= diff[i]);");
         code.add("assume(diff[i] <= MARGIN);");
-
         code.add("assume(0 <= ORIG_VOTES[i] + diff[i]);");
-
         code.deleteTab();
         code.add("}");
-
-        code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {"); // go over all voters
+        // go over all voters
+        code.add("for (int i = 0; i < "
+                + UnifiedNameContainer.getCandidate()
+                + "; i++) {");
         code.addTab();
 
         code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i] = ORIG_VOTES[i] + diff[i];");
@@ -114,15 +110,23 @@ public class SingleChoiceStack extends CBMCInputType {
     }
 
     @Override
-    public CBMCResultWrapperMultiArray extractVotesWrappedMulti(List<String> result, int numberCandidates) {
-        List<CBMCResultWrapperSingleArray> singleVotesList = super.helper.readOneDimVarLong("votes", result);
+    public CBMCResultWrapperMultiArray extractVotesWrappedMulti(List<String> result,
+                                                                int numberCandidates) {
+        List<CBMCResultWrapperSingleArray> singleVotesList =
+                super.helper.readOneDimVarLong("votes", result);
 
         List<CBMCResultWrapperMultiArray> toReturn = new ArrayList<CBMCResultWrapperMultiArray>();
 
-        for (Iterator<CBMCResultWrapperSingleArray> iterator = singleVotesList.iterator(); iterator.hasNext();) {
-            CBMCResultWrapperSingleArray cbmcResultWrapperSingleArray = (CBMCResultWrapperSingleArray) iterator.next();
-            toReturn.add(cbmcResultWrapperSingleArray.wrapInTwoDim(1, "" + UnifiedNameContainer.getNewVotesName() + "",
-                    numberCandidates));
+        for (Iterator<CBMCResultWrapperSingleArray> iterator = singleVotesList.iterator();
+                iterator.hasNext();) {
+            CBMCResultWrapperSingleArray cbmcResultWrapperSingleArray =
+                    (CBMCResultWrapperSingleArray) iterator.next();
+            toReturn.add(cbmcResultWrapperSingleArray.wrapInTwoDim(
+                    1,
+                    "" + UnifiedNameContainer.getNewVotesName() + "",
+                    numberCandidates
+                    )
+            );
         }
 
         return toReturn.get(0);
@@ -217,16 +221,17 @@ public class SingleChoiceStack extends CBMCInputType {
     @Override
     public List<List<String>> getNewVotes(List<String> lastFailedRun, int index) {
         List<List<String>> toReturn = new ArrayList<List<String>>();
-
-        toReturn.add(super.helper.readOneDimVarLong("" + UnifiedNameContainer.getNewVotesName() + "", lastFailedRun)
+        toReturn.add(super.helper.readOneDimVarLong(
+                "" + UnifiedNameContainer.getNewVotesName() + "", lastFailedRun)
                 .get(index).getList());
-
         return toReturn;
     }
 
     @Override
     public InternalTypeContainer getInternalTypeContainer() {
-        return new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
+        return new InternalTypeContainer(
+                new InternalTypeContainer(InternalTypeRep.CANDIDATE),
+                InternalTypeRep.VOTER);
     }
 
     @Override

@@ -4,7 +4,8 @@ package edu.pse.beast.toolbox;
  *
  * @author Niels Hanselmann
  */
-public class ErrorForUserDisplayerTest {
+public final class ErrorForUserDisplayerTest {
+    private ErrorForUserDisplayerTest() {}
 
     /**
      * a small main class Test for the ErrorForUserDisplayer

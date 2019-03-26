@@ -13,7 +13,6 @@
 // * @author Niels Hanselmann
 // */
 //public class ProjectTest {
-//
 //    /**
 //     * Test of getElecDescr method, of class Project.
 //     */
@@ -46,7 +45,8 @@
 //    @Test
 //    public void testGetElectionCheckParameter() {
 //        System.out.println("getElectionCheckParameter");
-//        ElectionCheckParameter params = new ElectionCheckParameter(null, null, null, null, Integer.BYTES, null);
+//        ElectionCheckParameter params =
+//            new ElectionCheckParameter(null, null, null, null, Integer.BYTES, null);
 //        Project instance = new Project(params, null, null, null);
 //        ElectionCheckParameter expResult = params;
 //        ElectionCheckParameter result = instance.getElectionCheckParameter();
@@ -63,7 +63,6 @@
 //        Project instance = new Project(null, null, null, "test");
 //        instance.setNewName(newName);
 //        assertEquals(instance.getName(), newName);
-// 
 //    }
 //
 //    /**
@@ -77,5 +76,4 @@
 //        String result = instance.getName();
 //        assertEquals(expResult, result);
 //    }
-//
 //}

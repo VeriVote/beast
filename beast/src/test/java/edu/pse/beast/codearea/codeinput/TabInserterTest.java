@@ -82,12 +82,14 @@
 //    @Test
 //    public void testAddAfterNewline() throws BadLocationException {
 //        pane.getStyledDocument().insertString(0, "\n", null);
-//        assertEquals("\n", pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength()));
+//        assertEquals(
+//            "\n",
+//            pane.getStyledDocument()
+//                .getText(0, pane.getStyledDocument().getLength()));
 //        ins.insertTabAtPos(1);
-//        assertEquals("\n" + "        ", pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength()));
+//        assertEquals(
+//            "\n" + "        ",
+//            pane.getStyledDocument()
+//                .getText(0, pane.getStyledDocument().getLength()));
 //    }
-//
-//
-//
-//
 //}

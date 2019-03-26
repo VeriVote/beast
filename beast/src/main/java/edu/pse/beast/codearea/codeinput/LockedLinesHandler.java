@@ -26,7 +26,6 @@ import edu.pse.beast.toolbox.SortedIntegerList;
  * @author Holger Klein
  */
 public class LockedLinesHandler implements DocumentListener {
-
     private SortedIntegerList lockedLines = new SortedIntegerList();
     private StyledDocument doc;
     private JTextPane pane;
@@ -73,7 +72,8 @@ public class LockedLinesHandler implements DocumentListener {
                 }
             }
             int firstLineAffected = JTextPaneToolbox.transformToLineNumber(pane, de.getOffset());
-            if (lockedLines.contains(firstLineAffected) && doc.getText(de.getOffset() + 1, 1).equals("\n")
+            if (lockedLines.contains(firstLineAffected)
+                    && doc.getText(de.getOffset() + 1, 1).equals("\n")
                     && !doc.getText(de.getOffset() - 1, 1).equals("\n")) {
                 ++firstLineAffected;
             }
@@ -106,8 +106,9 @@ public class LockedLinesHandler implements DocumentListener {
                 amtNewline++;
             }
         }
-        int firstLineAffected = JTextPaneToolbox.transformToLineNumber(saveBeforeRemove.getPrevText(),
-                de.getOffset() + de.getLength());
+        int firstLineAffected =
+            JTextPaneToolbox.transformToLineNumber(saveBeforeRemove.getPrevText(),
+                                                   de.getOffset() + de.getLength());
 
         lockedLines.subtractIfBigger(firstLineAffected - 1, amtNewline, (prevNum, newNum) -> {
             for (LockedLinesListener l : listeners) {

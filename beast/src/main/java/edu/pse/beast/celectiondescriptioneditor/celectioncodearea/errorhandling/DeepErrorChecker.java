@@ -9,9 +9,9 @@ import edu.pse.beast.toolbox.ErrorLogger;
 
 /**
  * this class gives you access to an underlying, system specific compiler so our
- * program can check for deeper errors in the code, that we couldn't find on our
+ * program can check for deeper errors in the code, that we could not find on our
  * own
- * 
+ *
  * @author Lukas Stapelbroek
  *
  */
@@ -41,11 +41,12 @@ public final class DeepErrorChecker {
             break;
         case Mac:
             ErrorForUserDisplayer.displayError(
-                    "MacOS is not supported yet, please implement the class CBMCProcess and add it then here in the "
-                            + "CBMCProcessFactory to be created");
+                "MacOS is not supported yet, please implement the class "
+                + "CBMCProcess and add it then here in the "
+                + "CBMCProcessFactory to be created.");
             break;
         default:
-            ErrorLogger.log("Warning, your OS couldn't be determined or is not supported yet.");
+            ErrorLogger.log("Warning, your OS could not be determined or is not supported yet.");
         }
 
         initialized = true;
@@ -53,7 +54,7 @@ public final class DeepErrorChecker {
 
     /**
      * checks the given list of c code (one entry per line) for errors
-     * 
+     *
      * @param toCheck the code to check
      * @param lineOffset line offset
      * @return a list of codeErros
@@ -67,7 +68,7 @@ public final class DeepErrorChecker {
 
     /**
      * determines the operating system that this program is running on
-     * 
+     *
      * @return the OperatingSystem as the enum
      */
     private static OperatingSystems determineOS() {

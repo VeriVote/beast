@@ -2,6 +2,7 @@ package edu.pse.beast.saverloader;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 
 import edu.pse.beast.highlevel.javafx.ChildTreeItemValues;
 import edu.pse.beast.propertychecker.Result;
@@ -35,7 +36,7 @@ public class ChildTreeItemSaverLoader implements SaverLoader<ChildTreeItemValues
     }
 
     @Override
-    public ChildTreeItemValues createFromSaveString(String toLoad) throws Exception {
+    public ChildTreeItemValues createFromSaveString(String toLoad) throws JsonSyntaxException {
         return saverLoader.fromJson(toLoad, ChildTreeItemValues.class);
     }
 

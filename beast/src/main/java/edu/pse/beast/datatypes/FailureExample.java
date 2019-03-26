@@ -13,7 +13,7 @@ import edu.pse.beast.propertychecker.SymbolicVarNameAndNumber;
 /**
  * This class provides the result presenter with the necessary data about the
  * counterexample.
- * 
+ *
  * @author Justin Hecht, Lukas Stapelbroek
  */
 public class FailureExample {
@@ -35,9 +35,12 @@ public class FailureExample {
 
     private final int numOfElections;
 
-    private List<SymbolicVarNameAndNumber> symbCandidates = new ArrayList<SymbolicVarNameAndNumber>();
-    private List<SymbolicVarNameAndNumber> symbVoters = new ArrayList<SymbolicVarNameAndNumber>();
-    private List<SymbolicVarNameAndNumber> symbSeats = new ArrayList<SymbolicVarNameAndNumber>();
+    private List<SymbolicVarNameAndNumber> symbCandidates =
+            new ArrayList<SymbolicVarNameAndNumber>();
+    private List<SymbolicVarNameAndNumber> symbVoters =
+            new ArrayList<SymbolicVarNameAndNumber>();
+    private List<SymbolicVarNameAndNumber> symbSeats =
+            new ArrayList<SymbolicVarNameAndNumber>();
     private boolean hasFinalMargin;
 
     private int finalMargin;
@@ -51,7 +54,7 @@ public class FailureExample {
     /**
      * Creates the FailureExample from the returned data of CBMC. If specific data
      * is not given, initialize with null reference.
-     * 
+     *
      * @param electionDescription The type of the election description
      * @param votes               A list of votings for a single candidate given as
      *                            an integer list. Null if another voting procedure
@@ -62,7 +65,7 @@ public class FailureExample {
      * @param elect               A list of elected candidates from different
      *                            votings. Null if more than one candidate is
      *                            elected.
-     * @param seats               A list of elected seasts from different votings.
+     * @param seats               A list of elected seats from different votings.
      *                            Null if only one candidate is elected.
      * @param numOfCandidates     The number of candidates in an election.
      * @param numOfSeats          The number of seats that are awarded in an
@@ -70,10 +73,14 @@ public class FailureExample {
      * @param numOfVoters         The number of voters that voted for the
      *                            candidates.
      */
-    public FailureExample(ElectionDescription electionDescription, List<CBMCResultWrapperSingleArray> votes,
-            List<CBMCResultWrapperMultiArray> voteList, List<CBMCResultWrapperLong> elect,
-            List<CBMCResultWrapperSingleArray> seats, int numOfCandidates, int numOfSeats, int numOfVoters) {
-
+    public FailureExample(ElectionDescription electionDescription,
+                          List<CBMCResultWrapperSingleArray> votes,
+                          List<CBMCResultWrapperMultiArray> voteList,
+                          List<CBMCResultWrapperLong> elect,
+                          List<CBMCResultWrapperSingleArray> seats,
+                          int numOfCandidates,
+                          int numOfSeats,
+                          int numOfVoters) {
         this.electionDescription = electionDescription;
         this.votes = votes;
         this.voteList = voteList;
@@ -82,7 +89,6 @@ public class FailureExample {
         this.numOfCandidates = numOfCandidates;
         this.numOfSeats = numOfSeats;
         this.numOfVoters = numOfVoters;
-
         if (votes != null && voteList != null) {
             if (isChooseOneCandidate()) {
                 this.numOfElections = votes.size();
@@ -146,18 +152,18 @@ public class FailureExample {
     /**
      * Saves a candidate symbolic variable in the list.
      *
-     * @param name
-     * @param number
+     * @param name   the name of the candidate
+     * @param number the number of the candidate
      */
-    public void addSymbolicCadidate(String name, long number) {
+    public void addSymbolicCandidate(String name, long number) {
         symbCandidates.add(new SymbolicVarNameAndNumber(name, number));
     }
 
     /**
      * Saves a seat symbolic variable in the list.
      *
-     * @param name
-     * @param number
+     * @param name   the name of the seat variable
+     * @param number the number of the seat variable
      */
     public void addSymbolicSeat(String name, long number) {
         symbSeats.add(new SymbolicVarNameAndNumber(name, number));
@@ -166,8 +172,8 @@ public class FailureExample {
     /**
      * Saves a voter symbolic variable in the list.
      *
-     * @param name
-     * @param number
+     * @param name   the name of the voters
+     * @param number the number of the voters
      */
     public void addSymbolicVoters(String name, long number) {
         symbVoters.add(new SymbolicVarNameAndNumber(name, number));
@@ -175,11 +181,14 @@ public class FailureExample {
 
     public String getSymbolicCandidateForIndex(long number) {
         String toOutput = "";
-        for (Iterator<SymbolicVarNameAndNumber> iterator = symbCandidates.iterator(); iterator.hasNext();) {
-            SymbolicVarNameAndNumber symbolicVarCandidate = (SymbolicVarNameAndNumber) iterator.next();
-            if (symbolicVarCandidate.getNumber() == number) { // if multiple variables share the same number
+        for (Iterator<SymbolicVarNameAndNumber> iterator = symbCandidates.iterator();
+                iterator.hasNext();) {
+            SymbolicVarNameAndNumber symbolicVarCandidate =
+                    (SymbolicVarNameAndNumber) iterator.next();
+            // if multiple variables share the same number
+            if (symbolicVarCandidate.getNumber() == number) {
                 if (toOutput != "") {
-                    toOutput = toOutput + " / " + symbolicVarCandidate.getName();
+                    toOutput += " / " + symbolicVarCandidate.getName();
                 } else { // if this is the first variable with this index
                     toOutput = symbolicVarCandidate.getName();
                 }
@@ -193,9 +202,12 @@ public class FailureExample {
 
     public String getSymbolicSeatForIndex(long number) {
         String toOutput = "";
-        for (Iterator<SymbolicVarNameAndNumber> iterator = symbSeats.iterator(); iterator.hasNext();) {
-            SymbolicVarNameAndNumber symbolicVarSeat = (SymbolicVarNameAndNumber) iterator.next();
-            if (symbolicVarSeat.getNumber() == number) { // if multiple variables share the same number
+        for (Iterator<SymbolicVarNameAndNumber> iterator = symbSeats.iterator();
+                iterator.hasNext();) {
+            SymbolicVarNameAndNumber symbolicVarSeat =
+                    (SymbolicVarNameAndNumber) iterator.next();
+            // if multiple variables share the same number
+            if (symbolicVarSeat.getNumber() == number) {
                 if (toOutput != "") {
                     toOutput = toOutput + " / " + symbolicVarSeat.getName();
                 } else { // if this is the first variable with this index
@@ -211,9 +223,12 @@ public class FailureExample {
 
     public String getSymbolicVoterForIndex(long number) {
         String toOutput = "";
-        for (Iterator<SymbolicVarNameAndNumber> iterator = symbVoters.iterator(); iterator.hasNext();) {
-            SymbolicVarNameAndNumber symbolicVarVoter = (SymbolicVarNameAndNumber) iterator.next();
-            if (symbolicVarVoter.getNumber() == number) { // if multiple variables share the same number
+        for (Iterator<SymbolicVarNameAndNumber> iterator = symbVoters.iterator();
+                iterator.hasNext();) {
+            SymbolicVarNameAndNumber symbolicVarVoter =
+                    (SymbolicVarNameAndNumber) iterator.next();
+            // if multiple variables share the same number
+            if (symbolicVarVoter.getNumber() == number) {
                 if (toOutput != "") {
                     toOutput = toOutput + " / " + symbolicVarVoter.getName();
                 } else { // if this is the first variable with this index

@@ -18,14 +18,15 @@ import edu.pse.beast.stringresource.StringResourceLoader;
 import edu.pse.beast.toolbox.Tuple;
 
 /**
- * This abstract class implements error displaying functionallity common to all
+ * This abstract class implements error displaying functionality common to all
  * specialized error display subclasses
  *
  * @author Holger Klein
  */
 public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMotionListener {
-    protected JTextPane pane;
     protected StringResourceLoader currentStringResLoader;
+    protected JTextPane pane;
+
     private SquigglePainter painter;
     private ArrayList<Tuple<Integer, Integer>> absPosToMsg;
     private ArrayList<String> msges;
@@ -103,7 +104,8 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
             return;
         }
         if (Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10
-                && Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10 && errorPopupMenu.isVisible()) {
+                && Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10
+                && errorPopupMenu.isVisible()) {
             return;
         }
         for (int i = 0; i < absPosToMsg.size(); ++i) {

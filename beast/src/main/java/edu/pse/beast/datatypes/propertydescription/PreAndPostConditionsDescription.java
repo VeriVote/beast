@@ -29,14 +29,17 @@ public class PreAndPostConditionsDescription {
     /**
      * Creator with a SymbolicVariableList
      *
-     * @param name                 name of the PreAndPostConditionsDescription
-     * @param preDescr             The preConditionDescription
-     * @param postDescr            The postConditionDescription
-     * @param symbolicVariableList the symbolicVariableList
+     * @param name                  name of the PreAndPostConditionsDescription
+     * @param preDescr              the preConditionDescription
+     * @param postDescr             the postConditionDescription
+     * @param boundedVarDescription the boundedVarDescription
+     * @param symbolicVariableList  the symbolicVariableList
      */
-    public PreAndPostConditionsDescription(String name, FormalPropertiesDescription preDescr,
-            FormalPropertiesDescription postDescr, FormalPropertiesDescription boundedVarDescription,
-            SymbolicVariableList symbolicVariableList) {
+    public PreAndPostConditionsDescription(String name,
+                                           FormalPropertiesDescription preDescr,
+                                           FormalPropertiesDescription postDescr,
+                                           FormalPropertiesDescription boundedVarDescription,
+                                           SymbolicVariableList symbolicVariableList) {
         this.name = name;
         this.preConditionsDescription = preDescr;
         this.postConditionsDescription = postDescr;

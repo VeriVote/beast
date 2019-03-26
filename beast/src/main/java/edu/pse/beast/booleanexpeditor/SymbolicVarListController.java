@@ -48,8 +48,11 @@
 //     * @param booleanExpEditorWindow the BooleanExpEditorWindow object (view)
 //     * @param symbolicVariableList the SymbolicVariableList
 //     */
-//    SymbolicVarListController(JList<String> jList, JButton addVarButton, JButton removeVarButton,
-//                              StringLoaderInterface stringLoaderInterface, SymbolicVariableList symbolicVariableList,
+//    SymbolicVarListController(JList<String> jList,
+//                              JButton addVarButton,
+//                              JButton removeVarButton,
+//                              StringLoaderInterface stringLoaderInterface,
+//                              SymbolicVariableList symbolicVariableList,
 //                              BooleanExpEditorWindow booleanExpEditorWindow) {
 //        this.jList = jList;
 //        this.stringLoaderInterface = stringLoaderInterface;
@@ -144,39 +147,53 @@
 //                    "Name:", name
 //            };
 //
-//            int option = JOptionPane.showConfirmDialog(booleanExpEditorWindow, message, newVariableString,
-//                    JOptionPane.OK_CANCEL_OPTION);
+//            int option =
+//                JOptionPane.showConfirmDialog(booleanExpEditorWindow,
+//                                              message,
+//                                              newVariableString,
+//                                              JOptionPane.OK_CANCEL_OPTION);
 //            if (option == JOptionPane.OK_OPTION) {
 //                String errorCause = "";
 //                boolean validname = true;
 //                if (!name.getText().matches("[a-zA-Z_][a-zA-Z0-9_]*")) {
 //                    validname = false;
 //                    errorCause = nameNotMatchingError;
-//                } else if (!SymbolicVarListController.this.symbolicVariableList.isVarIDAllowed(name.getText())) {
+//                } else if (!SymbolicVarListController.this
+//                               .symbolicVariableList
+//                               .isVarIDAllowed(name.getText())) {
 //                    validname = false;
 //                    errorCause = alreadyExistsError;
 //                }
 //                if (validname) {
 //                    if (voterButton.isSelected()) {
-//                        InternalTypeContainer intTypeCont = new InternalTypeContainer(InternalTypeRep.VOTER);
-//                        SymbolicVarListController.this.symbolicVariableList.addSymbolicVariable(name.getText(),
-//                                intTypeCont);
+//                        InternalTypeContainer intTypeCont =
+//                            new InternalTypeContainer(InternalTypeRep.VOTER);
+//                        SymbolicVarListController.this
+//                            .symbolicVariableList
+//                            .addSymbolicVariable(name.getText(), intTypeCont);
 //                        jListModel.addElement(voterString + " " + name.getText());
 //                    } else if (candidatesButton.isSelected()) {
-//                        InternalTypeContainer intTypeCont = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
-//                        SymbolicVarListController.this.symbolicVariableList.addSymbolicVariable(name.getText(),
-//                                intTypeCont);
+//                        InternalTypeContainer intTypeCont =
+//                            new InternalTypeContainer(InternalTypeRep.CANDIDATE);
+//                        SymbolicVarListController.this
+//                            .symbolicVariableList
+//                            .addSymbolicVariable(name.getText(), intTypeCont);
 //                        jListModel.addElement(candidateString + " " + name.getText());
 //                    } else if (seatsButton.isSelected()) {
-//                        InternalTypeContainer intTypeCont = new InternalTypeContainer(InternalTypeRep.SEAT);
-//                        SymbolicVarListController.this.symbolicVariableList.addSymbolicVariable(name.getText(),
-//                                intTypeCont);
+//                        InternalTypeContainer intTypeCont =
+//                            new InternalTypeContainer(InternalTypeRep.SEAT);
+//                        SymbolicVarListController.this
+//                            .symbolicVariableList
+//                            .addSymbolicVariable(name.getText(), intTypeCont);
 //                        jListModel.addElement(seatString + " " + name.getText());
 //
 //                    }
 //                } else {
 //                    Object errorMessage = errorString + "\n (" + errorCause + ")";
-//                    JOptionPane.showMessageDialog(booleanExpEditorWindow, errorMessage, "", JOptionPane.OK_OPTION);
+//                    JOptionPane.showMessageDialog(booleanExpEditorWindow,
+//                                                  errorMessage,
+//                                                  "",
+//                                                  JOptionPane.OK_OPTION);
 //                }
 //            }
 //        }

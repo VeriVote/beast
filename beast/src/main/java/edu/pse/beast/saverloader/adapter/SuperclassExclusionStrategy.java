@@ -6,7 +6,7 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 
 /**
- * 
+ *
  * @author Adrian Lee, Stackoverflow
  *         https://stackoverflow.com/a/20117863/5853965
  *
@@ -28,12 +28,11 @@ public class SuperclassExclusionStrategy implements ExclusionStrategy {
         while (superclass != null) {
             field = getField(superclass, fieldName);
 
-            if (field != null)
+            if (field != null) {
                 return true;
-
+            }
             superclass = superclass.getSuperclass();
         }
-
         return false;
     }
 
@@ -49,5 +48,4 @@ public class SuperclassExclusionStrategy implements ExclusionStrategy {
     public boolean shouldSkipClass(Class<?> clazz) {
         return false;
     }
-
 }

@@ -21,9 +21,9 @@
 // * supplied Actionlist
 // * @author Holger Klein
 // */
-//public class TextChangedActionAdder implements 
-//        ActionlistListener, 
-//        DocumentListener, 
+//public class TextChangedActionAdder implements
+//        ActionlistListener,
+//        DocumentListener,
 //        StoppedTypingContinuouslyListener {
 //    private final int caretPos = 0;
 //    private boolean listen = true;
@@ -31,9 +31,9 @@
 //    private final Actionlist actionList;
 //    private int recordingStartPos;
 //    private final String recordingString = "";
-//    private final SaveTextBeforeRemove saveBeforeRemove;    
+//    private final SaveTextBeforeRemove saveBeforeRemove;
 //    private final StoppedTypingContinuouslyMessager typingContinuouslyMessager;
-//    
+//
 //    /**
 //     * creates a TextChangedActionAdder
 //     * @param pane the JTextPane object used to communicate with the user. If the user
@@ -66,11 +66,10 @@
 //
 //
 //    @Override
-//    public void insertUpdate(DocumentEvent de) {       
-//        if(!listen) return; 
+//    public void insertUpdate(DocumentEvent de) {
+//        if(!listen) return;
 //        try {
 //            String added = pane.getStyledDocument().getText(de.getOffset(), de.getLength());
-//                      
 //            TextAddedAction action = new TextAddedAction(
 //                    new TextDelta(de.getOffset(), added),
 //                    pane.getStyledDocument());
@@ -82,11 +81,13 @@
 //
 //    @Override
 //    public void removeUpdate(DocumentEvent de) {
-//        if(!listen) return;            
+//        if(!listen) return;
 //        TextRemovedAction action = new TextRemovedAction(
-//                new TextDelta(de.getOffset(), saveBeforeRemove.getRemoveString(de.getOffset(), de.getLength())),
+//                new TextDelta(de.getOffset(),
+//                              saveBeforeRemove.getRemoveString(de.getOffset(),
+//                                                               de.getLength())),
 //                pane.getStyledDocument());
-//        actionList.add(action);              
+//        actionList.add(action);
 //    }
 //
 //    @Override
@@ -94,9 +95,7 @@
 //    }
 //
 //    @Override
-//    public void StoppedTypingContinuously(int newPos) {   
+//    public void StoppedTypingContinuously(int newPos) {
 //        recordingStartPos = newPos;
 //    }
-//    
-//
 //}

@@ -8,7 +8,7 @@
 //import edu.pse.beast.codearea.syntaxhighlighting.SyntaxHL;
 //
 ///**
-// * Sets the regular expressions to be highlighted by a syntaxhighlighter for the c
+// * Sets the regular expressions to be highlighted by a syntax highlighting for the c
 // * programming language.
 // * @author Holger Klein
 // */
@@ -29,8 +29,9 @@
 //        ArrayList<RegexAndColor> regexAndColorList = new ArrayList<>();
 //        for (String s : antlrHandler.getTypeLiterals()) {
 //            String regexWithWhiteSpace = "(\\(|\\s|\\A)" + s + "(\\s|\\Z|\\))";
+//            // BRIGHT INDIGO
 //            regexAndColorList.add(new RegexAndColor(regexWithWhiteSpace,
-//                                                    new Color(75,0,130).brighter())); // BRIGHT INDIGO
+//                                                    new Color(75,0,130).brighter()));
 //        }
 //        for (String s : antlrHandler.getControllLiterals()) {
 //            String regexWithWhiteSpace = "(\\(|\\s|\\A)" + s + "(\\s|\\Z|\\))";
@@ -38,7 +39,6 @@
 //        }
 //        regexAndColorList.add(new RegexAndColor(antlrHandler.getStringRegex(), Color.RED));
 //        regexAndColorList.add(new RegexAndColor(antlrHandler.getCommentRegex(), Color.GRAY));
-//
 //        syntaxHL.updateFilter(regexAndColorList);
 //    }
 //}

@@ -2,7 +2,9 @@ package edu.pse.beast.datatypes.booleanexpast;
 
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 
-public class BooleanExpConstant {
+public final class BooleanExpConstant {
+    private BooleanExpConstant() {}
+
     public static String getConstForVoterAmt() {
         return UnifiedNameContainer.getVoter();
     }

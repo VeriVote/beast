@@ -12,7 +12,8 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
  *
  * @author Holger Klein
  */
-public class CVariableErrorFinder {
+public final class CVariableErrorFinder {
+    private CVariableErrorFinder() {}
 
     public static List<CodeError> findErrors(List<String> code) {
         ArrayList<String> seperated = new ArrayList<>();
@@ -40,13 +41,17 @@ public class CVariableErrorFinder {
         seperated.add("void __CPROVER_assert(int x, int y) {}");
         seperated.add("void __CPROVER_assume(int x) {}");
 
-        seperated.add("struct result { unsigned int arr[" + UnifiedNameContainer.getSeats() + "]; };");
-        seperated.add("struct stack_result { unsigned int arr[" + UnifiedNameContainer.getCandidate() + "]; };");
+        seperated.add("struct result { unsigned int arr["
+                      + UnifiedNameContainer.getSeats()
+                      + "]; };");
+        seperated.add("struct stack_result { unsigned int arr["
+                      + UnifiedNameContainer.getCandidate()
+                      + "]; };");
 
-        seperated.add(UnifiedNameContainer.getStruct_candidateList() + " { unsigned int "
-                + UnifiedNameContainer.getResult_arr_name() + "["
-                + UnifiedNameContainer.getCandidate() + "]; };"); // add
-                                                                                                                    // a
+        seperated.add(UnifiedNameContainer.getStructCandidateList()
+                      + " { unsigned int "
+                      + UnifiedNameContainer.getResultArrName() + "["
+                      + UnifiedNameContainer.getCandidate() + "]; };"); // add a
 
         seperated.add("void assume(int x) {}");
         seperated.add("void assert(int x) {}");
@@ -57,7 +62,7 @@ public class CVariableErrorFinder {
         seperated.add("unsigned char nondet_uchar() {return 0;}");
         seperated.add("char nondet_char() {return 0;}");
 
-        // WORKAROUND ende
+        // WORKAROUND end
 
         seperated.add("int main() {");
         seperated.add("}");
@@ -65,7 +70,13 @@ public class CVariableErrorFinder {
         int lineOffset = seperated.size() + 1;
 
         seperated.addAll(code);
-        ArrayList<CodeError> found = new ArrayList<>(DeepErrorChecker.checkCodeForErrors(seperated, lineOffset));
+        ArrayList<CodeError> found =
+            new ArrayList<>(
+                DeepErrorChecker.checkCodeForErrors(
+                    seperated,
+                    lineOffset
+                )
+            );
         return found;
     }
 }

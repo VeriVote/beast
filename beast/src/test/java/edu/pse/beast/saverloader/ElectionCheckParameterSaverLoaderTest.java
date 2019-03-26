@@ -38,10 +38,12 @@ public class ElectionCheckParameterSaverLoaderTest {
      */
     @Test
     public void testCreateFromSaveString() throws Exception {
-        String saveString = ElectionCheckParameterSaverLoader.createSaveString(electionCheckParameter);
+        String saveString =
+            ElectionCheckParameterSaverLoader.createSaveString(electionCheckParameter);
 
         ElectionCheckParameter recreatedElectionCheckParameter =
-            (ElectionCheckParameter) ElectionCheckParameterSaverLoader.createFromSaveString(saveString);
+            (ElectionCheckParameter)
+                ElectionCheckParameterSaverLoader.createFromSaveString(saveString);
 
         assert (recreatedElectionCheckParameter.getAmountCandidates().get(0).equals(1));
         assert (recreatedElectionCheckParameter.getAmountCandidates().get(1).equals(2));

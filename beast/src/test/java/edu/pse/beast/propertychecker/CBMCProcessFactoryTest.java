@@ -11,11 +11,11 @@ import org.junit.Test;
 
 public class CBMCProcessFactoryTest {
 
-    CBMCProcessFactory prosFac;
+    private CBMCProcessFactory procFac;
 
     @Before
     public void setup() {
-        prosFac = new CBMCProcessFactory(null, null, null, null);
+        procFac = new CBMCProcessFactory(null, null, null, null);
     }
 
     @Test
@@ -23,7 +23,7 @@ public class CBMCProcessFactoryTest {
         List<String> toTest = new ArrayList<String>();
         toTest.add("VERIFICATION SUCCESSFUL");
 
-        assertTrue(prosFac.checkAssertionSuccess(toTest));
+        assertTrue(procFac.checkAssertionSuccess(toTest));
     }
 
     @Test
@@ -31,16 +31,16 @@ public class CBMCProcessFactoryTest {
         List<String> toTest = new ArrayList<String>();
         toTest.add("VERIFICATION FAILED");
 
-        assertTrue(prosFac.checkAssertionFailure(toTest));
+        assertTrue(procFac.checkAssertionFailure(toTest));
     }
 
     @Test
     public void succesFailureTest() {
-        assertFalse(prosFac.checkAssertionSuccess(null));
+        assertFalse(procFac.checkAssertionSuccess(null));
     }
 
     @Test
     public void failFailureTest() {
-        assertFalse(prosFac.checkAssertionFailure(null));
+        assertFalse(procFac.checkAssertionFailure(null));
     }
 }

@@ -29,7 +29,7 @@ public class LanguageOptions extends Options {
         String chosenLang = stringResLoader.getStringFromID("lang");
         List<String> choosableLangsList = Arrays.asList("de", "en");
         langOptElem = new LanguageOptionElement(choosableLangsList, chosenLang);
-        optElements.add(langOptElem);
+        addOptionElement(langOptElem);
     }
 
     public LanguageOptions(StringLoaderInterface sli) {
@@ -38,7 +38,7 @@ public class LanguageOptions extends Options {
         ArrayList<String> choosableLangsList = new ArrayList<>();
         choosableLangsList.add("de");
         langOptElem = new LanguageOptionElement(choosableLangsList, "de");
-        optElements.add(langOptElem);
+        addOptionElement(langOptElem);
     }
 
     /**

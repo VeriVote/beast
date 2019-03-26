@@ -33,11 +33,14 @@ public abstract class CBMCInputType extends InputType {
         String votesString = "";
         int voterIndex = 0;
 
-        for (Iterator<List<String>> iterator = origVotes.iterator(); iterator.hasNext();) { // iterate over the voters
+        // iterate over the voters
+        for (Iterator<List<String>> iterator = origVotes.iterator(); iterator.hasNext();) {
             List<String> list = (List<String>) iterator.next();
             String oneVoter = "";
             try {
-                oneVoter = GUIController.getController().getElectionSimulation().getVoterName(voterIndex);
+                oneVoter =
+                        GUIController.getController()
+                        .getElectionSimulation().getVoterName(voterIndex);
             } catch (Exception e) {
                 oneVoter = "" + voterIndex;
             }
@@ -45,11 +48,13 @@ public abstract class CBMCInputType extends InputType {
             voterIndex++;
             int partyIndex = 0;
 
-            for (Iterator<String> iterator2 = list.iterator(); iterator2.hasNext();) { // iterate over the candidates
+            // iterate over the candidates
+            for (Iterator<String> iterator2 = list.iterator(); iterator2.hasNext();) {
                 String voteAmount = (String) iterator2.next();
                 try {
                     oneVoter = oneVoter
-                            + GUIController.getController().getElectionSimulation().getPartyName(partyIndex);
+                            + GUIController.getController()
+                            .getElectionSimulation().getPartyName(partyIndex);
                 } catch (Exception e) {
                     oneVoter = "" + partyIndex;
                 }

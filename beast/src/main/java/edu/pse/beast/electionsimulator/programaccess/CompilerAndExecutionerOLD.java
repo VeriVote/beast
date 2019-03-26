@@ -9,14 +9,13 @@ import edu.pse.beast.toolbox.ErrorLogger;
 
 /**
  * this class gives you access to an underlying, system specific compiler so our
- * program can check for deeper errors in the code, that we couldn't find on our
+ * program can check for deeper errors in the code, that we could not find on our
  * own.
  *
  * @author Lukas Stapelbroek
  *
  */
 public final class CompilerAndExecutionerOLD {
-
     private static SystemSpecificCompilerAndExecutioner specificComAndExe = null;
 
     private static boolean initialized = false;
@@ -45,7 +44,7 @@ public final class CompilerAndExecutionerOLD {
                     + "extend the \"SystemSpecificCompilerandExecutioner\" .");
             break;
         default:
-            ErrorLogger.log("Warning, your OS couldn't be determined or is not supported yet.");
+            ErrorLogger.log("Warning, your OS could not be determined or is not supported yet.");
         }
 
         initialized = true;
@@ -67,7 +66,7 @@ public final class CompilerAndExecutionerOLD {
 
     /**
      * determines the operating system that this program is running on.
-     * 
+     *
      * @return the OperatingSystem as the enum
      */
     private static OperatingSystems determineOS() {

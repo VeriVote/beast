@@ -10,11 +10,14 @@ import java.util.concurrent.CountDownLatch;
  * are stored in a passed list. It either stops if the stream ends, or it gets
  * stopped from the outside. When it finishes normally, it also counts down a
  * latch to notify other waiting threads.
- * 
+ *
  * @author Lukas Stapelbroek
  *
  */
 public class ThreadedBufferedReader implements Runnable {
+    private static final int CHECKING_INTERVAL = 5000;
+    private static final int WARNING_INTERVAL = 1000;
+    private static final String UNWIND_PREFIX = "Unwinding loop";
 
     private final BufferedReader reader;
     private final List<String> readLines;
@@ -23,26 +26,22 @@ public class ThreadedBufferedReader implements Runnable {
 
     private final boolean checkForUnwind;
 
-    private final int checkingInterval = 5000;
-
-    private final int warningInterval = 1000;
-
-    private final String unwindPrefix = "Unwinding loop";
-
     /**
      * Class for reading a stream from the program
-     * 
-     * @param reader    The reader to be read from.
-     * @param readLines The list where the read lines should be added
-     * @param latch     the latch to synchronize on
+     *
+     * @param reader         the reader to be read from.
+     * @param readLines      the list where the read lines should be added
+     * @param latch          the latch to synchronize on
+     * @param checkForUnwind whether we care for the amount of loop unwindings
      */
-    public ThreadedBufferedReader(BufferedReader reader, List<String> readLines, CountDownLatch latch,
-            boolean checkForUnwind) {
+    public ThreadedBufferedReader(BufferedReader reader,
+                                  List<String> readLines,
+                                  CountDownLatch latch,
+                                  boolean checkForUnwind) {
         this.reader = reader;
         this.readLines = readLines;
         this.latch = latch;
         this.checkForUnwind = checkForUnwind;
-
         new Thread(this, "ReaderThread").start();
     }
 
@@ -61,14 +60,14 @@ public class ThreadedBufferedReader implements Runnable {
             line = reader.readLine();
             while (line != null && !isInterrupted) {
                 readLines.add(line);
-                if (checkForUnwind && (curr > checkingInterval)) {
-                    if (line.startsWith(unwindPrefix)) {
+                if (checkForUnwind && (curr > CHECKING_INTERVAL)) {
+                    if (line.startsWith(UNWIND_PREFIX)) {
                         // we are still unwinding, so we check the line now
                         // to see, how much we are unwinding
                         try {
                             int iteration = Integer
                                     .parseInt(line.split("iteration")[1].split("file")[0].replace(" ", ""));
-                            if (iteration > warningInterval) {
+                            if (iteration > WARNING_INTERVAL) {
                                 new Thread() {
                                     public void run() {
                                         ErrorForUserDisplayer.displayError("A loop in your c program is still"
@@ -80,7 +79,7 @@ public class ThreadedBufferedReader implements Runnable {
                             }
                             // reset curr;
                             curr = 0;
-                        } catch (Exception e) {
+                        } catch (NumberFormatException e) {
                             // do nothing
                         }
                     }

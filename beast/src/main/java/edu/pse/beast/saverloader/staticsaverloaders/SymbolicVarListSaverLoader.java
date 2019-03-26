@@ -11,7 +11,8 @@ import edu.pse.beast.types.InternalTypeRep;
  *
  * @author Holger Klein
  */
-public class SymbolicVarListSaverLoader {
+public final class SymbolicVarListSaverLoader {
+    private SymbolicVarListSaverLoader() {}
 
     /**
      * Creates a String from a given SymbolicVariableList, that can then be saved to
@@ -31,7 +32,8 @@ public class SymbolicVarListSaverLoader {
     }
 
     private static String createSaveStringForVar(SymbolicVariable var) {
-        return "id: " + var.getId() + " type: " + var.getInternalTypeContainer().getInternalType().toString();
+        return "id: " + var.getId() + " type: "
+                + var.getInternalTypeContainer().getInternalType().toString();
     }
 
     /**
@@ -52,9 +54,9 @@ public class SymbolicVarListSaverLoader {
     }
 
     private static void createSymbVarFromSaveString(String s, SymbolicVariableList list) {
-        if (s == null || s.length() == 0)
+        if (s == null || s.length() == 0) {
             return;
-
+        }
         String[] data = s.split(" ");
         String id = data[2];
         String typeString = data[4];

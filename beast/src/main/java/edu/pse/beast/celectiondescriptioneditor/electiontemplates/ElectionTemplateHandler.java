@@ -10,7 +10,7 @@ import edu.pse.beast.types.OutputType;
 
 /**
  * This class handles all available ElectionTypeContainer for input and output.
- * 
+ *
  * @author Holger Klein
  */
 public class ElectionTemplateHandler {
@@ -44,16 +44,22 @@ public class ElectionTemplateHandler {
 //                        InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER),
 //                ElectionTypeContainer.ElectionInputTypeIds.WEIGHTED_APPROVAL));
 //
-//        resTypes.add(new ElectionTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE),
-//                ElectionTypeContainer.ElectionOutputTypeIds.CAND_OR_UNDEF));
+//        resTypes.add(new ElectionTypeContainer(
+//            new InternalTypeContainer(InternalTypeRep.CANDIDATE),
+//            ElectionTypeContainer.ElectionOutputTypeIds.CAND_OR_UNDEF
+//        ));
 //
 //        resTypes.add(new ElectionTypeContainer(
-//                new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.SEAT),
-//                ElectionTypeContainer.ElectionOutputTypeIds.CAND_PER_SEAT));
+//            new InternalTypeContainer(
+//                new InternalTypeContainer(InternalTypeRep.CANDIDATE),
+//                InternalTypeRep.SEAT
+//            ),
+//            ElectionTypeContainer.ElectionOutputTypeIds.CAND_PER_SEAT)
+//        );
     }
 
     /**
-     * 
+     *
      * @return the ids that are used for the input
      */
     public List<InputType> getInputTypes() {
@@ -61,7 +67,7 @@ public class ElectionTemplateHandler {
     }
 
     /**
-     * 
+     *
      * @return the ids that are used for the output
      */
     public List<OutputType> getOutputTypes() {
@@ -70,7 +76,7 @@ public class ElectionTemplateHandler {
 //
 //    /**
 //     * returns the elecitontypecontainer having the supplied id
-//     * 
+//     *
 //     * @param id the id of the elecitontypecontainer to be retrieved
 //     * @return the electiontypecontainer if it exists, null otherwise
 //     */
@@ -82,10 +88,10 @@ public class ElectionTemplateHandler {
 //
 //        return null;
 //    }
-//    
+//
 //    /**
 //     * returns the elecitontypecontainer having the supplied id
-//     * 
+//     *
 //     * @param id
 //     *            the id of the elecitontypecontainer to be retrieved
 //     * @return the electiontypecontainer if it exists, null otherwise

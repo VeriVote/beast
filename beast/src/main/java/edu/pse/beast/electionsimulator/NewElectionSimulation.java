@@ -16,7 +16,10 @@ import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 import javafx.scene.layout.GridPane;
 
-public class NewElectionSimulation implements ElectionDescriptionChangeListener, MenuBarInterface {
+public class NewElectionSimulation
+                implements ElectionDescriptionChangeListener, MenuBarInterface {
+    private static final String CSV_SEPARATOR = ",";
+
     private ElectionTypeContainer container;
     private ElectionSimulationModel model;
 
@@ -25,10 +28,11 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener,
     private GridPane candidateGridPane;
 
     private SaverLoader saverLoader;
-    private final String csvSeparator = ",";
 
-    public NewElectionSimulation(ElectionTypeContainer container, GridPane inputGridPane, GridPane voterGridPane,
-            GridPane candidateGridPane) {
+    public NewElectionSimulation(ElectionTypeContainer container,
+                                 GridPane inputGridPane,
+                                 GridPane voterGridPane,
+                                 GridPane candidateGridPane) {
         this.container = container;
         this.saverLoader = new SaverLoader(".elecIn", "Election Input Data");
         this.inputGridPane = inputGridPane;
@@ -40,7 +44,8 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener,
         voterGridPane.setVgap(10);
         candidateGridPane.setHgap(10);
         candidateGridPane.setVgap(10);
-        model = new ElectionSimulationModel(container, inputGridPane, voterGridPane, candidateGridPane);
+        model = new ElectionSimulationModel(container, inputGridPane,
+                                            voterGridPane, candidateGridPane);
     }
 
     public void updateContainer(ElectionTypeContainer container) {
@@ -63,7 +68,8 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener,
         inputGridPane.getChildren().clear();
         voterGridPane.getChildren().clear();
         candidateGridPane.getChildren().clear();
-        model = new ElectionSimulationModel(container, inputGridPane, voterGridPane, candidateGridPane);
+        model = new ElectionSimulationModel(container, inputGridPane,
+                                            voterGridPane, candidateGridPane);
         model.setAmountCandidates(1);
         model.setAmountVoters(1);
         GUIController.getController().getInputVoters().setText("1");
@@ -72,7 +78,7 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener,
     }
 
     public String[][] getVotingData() {
-        String[][] votingData = {{"0"}};
+        String[][] votingData = { {"0"} };
         votingData = new String[model.getAmountVoters()][model.getAmountCandidates()];
         // read the data in a 2d array
         for (int i = 0; i < model.getAmountVoters(); i++) {
@@ -172,7 +178,7 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener,
         if (!input.equals("")) {
             String[] lines = input.split("\n");
             for (int y = 0; y < lines.length; y++) {
-                String[] values = lines[y].split(csvSeparator);
+                String[] values = lines[y].split(CSV_SEPARATOR);
                 if (!init) {
                     GUIController.getController().getInputVoters().setText("" + lines.length);
                     GUIController.getController().getInputCandidates().setText("" + values.length);
@@ -212,11 +218,12 @@ public class NewElectionSimulation implements ElectionDescriptionChangeListener,
 
         for (Iterator<NEWRowOfValues> iterator = rows.iterator(); iterator.hasNext();) {
             NEWRowOfValues row = (NEWRowOfValues) iterator.next();
-            for (Iterator<String> valueIterator = row.getValues().iterator(); valueIterator.hasNext();) {
+            for (Iterator<String> valueIterator = row.getValues().iterator();
+                    valueIterator.hasNext();) {
                 String value = (String) valueIterator.next();
                 saveString = saveString + value;
                 if (valueIterator.hasNext()) { // another value will follow
-                    saveString = saveString + csvSeparator;
+                    saveString = saveString + CSV_SEPARATOR;
                 }
             }
             if (iterator.hasNext()) {

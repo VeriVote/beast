@@ -11,29 +11,23 @@
 //
 //
 //public class CBMCResult_Test {
-//
 //    CBMCResult result = null;
-//
 //    List<String> lines = null;
 //
 //    @Before
 //    public void create() {
 //        //create some teststrings
 //        lines = new ArrayList<String>();
-//
 //        lines.add("begin");
 //        lines.add("----------------------------------------------------");
-//        
 //        lines.add("elect1=4u (00000000000000000000000000000100)");
 //        lines.add("----------------------------------------------------");
-//        
 //        lines.add("votes1={ 2u, 4u, 8u, 16u } "
 //                  + "({ 00000000000000000000000000000010, 00000000000000000000000000000100, "
 //                  + "00000000000000000000000000001000, 00000000000000000000000000010000 })");
 //
 //        lines.add("path to file that is checked");
 //        lines.add("----------------------------------------------------");
-//        
 //        lines.add("votes2={ { 1u, 2u, 3u, 4u, 5u }, { 6u, 7u, 8u, 9u, 10u }, "
 //                  + "{ 11u, 12u, 13u, 14u, 15u }, { 16u, 17u, 18u, 19u, 20u } } "
 //                  + "({ { 00000000000000000000000000000001, 00000000000000000000000000000010, "
@@ -49,7 +43,6 @@
 //
 //        lines.add("path to file that is checked");
 //        lines.add("----------------------------------------------------");
-//           
 //        lines.add("votes2={ { 1u, 2u, 3u, 4u, 5u }, { 6u, 7u, 8u, 9u, 10u }, "
 //                  + "{ 11u, 12u, 13u, 14u, 15u }, { 16u, 17u, 18u, 19u, 20u } } "
 //                  + "({ { 00000000000000000000000000000001, 00000000000000000000000000000010, "
@@ -65,25 +58,19 @@
 //
 //        lines.add("path to file that is checked");
 //        lines.add("----------------------------------------------------");
-//        
 //        lines.add("votes3[0l][0l]=3ul (00000000000000000000000000000011)");
 //        lines.add("path to file that is checked");
 //        lines.add("----------------------------------------------------");
-//        
 //        lines.add("votes3[0l][1l]=4ul (00000000000000000000000000000100)");
 //        lines.add("path to file that is checked");
 //        lines.add("----------------------------------------------------");
-//        
 //        lines.add("votes4[0l]=5ul (00000000000000000000000000000101)");
 //        lines.add("path to file that is checked");
 //        lines.add("----------------------------------------------------");
-//        
 //        lines.add("votes4[1l]=6ul (00000000000000000000000000000110)");
 //        lines.add("path to file that is checked");
 //        lines.add("----------------------------------------------------");
-//        
 //        result = new CBMCResult();
-//
 //       // result.setResult(lines);
 //    }
 //
@@ -107,11 +94,9 @@
 //        Long[] vars = zero.getArray();
 //        assertEquals((long) (vars[0]), 2l);
 //        assertEquals((long) (vars[1]), 4l);
-//
 //        CBMCResultWrapperSingleArray one = singleDim.get(1);
 //        assertEquals(one.getName(), "votes");
 //        assertEquals(one.getMainIndex(), 4);
-//
 //        Long[] varsO = one.getArray();
 //        assertEquals((long) (varsO[0]), 5l);
 //    }

@@ -9,7 +9,9 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 
-public class BooleanExpEditorGeneralErrorFinder {
+public final class BooleanExpEditorGeneralErrorFinder {
+    private BooleanExpEditorGeneralErrorFinder() {}
+
     /**
      *
      * @param parentTreeItem parent tree item
@@ -28,21 +30,29 @@ public class BooleanExpEditorGeneralErrorFinder {
     public static List<CodeError> getErrors(ParentTreeItem parentTreeItem) {
         List<CodeError> combinedErrors = new ArrayList<CodeError>();
         final PreAndPostConditionsDescription property = parentTreeItem.getPreAndPostProperties();
-
         // pre cond error finder
         final BooleanExpANTLRHandler preAntlrHandler = new BooleanExpANTLRHandler(
                 property.getPreConditionsDescription().getCode());
         combinedErrors.addAll(BooleanExpEditorGrammarErrorFinder.getErrors(preAntlrHandler));
-        combinedErrors.addAll(BooleanExpEditorVariableErrorFinder.getErrors(preAntlrHandler, property.getSymVarList(),
-                GUIController.getController().getCodeArea()));
+        combinedErrors.addAll(
+            BooleanExpEditorVariableErrorFinder.getErrors(
+                    preAntlrHandler,
+                    property.getSymVarList(),
+                    GUIController.getController().getCodeArea()
+            )
+        );
 
         // post cond error finder
         final BooleanExpANTLRHandler postAntlrHandler = new BooleanExpANTLRHandler(
                 property.getPostConditionsDescription().getCode());
         combinedErrors.addAll(BooleanExpEditorGrammarErrorFinder.getErrors(postAntlrHandler));
-        combinedErrors.addAll(BooleanExpEditorVariableErrorFinder.getErrors(postAntlrHandler, property.getSymVarList(),
-                GUIController.getController().getCodeArea()));
-
+        combinedErrors.addAll(
+            BooleanExpEditorVariableErrorFinder.getErrors(
+                    postAntlrHandler,
+                    property.getSymVarList(),
+                    GUIController.getController().getCodeArea()
+            )
+        );
         // bounded variable error finder
         return combinedErrors;
     }

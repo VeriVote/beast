@@ -27,13 +27,16 @@ public abstract class AccessValueNode extends TypeExpression {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (o == null || getClass() != o.getClass())
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
+        }
         AccessValueNode that = (AccessValueNode) o;
-        if (count != that.count)
+        if (count != that.count) {
             return false;
+        }
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
         return Arrays.equals(accessingVars, that.accessingVars);
     }

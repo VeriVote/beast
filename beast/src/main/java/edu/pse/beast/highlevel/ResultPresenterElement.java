@@ -16,12 +16,12 @@ public interface ResultPresenterElement {
     /**
      * Presents that a timeOut stopped the checking
      *
-     * @param isTimeout true, if it was a timeout, false if it was by the user
+     * @param isTimeout true if it was a timeout, false if it was by the user
      */
     void presentCanceled(boolean isTimeout);
 
     /**
-     * Presents that the check was successfull
+     * Presents that the check was successful
      */
     void presentSuccess();
 
@@ -35,7 +35,7 @@ public interface ResultPresenterElement {
     /**
      * Presents the example that fails the property
      *
-     * @param example the example to be presented
+     * @param result the example to be presented
      */
     void presentFailureExample(Result result);
 

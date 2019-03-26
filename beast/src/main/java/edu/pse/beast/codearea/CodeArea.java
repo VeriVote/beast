@@ -21,19 +21,18 @@
 //import edu.pse.beast.toolbox.UserAction;
 //
 ///**
-// * This class is the Fassade to the package of the same name - CodeArea. 
-// * It allows classes using this package to access its most commonly needed 
+// * This class is the facade to the package of the same name - CodeArea.
+// * It allows classes using this package to access its most commonly needed
 // * utilities without having to know about the classes which implement these.
 // * The Package CodeArea uses a JTextPane to allow other classes to implement
-// * code editor functionality without having to reimplement commonly needed features.
+// * code editor functionality without having to re-implement commonly needed features.
 // * As such, it provides basic implementations for error finding and code completion.
-// * Child classes such as booleanexpcodearea use this to add specific error finders
-// * and autocompletion possiblitites. Thus, the code area can be specialized towards 
+// * Child classes such as boolean expression code area use this to add specific error finders
+// * and auto-completion possibilities. Thus, the code area can be specialized towards
 // * a certain language.
-// * @author Holger Klein 
+// * @author Holger Klein
 // */
 //public class CodeArea implements AncestorListener {
-//    
 //    /**
 //     * the JTextpane on which the code will be presented to the user and
 //     * through which the user communicates with the codearea classes
@@ -46,13 +45,13 @@
 //    /**
 //     * handles input processing
 //     */
-//    protected UserInputHandler userInputHandler;   
+//    protected UserInputHandler userInputHandler;
 //    /**
-//     * handles mapping shortcuts to useractions
+//     * handles mapping shortcuts to user actions
 //     */
 //    protected ShortcutHandler shortcutHandler;
 //    /**
-//     * this class is used by the userinputhandler. It translates user input 
+//     * this class is used by the user input handler. It translates user input
 //     * into changes in the code
 //     */
 //    protected UserInsertToCode insertToCode;
@@ -61,24 +60,24 @@
 //     */
 //    protected Actionlist actionList;
 //    /**
-//     * this class controlls error finding and displaying
+//     * this class controls error finding and displaying
 //     */
 //    protected ErrorController errorCtrl;
 //    /**
-//     * this class controlls finding and displaying autocompletion possibilities
+//     * this class controls finding and displaying auto-completion possibilities
 //     */
 //    protected AutocompletionController autoComplCtrl;
 //    /**
-//     * This class provides access to and generates all useractions which can
-//     * be performed on a codearea
+//     * This class provides access to and generates all user actions which can
+//     * be performed on a code area
 //     */
 //    protected CodeAreaUserActions userActionList;
 //    /**
-//     * This class implements syntax highliting
+//     * This class implements syntax highlighting
 //     */
 //    protected SyntaxHL syntaxHL;
 //    /**
-//     * This class messages other classes once the user has stopped typing 
+//     * This class messages other classes once the user has stopped typing
 //     * continuously
 //     */
 //    protected StoppedTypingContinuouslyMessager stoppedTypingContinuouslyMessager;
@@ -86,20 +85,22 @@
 //     * this class highlight corresponding open/close chars
 //     */
 //    protected OpenCloseCharHighlighter openCloseCharHighlighter;
-//    
+//
 //    /**
 //     * The constructor simply sets all member variables to the supplied classes
 //     * @param pane the JTextpane on which the code will be presented to the user and
-//     * through which the user communicates with the codearea classes
+//     * through which the user communicates with the code area classes
 //     * @param tln shows the line numbers
 //     * @param userInputHandler handles input processing
-//     * @param insertToCode used by the userinputhandler. It translates user input 
-//     * into changes in the code
+//     * @param insertToCode used by the user-input handler. It translates user input
+//     * into changes in the code.
 //     * @param actionList enables undoing and redoing actions
-//     * @param errorCtrl controlls error finding and displaying
-//     * @param autoComplCtrl controlls finding and displaying autocompletion possibilities
-//     * @param syntaxHL implements syntax highliting
-//     * @param stoppedTypingContinuouslyMessager messages other classes once the user has stopped typing 
+//     * @param errorCtrl controls error finding and displaying
+//     * @param autoComplCtrl                     controls finding and displaying
+//     *                                          auto-completion possibilities
+//     * @param syntaxHL                          implements syntax highlighting
+//     * @param stoppedTypingContinuouslyMessager messages other classes once the user
+//     *                                          has stopped typing
 //     * continuously
 //     */
 //    public CodeArea(
@@ -113,7 +114,7 @@
 //            SyntaxHL syntaxHL,
 //            StoppedTypingContinuouslyMessager stoppedTypingContinuouslyMessager) {
 //        this.pane = pane;
-//        this.tln = tln; 
+//        this.tln = tln;
 //        this.userInputHandler = userInputHandler;
 //        this.shortcutHandler = userInputHandler.getShortcutHandler();
 //        this.insertToCode = insertToCode;
@@ -122,12 +123,13 @@
 //        this.autoComplCtrl = autoComplCtrl;
 //        this.syntaxHL = syntaxHL;
 //        this.stoppedTypingContinuouslyMessager = stoppedTypingContinuouslyMessager;
-//        this.openCloseCharHighlighter = new OpenCloseCharHighlighter(insertToCode.getOccList(), pane);
+//        this.openCloseCharHighlighter =
+//            new OpenCloseCharHighlighter(insertToCode.getOccList(), pane);
 //        pane.addAncestorListener(this);
 //    }
 //
 //    /**
-//     * This constructor initialises all the fields with the fields of the 
+//     * This constructor initialises all the fields with the fields of the
 //     * given codearea. Used to construct classes which inherit from codearea
 //     * @param codeArea the fields of this codeare are taken to initialize the fields
 //     * of the new codearea
@@ -147,13 +149,13 @@
 //        this.openCloseCharHighlighter = codeArea.openCloseCharHighlighter;
 //        pane.addAncestorListener(this);
 //    }
-//    
+//
 //    public ErrorController getErrorCtrl() {
 //        return errorCtrl;
 //    }
-//    
+//
 //    /**
-//     * locks the given line so the user cant edit it
+//     * locks the given line so the user cannot edit it
 //     * @param line the line to be locked, starting at 0
 //     */
 //    public void lockLine(int line) {
@@ -162,21 +164,21 @@
 //
 //    /**
 //     * return the first line of the code which is locked. Throws an exception
-//     * indexoutofbounds exception if no line is locked
+//     * index-out-of-bounds exception if no line is locked
 //     * @return the first locked line
 //     */
 //    public int getFirstLockedLine() {
 //        return insertToCode.getFirstLockedLine();
 //    }
-//    
+//
 //    public CodeAreaUserActions getUserActionList() {
 //        return userActionList;
 //    }
 //
 //    public void setUserActionList(CodeAreaUserActions userActionList) {
 //        this.userActionList = userActionList;
-//    }    
-//    
+//    }
+//
 //    public JTextPane getPane() {
 //        return this.pane;
 //    }
@@ -196,7 +198,7 @@
 //    public void insertString(String string) {
 //        insertToCode.insertString(string);
 //    }
-//    
+//
 //    public void replaceVotingDecline(List<String> code) throws BadLocationException {
 //      insertToCode.updateVotingDeclLine(code);
 //    }
@@ -213,7 +215,7 @@
 //
 //    public AutocompletionController getAutoComplCtrl() {
 //        return autoComplCtrl;
-//    }    
+//    }
 //
 //    @Override
 //    public void ancestorAdded(AncestorEvent ae) {
@@ -248,6 +250,4 @@
 //    public void resumeErrorFinding() {
 //        errorCtrl.resumeErrorFinding();
 //    }
-//    
-//
 //}

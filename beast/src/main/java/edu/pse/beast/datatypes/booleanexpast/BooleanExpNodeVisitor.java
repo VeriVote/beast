@@ -109,7 +109,8 @@ public interface BooleanExpNodeVisitor {
 
     /**
      *
-     * @param exp the vote sum expression to visit
+     * @param exp    the vote sum expression to visit
+     * @param unique unique or not
      */
     void visitVoteSumExp(VoteSumForCandExp exp, boolean unique);
 

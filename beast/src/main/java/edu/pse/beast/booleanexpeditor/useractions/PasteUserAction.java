@@ -21,6 +21,7 @@
 //
 //    @Override
 //    public void perform() {
-//        editor.getCodeAreaFocusListener().getLastFocused().getUserActionList().getActionById("paste").perform();
+//        editor.getCodeAreaFocusListener().getLastFocused().getUserActionList()
+//        .getActionById("paste").perform();
 //    }
 //}

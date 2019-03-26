@@ -10,7 +10,8 @@
 //import org.junit.Test;
 //
 //import edu.pse.beast.booleanexpeditor.booleanexpcodearea.BooleanExpANTLRHandler;
-//import edu.pse.beast.booleanexpeditor.booleanexpcodearea.errorfinder.BooleanExpEditorVariableErrorFinder;
+//import edu.pse.beast.booleanexpeditor.booleanexpcodearea.errorfinder
+//        .BooleanExpEditorVariableErrorFinder;
 //import edu.pse.beast.celectiondescriptioneditor.electiontemplates.ElectionTemplateHandler;
 //import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 //import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
@@ -39,7 +40,8 @@
 //      }
 //        varList = new SymbolicVariableList();
 //        stringRes =
-//            new StringLoaderInterface("en").getBooleanExpEditorStringResProvider().getBooleanExpErrorStringRes();
+//            new StringLoaderInterface("en").getBooleanExpEditorStringResProvider()
+//            .getBooleanExpErrorStringRes();
 //    }
 //
 //    @BeforeClass
@@ -83,7 +85,9 @@
 ////    @Test
 ////    public void testFindsCantCompareErrorDifferentLists() {
 ////        ElectionTypeContainer input =
-//              new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE);
+//              new ElectionTemplateHandler().getById(
+//                  ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE
+//              );
 ////        ElectionTypeContainer res = new ElectionTemplateHandler().getStandardResult();
 ////
 ////        BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
@@ -106,7 +110,9 @@
 ////    @Test
 ////    public void testFindsWrongVarPassedToVotesum() {
 ////        ElectionTypeContainer input =
-//              new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE);
+//              new ElectionTemplateHandler().getById(
+//                  ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE
+//              );
 ////        ElectionTypeContainer res = new ElectionTemplateHandler().getStandardResult();
 ////
 ////        BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
@@ -129,7 +135,9 @@
 ////    @Test
 ////    public void testGetVarNotDeclError() {
 ////        ElectionTypeContainer input =
-//              new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE);
+//              new ElectionTemplateHandler().getById(
+//                  ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE
+//              );
 ////        ElectionTypeContainer res = new ElectionTemplateHandler().getStandardResult();
 ////
 ////        BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();
@@ -150,7 +158,9 @@
 ////    @Test
 ////    public void testTooManyVarsPassedElect() {
 ////        ElectionTypeContainer input =
-//              new ElectionTemplateHandler().getById(ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE);
+//              new ElectionTemplateHandler().getById(
+//                  ElectionTypeContainer.ElectionInputTypeIds.PREFERENCE
+//              );
 ////        ElectionTypeContainer res = new ElectionTemplateHandler().getStandardResult();
 ////
 ////        BooleanExpScopehandler scopehandler = new BooleanExpScopehandler();

@@ -19,7 +19,7 @@ public class FormalPropertiesDescription {
     }
 
     /**
-     * 
+     *
      * @return the code of the FormalPropertyDescription
      */
     public String getCode() {

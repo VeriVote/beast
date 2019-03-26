@@ -36,8 +36,8 @@
 //    private final FindWordsConcurrently conc;
 //    private final Thread t;
 //    private final AutocompletionFrame frame;
-//    private final UserInsertToCode insertToCode;    
-//    
+//    private final UserInsertToCode insertToCode;
+//
 //    public AutocompletionController(JTextPane pane, UserInsertToCode insertToCode) {
 //        this.pane = pane;
 //        pane.addAncestorListener(this);
@@ -51,41 +51,41 @@
 //        frame.setAlwaysOnTop(true);
 //        frame.getjList1().addKeyListener(this);
 //        frame.getjList1().addMouseListener(this);
-//        
 //        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-//        
 //    }
-//    
+//
 //    public void stopThread() {
 //        conc.stop();
 //    }
-//    
+//
 //     public void addAutocompletionString(String s) {
 //        for(AutocompletionOption opt : completionOptions) {
-//            if(opt.getInsertString().equals(s)) return;        
+//            if(opt.getInsertString().equals(s)) {
+//                return;
+//            }
 //        }
 //        completionOptions.add(new AutocompletionOption(s, s));
 //    }
 //
 //    @Override
-//    public void keyTyped(KeyEvent ke) {             
+//    public void keyTyped(KeyEvent ke) {
 //       if(ke.getSource() == frame.getjList1()) {
 //            if(ke.getKeyCode() == KeyEvent.VK_UP ||
 //                ke.getKeyCode() == KeyEvent.VK_DOWN ||
 //                ke.getKeyCode() == KeyEvent.VK_ENTER ||
-//                ke.getKeyCode() == KeyEvent.VK_CONTROL) {                
+//                ke.getKeyCode() == KeyEvent.VK_CONTROL) {
 //                return;
 //            } else {
 //                int selection = frame.getjList1().getSelectedIndex();
-//                for(int i = 0; i < pane.getKeyListeners().length; ++i) {
-//                if(pane.getKeyListeners()[i] != this) 
+//                for (int i = 0; i < pane.getKeyListeners().length; ++i) {
+//                    if (pane.getKeyListeners()[i] != this) {
 //                        pane.getKeyListeners()[i].keyTyped(ke);
+//                    }
 //                }
 //                giveMenuOptions();
 //                ke.consume();
 //                frame.getjList1().setSelectedIndex(selection);
-//            }            
-//            
+//            }
 //       }
 //    }
 //
@@ -93,7 +93,7 @@
 //    public void keyPressed(KeyEvent ke) {
 //        if(ke.getSource() == frame.getjList1()) {
 //            if(ke.getKeyCode() == KeyEvent.VK_UP ||
-//                ke.getKeyCode() == KeyEvent.VK_DOWN) {                
+//                ke.getKeyCode() == KeyEvent.VK_DOWN) {
 //                return;
 //            } else if(ke.getKeyCode() == KeyEvent.VK_ESCAPE) {
 //                frame.setVisible(false);
@@ -101,7 +101,7 @@
 //                String s = frame.getjList1().getSelectedValue();
 //                if(s != null) choseCompletion(s);
 //                frame.setVisible(false);
-//            } 
+//            }
 //        }
 //    }
 //
@@ -110,30 +110,32 @@
 //        if(ke.getSource() == frame.getjList1()) {
 //            if(ke.getKeyCode() == KeyEvent.VK_UP ||
 //                ke.getKeyCode() == KeyEvent.VK_DOWN ||
-//                ke.getKeyCode() == KeyEvent.VK_ENTER || 
-//                ke.getKeyCode() == KeyEvent.VK_CONTROL || 
-//                ke.getKeyCode() == KeyEvent.VK_SPACE) {                
+//                ke.getKeyCode() == KeyEvent.VK_ENTER ||
+//                ke.getKeyCode() == KeyEvent.VK_CONTROL ||
+//                ke.getKeyCode() == KeyEvent.VK_SPACE) {
 //                return;
-//            } 
+//            }
 //        }
-//        if(ke.isControlDown() && ke.getKeyChar()== KeyEvent.VK_SPACE) {            
+//        if(ke.isControlDown() && ke.getKeyChar()== KeyEvent.VK_SPACE) {
 //            try {
 //                giveMenuOptions();
 //                Point loc = new Point(
 //                        pane.modelToView(pane.getCaretPosition()).x,
-//                        pane.modelToView(pane.getCaretPosition()).y);                  
-//                frame.setLocation(pane.getLocationOnScreen().x + loc.x, pane.getLocationOnScreen().y + loc.y + 20);
+//                        pane.modelToView(pane.getCaretPosition()).y);
+//                frame.setLocation(pane.getLocationOnScreen().x + loc.x,
+//                                  pane.getLocationOnScreen().y + loc.y + 20);
 //                frame.setVisible(true);
 //                frame.getjList1().setSelectedIndex(0);
 //            } catch (BadLocationException ex) {
-//                Logger.getLogger(AutocompletionController.class.getName()).log(Level.SEVERE, null, ex);
+//                Logger.getLogger(AutocompletionController.class.getName())
+//                .log(Level.SEVERE, null, ex);
 //            }
 //        }
 //    }
-//    
+//
 //    private String getWordAtCursor() throws BadLocationException {
 //        int wordAtCursorStartPos = JTextPaneToolbox.getWordBeginningAtCursor(pane);
-//        String wordAtCursor = 
+//        String wordAtCursor =
 //            pane.getStyledDocument().getText(
 //                wordAtCursorStartPos, pane.getCaretPosition() - wordAtCursorStartPos);
 //        return wordAtCursor;
@@ -145,19 +147,20 @@
 //            completionOptions.sort(new WordsMoreEqualToComparator(word));
 //            String opts[] = new String[completionOptions.size()];
 //            for (int i = 0; i < opts.length; i++) {
-//                opts[i] = completionOptions.get(i).getInsertString();                
+//                opts[i] = completionOptions.get(i).getInsertString();
 //            }
 //            frame.showUserOptions(opts);
 //        } catch (BadLocationException ex) {
-//            Logger.getLogger(AutocompletionController.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(AutocompletionController.class.getName())
+//            .log(Level.SEVERE, null, ex);
 //        }
 //    }
 //
 //     public void choseCompletion(String chosen) {
 //        for(AutocompletionOption opt : completionOptions) {
-//            if(opt.getInsertString().equals(chosen)) {   
-//                opt.insertInto(pane, pane.getCaretPosition(), insertToCode);                
-//                return;                
+//            if(opt.getInsertString().equals(chosen)) {
+//                opt.insertInto(pane, pane.getCaretPosition(), insertToCode);
+//                return;
 //            }
 //        }
 //    }

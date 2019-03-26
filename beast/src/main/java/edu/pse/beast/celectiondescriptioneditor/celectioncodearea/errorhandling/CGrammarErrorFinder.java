@@ -43,27 +43,35 @@ public class CGrammarErrorFinder implements ErrorFinder, ANTLRErrorListener {
     }
 
     @Override
-    public void syntaxError(Recognizer<?, ?> rcgnzr, Object offendingSymbol, int line, int charPosInLine, String msg,
-            RecognitionException e) {
-        CodeError err = new CodeError(line, charPosInLine, "antlr", 0, ((Token) offendingSymbol).getStartIndex(),
-                ((Token) offendingSymbol).getStopIndex());
+    public void syntaxError(Recognizer<?, ?> rcgnzr,
+                            Object offendingSymbol,
+                            int line,
+                            int charPosInLine,
+                            String msg,
+                            RecognitionException e) {
+        CodeError err =
+            new CodeError(line, charPosInLine, "antlr", 0,
+                          ((Token) offendingSymbol).getStartIndex(),
+                          ((Token) offendingSymbol).getStopIndex());
         err.setExtraInfo("msg", msg);
         errors.add(err);
     }
 
     @Override
-    public void reportAmbiguity(Parser parser, DFA dfa, int i, int i1, boolean bln, BitSet bitset, ATNConfigSet atncs) {
-
+    public void reportAmbiguity(Parser parser, DFA dfa,
+                                int i, int i1, boolean bln,
+                                BitSet bitset, ATNConfigSet atncs) {
     }
 
     @Override
-    public void reportAttemptingFullContext(Parser parser, DFA dfa, int i, int i1, BitSet bitset, ATNConfigSet atncs) {
-
+    public void reportAttemptingFullContext(Parser parser, DFA dfa,
+                                            int i, int i1,
+                                            BitSet bitset, ATNConfigSet atncs) {
     }
 
     @Override
-    public void reportContextSensitivity(Parser parser, DFA dfa, int i, int i1, int i2, ATNConfigSet atncs) {
-
+    public void reportContextSensitivity(Parser parser, DFA dfa,
+                                         int i, int i1, int i2,
+                                         ATNConfigSet atncs) {
     }
-
 }

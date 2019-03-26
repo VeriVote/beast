@@ -67,7 +67,7 @@ public class JTextPaneToolboxTest {
 
     /**
      * Test of getLinesBetween method, of class JTextPaneToolbox.
-     * 
+     *
      * @throws Exception when location does not exist
      */
     @Test

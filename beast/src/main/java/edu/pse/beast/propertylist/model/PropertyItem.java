@@ -96,11 +96,7 @@ public class PropertyItem implements ResultPresenterElement {
         if (o == null || this.getClass() != o.getClass()) {
             return false;
         }
-        if (this.description.getName().equals(((PropertyItem) o).description.getName())) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.description.getName().equals(((PropertyItem) o).description.getName());
     }
 
     // getter and setter
@@ -118,8 +114,12 @@ public class PropertyItem implements ResultPresenterElement {
 //  }
 
 //  public void setDescriptionName(String newName) {
-//    this.description = new PreAndPostConditionsDescription(newName, this.description.getPreConditionsDescription(),
-//        this.description.getPostConditionsDescription(), this.description.getSymVarList());
+//    this.description =
+//        new PreAndPostConditionsDescription(
+//                newName,
+//                this.description.getPreConditionsDescription(),
+//                this.description.getPostConditionsDescription(),
+//                this.description.getSymVarList());
 //  }
 
     public String getDescriptionName() {

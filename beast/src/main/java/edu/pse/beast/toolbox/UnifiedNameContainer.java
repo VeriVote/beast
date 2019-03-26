@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public class UnifiedNameContainer {
-
     private static List<NameChangeListener> listeners = new LinkedList<NameChangeListener>();
-
     private static Map<String, String> map = new HashMap<String, String>();
 
     static {
@@ -69,19 +67,19 @@ public class UnifiedNameContainer {
         return map.get("votingMethod");
     }
 
-    public static String getStruct_result() {
+    public static String getStructResult() {
         return "struct " + map.get("struct_result");
     }
 
-    public static String getStruct_candidateList() {
+    public static String getStructCandidateList() {
         return "struct " + map.get("struct_candidateList");
     }
 
-    public static String getStruct_stack_result() {
+    public static String getStructStackResult() {
         return "struct " + map.get("stack_result");
     }
 
-    public static String getResult_arr_name() {
+    public static String getResultArrName() {
         return map.get("result_arr_name");
     }
 
@@ -117,15 +115,15 @@ public class UnifiedNameContainer {
         return "votingMethod";
     }
 
-    public static String getStruct_resultKey() {
+    public static String getStructResultKey() {
         return "struct_result";
     }
 
-    public static String getStruct_stack_resultKey() {
+    public static String getStructStackResultKey() {
         return "stack_result";
     }
 
-    public static String getResult_arr_nameKey() {
+    public static String getResultArrNameKey() {
         return "result_arr_name";
     }
 
@@ -153,16 +151,16 @@ public class UnifiedNameContainer {
         setInMap("votingMethod", votingMethod);
     }
 
-    public static void setStruct_result(String struct_result) {
-        setInMap("struct_result", struct_result);
+    public static void setStructResult(String structResult) {
+        setInMap("struct_result", structResult);
     }
 
-    public static void setStack_result(String stack_result) {
-        setInMap("stack_result", stack_result);
+    public static void setStackResult(String stackResult) {
+        setInMap("stack_result", stackResult);
     }
 
-    public static void setResult_arr_name(String result_arr_name) {
-        setInMap("result_arr_name", result_arr_name);
+    public static void setResultArrName(String resultArrName) {
+        setInMap("result_arr_name", resultArrName);
     }
 
     public static void setVotingArray(String votingArray) {
@@ -173,5 +171,4 @@ public class UnifiedNameContainer {
         map.put(key, toSet);
         notifyNameChangeListeners();
     }
-
 }
