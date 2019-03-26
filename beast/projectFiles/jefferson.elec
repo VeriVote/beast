@@ -4,7 +4,7 @@
 //null: null
 struct stack_result voting(unsigned int votes[C]) {
  struct stack_result mandates;
-    
+
  for (int i = 0; i < C; i++) { mandates.arr[i] = 0; }
 
  int quotaNumerator = nondet_int();
@@ -27,5 +27,5 @@ int total_mand = 0;
  __CPROVER_assume (total_mand == S);
 
 return mandates;
-} 
+}
 9 inputType19 SINGLE_CHOICE_STACK10 outputType15 STACK_PER_PARTY
