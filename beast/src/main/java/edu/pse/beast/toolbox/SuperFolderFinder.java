@@ -23,8 +23,13 @@ public final class SuperFolderFinder {
         if (!initialized || superFolder.length() == 0) {
             // the class is two "directories away from the super folder
             // counteract possible whitespace errors on windows
-            File f = new File(SuperFolderFinder.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-            superFolder = (new File(f.getParent()).getParent()).replaceAll("%20", " ");
+            final String pathName =
+                    SuperFolderFinder.class.getProtectionDomain()
+                        .getCodeSource().getLocation().getPath();
+            File f = new File(pathName);
+            superFolder =
+                    (new File(f.getParent()).getParent())
+                    .replaceAll("%20", " ");
         }
         return superFolder;
     }

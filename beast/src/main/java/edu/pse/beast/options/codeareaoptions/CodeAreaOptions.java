@@ -46,7 +46,9 @@
 //            possibleTabSizes.add(String.valueOf(i));
 //        }
 //
-//        spacesPerTab = new SpacesPerTabOptionElement(possibleTabSizes, loader.getStringFromID("spaces_per_tab"));
+//        spacesPerTab =
+//            new SpacesPerTabOptionElement(possibleTabSizes,
+//                                          loader.getStringFromID("spaces_per_tab"));
 //
 //        optElements.add(fontType);
 //        optElements.add(fontSize);
@@ -87,7 +89,8 @@
 //    protected void reapplySpecialized() {
 //        Font f = new Font(fontType.getChosenOption(), Font.PLAIN, fontSize.getsize());
 //        codeArea.setFont(f);
-//        codeArea.getInsertToCode().getTabInserter().setAmountSpacesPerTab(spacesPerTab.getNumberTabs());
+//        codeArea.getInsertToCode().getTabInserter()
+//            .setAmountSpacesPerTab(spacesPerTab.getNumberTabs());
 //    }
 //
 //    /**

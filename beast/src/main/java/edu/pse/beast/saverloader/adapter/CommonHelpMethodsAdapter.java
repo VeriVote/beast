@@ -18,7 +18,8 @@ public class CommonHelpMethodsAdapter
         implements JsonSerializer<CommonHelpMethods>, JsonDeserializer<CommonHelpMethods> {
 
     @Override
-    public CommonHelpMethods deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public CommonHelpMethods deserialize(JsonElement json, Type typeOfT,
+                                         JsonDeserializationContext context)
             throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         String type = jsonObject.get("type").getAsString();
@@ -26,11 +27,14 @@ public class CommonHelpMethodsAdapter
 
         try {
 
-            for (Iterator<CommonHelpMethods> iterator = CommonHelpMethods.getImplementations().iterator(); iterator
-                    .hasNext();) {
+            for (Iterator<CommonHelpMethods> iterator =
+                    CommonHelpMethods.getImplementations().iterator();
+                    iterator.hasNext();) {
                 CommonHelpMethods implementation = (CommonHelpMethods) iterator.next();
                 if (implementation.getClass().getSimpleName().equals(type)) {
-                    return context.deserialize(element, Class.forName(implementation.getClass().getName()));
+                    return context.deserialize(element,
+                                               Class.forName(
+                                                       implementation.getClass().getName()));
                 }
             }
 
@@ -43,12 +47,12 @@ public class CommonHelpMethodsAdapter
     }
 
     @Override
-    public JsonElement serialize(CommonHelpMethods src, Type typeOfSrc, JsonSerializationContext context) {
+    public JsonElement serialize(CommonHelpMethods src, Type typeOfSrc,
+                                 JsonSerializationContext context) {
         JsonObject result = new JsonObject();
         result.add("type", new JsonPrimitive(src.getClass().getSimpleName()));
         result.add("properties", context.serialize(src, src.getClass()));
 
         return result;
     }
-
 }

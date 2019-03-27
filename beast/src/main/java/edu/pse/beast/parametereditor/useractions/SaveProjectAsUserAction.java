@@ -27,7 +27,8 @@
 //     * @param stringResourceLoader StringResourceLoader
 //     */
 //    public SaveProjectAsUserAction(PropertyList propertyList,
-//                                   CElectionDescriptionEditor cElectionEditor, ParameterEditor paramEditor,
+//                                   CElectionDescriptionEditor cElectionEditor0,
+//                                   ParameterEditor paramEditor,
 //                                   StringResourceLoader stringResourceLoader) {
 //        super("save_as");
 //        this.propertyList = propertyList;

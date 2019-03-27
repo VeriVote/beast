@@ -118,8 +118,11 @@ public class SortedIntegerList {
      *
      * @param start    defines the exclusive lower bound
      * @param subtract number to be subtracted from all elements > start
+     * @param func     the function
      */
-    public void subtractIfBigger(int start, int subtract, SortedIntegerListCalleeFunction func) {
+    public void subtractIfBigger(int start,
+                                 int subtract,
+                                 SortedIntegerListCalleeFunction func) {
         int i = 0;
         while (i < container.size() && container.get(i) <= start) {
             ++i;
@@ -137,6 +140,7 @@ public class SortedIntegerList {
      *
      * @param start defines the exclusive lower bound
      * @param add   number to be subtracted from all elements > start
+     * @param func  the function
      */
     public void addIfBigger(int start, int add,
                             SortedIntegerListCalleeFunction func) {

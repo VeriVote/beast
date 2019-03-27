@@ -7,8 +7,9 @@ import com.google.gson.JsonSyntaxException;
 import edu.pse.beast.options.OptionsNew;
 import edu.pse.beast.saverloader.SaverLoader;
 
-public class OptionsSaverLoader extends edu.pse.beast.codeareajavafx.SaverLoader implements SaverLoader<OptionsNew> {
-
+public class OptionsSaverLoader
+                extends edu.pse.beast.codeareajavafx.SaverLoader
+                implements SaverLoader<OptionsNew> {
     private static Gson saverLoader;
 
     public OptionsSaverLoader(String fileEnding, String fileExtensionDescription) {

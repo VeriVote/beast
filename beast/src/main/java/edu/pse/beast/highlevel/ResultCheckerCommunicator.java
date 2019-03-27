@@ -23,8 +23,10 @@ public interface ResultCheckerCommunicator {
 //     *            ElectionCheckParameter
 //     * @return array of ResultInterfaces
 //     */
-//    public List<ResultInterface> checkPropertiesForDescription(ElectionDescriptionSource elecDescr,
-//            PreAndPostConditionsDescriptionSource propDescrSrc, ElectionCheckParameter params);
+//    public List<ResultInterface>
+//                checkPropertiesForDescription(ElectionDescriptionSource elecDescr,
+//                                              PreAndPostConditionsDescriptionSource propDescrSrc,
+//                                              ElectionCheckParameter params);
 
     /**
      * Starts checks.
@@ -34,9 +36,10 @@ public interface ResultCheckerCommunicator {
      * @param electionCheckParameter election check parameter
      * @return array of ResultInterfaces
      */
-    public List<Result> checkPropertiesForDescription(ElectionDescription electDescr,
-                                                      List<ParentTreeItem> parentProperties,
-                                                      ElectionCheckParameter electionCheckParameter);
+    public List<Result>
+            checkPropertiesForDescription(ElectionDescription electDescr,
+                                          List<ParentTreeItem> parentProperties,
+                                          ElectionCheckParameter electionCheckParameter);
 
 //
 //    /**
@@ -45,7 +48,9 @@ public interface ResultCheckerCommunicator {
 //     * @param params the parameters to give extra
 //     * @return a single unprocessedResult
 //     */
-//    public UnprocessedCBMCResult checkFile(File toCheck, ElectionDescription elecDescr, ParameterSource params);
+//    public UnprocessedCBMCResult checkFile(File toCheck,
+//                                           ElectionDescription elecDescr,
+//                                           ParameterSource params);
 //
     /**
      * Stops checks.

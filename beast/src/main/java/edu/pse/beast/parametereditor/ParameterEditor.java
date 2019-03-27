@@ -81,7 +81,10 @@
 //        TimeOut timeout = timeoutHandler.getTimeout();
 //        Integer processes = processHandler.getValue();
 //        String argument = argumentHandler.getArgument();
-//        ElectionCheckParameter param = new ElectionCheckParameter(voter, cand, seat, timeout, processes, argument);
+//        ElectionCheckParameter param =
+//            new ElectionCheckParameter(voter, cand, seat,
+//                                       timeout, processes,
+//                                       argument);
 //        return param;
 //    }
 //
@@ -208,10 +211,12 @@
 //    public Project getCurrentlyLoadedProject() {
 //        if (currentlyLoadedProject == null) {
 //            return new Project(getParameter(), propertyList.getModel(),
-//                    cElectionDescriptionEditor.getElectionDescription(), "New Project");
+//                               cElectionDescriptionEditor.getElectionDescription(),
+//                               "New Project");
 //        } else {
 //            return new Project(getParameter(), propertyList.getModel(),
-//                    cElectionDescriptionEditor.getElectionDescription(), currentlyLoadedProject.getName());
+//                               cElectionDescriptionEditor.getElectionDescription(),
+//                               currentlyLoadedProject.getName());
 //        }
 //    }
 //

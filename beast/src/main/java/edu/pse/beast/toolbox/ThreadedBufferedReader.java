@@ -65,13 +65,18 @@ public class ThreadedBufferedReader implements Runnable {
                         // we are still unwinding, so we check the line now
                         // to see, how much we are unwinding
                         try {
-                            int iteration = Integer
-                                    .parseInt(line.split("iteration")[1].split("file")[0].replace(" ", ""));
+                            int iteration =
+                                    Integer.parseInt(
+                                            line.split("iteration")[1]
+                                                    .split("file")[0].replace(" ", "")
+                                    );
                             if (iteration > WARNING_INTERVAL) {
                                 new Thread() {
                                     public void run() {
-                                        ErrorForUserDisplayer.displayError("A loop in your c program is still"
-                                                + " (more than a thousand times)" + " getting unrolled. Maybe you want"
+                                        ErrorForUserDisplayer.displayError(
+                                                "A loop in your c program is still"
+                                                + " (more than a thousand times)"
+                                                + " getting unrolled. Maybe you want"
                                                 + " to stop the checking manually and"
                                                 + " add the \"--unwind\" option.");
                                     }

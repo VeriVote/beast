@@ -21,14 +21,11 @@ public abstract class InputType implements InOutType {
 
     public static List<InputType> getInputTypes() {
         ServiceLoader<InputType> loader = ServiceLoader.load(InputType.class);
-
         List<InputType> types = new ArrayList<InputType>();
-
         for (Iterator<InputType> iterator = loader.iterator(); iterator.hasNext();) {
             InputType type = (InputType) iterator.next();
             types.add(type);
         }
-
         return types;
     }
 
@@ -43,7 +40,7 @@ public abstract class InputType implements InOutType {
      * returns a String containing the shape of the input object e.g "[" +
      * UnifiedNameContainer.getVoter() + "]" for single choice
      *
-     * @return
+     * @return the String with the input object
      */
     public abstract String getInputString();
 
@@ -97,8 +94,9 @@ public abstract class InputType implements InOutType {
     /**
      * extracts the voting data out of the given list of strings into a wrapper
      *
-     * @param result the result of the computation from which the values will be
-     *               extracted
+     * @param result           the result of the computation from which
+     *                         the values will be extracted
+     * @param numberCandidates the number of candidates
      * @return a wrapper which contains the values
      */
     public abstract CBMCResultWrapperMultiArray extractVotesWrappedMulti(List<String> result,
@@ -126,9 +124,13 @@ public abstract class InputType implements InOutType {
         return toReturn;
     }
 
-    public abstract String[] getVotePoints(String[][] votes, int amountCandidates, int amountVoters);
+    public abstract String[] getVotePoints(String[][] votes,
+                                           int amountCandidates,
+                                           int amountVoters);
 
-    public abstract String[] getVotePoints(String[] votes, int amountCandidates, int amountVoters);
+    public abstract String[] getVotePoints(String[] votes,
+                                           int amountCandidates,
+                                           int amountVoters);
 
     // public abstract void addMarginMainCheck(CodeArrayListBeautifier code, int
     // margin, List<String> origResult);
@@ -148,11 +150,14 @@ public abstract class InputType implements InOutType {
      * @param code       the code
      * @param voteNumber the amount of votes
      */
-    public abstract void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, int voteNumber);
+    public abstract void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code,
+                                                     int voteNumber);
 
-    public abstract void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique);
+    public abstract void addCodeForVoteSum(CodeArrayListBeautifier code,
+                                           boolean unique);
 
-    public abstract List<List<String>> getNewVotes(List<String> lastFailedRun, int index);
+    public abstract List<List<String>> getNewVotes(List<String> lastFailedRun,
+                                                   int index);
 
     public abstract InternalTypeContainer getInternalTypeContainer();
 
@@ -172,5 +177,6 @@ public abstract class InputType implements InOutType {
 
     public abstract boolean hasVariableAsMaxValue();
 
-    public abstract List<List<String>> getVotingArray(List<String> lastFailedRun, int index);
+    public abstract List<List<String>> getVotingArray(List<String> lastFailedRun,
+                                                      int index);
 }

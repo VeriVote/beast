@@ -81,7 +81,9 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
             if (to.getDuration() <= 0) {
                 timeoutSpinner.setValue(0);
             } else {
-                timeoutSpinner.setValue(to.getOrigUnit().convert(to.getDuration(), TimeUnit.MILLISECONDS));
+                timeoutSpinner.setValue(
+                        to.getOrigUnit().convert(to.getDuration(),
+                                                 TimeUnit.MILLISECONDS));
             }
             setHasChanged(true);
             switch (to.getOrigUnit()) {
@@ -103,8 +105,9 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
             }
             timeoutBefore = getTimeout();
         } else {
-            timeoutSpinner
-                    .setValue(timeoutBefore.getOrigUnit().convert(timeoutBefore.getDuration(), TimeUnit.MILLISECONDS));
+            timeoutSpinner.setValue(
+                    timeoutBefore.getOrigUnit().convert(timeoutBefore.getDuration(),
+                                                        TimeUnit.MILLISECONDS));
             switch (timeoutBefore.getOrigUnit()) {
             case SECONDS:
                 timeoutUnit.setSelectedIndex(0);

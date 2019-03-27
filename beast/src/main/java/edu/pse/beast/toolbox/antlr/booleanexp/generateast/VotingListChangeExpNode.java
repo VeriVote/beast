@@ -10,7 +10,9 @@ public class VotingListChangeExpNode extends BooleanExpressionNode {
     public final TerminalNode vote;
     public final VotingListChangeContentContext votingListChangeContent;
 
-    public VotingListChangeExpNode(TerminalNode vote, VotingListChangeContentContext votingListChangeContent) {
+    public VotingListChangeExpNode(TerminalNode vote,
+                                   VotingListChangeContentContext
+                                       votingListChangeContent) {
         this.vote = vote;
         this.votingListChangeContent = votingListChangeContent;
     }

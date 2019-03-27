@@ -9,7 +9,8 @@ public class IntersectContentNode extends BooleanExpressionNode {
     public final IntersectContentContext intersectContentContext;
     public final String voteOutput;
 
-    public IntersectContentNode(IntersectContentContext intersectContentContext, String voteOutput) {
+    public IntersectContentNode(IntersectContentContext intersectContentContext,
+                                String voteOutput) {
         this.intersectContentContext = intersectContentContext;
         this.voteOutput = voteOutput;
     }

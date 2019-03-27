@@ -59,7 +59,8 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
                         .addGroup(
                             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup().addComponent(versionLabel)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addPreferredGap(
+                                            javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(versionNumber))
                                 .addComponent(jLabel1))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))

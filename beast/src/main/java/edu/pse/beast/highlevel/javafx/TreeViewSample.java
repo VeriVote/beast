@@ -23,15 +23,23 @@ import javafx.util.Callback;
 
 public class TreeViewSample extends Application {
 
-    private final Node rootIcon = new ImageView(new Image(getClass().getResourceAsStream("root.png")));
-    private final Image depIcon = new Image(getClass().getResourceAsStream("department.png"));
-    List<Employee> employees = Arrays.<Employee>asList(new Employee("Ethan Williams", "Sales Department"),
-            new Employee("Emma Jones", "Sales Department"), new Employee("Michael Brown", "Sales Department"),
-            new Employee("Anna Black", "Sales Department"), new Employee("Rodger York", "Sales Department"),
-            new Employee("Susan Collins", "Sales Department"), new Employee("Mike Graham", "IT Support"),
-            new Employee("Judy Mayer", "IT Support"), new Employee("Gregory Smith", "IT Support"),
-            new Employee("Jacob Smith", "Accounts Department"),
-            new Employee("Isabella Johnson", "Accounts Department"));
+    private final Node rootIcon =
+            new ImageView(new Image(getClass().getResourceAsStream("root.png")));
+    private final Image depIcon =
+            new Image(getClass().getResourceAsStream("department.png"));
+    List<Employee> employees =
+            Arrays.<Employee>asList(
+                    new Employee("Ethan Williams", "Sales Department"),
+                    new Employee("Emma Jones", "Sales Department"),
+                    new Employee("Michael Brown", "Sales Department"),
+                    new Employee("Anna Black", "Sales Department"),
+                    new Employee("Rodger York", "Sales Department"),
+                    new Employee("Susan Collins", "Sales Department"),
+                    new Employee("Mike Graham", "IT Support"),
+                    new Employee("Judy Mayer", "IT Support"),
+                    new Employee("Gregory Smith", "IT Support"),
+                    new Employee("Jacob Smith", "Accounts Department"),
+                    new Employee("Isabella Johnson", "Accounts Department"));
     TreeItem<String> rootNode = new TreeItem<String>("MyCompany Human Resources", rootIcon);
 
     public static void main(String[] args) {
@@ -52,7 +60,9 @@ public class TreeViewSample extends Application {
                 }
             }
             if (!found) {
-                TreeItem<String> depNode = new TreeItem<String>(employee.getDepartment(), new ImageView(depIcon));
+                TreeItem<String> depNode =
+                        new TreeItem<String>(employee.getDepartment(),
+                                             new ImageView(depIcon));
                 rootNode.getChildren().add(depNode);
                 depNode.getChildren().add(empLeaf);
             }
@@ -87,7 +97,6 @@ public class TreeViewSample extends Application {
         @Override
         public void startEdit() {
             super.startEdit();
-
             if (textField == null) {
                 createTextField();
             }
@@ -106,7 +115,6 @@ public class TreeViewSample extends Application {
         @Override
         public void updateItem(String item, boolean empty) {
             super.updateItem(item, empty);
-
             if (empty) {
                 setText(null);
                 setGraphic(null);

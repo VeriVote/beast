@@ -22,21 +22,21 @@ public class ResultPresenterOLD {
     }
 
     // private methods
-    private static String[] getVotePoints(String[] votes, ElectionTypeContainer type, FailureExample ex) {
-
+    private static String[] getVotePoints(String[] votes,
+                                          ElectionTypeContainer type,
+                                          FailureExample ex) {
         int amountCandidates = ex.getNumOfCandidates();
         int amountVoters = ex.getNumOfVoters();
-
         return type.getInputType().getVotePoints(votes, amountCandidates, amountVoters);
     }
 
-    private static String[] getVotePoints(String[][] votes, ElectionTypeContainer type, FailureExample ex) {
+    private static String[] getVotePoints(String[][] votes,
+                                          ElectionTypeContainer type,
+                                          FailureExample ex) {
         int amountCandidates = ex.getNumOfCandidates();
         int amountVoters = ex.getNumOfVoters();
-
         Long[] result = new Long[amountCandidates];
         Arrays.fill(result, 0l);
-
         return type.getInputType().getVotePoints(votes, amountCandidates, amountVoters);
     }
 
@@ -53,14 +53,10 @@ public class ResultPresenterOLD {
     }
 
     public static void presentFailureExample(Result parentResult) { // writes the failure
-        // example to the
-        // styled document
-
+        // example to the styled document
         erasePane();
-
         if (!parentResult.hasFinalMargin()) { //
             FailureExample ex = parentResult.getFailureExample();
-
             if (ex == null) {
                 return;
             }
@@ -68,10 +64,9 @@ public class ResultPresenterOLD {
             appendLine(((StringResourceLoader) srl).getStringFromID("electionType") + ": "
                     + srl.getStringFromID(ex.getTypeString()) + "\n");
             appendLine("");
-
             for (int i = 0; i < ex.getNumOfElections(); i++) {
-                appendLine("====== " + srl.getStringFromID("election").toUpperCase() + " " + (i + 1) + " ======");
-
+                appendLine("====== " + srl.getStringFromID("election").toUpperCase()
+                           + " " + (i + 1) + " ======");
                 // The votes part of the document
                 appendPane(srl.getStringFromID("votes") + ": ");
                 if (ex.isChooseOneCandidate()) {
@@ -80,10 +75,10 @@ public class ResultPresenterOLD {
                     writeVotesForMultipleCandidates(ex, i);
                 }
                 appendLine("");
-
                 // The elected part of the document
                 appendPane(srl.getStringFromID("elected") + ": ");
-                if (ex.getElectionDescription().getContainer().getOutputType().isOutputOneCandidate()) {
+                if (ex.getElectionDescription().getContainer()
+                        .getOutputType().isOutputOneCandidate()) {
                     writeElectedOneCandidate(ex, i);
                 } else {
                     writeElectedMultipleCandidates(ex, i);
@@ -91,21 +86,24 @@ public class ResultPresenterOLD {
 
                 // The vote points part of the document
                 appendLine("\n");
-                appendLine("====== " + srl.getStringFromID("electionpoints").toUpperCase() + " ======");
+                appendLine("====== "
+                           + srl.getStringFromID("electionpoints").toUpperCase()
+                           + " ======");
                 String[] result;
                 if (ex.isChooseOneCandidate()) {
-                    result = getVotePoints(ex.getVotes().get(i).getArray(), ex.getElectionDescription().getContainer(),
-                            ex);
+                    result = getVotePoints(ex.getVotes().get(i).getArray(),
+                                           ex.getElectionDescription().getContainer(),
+                                           ex);
                 } else {
                     result = getVotePoints(ex.getVoteList().get(i).getArray(),
                             ex.getElectionDescription().getContainer(), ex);
                 }
                 for (int j = 0; j < result.length; j++) {
-                    appendLine(srl.getStringFromID("Candidate") + " " + ex.getSymbolicCandidateForIndex(j) + ": "
-                            + result[j]);
+                    appendLine(srl.getStringFromID("Candidate") + " "
+                               + ex.getSymbolicCandidateForIndex(j) + ": "
+                               + result[j]);
                 }
                 appendLine("\n");
-
                 if (parentResult.hasSubResult()) {
                     appendMarginResult(parentResult.getSubResult());
                 }
@@ -113,36 +111,30 @@ public class ResultPresenterOLD {
         } else {
             appendMarginResult(parentResult);
         }
-
         // packFrame();
     }
 
     private static void appendMarginResult(Result marginResult) {
         // FailureExample ex = marginResult.getFailureExample();
-
-        ElectionTypeContainer container = marginResult.getFailureExample().getElectionDescription().getContainer();
+        ElectionTypeContainer container =
+                marginResult.getFailureExample().getElectionDescription().getContainer();
 
         appendLine("================================");
         appendLine("===========Margin Result===========");
         appendLine("================================");
         appendLine("");
-
         final List<List<String>> origVotes = marginResult.getOrigVoting();
 
         appendLine("====original Votes====");
         appendLine("");
-
         String toAppend = container.getInputType().getVoteDescriptionString(origVotes);
-
         appendPane(toAppend);
 
         appendLine("");
-
         appendLine("====original Result====");
         appendLine("");
-
-        toAppend = container.getOutputType().getResultDescriptionString(marginResult.getOrigWinner());
-
+        toAppend = container.getOutputType()
+                    .getResultDescriptionString(marginResult.getOrigWinner());
         appendPane(toAppend);
 
         appendLine("");
@@ -155,21 +147,16 @@ public class ResultPresenterOLD {
             appendLine("");
             appendLine("====new Votes====");
             appendLine("");
-
-            toAppend = container.getInputType().getVoteDescriptionString(marginResult.getNewVotes());
-
+            toAppend = container.getInputType()
+                            .getVoteDescriptionString(marginResult.getNewVotes());
             appendPane(toAppend);
 
             appendLine("");
-
             appendLine("====new Result====");
-
             appendLine("");
-
-            toAppend = container.getOutputType().getResultDescriptionString(marginResult.getNewWinner());
-
+            toAppend = container.getOutputType()
+                        .getResultDescriptionString(marginResult.getNewWinner());
             appendPane(toAppend);
-
         } else {
             appendPane("There is no final margin!");
         }
@@ -182,11 +169,11 @@ public class ResultPresenterOLD {
         // only show differences to preceding election when it is not the first
         // election
         preceding = i == 0 ? elected : ex.getElect().get(i - 1).getValue();
-
         long electedL = Long.parseLong(elected);
-
         if (electedL >= ex.getNumOfCandidates()) { // no candidate wins
-            appendPane(srl.getStringFromID("draw") + "(" + ex.getSymbolicCandidateForIndex(electedL) + ")" + ", ");
+            appendPane(srl.getStringFromID("draw")
+                       + "(" + ex.getSymbolicCandidateForIndex(electedL) + ")"
+                       + ", ");
         } else {
             appendPane(ex.getSymbolicCandidateForIndex(electedL) + ", ");
         }
@@ -195,12 +182,10 @@ public class ResultPresenterOLD {
     private static void writeElectedMultipleCandidates(FailureExample ex, int i) {
         String[] preceding;
         String[] elected = ex.getSeats().get(i).getArray();
-
         preceding = i == 0 ? elected : ex.getSeats().get(i - 1).getArray();
-
         for (int j = 0; j < elected.length; j++) {
-
-            if (Long.parseLong(elected[j]) >= ex.getNumOfCandidates()) { // no candidate wins
+            if (Long.parseLong(elected[j]) >= ex.getNumOfCandidates()) {
+                // no candidate wins
                 appendPane(srl.getStringFromID("draw") + "("
                         + ex.getSymbolicCandidateForIndex(Long.parseLong(elected[j])) + ")");
             } else {
@@ -213,28 +198,21 @@ public class ResultPresenterOLD {
     private static void writeVotesForMultipleCandidates(FailureExample ex, int i) {
         String[][] precedingList;
         String[][] voteList = ex.getVoteList().get(i).getArray();
-
         precedingList = i == 0 ? voteList : ex.getVoteList().get(i - 1).getArray();
-
         for (int j = 0; j < voteList.length; j++) {
-
             if (Arrays.equals(precedingList[j], voteList[j])) {
                 appendPane(Arrays.toString(voteList[j]) + ", ");
             } else {
                 appendPane(Arrays.toString(voteList[j]));
                 appendPane(", ");
             }
-
         }
-
     }
 
     private static void writeVotesForOneCandidate(FailureExample ex, int i) {
         String[] precedingList;
         String[] voteList = ex.getVotes().get(i).getArray();
-
         precedingList = i == 0 ? voteList : ex.getVotes().get(i - 1).getArray();
-
         if (ex.isOneSeatOnly()) {
             for (int j = 0; j < voteList.length; j++) {
                 appendPane(ex.getSymbolicCandidateForIndex(Long.parseLong(voteList[j])));
@@ -300,5 +278,4 @@ public class ResultPresenterOLD {
 //  private static void setExport(JButton export) {
 //    this.export = export;
 //  }
-
 }

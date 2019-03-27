@@ -44,7 +44,9 @@
 //    }
 //    PreAndPostConditionsDescription old = propertyList.get(index).getDescription();
 //
-//    if (editor != null && editor.getCurrentlyLoadedPreAndPostCondition().getName().equals(old.getName())) {
+//    if (editor != null
+//        && editor.getCurrentlyLoadedPreAndPostCondition()
+//            .getName().equals(old.getName())) {
 //      old = editor.getCurrentlyLoadedPreAndPostCondition();
 //      propertyList.get(index).setDescription(newName, old.getPreConditionsDescription(),
 //          old.getPostConditionsDescription(), old.getSymVarList());
@@ -96,7 +98,9 @@
 //    int i = 0;
 //    while (indexOfName(name + i) != -1)
 //      i++;
-//    PropertyItem newItem = new PropertyItem(new PreAndPostConditionsDescription(name + i), false, false);
+//    PropertyItem newItem =
+//        new PropertyItem(new PreAndPostConditionsDescription(name + i),
+//                         false, false);
 //    propertyList.add(newItem);
 //    if (editor != null) {
 //      editor.letUserEditPreAndPostConditions(newItem.getDescription(), true);

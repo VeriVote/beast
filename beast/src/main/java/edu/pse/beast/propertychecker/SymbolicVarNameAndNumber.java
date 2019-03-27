@@ -14,8 +14,8 @@ public class SymbolicVarNameAndNumber {
      * this class wraps a name for a symbolic variable and the number that the
      * checker determined for this candidate
      *
-     * @param name
-     * @param number
+     * @param name   the variable name
+     * @param number the determined number
      */
     public SymbolicVarNameAndNumber(String name, long number) {
         this.name = name;

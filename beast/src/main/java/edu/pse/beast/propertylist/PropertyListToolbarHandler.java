@@ -27,8 +27,12 @@
 //     * @param toolbar The tool-bar of the PropertyList view
 //     * @param window The view of PropertyList
 //     */
-//    public PropertyListToolbarHandler(ImageResourceProvider imageRes, StringResourceLoader stringRes,
-//            ActionIdAndListener[] actionIdsAndListener, JToolBar toolbar, PropertyListWindow window) {
+//    public PropertyListToolbarHandler(ImageResourceProvider imageRes,
+//                                      StringResourceLoader stringRes,
+//                                      ActionIdAndListener[]
+//                                          actionIdsAndListener,
+//                                      JToolBar toolbar,
+//                                      PropertyListWindow window) {
 //        super(imageRes, stringRes, actionIdsAndListener, toolbar);
 //        this.setWindow(window);
 //    }

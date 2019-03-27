@@ -19,14 +19,16 @@ public abstract class CommonHelpMethods {
      * @param name      the name of the variable
      * @return a two dim wrapper of the voting results
      */
-    public abstract List<CBMCResultWrapperMultiArray> readTwoDimVarLong(String name, List<String> toExtract);
+    public abstract List<CBMCResultWrapperMultiArray>
+                readTwoDimVarLong(String name,
+                                  List<String> toExtract);
 
     /**
      * reads a symbolic variable with a given name from a list
      *
-     * @param name
-     * @param toExtract
-     * @return
+     * @param name      the variable name
+     * @param toExtract the list to extract from
+     * @return the variable
      */
     public abstract Long readSymbolicVariable(String name, List<String> toExtract);
 
@@ -35,7 +37,7 @@ public abstract class CommonHelpMethods {
      *
      * @param name      the name of the variable
      * @param toExtract all the lines that should get checked, it they contain the
-     *                  searched var
+     *                  searched variable
      * @return a list of all occurrences
      */
     public abstract List<CBMCResultWrapperLong> readLongs(String name, List<String> toExtract);
@@ -46,20 +48,19 @@ public abstract class CommonHelpMethods {
      * @param name      the name of the saved variable
      * @param toExtract the string list to extract the variable out of
      * @return a list of all variables with a matching name with their index and
-     *         values that occured in the give list
+     *         values that occurred in the give list
      */
-    public abstract List<CBMCResultWrapperSingleArray> readOneDimVarLong(String name, List<String> toExtract);
+    public abstract List<CBMCResultWrapperSingleArray>
+                readOneDimVarLong(String name,
+                                  List<String> toExtract);
 
     public static List<CommonHelpMethods> getImplementations() {
         ServiceLoader<CommonHelpMethods> loader = ServiceLoader.load(CommonHelpMethods.class);
-
         List<CommonHelpMethods> implementations = new ArrayList<CommonHelpMethods>();
-
         for (Iterator<CommonHelpMethods> iterator = loader.iterator(); iterator.hasNext();) {
             CommonHelpMethods implementation = (CommonHelpMethods) iterator.next();
             implementations.add(implementation);
         }
-
         return implementations;
     }
 }

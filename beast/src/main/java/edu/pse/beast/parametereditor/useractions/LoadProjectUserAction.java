@@ -27,7 +27,8 @@
 //     * @param stringResourceLoader StringResourceLoader
 //     */
 //    public LoadProjectUserAction(PropertyList propertyList,
-//                                 CElectionDescriptionEditor cElectionEditor, ParameterEditor paramEditor,
+//                                 CElectionDescriptionEditor cElectionEditor,
+//                                 ParameterEditor paramEditor,
 //                                 StringResourceLoader stringResourceLoader) {
 //        super("load");
 //        this.projectSaverLoader = new ProjectSaverLoader();
@@ -43,7 +44,8 @@
 //        if (paramEditor.getReacts()) {
 //            if (paramEditor.hasChanged() || cElectionEditor.getChangeHandler().hasChanged()
 //                    || propertyList.getChangeHandler().hasChanged()) {
-//                if (!paramEditor.getFileChooser().openSaveChangesDialog(paramEditor.getCurrentlyLoadedProject())) {
+//                if (!paramEditor.getFileChooser()
+//                        .openSaveChangesDialog(paramEditor.getCurrentlyLoadedProject())) {
 //                    return;
 //                }
 //            }

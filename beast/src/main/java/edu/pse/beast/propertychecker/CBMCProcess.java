@@ -33,7 +33,8 @@ public abstract class CBMCProcess extends Checker {
     @Override
     public boolean checkAssertionSuccess() {
         if (super.getResultList() != null && super.getResultList().size() > 0) {
-            return super.getResultList().get(super.getResultList().size() - 1).contains(SUCCESS_LINE);
+            return super.getResultList()
+                    .get(super.getResultList().size() - 1).contains(SUCCESS_LINE);
         } else {
             return false;
         }
@@ -42,7 +43,8 @@ public abstract class CBMCProcess extends Checker {
     @Override
     public boolean checkAssertionFailure() {
         if (super.getResultList() != null && super.getResultList().size() > 0) {
-            return super.getResultList().get(super.getResultList().size() - 1).contains(FAILURE_LINE);
+            return super.getResultList()
+                    .get(super.getResultList().size() - 1).contains(FAILURE_LINE);
         } else {
             return false;
         }

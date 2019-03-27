@@ -74,7 +74,8 @@
 //            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
 //                .addContainerGap()
 //                .addComponent(input, javax.swing.GroupLayout.PREFERRED_SIZE,
-//                              javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                              javax.swing.GroupLayout.DEFAULT_SIZE,
+//                              javax.swing.GroupLayout.PREFERRED_SIZE)
 //                .addGap(18, 18, 18)
 //                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 //                    .addComponent(ok)
@@ -83,13 +84,15 @@
 //        );
 //
 //        pack();
-//    }// </editor-fold>//GEN-END:initComponents
+//    } // </editor-fold>//GEN-END:initComponents
 //
-//    private void inputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputActionPerformed
+//    //GEN-FIRST:event_inputActionPerformed
+//    private void inputActionPerformed(java.awt.event.ActionEvent evt) {
 //        //
-//    }//GEN-LAST:event_inputActionPerformed
+//    } //GEN-LAST:event_inputActionPerformed
 //
-//    private void okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okActionPerformed
+//    //GEN-FIRST:event_okActionPerformed
+//    private void okActionPerformed(java.awt.event.ActionEvent evt) {
 //        if (reacts) {
 //            textAfterLastOK = input.getText();
 //        } else {
@@ -98,10 +101,11 @@
 //        setVisible(false);
 //    }//GEN-LAST:event_okActionPerformed
 //
-//    private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
+//    //GEN-FIRST:event_cancelActionPerformed
+//    private void cancelActionPerformed(java.awt.event.ActionEvent evt) {
 //        input.setText(textAfterLastOK);
 //        setVisible(false);
-//    }//GEN-LAST:event_cancelActionPerformed
+//    } //GEN-LAST:event_cancelActionPerformed
 //
 //    /**
 //     * @param args the command line arguments
@@ -109,11 +113,14 @@
 //    public static void main(String args[]) {
 //        /* Set the Nimbus look and feel */
 //        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+//        /* If Nimbus (introduced in Java SE 6) is not available,
+//         * stay with the default look and feel.
+//         * For details see
+//         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
 //         */
 //        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//            for (javax.swing.UIManager.LookAndFeelInfo info
+//                     : javax.swing.UIManager.getInstalledLookAndFeels()) {
 //                if ("Nimbus".equals(info.getName())) {
 //                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
 //                    break;
@@ -164,7 +171,8 @@
 //
 //    @Override
 //    public void updateStringRes(StringLoaderInterface stringResIF) {
-//        StringResourceLoader other = stringResIF.getParameterEditorStringResProvider().getOtherStringRes();
+//        StringResourceLoader other =
+//            stringResIF.getParameterEditorStringResProvider().getOtherStringRes();
 //        setTitle(other.getStringFromID("title_advanced"));
 //        ok.setText(other.getStringFromID("ok"));
 //        cancel.setText(other.getStringFromID("cancel"));

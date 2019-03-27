@@ -8,13 +8,13 @@
 //import edu.pse.beast.toolbox.ActionIdAndListener;
 //import edu.pse.beast.toolbox.MenuBarHandler;
 ///**
-// * The ParameterEditorMenuBarHandler creates the menubar for the ParameterEditor.
+// * The ParameterEditorMenuBarHandler creates the menu bar for the ParameterEditor.
 // * @author Jonas Wohnig
 // */
 //public class ParameterEditorMenuBarHandler extends MenuBarHandler {
 //    private final ParameterEditorWindow window;
 //    /**
-//     * Creates the menubar and applies it to the ParameterEditorWindow
+//     * Creates the menu bar and applies it to the ParameterEditorWindow
 //     * @param headingIds headings for the different slots on the menu
 //     * @param actionIDAndListener list of ActionIdAndListeners
 //     * @param resLoader loader for the resources
@@ -29,7 +29,8 @@
 //    }
 //    @Override
 //    public void updateStringRes(StringLoaderInterface stringResIF) {
-//        updateStringResLoader(stringResIF.getParameterEditorStringResProvider().getMenuStringRes());
+//        updateStringResLoader(stringResIF.getParameterEditorStringResProvider()
+//                              .getMenuStringRes());
 //        window.setJMenuBar(createdMenuBar);
 //    }
 //}

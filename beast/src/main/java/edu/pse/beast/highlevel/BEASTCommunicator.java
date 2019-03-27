@@ -115,14 +115,10 @@ public final class BEASTCommunicator {
         ElectionDescription electionDesc = GUIController.getController().getElectionDescription();
         List<ParentTreeItem> properties = GUIController.getController().getProperties();
         ElectionCheckParameter parameter = GUIController.getController().getParameter();
-        // checks if there even are any properties selected for analysis in the
-        // PreAndPostConditionsSource
-        boolean hasProperties = false;
-        for (Iterator<ParentTreeItem> iterator = properties.iterator(); iterator.hasNext();) {
-            ParentTreeItem item = (ParentTreeItem) iterator.next();
-            hasProperties = hasProperties || item.isChildSelected();
-        }
-        if (!hasProperties) {
+
+        if (!hasProperties(properties)) {
+            // checks if there even are any properties selected for analysis in the
+            // PreAndPostConditionsSource
             GUIController.setInfoText("no property selected (add string resouce loading later)");
             return false;
         }
@@ -178,7 +174,7 @@ public final class BEASTCommunicator {
                     }
                 });
                 waitForResultsThread.start();
-                return true && !stopped;
+                return !stopped;
             } else {
                 return false;
             }
@@ -223,6 +219,15 @@ public final class BEASTCommunicator {
             }
         }
         return errorsFound;
+    }
+
+    private static boolean hasProperties(List<ParentTreeItem> properties) {
+        boolean hasProperties = false;
+        for (Iterator<ParentTreeItem> iterator = properties.iterator(); iterator.hasNext();) {
+            ParentTreeItem item = (ParentTreeItem) iterator.next();
+            hasProperties = hasProperties || item.isChildSelected();
+        }
+        return hasProperties;
     }
 
     /**

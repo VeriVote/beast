@@ -24,7 +24,7 @@
 //    /**
 //     * Creates new form OptionPresenterFrame
 //     * @param opt Options the options to be presented to the user
-//     * @param srl StringResourceLoader the stringresourseloader used by the whole system
+//     * @param srl StringResourceLoader the string resource loader used by the whole system
 //     */
 //    public OptionPresenterFrame(Options opt, StringResourceLoader srl) {
 //        initComponents();
@@ -38,11 +38,14 @@
 //    }
 //
 //    /**
-//     * if the user presses the apply button, the form closes, then saves and reapplies the given option.
-//     * options.reapply() is only called for this top level function, meaning it has to recursively call it
-//     * on its suboptions.
-//     * @param opt this option is going to get reapplied and its settings saved if the user presses the
-//     * apply button.
+//     * if the user presses the apply button, the form closes,
+//     * then saves and re-applies the given option.
+//     * options.reapply() is only called for this top level function,
+//     * meaning it has to recursively call it
+//     * on its sub-options.
+//     *
+//     * @param opt this option is going to get re-applied and its settings
+//                  saved if the user presses the apply button.
 //     */
 //    private void initializeApplyButtonPressFunctionality(Options opt) {
 //        jButton1.addActionListener((ae) -> {
@@ -54,14 +57,16 @@
 //    }
 //
 //    /**
-//     * displays the options recursively. For every option and cntained suboptions, it creates a new
-//     * panel if the option contains one or more optionitem. For each optionitem, it shows the user
-//     * the string connected to the optionitems id as well as all the choosable options.
-//     * Example: Codearea opions. If it has optionitem fontsize, it shows a panel containing a label saying
-//     * "fontsize" in whatever language is currently chosen and has a dropdownlist next to it displaying the
-//     * possible font sizes (e.g. 5 through 50)
-//     * @param opt this is the top level option which is displayed. all contained suboptions are then displayed
-//     * recursively.
+//     * displays the options recursively. For every option and contained
+//     * sub-options, it creates a new panel if the option contains one or more
+//     * option item. For each option item, it shows the user the string connected
+//     * to the option items id as well as all the choosable options.
+//     * Example: Code area options. If it has option item font size, it shows
+//     * a panel containing a label saying "font size" in whatever language is
+//     * currently chosen and has a drop-down list next to it displaying the
+//     * possible font sizes (e.g. 5 through 50).
+//     * @param opt this is the top level option which is displayed.
+//     *            All contained sub-options are then displayed recursively.
 //     */
 //    private void showOptionsRec(Options opt) {
 //        JPanel panel = new JPanel(new GridLayout(opt.getOptionElements().size(), 2, 5, 5));
@@ -111,8 +116,10 @@
 //    }
 //
 //    /**
-//     * this method makes the optionelement contained in the passed combobox handle if a new item is selected
-//     * @param combobox the comobox containing the optionelement which should handle a new selection
+//     * this method makes the optionelement contained in the passed combo box
+//     * handle if a new item is selected
+//     * @param combobox the combo box containing the option element which
+//     *        should handle a new selection
 //     */
 //    private void addHooksMakingElemHandleNewSelection(OptionElemComboBox combobox) {
 //        combobox.addItemListener((ie) -> {
@@ -120,12 +127,14 @@
 //                ((OptionElemComboBox) ie.getSource()).getElem().handleSelection(
 //                        srl.getIdForString((String) ie.getItem()));
 //            } else {
-//                ((OptionElemComboBox) ie.getSource()).getElem().handleSelection((String) ie.getItem());
+//                ((OptionElemComboBox) ie.getSource()).getElem()
+//                .handleSelection((String) ie.getItem());
 //            }
 //        });
 //    }
 //
-//    private void selectChosenOptionInCombobox(OptionElement elem, DefaultComboBoxModel<String> model) {
+//    private void selectChosenOptionInCombobox(OptionElement elem,
+//                                              DefaultComboBoxModel<String> model) {
 //        if (!srl.containsId(elem.chosenOption) ) {
 //            model.setSelectedItem(elem.chosenOption);
 //        } else {
@@ -133,7 +142,8 @@
 //        }
 //    }
 //
-//    private void addChoosableOptionsToCombobox(OptionElement elem, DefaultComboBoxModel<String> model) {
+//    private void addChoosableOptionsToCombobox(OptionElement elem,
+//                                               DefaultComboBoxModel<String> model) {
 //        for (String s : elem.getChoosableOptions()) {
 //            if (!srl.containsId(s) ) {
 //                model.addElement(s);

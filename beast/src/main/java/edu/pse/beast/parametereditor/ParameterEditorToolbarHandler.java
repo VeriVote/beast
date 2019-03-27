@@ -13,7 +13,8 @@
 // * The ParameterEditorToolbarHandler creates the toolbar for the ParameterEditor.
 // * @author Jonas Wohnig
 // */
-//public class ParameterEditorToolbarHandler extends ToolbarHandler implements DisplaysStringsToUser {
+//public class ParameterEditorToolbarHandler
+//        extends ToolbarHandler implements DisplaysStringsToUser {
 //    private final ParameterEditorWindow window;
 //        /**
 //         * Creates the toolbar and applies it to the ParameterEditorWindow
@@ -23,14 +24,18 @@
 //         * @param toolbar toolbar of the ParameterEditorWindow
 //         * @param window ParameterEditorWindow
 //         */
-//        public ParameterEditorToolbarHandler(ImageResourceProvider imageRes, StringResourceLoader stringRes,
-//            ActionIdAndListener[] actionIdsAndListener, JToolBar toolbar, ParameterEditorWindow window) {
+//        public ParameterEditorToolbarHandler(ImageResourceProvider imageRes,
+//                                             StringResourceLoader stringRes,
+//                                             ActionIdAndListener[] actionIdsAndListener,
+//                                             JToolBar toolbar,
+//                                             ParameterEditorWindow window) {
 //                super(imageRes, stringRes, actionIdsAndListener, toolbar);
 //                this.window = window;
 //        }
 //
 //    @Override
 //    public void updateStringRes(StringLoaderInterface stringResIF) {
-//        super.updateTooltips(stringResIF.getParameterEditorStringResProvider().getToolbarTipStringRes());
+//        super.updateTooltips(stringResIF.getParameterEditorStringResProvider()
+//                             .getToolbarTipStringRes());
 //    }
 //}

@@ -21,7 +21,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 
 public class BooleanExpEditorNEW implements MenuBarInterface {
-
     private NewPropertyCodeArea preArea;
     private NewPropertyCodeArea postArea;
 
@@ -32,126 +31,112 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 
     private final SaverLoader saverLoader;
 
-    private final PropertyDescriptionSaverLoader propSaverLoader = new PropertyDescriptionSaverLoader();
+    private final PropertyDescriptionSaverLoader propSaverLoader =
+            new PropertyDescriptionSaverLoader();
 
     private final ObservableList<TreeItem<String>> symbolicVoterVariableList;
     private final ObservableList<TreeItem<String>> symbolicCandidateVariableList;
     private final ObservableList<TreeItem<String>> symbolicSeatVariableList;
     private NewPropertyCodeArea focusedPane;
 
-    public BooleanExpEditorNEW(NewPropertyCodeArea preArea, NewPropertyCodeArea postArea,
-            BoundedVarCodeArea boundedVarArea, PreAndPostConditionsDescription propDesc, ParentTreeItem currentItem) {
-
+    public BooleanExpEditorNEW(NewPropertyCodeArea preArea,
+                               NewPropertyCodeArea postArea,
+                               BoundedVarCodeArea boundedVarArea,
+                               PreAndPostConditionsDescription propDesc,
+                               ParentTreeItem currentItem) {
         preArea.setParent(this);
         postArea.setParent(this);
-
         this.saverLoader = new SaverLoader(".prop", "BEAST property description");
-
         this.preArea = preArea;
         this.postArea = postArea;
-
         this.boundedVarArea = boundedVarArea;
-
         this.currentPropertyDescription = propDesc;
         this.currentItem = currentItem;
-
-        this.symbolicVoterVariableList = GUIController.getController().getVoterTreeItems().getChildren();
-
-        symbolicCandidateVariableList = GUIController.getController().getCandidateTreeItems().getChildren();
-
-        symbolicSeatVariableList = GUIController.getController().getSeatTreeItems().getChildren();
+        this.symbolicVoterVariableList =
+                GUIController.getController().getVoterTreeItems().getChildren();
+        this.symbolicCandidateVariableList =
+                GUIController.getController().getCandidateTreeItems().getChildren();
+        this.symbolicSeatVariableList =
+                GUIController.getController().getSeatTreeItems().getChildren();
     }
 
     public boolean containsVarName(String name) {
         boolean contains = false;
-
-        for (Iterator<SymbolicVariable> iterator = currentPropertyDescription.getSymbolicVariableList()
+        for (Iterator<SymbolicVariable> iterator =
+                currentPropertyDescription.getSymbolicVariableList()
                 .iterator(); iterator.hasNext();) {
             SymbolicVariable variable = (SymbolicVariable) iterator.next();
             contains = contains || (variable.getId().equals(name));
         }
-
         return contains;
     }
 
-    public synchronized void addSymbVar(InternalTypeContainer container, String toAdd, boolean fromExisting) {
+    public synchronized void addSymbVar(InternalTypeContainer container,
+                                        String toAdd,
+                                        boolean fromExisting) {
         if (!toAdd.equals("")) {
-
             GUIController.getController().getVariableNameField().setText("");
-
             adding: if ((!containsVarName(toAdd))) {
-
                 if (!fromExisting) {
-
                     TreeItem<String> newItem = new TreeItem<String>(toAdd);
-
                     switch (container.getInternalType()) {
                     case VOTER:
                         symbolicVoterVariableList.add(newItem);
                         break;
-
                     case CANDIDATE:
                         symbolicCandidateVariableList.add(newItem);
                         break;
-
                     case SEAT:
                         symbolicSeatVariableList.add(newItem);
                         break;
-
                     default:
                         break adding;
                     }
                 } else {
-                    currentPropertyDescription.getSymbolicVariableList().add(new SymbolicVariable(toAdd, container));
+                    currentPropertyDescription.getSymbolicVariableList()
+                        .add(new SymbolicVariable(toAdd, container));
                 }
             }
         }
     }
 
     public void removeVariable(String name) {
-        for (Iterator<SymbolicVariable> iterator = currentPropertyDescription.getSymbolicVariableList()
-                .iterator(); iterator.hasNext();) {
+        for (Iterator<SymbolicVariable> iterator =
+                currentPropertyDescription.getSymbolicVariableList().iterator();
+                iterator.hasNext();) {
             SymbolicVariable variable = (SymbolicVariable) iterator.next();
             if (variable.getId().equals(name)) {
                 switch (variable.getInternalTypeContainer().getInternalType()) {
                 case VOTER:
-
-                    for (Iterator<TreeItem<String>> treeItemIterator = symbolicVoterVariableList
-                            .iterator(); treeItemIterator.hasNext();) {
+                    for (Iterator<TreeItem<String>> treeItemIterator =
+                        symbolicVoterVariableList.iterator();
+                            treeItemIterator.hasNext();) {
                         TreeItem<String> item = (TreeItem<String>) treeItemIterator.next();
-
                         if (item.getValue().equals(name)) {
                             treeItemIterator.remove();
                         }
-
                     }
-
                     break;
-
                 case CANDIDATE:
-                    for (Iterator<TreeItem<String>> treeItemIterator = symbolicCandidateVariableList
-                            .iterator(); treeItemIterator.hasNext();) {
+                    for (Iterator<TreeItem<String>> treeItemIterator =
+                        symbolicCandidateVariableList.iterator();
+                            treeItemIterator.hasNext();) {
                         TreeItem<String> item = (TreeItem<String>) treeItemIterator.next();
-
                         if (item.getValue().equals(name)) {
                             treeItemIterator.remove();
                         }
-
                     }
                     break;
-
                 case SEAT:
-                    for (Iterator<TreeItem<String>> treeItemIterator = symbolicSeatVariableList
-                            .iterator(); treeItemIterator.hasNext();) {
+                    for (Iterator<TreeItem<String>> treeItemIterator =
+                        symbolicSeatVariableList.iterator();
+                            treeItemIterator.hasNext();) {
                         TreeItem<String> item = (TreeItem<String>) treeItemIterator.next();
-
                         if (item.getValue().equals(name)) {
                             treeItemIterator.remove();
                         }
-
                     }
                     break;
-
                 default:
                     break;
                 }
@@ -161,11 +146,8 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
     }
 
     public void removeAllVariables() {
-
         symbolicVoterVariableList.clear();
-
         symbolicCandidateVariableList.clear();
-
         symbolicSeatVariableList.clear();
     }
 
@@ -185,12 +167,10 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
         currentPropertyDescription.getPreConditionsDescription().setCode(preArea.getText());
         currentPropertyDescription.getPostConditionsDescription().setCode(postArea.getText());
         currentPropertyDescription.getBoundedVarDescription().setCode(boundedVarArea.getText());
-
         currentPropertyDescription.getSymbolicVariableList().clear();
-
         currentPropertyDescription.getSymVarList().clearList();
-
-        currentPropertyDescription.getSymVarList().addSymbolicVariableList(getAllSymbolicVariables());
+        currentPropertyDescription.getSymVarList()
+            .addSymbolicVariableList(getAllSymbolicVariables());
     }
 
     public void updatePropertyTextAreas(PreAndPostConditionsDescription description) {
@@ -199,40 +179,33 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
         boundedVarArea.setDescription(description.getBoundedVarDescription());
     }
 
-    public void setCurrentPropertyDescription(ParentTreeItem propertyItem, boolean bringToFront) {
-
+    public void setCurrentPropertyDescription(ParentTreeItem propertyItem,
+                                              boolean bringToFront) {
         savePropertyTextAreasIntoDescription();
-
         this.currentPropertyDescription = propertyItem.getPreAndPostProperties();
         this.currentItem = propertyItem;
-
         this.removeAllVariables();
-
         updatePropertyTextAreas(currentPropertyDescription);
-
-        for (Iterator<SymbolicVariable> iterator = currentPropertyDescription.getSymbolicVariableList()
-                .iterator(); iterator.hasNext();) {
+        for (Iterator<SymbolicVariable> iterator =
+                currentPropertyDescription.getSymbolicVariableList().iterator();
+                iterator.hasNext();) {
             SymbolicVariable variable = (SymbolicVariable) iterator.next();
-
             this.addSymbVar(variable.getInternalTypeContainer(), variable.getId(), true);
         }
-
         if (bringToFront) {
             bringToFront();
         }
-
         saverLoader.resetHasSaveFile();
-
     }
 
     public void bringToFront() {
         GUIController.getController().getMainTabPane().getSelectionModel()
                 .select(GUIController.getController().getPropertyTab());
-
         if (currentItem != null) {
-            BooleanExpEditorGeneralErrorFinder.hasErrors(currentItem); // checks if there are errors, and if there are
+            // checks if there are errors, and if there are,
+            // it displays them in the error tab
+            BooleanExpEditorGeneralErrorFinder.hasErrors(currentItem);
         }
-        // displays them in the error tab
     }
 
     public ParentTreeItem getCurrentItem() {
@@ -255,15 +228,12 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 
     private PreAndPostConditionsDescription convert(String json) {
         PreAndPostConditionsDescription newDescription = null;
-
         if (!json.equals("")) {
-
             try {
                 newDescription = propSaverLoader.createFromSaveString(json);
             } catch (JsonSyntaxException e) {
                 e.printStackTrace();
             }
-
             return newDescription;
         }
         return null;
@@ -271,22 +241,27 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 
     private SymbolicVariableList getAllSymbolicVariables() {
         SymbolicVariableList toReturn = new SymbolicVariableList();
-
-        for (Iterator<TreeItem<String>> iterator = symbolicVoterVariableList.iterator(); iterator.hasNext();) {
+        for (Iterator<TreeItem<String>> iterator =
+                symbolicVoterVariableList.iterator(); iterator.hasNext();) {
             TreeItem<String> voter = (TreeItem<String>) iterator.next();
-            toReturn.addSymbolicVariable(voter.getValue(), new InternalTypeContainer(InternalTypeRep.VOTER));
+            toReturn.addSymbolicVariable(voter.getValue(),
+                                         new InternalTypeContainer(InternalTypeRep.VOTER));
         }
 
-        for (Iterator<TreeItem<String>> iterator = symbolicCandidateVariableList.iterator(); iterator.hasNext();) {
+        for (Iterator<TreeItem<String>> iterator =
+                symbolicCandidateVariableList.iterator();
+                iterator.hasNext();) {
             TreeItem<String> candidate = (TreeItem<String>) iterator.next();
-            toReturn.addSymbolicVariable(candidate.getValue(), new InternalTypeContainer(InternalTypeRep.CANDIDATE));
+            toReturn.addSymbolicVariable(candidate.getValue(),
+                                         new InternalTypeContainer(InternalTypeRep.CANDIDATE));
         }
-
-        for (Iterator<TreeItem<String>> iterator = symbolicSeatVariableList.iterator(); iterator.hasNext();) {
+        for (Iterator<TreeItem<String>> iterator =
+                symbolicSeatVariableList.iterator();
+                iterator.hasNext();) {
             TreeItem<String> seat = (TreeItem<String>) iterator.next();
-            toReturn.addSymbolicVariable(seat.getValue(), new InternalTypeContainer(InternalTypeRep.SEAT));
+            toReturn.addSymbolicVariable(seat.getValue(),
+                                         new InternalTypeContainer(InternalTypeRep.SEAT));
         }
-
         return toReturn;
     }
 
@@ -296,20 +271,13 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 
     @Override
     public void open() {
-
         PreAndPostConditionsDescription newDescription = convert(saverLoader.load());
-
         if (newDescription != null) {
-
             GUIController.getController().addProperty(newDescription);
-
             currentPropertyDescription = newDescription;
-
             saverLoader.resetHasSaveFile();
-
             preArea.replaceText(newDescription.getPreConditionsDescription().getCode());
             postArea.replaceText(newDescription.getPostConditionsDescription().getCode());
-
             GUIController.getController().setPropNameField(newDescription.getName());
             bringToFront();
         }
@@ -318,26 +286,20 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
     @Override
     public void save() {
         savePropertyTextAreasIntoDescription();
-
         String json = propSaverLoader.createSaveString(currentPropertyDescription);
-
         saverLoader.save("", json);
     }
 
     @Override
     public void saveAs() {
         savePropertyTextAreasIntoDescription();
-
         String json = propSaverLoader.createSaveString(currentPropertyDescription);
-
         saverLoader.saveAs("", json);
     }
 
     public void saveAs(PreAndPostConditionsDescription description, File file) {
         savePropertyTextAreasIntoDescription();
-
         String json = propSaverLoader.createSaveString(description);
-
         saverLoader.saveAs(file, json);
     }
 
@@ -395,22 +357,24 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 
     public List<String> getSymbolicVariableNames() {
         List<String> toReturn = new ArrayList<String>();
-
-        for (Iterator<TreeItem<String>> iterator = symbolicVoterVariableList.iterator(); iterator.hasNext();) {
+        for (Iterator<TreeItem<String>> iterator =
+                symbolicVoterVariableList.iterator();
+                iterator.hasNext();) {
             TreeItem<String> item = (TreeItem<String>) iterator.next();
             toReturn.add(item.getValue());
         }
-
-        for (Iterator<TreeItem<String>> iterator = symbolicVoterVariableList.iterator(); iterator.hasNext();) {
+        for (Iterator<TreeItem<String>> iterator =
+                symbolicVoterVariableList.iterator();
+                iterator.hasNext();) {
             TreeItem<String> item = (TreeItem<String>) iterator.next();
             toReturn.add(item.getValue());
         }
-
-        for (Iterator<TreeItem<String>> iterator = symbolicVoterVariableList.iterator(); iterator.hasNext();) {
+        for (Iterator<TreeItem<String>> iterator =
+                symbolicVoterVariableList.iterator();
+                iterator.hasNext();) {
             TreeItem<String> item = (TreeItem<String>) iterator.next();
             toReturn.add(item.getValue());
         }
-
         return toReturn;
     }
 

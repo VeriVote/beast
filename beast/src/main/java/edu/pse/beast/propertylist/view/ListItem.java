@@ -53,13 +53,16 @@
 //    private GroupLayout layout = new GroupLayout(this);
 //
 //    private static final String PATH_TO_EYE = "/core/images/other/eye.png";
-//    private final ImageIcon eyeIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + PATH_TO_EYE);
+//    private final ImageIcon eyeIcon =
+//        new ImageIcon(SuperFolderFinder.getSuperFolder() + PATH_TO_EYE);
 //
 //    private static final String PATH_TO_WRENCH = "/core/images/other/wrench.png";
-//    private final ImageIcon wrenchIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + PATH_TO_WRENCH);
+//    private final ImageIcon wrenchIcon =
+//        new ImageIcon(SuperFolderFinder.getSuperFolder() + PATH_TO_WRENCH);
 //
 //    private static final String PATH_TO_X_MARK = "/core/images/other/x-mark.png";
-//    private final Icon xMarkIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + PATH_TO_X_MARK);
+//    private final Icon xMarkIcon =
+//        new ImageIcon(SuperFolderFinder.getSuperFolder() + PATH_TO_X_MARK);
 //
 //    /**
 //     * Constructor

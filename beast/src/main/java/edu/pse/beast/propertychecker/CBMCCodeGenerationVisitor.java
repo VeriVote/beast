@@ -56,7 +56,10 @@ import edu.pse.beast.types.cbmctypes.outputplugins.CandidateList;
  * @author Niels Hanselmann
  */
 public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
-    private String assumeOrAssert; // this String must always be "assume" or "assert". If it is not set it is null
+    /**
+     * This String must always be "assume" or "assert". If it is not set it is null.
+     */
+    private String assumeOrAssert;
 
     /*
      * the following attributes are the counters for the variables in the code they
@@ -76,8 +79,15 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     private int numberVars;
 
-    private Stack<String> variableNames; // stack of the variable names.
-    private CodeArrayListBeautifier code; // object, that handles the generated code
+    /**
+     * Stack of the variable names.
+     */
+    private Stack<String> variableNames;
+
+    /**
+     * Object that handles the generated code.
+     */
+    private CodeArrayListBeautifier code;
 
     private int tmpIndex = 0;
 
@@ -86,11 +96,11 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private boolean post;
 
     /**
-     * this creates the visitor You should create 1 and only 1 visitor for every c.
-     * file you want to make you have to set it to pre- or post-property mode in
-     * order for it to function
+     * This creates the visitor. You should create one and only one visitor for
+     * every c-file you want to make. You must set it to pre- or post-property
+     * mode in order for it to function.
      *
-     * @param electionTypeContainer
+     * @param electionTypeContainer the election type container.
      *
      */
     public CBMCCodeGenerationVisitor(ElectionTypeContainer electionTypeContainer) {
@@ -140,7 +150,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     }
 
     /**
-     * this generates the c-code for a propertydescription-statement
+     * this generates the c-code for a property description-statement
      *
      * @param node this should be the top node of a statement
      * @return the generated code
@@ -164,7 +174,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         variableNames.push(varName);
         node.getLHSBooleanExpNode().getVisited(this);
         node.getRHSBooleanExpNode().getVisited(this);
-        code.add("unsigned int " + varName + " = ((" + variableNames.pop() + ") && (" + variableNames.pop() + "));");
+        code.add("unsigned int " + varName
+                 + " = ((" + variableNames.pop()
+                 + ") && (" + variableNames.pop() + "));");
         testIfLast();
     }
 
@@ -180,7 +192,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         variableNames.push(varName);
         node.getLHSBooleanExpNode().getVisited(this);
         node.getRHSBooleanExpNode().getVisited(this);
-        code.add("unsigned int " + varName + " = ((" + variableNames.pop() + ") || (" + variableNames.pop() + "));");
+        code.add("unsigned int " + varName
+                 + " = ((" + variableNames.pop()
+                 + ") || (" + variableNames.pop() + "));");
         testIfLast();
     }
 
@@ -198,7 +212,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         node.getRHSBooleanExpNode().getVisited(this);
         String rhsName = variableNames.pop();
         String lhsName = variableNames.pop();
-        code.add("unsigned int " + varName + " = (!(" + lhsName + ") || (" + rhsName + "));");
+        code.add("unsigned int " + varName
+                 + " = (!(" + lhsName
+                 + ") || (" + rhsName + "));");
         testIfLast();
     }
 
@@ -216,8 +232,10 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         node.getRHSBooleanExpNode().getVisited(this);
         String rhs = variableNames.pop();
         String lhs = variableNames.pop();
-        code.add("unsigned int " + varName + " = (((" + lhs + ") && (" + rhs + ")) || (!(" + lhs + ") && (!" + rhs
-                + ")));");
+        code.add("unsigned int " + varName
+                 + " = (((" + lhs + ") && (" + rhs
+                 + ")) || (!(" + lhs
+                 + ") && (!" + rhs + ")));");
         testIfLast();
     }
 
@@ -234,7 +252,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         code.add("unsigned int " + varName + " = 1;");
         String max = "";
         max = getMaxString(node);
-        String tempString = "for(unsigned int SYMBVAR = 0; SYMBVAR < MAX && FORALL; SYMBVAR++) {";
+        String tempString =
+                "for(unsigned int SYMBVAR = 0; SYMBVAR < MAX && FORALL; SYMBVAR++) {";
         tempString = tempString.replaceAll("SYMBVAR", node.getDeclaredSymbolicVar().getId());
         tempString = tempString.replace("MAX", max);
         tempString = tempString.replace("FORALL", varName);
@@ -260,7 +279,10 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             max = UnifiedNameContainer.getSeats();
             break;
         default:
-            throw new AssertionError(node.getDeclaredSymbolicVar().getInternalTypeContainer().getInternalType().name());
+            throw new AssertionError(
+                    node.getDeclaredSymbolicVar()
+                    .getInternalTypeContainer()
+                    .getInternalType().name());
         }
         return max;
     }
@@ -277,7 +299,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         variableNames.push(varName);
         code.add("unsigned int " + varName + " = 0;");
         String max = getMaxString(node);
-        String tempString = "for(unsigned int SYMBVAR = 0; SYMBVAR < MAX && !THEREEXISTS; SYMBVAR++) {";
+        String tempString =
+                "for(unsigned int SYMBVAR = 0; SYMBVAR < MAX && !THEREEXISTS; SYMBVAR++) {";
         tempString = tempString.replaceAll("SYMBVAR", node.getDeclaredSymbolicVar().getId());
         tempString = tempString.replaceAll("MAX", max);
         tempString = tempString.replaceAll("THEREEXISTS", varName);
@@ -322,47 +345,39 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String varName = "comparison_" + comparisonNodeCounter;
         comparisonNodeCounter++;
         variableNames.push(varName);
-
         // let the visitor generate the code for the left value
         // which will be compared. This is also used to find out
         // how many list levels need to be compared, meaning how
         // many for loops need to be generated
         listlvl = 0;
-        for (InternalTypeContainer cont = node.getLHSBooleanExpNode().getInternalTypeContainer(); cont
-                .isList(); cont = cont.getListedType()) {
+        for (InternalTypeContainer cont =
+                node.getLHSBooleanExpNode().getInternalTypeContainer(); cont.isList();
+                cont = cont.getListedType()) {
             listlvl++;
         }
-
         code.add("//comparison left side");
-
         node.getLHSBooleanExpNode().getVisited(this);
         int lhslistLevel = listlvl;
-
         listlvl = 0;
-        for (InternalTypeContainer cont = node.getRHSBooleanExpNode().getInternalTypeContainer(); cont
-                .isList(); cont = cont.getListedType()) {
+        for (InternalTypeContainer cont = node.getRHSBooleanExpNode().getInternalTypeContainer();
+                cont.isList();
+                cont = cont.getListedType()) {
             listlvl++;
         }
-
         code.add("//comparison right side:");
-
         node.getRHSBooleanExpNode().getVisited(this);
         int rhslistLevel = listlvl;
-
         int maxListLevel = lhslistLevel > rhslistLevel ? lhslistLevel : rhslistLevel;
         InternalTypeContainer cont = lhslistLevel > rhslistLevel
                 ? node.getLHSBooleanExpNode().getInternalTypeContainer()
                 : node.getRHSBooleanExpNode().getInternalTypeContainer();
-
         while (cont.getListLvl() != maxListLevel) {
             cont = cont.getListedType();
         }
-
         String internCode = "unsigned int BOOL = 1;";
         internCode = internCode.replace("BOOL", varName);
         code.add(internCode);
         ArrayList<String> counter = new ArrayList<>();
-
         // generate the for loops used to test the two types..
         //
         for (int i = 0; i < maxListLevel; ++i) {
@@ -384,7 +399,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                     break;
                 }
             }
-
             // TODO this is just a hotfix because it used V when it should have used C
             // TODO for candidate lists
             // TODO maybe extract this to the voting types
@@ -398,10 +412,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             code.add(loop);
             cont = cont.getListedType();
         }
-
         String lhs;
         String rhs;
-
         // if (node.getRHSBooleanExpNode() instanceof IntersectTypeExpNode) {
         // IntersectTypeExpNode rightNode = (IntersectTypeExpNode)
         // node.getRHSBooleanExpNode();
@@ -467,13 +479,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         // } else {
         // lhs = variableNames.pop();
         // }
-
         rhs = variableNames.pop();
-
         lhs = variableNames.pop();
-
         setToPostConditionMode();
-
         if (!post) {
             internCode = varName + " = " + lhs;
             for (int i = 0; i < lhslistLevel; ++i) {
@@ -490,7 +498,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             }
             testIfLast();
         } else {
-
             internCode = varName + " = " + lhs;
             for (int i = 0; i < lhslistLevel; ++i) {
                 internCode += ".arr[VAR]".replace("VAR", counter.get(i));
@@ -521,7 +528,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     @Override
     public void visitElectExp(ElectExp exp) {
         visitAccessingNodesReverseOrder(exp);
-
         String tempCode = "electNUMBER".replace("NUMBER", String.valueOf(exp.getCount()));
         for (int i = 0; i < exp.getAccessingVars().length; ++i) {
             tempCode += "[VAR]".replace("VAR", variableNames.pop());
@@ -533,7 +539,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     @Override
     public void visitVoteExp(VoteExp exp) {
         visitAccessingNodesReverseOrder(exp);
-
         String tempCode = "votesNUMBER".replace("NUMBER", String.valueOf(exp.getCount()));
         for (int i = 0; i < exp.getAccessingVars().length; ++i) {
             tempCode += "[VAR]".replace("VAR", variableNames.pop());
@@ -551,7 +556,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     @Override
     public void visitVoteSumExp(VoteSumForCandExp exp, boolean unique) {
         exp.getAccessingVariable().getVisited(this);
-        String funcCallTemplate = "unsigned int VARNAME = voteSumForCandidate" + (unique ? "Unique" : "")
+        String funcCallTemplate =
+                "unsigned int VARNAME = voteSumForCandidate" + (unique ? "Unique" : "")
                 + "(votesNUM, " + UnifiedNameContainer.getVoter() + voteSumCounter + ", CAND);";
         String counter = "voteSumExp_" + voteSumCounter;
         voteSumCounter++;
@@ -579,15 +585,12 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     public void visitIntegerComparisonNode(IntegerComparisonNode listComparisonNode) {
         listComparisonNode.getLHSBooleanExpNode().getVisited(this);
         listComparisonNode.getRHSBooleanExpNode().getVisited(this);
-
         String varNameDecl = "integer_comp_" + comparisonNodeCounter;
         comparisonNodeCounter++;
         String rhs = variableNames.pop();
         String lhs = variableNames.pop();
-
         String comparisonString = "unsigned int " + varNameDecl + " = " + lhs + " "
                 + listComparisonNode.getComparisonSymbol().getCStringRep() + " " + rhs + ";";
-
         code.add(comparisonString);
         variableNames.push(varNameDecl);
         testIfLast();
@@ -600,8 +603,10 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String rhs = variableNames.pop();
         String lhs = variableNames.pop();
         String varname = getNewNumberVariableName();
-        code.add("unsigned int " + varname + " = " + lhs + " " + binaryIntegerValuedNode.getRelationSymbol() + " " + rhs
-                + ";");
+        code.add("unsigned int " + varname
+                 + " = " + lhs + " "
+                + binaryIntegerValuedNode.getRelationSymbol()
+                + " " + rhs + ";");
         variableNames.push(varname);
     }
 
@@ -619,7 +624,10 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private String getAtPosVarName(AtPosExp atPosExp) {
         int amtByPos = amtByPosVar;
         amtByPosVar++;
-        return atPosExp.getInternalTypeContainer().getInternalType().toString().toLowerCase() + "AtPos_" + amtByPos;
+        return atPosExp.getInternalTypeContainer()
+                .getInternalType().toString()
+                .toLowerCase()
+                + "AtPos_" + amtByPos;
     }
 
     private void testIfLast() {
@@ -634,9 +642,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitVotingTupleChangeNode(VotingTupelChangeExpNode node) {
-        List<String> tupelVotes = new ArrayList<String>();
-
-        tupelVotes.add(node.tuple.getChild(1).getText()); // add the first element to the list
+        List<String> tupleVotes = new ArrayList<String>();
+        // add the first element to the list
+        tupleVotes.add(node.tuple.getChild(1).getText());
 
         // extract the vote elements one by one. The terminal symbol is saved in
         // child(1).
@@ -644,30 +652,25 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         // null
         ParseTree subNode = node.tuple.getChild(2);
         do {
-            tupelVotes.add(subNode.getChild(1).getText());
-
+            tupleVotes.add(subNode.getChild(1).getText());
             subNode = subNode.getChild(2);
         } while (subNode != null);
-
-        ParseTree voteEquivalent = node.splitExp.getChild(2); // there is only one child
-
+        // there is only one child
+        ParseTree voteEquivalent = node.splitExp.getChild(2);
         String voteInput = "";
-
         String voteInputSize = "";
-
-        if (!(voteEquivalent instanceof TerminalNodeImpl)) { // we have to go deeper
-
+        // we have to go deeper
+        if (!(voteEquivalent instanceof TerminalNodeImpl)) {
             voteInput = "tmp_vote" + getTmpIndex();
-
-            code.add("unsigned int " + voteInput + electionTypeContainer.getInputType().getInputString() + ";"); // create
-                                                                                                                 // the
-                                                                                                                 // var
+            // create the variable
+            code.add("unsigned int " + voteInput
+                     + electionTypeContainer.getInputType().getInputString()
+                     + ";");
             voteInputSize = "tmp_size" + getTmpIndex();
-
             code.add("unsigned int " + voteInputSize + ";");
-
-            VoteEquivalentsNode equiNode = new VoteEquivalentsNode(node.splitExp.voteEquivalents(), voteInput,
-                    voteInputSize);
+            VoteEquivalentsNode equiNode =
+                    new VoteEquivalentsNode(node.splitExp.voteEquivalents(),
+                                            voteInput, voteInputSize);
             equiNode.getVisited(this);
         } else { // we only have one vote to split
             voteInput = node.splitExp.voteEquivalents().Vote().getText().toLowerCase();
@@ -676,97 +679,78 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
         // we now have only one voting array to care about, and its name is written in
         // voteInput;
-
         String splits = "splits" + getTmpIndex();
-
-        code.add("unsigned int " + splits + " = " + (tupelVotes.size() - 1) + ";"); // determine how many splits we need
-
+        // determine how many splits we need
+        code.add("unsigned int " + splits + " = "
+                 + (tupleVotes.size() - 1) + ";");
         String tmpLines = "tmp_Lines" + getTmpIndex();
-
         code.add("unsigned int *" + tmpLines + ";");
         code.add(tmpLines + " = getRandomSplitLines(" + splits + ", " + voteInputSize + ");");
-
         String splitLines = "splitLines" + getTmpIndex();
-
         code.add("unsigned int " + splitLines + "[" + splits + "];");
-
         code.add("for (int i = 0; i <= " + splits + "; i++) {");
         code.add(splitLines + "[i] = " + tmpLines + "[i];");
         code.add("}");
-
-        int tupelSize = tupelVotes.size();
-
+        int tupelSize = tupleVotes.size();
         String lastSplit = "last_split" + getTmpIndex();
-
         // TODO extract into input type
         if (electionTypeContainer.getInputType().getDimension() == 1) {
-
             code.add("unsigned int " + lastSplit + " = 0;");
-
-            for (int i = 0; i < tupelSize - 1; i++) { // split the array and extract the votes for all but one tupel
-                                                      // element
-
+            // split the array and extract the votes for all but one tuple element
+            for (int i = 0; i < tupelSize - 1; i++) {
                 String tmp = "tmp" + getTmpIndex();
-
-                code.add("struct vote_single " + tmp + " = splitOne( " + voteInput + ", " + lastSplit + ", "
-                        + splitLines + "[" + i + "]);");
-
+                code.add("struct vote_single " + tmp
+                         + " = splitOne( " + voteInput + ", "
+                         + lastSplit + ", "
+                         + splitLines + "[" + i + "]);");
                 code.add("for(int i = 0; i < V; i++) {");
-                code.add("  " + tupelVotes.get(i).toLowerCase() + "[i] = " + tmp + ".arr[i];");
+                code.add("  " + tupleVotes.get(i).toLowerCase() + "[i] = " + tmp + ".arr[i];");
                 code.add("}");
-
                 // set the size value for this array to its new size:
-
-                code.add("V" + tupelVotes.get(i).substring("votes".length()) + " = " + splitLines + "[" + i + "] - "
-                        + lastSplit + ";");
-
+                code.add("V" + tupleVotes.get(i).substring("votes".length())
+                         + " = " + splitLines + "[" + i + "] - "
+                         + lastSplit + ";");
                 code.add(lastSplit + " = " + splitLines + "[" + i + "];");
             }
-
             String tmp = "tmp" + getTmpIndex();
 
-            code.add("struct vote_single " + tmp + " = splitOne( " + voteInput + ", " + lastSplit + ", " + voteInputSize
-                    + ");"); // TODO is V
-            // correct
+            code.add("struct vote_single " + tmp + " = splitOne( " + voteInput
+                     + ", " + lastSplit + ", " + voteInputSize
+                     + ");"); // TODO is V correct
 
             code.add("for(int i = 0; i < V; i++) {");
-            code.add("  " + tupelVotes.get(tupelSize - 1).toLowerCase() + "[i] = " + tmp + ".arr[i];");
+            code.add("  " + tupleVotes.get(tupelSize - 1).toLowerCase()
+                     + "[i] = " + tmp + ".arr[i];");
             code.add("}");
 
         } else { // we have 2 dim
             code.add("unsigned int " + lastSplit + " = 0;");
-
-            for (int i = 0; i < tupelSize - 1; i++) { // split the array and extract the votes for all but one tupel
-                                                      // element
+            // split the array and extract the votes for all but one tuple element
+            for (int i = 0; i < tupelSize - 1; i++) {
                 String tmp = "tmp" + getTmpIndex();
-
-                code.add("struct vote_double " + tmp + " = splitTwo( " + voteInput + ", " + lastSplit + ", "
-                        + splitLines + "[" + i + "]);");
-
+                code.add("struct vote_double " + tmp
+                         + " = splitTwo( " + voteInput + ", " + lastSplit + ", "
+                         + splitLines + "[" + i + "]);");
                 code.add("for(int i = 0; i < V; i++) {");
                 code.add("  for(int j = 0; j < C; j++) {");
-                code.add("  " + tupelVotes.get(i).toLowerCase() + "[i][j] = " + tmp + ".arr[i][j];");
+                code.add("  " + tupleVotes.get(i).toLowerCase()
+                         + "[i][j] = " + tmp + ".arr[i][j];");
                 code.add("  }");
                 code.add("}");
-
                 // set the size value for this array to its new size:
-
-                code.add("V" + tupelVotes.get(i).substring("votes".length()) + " = " + splitLines + "[" + i + "] - "
-                        + lastSplit + ";");
-
+                code.add("V" + tupleVotes.get(i).substring("votes".length())
+                         + " = " + splitLines + "[" + i + "] - "
+                         + lastSplit + ";");
                 code.add(lastSplit + " = " + splitLines + "[" + i + "];");
             }
-
             String tmp = "tmp" + getTmpIndex();
-
-            code.add("struct vote_double " + tmp + " = splitTwo( " + voteInput + ", " + lastSplit + ", " + voteInputSize
-                    + ");"); // TODO is V
-            // correct
-            // here?
-
+            code.add("struct vote_double " + tmp + " = splitTwo( " + voteInput
+                     + ", " + lastSplit + ", " + voteInputSize
+                     + ");"); // TODO is V correct here?
             code.add("for(int i = 0; i < V; i++) {");
             code.add("  for(int j = 0; j < C; j++) {");
-            code.add("  " + tupelVotes.get(tupelSize - 1).toLowerCase() + "[i][j] = " + tmp + ".arr[i][j];");
+            code.add("  " + tupleVotes.get(tupelSize - 1).toLowerCase()
+                     + "[i][j] = " + tmp + ".arr[i][j];");
             code.add("  }");
             code.add("}");
         }
@@ -776,32 +760,27 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     @Override
     public void visitVotingListChangeNode(VotingListChangeExpNode node) {
         String voteToSaveInto = node.vote.getText().toLowerCase();
-
         VotingListChangeContentContext contentContext = node.votingListChangeContent;
-
         // we save the result of the sub computation in this variable
         String voteInput = "tmp_vote" + getTmpIndex();
-
-        code.add("unsigned int " + voteInput + electionTypeContainer.getInputType().getInputString() + ";"); // create
-                                                                                                             // the
-                                                                                                             // var
-
+        // create the variable
+        code.add("unsigned int " + voteInput
+                 + electionTypeContainer.getInputType().getInputString() + ";");
         String voteInputSize = "tmp_size" + getTmpIndex();
-
         code.add("unsigned int " + voteInputSize + ";");
-
-        if (contentContext.getChild(0) instanceof ConcatenationExpContext) { // we have a concatenation
-
-            ConcatenationExpNode concNode = new ConcatenationExpNode(contentContext.concatenationExp(), voteInput,
-                    voteInputSize);
+        if (contentContext.getChild(0) instanceof ConcatenationExpContext) {
+            // we have a concatenation
+            ConcatenationExpNode concNode =
+                    new ConcatenationExpNode(contentContext.concatenationExp(),
+                                             voteInput, voteInputSize);
             concNode.getVisited(this);
-        } else { // we have a permutation
-
-            PermutationExpNode permNode = new PermutationExpNode(contentContext.permutationExp(), voteInput,
-                    voteInputSize);
+        } else {
+            // we have a permutation
+            PermutationExpNode permNode =
+                    new PermutationExpNode(contentContext.permutationExp(),
+                                           voteInput, voteInputSize);
             permNode.getVisited(this);
         }
-
         // the result of the sub computation is now saved in "voteInput"
 
         // TODO extract this logic into InputType
@@ -816,26 +795,19 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             code.add("  }");
             code.add("}");
         }
-
     }
 
     @Override
     public void visitCandidateListChangeExpNode(CandidateListChangeExpNode node) {
-
         if (electionTypeContainer.getOutputType() instanceof CandidateList) {
-
             String voteInput = "tmp_elect" + getTmpIndex();
-
-            code.add(electionTypeContainer.getOutputType().getOutputString() + " " + voteInput + ";"); // create the var
-
+            // create the variable
+            code.add(electionTypeContainer.getOutputType().getOutputString()
+                     + " " + voteInput + ";");
             IntersectExpNode intersectNode = new IntersectExpNode(node.intersectExp, voteInput);
-
             intersectNode.getVisited(this);
-
             // the value the new array shall have is now in voteInput
-
             String toSaveInto = node.elect.getText().toLowerCase();
-
             code.add("for(int i = 0; i < C; i++) {");
             code.add(toSaveInto + ".arr[i] = " + voteInput + ".arr[i];");
             code.add("}");
@@ -846,81 +818,73 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitIntersectExpNode(IntersectExpNode node) {
-
         IntersectExpContext context = node.intersectExpContext;
-
         String voteInputOne = "tmp_elect" + getTmpIndex();
-
-        code.add(electionTypeContainer.getOutputType().getOutputString() + " " + voteInputOne + ";"); // create the var
-
+        // create the variable
+        code.add(electionTypeContainer.getOutputType().getOutputString()
+                 + " " + voteInputOne + ";");
         String voteInputTwo = "tmp_elect" + getTmpIndex();
+        // create the variable
+        code.add(electionTypeContainer.getOutputType().getOutputString()
+                 + " " + voteInputTwo + ";");
 
-        code.add(electionTypeContainer.getOutputType().getOutputString() + " " + voteInputTwo + ";"); // create the var
-
-        intersectHelpMethod(context.intersectContent(0), voteInputOne, context.intersectContent(1), voteInputTwo,
-                node.voteOutput);
-
+        intersectHelpMethod(context.intersectContent(0), voteInputOne,
+                            context.intersectContent(1), voteInputTwo,
+                            node.voteOutput);
         // we now have both inputs saved in their variables
-
     }
 
     @Override
     public void visitIntersectTypeExpNode(IntersectTypeExpNode node) {
-
         String voteInputOne = "tmp_elect" + getTmpIndex();
-
-        code.add(electionTypeContainer.getOutputType().getOutputString() + " " + voteInputOne + ";"); // create the var
-
+        // create the variable
+        code.add(electionTypeContainer.getOutputType().getOutputString()
+                 + " " + voteInputOne + ";");
         String voteInputTwo = "tmp_elect" + getTmpIndex();
-
-        code.add(electionTypeContainer.getOutputType().getOutputString() + " " + voteInputTwo + ";"); // create the var
-
+        // create the variable
+        code.add(electionTypeContainer.getOutputType().getOutputString()
+                 + " " + voteInputTwo + ";");
         String toOutputTo = "tmp_output" + getTmpIndex();
-
-        code.add(electionTypeContainer.getOutputType().getOutputString() + " " + toOutputTo + ";"); // create the var
-
-        intersectHelpMethod(node.context.intersectContent(0), voteInputOne, node.context.intersectContent(1),
-                voteInputTwo, toOutputTo);
-
+        // create the variable
+        code.add(electionTypeContainer.getOutputType().getOutputString()
+                 + " " + toOutputTo + ";");
+        intersectHelpMethod(node.context.intersectContent(0),
+                            voteInputOne, node.context.intersectContent(1),
+                            voteInputTwo, toOutputTo);
         variableNames.push(toOutputTo);
     }
 
     private void intersectHelpMethod(IntersectContentContext contextOne, String voteInputOne,
             IntersectContentContext contextTwo, String voteInputTwo, String toOutputTo) {
-
-        IntersectContentNode intersectContentNodeOne = new IntersectContentNode(contextOne, voteInputOne);
-
+        IntersectContentNode intersectContentNodeOne =
+                new IntersectContentNode(contextOne, voteInputOne);
         intersectContentNodeOne.getVisited(this);
-
-        IntersectContentNode intersectContentNodeTwo = new IntersectContentNode(contextTwo, voteInputTwo);
-
+        IntersectContentNode intersectContentNodeTwo =
+                new IntersectContentNode(contextTwo, voteInputTwo);
         intersectContentNodeTwo.getVisited(this);
-
-        code.add(toOutputTo + " = intersect(" + voteInputOne + ", " + voteInputTwo + ");");
-
+        code.add(toOutputTo + " = intersect(" + voteInputOne
+                 + ", " + voteInputTwo + ");");
     }
 
     @Override
     public void visitIntersectContentNode(IntersectContentNode node) {
-
         String voteInput = "tmp_elect" + getTmpIndex();
-
-        code.add(electionTypeContainer.getOutputType().getOutputString() + " " + voteInput + ";"); // create the var
-
+        // create the variable
+        code.add(electionTypeContainer.getOutputType().getOutputString()
+                 + " " + voteInput + ";");
         if (node.intersectContentContext.Elect() != null) {
-            code.add(voteInput + " = " + node.intersectContentContext.Elect().getText().toLowerCase() + ";");
-        } else { // we have an intersect expression
-
-            IntersectExpNode intersectNode = new IntersectExpNode(node.intersectContentContext.intersectExp(),
-                    voteInput);
-
+            code.add(voteInput + " = "
+                     + node.intersectContentContext.Elect().getText().toLowerCase()
+                     + ";");
+        } else {
+            // we have an intersect expression
+            IntersectExpNode intersectNode =
+                    new IntersectExpNode(node.intersectContentContext.intersectExp(),
+                                         voteInput);
             intersectNode.getVisited(this);
         }
-
         // we now have the result standing in
-
         String toOutputTo = node.voteOutput;
-
         code.add("for(int i = 0; i < C; i++) {");
         code.add(toOutputTo + ".arr[i] = " + voteInput + ".arr[i];");
         code.add("}");
@@ -928,49 +892,41 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     @Override
     public void visitVoteEquivalentsNode(VoteEquivalentsNode node) {
-
         String voteInput = "";
-
         String voteInputSize = "";
-
-        if (node.voteEquivalentsContext.getChild(0) instanceof PermutationExpContext) { // we have a permutation
-
+        if (node.voteEquivalentsContext.getChild(0) instanceof PermutationExpContext) {
+            // we have a permutation
             voteInput = "tmp_vote" + getTmpIndex();
-
-            code.add("unsigned int " + voteInput + electionTypeContainer.getInputType().getInputString() + ";"); // create
-                                                                                                                 // the
-                                                                                                                 // var
-
+            // create the variable
+            code.add("unsigned int " + voteInput
+                     + electionTypeContainer.getInputType().getInputString()
+                     + ";");
             voteInputSize = "tmp_size" + getTmpIndex();
-
             code.add("unsigned int " + voteInputSize + ";");
-
-            PermutationExpNode permNode = new PermutationExpNode(node.voteEquivalentsContext.permutationExp(),
-                    voteInput, voteInputSize);
+            PermutationExpNode permNode =
+                    new PermutationExpNode(node.voteEquivalentsContext.permutationExp(),
+                                           voteInput, voteInputSize);
             permNode.getVisited(this);
-        } else if (node.voteEquivalentsContext.getChild(0) instanceof ConcatenationExpContext) { // we have a
-                                                                                                 // concatenatio
-
+        } else if (node.voteEquivalentsContext.getChild(0)
+                    instanceof ConcatenationExpContext) {
+            // we have a concatenation
             voteInput = "unsigned int tmp_vote" + getTmpIndex() + " "
                     + electionTypeContainer.getInputType().getInputString();
-
-            ConcatenationExpNode concNode = new ConcatenationExpNode(node.voteEquivalentsContext.concatenationExp(),
-                    voteInput, voteInputSize);
-
+            ConcatenationExpNode concNode =
+                    new ConcatenationExpNode(node.voteEquivalentsContext.concatenationExp(),
+                                             voteInput, voteInputSize);
             concNode.getVisited(this);
-
-        } else { // we just have a simple vote
-            voteInput = node.voteEquivalentsContext.Vote().getText().toLowerCase();
-
-            voteInputSize = "V" + node.voteEquivalentsContext.Vote().getText().substring("VOTES".length());
+        } else {
+            // we just have a simple vote
+            voteInput =
+                    node.voteEquivalentsContext.Vote().getText().toLowerCase();
+            voteInputSize =
+                    "V" + node.voteEquivalentsContext.Vote().getText()
+                            .substring("VOTES".length());
         }
-
         // now a created voting array is saved in "voteInput"
-
         String voteToSaveInto = node.toOutput;
-
         String voteOutputLength = node.voteOutputLength;
-
         // TODO extract this logic into InputType
         if (electionTypeContainer.getInputType().getDimension() == 1) {
             code.add("for(int i = 0; i < V; i++) {");
@@ -983,114 +939,93 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             code.add("  }");
             code.add("}");
         }
-
         code.add(voteOutputLength + " = " + voteInputSize + ";");
-        // we fullfilled the task of writing the result of the lower var into the given
-        // output var
+        // we fulfilled the task of writing the result of the lower variable into the given
+        // output variable
 
     }
 
     @Override
     public void visitConcatenationExpNode(ConcatenationExpNode node) {
         int offset = 0;
-
-        if (node.concatenationExpContext.getChild(0).getText().equals("(")) { // we have to skip one child if we start
-                                                                              // with "("
+        if (node.concatenationExpContext.getChild(0).getText().equals("(")) {
+            // we have to skip one child if we start with "("
             offset = 1;
             System.out.println("hat eine klammer!!");
         }
-
         ConcatenationExpContext context = node.concatenationExpContext;
-
         ParseTree firstChild = context.getChild(0 + offset);
-
         String voteInputOne = "tmp_vote" + getTmpIndex();
-
-        code.add("unsigned int " + voteInputOne + electionTypeContainer.getInputType().getInputString() + ";"); // create
-                                                                                                                // the
-                                                                                                                // var
-
+        // create the variable
+        code.add("unsigned int " + voteInputOne
+                 + electionTypeContainer.getInputType().getInputString() + ";");
         String voteInputOneSize = "tmp_size" + getTmpIndex();
-
-        if (firstChild instanceof VoteEquivalentsContext) { // we have a vote equivalent
-
+        // we have a vote equivalent
+        if (firstChild instanceof VoteEquivalentsContext) {
             code.add("unsigned int " + voteInputOneSize + ";");
-
-            VoteEquivalentsNode voteEqNode = new VoteEquivalentsNode(context.voteEquivalents(0), voteInputOne,
-                    voteInputOneSize);
-
+            VoteEquivalentsNode voteEqNode =
+                    new VoteEquivalentsNode(context.voteEquivalents(0), voteInputOne,
+                                            voteInputOneSize);
             voteEqNode.getVisited(this);
 
-        } else if (firstChild instanceof PermutationExpContext) { // we have a permutation
-
+        } else if (firstChild instanceof PermutationExpContext) {
+            // we have a permutation
             code.add("unsigned int " + voteInputOneSize + ";");
-
-            PermutationExpNode permNode = new PermutationExpNode(context.permutationExp(), voteInputOne,
-                    voteInputOneSize);
-
+            PermutationExpNode permNode =
+                    new PermutationExpNode(context.permutationExp(), voteInputOne,
+                                           voteInputOneSize);
             permNode.getVisited(this);
 
-        } else { // we have just a single vote
+        } else {
+            // we have just a single vote
             voteInputOne = context.Vote().getText().toLowerCase();
         }
-
         // do the same thing for the other non terminal
-
         String voteInputTwo = "tmp_vote" + getTmpIndex();
-
-        code.add("unsigned int " + voteInputTwo + electionTypeContainer.getInputType().getInputString() + ";"); // create
-                                                                                                                // the
-                                                                                                                // var
-
+        // create the variable
+        code.add("unsigned int " + voteInputTwo
+                 + electionTypeContainer.getInputType().getInputString() + ";");
         String voteInputSecondSize = "tmp_size" + getTmpIndex();
-
         code.add("unsigned int " + voteInputSecondSize + ";");
-
-        VoteEquivalentsNode voteEqNodeTwo = new VoteEquivalentsNode(context.voteEquivalents(offset), voteInputTwo,
-                voteInputSecondSize);
-
+        VoteEquivalentsNode voteEqNodeTwo =
+                new VoteEquivalentsNode(context.voteEquivalents(offset), voteInputTwo,
+                                        voteInputSecondSize);
         voteEqNodeTwo.getVisited(this);
-
         // we now have both sides ready in voteInputOne and voteInputTwo
-
         String toSaveInto = node.voteOutput;
-
         String tmp = "tmp" + getTmpIndex();
-
         // TODO extract into input type
         if (electionTypeContainer.getInputType().getDimension() == 1) {
-
-            code.add("struct vote_single " + tmp + " = concatOne(" + voteInputOne + ", " + voteInputOneSize + " , "
+            code.add("struct vote_single " + tmp
+                     + " = concatOne(" + voteInputOne + ", "
+                    + voteInputOneSize + " , "
                     + voteInputTwo + ", " + voteInputSecondSize + ");");
-
             // result is now in tmp
-
             code.add("for(int i = 0; i < V; i++) {");
             code.add(toSaveInto + "[i] = " + tmp + ".arr[i];");
             code.add("}");
-
-        } else { // we have 2 dim
-
-            code.add("struct vote_double " + tmp + " = concatTwo(" + voteInputOne + ", " + voteInputOneSize + " , "
-                    + voteInputTwo + ", " + voteInputSecondSize + ");");
-
+        } else {
+            // we have 2 dim
+            code.add("struct vote_double " + tmp + " = concatTwo("
+                     + voteInputOne + ", " + voteInputOneSize + " , "
+                     + voteInputTwo + ", " + voteInputSecondSize + ");");
             // result is now in tmp
-
             code.add("for(int i = 0; i < V; i++) {");
             code.add("for(int j = 0; j < C; j++) {");
             code.add(toSaveInto + "[i][j] = " + tmp + ".arr[i][j];");
             code.add("}");
             code.add("}");
         }
-
         // the result is now saved in "toSaveInto"
     }
 
     @Override
     public void visitPermutationExpNode(PermutationExpNode node) {
         String voteInput = "tmp_vote" + getTmpIndex();
-        // create the var
-        code.add("unsigned int " + voteInput + electionTypeContainer.getInputType().getInputString() + ";");
+        // create the variable
+        code.add("unsigned int " + voteInput
+                 + electionTypeContainer.getInputType().getInputString()
+                 + ";");
         String voteInputSize = "tmp_size" + getTmpIndex();
         code.add("unsigned int " + voteInputSize + ";");
         VoteEquivalentsNode voteEqNode =
@@ -1102,16 +1037,20 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String toSaveInto = node.voteOutput;
         String toSaveSizeInto = node.voteOutoutLength;
         String tmp = "tmp" + getTmpIndex();
-        // TODO extract to inputtype
+        // TODO extract to input type
         if (electionTypeContainer.getInputType().getDimension() == 1) {
-            code.add("struct vote_single " + tmp + " = permutateOne(" + voteInput + ", " + voteInputSize + ");");
+            code.add("struct vote_single " + tmp
+                     + " = permutateOne(" + voteInput + ", "
+                     + voteInputSize + ");");
             // result is now in tmp
             code.add("for(int i = 0; i < V; i++) {");
             code.add(toSaveInto + "[i] = " + tmp + ".arr[i];");
             code.add("}");
             code.add(toSaveSizeInto + " = " + voteInputSize + ";");
         } else {
-            code.add("struct vote_double " + tmp + " = permutateTwo(" + voteInput + ", " + voteInputSize + ");");
+            code.add("struct vote_double " + tmp
+                     + " = permutateTwo(" + voteInput + ", "
+                    + voteInputSize + ");");
             // result is now in tmp
             code.add("for(int i = 0; i < V; i++) {");
             code.add("for(int j = 0; j < C; j++) {");
@@ -1126,10 +1065,14 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     public void visitNotEmptyExpNode(NotEmptyExpressionNode node) {
         String notEmpty = "not_empty" + getTmpIndex();
         code.add("unsigned int " + notEmpty + ";");
-        variableNames.push(notEmpty); // we will save the result in this var. 0 for false, everything else for true
+        // we will save the result in this variable.
+        // 0 for false, everything else for true
+        variableNames.push(notEmpty);
         String subResult = "tmp_bool" + getTmpIndex();
         code.add("unsigned int " + subResult + " = 0;");
-        NotEmptyContentNode notEmptyNode = new NotEmptyContentNode(node.context.notEmptyContent(), subResult);
+        NotEmptyContentNode notEmptyNode =
+                new NotEmptyContentNode(node.context.notEmptyContent(),
+                                        subResult);
         notEmptyNode.getVisited(this);
         // the result is now saved in votingInput
         code.add(notEmpty + " = " + subResult + ";");
@@ -1141,12 +1084,20 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     @Override
     public void visitNotEmptyContentNode(NotEmptyContentNode node) {
         String subResult = "tmp_elect" + getTmpIndex();
-        code.add(electionTypeContainer.getOutputType().getOutputString() + " " + subResult + ";"); // create the var
-        if (node.context.intersectExp() != null) { // we have an intersect beneath
-            IntersectExpNode intersectNode = new IntersectExpNode(node.context.intersectExp(), subResult);
+        // create the variable
+        code.add(electionTypeContainer.getOutputType().getOutputString()
+                 + " " + subResult + ";");
+        // we have an intersect beneath
+        if (node.context.intersectExp() != null) {
+            IntersectExpNode intersectNode =
+                    new IntersectExpNode(node.context.intersectExp(),
+                                         subResult);
             intersectNode.getVisited(this);
-        } else { // we only have an elect
-            code.add(subResult + " = " + node.context.Elect().getText().toLowerCase() + ";");
+        } else {
+            // we only have an elect
+            code.add(subResult + " = "
+                     + node.context.Elect().getText().toLowerCase()
+                     + ";");
         }
         String toReturn = node.votingOutput;
         // the value is now saved in subResult

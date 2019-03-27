@@ -61,28 +61,22 @@ public abstract class SystemSpecificCompilerAndExecutioner {
         String absolutePath = SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER;
         String pathToNewFile = absolutePath + FileLoader.getNewUniqueName(absolutePath);
         File dataFile = new File(pathToNewFile + DATA_FILE_ENDING);
-
         // create two links to files, so in case an object file gets created we
         // can delete it afterwards too
         File cFile = new File(pathToNewFile + C_FILE_ENDING);
         File objFile = new File(pathToNewFile + OBJECT_FILE_ENDING);
-
         // on windows we have to create a .bat file, so we create a reference to
         // the file
         // that will be created, to delete it afterwards
         File batFile = new File(pathToNewFile + BAT_FILE_ENDING);
-
         // on windows a .exe file will be created
         // here it will be created, to be delete it afterwards
         File exeFile = new File(pathToNewFile + EXE_FILE_ENDING);
-
         // the file that gets created on linux that can then get called later
         File outFile = new File(pathToNewFile + OUT_FILE_ENDING);
-
         // write the code to the file
         FileSaver.writeStringLinesToFile(code, cFile);
         Process process = compileCFile(cFile);
-
         if (process != null) {
             CountDownLatch latch = new CountDownLatch(2);
             ThreadedBufferedReader outReader =
@@ -92,10 +86,8 @@ public abstract class SystemSpecificCompilerAndExecutioner {
             ThreadedBufferedReader errReader = new ThreadedBufferedReader(
                     new BufferedReader(new InputStreamReader(process.getErrorStream())),
                     errors, latch, false);
-
             resultToStoreIn.setLastTmpResult(result);
             resultToStoreIn.setLastTmpResult(errors);
-
             // wait for the process to finish;
             try {
                 process.waitFor();
@@ -105,12 +97,10 @@ public abstract class SystemSpecificCompilerAndExecutioner {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
-
             // here the compilation is done
             result = new ArrayList<String>();
             errors = new ArrayList<String>();
             Process programProcess = runWithData(pathToNewFile, dataFile);
-
             if (programProcess != null) {
                 latch = new CountDownLatch(2);
                 outReader =
@@ -123,31 +113,24 @@ public abstract class SystemSpecificCompilerAndExecutioner {
                         new BufferedReader(
                             new InputStreamReader(programProcess.getErrorStream())),
                         errors, latch, false);
-
                 // wait for the process to finish;
                 try {
                     process.waitFor();
                     // wait for the readers to finish reading
                     latch.await();
                 } catch (InterruptedException e1) {
-                    // TODO Auto-generated catch block
                     e1.printStackTrace();
                 }
-
                 for (Iterator<String> iterator = errors.iterator(); iterator.hasNext();) {
                     String error = iterator.next();
                     System.out.println(error);
                 }
-
                 // here the computation is done
-
                 // the winning candidate gets printed as a number in the last line
                 // like this:
                 // winner = x (,y, z ..) ( = if seats are selected)
-
                 String winner = result.get(0);
                 winner = winner.split("=")[1].replaceAll("\\s+", "");
-
                 if (winner.contains(",")) {
                     String[] winnerArray = winner.split(",");
                     for (int i = 0; i < winnerArray.length; i++) {

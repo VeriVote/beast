@@ -75,7 +75,7 @@ public class CodeArrayListBeautifier {
     /**
      * adds an ArrayList with the indenting
      *
-     * @param arrayList the added ArrayList
+     * @param list the added ArrayList
      */
     public void addList(List<String> list) {
         if (list != null) {

@@ -62,13 +62,18 @@ public abstract class OutputType implements InOutType {
      */
     public abstract String[] extractResult(List<String> toExtract);
 
-    public abstract List<CBMCResultWrapperSingleArray> readSeatList(List<String> toExtract);
+    public abstract List<CBMCResultWrapperSingleArray>
+                        readSeatList(List<String> toExtract);
 
-    public abstract List<CBMCResultWrapperLong> readElect(List<String> toExtract);
+    public abstract List<CBMCResultWrapperLong>
+                        readElect(List<String> toExtract);
 
-    public abstract CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code);
+    public abstract CodeArrayListBeautifier
+                        addMarginVerifyCheck(CodeArrayListBeautifier code);
 
-    public abstract CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code, int voteNumber);
+    public abstract CodeArrayListBeautifier
+                        addVotesArrayAndInit(CodeArrayListBeautifier code,
+                                             int voteNumber);
 
     public abstract String getCArrayType();
 
@@ -80,17 +85,24 @@ public abstract class OutputType implements InOutType {
      * @param voteNumber the vote number
      * @return the beautified code
      */
-    public abstract CodeArrayListBeautifier addMarginMainTest(CodeArrayListBeautifier code, int voteNumber);
+    public abstract CodeArrayListBeautifier
+                        addMarginMainTest(CodeArrayListBeautifier code,
+                                          int voteNumber);
 
-    public abstract List<String> getCodeToRunMargin(List<String> origResult, List<String> lastResult);
+    public abstract List<String>
+                        getCodeToRunMargin(List<String> origResult,
+                                           List<String> lastResult);
 
-    public abstract List<String> getNewResult(List<String> lastFailedRun, int index);
+    public abstract List<String>
+                        getNewResult(List<String> lastFailedRun,
+                                     int index);
 
     public abstract InternalTypeContainer getInternalTypeContainer();
 
     public abstract void addVerifyOutput(CodeArrayListBeautifier code);
 
-    public abstract void addLastResultAsCode(CodeArrayListBeautifier code, List<String> origResult);
+    public abstract void addLastResultAsCode(CodeArrayListBeautifier code,
+                                             List<String> origResult);
 
     public abstract String getResultDescriptionString(List<String> result);
 }

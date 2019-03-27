@@ -68,22 +68,33 @@ public abstract class Checker implements Runnable {
         process = createProcess(toCheck, voters, candidates, seats, advanced);
         if (process != null) {
             CountDownLatch latch = new CountDownLatch(2);
-            ThreadedBufferedReader outReader = new ThreadedBufferedReader(
-                    new BufferedReader(new InputStreamReader(process.getInputStream())), output, latch, true);
-            ThreadedBufferedReader errReader = new ThreadedBufferedReader(
-                    new BufferedReader(new InputStreamReader(process.getErrorStream())), errors, latch, false);
-
+            ThreadedBufferedReader outReader =
+                    new ThreadedBufferedReader(
+                            new BufferedReader(
+                                    new InputStreamReader(process.getInputStream())
+                            ),
+                            output,
+                            latch,
+                            true);
+            ThreadedBufferedReader errReader =
+                    new ThreadedBufferedReader(
+                            new BufferedReader(
+                                    new InputStreamReader(process.getErrorStream())
+                            ),
+                            errors,
+                            latch,false);
             result.setLastTmpResult(output);
             result.setLastTmpError(errors);
             // result
-
             polling: while (!interrupted || !finished) {
                 if (!process.isAlive() && !interrupted) {
                     if (process.exitValue() == 0) {
                         success = true;
                     } else {
                         if (process.exitValue() != 10) {
-                            ErrorLogger.log("Process finished with exitcode: " + process.exitValue());
+                            ErrorLogger.log(
+                                    "Process finished with exitcode: "
+                                            + process.exitValue());
                         }
                     }
                     break polling;
@@ -174,7 +185,9 @@ public abstract class Checker implements Runnable {
      * @return a process that describes the system process that is currently
      *         checking the property
      */
-    protected abstract Process createProcess(File toCheck, int voters, int candidates, int seats, String advanced);
+    protected abstract Process createProcess(File toCheck, int voters,
+                                             int candidates, int seats,
+                                             String advanced);
 
     /**
      * system specific implementation to stop the process that got started

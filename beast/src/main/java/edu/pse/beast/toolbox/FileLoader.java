@@ -32,7 +32,8 @@ public final class FileLoader {
      * @throws FileNotFoundException if the file is not found it throws an exception
      * @throws IOException           throws Exception
      */
-    public static LinkedList<String> loadFileAsString(File file) throws FileNotFoundException, IOException {
+    public static LinkedList<String> loadFileAsString(File file)
+            throws FileNotFoundException, IOException {
         LinkedList<String> stringlist;
         InputStream inputStream = new FileInputStream(file);
         BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
@@ -99,6 +100,7 @@ public final class FileLoader {
      *
      * @param pathToDir the path to the folder
      * @param endsWith  the String
+     * @return the described files
      */
     public static List<String> listAllFilesFromFolder(String pathToDir, String endsWith) {
         ArrayList<String> foundFiles = new ArrayList<>();

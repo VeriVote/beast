@@ -139,8 +139,10 @@ public class FactoryController implements Runnable {
     //     }
     // }
 
-    public FactoryController(ElectionDescription elecDesc, List<ParentTreeItem> parentProperties,
-                             ElectionCheckParameter electionCheckParameter, String checkerID,
+    public FactoryController(ElectionDescription elecDesc,
+                             List<ParentTreeItem> parentProperties,
+                             ElectionCheckParameter electionCheckParameter,
+                             String checkerID,
                              int concurrentChecker) {
         // add a shutdown hook so all the checker are stopped properly so they
         // do not clog the host pc
@@ -151,9 +153,11 @@ public class FactoryController implements Runnable {
         this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
 
         // set the result objects for all the selected children
-        for (Iterator<ParentTreeItem> parentIterator = parentProperties.iterator(); parentIterator.hasNext();) {
+        for (Iterator<ParentTreeItem> parentIterator = parentProperties.iterator();
+                parentIterator.hasNext();) {
             ParentTreeItem parentTreeItem = (ParentTreeItem) parentIterator.next();
-            for (Iterator<ChildTreeItem> childIterator = parentTreeItem.getSubItems().iterator(); childIterator
+            for (Iterator<ChildTreeItem> childIterator =
+                    parentTreeItem.getSubItems().iterator(); childIterator
                     .hasNext();) {
                 ChildTreeItem child = (ChildTreeItem) childIterator.next();
                 if (child.isSelected()) {
@@ -272,8 +276,10 @@ public class FactoryController implements Runnable {
                     // electionDescSrc, propertiesToCheck.get(i).getDescription(), parameter,
                     // results.get(i), propertiesToCheckAndMargin.get(i).getMarginStatus());
 
-                    CheckerFactory factory = CheckerFactoryFactory.getCheckerFactory(checkerID, this, elecDesc,
-                            results.get(i), parameter);
+                    CheckerFactory factory =
+                            CheckerFactoryFactory.getCheckerFactory(
+                                    checkerID, this, elecDesc,
+                                    results.get(i), parameter);
 
                     synchronized (this) {
                         currentlyRunning.add(factory);
@@ -304,8 +310,11 @@ public class FactoryController implements Runnable {
             try {
                 Thread.sleep(POLLING_INTERVAL);
             } catch (InterruptedException e) {
-                ErrorLogger.log("Was interrupted while waiting for the last processes to finish \n"
-                        + "The waiting will still continue. To stop the factory properly, call \"stopChecking()\" !");
+                ErrorLogger.log(
+                        "Was interrupted while waiting for the last processes "
+                        + "to finish \n"
+                        + "The waiting will still continue. To stop the factory "
+                        + "properly, call \"stopChecking()\" !");
             }
         }
 
@@ -314,8 +323,11 @@ public class FactoryController implements Runnable {
             try {
                 Thread.sleep(POLLING_INTERVAL);
             } catch (InterruptedException e) {
-                ErrorLogger.log("Was interrupted while waiting for the last processes to finish \n"
-                        + "The waiting will still continue. To stop the factory properly, call \"stopChecking()\" !");
+                ErrorLogger.log(
+                        "Was interrupted while waiting for the last processes "
+                        + "to finish \n"
+                        + "The waiting will still continue. To stop the factory "
+                        + "properly, call \"stopChecking()\" !");
             }
         }
 
@@ -335,14 +347,16 @@ public class FactoryController implements Runnable {
         if (!stopped) {
             this.stopped = true;
             // send a signal to all currently running Checkers so they will stop
-            for (Iterator<CheckerFactory> iterator = currentlyRunning.iterator(); iterator.hasNext();) {
+            for (Iterator<CheckerFactory> iterator = currentlyRunning.iterator();
+                    iterator.hasNext();) {
                 CheckerFactory toStop = (CheckerFactory) iterator.next();
                 toStop.stopChecking();
             }
             // set all not finished results to finished, to indicate that they
             // are
             // ready to be presented
-            for (Iterator<Result> iterator = results.iterator(); iterator.hasNext();) {
+            for (Iterator<Result> iterator = results.iterator();
+                    iterator.hasNext();) {
                 Result result = (Result) iterator.next();
                 if (!result.isFinished()) {
                     result.setTimeoutFlag();

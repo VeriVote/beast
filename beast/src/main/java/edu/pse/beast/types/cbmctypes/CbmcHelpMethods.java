@@ -87,90 +87,65 @@ public class CbmcHelpMethods extends CommonHelpMethods {
     @Override
     public List<CBMCResultWrapperSingleArray> readOneDimVarLong(String name,
                                                                 List<String> toExtract) {
-
         List<CBMCResultWrapperSingleArray> list = new ArrayList<CBMCResultWrapperSingleArray>();
-
         // this pattern searches for words of the form
         // "votesNUMBER[NUMBER]" where "NUMBER" can by any positive
         // number. Also, the next character has to be an equals sign
         Pattern votesExtractor = null;
-
         Iterator<String> iterator = toExtract.iterator();
         String line = mergeLinesToOne(iterator, SEGMENT_END);
-
         while (line.length() > 0) {
-
             if (line.contains("[")) {
-
                 // pattern that checks for a pattern like
                 // "votesNUMBER[NUMBER(letters)] = ...."
                 votesExtractor = Pattern.compile(
                         "(\\b" + name
                         + "[0-9]+\\[[0-9]+[a-zA-Z]*\\])(=.*)");
-
                 Matcher votesMatcher = votesExtractor.matcher(line);
-
                 if (votesMatcher.find()) {
                     String newLine = votesMatcher.group(1);
-
                     // find out the number of this votes array
                     int mainIndex = Integer.parseInt(newLine.split("=")[0]
                             .split(name)[1]
                                     .split("\\[")[0]);
-
                     // get the first index for this array value
                     int arrayIndex = Integer
                             .parseInt((newLine.split("\\[")[1]
                                     .split("\\]")[0])
                                     .replaceAll("[^\\d.]", ""));
-
                     // split at the "(" and ")" to extract the value
                     String valueAsString = line.split("\\(")[1].split("\\)")[0];
-
                     String value = "" + Long.parseLong(valueAsString, 2);
-
                     boolean added = false;
-
                     for (Iterator<CBMCResultWrapperSingleArray> innerIterator = list.iterator();
                             innerIterator.hasNext();) {
                         CBMCResultWrapperSingleArray wrapper =
                                 (CBMCResultWrapperSingleArray) innerIterator.next();
-
                         if (wrapper.getMainIndex() == mainIndex) {
                             wrapper.addTo(arrayIndex, value);
                             added = true;
                         }
                     }
-
                     if (!added) {
                         list.add(new CBMCResultWrapperSingleArray(mainIndex, name));
                         list.get(list.size() - 1).addTo(arrayIndex, value);
                     }
-
                 }
             } else if (line.contains("{")) {
-
                 // pattern that checks for a pattern like "votesNUMBER = {..."
                 votesExtractor = Pattern.compile("(\\b" + name + "[0-9]+)=(\\{[^\\{|\\}]*\\})");
-
                 Matcher votesMatcher = votesExtractor.matcher(line);
-
                 if (votesMatcher.find()) {
                     String newLine = votesMatcher.group(1);
-
                     // find out the number of this votes array
                     int mainIndex = Integer.parseInt(newLine.split("=")[0].split(name)[1]);
-
                     String values = line.split("\\(")[1].split("\\)")[0];
-
-                    // strip away whitespaces and the double braces that
+                    // strip away white spaces and the double braces that
                     // represent
                     // the whole array
                     // also remove all opening braces
                     values = values.replaceAll(" +", "").replaceAll("\\{+", "").replace("}", "}");
-
                     String[] subValueArray = values.split("\\}")[0].split(",");
-
                     for (int i = 0; i < subValueArray.length; i++) {
                         if (!subValueArray[i].equals("")) {
                             boolean added = false;
@@ -203,16 +178,11 @@ public class CbmcHelpMethods extends CommonHelpMethods {
                                                                List<String> toExtract) {
         List<CBMCResultWrapperMultiArray> list =
                 new ArrayList<CBMCResultWrapperMultiArray>();
-
         Pattern votesExtractor = null;
-
         Iterator<String> iterator = toExtract.iterator();
         String line = mergeLinesToOne(iterator, SEGMENT_END);
-
         while (line.length() > 0) {
-
             if (line.contains("[")) {
-
                 // this pattern searches for words of the form
                 // "votesNUMBER[NUMBER][NUMBER]" where "NUMBER" can by any
                 // positive
@@ -221,101 +191,74 @@ public class CbmcHelpMethods extends CommonHelpMethods {
                         Pattern.compile(
                                 "(\\b" + name
                                 + "[0-9]+\\[[0-9]+[a-z]*\\]\\[[0-9]+[a-zA-z]*\\])(=.*)");
-
                 Matcher votesMatcher = votesExtractor.matcher(line);
-
                 if (votesMatcher.find()) {
-
                     String newLine = votesMatcher.group(1);
-
                     // find out the number of this votes array
                     int mainIndex = Integer.parseInt(newLine.split("=")[0]
                             .split(name)[1]
                                     .split("\\[")[0]);
-
                     // get the first index for this array value
                     int arrayIndexOne = Integer
                             .parseInt(newLine.split("\\[")[1]
                                     .split("\\]")[0]
                                             .replaceAll("[^\\d.]", ""));
-
                     // get the second index for this array value
                     int arrayIndexTwo = Integer
                             .parseInt(newLine.split("\\[")[2]
                                     .split("\\]")[0]
                                             .replaceAll("[^\\d.]", ""));
-
                     // split at the "(" and ")" to extract the value
                     String valueAsString = line.split("\\(")[1].split("\\)")[0];
-
                     String value = "" + Long.parseLong(valueAsString, 2);
-
                     boolean added = false;
-
                     for (Iterator<CBMCResultWrapperMultiArray> innerIterator = list.iterator();
                             innerIterator.hasNext();) {
                         CBMCResultWrapperMultiArray wrapper =
                                 (CBMCResultWrapperMultiArray) innerIterator.next();
-
                         if (wrapper.getMainIndex() == mainIndex) {
                             wrapper.addTo(arrayIndexOne, arrayIndexTwo, value);
                             added = true;
                         }
                     }
-
                     if (!added) {
                         list.add(new CBMCResultWrapperMultiArray(mainIndex, name));
                         list.get(list.size() - 1).addTo(arrayIndexOne, arrayIndexTwo, value);
                     }
                 }
             } else if (line.contains("{")) {
-
                 // searches for votesNUMBER={....}
                 votesExtractor =
                         Pattern.compile("(\\b" + name
                                         + "[0-9]+)=(\\{\\s*((\\{(.*)\\}(,)*\\s*)*)})");
-
                 Matcher votesMatcher = votesExtractor.matcher(line);
-
                 if (votesMatcher.find()) {
                     String newLine = votesMatcher.group(1);
-
                     // find out the number of this votes array
                     int mainIndex = Integer.parseInt(newLine.split("=")[0].split(name)[1]);
-
                     String values = line.split("\\(")[1].split("\\)")[0];
-
                     // strip away white spaces and the double braces that
                     // represent the whole array
                     // also remove all opening braces
                     values = values.replaceAll(" +", "")
                             .replaceAll("\\{+", "")
                             .replaceAll("} *}+", "");
-
                     // every sub array is now separated by these two characters
                     String[] subArrys = values.split("\\},");
-
                     for (int i = 0; i < subArrys.length; i++) {
-
                         String subValues[] = subArrys[i].split(",");
                         for (int j = 0; j < subValues.length; j++) {
-
                             if (!subValues[j].equals("")) {
-
                                 boolean added = false;
-
                                 for (Iterator<CBMCResultWrapperMultiArray> innerIterator = list
                                         .iterator(); innerIterator.hasNext();) {
                                     CBMCResultWrapperMultiArray wrapper =
                                             (CBMCResultWrapperMultiArray) innerIterator.next();
-
                                     if (wrapper.getMainIndex() == mainIndex) {
                                         wrapper.addTo(i, j, "" + Long.parseLong(subValues[j], 2));
-
                                         added = true;
                                     }
                                 }
-
                                 if (!added) {
                                     list.add(new CBMCResultWrapperMultiArray(mainIndex, name));
                                     list.get(list.size() - 1)
@@ -344,12 +287,9 @@ public class CbmcHelpMethods extends CommonHelpMethods {
         boolean notEnded = true;
         while (notEnded) {
             if (toMerge.hasNext()) {
-
                 String nextLine = toMerge.next();
-
                 // add the next line, separated by a whitespace
                 toReturn = toReturn + " " + nextLine;
-
                 if (nextLine.contains(regexToEndAt)) {
                     // we found the end of the segment
                     notEnded = false;

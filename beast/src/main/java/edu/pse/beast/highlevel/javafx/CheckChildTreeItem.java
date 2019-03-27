@@ -5,11 +5,14 @@ import javafx.scene.control.TreeItem;
 
 public class CheckChildTreeItem extends ChildTreeItem {
 
-    CheckChildTreeItem(ChildTreeItemValues values, ParentTreeItem parent, TreeItem<CustomTreeItem> treeItemReference) {
+    CheckChildTreeItem(ChildTreeItemValues values,
+                       ParentTreeItem parent,
+                       TreeItem<CustomTreeItem> treeItemReference) {
         super(values, parent, treeItemReference);
     }
 
-    CheckChildTreeItem(String name, ParentTreeItem parent, TreeItem<CustomTreeItem> treeItemReference) {
+    CheckChildTreeItem(String name, ParentTreeItem parent,
+                       TreeItem<CustomTreeItem> treeItemReference) {
         super(name, parent, treeItemReference);
     }
 
@@ -22,5 +25,4 @@ public class CheckChildTreeItem extends ChildTreeItem {
     public AnalysisType getAnalysisType() {
         return AnalysisType.Check;
     }
-
 }

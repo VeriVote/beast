@@ -31,8 +31,9 @@ public class ParliamentStack extends CBMCOutputType {
 
     @Override
     public String[] extractResult(List<String> toExtract) {
-        return super.helper.readOneDimVarLong("" + UnifiedNameContainer.getNewResultName() + "", toExtract).get(0)
-                .getArray();
+        return super.helper.readOneDimVarLong(
+                "" + UnifiedNameContainer.getNewResultName() + "",
+                toExtract).get(0).getArray();
     }
 
     @Override
@@ -58,55 +59,60 @@ public class ParliamentStack extends CBMCOutputType {
                 + UnifiedNameContainer.getNewVotesName() + "1);");
 
         code.add("unsigned int *tmp_result = tmp.arr;");
-
-        code.add("unsigned int " + UnifiedNameContainer.getNewResultName() + "1[" + UnifiedNameContainer.getSeats()
-                + "];"); // create the array where the
-        // new seats will get saved
-
-        code.add("for (int i = 0; i < " + UnifiedNameContainer.getSeats() + "; i++) {"); // iterate over the
-        // seat array, and
-        // fill it
+        // create the array where the new seats will get saved
+        code.add("unsigned int "
+                + UnifiedNameContainer.getNewResultName() + "1["
+                + UnifiedNameContainer.getSeats() + "];");
+        // iterate over the seat array, and fill it
+        code.add("for (int i = 0; i < "
+                 + UnifiedNameContainer.getSeats() + "; i++) {");
         code.addTab();
         // we do this, so our cbmc parser can read out the value of the
         // array
         code.add("" + UnifiedNameContainer.getNewResultName() + "1[i] = tmp_result[i];");
         code.deleteTab();
         code.add("}"); // close the for loop
-
-        code.add("for (int i = 0; i < " + UnifiedNameContainer.getSeats() + "; i++) {"); // iterate over all
+        // iterate over all
+        code.add("for (int i = 0; i < "
+                 + UnifiedNameContainer.getSeats() + "; i++) {");
         code.addTab();
-        // candidates /
-        // seats
+        // candidates / seats
         code.add("assert(" + UnifiedNameContainer.getNewResultName() + "1[i] == "
                 + UnifiedNameContainer.getOrigResultName() + " [i]);");
         code.deleteTab();
         code.add("}"); // end of the for loop
-
         code.deleteTab();
-
         code.add("}"); // end of the function
-
         code = new CodeArrayListBeautifier();
-
         code.add("IF SOMETHING GOES WRONG: SEARCH FOR DEBUG56693");
-
         return code;
     }
 
     @Override
-    public CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code, int voteNumber) {
-        String temp = "struct stack_result tmp" + voteNumber + " = " + UnifiedNameContainer.getVotingMethod() + "(votes"
-                + voteNumber + ");";
+    public CodeArrayListBeautifier
+            addVotesArrayAndInit(CodeArrayListBeautifier code,
+                                 int voteNumber) {
+        String temp =
+                "struct stack_result tmp" + voteNumber
+                + " = " + UnifiedNameContainer.getVotingMethod()
+                + "(votes" + voteNumber + ");";
         code.add(temp);
-        String tempElect = "unsigned int *tempElect" + voteNumber + " = tmp" + voteNumber + ".arr;";
+        String tempElect =
+                "unsigned int *tempElect" + voteNumber
+                + " = tmp" + voteNumber + ".arr;";
         code.add(tempElect);
-        String electX = "unsigned int elect" + voteNumber + "[" + UnifiedNameContainer.getCandidate() + "];";
+        String electX =
+                "unsigned int elect" + voteNumber
+                + "[" + UnifiedNameContainer.getCandidate() + "];";
         code.add(electX);
-        String forLoop = "for (int electLoop = 0; electLoop < " + UnifiedNameContainer.getCandidate()
-                + "; electLoop++) {";
+        String forLoop =
+                "for (int electLoop = 0; electLoop < "
+                + UnifiedNameContainer.getCandidate() + "; electLoop++) {";
         code.add(forLoop);
         code.addTab();
-        code.add("elect" + voteNumber + "[electLoop] = tempElect" + voteNumber + "[electLoop];");
+        code.add("elect" + voteNumber
+                 + "[electLoop] = tempElect"
+                + voteNumber + "[electLoop];");
         code.deleteTab();
         code.add("}");
 
@@ -122,86 +128,79 @@ public class ParliamentStack extends CBMCOutputType {
     public CodeArrayListBeautifier addMarginMainTest(CodeArrayListBeautifier code, int voteNumber) {
         code.add("int main() {");
         code.addTab();
-
-        String temp = "struct stack_result tmp" + voteNumber + " = " + UnifiedNameContainer.getVotingMethod()
-                + "(ORIG_VOTES);";
+        String temp = "struct stack_result tmp" + voteNumber
+                      + " = " + UnifiedNameContainer.getVotingMethod()
+                      + "(ORIG_VOTES);";
         code.add(temp);
-        String tempElect = "unsigned int *tempElect" + voteNumber + " = tmp" + voteNumber + ".arr;";
+        String tempElect =
+                "unsigned int *tempElect" + voteNumber
+                + " = tmp" + voteNumber + ".arr;";
         code.add(tempElect);
-        String electX = "unsigned int elect" + voteNumber + "[" + UnifiedNameContainer.getCandidate() + "];";
+        String electX =
+                "unsigned int elect" + voteNumber
+                + "[" + UnifiedNameContainer.getCandidate() + "];";
         code.add(electX);
-        String forLoop = "for (int electLoop = 0; electLoop < " + UnifiedNameContainer.getCandidate()
-                + "; electLoop++) {";
+        String forLoop =
+                "for (int electLoop = 0; electLoop < "
+                + UnifiedNameContainer.getCandidate() + "; electLoop++) {";
         code.add(forLoop);
         code.addTab();
         code.add("elect" + voteNumber + "[electLoop] = tempElect" + voteNumber + "[electLoop];");
         code.deleteTab();
         code.add("}");
-
         // add an assertion that always fails, so we can extract the trace
         code.add("assert(0);");
-
         code.deleteTab();
-
         code.add("}");
-
         return code;
     }
 
     @Override
     public List<String> getCodeToRunMargin(List<String> origResult, List<String> lastResult) {
-
-        List<CBMCResultWrapperSingleArray> tmpResultOneDim = super.helper.readOneDimVarLong("elect", lastResult);
-
+        List<CBMCResultWrapperSingleArray> tmpResultOneDim =
+                super.helper.readOneDimVarLong("elect", lastResult);
         origResult = tmpResultOneDim.get(0).getList();
-
         return origResult;
     }
 
     @Override
     public List<String> getNewResult(List<String> lastFailedRun, int index) {
         List<CBMCResultWrapperSingleArray> tmpResultOneDim = super.helper
-                .readOneDimVarLong("" + UnifiedNameContainer.getNewResultName() + "", lastFailedRun);
-
+                .readOneDimVarLong("" + UnifiedNameContainer.getNewResultName() + "",
+                                   lastFailedRun);
         return tmpResultOneDim.get(index).getList();
     }
 
     @Override
     public InternalTypeContainer getInternalTypeContainer() {
-        return new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
+        return new InternalTypeContainer(
+                new InternalTypeContainer(InternalTypeRep.CANDIDATE),
+                InternalTypeRep.VOTER);
     }
 
     @Override
     public void addVerifyOutput(CodeArrayListBeautifier code) {
-        code.add("struct stack_result tmp_result = " + UnifiedNameContainer.getVotingMethod() + "("
+        code.add("struct stack_result tmp_result = "
+                + UnifiedNameContainer.getVotingMethod() + "("
                 + UnifiedNameContainer.getNewVotesName() + "1);");
-
-        code.add("unsigned int " + UnifiedNameContainer.getNewResultName() + "1[" + UnifiedNameContainer.getCandidate()
-                + "];"); // create the array where the
-        // new seats will get saved
-
-        code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {"); // iterate over the
-                                                                                             // seat array, and
-                                                                                             // fill it
+        // create the array where the new seats will get saved
+        code.add("unsigned int " + UnifiedNameContainer.getNewResultName()
+                + "1[" + UnifiedNameContainer.getCandidate()
+                + "];");
+        // iterate over the seat array, and fill it
+        code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {");
         code.addTab();
-
         // we do this, so our cbmc parser can read out the value of the
         // array
         code.add("" + UnifiedNameContainer.getNewResultName() + "1[i] = tmp_result."
                 + UnifiedNameContainer.getResultArrName() + "[i];");
-
         code.deleteTab();
         code.add("}"); // close the for loop
-
-        code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {"); // iterate over all
-                                                                                             // candidates /
-                                                                                             // seats and assert
-                                                                                             // their equality
+        // iterate over all candidates / seats and assert their equality
+        code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {");
         code.addTab();
-
         code.add("assert(" + UnifiedNameContainer.getNewResultName() + "1[i] == "
                 + UnifiedNameContainer.getOrigResultName() + "[i]);");
-
         code.deleteTab();
         code.add("}"); // end of the for loop
     }
@@ -210,10 +209,10 @@ public class ParliamentStack extends CBMCOutputType {
     public void addLastResultAsCode(CodeArrayListBeautifier code, List<String> origResult) {
         // first create the declaration of the array:
         String declaration = "";
-
-        declaration = "int " + UnifiedNameContainer.getOrigResultName() + "[" + origResult.size() + "] = {";
+        declaration =
+                "int " + UnifiedNameContainer.getOrigResultName()
+                + "[" + origResult.size() + "] = {";
         code.addTab();
-
         code.add(declaration);
 
         String tmp = ""; // saves the amount of votes this seat got
@@ -225,34 +224,27 @@ public class ParliamentStack extends CBMCOutputType {
             }
         }
         code.add(tmp);
-
         code.deleteTab();
         code.add("};");
-
     }
 
     @Override
     public String getResultDescriptionString(List<String> result) {
-
         String toReturn = "[";
-
         int index = 0;
-
         for (Iterator<String> iterator = result.iterator(); iterator.hasNext();) {
             String currentValue = (String) iterator.next();
-
             try {
-                toReturn = toReturn + GUIController.getController().getElectionSimulation().getPartyName(index) + ": "
-                        + currentValue + ", ";
+                toReturn +=
+                        GUIController.getController()
+                        .getElectionSimulation().getPartyName(index)
+                        + ": " + currentValue + ", ";
             } catch (NumberFormatException e) {
                 toReturn = toReturn + index + ": " + currentValue + ", ";
             }
-
             index++;
         }
-
         toReturn = toReturn + "]";
-
         return toReturn;
     }
 

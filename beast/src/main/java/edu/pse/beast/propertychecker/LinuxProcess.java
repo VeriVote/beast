@@ -35,9 +35,11 @@ public class LinuxProcess extends CBMCProcess {
      * @param toCheck    the file to check with cbmc
      * @param parent     the parent CheckerFactory, that has to be notified about
      *                   finished checking
+     * @param result     the result
      */
-    public LinuxProcess(int voters, int candidates, int seats, String advanced, File toCheck, CheckerFactory parent,
-            Result result) {
+    public LinuxProcess(int voters, int candidates, int seats,
+                        String advanced, File toCheck, CheckerFactory parent,
+                        Result result) {
         super(voters, candidates, seats, advanced, toCheck, parent, result);
     }
 
@@ -47,9 +49,13 @@ public class LinuxProcess extends CBMCProcess {
     }
 
     @Override
-    public Process createProcess(File toCheck, int voters, int candidates, int seats, String advanced) {
+    public Process createProcess(File toCheck, int voters, int candidates,
+                                 int seats, String advanced) {
         List<String> arguments = new ArrayList<String>();
-        String cbmc = "\"" + new File(SuperFolderFinder.getSuperFolder() + RELATIVE_PATH_TO_CBMC_64).getPath() + "\"";
+        String cbmc =
+                "\"" + new File(SuperFolderFinder.getSuperFolder()
+                                + RELATIVE_PATH_TO_CBMC_64)
+                        .getPath() + "\"";
 
         // enable the usage of includes in cbmc
         String userIncludeAndPath =
@@ -57,14 +63,18 @@ public class LinuxProcess extends CBMCProcess {
                 + USER_INCLUDE_FOLDER + "\"";
         // get all Files from the form "*.c" so we can include them into cbmc,
         List<String> allFiles = FileLoader.listAllFilesFromFolder(
-                "\"" + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER + "\"", C_FILE_ENDING);
+                "\"" + SuperFolderFinder.getSuperFolder()
+                + USER_INCLUDE_FOLDER + "\"", C_FILE_ENDING);
         if (!new File(cbmc.replace("\"", "")).exists()) {
             ErrorForUserDisplayer.displayError(
-                    "Cannot find the cbmc program in the subfolger \"linux/cbmcLin/\", please download it from "
+                    "Cannot find the cbmc program in the subfolder \"linux/cbmcLin/\", "
+                            + "please download it from "
                             + "the cbmc website and place it there!");
         } else if (!new File(cbmc.replace("\"", "")).canExecute()) {
-            ErrorForUserDisplayer.displayError("This program does not have the privileges to execute this program. \n "
-                    + "Please change the access rights for the program \"/linux/cbmcLin/cbmc\" in the "
+            ErrorForUserDisplayer.displayError("This program does not have the privileges "
+                    + "to execute this program. \n "
+                    + "Please change the access rights for the "
+                    + "program \"/linux/cbmcLin/cbmc\" in the "
                     + "BEAST installation folder and try again");
         } else {
             arguments.add(cbmc.replace("\"", ""));
@@ -117,8 +127,10 @@ public class LinuxProcess extends CBMCProcess {
         } catch (InterruptedException e) {
         }
         if (process.isAlive()) {
-            ErrorForUserDisplayer.displayError("Warning, the program was still alive after trying to stop it \n"
-                    + "Please kill it manually if it is still alive, especially if it starts taking up a lot of ram");
+            ErrorForUserDisplayer.displayError(
+                    "Warning, the program was still alive after trying to stop it \n"
+                    + "Please kill it manually if it is still alive, especially if "
+                    + "it starts taking up a lot of ram");
         }
     }
 }

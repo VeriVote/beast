@@ -64,7 +64,8 @@
 //  private JButton addCreatedButton = new JButton();
 //
 //  private static final String PATH_TO_ADD = "/core/images/other/add.png";
-//  private final ImageIcon addIcon = new ImageIcon(SuperFolderFinder.getSuperFolder() + PATH_TO_ADD);
+//  private final ImageIcon addIcon =
+//      new ImageIcon(SuperFolderFinder.getSuperFolder() + PATH_TO_ADD);
 //
 //  /**
 //   * Constructor

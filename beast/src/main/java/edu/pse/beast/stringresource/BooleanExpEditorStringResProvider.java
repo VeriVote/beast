@@ -6,7 +6,6 @@ package edu.pse.beast.stringresource;
  * @author Niels Hanselmann
  */
 public class BooleanExpEditorStringResProvider extends StringResourceProvider {
-
     private StringResourceLoader menuStringRes;
     private StringResourceLoader toolbarTipStringRes;
     private StringResourceLoader booleanExpErrorStringRes;
@@ -68,11 +67,15 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
      */
     @Override
     protected final void initialize() {
-        toolbarTipStringRes = this.getStringResourceLoaderFromModuleName("BooleanExpEditorToolbar");
-        menuStringRes = this.getStringResourceLoaderFromModuleName("BooleanExpEditorMenu");
-        booleanExpErrorStringRes = this.getStringResourceLoaderFromModuleName("BooleanExpEditorBooleanExpError");
-        booleanExpEditorWindow = this.getStringResourceLoaderFromModuleName("BooleanExpEditorWindow");
-        booleanExpEditorSymbVarListRes = this.getStringResourceLoaderFromModuleName("BooleanExpEditorSymbVarList");
+        toolbarTipStringRes =
+                this.getStringResourceLoaderFromModuleName("BooleanExpEditorToolbar");
+        menuStringRes =
+                this.getStringResourceLoaderFromModuleName("BooleanExpEditorMenu");
+        booleanExpErrorStringRes =
+                this.getStringResourceLoaderFromModuleName("BooleanExpEditorBooleanExpError");
+        booleanExpEditorWindow =
+                this.getStringResourceLoaderFromModuleName("BooleanExpEditorWindow");
+        booleanExpEditorSymbVarListRes =
+                this.getStringResourceLoaderFromModuleName("BooleanExpEditorSymbVarList");
     }
-
 }

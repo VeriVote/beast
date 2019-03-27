@@ -58,7 +58,8 @@ public abstract class StringResourceProvider {
      */
     private void errorFileHasWrongFormat(File file) {
         ErrorLogger.log("The file " + file.getName() + " is not correctly formated");
-        ErrorLogger.log("You can find and correct the file in this directory " + file.getAbsolutePath());
+        ErrorLogger.log("You can find and correct the file in this directory "
+                        + file.getAbsolutePath());
     }
 
     private void fileNotFound(File file) {

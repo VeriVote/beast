@@ -12,7 +12,8 @@
 //
 //    private final PropertyListSaverLoader propListSL = new PropertyListSaverLoader();
 //    private final ProjectSaverLoader projSL = new ProjectSaverLoader();
-//    private final ElectionDescriptionSaverLoader electionDescrSL = new ElectionDescriptionSaverLoader();
+//    private final ElectionDescriptionSaverLoader electionDescrSL =
+//        new ElectionDescriptionSaverLoader();
 //    private final SymbolicVarListSaverLoader symVarListSL = null;
 //    private final PreAndPostConditionsDescriptionSaverLoader propDescrSL = new
 //            PreAndPostConditionsDescriptionSaverLoader();
@@ -55,7 +56,8 @@
 //     * Getter for PreAndPostConditionsDescriptionSaverLoader
 //     * @return the PreAndPostConditionsDescriptionSaverLoader
 //     */
-//    public PreAndPostConditionsDescriptionSaverLoader getPreAndPostConditionsDescriptionSaverLoader() {
+//    public PreAndPostConditionsDescriptionSaverLoader
+//            getPreAndPostConditionsDescriptionSaverLoader() {
 //        return propDescrSL;
 //    }
 //

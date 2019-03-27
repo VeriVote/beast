@@ -63,22 +63,42 @@
 //                refs.getStringIF().getParameterEditorStringResProvider().getOtherStringRes(),
 //                new ProjectSaverLoader(),
 //                null);
-//        editor = new ParameterEditor(cElectionDescriptionEditor, propertyList, window, fileChooser);
-//        ParameterEditorMenuBarHandler menuBarHandler = new ParameterEditorMenuBarHandler(MENU_HEADING_IDS,
-//                createActionIdAndListenerListForMenuHandler(
-//                    cElectionDescriptionEditor, booleanExpEditor, propertyList,
-//                    refs.getStringIF().getParameterEditorStringResProvider().getOtherStringRes(),
-//                    saverLoaderInterface.getProjectSaverLoader(), refs, centralObjectProvider),
-//                refs.getStringIF().getParameterEditorStringResProvider().getMenuStringRes(),
-//                window);
+//        editor = new ParameterEditor(cElectionDescriptionEditor, propertyList,
+//                                     window, fileChooser);
+//        ParameterEditorMenuBarHandler menuBarHandler =
+//            new ParameterEditorMenuBarHandler(
+//                    MENU_HEADING_IDS,
+//                    createActionIdAndListenerListForMenuHandler(
+//                            cElectionDescriptionEditor,
+//                            booleanExpEditor,
+//                            propertyList,
+//                            refs.getStringIF()
+//                                .getParameterEditorStringResProvider()
+//                                    .getOtherStringRes(),
+//                            saverLoaderInterface.getProjectSaverLoader(),
+//                            refs,
+//                            centralObjectProvider),
+//                    refs.getStringIF()
+//                        .getParameterEditorStringResProvider()
+//                            .getMenuStringRes(),
+//                    window);
 //
 //        ImageResourceProvider imageRes = ImageResourceProvider.getToolbarImages();
 //
-//        ParameterEditorToolbarHandler toolbarHandler = new ParameterEditorToolbarHandler(imageRes,
-//                refs.getStringIF().getParameterEditorStringResProvider().getToolbarTipStringRes(),
-//                createActionIdAndListenerListForToolbarHandler(cElectionDescriptionEditor, propertyList,
-//                        refs.getStringIF().getParameterEditorStringResProvider().getOtherStringRes(),
-//                        saverLoaderInterface.getProjectSaverLoader()), window.getToolbar(), window);
+//        ParameterEditorToolbarHandler toolbarHandler =
+//            new ParameterEditorToolbarHandler(
+//                    imageRes,
+//                    refs.getStringIF()
+//                        .getParameterEditorStringResProvider()
+//                            .getToolbarTipStringRes(),
+//                    createActionIdAndListenerListForToolbarHandler(
+//                            cElectionDescriptionEditor, propertyList,
+//                            refs.getStringIF()
+//                                .getParameterEditorStringResProvider()
+//                                    .getOtherStringRes(),
+//                            saverLoaderInterface.getProjectSaverLoader()),
+//                    window.getToolbar(),
+//                    window);
 //
 //        refs.getLanguageOpts().addStringDisplayer(menuBarHandler);
 //        refs.getLanguageOpts().addStringDisplayer(toolbarHandler);
@@ -89,8 +109,9 @@
 //        return editor;
 //    }
 //    /**
-//     * Creates an Arraylist of Arraylists of ActionIdAndListeners which the MenuBarHandler uses to create the
-//     * MenuBar with the appropriate Strings.
+//     * Creates an array list of array lists of ActionIdAndListeners which
+//     * the MenuBarHandler uses to create the MenuBar with the appropriate Strings.
+//     *
 //     * @param cElectionDescriptionEditor
 //     * @param booleanExpEditor
 //     * @param propertyList
@@ -98,13 +119,21 @@
 //     * @return the ArrayList
 //     */
 //    private ArrayList<ArrayList<ActionIdAndListener>>
-//            createActionIdAndListenerListForMenuHandler(CElectionDescriptionEditor cElectionDescriptionEditor,
+//            createActionIdAndListenerListForMenuHandler(CElectionDescriptionEditor
+//                                                            cElectionDescriptionEditor,
 //                                                        BooleanExpEditor booleanExpEditor,
-//                    PropertyList propertyList, StringResourceLoader stringResourceLoader, SaverLoader saverLoader,
-//                    ObjectRefsForBuilder refs, PSECentralObjectProvider centralObjectProvider) {
+//                                                        PropertyList propertyList,
+//                                                        StringResourceLoader
+//                                                            stringResourceLoader,
+//                                                        SaverLoader saverLoader,
+//                                                        ObjectRefsForBuilder refs,
+//                                                        PSECentralObjectProvider
+//                                                            centralObjectProvider) {
 //        ArrayList<ArrayList<ActionIdAndListener>> created = new ArrayList<>();
 //
-//        UserAction save = createSaveProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoader);
+//        UserAction save =
+//            createSaveProjectUserAction(cElectionDescriptionEditor,
+//                                        propertyList, saverLoader);
 //        UserAction save_as =
 //            createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList,
 //                                          stringResourceLoader, saverLoader);
@@ -115,8 +144,10 @@
 //        UserAction stop = createAbortCheckUserAction();
 //        UserAction options = createOptionsUserAction(refs, centralObjectProvider);
 //        UserAction showPropertyList = createShowPropertyListUserAction(propertyList.getView());
-//        UserAction showBooleanExpEditor = createShowBooleanExpEditorUserAction(booleanExpEditor.getView());
-//        UserAction showCElectionEditor = createShowCElectionEditorUserAction(cElectionDescriptionEditor.getView());
+//        UserAction showBooleanExpEditor =
+//            createShowBooleanExpEditorUserAction(booleanExpEditor.getView());
+//        UserAction showCElectionEditor =
+//            createShowCElectionEditorUserAction(cElectionDescriptionEditor.getView());
 //
 //        ArrayList<ActionIdAndListener> fileList = new ArrayList<>();
 //        fileList.add(createFromUserAction(load));
@@ -143,21 +174,28 @@
 //    }
 //    /**
 //     * Creates ActionIdAndListeners which the ToolbarHandler uses to create the
-//     * Toolbar with the appropriate Strings.
+//     * toolbar with the appropriate Strings.
+//     *
 //     * @param cElectionDescriptionEditor the CelectionDescriptionEditor
 //     * @param propertyList the PropertyList
 //     * @param stringResourceLoader the StringRessourceLoader
 //     * @return the Array of ActionIdAndListener objects
 //     */
-//    private ActionIdAndListener[] createActionIdAndListenerListForToolbarHandler(
-//            CElectionDescriptionEditor cElectionDescriptionEditor,
-//            PropertyList propertyList, StringResourceLoader stringResourceLoader, SaverLoader saverLoader) {
+//    private ActionIdAndListener[]
+//                createActionIdAndListenerListForToolbarHandler(CElectionDescriptionEditor
+//                                                                   cElectionDescriptionEditor,
+//                                                               PropertyList propertyList,
+//                                                               StringResourceLoader
+//                                                                   stringResourceLoader,
+//                                                               SaverLoader saverLoader) {
 //        ActionIdAndListener[] created = new ActionIdAndListener[5];
 //
 //        UserAction load =
 //            createLoadProjectUserAction(cElectionDescriptionEditor, propertyList,
 //                                        stringResourceLoader, saverLoader);
-//        UserAction save = createSaveProjectUserAction(cElectionDescriptionEditor, propertyList, saverLoader);
+//        UserAction save =
+//            createSaveProjectUserAction(cElectionDescriptionEditor,
+//                                        propertyList, saverLoader);
 //        UserAction save_as =
 //            createSaveProjectAsUserAction(cElectionDescriptionEditor, propertyList,
 //                                          stringResourceLoader, saverLoader);
@@ -169,25 +207,41 @@
 //        created[2] = createFromUserAction(save_as);
 //        created[3] = createFromUserAction(start);
 //        created[4] = createFromUserAction(stop);
-//
 //        return created;
 //    }
 //
-//    private UserAction createSaveProjectUserAction(CElectionDescriptionEditor cElectionDescriptionEditor,
-//            PropertyList propertyList, SaverLoader saverLoader) {
-//        return new SaveProjectUserAction(propertyList, cElectionDescriptionEditor, editor);
+//    private UserAction
+//                createSaveProjectUserAction(CElectionDescriptionEditor
+//                                                cElectionDescriptionEditor,
+//                                            PropertyList propertyList,
+//                                            SaverLoader saverLoader) {
+//        return new SaveProjectUserAction(propertyList,
+//                                         cElectionDescriptionEditor,
+//                                         editor);
 //    }
 //
-//    private UserAction createSaveProjectAsUserAction(CElectionDescriptionEditor cElectionDescriptionEditor,
-//                                                     PropertyList propertyList,
-//                                                     StringResourceLoader stringResourceLoader,
-//                                                     SaverLoader saverLoader) {
-//        return new SaveProjectAsUserAction(propertyList, cElectionDescriptionEditor, editor, stringResourceLoader);
+//    private UserAction
+//                createSaveProjectAsUserAction(CElectionDescriptionEditor
+//                                                  cElectionDescriptionEditor,
+//                                              PropertyList propertyList,
+//                                              StringResourceLoader stringResourceLoader,
+//                                              SaverLoader saverLoader) {
+//        return new SaveProjectAsUserAction(propertyList,
+//                                           cElectionDescriptionEditor,
+//                                           editor,
+//                                           stringResourceLoader);
 //    }
 //
-//    private UserAction createLoadProjectUserAction(CElectionDescriptionEditor cElectionDescriptionEditor,
-//            PropertyList propertyList, StringResourceLoader stringResourceLoader, SaverLoader saverLoader) {
-//        return new LoadProjectUserAction(propertyList, cElectionDescriptionEditor, editor, stringResourceLoader);
+//    private UserAction
+//                createLoadProjectUserAction(CElectionDescriptionEditor
+//                                                cElectionDescriptionEditor,
+//                                            PropertyList propertyList,
+//                                            StringResourceLoader stringResourceLoader,
+//                                            SaverLoader saverLoader) {
+//        return new LoadProjectUserAction(propertyList,
+//                                         cElectionDescriptionEditor,
+//                                         editor,
+//                                         stringResourceLoader);
 //    }
 //
 //    private UserAction createStartCheckUserAction() {
@@ -201,9 +255,12 @@
 //    private UserAction createOptionsUserAction(ObjectRefsForBuilder refs,
 //                                               PSECentralObjectProvider centralObjectProvider) {
 //        return new OptionsUserAction(
-//                refs.getOptionIF().getParameterEditorOptions(refs.getLanguageOpts(), editor,
-//                                                             centralObjectProvider), editor,
-//                                                             refs.getOptionIF().getOptionPresenter(refs));
+//                refs.getOptionIF()
+//                .getParameterEditorOptions(refs.getLanguageOpts(),
+//                                           editor,
+//                                           centralObjectProvider),
+//                                           editor,
+//                                           refs.getOptionIF().getOptionPresenter(refs));
 //    }
 //
 //    private UserAction createShowPropertyListUserAction(JFrame propertyListWindow) {

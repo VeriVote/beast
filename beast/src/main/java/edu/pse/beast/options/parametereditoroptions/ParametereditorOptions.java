@@ -18,17 +18,24 @@
 //
 //    private static boolean deleteFiles = false;
 //
-//    public ParametereditorOptions(StringResourceLoader loader, LanguageOptions langOpts, ParameterEditor editor,
-//            PSECentralObjectProvider centralObjectProvider) {
+//    public ParametereditorOptions(StringResourceLoader loader,
+//                                  LanguageOptions langOpts,
+//                                  ParameterEditor editor,
+//                                  PSECentralObjectProvider
+//                                      centralObjectProvider) {
 //        super("param_opts");
 //        this.langOpts = langOpts;
 //        this.subOptions.add(langOpts);
 //        this.editor = editor;
 //        this.centralObjectProvider = centralObjectProvider;
-//        this.checkerOptElem = new CheckerOptionElement(CheckerFactoryFactory.getAvailableCheckerIDs(),
+//        this.checkerOptElem =
+//            new CheckerOptionElement(
+//                CheckerFactoryFactory.getAvailableCheckerIDs(),
 //                loader.getIdForString("checker"));
 //        this.optElements.add(checkerOptElem);
-//        this.deleteElem = new DeleteCFilesElement(java.util.Arrays.asList("not_keep_files", "keep_files"),
+//        this.deleteElem =
+//            new DeleteCFilesElement(
+//                java.util.Arrays.asList("not_keep_files", "keep_files"),
 //                loader.getIdForString("keep_files"));
 //        this.optElements.add(deleteElem);
 //    }
@@ -43,17 +50,20 @@
 //        this.checkerOptElem =
 //                new CheckerOptionElement(CheckerFactoryFactory.getAvailableCheckerIDs(), "CBMC");
 //        this.optElements.add(checkerOptElem);
-//        this.deleteElem = new DeleteCFilesElement(java.util.Arrays.asList("not_keep_files", "keep_files"),
+//        this.deleteElem =
+//            new DeleteCFilesElement(
+//                java.util.Arrays.asList("not_keep_files", "keep_files"),
 //                "keep_files");
 //        this.optElements.add(deleteElem);
 //    }
 //
 //    @Override
 //    protected void reapplySpecialized() {
-//        OptionsSaverLoaderInterface.saveOpt(langOpts); // needed since lang opts
-//                                                       // are loaded seperately
-//        centralObjectProvider.setCheckerCommunicator(new PropertyChecker(checkerOptElem.getChosenOption()));
-//
+//        // needed since language options are loaded separately
+//        OptionsSaverLoaderInterface.saveOpt(langOpts);
+//        centralObjectProvider.setCheckerCommunicator(
+//                new PropertyChecker(checkerOptElem.getChosenOption())
+//        );
 //        //extract if the user wants to keep the files, or delete them
 //        String choosenOption = deleteElem.getChosenOption();
 //        if (choosenOption.equals("not_keep_files")) {

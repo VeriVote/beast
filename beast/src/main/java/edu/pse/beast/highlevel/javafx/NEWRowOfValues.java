@@ -26,17 +26,18 @@ public class NEWRowOfValues {
     private ElectionSimulationModel parent;
     private boolean disabled;
 
-    public NEWRowOfValues(ElectionSimulationModel parent, ElectionTypeContainer container, int amountOfCandidates,
-            int rowIndex, double elementWidth, double elementHeight) {
+    public NEWRowOfValues(ElectionSimulationModel parent,
+                          ElectionTypeContainer container,
+                          int amountOfCandidates,
+                          int rowIndex, double elementWidth,
+                          double elementHeight) {
         this.parent = parent;
         this.container = container;
         this.rowIndex = rowIndex;
-
         this.elementWidth = elementWidth;
         this.elementHeight = elementHeight;
         values = new ArrayList<>(amountOfCandidates);
         fields = new ArrayList<>(amountOfCandidates);
-
         this.setCandidates(amountOfCandidates);
     }
 
@@ -44,21 +45,17 @@ public class NEWRowOfValues {
         if (values.size() == amountOfCandidates) {
             values.add("0");
         }
-
         TextField field = new TextField(values.get(amountOfCandidates));
-
         field.setMinSize(elementWidth, elementHeight);
         field.setMaxSize(elementWidth, elementHeight);
         field.setPrefSize(elementWidth, elementHeight);
-
         fields.add(field);
-
         field.textProperty().addListener(new ChangeListener<String>() {
-
             int position = fields.indexOf(field);;
-
             @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            public void changed(ObservableValue<? extends String> observable,
+                                String oldValue,
+                                String newValue) {
                 Platform.runLater(() -> {
                     checkAndInsertValue(newValue, position);
                 });

@@ -118,7 +118,9 @@ public final class CheckerFactoryFactory {
                                                    ElectionCheckParameter parameter) {
 
         if (factories.keySet().contains(checkerID)) {
-            return factories.get(checkerID).getNewInstance(controller, electionDesc, result, parameter);
+            return factories.get(checkerID)
+                    .getNewInstance(controller, electionDesc,
+                                    result, parameter);
 
         } else {
             ErrorLogger.log("The specified checkerID was not found");

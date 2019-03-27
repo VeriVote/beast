@@ -28,7 +28,8 @@ import javafx.scene.control.Tooltip;
  * @author P.J. Meisch (pj.meisch@sothawo.com).
  *
  *         taken from:
- *         https://www.sothawo.com/2016/09/how-to-implement-a-javafx-ui-where-the-language-can-be-changed-dynamically/
+ *         https://www.sothawo.com/2016/09/
+ *         how-to-implement-a-javafx-ui-where-the-language-can-be-changed-dynamically/
  */
 public final class Internationalization {
     /** the current selected Locale. */
@@ -52,7 +53,7 @@ public final class Internationalization {
      * get the default LOCALE. This is the systems default if contained in the
      * supported locales, english otherwise.
      *
-     * @return
+     * @return the locale
      */
     public static Locale getDefaultLocale() {
         Locale sysDefault = Locale.getDefault();

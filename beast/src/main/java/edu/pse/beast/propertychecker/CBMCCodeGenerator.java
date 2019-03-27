@@ -34,7 +34,8 @@ public class CBMCCodeGenerator {
     private final PreAndPostConditionsDescription preAndPostCondDesc;
     private final FormalPropertySyntaxTreeToAstTranslator translator;
     private final CBMCCodeGenerationVisitor visitor;
-    private int numberOfTimesVoted; // this number should be the number of vote we want to perform
+    // this number should be the number of votes we want to perform
+    private int numberOfTimesVoted;
     private int margin;
     private List<String> origResult;
     // private boolean isTest;
@@ -129,16 +130,12 @@ public class CBMCCodeGenerator {
         code = addHeader(code);
         addVoteSumFunc(false);
         addVoteSumFunc(true);
-
         addOtherFunctions();
-
         code.add("//Code of the user");
         ArrayList<String> electionDescriptionCode = new ArrayList<>();
         electionDescriptionCode.addAll(electionDesc.getCode());
         code.addList(electionDescriptionCode);
-
         addMainMethod();
-
     }
 
     /**
@@ -180,7 +177,8 @@ public class CBMCCodeGenerator {
         // add the verify method:
         // taken and adjusted from the paper:
         // https://formal.iti.kit.edu/~beckert/pub/evoteid2016.pdf
-        electionDesc.getContainer().getInputType().addVerifyMethod(code, electionDesc.getContainer().getOutputType());
+        electionDesc.getContainer().getInputType()
+            .addVerifyMethod(code, electionDesc.getContainer().getOutputType());
         // add the main method
         code.add("int main() {");
         code.addTab();
@@ -215,9 +213,13 @@ public class CBMCCodeGenerator {
     }
 
     private void addVoteSumFunc(boolean unique) {
-        String input = "unsigned int arr" + electionDesc.getContainer().getInputType().getInputString();
+        String input =
+                "unsigned int arr"
+                + electionDesc.getContainer()
+                    .getInputType().getInputString();
         code.add("unsigned int voteSumForCandidate" + (unique ? "Unique" : "")
-                + "(INPUT, unsigned int amountVotes, unsigned int candidate) {".replace("INPUT", input));
+                + "(INPUT, unsigned int amountVotes, unsigned int candidate) {"
+                    .replace("INPUT", input));
         code.addTab();
         code.add("unsigned int sum = 0;");
         code.add("for(unsigned int i = 0; i < amountVotes; i++) {");
@@ -235,7 +237,194 @@ public class CBMCCodeGenerator {
      * Other functions needed for the check.
      */
     private void addOtherFunctions() {
-        // split array functions
+        addSplitArrayFunctions();
+        addConcatenationFunctions();
+        addPermutationFunctions();
+        addIntersectFunction();
+    }
+
+    private void addIntersectFunction() {
+        code.add(
+                "struct candidateList_result intersect(struct candidateList_result one, "
+                + "struct candidateList_result two) {");
+        code.add("  static struct candidateList_result toReturn;");
+        code.add("  ");
+        code.add("  for (int i = 0; i < C; i++) {");
+        code.add("    toReturn.arr[i] = 0;");
+        code.add("  }");
+        code.add("  ");
+        code.add("  for (int i = 0; i < C; i++) {");
+        code.add("    if (one.arr[i] && two.arr[i]) {");
+        code.add("      toReturn.arr[i] = 1;");
+        code.add("    }");
+        code.add("  }");
+        code.add("  ");
+        code.add("  return toReturn;");
+        code.add("}");
+    }
+
+    private void addPermutationFunctions() {
+        addPermutateOneFunction();
+        addPermutateTwoFunction();
+    }
+
+    private void addPermutateTwoFunction() {
+        code.add("struct vote_double permutateTwo(unsigned int votes[V][C], "
+                 + "unsigned int length) {");
+        code.add("  static unsigned int sub_arr[V][C];");
+        code.add("  ");
+        code.add("  static unsigned int already_used_arr[V];");
+        code.add("    ");
+        code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
+        code.add("    for(int j = 0; j < C; j++) {");
+        code.add("      sub_arr[i][j] = C;");
+        code.add("    }");
+        code.add("  }");
+        code.add("  ");
+        code.add("  ");
+        code.add("  for(int i = 0; i < length; i++) {");
+        code.add("    unsigned int new_index = nondet_uint();");
+        code.add("    assume((new_index >= 0) && (new_index < length));");
+        code.add("    ");
+        code.add("    for(int j = 0; j < i; j++) {");
+        code.add("      assume(new_index != already_used_arr[j]);");
+        code.add("    }");
+        code.add("    ");
+        code.add("    already_used_arr[i] = new_index;");
+        code.add("    ");
+        code.add("    for(int j = 0; j < C; j++) {");
+        code.add("      sub_arr[new_index][j] = votes[i][j];");
+        code.add("    }");
+        code.add("  }");
+        code.add("  ");
+        code.add("  struct vote_double toReturn;");
+        code.add("    ");
+        code.add("  for (int i = 0; i < V; i++) {");
+        code.add("    for(int j = 0; j < C; j++) {");
+        code.add("      toReturn.arr[i][j] = sub_arr[i][j];");
+        code.add("    }");
+        code.add("  }");
+        code.add("    ");
+        code.add("  return toReturn;");
+        code.add("}");
+    }
+
+    private void addPermutateOneFunction() {
+        code.add("struct vote_single permutateOne(unsigned int votes[V], unsigned int length) {");
+        code.add("  static unsigned int sub_arr[V];");
+        code.add("  ");
+        code.add("  static unsigned int already_used_arr[V];");
+        code.add("    ");
+        code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
+        code.add("    sub_arr[i] = C;");
+        code.add("  }");
+        code.add("  ");
+        code.add("  ");
+        code.add("  for(int i = 0; i < length; i++) {");
+        code.add("    unsigned int new_index = nondet_uint();");
+        code.add("    assume((new_index >= 0) && (new_index < length));");
+        code.add("    ");
+        code.add("    for(int j = 0; j < i; j++) {");
+        code.add("      assume(new_index != already_used_arr[j]);");
+        code.add("    }");
+        code.add("    ");
+        code.add("    already_used_arr[i] = new_index;");
+        code.add("    ");
+        code.add("    sub_arr[new_index] = votes[i];");
+        code.add("  }");
+        code.add("  ");
+        code.add("  struct vote_single toReturn;");
+        code.add("    ");
+        code.add("  for (int i = 0; i < V; i++) {");
+        code.add("    toReturn.arr[i] = sub_arr[i];");
+        code.add("  }");
+        code.add("    ");
+        code.add("  return toReturn;");
+        code.add("  ");
+        code.add("}");
+        code.add("");
+    }
+
+    private void addConcatenationFunctions() {
+        addConcatOneFunction();
+        addConcatTwoFunction();
+    }
+
+    private void addConcatTwoFunction() {
+        code.add(
+                "struct vote_double concatTwo(unsigned int votesOne[V][C], unsigned int sizeOne, "
+                + "unsigned int votesTwo[V][C], unsigned int sizeTwo) {");
+        code.add("  static unsigned int sub_arr[V][C];");
+        code.add("  ");
+        code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
+        code.add("    for(int j = 0; j < C; j++) {");
+        code.add("      sub_arr[i][j] = C;");
+        code.add("    }");
+        code.add("  }");
+        code.add("  ");
+        code.add("  for(int i = 0; i < sizeOne; i++) { //limit the size to the upper bound V");
+        code.add("    for(int j = 0; j < C; j++) {");
+        code.add("      if (i < V) {");
+        code.add("        sub_arr[i][j] = votesOne[i][j];");
+        code.add("      }");
+        code.add("    }");
+        code.add("  }");
+        code.add("  ");
+        code.add("  for(int i = 0; i < sizeTwo; i++) { //limit the size to the upper bound V");
+        code.add("    for(int j = 0; j < C; j++) {");
+        code.add("      if (sizeTwo + i < V) {");
+        code.add("        sub_arr[i][j] = votesTwo[i][j];");
+        code.add("      }");
+        code.add("    }");
+        code.add("  }");
+        code.add("  ");
+        code.add("  struct vote_double toReturn;");
+        code.add("    ");
+        code.add("  for (int i = 0; i < V; i++) {");
+        code.add("    for (int j = 0; j < C; j++) {");
+        code.add("      toReturn.arr[i][j] = sub_arr[i][j];");
+        code.add("    }");
+        code.add("  }");
+        code.add("    ");
+        code.add("  return toReturn;");
+        code.add("}");
+    }
+
+    private void addConcatOneFunction() {
+        code.add(
+            "struct vote_single concatOne(unsigned int votesOne[V], unsigned int sizeOne, "
+            + "unsigned int votesTwo[V][C], unsigned int sizeTwo) {");
+        code.add("  static unsigned int sub_arr[V];");
+        code.add("  ");
+        code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
+        code.add("    sub_arr[i] = C;");
+        code.add("  }");
+        code.add("  ");
+        code.add("  for(int i = 0; i < sizeOne; i++) { //limit the size to the upper bound V");
+        code.add("    if (i < V) {");
+        code.add("      sub_arr[i] = votesOne[i];");
+        code.add("    }");
+        code.add("  }");
+        code.add("  ");
+        code.add("  for(int i = 0; i < sizeTwo; i++) { //limit the size to the upper bound V");
+        code.add("    if (sizeOne + i < V) {");
+        code.add("      sub_arr[sizeOne + i] = votesTwo[i];");
+        code.add("    }");
+        code.add("  }");
+        code.add("  ");
+        code.add("  struct vote_single toReturn;");
+        code.add("    ");
+        code.add("  for (int i = 0; i < V; i++) {");
+        code.add("    toReturn.arr[i] = sub_arr[i];");
+        code.add("  }");
+        code.add("    ");
+        code.add("  return toReturn;");
+        code.add("  ");
+        code.add("}");
+        code.add("");
+    }
+
+    private void addSplitArrayFunctions() {
         code.add("//split array");
         code.add("");
         code.add("//get splits cuts through an array of size max");
@@ -273,7 +462,8 @@ public class CBMCCodeGenerator {
         code.add("}");
         code.add("");
         code.add("//start is inclusive, stop is exclusive");
-        code.add("struct vote_single splitOne(unsigned int votes[V], unsigned int start, unsigned int stop) {");
+        code.add("struct vote_single splitOne(unsigned int votes[V], "
+                + "unsigned int start, unsigned int stop) {");
         code.add("  static unsigned int sub_arr[V];");
         code.add("  ");
         code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
@@ -310,7 +500,8 @@ public class CBMCCodeGenerator {
         code.add("");
         code.add("//start is inclusive, stop is exclusive");
         code.add("//used for 2 dim arrays");
-        code.add("struct vote_double splitTwo(unsigned int votes[V][C], unsigned int start, unsigned int stop) {");
+        code.add("struct vote_double splitTwo(unsigned int votes[V][C], "
+                + "unsigned int start, unsigned int stop) {");
         code.add("  static unsigned int sub_arr[V][C];");
         code.add("  ");
         code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
@@ -351,178 +542,6 @@ public class CBMCCodeGenerator {
         code.add("  }");
         code.add("}");
         code.add("");
-        // end split array functions
-
-        // concatenation
-
-        code.add(
-            "struct vote_single concatOne(unsigned int votesOne[V], unsigned int sizeOne, "
-            + "unsigned int votesTwo[V][C], unsigned int sizeTwo) {");
-        code.add("  static unsigned int sub_arr[V];");
-        code.add("  ");
-        code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
-        code.add("    sub_arr[i] = C;");
-        code.add("  }");
-        code.add("  ");
-        code.add("  for(int i = 0; i < sizeOne; i++) { //limit the size to the upper bound V");
-        code.add("    if (i < V) {");
-        code.add("      sub_arr[i] = votesOne[i];");
-        code.add("    }");
-        code.add("  }");
-        code.add("  ");
-        code.add("  for(int i = 0; i < sizeTwo; i++) { //limit the size to the upper bound V");
-        code.add("    if (sizeOne + i < V) {");
-        code.add("      sub_arr[sizeOne + i] = votesTwo[i];");
-        code.add("    }");
-        code.add("  }");
-        code.add("  ");
-        code.add("  struct vote_single toReturn;");
-        code.add("    ");
-        code.add("  for (int i = 0; i < V; i++) {");
-        code.add("    toReturn.arr[i] = sub_arr[i];");
-        code.add("  }");
-        code.add("    ");
-        code.add("  return toReturn;");
-        code.add("  ");
-        code.add("}");
-        code.add("");
-        code.add(
-                "struct vote_double concatTwo(unsigned int votesOne[V][C], unsigned int sizeOne, "
-                + "unsigned int votesTwo[V][C], unsigned int sizeTwo) {");
-        code.add("  static unsigned int sub_arr[V][C];");
-        code.add("  ");
-        code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
-        code.add("    for(int j = 0; j < C; j++) {");
-        code.add("      sub_arr[i][j] = C;");
-        code.add("    }");
-        code.add("  }");
-        code.add("  ");
-        code.add("  for(int i = 0; i < sizeOne; i++) { //limit the size to the upper bound V");
-        code.add("    for(int j = 0; j < C; j++) {");
-        code.add("      if (i < V) {");
-        code.add("        sub_arr[i][j] = votesOne[i][j];");
-        code.add("      }");
-        code.add("    }");
-        code.add("  }");
-        code.add("  ");
-        code.add("  for(int i = 0; i < sizeTwo; i++) { //limit the size to the upper bound V");
-        code.add("    for(int j = 0; j < C; j++) {");
-        code.add("      if (sizeTwo + i < V) {");
-        code.add("        sub_arr[i][j] = votesTwo[i][j];");
-        code.add("      }");
-        code.add("    }");
-        code.add("  }");
-        code.add("  ");
-        code.add("  struct vote_double toReturn;");
-        code.add("    ");
-        code.add("  for (int i = 0; i < V; i++) {");
-        code.add("    for (int j = 0; j < C; j++) {");
-        code.add("      toReturn.arr[i][j] = sub_arr[i][j];");
-        code.add("    }");
-        code.add("  }");
-        code.add("    ");
-        code.add("  return toReturn;");
-        code.add("}");
-
-        // end concatenation
-
-        // permutation code start
-
-        code.add("struct vote_single permutateOne(unsigned int votes[V], unsigned int length) {");
-        code.add("  static unsigned int sub_arr[V];");
-        code.add("  ");
-        code.add("  static unsigned int already_used_arr[V];");
-        code.add("    ");
-        code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
-        code.add("    sub_arr[i] = C;");
-        code.add("  }");
-        code.add("  ");
-        code.add("  ");
-        code.add("  for(int i = 0; i < length; i++) {");
-        code.add("    unsigned int new_index = nondet_uint();");
-        code.add("    assume((new_index >= 0) && (new_index < length));");
-        code.add("    ");
-        code.add("    for(int j = 0; j < i; j++) {");
-        code.add("      assume(new_index != already_used_arr[j]);");
-        code.add("    }");
-        code.add("    ");
-        code.add("    already_used_arr[i] = new_index;");
-        code.add("    ");
-        code.add("    sub_arr[new_index] = votes[i];");
-        code.add("  }");
-        code.add("  ");
-        code.add("  struct vote_single toReturn;");
-        code.add("    ");
-        code.add("  for (int i = 0; i < V; i++) {");
-        code.add("    toReturn.arr[i] = sub_arr[i];");
-        code.add("  }");
-        code.add("    ");
-        code.add("  return toReturn;");
-        code.add("  ");
-        code.add("}");
-        code.add("");
-        code.add("struct vote_double permutateTwo(unsigned int votes[V][C], unsigned int length) {");
-        code.add("  static unsigned int sub_arr[V][C];");
-        code.add("  ");
-        code.add("  static unsigned int already_used_arr[V];");
-        code.add("    ");
-        code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
-        code.add("    for(int j = 0; j < C; j++) {");
-        code.add("      sub_arr[i][j] = C;");
-        code.add("    }");
-        code.add("  }");
-        code.add("  ");
-        code.add("  ");
-        code.add("  for(int i = 0; i < length; i++) {");
-        code.add("    unsigned int new_index = nondet_uint();");
-        code.add("    assume((new_index >= 0) && (new_index < length));");
-        code.add("    ");
-        code.add("    for(int j = 0; j < i; j++) {");
-        code.add("      assume(new_index != already_used_arr[j]);");
-        code.add("    }");
-        code.add("    ");
-        code.add("    already_used_arr[i] = new_index;");
-        code.add("    ");
-        code.add("    for(int j = 0; j < C; j++) {");
-        code.add("      sub_arr[new_index][j] = votes[i][j];");
-        code.add("    }");
-        code.add("  }");
-        code.add("  ");
-        code.add("  struct vote_double toReturn;");
-        code.add("    ");
-        code.add("  for (int i = 0; i < V; i++) {");
-        code.add("    for(int j = 0; j < C; j++) {");
-        code.add("      toReturn.arr[i][j] = sub_arr[i][j];");
-        code.add("    }");
-        code.add("  }");
-        code.add("    ");
-        code.add("  return toReturn;");
-        code.add("}");
-
-        // permutation end
-
-        // intersect start
-
-        code.add(
-                "struct candidateList_result intersect(struct candidateList_result one, "
-                + "struct candidateList_result two) {");
-        code.add("  static struct candidateList_result toReturn;");
-        code.add("  ");
-        code.add("  for (int i = 0; i < C; i++) {");
-        code.add("    toReturn.arr[i] = 0;");
-        code.add("  }");
-        code.add("  ");
-        code.add("  for (int i = 0; i < C; i++) {");
-        code.add("    if (one.arr[i] && two.arr[i]) {");
-        code.add("      toReturn.arr[i] = 1;");
-        code.add("    }");
-        code.add("  }");
-        code.add("  ");
-        code.add("  return toReturn;");
-        code.add("}");
-
-        // intersect end
-
     }
 
     /**
@@ -554,12 +573,14 @@ public class CBMCCodeGenerator {
                 + UnifiedNameContainer.getCandidate() + "]; };"); // add a
 
         code.add("struct vote_single { unsigned int arr[V]; };");
-        code.add("struct vote_double { unsigned int arr[V][C]; };"); // TODO make them use the UnifiedNameContainer
+        // TODO make them use the UnifiedNameContainer
+        code.add("struct vote_double { unsigned int arr[V][C]; };");
 
+        // add a  result
+        // same for a stacked result for each party
         code.add(UnifiedNameContainer.getStructCandidateList() + " { unsigned int "
                 + UnifiedNameContainer.getResultArrName() + "["
-                + UnifiedNameContainer.getCandidate() + "]; };"); // add a  result
-        // same for a stacked result for each party
+                + UnifiedNameContainer.getCandidate() + "]; };");
         return code;
     }
 
@@ -571,25 +592,29 @@ public class CBMCCodeGenerator {
         code.add("int main(int argc, char *argv[]) {");
         code.addTab();
         // generating the pre and post AbstractSyntaxTrees
-        BooleanExpListNode preAST = generateAST(preAndPostCondDesc.getPreConditionsDescription().getCode());
-        BooleanExpListNode postAST = generateAST(preAndPostCondDesc.getPostConditionsDescription().getCode());
+        BooleanExpListNode preAST =
+                generateAST(preAndPostCondDesc.getPreConditionsDescription().getCode());
+        BooleanExpListNode postAST =
+                generateAST(preAndPostCondDesc.getPostConditionsDescription().getCode());
         initializeNumberOfTimesVoted(preAST, postAST);
         // init all voting vars for the voters
         for (int i = 1; i <= numberOfTimesVoted; i++) {
-            code.add("unsigned int " + UnifiedNameContainer.getVoter() + i + " = " + UnifiedNameContainer.getVoter()
-                    + ";");
+            code.add("unsigned int " + UnifiedNameContainer.getVoter() + i
+                     + " = " + UnifiedNameContainer.getVoter()
+                     + ";");
         }
         // init all voting vars for the candidates
         for (int i = 1; i <= numberOfTimesVoted; i++) {
-            code.add("unsigned int " + UnifiedNameContainer.getCandidate() + i + " = "
-                    + UnifiedNameContainer.getCandidate() + ";");
+            code.add("unsigned int " + UnifiedNameContainer.getCandidate() + i
+                     + " = " + UnifiedNameContainer.getCandidate() + ";");
         }
         // init all voting vars for the seats
         for (int i = 1; i <= numberOfTimesVoted; i++) {
-            code.add("unsigned int " + UnifiedNameContainer.getSeats() + i + " = " + UnifiedNameContainer.getSeats()
-                    + ";");
+            code.add("unsigned int " + UnifiedNameContainer.getSeats() + i
+                     + " = " + UnifiedNameContainer.getSeats() + ";");
         }
-        List<String> boundedVars = preAndPostCondDesc.getBoundedVarDescription().getCodeAsList();
+        List<String> boundedVars =
+                preAndPostCondDesc.getBoundedVarDescription().getCodeAsList();
         code.addList(boundedVars);
         // first the Variables have to be Initialized
         addSymbVarInitialisation();
@@ -599,7 +624,8 @@ public class CBMCCodeGenerator {
         // now hold all the elections
         for (int i = 1; i <= numberOfTimesVoted; i++) {
             code.add("//election number: " + i);
-            code = electionDesc.getContainer().getOutputType().addVotesArrayAndInit(code, i);
+            code = electionDesc.getContainer().getOutputType()
+                    .addVotesArrayAndInit(code, i);
         }
         // now the Post Properties can be checked
         addPostProperties(postAST);
@@ -611,7 +637,8 @@ public class CBMCCodeGenerator {
      * This should be used to create the VarInitialisation within the main method.
      */
     private void addSymbVarInitialisation() {
-        List<SymbolicVariable> symbolicVariableList = preAndPostCondDesc.getSymbolicVariableList();
+        List<SymbolicVariable> symbolicVariableList =
+                preAndPostCondDesc.getSymbolicVariableList();
         code.add("//Symbolic Variables initialisation");
         symbolicVariableList.forEach((symbVar) -> {
             InternalTypeContainer internalType = symbVar.getInternalTypeContainer();
@@ -696,13 +723,20 @@ public class CBMCCodeGenerator {
         ErrorLogger.log("Der Typ der symbolischen Variable " + id + " wird nicht unterstützt");
     }
 
-    private void initializeNumberOfTimesVoted(BooleanExpListNode preAST, BooleanExpListNode postAST) {
-        numberOfTimesVoted = (preAST.getMaxVoteLevel() > postAST.getMaxVoteLevel()) ? preAST.getMaxVoteLevel()
-                : postAST.getMaxVoteLevel();
-        numberOfTimesVoted = (preAST.getHighestElect() > numberOfTimesVoted) ? preAST.getHighestElect()
-                : numberOfTimesVoted;
-        numberOfTimesVoted = (postAST.getHighestElect() > numberOfTimesVoted) ? postAST.getHighestElect()
-                : numberOfTimesVoted;
+    private void initializeNumberOfTimesVoted(BooleanExpListNode preAST,
+                                              BooleanExpListNode postAST) {
+        numberOfTimesVoted =
+                (preAST.getMaxVoteLevel() > postAST.getMaxVoteLevel())
+                ? preAST.getMaxVoteLevel()
+                        : postAST.getMaxVoteLevel();
+        numberOfTimesVoted =
+                (preAST.getHighestElect() > numberOfTimesVoted)
+                ? preAST.getHighestElect()
+                        : numberOfTimesVoted;
+        numberOfTimesVoted =
+                (postAST.getHighestElect() > numberOfTimesVoted)
+                ? postAST.getHighestElect()
+                        : numberOfTimesVoted;
     }
 
     private void addVotesArrayAndElectInitialisation() {
@@ -718,8 +752,11 @@ public class CBMCCodeGenerator {
             int listDepth = 0;
             for (int i = 0; i < electionDesc.getContainer().getInputType().getDimension(); i++) {
                 String currentFor = forTemplate.replaceAll("COUNTER", "counter_" + listDepth);
-                currentFor = currentFor.replaceAll("UPPER",
-                        electionDesc.getContainer().getInputType().getMaximalSize(listDepth) + voteNumber);
+                currentFor =
+                        currentFor.replaceAll(
+                                "UPPER",
+                                electionDesc.getContainer().getInputType()
+                                .getMaximalSize(listDepth) + voteNumber);
                 code.add(currentFor);
                 code.addTab();
                 listDepth++;
@@ -737,13 +774,16 @@ public class CBMCCodeGenerator {
                 votesElement += "[COUNTER]".replace("COUNTER", "counter_" + i);
             }
             String nondetInt = (votesElement + " = nondet_uint();");
-            String voteDecl = ("assume((MIN <= " + votesElement + ") && (" + votesElement + " < MAX));");
+            String voteDecl =
+                    ("assume((MIN <= " + votesElement
+                            + ") && (" + votesElement + " < MAX));");
             voteDecl = voteDecl.replace("MIN", min);
             voteDecl = voteDecl.replace("MAX", max);
             code.add(nondetInt);
             code.add(voteDecl);
             // if we need to add something extra
-            electionDesc.getContainer().getInputType().addExtraCodeAtEndOfCodeInit(code, voteNumber);
+            electionDesc.getContainer().getInputType()
+            .addExtraCodeAtEndOfCodeInit(code, voteNumber);
             // close the for loops
             for (int i = 0; i < listDepth; ++i) {
                 code.deleteTab();
@@ -754,7 +794,8 @@ public class CBMCCodeGenerator {
     }
 
     private BooleanExpListNode generateAST(String code) {
-        FormalPropertyDescriptionLexer l = new FormalPropertyDescriptionLexer(new ANTLRInputStream(code));
+        FormalPropertyDescriptionLexer l =
+                new FormalPropertyDescriptionLexer(new ANTLRInputStream(code));
         CommonTokenStream ts = new CommonTokenStream(l);
         FormalPropertyDescriptionParser p = new FormalPropertyDescriptionParser(ts);
 
@@ -762,8 +803,10 @@ public class CBMCCodeGenerator {
         preAndPostCondDesc.getSymbolicVariableList().forEach((v) -> {
             declaredVars.addTypeForId(v.getId(), v.getInternalTypeContainer());
         });
-        return translator.generateFromSyntaxTree(p.booleanExpList(), electionDesc.getContainer().getInputType(),
-                                                 electionDesc.getContainer().getOutputType(), declaredVars);
+        return translator.generateFromSyntaxTree(p.booleanExpList(),
+                                                 electionDesc.getContainer().getInputType(),
+                                                 electionDesc.getContainer().getOutputType(),
+                                                 declaredVars);
     }
 
     private List<String> getVotingResultCode(String[][] votingData) {

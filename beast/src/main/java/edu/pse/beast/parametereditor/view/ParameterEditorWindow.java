@@ -43,7 +43,8 @@
 //        initComponents();
 //        setReacts(true);
 //        userFeedbackPanel.setLayout(new BorderLayout());
-//        loading = new ImageIcon(SuperFolderFinder.getSuperFolder() + "/core/images/other/loader.gif");
+//        loading = new ImageIcon(SuperFolderFinder.getSuperFolder()
+//                  + "/core/images/other/loader.gif");
 //        imageLabel = new JLabel();
 //        imageLabel.setHorizontalAlignment(JLabel.CENTER);
 //        imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -145,7 +146,8 @@
 //
 //        userFeedbackPanel.setPreferredSize(new java.awt.Dimension(50, 40));
 //
-//        javax.swing.GroupLayout userFeedbackPanelLayout = new javax.swing.GroupLayout(userFeedbackPanel);
+//        javax.swing.GroupLayout userFeedbackPanelLayout =
+//            new javax.swing.GroupLayout(userFeedbackPanel);
 //        userFeedbackPanel.setLayout(userFeedbackPanelLayout);
 //        userFeedbackPanelLayout.setHorizontalGroup(
 //            userFeedbackPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,16 +170,19 @@
 //                .addGap(33, 33, 33)
 //                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
 //                    .addGroup(layout.createSequentialGroup()
-//                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                        .addGroup(layout.createParallelGroup(
+//                                javax.swing.GroupLayout.Alignment.LEADING)
 //                            .addComponent(seats, javax.swing.GroupLayout.Alignment.TRAILING)
 //                            .addComponent(candidates, javax.swing.GroupLayout.Alignment.TRAILING)
 //                            .addComponent(voters, javax.swing.GroupLayout.Alignment.TRAILING)
 //                            .addComponent(timeout, javax.swing.GroupLayout.Alignment.TRAILING)
 //                            .addComponent(processes, javax.swing.GroupLayout.Alignment.TRAILING))
 //                        .addGap(18, 18, 18)
-//                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+//                        .addGroup(layout.createParallelGroup(
+//                                javax.swing.GroupLayout.Alignment.LEADING, false)
 //                            .addComponent(voterMin, javax.swing.GroupLayout.Alignment.TRAILING,
-//                                          javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+//                                          javax.swing.GroupLayout.DEFAULT_SIZE,
+//                                          64, Short.MAX_VALUE)
 //                            .addComponent(seatMin, javax.swing.GroupLayout.Alignment.TRAILING,
 //                                          javax.swing.GroupLayout.DEFAULT_SIZE,
 //                                          javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -186,7 +191,8 @@
 //                                          javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 //                            .addComponent(timeoutNum, javax.swing.GroupLayout.DEFAULT_SIZE,
 //                                          javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-//                            .addComponent(amountProcessesSpinner, javax.swing.GroupLayout.DEFAULT_SIZE,
+//                            .addComponent(amountProcessesSpinner,
+//                                          javax.swing.GroupLayout.DEFAULT_SIZE,
 //                                          javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
 //                    .addGroup(layout.createSequentialGroup()
 //                        .addComponent(advancedButton)
@@ -194,77 +200,98 @@
 //                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 //                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 //                    .addComponent(aboutButton)
-//                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+//                    .addGroup(layout.createParallelGroup(
+//                            javax.swing.GroupLayout.Alignment.LEADING, false)
 //                        .addGroup(layout.createSequentialGroup()
-//                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+//                            .addGroup(layout.createParallelGroup(
+//                                    javax.swing.GroupLayout.Alignment.LEADING)
 //                                .addComponent(voterTo, javax.swing.GroupLayout.Alignment.TRAILING)
 //                                .addComponent(candTo, javax.swing.GroupLayout.Alignment.TRAILING)
 //                                .addComponent(seatTo, javax.swing.GroupLayout.Alignment.TRAILING))
 //                            .addGap(18, 18, 18)
-//                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-//                                .addComponent(voterMax, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+//                            .addGroup(layout.createParallelGroup(
+//                                    javax.swing.GroupLayout.Alignment.LEADING,
+//                                    false)
+//                                .addComponent(voterMax, javax.swing.GroupLayout.DEFAULT_SIZE,
+//                                              64, Short.MAX_VALUE)
 //                                .addComponent(candMax, javax.swing.GroupLayout.DEFAULT_SIZE,
-//                                              javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+//                                              javax.swing.GroupLayout.DEFAULT_SIZE,
+//                                              Short.MAX_VALUE)
 //                                .addComponent(seatMax, javax.swing.GroupLayout.DEFAULT_SIZE,
-//                                              javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+//                                              javax.swing.GroupLayout.DEFAULT_SIZE,
+//                                              Short.MAX_VALUE)))
 //                        .addComponent(timeoutUnit, 0, 102, Short.MAX_VALUE)))
 //                .addGap(151, 151, 151))
 //            .addGroup(layout.createSequentialGroup()
 //                .addComponent(userFeedbackPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-//                              javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                              javax.swing.GroupLayout.DEFAULT_SIZE,
+//                              javax.swing.GroupLayout.PREFERRED_SIZE)
 //                .addGap(2, 2, 2)
 //                .addComponent(statusLabel, javax.swing.GroupLayout.DEFAULT_SIZE,
-//                              javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+//                              javax.swing.GroupLayout.DEFAULT_SIZE,
+//                              javax.swing.GroupLayout.PREFERRED_SIZE))
 //        );
 //        layout.setVerticalGroup(
 //            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
 //            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
 //                .addComponent(toolbar, javax.swing.GroupLayout.DEFAULT_SIZE,
-//                              javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                              javax.swing.GroupLayout.DEFAULT_SIZE,
+//                              javax.swing.GroupLayout.PREFERRED_SIZE)
 //                .addGap(18, 18, 18)
 //                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 //                    .addComponent(voters)
 //                    .addComponent(voterMin, javax.swing.GroupLayout.PREFERRED_SIZE,
-//                                  javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                  javax.swing.GroupLayout.DEFAULT_SIZE,
+//                                  javax.swing.GroupLayout.PREFERRED_SIZE)
 //                    .addComponent(voterTo)
 //                    .addComponent(voterMax, javax.swing.GroupLayout.PREFERRED_SIZE,
-//                                  javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+//                                  javax.swing.GroupLayout.DEFAULT_SIZE,
+//                                  javax.swing.GroupLayout.PREFERRED_SIZE))
 //                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 //                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 //                    .addComponent(candTo)
 //                    .addComponent(candMax, javax.swing.GroupLayout.PREFERRED_SIZE,
-//                                  javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                  javax.swing.GroupLayout.DEFAULT_SIZE,
+//                                  javax.swing.GroupLayout.PREFERRED_SIZE)
 //                    .addComponent(candMin, javax.swing.GroupLayout.PREFERRED_SIZE,
-//                                  javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                  javax.swing.GroupLayout.DEFAULT_SIZE,
+//                                  javax.swing.GroupLayout.PREFERRED_SIZE)
 //                    .addComponent(candidates))
 //                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 //                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 //                    .addComponent(seatMin, javax.swing.GroupLayout.PREFERRED_SIZE,
-//                                  javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                  javax.swing.GroupLayout.DEFAULT_SIZE,
+//                                  javax.swing.GroupLayout.PREFERRED_SIZE)
 //                    .addComponent(seatTo)
 //                    .addComponent(seatMax, javax.swing.GroupLayout.PREFERRED_SIZE,
-//                                  javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                  javax.swing.GroupLayout.DEFAULT_SIZE,
+//                                  javax.swing.GroupLayout.PREFERRED_SIZE)
 //                    .addComponent(seats))
 //                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 //                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 //                    .addComponent(timeout)
 //                    .addComponent(timeoutNum, javax.swing.GroupLayout.PREFERRED_SIZE,
-//                                  javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                  javax.swing.GroupLayout.DEFAULT_SIZE,
+//                                  javax.swing.GroupLayout.PREFERRED_SIZE)
 //                    .addComponent(timeoutUnit, javax.swing.GroupLayout.PREFERRED_SIZE,
-//                                  javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+//                                  javax.swing.GroupLayout.DEFAULT_SIZE,
+//                                  javax.swing.GroupLayout.PREFERRED_SIZE))
 //                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
 //                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 //                    .addComponent(amountProcessesSpinner, javax.swing.GroupLayout.PREFERRED_SIZE,
-//                                  javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                  javax.swing.GroupLayout.DEFAULT_SIZE,
+//                                  javax.swing.GroupLayout.PREFERRED_SIZE)
 //                    .addComponent(processes))
 //                .addGap(18, 18, 18)
 //                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
 //                    .addComponent(advancedButton)
 //                    .addComponent(aboutButton))
 //                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-//                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+//                .addGroup(layout.createParallelGroup(
+//                              javax.swing.GroupLayout.Alignment.LEADING, false)
 //                    .addComponent(userFeedbackPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-//                                  javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+//                                  javax.swing.GroupLayout.DEFAULT_SIZE,
+//                                  javax.swing.GroupLayout.PREFERRED_SIZE)
 //                    .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 41,
 //                                  javax.swing.GroupLayout.PREFERRED_SIZE)))
 //        );
@@ -304,7 +331,8 @@
 //     * html
 //         */
 //        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//            for (javax.swing.UIManager.LookAndFeelInfo info
+//                     : javax.swing.UIManager.getInstalledLookAndFeels()) {
 //                if ("Nimbus".equals(info.getName())) {
 //                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
 //                    break;
@@ -448,7 +476,7 @@
 //    }
 //
 //    /**
-//     * Getter for the toolbar
+//     * Getter for the tool bar
 //     *
 //     * @return toolbar
 //     */
@@ -460,7 +488,8 @@
 //    public void updateStringRes(StringLoaderInterface stringResIF) {
 //        reacts = false;
 //        this.stringResIF = stringResIF;
-//        ParameterEditorStringResProvider provider = stringResIF.getParameterEditorStringResProvider();
+//        ParameterEditorStringResProvider provider =
+//            stringResIF.getParameterEditorStringResProvider();
 //        StringResourceLoader other = provider.getOtherStringRes();
 //        title = other.getStringFromID("title");
 //        setWindowTitle(currentlyLoadedProjectName);
@@ -522,7 +551,9 @@
 //    }
 //
 //    @Override
-//    public void displayText(String stringIdForResources, boolean showLoader, String additionalText) {
+//    public void displayText(String stringIdForResources,
+//                            boolean showLoader,
+//                            String additionalText) {
 //        new Thread(new Runnable() {
 //            @Override
 //            public void run() {
@@ -532,8 +563,10 @@
 //                    imageLabel.setIcon(null);
 //                }
 //                if (!"".equals(stringIdForResources)) {
-//                    statusLabel.setText(stringResIF.getParameterEditorStringResProvider().getOtherStringRes()
-//                            .getStringFromID(stringIdForResources) + additionalText);
+//                    statusLabel.setText(
+//                        stringResIF.getParameterEditorStringResProvider()
+//                        .getOtherStringRes().getStringFromID(stringIdForResources)
+//                        + additionalText);
 //                } else {
 //                    statusLabel.setText("");
 //                }

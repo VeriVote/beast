@@ -29,7 +29,9 @@ public class TimeOutNotifier implements Runnable {
                 Thread.sleep(endTime - System.currentTimeMillis());
             } catch (InterruptedException e) {
                 if (!disabled) {
-                    ErrorLogger.log("The Timeout interrupter was interrupted. It still continues though");
+                    ErrorLogger.log(
+                            "The Timeout interrupter was interrupted. "
+                            + "It still continues though");
                 }
             }
         }
