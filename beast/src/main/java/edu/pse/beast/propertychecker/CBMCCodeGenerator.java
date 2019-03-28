@@ -3,7 +3,7 @@ package edu.pse.beast.propertychecker;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpListNode;
@@ -795,7 +795,7 @@ public class CBMCCodeGenerator {
 
     private BooleanExpListNode generateAST(String code) {
         FormalPropertyDescriptionLexer l =
-                new FormalPropertyDescriptionLexer(new ANTLRInputStream(code));
+                new FormalPropertyDescriptionLexer(CharStreams.fromString(code));
         CommonTokenStream ts = new CommonTokenStream(l);
         FormalPropertyDescriptionParser p = new FormalPropertyDescriptionParser(ts);
 

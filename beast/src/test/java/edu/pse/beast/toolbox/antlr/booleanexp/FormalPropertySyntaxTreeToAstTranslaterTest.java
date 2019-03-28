@@ -1,6 +1,6 @@
 package edu.pse.beast.toolbox.antlr.booleanexp;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -69,7 +69,7 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
             + "EXISTS_ONE_CANDIDATE(c) : "
             + "VOTES1(v) == c && VOTES1(v) == c;";
         FormalPropertyDescriptionLexer lexer =
-            new FormalPropertyDescriptionLexer(new ANTLRInputStream(exp));
+            new FormalPropertyDescriptionLexer(CharStreams.fromString(exp));
         CommonTokenStream tokenS = new CommonTokenStream(lexer);
         new FormalPropertyDescriptionParser(tokenS);
         new FormalPropertySyntaxTreeToAstTranslator();

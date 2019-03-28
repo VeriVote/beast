@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 import javax.swing.JTextPane;
 import javax.swing.text.BadLocationException;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -28,7 +28,7 @@ public class CAntlrHandler {
      */
     public CAntlrHandler(JTextPane pane) {
         this.pane = pane;
-        lexer = new CLexer(new ANTLRInputStream(pane.getText()));
+        lexer = new CLexer(CharStreams.fromString(pane.getText()));
         CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
         cParser = new CParser(commonTokenStream);
     }
@@ -41,7 +41,7 @@ public class CAntlrHandler {
     public ParseTree getCParseTree() {
         try {
             String code = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
-            lexer.setInputStream(new ANTLRInputStream(code));
+            lexer.setInputStream(CharStreams.fromString(code));
             CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
             cParser.setTokenStream(commonTokenStream);
             return cParser.compilationUnit();
@@ -57,7 +57,7 @@ public class CAntlrHandler {
     public void updateParser() {
         try {
             String code = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
-            lexer.setInputStream(new ANTLRInputStream(code));
+            lexer.setInputStream(CharStreams.fromString(code));
             CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
             cParser.setTokenStream(commonTokenStream);
         } catch (BadLocationException ex) {

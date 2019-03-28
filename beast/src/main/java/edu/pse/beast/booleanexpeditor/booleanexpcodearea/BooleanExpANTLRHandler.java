@@ -1,6 +1,6 @@
 package edu.pse.beast.booleanexpeditor.booleanexpcodearea;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionLexer;
@@ -25,7 +25,7 @@ public class BooleanExpANTLRHandler {
      */
     public BooleanExpANTLRHandler(String input) {
         this.input = input;
-        lexer = new FormalPropertyDescriptionLexer(new ANTLRInputStream(input));
+        lexer = new FormalPropertyDescriptionLexer(CharStreams.fromString(input));
         CommonTokenStream ts = new CommonTokenStream(lexer);
         parser = new FormalPropertyDescriptionParser(ts);
     }
@@ -38,7 +38,7 @@ public class BooleanExpANTLRHandler {
      * @return a BooleanExpListContext node from the ANTLR generated ParseTree.
      */
     public FormalPropertyDescriptionParser.BooleanExpListContext getParseTree() {
-        lexer.setInputStream(new ANTLRInputStream(input));
+        lexer.setInputStream(CharStreams.fromString(input));
         CommonTokenStream ts = new CommonTokenStream(lexer);
         parser.setTokenStream(ts);
         return parser.booleanExpList();
