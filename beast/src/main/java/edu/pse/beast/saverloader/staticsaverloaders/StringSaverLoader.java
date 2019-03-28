@@ -7,7 +7,8 @@ package edu.pse.beast.saverloader.staticsaverloaders;
  *
  * @author Nikolai Schnell
  */
-public class StringSaverLoader {
+public final class StringSaverLoader {
+    private StringSaverLoader() {}
 
     /**
      * Creates a String from a given, by createSaveString() generated, saveString

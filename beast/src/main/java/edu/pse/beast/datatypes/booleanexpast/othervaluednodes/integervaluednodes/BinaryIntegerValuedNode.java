@@ -39,6 +39,20 @@ public class BinaryIntegerValuedNode extends IntegerValuedExpression {
     }
 
     @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result
+                + ((lhs == null) ? 0 : lhs.hashCode());
+        result = prime * result
+                + ((relationSymbol == null)
+                        ? 0 : relationSymbol.hashCode());
+        result = prime * result
+                + ((rhs == null) ? 0 : rhs.hashCode());
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -49,9 +63,7 @@ public class BinaryIntegerValuedNode extends IntegerValuedExpression {
         if (!super.equals(o)) {
             return false;
         }
-
         BinaryIntegerValuedNode that = (BinaryIntegerValuedNode) o;
-
         if (lhs != null ? !lhs.equals(that.lhs) : that.lhs != null) {
             return false;
         }

@@ -16,6 +16,8 @@ import edu.pse.beast.types.InternalTypeRep;
  * @author Holger Klein
  */
 public final class CCodeHelper {
+    private CCodeHelper() {}
+
     /**
      * returns the C constant which is the max amount of elements in a given list
      * container
@@ -47,11 +49,8 @@ public final class CCodeHelper {
      * @return the c type
      */
     public static String getCType(ElectionTypeContainer electionContainer, String name) {
-
         String decl = "unsigned int " + name;
-
         decl = decl + electionContainer.getInputType().getInputString();
-
         return decl;
     }
 
@@ -63,9 +62,7 @@ public final class CCodeHelper {
      * @return the c type
      */
     public static String getCTypePointer(ElectionTypeContainer electionContainer) {
-
         String decl = electionContainer.getOutputType().getOutputString();
-
         return decl;
     }
 
@@ -119,7 +116,6 @@ public final class CCodeHelper {
                                                 String name,
                                                 ElectionTemplateHandler templateHandler,
                                                 StringResourceLoader stringResourceLoader) {
-
         ElectionDescription description = new ElectionDescription(name, container.getInputType(),
                 container.getOutputType(), 2, 0, 0, 0, true);
         ArrayList<String> code = new ArrayList<>();

@@ -11,7 +11,8 @@ import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
  *
  * @author Nikolai Schnell
  */
-public class ElectionCheckParameterSaverLoader {
+public final class ElectionCheckParameterSaverLoader {
+    private ElectionCheckParameterSaverLoader() {}
 
     /**
      * Creates a String from a given ElectionCheckParameter, that can then be saved

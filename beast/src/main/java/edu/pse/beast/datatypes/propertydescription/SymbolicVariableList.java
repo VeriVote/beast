@@ -190,4 +190,38 @@ public class SymbolicVariableList {
         }
         return clonedSymbVariables;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((symbolicVariableList == null)
+                        ? 0 : symbolicVariableList.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        SymbolicVariableList other =
+                (SymbolicVariableList) obj;
+        if (symbolicVariableList == null) {
+            if (other.symbolicVariableList != null) {
+                return false;
+            }
+        } else if (!symbolicVariableList
+                .equals(other.symbolicVariableList)) {
+            return false;
+        }
+        return true;
+    }
 }

@@ -59,6 +59,22 @@ public class ComparisonNode extends BooleanExpressionNode {
     }
 
     @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((comparisonSymbol == null)
+                        ? 0 : comparisonSymbol.hashCode());
+        result = prime * result
+                + ((lhsTypeExp == null)
+                        ? 0 : lhsTypeExp.hashCode());
+        result = prime * result
+                + ((rhsTypeExp == null)
+                        ? 0 : rhsTypeExp.hashCode());
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

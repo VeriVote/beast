@@ -12,12 +12,12 @@ public class Win32Process {
     /**
      * the windows new technology handle for this process
      */
-    WinNT.HANDLE handle;
+    private WinNT.HANDLE handle;
 
     /**
      * the process id for this process
      */
-    int pid;
+    private int pid;
 
     /**
      * creates a new Win32 Process given a process id

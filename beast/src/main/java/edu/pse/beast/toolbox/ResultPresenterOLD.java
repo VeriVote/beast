@@ -10,7 +10,9 @@ import edu.pse.beast.stringresource.PropertyListStringResProvider;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 
-public class ResultPresenterOLD {
+public final class ResultPresenterOLD {
+    private ResultPresenterOLD() {}
+
     private static StringResourceLoader srl;
     // private static JTextPane result;
     private static String text;

@@ -32,6 +32,8 @@ import javafx.scene.control.Tooltip;
  *         how-to-implement-a-javafx-ui-where-the-language-can-be-changed-dynamically/
  */
 public final class Internationalization {
+    private Internationalization() {}
+
     /** the current selected Locale. */
     private static final ObjectProperty<Locale> LOCALE;
 

@@ -9,7 +9,8 @@ import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
  *
  * @author Holger Klein
  */
-public class FormalPropertySaverLoader {
+public final class FormalPropertySaverLoader {
+    private FormalPropertySaverLoader() {}
 
     /**
      * Creates a String from a given FormalPropertiesDescription, that can then be

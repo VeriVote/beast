@@ -94,4 +94,80 @@ public class PreAndPostConditionsDescription {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((boundedVarDescription == null)
+                        ? 0 : boundedVarDescription.hashCode());
+        result = prime * result + ((name == null)
+                ? 0 : name.hashCode());
+        result = prime * result
+                + ((postConditionsDescription == null)
+                        ? 0 : postConditionsDescription.hashCode());
+        result = prime * result
+                + ((preConditionsDescription == null)
+                        ? 0 : preConditionsDescription.hashCode());
+        result = prime * result
+                + ((symbolicVariableList == null)
+                        ? 0 : symbolicVariableList.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        PreAndPostConditionsDescription other =
+                (PreAndPostConditionsDescription) obj;
+        if (boundedVarDescription == null) {
+            if (other.boundedVarDescription != null) {
+                return false;
+            }
+        } else if (!boundedVarDescription
+                .equals(other.boundedVarDescription)) {
+            return false;
+        }
+        if (name == null) {
+            if (other.name != null) {
+                return false;
+            }
+        } else if (!name.equals(other.name)) {
+            return false;
+        }
+        if (postConditionsDescription == null) {
+            if (other.postConditionsDescription != null) {
+                return false;
+            }
+        } else if (!postConditionsDescription
+                .equals(other.postConditionsDescription)) {
+            return false;
+        }
+        if (preConditionsDescription == null) {
+            if (other.preConditionsDescription != null) {
+                return false;
+            }
+        } else if (!preConditionsDescription
+                .equals(other.preConditionsDescription)) {
+            return false;
+        }
+        if (symbolicVariableList == null) {
+            if (other.symbolicVariableList != null) {
+                return false;
+            }
+        } else if (!symbolicVariableList
+                .equals(other.symbolicVariableList)) {
+            return false;
+        }
+        return true;
+    }
 }

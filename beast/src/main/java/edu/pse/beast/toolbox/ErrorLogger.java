@@ -5,7 +5,9 @@ package edu.pse.beast.toolbox;
  * @author Lukas Stapelbroek
  *
  */
-public class ErrorLogger {
+public final class ErrorLogger {
+    private ErrorLogger() {}
+
     /**
      * logs all the errors to the error stream
      *

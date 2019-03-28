@@ -11,7 +11,6 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.highlevel.javafx.GUIController;
-import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
@@ -59,7 +58,7 @@ public class CBMCCodeGenerator {
         code = new CodeArrayListBeautifier();
         electionDesc.getContainer();
         this.visitor = new CBMCCodeGenerationVisitor(electionDesc.getContainer());
-        new CCodeHelper();
+        // new CCodeHelper();
         generateCodeCheck();
 
     }
@@ -88,7 +87,7 @@ public class CBMCCodeGenerator {
         code = new CodeArrayListBeautifier();
         electionDesc.getContainer();
         this.visitor = new CBMCCodeGenerationVisitor(electionDesc.getContainer());
-        new CCodeHelper();
+        // new CCodeHelper();
         this.margin = margin;
         this.origResult = origResult;
         generateCodeMargin(votingData);
@@ -114,7 +113,7 @@ public class CBMCCodeGenerator {
         code = new CodeArrayListBeautifier();
         electionDesc.getContainer();
         this.visitor = new CBMCCodeGenerationVisitor(electionDesc.getContainer());
-        new CCodeHelper();
+        // new CCodeHelper();
         generateCodeTest(votingData);
     }
 

@@ -6,7 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class UnifiedNameContainer {
+public final class UnifiedNameContainer {
+    private UnifiedNameContainer() {}
+
     private static List<NameChangeListener> listeners = new LinkedList<NameChangeListener>();
     private static Map<String, String> map = new HashMap<String, String>();
 

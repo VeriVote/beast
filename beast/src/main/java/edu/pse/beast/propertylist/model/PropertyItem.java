@@ -92,11 +92,22 @@ public class PropertyItem implements ResultPresenterElement {
     }
 
     @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((description == null)
+                        ? 0 : description.hashCode());
+        return result;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (o == null || this.getClass() != o.getClass()) {
             return false;
         }
-        return this.description.getName().equals(((PropertyItem) o).description.getName());
+        return this.description.getName()
+                .equals(((PropertyItem) o).description.getName());
     }
 
     // getter and setter

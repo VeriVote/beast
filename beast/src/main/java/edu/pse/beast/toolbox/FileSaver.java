@@ -7,7 +7,8 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
 
-public class FileSaver {
+public final class FileSaver {
+    private FileSaver() {}
 
     /**
      *
@@ -17,7 +18,6 @@ public class FileSaver {
      *             everything that stood in it before
      */
     public static void writeStringLinesToFile(List<String> text, File file) {
-
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -25,16 +25,12 @@ public class FileSaver {
                 e.printStackTrace();
             }
         }
-
         PrintWriter writer = null;
-
         try {
             writer = new PrintWriter(file);
-
         } catch (FileNotFoundException e) {
             ErrorLogger.log("File not found");
         }
-
         for (Iterator<String> iterator = text.iterator(); iterator.hasNext();) {
             String line = (String) iterator.next();
             writer.println(line);
