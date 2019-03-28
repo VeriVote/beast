@@ -45,8 +45,8 @@ unsigned int voting(unsigned int votes[V]) {
 }
 
 void anonymity(unsigned int votes1[V], unsigned int votes2[V],
-	       unsigned int c, unsigned int d,
-	       unsigned int v, unsigned int w) {
+           unsigned int c, unsigned int d,
+           unsigned int v, unsigned int w) {
     assume (0 < c && c <= C);
     assume (0 < d && d <= C);
     assume (0 <= v && v < V);
@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
     unsigned int votes2[V];
     for (i = 0; i < V; i++) {
         votes1[i] = nondet_uint();
-	votes2[i] = nondet_uint();
+    votes2[i] = nondet_uint();
     }
 
     unsigned int candidate1 = nondet_uint();

@@ -1,4 +1,4 @@
-	unsigned int res[C + 1];
+    unsigned int res[C + 1];
     unsigned int i = 0;
 
     for (i = 0; i <= C; i++) {

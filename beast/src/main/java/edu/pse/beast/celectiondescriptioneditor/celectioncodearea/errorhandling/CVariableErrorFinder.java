@@ -29,14 +29,13 @@ public final class CVariableErrorFinder {
         seperated.add("#define " + UnifiedNameContainer.getSeats() + " 1");
         seperated.add("#endif");
 
-        // because we want to reserver the function name "verify" we define it here
+        // since we want to reserve the function name "verify", we define it here
         seperated.add("void verify() {}");
 
-        // WORKAROUND: Will change, if I think of a more elegant solution (if there is
+        // WORKAROUND: Will change if I think of a more elegant solution (if there is
         // one) (look at issue 49 on github)
         // Maybe it is possible to include all CBMC functions, but I will have to see.
-        // At least I can extract it to a file
-        // which would make updating easier.
+        // At least I can extract it to a file, which would make updating easier.
 
         seperated.add("void __CPROVER_assert(int x, int y) {}");
         seperated.add("void __CPROVER_assume(int x) {}");

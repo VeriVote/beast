@@ -5,9 +5,9 @@ booleanExpList : booleanExpListElement*;
 booleanExpListElement : booleanExp ';' |
 
 //new part 0
-						votingListChangeExp ';'|
-						votingTupelChangeExp ';' |
-						candidateListChangeExp ';';
+                        votingListChangeExp ';'|
+                        votingTupelChangeExp ';' |
+                        candidateListChangeExp ';';
 //end new part 0
 
 //new part 1
@@ -21,44 +21,44 @@ candidateListChangeExp: Elect ValueAssign intersectExp;
 
 //end new part1
 
-booleanExp : 	quantifierExp | notEmptyExp | intersectExp | binaryRelationExp | notExp | comparisonExp | OpenBracket booleanExp ClosedBracket;
+booleanExp :     quantifierExp | notEmptyExp | intersectExp | binaryRelationExp | notExp | comparisonExp | OpenBracket booleanExp ClosedBracket;
 
 binaryRelationExp : binaryRelationExp BinaryRelationSymbol booleanExp |
-					quantifierExp BinaryRelationSymbol booleanExp |
-					notExp BinaryRelationSymbol booleanExp |
-					comparisonExp BinaryRelationSymbol booleanExp |
+                    quantifierExp BinaryRelationSymbol booleanExp |
+                    notExp BinaryRelationSymbol booleanExp |
+                    comparisonExp BinaryRelationSymbol booleanExp |
 
-					notEmptyExp BinaryRelationSymbol booleanExp |
-					intersectExp BinaryRelationSymbol booleanExp |
-//					concatenationExp BinaryRelationSymbol booleanExp|
+                    notEmptyExp BinaryRelationSymbol booleanExp |
+                    intersectExp BinaryRelationSymbol booleanExp |
+//                    concatenationExp BinaryRelationSymbol booleanExp|
 
 
 
-					'(' binaryRelationExp ')' BinaryRelationSymbol booleanExp |
-					'(' quantifierExp ')' BinaryRelationSymbol booleanExp |
-					'(' notExp ')' BinaryRelationSymbol booleanExp |
-					'(' comparisonExp ')' BinaryRelationSymbol booleanExp |
+                    '(' binaryRelationExp ')' BinaryRelationSymbol booleanExp |
+                    '(' quantifierExp ')' BinaryRelationSymbol booleanExp |
+                    '(' notExp ')' BinaryRelationSymbol booleanExp |
+                    '(' comparisonExp ')' BinaryRelationSymbol booleanExp |
 
-					'(' notEmptyExp ')' BinaryRelationSymbol booleanExp |
-					'(' intersectExp ')' BinaryRelationSymbol booleanExp
-					;
+                    '(' notEmptyExp ')' BinaryRelationSymbol booleanExp |
+                    '(' intersectExp ')' BinaryRelationSymbol booleanExp
+                    ;
 
 //new part 2
 
 addedContentExp : notEmptyExp | intersectExp;
 
-notEmptyExp :		NotEmpty '(' notEmptyContent ')';
+notEmptyExp :        NotEmpty '(' notEmptyContent ')';
 
 
-notEmptyContent	: Elect | intersectExp;
+notEmptyContent    : Elect | intersectExp;
 
 voteEquivalents : Vote | permutationExp | concatenationExp; //all types that are equivalent to "Vote" (e.g the function returns "Vote")
 
-concatenationExp :	'(' voteEquivalents Concatenate voteEquivalents ')'
-					| Vote Concatenate voteEquivalents
-					| permutationExp Concatenate voteEquivalents;
+concatenationExp :    '(' voteEquivalents Concatenate voteEquivalents ')'
+                    | Vote Concatenate voteEquivalents
+                    | permutationExp Concatenate voteEquivalents;
 
-splitExp : 	Split '(' voteEquivalents ')';
+splitExp :     Split '(' voteEquivalents ')';
 
 permutationExp: Permutation '(' voteEquivalents ')';
 
@@ -66,7 +66,7 @@ intersectExp: Intersect '(' intersectContent ',' intersectContent ')';
 
 intersectContent : Elect | intersectExp;
 
-tuple :	'(' Vote tupleContent ')';
+tuple :    '(' Vote tupleContent ')';
 
 tupleContent : ',' Vote | ',' Vote tupleContent;
 
@@ -81,13 +81,13 @@ comparisonExp : typeExp ComparisonSymbol typeExp;
 
 typeExp : electExp | voteExp | numberExpression | symbolicVarExp | typeByPosExp | intersectExp;
 
-numberExpression : 	'(' numberExpression ')' |
-			numberExpression Mult numberExpression |
-			numberExpression Add numberExpression |
-			voteSumExp |
-			voteSumUniqueExp |
-			constantExp |
-			integer;
+numberExpression :     '(' numberExpression ')' |
+            numberExpression Mult numberExpression |
+            numberExpression Add numberExpression |
+            voteSumExp |
+            voteSumUniqueExp |
+            constantExp |
+            integer;
 
 
 typeByPosExp : voterByPosExp | candByPosExp | seatByPosExp;
@@ -145,10 +145,10 @@ ClosedBracket : ')';
 OpenBracket : '(';
 
 Quantifier : 'FOR_ALL_VOTERS' | 'FOR_ALL_CANDIDATES' | 'FOR_ALL_SEATS' |
-			'EXISTS_ONE_VOTER' | 'EXISTS_ONE_CANDIDATE' | 'EXISTS_ONE_SEAT';
+            'EXISTS_ONE_VOTER' | 'EXISTS_ONE_CANDIDATE' | 'EXISTS_ONE_SEAT';
 
 //new part 3
-Split :		'SPLIT';
+Split :        'SPLIT';
 
 Permutation : 'PERM';
 

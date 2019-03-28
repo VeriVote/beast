@@ -34,7 +34,7 @@ public class CodeArrayListBeautifier {
 
             String tabbed = "";
             for (int i = 0; i < numberOfTabs; i++) {
-                tabbed += "\t";
+                tabbed += "    ";//"\t"; // rather use spaces than tabs
             }
             code.add(tabbed + addedString);
 
@@ -46,21 +46,21 @@ public class CodeArrayListBeautifier {
 
     /**
      * adds another tab to the indenting. If you add another String after this it
-     * will be indeted one more time
+     * will be indented one more time
      */
     public void addTab() {
         numberOfTabs++;
     }
 
     /**
-     * Decreases the number of tabs by one. If the Tabcount is allready 0 it will no
+     * Decreases the number of tabs by one. If the tab count is already 0 it will no
      * longer decrease it.
      */
     public void deleteTab() {
         if (numberOfTabs > 0) {
             numberOfTabs--;
         } else {
-            ErrorLogger.log("number of tabs is allready 0");
+            ErrorLogger.log("number of tabs is already 0");
         }
     }
 

@@ -1,11 +1,11 @@
 
- 
 
-   unsigned int res[C];
+
+    unsigned int res[C];
     unsigned int i = 0;
     unsigned int j = 0;
 
-	// lower and upper Bound have to be set outside 	   
+    // lower and upper Bound have to be set outside
     for (i = 0; i < C; i++) {
         res[i] = 0;
     }
