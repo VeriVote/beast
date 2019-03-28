@@ -37,7 +37,7 @@ public class CodeArrayListBeautifierTest {
         CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
         instance.addTab();
         instance.add(e);
-        assertEquals("\t" + "test", (instance.getCodeArrayList().get(0)));
+        assertEquals("    " + "test", (instance.getCodeArrayList().get(0)));
     }
 
     /**
@@ -63,7 +63,7 @@ public class CodeArrayListBeautifierTest {
         instance.addTab();
         instance.add(e);
         instance.deleteTab();
-        assertEquals("\t" + "test3", (instance.getCodeArrayList().get(2)));
+        assertEquals("    " + "test3", (instance.getCodeArrayList().get(2)));
     }
 
     /**
