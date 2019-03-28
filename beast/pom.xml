@@ -2,13 +2,22 @@
    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
    http://maven.apache.org/maven-v4_0_0.xsd">
    <modelVersion>4.0.0</modelVersion>
+
    <groupId>edu.pse.beast</groupId>
    <artifactId>Beast</artifactId>
-   <packaging>jar</packaging>
    <version>2.02</version>
+   <packaging>jar</packaging>
 
    <name>Beast</name>
-   <url>http://maven.apache.org</url>
+   <description>
+       BEAST aims to make the verification of voting rules easier.
+       Voting rules are methods to aggregate the preferences of a group to make decisions.
+   </description>
+   <url>https://github.com/mi-ki/BEAST</url>
+   <organization>
+       <name>KIT</name>
+       <url>https://www.kit.edu</url>
+   </organization>
    <properties>
       <skipTests>false</skipTests>
       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -17,16 +26,32 @@
          <maven.compiler.target>1.11</maven.compiler.target>
    </properties>
 
+   <distributionManagement>
+       <downloadUrl>https://github.com/mi-ki/BEAST</downloadUrl>
+       <repository>
+           <uniqueVersion>false</uniqueVersion>
+           <id>beast</id>
+           <name>BEAST</name>
+           <url>file://${basedir}/target/deployment</url>
+           <layout>default</layout>
+       </repository>
+       <site>
+           <id>beast</id>
+           <name>BEAST</name>
+           <url>file://${basedir}/target/deployment/site</url>
+       </site>
+   </distributionManagement>
+
    <dependencies>
       <dependency>
          <groupId>org.openjfx</groupId>
          <artifactId>javafx-controls</artifactId>
-         <version>11</version>
+         <version>12</version>
       </dependency>
       <dependency>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-fxml</artifactId>
-        <version>11</version>
+        <version>12</version>
       </dependency>
       <dependency>
          <groupId>junit</groupId>
@@ -180,6 +205,14 @@
                   </goals>
                </execution>
             </executions>
+         </plugin>
+         <plugin>
+             <groupId>org.apache.maven.plugins</groupId>
+             <artifactId>maven-site-plugin</artifactId>
+             <version>3.7.1</version>
+             <configuration>
+                 <locales>en,de</locales>
+             </configuration>
          </plugin>
       </plugins>
       <pluginManagement>
