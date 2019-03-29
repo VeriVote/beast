@@ -138,8 +138,8 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
 
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
-        StringResourceLoader other =
-                stringResIF.getParameterEditorStringResProvider().getOtherStringRes();
+        StringResourceLoader other
+            = stringResIF.getParameterEditorStringResProvider().getOtherStringRes();
         setTitle(other.getStringFromID("title_about"));
         versionLabel.setText(other.getStringFromID("version"));
     }

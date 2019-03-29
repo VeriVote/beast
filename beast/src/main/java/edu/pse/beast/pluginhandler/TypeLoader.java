@@ -16,15 +16,14 @@ import edu.pse.beast.types.cbmctypes.outputplugins.ParliamentStack;
 import edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
 
 public final class TypeLoader {
-    private TypeLoader() {}
-
     public static boolean init = false;
 
     private static List<InputType> availableInTypes = new ArrayList<InputType>();
-
     private static List<OutputType> availableOutTypes = new ArrayList<OutputType>();
 
-    public static void loadTypes() { // TODO load add-ons, too
+    private TypeLoader() { }
+
+    public static void loadTypes() { // TODO also load add-ons
         availableInTypes.add(new SingleChoice());
         availableInTypes.add(new Approval());
         availableInTypes.add(new Preference());
@@ -34,7 +33,6 @@ public final class TypeLoader {
         availableOutTypes.add(new SingleCandidate());
         availableOutTypes.add(new Parliament());
         availableOutTypes.add(new ParliamentStack());
-
         init = true;
     }
 

@@ -14,15 +14,11 @@ public class VoteExp extends AccessValueNode {
      * @param type  the internal type
      * @param accessingVars accessing variables
      * @param count the count of this vote
+     * @return the count of this vote
      */
     public VoteExp(InOutType type, TypeExpression[] accessingVars, int count) {
         super(type, accessingVars, count);
     }
-
-    /**
-     *
-     * @return the count of this vote
-     */
 
     @Override
     public void getVisited(BooleanExpNodeVisitor visitor) {

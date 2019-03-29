@@ -26,6 +26,28 @@ import edu.pse.beast.toolbox.ThreadedBufferedReader;
  *
  */
 public abstract class SystemSpecificErrorChecker {
+    // program that is to be used for checking
+    static final String COMPILER_STRING = "gcc";
+
+    // this flag prohibits that file are creates by the compiler and
+    // only the syntax is checked
+    static final String FIND_MISSING_RETURN_OPTION = "-Wreturn-type";
+
+    // we want to compile to a specific name, so we can delete the file
+    // then later on
+    static final String SET_OUTPUT_FILE_NAME = "-o ";
+    static final String ENABLE_USER_INCLUDE = "-I/";
+    static final String USER_INCLUDE_FOLDER = "/core/user_includes/";
+
+    // if gcc finds, that a return is missing, it prints out this error message.
+    // The error then
+    // stands in the format: "FILENANE:LINE:COLUMN warning:control reaches..."
+    static final String GCC_MISSING_RETURN_FOUND
+      = "warning: control reaches end of non-void function";
+    // if gcc finds that a function is missing, it gets displayed like this:
+    static final String GCC_MISSING_FUNCTION_FOUND
+      = "warning: implicit declaration of function";
+
     private static final String PATH_TO_TEMP_FOLDER = "/core/c_tempfiles/";
 
     /**
@@ -110,24 +132,24 @@ public abstract class SystemSpecificErrorChecker {
         // pathToNewFile = pathToNewFile.replaceAll("%20", " ");
         // Create two links to files, so in case an object file gets created we can
         // delete it afterwards, too.
-        File cFile = new File(pathToNewFile + ".c");
+        File cFile = new File(pathToNewFile + FileLoader.C_FILE_ENDING);
         // that will be created, to delete it afterwards
-        File batFile = new File(pathToNewFile + ".bat");
-        File objFile = new File(pathToNewFile + ".obj");
+        File batFile = new File(pathToNewFile + FileLoader.BAT_FILE_ENDING);
+        File objFile = new File(pathToNewFile + FileLoader.OBJECT_FILE_ENDING);
         // on windows we have to create a .bat file, so we create a reference to the
         // file that will be created, to delete it afterwards
-        File exeFile = new File(pathToNewFile + ".exe");
+        File exeFile = new File(pathToNewFile + FileLoader.EXE_FILE_ENDING);
         // write the code to the file
         FileSaver.writeStringLinesToFile(toCheck, cFile);
         Process process = checkCodeFileForErrors(cFile);
         if (process != null) {
             CountDownLatch latch = new CountDownLatch(2);
-            ThreadedBufferedReader outReader =
-                new ThreadedBufferedReader(
+            ThreadedBufferedReader outReader
+              = new ThreadedBufferedReader(
                     new BufferedReader(new InputStreamReader(process.getInputStream())),
                     result, latch, false);
-            ThreadedBufferedReader errReader =
-                new ThreadedBufferedReader(
+            ThreadedBufferedReader errReader
+              = new ThreadedBufferedReader(
                     new BufferedReader(new InputStreamReader(process.getErrorStream())),
                     errors, latch, false);
             // wait for the process to finish;
@@ -148,10 +170,8 @@ public abstract class SystemSpecificErrorChecker {
             }
             objFile.delete();
             exeFile.delete();
-
             outReader.finish();
             errReader.finish();
-
             return toReturn;
         } else {
             ErrorLogger.log("Process could not be started");
@@ -160,7 +180,7 @@ public abstract class SystemSpecificErrorChecker {
     }
 
     /**
-     * checks a file for errors. Has to be implemented system specific
+     * Checks a file for errors. Has to be implemented system specifically.
      *
      * @param toCheck the file to check
      * @return a process that is currently checking the file
@@ -168,8 +188,8 @@ public abstract class SystemSpecificErrorChecker {
     protected abstract Process checkCodeFileForErrors(File toCheck);
 
     /**
-     * parses the system specific outputs from the process to the internal
-     * "CodeError" format
+     * Parses the system specific outputs from the process to the internal
+     * "CodeError" format.
      *
      * @param result     the result list from the previously started process
      * @param errors     the error list from the previously started process

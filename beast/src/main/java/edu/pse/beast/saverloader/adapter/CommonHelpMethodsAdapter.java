@@ -27,8 +27,8 @@ public class CommonHelpMethodsAdapter
 
         try {
 
-            for (Iterator<CommonHelpMethods> iterator =
-                    CommonHelpMethods.getImplementations().iterator();
+            for (Iterator<CommonHelpMethods> iterator
+                  = CommonHelpMethods.getImplementations().iterator();
                     iterator.hasNext();) {
                 CommonHelpMethods implementation = (CommonHelpMethods) iterator.next();
                 if (implementation.getClass().getSimpleName().equals(type)) {

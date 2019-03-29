@@ -49,20 +49,20 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 
 public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterface {
-    private static final String[] KEYWORDS =
-    {
+    private static final String[] KEYWORDS
+        = {
         "auto", "break", "case", "const", "continue", "default",
         "do", "else", "error", "const", "continue", "default",
         "do", "else", "enum", "extern", "for", "goto", "if",
         "return", "signed", "sizeof", "static", "struct", "switch",
         "typedef", "union", "unsigned", "volatile", "while"
     };
-    private static final String[] PREPROCESSOR =
-    {
+    private static final String[] PREPROCESSOR
+        = {
         "#define", "#elif", "#endif", "#ifdef", "#ifndef", "#include"
     };
-    private static final String[] DATATYPES =
-    {
+    private static final String[] DATATYPES
+        = {
         "char", "double", "enum", "float", "int", "long", "register", "void"
     };
     private static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
@@ -113,33 +113,32 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
     private static Set<String> recommendations = new TreeSet<String>();
 
-    final KeyCombination selectAllCombination =
-            new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN); // select
-    // all
-    final KeyCombination backspaceCombination =
-            new KeyCodeCombination(KeyCode.BACK_SPACE); // backspace
-    final KeyCombination deleteCombination =
-            new KeyCodeCombination(KeyCode.DELETE); // delete
-    final KeyCombination enterCombination =
-            new KeyCodeCombination(KeyCode.ENTER); // enter
-    final KeyCombination undoCombination =
-            new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN); // undo
-    final KeyCombination redoCombination =
-            new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN); // redo
-    final KeyCombination pasteCombination =
-            new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN); // paste
-    final KeyCombination cutCombination =
-            new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_DOWN); // paste
-    final KeyCombination tabulatorCombination =
-            new KeyCodeCombination(KeyCode.TAB); // tab key
+    final KeyCombination selectAllCombination
+          = new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN); // select all
+    final KeyCombination backspaceCombination
+          = new KeyCodeCombination(KeyCode.BACK_SPACE); // backspace
+    final KeyCombination deleteCombination
+          = new KeyCodeCombination(KeyCode.DELETE); // delete
+    final KeyCombination enterCombination
+          = new KeyCodeCombination(KeyCode.ENTER); // enter
+    final KeyCombination undoCombination
+          = new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN); // undo
+    final KeyCombination redoCombination
+          = new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN); // redo
+    final KeyCombination pasteCombination
+          = new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN); // paste
+    final KeyCombination cutCombination
+          = new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_DOWN); // paste
+    final KeyCombination tabulatorCombination
+          = new KeyCodeCombination(KeyCode.TAB); // tab key
 
     private final SaverLoader saverLoader;
-    private final ElectionDescriptionSaverLoader electionSaverLoader =
-            new ElectionDescriptionSaverLoader();
+    private final ElectionDescriptionSaverLoader electionSaverLoader
+          = new ElectionDescriptionSaverLoader();
 
     private ElectionDescription elecDescription;
-    private List<ElectionDescriptionChangeListener> listeners =
-            new ArrayList<ElectionDescriptionChangeListener>();
+    private List<ElectionDescriptionChangeListener> listeners
+          = new ArrayList<ElectionDescriptionChangeListener>();
     private int lockedLineStart = 0;
     private int lockedLineEnd = 10;
     private int lockedBracePos;
@@ -152,8 +151,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         recommendations.addAll(Arrays.asList(PREPROCESSOR));
         recommendations.addAll(Arrays.asList(DATATYPES));
         saverLoader = new SaverLoader(".elec", "BEAST election description");
-        ElectionDescription startElecDescription =
-                new ElectionDescription("New description", new SingleChoice(),
+        ElectionDescription startElecDescription
+              = new ElectionDescription("New description", new SingleChoice(),
                                         new SingleCandidate(), 0, 0, 0, 0, true);
         this.setNewElectionDescription(startElecDescription);
         saverLoader.resetHasSaveFile();
@@ -161,8 +160,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         code.add("");
         // code.add(source.getContainer().getInputType().);
         String sampleCode = "";
-        String stylesheet =
-                this.getClass().getResource(RESOURCE).toExternalForm();
+        String stylesheet
+              = this.getClass().getResource(RESOURCE).toExternalForm();
         this.getStylesheets().add(stylesheet);
         IntFunction<Node> lineNumbers = LineNumberFactory.get(this);
         this.setParagraphGraphicFactory(lineNumbers);
@@ -258,8 +257,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     private void paste(KeyEvent event) {
         String clipboardText = "";
         try {
-            clipboardText =
-                    (String)
+            clipboardText
+                  = (String)
                         Toolkit.getDefaultToolkit()
                         .getSystemClipboard().getData(DataFlavor.stringFlavor);
         } catch (HeadlessException e) {
@@ -334,11 +333,12 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
      *                    inferred from the cursor or the marked area
      * @return
      */
-    private boolean lockedLineSafeInsertText(String replacement, boolean backspace, boolean delete,
-            Tuple<Integer, Integer> tuple) {
+    private boolean lockedLineSafeInsertText(String replacement,
+                                             boolean backspace,
+                                             boolean delete,
+                                             Tuple<Integer, Integer> tuple) {
         int selectionStart = 0;
         int selectionEnd = 0;
-
         if (tuple != null) {
             selectionStart = tuple.x;
             selectionEnd = tuple.y;
@@ -355,8 +355,11 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         if (backspace && delete) {
             return false;
         }
+        final String r;
         if (backspace || delete) {
-            replacement = "";
+            r = "";
+        } else {
+            r = replacement;
         }
         if (selectionLength == 0) { // update the values
             if (backspace) {
@@ -370,19 +373,18 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
         // if (selectionEnd - selectionStart > 0) { // we have a selected range
         // // find out, if the selected range overlaps with a locked line anywhere
-
-        boolean notOverlapping =
-                ((selectionEnd < lockedLineStart) || (lockedLineEnd <= selectionStart))
+        boolean notOverlapping
+              = ((selectionEnd < lockedLineStart) || (lockedLineEnd <= selectionStart))
                 && (((selectionEnd <= lockedBracePos) || (lockedBracePos < selectionStart)));
         if (notOverlapping) {
-            this.replaceText(selectionStart, selectionEnd, replacement);
-            int lengthChange = replacement.length() - selectionLength;
+            this.replaceText(selectionStart, selectionEnd, r);
+            int lengthChange = r.length() - selectionLength;
             updateLockedLineNumber(selectionEnd, lengthChange);
             return true;
         } else if (selectionEnd == lockedLineStart
-                && (replacement.endsWith("\n") || backspace || delete)) {
-            this.replaceText(selectionStart, selectionEnd, replacement);
-            int lengthChange = replacement.length() - selectionLength;
+                && (r.endsWith("\n") || backspace || delete)) {
+            this.replaceText(selectionStart, selectionEnd, r);
+            int lengthChange = r.length() - selectionLength;
             updateLockedLineNumber(selectionEnd, lengthChange);
             return true;
         } else {
@@ -418,8 +420,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         int lastKwEnd = 0;
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
         while (matcher.find()) {
-            String styleClass =
-                matcher.group(KEYWORD_STRING) != null
+            String styleClass
+              = matcher.group(KEYWORD_STRING) != null
                 ? KEYWORD_STRING.toLowerCase()
                     : matcher.group(PREPROCESSOR_STRING) != null
                     ? PREPROCESSOR_STRING.toLowerCase()
@@ -476,8 +478,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     public void createNew(InputType newIn, OutputType newOut) {
         for (Iterator<ElectionDescriptionChangeListener> iterator = listeners.iterator();
                 iterator.hasNext();) {
-            ElectionDescriptionChangeListener listener =
-                    (ElectionDescriptionChangeListener) iterator.next();
+            ElectionDescriptionChangeListener listener
+                  = (ElectionDescriptionChangeListener) iterator.next();
             listener.inputChanged(newIn);
             listener.outputChanged(newOut);
         }
@@ -490,8 +492,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     public void setNewElectionDescription(ElectionDescription newDescription) {
         this.elecDescription = newDescription;
         if (newDescription.isNew()) {
-            String declarationString =
-                    CCodeHelper.generateDeclString(newDescription.getContainer());
+            String declarationString
+                  = CCodeHelper.generateDeclString(newDescription.getContainer());
             lockedLineStart = 0;
             lockedLineEnd = lockedLineStart + declarationString.length();
             this.replaceText(declarationString + "\n\n}");
@@ -527,8 +529,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     public void bringToFront() {
         GUIController.getController().getMainTabPane().getSelectionModel()
                 .select(GUIController.getController().getCodeTab());
-        List<CodeError> errors =
-                CVariableErrorFinder.findErrors(elecDescription.getDeepCopy().getCode());
+        List<CodeError> errors
+              = CVariableErrorFinder.findErrors(elecDescription.getDeepCopy().getCode());
         displayErrors(errors);
     }
 

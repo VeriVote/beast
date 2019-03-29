@@ -78,7 +78,7 @@ public class NewElectionSimulation
     }
 
     public String[][] getVotingData() {
-        String[][] votingData = { {"0"} };
+        String[][] votingData = {{"0"}};
         votingData = new String[model.getAmountVoters()][model.getAmountCandidates()];
         // read the data in a 2d array
         for (int i = 0; i < model.getAmountVoters(); i++) {

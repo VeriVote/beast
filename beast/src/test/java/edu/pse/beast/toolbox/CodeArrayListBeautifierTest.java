@@ -12,7 +12,6 @@ import org.junit.Test;
  * @author Niels Hanselmann
  */
 public class CodeArrayListBeautifierTest {
-
     /**
      * Test of add method, of class CodeArrayListBeautifier.
      */
@@ -37,7 +36,8 @@ public class CodeArrayListBeautifierTest {
         CodeArrayListBeautifier instance = new CodeArrayListBeautifier();
         instance.addTab();
         instance.add(e);
-        assertEquals("    " + "test", (instance.getCodeArrayList().get(0)));
+        assertEquals(CodeArrayListBeautifier.TAB + "test",
+                     (instance.getCodeArrayList().get(0)));
     }
 
     /**
@@ -63,7 +63,8 @@ public class CodeArrayListBeautifierTest {
         instance.addTab();
         instance.add(e);
         instance.deleteTab();
-        assertEquals("    " + "test3", (instance.getCodeArrayList().get(2)));
+        assertEquals(CodeArrayListBeautifier.TAB + "test3",
+                     (instance.getCodeArrayList().get(2)));
     }
 
     /**

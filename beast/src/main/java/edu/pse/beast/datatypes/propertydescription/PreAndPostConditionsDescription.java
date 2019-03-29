@@ -127,8 +127,8 @@ public class PreAndPostConditionsDescription {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        PreAndPostConditionsDescription other =
-                (PreAndPostConditionsDescription) obj;
+        PreAndPostConditionsDescription other
+              = (PreAndPostConditionsDescription) obj;
         if (boundedVarDescription == null) {
             if (other.boundedVarDescription != null) {
                 return false;

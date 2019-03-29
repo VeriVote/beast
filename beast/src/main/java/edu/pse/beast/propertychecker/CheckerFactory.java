@@ -145,22 +145,22 @@ public abstract class CheckerFactory implements Runnable {
      *            the result
      */
     private void runCheck(String advanced, Result result) {
-        outerLoop: for (Iterator<Integer> voteIterator =
-                parameter.getAmountVoters().iterator();
+        outerLoop: for (Iterator<Integer> voteIterator
+              = parameter.getAmountVoters().iterator();
                 voteIterator.hasNext();) {
             int voters = (int) voteIterator.next();
-            for (Iterator<Integer> candidateIterator =
-                    parameter.getAmountCandidates().iterator();
+            for (Iterator<Integer> candidateIterator
+                  = parameter.getAmountCandidates().iterator();
                     candidateIterator.hasNext();) {
                 int candidates = (int) candidateIterator.next();
-                for (Iterator<Integer> seatsIterator =
-                        parameter.getAmountSeats().iterator();
+                for (Iterator<Integer> seatsIterator
+                      = parameter.getAmountSeats().iterator();
                         seatsIterator.hasNext();) {
                     int seats = (int) seatsIterator.next();
                     synchronized (this) {
                         if (!stopped) {
-                            currentlyRunning =
-                                    startProcessCheck(electionDesc,
+                            currentlyRunning
+                                  = startProcessCheck(electionDesc,
                                                       result.getPropertyDesctiption(),
                                                       advanced, voters, candidates,
                                                       seats, this, result);
@@ -255,8 +255,8 @@ public abstract class CheckerFactory implements Runnable {
                 // childItem.getPreAndPostProperties(), advanced, numVoters,
                 // numCandidates,
                 // numSeats, this, margin, origResult, origData)
-                currentlyRunning =
-                        startProcessTest(electionDesc, result.getPropertyDesctiption(),
+                currentlyRunning
+                      = startProcessTest(electionDesc, result.getPropertyDesctiption(),
                                          advanced, numVoters, numCandidates, numSeats,
                                          this, origData, result);
                 busyWaiting();
@@ -526,8 +526,8 @@ public abstract class CheckerFactory implements Runnable {
     protected void checkMarginAndWait(int margin, List<String> origResult, String advanced,
                                       int numVoters, int numCandidates, int numSeats,
                                       String[][] votingData, Result result) {
-        currentlyRunning =
-                startProcessMargin(electionDesc, result.getPropertyDesctiption(),
+        currentlyRunning
+              = startProcessMargin(electionDesc, result.getPropertyDesctiption(),
                                    advanced, numVoters, numCandidates, numSeats,
                                    this, margin, origResult, votingData, result);
         while (!currentlyRunning.isFinished()) {

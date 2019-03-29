@@ -14,7 +14,7 @@ import javax.swing.text.BadLocationException;
  * @author Holger Klein
  */
 public final class JTextPaneToolbox {
-    private JTextPaneToolbox() {}
+    private JTextPaneToolbox() { }
 
     /**
      * returns the text represented by the JTextPane in a non-OS dependent manner.
@@ -110,13 +110,14 @@ public final class JTextPaneToolbox {
      */
     public static int getClosestLineBeginningAfter(JTextPane pane, int absPos) {
         String code = getText(pane);
-        ++absPos;
-        for (; absPos < code.length(); ++absPos) {
-            if (code.charAt(absPos) == '\n') {
-                return absPos;
+        int pos = absPos;
+        ++pos;
+        for (; pos < code.length(); ++pos) {
+            if (code.charAt(pos) == '\n') {
+                return pos;
             }
         }
-        return absPos;
+        return pos;
     }
 
     /**
@@ -136,8 +137,9 @@ public final class JTextPaneToolbox {
         ArrayList<Integer> lines = new ArrayList<>();
         lines.add(startingline);
         String code = getText(pane);
-        for (; start < end; ++start) {
-            if (code.charAt(start) == '\n') {
+        int s = start;
+        for (; s < end; ++s) {
+            if (code.charAt(s) == '\n') {
                 startingline++;
                 lines.add(startingline);
             }

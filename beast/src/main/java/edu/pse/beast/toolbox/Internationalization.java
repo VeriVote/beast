@@ -32,10 +32,10 @@ import javafx.scene.control.Tooltip;
  *         how-to-implement-a-javafx-ui-where-the-language-can-be-changed-dynamically/
  */
 public final class Internationalization {
-    private Internationalization() {}
-
     /** the current selected Locale. */
     private static final ObjectProperty<Locale> LOCALE;
+
+    private Internationalization() { }
 
     static {
         LOCALE = new SimpleObjectProperty<>(getDefaultLocale());
@@ -76,9 +76,9 @@ public final class Internationalization {
     }
 
     /**
-     * gets the string with the given key from the resource bundle for the current
+     * Gets the string with the given key from the resource bundle for the current
      * LOCALE and uses it as first argument to MessageFormat.format, passing in the
-     * optional args and returning the result.
+     * optional arguments and returning the result.
      *
      * @param key  message key
      * @param args optional arguments for the message
@@ -90,8 +90,8 @@ public final class Internationalization {
     }
 
     /**
-     * creates a String binding to a localized String for the given message bundle
-     * key
+     * Creates a String binding to a localized String for the given message bundle
+     * key.
      *
      * @param key key
      * @param args arguments
@@ -102,8 +102,8 @@ public final class Internationalization {
     }
 
     /**
-     * creates a String Binding to a localized String that is computed by calling
-     * the given func
+     * Creates a String binding to a localized String that is computed by calling
+     * the given function.
      *
      * @param func function called on every change
      * @return StringBinding
@@ -113,7 +113,7 @@ public final class Internationalization {
     }
 
     /**
-     * creates a bound Label whose value is computed on language change.
+     * Creates a bound Label whose value is computed on language change.
      *
      * @param func the function to compute the value
      * @return Label
@@ -125,7 +125,7 @@ public final class Internationalization {
     }
 
     /**
-     * creates a bound Button for the given resourcebundle key
+     * Creates a bound Button for the given resource bundle key.
      *
      * @param key  ResourceBundle key
      * @param args optional arguments for the message
@@ -138,7 +138,7 @@ public final class Internationalization {
     }
 
     /**
-     * creates a bound Tooltip for the given resourcebundle key
+     * Creates a bound tool tip for the given resource bundle key.
      *
      * @param key  ResourceBundle key
      * @param args optional arguments for the message

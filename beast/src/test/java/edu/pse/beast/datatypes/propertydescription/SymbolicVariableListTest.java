@@ -48,8 +48,8 @@ public class SymbolicVariableListTest {
     public void testAddSymbolicVariable() {
         System.out.println("addSymbolicVariable");
         String id = "test";
-        InternalTypeContainer internalTypeContainer =
-            new InternalTypeContainer(InternalTypeRep.INTEGER);
+        InternalTypeContainer internalTypeContainer
+          = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.addSymbolicVariable(id, internalTypeContainer);
         assert (((LinkedList<SymbolicVariable>)
@@ -69,8 +69,8 @@ public class SymbolicVariableListTest {
     public void testIsVarIDAllowed() {
         System.out.println("isVarIDAllowed");
         String id = "test";
-        InternalTypeContainer internalTypeContainer =
-            new InternalTypeContainer(InternalTypeRep.INTEGER);
+        InternalTypeContainer internalTypeContainer
+          = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
         assert (instance.isVarIDAllowed("test"));
         instance.addSymbolicVariable(id, internalTypeContainer);
@@ -85,8 +85,8 @@ public class SymbolicVariableListTest {
         System.out.println("setSymbolicVariableList");
         LinkedList<SymbolicVariable> symbolicVariableList = new LinkedList<>();
         String id = "test";
-        InternalTypeContainer internalTypeContainer =
-            new InternalTypeContainer(InternalTypeRep.INTEGER);
+        InternalTypeContainer internalTypeContainer
+          = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariable var = new SymbolicVariable(id, internalTypeContainer);
         symbolicVariableList.add(var);
         SymbolicVariable var2 = new SymbolicVariable("test2", internalTypeContainer);
@@ -108,8 +108,8 @@ public class SymbolicVariableListTest {
     public void testGetSymbolicVariables() {
         System.out.println("getSymbolicVariables");
         String id = "test";
-        InternalTypeContainer internalTypeContainer =
-            new InternalTypeContainer(InternalTypeRep.INTEGER);
+        InternalTypeContainer internalTypeContainer
+          = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.addSymbolicVariable(id, internalTypeContainer);
         assert (((LinkedList<SymbolicVariable>)
@@ -129,8 +129,8 @@ public class SymbolicVariableListTest {
     public void testRemoveSymbolicVariableString() {
         System.out.println("removeSymbolicVariable");
         String id = "test";
-        InternalTypeContainer internalTypeContainer =
-            new InternalTypeContainer(InternalTypeRep.INTEGER);
+        InternalTypeContainer internalTypeContainer
+          = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.addSymbolicVariable(id, internalTypeContainer);
         assert (instance.removeSymbolicVariable("test"));
@@ -145,8 +145,8 @@ public class SymbolicVariableListTest {
         System.out.println("removeSymbolicVariable");
         int index = 0;
         String id = "test";
-        InternalTypeContainer internalTypeContainer =
-            new InternalTypeContainer(InternalTypeRep.INTEGER);
+        InternalTypeContainer internalTypeContainer
+          = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.addSymbolicVariable(id, internalTypeContainer);
         instance.removeSymbolicVariable(index);
@@ -160,13 +160,15 @@ public class SymbolicVariableListTest {
     @Test
     public void testAddListener() {
         System.out.println("addListener");
-        VariableListListener listener = new FormalExpErrorFinderTreeListener(null, null,
-                GUIController.getController().getElectionDescription());
+        VariableListListener listener
+            = new FormalExpErrorFinderTreeListener(
+                    null, null, GUIController.getController().getElectionDescription()
+              );
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.addListener(listener);
         String id = "test";
-        InternalTypeContainer internalTypeContainer =
-            new InternalTypeContainer(InternalTypeRep.INTEGER);
+        InternalTypeContainer internalTypeContainer
+          = new InternalTypeContainer(InternalTypeRep.INTEGER);
         instance.addSymbolicVariable(id, internalTypeContainer);
     }
 

@@ -83,36 +83,35 @@ public class ParliamentStack extends CBMCOutputType {
         code.add("}"); // end of the for loop
         code.deleteTab();
         code.add("}"); // end of the function
-        code = new CodeArrayListBeautifier();
-        code.add("IF SOMETHING GOES WRONG: SEARCH FOR DEBUG56693");
-        return code;
+        CodeArrayListBeautifier c = new CodeArrayListBeautifier();
+        c.add("IF SOMETHING GOES WRONG: SEARCH FOR DEBUG56693");
+        return c;
     }
 
     @Override
     public CodeArrayListBeautifier
             addVotesArrayAndInit(CodeArrayListBeautifier code,
                                  int voteNumber) {
-        String temp =
-                "struct stack_result tmp" + voteNumber
-                + " = " + UnifiedNameContainer.getVotingMethod()
-                + "(votes" + voteNumber + ");";
+        String temp = "struct stack_result tmp" + voteNumber
+                      + " = " + UnifiedNameContainer.getVotingMethod()
+                      + "(votes" + voteNumber + ");";
         code.add(temp);
-        String tempElect =
-                "unsigned int *tempElect" + voteNumber
+        String tempElect
+              = "unsigned int *tempElect" + voteNumber
                 + " = tmp" + voteNumber + ".arr;";
         code.add(tempElect);
-        String electX =
-                "unsigned int elect" + voteNumber
+        String electX
+              = "unsigned int elect" + voteNumber
                 + "[" + UnifiedNameContainer.getCandidate() + "];";
         code.add(electX);
-        String forLoop =
-                "for (int electLoop = 0; electLoop < "
+        String forLoop
+              = "for (int electLoop = 0; electLoop < "
                 + UnifiedNameContainer.getCandidate() + "; electLoop++) {";
         code.add(forLoop);
         code.addTab();
         code.add("elect" + voteNumber
                  + "[electLoop] = tempElect"
-                + voteNumber + "[electLoop];");
+                 + voteNumber + "[electLoop];");
         code.deleteTab();
         code.add("}");
 
@@ -132,16 +131,16 @@ public class ParliamentStack extends CBMCOutputType {
                       + " = " + UnifiedNameContainer.getVotingMethod()
                       + "(ORIG_VOTES);";
         code.add(temp);
-        String tempElect =
-                "unsigned int *tempElect" + voteNumber
+        String tempElect
+              = "unsigned int *tempElect" + voteNumber
                 + " = tmp" + voteNumber + ".arr;";
         code.add(tempElect);
-        String electX =
-                "unsigned int elect" + voteNumber
+        String electX
+              = "unsigned int elect" + voteNumber
                 + "[" + UnifiedNameContainer.getCandidate() + "];";
         code.add(electX);
-        String forLoop =
-                "for (int electLoop = 0; electLoop < "
+        String forLoop
+              = "for (int electLoop = 0; electLoop < "
                 + UnifiedNameContainer.getCandidate() + "; electLoop++) {";
         code.add(forLoop);
         code.addTab();
@@ -157,10 +156,9 @@ public class ParliamentStack extends CBMCOutputType {
 
     @Override
     public List<String> getCodeToRunMargin(List<String> origResult, List<String> lastResult) {
-        List<CBMCResultWrapperSingleArray> tmpResultOneDim =
-                super.helper.readOneDimVarLong("elect", lastResult);
-        origResult = tmpResultOneDim.get(0).getList();
-        return origResult;
+        List<CBMCResultWrapperSingleArray> tmpResultOneDim
+              = super.helper.readOneDimVarLong("elect", lastResult);
+        return tmpResultOneDim.get(0).getList();
     }
 
     @Override
@@ -209,8 +207,8 @@ public class ParliamentStack extends CBMCOutputType {
     public void addLastResultAsCode(CodeArrayListBeautifier code, List<String> origResult) {
         // first create the declaration of the array:
         String declaration = "";
-        declaration =
-                "int " + UnifiedNameContainer.getOrigResultName()
+        declaration
+              = "int " + UnifiedNameContainer.getOrigResultName()
                 + "[" + origResult.size() + "] = {";
         code.addTab();
         code.add(declaration);

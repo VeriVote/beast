@@ -31,13 +31,13 @@ public class SingleCandidate extends CBMCOutputType {
 
     @Override
     public String[] extractResult(List<String> toExtract) {
-        String[] tmpArray =
-        {
-            ""
-                + super.helper.readLongs(
-                   "" + UnifiedNameContainer.getNewResultName() + "",
-                   toExtract).get(0).getValue()
-        };
+        String[] tmpArray
+        = {
+              ""
+                  + super.helper.readLongs(
+                     "" + UnifiedNameContainer.getNewResultName() + "",
+                     toExtract).get(0).getValue()
+          };
         return tmpArray;
     }
 

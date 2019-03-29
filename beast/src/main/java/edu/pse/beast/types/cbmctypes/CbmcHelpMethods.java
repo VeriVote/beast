@@ -12,8 +12,8 @@ import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.types.CommonHelpMethods;
 
 public class CbmcHelpMethods extends CommonHelpMethods {
-    private static final String SEGMENT_END =
-            "-----------------------------------";
+    private static final String SEGMENT_END
+          = "-----------------------------------";
 
 //  // this is the last line in the cbmc output, if the verification was
 //  // successful
@@ -66,8 +66,8 @@ public class CbmcHelpMethods extends CommonHelpMethods {
                     boolean added = false;
                     for (Iterator<CBMCResultWrapperLong> innerIterator = toReturn.iterator();
                             innerIterator.hasNext();) {
-                        CBMCResultWrapperLong wrapper =
-                                (CBMCResultWrapperLong) innerIterator.next();
+                        CBMCResultWrapperLong wrapper
+                              = (CBMCResultWrapperLong) innerIterator.next();
                         if (wrapper.getMainIndex() == electIndex) {
                             wrapper.setValue(value);
                             added = true;
@@ -119,8 +119,8 @@ public class CbmcHelpMethods extends CommonHelpMethods {
                     boolean added = false;
                     for (Iterator<CBMCResultWrapperSingleArray> innerIterator = list.iterator();
                             innerIterator.hasNext();) {
-                        CBMCResultWrapperSingleArray wrapper =
-                                (CBMCResultWrapperSingleArray) innerIterator.next();
+                        CBMCResultWrapperSingleArray wrapper
+                              = (CBMCResultWrapperSingleArray) innerIterator.next();
                         if (wrapper.getMainIndex() == mainIndex) {
                             wrapper.addTo(arrayIndex, value);
                             added = true;
@@ -149,11 +149,11 @@ public class CbmcHelpMethods extends CommonHelpMethods {
                     for (int i = 0; i < subValueArray.length; i++) {
                         if (!subValueArray[i].equals("")) {
                             boolean added = false;
-                            for (Iterator<CBMCResultWrapperSingleArray> innerIterator =
-                                    list.iterator();
+                            for (Iterator<CBMCResultWrapperSingleArray> innerIterator
+                                  = list.iterator();
                                     innerIterator.hasNext();) {
-                                CBMCResultWrapperSingleArray wrapper =
-                                        (CBMCResultWrapperSingleArray) innerIterator.next();
+                                CBMCResultWrapperSingleArray wrapper
+                                      = (CBMCResultWrapperSingleArray) innerIterator.next();
                                 if (wrapper.getMainIndex() == mainIndex) {
                                     wrapper.addTo(i, subValueArray[i]);
                                     added = true;
@@ -176,8 +176,8 @@ public class CbmcHelpMethods extends CommonHelpMethods {
     @Override
     public List<CBMCResultWrapperMultiArray> readTwoDimVarLong(String name,
                                                                List<String> toExtract) {
-        List<CBMCResultWrapperMultiArray> list =
-                new ArrayList<CBMCResultWrapperMultiArray>();
+        List<CBMCResultWrapperMultiArray> list
+              = new ArrayList<CBMCResultWrapperMultiArray>();
         Pattern votesExtractor = null;
         Iterator<String> iterator = toExtract.iterator();
         String line = mergeLinesToOne(iterator, SEGMENT_END);
@@ -187,8 +187,8 @@ public class CbmcHelpMethods extends CommonHelpMethods {
                 // "votesNUMBER[NUMBER][NUMBER]" where "NUMBER" can by any
                 // positive
                 // number. Also, the next character has to be an equals sign
-                votesExtractor =
-                        Pattern.compile(
+                votesExtractor
+                      = Pattern.compile(
                                 "(\\b" + name
                                 + "[0-9]+\\[[0-9]+[a-z]*\\]\\[[0-9]+[a-zA-z]*\\])(=.*)");
                 Matcher votesMatcher = votesExtractor.matcher(line);
@@ -214,8 +214,8 @@ public class CbmcHelpMethods extends CommonHelpMethods {
                     boolean added = false;
                     for (Iterator<CBMCResultWrapperMultiArray> innerIterator = list.iterator();
                             innerIterator.hasNext();) {
-                        CBMCResultWrapperMultiArray wrapper =
-                                (CBMCResultWrapperMultiArray) innerIterator.next();
+                        CBMCResultWrapperMultiArray wrapper
+                              = (CBMCResultWrapperMultiArray) innerIterator.next();
                         if (wrapper.getMainIndex() == mainIndex) {
                             wrapper.addTo(arrayIndexOne, arrayIndexTwo, value);
                             added = true;
@@ -228,8 +228,8 @@ public class CbmcHelpMethods extends CommonHelpMethods {
                 }
             } else if (line.contains("{")) {
                 // searches for votesNUMBER={....}
-                votesExtractor =
-                        Pattern.compile("(\\b" + name
+                votesExtractor
+                      = Pattern.compile("(\\b" + name
                                         + "[0-9]+)=(\\{\\s*((\\{(.*)\\}(,)*\\s*)*)})");
                 Matcher votesMatcher = votesExtractor.matcher(line);
                 if (votesMatcher.find()) {
@@ -252,8 +252,8 @@ public class CbmcHelpMethods extends CommonHelpMethods {
                                 boolean added = false;
                                 for (Iterator<CBMCResultWrapperMultiArray> innerIterator = list
                                         .iterator(); innerIterator.hasNext();) {
-                                    CBMCResultWrapperMultiArray wrapper =
-                                            (CBMCResultWrapperMultiArray) innerIterator.next();
+                                    CBMCResultWrapperMultiArray wrapper
+                                          = (CBMCResultWrapperMultiArray) innerIterator.next();
                                     if (wrapper.getMainIndex() == mainIndex) {
                                         wrapper.addTo(i, j, "" + Long.parseLong(subValues[j], 2));
                                         added = true;

@@ -16,8 +16,8 @@ import edu.pse.beast.stringresource.StringResourceLoader;
  * @author Holger Klein
  */
 public abstract class MenuBarHandler implements DisplaysStringsToUser {
-    private static final String[] STANDARD_ID_ORDER =
-    {
+    private static final String[] STANDARD_ID_ORDER
+        = {
         "file", "edit", "code"
     };
 
@@ -75,8 +75,8 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
             for (int j = 0; j < actionIDAndListener.get(i).size(); ++j) {
                 ActionIdAndListener currentAccIdAndL = actionIDAndListener.get(i).get(j);
                 String currentAcId = currentAccIdAndL.getId();
-                JMenuItem currentItem =
-                        new JMenuItem(currentResourceLoader.getStringFromID(currentAcId));
+                JMenuItem currentItem
+                      = new JMenuItem(currentResourceLoader.getStringFromID(currentAcId));
                 currentItem.addActionListener(currentAccIdAndL.getListener());
                 createdItems.get(i).add(currentItem);
                 currentMenu.add(currentItem);
@@ -84,7 +84,6 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
             createdMenuBar.add(currentMenu);
         }
     }
-
 
     private class MenuHeadingSorter implements Comparator<String> {
         @Override

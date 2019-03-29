@@ -16,7 +16,7 @@ import edu.pse.beast.types.InternalTypeRep;
  * @author Holger Klein
  */
 public final class CCodeHelper {
-    private CCodeHelper() {}
+    private CCodeHelper() { }
 
     /**
      * returns the C constant which is the max amount of elements in a given list

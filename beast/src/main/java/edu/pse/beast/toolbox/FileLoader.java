@@ -20,6 +20,13 @@ import javax.imageio.ImageIO;
  * @author Niels Hanselmann
  */
 public final class FileLoader {
+    // we want to compile all available c files, so the user does not need to
+    // specify anything
+    public static final String C_FILE_ENDING      = ".c";
+    public static final String BAT_FILE_ENDING    = ".bat";
+    public static final String EXE_FILE_ENDING    = ".exe";
+    public static final String OBJECT_FILE_ENDING = ".obj";
+    public static final String OUT_FILE_ENDING    = ".out";
 
     private FileLoader() {
     }

@@ -14,7 +14,6 @@ import edu.pse.beast.types.OutputType;
  * @author Holger Klein
  */
 public class ElectionTemplateHandler {
-
     private final ArrayList<ElectionTypeContainer> inputTypes = new ArrayList<>();
     private final ArrayList<ElectionTypeContainer> resTypes = new ArrayList<>();
 
@@ -75,10 +74,10 @@ public class ElectionTemplateHandler {
     }
 //
 //    /**
-//     * returns the elecitontypecontainer having the supplied id
+//     * returns the election type container having the supplied id
 //     *
-//     * @param id the id of the elecitontypecontainer to be retrieved
-//     * @return the electiontypecontainer if it exists, null otherwise
+//     * @param id the id of the election type container to be retrieved
+//     * @return the election type container if it exists, null otherwise
 //     */
 //    public ElectionTypeContainer getById(ElectionInputTypeIds id) {
 //        for (ElectionTypeContainer cont : inputTypes) {
@@ -90,11 +89,11 @@ public class ElectionTemplateHandler {
 //    }
 //
 //    /**
-//     * returns the elecitontypecontainer having the supplied id
+//     * returns the election type container having the supplied id
 //     *
 //     * @param id
-//     *            the id of the elecitontypecontainer to be retrieved
-//     * @return the electiontypecontainer if it exists, null otherwise
+//     *            the id of the election type container to be retrieved
+//     * @return the election type container if it exists, null otherwise
 //     */
 //    public ElectionTypeContainer getById(ElectionOutputTypeIds id) {
 //        for (ElectionTypeContainer cont : resTypes) {
@@ -104,10 +103,18 @@ public class ElectionTemplateHandler {
 //        return null;
 //    }
 
+    /**
+     * Get standard input.
+     * @return the first election type container in input types
+     */
     public ElectionTypeContainer getStandardInput() {
         return inputTypes.get(0);
     }
 
+    /**
+     * Get standard result.
+     * @return the first election type container in result types
+     */
     public ElectionTypeContainer getStandardResult() {
         return resTypes.get(0);
     }

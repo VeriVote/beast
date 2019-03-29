@@ -21,8 +21,8 @@ public class ElectionCheckParameterSaverLoaderTest {
 
     @BeforeClass
     public static void setUpClass() {
-        electionCheckParameter =
-            new ElectionCheckParameter(
+        electionCheckParameter
+          = new ElectionCheckParameter(
                 Arrays.asList(new Integer[] {1, 2}),
                               Arrays.asList(new Integer[] {1, 2}),
                               Arrays.asList(new Integer[] {1, 2}),
@@ -38,13 +38,11 @@ public class ElectionCheckParameterSaverLoaderTest {
      */
     @Test
     public void testCreateFromSaveString() throws Exception {
-        String saveString =
-            ElectionCheckParameterSaverLoader.createSaveString(electionCheckParameter);
-
-        ElectionCheckParameter recreatedElectionCheckParameter =
-            (ElectionCheckParameter)
+        final String saveString
+          = ElectionCheckParameterSaverLoader.createSaveString(electionCheckParameter);
+        final ElectionCheckParameter recreatedElectionCheckParameter
+          = (ElectionCheckParameter)
                 ElectionCheckParameterSaverLoader.createFromSaveString(saveString);
-
         assert (recreatedElectionCheckParameter.getAmountCandidates().get(0).equals(1));
         assert (recreatedElectionCheckParameter.getAmountCandidates().get(1).equals(2));
         assert (recreatedElectionCheckParameter.getAmountSeats().get(0).equals(1));
@@ -53,8 +51,7 @@ public class ElectionCheckParameterSaverLoaderTest {
         assert (recreatedElectionCheckParameter.getAmountVoters().get(1).equals(2));
         assert (recreatedElectionCheckParameter.getArgument().equals("-- unwind 6"));
         assert (recreatedElectionCheckParameter.getProcesses() == 4);
-
-        TimeOut recreatedTimeOut = recreatedElectionCheckParameter.getTimeout();
+        final TimeOut recreatedTimeOut = recreatedElectionCheckParameter.getTimeout();
         assert (recreatedTimeOut.getDuration() == 10800000);
         assert (recreatedTimeOut.getOrigUnit().equals(TimeUnit.HOURS));
     }

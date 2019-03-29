@@ -153,8 +153,7 @@ public class CandidateList extends CBMCOutputType {
     public List<String> getCodeToRunMargin(List<String> origResult, List<String> lastResult) {
         List<CBMCResultWrapperSingleArray> tmpResultOneDim = super.helper.readOneDimVarLong("elect",
                 lastResult);
-        origResult = tmpResultOneDim.get(0).getList();
-        return origResult;
+        return tmpResultOneDim.get(0).getList();
     }
 
     @Override
@@ -206,9 +205,8 @@ public class CandidateList extends CBMCOutputType {
     public void addLastResultAsCode(CodeArrayListBeautifier code, List<String> origResult) {
         // first create the declaration of the array:
         String declaration = "";
-        declaration =
-                "int " + UnifiedNameContainer.getOrigResultName()
-                + "[" + origResult.size() + "] = {";
+        declaration = "int " + UnifiedNameContainer.getOrigResultName()
+                      + "[" + origResult.size() + "] = {";
         code.addTab();
         code.add(declaration);
         String tmp = ""; // saves the amount of votes this seat got

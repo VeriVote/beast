@@ -4,13 +4,13 @@ import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 
 /**
  * Implements static methods for creating saveStrings from
- * FormalPropertiesDescription objects and vice versa. Methods are static due to
+ * FormalPropertiesDescription objects and vice versa. Methods are static for
  * convenience.
  *
  * @author Holger Klein
  */
 public final class FormalPropertySaverLoader {
-    private FormalPropertySaverLoader() {}
+    private FormalPropertySaverLoader() { }
 
     /**
      * Creates a String from a given FormalPropertiesDescription, that can then be

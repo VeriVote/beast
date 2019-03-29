@@ -45,8 +45,8 @@ public class ResultPresenterWindow extends JFrame {
     private JTextPane result;
     private FailureExample example;
 
-    private final ImageIcon eyeIcon =
-            new ImageIcon(SuperFolderFinder.getSuperFolder() + PATH_TO_EYE);
+    private final ImageIcon eyeIcon
+          = new ImageIcon(SuperFolderFinder.getSuperFolder() + PATH_TO_EYE);
 
     /**
      *
@@ -278,8 +278,8 @@ public class ResultPresenterWindow extends JFrame {
 
     private void appendMarginResult(Result marginResult) {
         // FailureExample ex = marginResult.getFailureExample();
-        ElectionTypeContainer container =
-                marginResult.getFailureExample().getElectionDescription().getContainer();
+        ElectionTypeContainer container
+              = marginResult.getFailureExample().getElectionDescription().getContainer();
 
         appendLine("================================");
         appendLine("===========Margin Result===========");
@@ -287,16 +287,16 @@ public class ResultPresenterWindow extends JFrame {
         appendLine("");
         appendLine("====original Votes====");
         appendLine("");
-        String toAppend =
-                container.getInputType()
+        String toAppend
+              = container.getInputType()
                 .getVoteDescriptionString(marginResult.getOrigVoting());
         appendPane(toAppend);
 
         appendLine("");
         appendLine("====original Result====");
         appendLine("");
-        toAppend =
-                container.getOutputType()
+        toAppend
+              = container.getOutputType()
                 .getResultDescriptionString(marginResult.getOrigWinner());
         appendPane(toAppend);
 
@@ -310,16 +310,16 @@ public class ResultPresenterWindow extends JFrame {
             appendLine("");
             appendLine("====new Votes====");
             appendLine("");
-            toAppend =
-                    container.getInputType()
+            toAppend
+                  = container.getInputType()
                     .getVoteDescriptionString(marginResult.getNewVotes());
             appendPane(toAppend);
 
             appendLine("");
             appendLine("====new Result====");
             appendLine("");
-            toAppend =
-                    container.getOutputType()
+            toAppend
+                  = container.getOutputType()
                     .getResultDescriptionString(marginResult.getNewWinner());
             appendPane(toAppend);
         } else {
@@ -393,8 +393,8 @@ public class ResultPresenterWindow extends JFrame {
             }
         } else {
             for (int j = 0; j < voteList.length; j++) {
-                Color color =
-                        precedingList[j].equals(voteList[j]) ? Color.BLACK : Color.RED;
+                Color color
+                      = precedingList[j].equals(voteList[j]) ? Color.BLACK : Color.RED;
                 appendPaneColored(ex.getSymbolicSeatForIndex(Long.parseLong(voteList[j])),
                                   color);
                 appendPane(", ");

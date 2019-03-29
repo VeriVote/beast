@@ -81,13 +81,19 @@ public class GUIController {
     private static GUIController controller;
 
     private static List<ParentTreeItem> properties = new ArrayList<ParentTreeItem>();
-    private static List<TreeItem<CustomTreeItem>> treeItems =
-            new ArrayList<TreeItem<CustomTreeItem>>();
+    private static List<TreeItem<CustomTreeItem>> treeItems
+          = new ArrayList<TreeItem<CustomTreeItem>>();
     private static TreeItem<CustomTreeItem> root;
 
-    private static final String PATH_TO_IMAGES =
-            "file:///" + SuperFolderFinder.getSuperFolder() + "/core/images/";
+    private static final char   SLASH = '/';
+
+    private static final String FILE = "file:///";
+    private static final String RELATIVE_PATH = "/core/images/";
+    private static final String PATH_TO_IMAGES
+          = FILE + SuperFolderFinder.getSuperFolder() + RELATIVE_PATH;
+    private static final String BEAST_LOGO     = "other/BEAST.png";
     private static final String START_BUTTON   = "toolbar/start.png";
+    private static final String STOP_BUTTON    = "toolbar/stop.png";
     private static final String LOAD_BUTTON    = "toolbar/load.png";
     private static final String SAVE_BUTTON    = "toolbar/save.png";
     private static final String SAVE_AS_BUTTON = "toolbar/save_as.png";
@@ -330,16 +336,16 @@ public class GUIController {
 
     private boolean nameFieldIsChangeable = false;
 
-    private SaverLoader propertyListSaverLoader =
-            new SaverLoader(".propList", "BEAST list of properties");
-    private SaverLoader childItemSaverLoader =
-            new SaverLoader(".child", "BEAST child property item");
-    private ChildTreeItemSaverLoader propertyListGSON =
-            new ChildTreeItemSaverLoader();
-    private SaverLoader projectSaverLoader =
-            new SaverLoader(".proj", "BEAST project file");
-    private OptionsSaverLoader optionSaverLoader =
-            new OptionsSaverLoader(".opt", "BEAST option file");
+    private SaverLoader propertyListSaverLoader
+          = new SaverLoader(SaverLoader.PROP_LIST_FILE_ENDING, "BEAST list of properties");
+    private SaverLoader childItemSaverLoader
+          = new SaverLoader(SaverLoader.CHILD_PROP_FILE_ENDING, "BEAST child property item");
+    private ChildTreeItemSaverLoader propertyListGSON
+          = new ChildTreeItemSaverLoader();
+    private SaverLoader projectSaverLoader
+          = new SaverLoader(SaverLoader.PROJECT_FILE_ENDING, "BEAST project file");
+    private OptionsSaverLoader optionSaverLoader
+          = new OptionsSaverLoader(SaverLoader.OPT_FILE_ENDING, "BEAST option file");
     // private ProjectSaverLoader projectGSON = new ProjectSaverLoader();
 
     public GUIController(Stage mainStage) {
@@ -426,20 +432,20 @@ public class GUIController {
         // root.getChildren().add(test1);
         treeView.setRoot(root);
         codeArea = new NewCodeArea();
-        VirtualizedScrollPane<NewCodeArea> vsp =
-                new VirtualizedScrollPane<NewCodeArea>(codeArea);
+        VirtualizedScrollPane<NewCodeArea> vsp
+              = new VirtualizedScrollPane<NewCodeArea>(codeArea);
         codePane.setContent(vsp);
         preArea = new NewPropertyCodeArea();
-        VirtualizedScrollPane<NewPropertyCodeArea> vspPre =
-                new VirtualizedScrollPane<NewPropertyCodeArea>(preArea);
+        VirtualizedScrollPane<NewPropertyCodeArea> vspPre
+              = new VirtualizedScrollPane<NewPropertyCodeArea>(preArea);
         prePropertyPane.setContent(vspPre);
         postArea = new NewPropertyCodeArea();
-        VirtualizedScrollPane<NewPropertyCodeArea> vspPost =
-                new VirtualizedScrollPane<NewPropertyCodeArea>(postArea);
+        VirtualizedScrollPane<NewPropertyCodeArea> vspPost
+              = new VirtualizedScrollPane<NewPropertyCodeArea>(postArea);
         postPropertyPane.setContent(vspPost);
         boundedVarArea = new BoundedVarCodeArea();
-        VirtualizedScrollPane<BoundedVarCodeArea> vspBound =
-                new VirtualizedScrollPane<BoundedVarCodeArea>(boundedVarArea);
+        VirtualizedScrollPane<BoundedVarCodeArea> vspBound
+              = new VirtualizedScrollPane<BoundedVarCodeArea>(boundedVarArea);
         boundVariablesTab.setContent(vspBound);
         variableTreeView.setShowRoot(false);
         TreeItem<String> symbVarRoot = new TreeItem<String>();
@@ -526,13 +532,13 @@ public class GUIController {
                 event.consume();
             }
         });
-        electionSimulation =
-                new NewElectionSimulation(
+        electionSimulation
+              = new NewElectionSimulation(
                         codeArea.getElectionDescription().getContainer(),
                         inputGridPane, voterGridPane, candidateGridPane);
         // update all numbers for the input fields
         this.addInputNumberEnforcer(inputVoterField, "");
-        addTreeItem(new PreAndPostConditionsDescription("new Property"));
+        addTreeItem(new PreAndPostConditionsDescription("New Property"));
         properties.get(0).wasClicked(false);
     }
 
@@ -683,12 +689,10 @@ public class GUIController {
     public void removeProperty(TreeItem<CustomTreeItem> toRemove) {
         properties.remove(toRemove.getValue());
         root.getChildren().remove(toRemove);
-
         // reset the property fields
-        GUIController.getController().resultNameField.setText("no property selected");
-        GUIController.getController().getResultField().setText(""); // reset the
-                                                                    // result
-                                                                    // field
+        GUIController.getController().resultNameField.setText("No property selected.");
+        // reset the result field
+        GUIController.getController().getResultField().setText("");
     }
 
     private void removeAllProperties() {
@@ -727,7 +731,7 @@ public class GUIController {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                startStopButton.setGraphic(new ImageView(PATH_TO_IMAGES + "toolbar/start.png"));
+                startStopButton.setGraphic(new ImageView(PATH_TO_IMAGES + START_BUTTON));
             }
         });
         running = false;
@@ -739,9 +743,9 @@ public class GUIController {
     public synchronized void startStopPressed(ActionEvent event) {
         if (!running) {
             // react = false; // lock the GUI
-            if (BEASTCommunicator.startCheckNEW()) { // if we start it
-                                                     // successful
-                startStopButton.setGraphic(new ImageView(PATH_TO_IMAGES + "toolbar/stop.png"));
+            if (BEASTCommunicator.startCheckNEW()) {
+                // if we start it successfully
+                startStopButton.setGraphic(new ImageView(PATH_TO_IMAGES + STOP_BUTTON));
                 running = true;
             }
         } else {
@@ -833,13 +837,11 @@ public class GUIController {
     public void propNameButtonClicked(Event event) {
         if (nameFieldIsChangeable) {
             String text = propNameField.getText();
-            if (!text.equals("")) {
+            if (!text.isEmpty()) {
                 if (isValidFileName(text)) {
                     propNameField.setEditable(false);
                     resultNameField.setText(text);
-
                     booleanExpEditor.getPropertyDescription().setName(text);
-
                     if (booleanExpEditor.getCurrentItem() != null) {
                         booleanExpEditor.getCurrentItem().setText(text);
                     }
@@ -904,8 +906,8 @@ public class GUIController {
     @FXML
     public void newElectionDescription(ActionEvent event) {
         codeArea.resetSaveFile();
-        Triplet<String, InputType, OutputType> triplet =
-                showPopUp("New Election Description",
+        Triplet<String, InputType, OutputType> triplet
+              = showPopUp("New Election Description",
                           "chose the new Election description",
                           "input Type:",
                           InputType.getInputTypes(),
@@ -947,7 +949,7 @@ public class GUIController {
         propertyListSaverLoader.resetHasSaveFile();
         removeAllProperties();
         if (event != null) {
-            addProperty(new PreAndPostConditionsDescription("new Property"));
+            addProperty(new PreAndPostConditionsDescription("New Property"));
             properties.get(0).wasClicked(false);
         }
         GUIController.getController().resultNameField.setText("no property selected");
@@ -980,23 +982,28 @@ public class GUIController {
         if (projectFile != null) {
             removeAllProperties();
             String folderName = FilenameUtils.removeExtension(projectFile.getName());
-            File parent = new File(projectFile.getParentFile() + "/" + folderName);
+            File parent
+                = new File(projectFile.getParentFile()
+                           + Character.toString(SLASH)
+                           + folderName);
             if (parent != null) {
                 // load the election Description
-                File elecDescFile =
-                        new File(parent.getAbsolutePath() + "/" + "description.elec");
+                File elecDescFile
+                      = new File(parent.getAbsolutePath() + SLASH + "description.elec");
                 openElectionDescription(elecDescFile);
                 // load the propertyList
-                File propListFile =
-                        new File(parent.getAbsolutePath() + "/" + "propertyList.propList");
+                File propListFile
+                      = new File(parent.getAbsolutePath() + SLASH
+                                 + "propertyList" + SaverLoader.PROP_LIST_FILE_ENDING);
                 openPropertyList(propListFile);
                 // load the electionInput
-                File elecInputFile =
-                        new File(parent.getAbsolutePath() + "/" + "input.elecIn");
+                File elecInputFile
+                      = new File(parent.getAbsolutePath() + SLASH + "input.elecIn");
                 openVotingInput(elecInputFile);
                 // load the options
-                File optionsFile =
-                        new File(parent.getAbsolutePath() + "/" + "options.opt");
+                File optionsFile
+                      = new File(parent.getAbsolutePath() + SLASH
+                                 + "options" + SaverLoader.OPT_FILE_ENDING);
                 openOptions(optionsFile);
             }
         }
@@ -1005,7 +1012,6 @@ public class GUIController {
     @FXML
     public void openPropertyList(ActionEvent event) {
         File listFile = propertyListSaverLoader.showFileLoadDialog("");
-
         openPropertyListFile(listFile);
     }
 
@@ -1014,7 +1020,10 @@ public class GUIController {
         if (listFile != null) {
             removeAllProperties();
             String folderName = FilenameUtils.removeExtension(listFile.getName());
-            File parent = new File(listFile.getParentFile() + "/" + folderName);
+            File parent
+                = new File(listFile.getParentFile()
+                           + Character.toString(SLASH)
+                           + folderName);
             if (listFile != null) {
                 File[] directories = parent.listFiles(File::isDirectory);
                 if (directories != null && directories.length > 0) {
@@ -1022,7 +1031,7 @@ public class GUIController {
                         File currentDir = directories[i];
                         String[] property = currentDir.list(new FilenameFilter() {
                             public boolean accept(File dir, String name) {
-                                return name.endsWith(".prop");
+                                return name.endsWith(SaverLoader.PROP_DESCR_FILE_ENDING);
                             }
                         });
                         if (property.length != 1) {
@@ -1031,10 +1040,10 @@ public class GUIController {
                             return;
                         }
                         PreAndPostConditionsDescription prop = booleanExpEditor
-                                .open(new File(currentDir.getPath() + "/" + property[0]));
+                                .open(new File(currentDir.getPath() + SLASH + property[0]));
                         String[] children = currentDir.list(new FilenameFilter() {
                             public boolean accept(File dir, String name) {
-                                return name.endsWith(".child");
+                                return name.endsWith(SaverLoader.CHILD_PROP_FILE_ENDING);
                             }
                         });
                         if (children.length != 3) {
@@ -1043,16 +1052,16 @@ public class GUIController {
                             return;
                         }
                         TreeItem<CustomTreeItem> treeItem = new TreeItem<CustomTreeItem>();
-                        ParentTreeItem parentItem =
-                                new ParentTreeItem(prop, false, treeItem, false);
+                        ParentTreeItem parentItem
+                              = new ParentTreeItem(prop, false, treeItem, false);
                         treeItems.add(treeItem);
                         properties.add(parentItem);
                         root.getChildren().add(treeItem);
                         for (int j = 0; j < children.length; j++) {
-                            String json =
-                                    childItemSaverLoader.load(
+                            final String json
+                                  = childItemSaverLoader.load(
                                             new File(currentDir.getPath()
-                                                     + "/" + children[j]));
+                                                     + SLASH + children[j]));
                             String[] splits = children[j].split("\\.");
                             String stringIndex = splits[splits.length - 2];
                             ChildTreeItemValues values = null;
@@ -1139,20 +1148,22 @@ public class GUIController {
         if (projectFile != null) {
             File folder = createFolderWithName(projectFile, true);
             projectSaverLoader.saveAs(
-                    new File(folder.getParentFile() + "/"
+                    new File(folder.getParentFile() + Character.toString(SLASH)
                              + projectFile.getName()), "");
             // save the electionDescription
             saveAsElectionDescription(
-                    new File(folder.getPath() + "/" + "description.elec"));
+                    new File(folder.getPath() + SLASH + "description.elec"));
             // save the property list
             savePropertyListFromFile(
-                    new File(folder.getPath() + "/" + "propertyList.propList"),
+                    new File(folder.getPath() + SLASH
+                             + "propertyList" + SaverLoader.PROP_LIST_FILE_ENDING),
                     false,
                     true);
             // save election input
-            electionSimulation.saveAs(new File(folder.getPath() + "/" + "input.elecIn"));
+            electionSimulation.saveAs(new File(folder.getPath() + SLASH + "input.elecIn"));
             // save the options
-            saveOptions(new File(folder.getPath() + "/" + "options.opt"));
+            saveOptions(new File(folder.getPath() + SLASH
+                                 + "options" + SaverLoader.OPT_FILE_ENDING));
         }
     }
 
@@ -1172,8 +1183,11 @@ public class GUIController {
         savePropertyListFromFile(null, true, false);
     }
 
-    private void savePropertyListFromFile(File listFile, boolean askUser, boolean saveAs) {
+    private void savePropertyListFromFile(File listFile,
+                                          boolean askUser,
+                                          boolean saveAs) {
         if (properties.size() > 0) {
+            final File file;
             if (!saveAs && askUser) {
                 if (propertyListSaverLoader.hasSaveFile()) {
                     savePropertyListFromFile(propertyListSaverLoader.getSaveFile(),
@@ -1181,15 +1195,18 @@ public class GUIController {
                 } else {
                     savePropertyListFromFile(listFile, true, true);
                 }
+                file = listFile;
             } else if (saveAs && askUser) {
-                listFile = propertyListSaverLoader.showFileSaveDialog("");
-                savePropertyListFromFile(listFile, false, false);
+                file = propertyListSaverLoader.showFileSaveDialog("");
+                savePropertyListFromFile(file, false, false);
+            } else {
+                file = listFile;
             }
-            if (listFile != null) {
-                File folder = createFolderWithName(listFile, true);
+            if (file != null) {
+                File folder = createFolderWithName(file, true);
                 propertyListSaverLoader.save(
-                        new File(folder.getParentFile() + "/"
-                                 + listFile.getName()), "");
+                        new File(folder.getParentFile() + Character.toString(SLASH)
+                                 + file.getName()), "");
                 String listFileContent = "";
 
                 int counter = 0;
@@ -1197,14 +1214,18 @@ public class GUIController {
                         .hasNext();) {
                     ParentTreeItem parentItem = (ParentTreeItem) iterator.next();
                     String name = parentItem.getPreAndPostProperties().getName();
-                    File saveFolder = new File(folder + "/" + name + "_" + counter++);
+                    File saveFolder
+                        = new File(folder + Character.toString(SLASH)
+                                   + name + "_" + counter++);
                     // we want to save the parentTreeItem into this
                     saveFolder = createFolderWithName(saveFolder, true);
                     // folder
                     name = saveFolder.getName();
                     listFileContent = listFileContent + name;
                     booleanExpEditor.saveAs(parentItem.getPreAndPostProperties(),
-                            new File(saveFolder + "/" + parentItem.getText() + ".prop"));
+                            new File(saveFolder + Character.toString(SLASH)
+                                     + parentItem.getText()
+                                     + SaverLoader.PROP_DESCR_FILE_ENDING));
                     List<ChildTreeItem> children = parentItem.getSubItems();
                     int subCounter = 0;
                     for (Iterator<ChildTreeItem> childIterator = children.iterator(); childIterator
@@ -1213,7 +1234,9 @@ public class GUIController {
                         String saveString = propertyListGSON
                                 .createSaveString(childItem.getValues());
                         childItemSaverLoader.saveAs(new File(
-                                saveFolder.getAbsolutePath() + "/" + subCounter++ + ".child"),
+                                saveFolder.getAbsolutePath() + SLASH
+                                + subCounter++
+                                + SaverLoader.CHILD_PROP_FILE_ENDING),
                                 saveString);
                     }
                     if (iterator.hasNext()) {
@@ -1303,7 +1326,7 @@ public class GUIController {
         confirmation.setY(mainStage.getY());
         Stage stage = (Stage) confirmation.getDialogPane().getScene().getWindow();
         // Add a custom icon.
-        stage.getIcons().add(new Image(PATH_TO_IMAGES + "other/BEAST.png"));
+        stage.getIcons().add(new Image(PATH_TO_IMAGES + BEAST_LOGO));
         confirmation.setTitle("Confirmation Dialog");
         confirmation.setHeaderText("Do you really want to reset the input?");
         confirmation.setContentText("Doing so will reset all previously given values");
@@ -1342,7 +1365,6 @@ public class GUIController {
             field.setText("");
             partnerField.setText("");
         }
-
         field.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue,
@@ -1350,7 +1372,7 @@ public class GUIController {
                 if (!newValue.matches("\\d*")) {
                     field.setText(newValue.replaceAll("[^\\d]", ""));
                 }
-                if (newValue.equals("")) {
+                if (newValue.isEmpty()) {
                     field.setText("" + 1);
                 }
                 int valueField = Integer.parseInt(field.getText());
@@ -1371,17 +1393,17 @@ public class GUIController {
         int marginCandidates = electionSimulation.getNumCandidates();
         int marginSeats = electionSimulation.getNumSeats();
         Integer numberProcesses = Runtime.getRuntime().availableProcessors();
-        if (!processes.getText().equals("")) {
+        if (!processes.getText().isEmpty()) {
             numberProcesses = Integer.parseInt(processes.getText());
         }
         TimeOut time = new TimeOut(TimeUnit.SECONDS, 0);
-        if (!timeOut.getText().equals("")) {
+        if (!timeOut.getText().isEmpty()) {
             time = new TimeOut(timeUnitChoice.getValue(), Integer.parseInt(timeOut.getText()));
             numberProcesses = Integer.parseInt(processes.getText());
         }
         String argument = advancedParameters.getText();
-        ElectionCheckParameter param =
-                new ElectionCheckParameter(voter, cand, seat, marginVoters,
+        ElectionCheckParameter param
+              = new ElectionCheckParameter(voter, cand, seat, marginVoters,
                                            marginCandidates, marginSeats,
                                            time, numberProcesses, argument);
         return param;
@@ -1510,18 +1532,18 @@ public class GUIController {
     }
 
     private void addInputNumberEnforcer(TextField field, String newValue) {
-        newValue = newValue.replaceAll(" ", "");
-        if (newValue.length() != 0) {
+        final String val = newValue.replaceAll(" ", "");
+        if (val.length() != 0) {
             String sign = "";
-            if (newValue.charAt(0) == '-' && newValue.length() > 1) {
+            if (val.charAt(0) == '-' && val.length() > 1) {
                 sign = "-";
             }
-            if (!newValue.matches("\\d*")) {
+            if (!val.matches("\\d*")) {
                 String newText = "0";
-                if (!newValue.equals("")) {
-                    newText = newValue.replaceAll("[^\\d]", "");
+                if (!val.isEmpty()) {
+                    newText = val.replaceAll("[^\\d]", "");
                 }
-                if (newText.equals("")) {
+                if (newText.isEmpty()) {
                     newText = "0";
                 }
                 field.setText(sign + newText);
@@ -1529,18 +1551,18 @@ public class GUIController {
         } else {
             field.setText("0");
         }
-        String vettedVoters =
-                electionSimulation.setAndVetVoterNumber(inputVoterField.getText());
+        String vettedVoters
+              = electionSimulation.setAndVetVoterNumber(inputVoterField.getText());
         if (vettedVoters != inputVoterField.getText()) {
             inputVoterField.setText(vettedVoters);
         }
-        String vettedCandidates =
-                electionSimulation.setAndVetCandidateNumber(inputCandidateField.getText());
+        String vettedCandidates
+              = electionSimulation.setAndVetCandidateNumber(inputCandidateField.getText());
         if (vettedVoters != inputCandidateField.getText()) {
             inputCandidateField.setText(vettedCandidates);
         }
-        String vettedSeats =
-                electionSimulation.setAndVetSeatNumber(inputSeatField.getText());
+        String vettedSeats
+              = electionSimulation.setAndVetSeatNumber(inputSeatField.getText());
         if (vettedVoters != inputSeatField.getText()) {
             inputSeatField.setText(vettedSeats);
         }
@@ -1611,7 +1633,7 @@ public class GUIController {
         // dialog.setContentText(inputText);
         Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
         // Add a custom icon.
-        stage.getIcons().add(new Image(PATH_TO_IMAGES + "other/BEAST.png"));
+        stage.getIcons().add(new Image(PATH_TO_IMAGES + BEAST_LOGO));
         ButtonType buttonType = new ButtonType("OK", ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(buttonType, ButtonType.CANCEL);
         GridPane grid = new GridPane();
@@ -1623,13 +1645,13 @@ public class GUIController {
         TextField nameField = new TextField();
         grid.add(nameField, 1, 0);
         grid.add(new Label(inTypeDescription), 0, 1);
-        ChoiceBox<InputType> inputType =
-                new ChoiceBox<InputType>(FXCollections.observableList(inTypes));
+        ChoiceBox<InputType> inputType
+              = new ChoiceBox<InputType>(FXCollections.observableList(inTypes));
         inputType.getSelectionModel().selectFirst();
         grid.add(inputType, 1, 1);
         grid.add(new Label(outTypeDescription), 0, 2);
-        ChoiceBox<OutputType> outputType =
-                new ChoiceBox<OutputType>(FXCollections.observableList(outTypes));
+        ChoiceBox<OutputType> outputType
+              = new ChoiceBox<OutputType>(FXCollections.observableList(outTypes));
         outputType.getSelectionModel().selectFirst();
         grid.add(outputType, 1, 2);
         dialog.getDialogPane().setContent(grid);
@@ -1638,8 +1660,8 @@ public class GUIController {
         if (result.isPresent()) {
             String newName = nameField.getText();
             if (isValidFileName(newName)) {
-                Triplet<String, InputType, OutputType> toReturn =
-                        new Triplet<String, InputType, OutputType>(
+                Triplet<String, InputType, OutputType> toReturn
+                      = new Triplet<String, InputType, OutputType>(
                                 newName,
                                 inputType.getValue(),
                                 outputType.getValue()

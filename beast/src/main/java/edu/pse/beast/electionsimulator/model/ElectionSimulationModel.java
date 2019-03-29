@@ -68,8 +68,8 @@ public class ElectionSimulationModel implements NameInterface {
 
     private void addRow() {
         if (currentRows == maxRows) {
-            NEWRowOfValues toAdd =
-                    new NEWRowOfValues(this, container,
+            NEWRowOfValues toAdd
+                  = new NEWRowOfValues(this, container,
                                        this.getAmountCandidates(),
                                        currentRows,
                                        elementWidth, elementHeight);

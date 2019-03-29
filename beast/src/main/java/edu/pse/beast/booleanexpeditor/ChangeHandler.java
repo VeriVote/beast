@@ -55,8 +55,8 @@ public class ChangeHandler {
      */
     public void updatePreValues() {
         preString = prePane.getText() + postPane.getText();
-        preSymbolicVariableList =
-            new LinkedList<SymbolicVariable>(symbolicVariableList.getSymbolicVariables());
+        preSymbolicVariableList
+          = new LinkedList<SymbolicVariable>(symbolicVariableList.getSymbolicVariables());
     }
 
     /**

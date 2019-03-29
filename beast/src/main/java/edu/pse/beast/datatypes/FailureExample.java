@@ -35,20 +35,17 @@ public class FailureExample {
 
     private final int numOfElections;
 
-    private List<SymbolicVarNameAndNumber> symbCandidates =
-            new ArrayList<SymbolicVarNameAndNumber>();
-    private List<SymbolicVarNameAndNumber> symbVoters =
-            new ArrayList<SymbolicVarNameAndNumber>();
-    private List<SymbolicVarNameAndNumber> symbSeats =
-            new ArrayList<SymbolicVarNameAndNumber>();
+    private List<SymbolicVarNameAndNumber> symbCandidates
+          = new ArrayList<SymbolicVarNameAndNumber>();
+    private List<SymbolicVarNameAndNumber> symbVoters
+          = new ArrayList<SymbolicVarNameAndNumber>();
+    private List<SymbolicVarNameAndNumber> symbSeats
+          = new ArrayList<SymbolicVarNameAndNumber>();
+
     private boolean hasFinalMargin;
-
     private int finalMargin;
-
     private List<String> origWinner;
-
     private List<List<String>> newVotes;
-
     private List<List<String>> origVotes;
 
     /**
@@ -183,8 +180,8 @@ public class FailureExample {
         String toOutput = "";
         for (Iterator<SymbolicVarNameAndNumber> iterator = symbCandidates.iterator();
                 iterator.hasNext();) {
-            SymbolicVarNameAndNumber symbolicVarCandidate =
-                    (SymbolicVarNameAndNumber) iterator.next();
+            SymbolicVarNameAndNumber symbolicVarCandidate
+                  = (SymbolicVarNameAndNumber) iterator.next();
             // if multiple variables share the same number
             if (symbolicVarCandidate.getNumber() == number) {
                 if (toOutput != "") {
@@ -204,8 +201,8 @@ public class FailureExample {
         String toOutput = "";
         for (Iterator<SymbolicVarNameAndNumber> iterator = symbSeats.iterator();
                 iterator.hasNext();) {
-            SymbolicVarNameAndNumber symbolicVarSeat =
-                    (SymbolicVarNameAndNumber) iterator.next();
+            SymbolicVarNameAndNumber symbolicVarSeat
+                  = (SymbolicVarNameAndNumber) iterator.next();
             // if multiple variables share the same number
             if (symbolicVarSeat.getNumber() == number) {
                 if (toOutput != "") {
@@ -225,8 +222,8 @@ public class FailureExample {
         String toOutput = "";
         for (Iterator<SymbolicVarNameAndNumber> iterator = symbVoters.iterator();
                 iterator.hasNext();) {
-            SymbolicVarNameAndNumber symbolicVarVoter =
-                    (SymbolicVarNameAndNumber) iterator.next();
+            SymbolicVarNameAndNumber symbolicVarVoter
+                  = (SymbolicVarNameAndNumber) iterator.next();
             // if multiple variables share the same number
             if (symbolicVarVoter.getNumber() == number) {
                 if (toOutput != "") {

@@ -6,7 +6,7 @@ package edu.pse.beast.toolbox;
  *
  */
 public final class ErrorLogger {
-    private ErrorLogger() {}
+    private ErrorLogger() { }
 
     /**
      * logs all the errors to the error stream

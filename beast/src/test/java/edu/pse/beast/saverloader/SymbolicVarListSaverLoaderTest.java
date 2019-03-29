@@ -42,9 +42,8 @@ public class SymbolicVarListSaverLoaderTest {
     @Test
     public void testSaverLoader() {
         String saveString = SymbolicVarListSaverLoader.createSaveString(symbolicVariableList);
-        SymbolicVariableList recreatedList =
-                SymbolicVarListSaverLoader.createFromSaveString(saveString);
-
+        SymbolicVariableList recreatedList
+              = SymbolicVarListSaverLoader.createFromSaveString(saveString);
         assert (recreatedList.getSymbolicVariables().get(0).getId().equals("voter1"));
         assert (recreatedList.getSymbolicVariables().get(0)
                 .getInternalTypeContainer().getInternalType()

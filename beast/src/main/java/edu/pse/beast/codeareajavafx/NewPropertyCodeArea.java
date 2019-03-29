@@ -25,36 +25,36 @@ import javafx.scene.control.IndexRange;
 
 public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuBarInterface {
     private static final String[] OPERATORS = {"\\*", "/", "\\+", "-"};
-    private static final String[] COMPARISON =
-        {"==", "\\!\\=", "\\<\\=", "\\>\\=", "\\<", "\\>"};
-    private static final String[] RELATION =
-        {"&&", "\\|\\|", "==>", "<==>", "<--", "\\+\\+"};
-    private static final String[] MACROS =
-    {
+    private static final String[] COMPARISON
+        = {"==", "\\!\\=", "\\<\\=", "\\>\\=", "\\<", "\\>"};
+    private static final String[] RELATION
+        = {"&&", "\\|\\|", "==>", "<==>", "<--", "\\+\\+"};
+    private static final String[] MACROS
+        = {
         "VOTES", "ELECT", "VOTE_SUM_FOR_CANDIDATE",
         "VOTE_SUM_FOR_UNIQUE_CANDIDATE"
     };
-    private static final String[] QUANTIFIERS =
-    {
+    private static final String[] QUANTIFIERS
+        = {
         "FOR_ALL_VOTERS", "FOR_ALL_CANDIDATES", "FOR_ALL_SEATS",
         "EXISTS_ONE_VOTER", "EXISTS_ONE_CANDIDATE", "EXISTS_ONE_SEAT",
         "PERM", "SPLIT", "INTERSECT", "NOTEMPTY"
     };
-    private static final String OPERATORS_PATTERN =
-            "(" + String.join("|", OPERATORS) + ")";
-    private static final String COMPARISON_PATTERN =
-            "(" + String.join("|", COMPARISON) + ")";
-    private static final String RELATION_PATTERN =
-            "(" + String.join("|", RELATION) + ")";
+    private static final String OPERATORS_PATTERN
+            = "(" + String.join("|", OPERATORS) + ")";
+    private static final String COMPARISON_PATTERN
+            = "(" + String.join("|", COMPARISON) + ")";
+    private static final String RELATION_PATTERN
+            = "(" + String.join("|", RELATION) + ")";
 
-    private static final String MACROS_PATTERN =
-            "\\b("
+    private static final String MACROS_PATTERN
+          = "\\b("
             + String.join(
                 "|",
                 Arrays.stream(MACROS).map(s
                     -> s + "[0-9]+").toArray(String[]::new)) + ")\\b";
-    private static final String QUANTIFIERS_PATTERN =
-            "\\b(" + String.join("|", QUANTIFIERS) + ")\\b";
+    private static final String QUANTIFIERS_PATTERN
+          = "\\b(" + String.join("|", QUANTIFIERS) + ")\\b";
 
     private static final String PAREN_PATTERN = "\\(|\\)";
     private static final String SEMICOLON_PATTERN = "\\;";
@@ -117,8 +117,8 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
         int lastKwEnd = 0;
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
         while (matcher.find()) {
-            String styleClass =
-                matcher.group(OPERATORS_STRING) != null
+            String styleClass
+              = matcher.group(OPERATORS_STRING) != null
                 ? OPERATORS_STRING.toLowerCase()
                     : matcher.group(COMPARISON_STRING) != null
                     ? COMPARISON_STRING.toLowerCase()

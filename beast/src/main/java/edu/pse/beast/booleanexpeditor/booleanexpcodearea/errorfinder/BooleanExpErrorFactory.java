@@ -13,14 +13,14 @@ import edu.pse.beast.types.InternalTypeContainer;
  * @author Holger Klein
  */
 public final class BooleanExpErrorFactory {
-    private static final String[] ERROR_IDS =
-        {
+    private static final String[] ERROR_IDS
+      = {
         "antlr", "var_not_decl", "too_many_vars_passed", "wrong_var_type_passed",
         "incomparable_types", "incomparable_list_sizes", "wrong_var_passed_to_votesum",
         "number_must_be_greater_0"
         };
 
-    private BooleanExpErrorFactory() {}
+    private BooleanExpErrorFactory() { }
 
     private static int getErrorNum(String id) {
         for (int i = 0; i < ERROR_IDS.length; ++i) {
@@ -126,9 +126,9 @@ public final class BooleanExpErrorFactory {
     }
 
     /**
-     * create code error for a wront war to votesum
+     * Create code error for a wrong variable to votesum.
      *
-     * @param ctx        the sum expression contect
+     * @param ctx        the sum expression context
      * @param passedType the passed type
      * @return the code error
      */
@@ -140,22 +140,22 @@ public final class BooleanExpErrorFactory {
     }
 
     /**
-     * create code error for a wront war to votesum
+     * Create code error for a wrong variable to votesum.
      *
-     * @param ctx        the sum expression contect
+     * @param ctx        the sum expression context
      * @param passedType the passed type
      * @return the code error
      */
     static CodeError createWrongVarToVotesumError(VoteSumUniqueExpContext ctx,
-            InternalTypeContainer passedType) {
+                                                  InternalTypeContainer passedType) {
         CodeError err = generateStandardError(ctx, "wrong_var_passed_to_votesum_unique");
         err.setExtraInfo("var_type", passedType.getInternalType().toString());
         return err;
     }
 
     /**
-     * create the error that indicates that a number must be greater than zero for a
-     * votesum
+     * Create the error that indicates that a number must be greater than zero
+     * for a votesum.
      *
      * @param ctx the vote sum expression context
      * @return the code error
@@ -166,7 +166,7 @@ public final class BooleanExpErrorFactory {
     }
 
     /**
-     * creates an error if an "elect" value is smaller than zero
+     * Creates an error if an "elect" value is smaller than zero.
      *
      * @param ctx the election expression context
      * @return the code error
@@ -177,7 +177,7 @@ public final class BooleanExpErrorFactory {
     }
 
     /**
-     * creates an error if an "votes" value is smaller than zero
+     * Creates an error if an "votes" value is smaller than zero.
      *
      * @param ctx the vote expression context
      * @return the code error

@@ -149,18 +149,16 @@ public class Parliament extends CBMCOutputType {
 
     @Override
     public List<String> getCodeToRunMargin(List<String> origResult, List<String> lastResult) {
-        List<CBMCResultWrapperSingleArray> tmpResultOneDim =
-                super.helper.readOneDimVarLong("elect", lastResult);
-        origResult = tmpResultOneDim.get(0).getList();
-        return origResult;
+        List<CBMCResultWrapperSingleArray> tmpResultOneDim
+              = super.helper.readOneDimVarLong("elect", lastResult);
+        return tmpResultOneDim.get(0).getList();
     }
 
     @Override
     public List<String> getNewResult(List<String> lastFailedRun, int index) {
-        List<CBMCResultWrapperSingleArray> tmpResultOneDim =
-                super.helper.readOneDimVarLong(
+        List<CBMCResultWrapperSingleArray> tmpResultOneDim
+              = super.helper.readOneDimVarLong(
                         "" + UnifiedNameContainer.getNewResultName() + "", lastFailedRun);
-
         return tmpResultOneDim.get(index).getList();
     }
 

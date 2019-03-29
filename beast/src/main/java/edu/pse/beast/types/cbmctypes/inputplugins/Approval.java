@@ -17,8 +17,8 @@ import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class Approval extends CBMCInputType {
-    private String[] sizes =
-        {UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate()};
+    private String[] sizes
+        = {UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate()};
 
     @Override
     public String getInputString() {
@@ -117,17 +117,20 @@ public class Approval extends CBMCInputType {
     }
 
     @Override
-    public String vetValue(String newValue, ElectionTypeContainer container, NEWRowOfValues row) {
-        int number;
+    public String vetValue(String newValue,
+                           ElectionTypeContainer container,
+                           NEWRowOfValues row) {
+        final int number;
         try {
             number = Integer.parseInt(newValue);
         } catch (NumberFormatException e) {
             return "0";
         }
         if (number != 0 && number != 1) {
-            newValue = "0";
+            return "0";
+        } else {
+            return newValue;
         }
-        return newValue;
     }
 
     @Override

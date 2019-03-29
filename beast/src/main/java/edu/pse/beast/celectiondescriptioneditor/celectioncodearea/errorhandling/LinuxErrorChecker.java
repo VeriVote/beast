@@ -20,54 +20,24 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
  *
  */
 public class LinuxErrorChecker extends SystemSpecificErrorChecker {
-    // program that is to be used for checking
-    private static final String COMPILER_STRING = "gcc";
-
-    // this flag prohibits that file are creates by the compiler and
-    // only the syntax is checked
-    private static final String FIND_MISSING_RETURN_OPTION = "-Wreturn-type";
-
-    // we want to compile to a specific name, so we can delete the file
-    // then later on
-    private static final String SET_OUTPUT_FILE_NAME = "-o ";
-
-    private static final String ENABLE_USER_INCLUDE = "-I/";
-    private static final String USER_INCLUDE_FOLDER = "/core/user_includes/";
-
-    // we want to compile all available c files, so the user does not need to
-    // specify anything
-    private static final String C_FILE_ENDING = ".c";
-    private static final String OUT_FILE_ENDING = ".out";
-
-    // if gcc finds, that a return is missing, it prints out this error message.
-    // The error then
-    // stands in the format: "FILENANE:LINE:COLUMN warning:control reaches..."
-    private static final String GCC_MISSING_RETURN_FOUND =
-        "warning: control reaches end of non-void function";
-
-    // if gcc finds that a function is missing, it gets displayed like this:
-    private static final String GCC_MISSING_FUNCTION_FOUND =
-        "warning: implicit declaration of function";
-
     @Override
     public Process checkCodeFileForErrors(File toCheck) {
-        String nameOfOutFile = toCheck.getName().replace(C_FILE_ENDING, OUT_FILE_ENDING);
+        String nameOfOutFile
+            = toCheck.getName().replace(FileLoader.C_FILE_ENDING,
+                                        FileLoader.OUT_FILE_ENDING);
         File outFile = new File(toCheck.getParentFile(), nameOfOutFile);
         String compileToThis = SET_OUTPUT_FILE_NAME + outFile.getAbsolutePath();
-        String userIncludeAndPath =
-                ENABLE_USER_INCLUDE + SuperFolderFinder.getSuperFolder()
+        String userIncludeAndPath
+              = ENABLE_USER_INCLUDE + SuperFolderFinder.getSuperFolder()
                 + USER_INCLUDE_FOLDER;
-
         // get all Files from the form "*.c" so we can include them into cbmc,
-        List<String> allFiles =
-            FileLoader.listAllFilesFromFolder(
+        List<String> allFiles
+          = FileLoader.listAllFilesFromFolder(
                 "\"" + SuperFolderFinder.getSuperFolder()
-                + USER_INCLUDE_FOLDER + "\"", C_FILE_ENDING
+                + USER_INCLUDE_FOLDER + "\"", FileLoader.C_FILE_ENDING
             );
-
         Process startedProcess = null;
         List<String> arguments = new ArrayList<String>();
-
         // add the arguments needed for the call
         arguments.add(COMPILER_STRING);
         arguments.add(userIncludeAndPath);
@@ -84,7 +54,6 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
         ProcessBuilder prossBuild = new ProcessBuilder(arguments.toArray(new String[0]));
         Map<String, String> environment = prossBuild.environment();
         environment.put("LC_ALL", "C"); // set the language for the following call to english
-
         try {
             // start the process
             startedProcess = prossBuild.start();

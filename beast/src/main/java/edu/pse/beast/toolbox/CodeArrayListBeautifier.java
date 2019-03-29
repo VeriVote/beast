@@ -8,6 +8,10 @@ import java.util.List;
  * @author Niels Hanselmann
  */
 public class CodeArrayListBeautifier {
+    /**
+     * Tab sign "\t" or replacement, we currently rather use spaces than tabs.
+     */
+    static final String TAB = "    ";
 
     private int numberOfTabs;
     private final ArrayList<String> code;
@@ -31,13 +35,11 @@ public class CodeArrayListBeautifier {
             if (addedString.contains("}")) {
                 Math.max(0, numberOfTabs--);
             }
-
             String tabbed = "";
             for (int i = 0; i < numberOfTabs; i++) {
-                tabbed += "    ";//"\t"; // rather use spaces than tabs
+                tabbed += TAB;
             }
             code.add(tabbed + addedString);
-
             if (addedString.contains("{")) {
                 numberOfTabs++;
             }
@@ -83,7 +85,6 @@ public class CodeArrayListBeautifier {
                 this.add(singleItem);
             });
         }
-
     }
 
     public void addAll(List<String> votingResultCode) {

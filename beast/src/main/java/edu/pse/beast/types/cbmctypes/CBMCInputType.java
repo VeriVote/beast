@@ -29,6 +29,7 @@ public abstract class CBMCInputType extends InputType {
         code.add("");
     }
 
+    @Override
     public String getVoteDescriptionString(List<List<String>> origVotes) {
         String votesString = "";
         int voterIndex = 0;
@@ -38,10 +39,9 @@ public abstract class CBMCInputType extends InputType {
             List<String> list = (List<String>) iterator.next();
             String oneVoter = "";
             try {
-                oneVoter =
-                        GUIController.getController()
-                        .getElectionSimulation().getVoterName(voterIndex);
-            } catch (Exception e) {
+                oneVoter = GUIController.getController()
+                            .getElectionSimulation().getVoterName(voterIndex);
+            } catch (IndexOutOfBoundsException e) {
                 oneVoter = "" + voterIndex;
             }
             oneVoter = oneVoter + ": ";
@@ -55,7 +55,7 @@ public abstract class CBMCInputType extends InputType {
                     oneVoter = oneVoter
                             + GUIController.getController()
                             .getElectionSimulation().getPartyName(partyIndex);
-                } catch (Exception e) {
+                } catch (IndexOutOfBoundsException e) {
                     oneVoter = "" + partyIndex;
                 }
                 oneVoter = oneVoter + ": " + voteAmount + ", ";

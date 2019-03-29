@@ -26,15 +26,8 @@ import edu.pse.beast.toolbox.ThreadedBufferedReader;
  *
  */
 public abstract class SystemSpecificCompilerAndExecutioner {
-
     private static final String PATH_TO_TEMP_FOLDER = "/core/c_tempfiles/";
-
     private static final String DATA_FILE_ENDING = ".votingdata";
-    private static final String C_FILE_ENDING = ".c";
-    private static final String OBJECT_FILE_ENDING = ".obj";
-    private static final String BAT_FILE_ENDING = ".bat";
-    private static final String EXE_FILE_ENDING = ".exe";
-    private static final String OUT_FILE_ENDING = ".out";
 
     /**
      * constructor creates an error checker that compiles the c code and passes it
@@ -63,27 +56,28 @@ public abstract class SystemSpecificCompilerAndExecutioner {
         File dataFile = new File(pathToNewFile + DATA_FILE_ENDING);
         // create two links to files, so in case an object file gets created we
         // can delete it afterwards too
-        File cFile = new File(pathToNewFile + C_FILE_ENDING);
-        File objFile = new File(pathToNewFile + OBJECT_FILE_ENDING);
+        File cFile = new File(pathToNewFile + FileLoader.C_FILE_ENDING);
+        File objFile = new File(pathToNewFile + FileLoader.OBJECT_FILE_ENDING);
         // on windows we have to create a .bat file, so we create a reference to
         // the file
         // that will be created, to delete it afterwards
-        File batFile = new File(pathToNewFile + BAT_FILE_ENDING);
+        File batFile = new File(pathToNewFile + FileLoader.BAT_FILE_ENDING);
         // on windows a .exe file will be created
         // here it will be created, to be delete it afterwards
-        File exeFile = new File(pathToNewFile + EXE_FILE_ENDING);
+        File exeFile = new File(pathToNewFile + FileLoader.EXE_FILE_ENDING);
         // the file that gets created on linux that can then get called later
-        File outFile = new File(pathToNewFile + OUT_FILE_ENDING);
+        File outFile = new File(pathToNewFile + FileLoader.OUT_FILE_ENDING);
         // write the code to the file
         FileSaver.writeStringLinesToFile(code, cFile);
         Process process = compileCFile(cFile);
         if (process != null) {
             CountDownLatch latch = new CountDownLatch(2);
-            ThreadedBufferedReader outReader =
-                new ThreadedBufferedReader(
+            ThreadedBufferedReader outReader
+              = new ThreadedBufferedReader(
                     new BufferedReader(new InputStreamReader(process.getInputStream())),
                     result, latch, false);
-            ThreadedBufferedReader errReader = new ThreadedBufferedReader(
+            ThreadedBufferedReader errReader
+              = new ThreadedBufferedReader(
                     new BufferedReader(new InputStreamReader(process.getErrorStream())),
                     errors, latch, false);
             resultToStoreIn.setLastTmpResult(result);
@@ -103,13 +97,13 @@ public abstract class SystemSpecificCompilerAndExecutioner {
             Process programProcess = runWithData(pathToNewFile, dataFile);
             if (programProcess != null) {
                 latch = new CountDownLatch(2);
-                outReader =
-                    new ThreadedBufferedReader(
+                outReader
+                  = new ThreadedBufferedReader(
                         new BufferedReader(
                             new InputStreamReader(programProcess.getInputStream())),
                         result, latch, false);
-                errReader =
-                    new ThreadedBufferedReader(
+                errReader
+                  = new ThreadedBufferedReader(
                         new BufferedReader(
                             new InputStreamReader(programProcess.getErrorStream())),
                         errors, latch, false);

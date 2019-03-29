@@ -18,8 +18,8 @@ public abstract class ToolbarHandler {
     private static final int BUTTON_WIDTH = 32;
     private static final int BUTTON_HEIGHT = 32;
 
-    private static final String[] STANDARD_ID_ORDER =
-    {
+    private static final String[] STANDARD_ID_ORDER
+        = {
         "new", "load", "save", "save_as",
         "undo", "redo", "cut", "copy", "paste"
     };

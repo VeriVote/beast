@@ -64,12 +64,12 @@ public class FormalPropertySyntaxTreeToAstTranslaterTest {
 
     @Test
     public void testCreateAST() {
-        String exp =
-            "FOR_ALL_VOTERS(v) : "
+        String exp
+          = "FOR_ALL_VOTERS(v) : "
             + "EXISTS_ONE_CANDIDATE(c) : "
             + "VOTES1(v) == c && VOTES1(v) == c;";
-        FormalPropertyDescriptionLexer lexer =
-            new FormalPropertyDescriptionLexer(CharStreams.fromString(exp));
+        FormalPropertyDescriptionLexer lexer
+          = new FormalPropertyDescriptionLexer(CharStreams.fromString(exp));
         CommonTokenStream tokenS = new CommonTokenStream(lexer);
         new FormalPropertyDescriptionParser(tokenS);
         new FormalPropertySyntaxTreeToAstTranslator();

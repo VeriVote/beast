@@ -29,8 +29,8 @@ public class PropertyChecker implements ResultCheckerCommunicator {
         if (elecDescr == null || parentProperties == null || electionCheckParameter == null) {
             return null;
         } else {
-            this.factoryController =
-                    new FactoryController(elecDescr, parentProperties,
+            this.factoryController
+                  = new FactoryController(elecDescr, parentProperties,
                                           electionCheckParameter,
                                           checkerID,
                                           electionCheckParameter.getProcesses());

@@ -31,8 +31,8 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 
     private final SaverLoader saverLoader;
 
-    private final PropertyDescriptionSaverLoader propSaverLoader =
-            new PropertyDescriptionSaverLoader();
+    private final PropertyDescriptionSaverLoader propSaverLoader
+        = new PropertyDescriptionSaverLoader();
 
     private final ObservableList<TreeItem<String>> symbolicVoterVariableList;
     private final ObservableList<TreeItem<String>> symbolicCandidateVariableList;
@@ -52,18 +52,18 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
         this.boundedVarArea = boundedVarArea;
         this.currentPropertyDescription = propDesc;
         this.currentItem = currentItem;
-        this.symbolicVoterVariableList =
-                GUIController.getController().getVoterTreeItems().getChildren();
-        this.symbolicCandidateVariableList =
-                GUIController.getController().getCandidateTreeItems().getChildren();
-        this.symbolicSeatVariableList =
-                GUIController.getController().getSeatTreeItems().getChildren();
+        this.symbolicVoterVariableList
+            = GUIController.getController().getVoterTreeItems().getChildren();
+        this.symbolicCandidateVariableList
+            = GUIController.getController().getCandidateTreeItems().getChildren();
+        this.symbolicSeatVariableList
+            = GUIController.getController().getSeatTreeItems().getChildren();
     }
 
     public boolean containsVarName(String name) {
         boolean contains = false;
-        for (Iterator<SymbolicVariable> iterator =
-                currentPropertyDescription.getSymbolicVariableList()
+        for (Iterator<SymbolicVariable> iterator
+            = currentPropertyDescription.getSymbolicVariableList()
                 .iterator(); iterator.hasNext();) {
             SymbolicVariable variable = (SymbolicVariable) iterator.next();
             contains = contains || (variable.getId().equals(name));
@@ -101,15 +101,15 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
     }
 
     public void removeVariable(String name) {
-        for (Iterator<SymbolicVariable> iterator =
-                currentPropertyDescription.getSymbolicVariableList().iterator();
+        for (Iterator<SymbolicVariable> iterator
+                = currentPropertyDescription.getSymbolicVariableList().iterator();
                 iterator.hasNext();) {
             SymbolicVariable variable = (SymbolicVariable) iterator.next();
             if (variable.getId().equals(name)) {
                 switch (variable.getInternalTypeContainer().getInternalType()) {
                 case VOTER:
-                    for (Iterator<TreeItem<String>> treeItemIterator =
-                        symbolicVoterVariableList.iterator();
+                    for (Iterator<TreeItem<String>> treeItemIterator
+                            = symbolicVoterVariableList.iterator();
                             treeItemIterator.hasNext();) {
                         TreeItem<String> item = (TreeItem<String>) treeItemIterator.next();
                         if (item.getValue().equals(name)) {
@@ -118,8 +118,8 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
                     }
                     break;
                 case CANDIDATE:
-                    for (Iterator<TreeItem<String>> treeItemIterator =
-                        symbolicCandidateVariableList.iterator();
+                    for (Iterator<TreeItem<String>> treeItemIterator
+                            = symbolicCandidateVariableList.iterator();
                             treeItemIterator.hasNext();) {
                         TreeItem<String> item = (TreeItem<String>) treeItemIterator.next();
                         if (item.getValue().equals(name)) {
@@ -128,8 +128,8 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
                     }
                     break;
                 case SEAT:
-                    for (Iterator<TreeItem<String>> treeItemIterator =
-                        symbolicSeatVariableList.iterator();
+                    for (Iterator<TreeItem<String>> treeItemIterator
+                        = symbolicSeatVariableList.iterator();
                             treeItemIterator.hasNext();) {
                         TreeItem<String> item = (TreeItem<String>) treeItemIterator.next();
                         if (item.getValue().equals(name)) {
@@ -186,8 +186,8 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
         this.currentItem = propertyItem;
         this.removeAllVariables();
         updatePropertyTextAreas(currentPropertyDescription);
-        for (Iterator<SymbolicVariable> iterator =
-                currentPropertyDescription.getSymbolicVariableList().iterator();
+        for (Iterator<SymbolicVariable> iterator
+                = currentPropertyDescription.getSymbolicVariableList().iterator();
                 iterator.hasNext();) {
             SymbolicVariable variable = (SymbolicVariable) iterator.next();
             this.addSymbVar(variable.getInternalTypeContainer(), variable.getId(), true);
@@ -241,22 +241,22 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 
     private SymbolicVariableList getAllSymbolicVariables() {
         SymbolicVariableList toReturn = new SymbolicVariableList();
-        for (Iterator<TreeItem<String>> iterator =
-                symbolicVoterVariableList.iterator(); iterator.hasNext();) {
+        for (Iterator<TreeItem<String>> iterator
+                = symbolicVoterVariableList.iterator(); iterator.hasNext();) {
             TreeItem<String> voter = (TreeItem<String>) iterator.next();
             toReturn.addSymbolicVariable(voter.getValue(),
                                          new InternalTypeContainer(InternalTypeRep.VOTER));
         }
 
-        for (Iterator<TreeItem<String>> iterator =
-                symbolicCandidateVariableList.iterator();
+        for (Iterator<TreeItem<String>> iterator
+                = symbolicCandidateVariableList.iterator();
                 iterator.hasNext();) {
             TreeItem<String> candidate = (TreeItem<String>) iterator.next();
             toReturn.addSymbolicVariable(candidate.getValue(),
                                          new InternalTypeContainer(InternalTypeRep.CANDIDATE));
         }
-        for (Iterator<TreeItem<String>> iterator =
-                symbolicSeatVariableList.iterator();
+        for (Iterator<TreeItem<String>> iterator
+                = symbolicSeatVariableList.iterator();
                 iterator.hasNext();) {
             TreeItem<String> seat = (TreeItem<String>) iterator.next();
             toReturn.addSymbolicVariable(seat.getValue(),
@@ -357,20 +357,20 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 
     public List<String> getSymbolicVariableNames() {
         List<String> toReturn = new ArrayList<String>();
-        for (Iterator<TreeItem<String>> iterator =
-                symbolicVoterVariableList.iterator();
+        for (Iterator<TreeItem<String>> iterator
+                = symbolicVoterVariableList.iterator();
                 iterator.hasNext();) {
             TreeItem<String> item = (TreeItem<String>) iterator.next();
             toReturn.add(item.getValue());
         }
-        for (Iterator<TreeItem<String>> iterator =
-                symbolicVoterVariableList.iterator();
+        for (Iterator<TreeItem<String>> iterator
+                = symbolicVoterVariableList.iterator();
                 iterator.hasNext();) {
             TreeItem<String> item = (TreeItem<String>) iterator.next();
             toReturn.add(item.getValue());
         }
-        for (Iterator<TreeItem<String>> iterator =
-                symbolicVoterVariableList.iterator();
+        for (Iterator<TreeItem<String>> iterator
+                = symbolicVoterVariableList.iterator();
                 iterator.hasNext();) {
             TreeItem<String> item = (TreeItem<String>) iterator.next();
             toReturn.add(item.getValue());

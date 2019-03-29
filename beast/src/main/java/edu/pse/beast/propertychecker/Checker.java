@@ -68,21 +68,22 @@ public abstract class Checker implements Runnable {
         process = createProcess(toCheck, voters, candidates, seats, advanced);
         if (process != null) {
             CountDownLatch latch = new CountDownLatch(2);
-            ThreadedBufferedReader outReader =
-                    new ThreadedBufferedReader(
+            ThreadedBufferedReader outReader
+                  = new ThreadedBufferedReader(
                             new BufferedReader(
                                     new InputStreamReader(process.getInputStream())
                             ),
                             output,
                             latch,
                             true);
-            ThreadedBufferedReader errReader =
-                    new ThreadedBufferedReader(
+            ThreadedBufferedReader errReader
+                  = new ThreadedBufferedReader(
                             new BufferedReader(
                                     new InputStreamReader(process.getErrorStream())
                             ),
                             errors,
-                            latch,false);
+                            latch,
+                            false);
             result.setLastTmpResult(output);
             result.setLastTmpError(errors);
             // result

@@ -52,14 +52,14 @@ public class LinuxProcess extends CBMCProcess {
     public Process createProcess(File toCheck, int voters, int candidates,
                                  int seats, String advanced) {
         List<String> arguments = new ArrayList<String>();
-        String cbmc =
-                "\"" + new File(SuperFolderFinder.getSuperFolder()
+        String cbmc
+              = "\"" + new File(SuperFolderFinder.getSuperFolder()
                                 + RELATIVE_PATH_TO_CBMC_64)
                         .getPath() + "\"";
 
         // enable the usage of includes in cbmc
-        String userIncludeAndPath =
-                "\"" + ENABLE_USER_INCLUDE + SuperFolderFinder.getSuperFolder()
+        String userIncludeAndPath
+              = "\"" + ENABLE_USER_INCLUDE + SuperFolderFinder.getSuperFolder()
                 + USER_INCLUDE_FOLDER + "\"";
         // get all Files from the form "*.c" so we can include them into cbmc,
         List<String> allFiles = FileLoader.listAllFilesFromFolder(

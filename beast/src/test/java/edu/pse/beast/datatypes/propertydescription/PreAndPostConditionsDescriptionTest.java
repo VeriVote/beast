@@ -37,8 +37,8 @@ public class PreAndPostConditionsDescriptionTest {
         System.out.println("getSymbolicVariableList");
         SymbolicVariableList symbVarList = new SymbolicVariableList();
         symbVarList.addSymbolicVariable("test", new InternalTypeContainer(InternalTypeRep.INTEGER));
-        PreAndPostConditionsDescription instance =
-                new PreAndPostConditionsDescription("name", null,
+        PreAndPostConditionsDescription instance
+              = new PreAndPostConditionsDescription("name", null,
                                                     null, null,
                                                     symbVarList);
         List<SymbolicVariable> result = instance.getSymbolicVariableList();
@@ -52,11 +52,10 @@ public class PreAndPostConditionsDescriptionTest {
     public void testGetSymVarList() {
         System.out.println("getSymVarList");
         SymbolicVariableList symbVarList = new SymbolicVariableList();
-        symbVarList.addSymbolicVariable("test", new InternalTypeContainer(InternalTypeRep.INTEGER));
-        PreAndPostConditionsDescription instance =
-                new PreAndPostConditionsDescription("name", null,
-                                                    null, null,
-                                                    symbVarList);
+        symbVarList.addSymbolicVariable("test",
+                                        new InternalTypeContainer(InternalTypeRep.INTEGER));
+        PreAndPostConditionsDescription instance
+              = new PreAndPostConditionsDescription("name", null, null, null, symbVarList);
         SymbolicVariableList result = instance.getSymVarList();
         assertEquals(symbVarList.getSymbolicVariables().get(0),
                      result.getSymbolicVariables().get(0));
@@ -88,8 +87,8 @@ public class PreAndPostConditionsDescriptionTest {
         System.out.println("getPostConditionsDescription");
         FormalPropertiesDescription post = new FormalPropertiesDescription("postTest");
         FormalPropertiesDescription pre = new FormalPropertiesDescription("preTest");
-        PreAndPostConditionsDescription instance =
-                new PreAndPostConditionsDescription("test", pre, post,
+        PreAndPostConditionsDescription instance
+              = new PreAndPostConditionsDescription("test", pre, post,
                                                     null, null);
         FormalPropertiesDescription result = instance.getPostConditionsDescription();
         assertEquals(post, result);
@@ -104,8 +103,8 @@ public class PreAndPostConditionsDescriptionTest {
         System.out.println("getPreConditionsDescription");
         FormalPropertiesDescription post = new FormalPropertiesDescription("postTest");
         FormalPropertiesDescription pre = new FormalPropertiesDescription("preTest");
-        PreAndPostConditionsDescription instance =
-                new PreAndPostConditionsDescription("test", pre, post,
+        PreAndPostConditionsDescription instance
+              = new PreAndPostConditionsDescription("test", pre, post,
                                                     null, null);
         FormalPropertiesDescription result = instance.getPreConditionsDescription();
         assertEquals(pre, result);

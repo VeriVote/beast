@@ -14,8 +14,8 @@ import org.fxmisc.richtext.model.StyleSpansBuilder;
 import javafx.scene.Node;
 
 public class RichTextFXCodeArea extends CodeArea {
-    private static final String[] KEYWORDS =
-    {
+    private static final String[] KEYWORDS
+        = {
         "abstract", "assert", "boolean", "break", "byte", "case",
         "catch", "char", "class", "const", "continue", "default",
         "do", "double", "else", "enum", "extends", "final",
@@ -55,8 +55,8 @@ public class RichTextFXCodeArea extends CodeArea {
     private static final String RESOURCE = "codeAreaJAVAFXStyleSheet.css";
 
     public RichTextFXCodeArea() {
-        String sampleCode =
-            String.join("\n",
+        String sampleCode
+          = String.join("\n",
                         new String[]
                         {
                             "package com.example;",
@@ -100,8 +100,8 @@ public class RichTextFXCodeArea extends CodeArea {
         int lastKwEnd = 0;
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
         while (matcher.find()) {
-            String styleClass =
-                matcher.group(KEYWORD_STRING) != null
+            String styleClass
+              = matcher.group(KEYWORD_STRING) != null
                 ? KEYWORD_STRING.toLowerCase()
                     : matcher.group(PAREN_STRING) != null
                     ? PAREN_STRING.toLowerCase()

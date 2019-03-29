@@ -17,8 +17,11 @@ import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class WeightedApproval extends CBMCInputType {
-    private String[] sizes =
-        {UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate()};
+    private String[] sizes
+      = {
+              UnifiedNameContainer.getVoter(),
+              UnifiedNameContainer.getCandidate()
+        };
 
     @Override
     public String getInputString() {
@@ -128,18 +131,17 @@ public class WeightedApproval extends CBMCInputType {
     public String vetValue(String newValue,
                            ElectionTypeContainer container,
                            NEWRowOfValues rowOfValues) {
-        int number;
-
+        final int number;
         try {
             number = Integer.parseInt(newValue);
         } catch (NumberFormatException e) {
             return "0";
         }
-
         if (number < 0 || number > 100) {
-            newValue = "0";
+            return "0";
+        } else {
+            return newValue;
         }
-        return newValue;
     }
 
     @Override
@@ -156,20 +158,16 @@ public class WeightedApproval extends CBMCInputType {
     public String[] getVotePoints(String[][] votes, int amountCandidates, int amountVoters) {
         Long[] result = new Long[amountCandidates];
         Arrays.fill(result, 0l);
-
         for (int i = 0; i < amountVoters; i++) {
             String[] vote = votes[i];
             for (int j = 0; j < amountCandidates; j++) {
                 result[j] += Long.parseLong(vote[j]);
             }
         }
-
         String[] toReturn = new String[amountCandidates];
-
         for (int i = 0; i < result.length; i++) {
             toReturn[i] = "" + result[i];
         }
-
         return toReturn;
     }
 
@@ -222,11 +220,8 @@ public class WeightedApproval extends CBMCInputType {
 
     @Override
     public List<String> getVotingResultCode(String[][] votingData) {
-
         List<String> toReturn = new ArrayList<String>();
-
         toReturn.add("int ORIG_VOTES[" + votingData.length + "][" + votingData[0].length + "] = {");
-
         for (int i = 0; i < votingData.length; i++) {
             String tmp = "";
             for (int j = 0; j < votingData[i].length; j++) {
@@ -236,7 +231,6 @@ public class WeightedApproval extends CBMCInputType {
                     tmp = tmp + votingData[i][j];
                 }
             }
-
             tmp = "{" + tmp + "}";
             if (i < votingData.length - 1) {
                 toReturn.add(tmp + ",");

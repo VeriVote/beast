@@ -24,6 +24,8 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
 public abstract class ChildTreeItem extends CustomTreeItem {
+    protected ArrayList<ResultTreeItem> results
+          = new ArrayList<ResultTreeItem>();
 
     private Label propName;
     private CheckBox checkBox = new CheckBox();
@@ -31,13 +33,11 @@ public abstract class ChildTreeItem extends CustomTreeItem {
     // private ImageView statusIcon = new ImageView();
     private boolean disabled = false;
 
-    protected ArrayList<ResultTreeItem> results =
-            new ArrayList<ResultTreeItem>();
+    private final List<TreeItem<CustomTreeItem>> resultTreeItems
+          = new ArrayList<TreeItem<CustomTreeItem>>();
 
-    private final List<TreeItem<CustomTreeItem>> resultTreeItems =
-            new ArrayList<TreeItem<CustomTreeItem>>();
-
-    ChildTreeItem(ChildTreeItemValues values, ParentTreeItem parent,
+    ChildTreeItem(ChildTreeItemValues values,
+                  ParentTreeItem parent,
                   TreeItem<CustomTreeItem> treeItemReference) {
         this.parent = parent;
         this.checkBox.setSelected(values.checkBoxStatus);
@@ -45,14 +45,16 @@ public abstract class ChildTreeItem extends CustomTreeItem {
         this.disabled = values.disabled;
         this.setTreeItemReference(treeItemReference);
         treeItemReference.setValue(this);
-        for (Iterator<Result> iterator = values.results.iterator(); iterator.hasNext();) {
+        for (Iterator<Result> iterator = values.results.iterator();
+                iterator.hasNext();) {
             Result result = (Result) iterator.next();
             addResult(result);
         }
         init();
     }
 
-    ChildTreeItem(String name, ParentTreeItem parent,
+    ChildTreeItem(String name,
+                  ParentTreeItem parent,
                   TreeItem<CustomTreeItem> treeItemReference) {
         this.parent = parent;
         propName = new Label(name);
@@ -109,7 +111,8 @@ public abstract class ChildTreeItem extends CustomTreeItem {
     public void addResult(Result result) {
         ResultTreeItem resultItem = new ResultTreeItem(result, this);
         results.add(resultItem);
-        TreeItem<CustomTreeItem> reference = new TreeItem<CustomTreeItem>(resultItem);
+        TreeItem<CustomTreeItem> reference
+            = new TreeItem<CustomTreeItem>(resultItem);
         this.getTreeItemReference().getChildren().add(reference);
         // this.getChildren().add(resultItem);
         addChildrenToStage();

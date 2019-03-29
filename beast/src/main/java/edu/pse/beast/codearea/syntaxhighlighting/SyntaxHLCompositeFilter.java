@@ -22,8 +22,8 @@ public class SyntaxHLCompositeFilter extends DocumentFilter {
     private JTextPane textPane;
     private ArrayList<RegexAndColor> regexAndColorList;
     private StyleContext styleContext = StyleContext.getDefaultStyleContext();
-    private AttributeSet blackAttributeSet =
-        styleContext.addAttribute(styleContext.getEmptySet(),
+    private AttributeSet blackAttributeSet
+      = styleContext.addAttribute(styleContext.getEmptySet(),
                                   StyleConstants.Foreground,
                                   Color.BLACK);
 
@@ -87,8 +87,8 @@ public class SyntaxHLCompositeFilter extends DocumentFilter {
             // Look for tokens and highlight them
             Matcher matcher = null;
             try {
-                matcher =
-                    buildPattern(iter.getRegEx()).matcher(
+                matcher
+                  = buildPattern(iter.getRegEx()).matcher(
                         textPane.getStyledDocument()
                         .getText(0,
                                  textPane.getStyledDocument().getLength()));

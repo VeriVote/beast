@@ -14,7 +14,7 @@ import edu.pse.beast.codearea.actionlist.Actionlist;
 /**
  * This class saves the text of a styled document before a removed event is
  * triggered. This is needed because the remove event does not carry the
- * information of which text was removed. This info is needed eg by the
+ * information of which text was removed. This info is needed, e.g., by the
  * text changed action adder. It listens to keystrokes such as backspace which
  * indicate that text is about to be removed from the pane. It also listens to
  * the action list so it can save the text when an action is about to be undone /
@@ -55,7 +55,7 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
      * textRemovedEvent
      *
      * @param offset the offset of the first character of the removed string
-     * @param length the lengt of the removed string
+     * @param length the length of the removed string
      * @return the removed string
      */
     public String getRemoveString(int offset, int length) {
@@ -82,8 +82,8 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
                 || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE
                 || (ke.isShiftDown() && ke.getKeyChar() == KeyEvent.VK_TAB)) {
             try {
-                prevText =
-                    pane.getStyledDocument()
+                prevText
+                  = pane.getStyledDocument()
                     .getText(0, pane.getStyledDocument().getLength());
             } catch (BadLocationException ex) {
                 Logger.getLogger(SaveTextBeforeRemove.class.getName()).log(Level.SEVERE, null, ex);

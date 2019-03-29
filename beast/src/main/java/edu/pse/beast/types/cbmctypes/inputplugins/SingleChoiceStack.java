@@ -112,15 +112,13 @@ public class SingleChoiceStack extends CBMCInputType {
     @Override
     public CBMCResultWrapperMultiArray extractVotesWrappedMulti(List<String> result,
                                                                 int numberCandidates) {
-        List<CBMCResultWrapperSingleArray> singleVotesList =
-                super.helper.readOneDimVarLong("votes", result);
-
+        List<CBMCResultWrapperSingleArray> singleVotesList
+              = super.helper.readOneDimVarLong("votes", result);
         List<CBMCResultWrapperMultiArray> toReturn = new ArrayList<CBMCResultWrapperMultiArray>();
-
         for (Iterator<CBMCResultWrapperSingleArray> iterator = singleVotesList.iterator();
                 iterator.hasNext();) {
-            CBMCResultWrapperSingleArray cbmcResultWrapperSingleArray =
-                    (CBMCResultWrapperSingleArray) iterator.next();
+            CBMCResultWrapperSingleArray cbmcResultWrapperSingleArray
+                  = (CBMCResultWrapperSingleArray) iterator.next();
             toReturn.add(cbmcResultWrapperSingleArray.wrapInTwoDim(
                     1,
                     "" + UnifiedNameContainer.getNewVotesName() + "",
@@ -128,25 +126,24 @@ public class SingleChoiceStack extends CBMCInputType {
                     )
             );
         }
-
         return toReturn.get(0);
     }
 
     @Override
-    public String vetValue(String newValue, ElectionTypeContainer container, NEWRowOfValues row) {
-
-        int number;
-
+    public String vetValue(String newValue,
+                           ElectionTypeContainer container,
+                           NEWRowOfValues row) {
+        final int number;
         try {
             number = Integer.parseInt(newValue);
         } catch (NumberFormatException e) {
             return "0";
         }
-
         if (number < 0) {
-            newValue = "0";
+            return "0";
+        } else {
+            return newValue;
         }
-        return newValue;
     }
 
     @Override
@@ -168,15 +165,12 @@ public class SingleChoiceStack extends CBMCInputType {
     public String[] getVotePoints(String[] votes, int amountCandidates, int amountVoters) {
         Long[] result = new Long[amountCandidates];
         Arrays.fill(result, 0L);
-
         for (int i = 0; i < amountVoters; i++) {
             int vote = Integer.parseInt(votes[i]);
             result[vote]++;
 
         }
-
         String[] toReturn = new String[amountCandidates];
-
         for (int i = 0; i < result.length; i++) {
             toReturn[i] = "" + result[i];
         }
@@ -186,21 +180,15 @@ public class SingleChoiceStack extends CBMCInputType {
     @Override
     public List<String> getVotingResultCode(String[][] votingData) {
         List<String> toReturn = new ArrayList<String>();
-
         toReturn.add("int ORIG_VOTES[" + votingData[0].length + "] = {");
-
         // we only have the candidates, and only one "pseudo" voter,
-
         String tmp = "" + votingData[0][0];
-
         for (int i = 1; i < votingData[0].length; i++) {
             tmp = tmp + "," + votingData[0][i];
         }
-
         toReturn.add(tmp);
-
-        toReturn.add("};"); // close the array declaration
-
+        // close the array declaration
+        toReturn.add("};");
         return toReturn;
     }
 
@@ -210,7 +198,8 @@ public class SingleChoiceStack extends CBMCInputType {
     }
 
     @Override
-    public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, int voteNumber) {
+    public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code,
+                                            int voteNumber) {
     }
 
     @Override
@@ -260,13 +249,11 @@ public class SingleChoiceStack extends CBMCInputType {
     @Override
     public int getNumVotingPoints(String[][] votingData) {
         int sum = 0;
-
         for (int i = 0; i < votingData.length; i++) {
             for (int j = 0; j < votingData[0].length; j++) {
                 sum = sum + Integer.parseInt(votingData[i][j]);
             }
         }
-
         return sum;
     }
 

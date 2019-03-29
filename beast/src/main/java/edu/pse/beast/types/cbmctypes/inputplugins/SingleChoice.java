@@ -113,15 +113,13 @@ public class SingleChoice extends CBMCInputType {
     @Override
     public CBMCResultWrapperMultiArray extractVotesWrappedMulti(List<String> result,
                                                                 int numberCandidates) {
-        List<CBMCResultWrapperSingleArray> singleVotesList =
-                super.helper.readOneDimVarLong("votes", result);
-
+        List<CBMCResultWrapperSingleArray> singleVotesList
+              = super.helper.readOneDimVarLong("votes", result);
         List<CBMCResultWrapperMultiArray> toReturn = new ArrayList<CBMCResultWrapperMultiArray>();
-
         for (Iterator<CBMCResultWrapperSingleArray> iterator = singleVotesList.iterator();
                 iterator.hasNext();) {
-            CBMCResultWrapperSingleArray cbmcResultWrapperSingleArray =
-                    (CBMCResultWrapperSingleArray) iterator.next();
+            CBMCResultWrapperSingleArray cbmcResultWrapperSingleArray
+                  = (CBMCResultWrapperSingleArray) iterator.next();
             toReturn.add(
                     cbmcResultWrapperSingleArray.wrapInTwoDim(
                             1,
@@ -130,30 +128,29 @@ public class SingleChoice extends CBMCInputType {
                             )
             );
         }
-
         return toReturn.get(0);
     }
 
     @Override
-    public String vetValue(String newValue, ElectionTypeContainer container, NEWRowOfValues row) {
-
-        int number;
-
+    public String vetValue(String newValue,
+                           ElectionTypeContainer container,
+                           NEWRowOfValues row) {
+        final int number;
         try {
             number = Integer.parseInt(newValue);
         } catch (NumberFormatException e) {
             return "0";
         }
-
+        final String result;
         if (number == 1) {
             for (int i = 0; i < row.getValues().size(); i++) {
                 row.getValues().set(i, "0");
             }
-            newValue = "1";
+            result = "1";
         } else {
-            newValue = "0";
+            result = "0";
         }
-        return newValue;
+        return result;
     }
 
     @Override

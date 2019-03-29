@@ -20,8 +20,8 @@ public class MinMaxSpinValueHandlerTest {
     @Test
     public void testGetValues() {
         System.out.println("getValues");
-        MinMaxSpinValueHandler instance =
-                new MinMaxSpinValueHandler(new JSpinner(), new JSpinner());
+        MinMaxSpinValueHandler instance
+              = new MinMaxSpinValueHandler(new JSpinner(), new JSpinner());
         instance.setMinAndMax(2, 15);
         ArrayList<Integer> expResult = new ArrayList<>();
         for (int i = 2; i <= 15; i++) {
@@ -41,8 +41,8 @@ public class MinMaxSpinValueHandlerTest {
         Integer max = 3;
         Integer badMin = 0;
         Integer badMax = 10001;
-        MinMaxSpinValueHandler instance =
-                new MinMaxSpinValueHandler(new JSpinner(), new JSpinner());
+        MinMaxSpinValueHandler instance
+              = new MinMaxSpinValueHandler(new JSpinner(), new JSpinner());
         instance.setMinAndMax(min, max);
         instance.setMinAndMax(badMin, max);
         instance.setMinAndMax(min, badMax);

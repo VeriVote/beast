@@ -11,8 +11,8 @@ import java.util.HashMap;
 public class ImageResourceProvider {
     private static final String PNG_FILE_ENDING = ".png";
 
-    private static final String[] IDS =
-    {
+    private static final String[] IDS
+        = {
         "new", "load", "save", "save_as",
         "undo", "redo", "cut", "copy", "paste",
         "start", "stop",
@@ -30,8 +30,8 @@ public class ImageResourceProvider {
         this.folder = folder;
         this.ids = ids;
         for (String s : this.ids) {
-            File toRead =
-                    new File(
+            File toRead
+                  = new File(
                             SuperFolderFinder.getSuperFolder()
                             + this.folder + s + PNG_FILE_ENDING
                             );

@@ -71,8 +71,8 @@ public class SquigglePainter extends DefaultHighlighter.DefaultHighlightPainter 
             // Should only render part of View.
             try {
                 // --- determine locations ---
-                Shape shape =
-                    view.modelToView(offs0, Position.Bias.Forward,
+                Shape shape
+                  = view.modelToView(offs0, Position.Bias.Forward,
                                      offs1, Position.Bias.Backward,
                                      bounds);
                 Rectangle r = (shape instanceof Rectangle) ? (Rectangle) shape : shape.getBounds();

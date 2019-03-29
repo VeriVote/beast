@@ -8,13 +8,18 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
 
 /**
  * This class uses an external compiler (either gcc on linux or cl on windows)
- * to find errors in the c code
+ * to find errors in the c code.
  *
  * @author Holger Klein
  */
 public final class CVariableErrorFinder {
-    private CVariableErrorFinder() {}
+    private CVariableErrorFinder() { }
 
+    /**
+     * Find errors in the given c code.
+     * @param code the c code as list of code lines
+     * @return a list of code errors
+     */
     public static List<CodeError> findErrors(List<String> code) {
         ArrayList<String> seperated = new ArrayList<>();
         seperated.add("#ifndef " + UnifiedNameContainer.getVoter());
@@ -69,8 +74,8 @@ public final class CVariableErrorFinder {
         int lineOffset = seperated.size() + 1;
 
         seperated.addAll(code);
-        ArrayList<CodeError> found =
-            new ArrayList<>(
+        ArrayList<CodeError> found
+          = new ArrayList<>(
                 DeepErrorChecker.checkCodeForErrors(
                     seperated,
                     lineOffset

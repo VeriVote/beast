@@ -3,19 +3,19 @@ package edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling
 import edu.pse.beast.codearea.errorhandling.CodeError;
 
 /**
- * This class is used by the Cerrorfinder. It generates code errors from the given
- * information
+ * This class is used by the C error finder. It generates code errors from the given
+ * information.
  *
  * @author Holger Klein
  */
 public final class CCodeErrorFactory {
-    private static final String[] IDS =
-    {
-        "compilererror",
-        "antlr"
-    };
+    private static final String[] IDS
+    = {
+          "compilererror",
+          "antlr"
+      };
 
-    private CCodeErrorFactory() {}
+    private CCodeErrorFactory() { }
 
     /**
      * wraps the error from the compiler into a CodeError Object. If information for

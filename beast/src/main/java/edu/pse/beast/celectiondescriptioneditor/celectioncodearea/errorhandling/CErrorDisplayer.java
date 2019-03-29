@@ -67,7 +67,7 @@ public class CErrorDisplayer extends ErrorDisplayer {
 
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
-        this.currentStringResLoader =
-                stringResIF.getCElectionEditorStringResProvider().getCErrorStringRes();
+        this.currentStringResLoader
+              = stringResIF.getCElectionEditorStringResProvider().getCErrorStringRes();
     }
 }

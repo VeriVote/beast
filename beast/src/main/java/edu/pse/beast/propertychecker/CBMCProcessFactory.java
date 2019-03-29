@@ -338,9 +338,8 @@ public class CBMCProcessFactory extends CheckerFactory {
         CBMCCodeGenerator generator = new CBMCCodeGenerator(electionDesc, postAndPrepPropDesc);
         ArrayList<String> code = generator.getCode();
         String absolutePath = SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER;
-        File file =
-            new File(new File(absolutePath),
-                     FileLoader.getNewUniqueName(absolutePath) + ".c");
+        File file = new File(new File(absolutePath),
+                             FileLoader.getNewUniqueName(absolutePath) + ".c");
         if (file.getParentFile() == null) {
             ErrorLogger.log("Cannot find a parent to your file!");
         } else if (!file.getParentFile().exists()) {
@@ -370,14 +369,13 @@ public class CBMCProcessFactory extends CheckerFactory {
                                      String[][] inputData) {
         // create a code generator, that creates a code file for this call only
         // one time in this factory factory;
-        CBMCCodeGenerator generator =
-                new CBMCCodeGenerator(electionDesc, postAndPrepPropDesc, margin,
+        CBMCCodeGenerator generator
+              = new CBMCCodeGenerator(electionDesc, postAndPrepPropDesc, margin,
                                       origResult, inputData);
         ArrayList<String> code = generator.getCode();
         String absolutePath = SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER;
-        File file =
-            new File(new File(absolutePath),
-                     FileLoader.getNewUniqueName(absolutePath) + ".c");
+        File file = new File(new File(absolutePath),
+                             FileLoader.getNewUniqueName(absolutePath) + ".c");
         if (file.getParentFile() == null) {
             ErrorLogger.log("Cannot find a parent to your file!");
         } else if (!file.getParentFile().exists()) {
@@ -402,13 +400,12 @@ public class CBMCProcessFactory extends CheckerFactory {
             PreAndPostConditionsDescription postAndPrepPropDesc, String[][] inputData) {
         // create a code generator, that creates a code file for this call only
         // one time in this factory factory;
-        CBMCCodeGenerator generator =
-                new CBMCCodeGenerator(electionDesc, postAndPrepPropDesc, inputData);
+        CBMCCodeGenerator generator
+              = new CBMCCodeGenerator(electionDesc, postAndPrepPropDesc, inputData);
         ArrayList<String> code = generator.getCode();
         String absolutePath = SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER;
-        File file =
-            new File(new File(absolutePath),
-                     FileLoader.getNewUniqueName(absolutePath) + ".c");
+        File file = new File(new File(absolutePath),
+                             FileLoader.getNewUniqueName(absolutePath) + ".c");
         if (file.getParentFile() == null) {
             ErrorLogger.log("Cannot find a parent to your file!");
         } else if (!file.getParentFile().exists()) {
@@ -593,13 +590,13 @@ public class CBMCProcessFactory extends CheckerFactory {
         Checker startedChecker = null;
         switch (os) {
         case Linux:
-            startedChecker =
-                new LinuxProcess(voters, candidates, seats, userOptions,
+            startedChecker
+              = new LinuxProcess(voters, candidates, seats, userOptions,
                                  toCheck, parent, result);
             break;
         case Windows:
-            startedChecker =
-                new WindowsProcess(voters, candidates, seats, userOptions,
+            startedChecker
+              = new WindowsProcess(voters, candidates, seats, userOptions,
                                    toCheck, parent, result);
             break;
         case Mac:

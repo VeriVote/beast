@@ -70,14 +70,10 @@ public class FileLoaderTest {
     @Test
     public void testGetNewUniqueName() {
         System.out.println("getNewUniqueName");
-
         String pathToDir = "/src/test/testfiles/";
-
         ArrayList<String> usedNames = new ArrayList<>();
-
         File folder = new File(pathToDir);
         File[] listOfFiles = folder.listFiles();
-
         if (listOfFiles != null) {
             for (File file : listOfFiles) {
                 if (file.isFile()) {
@@ -90,7 +86,5 @@ public class FileLoaderTest {
         usedNames.forEach((filename) -> {
             assert (!(filename.equals(result)));
         });
-
     }
-
 }

@@ -14,6 +14,10 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
  * @author Nikolai Schnell
  */
 public class ErrorWindow {
+    private static final String ERROR = "error";
+    private static final String LINE = "line";
+    private static final String PRECONDITIONS = "preConditions";
+    private static final String POSTCONDITIONS = "postConditions";
 
     private final JTextPane textPane;
     private String errorString;
@@ -73,17 +77,17 @@ public class ErrorWindow {
      * @param stringLoaderInterface the new stringLoaderInterface
      */
     public void updateStringRes(StringLoaderInterface stringLoaderInterface) {
-        errorString =
-                stringLoaderInterface.getBooleanExpEditorStringResProvider()
-                .getBooleanExpErrorStringRes().getStringFromID("error");
-        lineString =
-                stringLoaderInterface.getBooleanExpEditorStringResProvider()
-                .getBooleanExpErrorStringRes().getStringFromID("line");
-        preConditionsString =
-                stringLoaderInterface.getBooleanExpEditorStringResProvider()
-                .getBooleanExpErrorStringRes().getStringFromID("preConditions");
-        postConditionsString =
-                stringLoaderInterface.getBooleanExpEditorStringResProvider()
-                .getBooleanExpErrorStringRes().getStringFromID("postConditions");
+        errorString
+              = stringLoaderInterface.getBooleanExpEditorStringResProvider()
+                .getBooleanExpErrorStringRes().getStringFromID(ERROR);
+        lineString
+              = stringLoaderInterface.getBooleanExpEditorStringResProvider()
+                .getBooleanExpErrorStringRes().getStringFromID(LINE);
+        preConditionsString
+              = stringLoaderInterface.getBooleanExpEditorStringResProvider()
+                .getBooleanExpErrorStringRes().getStringFromID(PRECONDITIONS);
+        postConditionsString
+              = stringLoaderInterface.getBooleanExpEditorStringResProvider()
+                .getBooleanExpErrorStringRes().getStringFromID(POSTCONDITIONS);
     }
 }

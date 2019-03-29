@@ -14,10 +14,10 @@ import edu.pse.beast.types.InternalTypeContainer;
  */
 public class SymbolicVariableList {
 
-    private final LinkedList<SymbolicVariable> symbolicVariableList =
-            new LinkedList<>();
-    private final transient List<VariableListListener> listenerList =
-            new ArrayList<VariableListListener>();
+    private final LinkedList<SymbolicVariable> symbolicVariableList
+          = new LinkedList<>();
+    private final transient List<VariableListListener> listenerList
+          = new ArrayList<VariableListListener>();
 
     /**
      *
@@ -167,8 +167,8 @@ public class SymbolicVariableList {
     }
 
     public void addSymbolicVariableList(SymbolicVariableList allSymbolicVariables) {
-        for (Iterator<SymbolicVariable> iterator =
-                allSymbolicVariables.getSymbolicVariables().iterator();
+        for (Iterator<SymbolicVariable> iterator
+              = allSymbolicVariables.getSymbolicVariables().iterator();
                 iterator.hasNext();) {
             SymbolicVariable var = (SymbolicVariable) iterator.next();
             this.addSymbolicVariable(var);
@@ -180,12 +180,12 @@ public class SymbolicVariableList {
      * @return a clone of the symbVarList
      */
     private synchronized List<SymbolicVariable> cloneSymbVars() {
-        List<SymbolicVariable> clonedSymbVariables =
-                new LinkedList<SymbolicVariable>();
+        List<SymbolicVariable> clonedSymbVariables
+              = new LinkedList<SymbolicVariable>();
         for (Iterator<SymbolicVariable> iterator = symbolicVariableList.iterator();
                 iterator.hasNext();) {
-            SymbolicVariable symbolicVariable =
-                    (SymbolicVariable) iterator.next();
+            SymbolicVariable symbolicVariable
+                  = (SymbolicVariable) iterator.next();
             clonedSymbVariables.add(symbolicVariable.clone());
         }
         return clonedSymbVariables;
@@ -212,8 +212,8 @@ public class SymbolicVariableList {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        SymbolicVariableList other =
-                (SymbolicVariableList) obj;
+        SymbolicVariableList other
+              = (SymbolicVariableList) obj;
         if (symbolicVariableList == null) {
             if (other.symbolicVariableList != null) {
                 return false;

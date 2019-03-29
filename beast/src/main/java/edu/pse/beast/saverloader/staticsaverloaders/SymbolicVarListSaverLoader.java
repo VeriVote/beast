@@ -12,7 +12,7 @@ import edu.pse.beast.types.InternalTypeRep;
  * @author Holger Klein
  */
 public final class SymbolicVarListSaverLoader {
-    private SymbolicVarListSaverLoader() {}
+    private SymbolicVarListSaverLoader() { }
 
     /**
      * Creates a String from a given SymbolicVariableList, that can then be saved to

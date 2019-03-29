@@ -15,7 +15,7 @@ import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr.CParser;
  * @author Nikolai Schnell
  */
 public final class ANTLRTest {
-    private ANTLRTest() {}
+    private ANTLRTest() { }
 
     static void showGuiTreeView(final String code) {
         final org.antlr.v4.runtime.CharStream stream = CharStreams.fromString(code);

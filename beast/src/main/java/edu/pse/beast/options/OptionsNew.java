@@ -1,7 +1,6 @@
 package edu.pse.beast.options;
 
 public class OptionsNew {
-
     public int minVoters = 1;
     public int maxVoters = 1;
 
@@ -10,5 +9,4 @@ public class OptionsNew {
 
     public int minSeats = 1;
     public int maxSeats = 1;
-
 }

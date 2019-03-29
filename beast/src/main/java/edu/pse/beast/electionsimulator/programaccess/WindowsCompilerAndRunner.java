@@ -34,13 +34,13 @@ public class WindowsCompilerAndRunner extends SystemSpecificCompilerAndExecution
     protected Process compileCFile(File toCheck) {
         String vsCmd = null;
         Process startedProcess = null;
-        String userIncludeAndPath =
-                ENABLE_USER_INCLUDE + "\"" + SuperFolderFinder.getSuperFolder()
+        String userIncludeAndPath
+              = ENABLE_USER_INCLUDE + "\"" + SuperFolderFinder.getSuperFolder()
                 + USER_INCLUDE_FOLDER + "\"";
         // we must compile all includes that the user puts in that folder, in
         // case some of them are needed
-        String compileAllIncludesInIncludePath =
-                "\"" + SuperFolderFinder.getSuperFolder()
+        String compileAllIncludesInIncludePath
+              = "\"" + SuperFolderFinder.getSuperFolder()
                 + USER_INCLUDE_FOLDER + COMPILE_ALL_INCLUDES_IN_FOLDER + "\"";
 
         // try to get the vsCMD
@@ -67,8 +67,8 @@ public class WindowsCompilerAndRunner extends SystemSpecificCompilerAndExecution
             // VScmd has to be in one giant string. Put the created file in the
             // output directory, so
             // it can be deleted afterwards
-            String clExeCall =
-                    "\"" + vsCmd + "\""
+            String clExeCall
+                  = "\"" + vsCmd + "\""
                     + " & " + COMPILER_STRING + " " + userIncludeAndPath + " "
                     + ("\"" + toCheck.getAbsolutePath() + "\"") + " "
                     + (" /Fo" + toCheck.getParent() + "\\ ")
@@ -77,8 +77,8 @@ public class WindowsCompilerAndRunner extends SystemSpecificCompilerAndExecution
 
             List<String> callInList = new ArrayList<String>();
             callInList.add(clExeCall);
-            File batFile =
-                    new File(toCheck.getParent() + "\\"
+            File batFile
+                  = new File(toCheck.getParent() + "\\"
                              + toCheck.getName().replace(".c", ".bat"));
             FileSaver.writeStringLinesToFile(callInList, batFile);
 
@@ -86,8 +86,8 @@ public class WindowsCompilerAndRunner extends SystemSpecificCompilerAndExecution
             // compiler) run in it
             // ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c",
             // clExeCall);
-            ProcessBuilder prossBuild =
-                    new ProcessBuilder("cmd.exe", "/c", batFile.getAbsolutePath());
+            ProcessBuilder prossBuild
+                  = new ProcessBuilder("cmd.exe", "/c", batFile.getAbsolutePath());
 
             try {
                 startedProcess = prossBuild.start();
@@ -106,9 +106,7 @@ public class WindowsCompilerAndRunner extends SystemSpecificCompilerAndExecution
         callString = toRun + ".exe";
         // the absolute path to the file that holds
         callString = callString + " " + dataFile.getAbsolutePath();
-
         ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", callString);
-
         try {
             // start the process
             startedProcess = prossBuild.start();

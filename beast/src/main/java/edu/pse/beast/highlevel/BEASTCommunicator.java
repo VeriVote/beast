@@ -108,7 +108,7 @@ public final class BEASTCommunicator {
     // }
     private static boolean stopped;
 
-    private BEASTCommunicator() {}
+    private BEASTCommunicator() { }
 
     public static synchronized boolean startCheckNEW() {
         stopped = false;
@@ -128,9 +128,9 @@ public final class BEASTCommunicator {
             PropertyChecker checker = new PropertyChecker("CBMC");
             currentCheckers.add(checker);
             // analysis gets started by CheckerCommunicator.checkPropertiesForDescription()
-            List<Result> results =
-                    checker.checkPropertiesForDescription(electionDesc,
-                                                          properties,
+            List<Result> results
+                = checker.checkPropertiesForDescription(electionDesc,
+                                                       properties,
                                                           parameter);
             if (results != null) {
                 // Thread that checks for new presentable results every n milliseconds
@@ -163,8 +163,8 @@ public final class BEASTCommunicator {
                             frameTime = System.currentTimeMillis();
                             // check if all results are finished already
                             allDone = true;
-                            for (Iterator<Result> iterator =
-                                    results.iterator(); iterator.hasNext();) {
+                            for (Iterator<Result> iterator
+                                    = results.iterator(); iterator.hasNext();) {
                                 Result result = (Result) iterator.next();
                                 allDone = allDone && result.isFinished();
                             }

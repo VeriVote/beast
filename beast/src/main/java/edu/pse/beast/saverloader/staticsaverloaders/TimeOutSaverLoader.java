@@ -11,7 +11,7 @@ import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
  * @author Nikolai Schnell
  */
 public final class TimeOutSaverLoader {
-    private TimeOutSaverLoader() {}
+    private TimeOutSaverLoader() { }
 
     /**
      * Creates a String from a given TimeOut, that can then be saved to a file and

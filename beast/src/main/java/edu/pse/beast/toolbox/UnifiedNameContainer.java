@@ -7,10 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 public final class UnifiedNameContainer {
-    private UnifiedNameContainer() {}
-
     private static List<NameChangeListener> listeners = new LinkedList<NameChangeListener>();
     private static Map<String, String> map = new HashMap<String, String>();
+
+    private UnifiedNameContainer() { }
 
     static {
         init();

@@ -11,11 +11,11 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 
 public final class ResultPresenterOLD {
-    private ResultPresenterOLD() {}
-
     private static StringResourceLoader srl;
     // private static JTextPane result;
     private static String text;
+
+    private ResultPresenterOLD() { }
 
     static {
         StringLoaderInterface sli = new StringLoaderInterface("en");
@@ -118,8 +118,8 @@ public final class ResultPresenterOLD {
 
     private static void appendMarginResult(Result marginResult) {
         // FailureExample ex = marginResult.getFailureExample();
-        ElectionTypeContainer container =
-                marginResult.getFailureExample().getElectionDescription().getContainer();
+        ElectionTypeContainer container
+              = marginResult.getFailureExample().getElectionDescription().getContainer();
 
         appendLine("================================");
         appendLine("===========Margin Result===========");

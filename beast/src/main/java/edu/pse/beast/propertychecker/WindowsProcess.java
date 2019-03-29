@@ -27,12 +27,12 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.WindowsOStoolbox;
 
 public class WindowsProcess extends CBMCProcess {
-    private final static long WAITING_TIME_FOR_TERMINATION = 8000;
+    private static final long WAITING_TIME_FOR_TERMINATION = 8000;
 
-    private static final String RELATIVE_PATH_TO_CBMC_32 =
-            "/windows/cbmcWIN/cbmc.exe";
-    private static final String RELATIVE_PATH_TO_CBMC_64 =
-            "/windows/cbmcWIN/cbmc64.exe";
+    private static final String RELATIVE_PATH_TO_CBMC_32
+          = "/windows/cbmcWIN/cbmc.exe";
+    private static final String RELATIVE_PATH_TO_CBMC_64
+          = "/windows/cbmcWIN/cbmc64.exe";
 
     private static final String ENABLE_USER_INCLUDE = "-I";
     private static final String USER_INCLUDE_FOLDER = "/core/user_includes/";
@@ -72,8 +72,8 @@ public class WindowsProcess extends CBMCProcess {
                 + " -D " + UnifiedNameContainer.getCandidate() + "=" + candidates
                 + " -D " + UnifiedNameContainer.getSeats() + "=" + seats;
         // enable the usage of includes in cbmc
-        String userIncludeAndPath =
-                "\"" + ENABLE_USER_INCLUDE + SuperFolderFinder.getSuperFolder()
+        String userIncludeAndPath
+              = "\"" + ENABLE_USER_INCLUDE + SuperFolderFinder.getSuperFolder()
                 + USER_INCLUDE_FOLDER + "\"";
         // get all Files from the form "*.c" so we can include them into cbmc,
         List<String> allFiles = FileLoader.listAllFilesFromFolder(
@@ -116,8 +116,8 @@ public class WindowsProcess extends CBMCProcess {
             }
             String cbmcEXE = "";
             // load the system specific cbmc programs
-            cbmcEXE =
-                    new File(SuperFolderFinder.getSuperFolder()
+            cbmcEXE
+                  = new File(SuperFolderFinder.getSuperFolder()
                             + (is64bit
                                     ? RELATIVE_PATH_TO_CBMC_64
                                             : RELATIVE_PATH_TO_CBMC_32)
@@ -153,8 +153,8 @@ public class WindowsProcess extends CBMCProcess {
                 FileSaver.writeStringLinesToFile(callInList, batFile);
                 // this call starts a new VScmd instance and lets cbmc run in it
                 // ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", cbmcCall);
-                ProcessBuilder prossBuild =
-                        new ProcessBuilder("cmd.exe", "/c",
+                ProcessBuilder prossBuild
+                      = new ProcessBuilder("cmd.exe", "/c",
                                            "\"" + batFile.getAbsolutePath()
                                            + "\"");
                 try {
@@ -178,8 +178,8 @@ public class WindowsProcess extends CBMCProcess {
             int pid = getWindowsProcessId(process);
             // generate a call to cmd to get all child processes of our
             // processID
-            String cmdCall =
-                    "wmic process where (ParentProcessId=" + pid
+            String cmdCall
+                  = "wmic process where (ParentProcessId=" + pid
                     + ") get Caption,ProcessId";
             List<String> children = new ArrayList<String>();
             // latch to synchronize on, so we can be sure that every

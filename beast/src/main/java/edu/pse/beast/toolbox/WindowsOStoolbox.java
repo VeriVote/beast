@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public final class WindowsOStoolbox {
-    private WindowsOStoolbox() {}
-
     private static final String RELATIVE_PATH_TO_VS_CMD = "/windows/VsDevCmd.bat";
+
+    private WindowsOStoolbox() { }
 
     /**
      *

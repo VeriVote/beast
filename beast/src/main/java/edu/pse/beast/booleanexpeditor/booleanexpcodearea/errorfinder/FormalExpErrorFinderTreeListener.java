@@ -27,7 +27,6 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 import edu.pse.beast.datatypes.propertydescription.VariableListListener;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionListener;
-import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.*;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.BooleanExpScopehandler;
 import edu.pse.beast.types.InputType;
@@ -58,7 +57,7 @@ public class FormalExpErrorFinderTreeListener
      * @param elecDescription the voting rule
      */
     public FormalExpErrorFinderTreeListener(SymbolicVariableList list, NewCodeArea codeArea,
-            ElectionDescription elecDescription) {
+                                            ElectionDescription elecDescription) {
         this.elecDescription = elecDescription;
         list.addListener(this);
         scopeHandler.enterNewScope();
@@ -97,13 +96,13 @@ public class FormalExpErrorFinderTreeListener
     }
 
     @Override
-    public void enterBooleanExpList(FormalPropertyDescriptionParser.BooleanExpListContext ctx) {
+    public void enterBooleanExpList(BooleanExpListContext ctx) {
         expStack = new Stack<>();
         created.clear();
     }
 
     @Override
-    public void exitBooleanExpList(FormalPropertyDescriptionParser.BooleanExpListContext ctx) {
+    public void exitBooleanExpList(BooleanExpListContext ctx) {
     }
 
     @Override
@@ -131,7 +130,7 @@ public class FormalExpErrorFinderTreeListener
     }
 
     @Override
-    public void enterQuantifierExp(FormalPropertyDescriptionParser.QuantifierExpContext ctx) {
+    public void enterQuantifierExp(QuantifierExpContext ctx) {
         String quantifierTypeString = ctx.Quantifier().getText();
         InternalTypeContainer varType = null;
         if (quantifierTypeString.contains("VOTER")) {
@@ -142,7 +141,7 @@ public class FormalExpErrorFinderTreeListener
             varType = new InternalTypeContainer(InternalTypeRep.SEAT);
         }
         scopeHandler.enterNewScope();
-        String id = ctx.passSymbVar().symbolicVarExp().Identifier().getText();
+        final String id = ctx.passSymbVar().symbolicVarExp().Identifier().getText();
         scopeHandler.addVariable(id, varType);
     }
 
@@ -167,15 +166,15 @@ public class FormalExpErrorFinderTreeListener
     public void exitComparisonExp(ComparisonExpContext ctx) {
         TypeExpression lhs;
         TypeExpression rhs;
-
-        if (ctx.typeExp(1).getChild(0) instanceof IntersectExpContext) { // the right arguments
+        // the right arguments
+        if (ctx.typeExp(1).getChild(0) instanceof IntersectExpContext) {
             rhs = new IntersectTypeExpNode(elecDescription.getContainer().getOutputType(),
                     (IntersectExpContext) ctx.typeExp(1).getChild(0));
         } else {
             rhs = expStack.pop();
         }
-
-        if (ctx.typeExp(0).getChild(0) instanceof IntersectExpContext) { // the left argument
+        // the left argument
+        if (ctx.typeExp(0).getChild(0) instanceof IntersectExpContext) {
             lhs = new IntersectTypeExpNode(elecDescription.getContainer().getOutputType(),
                     (IntersectExpContext) ctx.typeExp(0).getChild(0));
         } else {
@@ -185,8 +184,8 @@ public class FormalExpErrorFinderTreeListener
         InternalTypeContainer lhsCont = lhs.getInternalTypeContainer();
         InternalTypeContainer rhsCont = rhs.getInternalTypeContainer();
         if (lhsCont.getListLvl() != rhsCont.getListLvl()) {
-            final CodeError codeError =
-                BooleanExpErrorFactory
+            final CodeError codeError
+              = BooleanExpErrorFactory
                 .createCantCompareDifferentListLevels(ctx, lhsCont, rhsCont);
             created.add(codeError);
         } else {
@@ -195,86 +194,86 @@ public class FormalExpErrorFinderTreeListener
                 rhsCont = rhsCont.getListedType();
             }
             if (lhsCont.getInternalType() != rhsCont.getInternalType()) {
-                final CodeError codeError =
-                        BooleanExpErrorFactory.createCantCompareTypes(ctx, lhsCont, rhsCont);
+                final CodeError codeError
+                      = BooleanExpErrorFactory.createCantCompareTypes(ctx, lhsCont, rhsCont);
                 created.add(codeError);
             }
         }
     }
 
     @Override
-    public void enterTypeExp(FormalPropertyDescriptionParser.TypeExpContext ctx) {
+    public void enterTypeExp(TypeExpContext ctx) {
     }
 
     @Override
-    public void exitTypeExp(FormalPropertyDescriptionParser.TypeExpContext ctx) {
+    public void exitTypeExp(TypeExpContext ctx) {
     }
 
     @Override
-    public void enterNumberExpression(FormalPropertyDescriptionParser.NumberExpressionContext ctx) {
+    public void enterNumberExpression(NumberExpressionContext ctx) {
     }
 
     @Override
-    public void exitNumberExpression(FormalPropertyDescriptionParser.NumberExpressionContext ctx) {
+    public void exitNumberExpression(NumberExpressionContext ctx) {
         if (ctx.Mult() != null) {
             IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
             IntegerValuedExpression lsh = (IntegerValuedExpression) expStack.pop();
-            BinaryIntegerValuedNode expNode =
-                    new BinaryIntegerValuedNode(lsh, rhs, ctx.Mult().getText());
+            BinaryIntegerValuedNode expNode
+                  = new BinaryIntegerValuedNode(lsh, rhs, ctx.Mult().getText());
             expStack.push(expNode);
         } else if (ctx.Add() != null) {
             IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
             IntegerValuedExpression lsh = (IntegerValuedExpression) expStack.pop();
-            BinaryIntegerValuedNode expNode =
-                    new BinaryIntegerValuedNode(lsh, rhs, ctx.Add().getText());
+            BinaryIntegerValuedNode expNode
+                  = new BinaryIntegerValuedNode(lsh, rhs, ctx.Add().getText());
             expStack.push(expNode);
         }
     }
 
     @Override
-    public void enterTypeByPosExp(FormalPropertyDescriptionParser.TypeByPosExpContext ctx) {
+    public void enterTypeByPosExp(TypeByPosExpContext ctx) {
     }
 
     @Override
-    public void exitTypeByPosExp(FormalPropertyDescriptionParser.TypeByPosExpContext ctx) {
+    public void exitTypeByPosExp(TypeByPosExpContext ctx) {
     }
 
     @Override
-    public void enterVoterByPosExp(FormalPropertyDescriptionParser.VoterByPosExpContext ctx) {
+    public void enterVoterByPosExp(VoterByPosExpContext ctx) {
     }
 
     @Override
-    public void exitVoterByPosExp(FormalPropertyDescriptionParser.VoterByPosExpContext ctx) {
+    public void exitVoterByPosExp(VoterByPosExpContext ctx) {
         expStack.push(new AtPosExp(new InternalTypeContainer(InternalTypeRep.VOTER),
                 (IntegerValuedExpression) expStack.pop()));
     }
 
     @Override
-    public void enterCandByPosExp(FormalPropertyDescriptionParser.CandByPosExpContext ctx) {
+    public void enterCandByPosExp(CandByPosExpContext ctx) {
     }
 
     @Override
-    public void exitCandByPosExp(FormalPropertyDescriptionParser.CandByPosExpContext ctx) {
+    public void exitCandByPosExp(CandByPosExpContext ctx) {
         expStack.push(new AtPosExp(new InternalTypeContainer(InternalTypeRep.CANDIDATE),
                 (IntegerValuedExpression) expStack.pop()));
     }
 
     @Override
-    public void enterSeatByPosExp(FormalPropertyDescriptionParser.SeatByPosExpContext ctx) {
+    public void enterSeatByPosExp(SeatByPosExpContext ctx) {
     }
 
     @Override
-    public void exitSeatByPosExp(FormalPropertyDescriptionParser.SeatByPosExpContext ctx) {
+    public void exitSeatByPosExp(SeatByPosExpContext ctx) {
         expStack.push(new AtPosExp(new InternalTypeContainer(InternalTypeRep.SEAT),
                 (IntegerValuedExpression) expStack.pop()));
     }
 
     @Override
-    public void enterInteger(FormalPropertyDescriptionParser.IntegerContext ctx) {
+    public void enterInteger(IntegerContext ctx) {
     }
 
     @Override
-    public void exitInteger(FormalPropertyDescriptionParser.IntegerContext ctx) {
+    public void exitInteger(IntegerContext ctx) {
         String integerString = ctx.getText();
         int heldInteger = Integer.valueOf(integerString);
         IntegerNode integerNode = new IntegerNode(heldInteger);
@@ -282,13 +281,13 @@ public class FormalExpErrorFinderTreeListener
     }
 
     @Override
-    public void enterElectExp(FormalPropertyDescriptionParser.ElectExpContext ctx) {
+    public void enterElectExp(ElectExpContext ctx) {
         testIfTooManyVarsPassed(ctx.passType(),
                                 container.getOutputType().getInternalTypeContainer());
     }
 
     @Override
-    public void exitElectExp(FormalPropertyDescriptionParser.ElectExpContext ctx) {
+    public void exitElectExp(ElectExpContext ctx) {
         testIfWrongTypePassed(ctx.passType(), container.getOutputType().getInternalTypeContainer());
         InternalTypeContainer cont = container.getOutputType().getInternalTypeContainer();
         for (int i = 0; i < ctx.passType().size() && cont.isList(); ++i) {
@@ -303,13 +302,13 @@ public class FormalExpErrorFinderTreeListener
     }
 
     @Override
-    public void enterVoteExp(FormalPropertyDescriptionParser.VoteExpContext ctx) {
+    public void enterVoteExp(VoteExpContext ctx) {
         testIfTooManyVarsPassed(ctx.passType(),
                                 container.getInputType().getInternalTypeContainer());
     }
 
     @Override
-    public void exitVoteExp(FormalPropertyDescriptionParser.VoteExpContext ctx) {
+    public void exitVoteExp(VoteExpContext ctx) {
         testIfWrongTypePassed(ctx.passType(), container.getInputType().getInternalTypeContainer());
         InternalTypeContainer cont = container.getInputType().getInternalTypeContainer();
         for (int i = 0; i < ctx.passType().size() && cont.isList(); ++i) {
@@ -324,67 +323,67 @@ public class FormalExpErrorFinderTreeListener
     }
 
     @Override
-    public void enterPassType(FormalPropertyDescriptionParser.PassTypeContext ctx) {
+    public void enterPassType(PassTypeContext ctx) {
     }
 
     @Override
-    public void exitPassType(FormalPropertyDescriptionParser.PassTypeContext ctx) {
+    public void exitPassType(PassTypeContext ctx) {
     }
 
-    private void testIfTooManyVarsPassed(List<FormalPropertyDescriptionParser.PassTypeContext> ctx,
-            InternalTypeContainer cont) {
+    private void testIfTooManyVarsPassed(List<PassTypeContext> ctx,
+                                         InternalTypeContainer cont) {
         int amountPassedVariables = ctx.size();
         int listDepth = 0;
-        while (cont.isList()) {
+        InternalTypeContainer c = cont;
+        while (c.isList()) {
             listDepth++;
-            cont = cont.getListedType();
+            c = c.getListedType();
         }
         for (; listDepth < amountPassedVariables; ++listDepth) {
             created.add(BooleanExpErrorFactory.createTooManyVarsPassedError(ctx.get(listDepth)));
         }
     }
 
-    private void testIfWrongTypePassed(List<FormalPropertyDescriptionParser.PassTypeContext> ctx,
-            InternalTypeContainer cont) {
+    private void testIfWrongTypePassed(List<PassTypeContext> ctx,
+                                       InternalTypeContainer cont) {
         int amtPassed = ctx.size();
         Stack<TypeExpression> passedTypes = new Stack<>();
         for (int i = 0; i < amtPassed; ++i) {
             passedTypes.add(expStack.pop());
         }
         int i = 0;
-        while (cont.isList() && i < ctx.size()) {
+        InternalTypeContainer c = cont;
+        while (c.isList() && i < ctx.size()) {
             TypeExpression currentVarExp = passedTypes.pop();
-            if (cont.getAccessTypeIfList()
+            if (c.getAccessTypeIfList()
                     != currentVarExp.getInternalTypeContainer().getInternalType()) {
-                final CodeError codeError =
-                        BooleanExpErrorFactory.createWrongVarTypePassed(cont,
+                final CodeError codeError
+                      = BooleanExpErrorFactory.createWrongVarTypePassed(c,
                                                                         ctx.get(i),
                                                                         currentVarExp);
                 created.add(codeError);
             }
             ++i;
-            cont = cont.getListedType();
+            c = c.getListedType();
         }
     }
 
     @Override
-    public void enterConstantExp(FormalPropertyDescriptionParser.ConstantExpContext ctx) {
+    public void enterConstantExp(ConstantExpContext ctx) {
     }
 
     @Override
-    public void exitConstantExp(FormalPropertyDescriptionParser.ConstantExpContext ctx) {
+    public void exitConstantExp(ConstantExpContext ctx) {
         expStack.add(new ConstantExp(ctx.getText()));
     }
 
     @Override
-    public void enterVoteSumExp(FormalPropertyDescriptionParser.VoteSumExpContext ctx) {
+    public void enterVoteSumExp(VoteSumExpContext ctx) {
     }
 
     private void exitVoteSumExp(ParserRuleContext ctx, boolean unique) {
-        final Class<FormalPropertyDescriptionParser.VoteSumUniqueExpContext> cu =
-            FormalPropertyDescriptionParser.VoteSumUniqueExpContext.class;
-        final Class<FormalPropertyDescriptionParser.VoteSumExpContext> c =
-            FormalPropertyDescriptionParser.VoteSumExpContext.class;
+        final Class<VoteSumUniqueExpContext> cu = VoteSumUniqueExpContext.class;
+        final Class<VoteSumExpContext> c = VoteSumExpContext.class;
 
         TypeExpression passedVar = expStack.pop();
         if (passedVar.getInternalTypeContainer().getInternalType() != InternalTypeRep.CANDIDATE) {
@@ -407,49 +406,49 @@ public class FormalExpErrorFinderTreeListener
     }
 
     @Override
-    public void exitVoteSumExp(FormalPropertyDescriptionParser.VoteSumExpContext ctx) {
+    public void exitVoteSumExp(VoteSumExpContext ctx) {
         exitVoteSumExp(ctx, false);
     }
 
     @Override
-    public void enterVoteSumUniqueExp(FormalPropertyDescriptionParser.VoteSumUniqueExpContext ctx) {
+    public void enterVoteSumUniqueExp(VoteSumUniqueExpContext ctx) {
     }
 
     @Override
-    public void exitVoteSumUniqueExp(FormalPropertyDescriptionParser.VoteSumUniqueExpContext ctx) {
+    public void exitVoteSumUniqueExp(VoteSumUniqueExpContext ctx) {
         exitVoteSumExp(ctx, true);
     }
 
     @Override
-    public void enterPassSymbVar(FormalPropertyDescriptionParser.PassSymbVarContext ctx) {
+    public void enterPassSymbVar(PassSymbVarContext ctx) {
     }
 
     @Override
-    public void exitPassSymbVar(FormalPropertyDescriptionParser.PassSymbVarContext ctx) {
+    public void exitPassSymbVar(PassSymbVarContext ctx) {
     }
 
     @Override
-    public void enterPassPosition(FormalPropertyDescriptionParser.PassPositionContext ctx) {
+    public void enterPassPosition(PassPositionContext ctx) {
     }
 
     @Override
-    public void exitPassPosition(FormalPropertyDescriptionParser.PassPositionContext ctx) {
+    public void exitPassPosition(PassPositionContext ctx) {
     }
 
     @Override
-    public void enterPassByPos(FormalPropertyDescriptionParser.PassByPosContext ctx) {
+    public void enterPassByPos(PassByPosContext ctx) {
     }
 
     @Override
-    public void exitPassByPos(FormalPropertyDescriptionParser.PassByPosContext ctx) {
+    public void exitPassByPos(PassByPosContext ctx) {
     }
 
     @Override
-    public void enterSymbolicVarExp(FormalPropertyDescriptionParser.SymbolicVarExpContext ctx) {
+    public void enterSymbolicVarExp(SymbolicVarExpContext ctx) {
     }
 
     @Override
-    public void exitSymbolicVarExp(FormalPropertyDescriptionParser.SymbolicVarExpContext ctx) {
+    public void exitSymbolicVarExp(SymbolicVarExpContext ctx) {
         String name = ctx.getText();
         InternalTypeContainer type = scopeHandler.getTypeForVariable(name);
         SymbolicVarExp expNode;

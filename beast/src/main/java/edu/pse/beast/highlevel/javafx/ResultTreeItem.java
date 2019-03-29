@@ -19,8 +19,8 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
 public class ResultTreeItem extends CustomTreeItem {
-    private static final String SEPARATOR_LINE =
-            "===========================================================================";
+    private static final String SEPARATOR_LINE
+          = "===========================================================================";
 
     private final Result result;
     private final ChildTreeItem owner;
@@ -59,7 +59,6 @@ public class ResultTreeItem extends CustomTreeItem {
 
     private List<String> presentResult() {
         CodeArrayListBeautifier resultString = new CodeArrayListBeautifier();
-
         resultString.add("Result for electionDescription: "
                         + result.getElectionDescription().getName());
         resultString.add(SEPARATOR_LINE);
@@ -73,27 +72,23 @@ public class ResultTreeItem extends CustomTreeItem {
         resultString.add("VOTING DATA");
 
         int amountVotes = 3; // TODO hotfix, get the real amount of voting and elect arrays later
-
         for (int i = 0; i < amountVotes; i++) {
-
             resultString.add("");
             resultString.add("VOTE " + i);
 
-            List<List<String>> votes = result.getElectionDescription().getContainer().getInputType()
-                    .getNewVotes(result.getResult(), i);
+            List<List<String>> votes
+                  = result.getElectionDescription().getContainer()
+                    .getInputType().getNewVotes(result.getResult(), i);
 
             for (Iterator<List<String>> iterator = votes.iterator(); iterator.hasNext();) {
                 List<String> list = (List<String>) iterator.next();
                 String toAdd = "";
-
                 for (Iterator<String> iterator2 = list.iterator(); iterator2.hasNext();) {
                     String vote = (String) iterator2.next();
                     toAdd = toAdd + " " + vote;
                 }
-
                 resultString.add(toAdd);
             }
-
         }
         resultString.add(SEPARATOR_LINE);
         resultString.add("");

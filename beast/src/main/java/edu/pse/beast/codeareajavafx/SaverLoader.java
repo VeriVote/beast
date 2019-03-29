@@ -13,6 +13,13 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
 import javafx.stage.FileChooser;
 
 public class SaverLoader {
+    public static final String PROP_LIST_FILE_ENDING  = ".propList";
+    public static final String CHILD_PROP_FILE_ENDING = ".child";
+    public static final String PROJECT_FILE_ENDING    = ".proj";
+    public static final String ELEC_DESCR_FILE_ENDING = ".elec";
+    public static final String OPT_FILE_ENDING        = ".opt";
+    public static final String PROP_DESCR_FILE_ENDING = ".prop";
+
     private boolean hasSaveFile = false;
     private File saveFile = null;
     private final String initialDir;

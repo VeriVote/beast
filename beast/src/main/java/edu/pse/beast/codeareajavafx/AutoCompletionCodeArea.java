@@ -18,9 +18,8 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
     private static final String CONTROL_CHARACTERS = "\\p{Cntrl}";
     private static final String WORD = "([A-Za-z]+[A-Za-z0-9]*)";
     private static final String WHITESPACE = " ";
-
-    public static final String SPECIAL_CHARACTER_REGEX =
-            ",|;|\\.|\\(|\\)|\\{|\\}|\\[|\\|\\|/|\\+|-|\\*";
+    private static final String SPECIAL_CHARACTER_REGEX
+        = ",|;|\\.|\\(|\\)|\\{|\\}|\\[|\\|\\|/|\\+|-|\\*";
 
     private int start;
     private int end;

@@ -10,7 +10,7 @@ import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 
 public final class BooleanExpEditorGeneralErrorFinder {
-    private BooleanExpEditorGeneralErrorFinder() {}
+    private BooleanExpEditorGeneralErrorFinder() { }
 
     /**
      *

@@ -18,6 +18,14 @@ import edu.pse.beast.highlevel.javafx.ResultTreeItem;
  */
 public abstract class Result implements ResultInterface {
     protected FailureExample failureExample = null;
+
+    protected List<List<String>> origVoting;
+    protected List<String> origWinner;
+    protected List<List<String>> newVotes;
+    protected List<String> newWinner;
+
+    protected transient ResultTreeItem owner;
+
     private boolean wasStarted = false;
     private boolean valid = false;
     private boolean finished = false;
@@ -42,12 +50,6 @@ public abstract class Result implements ResultInterface {
     private Result subResult = null;
     private boolean isMarginComp = false;
 
-    protected List<List<String>> origVoting;
-    protected List<String> origWinner;
-    protected List<List<String>> newVotes;
-    protected List<String> newWinner;
-
-    protected transient ResultTreeItem owner;
     private List<String> statusStrings;
 
     public static List<Result> getResultTypes() {

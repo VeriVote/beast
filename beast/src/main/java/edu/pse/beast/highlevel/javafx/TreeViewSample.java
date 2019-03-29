@@ -22,13 +22,15 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 public class TreeViewSample extends Application {
+    private static final String ROOT = "root.png";
+    private static final String DEPARTMENT = "department.png";
 
-    private final Node rootIcon =
-            new ImageView(new Image(getClass().getResourceAsStream("root.png")));
-    private final Image depIcon =
-            new Image(getClass().getResourceAsStream("department.png"));
-    List<Employee> employees =
-            Arrays.<Employee>asList(
+    private final Node rootIcon
+          = new ImageView(new Image(getClass().getResourceAsStream(ROOT)));
+    private final Image depIcon
+          = new Image(getClass().getResourceAsStream(DEPARTMENT));
+    List<Employee> employees
+          = Arrays.<Employee>asList(
                     new Employee("Ethan Williams", "Sales Department"),
                     new Employee("Emma Jones", "Sales Department"),
                     new Employee("Michael Brown", "Sales Department"),
@@ -40,7 +42,8 @@ public class TreeViewSample extends Application {
                     new Employee("Gregory Smith", "IT Support"),
                     new Employee("Jacob Smith", "Accounts Department"),
                     new Employee("Isabella Johnson", "Accounts Department"));
-    TreeItem<String> rootNode = new TreeItem<String>("MyCompany Human Resources", rootIcon);
+    TreeItem<String> rootNode
+        = new TreeItem<String>("MyCompany Human Resources", rootIcon);
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -60,8 +63,8 @@ public class TreeViewSample extends Application {
                 }
             }
             if (!found) {
-                TreeItem<String> depNode =
-                        new TreeItem<String>(employee.getDepartment(),
+                TreeItem<String> depNode
+                      = new TreeItem<String>(employee.getDepartment(),
                                              new ImageView(depIcon));
                 rootNode.getChildren().add(depNode);
                 depNode.getChildren().add(empLeaf);

@@ -69,9 +69,9 @@ public class OpenCloseCharHighlighter implements CaretListener {
         char close = openCloseChar.getClose();
         String code = JTextPaneToolbox.getText(pane);
         int lvl = 1;
-        pos -= 2;
-        for (; pos >= 0 && lvl > 0; --pos) {
-            char c = code.charAt(pos);
+        int p = pos - 2;
+        for (; p >= 0 && lvl > 0; --p) {
+            char c = code.charAt(p);
             if (c == close) {
                 lvl++;
             } else if (c == open) {
@@ -79,7 +79,7 @@ public class OpenCloseCharHighlighter implements CaretListener {
             }
         }
         if (lvl == 0) {
-            highlightChar(pos + 2);
+            highlightChar(p + 2);
         }
     }
 
@@ -88,9 +88,9 @@ public class OpenCloseCharHighlighter implements CaretListener {
         char close = openCloseChar.getClose();
         String code = JTextPaneToolbox.getText(pane);
         int lvl = 1;
-
-        for (; pos < code.length() && lvl > 0; ++pos) {
-            char c = code.charAt(pos);
+        int p = pos;
+        for (; p < code.length() && lvl > 0; ++p) {
+            char c = code.charAt(p);
             if (c == open) {
                 lvl++;
             } else if (c == close) {
@@ -98,7 +98,7 @@ public class OpenCloseCharHighlighter implements CaretListener {
             }
         }
         if (lvl == 0) {
-            highlightChar(pos);
+            highlightChar(p);
         }
     }
 

@@ -19,17 +19,17 @@ public class FactoryController implements Runnable {
     private static final long POLLING_INTERVAL = 1000;
 
     /**
-     * gives access to the factorycontroller for the shutdown hook.
+     * gives access to the factory controller for the shutdown hook.
      */
     protected FactoryController thisObject = this;
+
+    List<ChildTreeItem> propertiesToCheck = new ArrayList<ChildTreeItem>();
 
     // private final ParameterSource parmSrc;
     // private final List<Result> results;
     private final TimeOutNotifier notifier;
 
     // private final List<ParentTreeItem> propertyParents;
-
-    List<ChildTreeItem> propertiesToCheck = new ArrayList<ChildTreeItem>();
 
     private List<CheckerFactory> currentlyRunning;
     private final String checkerID;
@@ -156,8 +156,8 @@ public class FactoryController implements Runnable {
         for (Iterator<ParentTreeItem> parentIterator = parentProperties.iterator();
                 parentIterator.hasNext();) {
             ParentTreeItem parentTreeItem = (ParentTreeItem) parentIterator.next();
-            for (Iterator<ChildTreeItem> childIterator =
-                    parentTreeItem.getSubItems().iterator(); childIterator
+            for (Iterator<ChildTreeItem> childIterator
+                  = parentTreeItem.getSubItems().iterator(); childIterator
                     .hasNext();) {
                 ChildTreeItem child = (ChildTreeItem) childIterator.next();
                 if (child.isSelected()) {
@@ -276,8 +276,8 @@ public class FactoryController implements Runnable {
                     // electionDescSrc, propertiesToCheck.get(i).getDescription(), parameter,
                     // results.get(i), propertiesToCheckAndMargin.get(i).getMarginStatus());
 
-                    CheckerFactory factory =
-                            CheckerFactoryFactory.getCheckerFactory(
+                    CheckerFactory factory
+                          = CheckerFactoryFactory.getCheckerFactory(
                                     checkerID, this, elecDesc,
                                     results.get(i), parameter);
 

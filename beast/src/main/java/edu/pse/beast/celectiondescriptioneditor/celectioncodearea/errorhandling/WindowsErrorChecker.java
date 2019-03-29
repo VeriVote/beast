@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import edu.pse.beast.codearea.errorhandling.CodeError;
 import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.toolbox.WindowsOStoolbox;
@@ -25,9 +26,9 @@ import edu.pse.beast.toolbox.WindowsOStoolbox;
 public class WindowsErrorChecker extends SystemSpecificErrorChecker {
 
     // the compiler we use on windows, because it is also needed by cbmc
-    private static final String COMPILER_STRING = "cl.exe";
+    private static final String COMPILER_STRING = "cl" + FileLoader.EXE_FILE_ENDING;
 
-    private static final String CMD_STRING = "cmd.exe";
+    private static final String CMD_STRING = "cmd" + FileLoader.EXE_FILE_ENDING;
 
     // used to enable includes from the users own written classes
     private static final String ENABLE_USER_INCLUDE = "/I";
@@ -35,23 +36,20 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
 
     // we want to compile all available c files, so the user does not need to
     // specify anything
-    private static final String COMPILE_ALL_INCLUDES_IN_FOLDER = "*.c";
+    private static final String COMPILE_ALL_INCLUDES_IN_FOLDER
+        = "*" + FileLoader.C_FILE_ENDING;
 
     @Override
     public Process checkCodeFileForErrors(File toCheck) {
-
         String vsCmd = null;
-
         Process startedProcess = null;
-
-        String userIncludeAndPath =
-                ENABLE_USER_INCLUDE + "\"" + SuperFolderFinder.getSuperFolder()
+        String userIncludeAndPath
+              = ENABLE_USER_INCLUDE + "\"" + SuperFolderFinder.getSuperFolder()
                 + USER_INCLUDE_FOLDER + "\"";
-
         // we have to compile all includes that the user puts in that folder, in
         // case some of them are needed
-        String compileAllIncludesInIncludePath =
-                "\"" + SuperFolderFinder.getSuperFolder()
+        String compileAllIncludesInIncludePath
+              = "\"" + SuperFolderFinder.getSuperFolder()
                 + USER_INCLUDE_FOLDER + COMPILE_ALL_INCLUDES_IN_FOLDER + "\"";
 
         // try to get the vsCMD
@@ -60,7 +58,6 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-
         if (vsCmd == null) {
             ErrorForUserDisplayer.displayError(
                 "The program \"VsDevCmd.bat\" could not be found. "
@@ -72,36 +69,30 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
                 + "it into the foler /windows/ in the BEAST installation folder.");
             return null;
         } else {
-
             // Since Windows is weird, the whole call that will get placed
             // inside VScmd has to be in one giant string. Put the created
             // file in the output directory, such that it can be deleted
             // afterwards.
-            String clExeCall =
-                "\"" + vsCmd + "\"" + " & "
+            String clExeCall
+              = "\"" + vsCmd + "\"" + " & "
                 + COMPILER_STRING + " " + userIncludeAndPath + " "
                 + ("\"" + toCheck.getAbsolutePath() + "\"") + " "
                 + (" /Fo" + toCheck.getParent() + "\\ ")
                 + (" /Fe" + toCheck.getParent() + "\\ ")
                 + compileAllIncludesInIncludePath;
-
             List<String> callInList = new ArrayList<String>();
-
             callInList.add(clExeCall);
-
-            File batFile =
-                new File(toCheck.getParent() + "\\"
-                         + toCheck.getName().replace(".c", ".bat"));
-
+            File batFile
+              = new File(toCheck.getParent() + "\\"
+                         + toCheck.getName().replace(FileLoader.C_FILE_ENDING,
+                                                     FileLoader.BAT_FILE_ENDING));
             FileSaver.writeStringLinesToFile(callInList, batFile);
-
             // This call starts a new VScmd instance and let's cl.exe (the
             // compiler) run in it.
             // ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c",
             // clExeCall);
-            ProcessBuilder prossBuild =
-                new ProcessBuilder(CMD_STRING, "/c", batFile.getAbsolutePath());
-
+            ProcessBuilder prossBuild
+              = new ProcessBuilder(CMD_STRING, "/c", batFile.getAbsolutePath());
             try {
                 startedProcess = prossBuild.start();
             } catch (IOException e) {
@@ -134,8 +125,8 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
                     // identifier, so we do not need to worry
                     // about code injection from strings or such
                     // then we split at "(" and ")" to extract the number
-                    lineNumber =
-                        Integer.parseInt(
+                    lineNumber
+                      = Integer.parseInt(
                             linesMatcher.group(1).split("\\(")[1]
                                 .split("\\)")[0]
                         ) - lineOffset;

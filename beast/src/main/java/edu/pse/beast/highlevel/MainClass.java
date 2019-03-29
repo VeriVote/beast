@@ -4,6 +4,7 @@ import static javafx.scene.input.KeyCombination.SHORTCUT_ANY;
 import static org.fxmisc.wellbehaved.event.EventPattern.anyOf;
 // import static org.fxmisc.wellbehaved.event.EventPattern.keyPressed;
 
+import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -33,9 +34,10 @@ import javafx.stage.WindowEvent;
  * @author Jonas Wohnig
  */
 public class MainClass extends Application {
+    private static final String TITLE = "BEAST";
     private static final String RESOURCE = "javafx/BEAST.fxml";
-    private static final String RESOURCE_BUNDLE =
-            "edu.pse.beast.highlevel.javafx.bundles.LangBundle";
+    private static final String RESOURCE_BUNDLE
+          = "edu.pse.beast.highlevel.javafx.bundles.LangBundle";
     private static final String BEAST_ICON = "/core/images/other/BEAST.png";
     private static final String FILE_STRING = "file:///";
 
@@ -64,14 +66,14 @@ public class MainClass extends Application {
         mainStage = stage;
         try {
             GUIController controller = new GUIController(mainStage);
-            FXMLLoader loader =
-                    new FXMLLoader(
+            FXMLLoader loader
+                  = new FXMLLoader(
                             getClass().getResource(RESOURCE),
                             ResourceBundle.getBundle(RESOURCE_BUNDLE, locale));
             loader.setController(controller);
             Parent root = loader.load();
             Scene scene = new Scene(root, 1000, 600);
-            stage.setTitle("BEAST");
+            stage.setTitle(TITLE);
             stage.getIcons().add(
                     new Image(
                             FILE_STRING
@@ -86,8 +88,8 @@ public class MainClass extends Application {
                 }
             });
             // specify the short cuts the program should ignore
-            InputMap<Event> shortcutsToConsume =
-                    InputMap.consume(anyOf(
+            InputMap<Event> shortcutsToConsume
+                  = InputMap.consume(anyOf(
                             // prevent selection via (CTRL + ) SHIFT + [LEFT, UP, DOWN]
                             // ignore the save shortcut
 //                          keyPressed(KeyCode.S,
@@ -99,24 +101,24 @@ public class MainClass extends Application {
 //                                     SHORTCUT_ANY)
             ));
             controller.setShortcutsToConsume(shortcutsToConsume);
-            final KeyCombination saveCombination =
-                    new KeyCodeCombination(KeyCode.S,
+            final KeyCombination saveCombination
+                  = new KeyCodeCombination(KeyCode.S,
                                            KeyCombination.CONTROL_DOWN,
                                            SHORTCUT_ANY);
-            final KeyCombination saveAllCombination =
-                    new KeyCodeCombination(KeyCode.S,
+            final KeyCombination saveAllCombination
+                  = new KeyCodeCombination(KeyCode.S,
                                            KeyCombination.SHIFT_DOWN,
                                            KeyCombination.CONTROL_DOWN);
-            final KeyCombination openCombination =
-                    new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
-            final KeyCombination autoCompletionCombination =
-                    new KeyCodeCombination(KeyCode.SPACE, KeyCombination.CONTROL_DOWN);
+            final KeyCombination openCombination
+                  = new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_DOWN);
+            final KeyCombination autoCompletionCombination
+                  = new KeyCodeCombination(KeyCode.SPACE, KeyCombination.CONTROL_DOWN);
             // final KeyCombination copyCombination = new KeyCodeCombination(KeyCode.C,
             // KeyCombination.CONTROL_DOWN);
-            final KeyCombination pasteCombination =
-                    new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN);
-            final KeyCombination cutCombination =
-                    new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_DOWN);
+            final KeyCombination pasteCombination
+                  = new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN);
+            final KeyCombination cutCombination
+                  = new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_DOWN);
             scene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent event) {
@@ -144,7 +146,7 @@ public class MainClass extends Application {
                 }
             });
             stage.show();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

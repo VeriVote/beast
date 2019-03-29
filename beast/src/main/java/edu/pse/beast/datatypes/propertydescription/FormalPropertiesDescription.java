@@ -8,7 +8,6 @@ import java.util.List;
  * @author Holger
  */
 public class FormalPropertiesDescription {
-
     private String code;
 
     /**
@@ -36,7 +35,6 @@ public class FormalPropertiesDescription {
 
     public List<String> getCodeAsList() {
         String[] split = code.split("\n");
-
         return Arrays.asList(split);
     }
 
@@ -55,14 +53,12 @@ public class FormalPropertiesDescription {
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
+        if (obj == null
+                || getClass() != obj.getClass()) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        FormalPropertiesDescription other =
-                (FormalPropertiesDescription) obj;
+        final FormalPropertiesDescription other
+              = (FormalPropertiesDescription) obj;
         if (code == null) {
             if (other.code != null) {
                 return false;

@@ -11,7 +11,7 @@ public final class SuperFolderFinder {
     private static boolean initialized = false;
     private static String superFolder = "";
 
-    private SuperFolderFinder() {}
+    private SuperFolderFinder() { }
 
     /**
      * this class is used so other classes can get the folder that BEAST is
@@ -23,12 +23,12 @@ public final class SuperFolderFinder {
         if (!initialized || superFolder.length() == 0) {
             // the class is two "directories away from the super folder
             // counteract possible whitespace errors on windows
-            final String pathName =
-                    SuperFolderFinder.class.getProtectionDomain()
+            final String pathName
+                  = SuperFolderFinder.class.getProtectionDomain()
                         .getCodeSource().getLocation().getPath();
             File f = new File(pathName);
-            superFolder =
-                    (new File(f.getParent()).getParent())
+            superFolder
+                  = (new File(f.getParent()).getParent())
                     .replaceAll("%20", " ");
         }
         return superFolder;

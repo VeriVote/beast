@@ -143,8 +143,8 @@ public class ElectionDescription implements NameInterface {
     }
 
     public ElectionDescription getDeepCopy() {
-        ElectionDescription deepCopy =
-            new ElectionDescription(name, container.getInputType(),
+        ElectionDescription deepCopy
+          = new ElectionDescription(name, container.getInputType(),
                                     container.getOutputType(),
                                     votingDeclLine, lockedLineStart,
                                     lockedLineEnd, lockedBracePos, isNew);

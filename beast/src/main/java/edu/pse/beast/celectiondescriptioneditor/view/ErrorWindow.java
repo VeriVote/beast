@@ -51,11 +51,11 @@ public class ErrorWindow {
      * @param stringLoaderInterface the new stringLoaderInterface
      */
     public void updateStringRes(StringLoaderInterface stringLoaderInterface) {
-        errorString =
-            stringLoaderInterface.getBooleanExpEditorStringResProvider()
+        errorString
+          = stringLoaderInterface.getBooleanExpEditorStringResProvider()
             .getBooleanExpErrorStringRes().getStringFromID("error");
-        lineString =
-            stringLoaderInterface.getBooleanExpEditorStringResProvider()
+        lineString
+          = stringLoaderInterface.getBooleanExpEditorStringResProvider()
             .getBooleanExpErrorStringRes().getStringFromID("line");
     }
 }

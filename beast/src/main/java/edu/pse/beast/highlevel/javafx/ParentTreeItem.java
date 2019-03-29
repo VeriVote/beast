@@ -20,10 +20,10 @@ public class ParentTreeItem extends CustomTreeItem {
     private Label propName;
     private CheckBox checkAll = new CheckBox("check all");
 
-    private final List<ChildTreeItem> subItems =
-            new ArrayList<ChildTreeItem>();
-    private final List<TreeItem<CustomTreeItem>> childTreeItems =
-            new ArrayList<TreeItem<CustomTreeItem>>();
+    private final List<ChildTreeItem> subItems
+          = new ArrayList<ChildTreeItem>();
+    private final List<TreeItem<CustomTreeItem>> childTreeItems
+          = new ArrayList<TreeItem<CustomTreeItem>>();
     private final PreAndPostConditionsDescription propDesc;
 
     private boolean disabled;

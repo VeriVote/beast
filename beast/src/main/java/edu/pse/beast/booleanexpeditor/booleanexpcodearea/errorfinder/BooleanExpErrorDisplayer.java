@@ -90,8 +90,8 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
 
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
-        this.currentStringResLoader =
-                stringResIF.getBooleanExpEditorStringResProvider()
+        this.currentStringResLoader
+              = stringResIF.getBooleanExpEditorStringResProvider()
                 .getBooleanExpErrorStringRes();
     }
 }

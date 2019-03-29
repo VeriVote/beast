@@ -25,8 +25,8 @@ public class ResultAdapter implements
         String type = jsonObject.get("type").getAsString();
         JsonElement element = jsonObject.get("properties");
         try {
-            for (Iterator<Result> iterator =
-                    Result.getResultTypes().iterator();
+            for (Iterator<Result> iterator
+                  = Result.getResultTypes().iterator();
                     iterator.hasNext();) {
                 Result result = (Result) iterator.next();
                 if (result.getClass().getSimpleName().equals(type)) {

@@ -12,7 +12,7 @@ import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressio
  * @author Holger Klein
  */
 public final class AstTesterHelper {
-    private AstTesterHelper() {}
+    private AstTesterHelper() { }
 
     public static void areTheSame(BooleanExpListNode lhs, BooleanExpListNode rhs) {
         assertEquals(lhs.getHighestElect(), rhs.getHighestElect());

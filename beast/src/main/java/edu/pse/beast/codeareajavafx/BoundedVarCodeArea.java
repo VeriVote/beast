@@ -19,16 +19,16 @@ import javafx.scene.Node;
 public class BoundedVarCodeArea extends AutoCompletionCodeArea implements MenuBarInterface {
     private static final String RESOURCE = "codeAreaSyntaxHighlight.css";
 
-    private List<ElectionDescriptionChangeListener> listeners =
-        new ArrayList<ElectionDescriptionChangeListener>();
+    private List<ElectionDescriptionChangeListener> listeners
+      = new ArrayList<ElectionDescriptionChangeListener>();
     private FormalPropertiesDescription description;
 
     public BoundedVarCodeArea() {
         List<String> code = new ArrayList<String>();
         code.add("");
         String sampleCode = "";
-        String stylesheet =
-                this.getClass().getResource(RESOURCE).toExternalForm();
+        String stylesheet
+              = this.getClass().getResource(RESOURCE).toExternalForm();
         this.getStylesheets().add(stylesheet);
         IntFunction<Node> lineNumbers = LineNumberFactory.get(this);
         this.setParagraphGraphicFactory(lineNumbers);
@@ -40,18 +40,18 @@ public class BoundedVarCodeArea extends AutoCompletionCodeArea implements MenuBa
         for (Iterator<CodeError> iterator = codeErrors.iterator(); iterator.hasNext();) {
             CodeError codeError = (CodeError) iterator.next();
             toDisplay +=
-                "line: " + codeError.getLine() +
-                "| Message: " + codeError.getMsg() + "\n";
+                "line: " + codeError.getLine()
+                + "| Message: " + codeError.getMsg() + "\n";
         }
 
         GUIController.setErrorText(toDisplay);
     }
 
     public void createNew(InputType newIn, OutputType newOut) {
-        for (Iterator<ElectionDescriptionChangeListener> iterator =
-                listeners.iterator(); iterator.hasNext();) {
-            ElectionDescriptionChangeListener listener =
-                    (ElectionDescriptionChangeListener) iterator.next();
+        for (Iterator<ElectionDescriptionChangeListener> iterator
+              = listeners.iterator(); iterator.hasNext();) {
+            ElectionDescriptionChangeListener listener
+                  = (ElectionDescriptionChangeListener) iterator.next();
             listener.inputChanged(newIn);
             listener.outputChanged(newOut);
         }

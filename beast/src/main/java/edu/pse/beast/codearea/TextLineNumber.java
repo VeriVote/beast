@@ -220,8 +220,8 @@ public class TextLineNumber extends JPanel
      * @param digitAlignment the Color used to render the current line
      */
     public void setDigitAlignment(float digitAlignment) {
-        this.digitAlignment =
-                digitAlignment > 1.0f
+        this.digitAlignment
+              = digitAlignment > 1.0f
                 ? 1.0f : digitAlignment < 0.0f ? -1.0f
                     : digitAlignment;
     }
@@ -288,8 +288,8 @@ public class TextLineNumber extends JPanel
 
         Rectangle2D clip = g.getClipBounds();
         int rowStartOffset = component.viewToModel2D(new Point2D.Double(0, clip.getY()));
-        int endOffset =
-            component.viewToModel2D(new Point2D.Double(0, clip.getY()
+        int endOffset
+          = component.viewToModel2D(new Point2D.Double(0, clip.getY()
                                                           + clip.getHeight()));
 
         while (rowStartOffset <= endOffset) {

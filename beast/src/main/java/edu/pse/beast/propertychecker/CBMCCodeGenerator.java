@@ -212,10 +212,9 @@ public class CBMCCodeGenerator {
     }
 
     private void addVoteSumFunc(boolean unique) {
-        String input =
-                "unsigned int arr"
-                + electionDesc.getContainer()
-                    .getInputType().getInputString();
+        String input = "unsigned int arr"
+                       + electionDesc.getContainer()
+                           .getInputType().getInputString();
         code.add("unsigned int voteSumForCandidate" + (unique ? "Unique" : "")
                 + "(INPUT, unsigned int amountVotes, unsigned int candidate) {"
                     .replace("INPUT", input));
@@ -591,10 +590,10 @@ public class CBMCCodeGenerator {
         code.add("int main(int argc, char *argv[]) {");
         code.addTab();
         // generating the pre and post AbstractSyntaxTrees
-        BooleanExpListNode preAST =
-                generateAST(preAndPostCondDesc.getPreConditionsDescription().getCode());
-        BooleanExpListNode postAST =
-                generateAST(preAndPostCondDesc.getPostConditionsDescription().getCode());
+        BooleanExpListNode preAST
+              = generateAST(preAndPostCondDesc.getPreConditionsDescription().getCode());
+        BooleanExpListNode postAST
+              = generateAST(preAndPostCondDesc.getPostConditionsDescription().getCode());
         initializeNumberOfTimesVoted(preAST, postAST);
         // init all voting vars for the voters
         for (int i = 1; i <= numberOfTimesVoted; i++) {
@@ -612,8 +611,8 @@ public class CBMCCodeGenerator {
             code.add("unsigned int " + UnifiedNameContainer.getSeats() + i
                      + " = " + UnifiedNameContainer.getSeats() + ";");
         }
-        List<String> boundedVars =
-                preAndPostCondDesc.getBoundedVarDescription().getCodeAsList();
+        List<String> boundedVars
+              = preAndPostCondDesc.getBoundedVarDescription().getCodeAsList();
         code.addList(boundedVars);
         // first the Variables have to be Initialized
         addSymbVarInitialisation();
@@ -636,8 +635,8 @@ public class CBMCCodeGenerator {
      * This should be used to create the VarInitialisation within the main method.
      */
     private void addSymbVarInitialisation() {
-        List<SymbolicVariable> symbolicVariableList =
-                preAndPostCondDesc.getSymbolicVariableList();
+        List<SymbolicVariable> symbolicVariableList
+              = preAndPostCondDesc.getSymbolicVariableList();
         code.add("//Symbolic Variables initialisation");
         symbolicVariableList.forEach((symbVar) -> {
             InternalTypeContainer internalType = symbVar.getInternalTypeContainer();
@@ -724,16 +723,16 @@ public class CBMCCodeGenerator {
 
     private void initializeNumberOfTimesVoted(BooleanExpListNode preAST,
                                               BooleanExpListNode postAST) {
-        numberOfTimesVoted =
-                (preAST.getMaxVoteLevel() > postAST.getMaxVoteLevel())
+        numberOfTimesVoted
+              = (preAST.getMaxVoteLevel() > postAST.getMaxVoteLevel())
                 ? preAST.getMaxVoteLevel()
                         : postAST.getMaxVoteLevel();
-        numberOfTimesVoted =
-                (preAST.getHighestElect() > numberOfTimesVoted)
+        numberOfTimesVoted
+              = (preAST.getHighestElect() > numberOfTimesVoted)
                 ? preAST.getHighestElect()
                         : numberOfTimesVoted;
-        numberOfTimesVoted =
-                (postAST.getHighestElect() > numberOfTimesVoted)
+        numberOfTimesVoted
+              = (postAST.getHighestElect() > numberOfTimesVoted)
                 ? postAST.getHighestElect()
                         : numberOfTimesVoted;
     }
@@ -751,8 +750,8 @@ public class CBMCCodeGenerator {
             int listDepth = 0;
             for (int i = 0; i < electionDesc.getContainer().getInputType().getDimension(); i++) {
                 String currentFor = forTemplate.replaceAll("COUNTER", "counter_" + listDepth);
-                currentFor =
-                        currentFor.replaceAll(
+                currentFor
+                      = currentFor.replaceAll(
                                 "UPPER",
                                 electionDesc.getContainer().getInputType()
                                 .getMaximalSize(listDepth) + voteNumber);
@@ -773,8 +772,8 @@ public class CBMCCodeGenerator {
                 votesElement += "[COUNTER]".replace("COUNTER", "counter_" + i);
             }
             String nondetInt = (votesElement + " = nondet_uint();");
-            String voteDecl =
-                    ("assume((MIN <= " + votesElement
+            String voteDecl
+                  = ("assume((MIN <= " + votesElement
                             + ") && (" + votesElement + " < MAX));");
             voteDecl = voteDecl.replace("MIN", min);
             voteDecl = voteDecl.replace("MAX", max);
@@ -793,8 +792,8 @@ public class CBMCCodeGenerator {
     }
 
     private BooleanExpListNode generateAST(String code) {
-        FormalPropertyDescriptionLexer l =
-                new FormalPropertyDescriptionLexer(CharStreams.fromString(code));
+        FormalPropertyDescriptionLexer l
+              = new FormalPropertyDescriptionLexer(CharStreams.fromString(code));
         CommonTokenStream ts = new CommonTokenStream(l);
         FormalPropertyDescriptionParser p = new FormalPropertyDescriptionParser(ts);
 

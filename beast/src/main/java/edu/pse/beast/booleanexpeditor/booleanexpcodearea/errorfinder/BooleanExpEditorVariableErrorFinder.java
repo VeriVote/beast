@@ -2,6 +2,7 @@ package edu.pse.beast.booleanexpeditor.booleanexpcodearea.errorfinder;
 
 import java.util.ArrayList;
 
+import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
@@ -17,13 +18,13 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
  * @author Nikolai Schnell
  */
 public final class BooleanExpEditorVariableErrorFinder {
-    private BooleanExpEditorVariableErrorFinder() {}
+    private BooleanExpEditorVariableErrorFinder() { }
 
     public static ArrayList<CodeError> getErrors(BooleanExpANTLRHandler antlrHandler,
                                                  SymbolicVariableList list,
                                                  NewCodeArea codeArea) {
-        FormalExpErrorFinderTreeListener listener =
-                new FormalExpErrorFinderTreeListener(
+        FormalExpErrorFinderTreeListener listener
+              =  new FormalExpErrorFinderTreeListener(
                     list, codeArea,
                     codeArea.getElectionDescription()
                 );
@@ -31,7 +32,7 @@ public final class BooleanExpEditorVariableErrorFinder {
         ParseTreeWalker walker = new ParseTreeWalker();
         try {
             walker.walk(listener, tree);
-        } catch (Exception e) {
+        } catch (RecognitionException e) {
             e.printStackTrace();
             return new ArrayList<CodeError>();
         }

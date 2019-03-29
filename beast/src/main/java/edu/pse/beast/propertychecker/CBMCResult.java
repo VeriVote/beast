@@ -194,19 +194,19 @@ public class CBMCResult extends Result {
             if (getResult() != null && getElectionDescription() != null) {
                 // define these arrays, because switch case does not let me reassign
                 // the same name, and i am a bit worried, that they will not get created properly;
-                List<CBMCResultWrapperMultiArray> votesList =
-                        getElectionDescription().getContainer().getInputType()
+                List<CBMCResultWrapperMultiArray> votesList
+                      = getElectionDescription().getContainer().getInputType()
                         .readVoteList(getResult());
-                List<CBMCResultWrapperSingleArray> singleVotesList =
-                        getElectionDescription().getContainer()
+                List<CBMCResultWrapperSingleArray> singleVotesList
+                      = getElectionDescription().getContainer()
                         .getInputType().readSingleVoteList(getResult());
 
                 // this list can be empty, if no voting for seats took place
-                List<CBMCResultWrapperSingleArray> seatsList =
-                        getElectionDescription().getContainer().getOutputType()
+                List<CBMCResultWrapperSingleArray> seatsList
+                      = getElectionDescription().getContainer().getOutputType()
                         .readSeatList(getResult());
-                List<CBMCResultWrapperLong> elect =
-                        getElectionDescription().getContainer().getOutputType()
+                List<CBMCResultWrapperLong> elect
+                      = getElectionDescription().getContainer().getOutputType()
                         .readElect(getResult());
                 toReturn = new FailureExample(getElectionDescription(), singleVotesList,
                                               votesList, elect, seatsList,
@@ -215,14 +215,14 @@ public class CBMCResult extends Result {
 //              (*)
                 // determine the values for the symbolic variables that the user set
                 // get ALL symbolic variables
-                List<SymbolicVariable> symbolicVariableList =
-                        super.getPropertyDesctiption().getSymbolicVariablesCloned();
+                List<SymbolicVariable> symbolicVariableList
+                      = super.getPropertyDesctiption().getSymbolicVariablesCloned();
                 // iterate through them
                 for (Iterator<SymbolicVariable> iterator = symbolicVariableList.iterator();
                         iterator.hasNext();) {
                     SymbolicVariable symbolicVariable = (SymbolicVariable) iterator.next();
-                    InternalTypeContainer internalType =
-                            symbolicVariable.getInternalTypeContainer();
+                    InternalTypeContainer internalType
+                          = symbolicVariable.getInternalTypeContainer();
                     String name = symbolicVariable.getId();
                     if (!internalType.isList()) {
                         // extract the value of "name" in the result
@@ -255,8 +255,8 @@ public class CBMCResult extends Result {
             }
         } else {
             // we have a margin computation and create the corresponding example object
-            FailureExample toReturn =
-                    new FailureExample(getElectionDescription(),
+            FailureExample toReturn
+                  = new FailureExample(getElectionDescription(),
                                        null, null, null, null,
                                        0, 0, 0);
             toReturn.setHasFinalMargin(hasFinalMargin());
@@ -320,8 +320,8 @@ public class CBMCResult extends Result {
                     boolean added = false;
                     for (Iterator<CBMCResultWrapperLong> innerIterator = toReturn.iterator();
                             innerIterator.hasNext();) {
-                        CBMCResultWrapperLong wrapper =
-                                (CBMCResultWrapperLong) innerIterator.next();
+                        CBMCResultWrapperLong wrapper
+                              = (CBMCResultWrapperLong) innerIterator.next();
                         if (wrapper.getMainIndex() == electIndex) {
                             wrapper.setValue(value);
                             added = true;
@@ -359,20 +359,20 @@ public class CBMCResult extends Result {
             if (line.contains("[")) {
                 // pattern that checks for a pattern like
                 // "votesNUMBER[NUMBER(letters)] = ...."
-                votesExtractor =
-                        Pattern.compile("(\\b" + name
+                votesExtractor
+                      = Pattern.compile("(\\b" + name
                                         + "[0-9]+\\[[0-9]+[a-zA-Z]*\\])(=.*)");
                 Matcher votesMatcher = votesExtractor.matcher(line);
                 if (votesMatcher.find()) {
                     String newLine = votesMatcher.group(1);
                     // find out the number of this votes array
-                    int mainIndex =
-                            Integer.parseInt(
+                    int mainIndex
+                          = Integer.parseInt(
                                     newLine.split("=")[0]
                                             .split(name)[1].split("\\[")[0]);
                     // get the first index for this array value
-                    int arrayIndex = Integer
-                            .parseInt(
+                    int arrayIndex
+                        = Integer.parseInt(
                                     (newLine.split("\\[")[1].split("\\]")[0])
                                     .replaceAll("[^\\d.]", ""));
                     // split at the "(" and ")" to extract the value
@@ -381,8 +381,8 @@ public class CBMCResult extends Result {
                     boolean added = false;
                     for (Iterator<CBMCResultWrapperSingleArray> innerIterator = list.iterator();
                             innerIterator.hasNext();) {
-                        CBMCResultWrapperSingleArray wrapper =
-                                (CBMCResultWrapperSingleArray) innerIterator.next();
+                        CBMCResultWrapperSingleArray wrapper
+                              = (CBMCResultWrapperSingleArray) innerIterator.next();
                         if (wrapper.getMainIndex() == mainIndex) {
                             wrapper.addTo(arrayIndex, value);
                             added = true;
@@ -414,8 +414,8 @@ public class CBMCResult extends Result {
                             for (Iterator<CBMCResultWrapperSingleArray> innerIterator
                                     = list.iterator();
                                     innerIterator.hasNext();) {
-                                CBMCResultWrapperSingleArray wrapper =
-                                        (CBMCResultWrapperSingleArray) innerIterator.next();
+                                CBMCResultWrapperSingleArray wrapper
+                                      = (CBMCResultWrapperSingleArray) innerIterator.next();
                                 if (wrapper.getMainIndex() == mainIndex) {
                                     wrapper.addTo(i, "" + Long.parseLong(subValueArray[i], 2));
                                     added = true;
@@ -455,37 +455,37 @@ public class CBMCResult extends Result {
                 // "votesNUMBER[NUMBER][NUMBER]" where "NUMBER" can by any
                 // positive
                 // number. Also, the next character has to be an equals sign
-                votesExtractor =
-                        Pattern.compile(
+                votesExtractor
+                      = Pattern.compile(
                                 "(\\b" + name
                                 + "[0-9]+\\[[0-9]+[a-z]*\\]\\[[0-9]+[a-zA-z]*\\])(=.*)");
                 Matcher votesMatcher = votesExtractor.matcher(line);
                 if (votesMatcher.find()) {
                     String newLine = votesMatcher.group(1);
                     // find out the number of this votes array
-                    int mainIndex =
-                            Integer.parseInt(
+                    int mainIndex
+                          = Integer.parseInt(
                                     newLine.split("=")[0].split(name)[1]
                                             .split("\\[")[0]);
                     // get the first index for this array value
-                    int arrayIndexOne =
-                            Integer.parseInt(
+                    int arrayIndexOne
+                          = Integer.parseInt(
                                     newLine.split("\\[")[1].split("\\]")[0]
                                             .replaceAll("[^\\d.]", ""));
                     // get the second index for this array value
-                    int arrayIndexTwo =
-                            Integer.parseInt(
+                    int arrayIndexTwo
+                          = Integer.parseInt(
                                     newLine.split("\\[")[2].split("\\]")[0]
                                             .replaceAll("[^\\d.]", ""));
                     // split at the "(" and ")" to extract the value
                     String valueAsString = line.split("\\(")[1].split("\\)")[0];
                     String value = "" + Long.parseLong(valueAsString, 2);
                     boolean added = false;
-                    for (Iterator<CBMCResultWrapperMultiArray> innerIterator =
-                            list.iterator();
+                    for (Iterator<CBMCResultWrapperMultiArray> innerIterator
+                          = list.iterator();
                             innerIterator.hasNext();) {
-                        CBMCResultWrapperMultiArray wrapper =
-                                (CBMCResultWrapperMultiArray) innerIterator.next();
+                        CBMCResultWrapperMultiArray wrapper
+                              = (CBMCResultWrapperMultiArray) innerIterator.next();
                         if (wrapper.getMainIndex() == mainIndex) {
                             wrapper.addTo(arrayIndexOne, arrayIndexTwo, value);
                             added = true;
@@ -498,8 +498,8 @@ public class CBMCResult extends Result {
                 }
             } else if (line.contains("{")) {
                 // searches for votesNUMBER={....}
-                votesExtractor =
-                        Pattern.compile(
+                votesExtractor
+                      = Pattern.compile(
                                 "(\\b" + name
                                 + "[0-9]+)=(\\{\\s*((\\{(.*)\\}(,)*\\s*)*)})");
                 Matcher votesMatcher = votesExtractor.matcher(line);
@@ -521,11 +521,11 @@ public class CBMCResult extends Result {
                         for (int j = 0; j < subValues.length; j++) {
                             if (!subValues[j].equals("")) {
                                 boolean added = false;
-                                for (Iterator<CBMCResultWrapperMultiArray> innerIterator =
-                                        list.iterator();
+                                for (Iterator<CBMCResultWrapperMultiArray> innerIterator
+                                      = list.iterator();
                                         innerIterator.hasNext();) {
-                                    CBMCResultWrapperMultiArray wrapper =
-                                            (CBMCResultWrapperMultiArray) innerIterator.next();
+                                    CBMCResultWrapperMultiArray wrapper
+                                          = (CBMCResultWrapperMultiArray) innerIterator.next();
                                     if (wrapper.getMainIndex() == mainIndex) {
                                         wrapper.addTo(i, j, "" + Long.parseLong(subValues[j], 2));
                                         added = true;

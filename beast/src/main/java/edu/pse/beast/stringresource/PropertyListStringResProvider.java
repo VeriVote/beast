@@ -54,5 +54,4 @@ public class PropertyListStringResProvider extends StringResourceProvider {
         menuStringRes = this.getStringResourceLoaderFromModuleName("PropertyListMenu");
         otherStringRes = this.getStringResourceLoaderFromModuleName("PropertyListOther");
     }
-
 }

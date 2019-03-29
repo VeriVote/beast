@@ -58,5 +58,4 @@ public class SaverLoaderHelper {
         currentSaveString = currentSaveString.substring(i + 1);
         return Integer.valueOf(numberS);
     }
-
 }
