@@ -53,6 +53,16 @@ public class ElectionCheckParameter {
         this.argument = argument;
     }
 
+    public ElectionCheckParameter(List<Integer> amountVoters,
+                                  List<Integer> amountCandidates,
+                                  List<Integer> amountSeats,
+                                  TimeOut timeOut,
+                                  Integer processes,
+                                  String argument) {
+        this(amountVoters, amountCandidates, amountSeats,
+             1, 1, 1, timeOut, processes, argument);
+}
+
     /**
      *
      * @return the list that specifies the range of voters

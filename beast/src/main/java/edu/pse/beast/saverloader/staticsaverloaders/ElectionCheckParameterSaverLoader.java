@@ -17,6 +17,7 @@ public final class ElectionCheckParameterSaverLoader {
     private static final char BREAK        = '\n';
     private static final char SLASH        = '/';
 
+    private static final String EMPTY      = "";
     private static final String MIN        = "Min";
     private static final String MAX        = "Max";
     private static final String VOTERS     = "amountVoters";
@@ -26,7 +27,67 @@ public final class ElectionCheckParameterSaverLoader {
     private static final String PROCS      = "processes";
     private static final String ARG        = "argument";
 
+    private static String[] splitString = {EMPTY};
+
     private ElectionCheckParameterSaverLoader() { }
+
+    private static void setString(final String s) {
+        splitString = new String[] {s};
+    }
+
+    private static void resetString() {
+        setString(EMPTY);
+    }
+
+    private static String boundString(final String type, final String minOrMax) {
+        return EMPTY + BREAK + LEFT + SLASH + type + minOrMax + RIGHT + BREAK;
+    }
+
+    private static String boundString(String type) {
+        return boundString(type, EMPTY);
+    }
+
+    private static String valString(final String type, final String minOrMax) {
+        return LEFT + type + minOrMax + RIGHT + BREAK;
+    }
+
+    private static String valString(String type) {
+        return valString(type, EMPTY);
+    }
+
+    private static String removeFrom(String[] src, String remove) {
+        return src[0].replace(EMPTY + remove, EMPTY);
+    }
+
+    private static String getString(String type, String minOrMax) {
+        final int idx = splitString.length <= 1 ? 0 : 1;
+        splitString = splitString[idx].split(boundString(type, minOrMax));
+        return removeFrom(splitString, valString(type, minOrMax));
+    }
+
+    private static String getString(String type) {
+        return getString(type, EMPTY);
+    }
+
+    private static int getInt(String type, String minOrMax) {
+        return Integer.parseInt(getString(type, minOrMax));
+    }
+
+    private static int getInt(String type) {
+        return getInt(type, EMPTY);
+    }
+
+    private static ArrayList<Integer> toIntList(int start, int end) {
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = start; i <= end; i++) {
+            list.add(i);
+        }
+        return list;
+    }
+
+    private static ArrayList<Integer> getList(final String type) {
+        return toIntList(getInt(type, MIN), getInt(type, MAX));
+    }
 
     /**
      * Creates a String from a given ElectionCheckParameter, that can then be saved
@@ -38,44 +99,40 @@ public final class ElectionCheckParameterSaverLoader {
      */
     public static String createSaveString(ElectionCheckParameter electionCheckParameter) {
         final String amountVotersMin
-              = LEFT + VOTERS + MIN + RIGHT + BREAK
+              = valString(VOTERS, MIN)
                 + electionCheckParameter.getAmountVoters().get(0)
-                + BREAK + LEFT + SLASH + VOTERS + MIN + RIGHT + BREAK;
+                + boundString(VOTERS, MIN);
         final String amountVotersMax
-              = LEFT + VOTERS + MAX + RIGHT + BREAK
+              = valString(VOTERS, MAX)
                 + electionCheckParameter.getAmountVoters()
                     .get(electionCheckParameter.getAmountVoters().size() - 1)
-                + BREAK + LEFT + SLASH + VOTERS + MAX + RIGHT + BREAK;
+                + boundString(VOTERS, MAX);
         final String amountCandidatesMin
-              = LEFT + CANDIDATES + MIN + RIGHT + BREAK
+              = valString(CANDIDATES, MIN)
                 + electionCheckParameter.getAmountCandidates().get(0)
-                + BREAK + LEFT + SLASH + CANDIDATES + MIN + RIGHT + BREAK;
+                + boundString(CANDIDATES, MIN);
         final String amountCandidatesMax
-              = LEFT + CANDIDATES + MAX + RIGHT + BREAK
+              = valString(CANDIDATES, MAX)
                 + electionCheckParameter.getAmountCandidates()
                     .get(electionCheckParameter.getAmountCandidates().size() - 1)
-                    + BREAK + LEFT + SLASH + CANDIDATES + MAX + RIGHT + BREAK;
+                + boundString(CANDIDATES, MAX);
         final String amountSeatsMin
-              = LEFT + SEATS + MIN + RIGHT + BREAK
+              = valString(SEATS, MIN)
                 + electionCheckParameter.getAmountSeats().get(0)
-                + BREAK + LEFT + SLASH + SEATS + MIN + RIGHT + BREAK;
+                + boundString(SEATS, MIN);
         final String amountSeatsMax
-              = LEFT + SEATS + MAX + RIGHT + BREAK
+              = valString(SEATS, MAX)
                 + electionCheckParameter.getAmountSeats()
                     .get(electionCheckParameter.getAmountSeats().size() - 1)
-                    + BREAK + LEFT + SLASH + SEATS + MAX + RIGHT + BREAK;
+                + boundString(SEATS, MAX);
         final String timeout
-              = LEFT + TIMEOUT + RIGHT + BREAK
+              = valString(TIMEOUT)
                 + TimeOutSaverLoader.createSaveString(electionCheckParameter.getTimeout())
-                + BREAK + LEFT + SLASH + TIMEOUT + RIGHT + BREAK;
+                + boundString(TIMEOUT);
         final String processes
-              = LEFT + PROCS + RIGHT + BREAK
-                + electionCheckParameter.getProcesses()
-                + BREAK + LEFT + SLASH + PROCS + RIGHT + BREAK;
+              = valString(PROCS) + electionCheckParameter.getProcesses() + boundString(PROCS);
         final String argument
-              = LEFT + ARG + RIGHT + BREAK
-                + electionCheckParameter.getArgument()
-                + BREAK + LEFT + SLASH + ARG + RIGHT + BREAK;
+              = valString(ARG) + electionCheckParameter.getArgument() + boundString(ARG);
         return (amountVotersMin + amountVotersMax
                 + amountCandidatesMin + amountCandidatesMax
                 + amountSeatsMin + amountSeatsMax
@@ -91,46 +148,15 @@ public final class ElectionCheckParameterSaverLoader {
      *                                        valid format
      */
     public static Object createFromSaveString(String s) throws ArrayIndexOutOfBoundsException {
-        String split[] = s.split(BREAK + LEFT + SLASH + VOTERS + MIN + RIGHT + BREAK);
-        int amountVotersMin
-            = Integer.parseInt(split[0].replace(LEFT + VOTERS + MIN + RIGHT + BREAK, ""));
-        split = split[1].split(BREAK + LEFT + SLASH + VOTERS + MAX + RIGHT + BREAK);
-        int amountVotersMax
-            = Integer.parseInt(split[0].replace(LEFT + VOTERS + MAX + RIGHT + BREAK, ""));
-        ArrayList<Integer> amountVoters = new ArrayList<>();
-        for (int i = amountVotersMin; i <= amountVotersMax; i++) {
-            amountVoters.add(i);
-        }
-        split = split[1].split(BREAK + LEFT + SLASH + CANDIDATES + MIN + RIGHT + BREAK);
-        int amountCandidatesMin
-            = Integer.parseInt(split[0].replace(LEFT + CANDIDATES + MIN + RIGHT + BREAK, ""));
-        split = split[1].split(BREAK + LEFT + SLASH + CANDIDATES + MAX + RIGHT + BREAK);
-        int amountCandidatesMax
-            = Integer.parseInt(split[0].replace(LEFT + CANDIDATES + MAX + RIGHT + BREAK, ""));
-        ArrayList<Integer> amountCandidates = new ArrayList<>();
-        for (int i = amountCandidatesMin; i <= amountCandidatesMax; i++) {
-            amountCandidates.add(i);
-        }
-        split = split[1].split(BREAK + LEFT + SLASH + SEATS + MIN + RIGHT + BREAK);
-        int amountSeatsMin
-            = Integer.parseInt(split[0].replace(LEFT + SEATS + MIN + RIGHT + BREAK, ""));
-        split = split[1].split(BREAK + LEFT + SLASH + SEATS + MAX + RIGHT + BREAK);
-        int amountSeatsMax
-            = Integer.parseInt(split[0].replace(LEFT + SEATS + MAX + RIGHT + BREAK, ""));
-        ArrayList<Integer> amountSeats = new ArrayList<>();
-        for (int i = amountSeatsMin; i <= amountSeatsMax; i++) {
-            amountSeats.add(i);
-        }
-        split = split[1].split(BREAK + LEFT + SLASH + TIMEOUT + RIGHT + BREAK);
-        String st = split[0].replace(LEFT + TIMEOUT + RIGHT + BREAK, "");
-        TimeOut timeout
-            = TimeOutSaverLoader.createFromSaveString(st);
-        split = split[1].split(BREAK + LEFT + SLASH + PROCS + RIGHT + BREAK);
-        int processes
-            = Integer.parseInt(split[0].replace(LEFT + PROCS + RIGHT + BREAK, ""));
-        split = split[1].split(BREAK + LEFT + SLASH + ARG + RIGHT + BREAK);
-        String argument = split[0].replace(LEFT + ARG + RIGHT + BREAK, "");
+        setString(s);
+        final ArrayList<Integer> amountVoters = getList(VOTERS);
+        final ArrayList<Integer> amountCandidates = getList(CANDIDATES);
+        final ArrayList<Integer> amountSeats = getList(SEATS);
+        final TimeOut timeout = TimeOutSaverLoader.createFromSaveString(getString(TIMEOUT));
+        final int processes = getInt(PROCS);
+        final String argument = getString(ARG);
+        resetString();
         return new ElectionCheckParameter(amountVoters, amountCandidates, amountSeats,
-                                          1, 1, 1, timeout, processes, argument);
+                                          timeout, processes, argument);
     }
 }
