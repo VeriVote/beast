@@ -5,6 +5,8 @@ import static org.fxmisc.wellbehaved.event.EventPattern.anyOf;
 // import static org.fxmisc.wellbehaved.event.EventPattern.keyPressed;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.Enumeration;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -35,9 +37,11 @@ import javafx.stage.WindowEvent;
  */
 public class MainClass extends Application {
     private static final String TITLE = "BEAST";
-    private static final String RESOURCE = "javafx/BEAST.fxml";
+    private static final String RESOURCE = "/src/main/resources/edu/pse/beast/highlevel/javafx/BEAST.fxml";
+    //private static final String RESOURCE = "/edu/pse/beast/highlevel/javafx/BEAST.fxml";
     private static final String RESOURCE_BUNDLE
-          = "edu.pse.beast.highlevel.javafx.bundles.LangBundle";
+         // = "/src/main/resources/edu.pse.beast.highlevel.javafx.bundles.LangBundle";
+    = "edu.pse.beast.highlevel.javafx.bundles.LangBundle";
     private static final String BEAST_ICON = "/core/images/other/BEAST.png";
     private static final String FILE_STRING = "file:///";
 
@@ -57,7 +61,6 @@ public class MainClass extends Application {
         // PSECentralObjectProvider(communicator);
         // communicator.setCentralObjectProvider(centralObjectProvider);
         launch(args);
-
     }
 
     @Override
@@ -68,7 +71,7 @@ public class MainClass extends Application {
             GUIController controller = new GUIController(mainStage);
             FXMLLoader loader
                   = new FXMLLoader(
-                            getClass().getResource(RESOURCE),
+                		  new URL("file:///" + SuperFolderFinder.getSuperFolder() + RESOURCE),
                             ResourceBundle.getBundle(RESOURCE_BUNDLE, locale));
             loader.setController(controller);
             Parent root = loader.load();
