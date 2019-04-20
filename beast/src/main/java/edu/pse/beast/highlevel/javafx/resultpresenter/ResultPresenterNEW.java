@@ -1,7 +1,6 @@
 package edu.pse.beast.highlevel.javafx.resultpresenter;
 
 import java.awt.Color;
-import java.
 import java.awt.image.BufferedImage;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import javafx.scene.image.ImageView;
