@@ -65,18 +65,23 @@ module beast {
 	exports edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr;
 	
 	requires java.sql;
-	requires transitive antlr4;
+	requires antlr4;
+	//requires transitive antlr4;
 	requires com.sun.jna;
 	requires com.sun.jna.platform;
 	requires flowless;
 	requires gson;
 	requires java.datatransfer;
-	requires transitive java.desktop;
+	requires java.desktop;
+	//requires transitive antlr4;
 	requires java.logging;
-	requires transitive javafx.base;
-	requires transitive javafx.controls;
+	requires javafx.base;
+	//requires transitive javafx.base;
+	requires javafx.controls;
+	//requires transitive javafx.controls;
 	requires javafx.fxml;
-	requires transitive javafx.graphics;
+	requires javafx.graphics;
+	//requires transitive javafx.graphics;
 	requires org.antlr.antlr4.runtime;
 	requires org.apache.commons.io;
 	requires org.apache.commons.lang3;
