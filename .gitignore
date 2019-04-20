@@ -59,3 +59,4 @@ beast/core/c_tempfiles/*.bat
 beast/.settings/org.eclipse.jdt.core.prefs
 beast/.classpath
 beast/windows/VsDevCmd.bat
+*.prefs

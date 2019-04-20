@@ -144,6 +144,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     private int lockedBracePos;
     // private int amountTabs = 0;
     private int spacesPerTab = 4;
+    
+    private String lastChar = "";
 
     public NewCodeArea() {
         // add all standard recommendations
@@ -173,6 +175,9 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
             String value = (event.getCharacter()).replaceAll("\\p{Cntrl}", "");
             System.out.println("value: " + event.getCharacter());
             System.out.println(value.equals("\t"));
+            
+            int step = 0;
+            
             if (value.length() != 1) {
                 return;
             } else {
@@ -180,9 +185,11 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
                 switch (value) {
                 case "(":
                     replacement = "()";
+                    step = -1;
                     break;
                 case "[":
                     replacement = "[]";
+                    step = -1;
                     break;
                 case "{":
                     replacement = "{\n\n}";
@@ -191,6 +198,10 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
                     break;
                 }
                 lockedLineSafeInsertText(replacement, false, false, null);
+                
+                this.moveTo(Math.max(0, this.getCaretPosition() + step));
+                
+                this.lastChar = value;
             }
         });
 

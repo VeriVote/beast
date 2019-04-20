@@ -72,6 +72,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class GUIController {
@@ -251,8 +252,8 @@ public class GUIController {
 	private TreeView<CustomTreeItem> treeView;
 
 	@FXML
-	private TextArea solutionField;
-
+	private Pane solutionPane;
+	
 	@FXML
 	private TabPane mainTabPane;
 
@@ -679,7 +680,7 @@ public class GUIController {
 		// reset the property fields
 		GUIController.getController().resultNameField.setText("No property selected.");
 		// reset the result field
-		GUIController.getController().getResultField().setText("");
+		GUIController.getController().getResultPane().getChildren().clear();
 	}
 
 	private void removeAllProperties() {
@@ -936,7 +937,7 @@ public class GUIController {
 		}
 		GUIController.getController().resultNameField.setText("no property selected");
 		// reset the result field
-		GUIController.getController().getResultField().setText("");
+		GUIController.getController().getResultPane().getChildren().clear();
 	}
 
 	@FXML
@@ -1405,8 +1406,8 @@ public class GUIController {
 		return controller;
 	}
 
-	public TextArea getResultField() {
-		return solutionField;
+	public Pane getResultPane() {
+		return solutionPane;
 	}
 
 	public NewCodeArea getCodeArea() {

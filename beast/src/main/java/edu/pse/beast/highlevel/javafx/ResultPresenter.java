@@ -25,25 +25,25 @@ public class ResultPresenter implements Runnable {
         new Thread(this).start();
     }
 
-    private void tmp() {
-        if (result != null && result.isFinished()) {
-            if (!result.isValid()) {
-            } else {
-                if (result.isSuccess()) {
-                    GUIController.getController().getResultField().setText("ASSERTION HOLDS");
-                    GUIController.getController().getMainTabPane().getSelectionModel()
-                            .select(GUIController.getController().getResultTab());
-                } else {
-                    // ResultPresenter.presentFailureExample(result);
-
-                    // GUIController.getController().getResultField().setText(String.join("\n",
-                    // presentResult()));
-                    GUIController.getController().getMainTabPane().getSelectionModel()
-                            .select(GUIController.getController().getResultTab());
-                }
-            }
-        }
-    }
+//    private void tmp() {
+//        if (result != null && result.isFinished()) {
+//            if (!result.isValid()) {
+//            } else {
+//                if (result.isSuccess()) {
+//                    GUIController.getController().getResultField().setText("ASSERTION HOLDS");
+//                    GUIController.getController().getMainTabPane().getSelectionModel()
+//                            .select(GUIController.getController().getResultTab());
+//                } else {
+//                    // ResultPresenter.presentFailureExample(result);
+//
+//                    // GUIController.getController().getResultField().setText(String.join("\n",
+//                    // presentResult()));
+//                    GUIController.getController().getMainTabPane().getSelectionModel()
+//                            .select(GUIController.getController().getResultTab());
+//                }
+//            }
+//        }
+//    }
 
     @Override
     public void run() {
@@ -87,7 +87,7 @@ public class ResultPresenter implements Runnable {
                 default:
                     break;
                 }
-                GUIController.getController().getResultField().setText(output);
+                //GUIController.getController().getResultField().setText(output);
                 if (result.isFinished()) {
                     running = false;
                 }

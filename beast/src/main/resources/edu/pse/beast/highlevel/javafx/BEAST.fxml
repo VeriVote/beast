@@ -26,11 +26,12 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="532.0" prefWidth="545.0" stylesheets="@../javafx/style.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="532.0" prefWidth="545.0" stylesheets="@../javafx/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -475,9 +476,6 @@
                 <Tab fx:id="resultPane" onSelectionChanged="#resultPaneClicked" text="%key.result">
                            <content>
                               <BorderPane>
-                                 <center>
-                                    <TextArea fx:id="solutionField" editable="false" text="&#10;" BorderPane.alignment="CENTER" />
-                                 </center>
                                  <top>
                                     <BorderPane BorderPane.alignment="CENTER">
                                        <center>
@@ -502,6 +500,9 @@
                                        </top>
                                     </BorderPane>
                                  </top>
+                                 <center>
+                                    <Pane fx:id="solutionPane" BorderPane.alignment="CENTER" />
+                                 </center>
                               </BorderPane>
                            </content></Tab>
               </tabs>

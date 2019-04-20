@@ -1,6 +1,12 @@
+import edu.pse.beast.types.CommonHelpMethods;
+import edu.pse.beast.types.InputType;
+import edu.pse.beast.types.OutputType;
+
 module beast {
 	uses edu.pse.beast.types.InputType;
 	uses edu.pse.beast.types.OutputType;
+	
+	uses edu.pse.beast.types.CommonHelpMethods;
 	
 	exports edu.pse.beast.datatypes;
 	exports edu.pse.beast.electionsimulator;
@@ -59,18 +65,18 @@ module beast {
 	exports edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr;
 	
 	requires java.sql;
-	requires antlr4;
+	requires transitive antlr4;
 	requires com.sun.jna;
 	requires com.sun.jna.platform;
 	requires flowless;
 	requires gson;
 	requires java.datatransfer;
-	requires java.desktop;
+	requires transitive java.desktop;
 	requires java.logging;
-	requires javafx.base;
-	requires javafx.controls;
+	requires transitive javafx.base;
+	requires transitive javafx.controls;
 	requires javafx.fxml;
-	requires javafx.graphics;
+	requires transitive javafx.graphics;
 	requires org.antlr.antlr4.runtime;
 	requires org.apache.commons.io;
 	requires org.apache.commons.lang3;
@@ -80,8 +86,25 @@ module beast {
 	requires wellbehavedfx;
 	requires java.base;
 	
-	opens edu.pse.beast.highlevel.javafx;
-	opens edu.pse.beast.datatypes.electiondescription;
-	opens edu.pse.beast.datatypes.propertydescription;
-	opens edu.pse.beast.types;
+	opens edu.pse.beast.highlevel.javafx to javafx.fxml;
+	opens edu.pse.beast.datatypes.electiondescription to gson;
+	opens edu.pse.beast.datatypes.propertydescription to gson;
+	opens edu.pse.beast.types to gson;
+	opens edu.pse.beast.types.cbmctypes.inputplugins to gson;
+	
+	//TODO maybe extract the types into their own modules
+	provides InputType with edu.pse.beast.types.cbmctypes.inputplugins.Approval,
+		edu.pse.beast.types.cbmctypes.inputplugins.Preference,
+		edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice,
+		edu.pse.beast.types.cbmctypes.inputplugins.SingleChoiceStack,
+		edu.pse.beast.types.cbmctypes.inputplugins.WeightedApproval;
+	
+	
+	provides OutputType with edu.pse.beast.types.cbmctypes.outputplugins.CandidateList, 
+		edu.pse.beast.types.cbmctypes.outputplugins.Parliament, 
+		edu.pse.beast.types.cbmctypes.outputplugins.ParliamentStack,
+		edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
+	
+	provides CommonHelpMethods with edu.pse.beast.types.cbmctypes.CbmcHelpMethods;
+	
 }
