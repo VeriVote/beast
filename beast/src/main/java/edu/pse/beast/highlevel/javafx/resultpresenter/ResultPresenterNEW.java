@@ -2,44 +2,54 @@ package edu.pse.beast.highlevel.javafx.resultpresenter;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.util.List;
+
 import edu.pse.beast.highlevel.javafx.GUIController;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.scene.Node;
+import javafx.scene.control.TextField;
 
-public class ResultPresenterNEW implements Runnable {
-	
-	
-	private ImageView view = new ImageView();
-	
-	private BufferedImage img = new BufferedImage(200, 200, BufferedImage.TYPE_4BYTE_ABGR);
 
-	public ResultPresenterNEW() {
-		
-		for(int i = 0; i < 200; i++) {
-			for(int j = 0; j < 200; j++) {
-				img.setRGB(i, j, new Color((float)Math.random(), (float)Math.random(), (float)Math.random(), (float)Math.random()).getRGB());
-			}
-		}
-		
-		
-		GUIController.getController().getResultPane().getChildren().add(view);
-		
-		//view.setImage(SwingFXUtils.toFXImage(img, null));
+/**
+ * This class is responsible to show the result of Checks.
+ * It provides ways of simply printing Text,
+ * drawing images with support for charting,
+ * and display any JavaFX node
+ * @author lukas
+ *
+ */
+public class ResultPresenterNEW {
+	
+	/**
+	 * removes all children from the result pane
+	 */
+	private static void reset() {
+		GUIController.getController().getResultPane().getChildren().clear();
 	}
-
-	@Override
-	public void run() {
-		boolean running = true;
+	
+	/**
+	 * Give the caller complete freedom how he wants to display the result.
+	 * It can be done in any way javafx permits
+	 * @param resultNode the Node which will be shown in the result window
+	 */
+	public static void setResultNode(Node resultNode) {
+		reset();
 		
-		while(running) {
-			
-			
-			
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		GUIController.getController().getResultPane().getChildren().add(resultNode);
+	}
+	
+	/**
+	 * sets the Text of the result pane.
+	 * @param resultText A list of JavaFX.scene.text.Text, which can be colored and sized as wished
+	 */
+	public static void setResultText(List<Text> resultText) {
+		reset();
+		
+		TextFlow resultTextField = new TextFlow();
+		resultTextField.getChildren().addAll(resultText);
+		GUIController.getController().getResultPane().getChildren().add(resultTextField);
 	}
 }

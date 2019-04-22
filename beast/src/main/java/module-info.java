@@ -2,7 +2,7 @@ import edu.pse.beast.types.CommonHelpMethods;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 
-module beast {
+module edu.pse.beast {
 	uses edu.pse.beast.types.InputType;
 	uses edu.pse.beast.types.OutputType;
 	
@@ -82,6 +82,7 @@ module beast {
 	requires javafx.fxml;
 	requires javafx.graphics;
 	//requires transitive javafx.graphics;
+	requires javafx.swing;
 	requires org.antlr.antlr4.runtime;
 	requires org.apache.commons.io;
 	requires org.apache.commons.lang3;
