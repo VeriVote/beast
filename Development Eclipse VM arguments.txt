@@ -1,0 +1,9 @@
+--add-exports javafx.graphics/com.sun.javafx.geom=richtextfx
+--add-exports javafx.graphics/com.sun.javafx.scene.text=richtextfx
+--add-exports javafx.graphics/com.sun.javafx.text=richtextfx
+
+--add-opens javafx.graphics/javafx.scene=richtextfx 
+--add-opens javafx.graphics/javafx.scene.text=richtextfx
+--add-opens javafx.graphics/com.sun.javafx.text=richtextfx
+
+--add-opens java.base/java.lang=beast
