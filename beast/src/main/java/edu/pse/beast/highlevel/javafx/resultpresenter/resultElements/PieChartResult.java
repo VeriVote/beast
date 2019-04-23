@@ -3,6 +3,7 @@ package edu.pse.beast.highlevel.javafx.resultpresenter.resultElements;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Arc2D;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,6 +13,8 @@ import javafx.scene.input.MouseEvent;
 public class PieChartResult extends ResultImageElement {
 
 	private List<Triplet<String, Double, Color>> resultValues;
+	
+	private List<Boolean> clicked = new ArrayList<Boolean>();
 
 	private double totalSize = 0;
 
@@ -52,9 +55,7 @@ public class PieChartResult extends ResultImageElement {
 
 	@Override
 	public void isClicked(MouseEvent event) {
-		System.out.println("wurde geklickt auf y: " + event.getY());
-		// TODO Auto-generated method stub
-		System.out.println("clicked on the pie chart");
+		//do nothing so far
 	}
 
 	@Override

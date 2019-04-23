@@ -3,7 +3,6 @@ package edu.pse.beast.highlevel.javafx.resultpresenter;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.ScrollPane;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,18 +10,18 @@ import java.util.List;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.resultpresenter.resultElements.ResultImageElement;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
-import javafx.scene.input.ZoomEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 
 public class ResultImageRenderer {
+
+	private static double scrollPosV;
+	private static double scrollPosH;
 
 	private static Boolean drawingBlocked = false;
 
@@ -57,6 +56,7 @@ public class ResultImageRenderer {
 				updateImageSizeAndRedraw();
 			}
 		});
+
 		GUIController.getController().getResultBorderPane().heightProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight,
@@ -94,21 +94,6 @@ public class ResultImageRenderer {
 				drawElements();
 			}
 		});
-//		alte zoom methode
-//		view.addEventHandler(ZoomEvent.ANY,  new EventHandler<ZoomEvent>() {
-//
-//			@Override
-//			public void handle(ZoomEvent event) {
-//				
-//				currentScale = currentScale * (event.getTotalZoomFactor());
-//				
-//				System.out.println("currentScale: " + currentScale);
-//				
-//				updateImageSizeAndRedraw();
-//				
-//				event.consume();
-//			}
-//		});
 	}
 
 	public synchronized static void reset() {
@@ -134,7 +119,6 @@ public class ResultImageRenderer {
 	 * view
 	 */
 	public static void drawElements() {
-		System.out.println("draw: " + elementList.size());
 		if (image.getWidth() != imageDesiredWidth || image.getHeight() != imageDesiredHeight) {
 			updateImageSize();
 		}
@@ -183,6 +167,7 @@ public class ResultImageRenderer {
 	private static void updateImageSizeAndRedraw() {
 		updateImageSize();
 		drawElements();
+		setScrollBars();
 	}
 
 	private synchronized static void zoomTo(double zoomValue) {
@@ -201,19 +186,21 @@ public class ResultImageRenderer {
 		}
 
 		// preserve the previous scroll setting
-		
-		System.out.println("vmin: " + GUIController.getController().getResultScrollPane().getVmin());
-		
-		double prevScrollV = GUIController.getController().getResultScrollPane().getVvalue()
-				/ GUIController.getController().getResultScrollPane().getVmax();
+		scrollPosV = GUIController.getController().getResultScrollPane().getVvalue();
 
-		System.out.println("prevscrollV: " + prevScrollV);
-
-		double prevScrollH = GUIController.getController().getResultScrollPane().getHvalue() / GUIController.getController().getResultScrollPane().getHmax();
-
-		ResultPresenterNEW.setNextScrollPostion(prevScrollV, prevScrollH);
+		scrollPosH = GUIController.getController().getResultScrollPane().getHvalue();
 
 		updateImageSizeAndRedraw();
 	}
 
+	private static void setScrollBars() {
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				GUIController.getController().getResultScrollPane().setVvalue(scrollPosV);
+
+				GUIController.getController().getResultScrollPane().setHvalue(scrollPosH);
+			}
+		});
+	}
 }

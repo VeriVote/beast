@@ -18,10 +18,6 @@ import javafx.scene.text.TextFlow;
  */
 public class ResultPresenterNEW {
 	
-	private static double scrollPosV;
-	private static double scrollPosH;
-	private static boolean scrollChanged = false;
-	
 	/**
 	 * removes all children from the result pane
 	 */
@@ -37,7 +33,6 @@ public class ResultPresenterNEW {
 	public static void setResultNode(Node resultNode) {
 		reset();
 		GUIController.getController().getResultPane().getChildren().add(resultNode);
-		setScrollBars();
 	}
 	
 	/**
@@ -50,21 +45,5 @@ public class ResultPresenterNEW {
 		TextFlow resultTextField = new TextFlow();
 		resultTextField.getChildren().addAll(resultText);
 		GUIController.getController().getResultPane().getChildren().add(resultTextField);
-	}
-	
-	private static void setScrollBars() {
-		GUIController.getController().getResultScrollPane()
-				.setVvalue(GUIController.getController().getResultScrollPane().getVmax() * scrollPosV);
-
-		GUIController.getController().getResultScrollPane()
-				.setHvalue(GUIController.getController().getResultScrollPane().getHmax() * scrollPosH);
-		
-		scrollChanged = false;
-	}
-	
-	public static void setNextScrollPostion(double newScrollPosV, double newScrollPosH) {
-		scrollChanged = true;
-		scrollPosV = newScrollPosV;
-		scrollPosH = newScrollPosH;
 	}
 }
