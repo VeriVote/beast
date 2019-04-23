@@ -19,7 +19,6 @@ import org.apache.commons.io.FilenameUtils;
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.wellbehaved.event.InputMap;
 import org.fxmisc.wellbehaved.event.Nodes;
-import org.reactfx.util.Tuple3;
 
 import com.google.gson.JsonSyntaxException;
 
@@ -34,6 +33,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.electionsimulator.NewElectionSimulation;
 import edu.pse.beast.highlevel.BEASTCommunicator;
+import edu.pse.beast.highlevel.javafx.GUIController.ResultPresentationType;
 import edu.pse.beast.highlevel.javafx.resultpresenter.ResultImageRenderer;
 import edu.pse.beast.highlevel.javafx.resultpresenter.ResultPresenterNEW;
 import edu.pse.beast.highlevel.javafx.resultpresenter.resultElements.PieChartResult;
@@ -66,6 +66,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
@@ -75,7 +76,10 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -206,7 +210,7 @@ public class GUIController {
 	private Tab propertyPane;
 
 	@FXML // fx:id="resultPane"
-	private Tab resultPane;
+	private Tab resultTab;
 
 	@FXML // fx:id="inputPane"
 	private Tab inputPane;
@@ -257,8 +261,8 @@ public class GUIController {
 	private TreeView<CustomTreeItem> treeView;
 
 	@FXML
-	private Pane solutionPane;
-	
+	private Pane resultPane;
+
 	@FXML
 	private TabPane mainTabPane;
 
@@ -309,7 +313,15 @@ public class GUIController {
 
 	@FXML
 	private TextField resultNameField;
+	
+	@FXML
+	private BorderPane resultBorderPane;
+	
+	@FXML
+	private Slider zoomSlider;
 
+	@FXML
+	
 	// @FXML
 	// private Text
 	//
@@ -510,7 +522,7 @@ public class GUIController {
 				focusedMainTab = codeArea;
 			} else if (newTab.equals(propertyPane)) {
 				focusedMainTab = booleanExpEditor;
-			} else if (newTab.equals(resultPane)) {
+			} else if (newTab.equals(resultTab)) {
 				focusedMainTab = resultArea;
 			} else if (newTab.equals(inputPane)) {
 				focusedMainTab = electionSimulation;
@@ -531,12 +543,16 @@ public class GUIController {
 				event.consume();
 			}
 		});
+		
+		//turn off the zoom slider in the beginning
+		zoomSlider.setDisable(true);
+		
 		electionSimulation = new NewElectionSimulation(codeArea.getElectionDescription().getContainer(), inputGridPane,
 				voterGridPane, candidateGridPane);
 		// update all numbers for the input fields
 		this.addInputNumberEnforcer(inputVoterField, "");
 		addTreeItem(new PreAndPostConditionsDescription("New Property"));
-		properties.get(0).wasClicked(false);		
+		properties.get(0).wasClicked(false);
 	}
 
 	private void setButtonImages() {
@@ -754,23 +770,32 @@ public class GUIController {
 
 	@FXML
 	public void undoButton(ActionEvent event) {
-		//test area, here we set a example pie chart
+
+		long start_time = System.nanoTime();
+		// test area, here we set a example pie chart
+
+		List<Triplet<String, Double, Color>> resultValues = new ArrayList<Triplet<String, Double, Color>>();
+
+		resultValues.add(new Triplet<String, Double, Color>("eins", Math.random() * 1000, Color.red));
+		resultValues.add(new Triplet<String, Double, Color>("zwei", Math.random() * 1000, Color.blue));
+		resultValues.add(new Triplet<String, Double, Color>("drei", Math.random() * 1000, Color.orange));
+		resultValues.add(new Triplet<String, Double, Color>("vier", Math.random() * 1000, Color.green));
+		resultValues.add(new Triplet<String, Double, Color>("fünft", Math.random() * 1000, Color.pink));
+
+		PieChartResult pieChart = new PieChartResult(0, 0, 100, 100, resultValues);
+
 		
-				List<Triplet<String, Double, Color>> resultValues = new ArrayList<Triplet<String, Double, Color>>();
-				
-				
-				resultValues.add(new Triplet<String, Double, Color>("eins", 5d, Color.red));
-				resultValues.add(new Triplet<String, Double, Color>("zwei", 10d, Color.blue));
-				resultValues.add(new Triplet<String, Double, Color>("drei", 15d, Color.orange));
-				resultValues.add(new Triplet<String, Double, Color>("vier", 25d, Color.green));
-			
-				PieChartResult pieChart = new PieChartResult(0, 0, 200, 200, resultValues);
-				
-				ResultImageRenderer.addElement(pieChart);
-				
-				ResultImageRenderer.drawElements();
-				
-				ResultPresenterNEW.setResultNode(ResultImageRenderer.getImageView());
+		PieChartResult pieChart2 = new PieChartResult(300, 300, 500, 500, resultValues);
+		
+		ResultImageRenderer.addElement(pieChart);
+		ResultImageRenderer.addElement(pieChart2);
+
+		ResultImageRenderer.drawElements();
+
+		ResultPresenterNEW.setResultNode(ResultImageRenderer.getImageView());
+
+		
+		System.out.println("dauer: " + ((System.nanoTime() - start_time) / 1000000) + " millisekunden");
 		
 		getFocusedArea().undo();
 	}
@@ -1430,7 +1455,11 @@ public class GUIController {
 	}
 
 	public Pane getResultPane() {
-		return solutionPane;
+		return resultPane;
+	}
+
+	public BorderPane getResultBorderPane() {
+		return resultBorderPane;
 	}
 
 	public NewCodeArea getCodeArea() {
@@ -1458,7 +1487,7 @@ public class GUIController {
 	}
 
 	public Tab getResultTab() {
-		return resultPane;
+		return resultTab;
 	}
 
 	public Tab getCodeTab() {
@@ -1467,6 +1496,14 @@ public class GUIController {
 
 	public Tab getInputTab() {
 		return inputPane;
+	}
+	
+	public Slider getZoomSlider() {
+		return zoomSlider;
+	}
+	
+	public ScrollPane getResultScrollPane() {
+		return resultScrollPane;
 	}
 
 	public List<ParentTreeItem> getProperties() {

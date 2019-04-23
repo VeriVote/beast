@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -11,6 +12,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -31,7 +33,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox prefHeight="532.0" prefWidth="545.0" stylesheets="@../javafx/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox prefHeight="532.0" prefWidth="545.0" stylesheets="@../javafx/style.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -473,35 +475,57 @@
                                  </children></AnchorPane>
                   </content>
                 </Tab>
-                <Tab fx:id="resultPane" onSelectionChanged="#resultPaneClicked" text="%key.result">
+                <Tab fx:id="resultTab" onSelectionChanged="#resultPaneClicked" text="%key.result">
                            <content>
                               <BorderPane>
                                  <top>
                                     <BorderPane BorderPane.alignment="CENTER">
+                                       <right>
+                                          <Slider fx:id="zoomSlider" max="10.0" min="-10.0" showTickLabels="true" showTickMarks="true" BorderPane.alignment="CENTER" />
+                                       </right>
+                                       <top>
+                                          <BorderPane BorderPane.alignment="CENTER">
+                                             <left>
+                                                <MenuBar fx:id="zoomMenu" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+                                                  <menus>
+                                                    <Menu mnemonicParsing="false">
+                                                         <graphic>
+                                                            <MenuButton fx:id="displayFormat" mnemonicParsing="false" text="Display Format">
+                                                               <items>
+                                                                  <MenuItem mnemonicParsing="false" onAction="#consoleOutputClicked" text="CBMC Output" />
+                                                                  <MenuItem mnemonicParsing="false" onAction="#consoleErrorClicked" text="CBMC Error" />
+                                                                  <MenuItem mnemonicParsing="false" onAction="#previousResultsClicked" text="Previous results" />
+                                                                  <MenuItem mnemonicParsing="false" onAction="#resultClicked" text="Result" />
+                                                               </items>
+                                                            </MenuButton>
+                                                         </graphic>
+                                                    </Menu>
+                                                  </menus>
+                                                   <opaqueInsets>
+                                                      <Insets />
+                                                   </opaqueInsets>
+                                                </MenuBar>
+                                             </left>
+                                             <right>
+                                                <Button disable="true" mnemonicParsing="false" text="reset Zoom" BorderPane.alignment="CENTER" />
+                                             </right>
+                                          </BorderPane>
+                                       </top>
                                        <center>
                                           <TextField fx:id="resultNameField" editable="false" text="no property" BorderPane.alignment="CENTER" />
                                        </center>
-                                       <top>
-                                          <MenuBar BorderPane.alignment="CENTER">
-                                            <menus>
-                                              <Menu mnemonicParsing="false">
-                                                   <graphic>
-                                                      <MenuButton fx:id="displayFormat" mnemonicParsing="false" text="Display Format">
-                                                         <items>
-                                                            <MenuItem mnemonicParsing="false" onAction="#consoleOutputClicked" text="CBMC Output" />
-                                                            <MenuItem mnemonicParsing="false" onAction="#consoleErrorClicked" text="CBMC Error" />
-                                                            <MenuItem mnemonicParsing="false" onAction="#previousResultsClicked" text="Previous results" />
-                                                            <MenuItem mnemonicParsing="false" onAction="#resultClicked" text="Result" />
-                                                         </items></MenuButton>
-                                                   </graphic>
-                                              </Menu>
-                                            </menus>
-                                          </MenuBar>
-                                       </top>
                                     </BorderPane>
                                  </top>
                                  <center>
-                                    <Pane fx:id="solutionPane" BorderPane.alignment="CENTER" />
+                                    <BorderPane fx:id="resultBorderPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                       <center>
+                                          <ScrollPane fx:id="resultScrollPane">
+                                             <content>
+                                                <Pane fx:id="resultPane" snapToPixel="true" />
+                                             </content>
+                                          </ScrollPane>
+                                       </center>
+                                    </BorderPane>
                                  </center>
                               </BorderPane>
                            </content></Tab>

@@ -1,6 +1,8 @@
 package edu.pse.beast.highlevel.javafx.resultpresenter.resultElements;
 
-import java.awt.image.BufferedImage;
+import java.awt.Graphics2D;
+
+import javafx.scene.input.MouseEvent;
 
 public abstract class ResultImageElement {
 
@@ -17,6 +19,22 @@ public abstract class ResultImageElement {
 		this.yPosBottomRight = yPosBottomRight;
 	}
 
+	public double getxPosTopLeft() {
+		return xPosTopLeft;
+	}
+
+	public double getyPosTopLeft() {
+		return yPosTopLeft;
+	}
+
+	public double getxPosBottomRight() {
+		return xPosBottomRight;
+	}
+
+	public double getyPosBottomRight() {
+		return yPosBottomRight;
+	}
+
 	/**
 	 * Determine if a point is inside 
 	 * @param posX the x position
@@ -24,6 +42,9 @@ public abstract class ResultImageElement {
 	 * @return true, if the point is inside this rectangle
 	 */
 	public boolean isInside(double posX, double posY) {
+		System.out.println("posx: " + posX);
+		System.out.println("posy: " + posY);
+		
 		return ((posX <= xPosBottomRight) && (posX >= xPosTopLeft) && (posY <= yPosBottomRight)
 				&& (posY >= yPosTopLeft));
 	}
@@ -31,16 +52,15 @@ public abstract class ResultImageElement {
 	//abstract methods
 	
 	/**
-	 * notifies the methdos that it is 
-	 * @param posX the x position where the click was made
-	 * @param posY the y position where the click was made
+	 * notifies the methdos that it was clicked on
+	 * @param event the y position where the click was made
 	 */
-	public abstract void isClicked(double posX, double posY);
+	public abstract void isClicked(MouseEvent event);
 	
 	/**
 	 * draws this element, scaled by the "scale" factor
-	 * @param image the image where the element has to be drawn on
+	 * @param graphics the image where the element has to be drawn on
 	 * @param scale the scale by which the element will be scaled
 	 */
-	public abstract void drawElement(BufferedImage image, double scale);
+	public abstract void drawElement(Graphics2D graphics, double scale);
 }

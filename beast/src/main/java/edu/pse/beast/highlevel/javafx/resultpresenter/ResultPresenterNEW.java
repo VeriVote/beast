@@ -1,16 +1,11 @@
 package edu.pse.beast.highlevel.javafx.resultpresenter;
 
-import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.util.List;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
-import javafx.scene.image.ImageView;
+import javafx.scene.Node;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.embed.swing.SwingFXUtils;
-import javafx.scene.Node;
-import javafx.scene.control.TextField;
 
 
 /**
@@ -22,6 +17,10 @@ import javafx.scene.control.TextField;
  *
  */
 public class ResultPresenterNEW {
+	
+	private static double scrollPosV;
+	private static double scrollPosH;
+	private static boolean scrollChanged = false;
 	
 	/**
 	 * removes all children from the result pane
@@ -37,8 +36,8 @@ public class ResultPresenterNEW {
 	 */
 	public static void setResultNode(Node resultNode) {
 		reset();
-		
 		GUIController.getController().getResultPane().getChildren().add(resultNode);
+		setScrollBars();
 	}
 	
 	/**
@@ -51,5 +50,21 @@ public class ResultPresenterNEW {
 		TextFlow resultTextField = new TextFlow();
 		resultTextField.getChildren().addAll(resultText);
 		GUIController.getController().getResultPane().getChildren().add(resultTextField);
+	}
+	
+	private static void setScrollBars() {
+		GUIController.getController().getResultScrollPane()
+				.setVvalue(GUIController.getController().getResultScrollPane().getVmax() * scrollPosV);
+
+		GUIController.getController().getResultScrollPane()
+				.setHvalue(GUIController.getController().getResultScrollPane().getHmax() * scrollPosH);
+		
+		scrollChanged = false;
+	}
+	
+	public static void setNextScrollPostion(double newScrollPosV, double newScrollPosH) {
+		scrollChanged = true;
+		scrollPosV = newScrollPosV;
+		scrollPosH = newScrollPosH;
 	}
 }
