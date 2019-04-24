@@ -507,7 +507,7 @@
                                                 </MenuBar>
                                              </left>
                                              <right>
-                                                <Button disable="true" mnemonicParsing="false" text="reset Zoom" BorderPane.alignment="CENTER" />
+                                                <Label alignment="CENTER" prefHeight="17.0" prefWidth="135.0" text="Zoom: " BorderPane.alignment="CENTER" />
                                              </right>
                                           </BorderPane>
                                        </top>

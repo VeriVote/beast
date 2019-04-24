@@ -375,72 +375,12 @@ public class GUIController {
 		timeUnitChoice.getItems().add(TimeUnit.HOURS);
 		timeUnitChoice.setValue(TimeUnit.SECONDS);
 		addListeners();
-		// init the propTree:
-		// treeView.setCellFactory(new Callback<TreeView<String>,
-		// TreeCell<String>>(){
-		//
-		// @Override
-		// public PropertyTreeCell call(TreeView<String> param) {
-		// return new PropertyTreeCell();
-		// }
-		// });
-		//
 
-		// // Use a custom callback to determine the style of the tree item
-		// treeView.setCellFactory(new Callback<TreeView<String>,
-		// TreeCell<String>>() {
-		// @Override
-		// public TreeCell<String> call(TreeView<String> param) {
-		// return new CheckBoxTreeCell<String>(){
-		// @Override
-		// public void updateItem(String item, boolean empty){
-		// super.updateItem(item, empty);
-		// // If there is no information for the Cell, make it empty
-		// if(empty){
-		// setGraphic(null);
-		// setText(null);
-		// // Otherwise if it's not representation as an item of the tree
-		// // is not a CheckBoxTreeItem, remove the checkbox item
-		// }else if (!(getTreeItem() instanceof CheckBoxTreeItem)){
-		// setGraphic(null);
-		// }
-		// }
-		// };
-		// }
-		// });
 		treeView.setShowRoot(false);
-		// treeView.setCellFactory(new Callback<TreeView<String>,
-		// TreeCell<String>>() {
-		//
-		//
-		// public TreeCell<String>() {
-		// @Override
-		// public TreeCell<String> call(TreeView<String> p) {
-		// return new TextFieldTreeCellImpl();
-		// }
-		// }
-		//
-		//// @Override
-		//// public TreeCell<String> call(TreeView<String> param) {
-		//// return new PropertyTreeCell();
-		//// }
-		// });
+
 		root = new TreeItem<>();
 		root.setExpanded(true);
-		// final ParentTreeItem test1 = new ParentTreeItem("test1");
-		// for testing add one "prop"
-		// final TreeItemParent parentNode1 = new TreeItemParent("test 1");
-		// final TreeItem<String> parentNode1 = new TreeItem<>("Property 1");
-		//
-		// final TreeItem<String> checkNode1 = new TreeItem<>("Check");
-		//
-		// final TreeItem<String> marginNode1 = new TreeItem<>("Margin");
-		//
-		// root.getChildren().add(parentNode1);
-		//
-		// parentNode1.getChildren().addAll(checkNode1, marginNode1);
-		//
-		// root.getChildren().add(test1);
+
 		treeView.setRoot(root);
 		codeArea = new NewCodeArea();
 		VirtualizedScrollPane<NewCodeArea> vsp = new VirtualizedScrollPane<NewCodeArea>(codeArea);
@@ -472,15 +412,7 @@ public class GUIController {
 		treeView.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> setPropertyToRemove(newValue));
 		codeArea.setStyle("-fx-font-family: consolas; -fx-font-size: 11pt;");
-		// inputScrollPane.addEventHandler(ScrollEvent.ANY, new
-		// EventHandler<Event>() {
-		// @Override
-		// public void handle(Event event) { // synchronize the scrolling
-		// voterScrollPane.vvalueProperty().set(inputScrollPane.getVvalue());
-		//
-		// candidateScrollPane.hvalueProperty().set(inputScrollPane.getHvalue());
-		// }
-		// });
+
 		Thread scrollUpdater = new Thread(new Runnable() {
 			@Override
 			public void run() {
@@ -492,17 +424,14 @@ public class GUIController {
 							voterScrollPane.vvalueProperty().set(inputScrollPane.getVvalue());
 						}
 					});
-					// voterScrollPane.vvalueProperty().set(inputScrollPane.getVvalue());
+
 					Platform.runLater(new Runnable() {
 						@Override
 						public void run() {
 							candidateScrollPane.hvalueProperty().set(inputScrollPane.getHvalue());
 						}
 					});
-					// candidateScrollPane.hvalueProperty().set(inputScrollPane.getHvalue());
-					// infoTextArea.setText("" + inputScrollPane.getHvalue() +
-					// "\n" +
-					// candidateScrollPane.getHvalue());
+					
 					inputScrollPane.fireEvent(new Event(ScrollEvent.ANY));
 					try {
 						Thread.sleep(Math.max(0, 16 - (System.currentTimeMillis() - time)));
@@ -673,7 +602,6 @@ public class GUIController {
 	public void removeSymbVar() {
 		if (symbVarToRemove != null) {
 			long time = System.currentTimeMillis();
-
 			if ((time - lastClicked) < THRESHOLD) {
 				booleanExpEditor.removeVariable(symbVarToRemove.getValue());
 				symbVarToRemove = null;
@@ -953,23 +881,6 @@ public class GUIController {
 		newElectionDescription(event);
 		newVotingInput(event);
 		newPropertyList(event);
-		//
-		// Triplet<String, InputType, OutputType> triplet = showPopUp("New
-		// Election
-		// Description",
-		// "chose the new Election description", "input Type:",
-		// InputType.getInputTypes(), "output Type:",
-		// OutputType.getOutputTypes());
-		//
-		// if (triplet != null) {
-		// codeArea.setNewElectionDescription(
-		// new ElectionDescription(triplet.first, triplet.second, triplet.third,
-		// 0));
-		// newPropertyList(null);
-		// newVotingInput(null);
-		// }
-		//
-		// new
 	}
 
 	@FXML
@@ -1599,13 +1510,7 @@ public class GUIController {
 		if (nameFieldIsChangeable && !bringToFront) {
 			propNameButtonClicked(null); // try to save the text the user wrote
 		}
-		//
-		// if (booleanExpEditor.getCurrentItem() == null) {
-		// if (!nameFieldIsChangeable) {
-		// propertyItem.setText(propNameField.getText());
-		// propertyItem.getPreAndPostPropertie().setNewName(propNameField.getText());
-		// }
-		// }
+
 		booleanExpEditor.setCurrentPropertyDescription(propertyItem, bringToFront);
 		propNameField.setText(propertyItem.getPreAndPostProperties().getName());
 		resultNameField.setText(propertyItem.getPreAndPostProperties().getName());
@@ -1619,12 +1524,12 @@ public class GUIController {
 			String inTypeDescription, List<InputType> inTypes, String outTypeDescription, List<OutputType> outTypes) {
 		Point position = MouseInfo.getPointerInfo().getLocation();
 		Dialog<String> dialog = new Dialog<>();
-		// TextInputDialog dialog = new TextInputDialog("");
+
 		dialog.setX(position.getX());
 		dialog.setY(position.getY());
 		dialog.setTitle(titleText);
 		dialog.setHeaderText(infoText);
-		// dialog.setContentText(inputText);
+
 		Stage stage = (Stage) dialog.getDialogPane().getScene().getWindow();
 		// Add a custom icon.
 		stage.getIcons().add(new Image(PATH_TO_IMAGES + BEAST_LOGO));
@@ -1726,18 +1631,4 @@ public class GUIController {
 	public ResultPresenter getResultPresenter() {
 		return resultPresenter;
 	}
-
 }
-// class PairValueFactory implements
-// Callback<TableColumn.CellDataFeatures<Pair<String, Object>, Object>,
-// ObservableValue<Object>> {
-// @SuppressWarnings("unchecked")
-// @Override
-// public ObservableValue<Object> call(TableColumn.CellDataFeatures<Pair<String,
-// Object>, Object> data) {
-// Object value = data.getValue().getValue();
-// return (value instanceof ObservableValue)
-// ? (ObservableValue) value
-// : new ReadOnlyObjectWrapper<>(value);
-// }
-// }

@@ -26,7 +26,7 @@ public class FormalPropertiesDescription {
     }
 
     /**
-     *
+     * Sets the code of this property. Replaces the previous code.
      * @param code the code of the FormalPropertyDescription
      */
     public void setCode(String code) {

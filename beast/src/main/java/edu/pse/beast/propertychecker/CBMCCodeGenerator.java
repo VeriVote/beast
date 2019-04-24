@@ -636,7 +636,7 @@ public class CBMCCodeGenerator {
      */
     private void addSymbVarInitialisation() {
         List<SymbolicVariable> symbolicVariableList
-              = preAndPostCondDesc.getSymbolicVariableList();
+              = preAndPostCondDesc.getSymbolicVariablesAsList();
         code.add("//Symbolic Variables initialisation");
         symbolicVariableList.forEach((symbVar) -> {
             InternalTypeContainer internalType = symbVar.getInternalTypeContainer();
@@ -798,7 +798,7 @@ public class CBMCCodeGenerator {
         FormalPropertyDescriptionParser p = new FormalPropertyDescriptionParser(ts);
 
         BooleanExpScope declaredVars = new BooleanExpScope();
-        preAndPostCondDesc.getSymbolicVariableList().forEach((v) -> {
+        preAndPostCondDesc.getSymbolicVariablesAsList().forEach((v) -> {
             declaredVars.addTypeForId(v.getId(), v.getInternalTypeContainer());
         });
         return translator.generateFromSyntaxTree(p.booleanExpList(),

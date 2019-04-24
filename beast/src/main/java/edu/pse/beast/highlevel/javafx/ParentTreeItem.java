@@ -9,12 +9,14 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.propertychecker.Result;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TreeItem;
+import javafx.scene.input.MouseEvent;
 
 public class ParentTreeItem extends CustomTreeItem {
     private Label propName;
@@ -64,6 +66,14 @@ public class ParentTreeItem extends CustomTreeItem {
                 checkBoxChanged(newValue);
             }
         });
+        
+        this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                wasClicked(true);
+            }
+        });
+        
         this.setSelected(isSelected);
         this.getTreeItemReference().setValue(this);
     }

@@ -55,7 +55,7 @@ public class PreAndPostConditionsDescription {
      *
      * @return the SymbolicVariableList as a List
      */
-    public List<SymbolicVariable> getSymbolicVariableList() {
+    public List<SymbolicVariable> getSymbolicVariablesAsList() {
         return symbolicVariableList.getSymbolicVariables();
     }
 

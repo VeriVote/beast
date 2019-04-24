@@ -41,7 +41,7 @@ public class PreAndPostConditionsDescriptionTest {
               = new PreAndPostConditionsDescription("name", null,
                                                     null, null,
                                                     symbVarList);
-        List<SymbolicVariable> result = instance.getSymbolicVariableList();
+        List<SymbolicVariable> result = instance.getSymbolicVariablesAsList();
         assertEquals(symbVarList.getSymbolicVariables().get(0), result.get(0));
     }
 
