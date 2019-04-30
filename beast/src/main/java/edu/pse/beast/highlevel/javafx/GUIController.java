@@ -720,7 +720,7 @@ public class GUIController {
 		
 		var info = new RichTextInformation("Hello World", new Font("Serif", Font.PLAIN, 20), Color.red);
 		
-		var info2 = new RichTextInformation(" Hello World2", new Font("Serif", Font.PLAIN, 30), Color.blue);
+		var info2 = new RichTextInformation(" Helglo g y qWorld2", new Font("Serif", Font.PLAIN, 30), Color.blue);
 		
 		rTI1.add(info);
 		

@@ -63,6 +63,7 @@ module edu.pse.beast {
 	exports edu.pse.beast.booleanexpeditor;
 	exports edu.pse.beast.datatypes.electioncheckparameter;
 	exports edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr;
+	exports edu.pse.beast.highlevel.javafx.resultpresenter.resultElements;
 	
 	requires java.sql;
 	requires antlr4;

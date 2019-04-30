@@ -49,7 +49,7 @@ public abstract class ResultImageElement {
 	//abstract methods
 	
 	/**
-	 * notifies the methdos that it was clicked on
+	 * notifies the methods that it was clicked on
 	 * @param event the y position where the click was made
 	 */
 	public abstract void isClicked(MouseEvent event);

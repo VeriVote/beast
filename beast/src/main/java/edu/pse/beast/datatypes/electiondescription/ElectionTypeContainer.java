@@ -12,33 +12,7 @@ import edu.pse.beast.types.OutputType;
 public class ElectionTypeContainer {
     private InputType inType;
     private OutputType outType;
-//    private ElectionInputTypeIds inID;
-//    private ElectionOutputTypeIds outID;
-
-//    public static enum ElectionInputTypeIds {
-//        SINGLE_CHOICE,
-//        PREFERENCE,
-//        APPROVAL,
-//        WEIGHTED_APPROVAL
-//    }
-
-//    public static enum ElectionOutputTypeIds {
-//        CAND_OR_UNDEF,
-//        CAND_PER_SEAT
-//    }
-
-//    /**
-//     * Constructor
-//     * @param type the type of this election
-//     */
-//    public ElectionTypeContainer(InputType inType, OutputType outType,
-//                                 int lowerBound, int upperBound) {
-//        this.inType = inType;
-//        this.outType = outType;
-//        this.lowerBound = lowerBound;
-//        this.upperBound = upperBound;
-//    }
-
+    
     /**
      * Constructor
      *

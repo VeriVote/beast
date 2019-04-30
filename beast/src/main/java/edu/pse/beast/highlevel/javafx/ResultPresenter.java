@@ -3,6 +3,8 @@ package edu.pse.beast.highlevel.javafx;
 import java.util.List;
 
 import edu.pse.beast.propertychecker.Result;
+import edu.pse.beast.types.InputType;
+import edu.pse.beast.types.OutputType;
 
 public class ResultPresenter implements Runnable {
 
@@ -13,14 +15,20 @@ public class ResultPresenter implements Runnable {
     private boolean running;
 
     private Thread currentThread = null;
+    
+    private InputType inType = null;
+    private OutputType outType = null;
 
     public void setResult(Result result) {
         if (currentThread != null) {
             this.running = false;
             currentThread.interrupt();
         }
+        
+        this.inType = result.getElectionDescription().getContainer().getInputType();
+        this.outType = result.getElectionDescription().getContainer().getOutputType();
+        
         this.result = result;
-        this.running = false;
         this.running = true;
         new Thread(this).start();
     }
@@ -44,6 +52,19 @@ public class ResultPresenter implements Runnable {
 //            }
 //        }
 //    }
+    
+    
+    public void present() {
+    	if (result == null) {
+    		return;
+    	} else {
+    		
+    		
+    		
+    		
+    		
+    	}
+    }
 
     @Override
     public void run() {
@@ -53,6 +74,11 @@ public class ResultPresenter implements Runnable {
         } else {
 
             while (running) {
+            	            	
+            	
+            	result.getElectionDescription().getContainer().getInputType();
+            	result.getElectionDescription().getContainer().getOutputType();
+            	
                 // do all the printing
                 String output = "";
                 switch (GUIController.getController().getPresentationType()) {
@@ -81,6 +107,7 @@ public class ResultPresenter implements Runnable {
                     if (result.isFinished()) {
                         System.out.println("fix printing results");
                     } else {
+                    	System.out.println("result not finished yet!");
                         output = "result not finished yet!";
                     }
                     break;

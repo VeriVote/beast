@@ -52,6 +52,10 @@ public abstract class Result implements ResultInterface {
 
     private List<String> statusStrings;
 
+    /**
+     * returns all currently available result types
+     * @return
+     */
     public static List<Result> getResultTypes() {
         ServiceLoader<Result> loader = ServiceLoader.load(Result.class);
 

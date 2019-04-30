@@ -5,5 +5,4 @@ public interface InOutType {
     InternalTypeContainer getInternalTypeContainer();
 
     String otherToString();
-
 }
