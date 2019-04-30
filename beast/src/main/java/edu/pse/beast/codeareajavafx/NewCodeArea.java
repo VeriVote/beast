@@ -35,7 +35,7 @@ import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.MenuBarInterface;
 import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
 import edu.pse.beast.toolbox.CCodeHelper;
-import edu.pse.beast.toolbox.Triplet;
+import edu.pse.beast.toolbox.Tuple3;
 import edu.pse.beast.toolbox.Tuple;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
@@ -631,7 +631,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
     @Override
     public void autoComplete() {
-        Triplet<List<String>, Integer, Integer> completion = getCompletions(recommendations);
+        Tuple3<List<String>, Integer, Integer> completion = getCompletions(recommendations);
         processAutocompletion(completion.first, completion.second, completion.third);
     }
 

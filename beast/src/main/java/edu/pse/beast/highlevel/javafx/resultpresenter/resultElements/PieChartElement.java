@@ -7,14 +7,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.pse.beast.toolbox.Triplet;
+import org.reactfx.util.Tuple4;
+
+import edu.pse.beast.toolbox.Tuple3;
 import javafx.scene.input.MouseEvent;
 
-public class PieChartResult extends ResultImageElement {
+public class PieChartElement extends ResultImageElement {
 
-	private List<Triplet<String, Double, Color>> resultValues;
-	
-	private List<Boolean> clicked = new ArrayList<Boolean>();
+	private List<Tuple3<String, Double, Color>> resultValues;
 
 	private double totalSize = 0;
 
@@ -22,15 +22,13 @@ public class PieChartResult extends ResultImageElement {
 	private double height = 0;
 	
 
-	public PieChartResult(double xPosTopLeft, double yPosTopLeft, double xPosBottomRight, double yPosBottomRight,
-			List<Triplet<String, Double, Color>> resultValues) {
-		super(xPosTopLeft, yPosTopLeft, xPosBottomRight, yPosBottomRight);
+	public PieChartElement(double xPosTopLeft, double yPosTopLeft, double width, double height,
+			List<Tuple3<String, Double, Color>> resultValues) {
+		super(xPosTopLeft, yPosTopLeft, xPosTopLeft + width, yPosTopLeft + height);
 		this.resultValues = resultValues;
 
-		this.width = xPosBottomRight - xPosTopLeft;
-		System.out.println("width: " + width);
-		this.height = yPosBottomRight - yPosTopLeft;
-		System.out.println("heigh: " + height);
+		this.width = width;
+		this.height = height;
 
 		init();
 	}
@@ -39,8 +37,8 @@ public class PieChartResult extends ResultImageElement {
 		double tmpSize = 0;
 		// iterate over the values, adding up their sizes, therefore getting the total
 		// size of the pie chart;
-		for (Iterator<Triplet<String, Double, Color>> iterator = resultValues.iterator(); iterator.hasNext();) {
-			Triplet<String, Double, Color> value = (Triplet<String, Double, Color>) iterator.next();
+		for (Iterator<Tuple3<String, Double, Color>> iterator = resultValues.iterator(); iterator.hasNext();) {
+			Tuple3<String, Double, Color> value = (Tuple3<String, Double, Color>) iterator.next();
 
 			if (value.second == 0) {
 				System.err.println("You are not allowed to have fields with zero size in this chart");
@@ -67,8 +65,8 @@ public class PieChartResult extends ResultImageElement {
 			double currentAngle = 0;
 			
 			
-			for (Iterator<Triplet<String, Double, Color>> iterator = resultValues.iterator(); iterator.hasNext();) {
-				Triplet<String, Double, Color> value = (Triplet<String, Double, Color>) iterator.next();
+			for (Iterator<Tuple3<String, Double, Color>> iterator = resultValues.iterator(); iterator.hasNext();) {
+				Tuple3<String, Double, Color> value = (Tuple3<String, Double, Color>) iterator.next();
 
 				double neededAngle = 360 * (value.second / totalSize);
 

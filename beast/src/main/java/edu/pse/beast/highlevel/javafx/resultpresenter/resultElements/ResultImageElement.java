@@ -42,9 +42,6 @@ public abstract class ResultImageElement {
 	 * @return true, if the point is inside this rectangle
 	 */
 	public boolean isInside(double posX, double posY) {
-		System.out.println("posx: " + posX);
-		System.out.println("posy: " + posY);
-		
 		return ((posX <= xPosBottomRight) && (posX >= xPosTopLeft) && (posY <= yPosBottomRight)
 				&& (posY >= yPosTopLeft));
 	}

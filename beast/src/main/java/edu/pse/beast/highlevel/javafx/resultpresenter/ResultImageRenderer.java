@@ -143,8 +143,7 @@ public class ResultImageRenderer {
 
 		for (Iterator<ResultImageElement> iterator = elementList.iterator(); iterator.hasNext();) {
 			ResultImageElement element = (ResultImageElement) iterator.next();
-
-			element.drawElement(graphics, currentScale);
+			element.drawElement((Graphics2D) graphics.create(), currentScale);
 		}
 
 		graphics.dispose();

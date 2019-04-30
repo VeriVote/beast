@@ -1,6 +1,7 @@
 package edu.pse.beast.highlevel.javafx;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.io.File;
@@ -35,11 +36,13 @@ import edu.pse.beast.electionsimulator.NewElectionSimulation;
 import edu.pse.beast.highlevel.BEASTCommunicator;
 import edu.pse.beast.highlevel.javafx.resultpresenter.ResultImageRenderer;
 import edu.pse.beast.highlevel.javafx.resultpresenter.ResultPresenterNEW;
-import edu.pse.beast.highlevel.javafx.resultpresenter.resultElements.PieChartResult;
+import edu.pse.beast.highlevel.javafx.resultpresenter.resultElements.PieChartElement;
+import edu.pse.beast.highlevel.javafx.resultpresenter.resultElements.TextImageElement;
 import edu.pse.beast.options.OptionsNew;
 import edu.pse.beast.saverloader.ChildTreeItemSaverLoader;
+import edu.pse.beast.toolbox.RichTextInformation;
 import edu.pse.beast.toolbox.SuperFolderFinder;
-import edu.pse.beast.toolbox.Triplet;
+import edu.pse.beast.toolbox.Tuple3;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
@@ -699,21 +702,44 @@ public class GUIController {
 		long start_time = System.nanoTime();
 		// test area, here we set a example pie chart
 
-		List<Triplet<String, Double, Color>> resultValues = new ArrayList<Triplet<String, Double, Color>>();
+		List<Tuple3<String, Double, Color>> resultValues = new ArrayList<Tuple3<String, Double, Color>>();
 
-		resultValues.add(new Triplet<String, Double, Color>("eins", Math.random() * 1000, Color.red));
-		resultValues.add(new Triplet<String, Double, Color>("zwei", Math.random() * 1000, Color.blue));
-		resultValues.add(new Triplet<String, Double, Color>("drei", Math.random() * 1000, Color.orange));
-		resultValues.add(new Triplet<String, Double, Color>("vier", Math.random() * 1000, Color.green));
-		resultValues.add(new Triplet<String, Double, Color>("fünft", Math.random() * 1000, Color.pink));
-
-		PieChartResult pieChart = new PieChartResult(0, 0, 100, 100, resultValues);
-
+		resultValues.add(new Tuple3<String, Double, Color>("eins", Math.random() * 1000, Color.red));
+		resultValues.add(new Tuple3<String, Double, Color>("zwei", Math.random() * 1000, Color.blue));
+		resultValues.add(new Tuple3<String, Double, Color>("drei", Math.random() * 1000, Color.orange));
+		resultValues.add(new Tuple3<String, Double, Color>("vier", Math.random() * 1000, Color.green));
+		resultValues.add(new Tuple3<String, Double, Color>("fünft", Math.random() * 1000, Color.pink));
 		
-		PieChartResult pieChart2 = new PieChartResult(300, 300, 500, 500, resultValues);
+		PieChartElement pieChart2 = new PieChartElement(300, 300, 70, 70, resultValues);
+		
+		//ResultImageRenderer.addElement(pieChart);
+		ResultImageRenderer.addElement(pieChart2);
+		
+		
+		List<RichTextInformation> rTI1 = new ArrayList<RichTextInformation>();
+		
+		var info = new RichTextInformation("Hello World", new Font("Serif", Font.PLAIN, 20), Color.red);
+		
+		var info2 = new RichTextInformation(" Hello World2", new Font("Serif", Font.PLAIN, 30), Color.blue);
+		
+		rTI1.add(info);
+		
+		List<RichTextInformation> rTI2 = new ArrayList<RichTextInformation>();
+		
+		rTI2.add(info2);
+		
+		TextImageElement tI1 = new TextImageElement(0, 0, rTI1);
+		
+		TextImageElement tI2 = new TextImageElement(tI1.getxPosBottomRight(), tI1.getyPosBottomRight(), rTI2);
+		
+
+		PieChartElement pieChart = new PieChartElement(tI2.getxPosTopLeft(), tI2.getyPosBottomRight(), 100, 100, resultValues);
+		
+		ResultImageRenderer.addElement(tI1);
+		ResultImageRenderer.addElement(tI2);
 		
 		ResultImageRenderer.addElement(pieChart);
-		ResultImageRenderer.addElement(pieChart2);
+
 
 		ResultImageRenderer.drawElements();
 
@@ -866,7 +892,7 @@ public class GUIController {
 	@FXML
 	public void newElectionDescription(ActionEvent event) {
 		codeArea.resetSaveFile();
-		Triplet<String, InputType, OutputType> triplet = showPopUp("New Election Description",
+		Tuple3<String, InputType, OutputType> triplet = showPopUp("New Election Description",
 				"chose the new Election description", "input Type:", InputType.getInputTypes(), "output Type:",
 				OutputType.getOutputTypes());
 		if (triplet != null) {
@@ -1520,7 +1546,7 @@ public class GUIController {
 		propNameField.setText(newText);
 	}
 
-	private Triplet<String, InputType, OutputType> showPopUp(String titleText, String infoText,
+	private Tuple3<String, InputType, OutputType> showPopUp(String titleText, String infoText,
 			String inTypeDescription, List<InputType> inTypes, String outTypeDescription, List<OutputType> outTypes) {
 		Point position = MouseInfo.getPointerInfo().getLocation();
 		Dialog<String> dialog = new Dialog<>();
@@ -1557,7 +1583,7 @@ public class GUIController {
 		if (result.isPresent()) {
 			String newName = nameField.getText();
 			if (isValidFileName(newName)) {
-				Triplet<String, InputType, OutputType> toReturn = new Triplet<String, InputType, OutputType>(newName,
+				Tuple3<String, InputType, OutputType> toReturn = new Tuple3<String, InputType, OutputType>(newName,
 						inputType.getValue(), outputType.getValue());
 				return toReturn;
 			} else {

@@ -9,7 +9,7 @@ import java.util.TreeSet;
 import org.fxmisc.richtext.CodeArea;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
-import edu.pse.beast.toolbox.Triplet;
+import edu.pse.beast.toolbox.Tuple3;
 import edu.pse.beast.toolbox.Tuple;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -58,7 +58,7 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
     public abstract void insertAutoCompletion(int start, int end,
                                               String toInsert);
 
-    protected Triplet<List<String>, Integer, Integer>
+    protected Tuple3<List<String>, Integer, Integer>
                 getCompletions(Set<String> recommendations) {
         String completeText = this.getText();
         int prefixEnd = caretPositionProperty().getValue();
@@ -123,7 +123,7 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
         if (possibleList.size() == 1) {
         }
 
-        return new Triplet<List<String>, Integer, Integer>(possibleList, prefixStart, prefixEnd);
+        return new Tuple3<List<String>, Integer, Integer>(possibleList, prefixStart, prefixEnd);
     }
 
     public void insertHiddenAutoCompletion(String toInsert) {

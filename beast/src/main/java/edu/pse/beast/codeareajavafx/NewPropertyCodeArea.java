@@ -17,7 +17,7 @@ import org.fxmisc.richtext.model.StyleSpansBuilder;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.highlevel.javafx.BooleanExpEditorNEW;
 import edu.pse.beast.highlevel.javafx.MenuBarInterface;
-import edu.pse.beast.toolbox.Triplet;
+import edu.pse.beast.toolbox.Tuple3;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
@@ -161,7 +161,7 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
     }
 
     public void autoComplete() {
-        Triplet<List<String>, Integer, Integer> completion = getCompletions(recommendations);
+        Tuple3<List<String>, Integer, Integer> completion = getCompletions(recommendations);
         processAutocompletion(completion.first, completion.second, completion.third);
     }
 

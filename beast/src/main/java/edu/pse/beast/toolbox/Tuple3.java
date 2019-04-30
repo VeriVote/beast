@@ -9,13 +9,13 @@ package edu.pse.beast.toolbox;
  * @param <S>
  * @param <T>
  */
-public class Triplet<F, S, T> {
+public class Tuple3<F, S, T> {
 
     public final F first;
     public final S second;
     public final T third;
 
-    public Triplet(F first, S second, T third) {
+    public Tuple3(F first, S second, T third) {
         this.first = first;
         this.second = second;
         this.third = third;
@@ -23,10 +23,10 @@ public class Triplet<F, S, T> {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof Triplet)) {
+        if (!(o instanceof Tuple3)) {
             return false;
         }
-        Triplet<?, ?, ?> p = (Triplet<?, ?, ?>) o;
+        Tuple3<?, ?, ?> p = (Tuple3<?, ?, ?>) o;
         return first.equals(p.first) && second.equals(p.second) && third.equals(p.third);
     }
 
@@ -40,7 +40,7 @@ public class Triplet<F, S, T> {
                 ^ (third == null ? 0 : third.hashCode());
     }
 
-    public static <F, S, T> Triplet<F, S, T> create(F f, S s, T t) {
-        return new Triplet<F, S, T>(f, s, t);
+    public static <F, S, T> Tuple3<F, S, T> create(F f, S s, T t) {
+        return new Tuple3<F, S, T>(f, s, t);
     }
 }
