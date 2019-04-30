@@ -14,72 +14,72 @@ import javafx.scene.input.MouseEvent;
 
 public class PieChartElement extends ResultImageElement {
 
-	private List<Tuple3<String, Double, Color>> resultValues;
+    private List<Tuple3<String, Double, Color>> resultValues;
 
-	private double totalSize = 0;
+    private double totalSize = 0;
 
-	private double width = 0;
-	private double height = 0;
-	
+    private double width = 0;
+    private double height = 0;
+    
 
-	public PieChartElement(double xPosTopLeft, double yPosTopLeft, double width, double height,
-			List<Tuple3<String, Double, Color>> resultValues) {
-		super(xPosTopLeft, yPosTopLeft, xPosTopLeft + width, yPosTopLeft + height);
-		this.resultValues = resultValues;
+    public PieChartElement(double xPosTopLeft, double yPosTopLeft, double width, double height,
+            List<Tuple3<String, Double, Color>> resultValues) {
+        super(xPosTopLeft, yPosTopLeft, xPosTopLeft + width, yPosTopLeft + height);
+        this.resultValues = resultValues;
 
-		this.width = width;
-		this.height = height;
+        this.width = width;
+        this.height = height;
 
-		init();
-	}
+        init();
+    }
 
-	private void init() {
-		double tmpSize = 0;
-		// iterate over the values, adding up their sizes, therefore getting the total
-		// size of the pie chart;
-		for (Iterator<Tuple3<String, Double, Color>> iterator = resultValues.iterator(); iterator.hasNext();) {
-			Tuple3<String, Double, Color> value = (Tuple3<String, Double, Color>) iterator.next();
+    private void init() {
+        double tmpSize = 0;
+        // iterate over the values, adding up their sizes, therefore getting the total
+        // size of the pie chart;
+        for (Iterator<Tuple3<String, Double, Color>> iterator = resultValues.iterator(); iterator.hasNext();) {
+            Tuple3<String, Double, Color> value = (Tuple3<String, Double, Color>) iterator.next();
 
-			if (value.second == 0) {
-				System.err.println("You are not allowed to have fields with zero size in this chart");
-				iterator.remove(); //remove this element from the chart
-			} else {
-				tmpSize = tmpSize + Math.abs(value.second);
-			}
-		}
+            if (value.second == 0) {
+                System.err.println("You are not allowed to have fields with zero size in this chart");
+                iterator.remove(); //remove this element from the chart
+            } else {
+                tmpSize = tmpSize + Math.abs(value.second);
+            }
+        }
 
-		this.totalSize = tmpSize;
-	}
+        this.totalSize = tmpSize;
+    }
 
-	@Override
-	public void isClicked(MouseEvent event) {
-		//do nothing so far
-	}
+    @Override
+    public void isClicked(MouseEvent event) {
+        //do nothing so far
+    }
 
-	@Override
-	public void drawElement(Graphics2D graphics, double scale) {
-		
-		if (totalSize == 0) {
-			System.err.println("The pie chart was not given a size larger than zero!");
-		} else {
-			double currentAngle = 0;
-			
-			
-			for (Iterator<Tuple3<String, Double, Color>> iterator = resultValues.iterator(); iterator.hasNext();) {
-				Tuple3<String, Double, Color> value = (Tuple3<String, Double, Color>) iterator.next();
+    @Override
+    public void drawElement(Graphics2D graphics, double scale) {
+        
+        if (totalSize == 0) {
+            System.err.println("The pie chart was not given a size larger than zero!");
+        } else {
+            double currentAngle = 0;
+            
+            
+            for (Iterator<Tuple3<String, Double, Color>> iterator = resultValues.iterator(); iterator.hasNext();) {
+                Tuple3<String, Double, Color> value = (Tuple3<String, Double, Color>) iterator.next();
 
-				double neededAngle = 360 * (value.second / totalSize);
+                double neededAngle = 360 * (value.second / totalSize);
 
-				if (!iterator.hasNext()) { // this is the last element, so we have to fill
-					neededAngle = 360 - currentAngle; //so we have to fill the rest of the circle
-				}
-				
-				graphics.setColor(value.third);
-				
-				graphics.fill(new Arc2D.Double(super.getxPosTopLeft() * scale, super.getyPosTopLeft() * scale, width * scale, height * scale, currentAngle, neededAngle, Arc2D.PIE));
-				
-				currentAngle = currentAngle + neededAngle;
-			}
-		}
-	}
+                if (!iterator.hasNext()) { // this is the last element, so we have to fill
+                    neededAngle = 360 - currentAngle; //so we have to fill the rest of the circle
+                }
+                
+                graphics.setColor(value.third);
+                
+                graphics.fill(new Arc2D.Double(super.getxPosTopLeft() * scale, super.getyPosTopLeft() * scale, width * scale, height * scale, currentAngle, neededAngle, Arc2D.PIE));
+                
+                currentAngle = currentAngle + neededAngle;
+            }
+        }
+    }
 }

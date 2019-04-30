@@ -13,30 +13,30 @@ import edu.pse.beast.types.OutputType;
  */
 public class Default extends ResultPresentationType {
 
-	@Override
-	public void presentResult(Result result) {
-		InputType inType 	= result.getElectionDescription().getContainer().getInputType();
-		OutputType outType	= result.getElectionDescription().getContainer().getOutputType();	
-		
-		
-		inType.getDimension();
-		
-		CBMCResultWrapperMultiArray votesWrapper = inType.extractVotesWrappedMulti(result.getResult(), result.getNumCandidates());
+    @Override
+    public void presentResult(Result result) {
+        InputType inType     = result.getElectionDescription().getContainer().getInputType();
+        OutputType outType    = result.getElectionDescription().getContainer().getOutputType();    
+        
+        
+        inType.getDimension();
+        
+        CBMCResultWrapperMultiArray votesWrapper = inType.extractVotesWrappedMulti(result.getResult(), result.getNumCandidates());
 
-		
-		
-		String[] electedWrapper = outType.extractResult(result.getResult());
-				
-				//inType.extractVotesWrappedMulti(result, numberCandidates)(result.getResult(), result.getNumCandidates());
-		
-		
-		
-		//ResultImageRenderer.
-	}
+        
+        
+        String[] electedWrapper = outType.extractResult(result.getResult());
+                
+                //inType.extractVotesWrappedMulti(result, numberCandidates)(result.getResult(), result.getNumCandidates());
+        
+        
+        
+        //ResultImageRenderer.
+    }
 
-	@Override
-	public String getName() {
-		return "Default";
-	}
+    @Override
+    public String getName() {
+        return "Default";
+    }
 
 }

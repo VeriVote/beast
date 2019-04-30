@@ -70,7 +70,7 @@ public class MainClass extends Application {
             GUIController controller = new GUIController(mainStage);
             FXMLLoader loader
                   = new FXMLLoader(
-                		  new URL("file:///" + SuperFolderFinder.getSuperFolder() + RESOURCE),
+                          new URL("file:///" + SuperFolderFinder.getSuperFolder() + RESOURCE),
                             ResourceBundle.getBundle(RESOURCE_BUNDLE, locale));
             loader.setController(controller);
             Parent root = loader.load();

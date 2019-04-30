@@ -55,15 +55,15 @@ public class ResultPresenter implements Runnable {
     
     
     public void present() {
-    	if (result == null) {
-    		return;
-    	} else {
-    		
-    		
-    		
-    		
-    		
-    	}
+        if (result == null) {
+            return;
+        } else {
+            
+            
+            
+            
+            
+        }
     }
 
     @Override
@@ -74,11 +74,11 @@ public class ResultPresenter implements Runnable {
         } else {
 
             while (running) {
-            	            	
-            	
-            	result.getElectionDescription().getContainer().getInputType();
-            	result.getElectionDescription().getContainer().getOutputType();
-            	
+                                
+                
+                result.getElectionDescription().getContainer().getInputType();
+                result.getElectionDescription().getContainer().getOutputType();
+                
                 // do all the printing
                 String output = "";
                 switch (GUIController.getController().getPresentationType()) {
@@ -107,7 +107,7 @@ public class ResultPresenter implements Runnable {
                     if (result.isFinished()) {
                         System.out.println("fix printing results");
                     } else {
-                    	System.out.println("result not finished yet!");
+                        System.out.println("result not finished yet!");
                         output = "result not finished yet!";
                     }
                     break;
