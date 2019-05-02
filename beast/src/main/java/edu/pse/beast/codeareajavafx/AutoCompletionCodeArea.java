@@ -9,8 +9,8 @@ import java.util.TreeSet;
 import org.fxmisc.richtext.CodeArea;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
-import edu.pse.beast.toolbox.Tuple3;
 import edu.pse.beast.toolbox.Tuple;
+import edu.pse.beast.toolbox.Tuple3;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 

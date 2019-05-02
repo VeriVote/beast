@@ -3,11 +3,8 @@ package edu.pse.beast.highlevel.javafx.resultpresenter.resultElements;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.geom.Arc2D;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import org.reactfx.util.Tuple4;
 
 import edu.pse.beast.toolbox.Tuple3;
 import javafx.scene.input.MouseEvent;

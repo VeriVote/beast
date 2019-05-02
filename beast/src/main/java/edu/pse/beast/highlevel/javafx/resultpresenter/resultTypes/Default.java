@@ -1,7 +1,7 @@
 package edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes;
 
-import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.Result;
+import edu.pse.beast.toolbox.valueContainers.ResultValueWrapper;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 
@@ -15,17 +15,18 @@ public class Default extends ResultPresentationType {
 
     @Override
     public void presentResult(Result result) {
-        InputType inType     = result.getElectionDescription().getContainer().getInputType();
-        OutputType outType    = result.getElectionDescription().getContainer().getOutputType();    
-        
+        InputType inType   = result.getElectionDescription().getContainer().getInputType();
+        OutputType outType = result.getElectionDescription().getContainer().getOutputType();
         
         inType.getDimension();
         
-        CBMCResultWrapperMultiArray votesWrapper = inType.extractVotesWrappedMulti(result.getResult(), result.getNumCandidates());
+       // CBMCResultWrapperMultiArray votesWrapper = inType.extractVotesWrappedMulti(result.getResult(), result.getNumCandidates());
 
+        ResultValueWrapper votesWrapper = inType.extractVotes(result.getResult(), result.getNumCandidates());
         
         
-        String[] electedWrapper = outType.extractResult(result.getResult());
+        //intype.extractv
+        
                 
                 //inType.extractVotesWrappedMulti(result, numberCandidates)(result.getResult(), result.getNumCandidates());
         

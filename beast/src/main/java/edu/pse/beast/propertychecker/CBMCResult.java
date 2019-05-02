@@ -188,87 +188,91 @@ public class CBMCResult extends Result {
      * @return a failure example that show how the voters voted and who won then
      */
     private FailureExample createFailureExample() {
+        
+        System.err.println("FIX rewrite createFailureExample"); //TODO
+        
+        return null;
         // determine the elect values
-        if (!isMarginComp()) {
-            FailureExample toReturn = null;
-            if (getResult() != null && getElectionDescription() != null) {
-                // define these arrays, because switch case does not let me reassign
-                // the same name, and i am a bit worried, that they will not get created properly;
-                List<CBMCResultWrapperMultiArray> votesList
-                      = getElectionDescription().getContainer().getInputType()
-                        .readVoteList(getResult());
-                List<CBMCResultWrapperSingleArray> singleVotesList
-                      = getElectionDescription().getContainer()
-                        .getInputType().readSingleVoteList(getResult());
-
-                // this list can be empty, if no voting for seats took place
-                List<CBMCResultWrapperSingleArray> seatsList
-                      = getElectionDescription().getContainer().getOutputType()
-                        .readSeatList(getResult());
-                List<CBMCResultWrapperLong> elect
-                      = getElectionDescription().getContainer().getOutputType()
-                        .readElect(getResult());
-                toReturn = new FailureExample(getElectionDescription(), singleVotesList,
-                                              votesList, elect, seatsList,
-                                              getNumCandidates(), getNumSeats(),
-                                              getNumVoters());
-//              (*)
-                // determine the values for the symbolic variables that the user set
-                // get ALL symbolic variables
-                List<SymbolicVariable> symbolicVariableList
-                      = super.getPropertyDesctiption().getSymbolicVariablesCloned();
-                // iterate through them
-                for (Iterator<SymbolicVariable> iterator = symbolicVariableList.iterator();
-                        iterator.hasNext();) {
-                    SymbolicVariable symbolicVariable = (SymbolicVariable) iterator.next();
-                    InternalTypeContainer internalType
-                          = symbolicVariable.getInternalTypeContainer();
-                    String name = symbolicVariable.getId();
-                    if (!internalType.isList()) {
-                        // extract the value of "name" in the result
-                        // if it is null, the variable could not be found
-                        Long extracted = readSymbolicVariable(name, getResult());
-                        if (extracted != null) {
-                            long number = (long) extracted;
-                            switch (internalType.getInternalType()) {
-                            case VOTER:
-                                toReturn.addSymbolicVoters(name, number);
-                                break;
-                            case CANDIDATE:
-                                toReturn.addSymbolicCandidate(name, number);
-                                break;
-                            case SEAT:
-                                toReturn.addSymbolicSeat(name, number);
-                                break;
-                            default:
-                                // do nothing
-                            }
-                        }
-                    }
-                }
-                return toReturn;
-            } else {
-                this.setError(
-                        "No input could be read from the Checker, "
-                        + "please make sure that it is there and working properly");
-                return null;
-            }
-        } else {
-            // we have a margin computation and create the corresponding example object
-            FailureExample toReturn
-                  = new FailureExample(getElectionDescription(),
-                                       null, null, null, null,
-                                       0, 0, 0);
-            toReturn.setHasFinalMargin(hasFinalMargin());
-            if (hasFinalMargin()) {
-                toReturn.setFinalMargin(getFinalMargin());
-            }
-            toReturn.setOrigVoting(origVoting);
-            toReturn.setOrigWinner(origWinner);
-            toReturn.setNewVotes(newVotes);
-            toReturn.setNewWinner(super.newWinner);
-            return toReturn;
-        }
+//        if (!isMarginComp()) {
+//            FailureExample toReturn = null;
+//            if (getResult() != null && getElectionDescription() != null) {
+//                // define these arrays, because switch case does not let me reassign
+//                // the same name, and I am a bit worried, that they will not get created properly;
+//                List<CBMCResultWrapperMultiArray> votesList
+//                      = getElectionDescription().getContainer().getInputType().
+//                        .readVoteList(getResult());
+//                List<CBMCResultWrapperSingleArray> singleVotesList
+//                      = getElectionDescription().getContainer()
+//                        .getInputType().readSingleVoteList(getResult());
+//
+//                // this list can be empty, if no voting for seats took place
+//                List<CBMCResultWrapperSingleArray> seatsList
+//                      = getElectionDescription().getContainer().getOutputType()
+//                        .readSeatList(getResult());
+//                List<CBMCResultWrapperLong> elect
+//                      = getElectionDescription().getContainer().getOutputType()
+//                        .readElect(getResult());
+//                toReturn = new FailureExample(getElectionDescription(), singleVotesList,
+//                                              votesList, elect, seatsList,
+//                                              getNumCandidates(), getNumSeats(),
+//                                              getNumVoters());
+////              (*)
+//                // determine the values for the symbolic variables that the user set
+//                // get ALL symbolic variables
+//                List<SymbolicVariable> symbolicVariableList
+//                      = super.getPropertyDesctiption().getSymbolicVariablesCloned();
+//                // iterate through them
+//                for (Iterator<SymbolicVariable> iterator = symbolicVariableList.iterator();
+//                        iterator.hasNext();) {
+//                    SymbolicVariable symbolicVariable = (SymbolicVariable) iterator.next();
+//                    InternalTypeContainer internalType
+//                          = symbolicVariable.getInternalTypeContainer();
+//                    String name = symbolicVariable.getId();
+//                    if (!internalType.isList()) {
+//                        // extract the value of "name" in the result
+//                        // if it is null, the variable could not be found
+//                        Long extracted = readSymbolicVariable(name, getResult());
+//                        if (extracted != null) {
+//                            long number = (long) extracted;
+//                            switch (internalType.getInternalType()) {
+//                            case VOTER:
+//                                toReturn.addSymbolicVoters(name, number);
+//                                break;
+//                            case CANDIDATE:
+//                                toReturn.addSymbolicCandidate(name, number);
+//                                break;
+//                            case SEAT:
+//                                toReturn.addSymbolicSeat(name, number);
+//                                break;
+//                            default:
+//                                // do nothing
+//                            }
+//                        }
+//                    }
+//                }
+//                return toReturn;
+//            } else {
+//                this.setError(
+//                        "No input could be read from the Checker, "
+//                        + "please make sure that it is there and working properly");
+//                return null;
+//            }
+//        } else {
+//            // we have a margin computation and create the corresponding example object
+//            FailureExample toReturn
+//                  = new FailureExample(getElectionDescription(),
+//                                       null, null, null, null,
+//                                       0, 0, 0);
+//            toReturn.setHasFinalMargin(hasFinalMargin());
+//            if (hasFinalMargin()) {
+//                toReturn.setFinalMargin(getFinalMargin());
+//            }
+//            toReturn.setOrigVoting(origVoting);
+//            toReturn.setOrigWinner(origWinner);
+//            toReturn.setNewVotes(newVotes);
+//            toReturn.setNewWinner(super.newWinner);
+//            return toReturn;
+//        }
     }
 
     protected Long readSymbolicVariable(String name, List<String> toExtract) {

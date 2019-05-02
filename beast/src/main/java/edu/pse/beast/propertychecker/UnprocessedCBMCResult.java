@@ -15,30 +15,30 @@ public class UnprocessedCBMCResult extends CBMCResult {
 //  }
 
     // returns the new Votes as a CBMCWrappedMultiArray
-    public CBMCResultWrapperMultiArray getNewVotesWrappedMulti() {
-        // determine the elect values
-        if (getResult() != null && getElectionDescription() != null) {
-            return getElectionDescription().getContainer()
-                    .getInputType().extractVotesWrappedMulti(
-                            getResult(), this.getNumCandidates());
-        } else {
-            this.setError(
-                    "No input could be read from the Checker, "
-                    + "please make sure that it is there and working properly");
-            return null;
-        }
-    }
-
-    public String[] getNewResult() {
-        // determine the elect values
-        if (getResult() != null && getElectionDescription() != null) {
-            return getElectionDescription().getContainer()
-                    .getOutputType().extractResult(getResult());
-        } else {
-            this.setError(
-                    "No input could be read from the Checker, "
-                    + "please make sure that it is there and working properly");
-            return null;
-        }
-    }
+//    public CBMCResultWrapperMultiArray getNewVotesWrappedMulti() {
+//        // determine the elect values
+//        if (getResult() != null && getElectionDescription() != null) {
+//            return getElectionDescription().getContainer()
+//                    .getInputType().extractVotesWrappedMulti(
+//                            getResult(), this.getNumCandidates());
+//        } else {
+//            this.setError(
+//                    "No input could be read from the Checker, "
+//                    + "please make sure that it is there and working properly");
+//            return null;
+//        }
+//    } TODO delete unused code
+//
+//    public String[] getNewResult() {
+//        // determine the elect values
+//        if (getResult() != null && getElectionDescription() != null) {
+//            return getElectionDescription().getContainer()
+//                    .getOutputType().extractResult(getResult());
+//        } else {
+//            this.setError(
+//                    "No input could be read from the Checker, "
+//                    + "please make sure that it is there and working properly");
+//            return null;
+//        }
+//    } TODO delete unused code
 }

@@ -13,6 +13,8 @@ import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
 public class ParliamentStack extends CBMCOutputType {
+    
+    
 
     @Override
     public String getOutputString() {
@@ -23,27 +25,15 @@ public class ParliamentStack extends CBMCOutputType {
     public String getOutputIDinFile() {
         return "STACK_PER_PARTY";
     }
+    
+    @Override
+    public int getDimension() {
+        return 1;
+    }
 
     @Override
     public boolean isOutputOneCandidate() {
         return false;
-    }
-
-    @Override
-    public String[] extractResult(List<String> toExtract) {
-        return super.helper.readOneDimVarLong(
-                "" + UnifiedNameContainer.getNewResultName() + "",
-                toExtract).get(0).getArray();
-    }
-
-    @Override
-    public List<CBMCResultWrapperSingleArray> readSeatList(List<String> toExtract) {
-        return super.helper.readOneDimVarLong("elect", toExtract);
-    }
-
-    @Override
-    public List<CBMCResultWrapperLong> readElect(List<String> toExtract) {
-        return null;
     }
 
     @Override

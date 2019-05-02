@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
+import edu.pse.beast.toolbox.valueContainers.ResultValueWrapper;
 import edu.pse.beast.types.CommonHelpMethods;
 
 public class CbmcHelpMethods extends CommonHelpMethods {
@@ -23,26 +24,6 @@ public class CbmcHelpMethods extends CommonHelpMethods {
 //  // failed
 //  private static final String FAILURELINE = "VERIFICATION FAILED";
 
-    @Override
-    public Long readSymbolicVariable(String name, List<String> toExtract) {
-        Long toReturn = null;
-        Pattern correctChecker = Pattern.compile("(\\b" + name + "=[0-9]+u*)(.*)");
-        Iterator<String> iterator = toExtract.iterator();
-        String line = mergeLinesToOne(iterator, SEGMENT_END);
-        while (line.length() > 0) {
-            Matcher checkerMatcher = correctChecker.matcher(line);
-            if (checkerMatcher.find()) {
-                // split at the "(" and ")" to extract the bit value
-                String valueAsString = line.split("\\(")[1].split("\\)")[0];
-                // parse the binary value to a long
-                toReturn = Long.parseLong(valueAsString, 2);
-            }
-            line = mergeLinesToOne(iterator, SEGMENT_END);
-        }
-        return toReturn;
-    }
-
-    @Override
     public List<CBMCResultWrapperLong> readLongs(String name, List<String> toExtract) {
         List<CBMCResultWrapperLong> toReturn = new ArrayList<CBMCResultWrapperLong>();
         Pattern correctChecker = Pattern.compile("(\\b" + name + "[0-9]+=[0-9]+u*)(.*)");
@@ -84,7 +65,6 @@ public class CbmcHelpMethods extends CommonHelpMethods {
         return toReturn;
     }
 
-    @Override
     public List<CBMCResultWrapperSingleArray> readOneDimVarLong(String name,
                                                                 List<String> toExtract) {
         List<CBMCResultWrapperSingleArray> list = new ArrayList<CBMCResultWrapperSingleArray>();
@@ -172,8 +152,37 @@ public class CbmcHelpMethods extends CommonHelpMethods {
         }
         return list;
     }
-
+    
     @Override
+    public List<ResultValueWrapper> extractVariable(String name, int dimension,
+            List<String> toExtract) {
+        
+        System.out.println("merge these methods to one");
+        
+        return readNDimVar(name, dimension, toExtract);
+        
+        
+//                if (dimension == 0) {
+//                    return readLongs(name, toExtract);
+//                } else 
+//                if (dimension == 1) {
+//                    return readOneDimVarLong(name, toExtract);
+//                } else
+//                if (dimension == 2) {
+//                    return readTwoDimVarLong(name, toExtract);
+//                }
+    }
+    
+    public List<ResultValueWrapper> readNDimVar(String name, int dimension, List<String> toExtract) {
+        List<ResultValueWrapper> list = new ArrayList<ResultValueWrapper>();
+        
+        
+        
+        
+        
+        return list;
+    }
+
     public List<CBMCResultWrapperMultiArray> readTwoDimVarLong(String name,
                                                                List<String> toExtract) {
         List<CBMCResultWrapperMultiArray> list

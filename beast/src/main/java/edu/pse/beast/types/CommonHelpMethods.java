@@ -8,9 +8,21 @@ import java.util.ServiceLoader;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
+import edu.pse.beast.toolbox.valueContainers.ResultValueWrapper;
 
 public abstract class CommonHelpMethods {
-
+    
+    /**
+     * extracts a variable with given dimension for the given checker from the output
+     * list
+     *
+     * @param toExtract the list to extract from
+     * @param name      the name of the variable
+     * @return a two dim wrapper of the voting results
+     */
+    public abstract List<ResultValueWrapper> extractVariable(String name, int dimension,
+            List<String> toExtract);
+    
     /**
      * extracts a two dimensional variable for the given checker from the output
      * list
@@ -22,15 +34,6 @@ public abstract class CommonHelpMethods {
     public abstract List<CBMCResultWrapperMultiArray>
                 readTwoDimVarLong(String name,
                                   List<String> toExtract);
-
-    /**
-     * reads a symbolic variable with a given name from a list
-     *
-     * @param name      the variable name
-     * @param toExtract the list to extract from
-     * @return the variable
-     */
-    public abstract Long readSymbolicVariable(String name, List<String> toExtract);
 
     /**
      * extracts a long variable out of the output from cbmc

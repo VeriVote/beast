@@ -11,6 +11,8 @@ import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
+import edu.pse.beast.toolbox.valueContainers.ResultValueWrapper;
 
 public abstract class InputType implements InOutType {
     protected CommonHelpMethods helper;
@@ -32,6 +34,21 @@ public abstract class InputType implements InOutType {
     @Override
     public final String toString() {
         return otherToString();
+    }
+    
+    @Deprecated
+    public final List<List<String>> getNewVotes(List<String> lastFailedRun, int index) {
+        List<List<String>> toReturn = new ArrayList<List<String>>();
+        
+        toReturn.addAll(this.helper.extractVariable(
+                "" + UnifiedNameContainer.getNewVotesName() + "", getDimension(), lastFailedRun)
+                .get(index).getList());
+
+        return toReturn;
+    }
+    
+    public final List<List<String>> getVotingArray(List<String> lastFailedRun, int index) {
+        return helper.extractVariable(UnifiedNameContainer.getVotingArray(), getDimension(), lastFailedRun).get(index).getList();
     }
 
     protected abstract void getHelper();
@@ -85,22 +102,18 @@ public abstract class InputType implements InOutType {
      *                a struct)
      */
     public abstract void addVerifyMethod(CodeArrayListBeautifier code, OutputType outType);
-
+    
     /**
-     *
-     * @return true, if the input is two dimensional, else false
-     */
-    public abstract boolean isTwoDim();
-
-    /**
-     * extracts the voting data out of the given list of strings into a wrapper
+     * extracts the voting data out of the given bounded model checker output into a wrapper object
      *
      * @param result           the result of the computation from which the values
      *                         will be extracted
      * @param numberCandidates the number of candidates
      * @return a wrapper which contains the values
      */
-    public abstract CBMCResultWrapperMultiArray extractVotesWrappedMulti(List<String> result, int numberCandidates);
+    public final ResultValueWrapper extractVotes(List<String> result, int numberCandidates) {
+        return this.helper.extractVariable("" + UnifiedNameContainer.getNewVotesName() + "", getDimension(), result).get(0);
+    }
 
     /**
      * vets a value to determine if it is legal for the input type, or not
@@ -112,9 +125,10 @@ public abstract class InputType implements InOutType {
      */
     public abstract String vetValue(String newValue, ElectionTypeContainer container, NEWRowOfValues newRowOfValues);
 
-    public abstract List<CBMCResultWrapperMultiArray> readVoteList(List<String> toExtract);
+    public List<ResultValueWrapper> readVote(List<String> toExtract) {
+        return this.helper.extractVariable(UnifiedNameContainer.getVotingArray(), getDimension(), toExtract);
+    }
 
-    public abstract List<CBMCResultWrapperSingleArray> readSingleVoteList(List<String> toExtract);
 
     public String[] wrongInputTypeArray(int amountCandidates, int amountVoters) {
         String[] toReturn = new String[amountCandidates];
@@ -148,8 +162,6 @@ public abstract class InputType implements InOutType {
 
     public abstract void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique);
 
-    public abstract List<List<String>> getNewVotes(List<String> lastFailedRun, int index);
-
     public abstract InternalTypeContainer getInternalTypeContainer();
 
     public abstract int vetAmountCandidates(int amountCandidates);
@@ -167,6 +179,4 @@ public abstract class InputType implements InOutType {
     public abstract boolean hasVariableAsMinValue();
 
     public abstract boolean hasVariableAsMaxValue();
-
-    public abstract List<List<String>> getVotingArray(List<String> lastFailedRun, int index);
 }

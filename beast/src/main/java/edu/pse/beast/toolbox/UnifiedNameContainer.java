@@ -20,6 +20,9 @@ public final class UnifiedNameContainer {
         map.put("candidate", "C");
         map.put("voter", "V");
         map.put("seats", "S");
+        
+        map.put("elect", "elect");
+        
 
         map.put("votingMethod", "voting");
         map.put("struct_result", "result");
@@ -63,6 +66,10 @@ public final class UnifiedNameContainer {
 
     public static String getSeats() {
         return map.get("seats");
+    }
+    
+    public static String getElect() {
+        return map.get("elect");
     }
 
     public static String getVotingMethod() {
@@ -112,6 +119,10 @@ public final class UnifiedNameContainer {
     public static String getSeatsKey() {
         return "seats";
     }
+    
+    public static String getElectKey() {
+        return "elect";
+    }
 
     public static String getVotingMethodKey() {
         return "votingMethod";
@@ -141,9 +152,9 @@ public final class UnifiedNameContainer {
         setInMap("voter", voter);
     }
 
-    public static void setVotes(String votes) {
-        setInMap("votes", votes);
-    }
+    //public static void setVotes(String votes) {
+    //    setInMap("votes", votes);
+    //}  TODO check if used
 
     public static void setSeats(String seats) {
         setInMap("seats", seats);

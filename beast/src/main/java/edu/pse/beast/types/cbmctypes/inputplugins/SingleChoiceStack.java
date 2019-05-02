@@ -30,11 +30,6 @@ public class SingleChoiceStack extends CBMCInputType {
     }
 
     @Override
-    public List<List<String>> getVotingArray(List<String> lastFailedRun, int index) {
-        return super.helper.readTwoDimVarLong("votes", lastFailedRun).get(index).getList();
-    }
-
-    @Override
     public String getMinimalValue() {
         return "0";
     }
@@ -105,31 +100,6 @@ public class SingleChoiceStack extends CBMCInputType {
     }
 
     @Override
-    public boolean isTwoDim() {
-        return getDimension() == 2;
-    }
-
-    @Override
-    public CBMCResultWrapperMultiArray extractVotesWrappedMulti(List<String> result,
-                                                                int numberCandidates) {
-        List<CBMCResultWrapperSingleArray> singleVotesList
-              = super.helper.readOneDimVarLong("votes", result);
-        List<CBMCResultWrapperMultiArray> toReturn = new ArrayList<CBMCResultWrapperMultiArray>();
-        for (Iterator<CBMCResultWrapperSingleArray> iterator = singleVotesList.iterator();
-                iterator.hasNext();) {
-            CBMCResultWrapperSingleArray cbmcResultWrapperSingleArray
-                  = (CBMCResultWrapperSingleArray) iterator.next();
-            toReturn.add(cbmcResultWrapperSingleArray.wrapInTwoDim(
-                    1,
-                    "" + UnifiedNameContainer.getNewVotesName() + "",
-                    numberCandidates
-                    )
-            );
-        }
-        return toReturn.get(0);
-    }
-
-    @Override
     public String vetValue(String newValue,
                            ElectionTypeContainer container,
                            NEWRowOfValues row) {
@@ -145,17 +115,7 @@ public class SingleChoiceStack extends CBMCInputType {
             return newValue;
         }
     }
-
-    @Override
-    public List<CBMCResultWrapperMultiArray> readVoteList(List<String> toExtract) {
-        return null;
-    }
-
-    @Override
-    public List<CBMCResultWrapperSingleArray> readSingleVoteList(List<String> toExtract) {
-        return super.helper.readOneDimVarLong("votes", toExtract);
-    }
-
+    
     @Override
     public String[] getVotePoints(String[][] votes, int amountCandidates, int amountVoters) {
         return super.wrongInputTypeArray(amountCandidates, amountVoters);
@@ -205,15 +165,6 @@ public class SingleChoiceStack extends CBMCInputType {
     @Override
     public void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique) {
         code.add("if(arr[i] == candidate) sum++;");
-    }
-
-    @Override
-    public List<List<String>> getNewVotes(List<String> lastFailedRun, int index) {
-        List<List<String>> toReturn = new ArrayList<List<String>>();
-        toReturn.add(super.helper.readOneDimVarLong(
-                "" + UnifiedNameContainer.getNewVotesName() + "", lastFailedRun)
-                .get(index).getList());
-        return toReturn;
     }
 
     @Override

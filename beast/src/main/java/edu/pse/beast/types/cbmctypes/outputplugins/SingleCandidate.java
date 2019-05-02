@@ -25,30 +25,13 @@ public class SingleCandidate extends CBMCOutputType {
     }
 
     @Override
+    public int getDimension() {
+        return 0;
+    }
+    
+    @Override
     public boolean isOutputOneCandidate() {
         return true;
-    }
-
-    @Override
-    public String[] extractResult(List<String> toExtract) {
-        String[] tmpArray
-        = {
-              ""
-                  + super.helper.readLongs(
-                     "" + UnifiedNameContainer.getNewResultName() + "",
-                     toExtract).get(0).getValue()
-          };
-        return tmpArray;
-    }
-
-    @Override
-    public List<CBMCResultWrapperSingleArray> readSeatList(List<String> toExtract) {
-        return null;
-    }
-
-    @Override
-    public List<CBMCResultWrapperLong> readElect(List<String> toExtract) {
-        return super.helper.readLongs("elect", toExtract);
     }
 
     @Override

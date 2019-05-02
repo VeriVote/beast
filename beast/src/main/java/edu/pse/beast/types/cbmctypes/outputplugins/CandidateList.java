@@ -23,27 +23,15 @@ public class CandidateList extends CBMCOutputType {
     public String getOutputIDinFile() {
         return "CANDIDATE_LIST";
     }
+    
+    @Override
+    public int getDimension() {
+        return 1;
+    }
 
     @Override
     public boolean isOutputOneCandidate() {
         return false;
-    }
-
-    @Override
-    public String[] extractResult(List<String> toExtract) {
-        return super.helper
-                .readOneDimVarLong("" + UnifiedNameContainer.getNewResultName() + "", toExtract)
-                .get(0).getArray();
-    }
-
-    @Override
-    public List<CBMCResultWrapperSingleArray> readSeatList(List<String> toExtract) {
-        return super.helper.readOneDimVarLong("elect", toExtract);
-    }
-
-    @Override
-    public List<CBMCResultWrapperLong> readElect(List<String> toExtract) {
-        return null;
     }
 
     @Override

@@ -7,36 +7,27 @@ import java.util.List;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
-import edu.pse.beast.highlevel.javafx.resultpresenter.ResultPresenterNEW;
-import edu.pse.beast.highlevel.javafx.resultpresenter.resultElements.ResultImageElement;
 import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
-import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
+import edu.pse.beast.toolbox.valueContainers.ResultValueWrapper;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class Approval extends CBMCInputType {
-    private String[] sizes
-        = {UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate()};
+    private String[] sizes = { UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate() };
 
     @Override
     public String getInputString() {
-        return "[" + UnifiedNameContainer.getVoter() + "]["
-                + UnifiedNameContainer.getCandidate() + "]";
+        return "[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "]";
     }
 
     @Override
     public String getInputIDinFile() {
         return "APPROVAL";
-    }
-
-    @Override
-    public List<List<String>> getVotingArray(List<String> lastFailedRun, int index) {
-        return super.helper.readTwoDimVarLong("votes", lastFailedRun).get(index).getList();
     }
 
     @Override
@@ -108,21 +99,7 @@ public class Approval extends CBMCInputType {
     }
 
     @Override
-    public boolean isTwoDim() {
-        return true;
-    }
-
-    @Override
-    public CBMCResultWrapperMultiArray extractVotesWrappedMulti(List<String> result,
-                                                                int numberCandidates) {
-        return super.helper.readTwoDimVarLong("" + UnifiedNameContainer.getNewVotesName()
-                                              + "", result).get(0);
-    }
-
-    @Override
-    public String vetValue(String newValue,
-                           ElectionTypeContainer container,
-                           NEWRowOfValues row) {
+    public String vetValue(String newValue, ElectionTypeContainer container, NEWRowOfValues row) {
         final int number;
         try {
             number = Integer.parseInt(newValue);
@@ -134,16 +111,6 @@ public class Approval extends CBMCInputType {
         } else {
             return newValue;
         }
-    }
-
-    @Override
-    public List<CBMCResultWrapperMultiArray> readVoteList(List<String> toExtract) {
-        return super.helper.readTwoDimVarLong("votes", toExtract);
-    }
-
-    @Override
-    public List<CBMCResultWrapperSingleArray> readSingleVoteList(List<String> toExtract) {
-        return null;
     }
 
     @Override
@@ -245,18 +212,9 @@ public class Approval extends CBMCInputType {
     }
 
     @Override
-    public List<List<String>> getNewVotes(List<String> lastFailedRun, int index) {
-        return super.helper.readTwoDimVarLong("" + UnifiedNameContainer.getNewVotesName()
-                                              + "", lastFailedRun)
-                .get(index).getList();
-    }
-
-    @Override
     public InternalTypeContainer getInternalTypeContainer() {
-        return new InternalTypeContainer(
-            new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.INTEGER),
-                                      InternalTypeRep.CANDIDATE),
-            InternalTypeRep.VOTER);
+        return new InternalTypeContainer(new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.INTEGER),
+                InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
     }
 
     @Override
