@@ -33,42 +33,49 @@ public class ResultImageRenderer {
 
     private static Color backgroundColor = Color.white;
 
-    private static double imageMinWidth = GUIController.getController().getResultBorderPane().getWidth();
-    private static double imageMinHeight = GUIController.getController().getResultBorderPane().getHeight();
+    private static double imageMinWidth
+            = GUIController.getController().getResultBorderPane().getWidth();
+    private static double imageMinHeight
+            = GUIController.getController().getResultBorderPane().getHeight();
 
-    private static final double imageMaxWidth = 10000;
-    private static final double imageMaxHeight = 10000;
+    private static final double IMAGE_MAX_WIDTH  = 10000;
+    private static final double IMAGE_MAX_HEIGHT = 10000;
 
     private static double imageDesiredWidth = imageMinWidth;
     private static double imageDesiredHeight = imageMinHeight;
 
     // the next image the graphic will be drawn on
-    private static BufferedImage image = new BufferedImage((int) imageDesiredWidth, (int) imageDesiredHeight,
-            BufferedImage.TYPE_4BYTE_ABGR);
+    private static BufferedImage image
+            = new BufferedImage((int) imageDesiredWidth, (int) imageDesiredHeight,
+                                BufferedImage.TYPE_4BYTE_ABGR);
 
     static {
 
-        GUIController.getController().getResultBorderPane().widthProperty().addListener(new ChangeListener<Number>() {
+        GUIController.getController().getResultBorderPane().widthProperty()
+                .addListener(new ChangeListener<Number>() {
             @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth,
-                    Number newSceneWidth) {
+            public void changed(ObservableValue<? extends Number> observableValue,
+                                Number oldSceneWidth, Number newSceneWidth) {
                 imageMinWidth = GUIController.getController().getResultBorderPane().getWidth();
                 updateImageSizeAndRedraw();
             }
         });
 
-        GUIController.getController().getResultBorderPane().heightProperty().addListener(new ChangeListener<Number>() {
+        GUIController.getController().getResultBorderPane().heightProperty()
+                .addListener(new ChangeListener<Number>() {
             @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight,
-                    Number newSceneHeight) {
+            public void changed(ObservableValue<? extends Number> observableValue,
+                                Number oldSceneHeight, Number newSceneHeight) {
                 imageMinHeight = GUIController.getController().getResultBorderPane().getHeight();
                 updateImageSizeAndRedraw();
             }
         });
 
-        GUIController.getController().getZoomSlider().valueProperty().addListener(new ChangeListener<>() {
+        GUIController.getController().getZoomSlider().valueProperty()
+                .addListener(new ChangeListener<>() {
             @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            public void changed(ObservableValue<? extends Number> observable,
+                                Number oldValue, Number newValue) {
                 zoomTo((double) newValue);
             }
         });
@@ -81,12 +88,11 @@ public class ResultImageRenderer {
                 double clickX = event.getX();
                 double clickY = event.getY();
 
-                for (Iterator<ResultImageElement> iterator = elementList.iterator(); iterator.hasNext();) {
-                    ResultImageElement element = (ResultImageElement) iterator.next();
+                for (ResultImageElement element : elementList) {
                     if (element.isInside(clickX, clickY)) {
-                        MouseEvent tmp_event = (MouseEvent) event.clone();
-                        element.isClicked(tmp_event);
-                        tmp_event.consume();
+                        MouseEvent tmpEvent = (MouseEvent) event.clone();
+                        element.isClicked(tmpEvent);
+                        tmpEvent.consume();
                     }
                 }
                 event.consume();
@@ -96,7 +102,7 @@ public class ResultImageRenderer {
         });
     }
 
-    public synchronized static void reset() {
+    public static synchronized void reset() {
         elementList.clear();
         imageDesiredWidth = imageMinWidth;
         imageDesiredHeight = imageMinHeight;
@@ -104,10 +110,10 @@ public class ResultImageRenderer {
 
     /**
      * adds an element which will be printed on the next image.
-     * 
+     *
      * @param element the element which will be added to the list
      */
-    public synchronized static void addElement(ResultImageElement element) {
+    public static synchronized void addElement(ResultImageElement element) {
         imageDesiredWidth = Math.max(imageDesiredWidth, element.getxPosBottomRight());
         imageDesiredHeight = Math.max(imageDesiredHeight, element.getyPosBottomRight());
 
@@ -138,8 +144,10 @@ public class ResultImageRenderer {
         graphics.setColor(backgroundColor);
         graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
         // anti-aliasing
-        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        graphics.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                                  RenderingHints.VALUE_ANTIALIAS_ON);
+        graphics.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
+                                  RenderingHints.VALUE_STROKE_PURE);
 
         for (Iterator<ResultImageElement> iterator = elementList.iterator(); iterator.hasNext();) {
             ResultImageElement element = (ResultImageElement) iterator.next();
@@ -159,8 +167,12 @@ public class ResultImageRenderer {
     }
 
     private static void updateImageSize() {
-        image = new BufferedImage((int) (Math.max(imageMinWidth, imageDesiredWidth) * currentScale),
-                (int) (Math.max(imageMinHeight, imageDesiredHeight) * currentScale), BufferedImage.TYPE_4BYTE_ABGR);
+        image
+            = new BufferedImage(
+                    (int) (Math.max(imageMinWidth, imageDesiredWidth) * currentScale),
+                    (int) (Math.max(imageMinHeight, imageDesiredHeight) * currentScale),
+                    BufferedImage.TYPE_4BYTE_ABGR
+              );
     }
 
     private static void updateImageSizeAndRedraw() {
@@ -169,19 +181,19 @@ public class ResultImageRenderer {
         setScrollBars();
     }
 
-    private synchronized static void zoomTo(double zoomValue) {
+    private static synchronized void zoomTo(double zoomValue) {
         if (zoomValue < 0) {
             currentScale = 1 + (0.09 * zoomValue);
         } else {
             currentScale = 1 + (0.9 * zoomValue);
         }
 
-        if (imageDesiredWidth * currentScale > imageMaxWidth) {
-            currentScale = Math.max(1, imageMaxWidth / imageDesiredWidth);
+        if (imageDesiredWidth * currentScale > IMAGE_MAX_WIDTH) {
+            currentScale = Math.max(1, IMAGE_MAX_WIDTH / imageDesiredWidth);
         }
 
-        if (imageDesiredHeight * currentScale > imageMaxHeight) {
-            currentScale = Math.max(1, imageMaxHeight / imageDesiredHeight);
+        if (imageDesiredHeight * currentScale > IMAGE_MAX_HEIGHT) {
+            currentScale = Math.max(1, IMAGE_MAX_HEIGHT / imageDesiredHeight);
         }
 
         // preserve the previous scroll setting

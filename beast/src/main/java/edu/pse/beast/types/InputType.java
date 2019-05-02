@@ -100,7 +100,8 @@ public abstract class InputType implements InOutType {
      * @param numberCandidates the number of candidates
      * @return a wrapper which contains the values
      */
-    public abstract CBMCResultWrapperMultiArray extractVotesWrappedMulti(List<String> result, int numberCandidates);
+    public abstract CBMCResultWrapperMultiArray extractVotesWrappedMulti(List<String> result,
+                                                                         int numberCandidates);
 
     /**
      * vets a value to determine if it is legal for the input type, or not
@@ -110,7 +111,8 @@ public abstract class InputType implements InOutType {
      * @param newRowOfValues the new row of values
      * @return the new value
      */
-    public abstract String vetValue(String newValue, ElectionTypeContainer container, NEWRowOfValues newRowOfValues);
+    public abstract String vetValue(String newValue, ElectionTypeContainer container,
+                                    NEWRowOfValues newRowOfValues);
 
     public abstract List<CBMCResultWrapperMultiArray> readVoteList(List<String> toExtract);
 
@@ -122,9 +124,11 @@ public abstract class InputType implements InOutType {
         return toReturn;
     }
 
-    public abstract String[] getVotePoints(String[][] votes, int amountCandidates, int amountVoters);
+    public abstract String[] getVotePoints(String[][] votes, int amountCandidates,
+                                           int amountVoters);
 
-    public abstract String[] getVotePoints(String[] votes, int amountCandidates, int amountVoters);
+    public abstract String[] getVotePoints(String[] votes, int amountCandidates,
+                                           int amountVoters);
 
     // public abstract void addMarginMainCheck(CodeArrayListBeautifier code, int
     // margin, List<String> origResult);

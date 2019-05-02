@@ -45,6 +45,7 @@ import edu.pse.beast.toolbox.antlr.booleanexp.generateast.VoteEquivalentsNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.VotingListChangeExpNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.VotingTupelChangeExpNode;
 import edu.pse.beast.types.InternalTypeContainer;
+import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.outputplugins.CandidateList;
 
 /**
@@ -76,7 +77,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private int voteSumCounter;
     private int listlvl = 0;
     private int amtByPosVar = 0;
-
     private int numberVars;
 
     /**
@@ -90,9 +90,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     private CodeArrayListBeautifier code;
 
     private int tmpIndex = 0;
-
     private final ElectionTypeContainer electionTypeContainer;
-
     private boolean post;
 
     /**
@@ -105,7 +103,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
      */
     public CBMCCodeGenerationVisitor(ElectionTypeContainer electionTypeContainer) {
         this.electionTypeContainer = electionTypeContainer;
-
         andNodeCounter = 0;
         orNodeCounter = 0;
         implicationNodeCounter = 0;
@@ -118,22 +115,18 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         numberVars = 0;
         listlvl = 0;
         amtByPosVar = 0;
-
         code = new CodeArrayListBeautifier();
-
     }
 
     private int getTmpIndex() {
         int tmp = tmpIndex;
-
         tmpIndex++;
-
         return tmp;
     }
 
     /**
-     * sets the visitor to preConditionMode. That means the top node will be assumed
-     * in the code
+     * Sets the visitor to preConditionMode. That means the top node will be assumed
+     * in the code.
      */
     public void setToPreConditionMode() {
         assumeOrAssert = "assume";
@@ -141,8 +134,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     }
 
     /**
-     * sets the visitor to postConditionMode. That means the top node will be
-     * asserted in the code
+     * Sets the visitor to postConditionMode. That means the top node will be
+     * asserted in the code.
      */
     public void setToPostConditionMode() {
         assumeOrAssert = "assert";
@@ -150,7 +143,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     }
 
     /**
-     * this generates the c-code for a property description-statement
+     * This generates the c-code for a property description-statement.
      *
      * @param node this should be the top node of a statement
      * @return the generated code
@@ -181,7 +174,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     }
 
     /**
-     * generates the code for logical an or node
+     * Generates the code for logical an or node.
      *
      * @param node the visited or node
      */
@@ -199,7 +192,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     }
 
     /**
-     * generates the code for the Implication Node
+     * Generates the code for the Implication Node.
      *
      * @param node the visited implication node
      */
@@ -219,9 +212,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     }
 
     /**
-     * generates the code for an EquivalencyNode
+     * Generates the code for an EquivalencyNode.
      *
-     * @param node equivalencz node
+     * @param node equivalence node
      */
     @Override
     public void visitEquivalencyNode(EquivalencyNode node) {
@@ -240,7 +233,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     }
 
     /**
-     * generates the code for an ForAllNode
+     * Generates the code for an ForAllNode.
      *
      * @param node the visited node
      */
@@ -268,7 +261,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
     private String getMaxString(QuantifierNode node) {
         String max;
-        switch (node.getDeclaredSymbolicVar().getInternalTypeContainer().getInternalType()) {
+        final InternalTypeRep typeRep
+                = node.getDeclaredSymbolicVar().getInternalTypeContainer().getInternalType();
+        switch (typeRep) {
         case VOTER:
             max = UnifiedNameContainer.getVoter();
             break;
@@ -279,16 +274,13 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             max = UnifiedNameContainer.getSeats();
             break;
         default:
-            throw new AssertionError(
-                    node.getDeclaredSymbolicVar()
-                    .getInternalTypeContainer()
-                    .getInternalType().name());
+            throw new AssertionError(typeRep.name());
         }
         return max;
     }
 
     /**
-     * generates the code to an ThereExistsNode
+     * Generates the code to an ThereExistsNode.
      *
      * @param node the visited node
      */
@@ -314,7 +306,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     }
 
     /**
-     * generates the code for a notNode
+     * Generates the code for a notNode.
      *
      * @param node the visited node
      */
@@ -482,37 +474,22 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         rhs = variableNames.pop();
         lhs = variableNames.pop();
         setToPostConditionMode();
-        if (!post) {
-            internCode = varName + " = " + lhs;
-            for (int i = 0; i < lhslistLevel; ++i) {
-                internCode += "[VAR]".replace("VAR", counter.get(i));
-            }
-            internCode += " " + node.getComparisonSymbol().getCStringRep() + " ";
-            internCode += rhs;
-            for (int i = 0; i < rhslistLevel; ++i) {
-                internCode += "[VAR]".replace("VAR", counter.get(i));
-            }
-            code.add(internCode + ";");
-            for (int i = 0; i < maxListLevel; ++i) {
-                code.add("}");
-            }
-            testIfLast();
-        } else {
-            internCode = varName + " = " + lhs;
-            for (int i = 0; i < lhslistLevel; ++i) {
-                internCode += ".arr[VAR]".replace("VAR", counter.get(i));
-            }
-            internCode += " " + node.getComparisonSymbol().getCStringRep() + " ";
-            internCode += rhs;
-            for (int i = 0; i < rhslistLevel; ++i) {
-                internCode += ".arr[VAR]".replace("VAR", counter.get(i));
-            }
-            code.add(internCode + ";");
-            for (int i = 0; i < maxListLevel; ++i) {
-                code.add("}");
-            }
-            testIfLast();
+        internCode = varName + " = " + lhs;
+        final String prefix = post ? ".arr" : "";
+
+        for (int i = 0; i < lhslistLevel; ++i) {
+            internCode += prefix + "[VAR]".replace("VAR", counter.get(i));
         }
+        internCode += " " + node.getComparisonSymbol().getCStringRep() + " ";
+        internCode += rhs;
+        for (int i = 0; i < rhslistLevel; ++i) {
+            internCode += prefix + "[VAR]".replace("VAR", counter.get(i));
+        }
+        code.add(internCode + ";");
+        for (int i = 0; i < maxListLevel; ++i) {
+            code.add("}");
+        }
+        testIfLast();
     }
 
     @Override
@@ -646,10 +623,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         // add the first element to the list
         tupleVotes.add(node.tuple.getChild(1).getText());
 
-        // extract the vote elements one by one. The terminal symbol is saved in
-        // child(1).
-        // if there is another non terminal, it is saved in child(2), else, that will be
-        // null
+        // Extract the vote elements one by one. The terminal symbol is saved in
+        // child(1). If there is another nonterminal, it is saved in child(2),
+        // else, that will be null.
         ParseTree subNode = node.tuple.getChild(2);
         do {
             tupleVotes.add(subNode.getChild(1).getText());
@@ -691,69 +667,51 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         code.add("for (int i = 0; i <= " + splits + "; i++) {");
         code.add(splitLines + "[i] = " + tmpLines + "[i];");
         code.add("}");
-        int tupelSize = tupleVotes.size();
+        int tupleSize = tupleVotes.size();
         String lastSplit = "last_split" + getTmpIndex();
-        // TODO extract into input type
-        if (electionTypeContainer.getInputType().getDimension() == 1) {
-            code.add("unsigned int " + lastSplit + " = 0;");
-            // split the array and extract the votes for all but one tuple element
-            for (int i = 0; i < tupelSize - 1; i++) {
-                String tmp = "tmp" + getTmpIndex();
-                code.add("struct vote_single " + tmp
-                         + " = splitOne( " + voteInput + ", "
-                         + lastSplit + ", "
-                         + splitLines + "[" + i + "]);");
-                code.add("for(int i = 0; i < V; i++) {");
-                code.add("  " + tupleVotes.get(i).toLowerCase() + "[i] = " + tmp + ".arr[i];");
-                code.add("}");
-                // set the size value for this array to its new size:
-                code.add("V" + tupleVotes.get(i).substring("votes".length())
-                         + " = " + splitLines + "[" + i + "] - "
-                         + lastSplit + ";");
-                code.add(lastSplit + " = " + splitLines + "[" + i + "];");
-            }
+
+        final int dim = electionTypeContainer.getInputType().getDimension();
+        code.add("unsigned int " + lastSplit + " = 0;");
+        // Split the array and extract the votes for all but one tuple element
+        for (int i = 0; i < tupleSize - 1; i++) {
             String tmp = "tmp" + getTmpIndex();
-
-            code.add("struct vote_single " + tmp + " = splitOne( " + voteInput
-                     + ", " + lastSplit + ", " + voteInputSize
-                     + ");"); // TODO is V correct
-
-            code.add("for(int i = 0; i < V; i++) {");
-            code.add("  " + tupleVotes.get(tupelSize - 1).toLowerCase()
-                     + "[i] = " + tmp + ".arr[i];");
+            code.add("struct vote_" + (dim < 2 ? "single" : "double") + " " + tmp
+                    + " = split" + (dim < 2 ? "One" : "Two") + "( " + voteInput + ", "
+                    + lastSplit + ", "
+                    + splitLines + "[" + i + "]);");
+            code.add("for (int i = 0; i < V; i++) {");
+            if (2 <= dim) {
+                code.add("  for (int j = 0; j < C; j++) {");
+            }
+            final String secDim = "[j]";
+            code.add("  " + tupleVotes.get(i).toLowerCase() + "[i]"
+                     + secDim + " = " + tmp + ".arr[i]" + secDim + ";");
+            code.add((dim < 2 ? "" : "  }") + "");
             code.add("}");
 
-        } else { // we have 2 dim
-            code.add("unsigned int " + lastSplit + " = 0;");
-            // split the array and extract the votes for all but one tuple element
-            for (int i = 0; i < tupelSize - 1; i++) {
-                String tmp = "tmp" + getTmpIndex();
-                code.add("struct vote_double " + tmp
-                         + " = splitTwo( " + voteInput + ", " + lastSplit + ", "
-                         + splitLines + "[" + i + "]);");
-                code.add("for(int i = 0; i < V; i++) {");
-                code.add("  for(int j = 0; j < C; j++) {");
-                code.add("  " + tupleVotes.get(i).toLowerCase()
-                         + "[i][j] = " + tmp + ".arr[i][j];");
-                code.add("  }");
-                code.add("}");
-                // set the size value for this array to its new size:
-                code.add("V" + tupleVotes.get(i).substring("votes".length())
-                         + " = " + splitLines + "[" + i + "] - "
-                         + lastSplit + ";");
-                code.add(lastSplit + " = " + splitLines + "[" + i + "];");
-            }
-            String tmp = "tmp" + getTmpIndex();
-            code.add("struct vote_double " + tmp + " = splitTwo( " + voteInput
-                     + ", " + lastSplit + ", " + voteInputSize
-                     + ");"); // TODO is V correct here?
-            code.add("for(int i = 0; i < V; i++) {");
-            code.add("  for(int j = 0; j < C; j++) {");
-            code.add("  " + tupleVotes.get(tupelSize - 1).toLowerCase()
-                     + "[i][j] = " + tmp + ".arr[i][j];");
-            code.add("  }");
-            code.add("}");
+            // Set the size value for this array to its new size:
+            code.add("V" + tupleVotes.get(i).substring("votes".length())
+                    + " = " + splitLines + "[" + i + "] - "
+                    + lastSplit + ";");
+            code.add(lastSplit + " = " + splitLines + "[" + i + "];");
         }
+        String tmp = "tmp" + getTmpIndex();
+        code.add("struct vote_" + (dim < 2 ? "single" : "double")
+                + " " + tmp + " = split" + (dim < 2 ? "One" : "Two")
+                + "( " + voteInput
+                + ", " + lastSplit + ", " + voteInputSize
+                + ");"); // TODO is V correct here?
+        code.add("for (int i = 0; i < V; i++) {");
+        if (2 <= dim) {
+            code.add("  for (int j = 0; j < C; j++) {");
+        }
+        code.add("  " + tupleVotes.get(tupleSize - 1).toLowerCase()
+                + "[i]" + (2 <= dim ? "[j]" : "") + " = " + tmp
+                + ".arr[i]" + "" + (2 <= dim ? "[j]" : "") + ";");
+        if (2 <= dim) {
+            code.add("  }");
+        }
+        code.add("}");
         // finished the split
     }
 
@@ -785,12 +743,12 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
         // TODO extract this logic into InputType
         if (electionTypeContainer.getInputType().getDimension() == 1) {
-            code.add("for(int i = 0; i < V; i++) {");
+            code.add("for (int i = 0; i < V; i++) {");
             code.add(voteToSaveInto + "[i] = " + voteInput + "[i];");
             code.add("}");
         } else { // we have two dimensions
-            code.add("for(int i = 0; i < V; i++) {");
-            code.add("  for(int j = 0; j < C; j++) {");
+            code.add("for (int i = 0; i < V; i++) {");
+            code.add("  for (int j = 0; j < C; j++) {");
             code.add(voteToSaveInto + "[i][j] = " + voteInput + "[i][j];");
             code.add("  }");
             code.add("}");
@@ -812,7 +770,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             code.add(toSaveInto + ".arr[i] = " + voteInput + ".arr[i];");
             code.add("}");
         } else {
-            GUIController.setErrorText("so far only candidate lists can be intersected!");
+            GUIController.setErrorText("So far only candidate lists can be intersected!");
         }
     }
 

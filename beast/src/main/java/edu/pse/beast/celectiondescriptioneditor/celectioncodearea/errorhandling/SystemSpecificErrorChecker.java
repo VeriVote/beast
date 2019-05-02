@@ -19,32 +19,42 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.toolbox.ThreadedBufferedReader;
 
 /**
- * this is the superclass for system specific error checkers that gets
- * implemented for the needed operating systems
+ * This is the superclass for system specific error checkers that gets
+ * implemented for the needed operating systems.
  *
  * @author Lukas Stapelbroek
  *
  */
 public abstract class SystemSpecificErrorChecker {
-    // program that is to be used for checking
+    /**
+     * Program that is to be used for checking
+     */
     static final String COMPILER_STRING = "gcc";
 
-    // this flag prohibits that file are creates by the compiler and
-    // only the syntax is checked
+    /**
+     * This flag prohibits that file are creates by the compiler and
+     * only the syntax is checked.
+     */
     static final String FIND_MISSING_RETURN_OPTION = "-Wreturn-type";
 
-    // we want to compile to a specific name, so we can delete the file
-    // then later on
+    /**
+     * We want to compile to a specific name, so we can delete the file
+     * then later on.
+     */
     static final String SET_OUTPUT_FILE_NAME = "-o ";
     static final String ENABLE_USER_INCLUDE = "-I/";
     static final String USER_INCLUDE_FOLDER = "/core/user_includes/";
 
-    // if gcc finds, that a return is missing, it prints out this error message.
-    // The error then
-    // stands in the format: "FILENANE:LINE:COLUMN warning:control reaches..."
+    /** If gcc finds, that a return is missing, it prints out this error message.
+     * The error then is of the format
+     * "FILENANE:LINE:COLUMN warning:control reaches...".
+     */
     static final String GCC_MISSING_RETURN_FOUND
       = "warning: control reaches end of non-void function";
-    // if gcc finds that a function is missing, it gets displayed like this:
+
+    /**
+     * If gcc finds that a function is missing, it gets displayed like this.
+     */
     static final String GCC_MISSING_FUNCTION_FOUND
       = "warning: implicit declaration of function";
 
@@ -56,15 +66,13 @@ public abstract class SystemSpecificErrorChecker {
      */
     public SystemSpecificErrorChecker() {
         // clear the folder where the files that get checked get saved to, because
-        // sometimes they
-        // persist from the last time BEAST was run
+        // sometimes they persist from the last time when BEAST was run.
         try {
             final String dummy = "dummy.file";
             cleanDirectory(
                 new File(SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER),
                 dummy);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -112,7 +120,7 @@ public abstract class SystemSpecificErrorChecker {
                 exception = ioe;
             }
         }
-        if (null != exception) {
+        if (exception != null) {
             throw exception;
         }
     }

@@ -17,20 +17,15 @@ public class Default extends ResultPresentationType {
     public void presentResult(Result result) {
         InputType inType     = result.getElectionDescription().getContainer().getInputType();
         OutputType outType    = result.getElectionDescription().getContainer().getOutputType();    
-        
-        
         inType.getDimension();
-        
-        CBMCResultWrapperMultiArray votesWrapper = inType.extractVotesWrappedMulti(result.getResult(), result.getNumCandidates());
 
-        
-        
+        CBMCResultWrapperMultiArray votesWrapper
+                = inType.extractVotesWrappedMulti(result.getResult(), result.getNumCandidates());
+
         String[] electedWrapper = outType.extractResult(result.getResult());
-                
-                //inType.extractVotesWrappedMulti(result, numberCandidates)(result.getResult(), result.getNumCandidates());
-        
-        
-        
+        //inType.extractVotesWrappedMulti(result, numberCandidates)(result.getResult(),
+        //                                result.getNumCandidates());
+
         //ResultImageRenderer.
     }
 
@@ -38,5 +33,4 @@ public class Default extends ResultPresentationType {
     public String getName() {
         return "Default";
     }
-
 }

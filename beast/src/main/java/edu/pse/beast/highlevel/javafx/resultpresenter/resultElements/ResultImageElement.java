@@ -12,7 +12,8 @@ public abstract class ResultImageElement {
     private double xPosBottomRight;
     private double yPosBottomRight;
 
-    public ResultImageElement(double xPosTopLeft, double yPosTopLeft, double xPosBottomRight, double yPosBottomRight) {
+    public ResultImageElement(double xPosTopLeft, double yPosTopLeft,
+                              double xPosBottomRight, double yPosBottomRight) {
         this.xPosTopLeft = xPosTopLeft;
         this.yPosTopLeft = yPosTopLeft;
         this.xPosBottomRight = xPosBottomRight;
