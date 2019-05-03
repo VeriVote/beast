@@ -263,10 +263,10 @@ public class CBMCResult extends Result {
             if (hasFinalMargin()) {
                 toReturn.setFinalMargin(getFinalMargin());
             }
-            toReturn.setOrigVoting(origVoting);
-            toReturn.setOrigWinner(origWinner);
-            toReturn.setNewVotes(newVotes);
-            toReturn.setNewWinner(super.newWinner);
+            toReturn.setOrigVoting(getOrigVoting());
+            toReturn.setOrigWinner(getOrigWinner());
+            toReturn.setNewVotes(getNewVotes());
+            toReturn.setNewWinner(super.getNewWinner());
             return toReturn;
         }
     }

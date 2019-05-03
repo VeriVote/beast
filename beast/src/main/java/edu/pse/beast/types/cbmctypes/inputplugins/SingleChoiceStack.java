@@ -147,6 +147,16 @@ public class SingleChoiceStack extends CBMCInputType {
     }
 
     @Override
+    public List<CBMCResultWrapperMultiArray> readVoteList(List<String> toExtract) {
+        return null;
+    }
+
+    @Override
+    public List<CBMCResultWrapperSingleArray> readSingleVoteList(List<String> toExtract) {
+        return super.helper.readOneDimVarLong("votes", toExtract);
+    }
+
+    @Override
     public String[] getVotePoints(String[][] votes, int amountCandidates, int amountVoters) {
         return super.wrongInputTypeArray(amountCandidates, amountVoters);
     }
