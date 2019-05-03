@@ -60,3 +60,4 @@ beast/.settings/org.eclipse.jdt.core.prefs
 beast/.classpath
 beast/windows/VsDevCmd.bat
 *.prefs
+beast/.settings/org.eclipse.jdt.core.prefs
