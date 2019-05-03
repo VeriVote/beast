@@ -152,19 +152,15 @@ public class CbmcHelpMethods extends CommonHelpMethods {
         }
         return list;
     }
-    
+
     @Override
     public List<ResultValueWrapper> extractVariable(String name, int dimension,
             List<String> toExtract) {
-        
         System.out.println("merge these methods to one");
-        
         return readNDimVar(name, dimension, toExtract);
-        
-        
 //                if (dimension == 0) {
 //                    return readLongs(name, toExtract);
-//                } else 
+//                } else
 //                if (dimension == 1) {
 //                    return readOneDimVarLong(name, toExtract);
 //                } else
@@ -172,14 +168,10 @@ public class CbmcHelpMethods extends CommonHelpMethods {
 //                    return readTwoDimVarLong(name, toExtract);
 //                }
     }
-    
-    public List<ResultValueWrapper> readNDimVar(String name, int dimension, List<String> toExtract) {
+
+    public List<ResultValueWrapper> readNDimVar(String name, int dimension,
+                                                List<String> toExtract) {
         List<ResultValueWrapper> list = new ArrayList<ResultValueWrapper>();
-        
-        
-        
-        
-        
         return list;
     }
 

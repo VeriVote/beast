@@ -7,8 +7,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import edu.pse.beast.datatypes.FailureExample;
-import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
-import edu.pse.beast.types.InternalTypeContainer;
+// import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
+// import edu.pse.beast.types.InternalTypeContainer;
 
 /**
  *
@@ -18,12 +18,14 @@ import edu.pse.beast.types.InternalTypeContainer;
 public class CBMCResult extends Result {
     private static final String SEGMENT_END = "-----------------------------------";
 
-    // this is the last line in the cbmc output, if the verification was
-    // successful
+    /**
+     * this is the last line in the cbmc output, if the verification was successful.
+     */
     private static final String SUCCESS_LINE = "VERIFICATION SUCCESSFUL";
 
-    // this is the last line in the cbmc output, if the assertion
-    // failed
+    /**
+     * this is the last line in the cbmc output, if the assertion failed.
+     */
     private static final String FAILURE_LINE = "VERIFICATION FAILED";
 
     private boolean createsExample = true;
@@ -40,7 +42,7 @@ public class CBMCResult extends Result {
     public void setResult(List<String> result) {
         super.setResult(result);
         if (createsExample) {
-            failureExample = createFailureExample();
+            setFailureExample(createFailureExample());
         }
     }
 
@@ -188,9 +190,7 @@ public class CBMCResult extends Result {
      * @return a failure example that show how the voters voted and who won then
      */
     private FailureExample createFailureExample() {
-        
         System.err.println("FIX rewrite createFailureExample"); //TODO
-        
         return null;
         // determine the elect values
 //        if (!isMarginComp()) {
@@ -573,10 +573,6 @@ public class CBMCResult extends Result {
             }
         }
         return toReturn;
-    }
-
-    public FailureExample getFailureExample() {
-        return failureExample;
     }
 
     @Override

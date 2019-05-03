@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
-import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
@@ -23,7 +22,7 @@ public class CandidateList extends CBMCOutputType {
     public String getOutputIDinFile() {
         return "CANDIDATE_LIST";
     }
-    
+
     @Override
     public int getDimension() {
         return 1;

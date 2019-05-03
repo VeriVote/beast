@@ -72,9 +72,9 @@ public class SquigglePainter extends DefaultHighlighter.DefaultHighlightPainter 
             try {
                 // --- determine locations ---
                 Shape shape
-                  = view.modelToView(offs0, Position.Bias.Forward,
-                                     offs1, Position.Bias.Backward,
-                                     bounds);
+                    = view.modelToView(offs0, Position.Bias.Forward,
+                                       offs1, Position.Bias.Backward,
+                                       bounds);
                 Rectangle r = (shape instanceof Rectangle) ? (Rectangle) shape : shape.getBounds();
                 return r;
             } catch (BadLocationException e) {

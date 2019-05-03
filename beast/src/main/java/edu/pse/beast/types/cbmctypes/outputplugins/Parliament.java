@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
-import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
@@ -13,7 +12,6 @@ import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
 public class Parliament extends CBMCOutputType {
-
     @Override
     public String getOutputString() {
         return UnifiedNameContainer.getStructResult();
@@ -23,7 +21,7 @@ public class Parliament extends CBMCOutputType {
     public String getOutputIDinFile() {
         return "CAND_PER_SEAT";
     }
-    
+
     @Override
     public int getDimension() {
         return 1;
@@ -65,11 +63,8 @@ public class Parliament extends CBMCOutputType {
                 + UnifiedNameContainer.getOrigResultName() + "[i]);");
         code.deleteTab();
         code.add("}"); // end of the for loop
-
         code.deleteTab();
-
         code.add("}"); // end of the function
-
         return code;
     }
 

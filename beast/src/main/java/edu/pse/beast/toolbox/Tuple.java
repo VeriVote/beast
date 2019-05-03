@@ -2,6 +2,8 @@ package edu.pse.beast.toolbox;
 
 /**
  * A simple generic tuple
+ * @param <X>
+ * @param <Y>
  *
  * @author Holger Klein
  */

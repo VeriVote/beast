@@ -66,14 +66,12 @@ public class ParentTreeItem extends CustomTreeItem {
                 checkBoxChanged(newValue);
             }
         });
-        
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 wasClicked(true);
             }
         });
-        
         this.setSelected(isSelected);
         this.getTreeItemReference().setValue(this);
     }

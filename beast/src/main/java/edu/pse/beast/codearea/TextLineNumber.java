@@ -289,8 +289,8 @@ public class TextLineNumber extends JPanel
         Rectangle2D clip = g.getClipBounds();
         int rowStartOffset = component.viewToModel2D(new Point2D.Double(0, clip.getY()));
         int endOffset
-          = component.viewToModel2D(new Point2D.Double(0, clip.getY()
-                                                          + clip.getHeight()));
+            = component.viewToModel2D(new Point2D.Double(0, clip.getY()
+                                                            + clip.getHeight()));
 
         while (rowStartOffset <= endOffset) {
             try {

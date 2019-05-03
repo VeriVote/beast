@@ -18,13 +18,13 @@ import edu.pse.beast.stringresource.StringResourceLoader;
 public abstract class MenuBarHandler implements DisplaysStringsToUser {
     private static final String[] STANDARD_ID_ORDER
         = {
-        "file", "edit", "code"
-    };
+            "file", "edit", "code"
+        };
 
     /**
      * the JMenuBar
      */
-    protected JMenuBar createdMenuBar;
+    private JMenuBar createdMenuBar;
 
     private final String[] headingIds;
     private final ArrayList<ArrayList<ActionIdAndListener>> actionIDAndListener;

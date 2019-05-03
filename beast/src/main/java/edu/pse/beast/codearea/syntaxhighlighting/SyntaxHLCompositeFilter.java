@@ -23,9 +23,9 @@ public class SyntaxHLCompositeFilter extends DocumentFilter {
     private ArrayList<RegexAndColor> regexAndColorList;
     private StyleContext styleContext = StyleContext.getDefaultStyleContext();
     private AttributeSet blackAttributeSet
-      = styleContext.addAttribute(styleContext.getEmptySet(),
-                                  StyleConstants.Foreground,
-                                  Color.BLACK);
+        = styleContext.addAttribute(styleContext.getEmptySet(),
+                                    StyleConstants.Foreground,
+                                    Color.BLACK);
 
     /**
      *
@@ -88,10 +88,10 @@ public class SyntaxHLCompositeFilter extends DocumentFilter {
             Matcher matcher = null;
             try {
                 matcher
-                  = buildPattern(iter.getRegEx()).matcher(
-                        textPane.getStyledDocument()
-                        .getText(0,
-                                 textPane.getStyledDocument().getLength()));
+                    = buildPattern(iter.getRegEx()).matcher(
+                          textPane.getStyledDocument()
+                           .getText(0,
+                                    textPane.getStyledDocument().getLength()));
             } catch (BadLocationException e) {
                 e.printStackTrace();
             }

@@ -13,11 +13,11 @@ public class ImageResourceProvider {
 
     private static final String[] IDS
         = {
-        "new", "load", "save", "save_as",
-        "undo", "redo", "cut", "copy", "paste",
-        "start", "stop",
-        "showHelpToUser", "simulation"
-    };
+            "new", "load", "save", "save_as",
+            "undo", "redo", "cut", "copy", "paste",
+            "start", "stop",
+            "showHelpToUser", "simulation"
+        };
     private static final String RESOURCE = "/core/images/toolbar/";
 
     private static ImageResourceProvider toolbar;

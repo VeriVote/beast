@@ -1,7 +1,6 @@
 package edu.pse.beast.propertychecker;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
 
@@ -17,14 +16,14 @@ import edu.pse.beast.highlevel.javafx.ResultTreeItem;
  * @author Niels Hanselmann, Lukas Stapelbroek
  */
 public abstract class Result implements ResultInterface {
-    protected FailureExample failureExample = null;
+    private FailureExample failureExample = null;
 
-    protected List<List<String>> origVoting;
-    protected List<String> origWinner;
-    protected List<List<String>> newVotes;
-    protected List<String> newWinner;
+    private List<List<String>> origVoting;
+    private List<String> origWinner;
+    private List<List<String>> newVotes;
+    private List<String> newWinner;
 
-    protected transient ResultTreeItem owner;
+    private transient ResultTreeItem owner;
 
     private boolean wasStarted = false;
     private boolean valid = false;
@@ -54,18 +53,14 @@ public abstract class Result implements ResultInterface {
 
     /**
      * returns all currently available result types
-     * @return
+     * @return list of result types
      */
     public static List<Result> getResultTypes() {
         ServiceLoader<Result> loader = ServiceLoader.load(Result.class);
-
         List<Result> types = new ArrayList<Result>();
-
-        for (Iterator<Result> iterator = loader.iterator(); iterator.hasNext();) {
-            Result type = (Result) iterator.next();
+        for (Result type : loader) {
             types.add(type);
         }
-
         return types;
     }
 
@@ -336,6 +331,10 @@ public abstract class Result implements ResultInterface {
      * @return true, if the assertion failed, else false
      */
     public abstract boolean checkAssertionFailure();
+
+    protected void setFailureExample(FailureExample fexp) {
+        this.failureExample = fexp;
+    }
 
     public FailureExample getFailureExample() {
         return failureExample;

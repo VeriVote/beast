@@ -4,7 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
-import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
@@ -13,9 +12,6 @@ import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
 public class ParliamentStack extends CBMCOutputType {
-    
-    
-
     @Override
     public String getOutputString() {
         return UnifiedNameContainer.getStructStackResult();
@@ -25,7 +21,7 @@ public class ParliamentStack extends CBMCOutputType {
     public String getOutputIDinFile() {
         return "STACK_PER_PARTY";
     }
-    
+
     @Override
     public int getDimension() {
         return 1;

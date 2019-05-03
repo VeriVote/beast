@@ -88,10 +88,10 @@ public class FormalExpErrorFinderTreeListener
     private Stack<TypeExpression> expStack;
 
     /**
-     * constructor to create the error finder in the tree list
+     * Constructor to create the error finder in the tree list.
      *
-     * @param list    the list with the symbolic variables
-     * @param codeArea the editor where the code is
+     * @param list            the list with the symbolic variables
+     * @param codeArea        the editor where the code is
      * @param elecDescription the voting rule
      */
     public FormalExpErrorFinderTreeListener(SymbolicVariableList list, NewCodeArea codeArea,
@@ -107,7 +107,7 @@ public class FormalExpErrorFinderTreeListener
     }
 
     /**
-     * sets up the input for the error finder
+     * Sets up the input for the error finder.
      *
      * @param inputType the election type container
      */
@@ -116,7 +116,7 @@ public class FormalExpErrorFinderTreeListener
     }
 
     /**
-     * sets up the output for the error finder
+     * Sets up the output for the error finder.
      *
      * @param outputType the election type container
      */
@@ -125,7 +125,7 @@ public class FormalExpErrorFinderTreeListener
     }
 
     /**
-     * gives all code errors found
+     * Gives all code errors found.
      *
      * @return a list of all found errors
      */
@@ -171,12 +171,13 @@ public class FormalExpErrorFinderTreeListener
     public void enterQuantifierExp(QuantifierExpContext ctx) {
         String quantifierTypeString = ctx.Quantifier().getText();
         InternalTypeContainer varType = null;
-        if (quantifierTypeString.contains("VOTER")) {
-            varType = new InternalTypeContainer(InternalTypeRep.VOTER);
-        } else if (quantifierTypeString.contains("CANDIDATE")) {
-            varType = new InternalTypeContainer(InternalTypeRep.CANDIDATE);
-        } else if (quantifierTypeString.contains("SEAT")) {
-            varType = new InternalTypeContainer(InternalTypeRep.SEAT);
+        for (InternalTypeRep typeRep
+                : new InternalTypeRep[]
+                    {InternalTypeRep.VOTER, InternalTypeRep.CANDIDATE, InternalTypeRep.SEAT }
+        ) {
+            if (quantifierTypeString.contains(typeRep.name())) {
+                varType = new InternalTypeContainer(typeRep);
+            }
         }
         scopeHandler.enterNewScope();
         final String id = ctx.passSymbVar().symbolicVarExp().Identifier().getText();
@@ -202,19 +203,20 @@ public class FormalExpErrorFinderTreeListener
 
     @Override
     public void exitComparisonExp(ComparisonExpContext ctx) {
-        TypeExpression lhs;
-        TypeExpression rhs;
-        // the right arguments
-        if (ctx.typeExp(1).getChild(0) instanceof IntersectExpContext) {
+        final TypeExpContext rhexp = ctx.typeExp(1);
+        final TypeExpContext lhexp = ctx.typeExp(0);
+
+        final TypeExpression rhs; // the right arguments
+        if (rhexp.getChild(0) instanceof IntersectExpContext) {
             rhs = new IntersectTypeExpNode(elecDescription.getContainer().getOutputType(),
-                    (IntersectExpContext) ctx.typeExp(1).getChild(0));
+                    (IntersectExpContext) rhexp.getChild(0));
         } else {
             rhs = expStack.pop();
         }
-        // the left argument
-        if (ctx.typeExp(0).getChild(0) instanceof IntersectExpContext) {
+        final TypeExpression lhs; // the left argument
+        if (lhexp.getChild(0) instanceof IntersectExpContext) {
             lhs = new IntersectTypeExpNode(elecDescription.getContainer().getOutputType(),
-                    (IntersectExpContext) ctx.typeExp(0).getChild(0));
+                    (IntersectExpContext) lhexp.getChild(0));
         } else {
             lhs = expStack.pop();
         }
@@ -223,8 +225,8 @@ public class FormalExpErrorFinderTreeListener
         InternalTypeContainer rhsCont = rhs.getInternalTypeContainer();
         if (lhsCont.getListLvl() != rhsCont.getListLvl()) {
             final CodeError codeError
-              = BooleanExpErrorFactory
-                .createCantCompareDifferentListLevels(ctx, lhsCont, rhsCont);
+                  = BooleanExpErrorFactory
+                    .createCantCompareDifferentListLevels(ctx, lhsCont, rhsCont);
             created.add(codeError);
         } else {
             while (lhsCont.isList()) {
@@ -253,17 +255,14 @@ public class FormalExpErrorFinderTreeListener
 
     @Override
     public void exitNumberExpression(NumberExpressionContext ctx) {
-        if (ctx.Mult() != null) {
+        if (ctx.Mult() != null || ctx.Add() != null) {
             IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
             IntegerValuedExpression lsh = (IntegerValuedExpression) expStack.pop();
-            BinaryIntegerValuedNode expNode
-                  = new BinaryIntegerValuedNode(lsh, rhs, ctx.Mult().getText());
-            expStack.push(expNode);
-        } else if (ctx.Add() != null) {
-            IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
-            IntegerValuedExpression lsh = (IntegerValuedExpression) expStack.pop();
-            BinaryIntegerValuedNode expNode
-                  = new BinaryIntegerValuedNode(lsh, rhs, ctx.Add().getText());
+            final BinaryIntegerValuedNode expNode
+                        = new BinaryIntegerValuedNode(lsh, rhs,
+                                                      ctx.Mult() != null
+                                                      ? ctx.Mult().getText()
+                                                              : ctx.Add().getText());
             expStack.push(expNode);
         }
     }
@@ -312,10 +311,8 @@ public class FormalExpErrorFinderTreeListener
 
     @Override
     public void exitInteger(IntegerContext ctx) {
-        String integerString = ctx.getText();
-        int heldInteger = Integer.valueOf(integerString);
-        IntegerNode integerNode = new IntegerNode(heldInteger);
-        expStack.push(integerNode);
+        int heldInteger = Integer.valueOf(ctx.getText());
+        expStack.push(new IntegerNode(heldInteger));
     }
 
     @Override
@@ -326,14 +323,13 @@ public class FormalExpErrorFinderTreeListener
 
     @Override
     public void exitElectExp(ElectExpContext ctx) {
-        testIfWrongTypePassed(ctx.passType(), container.getOutputType().getInternalTypeContainer());
         InternalTypeContainer cont = container.getOutputType().getInternalTypeContainer();
+        testIfWrongTypePassed(ctx.passType(), cont);
         for (int i = 0; i < ctx.passType().size() && cont.isList(); ++i) {
             cont = cont.getListedType();
         }
         String numberString = ctx.Elect().getText().substring("ELECT".length());
-        int number = Integer.valueOf(numberString);
-        if (number == 0) {
+        if (Integer.valueOf(numberString).intValue() == 0) {
             created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroElect(ctx));
         }
         expStack.add(new ElectExp(cont, null, 0));
@@ -347,14 +343,13 @@ public class FormalExpErrorFinderTreeListener
 
     @Override
     public void exitVoteExp(VoteExpContext ctx) {
-        testIfWrongTypePassed(ctx.passType(), container.getInputType().getInternalTypeContainer());
         InternalTypeContainer cont = container.getInputType().getInternalTypeContainer();
+        testIfWrongTypePassed(ctx.passType(), cont);
         for (int i = 0; i < ctx.passType().size() && cont.isList(); ++i) {
             cont = cont.getListedType();
         }
         String numberString = ctx.Vote().getText().substring("VOTES".length());
-        int number = Integer.valueOf(numberString);
-        if (number == 0) {
+        if (Integer.valueOf(numberString).intValue() == 0) {
             created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroVotes(ctx));
         }
         expStack.add(new ElectExp(cont, null, 0));
@@ -436,7 +431,7 @@ public class FormalExpErrorFinderTreeListener
         final String expStr = unique ? "VOTE_SUM_FOR_UNIQUE_CANDIDATE" : "VOTE_SUM_FOR_CANDIDATE";
         String numberString = tn.getText().substring(expStr.length());
 
-        int number = Integer.valueOf(numberString);
+        final int number = Integer.valueOf(numberString);
         if (number == 0) {
             created.add(BooleanExpErrorFactory.createNumberMustBeGreaterZeroVotesum(ctx));
         }
@@ -489,15 +484,11 @@ public class FormalExpErrorFinderTreeListener
     public void exitSymbolicVarExp(SymbolicVarExpContext ctx) {
         String name = ctx.getText();
         InternalTypeContainer type = scopeHandler.getTypeForVariable(name);
-        SymbolicVarExp expNode;
         if (type == null) {
             created.add(BooleanExpErrorFactory.createVarNotDeclaredErr(ctx));
             type = new InternalTypeContainer(InternalTypeRep.NULL);
-            expNode = new SymbolicVarExp(type, new SymbolicVariable(name, type));
-        } else {
-            expNode = new SymbolicVarExp(type, new SymbolicVariable(name, type));
         }
-        expStack.add(expNode);
+        expStack.add(new SymbolicVarExp(type, new SymbolicVariable(name, type)));
     }
 
     @Override
@@ -536,156 +527,127 @@ public class FormalExpErrorFinderTreeListener
         this.container.setOutput(output);
     }
 
-    // hier sind die neuen befehle:
+    // Here are the new commands:
+
     @Override
     public void enterVotingListChangeExp(VotingListChangeExpContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void exitVotingListChangeExp(VotingListChangeExpContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void enterVotingListChangeContent(VotingListChangeContentContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void exitVotingListChangeContent(VotingListChangeContentContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void enterVotingTupelChangeExp(VotingTupelChangeExpContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void exitVotingTupelChangeExp(VotingTupelChangeExpContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void enterCandidateListChangeExp(CandidateListChangeExpContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void exitCandidateListChangeExp(CandidateListChangeExpContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void enterVoteEquivalents(VoteEquivalentsContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void exitVoteEquivalents(VoteEquivalentsContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void enterConcatenationExp(ConcatenationExpContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void exitConcatenationExp(ConcatenationExpContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void enterSplitExp(SplitExpContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void exitSplitExp(SplitExpContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void enterPermutationExp(PermutationExpContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void exitPermutationExp(PermutationExpContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void enterIntersectExp(IntersectExpContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void exitIntersectExp(IntersectExpContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void enterIntersectContent(IntersectContentContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void exitIntersectContent(IntersectContentContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void enterTuple(TupleContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void exitTuple(TupleContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void enterTupleContent(TupleContentContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void exitTupleContent(TupleContentContext ctx) {
-        // TODO Auto-generated method stub
     }
 
-    // und hier die neuen neuen
+    // And here are the new/recent new ones.
 
     @Override
     public void enterNotEmptyExp(NotEmptyExpContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void exitNotEmptyExp(NotEmptyExpContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void enterNotEmptyContent(NotEmptyContentContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void exitNotEmptyContent(NotEmptyContentContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void enterAddedContentExp(AddedContentExpContext ctx) {
-        // TODO Auto-generated method stub
     }
 
     @Override
     public void exitAddedContentExp(AddedContentExpContext ctx) {
-        // TODO Auto-generated method stub
     }
 }

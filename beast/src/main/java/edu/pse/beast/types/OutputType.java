@@ -5,8 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
 
-import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
-import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainers.ResultValueWrapper;
@@ -63,8 +61,9 @@ public abstract class OutputType implements InOutType {
      * @return an array with the Result
      */
  //   public final String[] extractResult(List<String> toExtract) {
- //       return this.helper.extractVariable("" + UnifiedNameContainer.getNewResultName() + "", getDimension(), toExtract)
- //               .get(0).getArray();
+ //       return this.helper.extractVariable("" + UnifiedNameContainer.getNewResultName() + "",
+//                                           getDimension(), toExtract)
+ //                                          .get(0).getArray();
  //   }
 
     public List<ResultValueWrapper> readElectionResult(List<String> toExtract) {
@@ -73,7 +72,8 @@ public abstract class OutputType implements InOutType {
 
     public abstract CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code);
 
-    public abstract CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code, int voteNumber);
+    public abstract CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code,
+                                                                 int voteNumber);
 
     public abstract String getCArrayType();
 
@@ -86,9 +86,11 @@ public abstract class OutputType implements InOutType {
      * @param voteNumber the vote number
      * @return the beautified code
      */
-    public abstract CodeArrayListBeautifier addMarginMainTest(CodeArrayListBeautifier code, int voteNumber);
+    public abstract CodeArrayListBeautifier addMarginMainTest(CodeArrayListBeautifier code,
+                                                              int voteNumber);
 
-    public abstract List<String> getCodeToRunMargin(List<String> origResult, List<String> lastResult);
+    public abstract List<String> getCodeToRunMargin(List<String> origResult,
+                                                    List<String> lastResult);
 
     public abstract List<String> getNewResult(List<String> lastFailedRun, int index);
 
@@ -101,7 +103,7 @@ public abstract class OutputType implements InOutType {
     public abstract String getResultDescriptionString(List<String> result);
 
     /**
-     * 
+     *
      * @return the dimension of this output type
      */
     public abstract int getDimension();

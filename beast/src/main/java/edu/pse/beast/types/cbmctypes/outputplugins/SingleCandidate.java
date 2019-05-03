@@ -5,7 +5,6 @@ import java.util.List;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
-import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.InternalTypeContainer;
@@ -28,7 +27,7 @@ public class SingleCandidate extends CBMCOutputType {
     public int getDimension() {
         return 0;
     }
-    
+
     @Override
     public boolean isOutputOneCandidate() {
         return true;

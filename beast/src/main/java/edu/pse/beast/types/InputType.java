@@ -8,8 +8,6 @@ import java.util.ServiceLoader;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
-import edu.pse.beast.propertychecker.CBMCResultWrapperMultiArray;
-import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainers.ResultValueWrapper;
@@ -35,20 +33,20 @@ public abstract class InputType implements InOutType {
     public final String toString() {
         return otherToString();
     }
-    
+
     @Deprecated
     public final List<List<String>> getNewVotes(List<String> lastFailedRun, int index) {
         List<List<String>> toReturn = new ArrayList<List<String>>();
-        
         toReturn.addAll(this.helper.extractVariable(
                 "" + UnifiedNameContainer.getNewVotesName() + "", getDimension(), lastFailedRun)
                 .get(index).getList());
 
         return toReturn;
     }
-    
+
     public final List<List<String>> getVotingArray(List<String> lastFailedRun, int index) {
-        return helper.extractVariable(UnifiedNameContainer.getVotingArray(), getDimension(), lastFailedRun).get(index).getList();
+        return helper.extractVariable(UnifiedNameContainer.getVotingArray(), getDimension(),
+                                      lastFailedRun).get(index).getList();
     }
 
     protected abstract void getHelper();
@@ -102,7 +100,7 @@ public abstract class InputType implements InOutType {
      *                a struct)
      */
     public abstract void addVerifyMethod(CodeArrayListBeautifier code, OutputType outType);
-    
+
     /**
      * extracts the voting data out of the given bounded model checker output into a wrapper object
      *
@@ -112,7 +110,9 @@ public abstract class InputType implements InOutType {
      * @return a wrapper which contains the values
      */
     public final ResultValueWrapper extractVotes(List<String> result, int numberCandidates) {
-        return this.helper.extractVariable("" + UnifiedNameContainer.getNewVotesName() + "", getDimension(), result).get(0);
+        return this.helper.extractVariable("" + UnifiedNameContainer.getNewVotesName() + "",
+                                           getDimension(),
+                                           result).get(0);
     }
 
     /**
@@ -123,10 +123,12 @@ public abstract class InputType implements InOutType {
      * @param newRowOfValues the new row of values
      * @return the new value
      */
-    public abstract String vetValue(String newValue, ElectionTypeContainer container, NEWRowOfValues newRowOfValues);
+    public abstract String vetValue(String newValue, ElectionTypeContainer container,
+                                    NEWRowOfValues newRowOfValues);
 
     public List<ResultValueWrapper> readVote(List<String> toExtract) {
-        return this.helper.extractVariable(UnifiedNameContainer.getVotingArray(), getDimension(), toExtract);
+        return this.helper.extractVariable(UnifiedNameContainer.getVotingArray(),
+                                           getDimension(), toExtract);
     }
 
 
@@ -136,9 +138,11 @@ public abstract class InputType implements InOutType {
         return toReturn;
     }
 
-    public abstract String[] getVotePoints(String[][] votes, int amountCandidates, int amountVoters);
+    public abstract String[] getVotePoints(String[][] votes, int amountCandidates,
+                                           int amountVoters);
 
-    public abstract String[] getVotePoints(String[] votes, int amountCandidates, int amountVoters);
+    public abstract String[] getVotePoints(String[] votes, int amountCandidates,
+                                           int amountVoters);
 
     // public abstract void addMarginMainCheck(CodeArrayListBeautifier code, int
     // margin, List<String> origResult);

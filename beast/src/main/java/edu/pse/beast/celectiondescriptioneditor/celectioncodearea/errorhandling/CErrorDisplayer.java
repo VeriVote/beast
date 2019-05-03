@@ -44,15 +44,15 @@ public class CErrorDisplayer extends ErrorDisplayer {
     public String createMsg(CodeError er) {
         if (er.getId().equals("antlr")) {
             int line = er.getLine();
-            int start = JTextPaneToolbox.getLineBeginning(pane, line - 2);
-            int end = JTextPaneToolbox.getClosestLineBeginningAfter(pane, start);
+            int start = JTextPaneToolbox.getLineBeginning(getJTextPane(), line - 2);
+            int end = JTextPaneToolbox.getClosestLineBeginningAfter(getJTextPane(), start);
             er.setStartPos(start);
             er.setEndPos(end);
             return er.getExtraInfo("msg");
         } else if (er.getId().equals("compilererror")) {
             int line = er.getLine();
-            int start = JTextPaneToolbox.getLineBeginning(pane, line - 2);
-            int end = JTextPaneToolbox.getClosestLineBeginningAfter(pane, start);
+            int start = JTextPaneToolbox.getLineBeginning(getJTextPane(), line - 2);
+            int end = JTextPaneToolbox.getClosestLineBeginningAfter(getJTextPane(), start);
             er.setStartPos(start);
             er.setEndPos(end);
             String msg = er.getExtraInfo("msg");
@@ -67,7 +67,7 @@ public class CErrorDisplayer extends ErrorDisplayer {
 
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
-        this.currentStringResLoader
-              = stringResIF.getCElectionEditorStringResProvider().getCErrorStringRes();
+        setStringResourceLoader(stringResIF
+                                .getCElectionEditorStringResProvider().getCErrorStringRes());
     }
 }
