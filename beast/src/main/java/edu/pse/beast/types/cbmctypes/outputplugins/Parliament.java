@@ -78,11 +78,8 @@ public class Parliament extends CBMCOutputType {
                 + UnifiedNameContainer.getOrigResultName() + "[i]);");
         code.deleteTab();
         code.add("}"); // end of the for loop
-
         code.deleteTab();
-
         code.add("}"); // end of the function
-
         return code;
     }
 

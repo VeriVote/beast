@@ -13,18 +13,17 @@ import javafx.scene.text.TextFlow;
  * It provides ways of simply printing Text,
  * drawing images with support for charting,
  * and display any JavaFX node
- * @author lukas
+ * @author Lukas Stapelbroek
  *
  */
 public class ResultPresenterNEW {
-    
     /**
      * removes all children from the result pane
      */
     private static void reset() {
         GUIController.getController().getResultPane().getChildren().clear();
     }
-    
+
     /**
      * Give the caller complete freedom how he wants to display the result.
      * It can be done in any way javafx permits
@@ -34,14 +33,13 @@ public class ResultPresenterNEW {
         reset();
         GUIController.getController().getResultPane().getChildren().add(resultNode);
     }
-    
+
     /**
      * sets the Text of the result pane.
      * @param resultText A list of JavaFX.scene.text.Text, which can be colored and sized as wished
      */
     public static void setResultText(List<Text> resultText) {
         reset();
-        
         TextFlow resultTextField = new TextFlow();
         resultTextField.getChildren().addAll(resultText);
         GUIController.getController().getResultPane().getChildren().add(resultTextField);

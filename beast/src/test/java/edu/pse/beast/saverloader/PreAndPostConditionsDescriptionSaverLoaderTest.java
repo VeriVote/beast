@@ -30,9 +30,8 @@ public class PreAndPostConditionsDescriptionSaverLoaderTest {
         list.addSymbolicVariable("voter2", new InternalTypeContainer(InternalTypeRep.VOTER));
         list.addSymbolicVariable("candidate", new InternalTypeContainer(InternalTypeRep.CANDIDATE));
         list.addSymbolicVariable("seat", new InternalTypeContainer(InternalTypeRep.SEAT));
-        
+
         FormalPropertiesDescription bounded = new FormalPropertiesDescription("");
-        
         description
               = new PreAndPostConditionsDescription("description1", pre, post, bounded, list);
     }
@@ -48,7 +47,7 @@ public class PreAndPostConditionsDescriptionSaverLoaderTest {
         String saveString
               = preAndPostConditionsDescriptionSaverLoader.createSaveString(description);
         PreAndPostConditionsDescription recreatedPreAndPostConditionsDescription
-          = (PreAndPostConditionsDescription) preAndPostConditionsDescriptionSaverLoader
+            = (PreAndPostConditionsDescription) preAndPostConditionsDescriptionSaverLoader
                 .createFromSaveString(saveString);
         assert (recreatedPreAndPostConditionsDescription.getName().equals("description1"));
 

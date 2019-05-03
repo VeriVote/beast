@@ -16,14 +16,14 @@ import edu.pse.beast.highlevel.javafx.ResultTreeItem;
  * @author Niels Hanselmann, Lukas Stapelbroek
  */
 public abstract class Result implements ResultInterface {
-    protected FailureExample failureExample = null;
+    private FailureExample failureExample = null;
 
-    protected List<List<String>> origVoting;
-    protected List<String> origWinner;
-    protected List<List<String>> newVotes;
-    protected List<String> newWinner;
+    private List<List<String>> origVoting;
+    private List<String> origWinner;
+    private List<List<String>> newVotes;
+    private List<String> newWinner;
 
-    protected transient ResultTreeItem owner;
+    private transient ResultTreeItem owner;
 
     private boolean wasStarted = false;
     private boolean valid = false;
@@ -331,6 +331,10 @@ public abstract class Result implements ResultInterface {
      * @return true, if the assertion failed, else false
      */
     public abstract boolean checkAssertionFailure();
+
+    protected void setFailureExample(FailureExample fexp) {
+        this.failureExample = fexp;
+    }
 
     public FailureExample getFailureExample() {
         return failureExample;

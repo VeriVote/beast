@@ -115,18 +115,18 @@ public class LinuxProcess extends CBMCProcess {
 
     @Override
     protected void stopProcess() {
-        if (!process.isAlive()) {
+        if (!getProcess().isAlive()) {
             ErrorLogger.log("Warning, process is not alive anymore");
             return;
         } else {
-            process.destroyForcibly();
+            getProcess().destroyForcibly();
         }
 
         try {
             Thread.sleep(WAITING_TIME);
         } catch (InterruptedException e) {
         }
-        if (process.isAlive()) {
+        if (getProcess().isAlive()) {
             ErrorForUserDisplayer.displayError(
                     "Warning, the program was still alive after trying to stop it \n"
                     + "Please kill it manually if it is still alive, especially if "

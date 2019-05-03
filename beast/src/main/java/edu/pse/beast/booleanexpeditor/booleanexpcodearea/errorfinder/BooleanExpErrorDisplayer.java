@@ -85,13 +85,12 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
     }
 
     private String getTemplateString(String id) {
-        return currentStringResLoader.getStringFromID(id + "_descr");
+        return getStringResourceLoader().getStringFromID(id + "_descr");
     }
 
     @Override
     public void updateStringRes(StringLoaderInterface stringResIF) {
-        this.currentStringResLoader
-              = stringResIF.getBooleanExpEditorStringResProvider()
-                .getBooleanExpErrorStringRes();
+        setStringResourceLoader(stringResIF.getBooleanExpEditorStringResProvider()
+                                .getBooleanExpErrorStringRes());
     }
 }

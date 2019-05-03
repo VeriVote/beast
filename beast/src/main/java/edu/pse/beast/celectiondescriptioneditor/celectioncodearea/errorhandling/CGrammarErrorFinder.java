@@ -50,9 +50,9 @@ public class CGrammarErrorFinder implements ErrorFinder, ANTLRErrorListener {
                             String msg,
                             RecognitionException e) {
         CodeError err
-          = new CodeError(line, charPosInLine, "antlr", 0,
-                          ((Token) offendingSymbol).getStartIndex(),
-                          ((Token) offendingSymbol).getStopIndex());
+            = new CodeError(line, charPosInLine, "antlr", 0,
+                            ((Token) offendingSymbol).getStartIndex(),
+                            ((Token) offendingSymbol).getStopIndex());
         err.setExtraInfo("msg", msg);
         errors.add(err);
     }

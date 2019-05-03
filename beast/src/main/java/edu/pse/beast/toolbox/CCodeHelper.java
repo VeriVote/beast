@@ -21,15 +21,15 @@ public final class CCodeHelper {
     // String that only allows string in valid C format (they can still contain
     // identifiers)
     private static String characterRegex
-      = "[_a-zA-Z][_a-zA-Z0-9]{0,30}";
+        = "[_a-zA-Z][_a-zA-Z0-9]{0,30}";
     private static String[] reservedWords
       = {
-        "auto", "break", "case", "char", "const", "continue", "default", "do",
-        "double", "else", "enum", "extern", "float", "for", "goto", "if", "inline",
-        "int", "long", "register", "restrict", "return", "short", "signed", "sizeof",
-        "static", "struct", "switch", "typedef", "union", "unsigned", "void", "volatile",
-        "while", "_Alignas", "_Alignof", "_Atomic", "_Bool", "_Complex", "_Generic",
-        "_Imaginary", "_Noreturn", "_Static_assert", "_Thread_local" };
+          "auto", "break", "case", "char", "const", "continue", "default", "do",
+          "double", "else", "enum", "extern", "float", "for", "goto", "if", "inline",
+          "int", "long", "register", "restrict", "return", "short", "signed", "sizeof",
+          "static", "struct", "switch", "typedef", "union", "unsigned", "void", "volatile",
+          "while", "_Alignas", "_Alignof", "_Atomic", "_Bool", "_Complex", "_Generic",
+          "_Imaginary", "_Noreturn", "_Static_assert", "_Thread_local" };
 
     private static List<String> cReservedWords = new ArrayList<String>(
               Arrays.asList(reservedWords));
@@ -171,7 +171,7 @@ public final class CCodeHelper {
         return container.getInputType().getMinimalValue();
     }
 
-    public static boolean isValidCName(String name) {    
+    public static boolean isValidCName(String name) {
         if (name.matches(characterRegex)) {
             if (!cReservedWords.stream().anyMatch(str -> str.equals(name))) {
                 // it is not a reserved word

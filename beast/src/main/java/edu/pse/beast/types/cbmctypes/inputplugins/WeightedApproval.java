@@ -69,12 +69,12 @@ public class WeightedApproval extends CBMCInputType {
         code.add("void verify() {");
         code.add("int total_diff = 0;");
 
-        code.add("int " + UnifiedNameContainer.getNewVotesName()
-                + "1[" + UnifiedNameContainer.getVoter() + "]["
+        code.add("int " + UnifiedNameContainer.getNewVotesName() + "1["
+                + UnifiedNameContainer.getVoter() + "]["
                 + UnifiedNameContainer.getCandidate() + "];");
 
-        code.add("for (int i = 0; i < " + UnifiedNameContainer.getVoter()
-                 + "; i++) {"); // go over all voters
+        code.add("for (int i = 0; i < " + UnifiedNameContainer.getVoter() + "; i++) {");
+        // go over all voters
         code.addTab();
         code.add("for (int j = 0; i < " + UnifiedNameContainer.getCandidate()
                  + "; i++) {"); // go over all candidates
@@ -93,7 +93,7 @@ public class WeightedApproval extends CBMCInputType {
         code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = nondet_int();");
         // set the vote to (0-100), but different from original
         code.add("assume(" + UnifiedNameContainer.getNewVotesName()
-                + "1[i][j] != ORIG_VOTES[i][j]);");
+                 + "1[i][j] != ORIG_VOTES[i][j]);");
         code.add("assume(0 <= " + UnifiedNameContainer.getNewVotesName() + "1[i][j]);");
         code.add("assume(" + UnifiedNameContainer.getNewVotesName() + "1[i][j] <= 100);");
         code.deleteTab();
@@ -258,7 +258,7 @@ public class WeightedApproval extends CBMCInputType {
         code.add("unsigned int candSum = arr[i][candidate];");
         if (unique) {
             code.add("for(unsigned int j = 0; j < "
-                    + UnifiedNameContainer.getCandidate() + "; ++i) {");
+                     + UnifiedNameContainer.getCandidate() + "; ++i) {");
             code.add("if(j != candidate && arr[i][j] >= candSum) candSum = 0;");
             code.add("}");
         }
@@ -274,10 +274,10 @@ public class WeightedApproval extends CBMCInputType {
 
     @Override
     public InternalTypeContainer getInternalTypeContainer() {
-        return new InternalTypeContainer(
-            new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.INTEGER),
-                                      InternalTypeRep.CANDIDATE),
-            InternalTypeRep.VOTER);
+        return new InternalTypeContainer(new InternalTypeContainer(
+                    new InternalTypeContainer(InternalTypeRep.INTEGER),
+                                              InternalTypeRep.CANDIDATE),
+                InternalTypeRep.VOTER);
     }
 
     @Override

@@ -40,7 +40,7 @@ public class CBMCResult extends Result {
     public void setResult(List<String> result) {
         super.setResult(result);
         if (createsExample) {
-            failureExample = createFailureExample();
+            setFailureExample(createFailureExample());
         }
     }
 
@@ -569,10 +569,6 @@ public class CBMCResult extends Result {
             }
         }
         return toReturn;
-    }
-
-    public FailureExample getFailureExample() {
-        return failureExample;
     }
 
     @Override

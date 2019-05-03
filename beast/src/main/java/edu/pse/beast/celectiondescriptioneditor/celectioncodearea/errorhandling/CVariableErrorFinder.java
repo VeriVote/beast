@@ -75,7 +75,7 @@ public final class CVariableErrorFinder {
 
         seperated.addAll(code);
         ArrayList<CodeError> found
-          = new ArrayList<>(
+            = new ArrayList<>(
                 DeepErrorChecker.checkCodeForErrors(
                     seperated,
                     lineOffset

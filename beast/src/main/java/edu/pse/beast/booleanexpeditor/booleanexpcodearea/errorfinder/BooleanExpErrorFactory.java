@@ -21,10 +21,10 @@ import edu.pse.beast.types.InternalTypeContainer;
 public final class BooleanExpErrorFactory {
     private static final String[] ERROR_IDS
       = {
-        "antlr", "var_not_decl", "too_many_vars_passed", "wrong_var_type_passed",
-        "incomparable_types", "incomparable_list_sizes", "wrong_var_passed_to_votesum",
-        "number_must_be_greater_0"
-        };
+          "antlr", "var_not_decl", "too_many_vars_passed", "wrong_var_type_passed",
+          "incomparable_types", "incomparable_list_sizes", "wrong_var_passed_to_votesum",
+          "number_must_be_greater_0"
+      };
 
     private BooleanExpErrorFactory() { }
 

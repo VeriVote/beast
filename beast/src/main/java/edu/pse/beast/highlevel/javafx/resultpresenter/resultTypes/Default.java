@@ -7,8 +7,8 @@ import edu.pse.beast.types.OutputType;
 
 /**
  * We just print out the input votes, and the result
- * 
- * @author lukas
+ *
+ * @author Lukas Stapelbroek
  *
  */
 public class Default extends ResultPresentationType {

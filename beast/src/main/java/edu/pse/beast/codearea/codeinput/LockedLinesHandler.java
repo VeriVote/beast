@@ -107,8 +107,8 @@ public class LockedLinesHandler implements DocumentListener {
             }
         }
         int firstLineAffected
-          = JTextPaneToolbox.transformToLineNumber(saveBeforeRemove.getPrevText(),
-                                                   de.getOffset() + de.getLength());
+            = JTextPaneToolbox.transformToLineNumber(saveBeforeRemove.getPrevText(),
+                                                     de.getOffset() + de.getLength());
 
         lockedLines.subtractIfBigger(firstLineAffected - 1, amtNewline, (prevNum, newNum) -> {
             for (LockedLinesListener l : listeners) {

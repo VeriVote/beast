@@ -61,7 +61,7 @@ public class ElectionCheckParameter {
                                   String argument) {
         this(amountVoters, amountCandidates, amountSeats,
              1, 1, 1, timeOut, processes, argument);
-}
+    }
 
     /**
      *

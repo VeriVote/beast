@@ -31,15 +31,15 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
         = {"&&", "\\|\\|", "==>", "<==>", "<--", "\\+\\+"};
     private static final String[] MACROS
         = {
-        "VOTES", "ELECT", "VOTE_SUM_FOR_CANDIDATE",
-        "VOTE_SUM_FOR_UNIQUE_CANDIDATE"
-    };
+            "VOTES", "ELECT", "VOTE_SUM_FOR_CANDIDATE",
+            "VOTE_SUM_FOR_UNIQUE_CANDIDATE"
+        };
     private static final String[] QUANTIFIERS
         = {
-        "FOR_ALL_VOTERS", "FOR_ALL_CANDIDATES", "FOR_ALL_SEATS",
-        "EXISTS_ONE_VOTER", "EXISTS_ONE_CANDIDATE", "EXISTS_ONE_SEAT",
-        "PERM", "SPLIT", "INTERSECT", "NOTEMPTY"
-    };
+            "FOR_ALL_VOTERS", "FOR_ALL_CANDIDATES", "FOR_ALL_SEATS",
+            "EXISTS_ONE_VOTER", "EXISTS_ONE_CANDIDATE", "EXISTS_ONE_SEAT",
+            "PERM", "SPLIT", "INTERSECT", "NOTEMPTY"
+        };
     private static final String OPERATORS_PATTERN
             = "(" + String.join("|", OPERATORS) + ")";
     private static final String COMPARISON_PATTERN
@@ -118,21 +118,21 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
         while (matcher.find()) {
             String styleClass
-              = matcher.group(OPERATORS_STRING) != null
-                ? OPERATORS_STRING.toLowerCase()
-                    : matcher.group(COMPARISON_STRING) != null
-                    ? COMPARISON_STRING.toLowerCase()
-                        : matcher.group(RELATION_STRING) != null
-                        ? RELATION_STRING.toLowerCase()
-                            : matcher.group(MACROS_STRING) != null
-                            ? MACROS_STRING.toLowerCase()
-                                : matcher.group(QUANTIFIERS_STRING) != null
-                                ? QUANTIFIERS_STRING.toLowerCase()
-                                    : matcher.group(PAREN_STRING) != null
-                                    ? PAREN_STRING.toLowerCase()
-                                        : matcher.group(SEMICOLON_STRING) != null
-                                        ? SEMICOLON_STRING.toLowerCase()
-                                            : null;
+                = matcher.group(OPERATORS_STRING) != null
+                  ? OPERATORS_STRING.toLowerCase()
+                      : matcher.group(COMPARISON_STRING) != null
+                      ? COMPARISON_STRING.toLowerCase()
+                          : matcher.group(RELATION_STRING) != null
+                          ? RELATION_STRING.toLowerCase()
+                              : matcher.group(MACROS_STRING) != null
+                              ? MACROS_STRING.toLowerCase()
+                                  : matcher.group(QUANTIFIERS_STRING) != null
+                                  ? QUANTIFIERS_STRING.toLowerCase()
+                                      : matcher.group(PAREN_STRING) != null
+                                      ? PAREN_STRING.toLowerCase()
+                                          : matcher.group(SEMICOLON_STRING) != null
+                                          ? SEMICOLON_STRING.toLowerCase()
+                                              : null;
             /* never happens */ assert styleClass != null;
             spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
             spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());

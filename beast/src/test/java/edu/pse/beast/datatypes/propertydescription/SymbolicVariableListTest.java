@@ -49,7 +49,7 @@ public class SymbolicVariableListTest {
         System.out.println("addSymbolicVariable");
         String id = "test";
         InternalTypeContainer internalTypeContainer
-          = new InternalTypeContainer(InternalTypeRep.INTEGER);
+            = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.addSymbolicVariable(id, internalTypeContainer);
         assert (((LinkedList<SymbolicVariable>)
@@ -70,7 +70,7 @@ public class SymbolicVariableListTest {
         System.out.println("isVarIDAllowed");
         String id = "test";
         InternalTypeContainer internalTypeContainer
-          = new InternalTypeContainer(InternalTypeRep.INTEGER);
+            = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
         assert (instance.isVarIDAllowed("test"));
         instance.addSymbolicVariable(id, internalTypeContainer);
@@ -86,7 +86,7 @@ public class SymbolicVariableListTest {
         LinkedList<SymbolicVariable> symbolicVariableList = new LinkedList<>();
         String id = "test";
         InternalTypeContainer internalTypeContainer
-          = new InternalTypeContainer(InternalTypeRep.INTEGER);
+            = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariable var = new SymbolicVariable(id, internalTypeContainer);
         symbolicVariableList.add(var);
         SymbolicVariable var2 = new SymbolicVariable("test2", internalTypeContainer);
@@ -109,7 +109,7 @@ public class SymbolicVariableListTest {
         System.out.println("getSymbolicVariables");
         String id = "test";
         InternalTypeContainer internalTypeContainer
-          = new InternalTypeContainer(InternalTypeRep.INTEGER);
+            = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.addSymbolicVariable(id, internalTypeContainer);
         assert (((LinkedList<SymbolicVariable>)
@@ -130,7 +130,7 @@ public class SymbolicVariableListTest {
         System.out.println("removeSymbolicVariable");
         String id = "test";
         InternalTypeContainer internalTypeContainer
-          = new InternalTypeContainer(InternalTypeRep.INTEGER);
+            = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.addSymbolicVariable(id, internalTypeContainer);
         assert (instance.removeSymbolicVariable("test"));
@@ -146,7 +146,7 @@ public class SymbolicVariableListTest {
         int index = 0;
         String id = "test";
         InternalTypeContainer internalTypeContainer
-          = new InternalTypeContainer(InternalTypeRep.INTEGER);
+            = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.addSymbolicVariable(id, internalTypeContainer);
         instance.removeSymbolicVariable(index);
@@ -168,7 +168,7 @@ public class SymbolicVariableListTest {
         instance.addListener(listener);
         String id = "test";
         InternalTypeContainer internalTypeContainer
-          = new InternalTypeContainer(InternalTypeRep.INTEGER);
+            = new InternalTypeContainer(InternalTypeRep.INTEGER);
         instance.addSymbolicVariable(id, internalTypeContainer);
     }
 

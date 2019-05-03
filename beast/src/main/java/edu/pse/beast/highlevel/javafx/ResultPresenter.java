@@ -15,7 +15,7 @@ public class ResultPresenter implements Runnable {
     private boolean running;
 
     private Thread currentThread = null;
-    
+
     private InputType inType = null;
     private OutputType outType = null;
 
@@ -24,10 +24,8 @@ public class ResultPresenter implements Runnable {
             this.running = false;
             currentThread.interrupt();
         }
-        
         this.inType = result.getElectionDescription().getContainer().getInputType();
         this.outType = result.getElectionDescription().getContainer().getOutputType();
-        
         this.result = result;
         this.running = true;
         new Thread(this).start();
@@ -52,17 +50,11 @@ public class ResultPresenter implements Runnable {
 //            }
 //        }
 //    }
-    
-    
+
     public void present() {
         if (result == null) {
             return;
         } else {
-            
-            
-            
-            
-            
         }
     }
 
@@ -74,11 +66,8 @@ public class ResultPresenter implements Runnable {
         } else {
 
             while (running) {
-                                
-                
                 result.getElectionDescription().getContainer().getInputType();
                 result.getElectionDescription().getContainer().getOutputType();
-                
                 // do all the printing
                 String output = "";
                 switch (GUIController.getController().getPresentationType()) {

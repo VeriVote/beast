@@ -16,7 +16,7 @@ public abstract class StringResourceProvider {
     /**
      * languageId. Choose "de" for German
      */
-    protected String languageId;
+    private String languageId;
 
     /**
      * The constructor does not call initialize. If you make a subclass you have to

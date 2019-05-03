@@ -591,13 +591,13 @@ public class CBMCProcessFactory extends CheckerFactory {
         switch (os) {
         case Linux:
             startedChecker
-              = new LinuxProcess(voters, candidates, seats, userOptions,
-                                 toCheck, parent, result);
+                = new LinuxProcess(voters, candidates, seats, userOptions,
+                                   toCheck, parent, result);
             break;
         case Windows:
             startedChecker
-              = new WindowsProcess(voters, candidates, seats, userOptions,
-                                   toCheck, parent, result);
+                = new WindowsProcess(voters, candidates, seats, userOptions,
+                                     toCheck, parent, result);
             break;
         case Mac:
             ErrorForUserDisplayer.displayError(

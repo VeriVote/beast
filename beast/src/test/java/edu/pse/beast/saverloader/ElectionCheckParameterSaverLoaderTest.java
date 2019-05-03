@@ -22,7 +22,7 @@ public class ElectionCheckParameterSaverLoaderTest {
     @BeforeClass
     public static void setUpClass() {
         electionCheckParameter
-          = new ElectionCheckParameter(
+            = new ElectionCheckParameter(
                 Arrays.asList(new Integer[] {1, 2}),
                               Arrays.asList(new Integer[] {1, 2}),
                               Arrays.asList(new Integer[] {1, 2}),
@@ -39,9 +39,9 @@ public class ElectionCheckParameterSaverLoaderTest {
     @Test
     public void testCreateFromSaveString() throws Exception {
         final String saveString
-          = ElectionCheckParameterSaverLoader.createSaveString(electionCheckParameter);
+            = ElectionCheckParameterSaverLoader.createSaveString(electionCheckParameter);
         final ElectionCheckParameter recreatedElectionCheckParameter
-          = (ElectionCheckParameter)
+            = (ElectionCheckParameter)
                 ElectionCheckParameterSaverLoader.createFromSaveString(saveString);
         assert (recreatedElectionCheckParameter.getAmountCandidates().get(0).equals(1));
         assert (recreatedElectionCheckParameter.getAmountCandidates().get(1).equals(2));

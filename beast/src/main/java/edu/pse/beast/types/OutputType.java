@@ -71,9 +71,8 @@ public abstract class OutputType implements InOutType {
     public abstract CodeArrayListBeautifier
                         addMarginVerifyCheck(CodeArrayListBeautifier code);
 
-    public abstract CodeArrayListBeautifier
-                        addVotesArrayAndInit(CodeArrayListBeautifier code,
-                                             int voteNumber);
+    public abstract CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code,
+                                                                 int voteNumber);
 
     public abstract String getCArrayType();
 
@@ -85,13 +84,11 @@ public abstract class OutputType implements InOutType {
      * @param voteNumber the vote number
      * @return the beautified code
      */
-    public abstract CodeArrayListBeautifier
-                        addMarginMainTest(CodeArrayListBeautifier code,
-                                          int voteNumber);
+    public abstract CodeArrayListBeautifier addMarginMainTest(CodeArrayListBeautifier code,
+                                                              int voteNumber);
 
-    public abstract List<String>
-                        getCodeToRunMargin(List<String> origResult,
-                                           List<String> lastResult);
+    public abstract List<String> getCodeToRunMargin(List<String> origResult,
+                                                    List<String> lastResult);
 
     public abstract List<String>
                         getNewResult(List<String> lastFailedRun,
