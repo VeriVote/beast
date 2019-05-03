@@ -36,11 +36,12 @@ import javafx.stage.WindowEvent;
  */
 public class MainClass extends Application {
     private static final String TITLE = "BEAST";
-    private static final String RESOURCE = "/src/main/resources/edu/pse/beast/highlevel/javafx/BEAST.fxml";
+    private static final String RESOURCE
+            = "/src/main/resources/edu/pse/beast/highlevel/javafx/BEAST.fxml";
     //private static final String RESOURCE = "/edu/pse/beast/highlevel/javafx/BEAST.fxml";
     private static final String RESOURCE_BUNDLE
          // = "/src/main/resources/edu.pse.beast.highlevel.javafx.bundles.LangBundle";
-    = "edu.pse.beast.highlevel.javafx.bundles.LangBundle";
+            = "edu.pse.beast.highlevel.javafx.bundles.LangBundle";
     private static final String BEAST_ICON = "/core/images/other/BEAST.png";
     private static final String FILE_STRING = "file:///";
 

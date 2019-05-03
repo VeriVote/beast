@@ -1,7 +1,6 @@
 package edu.pse.beast.propertychecker;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
 
@@ -54,18 +53,14 @@ public abstract class Result implements ResultInterface {
 
     /**
      * returns all currently available result types
-     * @return
+     * @return list of result types
      */
     public static List<Result> getResultTypes() {
         ServiceLoader<Result> loader = ServiceLoader.load(Result.class);
-
         List<Result> types = new ArrayList<Result>();
-
-        for (Iterator<Result> iterator = loader.iterator(); iterator.hasNext();) {
-            Result type = (Result) iterator.next();
+        for (Result type : loader) {
             types.add(type);
         }
-
         return types;
     }
 

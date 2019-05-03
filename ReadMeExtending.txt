@@ -19,14 +19,14 @@ for that.
 1) There are multiple abstract classes you have to implement to add another checker
    All these classes are from "edu.pse.beast.propertychecker" :
 
-	- Checker.java (communicates with the program)
+    - Checker.java (communicates with the program)
 
-	- CheckerFactory.java (creates fitting checkers)
+    - CheckerFactory.java (creates fitting checkers)
 
-	- Result.java (saves the result and processes it, so it can be diplayed)
+    - Result.java (saves the result and processes it, so it can be diplayed)
 
-	Also, you have to choose a unique checkerID, with which you must register your CheckerFactory.java at
-	CheckerFactoryFactory.java (have a look at the function "init()")
+    Also, you have to choose a unique checkerID, with which you must register your CheckerFactory.java at
+    CheckerFactoryFactory.java (have a look at the function "init()")
 
 If that is all done, you can simply start BEAST and choose between CBMC, and your newly implemented checker.
 
@@ -45,21 +45,21 @@ However, for code generation we would need to create a new class inheriting from
 Finally, we have everything we need for the code generation. In the interface BooleanExpNodeVisitor, add a method called visitNandNode which we call from the getvisited function in NANDnodes. Then, implement this function in CBMCCodeGenerationVisitor. Looking at how other methods in this class work, it would suffice to generate a new variable name, visiting the lhs and rhs nodes, and combine their variable names in the correct manner:
 
 public void visitNand(NANDNode node) {
-	String varname = getNewNandVarname();
-	variableNames.push(varname);
-	node.getLHSBooleanExpNode().getVisited(this);
+    String varname = getNewNandVarname();
+    variableNames.push(varname);
+    node.getLHSBooleanExpNode().getVisited(this);
         node.getRHSBooleanExpNode().getVisited(this);
-	String rhsVarName = variableNames.pop();
-	String lhsVarName = variableNames.pop();
-	code.add(combineForNand(varname, lhsVarName, rhsVarName));
-	testIfLast();
+    String rhsVarName = variableNames.pop();
+    String lhsVarName = variableNames.pop();
+    code.add(combineForNand(varname, lhsVarName, rhsVarName));
+    testIfLast();
 }
 
 public String combineForNand(String varname, String lhsVarName, String rhsVarName) {
-	String template = "unsigned int VARNAME = !(LHS && RHS)"
-	return template.replace("VARNAME", varname)
-			.replace("LHS", lhsVarName)
-			.replace("RHS", rhsVarName);
+    String template = "unsigned int VARNAME = !(LHS && RHS)"
+    return template.replace("VARNAME", varname)
+            .replace("LHS", lhsVarName)
+            .replace("RHS", rhsVarName);
 }
 
 testIfLast needs to be called after every booleanExpNode visitation. It adds a necessary assume or assert for cbmc.

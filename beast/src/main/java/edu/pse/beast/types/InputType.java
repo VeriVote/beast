@@ -48,7 +48,8 @@ public abstract class InputType implements InOutType {
     }
     
     public final List<List<String>> getVotingArray(List<String> lastFailedRun, int index) {
-        return helper.extractVariable(UnifiedNameContainer.getVotingArray(), getDimension(), lastFailedRun).get(index).getList();
+        return helper.extractVariable(UnifiedNameContainer.getVotingArray(), getDimension(),
+                                      lastFailedRun).get(index).getList();
     }
 
     protected abstract void getHelper();
@@ -112,7 +113,9 @@ public abstract class InputType implements InOutType {
      * @return a wrapper which contains the values
      */
     public final ResultValueWrapper extractVotes(List<String> result, int numberCandidates) {
-        return this.helper.extractVariable("" + UnifiedNameContainer.getNewVotesName() + "", getDimension(), result).get(0);
+        return this.helper.extractVariable("" + UnifiedNameContainer.getNewVotesName() + "",
+                                           getDimension(),
+                                           result).get(0);
     }
 
     /**
@@ -123,10 +126,12 @@ public abstract class InputType implements InOutType {
      * @param newRowOfValues the new row of values
      * @return the new value
      */
-    public abstract String vetValue(String newValue, ElectionTypeContainer container, NEWRowOfValues newRowOfValues);
+    public abstract String vetValue(String newValue, ElectionTypeContainer container,
+                                    NEWRowOfValues newRowOfValues);
 
     public List<ResultValueWrapper> readVote(List<String> toExtract) {
-        return this.helper.extractVariable(UnifiedNameContainer.getVotingArray(), getDimension(), toExtract);
+        return this.helper.extractVariable(UnifiedNameContainer.getVotingArray(),
+                                           getDimension(), toExtract);
     }
 
 
@@ -136,9 +141,11 @@ public abstract class InputType implements InOutType {
         return toReturn;
     }
 
-    public abstract String[] getVotePoints(String[][] votes, int amountCandidates, int amountVoters);
+    public abstract String[] getVotePoints(String[][] votes, int amountCandidates,
+                                           int amountVoters);
 
-    public abstract String[] getVotePoints(String[] votes, int amountCandidates, int amountVoters);
+    public abstract String[] getVotePoints(String[] votes, int amountCandidates,
+                                           int amountVoters);
 
     // public abstract void addMarginMainCheck(CodeArrayListBeautifier code, int
     // margin, List<String> origResult);

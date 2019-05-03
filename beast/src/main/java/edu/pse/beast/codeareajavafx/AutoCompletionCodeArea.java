@@ -47,12 +47,17 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
         Tuple<Integer, Integer> position = getAbsolutCaretPosition();
         this.start = start;
         this.end = end;
-        if (content.size() == 1) { // there is only one element, so the user probably want that one
+        if (content.size() == 1) {
+            // there is only one element, so the user probably wants that one
             insertAutoCompletion(start, end, content.get(0));
         } else {
             GUIController.getController().getAutoCompleter()
             .showAutoCompletionWindows(position.x, position.y, content, this);
         }
+    }
+
+    public void processAutocompletion(Tuple3<List<String>, Integer, Integer> completion) {
+        processAutocompletion(completion.first, completion.second, completion.third);
     }
 
     public abstract void insertAutoCompletion(int start, int end,

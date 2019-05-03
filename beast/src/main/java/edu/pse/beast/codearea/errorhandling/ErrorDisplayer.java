@@ -19,7 +19,7 @@ import edu.pse.beast.toolbox.Tuple;
 
 /**
  * This abstract class implements error displaying functionality common to all
- * specialized error display subclasses
+ * specialized error display subclasses.
  *
  * @author Holger Klein
  */
@@ -77,16 +77,19 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         }
     }
 
-    private String getPosString(CodeError er) {
-        String template = "ERROR: ERRNO, LINE: LINO, CHAR: POSNO";
-        template = template.replace("ERROR", currentStringResLoader.getStringFromID("error"));
-        template = template.replace("LINE", currentStringResLoader.getStringFromID("line"));
-        template = template.replace("CHAR", currentStringResLoader.getStringFromID("char"));
-        template = template.replace("LINO", String.valueOf(er.getLine()));
-        template = template.replace("POSNO", String.valueOf(er.getPosInLine()));
-        template = template.replace("ERRNO", String.valueOf(er.getErrorNumber()));
-        return template;
-    }
+    /*
+     * private String getPosString(CodeError er) { String template =
+     * "ERROR: ERRNO, LINE: LINO, CHAR: POSNO"; template =
+     * template.replace("ERROR",
+     * currentStringResLoader.getStringFromID("error")); template =
+     * template.replace("LINE", currentStringResLoader.getStringFromID("line"));
+     * template = template.replace("CHAR",
+     * currentStringResLoader.getStringFromID("char")); template =
+     * template.replace("LINO", String.valueOf(er.getLine())); template =
+     * template.replace("POSNO", String.valueOf(er.getPosInLine())); template =
+     * template.replace("ERRNO", String.valueOf(er.getErrorNumber())); return
+     * template; }
+     */
 
     /**
      * checks if the mouse position is over a part of the code which contains an

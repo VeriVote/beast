@@ -18,20 +18,24 @@ import edu.pse.beast.types.InternalTypeRep;
  * @author Holger Klein
  */
 public final class CCodeHelper {
-    private CCodeHelper() {
-    }
-
     // String that only allows string in valid C format (they can still contain
     // identifiers)
-    private static String characterRegex = "[_a-zA-Z][_a-zA-Z0-9]{0,30}";
-    private static String[] reservedWords = { "auto", "break", "case", "char", "const", "continue", "default", "do",
-            "double", "else", "enum", "extern", "float", "for", "goto", "if", "inline", "int", "long", "register",
-            "restrict", "return", "short", "signed", "sizeof", "static", "struct", "switch", "typedef", "union",
-            "unsigned", "void", "volatile", "while", "_Alignas", "_Alignof", "_Atomic", "_Bool", "_Complex", "_Generic",
-            "_Imaginary", "_Noreturn", "_Static_assert", "_Thread_local" };
+    private static String characterRegex
+      = "[_a-zA-Z][_a-zA-Z0-9]{0,30}";
+    private static String[] reservedWords
+      = {
+        "auto", "break", "case", "char", "const", "continue", "default", "do",
+        "double", "else", "enum", "extern", "float", "for", "goto", "if", "inline",
+        "int", "long", "register", "restrict", "return", "short", "signed", "sizeof",
+        "static", "struct", "switch", "typedef", "union", "unsigned", "void", "volatile",
+        "while", "_Alignas", "_Alignof", "_Atomic", "_Bool", "_Complex", "_Generic",
+        "_Imaginary", "_Noreturn", "_Static_assert", "_Thread_local" };
 
     private static List<String> cReservedWords = new ArrayList<String>(
               Arrays.asList(reservedWords));
+
+    private CCodeHelper() {
+    }
 
     /**
      * returns the C constant which is the max amount of elements in a given list
@@ -126,8 +130,10 @@ public final class CCodeHelper {
      * @param stringResourceLoader the string resource loader currently used
      * @return the complete voting function
      */
-    public static ElectionDescription generateElectionDescription(ElectionTypeContainer container, String name,
-            ElectionTemplateHandler templateHandler, StringResourceLoader stringResourceLoader) {
+    public static ElectionDescription generateElectionDescription(
+            ElectionTypeContainer container, String name,
+            ElectionTemplateHandler templateHandler,
+            StringResourceLoader stringResourceLoader) {
         ElectionDescription description = new ElectionDescription(name, container.getInputType(),
                 container.getOutputType(), 2, 0, 0, 0, true);
         ArrayList<String> code = new ArrayList<>();
@@ -167,11 +173,11 @@ public final class CCodeHelper {
 
     public static boolean isValidCName(String name) {    
         if (name.matches(characterRegex)) {
-            if (!cReservedWords.stream().anyMatch(str -> str.equals(name))) { //it is not a reserved word
+            if (!cReservedWords.stream().anyMatch(str -> str.equals(name))) {
+                // it is not a reserved word
                 return true;
             }
         }
-        
         System.out.println("The given symbolic variable name is not valid in C");
         return false;
     }

@@ -29,7 +29,7 @@ public class TreeViewSample extends Application {
           = new ImageView(new Image(getClass().getResourceAsStream(ROOT)));
     private final Image depIcon
           = new Image(getClass().getResourceAsStream(DEPARTMENT));
-    List<Employee> employees
+    private List<Employee> employees
           = Arrays.<Employee>asList(
                     new Employee("Ethan Williams", "Sales Department"),
                     new Employee("Emma Jones", "Sales Department"),
@@ -42,7 +42,7 @@ public class TreeViewSample extends Application {
                     new Employee("Gregory Smith", "IT Support"),
                     new Employee("Jacob Smith", "Accounts Department"),
                     new Employee("Isabella Johnson", "Accounts Department"));
-    TreeItem<String> rootNode
+    private TreeItem<String> rootNode
         = new TreeItem<String>("MyCompany Human Resources", rootIcon);
 
     public static void main(String[] args) {
