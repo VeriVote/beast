@@ -2,6 +2,7 @@ package edu.pse.beast.saverloader;
 
 /**
  * Interface that allows the FileChooser to polymorphically save and load files.
+ * @param <T>
  *
  * @author Nikolai Schnell
  */

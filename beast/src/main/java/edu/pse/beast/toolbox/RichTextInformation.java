@@ -4,13 +4,12 @@ import java.awt.Color;
 import java.awt.Font;
 
 public class RichTextInformation {
-    
     public final String text;
     public final Font font;
     public final Color color;
-    
+
     /**
-     * 
+     *
      * @param text the text which has to be displayed
      * @param font the font the text should have
      * @param color the color the text should have

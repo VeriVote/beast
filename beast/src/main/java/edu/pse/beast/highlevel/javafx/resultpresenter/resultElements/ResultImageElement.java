@@ -37,7 +37,7 @@ public abstract class ResultImageElement {
     }
 
     /**
-     * Determine if a point is inside 
+     * Determine if a point is inside
      * @param posX the x position
      * @param posY the y position
      * @return true, if the point is inside this rectangle
@@ -46,15 +46,15 @@ public abstract class ResultImageElement {
         return ((posX <= xPosBottomRight) && (posX >= xPosTopLeft) && (posY <= yPosBottomRight)
                 && (posY >= yPosTopLeft));
     }
-    
+
     //abstract methods
-    
+
     /**
      * notifies the methods that it was clicked on
      * @param event the y position where the click was made
      */
     public abstract void isClicked(MouseEvent event);
-    
+
     /**
      * draws this element, scaled by the "scale" factor
      * @param graphics the image where the element has to be drawn on

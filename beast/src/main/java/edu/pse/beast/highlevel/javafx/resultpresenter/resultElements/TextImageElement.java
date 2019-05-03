@@ -20,7 +20,7 @@ public class TextImageElement extends ResultImageElement {
     /**
      * Draws a String which starts at the specified location. All special characters
      * will be discarded
-     * 
+     *
      * @param xPosTopLeft  the top left x value of the text
      * @param yPosTopLeft  the top left y value of the text
      * @param richTextInfo the text to be displayed
@@ -66,7 +66,6 @@ public class TextImageElement extends ResultImageElement {
             maxTextWidth +=
                     info.font.getStringBounds(replaceCharacters(info.text), frc).getWidth();
         }
-        
         return startX + maxTextWidth;
     }
 

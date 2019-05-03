@@ -73,11 +73,11 @@ public abstract class SystemSpecificCompilerAndExecutioner {
         if (process != null) {
             CountDownLatch latch = new CountDownLatch(2);
             ThreadedBufferedReader outReader
-              = new ThreadedBufferedReader(
+                = new ThreadedBufferedReader(
                     new BufferedReader(new InputStreamReader(process.getInputStream())),
                     result, latch, false);
             ThreadedBufferedReader errReader
-              = new ThreadedBufferedReader(
+                = new ThreadedBufferedReader(
                     new BufferedReader(new InputStreamReader(process.getErrorStream())),
                     errors, latch, false);
             resultToStoreIn.setLastTmpResult(result);
@@ -98,12 +98,12 @@ public abstract class SystemSpecificCompilerAndExecutioner {
             if (programProcess != null) {
                 latch = new CountDownLatch(2);
                 outReader
-                  = new ThreadedBufferedReader(
+                    = new ThreadedBufferedReader(
                         new BufferedReader(
                             new InputStreamReader(programProcess.getInputStream())),
                         result, latch, false);
                 errReader
-                  = new ThreadedBufferedReader(
+                    = new ThreadedBufferedReader(
                         new BufferedReader(
                             new InputStreamReader(programProcess.getErrorStream())),
                         errors, latch, false);

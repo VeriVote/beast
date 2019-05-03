@@ -20,7 +20,7 @@ public class BoundedVarCodeArea extends AutoCompletionCodeArea implements MenuBa
     private static final String RESOURCE = "codeAreaSyntaxHighlight.css";
 
     private List<ElectionDescriptionChangeListener> listeners
-      = new ArrayList<ElectionDescriptionChangeListener>();
+        = new ArrayList<ElectionDescriptionChangeListener>();
     private FormalPropertiesDescription description;
 
     public BoundedVarCodeArea() {

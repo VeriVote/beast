@@ -50,35 +50,36 @@ public class ResultImageRenderer {
                                 BufferedImage.TYPE_4BYTE_ABGR);
 
     static {
-
         GUIController.getController().getResultBorderPane().widthProperty()
                 .addListener(new ChangeListener<Number>() {
-            @Override
+                    @Override
             public void changed(ObservableValue<? extends Number> observableValue,
                                 Number oldSceneWidth, Number newSceneWidth) {
-                imageMinWidth = GUIController.getController().getResultBorderPane().getWidth();
-                updateImageSizeAndRedraw();
-            }
-        });
+                        imageMinWidth =
+                                GUIController.getController().getResultBorderPane().getWidth();
+                        updateImageSizeAndRedraw();
+                    }
+                });
 
         GUIController.getController().getResultBorderPane().heightProperty()
                 .addListener(new ChangeListener<Number>() {
-            @Override
+                    @Override
             public void changed(ObservableValue<? extends Number> observableValue,
                                 Number oldSceneHeight, Number newSceneHeight) {
-                imageMinHeight = GUIController.getController().getResultBorderPane().getHeight();
-                updateImageSizeAndRedraw();
-            }
-        });
+                        imageMinHeight
+                            = GUIController.getController().getResultBorderPane().getHeight();
+                        updateImageSizeAndRedraw();
+                    }
+                });
 
         GUIController.getController().getZoomSlider().valueProperty()
                 .addListener(new ChangeListener<>() {
-            @Override
+                    @Override
             public void changed(ObservableValue<? extends Number> observable,
                                 Number oldValue, Number newValue) {
-                zoomTo((double) newValue);
-            }
-        });
+                        zoomTo((double) newValue);
+                    }
+                });
 
         // TODO determine which mouse behavior would fit best
         view.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {

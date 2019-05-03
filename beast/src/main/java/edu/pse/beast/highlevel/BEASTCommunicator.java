@@ -24,7 +24,7 @@ import edu.pse.beast.propertychecker.Result;
  * @author Jonas Wohnig
  */
 public final class BEASTCommunicator {
-    static List<PropertyChecker> currentCheckers = new ArrayList<PropertyChecker>();
+    private static List<PropertyChecker> currentCheckers = new ArrayList<PropertyChecker>();
     // public static boolean startCheck() {
     // centralObjectProvider.getResultPresenter().resetResults();
     // ElectionDescriptionSource electSrc =

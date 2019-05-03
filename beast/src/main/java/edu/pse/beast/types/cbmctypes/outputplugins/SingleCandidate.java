@@ -27,7 +27,7 @@ public class SingleCandidate extends CBMCOutputType {
     public int getDimension() {
         return 0;
     }
-    
+
     @Override
     public boolean isOutputOneCandidate() {
         return true;

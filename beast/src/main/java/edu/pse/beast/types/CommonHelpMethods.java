@@ -11,18 +11,17 @@ import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.valueContainers.ResultValueWrapper;
 
 public abstract class CommonHelpMethods {
-    
     /**
      * extracts a variable with given dimension for the given checker from the output
      * list
      *
-     * @param toExtract the list to extract from
      * @param name      the name of the variable
+     * @param dimension the dimension of the variable
+     * @param toExtract the list to extract from
      * @return a two dim wrapper of the voting results
      */
     public abstract List<ResultValueWrapper> extractVariable(String name, int dimension,
             List<String> toExtract);
-    
     /**
      * extracts a two dimensional variable for the given checker from the output
      * list

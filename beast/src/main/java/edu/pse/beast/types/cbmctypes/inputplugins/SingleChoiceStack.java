@@ -112,7 +112,7 @@ public class SingleChoiceStack extends CBMCInputType {
             return newValue;
         }
     }
-    
+
     @Override
     public String[] getVotePoints(String[][] votes, int amountCandidates, int amountVoters) {
         return super.wrongInputTypeArray(amountCandidates, amountVoters);

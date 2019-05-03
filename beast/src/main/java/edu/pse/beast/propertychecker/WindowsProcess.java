@@ -170,12 +170,12 @@ public class WindowsProcess extends CBMCProcess {
 
     @Override
     protected void stopProcess() {
-        if (!process.isAlive()) {
+        if (!getProcess().isAlive()) {
             ErrorLogger.log("Warning, process is not alive anymore");
             return;
         } else {
             // get the process id of the parent process (cmd in our case here)
-            int pid = getWindowsProcessId(process);
+            int pid = getWindowsProcessId(getProcess());
             // generate a call to cmd to get all child processes of our
             // processID
             String cmdCall
@@ -268,7 +268,7 @@ public class WindowsProcess extends CBMCProcess {
                 }
             }
         }
-        if (process.isAlive()) {
+        if (getProcess().isAlive()) {
             ErrorForUserDisplayer.displayError(
                     "There was an attempt to stop the cbmc process, but after "
                             + (WAITING_TIME_FOR_TERMINATION / 1000d)

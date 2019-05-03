@@ -16,7 +16,7 @@ public abstract class Checker implements Runnable {
     /**
      * the process that this chcker runs
      */
-    protected Process process;
+    private Process process;
 
     private final int voters;
     private final int candidates;
@@ -61,6 +61,10 @@ public abstract class Checker implements Runnable {
         this.result = result;
 
         new Thread(this, "Checker").start();
+    }
+
+    Process getProcess() {
+        return this.process;
     }
 
     @Override

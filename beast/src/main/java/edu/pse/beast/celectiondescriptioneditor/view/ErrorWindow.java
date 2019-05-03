@@ -52,10 +52,10 @@ public class ErrorWindow {
      */
     public void updateStringRes(StringLoaderInterface stringLoaderInterface) {
         errorString
-          = stringLoaderInterface.getBooleanExpEditorStringResProvider()
-            .getBooleanExpErrorStringRes().getStringFromID("error");
+            = stringLoaderInterface.getBooleanExpEditorStringResProvider()
+              .getBooleanExpErrorStringRes().getStringFromID("error");
         lineString
-          = stringLoaderInterface.getBooleanExpEditorStringResProvider()
-            .getBooleanExpErrorStringRes().getStringFromID("line");
+            = stringLoaderInterface.getBooleanExpEditorStringResProvider()
+              .getBooleanExpErrorStringRes().getStringFromID("line");
     }
 }

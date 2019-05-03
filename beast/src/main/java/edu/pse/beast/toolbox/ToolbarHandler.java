@@ -20,11 +20,11 @@ public abstract class ToolbarHandler {
 
     private static final String[] STANDARD_ID_ORDER
         = {
-        "new", "load", "save", "save_as",
-        "undo", "redo", "cut", "copy", "paste"
-    };
+            "new", "load", "save", "save_as",
+            "undo", "redo", "cut", "copy", "paste"
+        };
 
-    protected JToolBar toolbar;
+    private JToolBar toolbar;
 
     private StringResourceLoader stringRes;
     private final ActionIdAndListener[] actionIdsAndListener;

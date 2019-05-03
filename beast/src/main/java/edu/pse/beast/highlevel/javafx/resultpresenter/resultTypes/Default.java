@@ -7,7 +7,7 @@ import edu.pse.beast.types.OutputType;
 
 /**
  * We just print out the input votes, and the result
- * 
+ *
  * @author Lukas Stapelbroek
  *
  */
@@ -22,7 +22,8 @@ public class Default extends ResultPresentationType {
        // CBMCResultWrapperMultiArray votesWrapper
        //     = inType.extractVotesWrappedMulti(result.getResult(), result.getNumCandidates());
 
-        ResultValueWrapper votesWrapper = inType.extractVotes(result.getResult(), result.getNumCandidates());
+        ResultValueWrapper votesWrapper
+            = inType.extractVotes(result.getResult(), result.getNumCandidates());
 
         //intype.extractv
 

@@ -12,7 +12,7 @@ import edu.pse.beast.types.OutputType;
 public class ElectionTypeContainer {
     private InputType inType;
     private OutputType outType;
-    
+
     /**
      * Constructor
      *

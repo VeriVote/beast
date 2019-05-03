@@ -74,25 +74,25 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
             // file in the output directory, such that it can be deleted
             // afterwards.
             String clExeCall
-              = "\"" + vsCmd + "\"" + " & "
-                + COMPILER_STRING + " " + userIncludeAndPath + " "
-                + ("\"" + toCheck.getAbsolutePath() + "\"") + " "
-                + (" /Fo" + toCheck.getParent() + "\\ ")
-                + (" /Fe" + toCheck.getParent() + "\\ ")
-                + compileAllIncludesInIncludePath;
+                = "\"" + vsCmd + "\"" + " & "
+                  + COMPILER_STRING + " " + userIncludeAndPath + " "
+                  + ("\"" + toCheck.getAbsolutePath() + "\"") + " "
+                  + (" /Fo" + toCheck.getParent() + "\\ ")
+                  + (" /Fe" + toCheck.getParent() + "\\ ")
+                  + compileAllIncludesInIncludePath;
             List<String> callInList = new ArrayList<String>();
             callInList.add(clExeCall);
             File batFile
-              = new File(toCheck.getParent() + "\\"
-                         + toCheck.getName().replace(FileLoader.C_FILE_ENDING,
-                                                     FileLoader.BAT_FILE_ENDING));
+                = new File(toCheck.getParent() + "\\"
+                           + toCheck.getName().replace(FileLoader.C_FILE_ENDING,
+                                                       FileLoader.BAT_FILE_ENDING));
             FileSaver.writeStringLinesToFile(callInList, batFile);
             // This call starts a new VScmd instance and let's cl.exe (the
             // compiler) run in it.
             // ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c",
             // clExeCall);
             ProcessBuilder prossBuild
-              = new ProcessBuilder(CMD_STRING, "/c", batFile.getAbsolutePath());
+                = new ProcessBuilder(CMD_STRING, "/c", batFile.getAbsolutePath());
             try {
                 startedProcess = prossBuild.start();
             } catch (IOException e) {
@@ -126,10 +126,10 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
                     // about code injection from strings or such
                     // then we split at "(" and ")" to extract the number
                     lineNumber
-                      = Integer.parseInt(
-                            linesMatcher.group(1).split("\\(")[1]
-                                .split("\\)")[0]
-                        ) - lineOffset;
+                          = Integer.parseInt(
+                                  linesMatcher.group(1).split("\\(")[1]
+                                          .split("\\)")[0]
+                                  ) - lineOffset;
                     // get the error message here by splitting at a common
                     // (error/warning C[ERRORNUMBER]) identifier
                     String[] varAndMessage = line.split("([a-zA-Z]+ C[0-9]+:)");

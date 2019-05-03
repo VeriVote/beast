@@ -22,7 +22,7 @@ public class CandidateList extends CBMCOutputType {
     public String getOutputIDinFile() {
         return "CANDIDATE_LIST";
     }
-    
+
     @Override
     public int getDimension() {
         return 1;

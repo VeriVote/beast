@@ -15,11 +15,13 @@ import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class Approval extends CBMCInputType {
-    private String[] sizes = { UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate() };
+    private String[] sizes = { UnifiedNameContainer.getVoter(),
+                               UnifiedNameContainer.getCandidate() };
 
     @Override
     public String getInputString() {
-        return "[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "]";
+        return "[" + UnifiedNameContainer.getVoter() + "]["
+                + UnifiedNameContainer.getCandidate() + "]";
     }
 
     @Override
@@ -210,8 +212,9 @@ public class Approval extends CBMCInputType {
 
     @Override
     public InternalTypeContainer getInternalTypeContainer() {
-        return new InternalTypeContainer(new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.INTEGER),
-                InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
+        return new InternalTypeContainer(new InternalTypeContainer(
+                new InternalTypeContainer(InternalTypeRep.INTEGER), InternalTypeRep.CANDIDATE),
+                InternalTypeRep.VOTER);
     }
 
     @Override

@@ -32,7 +32,7 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
                 + USER_INCLUDE_FOLDER;
         // get all Files from the form "*.c" so we can include them into cbmc,
         List<String> allFiles
-          = FileLoader.listAllFilesFromFolder(
+            = FileLoader.listAllFilesFromFolder(
                 "\"" + SuperFolderFinder.getSuperFolder()
                 + USER_INCLUDE_FOLDER + "\"", FileLoader.C_FILE_ENDING
             );

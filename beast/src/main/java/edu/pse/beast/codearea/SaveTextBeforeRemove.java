@@ -83,8 +83,8 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
                 || (ke.isShiftDown() && ke.getKeyChar() == KeyEvent.VK_TAB)) {
             try {
                 prevText
-                  = pane.getStyledDocument()
-                    .getText(0, pane.getStyledDocument().getLength());
+                    = pane.getStyledDocument()
+                      .getText(0, pane.getStyledDocument().getLength());
             } catch (BadLocationException ex) {
                 Logger.getLogger(SaveTextBeforeRemove.class.getName()).log(Level.SEVERE, null, ex);
             }

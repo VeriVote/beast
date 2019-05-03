@@ -173,8 +173,8 @@ public class FormalExpErrorFinderTreeListener
         InternalTypeContainer varType = null;
         for (InternalTypeRep typeRep
                 : new InternalTypeRep[]
-                        {InternalTypeRep.VOTER, InternalTypeRep.CANDIDATE, InternalTypeRep.SEAT }
-                ) {
+                    {InternalTypeRep.VOTER, InternalTypeRep.CANDIDATE, InternalTypeRep.SEAT }
+        ) {
             if (quantifierTypeString.contains(typeRep.name())) {
                 varType = new InternalTypeContainer(typeRep);
             }
@@ -225,8 +225,8 @@ public class FormalExpErrorFinderTreeListener
         InternalTypeContainer rhsCont = rhs.getInternalTypeContainer();
         if (lhsCont.getListLvl() != rhsCont.getListLvl()) {
             final CodeError codeError
-              = BooleanExpErrorFactory
-                .createCantCompareDifferentListLevels(ctx, lhsCont, rhsCont);
+                  = BooleanExpErrorFactory
+                    .createCantCompareDifferentListLevels(ctx, lhsCont, rhsCont);
             created.add(codeError);
         } else {
             while (lhsCont.isList()) {

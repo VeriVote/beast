@@ -16,7 +16,7 @@ import edu.pse.beast.types.cbmctypes.outputplugins.ParliamentStack;
 import edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
 
 public final class TypeLoader {
-    public static boolean init = false;
+    private static boolean init = false;
 
     private static List<InputType> availableInTypes = new ArrayList<InputType>();
     private static List<OutputType> availableOutTypes = new ArrayList<OutputType>();

@@ -15,11 +15,13 @@ import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class Preference extends CBMCInputType {
-    private String[] sizes = { UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate() };
+    private String[] sizes
+        = { UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate() };
 
     @Override
     public String getInputString() {
-        return "[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "]";
+        return "[" + UnifiedNameContainer.getVoter()
+                + "][" + UnifiedNameContainer.getCandidate() + "]";
     }
 
     @Override
@@ -63,8 +65,9 @@ public class Preference extends CBMCInputType {
         code.add("int total_diff = 0;");
 
         // TODO fix
-        code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" + UnifiedNameContainer.getVoter() + "]["
-                + UnifiedNameContainer.getCandidate() + "];");
+        code.add("int " + UnifiedNameContainer.getNewVotesName() + "1["
+                 + UnifiedNameContainer.getVoter() + "]["
+                 + UnifiedNameContainer.getCandidate() + "];");
         // go over all voters
         code.add("for (int i = 0; i < " + UnifiedNameContainer.getVoter() + "; i++) {");
         code.addTab();
@@ -81,7 +84,8 @@ public class Preference extends CBMCInputType {
         code.add("total_diff++;");
         code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = nondet_int();");
         // set the vote to (0-100), but different from original
-        code.add("assume(" + UnifiedNameContainer.getNewVotesName() + "1[i][j] != ORIG_VOTES[i][j]);");
+        code.add("assume(" + UnifiedNameContainer.getNewVotesName()
+                 + "1[i][j] != ORIG_VOTES[i][j]);");
         code.add("assume(0 <= " + UnifiedNameContainer.getNewVotesName() + "1[i][j]);");
         code.add("assume(" + UnifiedNameContainer.getNewVotesName() + "1[i][j] <= 100);");
         code.deleteTab();
@@ -232,7 +236,8 @@ public class Preference extends CBMCInputType {
 
     @Override
     public InternalTypeContainer getInternalTypeContainer() {
-        return new InternalTypeContainer(new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.INTEGER),
+        return new InternalTypeContainer(new InternalTypeContainer(
+                new InternalTypeContainer(InternalTypeRep.INTEGER),
                 InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
     }
 

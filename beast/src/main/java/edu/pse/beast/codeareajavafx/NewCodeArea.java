@@ -50,20 +50,20 @@ import javafx.scene.input.KeyEvent;
 public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterface {
     private static final String[] KEYWORDS
         = {
-        "auto", "break", "case", "const", "continue", "default",
-        "do", "else", "error", "const", "continue", "default",
-        "do", "else", "enum", "extern", "for", "goto", "if",
-        "return", "signed", "sizeof", "static", "struct", "switch",
-        "typedef", "union", "unsigned", "volatile", "while"
-    };
+            "auto", "break", "case", "const", "continue", "default",
+            "do", "else", "error", "const", "continue", "default",
+            "do", "else", "enum", "extern", "for", "goto", "if",
+            "return", "signed", "sizeof", "static", "struct", "switch",
+            "typedef", "union", "unsigned", "volatile", "while"
+        };
     private static final String[] PREPROCESSOR
         = {
-        "#define", "#elif", "#endif", "#ifdef", "#ifndef", "#include"
-    };
+            "#define", "#elif", "#endif", "#ifdef", "#ifndef", "#include"
+        };
     private static final String[] DATATYPES
         = {
-        "char", "double", "enum", "float", "int", "long", "register", "void"
-    };
+            "char", "double", "enum", "float", "int", "long", "register", "void"
+        };
     private static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
     private static final String PREPROCESSOR_PATTERN = "(" + String.join("|", PREPROCESSOR) + ")";
     private static final String DATATYPE_PATTERN = "(" + String.join("|", DATATYPES) + ")";
@@ -143,7 +143,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     private int lockedBracePos;
     // private int amountTabs = 0;
     private int spacesPerTab = 4;
-    
+
     private String lastChar = "";
 
     public NewCodeArea() {
@@ -394,10 +394,10 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
         while (matcher.find()) {
             final String styleClasses[] = new String[] {
-                    KEYWORD_STRING, PREPROCESSOR_STRING, METHOD_STRING, DATATYPE_STRING,
-                    POINTER_STRING, INCLUDE_STRING, PAREN_STRING, BRACE_STRING, BRACKET_STRING,
-                    SEMICOLON_STRING, STRING_STRING, COMMENT_STRING
-                    };
+                KEYWORD_STRING, PREPROCESSOR_STRING, METHOD_STRING, DATATYPE_STRING,
+                POINTER_STRING, INCLUDE_STRING, PAREN_STRING, BRACE_STRING, BRACKET_STRING,
+                SEMICOLON_STRING, STRING_STRING, COMMENT_STRING
+                };
             String styleClass = null;
             for (String style : styleClasses) {
                 if (styleClass == null

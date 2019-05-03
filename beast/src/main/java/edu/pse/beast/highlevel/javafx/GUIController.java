@@ -310,15 +310,15 @@ public class GUIController {
 
     @FXML
     private TextField resultNameField;
-    
+
     @FXML
     private BorderPane resultBorderPane;
-    
+
     @FXML
     private Slider zoomSlider;
 
     @FXML
-    
+
     // @FXML
     // private Text
     //
@@ -439,7 +439,6 @@ public class GUIController {
                             candidateScrollPane.hvalueProperty().set(inputScrollPane.getHvalue());
                         }
                     });
-                    
                     inputScrollPane.fireEvent(new Event(ScrollEvent.ANY));
                     try {
                         Thread.sleep(Math.max(0, 16 - (System.currentTimeMillis() - time)));
@@ -477,10 +476,10 @@ public class GUIController {
                 event.consume();
             }
         });
-        
+
         //turn off the zoom slider in the beginning
         zoomSlider.setDisable(true);
-        
+
         electionSimulation
             = new NewElectionSimulation(codeArea.getElectionDescription().getContainer(),
                                         inputGridPane, voterGridPane, candidateGridPane);
@@ -1450,11 +1449,11 @@ public class GUIController {
     public Tab getInputTab() {
         return inputPane;
     }
-    
+
     public Slider getZoomSlider() {
         return zoomSlider;
     }
-    
+
     public ScrollPane getResultScrollPane() {
         return resultScrollPane;
     }

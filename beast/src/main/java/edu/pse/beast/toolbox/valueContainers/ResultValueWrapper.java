@@ -18,6 +18,7 @@ public class ResultValueWrapper {
      *                  index of 1)
      * @param name      the name of this variable (for example votes1 has the name
      *                  votes)
+     * @param dimension the dimension of this variable
      */
     public ResultValueWrapper(int mainIndex, String name, int dimension) {
         this.mainIndex = mainIndex;
@@ -41,7 +42,7 @@ public class ResultValueWrapper {
 
         valueContainer.addValueAtPos(indices, toAdd);
     }
-    
+
     /**
      * Assumes that only a single element should be saved here
      * @param toAdd the value to add
@@ -52,15 +53,14 @@ public class ResultValueWrapper {
 
     /**
      * returns the value stored at the specified position
-     * @param indices
-     * @return
+     * @param indices the specific position
+     * @return the value
      */
     public String getValueAtPos(List<Integer> indices) {
         checkIndex(indices);
-        
         return valueContainer.getValueAtPos(indices);
     }
-    
+
     /**
      *
      * @return returns the main index (for example votes1 has the mainIndex of 1)
@@ -84,13 +84,15 @@ public class ResultValueWrapper {
     private void checkIndex(List<Integer> indices) {
         if (indices.size() != dimension) {
             throw new IndexOutOfBoundsException(
-                    "The dimension of the requested object does not match the dimension of this obejct");
+                    "The dimension of the requested object does not "
+                            + "match the dimension of this obejct");
         }
     }
 
     @Deprecated
     public List<List<String>> getList() {
-        System.err.println("DO NOT USE THIS ANYMORE. TODO, delete when all dependencies are removed");
+        System.err.println("DO NOT USE THIS ANYMORE. TODO, delete when "
+                          +"all dependencies are removed");
         return null;
     }
 }

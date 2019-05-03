@@ -33,18 +33,17 @@ public abstract class InputType implements InOutType {
     public final String toString() {
         return otherToString();
     }
-    
+
     @Deprecated
     public final List<List<String>> getNewVotes(List<String> lastFailedRun, int index) {
         List<List<String>> toReturn = new ArrayList<List<String>>();
-        
         toReturn.addAll(this.helper.extractVariable(
                 "" + UnifiedNameContainer.getNewVotesName() + "", getDimension(), lastFailedRun)
                 .get(index).getList());
 
         return toReturn;
     }
-    
+
     public final List<List<String>> getVotingArray(List<String> lastFailedRun, int index) {
         return helper.extractVariable(UnifiedNameContainer.getVotingArray(), getDimension(),
                                       lastFailedRun).get(index).getList();
@@ -101,7 +100,7 @@ public abstract class InputType implements InOutType {
      *                a struct)
      */
     public abstract void addVerifyMethod(CodeArrayListBeautifier code, OutputType outType);
-    
+
     /**
      * extracts the voting data out of the given bounded model checker output into a wrapper object
      *

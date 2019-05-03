@@ -11,9 +11,9 @@ import edu.pse.beast.codearea.errorhandling.CodeError;
 public final class CCodeErrorFactory {
     private static final String[] IDS
     = {
-          "compilererror",
-          "antlr"
-      };
+        "compilererror",
+        "antlr"
+        };
 
     private CCodeErrorFactory() { }
 

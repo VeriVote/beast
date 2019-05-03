@@ -24,8 +24,8 @@ import edu.pse.beast.toolbox.Tuple;
  * @author Holger Klein
  */
 public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMotionListener {
-    protected StringResourceLoader currentStringResLoader;
-    protected JTextPane pane;
+    private StringResourceLoader currentStringResLoader;
+    private JTextPane pane;
 
     private SquigglePainter painter;
     private ArrayList<Tuple<Integer, Integer>> absPosToMsg;
@@ -43,6 +43,18 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         this.painter = new SquigglePainter(Color.red);
         this.currentStringResLoader = currentStringResLoader;
         errorPopupMenu = new ErrorPopupMenu(pane);
+    }
+
+    protected StringResourceLoader getStringResourceLoader() {
+        return this.currentStringResLoader;
+    }
+
+    protected JTextPane getJTextPane() {
+        return this.pane;
+    }
+
+    protected void setStringResourceLoader(StringResourceLoader stringResLoader) {
+        this.currentStringResLoader = stringResLoader;
     }
 
     /**

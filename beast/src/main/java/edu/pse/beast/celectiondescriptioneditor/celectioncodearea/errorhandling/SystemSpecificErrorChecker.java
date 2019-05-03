@@ -50,13 +50,13 @@ public abstract class SystemSpecificErrorChecker {
      * "FILENANE:LINE:COLUMN warning:control reaches...".
      */
     static final String GCC_MISSING_RETURN_FOUND
-      = "warning: control reaches end of non-void function";
+        = "warning: control reaches end of non-void function";
 
     /**
      * If gcc finds that a function is missing, it gets displayed like this.
      */
     static final String GCC_MISSING_FUNCTION_FOUND
-      = "warning: implicit declaration of function";
+        = "warning: implicit declaration of function";
 
     private static final String PATH_TO_TEMP_FOLDER = "/core/c_tempfiles/";
 
@@ -153,11 +153,11 @@ public abstract class SystemSpecificErrorChecker {
         if (process != null) {
             CountDownLatch latch = new CountDownLatch(2);
             ThreadedBufferedReader outReader
-              = new ThreadedBufferedReader(
+                = new ThreadedBufferedReader(
                     new BufferedReader(new InputStreamReader(process.getInputStream())),
                     result, latch, false);
             ThreadedBufferedReader errReader
-              = new ThreadedBufferedReader(
+                = new ThreadedBufferedReader(
                     new BufferedReader(new InputStreamReader(process.getErrorStream())),
                     errors, latch, false);
             // wait for the process to finish;

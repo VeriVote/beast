@@ -12,9 +12,6 @@ import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
 public class ParliamentStack extends CBMCOutputType {
-    
-    
-
     @Override
     public String getOutputString() {
         return UnifiedNameContainer.getStructStackResult();
@@ -24,7 +21,7 @@ public class ParliamentStack extends CBMCOutputType {
     public String getOutputIDinFile() {
         return "STACK_PER_PARTY";
     }
-    
+
     @Override
     public int getDimension() {
         return 1;

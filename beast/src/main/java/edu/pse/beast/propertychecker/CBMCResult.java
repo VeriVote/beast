@@ -42,7 +42,7 @@ public class CBMCResult extends Result {
     public void setResult(List<String> result) {
         super.setResult(result);
         if (createsExample) {
-            failureExample = createFailureExample();
+            setFailureExample(createFailureExample());
         }
     }
 
@@ -190,9 +190,7 @@ public class CBMCResult extends Result {
      * @return a failure example that show how the voters voted and who won then
      */
     private FailureExample createFailureExample() {
-        
         System.err.println("FIX rewrite createFailureExample"); //TODO
-        
         return null;
         // determine the elect values
 //        if (!isMarginComp()) {
@@ -575,10 +573,6 @@ public class CBMCResult extends Result {
             }
         }
         return toReturn;
-    }
-
-    public FailureExample getFailureExample() {
-        return failureExample;
     }
 
     @Override
