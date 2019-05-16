@@ -64,7 +64,8 @@ module edu.pse.beast {
     exports edu.pse.beast.datatypes.electioncheckparameter;
     exports edu.pse.beast.celectiondescriptioneditor.celectioncodearea.antlr;
     exports edu.pse.beast.highlevel.javafx.resultpresenter.resultElements;
-    exports edu.pse.beast.toolbox.valueContainers;
+    exports edu.pse.beast.toolbox.valueContainer;
+    exports edu.pse.beast.toolbox.valueContainer.cbmcValueContainers;
     
     requires java.sql;
     requires antlr4;
@@ -112,7 +113,5 @@ module edu.pse.beast {
         edu.pse.beast.types.cbmctypes.outputplugins.Parliament, 
         edu.pse.beast.types.cbmctypes.outputplugins.ParliamentStack,
         edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
-    
-    provides CommonHelpMethods with edu.pse.beast.types.cbmctypes.CbmcHelpMethods;
     
 }

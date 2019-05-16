@@ -10,13 +10,14 @@ import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
-import edu.pse.beast.toolbox.valueContainers.ResultValueWrapper;
+import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 
 public abstract class InputType implements InOutType {
-    protected CommonHelpMethods helper;
+    //protected CommonHelpMethods helper;
 
     public InputType() {
-        getHelper();
+        
     }
 
     public static List<InputType> getInputTypes() {
@@ -33,23 +34,6 @@ public abstract class InputType implements InOutType {
     public final String toString() {
         return otherToString();
     }
-
-    @Deprecated
-    public final List<List<String>> getNewVotes(List<String> lastFailedRun, int index) {
-        List<List<String>> toReturn = new ArrayList<List<String>>();
-        toReturn.addAll(this.helper.extractVariable(
-                "" + UnifiedNameContainer.getNewVotesName() + "", getDimension(), lastFailedRun)
-                .get(index).getList());
-
-        return toReturn;
-    }
-
-    public final List<List<String>> getVotingArray(List<String> lastFailedRun, int index) {
-        return helper.extractVariable(UnifiedNameContainer.getVotingArray(), getDimension(),
-                                      lastFailedRun).get(index).getList();
-    }
-
-    protected abstract void getHelper();
 
     /**
      * returns a String containing the shape of the input object e.g "[" +
@@ -101,19 +85,19 @@ public abstract class InputType implements InOutType {
      */
     public abstract void addVerifyMethod(CodeArrayListBeautifier code, OutputType outType);
 
-    /**
-     * extracts the voting data out of the given bounded model checker output into a wrapper object
-     *
-     * @param result           the result of the computation from which the values
-     *                         will be extracted
-     * @param numberCandidates the number of candidates
-     * @return a wrapper which contains the values
-     */
-    public final ResultValueWrapper extractVotes(List<String> result, int numberCandidates) {
-        return this.helper.extractVariable("" + UnifiedNameContainer.getNewVotesName() + "",
-                                           getDimension(),
-                                           result).get(0);
-    }
+//    /**
+//     * extracts the voting data out of the given bounded model checker output into a wrapper object
+//     *
+//     * @param result           the result of the computation from which the values
+//     *                         will be extracted
+//     * @param numberCandidates the number of candidates
+//     * @return a wrapper which contains the values
+//     */
+//    public final ResultValueWrapper extractVotes(List<String> result, int numberCandidates) {
+//        return this.helper.extractVariable("" + UnifiedNameContainer.getNewVotesName() + "",
+//                                           getDimension(),
+//                                           result).get(0);
+//    } TODO remove unused code at the end of refactoring
 
     /**
      * vets a value to determine if it is legal for the input type, or not
@@ -126,10 +110,10 @@ public abstract class InputType implements InOutType {
     public abstract String vetValue(String newValue, ElectionTypeContainer container,
                                     NEWRowOfValues newRowOfValues);
 
-    public List<ResultValueWrapper> readVote(List<String> toExtract) {
-        return this.helper.extractVariable(UnifiedNameContainer.getVotingArray(),
-                                           getDimension(), toExtract);
-    }
+//    public List<ResultValueWrapper> readVote(List<String> toExtract) {
+//        return this.helper.extractVariable(UnifiedNameContainer.getVotingArray(),
+//                                           getDimension(), toExtract);
+//    }
 
 
     public String[] wrongInputTypeArray(int amountCandidates, int amountVoters) {
@@ -164,6 +148,8 @@ public abstract class InputType implements InOutType {
      */
     public abstract void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, int voteNumber);
 
+	public abstract ResultValueWrapper getNewVotes(List<String> lastFailedRun, int i);
+    
     public abstract void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique);
 
     public abstract InternalTypeContainer getInternalTypeContainer();

@@ -7,6 +7,7 @@ import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
+import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
@@ -148,7 +149,7 @@ public class ParliamentStack extends CBMCOutputType {
     }
 
     @Override
-    public List<String> getNewResult(List<String> lastFailedRun, int index) {
+    public ResultValueWrapper getNewResult(List<String> lastFailedRun, int index) {
         List<CBMCResultWrapperSingleArray> tmpResultOneDim = super.helper
                 .readOneDimVarLong("" + UnifiedNameContainer.getNewResultName() + "",
                                    lastFailedRun);

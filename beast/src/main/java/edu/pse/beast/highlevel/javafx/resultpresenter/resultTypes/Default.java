@@ -1,7 +1,9 @@
 package edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes;
 
+import java.util.List;
+
 import edu.pse.beast.propertychecker.Result;
-import edu.pse.beast.toolbox.valueContainers.ResultValueWrapper;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 
@@ -22,8 +24,13 @@ public class Default extends ResultPresentationType {
        // CBMCResultWrapperMultiArray votesWrapper
        //     = inType.extractVotesWrappedMulti(result.getResult(), result.getNumCandidates());
 
-        ResultValueWrapper votesWrapper
-            = inType.extractVotes(result.getResult(), result.getNumCandidates());
+        
+        
+        
+        
+        List<CBMCResultValueWrapper> votesWrapper = inType.readVote(result.getResult());
+        
+        List<CBMCResultValueWrapper> electWrapper = outType.readElectionResult(result.getResult());
 
         //intype.extractv
 

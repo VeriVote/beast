@@ -10,11 +10,6 @@ import edu.pse.beast.types.InputType;
 public abstract class CBMCInputType extends InputType {
 
     @Override
-    protected void getHelper() {
-        super.helper = new CbmcHelpMethods();
-    }
-
-    @Override
     public void addCheckerSpecificHeaders(CodeArrayListBeautifier code) {
         // add the headers CBMC needs;
         code.add("#include <stdlib.h>");

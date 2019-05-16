@@ -10,6 +10,7 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.javafx.AnalysisType;
 import edu.pse.beast.highlevel.javafx.ResultTreeItem;
+import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 
 /**
  *
@@ -18,10 +19,10 @@ import edu.pse.beast.highlevel.javafx.ResultTreeItem;
 public abstract class Result implements ResultInterface {
     private FailureExample failureExample = null;
 
-    private List<List<String>> origVoting;
-    private List<String> origWinner;
-    private List<List<String>> newVotes;
-    private List<String> newWinner;
+    private ResultValueWrapper origVoting;
+    private ResultValueWrapper origWinner;
+    private ResultValueWrapper newVotes;
+    private ResultValueWrapper newWinner;
 
     private transient ResultTreeItem owner;
 
@@ -340,35 +341,35 @@ public abstract class Result implements ResultInterface {
         return failureExample;
     }
 
-    public List<List<String>> getOrigVoting() {
+    public ResultValueWrapper getOrigVoting() {
         return origVoting;
     }
 
-    public void setOrigVoting(List<List<String>> origVoting) {
+    public void setOrigVoting(ResultValueWrapper origVoting) {
         this.origVoting = origVoting;
     }
 
-    public List<String> getOrigWinner() {
+    public ResultValueWrapper getOrigWinner() {
         return origWinner;
     }
 
-    public void setOrigWinner(List<String> origWinner) {
+    public void setOrigWinner(ResultValueWrapper origWinner) {
         this.origWinner = origWinner;
     }
 
-    public List<List<String>> getNewVotes() {
+    public ResultValueWrapper getNewVotes() {
         return newVotes;
     }
 
-    public void setNewVotes(List<List<String>> newVotes) {
+    public void setNewVotes(ResultValueWrapper newVotes) {
         this.newVotes = newVotes;
     }
 
-    public List<String> getNewWinner() {
+    public ResultValueWrapper getNewWinner() {
         return newWinner;
     }
 
-    public void setNewWinner(List<String> newWinner) {
+    public void setNewWinner(ResultValueWrapper newWinner) {
         this.newWinner = newWinner;
     }
 

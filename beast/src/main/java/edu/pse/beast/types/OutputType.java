@@ -7,13 +7,14 @@ import java.util.ServiceLoader;
 
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
-import edu.pse.beast.toolbox.valueContainers.ResultValueWrapper;
+import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 
 public abstract class OutputType implements InOutType {
     protected CommonHelpMethods helper;
 
     public OutputType() {
-        getHelper();
+        
     }
 
     public static List<OutputType> getOutputTypes() {
@@ -33,7 +34,7 @@ public abstract class OutputType implements InOutType {
         return otherToString();
     }
 
-    protected abstract void getHelper();
+    //protected abstract void getHelper();
 
     /**
      *
@@ -66,7 +67,7 @@ public abstract class OutputType implements InOutType {
  //                                          .get(0).getArray();
  //   }
 
-    public List<ResultValueWrapper> readElectionResult(List<String> toExtract) {
+    public List<CBMCResultValueWrapper> readElectionResult(List<String> toExtract) {
         return helper.extractVariable(UnifiedNameContainer.getElect(), getDimension(), toExtract);
     }
 
@@ -92,7 +93,7 @@ public abstract class OutputType implements InOutType {
     public abstract List<String> getCodeToRunMargin(List<String> origResult,
                                                     List<String> lastResult);
 
-    public abstract List<String> getNewResult(List<String> lastFailedRun, int index);
+    public abstract ResultValueWrapper getNewResult(List<String> lastFailedRun, int index);
 
     public abstract InternalTypeContainer getInternalTypeContainer();
 
