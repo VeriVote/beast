@@ -1,4 +1,3 @@
-import edu.pse.beast.types.CommonHelpMethods;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 
@@ -6,13 +5,10 @@ module edu.pse.beast {
     uses edu.pse.beast.types.InputType;
     uses edu.pse.beast.types.OutputType;
     
-    uses edu.pse.beast.types.CommonHelpMethods;
-    
     exports edu.pse.beast.datatypes;
     exports edu.pse.beast.electionsimulator;
     exports edu.pse.beast.propertychecker;
     exports edu.pse.beast.options.parametereditoroptions;
-    exports edu.pse.beast.propertylist.view;
     exports edu.pse.beast.types.cbmctypes;
     exports edu.pse.beast.saverloader.adapter;
     exports edu.pse.beast.types.cbmctypes.inputplugins;

@@ -1,12 +1,11 @@
 package edu.pse.beast.types.cbmctypes.outputplugins;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
-import edu.pse.beast.propertychecker.CBMCResultWrapperLong;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
+import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
@@ -83,22 +82,6 @@ public class SingleCandidate extends CBMCOutputType {
     }
 
     @Override
-    public List<String> getCodeToRunMargin(List<String> origResult, List<String> lastResult) {
-        List<CBMCResultWrapperLong> tmpResultLong = super.helper.readLongs("elect", lastResult);
-        origResult.add(tmpResultLong.get(0).getValue());
-        return origResult;
-    }
-
-    @Override
-    public List<String> getNewResult(List<String> lastFailedRun, int index) {
-        List<CBMCResultWrapperLong> tmpResultLong = super.helper
-                .readLongs("" + UnifiedNameContainer.getNewResultName() + "", lastFailedRun);
-        List<String> toReturn = new ArrayList<String>();
-        toReturn.add(tmpResultLong.get(index).getValue());
-        return toReturn;
-    }
-
-    @Override
     public InternalTypeContainer getInternalTypeContainer() {
         return new InternalTypeContainer(InternalTypeRep.INTEGER);
     }
@@ -113,12 +96,15 @@ public class SingleCandidate extends CBMCOutputType {
     }
 
     @Override
-    public void addLastResultAsCode(CodeArrayListBeautifier code, List<String> origResult) {
-        // just declare the variable as the result
-        String declaration = "";
-        declaration = "int " + UnifiedNameContainer.getOrigResultName()
-                      + " = " + origResult.get(0) + ";";
-        code.add(declaration);
+    public void addLastResultAsCode(CodeArrayListBeautifier code, ResultValueWrapper origResult) {
+    	//TODO
+    			throw new IllegalArgumentException();
+//    	
+//        // just declare the variable as the result
+//        String declaration = "";
+//        declaration = "int " + UnifiedNameContainer.getOrigResultName()
+//                      + " = " + origResult.get(0) + ";";
+//        code.add(declaration);
     }
 
     @Override

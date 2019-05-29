@@ -4,9 +4,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
-import edu.pse.beast.propertychecker.CBMCResultWrapperSingleArray;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
+import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
@@ -130,21 +130,6 @@ public class Parliament extends CBMCOutputType {
     }
 
     @Override
-    public List<String> getCodeToRunMargin(List<String> origResult, List<String> lastResult) {
-        List<CBMCResultWrapperSingleArray> tmpResultOneDim
-              = super.helper.readOneDimVarLong("elect", lastResult);
-        return tmpResultOneDim.get(0).getList();
-    }
-
-    @Override
-    public List<String> getNewResult(List<String> lastFailedRun, int index) {
-        List<CBMCResultWrapperSingleArray> tmpResultOneDim
-              = super.helper.readOneDimVarLong(
-                        "" + UnifiedNameContainer.getNewResultName() + "", lastFailedRun);
-        return tmpResultOneDim.get(index).getList();
-    }
-
-    @Override
     public InternalTypeContainer getInternalTypeContainer() {
         return new InternalTypeContainer(
                 new InternalTypeContainer(InternalTypeRep.CANDIDATE),
@@ -178,24 +163,27 @@ public class Parliament extends CBMCOutputType {
     }
 
     @Override
-    public void addLastResultAsCode(CodeArrayListBeautifier code, List<String> origResult) {
-        // first create the declaration of the array:
-        String declaration = "";
-        declaration = "int " + UnifiedNameContainer.getOrigResultName()
-                      + "[" + origResult.size() + "] = {";
-        code.addTab();
-        code.add(declaration);
-        String tmp = ""; // saves the amount of votes this seat got
-        for (int i = 0; i < origResult.size(); i++) {
-            if (i < origResult.size() - 1) {
-                tmp = tmp + origResult.get(i) + ",";
-            } else {
-                tmp = tmp + origResult.get(i);
-            }
-        }
-        code.add(tmp);
-        code.deleteTab();
-        code.add("};");
+    public void addLastResultAsCode(CodeArrayListBeautifier code, ResultValueWrapper origResult) {
+    	
+    	throw new IllegalArgumentException();
+//    	
+//        // first create the declaration of the array:
+//        String declaration = "";
+//        declaration = "int " + UnifiedNameContainer.getOrigResultName()
+//                      + "[" + origResult.size() + "] = {";
+//        code.addTab();
+//        code.add(declaration);
+//        String tmp = ""; // saves the amount of votes this seat got
+//        for (int i = 0; i < origResult.size(); i++) {
+//            if (i < origResult.size() - 1) {
+//                tmp = tmp + origResult.get(i) + ",";
+//            } else {
+//                tmp = tmp + origResult.get(i);
+//            }
+//        }
+//        code.add(tmp);
+//        code.deleteTab();
+//        code.add("};");
     }
 
     @Override

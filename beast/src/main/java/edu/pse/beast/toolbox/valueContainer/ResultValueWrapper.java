@@ -18,9 +18,7 @@ public abstract class ResultValueWrapper {
     	this.mainIndex = 0;
     	this.name = "";
     	this.isTopLevel = false;
-    	
     }
-
 
     /**
      *

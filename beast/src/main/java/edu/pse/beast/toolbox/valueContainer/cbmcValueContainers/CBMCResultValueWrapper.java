@@ -36,6 +36,10 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
         updateValue(node);
     }
     
+    public CBMCResultValueWrapper() {
+    	//TODO add functionality to add sub values by adding them through objects, and not through xml nodes
+    }
+    
     public CBMCResultValueWrapper(Node node) {
     	super();
     	

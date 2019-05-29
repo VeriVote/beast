@@ -3,6 +3,7 @@ package edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes;
 import java.util.List;
 
 import edu.pse.beast.propertychecker.Result;
+import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
@@ -24,19 +25,18 @@ public class Default extends ResultPresentationType {
        // CBMCResultWrapperMultiArray votesWrapper
        //     = inType.extractVotesWrappedMulti(result.getResult(), result.getNumCandidates());
 
+        System.out.println("include in Default.java a way that the saved value of a variable name is used");
+        List<ResultValueWrapper> votesWrapper = result.readVariableValue("vote\\d");
         
-        
-        
-        
-        List<CBMCResultValueWrapper> votesWrapper = inType.readVote(result.getResult());
-        
-        List<CBMCResultValueWrapper> electWrapper = outType.readElectionResult(result.getResult());
+        List<ResultValueWrapper> electWrapper = result.readVariableValue("elect\\d");
 
         //intype.extractv
 
        //inType.extractVotesWrappedMulti(result, numberCandidates)(result.getResult(),
        //                                                          result.getNumCandidates());
        //ResultImageRenderer.
+        
+        System.out.println("test wrapper: " + votesWrapper.get(0));
     }
 
     @Override

@@ -9,6 +9,7 @@ import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
+import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
@@ -165,29 +166,32 @@ public class Approval extends CBMCInputType {
     // }
 
     @Override
-    public List<String> getVotingResultCode(String[][] votingData) {
-        List<String> toReturn = new ArrayList<String>();
-        toReturn.add("int ORIG_VOTES[" + votingData.length + "][" + votingData[0].length + "] = {");
-        for (int i = 0; i < votingData.length; i++) {
-            String tmp = "";
-            for (int j = 0; j < votingData[i].length; j++) {
-                if (j < (votingData[i].length - 1)) {
-                    tmp = tmp + votingData[i][j] + ",";
-                } else {
-                    tmp = tmp + votingData[i][j];
-                }
-            }
-            tmp = "{" + tmp + "}";
-            if (i < votingData.length - 1) {
-                toReturn.add(tmp + ",");
-            } else {
-                // the last entry does not need a trailing comma
-                toReturn.add(tmp);
-            }
-        }
-        // close the array declaration
-        toReturn.add("};");
-        return toReturn;
+    public List<String> getVotingResultCode(ResultValueWrapper votingData) {
+    	throw new IllegalArgumentException();
+//    	
+//    	
+//        List<String> toReturn = new ArrayList<String>();
+//        toReturn.add("int ORIG_VOTES[" + votingData.length + "][" + votingData[0].length + "] = {");
+//        for (int i = 0; i < votingData.length; i++) {
+//            String tmp = "";
+//            for (int j = 0; j < votingData[i].length; j++) {
+//                if (j < (votingData[i].length - 1)) {
+//                    tmp = tmp + votingData[i][j] + ",";
+//                } else {
+//                    tmp = tmp + votingData[i][j];
+//                }
+//            }
+//            tmp = "{" + tmp + "}";
+//            if (i < votingData.length - 1) {
+//                toReturn.add(tmp + ",");
+//            } else {
+//                // the last entry does not need a trailing comma
+//                toReturn.add(tmp);
+//            }
+//        }
+//        // close the array declaration
+//        toReturn.add("};");
+//        return toReturn;
     }
 
     @Override
@@ -245,7 +249,7 @@ public class Approval extends CBMCInputType {
     }
 
     @Override
-    public int getNumVotingPoints(String[][] votingData) {
+    public int getNumVotingPoints(ResultValueWrapper result) {
         return GUIController.getController().getElectionSimulation().getNumVoters();
     }
 

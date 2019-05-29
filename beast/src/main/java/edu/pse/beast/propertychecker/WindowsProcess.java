@@ -60,7 +60,7 @@ public class WindowsProcess extends CBMCProcess {
         String userCommands = String.join(" ", advanced.split(";"));
         // trace is mandatory under windows, or the counter example cannot get
         // generated
-        userCommands = userCommands + " --trace";
+        userCommands = userCommands + " --xml-ui";
         // set the values for the voters, candidates and seats
         String arguments = userCommands + " -D " + UnifiedNameContainer.getVoter() + "=" + voters + " -D "
                 + UnifiedNameContainer.getCandidate() + "=" + candidates + " -D " + UnifiedNameContainer.getSeats()

@@ -9,6 +9,7 @@ import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
+import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
@@ -176,42 +177,45 @@ public class SingleChoice extends CBMCInputType {
 //  }
 
     @Override
-    public List<String> getVotingResultCode(String[][] votingData) {
-        List<String> toReturn = new ArrayList<String>();
-
-        toReturn.add("int ORIG_VOTES[" + votingData.length + "] = {");
-
-        // we have to map the two dimensional array to an one
-        // dimensional one
-        for (int i = 0; i < votingData.length; i++) {
-            int tmp = 0; // saves what this voter voted for
-            int tmpSum = 0;
-            for (int j = 0; j < votingData[i].length; j++) {
-                tmpSum += Long.parseLong(votingData[i][j]);
-                if (votingData[i][j].equals("0")) {
-                    tmp = j;
-                }
-            }
-
-            if (tmpSum == 0) {
-                if (i < votingData.length - 1) {
-                    toReturn.add("" + UnifiedNameContainer.getCandidate() + " ,");
-                } else {
-                    toReturn.add(UnifiedNameContainer.getCandidate());
-                }
-            } else {
-
-                if (i < votingData.length - 1) {
-                    toReturn.add(tmp + ",");
-                } else {
-                    toReturn.add("" + tmp);
-                }
-            }
-        }
-
-        toReturn.add("};"); // close the array declaration
-
-        return toReturn;
+    public List<String> getVotingResultCode(ResultValueWrapper votingData) {
+    	
+    	throw new IllegalArgumentException();
+//    	
+//        List<String> toReturn = new ArrayList<String>();
+//
+//        toReturn.add("int ORIG_VOTES[" + votingData.length + "] = {");
+//
+//        // we have to map the two dimensional array to an one
+//        // dimensional one
+//        for (int i = 0; i < votingData.length; i++) {
+//            int tmp = 0; // saves what this voter voted for
+//            int tmpSum = 0;
+//            for (int j = 0; j < votingData[i].length; j++) {
+//                tmpSum += Long.parseLong(votingData[i][j]);
+//                if (votingData[i][j].equals("0")) {
+//                    tmp = j;
+//                }
+//            }
+//
+//            if (tmpSum == 0) {
+//                if (i < votingData.length - 1) {
+//                    toReturn.add("" + UnifiedNameContainer.getCandidate() + " ,");
+//                } else {
+//                    toReturn.add(UnifiedNameContainer.getCandidate());
+//                }
+//            } else {
+//
+//                if (i < votingData.length - 1) {
+//                    toReturn.add(tmp + ",");
+//                } else {
+//                    toReturn.add("" + tmp);
+//                }
+//            }
+//        }
+//
+//        toReturn.add("};"); // close the array declaration
+//
+//        return toReturn;
     }
 
     @Override
@@ -263,7 +267,7 @@ public class SingleChoice extends CBMCInputType {
     }
 
     @Override
-    public int getNumVotingPoints(String[][] votingData) {
+    public int getNumVotingPoints(ResultValueWrapper result) {
         return GUIController.getController().getElectionSimulation().getNumVoters();
     }
 

@@ -92,7 +92,7 @@ public class LinuxProcess extends CBMCProcess {
             arguments.add("-D " + UnifiedNameContainer.getCandidate() + "=" + candidates);
             arguments.add("-D " + UnifiedNameContainer.getSeats() + "=" + seats);
             // we need the trace command to track the output on the command line
-            arguments.add("--trace");
+            arguments.add("--xml-ui");
             if (advanced != null && advanced.length() > 0) {
                 for (int i = 0; i < advanced.split(";").length; i++) {
                     String sanitized = sanitizeArguments(advanced.split(";")[i]);

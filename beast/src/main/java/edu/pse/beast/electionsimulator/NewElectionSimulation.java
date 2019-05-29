@@ -12,6 +12,8 @@ import edu.pse.beast.electionsimulator.model.ElectionSimulationModel;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.MenuBarInterface;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
+import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 import javafx.scene.layout.GridPane;
@@ -77,17 +79,17 @@ public class NewElectionSimulation
         GUIController.getController().getInputSeats().setText("1");
     }
 
-    public String[][] getVotingData() {
-        String[][] votingData = {{"0"}};
-        votingData = new String[model.getAmountVoters()][model.getAmountCandidates()];
-        // read the data in a 2d array
-        for (int i = 0; i < model.getAmountVoters(); i++) {
-            for (int j = 0; j < model.getAmountCandidates(); j++) {
-                votingData[i][j] = model.getRows().get(i).getValues().get(j);
-            }
-        }
-        return votingData;
-    }
+//    public String[][] getVotingData() { TODO remove later
+//        String[][] votingData = {{"0"}};
+//        votingData = new String[model.getAmountVoters()][model.getAmountCandidates()];
+//        // read the data in a 2d array
+//        for (int i = 0; i < model.getAmountVoters(); i++) {
+//            for (int j = 0; j < model.getAmountCandidates(); j++) {
+//                votingData[i][j] = model.getRows().get(i).getValues().get(j);
+//            }
+//        }
+//        return votingData;
+//    }
 
     public int getNumVoters() {
         return model.getAmountVoters();
@@ -101,21 +103,25 @@ public class NewElectionSimulation
         return model.getAmountSeats();
     }
 
-    public List<List<String>> getVotingDataListofList() {
-        List<List<String>> toReturn = new ArrayList<List<String>>();
-        String[][] data = getVotingData();
-        for (int i = 0; i < data.length; i++) {
-            List<String> tmp = new ArrayList<String>();
-            for (int j = 0; j < data[0].length; j++) {
-                tmp.add(data[i][j]);
-            }
-            toReturn.add(tmp);
-        }
-        return toReturn;
+    public ResultValueWrapper getVotingData() {
+    	return new CBMCResultValueWrapper();
     }
+//    TODO remove
+//    private List<List<String>> getVotingDataListofList() {
+//        List<List<String>> toReturn = new ArrayList<List<String>>();
+//        String[][] data = getVotingData();
+//        for (int i = 0; i < data.length; i++) {
+//            List<String> tmp = new ArrayList<String>();
+//            for (int j = 0; j < data[0].length; j++) {
+//                tmp.add(data[i][j]);
+//            }
+//            toReturn.add(tmp);
+//        }
+//        return toReturn;
+//    }
 
     public int getNumVotingPoints() {
-        return container.getInputType().getNumVotingPoints(getVotingData());
+        return container.getInputType().getNumVotingPoints(null);
     }
 
     public String getPartyName(int index) {

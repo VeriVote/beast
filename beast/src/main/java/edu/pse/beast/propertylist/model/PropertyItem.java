@@ -3,7 +3,6 @@ package edu.pse.beast.propertylist.model;
 import java.util.List;
 import java.util.UUID;
 
-import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.ResultPresenterElement;
 import edu.pse.beast.propertychecker.Result;
@@ -22,7 +21,6 @@ public class PropertyItem implements ResultPresenterElement {
     private boolean willBeTested;
     private ResultType resultType;
     private List<String> error;
-    private FailureExample example;
     private boolean willBeMarginComputed;
     private Result result;
 
@@ -155,14 +153,6 @@ public class PropertyItem implements ResultPresenterElement {
 
     public void setResultType(ResultType resultType) {
         this.resultType = resultType;
-    }
-
-    public FailureExample getExample() {
-        return example;
-    }
-
-    public void setExample(FailureExample example) {
-        this.example = example;
     }
 
     public List<String> getError() {

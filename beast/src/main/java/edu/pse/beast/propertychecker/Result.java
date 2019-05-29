@@ -1,23 +1,23 @@
 package edu.pse.beast.propertychecker;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
 
-import edu.pse.beast.datatypes.FailureExample;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.javafx.AnalysisType;
 import edu.pse.beast.highlevel.javafx.ResultTreeItem;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
+import javafx.scene.text.Text;
 
 /**
  *
  * @author Niels Hanselmann, Lukas Stapelbroek
  */
 public abstract class Result implements ResultInterface {
-    private FailureExample failureExample = null;
 
     private ResultValueWrapper origVoting;
     private ResultValueWrapper origWinner;
@@ -333,14 +333,13 @@ public abstract class Result implements ResultInterface {
      */
     public abstract boolean checkAssertionFailure();
 
-    protected void setFailureExample(FailureExample fexp) {
-        this.failureExample = fexp;
-    }
-
-    public FailureExample getFailureExample() {
-        return failureExample;
-    }
-
+    /**
+     * extracts the last values of all variables which name matches the given String
+     * @param variableMatcher a regex which should match all variable names, e.g "votes1", "votes2", ...
+     * @return a list containing the last values a variable with the following name has
+     */
+    public abstract List<ResultValueWrapper> readVariableValue(String variableMatcher);
+    
     public ResultValueWrapper getOrigVoting() {
         return origVoting;
     }
@@ -386,7 +385,9 @@ public abstract class Result implements ResultInterface {
     }
 
     public void setLastTmpResult(List<String> tmpResult) {
-        this.lastTmpResult = tmpResult;
+    	System.out.println("do we need tmpResults?");
+    	this.result = tmpResult;
+        //this.lastTmpResult = tmpResult; TODO
     }
 
     public List<String> getLastTmpResult() {
@@ -394,7 +395,8 @@ public abstract class Result implements ResultInterface {
     }
 
     public void setLastTmpError(List<String> tmpError) {
-        this.lastTmpError = tmpError;
+    	this.error = tmpError;
+        //this.lastTmpError = tmpError; TODO
     }
 
     public List<String> getLastTmpError() {
@@ -408,4 +410,28 @@ public abstract class Result implements ResultInterface {
     public List<String> getStatusStrings() {
         return this.statusStrings;
     }
+
+	public List<Text> getResultText() {
+		List<Text> toReturn = new ArrayList<Text>();
+		
+		for (Iterator<String> iterator = result.iterator(); iterator.hasNext();) {
+			String line = (String) iterator.next();
+			
+			toReturn.add(new Text(line + "\n"));
+		}
+
+		return toReturn;
+	}
+	
+	public List<Text> getErrorText() {
+		List<Text> toReturn = new ArrayList<Text>();
+		
+		for (Iterator<String> iterator = error.iterator(); iterator.hasNext();) {
+			String line = (String) iterator.next();
+			
+			toReturn.add(new Text(line + "\n"));
+		}
+
+		return toReturn;
+	}
 }

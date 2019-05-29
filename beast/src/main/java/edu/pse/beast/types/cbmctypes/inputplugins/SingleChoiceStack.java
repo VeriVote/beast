@@ -8,6 +8,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
+import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
@@ -135,18 +136,20 @@ public class SingleChoiceStack extends CBMCInputType {
     }
 
     @Override
-    public List<String> getVotingResultCode(String[][] votingData) {
-        List<String> toReturn = new ArrayList<String>();
-        toReturn.add("int ORIG_VOTES[" + votingData[0].length + "] = {");
-        // we only have the candidates, and only one "pseudo" voter,
-        String tmp = "" + votingData[0][0];
-        for (int i = 1; i < votingData[0].length; i++) {
-            tmp = tmp + "," + votingData[0][i];
-        }
-        toReturn.add(tmp);
-        // close the array declaration
-        toReturn.add("};");
-        return toReturn;
+    public List<String> getVotingResultCode(ResultValueWrapper votingData) {
+    	throw new IllegalArgumentException();
+//    	
+//        List<String> toReturn = new ArrayList<String>();
+//        toReturn.add("int ORIG_VOTES[" + votingData[0].length + "] = {");
+//        // we only have the candidates, and only one "pseudo" voter,
+//        String tmp = "" + votingData[0][0];
+//        for (int i = 1; i < votingData[0].length; i++) {
+//            tmp = tmp + "," + votingData[0][i];
+//        }
+//        toReturn.add(tmp);
+//        // close the array declaration
+//        toReturn.add("};");
+//        return toReturn;
     }
 
     @Override
@@ -195,14 +198,23 @@ public class SingleChoiceStack extends CBMCInputType {
     }
 
     @Override
-    public int getNumVotingPoints(String[][] votingData) {
+    public int getNumVotingPoints(ResultValueWrapper result) {
         int sum = 0;
-        for (int i = 0; i < votingData.length; i++) {
-            for (int j = 0; j < votingData[0].length; j++) {
-                sum = sum + Integer.parseInt(votingData[i][j]);
-            }
-        }
+//        for (int i = 0; i < votingData.length; i++) {
+//            for (int j = 0; j < votingData[0].length; j++) {
+//                sum = sum + Integer.parseInt(votingData[i][j]);
+//            }
+//        }
+        
+        System.out.println("fix: SingleChoiceStack:");
+        
         return sum;
+    }
+    
+    public int test(int i) {
+    	
+    	
+    	return 5;
     }
 
     @Override

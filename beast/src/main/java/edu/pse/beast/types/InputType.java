@@ -9,9 +9,7 @@ import java.util.ServiceLoader;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
-import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
-import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 
 public abstract class InputType implements InOutType {
     //protected CommonHelpMethods helper;
@@ -131,7 +129,7 @@ public abstract class InputType implements InOutType {
     // public abstract void addMarginMainCheck(CodeArrayListBeautifier code, int
     // margin, List<String> origResult);
 
-    public abstract List<String> getVotingResultCode(String[][] votingData);
+    public abstract List<String> getVotingResultCode(ResultValueWrapper votingData);
 
     /**
      *
@@ -147,8 +145,6 @@ public abstract class InputType implements InOutType {
      * @param voteNumber the amount of votes
      */
     public abstract void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, int voteNumber);
-
-	public abstract ResultValueWrapper getNewVotes(List<String> lastFailedRun, int i);
     
     public abstract void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique);
 
@@ -160,7 +156,7 @@ public abstract class InputType implements InOutType {
 
     public abstract int vetAmountSeats(int amountSeats);
 
-    public abstract int getNumVotingPoints(String[][] votingData);
+    public abstract int getNumVotingPoints(ResultValueWrapper result);
 
     public abstract String getVoteDescriptionString(List<List<String>> origVotes);
 

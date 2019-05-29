@@ -170,9 +170,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
             consume(event);
             String replacement = "";
             String value = (event.getCharacter()).replaceAll("\\p{Cntrl}", "");
-            System.out.println("value: " + event.getCharacter());
-            System.out.println(value.equals("\t"));
-
+            
             int step = 0;
 
             if (value.length() != 1) {

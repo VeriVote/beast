@@ -93,7 +93,7 @@ public abstract class CheckerFactory implements Runnable {
 		int numVotes = parameter.getMarginVotes();
 		int numCandidates = parameter.getMarginCandidates();
 		int numSeats = parameter.getMarginSeats();
-		String[][] votingData = GUIController.getController().getVotingData();
+		ResultValueWrapper votingData = GUIController.getController().getVotingData();
 
 		result.setStarted();
 		switch (result.getAnalysisType()) {
@@ -177,16 +177,21 @@ public abstract class CheckerFactory implements Runnable {
 						currentlyRunning = null;
 						// if the last check was successful, we have to
 						// keep checking the other ones
-						if (checkAssertionSuccess(lastResult)) {
+
+						if (result.checkAssertionSuccess()) {
 							finished = false;
 						} else {
 							// this was not successful for some reason, so stop now
 							finished = true;
-							if (checkAssertionFailure(lastResult)) {
+							if (result.checkAssertionFailure()) {
 								result.setNumVoters(voters);
 								result.setNumCandidates(candidates);
 								result.setNumSeats(seats);
 								result.setResult(lastResult);
+								
+								System.out.println("last error; " + lastError.size());
+								
+								result.setError(lastError);
 								result.setValid();
 							} else {
 								result.setError(lastError);
@@ -220,7 +225,7 @@ public abstract class CheckerFactory implements Runnable {
 	 * @param origData      original data
 	 * @param result        the result
 	 */
-	private void runMargin(String advanced, int numVoters, int numCandidates, int numSeats, String[][] origData,
+	private void runMargin(String advanced, int numVoters, int numCandidates, int numSeats, ResultValueWrapper origData,
 			Result result) {
 		synchronized (this) {
 			if (!stopped) {
@@ -230,9 +235,13 @@ public abstract class CheckerFactory implements Runnable {
 						numCandidates, numSeats, this, origData, result);
 				busyWaiting();
 
-				List<String> origResult = new ArrayList<String>();
-				origResult = getElectionDescription().getContainer().getOutputType().getCodeToRunMargin(origResult,
-						lastResult);
+				// ResultValueWrapper origResult =
+				// getElectionDescription().getContainer().getOutputType().getCodeToRunMargin(origResult,
+				// lastResult);
+
+				System.out.println("in CheckerFactory, add a reference to the nameContainer later");
+				ResultValueWrapper origResult = result.readVariableValue("elect\\d").get(0);
+
 				int left = 0;
 				int right = parameter.getNumVotingPoints();
 				if (right == 1) {
@@ -249,8 +258,8 @@ public abstract class CheckerFactory implements Runnable {
 					checkMarginAndWait(margin, origResult, advanced, numVoters, numCandidates, numSeats, origData,
 							result);
 					result.addStatusString(
-							"finished for margin " + margin + " result: " + currentlyRunning.checkAssertionSuccess());
-					if (currentlyRunning.checkAssertionSuccess()) {
+							"finished for margin " + margin + " result: " + result.checkAssertionSuccess());
+					if (result.checkAssertionSuccess()) {
 						left = margin + 1;
 						margin = margin + 1;
 						hasMargin = true;
@@ -265,7 +274,7 @@ public abstract class CheckerFactory implements Runnable {
 				if (!hasUpperBound) {
 					checkMarginAndWait(margin, origResult, advanced, numVoters, numCandidates, numSeats, origData,
 							result);
-					hasMargin = currentlyRunning.checkAssertionFailure();
+					hasMargin = result.checkAssertionFailure();
 					if (hasMargin) {
 						lastFailedRun = lastResult;
 					}
@@ -276,7 +285,9 @@ public abstract class CheckerFactory implements Runnable {
 				result.setMarginComp(true);
 				result.setHasFinalMargin(hasMargin);
 				result.setOrigWinner(origResult);
-				result.setOrigVoting(GUIController.getController().getElectionSimulation().getVotingDataListofList());
+				
+				result.setOrigVoting(GUIController.getController().getElectionSimulation().getVotingData());
+
 				if (hasMargin) {
 					result.setResult(currentlyRunning.getResultList());
 					result.setFinalMargin(margin);
@@ -284,35 +295,46 @@ public abstract class CheckerFactory implements Runnable {
 					result.setResult(null);
 					result.setFinalMargin(-1);
 				}
-				List<List<String>> newVotes = new ArrayList<List<String>>();
-				List<String> newResult = new ArrayList<String>();
+				ResultValueWrapper newVotes;
+				ResultValueWrapper newResult;
 				if (hasMargin) {
-					newResult = getElectionDescription().getContainer().getOutputType().getNewResult(lastFailedRun, 0);
-					newVotes = getElectionDescription().getContainer().getInputType().getNewVotes(lastFailedRun, 0);
+					
+					//TODO multiple times this in this file
+					System.out.println("add unifiednamecontainer CheckerFactory");
+					
+					newResult = result.readVariableValue("elect\\d").get(0);
+					newVotes = result.readVariableValue("votes\\d").get(0);
+
 					result.setNewVotes(newVotes);
 					result.setNewWinner(newResult);
 					result.setValid();
 					result.setFinished();
 					this.finished = true;
 					int count = 0;
-					for (Iterator<List<String>> iterator = newVotes.iterator(); iterator.hasNext();) {
-						int count2 = 0;
-						List<String> list = (List<String>) iterator.next();
-						System.out.println("");
-						System.out.print("new_votes: " + count++ + "==");
-						for (Iterator<String> iterator2 = list.iterator(); iterator2.hasNext();) {
-							String long1 = (String) iterator2.next();
-							System.out.print(count2++ + ":" + long1 + "|");
-						}
-					}
+
+					System.out.println("new_votes: " + newVotes);
+
+//					for (Iterator<List<String>> iterator = newVotes.iterator(); iterator.hasNext();) {
+//						int count2 = 0;
+//						List<String> list = (List<String>) iterator.next();
+//						System.out.println("");
+//						System.out.print("new_votes: " + count++ + "==");
+//						for (Iterator<String> iterator2 = list.iterator(); iterator2.hasNext();) {
+//							String long1 = (String) iterator2.next();
+//							System.out.print(count2++ + ":" + long1 + "|");
+//						}
+//					}
 					System.out.println("");
 					System.out.println("===========");
 					count = 0;
-					for (Iterator<String> iterator = newResult.iterator(); iterator.hasNext();) {
-						String string1 = (String) iterator.next();
-						System.out.println("new_result " + count + ": " + string1);
-						count = count + 1;
-					}
+
+					System.out.println("new_result: " + newResult);
+//					
+//					for (Iterator<String> iterator = newResult.iterator(); iterator.hasNext();) {
+//						String string1 = (String) iterator.next();
+//						System.out.println("new_result " + count + ": " + string1);
+//						count = count + 1;
+//					}
 				}
 				result.setFinished();
 			}
@@ -327,7 +349,7 @@ public abstract class CheckerFactory implements Runnable {
 	 * @param origData      original data
 	 * @param result        the result
 	 */
-	private void runTest(String advanced, int numVoters, int numCandidates, int numSeats, String[][] origData,
+	private void runTest(String advanced, int numVoters, int numCandidates, int numSeats, ResultValueWrapper origData,
 			Result result) {
 		synchronized (this) {
 			if (!stopped) {
@@ -336,9 +358,14 @@ public abstract class CheckerFactory implements Runnable {
 						numCandidates, numSeats, this, origData, result);
 				busyWaiting();
 				// CBMCResult dummyResult = new CBMCResult();
-				List<String> origResult = new ArrayList<String>();
-				origResult = getElectionDescription().getContainer().getOutputType().getCodeToRunMargin(origResult,
-						lastResult);
+//				List<String> origResult = new ArrayList<String>();
+//				origResult = getElectionDescription().getContainer().getOutputType().getCodeToRunMargin(origResult,
+//						lastResult);
+//				
+				System.out.println("add namecontainer CHECKERFACTORY");
+				
+				ResultValueWrapper origResult = result.readVariableValue("elect\\d").get(0);
+				
 				int left = 0;
 				// how many votes we have
 				int right = GUIController.getController().getElectionSimulation().getNumVotingPoints();
@@ -356,8 +383,8 @@ public abstract class CheckerFactory implements Runnable {
 					checkMarginAndWait(margin, origResult, advanced, numVoters, numCandidates, numSeats, origData,
 							result);
 					System.out.println(
-							"finished for margin " + margin + " result: " + currentlyRunning.checkAssertionSuccess());
-					if (currentlyRunning.checkAssertionSuccess()) {
+							"finished for margin " + margin + " result: " + result.checkAssertionSuccess());
+					if (result.checkAssertionSuccess()) {
 						left = margin + 1;
 						margin = margin + 1;
 						hasMargin = true;
@@ -372,7 +399,7 @@ public abstract class CheckerFactory implements Runnable {
 				if (!hasUpperBound) {
 					checkMarginAndWait(margin, origResult, advanced, numVoters, numCandidates, numSeats, origData,
 							result);
-					hasMargin = currentlyRunning.checkAssertionFailure();
+					hasMargin = result.checkAssertionFailure();
 					if (hasMargin) {
 						lastFailedRun = lastResult;
 					}
@@ -383,7 +410,10 @@ public abstract class CheckerFactory implements Runnable {
 				result.setMarginComp(true);
 				result.setHasFinalMargin(hasMargin);
 				result.setOrigWinner(origResult);
-				result.setOrigVoting(GUIController.getController().getElectionSimulation().getVotingDataListofList());
+//				result.setOrigVoting(GUIController.getController().getElectionSimulation().getVotingDataListofList());
+				
+				result.setOrigVoting(GUIController.getController().getElectionSimulation().getVotingData());
+				
 				if (hasMargin) {
 					result.setResult(currentlyRunning.getResultList());
 					result.setFinalMargin(margin);
@@ -391,38 +421,48 @@ public abstract class CheckerFactory implements Runnable {
 					result.setResult(null);
 					result.setFinalMargin(-1);
 				}
-				//List<List<String>> newVotes = new ArrayList<List<String>>();
-				//List<String> newResult = new ArrayList<String>();
+				// List<List<String>> newVotes = new ArrayList<List<String>>();
+				// List<String> newResult = new ArrayList<String>();
 				ResultValueWrapper newVotes;
 				ResultValueWrapper newResult;
-				
+
 				if (hasMargin) {
-					newResult = getElectionDescription().getContainer().getOutputType().getNewResult(lastFailedRun, 0);
-					newVotes = getElectionDescription().getContainer().getInputType().getNewVotes(lastFailedRun, 0);
+//					newResult = getElectionDescription().getContainer().getOutputType().getNewResult(lastFailedRun, 0);
+//					newVotes = getElectionDescription().getContainer().getInputType().getNewVotes(lastFailedRun, 0);
+					
+					//TODO
+					System.out.println("add unifiednamecontainer CheckerFactory");
+					
+					newResult = result.readVariableValue("elect\\d").get(0);
+					newVotes = result.readVariableValue("votes\\d").get(0);
+					
 					result.setNewVotes(newVotes);
 					result.setNewWinner(newResult);
 					result.setValid();
 					result.setFinished();
 					this.finished = true;
 					int count = 0;
-					for (Iterator<List<String>> iterator = newVotes.iterator(); iterator.hasNext();) {
-						int count2 = 0;
-						List<String> list = (List<String>) iterator.next();
-						System.out.println("");
-						System.out.print("new_votes: " + count++ + "==");
-						for (Iterator<String> iterator2 = list.iterator(); iterator2.hasNext();) {
-							String long1 = (String) iterator2.next();
-							System.out.print(count2++ + ":" + long1 + "|");
-						}
-					}
-					System.out.println("");
-					System.out.println("===========");
-					count = 0;
-					for (Iterator<String> iterator = newResult.iterator(); iterator.hasNext();) {
-						String string1 = (String) iterator.next();
-						System.out.println("new_result " + count + ": " + string1);
-						count = count + 1;
-					}
+					
+					
+					System.out.println("fix output CheckerFactory");
+//					for (Iterator<List<String>> iterator = newVotes.iterator(); iterator.hasNext();) {
+//						int count2 = 0;
+//						List<String> list = (List<String>) iterator.next();
+//						System.out.println("");
+//						System.out.print("new_votes: " + count++ + "==");
+//						for (Iterator<String> iterator2 = list.iterator(); iterator2.hasNext();) {
+//							String long1 = (String) iterator2.next();
+//							System.out.print(count2++ + ":" + long1 + "|");
+//						}
+//					}
+//					System.out.println("");
+//					System.out.println("===========");
+//					count = 0;
+//					for (Iterator<String> iterator = newResult.iterator(); iterator.hasNext();) {
+//						String string1 = (String) iterator.next();
+//						System.out.println("new_result " + count + ": " + string1);
+//						count = count + 1;
+//					}
 				}
 			}
 		}
@@ -465,10 +505,10 @@ public abstract class CheckerFactory implements Runnable {
 	 * @param votingData    the voting data
 	 * @param result        the result
 	 */
-	protected void checkMarginAndWait(int margin, List<String> origResult, String advanced, int numVoters,
-			int numCandidates, int numSeats, String[][] votingData, Result result) {
+	protected void checkMarginAndWait(int margin, ResultValueWrapper origData, String advanced, int numVoters,
+			int numCandidates, int numSeats, ResultValueWrapper votingData, Result result) {
 		currentlyRunning = startProcessMargin(electionDesc, result.getPropertyDesctiption(), advanced, numVoters,
-				numCandidates, numSeats, this, margin, origResult, votingData, result);
+				numCandidates, numSeats, this, margin, votingData, null, result);
 		while (!currentlyRunning.isFinished()) {
 			try {
 				Thread.sleep(SLEEP_INTERVAL);
@@ -511,15 +551,15 @@ public abstract class CheckerFactory implements Runnable {
 	 * @param parent              the parent that has to be notified when the
 	 *                            checker finished
 	 * @param margin              the margin
-	 * @param origResult          the original result
-	 * @param origData            the voting data
+	 * @param origResult            the voting data
+	 * @param votingData TODO
 	 * @param result              the result
 	 * @return the newly created Checker that is now checking the given file and
 	 *         other properties
 	 */
 	protected abstract Checker startProcessMargin(ElectionDescription electionDesc,
 			PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
-			CheckerFactory parent, int margin, List<String> origResult, String[][] origData, Result result);
+			CheckerFactory parent, int margin, ResultValueWrapper origResult, ResultValueWrapper votingData, Result result);
 
 	/**
 	 * starts a new Checker with the given parameters. Implementation depends on the
@@ -540,7 +580,7 @@ public abstract class CheckerFactory implements Runnable {
 	 */
 	protected abstract Checker startProcessTest(ElectionDescription electionDesc,
 			PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
-			CheckerFactory parent, String[][] origData, Result result);
+			CheckerFactory parent, ResultValueWrapper origData, Result result);
 
 	// /**
 	// * starts a new Checker with the given parameters. Implementation depends
@@ -680,22 +720,6 @@ public abstract class CheckerFactory implements Runnable {
 	// controller,
 	// File toCheck, ParameterSource paramSrc,
 	// Result result, boolean isMargin);
-
-	/**
-	 * checks if the result from the given checker found a counterexample or not
-	 *
-	 * @param toCheck the output of the checker to test
-	 * @return true, if the property was not violated, false if that was the case
-	 */
-	public abstract boolean checkAssertionSuccess(List<String> toCheck);
-
-	/**
-	 * checks the given list, if it indicates a failure
-	 *
-	 * @param toCheck the list to be searched for clues
-	 * @return true, if the property fails, false, if the property was successful
-	 */
-	public abstract boolean checkAssertionFailure(List<String> toCheck);
 
 	/**
 	 * this method extracts the electionType from the description

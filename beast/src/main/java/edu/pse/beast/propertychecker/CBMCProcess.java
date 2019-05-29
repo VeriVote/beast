@@ -4,14 +4,6 @@ import java.io.File;
 
 public abstract class CBMCProcess extends Checker {
 
-    // this is the last line in the cbmc output, if the verification was
-    // successful
-    private static final String SUCCESS_LINE = "VERIFICATION SUCCESSFUL";
-
-    // this is the last line in the cbmc output, if the assertion
-    // failed
-    private static final String FAILURE_LINE = "VERIFICATION FAILED";
-
     /**
      * creates a new CBMCProcess that is a super class for the system specific
      * processes that run cbmc
@@ -28,25 +20,5 @@ public abstract class CBMCProcess extends Checker {
     public CBMCProcess(int voters, int candidates, int seats, String advanced,
                        File toCheck, CheckerFactory parent, Result result) {
         super(voters, candidates, seats, advanced, toCheck, parent, result);
-    }
-
-    @Override
-    public boolean checkAssertionSuccess() {
-        if (super.getResultList() != null && super.getResultList().size() > 0) {
-            return super.getResultList()
-                    .get(super.getResultList().size() - 1).contains(SUCCESS_LINE);
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean checkAssertionFailure() {
-        if (super.getResultList() != null && super.getResultList().size() > 0) {
-            return super.getResultList()
-                    .get(super.getResultList().size() - 1).contains(FAILURE_LINE);
-        } else {
-            return false;
-        }
     }
 }

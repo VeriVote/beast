@@ -6,12 +6,10 @@ import java.util.List;
 import java.util.ServiceLoader;
 
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
-import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
-import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 
 public abstract class OutputType implements InOutType {
-    protected CommonHelpMethods helper;
+    //protected CommonHelpMethods helper; TODO remove
 
     public OutputType() {
         
@@ -55,21 +53,15 @@ public abstract class OutputType implements InOutType {
      */
     public abstract boolean isOutputOneCandidate();
 
-    /**
-     * extracts the result from the given list
-     *
-     * @param toExtract the list from which the result will be extracted
-     * @return an array with the Result
-     */
- //   public final String[] extractResult(List<String> toExtract) {
- //       return this.helper.extractVariable("" + UnifiedNameContainer.getNewResultName() + "",
-//                                           getDimension(), toExtract)
- //                                          .get(0).getArray();
- //   }
-
-    public List<CBMCResultValueWrapper> readElectionResult(List<String> toExtract) {
-        return helper.extractVariable(UnifiedNameContainer.getElect(), getDimension(), toExtract);
-    }
+//    /**
+//     * extracts a variable with a given name from a checker output
+//     * @param toExtract the raw data from which the data should be extracted
+//     * @param variableMather a regex matcher of the variable to be extracted (can e.g. include trailing numbers)
+//     * @return a list cotaining the last state this variable was seen in, and all the i
+//     */
+//    public List<ResultValueWrapper> readResult(List<String> toExtract, String variableMatcher) {
+//    	return helper.extractVariable(variableMatcher, toExtract);
+//    }
 
     public abstract CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code);
 
@@ -90,16 +82,15 @@ public abstract class OutputType implements InOutType {
     public abstract CodeArrayListBeautifier addMarginMainTest(CodeArrayListBeautifier code,
                                                               int voteNumber);
 
-    public abstract List<String> getCodeToRunMargin(List<String> origResult,
-                                                    List<String> lastResult);
-
-    public abstract ResultValueWrapper getNewResult(List<String> lastFailedRun, int index);
-
+//    public List<ResultValueWrapper> extractVariable(String variableMatcher, List<String> lastResult) {
+//    	return helper.extractVariable(variableMatcher, lastResult);
+//    } TODO remove
+    
     public abstract InternalTypeContainer getInternalTypeContainer();
 
     public abstract void addVerifyOutput(CodeArrayListBeautifier code);
 
-    public abstract void addLastResultAsCode(CodeArrayListBeautifier code, List<String> origResult);
+    public abstract void addLastResultAsCode(CodeArrayListBeautifier code, ResultValueWrapper origResult);
 
     public abstract String getResultDescriptionString(List<String> result);
 
