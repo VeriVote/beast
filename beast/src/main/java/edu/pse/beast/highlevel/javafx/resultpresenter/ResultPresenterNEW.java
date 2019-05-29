@@ -97,7 +97,6 @@ public class ResultPresenterNEW {
 		reset();
 		TextFlow resultTextField = new TextFlow();
 		resultTextField.getChildren().addAll(resultText);
-		resultTextField.
 		GUIController.getController().getResultPane().getChildren().add(resultTextField);
 	}
 
