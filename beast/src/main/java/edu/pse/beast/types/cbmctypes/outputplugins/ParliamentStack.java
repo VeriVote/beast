@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
@@ -226,4 +227,10 @@ public class ParliamentStack extends CBMCOutputType {
     public String otherToString() {
         return "Parliament stack";
     }
+
+	@Override
+	public int drawResult(Result result, double startY) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

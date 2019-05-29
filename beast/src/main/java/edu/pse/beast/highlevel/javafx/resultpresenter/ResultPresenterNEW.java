@@ -4,6 +4,8 @@ import java.util.List;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.propertychecker.Result;
+import edu.pse.beast.types.InputType;
+import edu.pse.beast.types.OutputType;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -23,7 +25,7 @@ public class ResultPresenterNEW {
 
 	private final Pane resultPane;
 
-	private Result currentResult = null;
+	private Result result = null;
 
 	private String currentSelection = "output"; // TODO kind of a hack, make object oriented later on
 	private String previousSelection = "";
@@ -40,7 +42,7 @@ public class ResultPresenterNEW {
 	}
 
 	public void setResult(Result newResult) {
-		this.currentResult = newResult;
+		this.result = newResult;
 		showResult();
 	}
 
@@ -58,17 +60,30 @@ public class ResultPresenterNEW {
 
 	private void showResult() {
     	reset();
-    	if (currentResult == null) {
+    	if (result == null) {
     		return;
     	}
 
 		if (currentSelection.equals("output")) {
-			setResultText(currentResult.getResultText());
+			setResultText(result.getResultText());
 		} else
 		if (currentSelection.equals("error")) {
-			setResultText(currentResult.getErrorText());
+			setResultText(result.getErrorText());
 		} else
 		if (currentSelection.equals("previous")) {
+			InputType inType = result.getElectionDescription().getContainer().getInputType();
+			OutputType outType = result.getElectionDescription().getContainer().getOutputType();
+			
+			
+			int maxY = inType.drawResult(result, 0);
+			
+			outType.drawResult(result, maxY);
+			
+			
+			
+			//var inType = result
+			
+			
 			//TODO implement
 		} else
 		if (currentSelection.equals("result")) {
@@ -82,8 +97,10 @@ public class ResultPresenterNEW {
 	 * 
 	 * @param resultNode the Node which will be shown in the result window
 	 */
-	private void setResultNode(Node resultNode) {
+	public void setResultNode(Node resultNode) {
 		reset();
+		ResultImageRenderer.resetScrollBars();
+		
 		GUIController.getController().getResultPane().getChildren().add(resultNode);
 	}
 
@@ -97,11 +114,10 @@ public class ResultPresenterNEW {
 		reset();
 		TextFlow resultTextField = new TextFlow();
 		resultTextField.getChildren().addAll(resultText);
-		resultTextField.
 		GUIController.getController().getResultPane().getChildren().add(resultTextField);
 	}
 
-	public static ResultPresenterNEW getInstance() {
+	public synchronized static ResultPresenterNEW getInstance() {
 		if (instance == null) {
 			instance = new ResultPresenterNEW();
 		}

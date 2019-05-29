@@ -83,7 +83,6 @@ public class CBMCResult extends Result {
 	}
 
 	private void parseResult() {
-		
 		InputStream xmlStream = IOUtils.toInputStream(String.join("", super.getResult().subList(8, super.getResult().size())), charSet);
 
 		DocumentBuilder builder;

@@ -83,8 +83,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.InputMethodEvent;
 
 public class GUIController {
 	// 10 seconds to click "remove item" after one was selected
@@ -468,14 +466,21 @@ public class GUIController {
 				event.consume();
 			}
 		});
+		
+		displayFormat.setOnAction(new EventHandler<ActionEvent>() {
 
+			@Override
+			public void handle(ActionEvent event) {
+				System.out.println("ich wurde gedrückt: bin jetzt: " + displayFormat.getText());
+			}
+		});
 		// this handler will trigger whenever the menu is opened or closed
 		displayFormat.showingProperty().addListener(new ChangeListener<Boolean>() {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue,
 					Boolean newValue) {
 				// TODO quick hack. transform it to object oriented later
-				
+				// Remove this listener later on, and add a listener for every underlying menu
 				ResultPresenterNEW.getInstance().setSelection(displayFormat.getText());
 			}
 

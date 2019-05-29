@@ -6,6 +6,7 @@ import java.util.List;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
+import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
@@ -282,5 +283,11 @@ public class WeightedApproval extends CBMCInputType {
     @Override
     public String otherToString() {
         return "Weighted Approval";
-    }
+    }   
+
+	@Override
+	public int drawResult(Result result, double startY) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }

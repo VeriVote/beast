@@ -1,10 +1,12 @@
 package edu.pse.beast.types;
 
+import edu.pse.beast.propertychecker.Result;
+
 /**
  *
  * @author Niels Hanselmann
  */
-public class InternalTypeContainer implements InOutType {
+public class InternalTypeContainer implements InOutType { //TODO maybe extract to another interface
 
     private final boolean isList;
     private final InternalTypeRep internalType;
@@ -139,4 +141,9 @@ public class InternalTypeContainer implements InOutType {
     public String otherToString() {
         return "";
     }
+
+	@Override
+	public int drawResult(Result result, double startY) {
+		return 0; //TODO a new interface hopefully removes this
+	}
 }

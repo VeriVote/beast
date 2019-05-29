@@ -2,14 +2,17 @@ package edu.pse.beast.types.cbmctypes.inputplugins;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
+import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
@@ -275,4 +278,35 @@ public class SingleChoice extends CBMCInputType {
     public String otherToString() {
         return "Single choice";
     }
+
+	@Override
+	public int drawResult(Result result, double startY) {
+		
+		List<ResultValueWrapper> votes = result.readVariableValue("votes\\d"); //TODO name container
+		
+		
+		for (ResultValueWrapper currentVote: votes) {
+			CBMCResultValueWrapper tmp = (CBMCResultValueWrapper) currentVote;
+			
+			currentVote.
+			
+		}
+		
+//		for (int i = 1; i < votes.size(); i ++);
+//		
+//			currentVote:
+//		
+//			for(ResultValueWrapper currentVote: votes) {
+//				
+//				if (currentVote.getMainIndex() == i) {
+//					
+//				}
+//				
+//				
+//			}
+//		
+		
+		
+		return 0;
+	}
 }

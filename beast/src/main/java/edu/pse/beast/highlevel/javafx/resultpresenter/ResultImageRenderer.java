@@ -215,4 +215,15 @@ public class ResultImageRenderer {
             }
         });
     }
+    
+    public static void resetScrollBars() {
+    	Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                GUIController.getController().getResultScrollPane().setVvalue(0);
+
+                GUIController.getController().getResultScrollPane().setHvalue(0);
+            }
+        });
+    }
 }

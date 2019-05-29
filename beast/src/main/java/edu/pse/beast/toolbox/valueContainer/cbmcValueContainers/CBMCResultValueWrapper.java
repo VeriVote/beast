@@ -145,10 +145,10 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
 
         return type;
     }
-    
-    public CBMCResultValue getResultValueAtPos(List<Integer> indices) {
-        return valueContainer.getResultValue(indices);
-    }
+//    
+//    public CBMCResultValue getResultValueAtPos(List<Integer> indices) {
+//        return valueContainer.getResultValue(indices);
+//    }
 
     private static void throwError() {
         throw new IndexOutOfBoundsException(

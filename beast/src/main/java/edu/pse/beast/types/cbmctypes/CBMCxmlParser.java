@@ -43,7 +43,7 @@ public class CBMCxmlParser {
 
 			// we extract the name of the variable which a value is described upon
 			String identifier = node.getAttributes().getNamedItem(displayName).getNodeValue();
-
+				//TODO maybe we can filter for all assignments with function: "main"
 			if (identifier.startsWith(mainMethodID)) { // we only care for variables from the main method
 				String name = node.getAttributes().getNamedItem(baseName).getNodeValue();
 

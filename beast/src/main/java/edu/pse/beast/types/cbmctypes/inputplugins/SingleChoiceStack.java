@@ -6,6 +6,7 @@ import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
+import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
@@ -221,4 +222,11 @@ public class SingleChoiceStack extends CBMCInputType {
     public String otherToString() {
         return "Single choice stack";
     }
+    
+
+	@Override
+	public int drawResult(Result result, double startY) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
