@@ -64,15 +64,12 @@ module edu.pse.beast {
     exports edu.pse.beast.toolbox.valueContainer.cbmcValueContainers;
     
     requires java.sql;
-    requires antlr4;
-    //requires transitive antlr4;
     requires com.sun.jna;
     requires com.sun.jna.platform;
     requires flowless;
     requires gson;
     requires java.datatransfer;
     requires java.desktop;
-    //requires transitive antlr4;
     requires java.logging;
     requires javafx.base;
     //requires transitive javafx.base;
@@ -82,6 +79,7 @@ module edu.pse.beast {
     requires javafx.graphics;
     //requires transitive javafx.graphics;
     requires javafx.swing;
+    //requires transitive antlr4;
     requires org.antlr.antlr4.runtime;
     requires org.apache.commons.io;
     requires org.apache.commons.lang3;
