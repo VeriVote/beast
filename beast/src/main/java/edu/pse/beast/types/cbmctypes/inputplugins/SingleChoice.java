@@ -12,6 +12,8 @@ import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueArray;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueSingle;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
@@ -286,10 +288,32 @@ public class SingleChoice extends CBMCInputType {
 		
 		
 		for (ResultValueWrapper currentVote: votes) {
-			CBMCResultValueWrapper tmp = (CBMCResultValueWrapper) currentVote;
+		    
+		    CBMCResultValueArray array = (CBMCResultValueArray) currentVote.getResultValue();
+		    
+		    
+		    List<CBMCResultValueWrapper> arrayValues = array.getValues();
+		    
+		    for (int i = 0; i < arrayValues.size(); i++) {
+		        CBMCResultValueSingle singleValue = (CBMCResultValueSingle) arrayValues.get(i).getResultValue();
+		        
+		        
+		        System.out.println(singleValue.getValue());
+		    }
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+		    
+			// fittingVote = (CBMCResultValueWrapper) currentVote;
 			
-			currentVote.
-			
+    			//currentVote.^^
+    			
 		}
 		
 //		for (int i = 1; i < votes.size(); i ++);

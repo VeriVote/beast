@@ -4,7 +4,6 @@ import java.util.List;
 
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
-import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 

@@ -64,6 +64,8 @@ public class ResultPresenterNEW {
     		return;
     	}
 
+    	System.out.println("current: " + currentSelection);
+    	
 		if (currentSelection.equals("output")) {
 			setResultText(result.getResultText());
 		} else
@@ -71,24 +73,27 @@ public class ResultPresenterNEW {
 			setResultText(result.getErrorText());
 		} else
 		if (currentSelection.equals("previous")) {
-			InputType inType = result.getElectionDescription().getContainer().getInputType();
-			OutputType outType = result.getElectionDescription().getContainer().getOutputType();
-			
-			
-			int maxY = inType.drawResult(result, 0);
-			
-			outType.drawResult(result, maxY);
-			
-			
-			
-			//var inType = result
-			
-			
-			//TODO implement
+
 		} else
 		if (currentSelection.equals("result")) {
 			
-		}
+		}         
+        System.out.println("result");
+        
+        InputType inType = result.getElectionDescription().getContainer().getInputType();
+        OutputType outType = result.getElectionDescription().getContainer().getOutputType();
+        
+        
+        int maxY = inType.drawResult(result, 0);
+        
+        outType.drawResult(result, maxY);
+        
+        
+        
+        //var inType = result
+        
+        
+        //TODO implement
     }
 
 	/**

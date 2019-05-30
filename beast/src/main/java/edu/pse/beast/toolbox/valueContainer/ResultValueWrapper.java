@@ -42,4 +42,6 @@ public abstract class ResultValueWrapper {
     	}
         return name;
     }
+    
+    public abstract ResultValue getResultValue();
 }

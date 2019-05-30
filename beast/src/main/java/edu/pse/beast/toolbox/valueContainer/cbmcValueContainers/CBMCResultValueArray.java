@@ -13,7 +13,6 @@ public class CBMCResultValueArray implements CBMCResultValue {
     private final String INDEX_NAME = "index";
     
     private List<CBMCResultValueWrapper> values = new ArrayList<CBMCResultValueWrapper>();
-    List<Integer> indices = new ArrayList<Integer>();
 
     @Override
     public void setValue(Element element) {
@@ -55,11 +54,8 @@ public class CBMCResultValueArray implements CBMCResultValue {
             nextNode = childElement.getNextSibling();
         }        
     }
-
-    @Override
-    public CBMCResultValue getResultValue(List<Integer> indices) {
-        int index = indices.get(0);
-        // the sublist contains all indices not used so far
-        return values.get(index).getResultValueAtPos(indices.subList(1, indices.size()));
+    
+    public List<CBMCResultValueWrapper> getValues() {
+        return values;
     }
 }

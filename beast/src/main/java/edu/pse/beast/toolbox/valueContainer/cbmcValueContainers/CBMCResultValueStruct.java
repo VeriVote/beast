@@ -43,12 +43,6 @@ public class CBMCResultValueStruct implements CBMCResultValue {
             }
         }
     }
-
-    @Override
-    public CBMCResultValue getResultValue(List<Integer> indices) {
-        System.err.println("Can not get a single result value from a struct");
-        return null;
-    }
     
     public CBMCResultValueWrapper getResultVariable(String variableName) {
         return values.get(variableName);

@@ -6,6 +6,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import edu.pse.beast.toolbox.XMLtoolbox;
+import edu.pse.beast.toolbox.valueContainer.ResultValue;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 
 enum C_DATATYPE {
@@ -111,8 +112,6 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
     private static C_DATATYPE getDataType(Node node) {
 
         String nodeTagName = node.getNodeName();
-
-        System.out.println("tagname: " + nodeTagName);
         
         C_DATATYPE type = null;
         
@@ -153,5 +152,10 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
     private static void throwError() {
         throw new IndexOutOfBoundsException(
                 "The dimension of the object does not match the dimension of this container");
+    }
+
+    @Override
+    public ResultValue getResultValue() {
+        return valueContainer;
     }
 }

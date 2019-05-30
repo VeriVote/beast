@@ -3,8 +3,8 @@ import java.util.List;
 
 import org.w3c.dom.Element;
 
-public interface CBMCResultValue {
-    public void setValue(Element element);
+import edu.pse.beast.toolbox.valueContainer.ResultValue;
 
-    public CBMCResultValue getResultValue(List<Integer> indices);
+public interface CBMCResultValue extends ResultValue {
+    public void setValue(Element element);
 }

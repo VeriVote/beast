@@ -32,15 +32,6 @@ public class CBMCResultValueSingle implements CBMCResultValue {
 
         Number toNumber = Long.parseLong(this.value);
     }
-    
-    @Override
-    public CBMCResultValue getResultValue(List<Integer> indices) {
-        if (indices.size() == 0) {
-            return this;
-        } else {
-            throw new IndexOutOfBoundsException();
-        }
-    }
 
     public String getValue() {
         return value;
