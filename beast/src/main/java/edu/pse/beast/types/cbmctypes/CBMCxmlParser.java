@@ -47,9 +47,8 @@ public class CBMCxmlParser {
 			if (identifier.startsWith(mainMethodID)) { // we only care for variables from the main method
 				String name = node.getAttributes().getNamedItem(baseName).getNodeValue();
 
-				int index = 0;
-				for (Iterator<String> iterator = variablesToFind.iterator(); iterator.hasNext();) {
-					String variableNameMatcher = (String) iterator.next();
+				for (int index = 0; index < variablesToFind.size(); index++) {
+					String variableNameMatcher = variablesToFind.get(index);
 
 					if (name.matches(variableNameMatcher)) {
 
@@ -78,11 +77,18 @@ public class CBMCxmlParser {
 						
 						toReturn.get(index).y.set(mainIndex, toAdd);
 					}
-
-					index++;
 				}
 			}
 		}
+		
+		//remove null elements from all lists
+		for (Iterator<Tuple<String, List<ResultValueWrapper>>> iterator = toReturn.iterator(); iterator.hasNext();) {
+			Tuple<String, List<ResultValueWrapper>> toClean = iterator.next();
+			
+			cleanSparseList(toClean.y);
+			
+		}
+		
 		return toReturn;
 	}
 
@@ -95,6 +101,19 @@ public class CBMCxmlParser {
 	private static void expandSparseList(List<?> list, int position) {
 		for (int i = list.size(); i < (position + 1); i++) {
 			list.add(null);
+		}
+	}
+	
+	/**
+	 * removes all null objects from a list. The previous order of the elements will not be changed
+	 * @param toClean
+	 */
+	private static void cleanSparseList(List<?> toClean) {
+		for (Iterator iterator = toClean.iterator(); iterator.hasNext();) {
+			Object object = (Object) iterator.next();
+			if (object == null) {
+				iterator.remove();
+			}
 		}
 	}
 }

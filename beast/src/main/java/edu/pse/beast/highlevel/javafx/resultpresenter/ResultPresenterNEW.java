@@ -39,6 +39,7 @@ public class ResultPresenterNEW {
 	 */
 	private void reset() {
 		GUIController.getController().getResultPane().getChildren().clear();
+		ResultImageRenderer.reset();
 	}
 
 	public void setResult(Result newResult) {
@@ -88,7 +89,10 @@ public class ResultPresenterNEW {
         
         outType.drawResult(result, maxY);
         
-        
+	    
+	    ResultImageRenderer.drawElements();
+	    
+	    setResultNode(ResultImageRenderer.getImageView());
         
         //var inType = result
         

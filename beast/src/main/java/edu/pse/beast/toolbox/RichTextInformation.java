@@ -19,4 +19,14 @@ public class RichTextInformation {
         this.font = font;
         this.color = color;
     }
+    
+    /**
+    *
+    * @param represents standard text in black with size 12
+    */
+   public RichTextInformation(String text) {
+       this.text = text;
+       this.font = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
+       this.color = Color.BLACK;
+   }
 }

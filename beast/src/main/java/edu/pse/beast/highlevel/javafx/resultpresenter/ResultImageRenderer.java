@@ -126,6 +126,7 @@ public class ResultImageRenderer {
      * view
      */
     public static void drawElements() {
+    	
         if (image.getWidth() != imageDesiredWidth || image.getHeight() != imageDesiredHeight) {
             updateImageSize();
         }

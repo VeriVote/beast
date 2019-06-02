@@ -1,5 +1,6 @@
 package edu.pse.beast.types.cbmctypes.inputplugins;
 
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -8,8 +9,12 @@ import java.util.List;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
+import edu.pse.beast.highlevel.javafx.resultpresenter.ResultImageRenderer;
+import edu.pse.beast.highlevel.javafx.resultpresenter.resultElements.ResultImageElement;
+import edu.pse.beast.highlevel.javafx.resultpresenter.resultElements.TextImageElement;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.toolbox.RichTextInformation;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueArray;
@@ -19,6 +24,7 @@ import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
+import javafx.scene.input.MouseEvent;
 
 public class SingleChoice extends CBMCInputType {
     private String[] sizes = {UnifiedNameContainer.getVoter()};
@@ -287,24 +293,34 @@ public class SingleChoice extends CBMCInputType {
 		List<ResultValueWrapper> votes = result.readVariableValue("votes\\d"); //TODO name container
 		
 		
+		double previousMaxY = 0;
+		
 		for (ResultValueWrapper currentVote: votes) {
-		    
+			
+	    	List<RichTextInformation> text = new ArrayList<RichTextInformation>();
+	    	
+	    	text.add(new RichTextInformation(currentVote.getName() + ": "));
+			
 		    CBMCResultValueArray array = (CBMCResultValueArray) currentVote.getResultValue();
-		    
 		    
 		    List<CBMCResultValueWrapper> arrayValues = array.getValues();
 		    
 		    for (int i = 0; i < arrayValues.size(); i++) {
+		    	
+		    	//TextImageElement voteElement = new TextImageElement(xPosTopLeft, yPosTopLeft, richTextInfo);
+		    	
 		        CBMCResultValueSingle singleValue = (CBMCResultValueSingle) arrayValues.get(i).getResultValue();
 		        
+		        text.add(new RichTextInformation(singleValue.getValue() + " "));
 		        
 		        System.out.println(singleValue.getValue());
 		    }
 		    
+	    	TextImageElement voteElement = new TextImageElement(0, previousMaxY, text);
 		    
+		    previousMaxY = voteElement.getyPosBottomRight();
 		    
-		    
-		    
+		    ResultImageRenderer.addElement(voteElement);
 		    
 		    
 		    
