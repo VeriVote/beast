@@ -3,6 +3,8 @@ package edu.pse.beast.highlevel.javafx.resultpresenter;
 import java.util.List;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.Default;
+import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresentationType;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
@@ -22,13 +24,12 @@ import javafx.scene.text.TextFlow;
 public class ResultPresenterNEW {
 
 	private static ResultPresenterNEW instance;
-
+	
+	ResultPresentationType presentationType;
+	
 	private final Pane resultPane;
 
 	private Result result = null;
-
-	private String currentSelection = "output"; // TODO kind of a hack, make object oriented later on
-	private String previousSelection = "";
 
 	private ResultPresenterNEW() {
 		this.resultPane = GUIController.getController().getResultPane();
@@ -38,66 +39,69 @@ public class ResultPresenterNEW {
 	 * removes all children from the result pane
 	 */
 	private void reset() {
-		GUIController.getController().getResultPane().getChildren().clear();
 		ResultImageRenderer.reset();
+		resultPane.getChildren().clear();
 	}
 
-	public void setResult(Result newResult) {
-		this.result = newResult;
-		showResult();
+	public void setResult(Result result) {
+		boolean changed = (this.result != result);
+		this.result = result;
+		if (changed) {
+			showResult();
+		}
 	}
-
-	public void setSelection(String newSelection) {
-		this.previousSelection = currentSelection;
-		this.currentSelection = newSelection;
-		showSelection();
-	}
-
-	private void showSelection() {
-		if (!previousSelection.equals(currentSelection)) { // the selection changed
+	
+	public void setPresentationType(ResultPresentationType presentationType) {
+		boolean changed = (this.presentationType != presentationType);
+		this.presentationType = presentationType;
+		if (changed) {
 			showResult();
 		}
 	}
 
-	private void showResult() {
+	private void showResult() {	
     	reset();
     	if (result == null) {
     		return;
     	}
 
-    	System.out.println("current: " + currentSelection);
+    	Node finishedResult = presentationType.presentResult(result);
     	
-		if (currentSelection.equals("output")) {
-			setResultText(result.getResultText());
-		} else
-		if (currentSelection.equals("error")) {
-			setResultText(result.getErrorText());
-		} else
-		if (currentSelection.equals("previous")) {
-
-		} else
-		if (currentSelection.equals("result")) {
-			
-		}         
-        System.out.println("result");
-        
-        InputType inType = result.getElectionDescription().getContainer().getInputType();
-        OutputType outType = result.getElectionDescription().getContainer().getOutputType();
-        
-        
-        int maxY = inType.drawResult(result, 0);
-        
-        outType.drawResult(result, maxY);
-        
-	    
-	    ResultImageRenderer.drawElements();
-	    
-	    setResultNode(ResultImageRenderer.getImageView());
-        
-        //var inType = result
-        
-        
-        //TODO implement
+    	this.setResultNode(finishedResult);
+    	
+//    	System.out.println("current: " + currentSelection);
+//    	
+//		if (currentSelection.equals("output")) {
+//			setResultText(result.getResultText());
+//		} else
+//		if (currentSelection.equals("error")) {
+//			setResultText(result.getErrorText());
+//		} else
+//		if (currentSelection.equals("previous")) {
+//
+//		} else
+//		if (currentSelection.equals("result")) {
+//			
+//		}         
+//        System.out.println("result");
+//        
+//        InputType inType = result.getElectionDescription().getContainer().getInputType();
+//        OutputType outType = result.getElectionDescription().getContainer().getOutputType();
+//        
+//        
+//        int maxY = inType.drawResult(result, 0);
+//        
+//        outType.drawResult(result, maxY);
+//        
+//	    
+//	    ResultImageRenderer.drawElements();
+//	    
+//	    setResultNode(ResultImageRenderer.getImageView());
+//        
+//        //var inType = result
+//        
+//        
+//        //TODO implement
     }
 
 	/**
@@ -110,7 +114,7 @@ public class ResultPresenterNEW {
 		reset();
 		ResultImageRenderer.resetScrollBars();
 		
-		GUIController.getController().getResultPane().getChildren().add(resultNode);
+		resultPane.getChildren().add(resultNode);
 	}
 
 	/**
@@ -123,7 +127,7 @@ public class ResultPresenterNEW {
 		reset();
 		TextFlow resultTextField = new TextFlow();
 		resultTextField.getChildren().addAll(resultText);
-		GUIController.getController().getResultPane().getChildren().add(resultTextField);
+		resultPane.getChildren().add(resultTextField);
 	}
 
 	public synchronized static ResultPresenterNEW getInstance() {

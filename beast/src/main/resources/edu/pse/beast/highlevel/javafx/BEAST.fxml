@@ -490,14 +490,7 @@
                                                   <menus>
                                                     <Menu mnemonicParsing="false">
                                                          <graphic>
-                                                            <MenuButton fx:id="displayFormat" mnemonicParsing="false" text="Display Format">
-                                                               <items>
-                                                                  <MenuItem mnemonicParsing="false" onAction="#consoleOutputClicked" text="CBMC Output" />
-                                                                  <MenuItem mnemonicParsing="false" onAction="#consoleErrorClicked" text="CBMC Error" />
-                                                                  <MenuItem mnemonicParsing="false" onAction="#previousResultsClicked" text="Previous results" />
-                                                                  <MenuItem mnemonicParsing="false" onAction="#resultClicked" text="Result" />
-                                                               </items>
-                                                            </MenuButton>
+                                                            <MenuButton fx:id="displayFormat" mnemonicParsing="false" text="Display Format" />
                                                          </graphic>
                                                     </Menu>
                                                   </menus>

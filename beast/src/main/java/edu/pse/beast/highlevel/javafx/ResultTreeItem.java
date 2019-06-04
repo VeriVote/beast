@@ -16,40 +16,40 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
 public class ResultTreeItem extends CustomTreeItem {
-    private final Result result;
-    private final ChildTreeItem owner;
+	private final Result result;
+	private final ChildTreeItem owner;
 
-    private Label name = new Label("Result");
-    private Button button = new Button("delete");
+	private Label name = new Label("Result");
+	private Button button = new Button("delete");
 
-    public ResultTreeItem(Result result, ChildTreeItem owner) {
-        this.result = result;
-        this.owner = owner;
-        this.result.setOwner(this);
-        init();
-    }
+	public ResultTreeItem(Result result, ChildTreeItem owner) {
+		this.result = result;
+		this.owner = owner;
+		this.result.setOwner(this);
+		init();
+	}
 
-    private void init() {
-        this.setAlignment(Pos.CENTER_LEFT);
-        button.setOnAction((event) -> {
-            owner.deleteResult(this);
-        });
-        this.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                wasClicked();
-            }
-        });
-        this.getChildren().add(name);
-        this.getChildren().add(new Separator(Orientation.VERTICAL));
-        this.getChildren().add(button);
-    }
+	private void init() {
+		this.setAlignment(Pos.CENTER_LEFT);
+		button.setOnAction((event) -> {
+			owner.deleteResult(this);
+		});
+		this.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				wasClicked();
+			}
+		});
+		this.getChildren().add(name);
+		this.getChildren().add(new Separator(Orientation.VERTICAL));
+		this.getChildren().add(button);
+	}
 
-    public void wasClicked() {
-        if (result != null) {
-        	ResultPresenterNEW.getInstance().setResult(result);
-        }
-    }
+	public void wasClicked() {
+		if (result != null) {
+			ResultPresenterNEW.getInstance().setResult(result);
+		}
+	}
 //
 //    private List<String> presentResult() {
 //        CodeArrayListBeautifier resultString = new CodeArrayListBeautifier();
@@ -106,36 +106,26 @@ public class ResultTreeItem extends CustomTreeItem {
 //        return resultString.getCodeArrayList();
 //    }
 
-    public void setPresentable() {
-        if (result != null && result.isFinished()) {
-            if (!result.isValid()) {
-                this.setBackground(new Background(
-                        new BackgroundFill(Color.YELLOW,
-                                           CornerRadii.EMPTY,
-                                           Insets.EMPTY)));
-            } else {
-                if (result.isSuccess()) {
-                    this.setBackground(
-                            new Background(
-                                    new BackgroundFill(Color.GREEN,
-                                                       CornerRadii.EMPTY,
-                                                       Insets.EMPTY)));
-                } else {
-                    this.setBackground(
-                            new Background(
-                                    new BackgroundFill(Color.RED,
-                                                       CornerRadii.EMPTY,
-                                                       Insets.EMPTY)));
-                }
-            }
-        }
-    }
+	public void setPresentable() {
+		if (result != null && result.isFinished()) {
+			if (!result.isValid()) {
+				this.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
+			} else {
+				if (result.isSuccess()) {
+					this.setBackground(
+							new Background(new BackgroundFill(Color.GREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+				} else {
+					this.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
+				}
+			}
+		}
+	}
 
-    public Result getResult() {
-        return result;
-    }
+	public Result getResult() {
+		return result;
+	}
 
-    public ChildTreeItem getOwner() {
-        return owner;
-    }
+	public ChildTreeItem getOwner() {
+		return owner;
+	}
 }

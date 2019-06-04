@@ -2,6 +2,7 @@ package edu.pse.beast.highlevel.javafx.resultpresenter.resultElements;
 
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.util.Iterator;
@@ -40,7 +41,6 @@ public class TextImageElement extends ResultImageElement {
 
     @Override
     public void drawElement(Graphics2D graphics, double scale) {
-
         double xOffset = 0;
 
         for (RichTextInformation info : richTextInfo) {

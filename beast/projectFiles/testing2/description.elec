@@ -1,0 +1,1 @@
+{"name":"New description","code":["unsigned int voting(unsigned int votes[V]) {","    return 0;","}"],"container":{"inType":{"type":"SingleChoice","properties":{"sizes":["V"]}},"outType":{"type":"SingleCandidate","properties":{}}},"votingDeclLine":0,"lockedLineStart":0,"lockedLineEnd":44,"lockedBracePos":46,"isNew":false}

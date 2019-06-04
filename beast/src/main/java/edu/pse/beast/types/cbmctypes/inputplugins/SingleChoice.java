@@ -322,29 +322,7 @@ public class SingleChoice extends CBMCInputType {
 		    
 		    ResultImageRenderer.addElement(voteElement);
 		    
-		    
-		    
-		    
-		    
-			// fittingVote = (CBMCResultValueWrapper) currentVote;
-			
-    			//currentVote.^^
-    			
 		}
-		
-//		for (int i = 1; i < votes.size(); i ++);
-//		
-//			currentVote:
-//		
-//			for(ResultValueWrapper currentVote: votes) {
-//				
-//				if (currentVote.getMainIndex() == i) {
-//					
-//				}
-//				
-//				
-//			}
-//		
 		
 		
 		return 0;

@@ -1,9 +1,13 @@
+import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresentationType;
+import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 
 module edu.pse.beast {
     uses edu.pse.beast.types.InputType;
     uses edu.pse.beast.types.OutputType;
+    uses edu.pse.beast.propertychecker.Result;
+    uses edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresentationType;
     
     exports edu.pse.beast.datatypes;
     exports edu.pse.beast.electionsimulator;
@@ -94,6 +98,8 @@ module edu.pse.beast {
     opens edu.pse.beast.datatypes.propertydescription to gson;
     opens edu.pse.beast.types to gson;
     opens edu.pse.beast.types.cbmctypes.inputplugins to gson;
+    opens edu.pse.beast.propertychecker to gson;
+    opens edu.pse.beast.toolbox.valueContainer to gson;
     
     //TODO maybe extract the types into their own modules
     provides InputType with edu.pse.beast.types.cbmctypes.inputplugins.Approval,
@@ -107,5 +113,9 @@ module edu.pse.beast {
         edu.pse.beast.types.cbmctypes.outputplugins.Parliament, 
         edu.pse.beast.types.cbmctypes.outputplugins.ParliamentStack,
         edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
+    
+    provides Result with edu.pse.beast.propertychecker.CBMCResult;
+    
+    provides ResultPresentationType with edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.Default;
     
 }

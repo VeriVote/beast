@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -37,6 +38,7 @@ import edu.pse.beast.highlevel.javafx.resultpresenter.ResultImageRenderer;
 import edu.pse.beast.highlevel.javafx.resultpresenter.ResultPresenterNEW;
 import edu.pse.beast.highlevel.javafx.resultpresenter.resultElements.PieChartElement;
 import edu.pse.beast.highlevel.javafx.resultpresenter.resultElements.TextImageElement;
+import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresentationType;
 import edu.pse.beast.options.OptionsNew;
 import edu.pse.beast.saverloader.ChildTreeItemSaverLoader;
 import edu.pse.beast.toolbox.RichTextInformation;
@@ -112,11 +114,6 @@ public class GUIController {
 
 	private MenuBarInterface focusedMainTab;
 	private NewElectionSimulation electionSimulation;
-	private ResultPresentationType presentationType = ResultPresentationType.result;
-
-	public enum ResultPresentationType {
-		output, error, previous, result
-	}
 
 	@FXML // fx:id="maxVoter"
 	private TextField maxVoter;
@@ -466,26 +463,13 @@ public class GUIController {
 				event.consume();
 			}
 		});
+
+		List<ResultPresentationType> types = ResultPresentationType.getImplementations();
 		
-		displayFormat.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				System.out.println("ich wurde gedrückt: bin jetzt: " + displayFormat.getText());
-			}
-		});
-		// this handler will trigger whenever the menu is opened or closed
-		displayFormat.showingProperty().addListener(new ChangeListener<Boolean>() {
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldValue,
-					Boolean newValue) {
-				// TODO quick hack. transform it to object oriented later
-				// Remove this listener later on, and add a listener for every underlying menu
-				ResultPresenterNEW.getInstance().setSelection(displayFormat.getText());
-			}
-
-		});
-
+		for (ResultPresentationType type : types) {
+			displayFormat.getItems().add(type.getMenuItem());
+		}
+		
 		// turn off the zoom slider in the beginning
 		zoomSlider.setDisable(true);
 
@@ -543,6 +527,10 @@ public class GUIController {
 
 	// Top Panels
 	@FXML
+	public void resultPaneClicked(Event event) {
+	}
+	
+	@FXML
 	public void errorPaneClicked(Event event) {
 	}
 
@@ -552,40 +540,6 @@ public class GUIController {
 
 	@FXML
 	public void propertyPaneClicked(Event event) {
-	}
-
-	@FXML
-	public void resultPaneClicked(Event event) {
-		this.presentationType = ResultPresentationType.result;
-	}
-
-	@FXML
-	public void consoleOutputClicked(Event event) {
-		this.presentationType = ResultPresentationType.output;
-		this.displayFormat.setText(presentationType.name());
-	}
-
-	@FXML
-	public void consoleErrorClicked(Event event) {
-		this.presentationType = ResultPresentationType.error;
-
-		this.displayFormat.setText(presentationType.name());
-	}
-
-	@FXML
-	public void previousResultsClicked(Event event) {
-		this.presentationType = ResultPresentationType.previous;
-		this.displayFormat.setText(presentationType.name());
-	}
-
-	@FXML
-	public void resultClicked(Event event) {
-		this.presentationType = ResultPresentationType.result;
-		this.displayFormat.setText(presentationType.name());
-	}
-
-	public ResultPresentationType getPresentationType() {
-		return this.presentationType;
 	}
 
 	// ------------
