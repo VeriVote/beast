@@ -179,7 +179,7 @@
                         <phase>execution</phase>
                         <goals>
                             <goal>java</goal>
-                        </goals>
+                         </goals>
                     </execution>
                 </executions>
             </plugin>
@@ -232,6 +232,24 @@
                 <configuration>
                     <locales>en,de</locales>
                 </configuration>
+            </plugin>
+            <plugin> <!-- Adding services for service loader, TODO: there might be a better solution using modules-info.java -->
+                <groupId>eu.somatik.serviceloader-maven-plugin</groupId>
+                <artifactId>serviceloader-maven-plugin</artifactId>
+                <version>1.1.0</version>
+                <configuration>
+                    <services>
+                        <param>edu.pse.beast.types.InputType</param>
+                        <param>edu.pse.beast.types.OutputType</param>
+                    </services>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         <pluginManagement>
