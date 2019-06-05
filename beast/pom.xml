@@ -241,6 +241,8 @@
                     <services>
                         <param>edu.pse.beast.types.InputType</param>
                         <param>edu.pse.beast.types.OutputType</param>
+                        <param>edu.pse.beast.propertychecker.Result</param>
+                        <param>edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresentationType</param>
                     </services>
                 </configuration>
                 <executions>
