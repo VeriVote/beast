@@ -228,4 +228,9 @@ public class SingleChoiceStack extends CBMCInputType {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
+	@Override
+	public String getInputDataType() {
+		return "struct stack_result";
+	}
 }

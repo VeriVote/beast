@@ -51,6 +51,7 @@ public abstract class Result implements ResultInterface {
     private boolean isMarginComp = false;
 
     private List<String> statusStrings;
+	private int exitCode;
 
     /**
      * returns all currently available result types
@@ -433,5 +434,17 @@ public abstract class Result implements ResultInterface {
 		}
 
 		return toReturn;
+	}
+
+	public void setExitCode(int exitCode) {
+		this.exitCode = exitCode;
+	}
+	
+	public int getExitCode() {
+		if (isFinished()) {
+			return this.exitCode;
+		} else {
+			return -1;
+		}
 	}
 }

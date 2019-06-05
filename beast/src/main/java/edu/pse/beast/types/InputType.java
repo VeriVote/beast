@@ -165,4 +165,10 @@ public abstract class InputType implements InOutType {
     public abstract boolean hasVariableAsMinValue();
 
     public abstract boolean hasVariableAsMaxValue();
+
+    /**
+     * 
+     * @return the datatype this input type uses, e.g "struct vote_single"
+     */
+	public abstract String getInputDataType();
 }

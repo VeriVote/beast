@@ -24,15 +24,19 @@ import javafx.scene.text.TextFlow;
 public class ResultPresenterNEW {
 
 	private static ResultPresenterNEW instance;
-	
-	ResultPresentationType presentationType;
-	
+
+	private ResultPresentationType presentationType;
+
 	private final Pane resultPane;
 
 	private Result result = null;
 
 	private ResultPresenterNEW() {
 		this.resultPane = GUIController.getController().getResultPane();
+		if (presentationType == null) {
+			this.setPresentationType(new Default()); // set the defaul presentationtype, if the user didn't set another
+														// one before
+		}
 	}
 
 	/**
@@ -50,8 +54,10 @@ public class ResultPresenterNEW {
 			showResult();
 		}
 	}
-	
+
 	public void setPresentationType(ResultPresentationType presentationType) {
+		GUIController.getController().setPresentationTypeText(presentationType.getName());
+
 		boolean changed = (this.presentationType != presentationType);
 		this.presentationType = presentationType;
 		if (changed) {
@@ -59,50 +65,18 @@ public class ResultPresenterNEW {
 		}
 	}
 
-	private void showResult() {	
-    	reset();
-    	if (result == null) {
-    		return;
-    	}
+	private void showResult() {
+		reset();
+		if (result == null) {
+			return;
+		}
 
-    	Node finishedResult = presentationType.presentResult(result);
-    	
-    	this.setResultNode(finishedResult);
-    	
-//    	System.out.println("current: " + currentSelection);
-//    	
-//		if (currentSelection.equals("output")) {
-//			setResultText(result.getResultText());
-//		} else
-//		if (currentSelection.equals("error")) {
-//			setResultText(result.getErrorText());
-//		} else
-//		if (currentSelection.equals("previous")) {
-//
-//		} else
-//		if (currentSelection.equals("result")) {
-//			
-//		}         
-//        System.out.println("result");
-//        
-//        InputType inType = result.getElectionDescription().getContainer().getInputType();
-//        OutputType outType = result.getElectionDescription().getContainer().getOutputType();
-//        
-//        
-//        int maxY = inType.drawResult(result, 0);
-//        
-//        outType.drawResult(result, maxY);
-//        
-//	    
-//	    ResultImageRenderer.drawElements();
-//	    
-//	    setResultNode(ResultImageRenderer.getImageView());
-//        
-//        //var inType = result
-//        
-//        
-//        //TODO implement
-    }
+		Node finishedResult = presentationType.presentResult(result);
+
+		GUIController.getController().disableZoomSlider(!presentationType.supportsZoom());
+		
+		this.setResultNode(finishedResult);
+	}
 
 	/**
 	 * Give the caller complete freedom how he wants to display the result. It can
@@ -113,7 +87,7 @@ public class ResultPresenterNEW {
 	public void setResultNode(Node resultNode) {
 		reset();
 		ResultImageRenderer.resetScrollBars();
-		
+
 		resultPane.getChildren().add(resultNode);
 	}
 

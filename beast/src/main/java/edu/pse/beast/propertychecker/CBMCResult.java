@@ -162,7 +162,10 @@ public class CBMCResult extends Result {
 		if (isInitialized()) {
 			NodeList resultElements = rootElement.getElementsByTagName(RESULT_TAG);
 
-			if (resultElements.getLength() != 1) {
+			if (resultElements.getLength() == 0) {
+				return false; //no result tag found, so it can not hold
+			} else
+			if (resultElements.getLength() > 1) {
 				throw new IndexOutOfBoundsException("Multiple Result Tags detected, this can not happen");
 			} else {
 				return resultElements.item(0).getTextContent().equals(identifier);

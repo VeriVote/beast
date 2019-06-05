@@ -270,4 +270,9 @@ public class Approval extends CBMCInputType {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public String getInputDataType() {
+		return "struct vote_double";
+	}
 }

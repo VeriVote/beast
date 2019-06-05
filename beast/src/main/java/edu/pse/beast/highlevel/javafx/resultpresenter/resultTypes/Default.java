@@ -37,4 +37,9 @@ public class Default extends ResultPresentationType {
 	public String getToolTipDescription() {
 		return "The Defaul way of presenting a result";
 	}
+
+	@Override
+	public boolean supportsZoom() {
+		return true;
+	}
 }

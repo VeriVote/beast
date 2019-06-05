@@ -290,4 +290,9 @@ public class WeightedApproval extends CBMCInputType {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+	@Override
+	public String getInputDataType() {
+		return "vote_double";
+	}
 }

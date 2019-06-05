@@ -470,6 +470,13 @@ public class GUIController {
 			displayFormat.getItems().add(type.getMenuItem());
 		}
 		
+		//set the default presentation type
+		
+		for (Iterator<ResultPresentationType> iterator = types.iterator(); iterator.hasNext();) {
+			ResultPresentationType type = iterator.next();
+			
+		}
+		
 		// turn off the zoom slider in the beginning
 		zoomSlider.setDisable(true);
 
@@ -1581,5 +1588,13 @@ public class GUIController {
 
 	public ResultPresenterNEW getResultPresenter() {
 		return ResultPresenterNEW.getInstance();
+	}
+
+	public void setPresentationTypeText(String name) {
+		this.displayFormat.setText(name);
+	}
+
+	public void disableZoomSlider(boolean disabled) {
+		zoomSlider.setDisable(disabled);
 	}
 }

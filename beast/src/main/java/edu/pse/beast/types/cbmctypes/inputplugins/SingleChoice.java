@@ -1,30 +1,31 @@
 package edu.pse.beast.types.cbmctypes.inputplugins;
 
-import java.awt.Graphics2D;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import edu.pse.beast.highlevel.javafx.resultpresenter.ResultImageRenderer;
-import edu.pse.beast.highlevel.javafx.resultpresenter.resultElements.ResultImageElement;
+import edu.pse.beast.highlevel.javafx.resultpresenter.resultElements.PieChartElement;
 import edu.pse.beast.highlevel.javafx.resultpresenter.resultElements.TextImageElement;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.RichTextInformation;
+import edu.pse.beast.toolbox.Tuple3;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueArray;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueSingle;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueStruct;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
-import javafx.scene.input.MouseEvent;
 
 public class SingleChoice extends CBMCInputType {
     private String[] sizes = {UnifiedNameContainer.getVoter()};
@@ -290,6 +291,8 @@ public class SingleChoice extends CBMCInputType {
 	@Override
 	public int drawResult(Result result, double startY) {
 		
+		Random rand = new Random();
+		
 		List<ResultValueWrapper> votes = result.readVariableValue("votes\\d"); //TODO name container
 		
 		
@@ -301,7 +304,12 @@ public class SingleChoice extends CBMCInputType {
 	    	
 	    	text.add(new RichTextInformation(currentVote.getName() + ": "));
 			
-		    CBMCResultValueArray array = (CBMCResultValueArray) currentVote.getResultValue();
+	    	CBMCResultValueStruct struct = (CBMCResultValueStruct) currentVote.getResultValue();
+	    	
+	    	CBMCResultValueArray array = (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
+		    
+		    
+		    List<Tuple3<String, Double, Color>> values = new ArrayList<Tuple3<String, Double, Color>>();
 		    
 		    List<CBMCResultValueWrapper> arrayValues = array.getValues();
 		    
@@ -313,12 +321,18 @@ public class SingleChoice extends CBMCInputType {
 		        
 		        text.add(new RichTextInformation(singleValue.getValue() + " "));
 		        
-		        System.out.println(singleValue.getValue());
+		        Color randomColor = new Color(rand.nextFloat(), rand.nextFloat(), rand.nextFloat());
+		        
+		        values.add(new Tuple3<String, Double, Color>("x", 2d, randomColor));
+		        
+		        System.out.println("num: " + singleValue.getValueAsNumber());
 		    }
 		    
 	    	TextImageElement voteElement = new TextImageElement(0, previousMaxY, text);
+	    	
+	    	PieChartElement pie = new PieChartElement(0, voteElement.getyPosBottomRight(), 400, 400, values);
 		    
-		    previousMaxY = voteElement.getyPosBottomRight();
+		    previousMaxY = pie.getyPosBottomRight();
 		    
 		    ResultImageRenderer.addElement(voteElement);
 		    
@@ -326,5 +340,10 @@ public class SingleChoice extends CBMCInputType {
 		
 		
 		return 0;
+	}
+	
+	@Override
+	public String getInputDataType() {
+		return "struct vote_single";
 	}
 }

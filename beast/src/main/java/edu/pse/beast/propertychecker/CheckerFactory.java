@@ -189,8 +189,6 @@ public abstract class CheckerFactory implements Runnable {
 								result.setNumSeats(seats);
 								result.setResult(lastResult);
 								
-								System.out.println("last error; " + lastError.size());
-								
 								result.setError(lastError);
 								result.setValid();
 							} else {

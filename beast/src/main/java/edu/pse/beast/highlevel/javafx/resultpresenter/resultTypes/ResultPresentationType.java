@@ -16,11 +16,20 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
 
 public abstract class ResultPresentationType {
+
+	public MenuItem menuItem = null;
+
 	public abstract Node presentResult(Result result);
 
 	public abstract String getName();
 
 	public abstract String getToolTipDescription();
+	
+	/**
+	 * 
+	 * @return true, if the Node given by this Type support zooming
+	 */
+	public abstract boolean supportsZoom();
 
 	/**
 	 * 
@@ -38,20 +47,27 @@ public abstract class ResultPresentationType {
 	}
 
 	public MenuItem getMenuItem() {
-		CustomMenuItem item = new CustomMenuItem(new Label(getName()));
+		if (menuItem != null) {
+			return menuItem;
+		} else {
 
-		Tooltip tip = new Tooltip(getToolTipDescription());
+			CustomMenuItem item = new CustomMenuItem(new Label(getName()));
 
-		Tooltip.install(item.getContent(), tip);
-		
-		item.setOnAction(new EventHandler<ActionEvent>() {
+			Tooltip tip = new Tooltip(getToolTipDescription());
+
+			Tooltip.install(item.getContent(), tip);
+
+			item.setOnAction(new EventHandler<ActionEvent>() {
+
+				@Override
+				public void handle(ActionEvent event) {
+					ResultPresenterNEW.getInstance().setPresentationType(ResultPresentationType.this);
+				}
+			});
 			
-			@Override
-			public void handle(ActionEvent event) {
-				ResultPresenterNEW.getInstance().setPresentationType(ResultPresentationType.this);
-			}
-		});
-		
-		return item;
+			this.menuItem = item;
+			
+			return item;
+		}
 	}
 }

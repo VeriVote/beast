@@ -116,6 +116,8 @@ module edu.pse.beast {
     
     provides Result with edu.pse.beast.propertychecker.CBMCResult;
     
-    provides ResultPresentationType with edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.Default;
+    provides ResultPresentationType with edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.Default,
+    	edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.CBMCOutput,
+    	edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.CBMCError;
     
 }

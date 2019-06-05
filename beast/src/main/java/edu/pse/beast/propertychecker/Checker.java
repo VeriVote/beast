@@ -81,6 +81,9 @@ public abstract class Checker implements Runnable {
 			// result
 			polling: while (!interrupted || !finished) {
 				if (!process.isAlive() && !interrupted) {
+					
+					result.setExitCode(process.exitValue());
+					
 					if (process.exitValue() == 0) {
 						success = true;
 					} else {

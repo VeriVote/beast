@@ -745,8 +745,11 @@ public class CBMCCodeGenerator {
         code.add("//voting-array and elect variable initialisation");
         for (int voteNumber = 1; voteNumber <= numberOfTimesVoted; voteNumber++) {
             code.add("//init for election: " + voteNumber);
-            String votesX = "unsigned int votes" + voteNumber;
-            votesX = votesX + electionDesc.getContainer().getInputType().getInputString();
+            
+            String votesX = electionDesc.getContainer().getInputType().getInputDataType();
+            
+            votesX = votesX + " " + UnifiedNameContainer.getVotingArray() + voteNumber;
+            
             code.add(votesX + ";");
             // String[] counter = { "counter_0", "counter_1", "counter_2", "counter_3" };
             String forTemplate = "for(unsigned int COUNTER = 0; COUNTER < UPPER; COUNTER++){";
@@ -771,7 +774,9 @@ public class CBMCCodeGenerator {
             if (electionDesc.getContainer().getInputType().hasVariableAsMaxValue()) {
                 max += voteNumber;
             }
-            String votesElement = "votes" + voteNumber;
+            
+            String votesElement = UnifiedNameContainer.getVotingArray() + voteNumber + ".arr";
+
             for (int i = 0; i < listDepth; ++i) {
                 votesElement += "[COUNTER]".replace("COUNTER", "counter_" + i);
             }
