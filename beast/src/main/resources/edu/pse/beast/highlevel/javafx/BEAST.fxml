@@ -69,6 +69,7 @@
             <Menu mnemonicParsing="false" text="%key.save_as">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#saveAsProject" text="%key.project" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveAsProperty" text="%key.property" />
                 <MenuItem mnemonicParsing="false" onAction="#saveAsElectionDescription" text="%key.electiondescription" />
                 <MenuItem mnemonicParsing="false" onAction="#saveAsPropertyList" text="%key.propertylist" />
                 <MenuItem mnemonicParsing="false" onAction="#saveAsVotingInput" text="%key.voteslist" />

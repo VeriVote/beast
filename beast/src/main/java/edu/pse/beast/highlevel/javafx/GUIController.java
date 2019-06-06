@@ -1017,6 +1017,11 @@ public class GUIController {
 	public void saveProperty(ActionEvent event) {
 		booleanExpEditor.save();
 	}
+	
+	@FXML
+	public void saveAsProperty(ActionEvent event) {
+		booleanExpEditor.saveAs();
+	}
 
 	@FXML
 	public void saveProject(ActionEvent event) {
