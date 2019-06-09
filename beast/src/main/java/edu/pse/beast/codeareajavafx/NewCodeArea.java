@@ -65,8 +65,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
             "char", "double", "enum", "float", "int", "long", "register", "void"
         };
     private static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
-    private static final String PREPROCESSOR_PATTERN = "(" + String.join("|", PREPROCESSOR) + ")";
-    private static final String DATATYPE_PATTERN = "(" + String.join("|", DATATYPES) + ")";
+    private static final String PREPROCESSOR_PATTERN = "\\b(" + String.join("|", PREPROCESSOR) + ")\\b";
+    private static final String DATATYPE_PATTERN = "\\b(" + String.join("|", DATATYPES) + ")\\b";
     private static final String POINTER_PATTERN = "\\b("
             + String.join("|", Arrays.stream(DATATYPES).map(s
                 ->

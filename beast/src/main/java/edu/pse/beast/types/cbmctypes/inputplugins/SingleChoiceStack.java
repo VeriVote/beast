@@ -1,14 +1,18 @@
 package edu.pse.beast.types.cbmctypes.inputplugins;
 
+import java.awt.geom.Point2D;
 import java.util.Arrays;
 import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import edu.pse.beast.propertychecker.Result;
+import edu.pse.beast.toolbox.CBMCResultPresentationHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueArray;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueStruct;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
@@ -225,8 +229,22 @@ public class SingleChoiceStack extends CBMCInputType {
 
 	@Override
 	public int drawResult(Result result, double startY) {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		List<ResultValueWrapper> votes = result.readVariableValue("votes\\d"); //TODO name container
+		
+		double previousMaxY = startY;
+		
+		for (ResultValueWrapper currentVote: votes) {
+			
+			Point2D.Double point = CBMCResultPresentationHelper.printNameResult(currentVote.getName(), 20, previousMaxY);
+			
+	    	CBMCResultValueStruct struct = (CBMCResultValueStruct) currentVote.getResultValue();
+	    	CBMCResultValueArray arr = (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
+	    	
+	    	previousMaxY = CBMCResultPresentationHelper.printOneDimResult(arr, point.x, point.y);
+		}	
+		
+		return (int) previousMaxY;
 	}
 	
 	@Override

@@ -1,4 +1,4 @@
-//package edu.pse.beast.celectiondescriptioneditor.view;
+//package edu.pse.beast.celectiondescriptioneditor.view; //TODO remove
 //
 //import javax.swing.JMenuBar;
 //import javax.swing.JOptionPane;
