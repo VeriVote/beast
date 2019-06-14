@@ -35,7 +35,6 @@ module edu.pse.beast {
     exports edu.pse.beast.parametereditor;
     exports edu.pse.beast.pluginmanager;
     exports edu.pse.beast.codearea.autocompletion;
-    exports edu.pse.beast.toolbox.antlr.booleanexp;
     exports edu.pse.beast.codearea;
     exports edu.pse.beast.electionsimulator.programaccess;
     exports edu.pse.beast.stringresource;
