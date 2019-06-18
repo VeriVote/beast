@@ -130,7 +130,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
      */
     public void setToPreConditionMode() {
         assumeOrAssert = "assume";
-        this.post = false;
+        this.post = true; //refactor this later
     }
 
     /**
@@ -473,17 +473,25 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         // }
         rhs = variableNames.pop();
         lhs = variableNames.pop();
-        setToPostConditionMode();
+        //setToPostConditionMode();
         internCode = varName + " = " + lhs;
-        final String prefix = post ? ".arr" : "";
+        final String prefix = post ? ".arr" : ""; //TODO use unifed name container, or defer to the Types
 
+        String preFixCopy = prefix;
+        
         for (int i = 0; i < lhslistLevel; ++i) {
-            internCode += prefix + "[VAR]".replace("VAR", counter.get(i));
+            internCode += preFixCopy + "[VAR]".replace("VAR", counter.get(i));
+            preFixCopy = ""; //TODO rewrite this with using input and output types
         }
         internCode += " " + node.getComparisonSymbol().getCStringRep() + " ";
         internCode += rhs;
+        
+        preFixCopy = prefix;
+        
+        
         for (int i = 0; i < rhslistLevel; ++i) {
-            internCode += prefix + "[VAR]".replace("VAR", counter.get(i));
+            internCode += preFixCopy + "[VAR]".replace("VAR", counter.get(i));
+            preFixCopy = ""; //TODO rewrite this with using input and output types
         }
         code.add(internCode + ";");
         for (int i = 0; i < maxListLevel; ++i) {
@@ -607,7 +615,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                 + "AtPos_" + amtByPos;
     }
 
-    private void testIfLast() {
+    private void testIfLast() {    	
         if (variableNames.size() == 1) {
             if (assumeOrAssert != null) {
                 code.add(assumeOrAssert + "(" + variableNames.pop() + ");");

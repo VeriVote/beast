@@ -783,7 +783,7 @@ public class CBMCCodeGenerator {
             String nondetInt = (votesElement + " = nondet_uint();");
             String voteDecl
                   = ("assume((MIN <= " + votesElement
-                            + ") && (" + votesElement + " < MAX));");
+                            + ") && (" + votesElement + " <= MAX));");
             voteDecl = voteDecl.replace("MIN", min);
             voteDecl = voteDecl.replace("MAX", max);
             code.add(nondetInt);

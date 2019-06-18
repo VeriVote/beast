@@ -1,1 +1,0 @@
-{"name":"New Property","symbolicVariableList":{"symbolicVariableList":[]},"preConditionsDescription":{"code":"VOTES1 !\u003d VOTES2;"},"postConditionsDescription":{"code":"ELECT1 \u003d\u003d ELECT2;"},"boundedVarDescription":{"code":""}}

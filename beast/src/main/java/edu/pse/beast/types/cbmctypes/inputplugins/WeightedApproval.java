@@ -311,6 +311,6 @@ public class WeightedApproval extends CBMCInputType {
 
 	@Override
 	public String getInputDataType() {
-		return "vote_double";
+		return "struct vote_double";
 	}
 }

@@ -86,18 +86,9 @@ public class CandidateList extends CBMCOutputType {
 
 	@Override
 	public CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code, int voteNumber) {
-		String temp = UnifiedNameContainer.getStructCandidateList() + " tmp" + voteNumber + " = "
+		String electX = UnifiedNameContainer.getStructCandidateList() + " elect" + voteNumber + " = "
 				+ UnifiedNameContainer.getVotingMethod() + "(votes" + voteNumber + ");";
-		code.add(temp);
-		String electX = UnifiedNameContainer.getStructCandidateList() + " elect" + voteNumber + ";";
 		code.add(electX);
-		String forLoop = "for (int electLoop = 0; electLoop < " + UnifiedNameContainer.getCandidate()
-				+ "; electLoop++) {";
-		code.add(forLoop);
-		code.addTab();
-		code.add("elect" + voteNumber + ".arr[electLoop] = tmp" + voteNumber + ".arr[electLoop];");
-		code.deleteTab();
-		code.add("}");
 
 		return code;
 	}

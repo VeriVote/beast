@@ -1,1 +1,0 @@
-{"name":"New description","code":["unsigned int voting(struct vote_single votes) {","    return votes.arr[0];","}"],"container":{"inType":{"type":"SingleChoice","properties":{"sizes":["V"]}},"outType":{"type":"SingleCandidate","properties":{}}},"votingDeclLine":0,"lockedLineStart":0,"lockedLineEnd":47,"lockedBracePos":49,"isNew":false}

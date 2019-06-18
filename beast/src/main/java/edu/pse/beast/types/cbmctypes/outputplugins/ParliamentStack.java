@@ -83,29 +83,10 @@ public class ParliamentStack extends CBMCOutputType {
     public CodeArrayListBeautifier
             addVotesArrayAndInit(CodeArrayListBeautifier code,
                                  int voteNumber) {
-        String temp = "struct stack_result tmp" + voteNumber
+        String electX = "struct stack_result elect" + voteNumber
                       + " = " + UnifiedNameContainer.getVotingMethod()
                       + "(votes" + voteNumber + ");";
-        code.add(temp);
-        String tempElect
-              = "unsigned int *tempElect" + voteNumber
-                + " = tmp" + voteNumber + ".arr;";
-        code.add(tempElect);
-        String electX
-              = "unsigned int elect" + voteNumber
-                + "[" + UnifiedNameContainer.getCandidate() + "];";
         code.add(electX);
-        String forLoop
-              = "for (int electLoop = 0; electLoop < "
-                + UnifiedNameContainer.getCandidate() + "; electLoop++) {";
-        code.add(forLoop);
-        code.addTab();
-        code.add("elect" + voteNumber
-                 + "[electLoop] = tempElect"
-                 + voteNumber + "[electLoop];");
-        code.deleteTab();
-        code.add("}");
-
         return code;
     }
 

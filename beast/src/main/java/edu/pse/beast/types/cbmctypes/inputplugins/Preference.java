@@ -231,8 +231,8 @@ public class Preference extends CBMCInputType {
     public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, int voteNumber) {
         code.add("for (unsigned int j_prime = 0; j_prime < counter_1; j_prime++) {");
         code.addTab();
-        code.add("assume (votes" + voteNumber + "[counter_0][counter_1] != votes" + voteNumber
-                + "[counter_0][j_prime]);");
+        code.add("assume (votes" + voteNumber + ".arr[counter_0][counter_1] != votes" + voteNumber
+                + ".arr[counter_0][j_prime]);"); //TODO change to unifed name container
         code.deleteTab();
         code.add("}");
     }
