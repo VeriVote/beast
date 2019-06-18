@@ -262,14 +262,14 @@ public class CBMCProcessFactory extends CheckerFactory {
 	// return startedChecker;
 	// }
 
-	private OperatingSystems determineOS() {
+	public static OperatingSystems determineOS() { //TODO extract to UTIl
 		String environment = System.getProperty("os.name");
 		OperatingSystems determinedOS = null;
 		if (environment.toLowerCase().contains("linux")) {
 			determinedOS = OperatingSystems.Linux;
-		} else if (environment.toLowerCase().contains("windows") && os == null) {
+		} else if (environment.toLowerCase().contains("windows")) {
 			determinedOS = OperatingSystems.Windows;
-		} else if (environment.toLowerCase().contains("mac") && os == null) {
+		} else if (environment.toLowerCase().contains("mac")) {
 			determinedOS = OperatingSystems.Mac;
 		} else {
 			ErrorLogger.log("Sorry, your OS " + environment + " is not supported");

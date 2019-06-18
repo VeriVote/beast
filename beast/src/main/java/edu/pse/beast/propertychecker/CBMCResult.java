@@ -83,7 +83,25 @@ public class CBMCResult extends Result {
 	}
 
 	private void parseResult() {
-		InputStream xmlStream = IOUtils.toInputStream(String.join("", super.getResult().subList(8, super.getResult().size())), charSet);
+		
+		int offset = 0; //TODO beautify
+		
+		OperatingSystems os = CBMCProcessFactory.determineOS();
+		
+		switch (os) {
+		case Windows:
+			offset = 8;
+			break;
+
+		case Linux:
+			offset = 0;
+			break;
+			
+		default:
+			break;
+		}
+		
+		InputStream xmlStream = IOUtils.toInputStream(String.join("", super.getResult().subList(offset, super.getResult().size())), charSet);
 
 		DocumentBuilder builder;
 		try {
