@@ -19,4 +19,11 @@ public interface InOutType {
      * @return the bottom most y-position the presentation has
      */
     int drawResult(Result result, double startY);
+    
+
+    /**
+     * 
+     * @return a text describing everything the user needs to know about this type (e.g description of structs...)
+     */
+	String getInfo();
 }

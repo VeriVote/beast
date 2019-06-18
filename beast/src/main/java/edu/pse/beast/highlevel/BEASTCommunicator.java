@@ -119,11 +119,11 @@ public final class BEASTCommunicator {
         if (!hasProperties(properties)) {
             // checks if there even are any properties selected for analysis in the
             // PreAndPostConditionsSource
-            GUIController.setInfoText("no property selected (add string resouce loading later)");
+        	GUIController.setConsoleText("no property selected (add string resouce loading later)");
             return false;
         }
         if (!checkForErrors(electionDesc, properties)) {
-            GUIController.setInfoText("starting Check");
+        	GUIController.setConsoleText("starting Check");
             // TODO load the property checker
             PropertyChecker checker = new PropertyChecker("CBMC");
             currentCheckers.add(checker);
@@ -169,7 +169,7 @@ public final class BEASTCommunicator {
                                 allDone = allDone && result.isFinished();
                             }
                         }
-                        GUIController.setInfoText("analysis ended after " + timeString);
+                        GUIController.setConsoleText("analysis ended after " + timeString);
                         GUIController.getController().checkFinished();
                     }
                 });
@@ -202,7 +202,7 @@ public final class BEASTCommunicator {
      */
     public static boolean checkForErrors(ElectionDescription description,
                                          List<ParentTreeItem> properties) {
-        GUIController.setInfoText("searching for errors");
+        GUIController.setConsoleText("searching for errors");
         // save the currently opened property
         GUIController.getController().getBooleanExpEditor().savePropertyTextAreasIntoDescription();
         List<CodeError> codeErrors = CVariableErrorFinder.findErrors(description.getCode());

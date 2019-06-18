@@ -386,7 +386,7 @@ public abstract class Result implements ResultInterface {
     }
 
     public void setLastTmpResult(List<String> tmpResult) {
-    	System.out.println("do we need tmpResults?");
+    	//TODO maybe refactor this so no "tmp" result is used
     	this.result = tmpResult;
         //this.lastTmpResult = tmpResult; TODO
     }

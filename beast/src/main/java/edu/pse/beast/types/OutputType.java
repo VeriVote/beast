@@ -99,4 +99,8 @@ public abstract class OutputType implements InOutType {
      * @return the dimension of this output type
      */
     public abstract int getDimension();
+    
+	public String getInfo() { //TODO move later on further down
+		return "output type information";
+	}
 }

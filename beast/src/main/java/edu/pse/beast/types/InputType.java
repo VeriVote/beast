@@ -171,4 +171,8 @@ public abstract class InputType implements InOutType {
      * @return the datatype this input type uses, e.g "struct vote_single"
      */
 	public abstract String getInputDataType();
+	
+	public String getInfo() { //TODO move later on further down
+		return "input type information";
+	}
 }

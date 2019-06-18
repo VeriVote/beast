@@ -146,4 +146,9 @@ public class InternalTypeContainer implements InOutType { //TODO maybe extract t
 	public int drawResult(Result result, double startY) {
 		return 0; //TODO a new interface hopefully removes this
 	}
+
+	@Override
+	public String getInfo() {
+		return null;
+	}
 }

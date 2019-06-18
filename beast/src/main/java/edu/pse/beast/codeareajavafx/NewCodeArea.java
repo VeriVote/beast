@@ -373,17 +373,6 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         lockedBracePos +=
                 (changePosition <= lockedLineStart || changePosition <= lockedBracePos)
                 ? lengthChange : 0;
-        test();
-    }
-
-    private void test() {
-        Set<String> style = Collections.singleton("-fx-background-fill: blue;");
-        // this.setStyle(paragraph, style);
-        // this.setStyle(value);
-        // this.setStyle("-fx-background-color: blue;");
-        this.setStyle(lockedLineStart, lockedLineEnd, style);
-        // this.setStyle(lockedLineStart, lockedLineEnd, style);
-        // this.setStyle(lockedBracePos, lockedBracePos + 1, style);
     }
 
     private static StyleSpans<Collection<String>> computeHighlighting(String text) {
@@ -464,7 +453,15 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         saverLoader.resetHasSaveFile();
         // force the undo manager to not be able to return to previous text
         this.getUndoManager().forgetHistory();
-        test(); // or delete the locked lines
+        
+        String inputInfo = elecDescription.getContainer().getInputType().getInfo();
+        
+        String outputInfo = elecDescription.getContainer().getOutputType().getInfo();
+        
+        String combined = inputInfo + "\n\n\n" + outputInfo;
+        
+        GUIController.setInfoText(combined);
+        
     }
 
     // public void setElectionDescription(ElectionDescription newDescription) {
