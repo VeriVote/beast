@@ -581,13 +581,23 @@ public class GUIController {
 	}
 
 	@FXML
-	public void removePropVar() {
-		if (propertyToRemove != null) {
-			long time = System.currentTimeMillis();
-			if ((time - lastClicked) < THRESHOLD) {
-				removeProperty(propertyToRemove);
-				propertyToRemove = null;
-			}
+	public void resetPropList() {
+		Alert confirmation = new Alert(AlertType.CONFIRMATION);
+		
+		Point position = MouseInfo.getPointerInfo().getLocation();
+		
+		confirmation.setX(position.getX() - confirmation.getWidth());
+		confirmation.setY(position.getY() - confirmation.getHeight());
+		
+		Stage stage = (Stage) confirmation.getDialogPane().getScene().getWindow();
+		// Add a custom icon.
+		stage.getIcons().add(new Image(PATH_TO_IMAGES + BEAST_LOGO));
+		confirmation.setTitle("Confirmation Dialog");
+		confirmation.setHeaderText("Do you really want to reset the property List?");
+		confirmation.setContentText("Doing so will delete all current properties!");
+		Optional<ButtonType> result = confirmation.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			newPropertyList();
 		}
 	}
 
@@ -839,26 +849,8 @@ public class GUIController {
 	public void newProject(ActionEvent event) {
 		projectSaverLoader.resetHasSaveFile();
 		newElectionDescription(event);
-		newVotingInput(event);
-		newPropertyList(event);
-	}
-
-	@FXML
-	public void newPropertyList(ActionEvent event) {
-		propertyListSaverLoader.resetHasSaveFile();
-		removeAllProperties();
-		if (event != null) {
-			addProperty(new PreAndPostConditionsDescription("New Property"));
-			properties.get(0).wasClicked(false);
-		}
-		GUIController.getController().resultNameField.setText("no property selected");
-		// reset the result field
-		GUIController.getController().getResultPane().getChildren().clear();
-	}
-
-	@FXML
-	public void newVotingInput(ActionEvent event) {
-		electionSimulation.reset();
+		newVotingInput();
+		newPropertyList();
 	}
 
 	@FXML
@@ -1065,6 +1057,21 @@ public class GUIController {
 	public void savePropertyList(ActionEvent event) {
 		savePropertyListFromFile(null, true, false);
 	}
+	
+
+	public void newPropertyList() {
+		propertyListSaverLoader.resetHasSaveFile();
+		removeAllProperties();
+		addProperty(new PreAndPostConditionsDescription("New Property"));
+		properties.get(0).wasClicked(false);
+		GUIController.getController().resultNameField.setText("no property selected");
+		// reset the result field
+		GUIController.getController().getResultPane().getChildren().clear();
+	}
+
+	public void newVotingInput() {
+		electionSimulation.reset();
+	}
 
 	private void savePropertyListFromFile(File listFile, boolean askUser, boolean saveAs) {
 		if (properties.size() > 0) {
@@ -1171,7 +1178,7 @@ public class GUIController {
 
 	@FXML
 	public void newProperty(ActionEvent event) {
-		addProperty(new PreAndPostConditionsDescription("new Property"));
+		addProperty(new PreAndPostConditionsDescription("New Property"));
 	}
 
 	@FXML
@@ -1187,8 +1194,13 @@ public class GUIController {
 	@FXML
 	public void resetInput(ActionEvent event) {
 		Alert confirmation = new Alert(AlertType.CONFIRMATION);
-		confirmation.setX(mainStage.getX());
-		confirmation.setY(mainStage.getY());
+		
+		Point position = MouseInfo.getPointerInfo().getLocation();
+		
+		confirmation.setX(position.getX() - confirmation.getWidth());
+		confirmation.setY(position.getY() - confirmation.getHeight());
+
+
 		Stage stage = (Stage) confirmation.getDialogPane().getScene().getWindow();
 		// Add a custom icon.
 		stage.getIcons().add(new Image(PATH_TO_IMAGES + BEAST_LOGO));

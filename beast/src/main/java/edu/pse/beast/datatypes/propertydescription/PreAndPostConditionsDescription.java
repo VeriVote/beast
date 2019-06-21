@@ -14,10 +14,6 @@ public class PreAndPostConditionsDescription {
     private final FormalPropertiesDescription postConditionsDescription;
     private final FormalPropertiesDescription boundedVarDescription;
 
-    /**
-     *
-     * @param name HAS to be UNIQUE in the context
-     */
     public PreAndPostConditionsDescription(String name) {
         this.name = name;
         this.symbolicVariableList = new SymbolicVariableList();

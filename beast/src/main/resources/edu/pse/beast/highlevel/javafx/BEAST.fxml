@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ChoiceBox?>
@@ -43,8 +42,6 @@
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#newProject" text="%key.project" />
                 <MenuItem mnemonicParsing="false" onAction="#newElectionDescription" text="%key.electiondescription" />
-                <MenuItem mnemonicParsing="false" onAction="#newPropertyList" text="%key.propertylist" />
-                <MenuItem mnemonicParsing="false" onAction="#newVotingInput" text="%key.voteslist" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="%key.open">
@@ -152,52 +149,6 @@
             </Menu>
           </items>
         </Menu>
-            <Menu mnemonicParsing="false" text="%key.verificationBounds">
-              <items>
-            <Menu mnemonicParsing="false" text="%key.voters">
-              <items>
-                <MenuItem mnemonicParsing="false" text="%key.minimum">
-                  <graphic>
-                    <TextField fx:id="minVoter" alignment="CENTER_RIGHT" onAction="#minVoter" prefWidth="50.0" text="1" />
-                  </graphic>
-                </MenuItem>
-                <MenuItem mnemonicParsing="false" text="%key.maximum">
-                  <graphic>
-                    <TextField fx:id="maxVoter" alignment="CENTER_RIGHT" onAction="#maxVoter" prefWidth="50.0" text="1" />
-                  </graphic>
-                </MenuItem>
-              </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="%key.candidates">
-              <items>
-                <MenuItem mnemonicParsing="false" text="%key.minimum">
-                  <graphic>
-                    <TextField fx:id="minCandidates" alignment="CENTER_RIGHT" onAction="#minCandidates" prefWidth="50.0" text="1" />
-                  </graphic>
-                </MenuItem>
-                <MenuItem mnemonicParsing="false" text="%key.maximum">
-                  <graphic>
-                    <TextField fx:id="maxCandidates" alignment="CENTER_RIGHT" onAction="#maxCandidates" prefWidth="50.0" text="1" />
-                  </graphic>
-                </MenuItem>
-              </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="%key.seats">
-              <items>
-                <MenuItem mnemonicParsing="false" text="%key.minimum">
-                  <graphic>
-                    <TextField fx:id="minSeats" alignment="CENTER_RIGHT" onAction="#minSeats" prefWidth="50.0" text="1" />
-                  </graphic>
-                </MenuItem>
-                <MenuItem mnemonicParsing="false" text="%key.maximum">
-                  <graphic>
-                    <TextField fx:id="maxSeats" alignment="CENTER_RIGHT" onAction="#maxSeats" prefWidth="50.0" text="1" />
-                  </graphic>
-                </MenuItem>
-              </items>
-            </Menu>
-              </items>
-            </Menu>
         <Menu mnemonicParsing="false" text="%key.options">
           <items>
                   <MenuItem mnemonicParsing="false" text="%key.constantName" />
@@ -219,7 +170,7 @@
         </Menu>
       </menus>
     </MenuBar>
-    <ToolBar prefHeight="40.0" prefWidth="200.0">
+    <ToolBar>
       <items>
         <Button id="startStopButton" fx:id="startStopButton" mnemonicParsing="false" onAction="#startStopPressed" text="">
           <tooltip>
@@ -273,6 +224,84 @@
                   <Tooltip text="%key.delete" />
                </tooltip>
             </Button>
+            <Pane HBox.hgrow="ALWAYS" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Voters:" />
+            <VBox>
+               <children>
+                  <HBox>
+                     <children>
+                        <BorderPane prefWidth="25.0">
+                           <left>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="min" BorderPane.alignment="CENTER" />
+                           </left>
+                        </BorderPane>
+              <TextField fx:id="minVoter" alignment="CENTER_RIGHT" onAction="#minVoter" prefWidth="50.0" text="1" />
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <BorderPane prefWidth="25.0">
+                           <left>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="max" BorderPane.alignment="CENTER" />
+                           </left>
+                        </BorderPane>
+              <TextField fx:id="maxVoter" alignment="CENTER_RIGHT" onAction="#maxVoter" prefWidth="50.0" text="1" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <Separator orientation="VERTICAL" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Candidates:" />
+            <VBox>
+               <children>
+                  <HBox>
+                     <children>
+                        <BorderPane prefWidth="25.0">
+                           <left>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="min" BorderPane.alignment="CENTER" />
+                           </left>
+                        </BorderPane>
+              <TextField fx:id="minCandidates" alignment="CENTER_RIGHT" onAction="#minCandidates" prefWidth="50.0" text="1" />
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <BorderPane prefWidth="25.0">
+                           <left>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="max" BorderPane.alignment="CENTER" />
+                           </left>
+                        </BorderPane>
+              <TextField fx:id="maxCandidates" alignment="CENTER_RIGHT" onAction="#maxCandidates" prefWidth="50.0" text="1" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <Separator orientation="VERTICAL" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Seats:" />
+            <VBox>
+               <children>
+                  <HBox>
+                     <children>
+                        <BorderPane prefWidth="25.0">
+                           <left>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="min" BorderPane.alignment="CENTER" />
+                           </left>
+                        </BorderPane>
+              <TextField fx:id="minSeats" alignment="CENTER_RIGHT" onAction="#minSeats" prefWidth="50.0" text="1" />
+                     </children>
+                  </HBox>
+                  <HBox>
+                     <children>
+                        <BorderPane prefWidth="25.0">
+                           <left>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="max" BorderPane.alignment="CENTER" />
+                           </left>
+                        </BorderPane>
+              <TextField fx:id="maxSeats" alignment="CENTER_RIGHT" onAction="#maxSeats" prefWidth="50.0" text="1" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
       </items>
     </ToolBar>
     <SplitPane dividerPositions="0.7513812154696132" focusTraversable="true" VBox.vgrow="ALWAYS">
@@ -383,32 +412,6 @@
                     <AnchorPane>
                                  <children>
                                     <BorderPane prefHeight="292.6666666666667" prefWidth="415.3333333333333" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <top>
-                                          <MenuBar BorderPane.alignment="CENTER">
-                                            <menus>
-                                              <Menu mnemonicParsing="false" text="Voters">
-                                                   <graphic>
-                                                      <TextField fx:id="inputVoterField" alignment="CENTER_RIGHT" maxWidth="50.0" text="0" />
-                                                   </graphic>
-                                              </Menu>
-                                                <Menu mnemonicParsing="false" text="Candidates">
-                                                   <graphic>
-                                                      <TextField fx:id="inputCandidateField" alignment="CENTER_RIGHT" maxWidth="50.0" text="0" />
-                                                   </graphic>
-                                                </Menu>
-                                                <Menu mnemonicParsing="false" text="Seats">
-                                                   <graphic>
-                                                      <TextField fx:id="inputSeatField" alignment="CENTER_RIGHT" maxWidth="50.0" text="0" />
-                                                   </graphic>
-                                                </Menu>
-                                                <Menu mnemonicParsing="false">
-                                                   <graphic>
-                                                      <Button mnemonicParsing="false" onAction="#resetInput" text="%key.reset" />
-                                                   </graphic>
-                                                </Menu>
-                                            </menus>
-                                          </MenuBar>
-                                       </top>
                                        <center>
                                           <BorderPane BorderPane.alignment="CENTER">
                                              <center>
@@ -472,6 +475,20 @@
                                              </top>
                                           </BorderPane>
                                        </center>
+                                       <top>
+                                          <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                                            <items>
+                                                <Label text="Voters" />
+                                                <TextField fx:id="inputVoterField" alignment="CENTER_RIGHT" maxWidth="50.0" text="0" />
+                                                <Label text="Candidates" />
+                                                <TextField fx:id="inputCandidateField" alignment="CENTER_RIGHT" maxWidth="50.0" text="0" />
+                                                <Label text="Seats" />
+                                                <TextField fx:id="inputSeatField" alignment="CENTER_RIGHT" maxWidth="50.0" text="0" />
+                                                <Pane HBox.hgrow="ALWAYS" />
+                                                <Button mnemonicParsing="false" onAction="#resetInput" text="%key.reset" />
+                                            </items>
+                                          </ToolBar>
+                                       </top>
                                     </BorderPane>
                                  </children></AnchorPane>
                   </content>
@@ -486,23 +503,16 @@
                                        </right>
                                        <top>
                                           <BorderPane BorderPane.alignment="CENTER">
-                                             <left>
-                                                <MenuBar fx:id="zoomMenu" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
-                                                  <menus>
-                                                    <Menu mnemonicParsing="false">
-                                                         <graphic>
-                                                            <MenuButton fx:id="displayFormat" mnemonicParsing="false" text="Display Format" />
-                                                         </graphic>
-                                                    </Menu>
-                                                  </menus>
-                                                   <opaqueInsets>
-                                                      <Insets />
-                                                   </opaqueInsets>
-                                                </MenuBar>
-                                             </left>
                                              <right>
                                                 <Label alignment="CENTER" prefHeight="17.0" prefWidth="135.0" text="Zoom: " BorderPane.alignment="CENTER" />
                                              </right>
+                                             <left>
+                                                <ToolBar style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+                                                  <items>
+                                                      <MenuButton fx:id="displayFormat" mnemonicParsing="false" text="Display Format" />
+                                                  </items>
+                                                </ToolBar>
+                                             </left>
                                           </BorderPane>
                                        </top>
                                        <center>
@@ -576,7 +586,8 @@
                         <CheckBox mnemonicParsing="false" />
                         <Label text="propless margin" />
                         <ImageView fx:id="proplessImage" pickOnBounds="true" preserveRatio="true" />
-                        <Button mnemonicParsing="false" onMouseClicked="#removePropVar" text="-" />
+                        <Pane HBox.hgrow="ALWAYS" />
+                        <Button mnemonicParsing="false" onAction="#resetPropList" text="Reset List" />
                     </items>
                   </ToolBar>
                </bottom>
