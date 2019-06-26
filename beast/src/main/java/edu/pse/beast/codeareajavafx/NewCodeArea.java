@@ -323,8 +323,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         int selectionStart = 0;
         int selectionEnd = 0;
         if (tuple != null) {
-            selectionStart = tuple.x;
-            selectionEnd = tuple.y;
+            selectionStart = tuple.first;
+            selectionEnd = tuple.second;
         } else {
             IndexRange selectionRange = this.getSelection();
             selectionStart = selectionRange.getStart();

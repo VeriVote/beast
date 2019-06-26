@@ -144,9 +144,9 @@ public class CBMCResult extends Result {
 					variablesToFind);
 
 			for (int i = 0; i < newValues.size(); i++) {
-				valueCache.put(newValues.get(i).x, newValues.get(i).y);
+				valueCache.put(newValues.get(i).first, newValues.get(i).second);
 
-				toReturn.put(newValues.get(i).x, newValues.get(i).y);
+				toReturn.put(newValues.get(i).first, newValues.get(i).second);
 			}
 
 			return toReturn;

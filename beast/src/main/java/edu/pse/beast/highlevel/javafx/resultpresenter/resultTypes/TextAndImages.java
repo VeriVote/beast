@@ -104,4 +104,21 @@ public class TextAndImages extends ResultPresentationType {
 		return true;
 	}
 
+	@Override
+	public void zoomTo(double zoomValue) {
+//		if (zoomValue < 0) { //TODO add zoom later
+//			currentScale = 1 + (0.09 * zoomValue);
+//		} else {
+//			currentScale = 1 + (0.9 * zoomValue);
+//		}
+//
+//		if (imageDesiredWidth * currentScale > IMAGE_MAX_WIDTH) {
+//			currentScale = Math.max(1, IMAGE_MAX_WIDTH / imageDesiredWidth);
+//		}
+//
+//		if (imageDesiredHeight * currentScale > IMAGE_MAX_HEIGHT) {
+//			currentScale = Math.max(1, IMAGE_MAX_HEIGHT / imageDesiredHeight);
+//		}
+	}
+
 }

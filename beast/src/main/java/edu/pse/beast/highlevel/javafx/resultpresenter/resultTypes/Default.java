@@ -1,7 +1,18 @@
 package edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes;
 
+import java.util.Iterator;
+import java.util.List;
+
+import org.fxmisc.richtext.GenericStyledArea;
+import org.reactfx.util.Either;
+
 import edu.pse.beast.highlevel.javafx.resultpresenter.ResultImageRenderer;
 import edu.pse.beast.propertychecker.Result;
+import edu.pse.beast.toolbox.LinkedImage;
+import edu.pse.beast.toolbox.ParStyle;
+import edu.pse.beast.toolbox.TextFieldCreator;
+import edu.pse.beast.toolbox.TextStyle;
+import edu.pse.beast.toolbox.Tuple;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 import javafx.scene.Node;
@@ -13,19 +24,36 @@ import javafx.scene.Node;
  *
  */
 public class Default extends ResultPresentationType {
-	
+
+	GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area;
+
+	int standartSize = 10;
+
 	@Override
 	public Node presentResult(Result result) {
+		
+		if (area == null) {
+			area = TextFieldCreator.getGenericStyledAreaInstance(TextStyle.DEFAULT.fontSize(standartSize),
+					ParStyle.EMPTY);
+			area.setEditable(false);
+		}
+		
 		InputType inType = result.getElectionDescription().getContainer().getInputType();
 		OutputType outType = result.getElectionDescription().getContainer().getOutputType();
 
-		int maxY = inType.drawResult(result, 0);
+		List<String> toAdd = inType.drawResult(result);
 
-		outType.drawResult(result, maxY);
+		for (int i = 0; i < toAdd.size(); i++) {
+			area.appendText(toAdd.get(i));
+		}
+		
+		toAdd = outType.drawResult(result);
+		
+		for (int i = 0; i < toAdd.size(); i++) {
+			area.appendText(toAdd.get(i));
+		}
 
-		ResultImageRenderer.drawElements();
-
-		return (ResultImageRenderer.getImageView());
+		return area;
 	}
 
 	@Override
@@ -41,5 +69,12 @@ public class Default extends ResultPresentationType {
 	@Override
 	public boolean supportsZoom() {
 		return true;
+	}
+
+	@Override
+	public void zoomTo(double zoomValue) {
+		if (area != null) {
+			area.setStyle(0, area.getLength(), TextStyle.DEFAULT.fontSize((int) (standartSize - zoomValue)));
+		}
 	}
 }

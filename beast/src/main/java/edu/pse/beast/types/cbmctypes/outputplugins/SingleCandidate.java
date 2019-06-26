@@ -1,6 +1,7 @@
 package edu.pse.beast.types.cbmctypes.outputplugins;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
@@ -9,7 +10,9 @@ import edu.pse.beast.toolbox.CBMCResultPresentationHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueArray;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueSingle;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueStruct;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
@@ -127,22 +130,23 @@ public class SingleCandidate extends CBMCOutputType {
     public String otherToString() {
         return "Single candidate";
     }
-    
+	
 	@Override
-	public int drawResult(Result result, double startY) {
-		List<ResultValueWrapper> winners = result.readVariableValue("elect\\d"); //TODO name container
+	public List<String> drawResult(Result result) {	
+		List<String> toReturn = new ArrayList<String>();
 		
-		double previousMaxY = startY;
+		List<ResultValueWrapper> winners = result.readVariableValue("elect\\d"); //TODO name container
 		
 		for (ResultValueWrapper currentWinner: winners) {
 			
-			Point2D.Double point = CBMCResultPresentationHelper.printNameResult(currentWinner.getName(), 20, previousMaxY);
+			String name = currentWinner.getName();
+			
+			toReturn.add(name);
 			
 	    	CBMCResultValueSingle value = (CBMCResultValueSingle) currentWinner.getResultValue();
-	    	
-	    	previousMaxY = CBMCResultPresentationHelper.printSingleElement(value, point.x, point.y);
-		}	
-		
-		return (int) previousMaxY;
+			
+			toReturn.add(CBMCResultPresentationHelper.printSingleElement(value, name.length()));
+		}		
+		return toReturn;
 	}
 }

@@ -52,7 +52,7 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
             insertAutoCompletion(start, end, content.get(0));
         } else {
             GUIController.getController().getAutoCompleter()
-            .showAutoCompletionWindows(position.x, position.y, content, this);
+            .showAutoCompletionWindows(position.first, position.second, content, this);
         }
     }
 

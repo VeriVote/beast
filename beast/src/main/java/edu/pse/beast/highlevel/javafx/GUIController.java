@@ -824,6 +824,7 @@ public class GUIController {
 		newElectionDescription(event);
 		newVotingInput();
 		newPropertyList();
+		setOptions(new OptionsNew()); //reset the voting bounds
 	}
 
 	@FXML

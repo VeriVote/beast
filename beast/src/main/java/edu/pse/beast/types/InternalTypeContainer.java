@@ -1,5 +1,7 @@
 package edu.pse.beast.types;
 
+import java.util.List;
+
 import edu.pse.beast.propertychecker.Result;
 
 /**
@@ -143,12 +145,13 @@ public class InternalTypeContainer implements InOutType { //TODO maybe extract t
     }
 
 	@Override
-	public int drawResult(Result result, double startY) {
-		return 0; //TODO a new interface hopefully removes this
+	public String getInfo() {
+		return "";
 	}
 
 	@Override
-	public String getInfo() {
+	public List<String> drawResult(Result result) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 }

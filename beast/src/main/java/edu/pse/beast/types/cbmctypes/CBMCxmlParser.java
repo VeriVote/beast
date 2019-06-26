@@ -70,12 +70,12 @@ public class CBMCxmlParser {
 
 						int mainIndex = getMainIndex(name);
 						
-						expandSparseList(toReturn.get(index).y, mainIndex);
+						expandSparseList(toReturn.get(index).second, mainIndex);
 						
 						ResultValueWrapper toAdd = new CBMCResultValueWrapper(mainIndex, name,
 								valueNodeList.item(0).getFirstChild());
 						
-						toReturn.get(index).y.set(mainIndex, toAdd);
+						toReturn.get(index).second.set(mainIndex, toAdd);
 					}
 				}
 			}
@@ -85,7 +85,7 @@ public class CBMCxmlParser {
 		for (Iterator<Tuple<String, List<ResultValueWrapper>>> iterator = toReturn.iterator(); iterator.hasNext();) {
 			Tuple<String, List<ResultValueWrapper>> toClean = iterator.next();
 			
-			cleanSparseList(toClean.y);
+			cleanSparseList(toClean.second);
 			
 		}
 		

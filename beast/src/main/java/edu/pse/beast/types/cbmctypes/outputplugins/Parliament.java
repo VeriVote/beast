@@ -1,6 +1,7 @@
 package edu.pse.beast.types.cbmctypes.outputplugins;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -196,23 +197,24 @@ public class Parliament extends CBMCOutputType {
     public String otherToString() {
         return "Parliament";
     }
-    
+	
 	@Override
-	public int drawResult(Result result, double startY) {
-		List<ResultValueWrapper> winners = result.readVariableValue("elect\\d"); //TODO name container
+	public List<String> drawResult(Result result) {	
+		List<String> toReturn = new ArrayList<String>();
 		
-		double previousMaxY = startY;
+		List<ResultValueWrapper> winners = result.readVariableValue("elect\\d"); //TODO name container
 		
 		for (ResultValueWrapper currentWinner: winners) {
 			
-			Point2D.Double point = CBMCResultPresentationHelper.printNameResult(currentWinner.getName(), 20, previousMaxY);
+			String name = currentWinner.getName();
+			
+			toReturn.add(name);
 			
 	    	CBMCResultValueStruct struct = (CBMCResultValueStruct) currentWinner.getResultValue();
 	    	CBMCResultValueArray arr = (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
-	    	
-	    	previousMaxY = CBMCResultPresentationHelper.printOneDimResult(arr, point.x, point.y);
-		}	
-		
-		return (int) previousMaxY;
+			
+			toReturn.add(CBMCResultPresentationHelper.printOneDimResult(arr, name.length()));
+		}		
+		return toReturn;
 	}
 }

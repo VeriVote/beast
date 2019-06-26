@@ -105,7 +105,7 @@ public class TextStyle {
 	};
 
 	private static Font getDefaultFont() {
-		return javafx.scene.text.Font.getDefault();
+		return new Font("Monospaced", 12);
 	}
 
 	private static Color getDefaultTextColor() {

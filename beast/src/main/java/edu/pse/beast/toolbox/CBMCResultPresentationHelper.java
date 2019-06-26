@@ -1,7 +1,7 @@
 package edu.pse.beast.toolbox;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import edu.pse.beast.highlevel.javafx.resultpresenter.ResultImageRenderer;
@@ -11,58 +11,45 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueS
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 
 public class CBMCResultPresentationHelper {
-
-	public static Point2D.Double printNameResult(String name, double xPos, double yPos) {
-		TextImageElement nameElement = new TextImageElement(xPos, yPos, new RichTextInformation(name));
-
-		ResultImageRenderer.addElement(nameElement);
-
-		return new Point2D.Double(nameElement.getxPosBottomRight(), nameElement.getyPosBottomRight());
+	
+	private static String getWhiteSpaces(int amount) {
+		char[] spaces = new char[amount];
+		Arrays.fill(spaces, ' ');
+		
+		return new String(spaces);
 	}
 	
-	public static double printSingleElement(CBMCResultValueSingle single, double startX, double startY) {
-		TextImageElement singleElement = new TextImageElement(startX, startY, new RichTextInformation(single.getValue()));
-		
-		ResultImageRenderer.addElement(singleElement);
-		
-		return singleElement.getyPosBottomRight();
+	public static String printSingleElement(CBMCResultValueSingle single, int offset) {
+		return getWhiteSpaces(offset) + single.getValue() + "\n";
 	}
 
-	public static double printOneDimResult(CBMCResultValueArray array, double startX, double startY) {
-		double lastYPos = startY;
-
-		List<RichTextInformation> text = new ArrayList<RichTextInformation>();
+	public static String printOneDimResult(CBMCResultValueArray array, int offset) {
+		
+		String toReturn = getWhiteSpaces(offset);
 
 		List<CBMCResultValueWrapper> arrayValues = array.getValues();
 
 		for (int i = 0; i < arrayValues.size(); i++) {
-			
 			CBMCResultValueSingle singleValue = (CBMCResultValueSingle) arrayValues.get(i).getResultValue();
 
-			text.add(new RichTextInformation(singleValue.getValue() + " "));
+			toReturn = toReturn + singleValue.getValue() + " ";
 		}
 
-		TextImageElement voteElement = new TextImageElement(startX, lastYPos, text);
-
-		lastYPos = voteElement.getyPosBottomRight();
-
-		ResultImageRenderer.addElement(voteElement);
-
-		return lastYPos;
+		return toReturn + "\n";
 	}
 
-	public static double printTwoDimResult(CBMCResultValueArray array, double startX, double startY) {
-		double lastYPos = startY;
+	public static List<String> printTwoDimResult(CBMCResultValueArray array, int offset) {
 
+		List<String> toReturn = new ArrayList<String>();
+		
 		List<CBMCResultValueWrapper> arrayValues = array.getValues();
 
 		for (int i = 0; i < arrayValues.size(); i++) {
-
 			CBMCResultValueArray current_array = (CBMCResultValueArray) arrayValues.get(i).getResultValue();
-
-			lastYPos = printOneDimResult(current_array, startX, lastYPos);
+			
+			toReturn.add(printOneDimResult(current_array, offset));
 		}
 		
-		return lastYPos;
+		return toReturn;
 	}
 }

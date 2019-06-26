@@ -20,6 +20,7 @@ import edu.pse.beast.toolbox.LinkedImage;
 import edu.pse.beast.toolbox.LinkedImageOps;
 import edu.pse.beast.toolbox.ParStyle;
 import edu.pse.beast.toolbox.RealLinkedImage;
+import edu.pse.beast.toolbox.TextFieldCreator;
 import edu.pse.beast.toolbox.TextStyle;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
@@ -28,51 +29,28 @@ import javafx.scene.paint.Color;
 
 public class CBMCOutput extends ResultPresentationType {
 
-	private final TextOps<String, TextStyle> styledTextOps = SegmentOps.styledTextOps();
+	GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area;
 
-	private final LinkedImageOps<TextStyle> linkedImageOps = new LinkedImageOps<>();
-
-	private Node createNode(StyledSegment<Either<String, LinkedImage>, TextStyle> seg,
-			BiConsumer<? super TextExt, TextStyle> applyStyle) {
-		return seg.getSegment().unify(text -> StyledTextArea.createStyledTextNode(text, seg.getStyle(), applyStyle),
-				LinkedImage::createNode);
-	}
-
-	private final GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area = new GenericStyledArea<>(
-			ParStyle.EMPTY, // default paragraph style
-			(paragraph, style) -> paragraph.setStyle(style.toCss()), // paragraph style setter
-
-			TextStyle.DEFAULT.updateFontSize(12).updateFontFamily("Serif").updateTextColor(Color.BLACK), // default
-																											// segment																				// style
-			styledTextOps._or(linkedImageOps, (s1, s2) -> Optional.empty()), // segment operations
-			seg -> createNode(seg, (text, style) -> text.setStyle(style.toCss()))); // Node creator and segment style
-																					// setter
+	int standartSize = 10;
 
 	@Override
 	public Node presentResult(Result result) {
 
-		//generate the text area in which the results can be displayed
-		GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area = new GenericStyledArea<>(
-				ParStyle.EMPTY, // default paragraph style
-				(paragraph, style) -> paragraph.setStyle(style.toCss()), // paragraph style setter
+		if (area == null) {
+			area = TextFieldCreator.getGenericStyledAreaInstance(TextStyle.DEFAULT.fontSize(standartSize),
+					ParStyle.EMPTY);
+			area.setEditable(false);
+		}
 
-				TextStyle.DEFAULT.updateFontSize(12).updateFontFamily("Serif").updateTextColor(Color.BLACK), // default
-																												// segment
-																												// style
-				styledTextOps._or(linkedImageOps, (s1, s2) -> Optional.empty()), // segment operations
-				seg -> createNode(seg, (text, style) -> text.setStyle(style.toCss()))); // Node creator and segment
-
-		area.setEditable(false);
-		
 		List<String> resultText = result.getResultText();
-		
+
 		for (Iterator<String> iterator = resultText.iterator(); iterator.hasNext();) {
 			String text = (String) iterator.next();
 			area.appendText(text);
 		}
 
-		VirtualizedScrollPane<GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle>> vsPane
-			= new VirtualizedScrollPane<>(area); // Wrap it in a scroll area
+		VirtualizedScrollPane<GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle>> vsPane = new VirtualizedScrollPane<>(
+				area); // Wrap it in a scroll area
 
 		return vsPane;
 	}
@@ -89,6 +67,13 @@ public class CBMCOutput extends ResultPresentationType {
 
 	@Override
 	public boolean supportsZoom() {
-		return false;
+		return true;
+	}
+
+	@Override
+	public void zoomTo(double zoomValue) {
+		if (area != null) {
+			area.setStyle(0, area.getLength(), TextStyle.DEFAULT.fontSize((int) (standartSize + zoomValue)));
+		}
 	}
 }

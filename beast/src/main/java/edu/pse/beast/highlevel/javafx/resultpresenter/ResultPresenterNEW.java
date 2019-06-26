@@ -9,6 +9,8 @@ import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresenta
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
@@ -39,6 +41,15 @@ public class ResultPresenterNEW {
 			this.setPresentationType(new Default()); // set the defaul presentationtype, if the user didn't set another
 														// one before
 		}
+		
+		GUIController.getController().getZoomSlider().valueProperty().addListener(new ChangeListener<>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				if (presentationType != null && presentationType.supportsZoom()) {
+					presentationType.zoomTo((double) newValue);
+				}
+			}
+		});
 	}
 
 	/**

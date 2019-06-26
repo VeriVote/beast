@@ -2,17 +2,17 @@ package edu.pse.beast.toolbox;
 
 /**
  * A simple generic tuple
- * @param <X>
- * @param <Y>
+ * @param <FIRST>
+ * @param <SECOND>
  *
  * @author Holger Klein
  */
-public class Tuple<X, Y> {
-    public final X x;
-    public final Y y;
+public class Tuple<FIRST, SECOND> {
+    public final FIRST first;
+    public final SECOND second;
 
-    public Tuple(X x, Y y) {
-        this.x = x;
-        this.y = y;
+    public Tuple(FIRST x, SECOND y) {
+        this.first = x;
+        this.second = y;
     }
 }

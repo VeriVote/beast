@@ -124,7 +124,7 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
             return;
         }
         for (int i = 0; i < absPosToMsg.size(); ++i) {
-            if (absPosToMsg.get(i).x <= pos && absPosToMsg.get(i).y >= pos) {
+            if (absPosToMsg.get(i).first <= pos && absPosToMsg.get(i).second >= pos) {
                 pane.setToolTipText(msges.get(i));
                 // errorPopupMenu.getErrorItem().setText(msges.get(i));
                 // errorPopupMenu.show(pane, e.getX(), e.getY() + 20);

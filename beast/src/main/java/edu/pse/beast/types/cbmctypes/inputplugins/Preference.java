@@ -1,6 +1,7 @@
 package edu.pse.beast.types.cbmctypes.inputplugins;
 
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -285,25 +286,26 @@ public class Preference extends CBMCInputType {
     public String otherToString() {
         return "Preference";
     }
-
+	
 	@Override
-	public int drawResult(Result result, double startY) {
+	public List<String> drawResult(Result result) {	
+		List<String> toReturn = new ArrayList<String>();
 		
 		List<ResultValueWrapper> votes = result.readVariableValue("votes\\d"); //TODO name container
 		
-		double previousMaxY = startY;
-		
 		for (ResultValueWrapper currentVote: votes) {
 			
-			Point2D.Double point = CBMCResultPresentationHelper.printNameResult(currentVote.getName(), 20, previousMaxY);
+			String name = currentVote.getName();
+			
+			toReturn.add(name);
 			
 	    	CBMCResultValueStruct struct = (CBMCResultValueStruct) currentVote.getResultValue();
 	    	CBMCResultValueArray arr = (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
-	    	
-	    	previousMaxY = CBMCResultPresentationHelper.printTwoDimResult(arr, point.x, point.y);
+			
+			toReturn.addAll(CBMCResultPresentationHelper.printTwoDimResult(arr, name.length()));
 		}	
 		
-		return (int) previousMaxY;
+		return toReturn;
 	}
 
 	@Override

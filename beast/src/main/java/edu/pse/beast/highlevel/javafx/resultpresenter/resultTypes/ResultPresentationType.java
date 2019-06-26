@@ -71,4 +71,6 @@ public abstract class ResultPresentationType {
 			return item;
 		}
 	}
+	
+	public abstract void zoomTo(double zoomValue);
 }
