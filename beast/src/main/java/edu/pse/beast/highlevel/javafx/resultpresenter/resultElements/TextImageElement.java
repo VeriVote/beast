@@ -1,6 +1,5 @@
 package edu.pse.beast.highlevel.javafx.resultpresenter.resultElements;
 
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.font.FontRenderContext;
@@ -12,6 +11,7 @@ import java.util.List;
 
 import edu.pse.beast.toolbox.RichTextInformation;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Font;
 
 public class TextImageElement extends ResultImageElement {
 	// objects needed to calculate the size of the text
@@ -56,37 +56,42 @@ public class TextImageElement extends ResultImageElement {
 		double xOffset = 0;
 
 		for (RichTextInformation info : richTextInfo) {
-			Font scaledFont = new Font(info.font.getName(), info.font.getStyle(),
-					(int) (Math.round(((info.font.getSize() * scale)))));
-
-			graphics.setFont(scaledFont);
-			graphics.setColor(info.color);
-
-			graphics.drawString(replaceCharacters(info.text), (float) ((super.getxPosTopLeft() * scale) + xOffset),
-					(float) (super.getyPosBottomRight() * scale));
-
-			xOffset += scaledFont.getStringBounds(replaceCharacters(info.text), frc).getWidth();
+			
+//			TODO change richtextinfo maybe to TextStyle
+//			
+//			Font scaledFont = new Font(info.font.getName(), info.font.getStyle(),
+//					(int) (Math.round(((info.font.getSize() * scale)))));
+//
+//			graphics.setFont(scaledFont);
+//			graphics.setColor(info.color);
+//
+//			graphics.drawString(replaceCharacters(info.text), (float) ((super.getxPosTopLeft() * scale) + xOffset),
+//					(float) (super.getyPosBottomRight() * scale));
+//
+//			xOffset += scaledFont.getStringBounds(replaceCharacters(info.text), frc).getWidth();
 		}
 	}
 
+	@Deprecated
 	private static double getMaxX(double startX, List<RichTextInformation> textInfo) {
 		double maxTextWidth = 0;
 
 		for (Iterator<RichTextInformation> iterator = textInfo.iterator(); iterator.hasNext();) {
 			RichTextInformation info = (RichTextInformation) iterator.next();
-			maxTextWidth += info.font.getStringBounds(replaceCharacters(info.text), frc).getWidth();
+			//maxTextWidth += info.font.getStringBounds(replaceCharacters(info.text), frc).getWidth();
 		}
 		return startX + maxTextWidth;
 	}
 
+	@Deprecated
 	private static double getMaxY(double startY, List<RichTextInformation> textInfo) {
 
 		double maxTextHeight = 0;
 
 		for (Iterator<RichTextInformation> iterator = textInfo.iterator(); iterator.hasNext();) {
 			RichTextInformation info = (RichTextInformation) iterator.next();
-			maxTextHeight = Math.max(maxTextHeight,
-					info.font.getStringBounds(replaceCharacters(info.text), frc).getHeight());
+			//maxTextHeight = Math.max(maxTextHeight,
+			//		info.font.getStringBounds(replaceCharacters(info.text), frc).getHeight());
 		}
 
 		return startY + maxTextHeight;

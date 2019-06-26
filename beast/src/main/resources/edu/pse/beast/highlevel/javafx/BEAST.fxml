@@ -523,11 +523,7 @@
                                  <center>
                                     <BorderPane fx:id="resultBorderPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                        <center>
-                                          <ScrollPane fx:id="resultScrollPane">
-                                             <content>
-                                                <Pane fx:id="resultPane" snapToPixel="true" />
-                                             </content>
-                                          </ScrollPane>
+                                          <ScrollPane fx:id="resultScrollPane" />
                                        </center>
                                     </BorderPane>
                                  </center>

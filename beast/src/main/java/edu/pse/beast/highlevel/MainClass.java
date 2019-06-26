@@ -26,6 +26,7 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 
 /**
@@ -67,6 +68,7 @@ public class MainClass extends Application {
     public void start(Stage stage) throws Exception {
         Locale locale = Locale.ENGLISH;
         mainStage = stage;
+
         try {
             GUIController controller = new GUIController(mainStage);
             FXMLLoader loader

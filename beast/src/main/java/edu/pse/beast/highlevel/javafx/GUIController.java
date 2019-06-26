@@ -201,7 +201,7 @@ public class GUIController {
 
 	@FXML // fx:id="propertyPane"
 	private Tab propertyPane;
-
+	
 	@FXML // fx:id="resultPane"
 	private Tab resultTab;
 
@@ -252,9 +252,6 @@ public class GUIController {
 
 	@FXML
 	private TreeView<CustomTreeItem> treeView;
-
-	@FXML
-	private Pane resultPane;
 
 	@FXML
 	private TabPane mainTabPane;
@@ -477,6 +474,9 @@ public class GUIController {
 			
 		}
 		
+		resultScrollPane.setFitToHeight(true);
+		resultScrollPane.setFitToWidth(true);
+		
 		// turn off the zoom slider in the beginning
 		zoomSlider.setDisable(true);
 
@@ -607,7 +607,7 @@ public class GUIController {
 		// reset the property fields
 		GUIController.getController().resultNameField.setText("No property selected.");
 		// reset the result field
-		GUIController.getController().getResultPane().getChildren().clear();
+		GUIController.getController().getResultScrollPane().setContent(null);
 	}
 
 	private void removeAllProperties() {
@@ -673,33 +673,6 @@ public class GUIController {
 
 	@FXML
 	public void undoButton(ActionEvent event) {
-		long start_time = System.nanoTime();
-		// test area, here we set an example pie chart
-		List<Tuple3<String, Double, Color>> resultValues = new ArrayList<Tuple3<String, Double, Color>>();
-		resultValues.add(new Tuple3<String, Double, Color>("eins", Math.random() * 1000, Color.red));
-		resultValues.add(new Tuple3<String, Double, Color>("zwei", Math.random() * 1000, Color.blue));
-		resultValues.add(new Tuple3<String, Double, Color>("drei", Math.random() * 1000, Color.orange));
-		resultValues.add(new Tuple3<String, Double, Color>("vier", Math.random() * 1000, Color.green));
-		resultValues.add(new Tuple3<String, Double, Color>("fünft", Math.random() * 1000, Color.pink));
-		PieChartElement pieChart2 = new PieChartElement(300, 300, 70, 70, resultValues);
-		// ResultImageRenderer.addElement(pieChart);
-		ResultImageRenderer.addElement(pieChart2);
-		List<RichTextInformation> rTI1 = new ArrayList<RichTextInformation>();
-		var info = new RichTextInformation("Hello World", new Font("Serif", Font.PLAIN, 20), Color.red);
-		var info2 = new RichTextInformation("AqZfyg", new Font("Serif", Font.PLAIN, 30), Color.blue);
-		rTI1.add(info);
-		List<RichTextInformation> rTI2 = new ArrayList<RichTextInformation>();
-		rTI2.add(info2);
-		TextImageElement tI1 = new TextImageElement(0, 0, rTI1);
-		TextImageElement tI2 = new TextImageElement(tI1.getxPosBottomRight(), tI1.getyPosBottomRight(), rTI2);
-		PieChartElement pieChart = new PieChartElement(tI2.getxPosTopLeft(), tI2.getyPosBottomRight(), 100, 100,
-				resultValues);
-		ResultImageRenderer.addElement(tI1);
-		ResultImageRenderer.addElement(tI2);
-		ResultImageRenderer.addElement(pieChart);
-		ResultImageRenderer.drawElements();
-		//ResultPresenterNEW.getInstance().setResultNode(ResultImageRenderer.getImageView());
-		System.out.println("dauer: " + ((System.nanoTime() - start_time) / 1000000) + " millisekunden");
 		getFocusedArea().undo();
 	}
 
@@ -1066,7 +1039,7 @@ public class GUIController {
 		properties.get(0).wasClicked(false);
 		GUIController.getController().resultNameField.setText("no property selected");
 		// reset the result field
-		GUIController.getController().getResultPane().getChildren().clear();
+		GUIController.getController().getResultScrollPane().setContent(null);
 	}
 
 	public void newVotingInput() {
@@ -1331,10 +1304,6 @@ public class GUIController {
 
 	public static GUIController getController() {
 		return controller;
-	}
-
-	public Pane getResultPane() {
-		return resultPane;
 	}
 
 	public BorderPane getResultBorderPane() {

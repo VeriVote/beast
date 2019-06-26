@@ -20,211 +20,194 @@ import javafx.scene.input.MouseEvent;
 
 public class ResultImageRenderer {
 
-    private static double scrollPosV;
-    private static double scrollPosH;
+	private static double scrollPosV;
+	private static double scrollPosH;
 
-    private static Boolean drawingBlocked = false;
+	private static Boolean drawingBlocked = false;
 
-    private static double currentScale = 1;
+	private static double currentScale = 1;
 
-    private static List<ResultImageElement> elementList = new ArrayList<ResultImageElement>();
+	private static List<ResultImageElement> elementList = new ArrayList<ResultImageElement>();
 
-    private static ImageView view = new ImageView();
+	private static ImageView view = new ImageView();
 
-    private static Color backgroundColor = Color.white;
+	private static Color backgroundColor = Color.white;
 
-    private static double imageMinWidth
-            = GUIController.getController().getResultBorderPane().getWidth();
-    private static double imageMinHeight
-            = GUIController.getController().getResultBorderPane().getHeight();
+	private static double imageMinWidth = GUIController.getController().getResultBorderPane().getWidth();
+	private static double imageMinHeight = GUIController.getController().getResultBorderPane().getHeight();
 
-    private static final double IMAGE_MAX_WIDTH  = 10000;
-    private static final double IMAGE_MAX_HEIGHT = 10000;
+	private static final double IMAGE_MAX_WIDTH = 10000;
+	private static final double IMAGE_MAX_HEIGHT = 10000;
 
-    private static double imageDesiredWidth = imageMinWidth;
-    private static double imageDesiredHeight = imageMinHeight;
+	private static double imageDesiredWidth = imageMinWidth;
+	private static double imageDesiredHeight = imageMinHeight;
 
-    // the next image the graphic will be drawn on
-    private static BufferedImage image
-            = new BufferedImage((int) imageDesiredWidth, (int) imageDesiredHeight,
-                                BufferedImage.TYPE_4BYTE_ABGR);
+	// the next image the graphic will be drawn on
+	private static BufferedImage image = new BufferedImage((int) imageDesiredWidth, (int) imageDesiredHeight,
+			BufferedImage.TYPE_4BYTE_ABGR);
 
-    static {
-        GUIController.getController().getResultBorderPane().widthProperty()
-                .addListener(new ChangeListener<Number>() {
-                    @Override
-            public void changed(ObservableValue<? extends Number> observableValue,
-                                Number oldSceneWidth, Number newSceneWidth) {
-                        imageMinWidth =
-                                GUIController.getController().getResultBorderPane().getWidth();
-                        updateImageSizeAndRedraw();
-                    }
-                });
+	static {
+		GUIController.getController().getResultBorderPane().widthProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth,
+					Number newSceneWidth) {
+				imageMinWidth = GUIController.getController().getResultBorderPane().getWidth();
+				updateImageSizeAndRedraw();
+			}
+		});
 
-        GUIController.getController().getResultBorderPane().heightProperty()
-                .addListener(new ChangeListener<Number>() {
-                    @Override
-            public void changed(ObservableValue<? extends Number> observableValue,
-                                Number oldSceneHeight, Number newSceneHeight) {
-                        imageMinHeight
-                            = GUIController.getController().getResultBorderPane().getHeight();
-                        updateImageSizeAndRedraw();
-                    }
-                });
+		GUIController.getController().getResultBorderPane().heightProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneHeight,
+					Number newSceneHeight) {
+				imageMinHeight = GUIController.getController().getResultBorderPane().getHeight();
+				updateImageSizeAndRedraw();
+			}
+		});
 
-        GUIController.getController().getZoomSlider().valueProperty()
-                .addListener(new ChangeListener<>() {
-                    @Override
-            public void changed(ObservableValue<? extends Number> observable,
-                                Number oldValue, Number newValue) {
-                        zoomTo((double) newValue);
-                    }
-                });
+		GUIController.getController().getZoomSlider().valueProperty().addListener(new ChangeListener<>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+				zoomTo((double) newValue);
+			}
+		});
 
-        // TODO determine which mouse behavior would fit best
-        view.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+		// TODO determine which mouse behavior would fit best
+		view.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 
-            @Override
-            public void handle(MouseEvent event) {
-                double clickX = event.getX();
-                double clickY = event.getY();
+			@Override
+			public void handle(MouseEvent event) {
+				double clickX = event.getX();
+				double clickY = event.getY();
 
-                for (ResultImageElement element : elementList) {
-                    if (element.isInside(clickX, clickY)) {
-                        MouseEvent tmpEvent = (MouseEvent) event.clone();
-                        element.isClicked(tmpEvent);
-                        tmpEvent.consume();
-                    }
-                }
-                event.consume();
+				for (ResultImageElement element : elementList) {
+					if (element.isInside(clickX, clickY)) {
+						MouseEvent tmpEvent = (MouseEvent) event.clone();
+						element.isClicked(tmpEvent);
+						tmpEvent.consume();
+					}
+				}
+				event.consume();
 
-                drawElements();
-            }
-        });
-    }
+				drawElements();
+			}
+		});
+	}
 
-    public static synchronized void reset() {
-        elementList.clear();
-        imageDesiredWidth = imageMinWidth;
-        imageDesiredHeight = imageMinHeight;
-    }
+	public static synchronized void reset() {
+		elementList.clear();
+		imageDesiredWidth = imageMinWidth;
+		imageDesiredHeight = imageMinHeight;
+	}
 
-    /**
-     * adds an element which will be printed on the next image.
-     *
-     * @param element the element which will be added to the list
-     */
-    public static synchronized void addElement(ResultImageElement element) {
-        imageDesiredWidth = Math.max(imageDesiredWidth, element.getxPosBottomRight());
-        imageDesiredHeight = Math.max(imageDesiredHeight, element.getyPosBottomRight());
+	/**
+	 * adds an element which will be printed on the next image.
+	 *
+	 * @param element the element which will be added to the list
+	 */
+	public static synchronized void addElement(ResultImageElement element) {
+		imageDesiredWidth = Math.max(imageDesiredWidth, element.getxPosBottomRight());
+		imageDesiredHeight = Math.max(imageDesiredHeight, element.getyPosBottomRight());
 
-        elementList.add(element);
-    }
+		elementList.add(element);
+	}
 
-    /**
-     * draw all elements on the underlying image, and show this image in the image
-     * view
-     */
-    public static void drawElements() {
-    	
-        if (image.getWidth() != imageDesiredWidth || image.getHeight() != imageDesiredHeight) {
-            updateImageSize();
-        }
+	/**
+	 * draw all elements on the underlying image, and show this image in the image
+	 * view
+	 */
+	public static void drawElements() {
 
-        GUIController.getController().getZoomSlider().setDisable(false);
+		if (image.getWidth() != imageDesiredWidth || image.getHeight() != imageDesiredHeight) {
+			updateImageSize();
+		}
 
-        synchronized (drawingBlocked) {
-            if (drawingBlocked) {
-                return;
-            } else {
-                drawingBlocked = true;
-            }
-        }
+		GUIController.getController().getZoomSlider().setDisable(false);
 
-        drawingBlocked = true;
-        Graphics2D graphics = (Graphics2D) image.getGraphics();
-        graphics.setColor(backgroundColor);
-        graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
-        // anti-aliasing
-        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                                  RenderingHints.VALUE_ANTIALIAS_ON);
-        graphics.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
-                                  RenderingHints.VALUE_STROKE_PURE);
+		synchronized (drawingBlocked) {
+			if (drawingBlocked) {
+				return;
+			} else {
+				drawingBlocked = true;
+			}
+		}
 
-        for (Iterator<ResultImageElement> iterator = elementList.iterator(); iterator.hasNext();) {
-            ResultImageElement element = (ResultImageElement) iterator.next();
-            element.drawElement((Graphics2D) graphics.create(), currentScale);
-        }
+		Graphics2D graphics = (Graphics2D) image.getGraphics();
+		graphics.setColor(backgroundColor);
+		graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
+		// anti-aliasing
+		graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		graphics.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 
-        graphics.dispose();
-        view.setImage(SwingFXUtils.toFXImage(image, null));
+		for (Iterator<ResultImageElement> iterator = elementList.iterator(); iterator.hasNext();) {
+			ResultImageElement element = (ResultImageElement) iterator.next();
+			element.drawElement((Graphics2D) graphics.create(), currentScale);
+		}
 
-        synchronized (drawingBlocked) {
-            drawingBlocked = false;
-        }
-    }
+		graphics.dispose();
+		view.setImage(SwingFXUtils.toFXImage(image, null));
 
-    public static ImageView getImageView() {
-        return view;
-    }
+		synchronized (drawingBlocked) {
+			drawingBlocked = false;
+		}
+	}
 
-    private static void updateImageSize() {
-        image
-            = new BufferedImage(
-                    (int) (Math.max(imageMinWidth, imageDesiredWidth) * currentScale),
-                    (int) (Math.max(imageMinHeight, imageDesiredHeight) * currentScale),
-                    BufferedImage.TYPE_4BYTE_ABGR
-              );
-    }
+	public static ImageView getImageView() {
+		return view;
+	}
 
-    private static void updateImageSizeAndRedraw() {
-        updateImageSize();
-        drawElements();
-        setScrollBars();
-    }
+	private static void updateImageSize() {
+		image = new BufferedImage((int) (Math.max(imageMinWidth, imageDesiredWidth) * currentScale),
+				(int) (Math.max(imageMinHeight, imageDesiredHeight) * currentScale), BufferedImage.TYPE_4BYTE_ABGR);
+	}
 
-    private static synchronized void zoomTo(double zoomValue) {
-        if (zoomValue < 0) {
-            currentScale = 1 + (0.09 * zoomValue);
-        } else {
-            currentScale = 1 + (0.9 * zoomValue);
-        }
+	private static void updateImageSizeAndRedraw() {
+		drawElements();
+		setScrollBars();
+	}
 
-        if (imageDesiredWidth * currentScale > IMAGE_MAX_WIDTH) {
-            currentScale = Math.max(1, IMAGE_MAX_WIDTH / imageDesiredWidth);
-        }
+	private static synchronized void zoomTo(double zoomValue) {
+		if (zoomValue < 0) {
+			currentScale = 1 + (0.09 * zoomValue);
+		} else {
+			currentScale = 1 + (0.9 * zoomValue);
+		}
 
-        if (imageDesiredHeight * currentScale > IMAGE_MAX_HEIGHT) {
-            currentScale = Math.max(1, IMAGE_MAX_HEIGHT / imageDesiredHeight);
-        }
+		if (imageDesiredWidth * currentScale > IMAGE_MAX_WIDTH) {
+			currentScale = Math.max(1, IMAGE_MAX_WIDTH / imageDesiredWidth);
+		}
 
-        // preserve the previous scroll setting
-        scrollPosV = GUIController.getController().getResultScrollPane().getVvalue();
+		if (imageDesiredHeight * currentScale > IMAGE_MAX_HEIGHT) {
+			currentScale = Math.max(1, IMAGE_MAX_HEIGHT / imageDesiredHeight);
+		}
 
-        scrollPosH = GUIController.getController().getResultScrollPane().getHvalue();
+		// preserve the previous scroll setting
+		scrollPosV = GUIController.getController().getResultScrollPane().getVvalue();
 
-        updateImageSizeAndRedraw();
-    }
+		scrollPosH = GUIController.getController().getResultScrollPane().getHvalue();
 
-    private static void setScrollBars() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                GUIController.getController().getResultScrollPane().setVvalue(scrollPosV);
+		updateImageSizeAndRedraw();
+	}
 
-                GUIController.getController().getResultScrollPane().setHvalue(scrollPosH);
-            }
-        });
-    }
-    
-    public static void resetScrollBars() {
-    	Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                GUIController.getController().getResultScrollPane().setVvalue(0);
+	private static void setScrollBars() {
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				GUIController.getController().getResultScrollPane().setVvalue(scrollPosV);
 
-                GUIController.getController().getResultScrollPane().setHvalue(0);
-            }
-        });
-    }
+				GUIController.getController().getResultScrollPane().setHvalue(scrollPosH);
+			}
+		});
+	}
+
+	public static void resetScrollBars() {
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				GUIController.getController().getResultScrollPane().setVvalue(0);
+
+				GUIController.getController().getResultScrollPane().setHvalue(0);
+			}
+		});
+	}
 }

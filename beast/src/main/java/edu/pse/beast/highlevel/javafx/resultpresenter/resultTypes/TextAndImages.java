@@ -1,7 +1,5 @@
 package edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes;
 
-import java.util.Iterator;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 
@@ -26,7 +24,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-public class CBMCOutput extends ResultPresentationType {
+public class TextAndImages extends ResultPresentationType {
 
 	private final TextOps<String, TextStyle> styledTextOps = SegmentOps.styledTextOps();
 
@@ -43,7 +41,8 @@ public class CBMCOutput extends ResultPresentationType {
 			(paragraph, style) -> paragraph.setStyle(style.toCss()), // paragraph style setter
 
 			TextStyle.DEFAULT.updateFontSize(12).updateFontFamily("Serif").updateTextColor(Color.BLACK), // default
-																											// segment																				// style
+																											// segment
+																											// style
 			styledTextOps._or(linkedImageOps, (s1, s2) -> Optional.empty()), // segment operations
 			seg -> createNode(seg, (text, style) -> text.setStyle(style.toCss()))); // Node creator and segment style
 																					// setter
@@ -51,7 +50,8 @@ public class CBMCOutput extends ResultPresentationType {
 	@Override
 	public Node presentResult(Result result) {
 
-		//generate the text area in which the results can be displayed
+		//TODO still WIP, no images get created
+		
 		GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area = new GenericStyledArea<>(
 				ParStyle.EMPTY, // default paragraph style
 				(paragraph, style) -> paragraph.setStyle(style.toCss()), // paragraph style setter
@@ -61,34 +61,47 @@ public class CBMCOutput extends ResultPresentationType {
 																												// style
 				styledTextOps._or(linkedImageOps, (s1, s2) -> Optional.empty()), // segment operations
 				seg -> createNode(seg, (text, style) -> text.setStyle(style.toCss()))); // Node creator and segment
-
+		
 		area.setEditable(false);
 		
-		List<String> resultText = result.getResultText();
+		Canvas can = new Canvas(100, 100);
+		GraphicsContext g = can.getGraphicsContext2D();
 		
-		for (Iterator<String> iterator = resultText.iterator(); iterator.hasNext();) {
-			String text = (String) iterator.next();
-			area.appendText(text);
+        ReadOnlyStyledDocument<ParStyle, Either<String, LinkedImage>, TextStyle> ros =
+                ReadOnlyStyledDocument.fromSegment(Either.right(new RealLinkedImage(new Canvas(100, 100))),
+                                                   ParStyle.EMPTY, TextStyle.DEFAULT, area.getSegOps());
+		
+
+		g.setFill(Color.RED);
+        g.fillOval(10, 60, 30, 30);
+        
+		String textTest = "testasdjfklasdf\n";
+		
+		for (int i = 0; i < 1000; i++) {
+			area.replaceText(area.getLength(), area.getLength(), textTest);
+			
 		}
-
-		VirtualizedScrollPane<GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle>> vsPane
-			= new VirtualizedScrollPane<>(area); // Wrap it in a scroll area
-
+		
+		area.replace(area.getLength(), area.getLength(), ros);
+		
+		VirtualizedScrollPane<GenericStyledArea> vsPane = new VirtualizedScrollPane<>(area); //Wrap it in a scroll area
+		
 		return vsPane;
 	}
 
 	@Override
 	public String getName() {
-		return "CBMC Output";
+		return "TextAndImagesWIP";
 	}
 
 	@Override
 	public String getToolTipDescription() {
-		return "Shows the complete output cbmc gave";
+		return "WIP merge of images and text";
 	}
 
 	@Override
 	public boolean supportsZoom() {
-		return false;
+		return true;
 	}
+
 }

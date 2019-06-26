@@ -3,12 +3,14 @@ package edu.pse.beast.highlevel.javafx.resultpresenter;
 import java.util.List;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.CBMCOutput;
 import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.Default;
 import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresentationType;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 import javafx.scene.Node;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -27,12 +29,12 @@ public class ResultPresenterNEW {
 
 	private ResultPresentationType presentationType;
 
-	private final Pane resultPane;
+	private final ScrollPane resultScrollPane;
 
 	private Result result = null;
 
 	private ResultPresenterNEW() {
-		this.resultPane = GUIController.getController().getResultPane();
+		this.resultScrollPane = GUIController.getController().getResultScrollPane();
 		if (presentationType == null) {
 			this.setPresentationType(new Default()); // set the defaul presentationtype, if the user didn't set another
 														// one before
@@ -44,7 +46,10 @@ public class ResultPresenterNEW {
 	 */
 	private void reset() {
 		ResultImageRenderer.reset();
-		resultPane.getChildren().clear();
+		
+		resultScrollPane.setContent(null);
+		
+		//resultPane.getChildren().clear();
 	}
 
 	public void setResult(Result result) {
@@ -61,7 +66,7 @@ public class ResultPresenterNEW {
 		boolean changed = (this.presentationType != presentationType);
 		this.presentationType = presentationType;
 		if (changed) {
-			showResult();
+			showResult();			
 		}
 	}
 
@@ -85,23 +90,11 @@ public class ResultPresenterNEW {
 	 * @param resultNode the Node which will be shown in the result window
 	 */
 	public void setResultNode(Node resultNode) {
-		reset();
-		ResultImageRenderer.resetScrollBars();
-
-		resultPane.getChildren().add(resultNode);
-	}
-
-	/**
-	 * sets the Text of the result pane.
-	 * 
-	 * @param resultText A list of JavaFX.scene.text.Text, which can be colored and
-	 *                   sized as wished
-	 */
-	private void setResultText(List<Text> resultText) {
-		reset();
-		TextFlow resultTextField = new TextFlow();
-		resultTextField.getChildren().addAll(resultText);
-		resultPane.getChildren().add(resultTextField);
+		ResultImageRenderer.resetScrollBars();	
+		
+		//resultPane.getChildren().add(resultNode);	
+		
+		resultScrollPane.setContent(resultNode);
 	}
 
 	public synchronized static ResultPresenterNEW getInstance() {

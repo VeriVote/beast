@@ -14,6 +14,7 @@ import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
+import javafx.scene.layout.Pane;
 
 public abstract class ResultPresentationType {
 

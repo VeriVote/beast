@@ -1,11 +1,13 @@
 package edu.pse.beast.toolbox;
 
-import java.awt.Color;
-import java.awt.Font;
+import javafx.geometry.Bounds;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 public class RichTextInformation {
     public final String text;
-    public final Font font;
+    public final javafx.scene.text.Font font;
     public final Color color;
 
     /**
@@ -26,7 +28,14 @@ public class RichTextInformation {
     */
    public RichTextInformation(String text) {
        this.text = text;
-       this.font = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
+       this.font = new Font(12);
        this.color = Color.BLACK;
+   }
+   
+   public Bounds getSize() {
+	   Text textField = new Text(this.text);
+	   textField.setFont(this.font);
+	   
+	   return textField.getBoundsInLocal();
    }
 }
