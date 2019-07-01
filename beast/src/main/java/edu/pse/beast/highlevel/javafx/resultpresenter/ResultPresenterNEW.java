@@ -1,21 +1,13 @@
 package edu.pse.beast.highlevel.javafx.resultpresenter;
 
-import java.util.List;
-
 import edu.pse.beast.highlevel.javafx.GUIController;
-import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.CBMCOutput;
 import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.Default;
 import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresentationType;
 import edu.pse.beast.propertychecker.Result;
-import edu.pse.beast.types.InputType;
-import edu.pse.beast.types.OutputType;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 
 /**
  * This class is responsible to show the result of Checks. It provides ways of

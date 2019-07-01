@@ -18,19 +18,30 @@ import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
 public class Parliament extends CBMCOutputType {
+	
+	private static final String dataType = "int";	
+	
+	private static final int dimensions = 1;
+
+	private final static String[] sizeOfDimensions = { UnifiedNameContainer.getCandidate() };
+	
+	public Parliament() {
+		super(dataType, dimensions, sizeOfDimensions);
+	}
+	
+	@Override
+	public String getSimpleType() {
+		return "unsigned int[" + UnifiedNameContainer.getSeats() + "]";
+	}
+	
     @Override
-    public String getOutputString() {
+    public String getComplexType() {
         return UnifiedNameContainer.getStructResult();
     }
 
     @Override
     public String getOutputIDinFile() {
         return "CAND_PER_SEAT";
-    }
-
-    @Override
-    public int getDimension() {
-        return 1;
     }
 
     @Override
@@ -216,5 +227,12 @@ public class Parliament extends CBMCOutputType {
 			toReturn.add(CBMCResultPresentationHelper.printOneDimResult(arr, name.length()));
 		}		
 		return toReturn;
+	}
+	
+	
+	@Override
+	public String accessValues() {
+		// TODO Auto-generated method stub
+		return ".arr";
 	}
 }

@@ -64,7 +64,7 @@ public final class CCodeHelper {
 	 */
 	public static String getCType(ElectionTypeContainer electionContainer, String name) {
 		String decl = "unsigned int " + name;
-		decl = decl + electionContainer.getInputType().getInputString();
+		decl = decl + electionContainer.getInputType().getSimpleType();
 		return decl;
 	}
 
@@ -76,7 +76,7 @@ public final class CCodeHelper {
 	 * @return the c type
 	 */
 	public static String getCTypePointer(ElectionTypeContainer electionContainer) {
-		String decl = electionContainer.getOutputType().getOutputString();
+		String decl = electionContainer.getOutputType().getSimpleType();
 		return decl;
 	}
 
@@ -100,17 +100,36 @@ public final class CCodeHelper {
 
 	/**
 	 * generates the declaration String for a voting function depending on its input
+	 * and result type. This is the voting method which will be presented to the
+	 * user, so it should not contain structs, but just simple data types (except if
+	 * it cannot be helped)
+	 *
+	 * @param container the input format of the voting array passed to the function
+	 * @return the voting function declaration line
+	 */
+	public static String generateSimpleDeclString(ElectionTypeContainer container) {
+		String decl = "RESULT " + UnifiedNameContainer.getVotingMethod() + "(VOTES) {";
+
+		decl = decl.replace("RESULT", container.getOutputType().getSimpleType());
+		decl = decl.replace("VOTES",
+				container.getInputType().getSimpleType() + " " + UnifiedNameContainer.getVotingArray());
+
+		return decl;
+	}
+
+	/**
+	 * generates the declaration String for a voting function depending on its input
 	 * and result type.
 	 *
 	 * @param container the input format of the voting array passed to the function
 	 * @return the voting function declaration line
 	 */
-	public static String generateDeclString(ElectionTypeContainer container) {
+	public static String generateStructDeclString(ElectionTypeContainer container) {
 		String decl = "RESULT " + UnifiedNameContainer.getVotingMethod() + "(VOTES) {";
 
-		decl = decl.replace("RESULT", container.getOutputType().getOutputString());
+		decl = decl.replace("RESULT", container.getOutputType().getSimpleType());
 		decl = decl.replace("VOTES",
-				container.getInputType().getInputDataType() + " " + UnifiedNameContainer.getVotingArray());
+				container.getInputType().getComplexType() + " " + UnifiedNameContainer.getVotingArray());
 
 		return decl;
 	}
@@ -131,7 +150,7 @@ public final class CCodeHelper {
 	public static ElectionDescription generateElectionDescription(ElectionTypeContainer container, String name,
 			ElectionTemplateHandler templateHandler, StringResourceLoader stringResourceLoader) {
 		ElectionDescription description = new ElectionDescription(name, container.getInputType(),
-				container.getOutputType(), 2, 0, 0, 0, true);
+				container.getOutputType(), 0, 0, 0, true);
 		ArrayList<String> code = new ArrayList<>();
 		String inputIdInFile = container.getInputType().getInputIDinFile();
 		String outputIdInFile = container.getOutputType().getOutputIDinFile();
@@ -140,7 +159,7 @@ public final class CCodeHelper {
 				+ stringResourceLoader.getStringFromID(inputIdInFile + "_exp"));
 		code.add("//" + stringResourceLoader.getStringFromID(outputIdInFile) + ": "
 				+ stringResourceLoader.getStringFromID(outputIdInFile + "_exp"));
-		code.add(generateDeclString(container));
+		code.add(generateSimpleDeclString(container));
 		code.add("} ");
 		description.setCode(code);
 		return description;

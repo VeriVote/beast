@@ -24,7 +24,7 @@ public class PropertyChecker implements ResultCheckerCommunicator {
     }
 
     @Override
-    public List<Result> checkPropertiesForDescription(ElectionDescription elecDescr,
+	public List<Result> checkPropertiesForDescription(ElectionDescription elecDescr,
             List<ParentTreeItem> parentProperties, ElectionCheckParameter electionCheckParameter) {
         if (elecDescr == null || parentProperties == null || electionCheckParameter == null) {
             return null;

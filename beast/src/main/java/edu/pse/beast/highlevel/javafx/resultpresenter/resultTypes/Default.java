@@ -1,18 +1,15 @@
 package edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.fxmisc.richtext.GenericStyledArea;
 import org.reactfx.util.Either;
 
-import edu.pse.beast.highlevel.javafx.resultpresenter.ResultImageRenderer;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.LinkedImage;
 import edu.pse.beast.toolbox.ParStyle;
 import edu.pse.beast.toolbox.TextFieldCreator;
 import edu.pse.beast.toolbox.TextStyle;
-import edu.pse.beast.toolbox.Tuple;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 import javafx.scene.Node;

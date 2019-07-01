@@ -1,6 +1,5 @@
 package edu.pse.beast.types.cbmctypes.outputplugins;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,28 +9,36 @@ import edu.pse.beast.toolbox.CBMCResultPresentationHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
-import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueArray;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueSingle;
-import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueStruct;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
 public class SingleCandidate extends CBMCOutputType {
 
+	private static final String dataType = "int";
+	
+	private static final int dimensions = 0;
+
+	private final static String[] sizeOfDimensions = { };
+	
+	public SingleCandidate() {
+		super(dataType, dimensions, sizeOfDimensions);
+	}
+	
+	@Override
+	public String getSimpleType() {
+		return "unsigned int";
+	}
+	
     @Override
-    public String getOutputString() {
+    public String getComplexType() {
         return "unsigned int";
     }
 
     @Override
     public String getOutputIDinFile() {
         return "CAND_OR_UNDEF";
-    }
-
-    @Override
-    public int getDimension() {
-        return 0;
     }
 
     @Override
@@ -148,5 +155,11 @@ public class SingleCandidate extends CBMCOutputType {
 			toReturn.add(CBMCResultPresentationHelper.printSingleElement(value, name.length()));
 		}		
 		return toReturn;
+	}
+	
+	@Override
+	public String accessValues() {
+		// TODO Auto-generated method stub
+		return ".arr";
 	}
 }
