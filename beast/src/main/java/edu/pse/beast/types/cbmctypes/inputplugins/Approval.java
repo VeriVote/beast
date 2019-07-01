@@ -1,7 +1,5 @@
 package edu.pse.beast.types.cbmctypes.inputplugins;
 
-import java.awt.Color;
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,30 +7,33 @@ import java.util.List;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
-import edu.pse.beast.highlevel.javafx.resultpresenter.ResultImageRenderer;
-import edu.pse.beast.highlevel.javafx.resultpresenter.resultElements.TextImageElement;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CBMCResultPresentationHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
-import edu.pse.beast.toolbox.RichTextInformation;
-import edu.pse.beast.toolbox.Tuple3;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueArray;
-import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueSingle;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueStruct;
-import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class Approval extends CBMCInputType {
-	private String[] sizes = { UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate() };
+	
+	private static final String dataType = "int";
+	
+	private static final int dimensions = 2;
+	
+	private static final String[] sizeOfDimensions = { UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate() };
+	
+	public Approval() {
+		super(dataType, dimensions, sizeOfDimensions);
+	}
 
 	@Override
-	public String getInputString() {
-		return "[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "]";
+	public String getSimpleType() {
+		return "unsigned int[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "]";
 	}
 
 	@Override
@@ -66,15 +67,10 @@ public class Approval extends CBMCInputType {
 	}
 
 	@Override
-	public String getMaximalSize(int listDepth) {
-		return sizes[listDepth];
-	}
-
-	@Override
 	public void addVerifyMethod(CodeArrayListBeautifier code, OutputType outType) {
 		code.add("void verify() {");
 		code.add("int total_diff = 0;");
-		code.add("int " + UnifiedNameContainer.getNewVotesName() + "1" + getInputString() + ";");
+		code.add("int " + UnifiedNameContainer.getNewVotesName() + "1" + getSimpleType() + ";");
 		// go over all voters
 		code.add("for (int i = 0; i < V; i++) {");
 		code.addTab();
@@ -205,11 +201,6 @@ public class Approval extends CBMCInputType {
 	}
 
 	@Override
-	public int getDimension() {
-		return 2;
-	}
-
-	@Override
 	public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, int voteNumber) {
 	}
 
@@ -289,7 +280,13 @@ public class Approval extends CBMCInputType {
 	}
 
 	@Override
-	public String getInputDataType() {
+	public String getComplexType() {
 		return "struct vote_double";
+	}
+	
+	@Override
+	public String accessValues() {
+		// TODO Auto-generated method stub
+		return ".arr";
 	}
 }

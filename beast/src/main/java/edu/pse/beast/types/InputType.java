@@ -11,11 +11,11 @@ import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 
-public abstract class InputType implements InOutType {
+public abstract class InputType extends InOutType {
     //protected CommonHelpMethods helper;
 
-    public InputType() {
-        
+    public InputType(String dataType, int dimensions, String[] sizeOfDimensions) {
+        super(dataType, dimensions, sizeOfDimensions);
     }
 
     public static List<InputType> getInputTypes() {
@@ -32,14 +32,6 @@ public abstract class InputType implements InOutType {
     public final String toString() {
         return otherToString();
     }
-
-    /**
-     * returns a String containing the shape of the input object e.g "[" +
-     * UnifiedNameContainer.getVoter() + "]" for single choice
-     *
-     * @return the String with the input object
-     */
-    public abstract String getInputString();
 
     /**
      *
@@ -132,13 +124,6 @@ public abstract class InputType implements InOutType {
     public abstract List<String> getVotingResultCode(ResultValueWrapper votingData);
 
     /**
-     *
-     * @return the dimension of the array which holds the votes (e.g 1 for single
-     *         choice, 2 for approval)
-     */
-    public abstract int getDimension();
-
-    /**
      * so far only used for preference voting
      *
      * @param code       the code
@@ -160,17 +145,9 @@ public abstract class InputType implements InOutType {
 
     public abstract String getVoteDescriptionString(List<List<String>> origVotes);
 
-    public abstract String getMaximalSize(int listDepth);
-
     public abstract boolean hasVariableAsMinValue();
 
     public abstract boolean hasVariableAsMaxValue();
-
-    /**
-     * 
-     * @return the datatype this input type uses, e.g "struct vote_single"
-     */
-	public abstract String getInputDataType();
 	
 	public String getInfo() { //TODO move later on further down
 		return "input type information";

@@ -205,7 +205,7 @@ public final class BEASTCommunicator {
         GUIController.setConsoleText("searching for errors");
         // save the currently opened property
         GUIController.getController().getBooleanExpEditor().savePropertyTextAreasIntoDescription();
-        List<CodeError> codeErrors = CVariableErrorFinder.findErrors(description.getCode());
+        List<CodeError> codeErrors = CVariableErrorFinder.findErrors(description.getSimpleCode());
         if (codeErrors.size() != 0) {
             GUIController.getController().getCodeArea().displayErrors(codeErrors);
             return true;

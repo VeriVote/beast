@@ -20,11 +20,20 @@ import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class SingleChoiceStack extends CBMCInputType {
-    private String[] sizes = {UnifiedNameContainer.getCandidate()};
+	
+	private static final String dataType = "int";
+	
+	private static final int dimensions = 1;
 
+	private final static  String[] sizeOfDimensions = {UnifiedNameContainer.getCandidate()};
+
+	public SingleChoiceStack() {
+		super(dataType, dimensions, sizeOfDimensions);
+	}
+	
     @Override
-    public String getInputString() {
-        return "[" + UnifiedNameContainer.getCandidate() + "]";
+    public String getSimpleType() {
+        return "unsigned int[" + UnifiedNameContainer.getCandidate() + "]";
     }
 
     @Override
@@ -40,11 +49,6 @@ public class SingleChoiceStack extends CBMCInputType {
     @Override
     public String getMaximalValue() {
         return UnifiedNameContainer.getVoter();
-    }
-
-    @Override
-    public String getMaximalSize(int listDepth) {
-        return sizes[listDepth];
     }
 
     @Override
@@ -158,11 +162,6 @@ public class SingleChoiceStack extends CBMCInputType {
     }
 
     @Override
-    public int getDimension() {
-        return 1;
-    }
-
-    @Override
     public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code,
                                             int voteNumber) {
     }
@@ -248,7 +247,14 @@ public class SingleChoiceStack extends CBMCInputType {
 	}
 	
 	@Override
-	public String getInputDataType() {
+	public String getComplexType() {
 		return "struct stack_result";
+	}
+	
+	
+	@Override
+	public String accessValues() {
+		// TODO Auto-generated method stub
+		return ".arr";
 	}
 }

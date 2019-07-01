@@ -21,11 +21,20 @@ import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class SingleChoice extends CBMCInputType {
-    private String[] sizes = {UnifiedNameContainer.getVoter()};
+	
+	private static final String dataType = "int";
+	
+	private static final int dimensions = 1;
+
+	private final static  String[] sizeOfDimensions = {UnifiedNameContainer.getVoter()};
+	
+	public SingleChoice() {
+		super(dataType, dimensions, sizeOfDimensions);
+	}
 
     @Override
-    public String getInputString() {
-        return "[" + UnifiedNameContainer.getVoter() + "]";
+    public String getSimpleType() {
+        return "unsigned int[" + UnifiedNameContainer.getVoter() + "]";
     }
 
     @Override
@@ -41,11 +50,6 @@ public class SingleChoice extends CBMCInputType {
     @Override
     public String getMaximalValue() {
         return UnifiedNameContainer.getCandidate();
-    }
-
-    @Override
-    public String getMaximalSize(int listDepth) {
-        return sizes[listDepth];
     }
 
     @Override
@@ -224,11 +228,6 @@ public class SingleChoice extends CBMCInputType {
     }
 
     @Override
-    public int getDimension() {
-        return 1;
-    }
-
-    @Override
     public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, int voteNumber) {
     }
 
@@ -302,7 +301,13 @@ public class SingleChoice extends CBMCInputType {
 	}
 	
 	@Override
-	public String getInputDataType() {
+	public String getComplexType() {
 		return "struct vote_single";
+	}
+	
+	@Override
+	public String accessValues() {
+		// TODO Auto-generated method stub
+		return ".arr";
 	}
 }

@@ -814,7 +814,7 @@ public class GUIController {
 				OutputType.getOutputTypes());
 		if (triplet != null) {
 			codeArea.setNewElectionDescription(
-					new ElectionDescription(triplet.first, triplet.second, triplet.third, 0, 0, 0, 0, true));
+					new ElectionDescription(triplet.first, triplet.second, triplet.third, 0, 0, 0, true));
 		}
 	}
 
