@@ -648,7 +648,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             voteInput = "tmp_vote" + getTmpIndex();
             // create the variable
             code.add("unsigned int " + voteInput
-                     + electionTypeContainer.getInputType().getSimpleType()
+                     + electionTypeContainer.getInputType().getInputString()
                      + ";");
             voteInputSize = "tmp_size" + getTmpIndex();
             code.add("unsigned int " + voteInputSize + ";");
@@ -678,7 +678,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         int tupleSize = tupleVotes.size();
         String lastSplit = "last_split" + getTmpIndex();
 
-        final int dim = electionTypeContainer.getInputType().getAmountOfDimensions();
+        final int dim = electionTypeContainer.getInputType().getDimension();
         code.add("unsigned int " + lastSplit + " = 0;");
         // Split the array and extract the votes for all but one tuple element
         for (int i = 0; i < tupleSize - 1; i++) {
@@ -731,7 +731,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String voteInput = "tmp_vote" + getTmpIndex();
         // create the variable
         code.add("unsigned int " + voteInput
-                 + electionTypeContainer.getInputType().getSimpleType() + ";");
+                 + electionTypeContainer.getInputType().getInputString() + ";");
         String voteInputSize = "tmp_size" + getTmpIndex();
         code.add("unsigned int " + voteInputSize + ";");
         if (contentContext.getChild(0) instanceof ConcatenationExpContext) {
@@ -750,7 +750,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         // the result of the sub computation is now saved in "voteInput"
 
         // TODO extract this logic into InputType
-        if (electionTypeContainer.getInputType().getAmountOfDimensions() == 1) {
+        if (electionTypeContainer.getInputType().getDimension() == 1) {
             code.add("for (int i = 0; i < V; i++) {");
             code.add(voteToSaveInto + "[i] = " + voteInput + "[i];");
             code.add("}");
@@ -768,7 +768,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         if (electionTypeContainer.getOutputType() instanceof CandidateList) {
             String voteInput = "tmp_elect" + getTmpIndex();
             // create the variable
-            code.add(electionTypeContainer.getOutputType().getSimpleType()
+            code.add(electionTypeContainer.getOutputType().getOutputString()
                      + " " + voteInput + ";");
             IntersectExpNode intersectNode = new IntersectExpNode(node.intersectExp, voteInput);
             intersectNode.getVisited(this);
@@ -787,11 +787,11 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         IntersectExpContext context = node.intersectExpContext;
         String voteInputOne = "tmp_elect" + getTmpIndex();
         // create the variable
-        code.add(electionTypeContainer.getOutputType().getSimpleType()
+        code.add(electionTypeContainer.getOutputType().getOutputString()
                  + " " + voteInputOne + ";");
         String voteInputTwo = "tmp_elect" + getTmpIndex();
         // create the variable
-        code.add(electionTypeContainer.getOutputType().getSimpleType()
+        code.add(electionTypeContainer.getOutputType().getOutputString()
                  + " " + voteInputTwo + ";");
 
         intersectHelpMethod(context.intersectContent(0), voteInputOne,
@@ -804,15 +804,15 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     public void visitIntersectTypeExpNode(IntersectTypeExpNode node) {
         String voteInputOne = "tmp_elect" + getTmpIndex();
         // create the variable
-        code.add(electionTypeContainer.getOutputType().getSimpleType()
+        code.add(electionTypeContainer.getOutputType().getOutputString()
                  + " " + voteInputOne + ";");
         String voteInputTwo = "tmp_elect" + getTmpIndex();
         // create the variable
-        code.add(electionTypeContainer.getOutputType().getSimpleType()
+        code.add(electionTypeContainer.getOutputType().getOutputString()
                  + " " + voteInputTwo + ";");
         String toOutputTo = "tmp_output" + getTmpIndex();
         // create the variable
-        code.add(electionTypeContainer.getOutputType().getSimpleType()
+        code.add(electionTypeContainer.getOutputType().getOutputString()
                  + " " + toOutputTo + ";");
         intersectHelpMethod(node.context.intersectContent(0),
                             voteInputOne, node.context.intersectContent(1),
@@ -836,7 +836,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     public void visitIntersectContentNode(IntersectContentNode node) {
         String voteInput = "tmp_elect" + getTmpIndex();
         // create the variable
-        code.add(electionTypeContainer.getOutputType().getSimpleType()
+        code.add(electionTypeContainer.getOutputType().getOutputString()
                  + " " + voteInput + ";");
         if (node.intersectContentContext.Elect() != null) {
             code.add(voteInput + " = "
@@ -865,7 +865,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             voteInput = "tmp_vote" + getTmpIndex();
             // create the variable
             code.add("unsigned int " + voteInput
-                     + electionTypeContainer.getInputType().getSimpleType()
+                     + electionTypeContainer.getInputType().getInputString()
                      + ";");
             voteInputSize = "tmp_size" + getTmpIndex();
             code.add("unsigned int " + voteInputSize + ";");
@@ -877,7 +877,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                     instanceof ConcatenationExpContext) {
             // we have a concatenation
             voteInput = "unsigned int tmp_vote" + getTmpIndex() + " "
-                    + electionTypeContainer.getInputType().getSimpleType();
+                    + electionTypeContainer.getInputType().getInputString();
             ConcatenationExpNode concNode
                   = new ConcatenationExpNode(node.voteEquivalentsContext.concatenationExp(),
                                              voteInput, voteInputSize);
@@ -893,7 +893,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String voteToSaveInto = node.toOutput;
         String voteOutputLength = node.voteOutputLength;
         // TODO extract this logic into InputType
-        if (electionTypeContainer.getInputType().getAmountOfDimensions() == 1) {
+        if (electionTypeContainer.getInputType().getDimension() == 1) {
             code.add("for(int i = 0; i < V; i++) {");
             code.add(voteToSaveInto + "[i] = " + voteInput + "[i];");
             code.add("}");
@@ -923,7 +923,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String voteInputOne = "tmp_vote" + getTmpIndex();
         // create the variable
         code.add("unsigned int " + voteInputOne
-                 + electionTypeContainer.getInputType().getSimpleType() + ";");
+                 + electionTypeContainer.getInputType().getInputString() + ";");
         String voteInputOneSize = "tmp_size" + getTmpIndex();
         // we have a vote equivalent
         if (firstChild instanceof VoteEquivalentsContext) {
@@ -949,7 +949,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String voteInputTwo = "tmp_vote" + getTmpIndex();
         // create the variable
         code.add("unsigned int " + voteInputTwo
-                 + electionTypeContainer.getInputType().getSimpleType() + ";");
+                 + electionTypeContainer.getInputType().getInputString() + ";");
         String voteInputSecondSize = "tmp_size" + getTmpIndex();
         code.add("unsigned int " + voteInputSecondSize + ";");
         VoteEquivalentsNode voteEqNodeTwo
@@ -960,7 +960,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String toSaveInto = node.voteOutput;
         String tmp = "tmp" + getTmpIndex();
         // TODO extract into input type
-        if (electionTypeContainer.getInputType().getAmountOfDimensions() == 1) {
+        if (electionTypeContainer.getInputType().getDimension() == 1) {
             code.add("struct vote_single " + tmp
                      + " = concatOne(" + voteInputOne + ", "
                     + voteInputOneSize + " , "
@@ -989,7 +989,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String voteInput = "tmp_vote" + getTmpIndex();
         // create the variable
         code.add("unsigned int " + voteInput
-                 + electionTypeContainer.getInputType().getSimpleType()
+                 + electionTypeContainer.getInputType().getInputString()
                  + ";");
         String voteInputSize = "tmp_size" + getTmpIndex();
         code.add("unsigned int " + voteInputSize + ";");
@@ -1003,7 +1003,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         String toSaveSizeInto = node.voteOutoutLength;
         String tmp = "tmp" + getTmpIndex();
         // TODO extract to input type
-        if (electionTypeContainer.getInputType().getAmountOfDimensions() == 1) {
+        if (electionTypeContainer.getInputType().getDimension() == 1) {
             code.add("struct vote_single " + tmp
                      + " = permutateOne(" + voteInput + ", "
                      + voteInputSize + ");");
@@ -1050,7 +1050,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     public void visitNotEmptyContentNode(NotEmptyContentNode node) {
         String subResult = "tmp_elect" + getTmpIndex();
         // create the variable
-        code.add(electionTypeContainer.getOutputType().getSimpleType()
+        code.add(electionTypeContainer.getOutputType().getOutputString()
                  + " " + subResult + ";");
         // we have an intersect beneath
         if (node.context.intersectExp() != null) {

@@ -8,7 +8,7 @@ import edu.pse.beast.propertychecker.Result;
  *
  * @author Niels Hanselmann
  */
-public class InternalTypeContainer extends InOutType { //TODO extract to another interface
+public class InternalTypeContainer implements InOutType { //TODO maybe extract to another interface
 
     private final boolean isList;
     private final InternalTypeRep internalType;
@@ -32,7 +32,6 @@ public class InternalTypeContainer extends InOutType { //TODO extract to another
      */
     public InternalTypeContainer(InternalTypeContainer listedType,
                                  InternalTypeRep accessTypeIfList) {
-    	super("", -1, null);
         this.isList = true;
         this.listedType = listedType;
         this.accessTypeIfList = accessTypeIfList;
@@ -45,7 +44,6 @@ public class InternalTypeContainer extends InOutType { //TODO extract to another
      * @param internalType the type of this election
      */
     public InternalTypeContainer(InternalTypeRep internalType) {
-    	super("", 1, null);
         this.isList = false;
         this.internalType = internalType;
         this.listedType = null;
@@ -153,24 +151,6 @@ public class InternalTypeContainer extends InOutType { //TODO extract to another
 
 	@Override
 	public List<String> drawResult(Result result) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
-	public String accessValues() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getSimpleType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getComplexType() {
 		// TODO Auto-generated method stub
 		return null;
 	}

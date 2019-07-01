@@ -8,11 +8,11 @@ import java.util.ServiceLoader;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 
-public abstract class OutputType extends InOutType {
+public abstract class OutputType implements InOutType {
     //protected CommonHelpMethods helper; TODO remove
 
-    public OutputType(String dataType, int dimensions, String[] sizeOfDimensions) {
-        super(dataType, dimensions, sizeOfDimensions);
+    public OutputType() {
+        
     }
 
     public static List<OutputType> getOutputTypes() {
@@ -33,6 +33,13 @@ public abstract class OutputType extends InOutType {
     }
 
     //protected abstract void getHelper();
+
+    /**
+     *
+     * @return A string which describes the output type of the election in C. e.g
+     *         "struct result"
+     */
+    public abstract String getOutputString();
 
     /**
      *
@@ -86,6 +93,12 @@ public abstract class OutputType extends InOutType {
     public abstract void addLastResultAsCode(CodeArrayListBeautifier code, ResultValueWrapper origResult);
 
     public abstract String getResultDescriptionString(List<String> result);
+
+    /**
+     *
+     * @return the dimension of this output type
+     */
+    public abstract int getDimension();
     
 	public String getInfo() { //TODO move later on further down
 		return "output type information";
