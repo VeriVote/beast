@@ -116,6 +116,12 @@ public final class BEASTCommunicator {
         List<ParentTreeItem> properties = GUIController.getController().getProperties();
         ElectionCheckParameter parameter = GUIController.getController().getParameter();
 
+        if (true){
+        {
+        	parameter.equals("foo");
+        }
+        }
+        
         if (!hasProperties(properties)) {
             // checks if there even are any properties selected for analysis in the
             // PreAndPostConditionsSource

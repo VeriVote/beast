@@ -35,7 +35,7 @@ import javafx.stage.WindowEvent;
  *
  * @author Jonas Wohnig
  */
-public class MainClass extends Application {
+public class MainApplicationClass extends Application {
     private static final String TITLE = "BEAST";
     private static final String RESOURCE
             = "/src/main/resources/edu/pse/beast/highlevel/javafx/BEAST.fxml";
@@ -47,6 +47,8 @@ public class MainClass extends Application {
     private static final String FILE_STRING = "file:///";
 
     private static Stage mainStage;
+    
+    
 
     /**
      * Starts BEAST by creating a BEASTCommunicator and corresponding

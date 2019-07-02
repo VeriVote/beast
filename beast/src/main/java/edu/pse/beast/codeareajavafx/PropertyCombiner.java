@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import edu.pse.beast.highlevel.MainClass;
+import edu.pse.beast.highlevel.MainApplicationClass;
 import edu.pse.beast.highlevel.javafx.TabClass;
 import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
@@ -66,7 +66,7 @@ public class PropertyCombiner extends TabClass {
         // fileChooser.setTitle("Save document");
         fileChooser.setInitialDirectory(new File(initialDir));
         fileChooser.setInitialFileName(fileName + fileEnding);
-        File selectedFile = fileChooser.showSaveDialog(MainClass.getMainStage());
+        File selectedFile = fileChooser.showSaveDialog(MainApplicationClass.getMainStage());
         if (selectedFile != null) {
             save(selectedFile, preText, postText);
         }
@@ -79,7 +79,7 @@ public class PropertyCombiner extends TabClass {
         fileChooser.setSelectedExtensionFilter(
             new FileChooser.ExtensionFilter("Arbitrary RTFX file",
                                             "*" + fileEnding));
-        File selectedFile = fileChooser.showOpenDialog(MainClass.getMainStage());
+        File selectedFile = fileChooser.showOpenDialog(MainApplicationClass.getMainStage());
         if (selectedFile != null) {
             load(selectedFile, preCodeArea, postCodeArea);
         }

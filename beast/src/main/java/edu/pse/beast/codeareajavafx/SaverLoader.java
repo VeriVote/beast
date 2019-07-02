@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import edu.pse.beast.highlevel.MainClass;
+import edu.pse.beast.highlevel.MainApplicationClass;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import javafx.stage.FileChooser;
 
@@ -96,7 +96,7 @@ public class SaverLoader {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All (*.*)", "*.*"));
         fileChooser.setInitialDirectory(new File(initialDir));
         fileChooser.setInitialFileName(fileName + fileEnding);
-        File selectedFile = fileChooser.showSaveDialog(MainClass.getMainStage());
+        File selectedFile = fileChooser.showSaveDialog(MainApplicationClass.getMainStage());
         return selectedFile;
     }
 
@@ -107,7 +107,7 @@ public class SaverLoader {
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All (*.*)", "*.*"));
         fileChooser.setInitialDirectory(new File(initialDir));
         fileChooser.setInitialFileName(fileName + fileEnding);
-        File selectedFile = fileChooser.showOpenDialog(MainClass.getMainStage());
+        File selectedFile = fileChooser.showOpenDialog(MainApplicationClass.getMainStage());
         return selectedFile;
     }
 
