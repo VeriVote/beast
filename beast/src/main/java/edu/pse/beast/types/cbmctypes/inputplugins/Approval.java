@@ -17,23 +17,17 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueS
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
+import edu.pse.beast.types.InOutType.DataType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class Approval extends CBMCInputType {
-	
-	private static final String dataType = "int";
 	
 	private static final int dimensions = 2;
 	
 	private static final String[] sizeOfDimensions = { UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate() };
 	
 	public Approval() {
-		super(dataType, dimensions, sizeOfDimensions);
-	}
-
-	@Override
-	public String getSimpleType() {
-		return "unsigned int[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "]";
+		super(true, DataType.INT, dimensions, sizeOfDimensions);
 	}
 
 	@Override
@@ -70,7 +64,7 @@ public class Approval extends CBMCInputType {
 	public void addVerifyMethod(CodeArrayListBeautifier code, OutputType outType) {
 		code.add("void verify() {");
 		code.add("int total_diff = 0;");
-		code.add("int " + UnifiedNameContainer.getNewVotesName() + "1" + getSimpleType() + ";");
+		code.add("int " + UnifiedNameContainer.getNewVotesName() + "1 " + getDimensionDescriptor(false) + ";");
 		// go over all voters
 		code.add("for (int i = 0; i < V; i++) {");
 		code.addTab();
@@ -277,16 +271,5 @@ public class Approval extends CBMCInputType {
 		}	
 		
 		return toReturn;
-	}
-
-	@Override
-	public String getComplexType() {
-		return "struct vote_double";
-	}
-	
-	@Override
-	public String accessValues() {
-		// TODO Auto-generated method stub
-		return ".arr";
 	}
 }

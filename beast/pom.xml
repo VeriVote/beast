@@ -58,29 +58,15 @@
 			<version>12.0.1</version>
 		</dependency>
 
-<!-- comment this in if you want to create a jar. It sadly fails when launching over "javafx:run"
-		<dependency>
-			<groupId>org.openjfx</groupId>
-			<artifactId>javafx-graphics </artifactId>
-			<version>12.0.1</version>
-			<classifier>win</classifier>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.openjfx</groupId>
-			<artifactId>javafx-graphics </artifactId>
-			<version>12.0.1</version>
-			<classifier>linux</classifier>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.openjfx</groupId>
-			<artifactId>javafx-graphics </artifactId>
-			<version>12.0.1</version>
-			<classifier>mac</classifier>
-			<optional>true</optional>
-		</dependency>
-  -->
+		<!-- comment this in if creating a jar wont work. It sadly fails when launching 
+			over "javafx:run". so far it seems like it is not needed
+			 <dependency> <groupId>org.openjfx</groupId> 
+			<artifactId>javafx-graphics </artifactId> <version>12.0.1</version> <classifier>win</classifier> 
+			<optional>true</optional> </dependency> <dependency> <groupId>org.openjfx</groupId> 
+			<artifactId>javafx-graphics </artifactId> <version>12.0.1</version> <classifier>linux</classifier> 
+			<optional>true</optional> </dependency> <dependency> <groupId>org.openjfx</groupId> 
+			<artifactId>javafx-graphics </artifactId> <version>12.0.1</version> <classifier>mac</classifier> 
+			<optional>true</optional> </dependency> -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

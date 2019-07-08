@@ -9,7 +9,6 @@ module edu.pse.beast {
     uses edu.pse.beast.propertychecker.Result;
     uses edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresentationType;
     
-    exports edu.pse.beast.datatypes;
     exports edu.pse.beast.electionsimulator;
     exports edu.pse.beast.propertychecker;
     exports edu.pse.beast.options.parametereditoroptions;

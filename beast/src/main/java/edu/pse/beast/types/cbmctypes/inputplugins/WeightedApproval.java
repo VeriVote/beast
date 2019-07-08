@@ -18,11 +18,10 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueS
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
+import edu.pse.beast.types.InOutType.DataType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class WeightedApproval extends CBMCInputType {
-
-	private static final String dataType = "int";
 	
 	private static final int dimensions = 2;
 
@@ -30,12 +29,7 @@ public class WeightedApproval extends CBMCInputType {
 			UnifiedNameContainer.getCandidate() };
 
 	public WeightedApproval() {
-		super(dataType, dimensions, sizeOfDimensions);
-	}
-
-	@Override
-	public String getSimpleType() {
-		return "unsigned int[" + UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate() + "]";
+		super(true, DataType.INT, dimensions, sizeOfDimensions);
 	}
 
 	@Override
@@ -299,16 +293,5 @@ public class WeightedApproval extends CBMCInputType {
 			toReturn.addAll(CBMCResultPresentationHelper.printTwoDimResult(arr, name.length()));
 		}
 		return toReturn;
-	}
-
-	@Override
-	public String getComplexType() {
-		return "struct vote_double";
-	}
-	
-	@Override
-	public String accessValues() {
-		// TODO Auto-generated method stub
-		return ".arr";
 	}
 }

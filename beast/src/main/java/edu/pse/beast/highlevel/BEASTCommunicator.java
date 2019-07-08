@@ -115,12 +115,6 @@ public final class BEASTCommunicator {
         ElectionDescription electionDesc = GUIController.getController().getElectionDescription();
         List<ParentTreeItem> properties = GUIController.getController().getProperties();
         ElectionCheckParameter parameter = GUIController.getController().getParameter();
-
-        if (true){
-        {
-        	parameter.equals("foo");
-        }
-        }
         
         if (!hasProperties(properties)) {
             // checks if there even are any properties selected for analysis in the
@@ -211,7 +205,7 @@ public final class BEASTCommunicator {
         GUIController.setConsoleText("searching for errors");
         // save the currently opened property
         GUIController.getController().getBooleanExpEditor().savePropertyTextAreasIntoDescription();
-        List<CodeError> codeErrors = CVariableErrorFinder.findErrors(description.getSimpleCode());
+        List<CodeError> codeErrors = CVariableErrorFinder.findErrors(description.getComplexCode());
         if (codeErrors.size() != 0) {
             GUIController.getController().getCodeArea().displayErrors(codeErrors);
             return true;

@@ -6,14 +6,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.pse.beast.datatypes.NameInterface;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
-public class ElectionSimulationModel implements NameInterface {
+public class ElectionSimulationModel{
 
     private String name;
 
@@ -101,17 +100,6 @@ public class ElectionSimulationModel implements NameInterface {
             rows.get(currentRows).disable();
             voterGridPane.getChildren().remove(voters.get(currentRows));
         }
-    }
-
-    @Override
-    public void setNewName(String newName) {
-        this.support.firePropertyChange("news", this.name, newName);
-        this.name = newName;
-    }
-
-    @Override
-    public String getName() {
-        return name;
     }
 
     public void changeContainer(ElectionTypeContainer container) {

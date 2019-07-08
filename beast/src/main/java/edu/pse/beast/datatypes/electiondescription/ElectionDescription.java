@@ -1,13 +1,13 @@
 package edu.pse.beast.datatypes.electiondescription;
 
 import java.util.ArrayList;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import edu.pse.beast.datatypes.NameInterface;
+import org.apache.commons.lang3.RandomStringUtils;
+
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.Tuple;
 import edu.pse.beast.toolbox.Tuple3;
@@ -19,7 +19,7 @@ import edu.pse.beast.types.OutputType;
  * @author Lukas Stapelbroek
  *
  */
-public class ElectionDescription implements NameInterface {
+public class ElectionDescription {
 	private String name;
 	private String code = "";
 	private ElectionTypeContainer container;
@@ -52,6 +52,13 @@ public class ElectionDescription implements NameInterface {
 		this.isNew = isNew;
 	}
 
+	public ElectionDescription(String name, InputType inputType, OutputType outputType) {
+		this.name = name;
+		this.container = new ElectionTypeContainer(inputType, outputType);
+
+		this.isNew = true;
+	}
+
 	/**
 	 *
 	 * @return code of this description as seen by the user The methode signature
@@ -67,20 +74,33 @@ public class ElectionDescription implements NameInterface {
 	 */
 	public List<String> getComplexCode() {
 
-		System.out
-				.println("check in generated code if the boundaries are working. If not, maybe add a \"+1\" somewhere");
-
 		String firstPart = code.substring(0, lockedLineStart);
 
 		String replacementLine = CCodeHelper.generateStructDeclString(container);
 
-		String secondPart = code.substring(lockedLineEnd);
+		String middlePart = code.substring(lockedLineEnd, lockedBracePos);
+
+		String thirdPart = code.substring(lockedBracePos);
+
 		// in the second part, we have to replace every return statement with a loop
 		// which transforms the one data type into another
 
-		secondPart = replaceReturns(secondPart);
+		boolean duplicate = true;
+		String varName = "toReturn";
 
-		return stringToList(firstPart + replacementLine + secondPart);
+		int length = 4;
+		while (duplicate) {
+			if (code.contains(varName)) {
+				varName = generateRandomString(length);
+				length++; // increase the length in case all words from that length are alread taken
+			} else {
+				duplicate = false;
+			}
+		}
+
+		middlePart = replaceReturns(middlePart, varName);
+
+		return stringToList(firstPart + replacementLine + middlePart + thirdPart);
 	}
 
 	public String getCodeAsString() {
@@ -133,11 +153,6 @@ public class ElectionDescription implements NameInterface {
 	 */
 	public void setContainer(ElectionTypeContainer newContainer) {
 		this.container = newContainer;
-	}
-
-	@Override
-	public void setNewName(String newName) {
-		setName(newName);
 	}
 
 	public ElectionDescription getDeepCopy() {
@@ -197,33 +212,62 @@ public class ElectionDescription implements NameInterface {
 	 * 
 	 * @return
 	 */
-	private String replaceReturns(String toProcess) { // change this to antLR maybe
+	private String replaceReturns(String toProcess, String variableName) { // change this to antLR maybe
+		String toReturn = "";
 
-		Pattern returnPattern = Pattern.compile("\\sreturn");
-
-		Matcher matcher = returnPattern.matcher(toProcess);
+		Pattern returnPattern = Pattern.compile("(?:\\s|^)return");
 
 		Tuple3<Boolean, Boolean, Boolean> executionValues = new Tuple3<>(false, false, false);
 
-		int currentPos = 0;
+		Matcher matcher = returnPattern.matcher(toProcess);
 
 		while (matcher.find()) {
+
+			System.out.println("line: " + executionValues.first + " multi: " + executionValues.second);
+			System.out.println("testing: " + toProcess.substring(0, matcher.end()));
+
 			executionValues = checkIfExecutedCode(executionValues, toProcess, 0, matcher.end());
 
-			if (checkForTrue(executionValues)) { // the return statement was standing in a comment block
-				break;
-			} else {
-				Tuple<String, Integer> replacement = replaceSpecificReturnStatement(toProcess.substring(matcher.end()));
+			if (!checkForTrue(executionValues)) { // the return statement was NOT standing in a comment block
 
-				toProcess = toProcess.substring(matcher.end()) + replacement.first; // replace the string
+				Tuple<String, Integer> replacement = replaceSpecificReturnStatement(toProcess.substring(matcher.end()),
+						variableName);
+				// replacement now contains one or multiple lines which assign the fitting
+				// return value to "variableName"
+				// at first we have to add the assignment lines, afterwards we just have to add
+				// "return variablename"
+
+				// the whole segment is put in curly braces, as the user could use single line
+				// if cases or similar things
+				String toInsert = wrapInCurlyBraces(replacement.first + " return " + variableName + "; ");
+
+				// the part which was changed
+				String leadingPart = toProcess.substring(0, matcher.start()) + toInsert;
+
+				// replacement.second contains the position after the ";", therefore we have to
+				// append this end part again at the end
+				String trailingPart = toProcess.substring((matcher.end() + replacement.second));
+
+				toReturn = toReturn + leadingPart;
 
 				// now that we changed the underlying string, we have to update the matcher
+				matcher = returnPattern.matcher(trailingPart);
 
-				matcher = returnPattern.matcher(toProcess.substring(matcher.end() + replacement.second));
+				toProcess = trailingPart;
+			} else { // we are in a comment, so we add the part to here and continue on
+				toReturn = toReturn + toProcess.substring(0, matcher.end()); // add the analysed part
+
+				String trailingPart = toProcess.substring(matcher.end());
+				// now that we changed the underlying string, we have to update the matcher
+				matcher = returnPattern.matcher(trailingPart);
+
+				toProcess = trailingPart;
 			}
 		}
 
-		return toProcess;
+		toReturn = toReturn + toProcess; // add the last parts which were not processed
+
+		return toReturn;
 	}
 
 	/**
@@ -231,9 +275,9 @@ public class ElectionDescription implements NameInterface {
 	 * @param toProcess the String to process, should start immediately after the
 	 *                  "return";
 	 * @return a tuple containgin the string containing the next return statement,
-	 *         and the length of the new return statement
+	 *         and the length of the previous expression after "return" up to ";"
 	 */
-	private Tuple<String, Integer> replaceSpecificReturnStatement(String toProcess) {
+	private Tuple<String, Integer> replaceSpecificReturnStatement(String toProcess, String variableName) {
 		Tuple3<Boolean, Boolean, Boolean> executionValues = new Tuple3<>(false, false, false);
 
 		Pattern returnPattern = Pattern.compile(";");
@@ -245,10 +289,12 @@ public class ElectionDescription implements NameInterface {
 			executionValues = checkIfExecutedCode(executionValues, toProcess, 0, matcher.end());
 
 			if (!checkForTrue(executionValues)) { // the found ";" is valid
-				Tuple<String, Integer> wrapped = wrapInStruct(toProcess.substring(0, matcher.end()));
+				String wrapped = wrapInStruct(variableName, toProcess.substring(0, matcher.end() - 1)); // ignore the
+																										// last char, as
+																										// it will be a
+																										// ";"
 
-				Tuple<String, Integer> toReturn = new Tuple<>((wrapped.first + toProcess.substring(matcher.end())),
-						wrapped.second);
+				Tuple<String, Integer> toReturn = new Tuple<>(wrapped, matcher.end());
 
 				return toReturn;
 			}
@@ -265,10 +311,60 @@ public class ElectionDescription implements NameInterface {
 	 * @return return + wrapper + ;
 	 * 
 	 */
-	private Tuple<String, Integer> wrapInStruct(String valueDefinition) {
-		String replacement = "TESTREPLACEMENT;";
+	private String wrapInStruct(String variableName, String valueDefinition) {
+		String toReturn = container.getOutputStruct().getStructAccess() + " " + variableName + "; ";
 
-		return new Tuple<>(replacement, replacement.length()); // TODO implement this correctly
+		int dimensions = container.getOutputType().getAmountOfDimensions();
+
+		List<String> loopVariables = generateLoopVariables(dimensions, variableName);
+
+		for (int i = 0; i < dimensions; i++) {
+			toReturn = toReturn // add all needed loop headers
+					+ generateForLoopHeader(loopVariables.get(i), container.getOutputType().getSizeOfDimensions()[i]);
+		}
+
+		String arrayAccess = "";
+
+		for (int i = 0; i < dimensions; i++) {
+			arrayAccess = arrayAccess + "[" + loopVariables.get(i) + "]";
+		}
+
+		toReturn = toReturn + variableName + container.getOutputStruct().getStructAccess() + " = " + valueDefinition
+				+ arrayAccess + ";";
+
+		for (int i = 0; i < dimensions; i++) {
+			toReturn = toReturn + "}"; // close the for loops
+		}
+
+		return toReturn;
+	}
+
+	private String generateForLoopHeader(String indexName, String maxSize) {
+		return "for (unsigned int " + indexName + " = 0; " + indexName + " < " + maxSize + "; " + indexName + "++ ) { ";
+	}
+
+	private List<String> generateLoopVariables(int dimensions, String variableName) {
+		List<String> generatedVariables = new ArrayList<String>(dimensions);
+
+		int currentIndex = 0;
+		String defaultName = "loop_index_"; // use i as the default name for a loop
+		String varName = defaultName + currentIndex;
+
+		for (int i = 0; i < dimensions; i++) {
+			boolean duplicate = true;
+			int length = 1;
+			while (duplicate) {
+				if (code.contains(varName) || variableName.equals(varName)) {
+					varName = generateRandomString(length) + "_" + currentIndex;
+					length++; // increase the length in case all words from that length are already taken
+				} else {
+					duplicate = false;
+				}
+			}
+			generatedVariables.add(varName);
+		}
+
+		return generatedVariables;
 	}
 
 	private Tuple3<Boolean, Boolean, Boolean> checkIfExecutedCode(Tuple3<Boolean, Boolean, Boolean> prevValues,
@@ -293,7 +389,7 @@ public class ElectionDescription implements NameInterface {
 				if (currentChar == '"') {
 					isText = false;
 				}
-			}
+			} else
 
 			if (lineComment || multiComment) { // we are in a commented area
 				if (currentChar == '\n') {
@@ -307,6 +403,10 @@ public class ElectionDescription implements NameInterface {
 					} else {
 						lastCharSlash = true;
 					}
+				}
+
+				if (currentChar == '*') {
+					lastCharStar = true;
 				}
 			} else {
 
@@ -343,5 +443,22 @@ public class ElectionDescription implements NameInterface {
 	 */
 	private boolean checkForTrue(Tuple3<Boolean, Boolean, Boolean> toCheck) {
 		return toCheck.first || toCheck.second || toCheck.third;
+	}
+
+	/**
+	 * Wraps a String into curly braces. This is done so single line if conditions
+	 * or for loops still work when muliple lines are added
+	 * 
+	 * @param toWrap the String to wrap
+	 * @return "{toWrap}"
+	 */
+	private String wrapInCurlyBraces(String toWrap) {
+		return "{" + toWrap + "}";
+	}
+
+	private String generateRandomString(int length) {
+		String generatedString = RandomStringUtils.random(length, true, false);
+
+		return generatedString;
 	}
 }

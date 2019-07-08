@@ -9,8 +9,8 @@ import edu.pse.beast.types.InputType;
 
 public abstract class CBMCInputType extends InputType {
 	
-	public CBMCInputType(String dataType, int dimensions, String[] sizeOfDimensions) {
-        super(dataType, dimensions, sizeOfDimensions);
+	public CBMCInputType(boolean unsigned, DataType dataType, int dimensions, String[] sizeOfDimensions) {
+        super(unsigned, dataType, dimensions, sizeOfDimensions);
     }
 
     @Override

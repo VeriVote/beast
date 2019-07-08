@@ -209,7 +209,7 @@ public class CBMCCodeGenerator {
 	}
 
 	private void addVoteSumFunc(boolean unique) {
-		String input = "unsigned int arr" + electionDesc.getContainer().getInputType().getSimpleType();
+		String input = electionDesc.getContainer().getInputType().getDimensionDescriptor(true) + " arr";
 		code.add("unsigned int voteSumForCandidate" + (unique ? "Unique" : "")
 				+ "(INPUT, unsigned int amountVotes, unsigned int candidate) {".replace("INPUT", input));
 		code.addTab();
@@ -715,20 +715,20 @@ public class CBMCCodeGenerator {
 		for (int voteNumber = 1; voteNumber <= numberOfTimesVoted; voteNumber++) {
 			code.add("//init for election: " + voteNumber);
 
-			String votesX = electionDesc.getContainer().getInputType().getComplexType();
+			String votesX = electionDesc.getContainer().getInputStruct().getStructAccess();
 
 			votesX = votesX + " " + UnifiedNameContainer.getVotingArray() + voteNumber;
 
 			code.add(votesX + ";");
 
-			String forTemplate = "for(unsigned int COUNTER = 0; COUNTER < UPPER; COUNTER++){";
+			String forTemplate = "for(unsigned int COUNTER = 0; COUNTER < UPPER; COUNTER++) {";
 
 			int listDepth = 0;
 			for (int i = 0; i < electionDesc.getContainer().getInputType().getAmountOfDimensions(); i++) {
 				String currentFor = forTemplate.replaceAll("COUNTER", "counter_" + listDepth);
 
 				currentFor = currentFor.replaceAll("UPPER",
-						electionDesc.getContainer().getInputType().getSizeOfDimension(listDepth) + voteNumber);
+						electionDesc.getContainer().getInputType().getSizeOfDimensions()[listDepth] + voteNumber);
 
 				code.add(currentFor);
 				code.addTab();
@@ -746,7 +746,7 @@ public class CBMCCodeGenerator {
 			}
 
 			String votesElement = UnifiedNameContainer.getVotingArray() + voteNumber
-					+ electionDesc.getContainer().getInputType().accessValues();
+					+ electionDesc.getContainer().getInputStruct().getStructAccess();
 			
 			for (int i = 0; i < listDepth; ++i) {
 				votesElement += "[COUNTER]".replace("COUNTER", "counter_" + i);

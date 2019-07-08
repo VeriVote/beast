@@ -8,19 +8,14 @@ import java.util.function.IntFunction;
 import org.fxmisc.richtext.LineNumberFactory;
 
 import edu.pse.beast.codearea.errorhandling.CodeError;
-import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.MenuBarInterface;
-import edu.pse.beast.types.InputType;
-import edu.pse.beast.types.OutputType;
 import javafx.scene.Node;
 
 public class BoundedVarCodeArea extends AutoCompletionCodeArea implements MenuBarInterface {
     private static final String RESOURCE = "codeAreaSyntaxHighlight.css";
 
-    private List<ElectionDescriptionChangeListener> listeners
-        = new ArrayList<ElectionDescriptionChangeListener>();
     private FormalPropertiesDescription description;
 
     public BoundedVarCodeArea() {
@@ -45,20 +40,6 @@ public class BoundedVarCodeArea extends AutoCompletionCodeArea implements MenuBa
         }
 
         GUIController.setErrorText(toDisplay);
-    }
-
-    public void createNew(InputType newIn, OutputType newOut) {
-        for (Iterator<ElectionDescriptionChangeListener> iterator
-              = listeners.iterator(); iterator.hasNext();) {
-            ElectionDescriptionChangeListener listener
-                  = (ElectionDescriptionChangeListener) iterator.next();
-            listener.inputChanged(newIn);
-            listener.outputChanged(newOut);
-        }
-    }
-
-    public void addListener(ElectionDescriptionChangeListener listener) {
-        listeners.add(listener);
     }
 
     /**

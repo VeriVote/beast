@@ -1,35 +1,69 @@
 package edu.pse.beast.types;
 
+import java.util.Iterator;
 import java.util.List;
 
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.propertychecker.Result;
 
 public abstract class InOutType {
 
-	private final String dataType;
+	public enum DataType {
+		CHAR("byte"), SHORT("short"), INT("int"), LONG("long"), DOUBLE("double");
+
+		private final String text;
+
+		/**
+		 * @param text
+		 */
+		DataType(final String text) {
+			this.text = text;
+		}
+
+		@Override
+		public String toString() {
+			return text;
+		}
+	}
+	
+	private final boolean unsigned;
+	private final DataType dataType;
 	private final int dimensions;
 	private final String[] sizeOfDimensions;
 
-	public InOutType(String dataType, int dimensions, String[] sizeOfDimensions) {
+	public InOutType(boolean unsigned, DataType dataType, int dimensions, String[] sizeOfDimensions) {
+		this.unsigned = unsigned;
 		this.dataType = dataType;
 		this.dimensions = dimensions;
 		this.sizeOfDimensions = sizeOfDimensions;
 	}
-
-	/**
-	 * 
-	 * @param dimension one indexed, retrieves the size of the given dimension
-	 * @return the size of the given dimensions, "ERROR", when dimensions < 1,
-	 *         dimension > max amount dimensions
-	 */
-	public final String getSizeOfDimension(int dimension) {
-		if (dimension > dimension || dimension < 1) {
-			return "ERROR";
-		}
-
-		return sizeOfDimensions[dimension - 1];
+//
+//	/**
+//	 * 
+//	 * @param dimension one indexed, retrieves the size of the given dimension
+//	 * @return the size of the given dimensions, "ERROR", when dimensions < 1,
+//	 *         dimension > max amount dimensions
+//	 */
+//	public final String getSizeOfDimension(int dimension) {
+//		if (dimension > dimension || dimension < 1) {
+//			return "ERROR";
+//		}
+//
+//		return sizeOfDimensions[dimension - 1];
+//	}
+	
+	public boolean isDataTypeUnsigned() {
+		return this.unsigned;
 	}
-
+	
+	public DataType getDataType() {
+		return this.dataType;
+	}
+	
+	public String getDataTypeAsString() {
+		return this.dataType.toString();
+	}
+	
 	/**
 	 *
 	 * @return the dimensions of the array which holds the votes (e.g 1 for single
@@ -38,6 +72,51 @@ public abstract class InOutType {
 	public final int getAmountOfDimensions() {
 		return dimensions;
 	}
+	
+	/**
+	 * 
+	 * @return the size of all dimensions, null if it is 0 dimensional
+	 */
+	public String[] getSizeOfDimensions() {
+		return sizeOfDimensions;
+	}
+	
+	/**
+	 *
+	 * @return returns a String containing the shape of the input object e.g "[" +
+    * UnifiedNameContainer.getVoter() + "]" for single choice
+	 */
+	public final String getDimensionDescriptor(boolean includeSizes) {	
+		String toReturn = "";
+		
+		for(int i = 0; i < dimensions; i++) {
+			String content = "";
+			if (includeSizes) {
+				content = sizeOfDimensions[i];
+			}
+			toReturn = toReturn + createSquareBrackets(content);
+		}
+		
+		return toReturn;
+	}
+	
+	public String getDataTypeAndSign() {
+		String sign = "";
+		
+		if (unsigned) {
+			sign = "unsigned ";
+		}
+		return sign + this.dataType;
+	}
+	
+	/**
+	 * 
+	 * @param content the content to be put in the bracketes
+	 * @return e.g "[content]"
+	 */
+	private String createSquareBrackets(String content) {
+		return "[" + content + "]";
+	}
 
 	/**
 	 * 
@@ -45,7 +124,13 @@ public abstract class InOutType {
 	 *         allows access to its values (e.g ".arr", if it is a struct in which
 	 *         the value is stored in "arr"
 	 */
-	public abstract String accessValues();
+	public final String accessValues(ElectionTypeContainer electionContainer) {
+		if (dimensions == 0) {
+			return ""; //zero dimensional dataTypes are not represented by structs
+		} else {
+			return electionContainer.getNameContainer().getResultArrName();
+		}
+	}
 
 	public abstract InternalTypeContainer getInternalTypeContainer();
 
@@ -70,17 +155,4 @@ public abstract class InOutType {
 	 *         (e.g description of structs...)
 	 */
 	public abstract String getInfo();
-   
-	/**
-	 *
-	 * @return returns a String containing the shape of the input object e.g "[" +
-     * UnifiedNameContainer.getVoter() + "]" for single choice
-	 */
-	public abstract String getSimpleType();
-	
-	/**
-	 *
-	 * @return returns a String containing the shape of the input object e.g "struct vote_single" for single choice
-	 */
-	public abstract String getComplexType();
 }

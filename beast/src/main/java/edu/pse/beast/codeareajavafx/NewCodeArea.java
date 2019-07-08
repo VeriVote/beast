@@ -29,15 +29,12 @@ import com.google.gson.JsonSyntaxException;
 import edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling.CVariableErrorFinder;
 import edu.pse.beast.codearea.errorhandling.CodeError;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.MenuBarInterface;
 import edu.pse.beast.saverloader.ElectionDescriptionSaverLoader;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.Tuple;
 import edu.pse.beast.toolbox.Tuple3;
-import edu.pse.beast.types.InputType;
-import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice;
 import edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
 import javafx.scene.Node;
@@ -108,9 +105,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 	private final ElectionDescriptionSaverLoader electionSaverLoader = new ElectionDescriptionSaverLoader();
 
 	private ElectionDescription elecDescription;
-	private List<ElectionDescriptionChangeListener> listeners = new ArrayList<ElectionDescriptionChangeListener>();
 	private int lockedLineStart = 0;
-	private int lockedLineEnd = 10;
+	private int lockedLineEnd = 0;
 	private int lockedBracePos;
 	// private int amountTabs = 0;
 	private int spacesPerTab = 4;
@@ -328,6 +324,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 			lockedLineEnd += lengthChange;
 		}
 		lockedBracePos += (changePosition <= lockedLineStart || changePosition <= lockedBracePos) ? lengthChange : 0;
+		this.elecDescription.setLockedPositions(this.lockedLineStart, this.lockedLineEnd, this.lockedBracePos);
 	}
 
 	private static StyleSpans<Collection<String>> computeHighlighting(String text) {
@@ -371,17 +368,6 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 			toDisplay += "line: " + codeError.getLine() + "| Message: " + codeError.getMsg() + "\n";
 		}
 		GUIController.setErrorText(toDisplay);
-	}
-
-	public void createNew(InputType newIn, OutputType newOut) {
-		for (ElectionDescriptionChangeListener listener : listeners) {
-			listener.inputChanged(newIn);
-			listener.outputChanged(newOut);
-		}
-	}
-
-	public void addListener(ElectionDescriptionChangeListener listener) {
-		listeners.add(listener);
 	}
 
 	public void setNewElectionDescription(ElectionDescription newDescription) {

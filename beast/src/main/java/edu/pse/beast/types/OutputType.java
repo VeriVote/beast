@@ -11,8 +11,8 @@ import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 public abstract class OutputType extends InOutType {
     //protected CommonHelpMethods helper; TODO remove
 
-    public OutputType(String dataType, int dimensions, String[] sizeOfDimensions) {
-        super(dataType, dimensions, sizeOfDimensions);
+    public OutputType(boolean unsigned, DataType dataType, int dimensions, String[] sizeOfDimensions) {
+        super(unsigned, dataType, dimensions, sizeOfDimensions);
     }
 
     public static List<OutputType> getOutputTypes() {

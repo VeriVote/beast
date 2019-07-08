@@ -1,11 +1,11 @@
 package edu.pse.beast.electionsimulator;
 
 import java.io.File;
+
 import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.codeareajavafx.SaverLoader;
-import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.electionsimulator.model.ElectionSimulationModel;
 import edu.pse.beast.highlevel.javafx.GUIController;
@@ -18,7 +18,7 @@ import edu.pse.beast.types.OutputType;
 import javafx.scene.layout.GridPane;
 
 public class NewElectionSimulation
-                implements ElectionDescriptionChangeListener, MenuBarInterface {
+                implements MenuBarInterface {
     private static final String CSV_SEPARATOR = ",";
 
     private ElectionTypeContainer container;
@@ -159,16 +159,6 @@ public class NewElectionSimulation
         int vetted = container.getInputType().vetAmountSeats(Integer.parseInt(toVet));
         model.setAmountSeats(vetted);
         return "" + vetted;
-    }
-
-    @Override
-    public void inputChanged(InputType input) {
-        System.out.println("todo? ");
-    }
-
-    @Override
-    public void outputChanged(OutputType output) {
-        inputChanged(null);
     }
 
     @Override

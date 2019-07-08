@@ -1,7 +1,10 @@
 package edu.pse.beast.datatypes.electiondescription;
 
+import edu.pse.beast.toolbox.UnifiedNameContainer;
+import edu.pse.beast.types.ComplexType;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
+import edu.pse.beast.types.cbmctypes.cbmcstructs.CBMCStruct;
 
 /**
  * Datatype for the Input and Output of an Election
@@ -9,9 +12,14 @@ import edu.pse.beast.types.OutputType;
  * @author Lukas Stapelbroek
  *
  */
-public class ElectionTypeContainer {
-    private InputType inType;
-    private OutputType outType;
+public class ElectionTypeContainer { //TODO make this class abstract, move code to "CBMCElectionTypeContainer"
+    private final InputType inType;
+    private final OutputType outType;
+    
+    private CBMCStruct inputStruct;
+    private CBMCStruct outputStruct;
+    
+    private UnifiedNameContainer nameContainer = new UnifiedNameContainer();
 
     /**
      * Constructor
@@ -22,15 +30,18 @@ public class ElectionTypeContainer {
     public ElectionTypeContainer(InputType inType, OutputType outType) {
         this.inType = inType;
         this.outType = outType;
+        
+        generateStructs();
     }
-
-//    /**
-//     *
-//     * @return the type of this election
-//     */
-//    public InternalTypeContainer getType() {
-//        return type;
-//    }
+    
+    private void generateStructs() {
+    	this.inputStruct = new CBMCStruct(inType);
+    	this.outputStruct = new CBMCStruct(outType);
+    	
+    	if (this.inputStruct.equals(this.outputStruct)) { //they have the same shape
+    		this.outputStruct = inputStruct;
+    	}
+    }
 
     /**
      *
@@ -48,11 +59,27 @@ public class ElectionTypeContainer {
         return outType;
     }
 
-    public void setInput(InputType inputType) {
-        this.inType = inputType;
-    }
-
-    public void setOutput(OutputType outputType) {
-        this.outType = outputType;
-    }
+	public UnifiedNameContainer getNameContainer(){
+		return nameContainer;
+	}
+	
+	public ComplexType getInputStruct() {
+		return inputStruct;
+	}
+	
+	public ComplexType getOutputStruct() {
+		return outputStruct;
+	}
+	
+	public String getStructDefinitions() {
+		String toReturn = "";
+		
+		toReturn = inputStruct.getStructDefinition(nameContainer) + "\n";
+		
+		if (!inputStruct.equals(outputStruct)) {
+			toReturn = toReturn + outputStruct.getStructDefinition(nameContainer) + "\n";
+		}
+		
+		return toReturn;
+	}
 }

@@ -51,34 +51,34 @@ public final class CCodeHelper {
 		ErrorLogger.log("");
 		return "";
 	}
-
-	/**
-	 * creates the C-Type text representation of the given internal type container,
-	 * arrays are created as arrays: "unsigned int votes[" +
-	 * UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate()
-	 * + "]", for example
-	 *
-	 * @param electionContainer the container for which the C type should be created
-	 * @param name              the name of the variable
-	 * @return the c type
-	 */
-	public static String getCType(ElectionTypeContainer electionContainer, String name) {
-		String decl = "unsigned int " + name;
-		decl = decl + electionContainer.getInputType().getSimpleType();
-		return decl;
-	}
-
-	/**
-	 * creates the C-Type text representation of the given Internaltypecontainer,
-	 * arrays are created as pointers: "unsigned int *", for example
-	 *
-	 * @param electionContainer the container for which the C type should be created
-	 * @return the c type
-	 */
-	public static String getCTypePointer(ElectionTypeContainer electionContainer) {
-		String decl = electionContainer.getOutputType().getSimpleType();
-		return decl;
-	}
+//
+//	/**
+//	 * creates the C-Type text representation of the given internal type container,
+//	 * arrays are created as arrays: "unsigned int votes[" +
+//	 * UnifiedNameContainer.getVoter() + "][" + UnifiedNameContainer.getCandidate()
+//	 * + "]", for example
+//	 *
+//	 * @param electionContainer the container for which the C type should be created
+//	 * @param name              the name of the variable
+//	 * @return the c type
+//	 */
+//	public static String getCType(ElectionTypeContainer electionContainer, String name) {
+//		String decl = "unsigned int " + name;
+//		decl = decl + electionContainer.getInputType().getSimpleType(true);
+//		return decl;
+//	}
+//
+//	/**
+//	 * creates the C-Type text representation of the given Internaltypecontainer,
+//	 * arrays are created as pointers: "unsigned int *", for example
+//	 *
+//	 * @param electionContainer the container for which the C type should be created
+//	 * @return the c type
+//	 */
+//	public static String getCTypePointer(ElectionTypeContainer electionContainer) {
+//		String decl = electionContainer.getOutputType().getSimpleType(true);
+//		return decl;
+//	}
 
 	/**
 	 * if the given InternaltypeContainer represents a list, it generates the String
@@ -110,9 +110,9 @@ public final class CCodeHelper {
 	public static String generateSimpleDeclString(ElectionTypeContainer container) {
 		String decl = "RESULT " + UnifiedNameContainer.getVotingMethod() + "(VOTES) {";
 
-		decl = decl.replace("RESULT", container.getOutputType().getSimpleType());
+		decl = decl.replace("RESULT", container.getOutputType().getDimensionDescriptor(true));
 		decl = decl.replace("VOTES",
-				container.getInputType().getSimpleType() + " " + UnifiedNameContainer.getVotingArray());
+				container.getInputType().getDimensionDescriptor(true) + " " + UnifiedNameContainer.getVotingArray());
 
 		return decl;
 	}
@@ -127,9 +127,9 @@ public final class CCodeHelper {
 	public static String generateStructDeclString(ElectionTypeContainer container) {
 		String decl = "RESULT " + UnifiedNameContainer.getVotingMethod() + "(VOTES) {";
 
-		decl = decl.replace("RESULT", container.getOutputType().getSimpleType());
+		decl = decl.replace("RESULT", container.getOutputStruct().getStructAccess());
 		decl = decl.replace("VOTES",
-				container.getInputType().getComplexType() + " " + UnifiedNameContainer.getVotingArray());
+				container.getInputType().getDataTypeAndSign() + " " + container.getInputType().getDimensionDescriptor(false) + " " + UnifiedNameContainer.getVotingArray());
 
 		return decl;
 	}

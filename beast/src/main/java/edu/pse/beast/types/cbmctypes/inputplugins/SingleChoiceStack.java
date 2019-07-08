@@ -17,24 +17,18 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueS
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
+import edu.pse.beast.types.InOutType.DataType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class SingleChoiceStack extends CBMCInputType {
-	
-	private static final String dataType = "int";
 	
 	private static final int dimensions = 1;
 
 	private final static  String[] sizeOfDimensions = {UnifiedNameContainer.getCandidate()};
 
 	public SingleChoiceStack() {
-		super(dataType, dimensions, sizeOfDimensions);
+		super(true, DataType.INT, dimensions, sizeOfDimensions);
 	}
-	
-    @Override
-    public String getSimpleType() {
-        return "unsigned int[" + UnifiedNameContainer.getCandidate() + "]";
-    }
 
     @Override
     public String getInputIDinFile() {
@@ -244,17 +238,5 @@ public class SingleChoiceStack extends CBMCInputType {
 			toReturn.add(CBMCResultPresentationHelper.printOneDimResult(arr, name.length()));
 		}		
 		return toReturn;
-	}
-	
-	@Override
-	public String getComplexType() {
-		return "struct stack_result";
-	}
-	
-	
-	@Override
-	public String accessValues() {
-		// TODO Auto-generated method stub
-		return ".arr";
 	}
 }

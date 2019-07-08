@@ -6,11 +6,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public final class UnifiedNameContainer {
+public final class UnifiedNameContainer { //TODO make not static and then only accessible through electionContainer
     private static List<NameChangeListener> listeners = new LinkedList<NameChangeListener>();
     private static Map<String, String> map = new HashMap<String, String>();
 
-    private UnifiedNameContainer() { }
+    public UnifiedNameContainer() { 
+    	init();
+    }
 
     static {
         init();
@@ -23,9 +25,7 @@ public final class UnifiedNameContainer {
         map.put("elect", "elect");
 
         map.put("votingMethod", "voting");
-        map.put("struct_result", "result");
-        map.put("stack_result", "stack_result");
-        map.put("struct_candidateList", "candidateList_result");
+
         map.put("result_arr_name", "arr");
 
         map.put("votingArray", "votes");

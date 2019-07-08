@@ -15,28 +15,17 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueA
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueStruct;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
+import edu.pse.beast.types.InOutType.DataType;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
 public class CandidateList extends CBMCOutputType {
-	
-	private static final String dataType = "int";
 	
 	private static final int dimensions = 1;
 
 	private final static String[] sizeOfDimensions = { UnifiedNameContainer.getCandidate() };
 	
 	public CandidateList() {
-		super(dataType, dimensions, sizeOfDimensions);
-	}
-
-	@Override
-	public String getSimpleType() {
-		return "unsigned int[" + UnifiedNameContainer.getCandidate() + "]";
-	}
-	
-	@Override
-	public String getComplexType() {
-		return UnifiedNameContainer.getStructCandidateList();
+		super(true, DataType.INT, dimensions, sizeOfDimensions);
 	}
 
 	@Override
@@ -254,11 +243,5 @@ public class CandidateList extends CBMCOutputType {
 			toReturn.add(CBMCResultPresentationHelper.printOneDimResult(arr, name.length()));
 		}		
 		return toReturn;
-	}
-	
-	@Override
-	public String accessValues() {
-		// TODO Auto-generated method stub
-		return ".arr";
 	}
 }

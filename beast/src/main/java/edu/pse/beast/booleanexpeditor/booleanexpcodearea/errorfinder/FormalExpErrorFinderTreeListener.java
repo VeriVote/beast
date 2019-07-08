@@ -21,7 +21,6 @@ import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.IntegerValuedExpression;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes.VoteSumForCandExp;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
-import edu.pse.beast.datatypes.electiondescription.ElectionDescriptionChangeListener;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
@@ -67,10 +66,8 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Vo
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VotingListChangeExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VotingTupelChangeExpContext;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.BooleanExpScopehandler;
-import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
-import edu.pse.beast.types.OutputType;
 
 /**
  *
@@ -78,8 +75,7 @@ import edu.pse.beast.types.OutputType;
  */
 public class FormalExpErrorFinderTreeListener
         implements FormalPropertyDescriptionListener,
-                    VariableListListener,
-                    ElectionDescriptionChangeListener {
+                    VariableListListener {
     private final ArrayList<CodeError> created = new ArrayList<>();
     private final BooleanExpScopehandler scopeHandler = new BooleanExpScopehandler();
     private final ElectionDescription elecDescription;
@@ -103,25 +99,6 @@ public class FormalExpErrorFinderTreeListener
             scopeHandler.addVariable(var.getId(), var.getInternalTypeContainer());
         }
         this.container = codeArea.getElectionDescription().getContainer();
-        codeArea.addListener(this);
-    }
-
-    /**
-     * Sets up the input for the error finder.
-     *
-     * @param inputType the election type container
-     */
-    public void setInput(InputType inputType) {
-        container.setInput(inputType);
-    }
-
-    /**
-     * Sets up the output for the error finder.
-     *
-     * @param outputType the election type container
-     */
-    public void setOutput(OutputType outputType) {
-        container.setOutput(outputType);
     }
 
     /**
@@ -515,16 +492,6 @@ public class FormalExpErrorFinderTreeListener
     @Override
     public void removedVar(SymbolicVariable var) {
         scopeHandler.removeFromTopScope(var.getId());
-    }
-
-    @Override
-    public void inputChanged(InputType input) {
-        this.container.setInput(input);
-    }
-
-    @Override
-    public void outputChanged(OutputType output) {
-        this.container.setOutput(output);
     }
 
     // Here are the new commands:

@@ -12,10 +12,9 @@ import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 
 public abstract class InputType extends InOutType {
-    //protected CommonHelpMethods helper;
 
-    public InputType(String dataType, int dimensions, String[] sizeOfDimensions) {
-        super(dataType, dimensions, sizeOfDimensions);
+    public InputType(boolean unsigned, DataType dataType, int dimensions, String[] sizeOfDimensions) {
+        super(unsigned, dataType, dimensions, sizeOfDimensions);
     }
 
     public static List<InputType> getInputTypes() {
