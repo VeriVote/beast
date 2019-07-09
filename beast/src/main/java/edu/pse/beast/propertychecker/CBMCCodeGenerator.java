@@ -487,8 +487,8 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		code.add("//start is inclusive, stop is exclusive");
 		code.add("");
 
-		if (!(electionDesc.getContainer().getInputType().getAmountOfDimensions() != 2
-				|| !electionDesc.getContainer().getInputType().getSizeOfDimensions()[0].equals("V"))) {
+		if ((electionDesc.getContainer().getInputType().getAmountOfDimensions() == 1
+				&& !electionDesc.getContainer().getInputType().getSizeOfDimensions()[0].equals("V"))) {
 
 			code.add(electionDesc.getContainer().getInputStruct().getStructAccess()
 					+ " splitOne(unsigned int votes[V], " + "unsigned int start, unsigned int stop) {");
@@ -527,9 +527,9 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 			code.add("");
 		}
 
-		if (!(electionDesc.getContainer().getInputType().getAmountOfDimensions() != 2
-				|| !electionDesc.getContainer().getInputType().getSizeOfDimensions()[0].equals("V")
-				|| !electionDesc.getContainer().getInputType().getSizeOfDimensions()[0].equals("C"))) {
+		if ((electionDesc.getContainer().getInputType().getAmountOfDimensions() == 2
+				&& !electionDesc.getContainer().getInputType().getSizeOfDimensions()[0].equals("V")
+				&& !electionDesc.getContainer().getInputType().getSizeOfDimensions()[0].equals("C"))) {
 
 			code.add("//start is inclusive, stop is exclusive");
 			code.add("//used for 2 dim arrays");
