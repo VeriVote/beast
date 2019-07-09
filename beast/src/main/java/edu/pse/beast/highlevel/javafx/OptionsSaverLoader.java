@@ -13,7 +13,7 @@ public class OptionsSaverLoader
     private static Gson saverLoader;
 
     public OptionsSaverLoader(String fileEnding, String fileExtensionDescription) {
-        super(fileEnding, fileExtensionDescription);
+        super(fileEnding, fileExtensionDescription, null);
         // TODO Auto-generated constructor stub
     }
 

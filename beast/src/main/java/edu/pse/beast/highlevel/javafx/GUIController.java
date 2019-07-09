@@ -41,6 +41,7 @@ import edu.pse.beast.highlevel.javafx.resultpresenter.resultElements.TextImageEl
 import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresentationType;
 import edu.pse.beast.options.OptionsNew;
 import edu.pse.beast.saverloader.ChildTreeItemSaverLoader;
+import edu.pse.beast.saverloader.MinimalSaverInterface;
 import edu.pse.beast.toolbox.RichTextInformation;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.toolbox.Tuple3;
@@ -201,7 +202,7 @@ public class GUIController {
 
 	@FXML // fx:id="propertyPane"
 	private Tab propertyPane;
-	
+
 	@FXML // fx:id="resultPane"
 	private Tab resultTab;
 
@@ -342,11 +343,33 @@ public class GUIController {
 	private boolean nameFieldIsChangeable = false;
 
 	private SaverLoader propertyListSaverLoader = new SaverLoader(SaverLoader.PROP_LIST_FILE_ENDING,
-			"BEAST list of properties");
+			"BEAST list of properties", new MinimalSaverInterface() {
+				@Override
+				public void saveAs() {
+					GUIController.getController().saveAsPropertyList(null);
+				}
+
+				@Override
+				public void save() {
+					GUIController.getController().savePropertyList(null);
+				}
+			});
 	private SaverLoader childItemSaverLoader = new SaverLoader(SaverLoader.CHILD_PROP_FILE_ENDING,
-			"BEAST child property item");
+			"BEAST child property item", null);
 	private ChildTreeItemSaverLoader propertyListGSON = new ChildTreeItemSaverLoader();
-	private SaverLoader projectSaverLoader = new SaverLoader(SaverLoader.PROJECT_FILE_ENDING, "BEAST project file");
+	private SaverLoader projectSaverLoader = new SaverLoader(SaverLoader.PROJECT_FILE_ENDING, "BEAST project file",
+			new MinimalSaverInterface() {
+
+				@Override
+				public void saveAs() {
+					GUIController.getController().saveAsProject(null);
+				}
+
+				@Override
+				public void save() {
+					GUIController.getController().saveProject(null);
+				}
+			});
 	private OptionsSaverLoader optionSaverLoader = new OptionsSaverLoader(SaverLoader.OPT_FILE_ENDING,
 			"BEAST option file");
 	// private ProjectSaverLoader projectGSON = new ProjectSaverLoader();
@@ -401,8 +424,7 @@ public class GUIController {
 				new PreAndPostConditionsDescription("default description"), null);
 		variableTreeView.getSelectionModel().selectedItemProperty()
 				.addListener((observable, oldValue, newValue) -> setSymbVarToRemove(newValue));
-		treeView.getSelectionModel().selectedItemProperty()
-				.addListener((observable, oldValue, newValue) -> setPropertyToRemove(newValue));
+
 		codeArea.setStyle("-fx-font-family: consolas; -fx-font-size: 11pt;");
 
 		Thread scrollUpdater = new Thread(new Runnable() {
@@ -462,21 +484,21 @@ public class GUIController {
 		});
 
 		List<ResultPresentationType> types = ResultPresentationType.getImplementations();
-		
+
 		for (ResultPresentationType type : types) {
 			displayFormat.getItems().add(type.getMenuItem());
 		}
-		
-		//set the default presentation type
-		
+
+		// set the default presentation type
+
 		for (Iterator<ResultPresentationType> iterator = types.iterator(); iterator.hasNext();) {
 			ResultPresentationType type = iterator.next();
-			
+
 		}
-		
+
 		resultScrollPane.setFitToHeight(true);
 		resultScrollPane.setFitToWidth(true);
-		
+
 		// turn off the zoom slider in the beginning
 		zoomSlider.setDisable(true);
 
@@ -536,7 +558,7 @@ public class GUIController {
 	@FXML
 	public void resultPaneClicked(Event event) {
 	}
-	
+
 	@FXML
 	public void errorPaneClicked(Event event) {
 	}
@@ -583,12 +605,12 @@ public class GUIController {
 	@FXML
 	public void resetPropList() {
 		Alert confirmation = new Alert(AlertType.CONFIRMATION);
-		
+
 		Point position = MouseInfo.getPointerInfo().getLocation();
-		
+
 		confirmation.setX(position.getX() - confirmation.getWidth());
 		confirmation.setY(position.getY() - confirmation.getHeight());
-		
+
 		Stage stage = (Stage) confirmation.getDialogPane().getScene().getWindow();
 		// Add a custom icon.
 		stage.getIcons().add(new Image(PATH_TO_IMAGES + BEAST_LOGO));
@@ -611,7 +633,10 @@ public class GUIController {
 	}
 
 	private void removeAllProperties() {
-		for (TreeItem<CustomTreeItem> treeItem : treeItems) {
+		List<TreeItem<CustomTreeItem>> tmpCopy = new ArrayList<TreeItem<CustomTreeItem>>();
+		tmpCopy.addAll(treeItems);
+		
+		for (TreeItem<CustomTreeItem> treeItem : tmpCopy) {
 			removeProperty(treeItem);
 		}
 	}
@@ -824,7 +849,7 @@ public class GUIController {
 		newElectionDescription(event);
 		newVotingInput();
 		newPropertyList();
-		setOptions(new OptionsNew()); //reset the voting bounds
+		setOptions(new OptionsNew()); // reset the voting bounds
 	}
 
 	@FXML
@@ -983,7 +1008,7 @@ public class GUIController {
 	public void saveProperty(ActionEvent event) {
 		booleanExpEditor.save();
 	}
-	
+
 	@FXML
 	public void saveAsProperty(ActionEvent event) {
 		booleanExpEditor.saveAs();
@@ -1031,11 +1056,12 @@ public class GUIController {
 	public void savePropertyList(ActionEvent event) {
 		savePropertyListFromFile(null, true, false);
 	}
-	
 
 	public void newPropertyList() {
 		propertyListSaverLoader.resetHasSaveFile();
-		removeAllProperties();
+		if (properties.size() > 0) {
+			removeAllProperties();
+		}
 		addProperty(new PreAndPostConditionsDescription("New Property"));
 		properties.get(0).wasClicked(false);
 		GUIController.getController().resultNameField.setText("no property selected");
@@ -1168,12 +1194,11 @@ public class GUIController {
 	@FXML
 	public void resetInput(ActionEvent event) {
 		Alert confirmation = new Alert(AlertType.CONFIRMATION);
-		
+
 		Point position = MouseInfo.getPointerInfo().getLocation();
-		
+
 		confirmation.setX(position.getX() - confirmation.getWidth());
 		confirmation.setY(position.getY() - confirmation.getHeight());
-
 
 		Stage stage = (Stage) confirmation.getDialogPane().getScene().getWindow();
 		// Add a custom icon.
@@ -1437,18 +1462,13 @@ public class GUIController {
 		return seatItems;
 	}
 
-	private void setPropertyToRemove(TreeItem<CustomTreeItem> prop) {
-		this.propertyToRemove = prop;
-		this.lastClicked = System.currentTimeMillis();
-	}
-
 	public void setSymbVarToRemove(TreeItem<String> item) {
 		this.symbVarToRemove = item;
 		this.lastClicked = System.currentTimeMillis();
 	}
 
 	public void setCurrentPropertyDescription(ParentTreeItem propertyItem, boolean bringToFront) {
-		if (nameFieldIsChangeable && !bringToFront) {
+		if (nameFieldIsChangeable) {
 			propNameButtonClicked(null); // try to save the text the user wrote
 		}
 
@@ -1583,5 +1603,36 @@ public class GUIController {
 
 	public void disableZoomSlider(boolean disabled) {
 		zoomSlider.setDisable(disabled);
+	}
+
+	public void showSaveChangesDialog(MinimalSaverInterface caller) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+
+		Point position = MouseInfo.getPointerInfo().getLocation();
+
+		alert.setX(position.getX() - alert.getWidth());
+		alert.setY(position.getY() - alert.getHeight());
+
+		alert.setTitle("Confirmation Dialog");
+		alert.setHeaderText("You have unsaved changes. Do you want to change them?");
+
+		Stage stage = (Stage) alert.getDialogPane().getScene().getWindow();
+		// Add a custom icon.
+		stage.getIcons().add(new Image(PATH_TO_IMAGES + BEAST_LOGO));
+
+		ButtonType buttonTypeSave = new ButtonType("Save");
+		ButtonType buttonTypeSaveAs = new ButtonType("Save as");
+		ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().setAll(buttonTypeSave, buttonTypeSaveAs, buttonTypeCancel);
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == buttonTypeSave) {
+			caller.save();
+		} else if (result.get() == buttonTypeSaveAs) {
+			caller.saveAs();
+		} else {
+			// do nothing
+		}
 	}
 }

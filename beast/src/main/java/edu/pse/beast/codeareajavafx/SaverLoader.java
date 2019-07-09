@@ -9,6 +9,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import edu.pse.beast.highlevel.MainApplicationClass;
+import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.highlevel.javafx.MenuBarInterface;
+import edu.pse.beast.saverloader.MinimalSaverInterface;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import javafx.stage.FileChooser;
 
@@ -20,17 +23,21 @@ public class SaverLoader {
     public static final String OPT_FILE_ENDING        = ".opt";
     public static final String PROP_DESCR_FILE_ENDING = ".prop";
 
+    public final MinimalSaverInterface owner;
+    
+    private boolean hasChanges = false; //small hack, update values later on with listeners
     private boolean hasSaveFile = false;
     private File saveFile = null;
     private final String initialDir;
     private final String fileEnding;
     private final String fileExtensionDescription;
 
-    public SaverLoader(String fileEnding, String fileExtensionDescription) {
+    public SaverLoader(String fileEnding, String fileExtensionDescription, MinimalSaverInterface owner) {
         this.initialDir = SuperFolderFinder.getSuperFolder() + "/projectFiles/";
         new File(initialDir).mkdirs(); // make sure, that the initial folder exists
         this.fileEnding = fileEnding;
         this.fileExtensionDescription = fileExtensionDescription;
+        this.owner = owner;
     }
 
     public void save(String fileName, String text) {
@@ -61,6 +68,8 @@ public class SaverLoader {
      * @param text given text
      */
     public void saveToDisk(File toSaveIn, String text) {
+    	//hasChanges = false; //TODO enable again when it is updated with listeners
+    	
         PrintWriter out = null;
         try {
             out = new PrintWriter(toSaveIn);
@@ -120,6 +129,8 @@ public class SaverLoader {
     }
 
     public String load(File toLoadFrom) {
+    	checkToSaveChanges();
+    	
         try {
             return readFile(toLoadFrom, StandardCharsets.UTF_8);
         } catch (IOException e) {
@@ -131,6 +142,13 @@ public class SaverLoader {
     private static String readFile(File file, Charset encoding) throws IOException {
         byte[] encoded = Files.readAllBytes(Paths.get(file.getPath()));
         return new String(encoded, encoding);
+    }
+    
+    private void checkToSaveChanges() {
+    	if (hasChanges) {
+    		GUIController.getController().showSaveChangesDialog(owner);
+    		hasChanges = false;
+    	}
     }
 
     public void resetHasSaveFile() {
@@ -151,8 +169,12 @@ public class SaverLoader {
             this.hasSaveFile = true;
         }
     }
-
-    public void saveAs(File file) {
-        // TODO Auto-generated method stub
+    
+    public void hasChanged() {
+    	this.hasChanges = true;
+    }
+    
+    public void resetHasChanges() {
+    	this.hasChanges = false;
     }
 }

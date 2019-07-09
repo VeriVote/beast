@@ -47,7 +47,7 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
                                ParentTreeItem currentItem) {
         preArea.setParent(this);
         postArea.setParent(this);
-        this.saverLoader = new SaverLoader(".prop", "BEAST property description");
+        this.saverLoader = new SaverLoader(".prop", "BEAST property description", this);
         this.preArea = preArea;
         this.postArea = postArea;
         this.boundedVarArea = boundedVarArea;

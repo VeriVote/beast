@@ -118,7 +118,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 		recommendations.addAll(Arrays.asList(KEYWORDS));
 		recommendations.addAll(Arrays.asList(PREPROCESSOR));
 		recommendations.addAll(Arrays.asList(DATATYPES));
-		saverLoader = new SaverLoader(".elec", "BEAST election description");
+		saverLoader = new SaverLoader(".elec", "BEAST election description", this);
 		ElectionDescription startElecDescription = new ElectionDescription("New description", new SingleChoice(),
 				new SingleCandidate(), 0, 0, 0, true);
 		this.setNewElectionDescription(startElecDescription);

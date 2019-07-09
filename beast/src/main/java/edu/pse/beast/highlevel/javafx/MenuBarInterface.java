@@ -1,11 +1,9 @@
 package edu.pse.beast.highlevel.javafx;
 
-public interface MenuBarInterface {
+import edu.pse.beast.saverloader.MinimalSaverInterface;
+
+public interface MenuBarInterface extends MinimalSaverInterface{
     void open();
-
-    void save();
-
-    void saveAs();
 
     void undo();
 

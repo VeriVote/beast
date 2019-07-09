@@ -35,7 +35,7 @@ public class NewElectionSimulation
                                  GridPane voterGridPane,
                                  GridPane candidateGridPane) {
         this.container = container;
-        this.saverLoader = new SaverLoader(".elecIn", "Election Input Data");
+        this.saverLoader = new SaverLoader(".elecIn", "Election Input Data", this);
         this.inputGridPane = inputGridPane;
         this.voterGridPane = voterGridPane;
         this.candidateGridPane = candidateGridPane;

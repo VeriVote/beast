@@ -9,18 +9,26 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.propertychecker.Result;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TreeItem;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 public class ParentTreeItem extends CustomTreeItem {
     private Label propName;
     private CheckBox checkAll = new CheckBox("check all");
+    
+    ContextMenu contextMenu = new ContextMenu();
+    MenuItem deleteItem = new MenuItem("Delete Property");
 
     private final List<ChildTreeItem> subItems
           = new ArrayList<ChildTreeItem>();
@@ -40,6 +48,9 @@ public class ParentTreeItem extends CustomTreeItem {
                    boolean isSelected,
                    TreeItem<CustomTreeItem> treeItemReference,
                    boolean createChildren) {
+    	
+    	contextMenu.getItems().add(deleteItem);
+    	
         this.setTreeItemReference(treeItemReference);
         this.propDesc = propDesc;
         this.setAlignment(Pos.CENTER_LEFT);
@@ -69,11 +80,35 @@ public class ParentTreeItem extends CustomTreeItem {
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                wasClicked(true);
+            	MouseButton button = event.getButton();
+            	
+            	if(button == MouseButton.PRIMARY) {
+                    wasClicked(true);
+            	}
             }
         });
+        
+        this.deleteItem.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				GUIController.getController().removeProperty(treeItemReference);
+			}
+		});
+        
+        this.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+            @Override
+            public void handle(ContextMenuEvent event) {
+                contextMenu.show(ParentTreeItem.this, event.getScreenX(), event.getScreenY());
+            }
+        });
+        
         this.setSelected(isSelected);
         this.getTreeItemReference().setValue(this);
+        
+//        
+//		this.getChildren().add(new Separator(Orientation.VERTICAL));
+//		this.getChildren().add(removeButton);
     }
 
     public void addChildrenToStage() {
