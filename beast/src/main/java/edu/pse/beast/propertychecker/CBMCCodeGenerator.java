@@ -210,7 +210,7 @@ public class CBMCCodeGenerator { //TODO refactor this into multiple sub classes 
 	}
 
 	private void addVoteSumFunc(boolean unique) {
-		String input = electionDesc.getContainer().getInputType().getDimensionDescriptor(true) + " arr";
+		String input = electionDesc.getContainer().getOutputType().getDataTypeAndSign() + " arr" + electionDesc.getContainer().getInputType().getDimensionDescriptor(true);
 		code.add("unsigned int voteSumForCandidate" + (unique ? "Unique" : "")
 				+ "(INPUT, unsigned int amountVotes, unsigned int candidate) {".replace("INPUT", input));
 		code.addTab();

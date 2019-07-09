@@ -5,8 +5,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
+import edu.pse.beast.saverloader.adapter.InOutTypeAdapter;
 import edu.pse.beast.saverloader.adapter.InputTypeAdapter;
 import edu.pse.beast.saverloader.adapter.OutputTypeAdapter;
+import edu.pse.beast.types.InOutType;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 
@@ -19,9 +21,9 @@ public class ElectionDescriptionSaverLoader implements SaverLoader<ElectionDescr
 
     static { // here you have the chance to register typeAdapters
         GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(InOutType.class, new InOutTypeAdapter());
         builder.registerTypeAdapter(InputType.class, new InputTypeAdapter());
         builder.registerTypeAdapter(OutputType.class, new OutputTypeAdapter());
-        //builder.registerTypeAdapter(CommonHelpMethods.class, new CommonHelpMethodsAdapter()); TODO remove
         saverLoader = builder.create();
     }
 

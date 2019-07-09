@@ -19,7 +19,7 @@ public class InputTypeAdapter
                            JsonDeserializer<InputType> {
 
     @Override
-    public InputType deserialize(JsonElement json, Type typeOfT,
+    public InputType deserialize(JsonElement json, Type typeOf,
                                  JsonDeserializationContext context)
             throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
