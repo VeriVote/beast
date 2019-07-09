@@ -129,7 +129,7 @@ public final class CCodeHelper {
 
 		decl = decl.replace("RESULT", container.getOutputStruct().getStructAccess());
 		decl = decl.replace("VOTES",
-				container.getInputType().getDataTypeAndSign() + " " + UnifiedNameContainer.getVotingArray() + container.getInputType().getDimensionDescriptor(true));
+				container.getInputStruct().getStructAccess() + " " + UnifiedNameContainer.getVotingArray());
 
 		return decl;
 	}

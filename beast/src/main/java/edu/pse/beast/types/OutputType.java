@@ -59,6 +59,7 @@ public abstract class OutputType extends InOutType {
 
     public abstract CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code);
 
+    @Deprecated
     public abstract CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code,
                                                                  int voteNumber);
 

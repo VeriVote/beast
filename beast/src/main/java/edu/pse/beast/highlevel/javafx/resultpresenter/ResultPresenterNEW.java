@@ -48,6 +48,7 @@ public class ResultPresenterNEW {
 	 * removes all children from the result pane
 	 */
 	private void reset() {
+		
 		ResultImageRenderer.reset();
 		
 		resultScrollPane.setContent(null);
