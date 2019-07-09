@@ -413,7 +413,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 	public void bringToFront() {
 		final GUIController cont = GUIController.getController();
 		cont.getMainTabPane().getSelectionModel().select(cont.getCodeTab());
-		displayErrors(CVariableErrorFinder.findErrors(elecDescription.getDeepCopy().getSimpleCode()));
+		displayErrors(CVariableErrorFinder.findErrors(elecDescription.getDeepCopy().getSimpleCode(), elecDescription));
 	}
 
 	@Override

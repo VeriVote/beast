@@ -3,6 +3,7 @@ package edu.pse.beast.types;
 import java.util.Iterator;
 import java.util.List;
 
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.propertychecker.Result;
 
@@ -30,6 +31,8 @@ public abstract class InOutType {
 	private final DataType dataType;
 	private final int dimensions;
 	private final String[] sizeOfDimensions;
+	
+	private ElectionTypeContainer container;
 
 	public InOutType(boolean unsigned, DataType dataType, int dimensions, String[] sizeOfDimensions) {
 		this.unsigned = unsigned;
@@ -37,20 +40,10 @@ public abstract class InOutType {
 		this.dimensions = dimensions;
 		this.sizeOfDimensions = sizeOfDimensions;
 	}
-//
-//	/**
-//	 * 
-//	 * @param dimension one indexed, retrieves the size of the given dimension
-//	 * @return the size of the given dimensions, "ERROR", when dimensions < 1,
-//	 *         dimension > max amount dimensions
-//	 */
-//	public final String getSizeOfDimension(int dimension) {
-//		if (dimension > dimension || dimension < 1) {
-//			return "ERROR";
-//		}
-//
-//		return sizeOfDimensions[dimension - 1];
-//	}
+
+	public void setElectionTypeContainer(ElectionTypeContainer container) {
+		this.container = container;
+	}
 	
 	public boolean isDataTypeUnsigned() {
 		return this.unsigned;
@@ -107,6 +100,10 @@ public abstract class InOutType {
 			sign = "unsigned ";
 		}
 		return sign + this.dataType;
+	}
+	
+	public ElectionTypeContainer getContainer() {
+		return container;
 	}
 	
 	/**

@@ -329,7 +329,7 @@ public class ElectionDescription {
 			arrayAccess = arrayAccess + "[" + loopVariables.get(i) + "]";
 		}
 
-		toReturn = toReturn + variableName + container.getOutputStruct().getStructAccess() + " = " + valueDefinition
+		toReturn = toReturn + variableName + "." + container.getNameContainer().getResultArrName() + " = " + valueDefinition
 				+ arrayAccess + ";";
 
 		for (int i = 0; i < dimensions; i++) {

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CBMCResultPresentationHelper;
@@ -27,7 +28,7 @@ public class ParliamentStack extends CBMCOutputType {
 	public ParliamentStack() {
 		super(true, DataType.INT, dimensions, sizeOfDimensions);
 	}
-
+	
     @Override
     public String getOutputIDinFile() {
         return "STACK_PER_PARTY";
@@ -84,7 +85,7 @@ public class ParliamentStack extends CBMCOutputType {
     public CodeArrayListBeautifier
             addVotesArrayAndInit(CodeArrayListBeautifier code,
                                  int voteNumber) {
-        String electX = "struct stack_result elect" + voteNumber
+        String electX = super.getContainer().getOutputStruct().getStructAccess() + " elect" + voteNumber
                       + " = " + UnifiedNameContainer.getVotingMethod()
                       + "(votes" + voteNumber + ");";
         code.add(electX);
@@ -100,7 +101,7 @@ public class ParliamentStack extends CBMCOutputType {
     public CodeArrayListBeautifier addMarginMainTest(CodeArrayListBeautifier code, int voteNumber) {
         code.add("int main() {");
         code.addTab();
-        String temp = "struct stack_result tmp" + voteNumber
+        String temp = super.getContainer().getOutputStruct().getStructAccess() + " tmp" + voteNumber
                       + " = " + UnifiedNameContainer.getVotingMethod()
                       + "(ORIG_VOTES);";
         code.add(temp);
@@ -136,7 +137,7 @@ public class ParliamentStack extends CBMCOutputType {
 
     @Override
     public void addVerifyOutput(CodeArrayListBeautifier code) {
-        code.add("struct stack_result tmp_result = "
+        code.add(super.getContainer().getOutputStruct().getStructAccess() + " tmp_result = "
                 + UnifiedNameContainer.getVotingMethod() + "("
                 + UnifiedNameContainer.getNewVotesName() + "1);");
         // create the array where the new seats will get saved

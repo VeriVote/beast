@@ -43,7 +43,6 @@ module edu.pse.beast {
     exports edu.pse.beast.codearea.actionlist;
     exports edu.pse.beast.booleanexpeditor.view;
     exports edu.pse.beast.options.codeareaoptions;
-    exports edu.pse.beast.pluginhandler;
     exports edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
     exports edu.pse.beast.celectiondescriptioneditor;
     exports edu.pse.beast.datatypes.booleanexpast.othervaluednodes;

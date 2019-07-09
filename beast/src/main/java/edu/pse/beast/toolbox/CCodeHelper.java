@@ -110,9 +110,9 @@ public final class CCodeHelper {
 	public static String generateSimpleDeclString(ElectionTypeContainer container) {
 		String decl = "RESULT " + UnifiedNameContainer.getVotingMethod() + "(VOTES) {";
 
-		decl = decl.replace("RESULT", container.getOutputType().getDimensionDescriptor(true));
+		decl = decl.replace("RESULT", container.getInputType().getDataTypeAndSign() + container.getOutputType().getDimensionDescriptor(true));
 		decl = decl.replace("VOTES",
-				container.getInputType().getDimensionDescriptor(true) + " " + UnifiedNameContainer.getVotingArray());
+				container.getInputType().getDataTypeAndSign() + " " + UnifiedNameContainer.getVotingArray() + container.getInputType().getDimensionDescriptor(true));
 
 		return decl;
 	}
@@ -129,7 +129,7 @@ public final class CCodeHelper {
 
 		decl = decl.replace("RESULT", container.getOutputStruct().getStructAccess());
 		decl = decl.replace("VOTES",
-				container.getInputType().getDataTypeAndSign() + " " + container.getInputType().getDimensionDescriptor(false) + " " + UnifiedNameContainer.getVotingArray());
+				container.getInputType().getDataTypeAndSign() + " " + UnifiedNameContainer.getVotingArray() + container.getInputType().getDimensionDescriptor(true));
 
 		return decl;
 	}

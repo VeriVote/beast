@@ -1,10 +1,10 @@
 package edu.pse.beast.types.cbmctypes.outputplugins;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CBMCResultPresentationHelper;
@@ -46,7 +46,7 @@ public class Parliament extends CBMCOutputType {
         // UnifiedNameContainer.getVoter() + "], total_diff, pos_diff;");
 
         code.addTab();
-        code.add("struct result tmp = " + UnifiedNameContainer.getVotingMethod() + "("
+        code.add(super.getContainer().getOutputStruct().getStructAccess() + "tmp = " + UnifiedNameContainer.getVotingMethod() + "("
                 + UnifiedNameContainer.getNewVotesName() + "1);");
         code.add("unsigned int *tmp_result = tmp."
                 + UnifiedNameContainer.getResultArrName() + ";");
@@ -77,7 +77,7 @@ public class Parliament extends CBMCOutputType {
     @Override
     public CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code,
                                                         int voteNumber) {
-        String electX = "struct result elect" + voteNumber
+        String electX = super.getContainer().getOutputStruct().getStructAccess() + " elect" + voteNumber
                 + " = " + UnifiedNameContainer.getVotingMethod()
                 + "(votes" + voteNumber + ");";
         code.add(electX);
@@ -94,7 +94,7 @@ public class Parliament extends CBMCOutputType {
                                                      int voteNumber) {
         code.add("int main() {");
         code.addTab();
-        String temp = "struct result tmp" + voteNumber
+        String temp = super.getContainer().getOutputStruct().getStructAccess() + " tmp" + voteNumber
                 + " = " + UnifiedNameContainer.getVotingMethod()
                 + "(ORIG_VOTES);";
         code.add(temp);
@@ -129,7 +129,7 @@ public class Parliament extends CBMCOutputType {
 
     @Override
     public void addVerifyOutput(CodeArrayListBeautifier code) {
-        code.add("struct result tmp_result = " + UnifiedNameContainer.getVotingMethod() + "("
+        code.add(super.getContainer().getOutputStruct().getStructAccess() + " tmp_result = " + UnifiedNameContainer.getVotingMethod() + "("
                 + UnifiedNameContainer.getNewVotesName() + "1);");
         // create the array where the new seats will get saved
         code.add("unsigned int "

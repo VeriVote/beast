@@ -3,16 +3,18 @@ package edu.pse.beast.types.cbmctypes;
 import java.util.Iterator;
 import java.util.List;
 
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.types.InputType;
+import edu.pse.beast.types.InOutType.DataType;
 
 public abstract class CBMCInputType extends InputType {
 	
 	public CBMCInputType(boolean unsigned, DataType dataType, int dimensions, String[] sizeOfDimensions) {
         super(unsigned, dataType, dimensions, sizeOfDimensions);
     }
-
+	
     @Override
     public void addCheckerSpecificHeaders(CodeArrayListBeautifier code) {
         // add the headers CBMC needs;

@@ -74,18 +74,6 @@ public final class UnifiedNameContainer { //TODO make not static and then only a
         return map.get("votingMethod");
     }
 
-    public static String getStructResult() {
-        return "struct " + map.get("struct_result");
-    }
-
-    public static String getStructCandidateList() {
-        return "struct " + map.get("struct_candidateList");
-    }
-
-    public static String getStructStackResult() {
-        return "struct " + map.get("stack_result");
-    }
-
     public static String getResultArrName() {
         return map.get("result_arr_name");
     }
@@ -126,14 +114,6 @@ public final class UnifiedNameContainer { //TODO make not static and then only a
         return "votingMethod";
     }
 
-    public static String getStructResultKey() {
-        return "struct_result";
-    }
-
-    public static String getStructStackResultKey() {
-        return "stack_result";
-    }
-
     public static String getResultArrNameKey() {
         return "result_arr_name";
     }
@@ -160,14 +140,6 @@ public final class UnifiedNameContainer { //TODO make not static and then only a
 
     public static void setVotingMethod(String votingMethod) {
         setInMap("votingMethod", votingMethod);
-    }
-
-    public static void setStructResult(String structResult) {
-        setInMap("struct_result", structResult);
-    }
-
-    public static void setStackResult(String stackResult) {
-        setInMap("stack_result", stackResult);
     }
 
     public static void setResultArrName(String resultArrName) {

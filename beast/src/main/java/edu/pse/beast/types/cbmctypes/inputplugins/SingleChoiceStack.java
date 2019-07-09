@@ -1,6 +1,5 @@
 package edu.pse.beast.types.cbmctypes.inputplugins;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +16,6 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueS
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
-import edu.pse.beast.types.InOutType.DataType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class SingleChoiceStack extends CBMCInputType {
@@ -29,7 +27,7 @@ public class SingleChoiceStack extends CBMCInputType {
 	public SingleChoiceStack() {
 		super(true, DataType.INT, dimensions, sizeOfDimensions);
 	}
-
+	
     @Override
     public String getInputIDinFile() {
         return "SINGLE_CHOICE_STACK";

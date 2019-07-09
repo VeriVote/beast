@@ -3,6 +3,7 @@ package edu.pse.beast.types.cbmctypes.outputplugins;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CBMCResultPresentationHelper;

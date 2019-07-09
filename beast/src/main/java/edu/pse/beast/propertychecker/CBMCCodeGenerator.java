@@ -1,6 +1,7 @@
 package edu.pse.beast.propertychecker;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.antlr.v4.runtime.CharStreams;
@@ -28,7 +29,7 @@ import edu.pse.beast.types.InternalTypeContainer;
  *
  * @author Niels Hanselmann
  */
-public class CBMCCodeGenerator {
+public class CBMCCodeGenerator { //TODO refactor this into multiple sub classes later on
 	private CodeArrayListBeautifier code;
 	private final ElectionDescription electionDesc;
 	private final PreAndPostConditionsDescription preAndPostCondDesc;
@@ -536,7 +537,7 @@ public class CBMCCodeGenerator {
 	 * @param code the list in which the header should be written
 	 * @return the finished header
 	 */
-	public static CodeArrayListBeautifier addHeader(CodeArrayListBeautifier code) {
+	public CodeArrayListBeautifier addHeader(CodeArrayListBeautifier code) {
 		code.add("#include <stdlib.h>");
 		code.add("#include <stdint.h>");
 		code.add("#include <assert.h>");
@@ -547,24 +548,9 @@ public class CBMCCodeGenerator {
 		code.add("#define assert2(x, y) __CPROVER_assert(x, y)");
 		code.add("#define assume(x) __CPROVER_assume(x)");
 		code.add("");
-		code.add(UnifiedNameContainer.getStructResult() + " { unsigned int " + UnifiedNameContainer.getResultArrName()
-				+ "[" + UnifiedNameContainer.getSeats() + "]; };"); // add a result
-		// struct to be
-		// returned in case
-		// of a parliament
-
-		code.add(UnifiedNameContainer.getStructStackResult() + " { unsigned int "
-				+ UnifiedNameContainer.getResultArrName() + "[" + UnifiedNameContainer.getCandidate() + "]; };"); // add
-																													// a
-
-		code.add("struct vote_single { unsigned int arr[V]; };");
-		// TODO make them use the UnifiedNameContainer
-		code.add("struct vote_double { unsigned int arr[V][C]; };");
-
-		// add a result
-		// same for a stacked result for each party
-		code.add(UnifiedNameContainer.getStructCandidateList() + " { unsigned int "
-				+ UnifiedNameContainer.getResultArrName() + "[" + UnifiedNameContainer.getCandidate() + "]; };");
+			
+		code.addAll(Arrays.asList(electionDesc.getContainer().getStructDefinitions().split("\\n")));
+		
 		return code;
 	}
 

@@ -1,9 +1,11 @@
 package edu.pse.beast.celectiondescriptioneditor.celectioncodearea.errorhandling;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import edu.pse.beast.codearea.errorhandling.CodeError;
+import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 
 /**
@@ -14,6 +16,7 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
  */
 public final class CVariableErrorFinder {
 	private CVariableErrorFinder() {
+		
 	}
 
 	/**
@@ -22,7 +25,7 @@ public final class CVariableErrorFinder {
 	 * @param code the c code as list of code lines
 	 * @return a list of code errors
 	 */
-	public static List<CodeError> findErrors(List<String> code) {
+	public static List<CodeError> findErrors(List<String> code, ElectionDescription electionDesc) {
 
 		// TODO use unfifed name container here later
 
@@ -47,18 +50,10 @@ public final class CVariableErrorFinder {
 		// Maybe it is possible to include all CBMC functions, but I will have to see.
 		// At least I can extract it to a file, which would make updating easier.
 
-		seperated.add("struct vote_single { unsigned int arr[V]; };");
-		seperated.add("struct vote_double { unsigned int arr[V][C]; };");
-
 		seperated.add("void __CPROVER_assert(int x, int y) {}");
 		seperated.add("void __CPROVER_assume(int x) {}");
-
-		seperated.add("struct result { unsigned int arr[" + UnifiedNameContainer.getSeats() + "]; };");
-		seperated.add("struct stack_result { unsigned int arr[" + UnifiedNameContainer.getCandidate() + "]; };");
-
-		seperated.add(UnifiedNameContainer.getStructCandidateList() + " { unsigned int "
-				+ UnifiedNameContainer.getResultArrName() + "[" + UnifiedNameContainer.getCandidate() + "]; };"); // add
-																													// a
+		
+		seperated.addAll(Arrays.asList(electionDesc.getContainer().getStructDefinitions().split("\\n"))); //add all used structs
 
 		seperated.add("void assume(int x) {}");
 		seperated.add("void assert(int x) {}");

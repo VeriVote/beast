@@ -1,10 +1,10 @@
-package edu.pse.beast.celectiondescriptioneditor.electiontemplates;
+package edu.pse.beast.celectiondescriptioneditor.electiontemplates; //TODO clean up
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
-import edu.pse.beast.pluginhandler.TypeLoader;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 
@@ -21,6 +21,7 @@ public class ElectionTemplateHandler {
      * creates the template handler and sets it up for usage
      */
     public ElectionTemplateHandler() {
+    }
 //        inputTypes.add(new ElectionTypeContainer(
 //                new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE),
 //                                          InternalTypeRep.VOTER),
@@ -55,23 +56,6 @@ public class ElectionTemplateHandler {
 //            ),
 //            ElectionTypeContainer.ElectionOutputTypeIds.CAND_PER_SEAT)
 //        );
-    }
-
-    /**
-     *
-     * @return the ids that are used for the input
-     */
-    public List<InputType> getInputTypes() {
-        return TypeLoader.getAvailableInputTypes();
-    }
-
-    /**
-     *
-     * @return the ids that are used for the output
-     */
-    public List<OutputType> getOutputTypes() {
-        return TypeLoader.getAvailableOutputTypes();
-    }
 //
 //    /**
 //     * returns the election type container having the supplied id

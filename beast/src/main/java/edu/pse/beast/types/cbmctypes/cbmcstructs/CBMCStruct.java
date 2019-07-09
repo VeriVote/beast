@@ -11,22 +11,28 @@ import edu.pse.beast.types.InOutType.DataType;
 public class CBMCStruct extends ComplexType {
 
 	public final InOutType inOutType;
-	
+
 	public final DataType dataType;
 	public final int dimensions;
 	public final String[] sizeOfDimensions;
 	public final boolean unsigned;
-	
-	private boolean isSet = false;
-	private String structName = "";
+
+	private final String structName;
 
 	public CBMCStruct(InOutType inOutType) {
 		this.inOutType = inOutType;
-		
+
 		this.dataType = inOutType.getDataType();
 		this.dimensions = inOutType.getAmountOfDimensions();
 		this.sizeOfDimensions = inOutType.getSizeOfDimensions();
 		this.unsigned = inOutType.isDataTypeUnsigned();
+		String generatedName = "auto_" + this.dataType.toString().replaceAll("\\s","");
+
+		for (int i = 0; i < dimensions; i++) {
+			generatedName = generatedName + sizeOfDimensions[i];
+		}
+		
+		this.structName = generatedName;
 	}
 
 	@Override
@@ -46,40 +52,25 @@ public class CBMCStruct extends ComplexType {
 		return false;
 
 	}
-	
+
 	/**
 	 * 
 	 * @return the string which defines this struct
 	 */
 	@Override
 	public String getStructDefinition(UnifiedNameContainer nameContainer) {
-		this.structName = dataType.toString();
-		
-		for(int i = 0; i < dimensions; i++) {
-			this.structName = structName + sizeOfDimensions[i];
-		}
-		
-		this.isSet = true;
-		
 		String sign = "";
-		
+
 		if (inOutType.isDataTypeUnsigned()) {
 			sign = "unsigned ";
 		}
-		
-		return "struct " + structName + " { "
-				+ sign + inOutType.getDataType() + " " + nameContainer.getResultArrName() 
-				+ " " + inOutType.getDimensionDescriptor(true) 
-				+ "]; };";	
+
+		return "struct " + structName + " { " + sign + inOutType.getDataType() + " " + nameContainer.getResultArrName()
+				+ " " + inOutType.getDimensionDescriptor(true) + ";};";
 	}
-	
+
 	@Override
 	public String getStructAccess() {
-		if (isSet) {
-			return "struct " + structName;
-		} else {
-			System.out.println("The struct was not yet created, so no name was set");
-			throw new IllegalArgumentException();
-		}
+		return "struct " + structName;
 	}
 }
