@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpListNode;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
@@ -21,7 +22,11 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.BooleanExpScope;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.FormalPropertySyntaxTreeToAstTranslator;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
+import edu.pse.beast.types.ComplexType;
+import edu.pse.beast.types.InOutType;
+import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.InternalTypeContainer;
+import edu.pse.beast.types.OutputType;
 
 /**
  * This class creates the .c file which will be checked with CBMC. It generates
@@ -149,7 +154,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		String origVotes = electionDesc.getContainer().getInputStruct().getStructAccess() + " "
 				+ electionDesc.getContainer().getNameContainer().getOrigVotesName() + " = "
 				+ getVotingResultCode((CBMCResultValueWrapper) votingData.values) + ";";
-		
+
 		code.add(origVotes);
 		addMarginMainCheck(margin, origResult);
 	}
@@ -165,12 +170,11 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		// add the code the user wrote (e.g the election function)
 		code.addAll(GUIController.getController().getElectionDescription().getComplexCode());
 		// add the code which defines the votes
-		
+
 		String origVotes = electionDesc.getContainer().getInputStruct().getStructAccess() + " "
 				+ electionDesc.getContainer().getNameContainer().getOrigVotesName() + " = "
 				+ getVotingResultCode((CBMCResultValueWrapper) votingData.values) + ";";
 
-		
 		code.add(origVotes);
 
 		addMarginMainTest(); // TODO add gcc ability here
@@ -192,6 +196,82 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		code.add("verify();");
 		code.deleteTab();
 		code.add("}");
+	}
+
+	private void addVerifyMethod(CodeArrayListBeautifier code, InputType inType, OutputType outType) {
+		code.add("void verify() {");
+		code.add("int total_diff = 0;");
+
+		String voteContainer = electionDesc.getContainer().getInputStruct().getStructAccess() + " "
+				+ UnifiedNameContainer.getNewVotesName() + "1;";
+
+		addInitialisedValue(UnifiedNameContainer.getNewVotesName() + "1", inType,
+				electionDesc.getContainer().getInputStruct(), inType.getMinimalValue(), inType.getMaximalValue());
+
+		code.add(voteContainer);
+
+		List<String> loopNames = addNestedForLoopTop(code, inType.getSizeOfDimensionsAsList(), new ArrayList<String>());
+		code.add("int changed = nondet_int();");
+		code.add("assume(0 <= changed);");
+		code.add("assume(changed <= 1);");
+		code.add("if(changed) {");
+		code.addTab();
+		// if we changed the vote, we keep track of it
+		code.add("total_diff++;");
+
+		code.add(inType.flipVote(UnifiedNameContainer.getNewVotesName(),
+				electionDesc.getContainer().getNameContainer().getOrigVotesName(), loopNames));
+
+		// flip the vote (0 -> 1 | 1 -> 0)
+		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = !ORIG_VOTES[i][j];");
+		code.deleteTab();
+		code.add("} else {");
+		code.addTab();
+		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = ORIG_VOTES[i][j];");
+		code.deleteTab();
+		code.add("}");
+		code.deleteTab();
+		code.add("}");
+		code.deleteTab();
+		code.add("}"); // end of the double for-loop
+		// no more changes than margin allows
+		code.add("assume(total_diff <= MARGIN);");
+		outType.addVerifyOutput(code);
+		// end of the function
+		code.add("}");
+	}
+
+	/**
+	 * 
+	 * @param code                the code beautifier it should be added to
+	 * @param dimensions          the size of each dimension,
+	 * @param nameOfLoopVariables an empty, new list. Every new loop variable will
+	 *                            be appended
+	 * @return
+	 */
+	private List<String> addNestedForLoopTop(CodeArrayListBeautifier code, List<String> dimensions,
+			List<String> nameOfLoopVariables) {
+
+		if (dimensions.size() > 0) {
+
+			String name = "loop_" + nameOfLoopVariables.size();
+			name = code.getNotUsedVarName(name);
+
+			nameOfLoopVariables.add(name);
+
+			code.add("for (int " + name + " = 0; " + name + " < " + dimensions.get(0) + "; " + name + "++) {");
+			code.addTab();
+			return addNestedForLoopTop(code, dimensions.subList(1, dimensions.size()), nameOfLoopVariables);
+		}
+
+		return dimensions;
+	}
+
+	private void addNestedForrLoopBot(CodeArrayListBeautifier code, int dimensions) {
+		for (int i = 0; i < dimensions; i++) {
+			code.deleteTab();
+			code.add("}");
+		}
 	}
 
 	/**
@@ -638,7 +718,23 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		code.addList(boundedVars);
 		// first the Variables have to be Initialized
 		addSymbVarInitialisation();
-		addVotesArrayAndElectInitialisation();
+
+		for (int voteNumber = 1; voteNumber <= numberOfTimesVoted; voteNumber++) {
+			String minV = "" + electionDesc.getContainer().getInputType().getMinimalValue();
+			if (electionDesc.getContainer().getInputType().hasVariableAsMinValue()) {
+				minV += voteNumber;
+			}
+			String maxV = "" + electionDesc.getContainer().getInputType().getMaximalValue();
+			if (electionDesc.getContainer().getInputType().hasVariableAsMaxValue()) {
+				maxV += voteNumber;
+			}
+
+			code.add("//init for election: " + voteNumber);
+			addInitialisedValue(electionDesc.getContainer().getNameContainer().getVotingArray() + voteNumber,
+					electionDesc.getContainer().getInputType(), electionDesc.getContainer().getInputStruct(), minV,
+					maxV);
+		}
+
 		// the the PreProperties must be defined
 		addPreProperties(preAST);
 		// now hold all the elections
@@ -753,62 +849,37 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 				: numberOfTimesVoted;
 	}
 
-	private void addVotesArrayAndElectInitialisation() {
-		code.add("//voting-array and elect variable initialisation");
-		for (int voteNumber = 1; voteNumber <= numberOfTimesVoted; voteNumber++) {
-			code.add("//init for election: " + voteNumber);
+	/**
+	 * adds a value of the fitting size as described
+	 * 
+	 * @param valueName
+	 * @param type
+	 * @param voteNumber if multiple instances of this variable should be created
+	 *                   for multiple votes, this number has to be given
+	 */
+	private void addInitialisedValue(String valueName, InOutType inOutType, ComplexType complexType, String minValue,
+			String maxValue) {
+		code.add("// init of variable " + valueName);
 
-			String votesX = electionDesc.getContainer().getInputStruct().getStructAccess();
+		String declaration = complexType.getStructAccess() + " " + valueName + ";";
+		code.add(declaration);
 
-			votesX = votesX + " " + UnifiedNameContainer.getVotingArray() + voteNumber;
+		List<String> loopVariables = addNestedForLoopTop(this.code, inOutType.getSizeOfDimensionsAsList(),
+				new ArrayList<String>());
 
-			code.add(votesX + ";");
+		String assignment = valueName + "." + electionDesc.getContainer().getNameContainer().getResultArrName();
 
-			String forTemplate = "for(unsigned int COUNTER = 0; COUNTER < UPPER; COUNTER++) {";
-
-			int listDepth = 0;
-			for (int i = 0; i < electionDesc.getContainer().getInputType().getAmountOfDimensions(); i++) {
-				String currentFor = forTemplate.replaceAll("COUNTER", "counter_" + listDepth);
-
-				currentFor = currentFor.replaceAll("UPPER",
-						electionDesc.getContainer().getInputType().getSizeOfDimensions()[listDepth] + voteNumber);
-
-				code.add(currentFor);
-				code.addTab();
-				listDepth++;
-			}
-
-			String min = "" + electionDesc.getContainer().getInputType().getMinimalValue();
-			if (electionDesc.getContainer().getInputType().hasVariableAsMinValue()) {
-				min += voteNumber;
-			}
-
-			String max = "" + electionDesc.getContainer().getInputType().getMaximalValue();
-			if (electionDesc.getContainer().getInputType().hasVariableAsMaxValue()) {
-				max += voteNumber;
-			}
-
-			String votesElement = UnifiedNameContainer.getVotingArray() + voteNumber + "."
-					+ electionDesc.getContainer().getNameContainer().getResultArrName();
-
-			for (int i = 0; i < listDepth; ++i) {
-				votesElement += "[COUNTER]".replace("COUNTER", "counter_" + i);
-			}
-			String nondetInt = (votesElement + " = nondet_uint();");
-			String voteDecl = ("assume((MIN <= " + votesElement + ") && (" + votesElement + " <= MAX));");
-			voteDecl = voteDecl.replace("MIN", min);
-			voteDecl = voteDecl.replace("MAX", max);
-			code.add(nondetInt);
-			code.add(voteDecl);
-			// if we need to add something extra
-			electionDesc.getContainer().getInputType().addExtraCodeAtEndOfCodeInit(code, voteNumber);
-			// close the for loops
-			for (int i = 0; i < listDepth; ++i) {
-				code.deleteTab();
-				code.add("}");
-			}
-			code.add("");
+		for (int i = 0; i < inOutType.getAmountOfDimensions(); i++) {
+			assignment = assignment + "[" + loopVariables.get(i) + "]";
 		}
+
+		code.add(assignment + " = nondet_uint();");
+		code.add("assume((" + minValue + " <= " + assignment + ") && (" + assignment + " <= " + maxValue + "));");
+
+		inOutType.addExtraCodeAtEndOfCodeInit(code, valueName, loopVariables);
+
+		addNestedForrLoopBot(this.code, inOutType.getAmountOfDimensions());
+
 	}
 
 	private BooleanExpListNode generateAST(String code) {

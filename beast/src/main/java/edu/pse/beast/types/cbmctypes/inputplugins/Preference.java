@@ -24,10 +24,11 @@ import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class Preference extends CBMCInputType {
-	
+
 	private static final int dimensions = 2;
 
-	private final static String[] sizeOfDimensions = { UnifiedNameContainer.getVoter(), UnifiedNameContainer.getCandidate() };
+	private final static String[] sizeOfDimensions = { UnifiedNameContainer.getVoter(),
+			UnifiedNameContainer.getCandidate() };
 
 	public Preference() {
 		super(true, DataType.INT, dimensions, sizeOfDimensions);
@@ -191,11 +192,18 @@ public class Preference extends CBMCInputType {
 //  }
 
 	@Override
-	public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, int voteNumber) {
-		code.add("for (unsigned int j_prime = 0; j_prime < counter_1; j_prime++) {");
+	public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, String valueName,
+			List<String> loopVariables) {
+		String ownLoopVar = code.getNotUsedVarName("j_prime");
+
+		String loopHead = "for (unsigned int " + ownLoopVar + " = 0; " + ownLoopVar + " < " + loopVariables.get(1)
+				+ "; " + ownLoopVar + "++) {";
 		code.addTab();
-		code.add("assume (votes" + voteNumber + ".arr[counter_0][counter_1] != votes" + voteNumber
-				+ ".arr[counter_0][j_prime]);"); // TODO change to unifed name container
+
+		code.add("assume (" + valueName + "." + this.getContainer().getNameContainer().getResultArrName() + "["
+				+ loopVariables.get(0) + "]" + "[" + loopVariables.get(1) + "] != " + valueName + "."
+				+ this.getContainer().getNameContainer().getResultArrName() + "[" + loopVariables.get(0) + "]" + "["
+				+ ownLoopVar + "]);");
 		code.deleteTab();
 		code.add("}");
 	}
@@ -203,6 +211,7 @@ public class Preference extends CBMCInputType {
 	@Override
 	public void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique) {
 		code.add("if(arr[i][0] == candidate) sum++;");
+		throw new IllegalArgumentException(); //TODO rewrite
 	}
 
 	@Override
@@ -268,25 +277,25 @@ public class Preference extends CBMCInputType {
 
 		return toReturn;
 	}
-	
+
 	@Override
 	public CBMCResultValue convertRowToResultValue(NEWRowOfValues row) {
 		List<String> values = row.getValues();
-		
+
 		List<CBMCResultValueWrapper> wrappedValues = new ArrayList<CBMCResultValueWrapper>();
-		
+
 		for (Iterator<String> iterator = values.iterator(); iterator.hasNext();) {
 			String value = (String) iterator.next();
-			
+
 			CBMCResultValueWrapper wrapper = new CBMCResultValueWrapper();
 			CBMCResultValueSingle toWrap = new CBMCResultValueSingle();
 			toWrap.setValue("int", value, 32);
-			
+
 			wrapper.setValue(toWrap);
 		}
-		
+
 		CBMCResultValueArray toReturn = new CBMCResultValueArray();
-		
+
 		toReturn.setValue(wrappedValues);
 		return toReturn;
 	}

@@ -46,20 +46,6 @@ public abstract class InputType extends InOutType {
 
 	/**
 	 *
-	 * @param container
-	 * @return the minimal value a voter can assign
-	 */
-	public abstract String getMinimalValue();
-
-	/**
-	 *
-	 * @param container
-	 * @return the maximal value a voter can assign
-	 */
-	public abstract String getMaximalValue();
-
-	/**
-	 *
 	 * @return true, if one voter can only vote for one candidate
 	 */
 	public abstract boolean isVotingForOneCandidate();
@@ -132,13 +118,6 @@ public abstract class InputType extends InOutType {
 		return printArray(wrapper);
 	}	
 
-	/**
-	 * so far only used for preference voting
-	 *
-	 * @param code       the code
-	 * @param voteNumber the amount of votes
-	 */
-	public abstract void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, int voteNumber);
 
 	public abstract void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique);
 
@@ -153,14 +132,19 @@ public abstract class InputType extends InOutType {
 	public abstract int getNumVotingPoints(ResultValueWrapper result);
 
 	public abstract String getVoteDescriptionString(List<List<String>> origVotes);
-
-	public abstract boolean hasVariableAsMinValue();
-
-	public abstract boolean hasVariableAsMaxValue();
 	
 	public abstract CBMCResultValue convertRowToResultValue(NEWRowOfValues row);
 
 	public String getInfo() { // TODO move later on further down
 		return "input type information";
 	}
+
+	/**
+	 * change the vote of origVotesName at a position defined by loopNames to a vote that is different that the original one
+	 * @param newVotesName
+	 * @param origVotesName
+	 * @param loopNames
+	 * @return
+	 */
+	public abstract String flipVote(String newVotesName, String origVotesName, List<String> loopNames);
 }

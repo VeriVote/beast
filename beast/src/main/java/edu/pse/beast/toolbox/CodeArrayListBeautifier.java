@@ -1,7 +1,10 @@
 package edu.pse.beast.toolbox;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import org.apache.commons.lang3.RandomStringUtils;
 
 /**
  *
@@ -90,4 +93,26 @@ public class CodeArrayListBeautifier {
     public void addAll(List<String> votingResultCode) {
         addList(votingResultCode);
     }
+
+	public boolean contains(String name) {
+		for (Iterator<String> iterator = code.iterator(); iterator.hasNext();) {
+			String line = (String) iterator.next();
+			if (line.contains(name)) {
+				return true;
+			}
+		} 
+		return false;
+	}
+	
+	public String getNotUsedVarName(String preferredName) {
+		int length = Math.min(preferredName.length(), 2);
+
+		String name = preferredName;
+
+		while (this.contains(name)) {
+			name = RandomStringUtils.random(length++, true, false);
+		}
+
+		return name;
+	}
 }

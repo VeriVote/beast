@@ -1,13 +1,16 @@
 package edu.pse.beast.types;
 
+import java.util.Arrays;
 import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.propertychecker.Result;
+import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.valueContainer.ResultValue;
 import edu.pse.beast.toolbox.valueContainer.ResultValue.ResultType;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueArray;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueSingle;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueStruct;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 
 public abstract class InOutType {
@@ -76,6 +79,10 @@ public abstract class InOutType {
 	public String[] getSizeOfDimensions() {
 		return sizeOfDimensions;
 	}
+	
+	public List<String> getSizeOfDimensionsAsList() {
+		return Arrays.asList(sizeOfDimensions);
+	}
 
 	/**
 	 *
@@ -128,7 +135,7 @@ public abstract class InOutType {
 		if (dimensions == 0) {
 			return ""; // zero dimensional dataTypes are not represented by structs
 		} else {
-			return electionContainer.getNameContainer().getResultArrName();
+			return this.getContainer().getNameContainer().getResultArrName();
 		}
 	}
 
@@ -136,6 +143,11 @@ public abstract class InOutType {
 
 		ResultValue resultValue = wrapper.getResultValue();
 
+		if (resultValue.getResultType() == ResultType.STRUCT) {
+			CBMCResultValueStruct struct = (CBMCResultValueStruct) resultValue;
+			
+			return printArray(struct.getResultVariable(getContainer().getNameContainer().getResultArrName()));
+		}
 		if (resultValue.getResultType() == ResultType.SINGLE) {
 
 			CBMCResultValueSingle single = (CBMCResultValueSingle) resultValue;
@@ -160,7 +172,7 @@ public abstract class InOutType {
 			return subArray;
 
 		} else {
-			throw new IllegalArgumentException("Only single numbers and arrays are allowed here");
+			throw new IllegalArgumentException("Only single numbers arrays, and a struct of an array are allowed here");
 		}
 	}
 
@@ -187,4 +199,30 @@ public abstract class InOutType {
 	 *         (e.g description of structs...)
 	 */
 	public abstract String getInfo();
+	
+	public abstract boolean hasVariableAsMinValue();
+
+	public abstract boolean hasVariableAsMaxValue();
+	
+	/**
+	 *
+	 *
+	 * @return the minimal value a voter can assign
+	 */
+	public abstract String getMinimalValue();
+
+	/**
+	 *
+	 *
+	 * @return the maximal value a voter can assign
+	 */
+	public abstract String getMaximalValue();
+	
+	/**
+	 * so far only used for preference voting
+	 *
+	 * @param code       the code
+	 * @param voteNumber the amount of votes
+	 */
+	public abstract void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, String valueName, List<String> loopVariables);
 }

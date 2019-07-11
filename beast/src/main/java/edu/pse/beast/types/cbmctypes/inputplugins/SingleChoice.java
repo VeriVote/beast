@@ -175,10 +175,6 @@ public class SingleChoice extends CBMCInputType {
 //  }
 
 	@Override
-	public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, int voteNumber) {
-	}
-
-	@Override
 	public void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique) {
 		code.add("if(arr[i] == candidate) sum++;");
 	}
@@ -273,4 +269,21 @@ public class SingleChoice extends CBMCInputType {
 		
 		return toReturn;
 	}
+
+	@Override
+	public String flipVote(String newVotesName, String origVotesName, List<String> loopNames) {
+		newVotes
+		
+		
+		// flip the vote (0 -> 1 | 1 -> 0)
+		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = !ORIG_VOTES[i][j];");
+		code.deleteTab();
+		code.add("} else {");
+		code.addTab();
+		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = ORIG_VOTES[i][j];");
+	}
+
+	@Override
+	public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, String valueName,
+			List<String> loopVariables) {}
 }

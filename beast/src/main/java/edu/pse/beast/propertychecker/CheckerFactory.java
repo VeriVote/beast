@@ -513,8 +513,10 @@ public abstract class CheckerFactory implements Runnable {
 	 */
 	protected void checkMarginAndWait(int margin, ElectionSimulationData origData, String advanced, int numVoters,
 			int numCandidates, int numSeats, ElectionSimulationData votingData, Result result) {
+		
 		currentlyRunning = startProcessMargin(electionDesc, result.getPropertyDesctiption(), advanced, numVoters,
-				numCandidates, numSeats, this, margin, votingData, null, result);
+				numCandidates, numSeats, this, margin, origData, votingData, result);
+
 		while (!currentlyRunning.isFinished()) {
 			try {
 				Thread.sleep(SLEEP_INTERVAL);
