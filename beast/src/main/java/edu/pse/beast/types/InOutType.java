@@ -1,9 +1,7 @@
 package edu.pse.beast.types;
 
-import java.util.Iterator;
 import java.util.List;
 
-import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.propertychecker.Result;
 

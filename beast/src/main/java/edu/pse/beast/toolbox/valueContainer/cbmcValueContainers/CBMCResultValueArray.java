@@ -14,6 +14,10 @@ public class CBMCResultValueArray implements CBMCResultValue {
     
     private List<CBMCResultValueWrapper> values = new ArrayList<CBMCResultValueWrapper>();
 
+    public void setValue(List<CBMCResultValueWrapper> values) {
+    	this.values = values;
+    }
+    
     @Override
     public void setValue(Element element) {
         values.clear();
@@ -58,4 +62,18 @@ public class CBMCResultValueArray implements CBMCResultValue {
     public List<CBMCResultValueWrapper> getValues() {
         return values;
     }
+    
+    
+    /**
+     * 
+     * @return the size of the datastructure which is represented here
+     */
+    public int getArraySize() {
+    	return values.size();
+    }
+
+	@Override
+	public ResultType getResultType() {
+		return ResultType.ARRAY;
+	}
 }

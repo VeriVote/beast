@@ -1,6 +1,5 @@
 package edu.pse.beast.toolbox.valueContainer.cbmcValueContainers;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.Element;
@@ -47,4 +46,9 @@ public class CBMCResultValueStruct implements CBMCResultValue {
     public CBMCResultValueWrapper getResultVariable(String variableName) {
         return values.get(variableName);
     }
+    
+	@Override
+	public ResultType getResultType() {
+		return ResultType.STRUCT;
+	}
 }

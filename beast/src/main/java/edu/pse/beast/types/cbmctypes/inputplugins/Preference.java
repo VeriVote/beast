@@ -1,8 +1,8 @@
 package edu.pse.beast.types.cbmctypes.inputplugins;
 
-import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
@@ -13,12 +13,14 @@ import edu.pse.beast.toolbox.CBMCResultPresentationHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValue;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueArray;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueSingle;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueStruct;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
-import edu.pse.beast.types.InOutType.DataType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class Preference extends CBMCInputType {
@@ -107,7 +109,7 @@ public class Preference extends CBMCInputType {
 	}
 
 	@Override
-	public String vetValue(String newValue, ElectionTypeContainer container, NEWRowOfValues row) {
+	public String vetValue(String newValue, int position, ElectionTypeContainer container, NEWRowOfValues row) {
 		final int number;
 		try {
 			number = Integer.parseInt(newValue);
@@ -189,35 +191,6 @@ public class Preference extends CBMCInputType {
 //  }
 
 	@Override
-	public List<String> getVotingResultCode(ResultValueWrapper votingData) {
-
-		throw new IllegalArgumentException();
-//    	
-//        List<String> toReturn = new ArrayList<String>();
-//        toReturn.add("int ORIG_VOTES[" + votingData.length + "][" + votingData[0].length + "] = {");
-//        for (int i = 0; i < votingData.length; i++) {
-//            String tmp = "";
-//            for (int j = 0; j < votingData[i].length; j++) {
-//                if (j < (votingData[i].length - 1)) {
-//                    tmp = tmp + votingData[i][j] + ",";
-//                } else {
-//                    tmp = tmp + votingData[i][j];
-//                }
-//            }
-//            tmp = "{" + tmp + "}";
-//            if (i < votingData.length - 1) {
-//                toReturn.add(tmp + ",");
-//            } else {
-//                // the last entry does not need a trailing comma
-//                toReturn.add(tmp);
-//            }
-//        }
-//        // close the array declaration
-//        toReturn.add("};");
-//        return toReturn;
-	}
-
-	@Override
 	public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, int voteNumber) {
 		code.add("for (unsigned int j_prime = 0; j_prime < counter_1; j_prime++) {");
 		code.addTab();
@@ -293,6 +266,28 @@ public class Preference extends CBMCInputType {
 			toReturn.addAll(CBMCResultPresentationHelper.printTwoDimResult(arr, name.length()));
 		}
 
+		return toReturn;
+	}
+	
+	@Override
+	public CBMCResultValue convertRowToResultValue(NEWRowOfValues row) {
+		List<String> values = row.getValues();
+		
+		List<CBMCResultValueWrapper> wrappedValues = new ArrayList<CBMCResultValueWrapper>();
+		
+		for (Iterator<String> iterator = values.iterator(); iterator.hasNext();) {
+			String value = (String) iterator.next();
+			
+			CBMCResultValueWrapper wrapper = new CBMCResultValueWrapper();
+			CBMCResultValueSingle toWrap = new CBMCResultValueSingle();
+			toWrap.setValue("int", value, 32);
+			
+			wrapper.setValue(toWrap);
+		}
+		
+		CBMCResultValueArray toReturn = new CBMCResultValueArray();
+		
+		toReturn.setValue(wrappedValues);
 		return toReturn;
 	}
 }

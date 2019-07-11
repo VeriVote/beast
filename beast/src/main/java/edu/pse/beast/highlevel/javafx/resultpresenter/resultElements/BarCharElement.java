@@ -2,7 +2,6 @@ package edu.pse.beast.highlevel.javafx.resultpresenter.resultElements;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.geom.Arc2D;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;

@@ -1,6 +1,4 @@
 package edu.pse.beast.toolbox.valueContainer.cbmcValueContainers;
-import java.util.List;
-
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -38,7 +36,11 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
     }
     
     public CBMCResultValueWrapper() {
-    	//TODO add functionality to add sub values by adding them through objects, and not through xml nodes
+    	
+    }
+    
+    public CBMCResultValueWrapper(CBMCResultValue valueContainer) {
+    	this.valueContainer = valueContainer;
     }
     
     public CBMCResultValueWrapper(Node node) {
@@ -70,6 +72,10 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
         }
         
         setNewValue(element);
+    }
+    
+    public void setValue(CBMCResultValue newValueContainer) {
+    	this.valueContainer = newValueContainer;
     }
 
     private void initialize(C_DATATYPE newType) {

@@ -2,11 +2,7 @@ package edu.pse.beast.celectiondescriptioneditor.electiontemplates; //TODO clean
 
 import java.util.ArrayList;
 
-import java.util.List;
-
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
-import edu.pse.beast.types.InputType;
-import edu.pse.beast.types.OutputType;
 
 /**
  * This class handles all available ElectionTypeContainer for input and output.

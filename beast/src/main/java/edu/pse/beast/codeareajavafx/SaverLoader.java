@@ -10,7 +10,6 @@ import java.nio.file.Paths;
 
 import edu.pse.beast.highlevel.MainApplicationClass;
 import edu.pse.beast.highlevel.javafx.GUIController;
-import edu.pse.beast.highlevel.javafx.MenuBarInterface;
 import edu.pse.beast.saverloader.MinimalSaverInterface;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import javafx.stage.FileChooser;

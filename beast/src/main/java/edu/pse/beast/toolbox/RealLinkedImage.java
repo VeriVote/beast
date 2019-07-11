@@ -1,11 +1,5 @@
 package edu.pse.beast.toolbox;
 
-import java.awt.image.BufferedImage;
-
-//Taken from the Demos and edited from https://github.com/FXMisc/RichTextFX 
-
-import java.io.File;
-
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 

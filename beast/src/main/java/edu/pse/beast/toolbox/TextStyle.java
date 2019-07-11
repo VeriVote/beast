@@ -1,12 +1,5 @@
 package edu.pse.beast.toolbox;
 
-//taken with changes from https://github.com/FXMisc/RichTextFX/blob/5d64bd7ef211292ec096b5b152aa79ee934e4678/richtextfx-demos/src/main/java/org/fxmisc/richtext/demo/hyperlink/TextStyle.java
-
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-
-import org.fxmisc.richtext.model.Codec;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -15,6 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+
+import org.fxmisc.richtext.model.Codec;
+
+//taken with changes from https://github.com/FXMisc/RichTextFX/blob/5d64bd7ef211292ec096b5b152aa79ee934e4678/richtextfx-demos/src/main/java/org/fxmisc/richtext/demo/hyperlink/TextStyle.java
+
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 /**
  * Holds information about the style of a text fragment.

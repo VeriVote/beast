@@ -2,7 +2,6 @@ package edu.pse.beast.types.cbmctypes.cbmcstructs;
 
 import java.util.Arrays;
 
-import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.ComplexType;
 import edu.pse.beast.types.InOutType;

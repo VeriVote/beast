@@ -2,30 +2,17 @@ package edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.BiConsumer;
 
 import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.GenericStyledArea;
-import org.fxmisc.richtext.StyledTextArea;
-import org.fxmisc.richtext.TextExt;
-import org.fxmisc.richtext.model.ReadOnlyStyledDocument;
-import org.fxmisc.richtext.model.SegmentOps;
-import org.fxmisc.richtext.model.StyledSegment;
-import org.fxmisc.richtext.model.TextOps;
 import org.reactfx.util.Either;
 
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.LinkedImage;
-import edu.pse.beast.toolbox.LinkedImageOps;
 import edu.pse.beast.toolbox.ParStyle;
-import edu.pse.beast.toolbox.RealLinkedImage;
 import edu.pse.beast.toolbox.TextFieldCreator;
 import edu.pse.beast.toolbox.TextStyle;
 import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
 public class CBMCOutput extends ResultPresentationType {
 

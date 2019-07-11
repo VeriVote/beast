@@ -12,7 +12,6 @@ public class CBMCResultValueSingle implements CBMCResultValue {
 	private final String TYPE_NAME = "c_type";
 	private final String WIDTH_NAME = "width";
 
-	private boolean set = false;
 	private boolean parsed = false;
 
 	private String type = "";
@@ -20,6 +19,18 @@ public class CBMCResultValueSingle implements CBMCResultValue {
 
 	private int width = 0;
 	private Number numberValue = null;
+	
+	/**
+	 * 
+	 * @param type the datatye (e.g "int")
+	 * @param value the value (e.g "5")
+	 * @param bitWidth the width in bit this datatype has (e.g 32 for int)
+	 */
+	public void setValue(String type, String value, int bitWidth) {
+		this.type = type;
+		this.value = value;
+		this.width = bitWidth;
+	}
 
 	@Override
 	public void setValue(Element element) {
@@ -30,8 +41,6 @@ public class CBMCResultValueSingle implements CBMCResultValue {
 		this.value = element.getFirstChild().getNodeValue(); // the value is saved in the first child
 
 		this.width = Integer.parseInt(attributes.getNamedItem(WIDTH_NAME).getNodeValue()); // the width of the data type
-
-		Number toNumber = Long.parseLong(this.value);
 	}
 
 	public String getValue() {
@@ -98,5 +107,10 @@ public class CBMCResultValueSingle implements CBMCResultValue {
 
 	public Number getValueAsNumber() {
 		return getNumberValue();
+	}
+	
+	@Override
+	public ResultType getResultType() {
+		return ResultType.SINGLE;
 	}
 }

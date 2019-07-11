@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import edu.pse.beast.highlevel.javafx.resultpresenter.ResultImageRenderer;
-import edu.pse.beast.highlevel.javafx.resultpresenter.resultElements.TextImageElement;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueArray;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueSingle;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;

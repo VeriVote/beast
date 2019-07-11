@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CBMCResultPresentationHelper;
@@ -15,7 +14,6 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueA
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueStruct;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
-import edu.pse.beast.types.InOutType.DataType;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
 public class Parliament extends CBMCOutputType {

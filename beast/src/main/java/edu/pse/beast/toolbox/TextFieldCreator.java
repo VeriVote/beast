@@ -12,7 +12,6 @@ import org.fxmisc.richtext.model.TextOps;
 import org.reactfx.util.Either;
 
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
 
 public class TextFieldCreator {
 

@@ -92,7 +92,7 @@ public class ElectionDescription {
 		while (duplicate) {
 			if (code.contains(varName)) {
 				varName = generateRandomString(length);
-				length++; // increase the length in case all words from that length are alread taken
+				length++; // increase the length in case all words from that length are already taken
 			} else {
 				duplicate = false;
 			}

@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
 
-import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 

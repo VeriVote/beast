@@ -1,5 +1,13 @@
 package edu.pse.beast.toolbox.valueContainer;
 
 public interface ResultValue {
-    //TODO maybe add functions here
+	
+	enum ResultType {
+		ARRAY,
+		POINTER,
+		SINGLE,
+		STRUCT
+	}
+	
+	public ResultType getResultType();
 }

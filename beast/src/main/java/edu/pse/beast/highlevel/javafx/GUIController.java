@@ -1,7 +1,5 @@
 package edu.pse.beast.highlevel.javafx;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.io.File;
@@ -32,20 +30,16 @@ import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
-import edu.pse.beast.electionsimulator.NewElectionSimulation;
+import edu.pse.beast.electionsimulator.ElectionSimulation;
+import edu.pse.beast.electionsimulator.ElectionSimulationData;
 import edu.pse.beast.highlevel.BEASTCommunicator;
-import edu.pse.beast.highlevel.javafx.resultpresenter.ResultImageRenderer;
 import edu.pse.beast.highlevel.javafx.resultpresenter.ResultPresenterNEW;
-import edu.pse.beast.highlevel.javafx.resultpresenter.resultElements.PieChartElement;
-import edu.pse.beast.highlevel.javafx.resultpresenter.resultElements.TextImageElement;
 import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresentationType;
 import edu.pse.beast.options.OptionsNew;
 import edu.pse.beast.saverloader.ChildTreeItemSaverLoader;
 import edu.pse.beast.saverloader.MinimalSaverInterface;
-import edu.pse.beast.toolbox.RichTextInformation;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.toolbox.Tuple3;
-import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
@@ -84,7 +78,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class GUIController {
@@ -114,7 +107,7 @@ public class GUIController {
 	private static final String X_MARK_BUTTON = "toolbar/x-mark.png";
 
 	private MenuBarInterface focusedMainTab;
-	private NewElectionSimulation electionSimulation;
+	private ElectionSimulation electionSimulation;
 
 	@FXML // fx:id="maxVoter"
 	private TextField maxVoter;
@@ -502,7 +495,7 @@ public class GUIController {
 		// turn off the zoom slider in the beginning
 		zoomSlider.setDisable(true);
 
-		electionSimulation = new NewElectionSimulation(codeArea.getElectionDescription().getContainer(), inputGridPane,
+		electionSimulation = new ElectionSimulation(codeArea.getElectionDescription().getContainer(), inputGridPane,
 				voterGridPane, candidateGridPane);
 		// update all numbers for the input fields
 		this.addInputNumberEnforcer(inputVoterField, "");
@@ -1388,10 +1381,6 @@ public class GUIController {
 		return codeArea.getElectionDescription();
 	}
 
-	public ResultValueWrapper getVotingData() {
-		return electionSimulation.getVotingData();
-	}
-
 	public NewPropertyCodeArea getPreCodeArea() {
 		return preArea;
 	}
@@ -1442,7 +1431,7 @@ public class GUIController {
 		}
 	}
 
-	public NewElectionSimulation getElectionSimulation() {
+	public ElectionSimulation getElectionSimulation() {
 		return electionSimulation;
 	}
 

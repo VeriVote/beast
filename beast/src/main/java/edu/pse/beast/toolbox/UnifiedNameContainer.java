@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.print.DocFlavor.STRING;
+
 public final class UnifiedNameContainer { //TODO make not static and then only accessible through electionContainer
     private static List<NameChangeListener> listeners = new LinkedList<NameChangeListener>();
     private static Map<String, String> map = new HashMap<String, String>();
@@ -31,8 +33,9 @@ public final class UnifiedNameContainer { //TODO make not static and then only a
         map.put("votingArray", "votes");
 
         map.put("new_result", "new_result");
-        map.put(("new_votes"), ("new_votes"));
+        map.put("new_votes", "new_votes");
         map.put("orig_result", "ORIG_RESULT");
+        map.put("orig_votes", "ORIG_VOTES");
     }
 
     public static void addListener(NameChangeListener toAdd) {
@@ -87,7 +90,11 @@ public final class UnifiedNameContainer { //TODO make not static and then only a
     }
 
     public static String getOrigResultName() {
-        return map.get("ORIG_RESULT");
+        return map.get("orig_result");
+    }
+    
+    public static String getOrigVotesName() {
+    	return map.get("orig_votes");
     }
 
     public static String getVotingArray() {
@@ -120,6 +127,10 @@ public final class UnifiedNameContainer { //TODO make not static and then only a
 
     public static String getVotingArrayKey() {
         return "votingArray";
+    }
+    
+    public static String getOrigVotesKey() {
+    	return "orig_votes";
     }
 
     public static void setCandidate(String candidate) {

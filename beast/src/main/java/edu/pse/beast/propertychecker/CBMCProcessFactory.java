@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.electionsimulator.ElectionSimulationData;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
 import edu.pse.beast.toolbox.SuperFolderFinder;
-import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 
 public class CBMCProcessFactory extends CheckerFactory {
 	
@@ -337,8 +337,8 @@ public class CBMCProcessFactory extends CheckerFactory {
 	 * @return a file that contains the generated code from the two above variables
 	 */
 	public File createCodeFileMargin(ElectionDescription electionDesc,
-			PreAndPostConditionsDescription postAndPrepPropDesc, int margin, ResultValueWrapper origResult,
-			ResultValueWrapper inputData) {
+			PreAndPostConditionsDescription postAndPrepPropDesc, int margin, ElectionSimulationData origResult,
+			ElectionSimulationData inputData) {
 		// create a code generator, that creates a code file for this call only
 		// one time in this factory factory;
 		CBMCCodeGenerator generator = new CBMCCodeGenerator(electionDesc, postAndPrepPropDesc, margin, origResult,
@@ -367,7 +367,7 @@ public class CBMCProcessFactory extends CheckerFactory {
 	 * @return a file that contains the generated code from the two above variables
 	 */
 	public File createCodeFileTest(ElectionDescription electionDesc,
-			PreAndPostConditionsDescription postAndPrepPropDesc, ResultValueWrapper inputData) {
+			PreAndPostConditionsDescription postAndPrepPropDesc, ElectionSimulationData inputData) {
 		// create a code generator, that creates a code file for this call only
 		// one time in this factory factory;
 		CBMCCodeGenerator generator = new CBMCCodeGenerator(electionDesc, postAndPrepPropDesc, inputData);
@@ -573,7 +573,7 @@ public class CBMCProcessFactory extends CheckerFactory {
 	@Override
 	protected Checker startProcessMargin(ElectionDescription electionDesc,
 			PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
-			CheckerFactory parent, int margin, ResultValueWrapper origResult, ResultValueWrapper votingData, Result result) {
+			CheckerFactory parent, int margin, ElectionSimulationData origResult, ElectionSimulationData votingData, Result result) {
 		String userOptions = advanced.trim().replaceAll(" +", WHITESPACE);
 		// remove all unnecessary white spaces
 		// create the file in which the code is saved
@@ -600,7 +600,7 @@ public class CBMCProcessFactory extends CheckerFactory {
 	@Override
 	protected Checker startProcessTest(ElectionDescription electionDesc,
 			PreAndPostConditionsDescription postAndPrepPropDesc, String advanced, int voters, int candidates, int seats,
-			CheckerFactory parent, ResultValueWrapper votingData, Result result) {
+			CheckerFactory parent, ElectionSimulationData votingData, Result result) {
 		String userOptions = advanced.trim().replaceAll(" +", WHITESPACE);
 		// remove all unnecessary white spaces
 		// create the file in which the code is saved

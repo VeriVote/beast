@@ -1,7 +1,6 @@
 package edu.pse.beast.highlevel.javafx.resultpresenter.resultElements;
 
 import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
@@ -11,7 +10,6 @@ import java.util.List;
 
 import edu.pse.beast.toolbox.RichTextInformation;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Font;
 
 public class TextImageElement extends ResultImageElement {
 	// objects needed to calculate the size of the text

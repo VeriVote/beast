@@ -1,19 +1,16 @@
 package edu.pse.beast.propertychecker;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
+import edu.pse.beast.electionsimulator.ElectionSimulationData;
 import edu.pse.beast.highlevel.ResultInterface;
 import edu.pse.beast.highlevel.javafx.AnalysisType;
 import edu.pse.beast.highlevel.javafx.ResultTreeItem;
-import edu.pse.beast.toolbox.RichTextInformation;
-import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.Background; 
+import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper; 
 
 /**
  *
@@ -21,10 +18,10 @@ import javafx.scene.layout.Background;
  */
 public abstract class Result implements ResultInterface {
 
-	private ResultValueWrapper origVoting;
-	private ResultValueWrapper origWinner;
-	private ResultValueWrapper newVotes;
-	private ResultValueWrapper newWinner;
+	private ElectionSimulationData origVoting;
+	private ElectionSimulationData origWinner;
+	private ElectionSimulationData newVotes;
+	private ElectionSimulationData newWinner;
 
 	private transient ResultTreeItem owner;
 
@@ -347,35 +344,35 @@ public abstract class Result implements ResultInterface {
 	 */
 	public abstract List<ResultValueWrapper> readVariableValue(String variableMatcher);
 
-	public ResultValueWrapper getOrigVoting() {
+	public ElectionSimulationData getOrigVoting() {
 		return origVoting;
 	}
 
-	public void setOrigVoting(ResultValueWrapper origVoting) {
+	public void setOrigVoting(ElectionSimulationData origVoting) {
 		this.origVoting = origVoting;
 	}
 
-	public ResultValueWrapper getOrigWinner() {
+	public ElectionSimulationData getOrigWinner() {
 		return origWinner;
 	}
 
-	public void setOrigWinner(ResultValueWrapper origWinner) {
+	public void setOrigWinner(ElectionSimulationData origWinner) {
 		this.origWinner = origWinner;
 	}
 
-	public ResultValueWrapper getNewVotes() {
+	public ElectionSimulationData getNewVotes() {
 		return newVotes;
 	}
 
-	public void setNewVotes(ResultValueWrapper newVotes) {
+	public void setNewVotes(ElectionSimulationData newVotes) {
 		this.newVotes = newVotes;
 	}
 
-	public ResultValueWrapper getNewWinner() {
+	public ElectionSimulationData getNewWinner() {
 		return newWinner;
 	}
 
-	public void setNewWinner(ResultValueWrapper newWinner) {
+	public void setNewWinner(ElectionSimulationData newWinner) {
 		this.newWinner = newWinner;
 	}
 
