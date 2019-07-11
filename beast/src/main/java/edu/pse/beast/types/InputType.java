@@ -130,43 +130,7 @@ public abstract class InputType extends InOutType {
 	 */
 	public final String getVotingResultCode(CBMCResultValueWrapper wrapper) {
 		return printArray(wrapper);
-	}
-	
-	
-	private String printArray(CBMCResultValueWrapper wrapper) {
-		
-		ResultValue resultValue = wrapper.getResultValue();
-		
-		if (resultValue.getResultType() == ResultType.SINGLE) {
-			
-			CBMCResultValueSingle single = (CBMCResultValueSingle) resultValue;
-			return single.getValue();
-			
-		} else
-		if (resultValue.getResultType() == ResultType.ARRAY) {
-			
-			CBMCResultValueArray array = (CBMCResultValueArray) resultValue;
-			
-			List<CBMCResultValueWrapper> newValues = array.getValues();
-			
-			String subArray = "";
-			
-			for(int i = 0; i < array.getArraySize(); i++) {
-				subArray = subArray + printArray(newValues.get(i)) + ",";
-			}
-			
-			subArray = subArray.substring(0, subArray.length() - 1); //cut off the last ","
-			
-			subArray = "{" + subArray + "}";
-			
-			return subArray;
-			
-		} else {
-			throw new IllegalArgumentException("Only single numbers and arrays are allowed here");
-		}
-	}
-	
-	
+	}	
 
 	/**
 	 * so far only used for preference voting

@@ -4,6 +4,11 @@ import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.propertychecker.Result;
+import edu.pse.beast.toolbox.valueContainer.ResultValue;
+import edu.pse.beast.toolbox.valueContainer.ResultValue.ResultType;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueArray;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueSingle;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 
 public abstract class InOutType {
 
@@ -24,12 +29,12 @@ public abstract class InOutType {
 			return text;
 		}
 	}
-	
+
 	private final boolean unsigned;
 	private final DataType dataType;
 	private final int dimensions;
 	private final String[] sizeOfDimensions;
-	
+
 	private ElectionTypeContainer container;
 
 	public InOutType(boolean unsigned, DataType dataType, int dimensions, String[] sizeOfDimensions) {
@@ -42,19 +47,19 @@ public abstract class InOutType {
 	public void setElectionTypeContainer(ElectionTypeContainer container) {
 		this.container = container;
 	}
-	
+
 	public boolean isDataTypeUnsigned() {
 		return this.unsigned;
 	}
-	
+
 	public DataType getDataType() {
 		return this.dataType;
 	}
-	
+
 	public String getDataTypeAsString() {
 		return this.dataType.toString();
 	}
-	
+
 	/**
 	 *
 	 * @return the dimensions of the array which holds the votes (e.g 1 for single
@@ -63,7 +68,7 @@ public abstract class InOutType {
 	public final int getAmountOfDimensions() {
 		return dimensions;
 	}
-	
+
 	/**
 	 * 
 	 * @return the size of all dimensions, null if it is 0 dimensional
@@ -71,39 +76,39 @@ public abstract class InOutType {
 	public String[] getSizeOfDimensions() {
 		return sizeOfDimensions;
 	}
-	
+
 	/**
 	 *
 	 * @return returns a String containing the shape of the input object e.g "[" +
-    * UnifiedNameContainer.getVoter() + "]" for single choice
+	 *         UnifiedNameContainer.getVoter() + "]" for single choice
 	 */
-	public final String getDimensionDescriptor(boolean includeSizes) {	
+	public final String getDimensionDescriptor(boolean includeSizes) {
 		String toReturn = "";
-		
-		for(int i = 0; i < dimensions; i++) {
+
+		for (int i = 0; i < dimensions; i++) {
 			String content = "";
 			if (includeSizes) {
 				content = sizeOfDimensions[i];
 			}
 			toReturn = toReturn + createSquareBrackets(content);
 		}
-		
+
 		return toReturn;
 	}
-	
+
 	public String getDataTypeAndSign() {
 		String sign = "";
-		
+
 		if (unsigned) {
 			sign = "unsigned ";
 		}
 		return sign + this.dataType;
 	}
-	
+
 	public ElectionTypeContainer getContainer() {
 		return container;
 	}
-	
+
 	/**
 	 * 
 	 * @param content the content to be put in the bracketes
@@ -121,9 +126,41 @@ public abstract class InOutType {
 	 */
 	public final String accessValues(ElectionTypeContainer electionContainer) {
 		if (dimensions == 0) {
-			return ""; //zero dimensional dataTypes are not represented by structs
+			return ""; // zero dimensional dataTypes are not represented by structs
 		} else {
 			return electionContainer.getNameContainer().getResultArrName();
+		}
+	}
+
+	public String printArray(CBMCResultValueWrapper wrapper) {
+
+		ResultValue resultValue = wrapper.getResultValue();
+
+		if (resultValue.getResultType() == ResultType.SINGLE) {
+
+			CBMCResultValueSingle single = (CBMCResultValueSingle) resultValue;
+			return single.getValue();
+
+		} else if (resultValue.getResultType() == ResultType.ARRAY) {
+
+			CBMCResultValueArray array = (CBMCResultValueArray) resultValue;
+
+			List<CBMCResultValueWrapper> newValues = array.getValues();
+
+			String subArray = "";
+
+			for (int i = 0; i < array.getArraySize(); i++) {
+				subArray = subArray + printArray(newValues.get(i)) + ",";
+			}
+
+			subArray = subArray.substring(0, subArray.length() - 1); // cut off the last ","
+
+			subArray = "{" + subArray + "}";
+
+			return subArray;
+
+		} else {
+			throw new IllegalArgumentException("Only single numbers and arrays are allowed here");
 		}
 	}
 

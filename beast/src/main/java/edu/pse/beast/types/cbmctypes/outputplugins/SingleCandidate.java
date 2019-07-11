@@ -68,19 +68,6 @@ public class SingleCandidate extends CBMCOutputType {
 	}
 
 	@Override
-	public CodeArrayListBeautifier addMarginMainTest(CodeArrayListBeautifier code, int voteNumber) {
-		code.add("int main() {");
-		code.addTab();
-		code.add("int elect1 = " + UnifiedNameContainer.getVotingMethod() + "(ORIG_VOTES);"); // we just have a single
-																								// int as the winner
-		// add an assertion that always fails, so we can extract the trace
-		code.add("assert(0);");
-		code.deleteTab();
-		code.add("}");
-		return code;
-	}
-
-	@Override
 	public InternalTypeContainer getInternalTypeContainer() {
 		return new InternalTypeContainer(InternalTypeRep.INTEGER);
 	}
@@ -91,18 +78,6 @@ public class SingleCandidate extends CBMCOutputType {
 				+ "(" + UnifiedNameContainer.getNewVotesName() + "1);");
 		code.add("assert(" + UnifiedNameContainer.getNewResultName() + "1 == "
 				+ UnifiedNameContainer.getOrigResultName() + ");");
-	}
-
-	@Override
-	public void addLastResultAsCode(CodeArrayListBeautifier code, ResultValueWrapper origResult) {
-		// TODO
-		throw new IllegalArgumentException();
-//    	
-//        // just declare the variable as the result
-//        String declaration = "";
-//        declaration = "int " + UnifiedNameContainer.getOrigResultName()
-//                      + " = " + origResult.get(0) + ";";
-//        code.add(declaration);
 	}
 
 	@Override

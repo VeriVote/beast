@@ -86,38 +86,7 @@ public class Parliament extends CBMCOutputType {
     public String getCArrayType() {
         return "[" + UnifiedNameContainer.getSeats() + "]";
     }
-
-    @Override
-    public CodeArrayListBeautifier addMarginMainTest(CodeArrayListBeautifier code,
-                                                     int voteNumber) {
-        code.add("int main() {");
-        code.addTab();
-        String temp = super.getContainer().getOutputStruct().getStructAccess() + " tmp" + voteNumber
-                + " = " + UnifiedNameContainer.getVotingMethod()
-                + "(ORIG_VOTES);";
-        code.add(temp);
-        String tempElect = "unsigned int *tempElect" + voteNumber
-                + " = tmp" + voteNumber + "."
-                + UnifiedNameContainer.getResultArrName() + ";";
-        code.add(tempElect);
-        String electX = "unsigned int elect" + voteNumber
-                + "[" + UnifiedNameContainer.getSeats() + "];";
-        code.add(electX);
-        String forLoop = "for (int electLoop = 0; electLoop < "
-                + UnifiedNameContainer.getSeats() + "; electLoop++) {";
-        code.add(forLoop);
-        code.addTab();
-        code.add("elect" + voteNumber + "[electLoop] = tempElect"
-                + voteNumber + "[electLoop];");
-        code.deleteTab();
-        code.add("}");
-        // add an assertion that always fails, so we can extract the trace
-        code.add("assert(0);");
-        code.deleteTab();
-        code.add("}");
-        return code;
-    }
-
+    
     @Override
     public InternalTypeContainer getInternalTypeContainer() {
         return new InternalTypeContainer(
@@ -149,30 +118,6 @@ public class Parliament extends CBMCOutputType {
                 + UnifiedNameContainer.getOrigResultName() + "[i]);");
         code.deleteTab();
         code.add("}"); // end of the for loop
-    }
-
-    @Override
-    public void addLastResultAsCode(CodeArrayListBeautifier code, ResultValueWrapper origResult) {
-    	
-    	throw new IllegalArgumentException();
-//    	
-//        // first create the declaration of the array:
-//        String declaration = "";
-//        declaration = "int " + UnifiedNameContainer.getOrigResultName()
-//                      + "[" + origResult.size() + "] = {";
-//        code.addTab();
-//        code.add(declaration);
-//        String tmp = ""; // saves the amount of votes this seat got
-//        for (int i = 0; i < origResult.size(); i++) {
-//            if (i < origResult.size() - 1) {
-//                tmp = tmp + origResult.get(i) + ",";
-//            } else {
-//                tmp = tmp + origResult.get(i);
-//            }
-//        }
-//        code.add(tmp);
-//        code.deleteTab();
-//        code.add("};");
     }
 
     @Override

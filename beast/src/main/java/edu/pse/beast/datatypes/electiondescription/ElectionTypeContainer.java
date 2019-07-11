@@ -29,7 +29,12 @@ public class ElectionTypeContainer { //TODO make this class abstract, move code 
      */
     public ElectionTypeContainer(InputType inType, OutputType outType) {
         this.inType = inType;
+        
+        this.inType.setElectionTypeContainer(this);
+        
         this.outType = outType;
+        
+        this.outType.setElectionTypeContainer(this);
         
         generateStructs();
     }

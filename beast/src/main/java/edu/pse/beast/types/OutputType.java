@@ -5,46 +5,50 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
 
+import edu.pse.beast.electionsimulator.ElectionSimulation;
+import edu.pse.beast.electionsimulator.ElectionSimulationData;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 
 public abstract class OutputType extends InOutType {
-    //protected CommonHelpMethods helper; TODO remove
+	// protected CommonHelpMethods helper; TODO remove
 
-    public OutputType(boolean unsigned, DataType dataType, int dimensions, String[] sizeOfDimensions) {
-        super(unsigned, dataType, dimensions, sizeOfDimensions);
-    }
+	public OutputType(boolean unsigned, DataType dataType, int dimensions, String[] sizeOfDimensions) {
+		super(unsigned, dataType, dimensions, sizeOfDimensions);
+	}
 
-    public static List<OutputType> getOutputTypes() {
-        ServiceLoader<OutputType> loader = ServiceLoader.load(OutputType.class);
+	public static List<OutputType> getOutputTypes() {
+		ServiceLoader<OutputType> loader = ServiceLoader.load(OutputType.class);
 
-        List<OutputType> types = new ArrayList<OutputType>();
+		List<OutputType> types = new ArrayList<OutputType>();
 
-        for (Iterator<OutputType> iterator = loader.iterator(); iterator.hasNext();) {
-            OutputType type = (OutputType) iterator.next();
-            types.add(type);
-        }
-        return types;
-    }
+		for (Iterator<OutputType> iterator = loader.iterator(); iterator.hasNext();) {
+			OutputType type = (OutputType) iterator.next();
+			types.add(type);
+		}
+		return types;
+	}
 
-    @Override
-    public String toString() {
-        return otherToString();
-    }
+	@Override
+	public String toString() {
+		return otherToString();
+	}
 
-    //protected abstract void getHelper();
+	// protected abstract void getHelper();
 
-    /**
-     *
-     * @return the ID this output type uses in the string resources
-     */
-    public abstract String getOutputIDinFile();
+	/**
+	 *
+	 * @return the ID this output type uses in the string resources
+	 */
+	public abstract String getOutputIDinFile();
 
-    /**
-     *
-     * @return true, if the output is just one candidate
-     */
-    public abstract boolean isOutputOneCandidate();
+	/**
+	 *
+	 * @return true, if the output is just one candidate
+	 */
+	public abstract boolean isOutputOneCandidate();
 
 //    /**
 //     * extracts a variable with a given name from a checker output
@@ -56,39 +60,48 @@ public abstract class OutputType extends InOutType {
 //    	return helper.extractVariable(variableMatcher, toExtract);
 //    }
 
-    public abstract CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code);
+	public abstract CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code);
 
-    @Deprecated
-    public abstract CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code,
-                                                                 int voteNumber);
+	@Deprecated
+	public abstract CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code, int voteNumber);
 
-    public abstract String getCArrayType();
+	public abstract String getCArrayType();
 
-    /**
-     * returns the code with the added line of the margin main test method. The
-     * method must end with an assertion that let's cbmc fail, so we can extract the
-     * result.
-     *
-     * @param code       the code
-     * @param voteNumber the vote number
-     * @return the beautified code
-     */
-    public abstract CodeArrayListBeautifier addMarginMainTest(CodeArrayListBeautifier code,
-                                                              int voteNumber);
+	/**
+	 * returns the code with the added line of the margin main test method. The
+	 * method must end with an assertion that let's cbmc fail, so we can extract the
+	 * result.
+	 *
+	 * @param code       the code
+	 * @param voteNumber the vote number
+	 * @return the beautified code
+	 */
+	public abstract CodeArrayListBeautifier addMarginMainTest(CodeArrayListBeautifier code, int voteNumber);
 
 //    public List<ResultValueWrapper> extractVariable(String variableMatcher, List<String> lastResult) {
 //    	return helper.extractVariable(variableMatcher, lastResult);
 //    } TODO remove
-    
-    public abstract InternalTypeContainer getInternalTypeContainer();
 
-    public abstract void addVerifyOutput(CodeArrayListBeautifier code);
+	public abstract InternalTypeContainer getInternalTypeContainer();
 
-    public abstract void addLastResultAsCode(CodeArrayListBeautifier code, ResultValueWrapper origResult);
+	public abstract void addVerifyOutput(CodeArrayListBeautifier code);
 
-    public abstract String getResultDescriptionString(List<String> result);
-    
-	public String getInfo() { //TODO move later on further down
+	public void addLastResultAsCode(CodeArrayListBeautifier code, ElectionSimulationData origResult) {
+
+		// first create the declaration of the array:
+		String declaration = getContainer().getOutputStruct().getStructAccess() + " "
+				+ getContainer().getNameContainer().getOrigResultName() + ";";
+
+		code.add(declaration);
+
+		String assignment = getContainer().getNameContainer().getOrigResultName() + "."
+				+ getContainer().getNameContainer().getResultArrName() + " = "
+				+ printArray((CBMCResultValueWrapper) origResult.values);
+	}
+
+	public abstract String getResultDescriptionString(List<String> result);
+	
+	public String getInfo() { // TODO move later on further down
 		return "output type information";
 	}
 }

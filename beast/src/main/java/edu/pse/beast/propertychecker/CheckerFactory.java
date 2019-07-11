@@ -237,7 +237,10 @@ public abstract class CheckerFactory implements Runnable {
 				// getElectionDescription().getContainer().getOutputType().getCodeToRunMargin(origResult,
 				// lastResult);
 
-				System.out.println("in CheckerFactory, add a reference to the nameContainer later");
+				//TODO in CheckerFactory, add a reference to the nameContainer later
+				
+				var testing = result.readVariableValue("elect\\d");
+				
 				ElectionSimulationData origResult = new ElectionSimulationData(numVoters, numCandidates, numSeats,
 						result.readVariableValue("elect\\d").get(0));
 

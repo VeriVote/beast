@@ -181,7 +181,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		code.add("#ifndef MARGIN\n #define MARGIN " + margin + "\n #endif");
 		// we also add the original result, which is calculated by compiling the
 		// program and running it
-		electionDesc.getContainer().getOutputType().addLastResultAsCode(code, origResult.values);
+		electionDesc.getContainer().getOutputType().addLastResultAsCode(code, origResult);
 		// add the verify method:
 		// taken and adjusted from the paper:
 		// https://formal.iti.kit.edu/~beckert/pub/evoteid2016.pdf
