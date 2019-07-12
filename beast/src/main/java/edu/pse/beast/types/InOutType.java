@@ -216,21 +216,7 @@ public abstract class InOutType {
 
 	//public abstract List<String> drawResult(ResultValueWrapper wrapper, String varName);
 	
-	
-	@Override
-	public final List<String> drawResult(ResultValueWrapper wrapper, String varName) {
-
-		List<String> toReturn = new ArrayList<String>();
-		
-		toReturn.add(varName);
-		
-		CBMCResultValueStruct struct = (CBMCResultValueStruct) wrapper.getResultValue();
-    	CBMCResultValueArray arr = (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
-		
-		toReturn.add(CBMCResultPresentationHelper.printOneDimResult(arr, varName.length()));
-		
-		return toReturn;
-	}
+	public abstract List<String> drawResult(ResultValueWrapper wrapper, String varName); // extract later to here if possible
 	
 	
 	/**

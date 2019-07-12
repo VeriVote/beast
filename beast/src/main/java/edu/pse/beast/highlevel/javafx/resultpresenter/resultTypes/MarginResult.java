@@ -1,16 +1,19 @@
 package edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes;
 
+import java.awt.Container;
 import java.util.List;
 
 import org.fxmisc.richtext.GenericStyledArea;
 import org.reactfx.util.Either;
 
+import edu.pse.beast.electionsimulator.ElectionSimulationData;
 import edu.pse.beast.highlevel.javafx.AnalysisType;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.LinkedImage;
 import edu.pse.beast.toolbox.ParStyle;
 import edu.pse.beast.toolbox.TextFieldCreator;
 import edu.pse.beast.toolbox.TextStyle;
+import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueStruct;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 import edu.pse.beast.types.InputType;
@@ -31,26 +34,52 @@ public class MarginResult extends ResultPresentationType {
 					ParStyle.EMPTY);
 			area.setEditable(false);
 		}
-
-		InputType inType = result.getElectionDescription().getContainer().getInputType();
-		OutputType outType = result.getElectionDescription().getContainer().getOutputType();
 		
-		ResultValueWrapper structedWrapper = new CBMCResultValueWrapper(valueContainer)
-		
-		CBMCResultValueStruct struct = new CBMCResultValueWrapper(result.getOrigVoting().values);
-				
-		List<String> toAdd = inType.drawResult(result.getOrigVoting().values, "orig Votes: ");
+		if (!result.hasFinalMargin()) {
+			area.appendText("There is no final margin.");
+		} else {
 
-		for (int i = 0; i < toAdd.size(); i++) {
-			area.appendText(toAdd.get(i));
+			area.appendText("Final Margin: " + result.getFinalMargin());
+
+			area.appendText("=================================================");
+			
+			InputType inType = result.getElectionDescription().getContainer().getInputType();
+			OutputType outType = result.getElectionDescription().getContainer().getOutputType();
+
+			CBMCResultValueStruct structVotes = new CBMCResultValueStruct();
+
+			structVotes.setValue((CBMCResultValueWrapper) result.getOrigVoting().values,
+					inType.getContainer().getNameContainer().getStructValueName());
+
+			ResultValueWrapper structVotesWrapped = new CBMCResultValueWrapper(structVotes);
+
+			List<String> toAdd = inType.drawResult(structVotesWrapped, "orig votes: ");
+
+			for (int i = 0; i < toAdd.size(); i++) {
+				area.appendText(toAdd.get(i));
+			}
+
+			toAdd = outType.drawResult(result.getOrigWinner().values, "orig result: ");
+
+			for (int i = 0; i < toAdd.size(); i++) {
+				area.appendText(toAdd.get(i));
+			}
+			
+			area.appendText("=================================================");
+			
+			toAdd = inType.drawResult(result.getNewVotes().values, "new votes: ");
+			
+			for (int i = 0; i < toAdd.size(); i++) {
+				area.appendText(toAdd.get(i));
+			}
+			
+			toAdd = inType.drawResult(result.getNewWinner().values, "new result: ");
+			
+			for (int i = 0; i < toAdd.size(); i++) {
+				area.appendText(toAdd.get(i));
+			}
+			
 		}
-
-		toAdd = outType.drawResult(result.getOrigVoting().values, "orig result: ");
-
-		for (int i = 0; i < toAdd.size(); i++) {
-			area.appendText(toAdd.get(i));
-		}
-
 		return area;
 	}
 
@@ -85,5 +114,5 @@ public class MarginResult extends ResultPresentationType {
 			return false;
 		}
 	}
-	
+
 }
