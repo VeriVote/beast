@@ -1,6 +1,11 @@
 package edu.pse.beast.highlevel.javafx.resultpresenter;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import edu.pse.beast.highlevel.javafx.GUIController;
+import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.CBMCOutput;
 import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.Default;
 import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresentationType;
 import edu.pse.beast.propertychecker.Result;
@@ -30,10 +35,10 @@ public class ResultPresenterNEW {
 	private ResultPresenterNEW() {
 		this.resultScrollPane = GUIController.getController().getResultScrollPane();
 		if (presentationType == null) {
-			this.setPresentationType(new Default()); // set the defaul presentationtype, if the user didn't set another
+			this.setPresentationType(new CBMCOutput()); // set the defaul presentationtype, if the user didn't set another
 														// one before
 		}
-		
+
 		GUIController.getController().getZoomSlider().valueProperty().addListener(new ChangeListener<>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -48,20 +53,42 @@ public class ResultPresenterNEW {
 	 * removes all children from the result pane
 	 */
 	private void reset() {
-		
+
 		ResultImageRenderer.reset();
-		
+
 		resultScrollPane.setContent(null);
-		
-		//resultPane.getChildren().clear();
+
+		// resultPane.getChildren().clear();
 	}
 
 	public void setResult(Result result) {
 		boolean changed = (this.result != result);
 		this.result = result;
 		if (changed) {
+			getEligablePresentationTypes();
+			
+			
 			showResult();
 		}
+	}
+	
+	private void getEligablePresentationTypes() {
+		this.presentationType = null;
+		
+		List<ResultPresentationType> eligableTypes = new ArrayList<ResultPresentationType>();
+
+		for (Iterator<ResultPresentationType> iterator = ResultPresentationType.getImplementations().iterator(); iterator.hasNext();) {
+			ResultPresentationType typeToCheck = (ResultPresentationType) iterator.next();
+			
+			if (typeToCheck.supports(result.getAnalysisType())) {
+				eligableTypes.add(typeToCheck);
+			}
+			
+		}
+		
+		this.setPresentationType(new CBMCOutput()); //TODO maybe find a better way to find the best presenter for every type
+		
+		GUIController.getController().setEligableTypes(eligableTypes);
 	}
 
 	public void setPresentationType(ResultPresentationType presentationType) {
@@ -70,7 +97,7 @@ public class ResultPresenterNEW {
 		boolean changed = (this.presentationType != presentationType);
 		this.presentationType = presentationType;
 		if (changed) {
-			showResult();			
+			showResult();
 		}
 	}
 
@@ -79,11 +106,11 @@ public class ResultPresenterNEW {
 		if (result == null) {
 			return;
 		}
-
+		
 		Node finishedResult = presentationType.presentResult(result);
 
 		GUIController.getController().disableZoomSlider(!presentationType.supportsZoom());
-		
+
 		this.setResultNode(finishedResult);
 	}
 
@@ -94,10 +121,10 @@ public class ResultPresenterNEW {
 	 * @param resultNode the Node which will be shown in the result window
 	 */
 	public void setResultNode(Node resultNode) {
-		ResultImageRenderer.resetScrollBars();	
-		
-		//resultPane.getChildren().add(resultNode);	
-		
+		ResultImageRenderer.resetScrollBars();
+
+		// resultPane.getChildren().add(resultNode);
+
 		resultScrollPane.setContent(resultNode);
 	}
 

@@ -11,17 +11,13 @@ import edu.pse.beast.toolbox.LinkedImage;
 import edu.pse.beast.toolbox.ParStyle;
 import edu.pse.beast.toolbox.TextFieldCreator;
 import edu.pse.beast.toolbox.TextStyle;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueStruct;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 import javafx.scene.Node;
 
-/**
- * We just print out the input votes, and the result
- *
- * @author Lukas Stapelbroek
- *
- */
-public class Default extends ResultPresentationType {
+public class MarginResult extends ResultPresentationType {
 
 	GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area;
 
@@ -38,18 +34,18 @@ public class Default extends ResultPresentationType {
 
 		InputType inType = result.getElectionDescription().getContainer().getInputType();
 		OutputType outType = result.getElectionDescription().getContainer().getOutputType();
-
-		String votesNameMatcher = inType.getContainer().getNameContainer().getVotingArray() + "\\d";
-
-		List<String> toAdd = inType.drawResult(result, votesNameMatcher);
+		
+		ResultValueWrapper structedWrapper = new CBMCResultValueWrapper(valueContainer)
+		
+		CBMCResultValueStruct struct = new CBMCResultValueWrapper(result.getOrigVoting().values);
+				
+		List<String> toAdd = inType.drawResult(result.getOrigVoting().values, "orig Votes: ");
 
 		for (int i = 0; i < toAdd.size(); i++) {
 			area.appendText(toAdd.get(i));
 		}
-		
-		String resultNameMatcher = inType.getContainer().getNameContainer().getVotingArray() + "\\d";
 
-		toAdd = outType.drawResult(result, resultNameMatcher);
+		toAdd = outType.drawResult(result.getOrigVoting().values, "orig result: ");
 
 		for (int i = 0; i < toAdd.size(); i++) {
 			area.appendText(toAdd.get(i));
@@ -60,7 +56,7 @@ public class Default extends ResultPresentationType {
 
 	@Override
 	public String getName() {
-		return "Default";
+		return "Margin Result";
 	}
 
 	@Override
@@ -83,10 +79,11 @@ public class Default extends ResultPresentationType {
 	@Override
 	public boolean supports(AnalysisType analysisType) {
 		switch (analysisType) {
-		case Check:
+		case Margin:
 			return true;
 		default:
 			return false;
 		}
 	}
+	
 }

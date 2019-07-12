@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
 
+import edu.pse.beast.highlevel.javafx.AnalysisType;
 import edu.pse.beast.highlevel.javafx.resultpresenter.ResultPresenterNEW;
 import edu.pse.beast.propertychecker.Result;
 import javafx.event.ActionEvent;
@@ -72,4 +73,6 @@ public abstract class ResultPresentationType {
 	}
 	
 	public abstract void zoomTo(double zoomValue);
+
+	public abstract boolean supports(AnalysisType analysisType);
 }

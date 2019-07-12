@@ -65,43 +65,6 @@ public class SingleChoiceStack extends CBMCInputType {
 	}
 
 	@Override
-	public void addVerifyMethod(CodeArrayListBeautifier code, OutputType outType) {
-		code.add("void verify() {");
-		code.addTab();
-		code.add("int total_diff = 0;");
-		code.add("int pos_diff = 0;");
-		code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" + UnifiedNameContainer.getCandidate() + "];");
-		code.add("int diff[" + UnifiedNameContainer.getCandidate() + "];");
-		// go over all voters
-		code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {");
-		code.addTab();
-		code.add("diff[i] = nondet_int();");
-		code.add("assume(-1 * MARGIN <= diff[i]);");
-		code.add("assume(diff[i] <= MARGIN);");
-		code.add("assume(0 <= ORIG_VOTES[i] + diff[i]);");
-		code.deleteTab();
-		code.add("}");
-		// go over all voters
-		code.add("for (int i = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {");
-		code.addTab();
-
-		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i] = ORIG_VOTES[i] + diff[i];");
-		code.add("if (0 < diff[i]) pos_diff += diff[i];");
-		code.add("total_diff += diff[i];");
-
-		code.deleteTab();
-		code.add("}");
-
-		code.add("assume(pos_diff <= MARGIN);");
-		code.add("assume(total_diff == 0);");
-
-		outType.addVerifyOutput(code);
-
-		code.deleteTab();
-		code.add("}"); // end of the function
-	}
-
-	@Override
 	public String vetValue(String newValue, int position, ElectionTypeContainer container, NEWRowOfValues row) {
 		final int number;
 		try {
@@ -150,10 +113,6 @@ public class SingleChoiceStack extends CBMCInputType {
 			toReturn[i] = "" + result[i];
 		}
 		return toReturn;
-	}
-
-	@Override
-	public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, int voteNumber) {
 	}
 
 	@Override
@@ -214,10 +173,10 @@ public class SingleChoiceStack extends CBMCInputType {
 	}
 
 	@Override
-	public List<String> drawResult(Result result) {
+	public List<String> drawResult(Result result, String varNameMatcher) {
 		List<String> toReturn = new ArrayList<String>();
 
-		List<ResultValueWrapper> votes = result.readVariableValue("votes\\d"); // TODO name container
+		List<ResultValueWrapper> votes = result.readVariableValue(varNameMatcher); // TODO name container
 
 		for (ResultValueWrapper currentVote : votes) {
 
@@ -230,6 +189,22 @@ public class SingleChoiceStack extends CBMCInputType {
 
 			toReturn.add(CBMCResultPresentationHelper.printOneDimResult(arr, name.length()));
 		}
+		return toReturn;
+	}
+	
+	
+	@Override
+	public List<String> drawResult(ResultValueWrapper wrapper, String varName) {
+
+		List<String> toReturn = new ArrayList<String>();
+		
+		toReturn.add(varName);
+		
+		CBMCResultValueStruct struct = (CBMCResultValueStruct) wrapper.getResultValue();
+    	CBMCResultValueArray arr = (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
+		
+		toReturn.add(CBMCResultPresentationHelper.printOneDimResult(arr, varName.length()));
+		
 		return toReturn;
 	}
 
@@ -257,5 +232,12 @@ public class SingleChoiceStack extends CBMCInputType {
 //		toReturn.setValue("int", foundValue, 32);
 //
 //		return toReturn;
+	}
+
+	@Override
+	public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, String valueName,
+			List<String> loopVariables) {
+		// TODO Auto-generated method stub
+		
 	}
 }

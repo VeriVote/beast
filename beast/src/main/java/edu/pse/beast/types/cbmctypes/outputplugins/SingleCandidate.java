@@ -9,6 +9,7 @@ import edu.pse.beast.toolbox.CBMCResultPresentationHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueArray;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueSingle;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueStruct;
 import edu.pse.beast.types.InternalTypeContainer;
@@ -73,14 +74,6 @@ public class SingleCandidate extends CBMCOutputType {
 	}
 
 	@Override
-	public void addVerifyOutput(CodeArrayListBeautifier code) {
-		code.add("int " + UnifiedNameContainer.getNewResultName() + "1 = " + UnifiedNameContainer.getVotingMethod()
-				+ "(" + UnifiedNameContainer.getNewVotesName() + "1);");
-		code.add("assert(" + UnifiedNameContainer.getNewResultName() + "1 == "
-				+ UnifiedNameContainer.getOrigResultName() + ");");
-	}
-
-	@Override
 	public String getResultDescriptionString(List<String> result) {
 		String toReturn = "winner: ";
 		try {
@@ -98,10 +91,10 @@ public class SingleCandidate extends CBMCOutputType {
 	}
 
 	@Override
-	public List<String> drawResult(Result result) {
+	public List<String> drawResult(Result result, String varNameMatcher) {
 		List<String> toReturn = new ArrayList<String>();
 
-		List<ResultValueWrapper> winners = result.readVariableValue("elect\\d"); // TODO name container
+		List<ResultValueWrapper> winners = result.readVariableValue(varNameMatcher); // TODO name container
 
 		for (ResultValueWrapper currentWinner : winners) {
 
@@ -111,8 +104,24 @@ public class SingleCandidate extends CBMCOutputType {
 
 			CBMCResultValueStruct value = (CBMCResultValueStruct) currentWinner.getResultValue();
 
-			toReturn.add(CBMCResultPresentationHelper.printSingleElement((CBMCResultValueSingle) value.getResultVariable("arr").getResultValue(), name.length()));
+			toReturn.add(CBMCResultPresentationHelper.printSingleElement(
+					(CBMCResultValueSingle) value.getResultVariable("arr").getResultValue(), name.length()));
 		}
+		return toReturn;
+	}
+
+	@Override
+	public List<String> drawResult(ResultValueWrapper wrapper, String varName) {
+
+		List<String> toReturn = new ArrayList<String>();
+
+		toReturn.add(varName);
+
+		CBMCResultValueStruct value = (CBMCResultValueStruct) wrapper.getResultValue();
+
+		toReturn.add(CBMCResultPresentationHelper.printSingleElement(
+				(CBMCResultValueSingle) value.getResultVariable("arr").getResultValue(), varName.length()));
+
 		return toReturn;
 	}
 }

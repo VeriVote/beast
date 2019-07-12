@@ -63,6 +63,7 @@ module edu.pse.beast {
     exports edu.pse.beast.highlevel.javafx.resultpresenter.resultElements;
     exports edu.pse.beast.toolbox.valueContainer;
     exports edu.pse.beast.toolbox.valueContainer.cbmcValueContainers;
+    exports edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes;
     
     requires java.sql;
     requires com.sun.jna;

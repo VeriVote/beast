@@ -7,6 +7,7 @@ import org.fxmisc.flowless.VirtualizedScrollPane;
 import org.fxmisc.richtext.GenericStyledArea;
 import org.reactfx.util.Either;
 
+import edu.pse.beast.highlevel.javafx.AnalysisType;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.LinkedImage;
 import edu.pse.beast.toolbox.ParStyle;
@@ -62,5 +63,10 @@ public class CBMCOutput extends ResultPresentationType {
 		if (area != null) {
 			area.setStyle(0, area.getLength(), TextStyle.DEFAULT.fontSize((int) (standartSize + zoomValue)));
 		}
+	}
+
+	@Override
+	public boolean supports(AnalysisType analysisType) {
+		return true;
 	}
 }

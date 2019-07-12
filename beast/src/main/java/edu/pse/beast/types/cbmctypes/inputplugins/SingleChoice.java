@@ -63,42 +63,6 @@ public class SingleChoice extends CBMCInputType {
 	}
 
 	@Override
-	public void addVerifyMethod(CodeArrayListBeautifier code, OutputType outType) {
-		code.add("void verify() {");
-		code.addTab();
-		code.add("int total_diff = 0;");
-		code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" + UnifiedNameContainer.getVoter() + "];");
-		// go over all voters
-		code.add("for (int i = 0; i < " + UnifiedNameContainer.getVoter() + "; i++) {");
-		code.addTab();
-		// determine, if we want to change votes for this voter
-		code.add("int changed = nondet_int();");
-		code.add("assume(0 <= changed);");
-		code.add("assume(changed <= 1);");
-		code.add("if(changed) {");
-		code.addTab();
-		// if we changed the vote, we keep track of it
-		code.add("total_diff++;");
-		// flip the vote (0 -> 1 | 1 -> 0)
-		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i] = !ORIG_VOTES[i];");
-		code.deleteTab();
-		code.add("} else {");
-		code.addTab();
-		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i] = ORIG_VOTES[i];");
-		code.deleteTab();
-		code.add("}");
-		code.deleteTab();
-		code.add("}");
-		code.add("assume(total_diff <= MARGIN);"); // no more changes than
-													// margin allows
-
-		outType.addVerifyOutput(code);
-
-		code.deleteTab();
-		code.add("}"); // end of the function
-	}
-
-	@Override
 	public String vetValue(String newValue, int position, ElectionTypeContainer container, NEWRowOfValues row) {
 		final int number;
 		try {
@@ -222,10 +186,10 @@ public class SingleChoice extends CBMCInputType {
 	}
 
 	@Override
-	public List<String> drawResult(Result result) {
+	public List<String> drawResult(Result result, String varNameMatcher) {
 		List<String> toReturn = new ArrayList<String>();
 
-		List<ResultValueWrapper> votes = result.readVariableValue("votes\\d"); // TODO name container
+		List<ResultValueWrapper> votes = result.readVariableValue(varNameMatcher); // TODO name container
 
 		for (ResultValueWrapper currentVote : votes) {
 
@@ -238,6 +202,22 @@ public class SingleChoice extends CBMCInputType {
 
 			toReturn.add(CBMCResultPresentationHelper.printOneDimResult(arr, name.length()));
 		}
+		return toReturn;
+	}
+	
+	
+	@Override
+	public List<String> drawResult(ResultValueWrapper wrapper, String varName) {
+
+		List<String> toReturn = new ArrayList<String>();
+		
+		toReturn.add(varName);
+		
+		CBMCResultValueStruct struct = (CBMCResultValueStruct) wrapper.getResultValue();
+    	CBMCResultValueArray arr = (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
+		
+		toReturn.add(CBMCResultPresentationHelper.printOneDimResult(arr, varName.length()));
+		
 		return toReturn;
 	}
 
@@ -268,19 +248,6 @@ public class SingleChoice extends CBMCInputType {
 		toReturn.setValue("int", chosenValue, 32);
 		
 		return toReturn;
-	}
-
-	@Override
-	public String flipVote(String newVotesName, String origVotesName, List<String> loopNames) {
-		newVotes
-		
-		
-		// flip the vote (0 -> 1 | 1 -> 0)
-		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = !ORIG_VOTES[i][j];");
-		code.deleteTab();
-		code.add("} else {");
-		code.addTab();
-		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = ORIG_VOTES[i][j];");
 	}
 
 	@Override

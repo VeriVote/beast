@@ -43,6 +43,10 @@ public class CBMCResultValueStruct implements CBMCResultValue {
         }
     }
     
+    public void setValue(CBMCResultValueWrapper wrapper, String name) {
+    	 values.put(name, wrapper);
+    }
+    
     public CBMCResultValueWrapper getResultVariable(String variableName) {
         return values.get(variableName);
     }

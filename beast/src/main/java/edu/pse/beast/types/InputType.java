@@ -9,6 +9,7 @@ import java.util.ServiceLoader;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValue;
 import edu.pse.beast.toolbox.valueContainer.ResultValue.ResultType;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
@@ -16,6 +17,7 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValue;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueArray;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueSingle;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
+import edu.pse.beast.types.cbmctypes.cbmcstructs.CBMCStruct;
 
 public abstract class InputType extends InOutType {
 
@@ -56,15 +58,6 @@ public abstract class InputType extends InOutType {
 	 * @param code the list to which the headers should be added to
 	 */
 	public abstract void addCheckerSpecificHeaders(CodeArrayListBeautifier code);
-
-	/**
-	 * adds the verify method to the code list
-	 *
-	 * @param code    the list with the previous code
-	 * @param outType the output type (whether we have a single output candidate or
-	 *                a struct)
-	 */
-	public abstract void addVerifyMethod(CodeArrayListBeautifier code, OutputType outType);
 
 //    /**
 //     * extracts the voting data out of the given bounded model checker output into a wrapper object
@@ -140,11 +133,50 @@ public abstract class InputType extends InOutType {
 	}
 
 	/**
+	 * ASSERTION: newVotesName already has to be bounded to the max and min values it can have
 	 * change the vote of origVotesName at a position defined by loopNames to a vote that is different that the original one
 	 * @param newVotesName
 	 * @param origVotesName
 	 * @param loopNames
 	 * @return
 	 */
-	public abstract String flipVote(String newVotesName, String origVotesName, List<String> loopNames);
+	public String flipVote(String newVotesName, String origVotesName, List<String> loopVars) {	
+		String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
+		
+		String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
+		
+		return "assume(" + newVotesNameAcc + " = !" + origVotesNameAcc + ");";
+	}
+
+	public String setVoteValue(String newVotesName, String origVotesName, List<String> loopVars) {
+		String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
+		
+		String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
+		
+		return (newVotesNameAcc + " = " + origVotesNameAcc + ";");
+	}
+	
+	public String getFullVoteAccess(String voteName, List<String> loopVars) {
+		String access = this.getAccessDimensions(loopVars);
+		
+		return (voteName + "." + this.getContainer().getNameContainer().getStructValueName() + access);
+	}
+	
+	public abstract boolean hasVariableAsMinValue();
+	
+	public abstract boolean hasVariableAsMaxValue();
+	
+	/**
+	 *
+	 *
+	 * @return the minimal value a voter can assign
+	 */
+	public abstract String getMinimalValue();
+
+	/**
+	 *
+	 *
+	 * @return the maximal value a voter can assign
+	 */
+	public abstract String getMaximalValue();
 }

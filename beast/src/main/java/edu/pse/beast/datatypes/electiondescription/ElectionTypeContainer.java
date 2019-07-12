@@ -46,6 +46,10 @@ public class ElectionTypeContainer { //TODO make this class abstract, move code 
     	if (this.inputStruct.equals(this.outputStruct)) { //they have the same shape
     		this.outputStruct = inputStruct;
     	}
+    	
+    	inType.setStruct(inputStruct);
+    	outType.setStruct(outputStruct);
+   	
     }
 
     /**

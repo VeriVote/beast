@@ -124,7 +124,6 @@ public class ElectionCheckParameter {
     }
 
     public int getNumVotingPoints() {
-        System.out.println("TODO getNumVotingPoints in electionCheckParameters");
         return GUIController.getController().getElectionSimulation().getNumVotingPoints();
     }
 }

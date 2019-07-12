@@ -84,24 +84,25 @@ public abstract class OutputType extends InOutType {
 
 	public abstract InternalTypeContainer getInternalTypeContainer();
 
-	public abstract void addVerifyOutput(CodeArrayListBeautifier code);
-
-	public void addLastResultAsCode(CodeArrayListBeautifier code, ElectionSimulationData origResult) {
+	public void addLastResultAsCode(CodeArrayListBeautifier code, ElectionSimulationData origResult,
+			String origResultName) {
 
 		// first create the declaration of the array:
-		String declaration = getContainer().getOutputStruct().getStructAccess() + " "
-				+ getContainer().getNameContainer().getOrigResultName() + ";";
+		String declaration = getContainer().getOutputStruct().getStructAccess() + " " + origResultName + " = {"
+				+ printArray((CBMCResultValueWrapper) origResult.values) + "};";
 
 		code.add(declaration);
-
-		String assignment = getContainer().getNameContainer().getOrigResultName() + "."
-				+ getContainer().getNameContainer().getResultArrName() + " = "
-				+ printArray((CBMCResultValueWrapper) origResult.values);
 	}
 
 	public abstract String getResultDescriptionString(List<String> result);
-	
+
 	public String getInfo() { // TODO move later on further down
 		return "output type information";
+	}
+
+	@Override
+	public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, String valueName,
+			List<String> loopVariables) {
+		// as this is a output type, nothing has to be done
 	}
 }

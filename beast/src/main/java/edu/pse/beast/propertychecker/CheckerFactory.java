@@ -294,7 +294,7 @@ public abstract class CheckerFactory implements Runnable {
 					result.setResult(currentlyRunning.getResultList());
 					result.setFinalMargin(margin);
 				} else {
-					result.setResult(null);
+					result.setResult(currentlyRunning.getResultList());
 					result.setFinalMargin(-1);
 				}
 				ElectionSimulationData newVotes;

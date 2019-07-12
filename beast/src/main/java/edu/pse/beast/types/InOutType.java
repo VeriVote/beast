@@ -1,17 +1,21 @@
 package edu.pse.beast.types;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.propertychecker.Result;
+import edu.pse.beast.toolbox.CBMCResultPresentationHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.valueContainer.ResultValue;
+import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.toolbox.valueContainer.ResultValue.ResultType;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueArray;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueSingle;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueStruct;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
+import edu.pse.beast.types.cbmctypes.cbmcstructs.CBMCStruct;
 
 public abstract class InOutType {
 
@@ -38,6 +42,8 @@ public abstract class InOutType {
 	private final int dimensions;
 	private final String[] sizeOfDimensions;
 
+	private ComplexType complexType;
+	
 	private ElectionTypeContainer container;
 
 	public InOutType(boolean unsigned, DataType dataType, int dimensions, String[] sizeOfDimensions) {
@@ -79,7 +85,7 @@ public abstract class InOutType {
 	public String[] getSizeOfDimensions() {
 		return sizeOfDimensions;
 	}
-	
+
 	public List<String> getSizeOfDimensionsAsList() {
 		return Arrays.asList(sizeOfDimensions);
 	}
@@ -135,7 +141,7 @@ public abstract class InOutType {
 		if (dimensions == 0) {
 			return ""; // zero dimensional dataTypes are not represented by structs
 		} else {
-			return this.getContainer().getNameContainer().getResultArrName();
+			return this.getContainer().getNameContainer().getStructValueName();
 		}
 	}
 
@@ -145,8 +151,8 @@ public abstract class InOutType {
 
 		if (resultValue.getResultType() == ResultType.STRUCT) {
 			CBMCResultValueStruct struct = (CBMCResultValueStruct) resultValue;
-			
-			return printArray(struct.getResultVariable(getContainer().getNameContainer().getResultArrName()));
+
+			return printArray(struct.getResultVariable(getContainer().getNameContainer().getStructValueName()));
 		}
 		if (resultValue.getResultType() == ResultType.SINGLE) {
 
@@ -176,6 +182,20 @@ public abstract class InOutType {
 		}
 	}
 
+	public String getAccessDimensions(List<String> filling) {
+		String dimAccess = "";
+
+		for (int i = 0; i < this.getAmountOfDimensions(); i++) {
+			dimAccess = dimAccess + "[" + filling.get(i) + "]";
+		}
+
+		return dimAccess;
+	}
+	
+	public String getFullVarAccess(String varName, List<String> filling) {
+		return varName + "." + this.getContainer().getNameContainer().getStructValueName() + getAccessDimensions(filling);
+	}
+
 	public abstract InternalTypeContainer getInternalTypeContainer();
 
 	/**
@@ -188,41 +208,53 @@ public abstract class InOutType {
 	/**
 	 * 
 	 * @param result the result to be presented
+	 * @param varNameMatcher TODO
 	 * @param startY the y position to start the drawing at
 	 * @return the bottom most y-position the presentation has
 	 */
-	public abstract List<String> drawResult(Result result);
+	public abstract List<String> drawResult(Result result, String varNameMatcher); //TODO extract to topmost position
 
+	//public abstract List<String> drawResult(ResultValueWrapper wrapper, String varName);
+	
+	
+	@Override
+	public final List<String> drawResult(ResultValueWrapper wrapper, String varName) {
+
+		List<String> toReturn = new ArrayList<String>();
+		
+		toReturn.add(varName);
+		
+		CBMCResultValueStruct struct = (CBMCResultValueStruct) wrapper.getResultValue();
+    	CBMCResultValueArray arr = (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
+		
+		toReturn.add(CBMCResultPresentationHelper.printOneDimResult(arr, varName.length()));
+		
+		return toReturn;
+	}
+	
+	
 	/**
 	 * 
 	 * @return a text describing everything the user needs to know about this type
 	 *         (e.g description of structs...)
 	 */
 	public abstract String getInfo();
-	
-	public abstract boolean hasVariableAsMinValue();
 
-	public abstract boolean hasVariableAsMaxValue();
-	
-	/**
-	 *
-	 *
-	 * @return the minimal value a voter can assign
-	 */
-	public abstract String getMinimalValue();
-
-	/**
-	 *
-	 *
-	 * @return the maximal value a voter can assign
-	 */
-	public abstract String getMaximalValue();
-	
 	/**
 	 * so far only used for preference voting
 	 *
 	 * @param code       the code
 	 * @param voteNumber the amount of votes
 	 */
-	public abstract void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, String valueName, List<String> loopVariables);
+	public abstract void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, String valueName,
+			List<String> loopVariables);
+	
+
+	public void setStruct(ComplexType complexType) {
+		this.complexType = complexType;
+	}
+	
+	public ComplexType getStruct() {
+		return complexType;
+	}
 }

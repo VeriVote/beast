@@ -76,18 +76,20 @@ public class CBMCResult extends Result {
 
 		super.setResult(result);
 
-		parseResult(); // get the xml list from this list of strings
+		if (result != null) {
+			parseResult(); // get the xml list from this list of strings
 
-		String[] arr = { "votes\\d", "elect\\d" }; // TODO add the NameContainer here
-		readVariableValue(Arrays.asList(arr)); // already read "votes" and "elect", so the access can be faster
+			String[] arr = { "votes\\d", "elect\\d" }; // TODO add the NameContainer here
+			readVariableValue(Arrays.asList(arr)); // already read "votes" and "elect", so the access can be faster
+		}
 	}
 
 	private void parseResult() {
-		
-		int offset = 0; //TODO beautify
-		
+
+		int offset = 0; // TODO beautify
+
 		OperatingSystems os = CBMCProcessFactory.determineOS();
-		
+
 		switch (os) {
 		case Windows:
 			offset = 8;
@@ -96,12 +98,13 @@ public class CBMCResult extends Result {
 		case Linux:
 			offset = 0;
 			break;
-			
+
 		default:
 			break;
 		}
-		
-		InputStream xmlStream = IOUtils.toInputStream(String.join("", super.getResult().subList(offset, super.getResult().size())), charSet);
+
+		InputStream xmlStream = IOUtils
+				.toInputStream(String.join("", super.getResult().subList(offset, super.getResult().size())), charSet);
 
 		DocumentBuilder builder;
 		try {
@@ -181,9 +184,8 @@ public class CBMCResult extends Result {
 			NodeList resultElements = rootElement.getElementsByTagName(RESULT_TAG);
 
 			if (resultElements.getLength() == 0) {
-				return false; //no result tag found, so it can not hold
-			} else
-			if (resultElements.getLength() > 1) {
+				return false; // no result tag found, so it can not hold
+			} else if (resultElements.getLength() > 1) {
 				throw new IndexOutOfBoundsException("Multiple Result Tags detected, this can not happen");
 			} else {
 				return resultElements.item(0).getTextContent().equals(identifier);

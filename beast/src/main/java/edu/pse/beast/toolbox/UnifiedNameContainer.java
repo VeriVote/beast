@@ -77,7 +77,7 @@ public final class UnifiedNameContainer { //TODO make not static and then only a
         return map.get("votingMethod");
     }
 
-    public static String getResultArrName() {
+    public static String getStructValueName() {
         return map.get("result_arr_name");
     }
 
@@ -121,7 +121,7 @@ public final class UnifiedNameContainer { //TODO make not static and then only a
         return "votingMethod";
     }
 
-    public static String getResultArrNameKey() {
+    public static String getStructValueNameKey() {
         return "result_arr_name";
     }
 

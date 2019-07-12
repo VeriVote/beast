@@ -49,7 +49,7 @@ public abstract class Result implements ResultInterface {
 	private Result subResult = null;
 	private boolean isMarginComp = false;
 
-	private List<String> statusStrings;
+	private List<String> statusStrings = new ArrayList<String>();
 	private int exitCode;
 
 	/**
@@ -66,8 +66,12 @@ public abstract class Result implements ResultInterface {
 		return types;
 	}
 
+	public boolean isTest() {
+		return getAnalysisType() == AnalysisType.Test;
+	}
+	
 	public boolean isMarginComp() {
-		return isMarginComp;
+		return getAnalysisType() == AnalysisType.Margin;
 	}
 
 	public void setMarginComp(boolean isMarginComp) {

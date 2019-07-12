@@ -180,16 +180,21 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		addMarginMainTest(); // TODO add gcc ability here
 	}
 
-	private void addMarginMainCheck(int margin, ElectionSimulationData origResult) {
+	private void addMarginMainCheck(int margin, ElectionSimulationData origData) {
 		// we add the margin which will get computed by the model checker
 		code.add("#ifndef MARGIN\n #define MARGIN " + margin + "\n #endif");
 		// we also add the original result, which is calculated by compiling the
 		// program and running it
-		electionDesc.getContainer().getOutputType().addLastResultAsCode(code, origResult);
+		
+		String origResultName = electionDesc.getContainer().getNameContainer().getOrigResultName();
+		
+		electionDesc.getContainer().getOutputType().addLastResultAsCode(code, origResult, origResultName);
 		// add the verify method:
 		// taken and adjusted from the paper:
 		// https://formal.iti.kit.edu/~beckert/pub/evoteid2016.pdf
-		electionDesc.getContainer().getInputType().addVerifyMethod(code, electionDesc.getContainer().getOutputType());
+
+		addVerifyMethod(code, electionDesc.getContainer().getInputType(), electionDesc.getContainer().getOutputType(), origResultName);
+
 		// add the main method
 		code.add("int main() {");
 		code.addTab();
@@ -198,19 +203,36 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		code.add("}");
 	}
 
-	private void addVerifyMethod(CodeArrayListBeautifier code, InputType inType, OutputType outType) {
+	private void addVerifyMethod(CodeArrayListBeautifier code, InputType inType, OutputType outType, String origResultName) {
 		code.add("void verify() {");
+		code.addTab();
+
+		code.add("//Verify for input");
+		
+		String voteName = UnifiedNameContainer.getNewVotesName();
+		addVerifyMethodInput(code, inType, voteName);
+		
+		code.add("//Verify for output");
+
+		addVerifyMethodOutput(code, outType, voteName, origResultName);
+		
+		// end of the function
+		code.add("}");
+	}
+	
+	private void addVerifyMethodInput(CodeArrayListBeautifier code, InputType inType, String voteName) {
+		
 		code.add("int total_diff = 0;");
 
-		String voteContainer = electionDesc.getContainer().getInputStruct().getStructAccess() + " "
-				+ UnifiedNameContainer.getNewVotesName() + "1;";
+		String voteContainer = inType.getStruct().getStructAccess() + " " + voteName + ";";
 
-		addInitialisedValue(UnifiedNameContainer.getNewVotesName() + "1", inType,
-				electionDesc.getContainer().getInputStruct(), inType.getMinimalValue(), inType.getMaximalValue());
+		addInitialisedValue(voteName, inType, electionDesc.getContainer().getInputStruct(), inType.getMinimalValue(),
+				inType.getMaximalValue());
 
 		code.add(voteContainer);
 
-		List<String> loopNames = addNestedForLoopTop(code, inType.getSizeOfDimensionsAsList(), new ArrayList<String>());
+		List<String> loopVars = addNestedForLoopTop(code, inType.getSizeOfDimensionsAsList(), new ArrayList<String>());
+
 		code.add("int changed = nondet_int();");
 		code.add("assume(0 <= changed);");
 		code.add("assume(changed <= 1);");
@@ -219,26 +241,43 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		// if we changed the vote, we keep track of it
 		code.add("total_diff++;");
 
-		code.add(inType.flipVote(UnifiedNameContainer.getNewVotesName(),
-				electionDesc.getContainer().getNameContainer().getOrigVotesName(), loopNames));
+		code.add(inType.flipVote(voteName, electionDesc.getContainer().getNameContainer().getOrigVotesName(),
+				loopVars));
 
-		// flip the vote (0 -> 1 | 1 -> 0)
-		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = !ORIG_VOTES[i][j];");
 		code.deleteTab();
 		code.add("} else {");
 		code.addTab();
-		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = ORIG_VOTES[i][j];");
-		code.deleteTab();
+
+		code.add(inType.setVoteValue(voteName, electionDesc.getContainer().getNameContainer().getOrigVotesName(),
+				loopVars));
+
 		code.add("}");
-		code.deleteTab();
-		code.add("}");
-		code.deleteTab();
-		code.add("}"); // end of the double for-loop
+		
+		addNestedForrLoopBot(code, inType.getAmountOfDimensions());
+
 		// no more changes than margin allows
 		code.add("assume(total_diff <= MARGIN);");
-		outType.addVerifyOutput(code);
-		// end of the function
-		code.add("}");
+	}
+	
+	private void addVerifyMethodOutput(CodeArrayListBeautifier code, OutputType outType, String newVotesName, String origResultName) {
+		String resultName = outType.getContainer().getNameContainer().getNewResultName();
+
+		String resultContainer = outType.getStruct().getStructAccess() + " " + resultName;
+		
+		String resultAssignment = resultContainer + " = " + outType.getContainer().getNameContainer().getVotingMethod() +
+				"(" + newVotesName + ");";
+
+		code.add(resultAssignment);
+		
+		List<String> loopVars = addNestedForLoopTop(code, outType.getSizeOfDimensionsAsList(), new ArrayList<String>());
+
+		String newResultAcc = outType.getFullVarAccess(resultName, loopVars);
+		
+		String origResultAcc = outType.getFullVarAccess(origResultName, loopVars);
+		
+		code.add("assert(" + newResultAcc + " == " + origResultAcc + ");");
+		
+		addNestedForrLoopBot(code, loopVars.size());
 	}
 
 	/**
@@ -251,7 +290,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 	 */
 	private List<String> addNestedForLoopTop(CodeArrayListBeautifier code, List<String> dimensions,
 			List<String> nameOfLoopVariables) {
-
+		
 		if (dimensions.size() > 0) {
 
 			String name = "loop_" + nameOfLoopVariables.size();
@@ -264,7 +303,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 			return addNestedForLoopTop(code, dimensions.subList(1, dimensions.size()), nameOfLoopVariables);
 		}
 
-		return dimensions;
+		return nameOfLoopVariables;
 	}
 
 	private void addNestedForrLoopBot(CodeArrayListBeautifier code, int dimensions) {
@@ -867,7 +906,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		List<String> loopVariables = addNestedForLoopTop(this.code, inOutType.getSizeOfDimensionsAsList(),
 				new ArrayList<String>());
 
-		String assignment = valueName + "." + electionDesc.getContainer().getNameContainer().getResultArrName();
+		String assignment = valueName + "." + electionDesc.getContainer().getNameContainer().getStructValueName();
 
 		for (int i = 0; i < inOutType.getAmountOfDimensions(); i++) {
 			assignment = assignment + "[" + loopVariables.get(i) + "]";

@@ -64,44 +64,6 @@ public class Approval extends CBMCInputType {
 	}
 
 	@Override
-	public void addVerifyMethod(CodeArrayListBeautifier code, OutputType outType) {
-		code.add("void verify() {");
-		code.add("int total_diff = 0;");
-		code.add("int " + UnifiedNameContainer.getNewVotesName() + "1 " + getDimensionDescriptor(false) + ";");
-		// go over all voters
-		code.add("for (int i = 0; i < V; i++) {");
-		code.addTab();
-		// go over all candidates
-		code.add("for (int j = 0; i < C; i++) {");
-		code.addTab();
-		// determine, if we want to changed votes for this "voter - candidate" pair
-		code.add("int changed = nondet_int();");
-		code.add("assume(0 <= changed);");
-		code.add("assume(changed <= 1);");
-		code.add("if(changed) {");
-		code.addTab();
-		// if we changed the vote, we keep track of it
-		code.add("total_diff++;");
-		// flip the vote (0 -> 1 | 1 -> 0)
-		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = !ORIG_VOTES[i][j];");
-		code.deleteTab();
-		code.add("} else {");
-		code.addTab();
-		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = ORIG_VOTES[i][j];");
-		code.deleteTab();
-		code.add("}");
-		code.deleteTab();
-		code.add("}");
-		code.deleteTab();
-		code.add("}"); // end of the double for-loop
-		// no more changes than margin allows
-		code.add("assume(total_diff <= MARGIN);");
-		outType.addVerifyOutput(code);
-		// end of the function
-		code.add("}");
-	}
-
-	@Override
 	public String vetValue(String newValue, int position, ElectionTypeContainer container, NEWRowOfValues row) {
 		final int number;
 		try {
@@ -169,10 +131,6 @@ public class Approval extends CBMCInputType {
 	// }
 
 	@Override
-	public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, int voteNumber) {
-	}
-
-	@Override
 	public void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique) {
 		code.add("unsigned int candSum = arr[i][candidate];");
 		if (unique) {
@@ -227,10 +185,10 @@ public class Approval extends CBMCInputType {
 	}
 
 	@Override
-	public List<String> drawResult(Result result) {	
+	public List<String> drawResult(Result result, String varNameMatcher) {	
 		List<String> toReturn = new ArrayList<String>();
 		
-		List<ResultValueWrapper> votes = result.readVariableValue("votes\\d"); //TODO name container
+		List<ResultValueWrapper> votes = result.readVariableValue(varNameMatcher); //TODO name container
 		
 		for (ResultValueWrapper currentVote: votes) {
 			
@@ -243,6 +201,21 @@ public class Approval extends CBMCInputType {
 			
 			toReturn.addAll(CBMCResultPresentationHelper.printTwoDimResult(arr, name.length()));
 		}	
+		
+		return toReturn;
+	}
+	
+	@Override
+	public List<String> drawResult(ResultValueWrapper wrapper, String varName) {
+
+		List<String> toReturn = new ArrayList<String>();
+		
+		toReturn.add(varName);
+		
+		CBMCResultValueStruct struct = (CBMCResultValueStruct) wrapper.getResultValue();
+    	CBMCResultValueArray arr = (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
+		
+		toReturn.addAll(CBMCResultPresentationHelper.printTwoDimResult(arr, varName.length()));
 		
 		return toReturn;
 	}
@@ -267,5 +240,12 @@ public class Approval extends CBMCInputType {
 		
 		toReturn.setValue(wrappedValues);
 		return toReturn;
+	}
+
+	@Override
+	public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, String valueName,
+			List<String> loopVariables) {
+		// TODO Auto-generated method stub
+		
 	}
 }

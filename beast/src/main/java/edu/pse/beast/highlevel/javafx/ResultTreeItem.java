@@ -1,6 +1,5 @@
 package edu.pse.beast.highlevel.javafx;
 
-import edu.pse.beast.highlevel.javafx.resultpresenter.ResultPresenterNEW;
 import edu.pse.beast.propertychecker.Result;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -47,7 +46,8 @@ public class ResultTreeItem extends CustomTreeItem {
 
 	public void wasClicked() {
 		if (result != null) {
-			ResultPresenterNEW.getInstance().setResult(result);
+			
+			owner.showResult(result);
 		}
 	}
 //
@@ -108,6 +108,9 @@ public class ResultTreeItem extends CustomTreeItem {
 
 	public void setPresentable() {
 		if (result != null && result.isFinished()) {
+			if (result.isMarginComp() || result.isTest()) {
+				this.setBackground(new Background(new BackgroundFill(Color.AQUA, CornerRadii.EMPTY, Insets.EMPTY)));
+			} else
 			if (!result.isValid()) {
 				this.setBackground(new Background(new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)));
 			} else {

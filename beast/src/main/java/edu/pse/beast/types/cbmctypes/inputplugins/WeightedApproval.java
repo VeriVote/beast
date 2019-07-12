@@ -65,53 +65,6 @@ public class WeightedApproval extends CBMCInputType {
 	}
 
 	@Override
-	public void addVerifyMethod(CodeArrayListBeautifier code, OutputType outType) {
-		code.add("void verify() {");
-		code.add("int total_diff = 0;");
-
-		code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" + UnifiedNameContainer.getVoter() + "]["
-				+ UnifiedNameContainer.getCandidate() + "];");
-
-		code.add("for (int i = 0; i < " + UnifiedNameContainer.getVoter() + "; i++) {");
-		// go over all voters
-		code.addTab();
-		code.add("for (int j = 0; i < " + UnifiedNameContainer.getCandidate() + "; i++) {"); // go over all candidates
-		code.addTab();
-		code.add("int changed = nondet_int();"); // determine, if we want to
-													// changed votes for
-													// this
-													// voter - candidate
-													// pair
-		code.add("assume(0 <= changed);");
-		code.add("assume(changed <= 1);");
-		code.add("if(changed) {");
-		code.addTab();
-		code.add("total_diff++;"); // if we changed the vote, we keep track
-									// of it
-		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = nondet_int();");
-		// set the vote to (0-100), but different from original
-		code.add("assume(" + UnifiedNameContainer.getNewVotesName() + "1[i][j] != ORIG_VOTES[i][j]);");
-		code.add("assume(0 <= " + UnifiedNameContainer.getNewVotesName() + "1[i][j]);");
-		code.add("assume(" + UnifiedNameContainer.getNewVotesName() + "1[i][j] <= 100);");
-		code.deleteTab();
-		code.add("} else {");
-		code.addTab();
-		code.add("" + UnifiedNameContainer.getNewVotesName() + "1[i][j] = ORIG_VOTES[i][j];");
-		code.deleteTab();
-		code.add("}");
-		code.deleteTab();
-		code.add("}");
-		code.deleteTab();
-		code.add("}"); // end of the double for loop
-		code.add("assume(total_diff <= MARGIN);"); // no more changes than
-													// margin allows
-
-		outType.addVerifyOutput(code);
-
-		code.add("}"); // end of the function
-	}
-
-	@Override
 	public String vetValue(String newValue, int position, ElectionTypeContainer container, NEWRowOfValues rowOfValues) {
 		final int number;
 		try {
@@ -191,10 +144,6 @@ public class WeightedApproval extends CBMCInputType {
 //  } TODO remove unused code
 
 	@Override
-	public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, int voteNumber) {
-	}
-
-	@Override
 	public void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique) {
 		code.add("unsigned int candSum = arr[i][candidate];");
 		if (unique) {
@@ -249,10 +198,10 @@ public class WeightedApproval extends CBMCInputType {
 	}
 
 	@Override
-	public List<String> drawResult(Result result) {
+	public List<String> drawResult(Result result, String varNameMatcher) {
 		List<String> toReturn = new ArrayList<String>();
 
-		List<ResultValueWrapper> votes = result.readVariableValue("votes\\d"); // TODO name container
+		List<ResultValueWrapper> votes = result.readVariableValue(varNameMatcher); // TODO name container
 
 		for (ResultValueWrapper currentVote : votes) {
 
@@ -265,6 +214,22 @@ public class WeightedApproval extends CBMCInputType {
 
 			toReturn.addAll(CBMCResultPresentationHelper.printTwoDimResult(arr, name.length()));
 		}
+		return toReturn;
+	}
+	
+	
+	@Override
+	public List<String> drawResult(ResultValueWrapper wrapper, String varName) {
+
+		List<String> toReturn = new ArrayList<String>();
+		
+		toReturn.add(varName);
+		
+		CBMCResultValueStruct struct = (CBMCResultValueStruct) wrapper.getResultValue();
+    	CBMCResultValueArray arr = (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
+		
+		toReturn.addAll(CBMCResultPresentationHelper.printTwoDimResult(arr, varName.length()));
+		
 		return toReturn;
 	}
 	
@@ -288,5 +253,12 @@ public class WeightedApproval extends CBMCInputType {
 		
 		toReturn.setValue(wrappedValues);
 		return toReturn;
+	}
+
+	@Override
+	public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, String valueName,
+			List<String> loopVariables) {
+		// TODO Auto-generated method stub
+		
 	}
 }

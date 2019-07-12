@@ -476,18 +476,11 @@ public class GUIController {
 			}
 		});
 
-		List<ResultPresentationType> types = ResultPresentationType.getImplementations();
+//		List<ResultPresentationType> types = ResultPresentationType.getImplementations();
+//		for (ResultPresentationType type : types) {
+//			displayFormat.getItems().add(type.getMenuItem());
+//		} TODO remove
 
-		for (ResultPresentationType type : types) {
-			displayFormat.getItems().add(type.getMenuItem());
-		}
-
-		// set the default presentation type
-
-		for (Iterator<ResultPresentationType> iterator = types.iterator(); iterator.hasNext();) {
-			ResultPresentationType type = iterator.next();
-
-		}
 
 		resultScrollPane.setFitToHeight(true);
 		resultScrollPane.setFitToWidth(true);
@@ -1592,6 +1585,14 @@ public class GUIController {
 
 	public void disableZoomSlider(boolean disabled) {
 		zoomSlider.setDisable(disabled);
+	}
+	
+	public void setEligableTypes(List<ResultPresentationType> eligableTypes) {
+		displayFormat.getItems().clear();
+		
+		for (ResultPresentationType type : eligableTypes) {
+			displayFormat.getItems().add(type.getMenuItem());
+		}
 	}
 
 	public void showSaveChangesDialog(MinimalSaverInterface caller) {

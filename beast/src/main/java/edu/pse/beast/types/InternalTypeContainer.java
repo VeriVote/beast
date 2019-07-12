@@ -3,6 +3,8 @@ package edu.pse.beast.types;
 import java.util.List;
 
 import edu.pse.beast.propertychecker.Result;
+import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 
 /**
  *
@@ -152,7 +154,20 @@ public class InternalTypeContainer extends InOutType { //TODO extract to another
 	}
 
 	@Override
-	public List<String> drawResult(Result result) {
+	public List<String> drawResult(Result result, String varNameMatcher) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, String valueName,
+			List<String> loopVariables) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<String> drawResult(ResultValueWrapper wrapper, String varName) {
 		// TODO Auto-generated method stub
 		return null;
 	}

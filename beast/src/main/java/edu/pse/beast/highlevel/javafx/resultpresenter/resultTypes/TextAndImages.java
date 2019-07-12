@@ -13,6 +13,7 @@ import org.fxmisc.richtext.model.StyledSegment;
 import org.fxmisc.richtext.model.TextOps;
 import org.reactfx.util.Either;
 
+import edu.pse.beast.highlevel.javafx.AnalysisType;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.LinkedImage;
 import edu.pse.beast.toolbox.LinkedImageOps;
@@ -119,6 +120,16 @@ public class TextAndImages extends ResultPresentationType {
 //		if (imageDesiredHeight * currentScale > IMAGE_MAX_HEIGHT) {
 //			currentScale = Math.max(1, IMAGE_MAX_HEIGHT / imageDesiredHeight);
 //		}
+	}
+	
+	@Override
+	public boolean supports(AnalysisType analysisType) {
+		switch (analysisType) {
+		case Check:
+			return true;
+		default:
+			return false;
+		}
 	}
 
 }
