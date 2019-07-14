@@ -28,6 +28,8 @@ public class MarginResult extends ResultPresentationType {
 
 	@Override
 	public Node presentResult(Result result) {
+		
+		area.clear();
 
 		if (area == null) {
 			area = TextFieldCreator.getGenericStyledAreaInstance(TextStyle.DEFAULT.fontSize(standartSize),
@@ -41,7 +43,7 @@ public class MarginResult extends ResultPresentationType {
 
 			area.appendText("Final Margin: " + result.getFinalMargin());
 
-			area.appendText("=================================================");
+			area.appendText("\n=================================================");
 			
 			InputType inType = result.getElectionDescription().getContainer().getInputType();
 			OutputType outType = result.getElectionDescription().getContainer().getOutputType();
@@ -53,27 +55,27 @@ public class MarginResult extends ResultPresentationType {
 
 			ResultValueWrapper structVotesWrapped = new CBMCResultValueWrapper(structVotes);
 
-			List<String> toAdd = inType.drawResult(structVotesWrapped, "orig votes: ");
+			List<String> toAdd = inType.drawResult(structVotesWrapped, "\norig votes: ");
 
 			for (int i = 0; i < toAdd.size(); i++) {
 				area.appendText(toAdd.get(i));
 			}
 
-			toAdd = outType.drawResult(result.getOrigWinner().values, "orig result: ");
+			toAdd = outType.drawResult(result.getOrigWinner().values, "\norig result: ");
 
 			for (int i = 0; i < toAdd.size(); i++) {
 				area.appendText(toAdd.get(i));
 			}
 			
-			area.appendText("=================================================");
+			area.appendText("\n=================================================\n");
 			
-			toAdd = inType.drawResult(result.getNewVotes().values, "new votes: ");
+			toAdd = inType.drawResult(result.getNewVotes().values, "\nnew votes: ");
 			
 			for (int i = 0; i < toAdd.size(); i++) {
 				area.appendText(toAdd.get(i));
 			}
 			
-			toAdd = inType.drawResult(result.getNewWinner().values, "new result: ");
+			toAdd = outType.drawResult(result.getNewWinner().values, "\nnew result: ");
 			
 			for (int i = 0; i < toAdd.size(); i++) {
 				area.appendText(toAdd.get(i));

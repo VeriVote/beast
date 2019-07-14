@@ -22,11 +22,13 @@ public class CBMCxmlParser {
 	private static final String valueExpression = "value_expression";
 	private static final String assignment = "assignment";
 
-	public static List<Tuple<String, List<ResultValueWrapper>>> extractVariables(Document document, List<String> variablesToFind) {
+	public static List<Tuple<String, List<ResultValueWrapper>>> extractVariables(Document document,
+			List<String> variablesToFind) {
 		List<Tuple<String, List<ResultValueWrapper>>> toReturn = new ArrayList<Tuple<String, List<ResultValueWrapper>>>();
 
 		for (int i = 0; i < variablesToFind.size(); i++) {
-			toReturn.add(new Tuple<String, List<ResultValueWrapper>>(variablesToFind.get(i), new ArrayList<ResultValueWrapper>()));
+			toReturn.add(new Tuple<String, List<ResultValueWrapper>>(variablesToFind.get(i),
+					new ArrayList<ResultValueWrapper>()));
 		}
 
 		// TODO possible optimization: traverse the document backwards, and stop when
@@ -43,7 +45,7 @@ public class CBMCxmlParser {
 
 			// we extract the name of the variable which a value is described upon
 			String identifier = node.getAttributes().getNamedItem(displayName).getNodeValue();
-				//TODO maybe we can filter for all assignments with function: "main"
+			// TODO maybe we can filter for all assignments with function: "main"
 			if (identifier.startsWith(mainMethodID)) { // we only care for variables from the main method
 				String name = node.getAttributes().getNamedItem(baseName).getNodeValue();
 
@@ -69,33 +71,36 @@ public class CBMCxmlParser {
 						}
 
 						int mainIndex = getMainIndex(name);
-						
+
 						expandSparseList(toReturn.get(index).second, mainIndex);
-						
+
 						ResultValueWrapper toAdd = new CBMCResultValueWrapper(mainIndex, name,
 								valueNodeList.item(0).getFirstChild());
-						
+
 						toReturn.get(index).second.set(mainIndex, toAdd);
 					}
 				}
 			}
 		}
-		
-		//remove null elements from all lists
+
+		// remove null elements from all lists
 		for (Iterator<Tuple<String, List<ResultValueWrapper>>> iterator = toReturn.iterator(); iterator.hasNext();) {
 			Tuple<String, List<ResultValueWrapper>> toClean = iterator.next();
-			
+
 			cleanSparseList(toClean.second);
-			
+
 		}
-		
+
 		return toReturn;
 	}
 
 	private static int getMainIndex(String variableWithIndex) {
-		String number = variableWithIndex.replaceAll("[^\\d.]", "");
-
-		return Integer.parseInt(number);
+		try {
+			String number = variableWithIndex.replaceAll("[^\\d.]", "");
+			return Integer.parseInt(number);
+		} catch (Exception e) {
+			return 0;
+		}
 	}
 
 	private static void expandSparseList(List<?> list, int position) {
@@ -103,9 +108,11 @@ public class CBMCxmlParser {
 			list.add(null);
 		}
 	}
-	
+
 	/**
-	 * removes all null objects from a list. The previous order of the elements will not be changed
+	 * removes all null objects from a list. The previous order of the elements will
+	 * not be changed
+	 * 
 	 * @param toClean
 	 */
 	private static void cleanSparseList(List<?> toClean) {

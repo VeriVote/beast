@@ -68,10 +68,12 @@ public class CBMCResult extends Result {
 	private void reset() {
 		this.valueCache.clear();
 		this.rootElement = null;
+		this.isInitialized();
 	}
 
 	@Override
 	public void setResult(List<String> result) {
+		
 		reset();
 
 		super.setResult(result);
@@ -188,6 +190,7 @@ public class CBMCResult extends Result {
 			} else if (resultElements.getLength() > 1) {
 				throw new IndexOutOfBoundsException("Multiple Result Tags detected, this can not happen");
 			} else {
+				
 				return resultElements.item(0).getTextContent().equals(identifier);
 			}
 		}

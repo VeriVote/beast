@@ -66,12 +66,13 @@ public final class CVariableErrorFinder {
 
 		// WORKAROUND end
 
+		seperated.addAll(code);
+		
 		seperated.add("int main() {");
 		seperated.add("}");
 
 		int lineOffset = seperated.size() + 1;
 
-		seperated.addAll(code);
 		ArrayList<CodeError> found = new ArrayList<>(DeepErrorChecker.checkCodeForErrors(seperated, lineOffset));
 		return found;
 	}

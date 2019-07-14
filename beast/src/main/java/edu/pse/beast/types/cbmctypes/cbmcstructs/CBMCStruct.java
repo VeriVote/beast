@@ -65,7 +65,7 @@ public class CBMCStruct extends ComplexType {
 		}
 
 		return "struct " + structName + " { " + sign + inOutType.getDataType() + " " + nameContainer.getStructValueName()
-				+ " " + inOutType.getDimensionDescriptor(true) + ";};";
+				 + inOutType.getDimensionDescriptor(true) + ";};";
 	}
 
 	@Override

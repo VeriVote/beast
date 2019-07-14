@@ -118,7 +118,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 		code = new CodeArrayListBeautifier();
 	}
 
-	private int getTmpIndex() {
+	private synchronized int getTmpIndex() {
 		int tmp = tmpIndex;
 		tmpIndex++;
 		return tmp;
@@ -627,7 +627,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 		if (!(voteEquivalent instanceof TerminalNodeImpl)) {
 			voteInput = "tmp_vote" + getTmpIndex();
 			// create the variable
-			code.add(electionTypeContainer.getInputType().getDimensionDescriptor(true) + " " + voteInput + ";");
+			code.add(electionTypeContainer.getOutputStruct().getStructAccess() + " " + voteInput + ";");
 			voteInputSize = "tmp_size" + getTmpIndex();
 			code.add("unsigned int " + voteInputSize + ";");
 			VoteEquivalentsNode equiNode = new VoteEquivalentsNode(node.splitExp.voteEquivalents(), voteInput,
@@ -645,7 +645,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 		code.add("unsigned int " + splits + " = " + (tupleVotes.size() - 1) + ";");
 		String tmpLines = "tmp_Lines" + getTmpIndex();
 		code.add("unsigned int *" + tmpLines + ";");
-		code.add(tmpLines + " = getRandomSplitLines(" + splits + ", " + voteInputSize + ");");
+		code.add(tmpLines + " = getRandomSplitLines(" + splits + ", " + voteInputSize + ");"); // TODO maybe make this
+																								// non dynamic
 		String splitLines = "splitLines" + getTmpIndex();
 		code.add("unsigned int " + splitLines + "[" + splits + "];");
 		code.add("for (int i = 0; i <= " + splits + "; i++) {");
@@ -677,13 +678,16 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 			code.add(lastSplit + " = " + splitLines + "[" + i + "];");
 		}
 		String tmp = "tmp" + getTmpIndex();
-		code.add("struct vote_" + (dim < 2 ? "single" : "double") + " " + tmp + " = split" + (dim < 2 ? "One" : "Two")
-				+ "( " + voteInput + ", " + lastSplit + ", " + voteInputSize + ");"); // TODO is V correct here?
+
+		String votingStruct = electionTypeContainer.getInputStruct().getStructAccess();
+
+		code.add(votingStruct + " " + tmp + " = split" + "( " + voteInput + ", " + lastSplit + ", " + voteInputSize + ");");
+		// TODO is V correct here?
 		code.add("for (int i = 0; i < V; i++) {");
 		if (2 <= dim) {
-			code.add("  for (int j = 0; j < C; j++) {");
+			code.add("for (int j = 0; j < C; j++) {"); //TODO change to dimensions
 		}
-		code.add("  " + tupleVotes.get(tupleSize - 1).toLowerCase() + "[i]" + (2 <= dim ? "[j]" : "") + " = " + tmp
+		code.add(tupleVotes.get(tupleSize - 1).toLowerCase() + ".arr[i]" + (2 <= dim ? "[j]" : "") + " = " + tmp
 				+ ".arr[i]" + "" + (2 <= dim ? "[j]" : "") + ";");
 		if (2 <= dim) {
 			code.add("  }");
@@ -694,12 +698,15 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
 	@Override
 	public void visitVotingListChangeNode(VotingListChangeExpNode node) {
+
 		String voteToSaveInto = node.vote.getText().toLowerCase();
 		VotingListChangeContentContext contentContext = node.votingListChangeContent;
 		// we save the result of the sub computation in this variable
 		String voteInput = "tmp_vote" + getTmpIndex();
 		// create the variable
-		code.add(electionTypeContainer.getInputType().getDimensionDescriptor(true) + " " + voteInput + ";");
+
+		code.add(electionTypeContainer.getInputStruct().getStructAccess() + " " + voteInput + ";");
+
 		String voteInputSize = "tmp_size" + getTmpIndex();
 		code.add("unsigned int " + voteInputSize + ";");
 		if (contentContext.getChild(0) instanceof ConcatenationExpContext) {
@@ -718,12 +725,12 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 		// TODO extract this logic into InputType
 		if (electionTypeContainer.getInputType().getAmountOfDimensions() == 1) {
 			code.add("for (int i = 0; i < V; i++) {");
-			code.add(voteToSaveInto + "[i] = " + voteInput + "[i];");
+			code.add(voteToSaveInto + ".arr[i] = " + voteInput + ".arr[i];");
 			code.add("}");
 		} else { // we have two dimensions
 			code.add("for (int i = 0; i < V; i++) {");
 			code.add("  for (int j = 0; j < C; j++) {");
-			code.add(voteToSaveInto + "[i][j] = " + voteInput + "[i][j];");
+			code.add(voteToSaveInto + ".arr[i][j] = " + voteInput + ".arr[i][j];");
 			code.add("  }");
 			code.add("}");
 		}
@@ -734,13 +741,16 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 		if (electionTypeContainer.getOutputType() instanceof CandidateList) {
 			String voteInput = "tmp_elect" + getTmpIndex();
 			// create the variable
-			code.add(electionTypeContainer.getOutputType().getDimensionDescriptor(true) + " " + voteInput + ";");
+			code.add(electionTypeContainer.getOutputStruct().getStructAccess() + " " + voteInput + ";");
 			IntersectExpNode intersectNode = new IntersectExpNode(node.intersectExp, voteInput);
 			intersectNode.getVisited(this);
 			// the value the new array shall have is now in voteInput
 			String toSaveInto = node.elect.getText().toLowerCase();
-			code.add("for(int i = 0; i < C; i++) {");
-			code.add(toSaveInto + ".arr[i] = " + voteInput + ".arr[i];");
+			code.add("for(int i = 0; i < " + electionTypeContainer.getNameContainer().getCandidate() + "; i++) {");
+
+			String structVarAcc = "." + electionTypeContainer.getNameContainer().getStructValueName() + "[i]";
+
+			code.add(toSaveInto + " " + structVarAcc + " = " + voteInput + structVarAcc + ";");
 			code.add("}");
 		} else {
 			GUIController.setErrorText("So far only candidate lists can be intersected!");
@@ -752,10 +762,10 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 		IntersectExpContext context = node.intersectExpContext;
 		String voteInputOne = "tmp_elect" + getTmpIndex();
 		// create the variable
-		code.add(electionTypeContainer.getOutputType().getDimensionDescriptor(true) + " " + voteInputOne + ";");
+		code.add(electionTypeContainer.getOutputStruct().getStructAccess() + " " + voteInputOne + ";");
 		String voteInputTwo = "tmp_elect" + getTmpIndex();
 		// create the variable
-		code.add(electionTypeContainer.getOutputType().getDimensionDescriptor(true) + " " + voteInputTwo + ";");
+		code.add(electionTypeContainer.getOutputStruct().getStructAccess() + " " + voteInputTwo + ";");
 
 		intersectHelpMethod(context.intersectContent(0), voteInputOne, context.intersectContent(1), voteInputTwo,
 				node.voteOutput);
@@ -766,13 +776,13 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 	public void visitIntersectTypeExpNode(IntersectTypeExpNode node) {
 		String voteInputOne = "tmp_elect" + getTmpIndex();
 		// create the variable
-		code.add(electionTypeContainer.getOutputType().getDimensionDescriptor(true) + " " + voteInputOne + ";");
+		code.add(electionTypeContainer.getOutputStruct().getStructAccess() + " " + voteInputOne + ";");
 		String voteInputTwo = "tmp_elect" + getTmpIndex();
 		// create the variable
-		code.add(electionTypeContainer.getOutputType().getDimensionDescriptor(true) + " " + voteInputTwo + ";");
+		code.add(electionTypeContainer.getOutputStruct().getStructAccess() + " " + voteInputTwo + ";");
 		String toOutputTo = "tmp_output" + getTmpIndex();
 		// create the variable
-		code.add(electionTypeContainer.getOutputType().getDimensionDescriptor(true) + " " + toOutputTo + ";");
+		code.add(electionTypeContainer.getOutputStruct().getStructAccess() + " " + toOutputTo + ";");
 		intersectHelpMethod(node.context.intersectContent(0), voteInputOne, node.context.intersectContent(1),
 				voteInputTwo, toOutputTo);
 		variableNames.push(toOutputTo);
@@ -791,7 +801,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 	public void visitIntersectContentNode(IntersectContentNode node) {
 		String voteInput = "tmp_elect" + getTmpIndex();
 		// create the variable
-		code.add(electionTypeContainer.getOutputType().getDimensionDescriptor(true) + " " + voteInput + ";");
+		code.add(electionTypeContainer.getOutputStruct().getStructAccess() + " " + voteInput + ";");
 		if (node.intersectContentContext.Elect() != null) {
 			code.add(voteInput + " = " + node.intersectContentContext.Elect().getText().toLowerCase() + ";");
 		} else {
@@ -815,7 +825,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 			// we have a permutation
 			voteInput = "tmp_vote" + getTmpIndex();
 			// create the variable
-			code.add(electionTypeContainer.getInputType().getDimensionDescriptor(true) + " " + voteInput + ";");
+			code.add(electionTypeContainer.getOutputStruct().getStructAccess() + " " + voteInput + ";");
 			voteInputSize = "tmp_size" + getTmpIndex();
 			code.add("unsigned int " + voteInputSize + ";");
 			PermutationExpNode permNode = new PermutationExpNode(node.voteEquivalentsContext.permutationExp(),
@@ -823,7 +833,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 			permNode.getVisited(this);
 		} else if (node.voteEquivalentsContext.getChild(0) instanceof ConcatenationExpContext) {
 			// we have a concatenation
-			voteInput = electionTypeContainer.getInputType().getDimensionDescriptor(true) + " " + "tmp_vote" + getTmpIndex();
+			voteInput = electionTypeContainer.getOutputStruct().getStructAccess() + " " + "tmp_vote" + getTmpIndex();
 			ConcatenationExpNode concNode = new ConcatenationExpNode(node.voteEquivalentsContext.concatenationExp(),
 					voteInput, voteInputSize);
 			concNode.getVisited(this);
@@ -838,12 +848,12 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 		// TODO extract this logic into InputType
 		if (electionTypeContainer.getInputType().getAmountOfDimensions() == 1) {
 			code.add("for(int i = 0; i < V; i++) {");
-			code.add(voteToSaveInto + "[i] = " + voteInput + "[i];");
+			code.add(voteToSaveInto + ".arr[i] = " + voteInput + ".arr[i];");
 			code.add("}");
 		} else { // we have two dimensions
 			code.add("for(int i = 0; i < V; i++) {");
 			code.add("  for(int j = 0; j < C; j++) {");
-			code.add(voteToSaveInto + "[i][j] = " + voteInput + "[i][j];");
+			code.add(voteToSaveInto + ".arr[i][j] = " + voteInput + ".arr[i][j];");
 			code.add("  }");
 			code.add("}");
 		}
@@ -859,14 +869,14 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 		int offset = 0;
 		if (node.concatenationExpContext.getChild(0).getText().equals("(")) {
 			// we have to skip one child if we start with "("
-			offset = 1;
-			System.out.println("hat eine klammer!!");
+			offset = 1; // TODO wieso?
+			// System.out.println("hat eine klammer!!");
 		}
 		ConcatenationExpContext context = node.concatenationExpContext;
 		ParseTree firstChild = context.getChild(0 + offset);
 		String voteInputOne = "tmp_vote" + getTmpIndex();
 		// create the variable
-		code.add(electionTypeContainer.getInputType().getDimensionDescriptor(true) + " " + voteInputOne + ";");
+		code.add(electionTypeContainer.getInputStruct().getStructAccess() + " " + voteInputOne + ";");
 		String voteInputOneSize = "tmp_size" + getTmpIndex();
 		// we have a vote equivalent
 		if (firstChild instanceof VoteEquivalentsContext) {
@@ -889,7 +899,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 		// do the same thing for the other non terminal
 		String voteInputTwo = "tmp_vote" + getTmpIndex();
 		// create the variable
-		code.add(electionTypeContainer.getInputType().getDimensionDescriptor(true) + " " + voteInputTwo + ";");
+		code.add(electionTypeContainer.getInputStruct().getStructAccess() + " " + voteInputTwo + ";");
 		String voteInputSecondSize = "tmp_size" + getTmpIndex();
 		code.add("unsigned int " + voteInputSecondSize + ";");
 		VoteEquivalentsNode voteEqNodeTwo = new VoteEquivalentsNode(context.voteEquivalents(offset), voteInputTwo,
@@ -899,21 +909,24 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 		String toSaveInto = node.voteOutput;
 		String tmp = "tmp" + getTmpIndex();
 		// TODO extract into input type
+
+		String outputStructDesc = electionTypeContainer.getOutputStruct().getStructAccess();
+
 		if (electionTypeContainer.getInputType().getAmountOfDimensions() == 1) {
-			code.add("struct vote_single " + tmp + " = concatOne(" + voteInputOne + ", " + voteInputOneSize + " , "
+			code.add(outputStructDesc + " " + tmp + " = concatOne(" + voteInputOne + ", " + voteInputOneSize + " , "
 					+ voteInputTwo + ", " + voteInputSecondSize + ");");
 			// result is now in tmp
 			code.add("for(int i = 0; i < V; i++) {");
-			code.add(toSaveInto + "[i] = " + tmp + ".arr[i];");
+			code.add(toSaveInto + ".arr[i] = " + tmp + ".arr[i];");
 			code.add("}");
 		} else {
 			// we have 2 dim
-			code.add("struct vote_double " + tmp + " = concatTwo(" + voteInputOne + ", " + voteInputOneSize + " , "
+			code.add(outputStructDesc + " " + tmp + " = concatTwo(" + voteInputOne + ", " + voteInputOneSize + " , "
 					+ voteInputTwo + ", " + voteInputSecondSize + ");");
-			// result is now in tmp
+			// result is now in tmp //TODO redo all of this later on
 			code.add("for(int i = 0; i < V; i++) {");
 			code.add("for(int j = 0; j < C; j++) {");
-			code.add(toSaveInto + "[i][j] = " + tmp + ".arr[i][j];");
+			code.add(toSaveInto + ".arr[i][j] = " + tmp + ".arr[i][j];");
 			code.add("}");
 			code.add("}");
 		}
@@ -924,7 +937,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 	public void visitPermutationExpNode(PermutationExpNode node) {
 		String voteInput = "tmp_vote" + getTmpIndex();
 		// create the variable
-		code.add(electionTypeContainer.getInputType().getDimensionDescriptor(true) + " " + voteInput + ";");
+		code.add(electionTypeContainer.getOutputStruct().getStructAccess() + " " + voteInput + ";");
 		String voteInputSize = "tmp_size" + getTmpIndex();
 		code.add("unsigned int " + voteInputSize + ";");
 		VoteEquivalentsNode voteEqNode = new VoteEquivalentsNode(node.permutationExpContext.voteEquivalents(),
@@ -936,19 +949,22 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 		String toSaveSizeInto = node.voteOutoutLength;
 		String tmp = "tmp" + getTmpIndex();
 		// TODO extract to input type
+
+		String voteStruct = electionTypeContainer.getInputStruct().getStructAccess();
+
 		if (electionTypeContainer.getInputType().getAmountOfDimensions() == 1) {
-			code.add("struct vote_single " + tmp + " = permutateOne(" + voteInput + ", " + voteInputSize + ");");
+			code.add(voteStruct + " " + tmp + " = permutateOne(" + voteInput + ", " + voteInputSize + ");");
 			// result is now in tmp
 			code.add("for(int i = 0; i < V; i++) {");
-			code.add(toSaveInto + "[i] = " + tmp + ".arr[i];");
+			code.add(toSaveInto + ".arr[i] = " + tmp + ".arr[i];");
 			code.add("}");
 			code.add(toSaveSizeInto + " = " + voteInputSize + ";");
 		} else {
-			code.add("struct vote_double " + tmp + " = permutateTwo(" + voteInput + ", " + voteInputSize + ");");
+			code.add(voteStruct + " " + tmp + " = permutateTwo(" + voteInput + ", " + voteInputSize + ");");
 			// result is now in tmp
 			code.add("for(int i = 0; i < V; i++) {");
 			code.add("for(int j = 0; j < C; j++) {");
-			code.add(toSaveInto + "[i][j] = " + tmp + ".arr[i][j];");
+			code.add(toSaveInto + ".arr[i][j] = " + tmp + ".arr[i][j];");
 			code.add("}");
 			code.add("}");
 			code.add(toSaveSizeInto + " = " + voteInputSize + ";");
@@ -977,7 +993,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 	public void visitNotEmptyContentNode(NotEmptyContentNode node) {
 		String subResult = "tmp_elect" + getTmpIndex();
 		// create the variable
-		code.add(electionTypeContainer.getOutputType().getDimensionDescriptor(true) + " " + subResult + ";");
+		code.add(electionTypeContainer.getOutputStruct().getStructAccess() + " " + subResult + ";");
 		// we have an intersect beneath
 		if (node.context.intersectExp() != null) {
 			IntersectExpNode intersectNode = new IntersectExpNode(node.context.intersectExp(), subResult);

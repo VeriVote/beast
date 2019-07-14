@@ -69,8 +69,8 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
 
     private static final Pattern PATTERN = Pattern.compile(
             "(?<" + OPERATORS_STRING + ">" + OPERATORS_PATTERN + ")"
-            + "|(?<" + COMPARISON_STRING + ">" + COMPARISON_PATTERN + ")"
             + "|(?<" + RELATION_STRING + ">" + RELATION_PATTERN + ")"
+            + "|(?<" + COMPARISON_STRING + ">" + COMPARISON_PATTERN + ")"
             + "|(?<" + MACROS_STRING + ">" + MACROS_PATTERN + ")"
             + "|(?<" + QUANTIFIERS_STRING + ">" + QUANTIFIERS_PATTERN + ")"
             + "|(?<" + PAREN_STRING + ">" + PAREN_PATTERN + ")"

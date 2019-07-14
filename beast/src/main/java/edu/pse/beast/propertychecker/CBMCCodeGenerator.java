@@ -193,34 +193,28 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		// taken and adjusted from the paper:
 		// https://formal.iti.kit.edu/~beckert/pub/evoteid2016.pdf
 
-		addVerifyMethod(code, electionDesc.getContainer().getInputType(), electionDesc.getContainer().getOutputType(), origResultName);
-
 		// add the main method
 		code.add("int main() {");
-		code.addTab();
-		code.add("verify();");
-		code.deleteTab();
+		
+		addMarginCompMethod(code, electionDesc.getContainer().getInputType(), electionDesc.getContainer().getOutputType(), origResultName);
+
 		code.add("}");
 	}
 
-	private void addVerifyMethod(CodeArrayListBeautifier code, InputType inType, OutputType outType, String origResultName) {
-		code.add("void verify() {");
-		code.addTab();
+	private void addMarginCompMethod(CodeArrayListBeautifier code, InputType inType, OutputType outType, String origResultName) {
 
 		code.add("//Verify for input");
 		
 		String voteName = UnifiedNameContainer.getNewVotesName();
-		addVerifyMethodInput(code, inType, voteName);
+		addMarginCompMethodInput(code, inType, voteName);
 		
 		code.add("//Verify for output");
 
-		addVerifyMethodOutput(code, outType, voteName, origResultName);
+		addMarginCompMethodOutput(code, outType, voteName, origResultName);
 		
-		// end of the function
-		code.add("}");
 	}
 	
-	private void addVerifyMethodInput(CodeArrayListBeautifier code, InputType inType, String voteName) {
+	private void addMarginCompMethodInput(CodeArrayListBeautifier code, InputType inType, String voteName) {
 		
 		code.add("int total_diff = 0;");
 
@@ -259,7 +253,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		code.add("assume(total_diff <= MARGIN);");
 	}
 	
-	private void addVerifyMethodOutput(CodeArrayListBeautifier code, OutputType outType, String newVotesName, String origResultName) {
+	private void addMarginCompMethodOutput(CodeArrayListBeautifier code, OutputType outType, String newVotesName, String origResultName) {
 		String resultName = outType.getContainer().getNameContainer().getNewResultName();
 
 		String resultContainer = outType.getStruct().getStructAccess() + " " + resultName;
@@ -336,20 +330,26 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 	}
 
 	private void addVoteSumFunc(boolean unique) {
-		String input = electionDesc.getContainer().getOutputType().getDataTypeAndSign() + " arr"
-				+ electionDesc.getContainer().getInputType().getDimensionDescriptor(true);
+		String input = electionDesc.getContainer().getInputStruct().getStructAccess() + " tmp_struct";
+
 		code.add("unsigned int voteSumForCandidate" + (unique ? "Unique" : "")
 				+ "(INPUT, unsigned int amountVotes, unsigned int candidate) {".replace("INPUT", input));
-		code.addTab();
+		
+		String dataDef = electionDesc.getContainer().getInputType().getDataTypeAndSign();
+		
+		String definition = dataDef + " *arr = tmp_struct;";
+		
+		code.add(definition);
+		
 		code.add("unsigned int sum = 0;");
 		code.add("for(unsigned int i = 0; i < amountVotes; i++) {");
-		code.addTab();
+
 		// add the specific code which differs for different input types
 		electionDesc.getContainer().getInputType().addCodeForVoteSum(code, unique);
-		code.deleteTab();
+
 		code.add("}");
 		code.add("return sum;");
-		code.deleteTab();
+
 		code.add("}");
 	}
 

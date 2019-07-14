@@ -76,7 +76,26 @@ public class ElectionDescription {
 
 		String firstPart = code.substring(0, lockedLineStart);
 
-		String replacementLine = CCodeHelper.generateStructDeclString(container);
+		boolean duplicate = true;
+		String votesName = "auto_votes";
+
+		int length = 4;
+		while (duplicate) {
+			if (code.contains(votesName)) {
+				votesName = generateRandomString(length);
+				length++; // increase the length in case all words from that length are already taken
+			} else {
+				duplicate = false;
+			}
+		}
+
+		String replacementLine = CCodeHelper.generateStructDeclString(container, votesName);
+
+		String switchedArray = getContainer().getInputType().getDataTypeAndSign() + " *"
+				+ getContainer().getNameContainer().getVotingArray() + " = " + votesName + "."
+				+ getContainer().getNameContainer().getStructValueName();
+
+		replacementLine = replacementLine + " " + switchedArray + ";";
 
 		String middlePart = code.substring(lockedLineEnd, lockedBracePos);
 
@@ -85,20 +104,20 @@ public class ElectionDescription {
 		// in the second part, we have to replace every return statement with a loop
 		// which transforms the one data type into another
 
-		boolean duplicate = true;
-		String varName = "toReturn";
+		duplicate = true;
+		String electName = "toReturn";
 
-		int length = 4;
+		length = 4;
 		while (duplicate) {
-			if (code.contains(varName)) {
-				varName = generateRandomString(length);
+			if (code.contains(electName)) {
+				electName = generateRandomString(length);
 				length++; // increase the length in case all words from that length are already taken
 			} else {
 				duplicate = false;
 			}
 		}
 
-		middlePart = replaceReturns(middlePart, varName);
+		middlePart = replaceReturns(middlePart, electName);
 
 		return stringToList(firstPart + replacementLine + middlePart + thirdPart);
 	}
@@ -223,9 +242,6 @@ public class ElectionDescription {
 
 		while (matcher.find()) {
 
-			System.out.println("line: " + executionValues.first + " multi: " + executionValues.second);
-			System.out.println("testing: " + toProcess.substring(0, matcher.end()));
-
 			executionValues = checkIfExecutedCode(executionValues, toProcess, 0, matcher.end());
 
 			if (!checkForTrue(executionValues)) { // the return statement was NOT standing in a comment block
@@ -329,8 +345,8 @@ public class ElectionDescription {
 			arrayAccess = arrayAccess + "[" + loopVariables.get(i) + "]";
 		}
 
-		toReturn = toReturn + variableName + "." + container.getNameContainer().getStructValueName() + arrayAccess + " = " + valueDefinition
-				+ arrayAccess + ";";
+		toReturn = toReturn + variableName + "." + container.getNameContainer().getStructValueName() + arrayAccess
+				+ " = " + valueDefinition + arrayAccess + ";";
 
 		for (int i = 0; i < dimensions; i++) {
 			toReturn = toReturn + "}"; // close the for loops

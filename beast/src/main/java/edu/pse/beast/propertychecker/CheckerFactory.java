@@ -11,6 +11,7 @@ import edu.pse.beast.electionsimulator.ElectionSimulationData;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 
 /**
  *
@@ -232,14 +233,6 @@ public abstract class CheckerFactory implements Runnable {
 				currentlyRunning = startProcessTest(electionDesc, result.getPropertyDesctiption(), advanced, numVoters,
 						numCandidates, numSeats, this, origData, result);
 				busyWaiting();
-
-				// ResultValueWrapper origResult =
-				// getElectionDescription().getContainer().getOutputType().getCodeToRunMargin(origResult,
-				// lastResult);
-
-				//TODO in CheckerFactory, add a reference to the nameContainer later
-				
-				var testing = result.readVariableValue("elect\\d");
 				
 				ElectionSimulationData origResult = new ElectionSimulationData(numVoters, numCandidates, numSeats,
 						result.readVariableValue("elect\\d").get(0));
@@ -251,7 +244,7 @@ public abstract class CheckerFactory implements Runnable {
 							+ "which does not make any sense.");
 				}
 				int margin = 0;
-				List<String> lastFailedRun = new ArrayList<String>();
+ 				List<String> lastFailedRun = new ArrayList<String>();
 				boolean hasUpperBound = false;
 				boolean hasMargin = false;
 				while ((left < right) && !stopped) {
@@ -261,6 +254,9 @@ public abstract class CheckerFactory implements Runnable {
 							result);
 					result.addStatusString(
 							"finished for margin " + margin + " result: " + result.checkAssertionSuccess());
+					
+					result.setResult(currentlyRunning.getResultList());
+					
 					if (result.checkAssertionSuccess()) {
 						left = margin + 1;
 						margin = margin + 1;
@@ -268,7 +264,7 @@ public abstract class CheckerFactory implements Runnable {
 					} else {
 						hasUpperBound = true;
 						right = margin;
-						lastFailedRun = lastResult;
+						lastFailedRun = currentlyRunning.getResultList();
 					}
 				}
 				// so far, we have not found an upper bound for the
@@ -291,7 +287,7 @@ public abstract class CheckerFactory implements Runnable {
 				result.setOrigVoting(GUIController.getController().getElectionSimulation().getVotingData());
 
 				if (hasMargin) {
-					result.setResult(currentlyRunning.getResultList());
+					result.setResult(lastFailedRun);
 					result.setFinalMargin(margin);
 				} else {
 					result.setResult(currentlyRunning.getResultList());
@@ -301,45 +297,20 @@ public abstract class CheckerFactory implements Runnable {
 				ElectionSimulationData newResult;
 				if (hasMargin) {
 
-					// TODO multiple times this in this file
-					System.out.println("add unifiednamecontainer CheckerFactory");
-
-					newResult = new ElectionSimulationData(numVoters, numCandidates, numSeats,
-							result.readVariableValue("elect\\d").get(0));
+					String voteName = UnifiedNameContainer.getNewVotesName();
+					String newResultName = electionDesc.getContainer().getNameContainer().getNewResultName();			
 
 					newVotes = new ElectionSimulationData(numVoters, numCandidates, numSeats,
-							result.readVariableValue("votes\\d").get(0));
+							result.readVariableValue(voteName).get(0));
+					
+					newResult = new ElectionSimulationData(numVoters, numCandidates, numSeats,
+							result.readVariableValue(newResultName).get(0));
 
 					result.setNewVotes(newVotes);
 					result.setNewWinner(newResult);
 					result.setValid();
 					result.setFinished();
 					this.finished = true;
-					int count = 0;
-
-					System.out.println("new_votes: " + newVotes);
-
-//					for (Iterator<List<String>> iterator = newVotes.iterator(); iterator.hasNext();) {
-//						int count2 = 0;
-//						List<String> list = (List<String>) iterator.next();
-//						System.out.println("");
-//						System.out.print("new_votes: " + count++ + "==");
-//						for (Iterator<String> iterator2 = list.iterator(); iterator2.hasNext();) {
-//							String long1 = (String) iterator2.next();
-//							System.out.print(count2++ + ":" + long1 + "|");
-//						}
-//					}
-					System.out.println("");
-					System.out.println("===========");
-					count = 0;
-
-					System.out.println("new_result: " + newResult);
-//					
-//					for (Iterator<String> iterator = newResult.iterator(); iterator.hasNext();) {
-//						String string1 = (String) iterator.next();
-//						System.out.println("new_result " + count + ": " + string1);
-//						count = count + 1;
-//					}
 				}
 				result.setFinished();
 			}
@@ -435,9 +406,6 @@ public abstract class CheckerFactory implements Runnable {
 				if (hasMargin) {
 //					newResult = getElectionDescription().getContainer().getOutputType().getNewResult(lastFailedRun, 0);
 //					newVotes = getElectionDescription().getContainer().getInputType().getNewVotes(lastFailedRun, 0);
-
-					// TODO
-					System.out.println("add unifiednamecontainer CheckerFactory");
 
 					newResult = new ElectionSimulationData(numVoters, numCandidates, numSeats, result.readVariableValue("elect\\d").get(0));
 					

@@ -145,7 +145,7 @@ public abstract class InputType extends InOutType {
 		
 		String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
 		
-		return "assume(" + newVotesNameAcc + " = !" + origVotesNameAcc + ");";
+		return "assume(" + newVotesNameAcc + " != " + origVotesNameAcc + ");";
 	}
 
 	public String setVoteValue(String newVotesName, String origVotesName, List<String> loopVars) {

@@ -30,6 +30,8 @@ public class Default extends ResultPresentationType {
 	@Override
 	public Node presentResult(Result result) {
 
+		area.clear();
+		
 		if (area == null) {
 			area = TextFieldCreator.getGenericStyledAreaInstance(TextStyle.DEFAULT.fontSize(standartSize),
 					ParStyle.EMPTY);
@@ -47,7 +49,7 @@ public class Default extends ResultPresentationType {
 			area.appendText(toAdd.get(i));
 		}
 		
-		String resultNameMatcher = inType.getContainer().getNameContainer().getVotingArray() + "\\d";
+		String resultNameMatcher = outType.getContainer().getNameContainer().getVotingArray() + "\\d";
 
 		toAdd = outType.drawResult(result, resultNameMatcher);
 

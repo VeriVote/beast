@@ -110,9 +110,10 @@ public final class CCodeHelper {
 	public static String generateSimpleDeclString(ElectionTypeContainer container) {
 		String decl = "RESULT " + UnifiedNameContainer.getVotingMethod() + "(VOTES) {";
 
-		decl = decl.replace("RESULT", container.getInputType().getDataTypeAndSign() + container.getOutputType().getDimensionDescriptor(true));
-		decl = decl.replace("VOTES",
-				container.getInputType().getDataTypeAndSign() + " " + UnifiedNameContainer.getVotingArray() + container.getInputType().getDimensionDescriptor(true));
+		decl = decl.replace("RESULT",
+				container.getInputType().getDataTypeAndSign() + container.getOutputType().getDimensionDescriptor(true));
+		decl = decl.replace("VOTES", container.getInputType().getDataTypeAndSign() + " "
+				+ UnifiedNameContainer.getVotingArray() + container.getInputType().getDimensionDescriptor(true));
 
 		return decl;
 	}
@@ -124,12 +125,11 @@ public final class CCodeHelper {
 	 * @param container the input format of the voting array passed to the function
 	 * @return the voting function declaration line
 	 */
-	public static String generateStructDeclString(ElectionTypeContainer container) {
+	public static String generateStructDeclString(ElectionTypeContainer container, String voteStructName) {
 		String decl = "RESULT " + UnifiedNameContainer.getVotingMethod() + "(VOTES) {";
 
 		decl = decl.replace("RESULT", container.getOutputStruct().getStructAccess());
-		decl = decl.replace("VOTES",
-				container.getInputStruct().getStructAccess() + " " + UnifiedNameContainer.getVotingArray());
+		decl = decl.replace("VOTES", container.getInputStruct().getStructAccess() + " " + voteStructName);
 
 		return decl;
 	}

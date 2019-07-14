@@ -1,21 +1,18 @@
 package edu.pse.beast.types;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.propertychecker.Result;
-import edu.pse.beast.toolbox.CBMCResultPresentationHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.valueContainer.ResultValue;
-import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.toolbox.valueContainer.ResultValue.ResultType;
+import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueArray;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueSingle;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueStruct;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
-import edu.pse.beast.types.cbmctypes.cbmcstructs.CBMCStruct;
 
 public abstract class InOutType {
 
@@ -42,9 +39,9 @@ public abstract class InOutType {
 	private final int dimensions;
 	private final String[] sizeOfDimensions;
 
-	private ComplexType complexType;
+	private transient ComplexType complexType;
 	
-	private ElectionTypeContainer container;
+	private transient ElectionTypeContainer container;
 
 	public InOutType(boolean unsigned, DataType dataType, int dimensions, String[] sizeOfDimensions) {
 		this.unsigned = unsigned;
