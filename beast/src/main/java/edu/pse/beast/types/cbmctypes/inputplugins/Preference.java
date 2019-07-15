@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
@@ -153,7 +154,7 @@ public class Preference extends CBMCInputType {
 
 		String loopHead = "for (unsigned int " + ownLoopVar + " = 0; " + ownLoopVar + " < " + loopVariables.get(1)
 				+ "; " + ownLoopVar + "++) {";
-		code.addTab();
+		code.add(loopHead);
 
 		code.add("assume (" + valueName + "." + this.getContainer().getNameContainer().getStructValueName() + "["
 				+ loopVariables.get(0) + "]" + "[" + loopVariables.get(1) + "] != " + valueName + "."
@@ -166,7 +167,6 @@ public class Preference extends CBMCInputType {
 	@Override
 	public void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique) {
 		code.add("if(arr[i][0] == candidate) sum++;");
-		throw new IllegalArgumentException(); //TODO rewrite
 	}
 
 	@Override
@@ -210,42 +210,6 @@ public class Preference extends CBMCInputType {
 	@Override
 	public String otherToString() {
 		return "Preference";
-	}
-
-	@Override
-	public List<String> drawResult(Result result, String varNameMatcher) {
-		List<String> toReturn = new ArrayList<String>();
-
-		List<ResultValueWrapper> votes = result.readVariableValue(varNameMatcher); // TODO name container
-
-		for (ResultValueWrapper currentVote : votes) {
-
-			String name = currentVote.getName();
-
-			toReturn.add(name);
-
-			CBMCResultValueStruct struct = (CBMCResultValueStruct) currentVote.getResultValue();
-			CBMCResultValueArray arr = (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
-
-			toReturn.addAll(CBMCResultPresentationHelper.printTwoDimResult(arr, name.length()));
-		}
-
-		return toReturn;
-	}
-	
-	@Override
-	public List<String> drawResult(ResultValueWrapper wrapper, String varName) {
-
-		List<String> toReturn = new ArrayList<String>();
-		
-		toReturn.add(varName);
-		
-		CBMCResultValueStruct struct = (CBMCResultValueStruct) wrapper.getResultValue();
-		CBMCResultValueArray arr = (CBMCResultValueArray) struct.getResultVariable(varName).getResultValue();
-
-		toReturn.addAll(CBMCResultPresentationHelper.printTwoDimResult(arr, varName.length()));
-		
-		return toReturn;
 	}
 
 	@Override

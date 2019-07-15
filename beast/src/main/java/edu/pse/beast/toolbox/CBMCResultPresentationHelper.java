@@ -21,13 +21,16 @@ public class CBMCResultPresentationHelper {
 		return getWhiteSpaces(offset) + single.getValue() + "\n";
 	}
 
-	public static String printOneDimResult(CBMCResultValueArray array, int offset) {
-		
+	public static String printOneDimResult(CBMCResultValueArray array, long size, int offset) {
 		String toReturn = getWhiteSpaces(offset);
 
 		List<CBMCResultValueWrapper> arrayValues = array.getValues();
 
-		for (int i = 0; i < arrayValues.size(); i++) {
+		if (size < 0) {
+			size = arrayValues.size();
+		}
+		
+		for (int i = 0; i < size; i++) {
 			CBMCResultValueSingle singleValue = (CBMCResultValueSingle) arrayValues.get(i).getResultValue();
 
 			toReturn = toReturn + singleValue.getValue() + " ";
@@ -36,16 +39,20 @@ public class CBMCResultPresentationHelper {
 		return toReturn + "\n";
 	}
 
-	public static List<String> printTwoDimResult(CBMCResultValueArray array, int offset) {
-
+	public static List<String> printTwoDimResult(CBMCResultValueArray array, long size, int offset) {
+		
 		List<String> toReturn = new ArrayList<String>();
 		
 		List<CBMCResultValueWrapper> arrayValues = array.getValues();
 
-		for (int i = 0; i < arrayValues.size(); i++) {
+		if (size < 0) {
+			size = arrayValues.size();
+		}
+
+		for (int i = 0; i < size; i++) {
 			CBMCResultValueArray current_array = (CBMCResultValueArray) arrayValues.get(i).getResultValue();
 			
-			toReturn.add(printOneDimResult(current_array, offset));
+			toReturn.add(printOneDimResult(current_array, -1, offset));
 		}
 		
 		return toReturn;

@@ -1,10 +1,13 @@
 package edu.pse.beast.types;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.propertychecker.Result;
+import edu.pse.beast.toolbox.CBMCResultPresentationHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.valueContainer.ResultValue;
 import edu.pse.beast.toolbox.valueContainer.ResultValue.ResultType;
@@ -40,7 +43,7 @@ public abstract class InOutType {
 	private final String[] sizeOfDimensions;
 
 	private transient ComplexType complexType;
-	
+
 	private transient ElectionTypeContainer container;
 
 	public InOutType(boolean unsigned, DataType dataType, int dimensions, String[] sizeOfDimensions) {
@@ -80,7 +83,7 @@ public abstract class InOutType {
 	 * @return the size of all dimensions, null if it is 0 dimensional
 	 */
 	public String[] getSizeOfDimensions() {
-		return sizeOfDimensions;
+		return sizeOfDimensions.clone(); //it is important to clone the array, as it should not be changed
 	}
 
 	public List<String> getSizeOfDimensionsAsList() {
@@ -92,14 +95,15 @@ public abstract class InOutType {
 	 * @return returns a String containing the shape of the input object e.g "[" +
 	 *         UnifiedNameContainer.getVoter() + "]" for single choice
 	 */
-	public final String getDimensionDescriptor(boolean includeSizes) {
+	public String getDimensionDescriptor(boolean includeSizes) {
+		return getDimensionDescriptor(sizeOfDimensions);
+	}
+
+	public String getDimensionDescriptor(String[] sizes) {
 		String toReturn = "";
 
 		for (int i = 0; i < dimensions; i++) {
-			String content = "";
-			if (includeSizes) {
-				content = sizeOfDimensions[i];
-			}
+			String content = sizes[i];
 			toReturn = toReturn + createSquareBrackets(content);
 		}
 
@@ -188,9 +192,10 @@ public abstract class InOutType {
 
 		return dimAccess;
 	}
-	
+
 	public String getFullVarAccess(String varName, List<String> filling) {
-		return varName + "." + this.getContainer().getNameContainer().getStructValueName() + getAccessDimensions(filling);
+		return varName + "." + this.getContainer().getNameContainer().getStructValueName()
+				+ getAccessDimensions(filling);
 	}
 
 	public abstract InternalTypeContainer getInternalTypeContainer();
@@ -202,20 +207,70 @@ public abstract class InOutType {
 	 */
 	public abstract String otherToString();
 
-	/**
-	 * 
-	 * @param result the result to be presented
-	 * @param varNameMatcher TODO
-	 * @param startY the y position to start the drawing at
-	 * @return the bottom most y-position the presentation has
-	 */
-	public abstract List<String> drawResult(Result result, String varNameMatcher); //TODO extract to topmost position
+	// public abstract List<String> drawResult(ResultValueWrapper wrapper, String
+	// varName);
 
-	//public abstract List<String> drawResult(ResultValueWrapper wrapper, String varName);
-	
-	public abstract List<String> drawResult(ResultValueWrapper wrapper, String varName); // extract later to here if possible
-	
-	
+	public List<String> drawResult(Result result, String varNameMatcher, Map<Integer, Long> sizes) {
+		List<String> toReturn = new ArrayList<String>();
+
+		List<ResultValueWrapper> votes = result.readVariableValue(varNameMatcher); // TODO name container
+
+		for (ResultValueWrapper currentVar : votes) {
+
+			long size = sizes.get(currentVar.getMainIndex());
+
+			String name = currentVar.getName();
+
+			toReturn.add(name + "\n");
+
+			CBMCResultValueStruct struct = (CBMCResultValueStruct) currentVar.getResultValue();
+
+			if (getAmountOfDimensions() == 2) {
+				CBMCResultValueArray arr = (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
+
+				toReturn.addAll(CBMCResultPresentationHelper.printTwoDimResult(arr, size, name.length()));
+			} else if (getAmountOfDimensions() == 1) {
+				CBMCResultValueArray arr = (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
+
+				toReturn.add(CBMCResultPresentationHelper.printOneDimResult(arr, size, name.length()));
+			} else if (getAmountOfDimensions() == 0) {
+
+				toReturn.add(CBMCResultPresentationHelper.printSingleElement(
+						(CBMCResultValueSingle) struct.getResultVariable("arr").getResultValue(), name.length()));
+			}
+		}
+
+		return toReturn;
+	}
+
+	public List<String> drawResult(ResultValueWrapper wrapper, String varName, Long size) {
+		List<String> toReturn = new ArrayList<String>();
+
+		toReturn.add(varName);
+
+		CBMCResultValueStruct struct = (CBMCResultValueStruct) wrapper.getResultValue();
+
+		if (getAmountOfDimensions() == 2) {
+			CBMCResultValueArray arr = (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
+
+			toReturn.addAll(CBMCResultPresentationHelper.printTwoDimResult(arr, size, varName.length()));
+		} else if (getAmountOfDimensions() == 1) {
+			CBMCResultValueArray arr = (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
+
+			toReturn.add(CBMCResultPresentationHelper.printOneDimResult(arr, size, varName.length()));
+		} else if (getAmountOfDimensions() == 0) {
+
+			toReturn.add(CBMCResultPresentationHelper.printSingleElement(
+					(CBMCResultValueSingle) struct.getResultVariable("arr").getResultValue(), varName.length()));
+		}
+
+		CBMCResultValueArray arr = (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
+
+		toReturn.addAll(CBMCResultPresentationHelper.printTwoDimResult(arr, size, varName.length()));
+
+		return toReturn;
+	}
+
 	/**
 	 * 
 	 * @return a text describing everything the user needs to know about this type
@@ -231,12 +286,11 @@ public abstract class InOutType {
 	 */
 	public abstract void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, String valueName,
 			List<String> loopVariables);
-	
 
 	public void setStruct(ComplexType complexType) {
 		this.complexType = complexType;
 	}
-	
+
 	public ComplexType getStruct() {
 		return complexType;
 	}

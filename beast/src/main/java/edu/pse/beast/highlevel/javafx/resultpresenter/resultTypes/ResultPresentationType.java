@@ -1,13 +1,17 @@
 package edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.ServiceLoader;
 
 import edu.pse.beast.highlevel.javafx.AnalysisType;
 import edu.pse.beast.highlevel.javafx.resultpresenter.ResultPresenterNEW;
 import edu.pse.beast.propertychecker.Result;
+import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
+import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueSingle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
@@ -75,4 +79,31 @@ public abstract class ResultPresentationType {
 	public abstract void zoomTo(double zoomValue);
 
 	public abstract boolean supports(AnalysisType analysisType);
+	
+	
+	/**
+	 * extracts the value of single value objects. is used to extract the size of each vote
+	 * @param toExtract has be of the form: ValueWrapper -> ResultValueSingle<Integer>
+	 * @return
+	 */
+	public Map<Integer, Long> getAllSizes(List<ResultValueWrapper> toExtract) {
+		HashMap<Integer, Long> toReturn = new HashMap<Integer, Long>();
+		
+		for (Iterator<ResultValueWrapper> iterator = toExtract.iterator(); iterator.hasNext();) {
+			ResultValueWrapper currentWrapper = (ResultValueWrapper) iterator.next();
+			int index = currentWrapper.getMainIndex();
+			
+			CBMCResultValueSingle singleValue = (CBMCResultValueSingle) currentWrapper.getResultValue();
+			
+			toReturn.put(index, (Long)singleValue.getNumberValue());
+		}
+		
+		return toReturn;
+	}
+
+	/**
+	 * indicates if this class should be normally used first to display a result
+	 * @return
+	 */
+	public abstract boolean isDefault();
 }

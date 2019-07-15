@@ -658,20 +658,24 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 		final int dim = electionTypeContainer.getInputType().getAmountOfDimensions();
 		code.add("unsigned int " + lastSplit + " = 0;");
 		// Split the array and extract the votes for all but one tuple element
-		
+
 		String voteStruct = electionTypeContainer.getInputStruct().getStructAccess();
-		
+
+		// -1, as the last one has to take the rest
 		for (int i = 0; i < tupleSize - 1; i++) {
 			String tmp = "tmp" + getTmpIndex();
-			code.add(voteStruct + " " + tmp + " = split"
-					+ (dim < 2 ? "One" : "Two") + "( " + voteInput + ", " + lastSplit + ", " + splitLines + "[" + i
-					+ "]);");
+			code.add(voteStruct + " " + tmp + " = split" + "( " + voteInput + ", " + lastSplit + ", " + splitLines + "["
+					+ i + "]);");
 			code.add("for (int i = 0; i < V; i++) {");
+
+			String secDim = "";
+
 			if (2 <= dim) {
 				code.add("  for (int j = 0; j < C; j++) {");
+				secDim = "[j]";
 			}
-			final String secDim = "[j]";
-			code.add("  " + tupleVotes.get(i).toLowerCase() + ".arr[i]" + secDim + " = " + tmp + ".arr[i]" + secDim + ";");
+			code.add("  " + tupleVotes.get(i).toLowerCase() + ".arr[i]" + secDim + " = " + tmp + ".arr[i]" + secDim
+					+ ";");
 			code.add((dim < 2 ? "" : "  }") + "");
 			code.add("}");
 
@@ -684,11 +688,12 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 
 		String votingStruct = electionTypeContainer.getInputStruct().getStructAccess();
 
-		code.add(votingStruct + " " + tmp + " = split" + "( " + voteInput + ", " + lastSplit + ", " + voteInputSize + ");");
+		code.add(votingStruct + " " + tmp + " = split" + "( " + voteInput + ", " + lastSplit + ", " + voteInputSize
+				+ ");");
 		// TODO is V correct here?
 		code.add("for (int i = 0; i < V; i++) {");
 		if (2 <= dim) {
-			code.add("for (int j = 0; j < C; j++) {"); //TODO change to dimensions
+			code.add("for (int j = 0; j < C; j++) {"); // TODO change to dimensions
 		}
 		code.add(tupleVotes.get(tupleSize - 1).toLowerCase() + ".arr[i]" + (2 <= dim ? "[j]" : "") + " = " + tmp
 				+ ".arr[i]" + "" + (2 <= dim ? "[j]" : "") + ";");
@@ -696,6 +701,11 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
 			code.add("  }");
 		}
 		code.add("}");
+
+		int index = (tupleSize - 1);
+
+		code.add("V" + tupleVotes.get(index).substring("votes".length()) + " = " + voteInputSize + " - " + lastSplit
+				+ ";");
 		// finished the split
 	}
 

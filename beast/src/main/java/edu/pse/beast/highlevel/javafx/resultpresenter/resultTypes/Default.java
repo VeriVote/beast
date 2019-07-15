@@ -1,6 +1,7 @@
 package edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes;
 
 import java.util.List;
+import java.util.Map;
 
 import org.fxmisc.richtext.GenericStyledArea;
 import org.reactfx.util.Either;
@@ -11,6 +12,7 @@ import edu.pse.beast.toolbox.LinkedImage;
 import edu.pse.beast.toolbox.ParStyle;
 import edu.pse.beast.toolbox.TextFieldCreator;
 import edu.pse.beast.toolbox.TextStyle;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 import javafx.scene.Node;
@@ -30,28 +32,36 @@ public class Default extends ResultPresentationType {
 	@Override
 	public Node presentResult(Result result) {
 
-		area.clear();
-		
 		if (area == null) {
 			area = TextFieldCreator.getGenericStyledAreaInstance(TextStyle.DEFAULT.fontSize(standartSize),
 					ParStyle.EMPTY);
 			area.setEditable(false);
 		}
 
+		area.clear();
+
 		InputType inType = result.getElectionDescription().getContainer().getInputType();
 		OutputType outType = result.getElectionDescription().getContainer().getOutputType();
 
-		String votesNameMatcher = inType.getContainer().getNameContainer().getVotingArray() + "\\d";
+		String voters = UnifiedNameContainer.getVoter() + "\\d";
 
-		List<String> toAdd = inType.drawResult(result, votesNameMatcher);
+		Map<Integer, Long> sizeOfVoters = getAllSizes(result.readVariableValue(voters));
+
+		String votesNameMatcher = UnifiedNameContainer.getVotingArray() + "\\d";
+
+		List<String> toAdd = inType.drawResult(result, votesNameMatcher, sizeOfVoters);
 
 		for (int i = 0; i < toAdd.size(); i++) {
 			area.appendText(toAdd.get(i));
 		}
-		
-		String resultNameMatcher = outType.getContainer().getNameContainer().getVotingArray() + "\\d";
 
-		toAdd = outType.drawResult(result, resultNameMatcher);
+		String candidates = UnifiedNameContainer.getCandidate() + "\\d";
+
+		Map<Integer, Long> sizeOfCandidates = getAllSizes(result.readVariableValue(candidates));
+
+		String resultNameMatcher = UnifiedNameContainer.getElect() + "\\d";
+
+		toAdd = outType.drawResult(result, resultNameMatcher, sizeOfCandidates);
 
 		for (int i = 0; i < toAdd.size(); i++) {
 			area.appendText(toAdd.get(i));
@@ -90,5 +100,10 @@ public class Default extends ResultPresentationType {
 		default:
 			return false;
 		}
+	}
+	
+	@Override
+	public boolean isDefault() {
+		return true;
 	}
 }

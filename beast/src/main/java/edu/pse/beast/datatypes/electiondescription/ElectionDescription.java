@@ -91,11 +91,42 @@ public class ElectionDescription {
 
 		String replacementLine = CCodeHelper.generateStructDeclString(container, votesName);
 
-		String switchedArray = getContainer().getInputType().getDataTypeAndSign() + " *"
-				+ getContainer().getNameContainer().getVotingArray() + " = " + votesName + "."
-				+ getContainer().getNameContainer().getStructValueName();
+		
+		int dimensions = container.getInputType().getAmountOfDimensions();
 
-		replacementLine = replacementLine + " " + switchedArray + ";";
+		List<String> loopVariables = generateLoopVariables(dimensions, "votes");
+		
+		String[] sizes = container.getInputType().getSizeOfDimensions();
+		
+		sizes[0] = "amountVotes";
+		
+		String forLoopStart = "";
+		
+		for (int i = 0; i < dimensions; i++) {
+			forLoopStart = forLoopStart // add all needed loop headers
+					+ generateForLoopHeader(loopVariables.get(i), sizes[i]);
+		}
+		
+		String forLoopEnd = "";
+		
+		for (int i = 0; i < dimensions; i++) {
+			forLoopEnd = forLoopEnd + "}"; // close the for loops
+		}
+		
+		String access = "";
+		
+		for (int i = 0; i < dimensions; i++) {
+			access = access + "[" + loopVariables.get(i) + "]";
+		}
+		
+		String assignment = getContainer().getNameContainer().getVotingArray() + access + " = " + votesName + ".arr" + access + ";";
+		
+		
+		String switchedArray = getContainer().getInputType().getDataTypeAndSign() + " "
+				+ getContainer().getNameContainer().getVotingArray() + getContainer().getInputType().getDimensionDescriptor(true) + ";"
+				+ forLoopStart + assignment + forLoopEnd;
+
+		replacementLine = replacementLine + " " + switchedArray;
 
 		String middlePart = code.substring(lockedLineEnd, lockedBracePos);
 
@@ -334,9 +365,13 @@ public class ElectionDescription {
 
 		List<String> loopVariables = generateLoopVariables(dimensions, variableName);
 
+		String[] sizes = container.getInputType().getSizeOfDimensions();
+		
+		sizes[0] = "amountVotes";
+		
 		for (int i = 0; i < dimensions; i++) {
 			toReturn = toReturn // add all needed loop headers
-					+ generateForLoopHeader(loopVariables.get(i), container.getOutputType().getSizeOfDimensions()[i]);
+					+ generateForLoopHeader(loopVariables.get(i), sizes[i]);
 		}
 
 		String arrayAccess = "";
@@ -364,9 +399,10 @@ public class ElectionDescription {
 
 		int currentIndex = 0;
 		String defaultName = "loop_index_"; // use i as the default name for a loop
-		String varName = defaultName + currentIndex;
 
 		for (int i = 0; i < dimensions; i++) {
+			String varName = defaultName + currentIndex;
+			
 			boolean duplicate = true;
 			int length = 1;
 			while (duplicate) {
@@ -378,8 +414,8 @@ public class ElectionDescription {
 				}
 			}
 			generatedVariables.add(varName);
+			currentIndex++;
 		}
-
 		return generatedVariables;
 	}
 

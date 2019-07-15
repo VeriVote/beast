@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.antlr.v4.runtime.BufferedTokenStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -335,11 +336,45 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		code.add("unsigned int voteSumForCandidate" + (unique ? "Unique" : "")
 				+ "(INPUT, unsigned int amountVotes, unsigned int candidate) {".replace("INPUT", input));
 		
+		
+		int dimensions = electionDesc.getContainer().getInputType().getAmountOfDimensions();
+		
+		String[] sizes = electionDesc.getContainer().getInputType().getSizeOfDimensions();
+		
+		sizes[0] = "amountVotes";
+		
+		String forLoopStart = "";
+		
+		List<String> loopVariables = generateLoopVariables(dimensions, "arr");
+		
+		
+		for (int i = 0; i < dimensions; i++) {
+			forLoopStart = forLoopStart // add all needed loop headers
+					+ generateForLoopHeader(loopVariables.get(i), sizes[i]);
+		}
+		
+		String forLoopEnd = "";
+		
+		for (int i = 0; i < dimensions; i++) {
+			forLoopEnd = forLoopEnd + "}"; // close the for loops
+		}
+		
+		String access = "";
+		
+		for (int i = 0; i < dimensions; i++) {
+			access = access + "[" + loopVariables.get(i) + "]";
+		}
+		
+		
 		String dataDef = electionDesc.getContainer().getInputType().getDataTypeAndSign();
 		
-		String definition = dataDef + " *arr = tmp_struct." + electionDesc.getContainer().getNameContainer().getStructValueName() + ";";
+		String definition = dataDef + " arr" + electionDesc.getContainer().getInputType().getDimensionDescriptor(true) + ";";
 		
 		code.add(definition);
+		
+		String assignment = forLoopStart + "arr" + access + " = " + " tmp_struct.arr" + access +";" + forLoopEnd + "\n";
+		
+		code.add(assignment);
 		
 		code.add("unsigned int sum = 0;");
 		code.add("for(unsigned int i = 0; i < amountVotes; i++) {");
@@ -396,7 +431,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 	private void addPermutateTwoFunction() {
 		if (electionDesc.getContainer().getInputType().getAmountOfDimensions() != 2
 				|| !electionDesc.getContainer().getInputType().getSizeOfDimensions()[0].equals("V")
-				|| !electionDesc.getContainer().getInputType().getSizeOfDimensions()[0].equals("C")) {
+				|| !electionDesc.getContainer().getInputType().getSizeOfDimensions()[1].equals("C")) {
 			return;
 		}
 
@@ -494,7 +529,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 	private void addConcatTwoFunction() {
 		if (electionDesc.getContainer().getInputType().getAmountOfDimensions() != 2
 				|| !electionDesc.getContainer().getInputType().getSizeOfDimensions()[0].equals("V")
-				|| !electionDesc.getContainer().getInputType().getSizeOfDimensions()[0].equals("C")) {
+				|| !electionDesc.getContainer().getInputType().getSizeOfDimensions()[1].equals("C")) {
 			return;
 		}
 
@@ -625,10 +660,10 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		String voteStruct = electionDesc.getContainer().getInputStruct().getStructAccess();
 		
 		if ((electionDesc.getContainer().getInputType().getAmountOfDimensions() == 1
-				&& !electionDesc.getContainer().getInputType().getSizeOfDimensions()[0].equals("V"))) {
+				&& electionDesc.getContainer().getInputType().getSizeOfDimensions()[0].equals("V"))) {
 
 			code.add(voteStruct
-					+ " splitOne(" + voteStruct + "votes, " + "unsigned int start, unsigned int stop) {");
+					+ " split(" + voteStruct + " votes, " + "unsigned int start, unsigned int stop) {");
 			code.add(voteStruct + " sub_arr;");
 			code.add("  ");
 			code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
@@ -647,7 +682,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 			code.add("");
 			code.add("    for (int i = 0; i < V; i++) {");
 			code.add("      if ((i >= start) && (i < stop)) {");
-			code.add("        sub_arr[i - start] = votes.arr[i];");
+			code.add("        sub_arr.arr[i - start] = votes.arr[i];");
 			code.add("      }");
 			code.add("    }");
 			code.add("  ");
@@ -665,13 +700,13 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		}
 
 		if ((electionDesc.getContainer().getInputType().getAmountOfDimensions() == 2
-				&& !electionDesc.getContainer().getInputType().getSizeOfDimensions()[0].equals("V")
-				&& !electionDesc.getContainer().getInputType().getSizeOfDimensions()[0].equals("C"))) {
+				&& electionDesc.getContainer().getInputType().getSizeOfDimensions()[0].equals("V")
+				&& electionDesc.getContainer().getInputType().getSizeOfDimensions()[1].equals("C"))) {
 
 			code.add("//start is inclusive, stop is exclusive");
 			code.add("//used for 2 dim arrays");
 			code.add(voteStruct
-					+ " splitTwo(" + voteStruct + ", " + "unsigned int start, unsigned int stop) {");
+					+ " split(" + voteStruct + " votes, " + "unsigned int start, unsigned int stop) {");
 			code.add(voteStruct + " sub_arr;");
 			code.add("  ");
 			code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
@@ -791,8 +826,10 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		for (int i = 1; i <= numberOfTimesVoted; i++) {
 			code.add("//election number: " + i);
 
+			String sizeOfVotes = electionDesc.getContainer().getNameContainer().getVoter() + i;
+			
 			String electX = electionDesc.getContainer().getOutputStruct().getStructAccess() + " elect" + i + " = "
-					+ UnifiedNameContainer.getVotingMethod() + "(votes" + i + ");";
+					+ UnifiedNameContainer.getVotingMethod() + "(" + sizeOfVotes + ", votes" + i + ");";
 			code.add(electX);
 		}
 		// now the Post Properties can be checked
@@ -947,5 +984,40 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 
 	private String getVotingResultCode(CBMCResultValueWrapper votingData) {
 		return electionDesc.getContainer().getInputType().getVotingResultCode(votingData);
+	}
+	
+	private List<String> generateLoopVariables(int dimensions, String variableName) {
+		List<String> generatedVariables = new ArrayList<String>(dimensions);
+
+		int currentIndex = 0;
+		String defaultName = "loop_index_"; // use i as the default name for a loop
+
+		for (int i = 0; i < dimensions; i++) {
+			String varName = defaultName + currentIndex;
+			
+			boolean duplicate = true;
+			int length = 1;
+			while (duplicate) {
+				if (code.contains(varName) || variableName.equals(varName)) {
+					varName = generateRandomString(length) + "_" + currentIndex;
+					length++; // increase the length in case all words from that length are already taken
+				} else {
+					duplicate = false;
+				}
+			}
+			generatedVariables.add(varName);
+			currentIndex++;
+		}
+		return generatedVariables;
+	}
+	
+	private String generateRandomString(int length) {
+		String generatedString = RandomStringUtils.random(length, true, false);
+
+		return generatedString;
+	}
+	
+	private String generateForLoopHeader(String indexName, String maxSize) {
+		return "for (unsigned int " + indexName + " = 0; " + indexName + " < " + maxSize + "; " + indexName + "++ ) { ";
 	}
 }

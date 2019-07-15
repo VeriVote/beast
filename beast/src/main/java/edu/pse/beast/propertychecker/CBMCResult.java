@@ -73,7 +73,7 @@ public class CBMCResult extends Result {
 
 	@Override
 	public void setResult(List<String> result) {
-		
+
 		reset();
 
 		super.setResult(result);
@@ -125,8 +125,11 @@ public class CBMCResult extends Result {
 		List<String> arg = new LinkedList<String>();
 		arg.add(variableMatcher);
 
-		readVariableValue(arg); // afterwards, variables matching are in the cache
-
+		if (valueCache.containsKey(variableMatcher)) {
+			return valueCache.get(variableMatcher);
+		} else {
+			readVariableValue(arg); // afterwards, variables matching are in the cache
+		}
 		return valueCache.get(variableMatcher);
 	}
 
@@ -190,7 +193,7 @@ public class CBMCResult extends Result {
 			} else if (resultElements.getLength() > 1) {
 				throw new IndexOutOfBoundsException("Multiple Result Tags detected, this can not happen");
 			} else {
-				
+
 				return resultElements.item(0).getTextContent().equals(identifier);
 			}
 		}

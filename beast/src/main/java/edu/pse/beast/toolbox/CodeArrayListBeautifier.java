@@ -65,7 +65,7 @@ public class CodeArrayListBeautifier {
         if (numberOfTabs > 0) {
             //numberOfTabs--;
         } else {
-            ErrorLogger.log("number of tabs is already 0");
+            //ErrorLogger.log("number of tabs is already 0");
         }
     }
 

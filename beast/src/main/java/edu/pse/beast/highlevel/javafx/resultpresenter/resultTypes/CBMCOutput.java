@@ -69,4 +69,9 @@ public class CBMCOutput extends ResultPresentationType {
 	public boolean supports(AnalysisType analysisType) {
 		return true;
 	}
+	
+	@Override
+	public boolean isDefault() {
+		return false;
+	}
 }

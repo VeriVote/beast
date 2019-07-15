@@ -16,8 +16,8 @@ import java.util.concurrent.CountDownLatch;
  */
 public class ThreadedBufferedReader implements Runnable {
     private static final int CHECKING_INTERVAL = 5000;
-    private static final int WARNING_INTERVAL = 1000;
-    private static final String UNWIND_PREFIX = "Unwinding loop";
+    private static final int WARNING_INTERVAL = 100;
+    private static final String UNWIND_PREFIX = "  <text>Unwinding loop";
 
     private final BufferedReader reader;
     private final List<String> readLines;

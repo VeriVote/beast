@@ -125,11 +125,15 @@ public class TextAndImages extends ResultPresentationType {
 	@Override
 	public boolean supports(AnalysisType analysisType) {
 		switch (analysisType) {
-		case Check:
-			return true;
+		case Check: //TODO
+			return false;
 		default:
 			return false;
 		}
 	}
 
+	@Override
+	public boolean isDefault() {
+		return false;
+	}
 }

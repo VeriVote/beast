@@ -108,6 +108,7 @@ public class ResultTreeItem extends CustomTreeItem {
 
 	public void setPresentable() {
 		if (result != null && result.isFinished()) {
+			
 			if (result.isMarginComp() || result.isTest()) {
 				this.setBackground(new Background(new BackgroundFill(Color.AQUA, CornerRadii.EMPTY, Insets.EMPTY)));
 			} else

@@ -31,11 +31,11 @@ import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescription;
 import edu.pse.beast.electionsimulator.ElectionSimulation;
-import edu.pse.beast.electionsimulator.ElectionSimulationData;
 import edu.pse.beast.highlevel.BEASTCommunicator;
 import edu.pse.beast.highlevel.javafx.resultpresenter.ResultPresenterNEW;
 import edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresentationType;
 import edu.pse.beast.options.OptionsNew;
+import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.saverloader.ChildTreeItemSaverLoader;
 import edu.pse.beast.saverloader.MinimalSaverInterface;
 import edu.pse.beast.toolbox.SuperFolderFinder;
@@ -476,12 +476,6 @@ public class GUIController {
 			}
 		});
 
-//		List<ResultPresentationType> types = ResultPresentationType.getImplementations();
-//		for (ResultPresentationType type : types) {
-//			displayFormat.getItems().add(type.getMenuItem());
-//		} TODO remove
-
-
 		resultScrollPane.setFitToHeight(true);
 		resultScrollPane.setFitToWidth(true);
 
@@ -621,7 +615,7 @@ public class GUIController {
 	private void removeAllProperties() {
 		List<TreeItem<CustomTreeItem>> tmpCopy = new ArrayList<TreeItem<CustomTreeItem>>();
 		tmpCopy.addAll(treeItems);
-		
+
 		for (TreeItem<CustomTreeItem> treeItem : tmpCopy) {
 			removeProperty(treeItem);
 		}
@@ -1260,6 +1254,13 @@ public class GUIController {
 			numberProcesses = Integer.parseInt(processes.getText());
 		}
 		String argument = advancedParameters.getText();
+		
+		int maxUnrolls = getMaxUnrolls();
+		
+		if (maxUnrolls > 0) {
+			argument = argument + " --unwind " + maxUnrolls;
+		}
+		
 		ElectionCheckParameter param = new ElectionCheckParameter(voter, cand, seat, marginVoters, marginCandidates,
 				marginSeats, time, numberProcesses, argument);
 		return param;
@@ -1586,11 +1587,12 @@ public class GUIController {
 	public void disableZoomSlider(boolean disabled) {
 		zoomSlider.setDisable(disabled);
 	}
-	
+
 	public void setEligableTypes(List<ResultPresentationType> eligableTypes) {
 		displayFormat.getItems().clear();
-		
-		for (ResultPresentationType type : eligableTypes) {
+
+		for (Iterator iterator = eligableTypes.iterator(); iterator.hasNext();) {
+			ResultPresentationType type = (ResultPresentationType) iterator.next();
 			displayFormat.getItems().add(type.getMenuItem());
 		}
 	}
@@ -1625,4 +1627,19 @@ public class GUIController {
 			// do nothing
 		}
 	}
+
+	public int getMaxUnrolls() {
+		String text = maxUnrolls.getText();
+
+		if (text.equals("")) {
+			return -1;
+		} else {
+			return Integer.parseInt(maxUnrolls.getText());
+		}
+	}
+
+	public void setPreviousState(Result result) {
+		result.getPropertyDesctiption();
+	}
+
 }

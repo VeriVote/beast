@@ -26,7 +26,7 @@ public class ElectionCheckParameterSaverLoaderTest {
                 Arrays.asList(new Integer[] {1, 2}),
                               Arrays.asList(new Integer[] {1, 2}),
                               Arrays.asList(new Integer[] {1, 2}),
-                              1, 1, 1, new TimeOut(TimeUnit.HOURS, (long) 3.2), 4, "-- unwind 6");
+                              1, 1, 1, new TimeOut(TimeUnit.HOURS, (long) 3.2), 4, "--unwind 6");
     }
 
     /**

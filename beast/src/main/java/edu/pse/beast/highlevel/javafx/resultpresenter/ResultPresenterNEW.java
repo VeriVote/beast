@@ -34,10 +34,6 @@ public class ResultPresenterNEW {
 
 	private ResultPresenterNEW() {
 		this.resultScrollPane = GUIController.getController().getResultScrollPane();
-		if (presentationType == null) {
-			this.setPresentationType(new CBMCOutput()); // set the defaul presentationtype, if the user didn't set another
-														// one before
-		}
 
 		GUIController.getController().getZoomSlider().valueProperty().addListener(new ChangeListener<>() {
 			@Override
@@ -48,6 +44,22 @@ public class ResultPresenterNEW {
 			}
 		});
 	}
+	
+	private void getDefaultPresentation() {
+		List<ResultPresentationType> types = getEligablePresentationTypes();
+		
+		for (Iterator<ResultPresentationType> iterator = types.iterator(); iterator.hasNext();) {
+			ResultPresentationType type = (ResultPresentationType) iterator.next();
+			
+			if (!result.isValid()) {
+				setPresentationType(new CBMCOutput());
+			} else
+			if (type.isDefault() ) {
+				setPresentationType(type);
+			}
+			
+		}
+	}
 
 	/**
 	 * removes all children from the result pane
@@ -55,6 +67,8 @@ public class ResultPresenterNEW {
 	private void reset() {
 
 		ResultImageRenderer.reset();
+		
+		GUIController.getController().setEligableTypes(new ArrayList<ResultPresentationType>());
 
 		resultScrollPane.setContent(null);
 
@@ -65,14 +79,13 @@ public class ResultPresenterNEW {
 		boolean changed = (this.result != result);
 		this.result = result;
 		if (changed) {
-			getEligablePresentationTypes();
-			
+			getDefaultPresentation();
 			
 			showResult();
 		}
 	}
 	
-	private void getEligablePresentationTypes() {
+	private List<ResultPresentationType> getEligablePresentationTypes() {
 		this.presentationType = null;
 		
 		List<ResultPresentationType> eligableTypes = new ArrayList<ResultPresentationType>();
@@ -89,6 +102,8 @@ public class ResultPresenterNEW {
 		this.setPresentationType(new CBMCOutput()); //TODO maybe find a better way to find the best presenter for every type
 		
 		GUIController.getController().setEligableTypes(eligableTypes);
+		
+		return eligableTypes;
 	}
 
 	public void setPresentationType(ResultPresentationType presentationType) {

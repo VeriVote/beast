@@ -155,7 +155,7 @@ public abstract class SystemSpecificErrorChecker {
             ThreadedBufferedReader outReader
                 = new ThreadedBufferedReader(
                     new BufferedReader(new InputStreamReader(process.getInputStream())),
-                    result, latch, false);
+                    result, latch, true);
             ThreadedBufferedReader errReader
                 = new ThreadedBufferedReader(
                     new BufferedReader(new InputStreamReader(process.getErrorStream())),

@@ -1,5 +1,6 @@
 package edu.pse.beast.datatypes.electiondescription;
 
+import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.ComplexType;
 import edu.pse.beast.types.InputType;
@@ -68,7 +69,11 @@ public class ElectionTypeContainer { //TODO make this class abstract, move code 
         return outType;
     }
 
-	public UnifiedNameContainer getNameContainer(){
+	public UnifiedNameContainer getNameContainer() {
+		if (this.nameContainer == null) {
+			this.nameContainer = new UnifiedNameContainer();
+		}
+		
 		return nameContainer;
 	}
 	

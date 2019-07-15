@@ -3,6 +3,7 @@ package edu.pse.beast.types.cbmctypes.outputplugins;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.propertychecker.Result;
@@ -135,40 +136,5 @@ public class CandidateList extends CBMCOutputType {
 	@Override
 	public String otherToString() {
 		return "Candidate List";
-	}
-	
-	@Override
-	public List<String> drawResult(Result result, String varNameMatcher) {	
-		List<String> toReturn = new ArrayList<String>();
-		
-		List<ResultValueWrapper> winners = result.readVariableValue(varNameMatcher); //TODO name container
-		
-		for (ResultValueWrapper currentWinner: winners) {
-			
-			String name = currentWinner.getName();
-			
-			toReturn.add(name);
-			
-	    	CBMCResultValueStruct struct = (CBMCResultValueStruct) currentWinner.getResultValue();
-	    	CBMCResultValueArray arr = (CBMCResultValueArray) struct.getResultVariable(varNameMatcher).getResultValue();
-			
-			toReturn.add(CBMCResultPresentationHelper.printOneDimResult(arr, name.length()));
-		}		
-		return toReturn;
-	}
-	
-	@Override
-	public List<String> drawResult(ResultValueWrapper wrapper, String varName) {
-
-		List<String> toReturn = new ArrayList<String>();
-		
-		toReturn.add(varName);
-		
-		CBMCResultValueStruct struct = (CBMCResultValueStruct) wrapper.getResultValue();
-    	CBMCResultValueArray arr = (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
-		
-		toReturn.add(CBMCResultPresentationHelper.printOneDimResult(arr, varName.length()));
-		
-		return toReturn;
 	}
 }

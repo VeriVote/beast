@@ -2,6 +2,7 @@ package edu.pse.beast.types.cbmctypes.outputplugins;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.propertychecker.Result;
@@ -88,40 +89,5 @@ public class SingleCandidate extends CBMCOutputType {
 	@Override
 	public String otherToString() {
 		return "Single candidate";
-	}
-
-	@Override
-	public List<String> drawResult(Result result, String varNameMatcher) {
-		List<String> toReturn = new ArrayList<String>();
-
-		List<ResultValueWrapper> winners = result.readVariableValue(varNameMatcher); // TODO name container
-
-		for (ResultValueWrapper currentWinner : winners) {
-
-			String name = currentWinner.getName();
-
-			toReturn.add(name);
-
-			CBMCResultValueStruct value = (CBMCResultValueStruct) currentWinner.getResultValue();
-
-			toReturn.add(CBMCResultPresentationHelper.printSingleElement(
-					(CBMCResultValueSingle) value.getResultVariable("arr").getResultValue(), name.length()));
-		}
-		return toReturn;
-	}
-
-	@Override
-	public List<String> drawResult(ResultValueWrapper wrapper, String varName) {
-
-		List<String> toReturn = new ArrayList<String>();
-
-		toReturn.add(varName);
-
-		CBMCResultValueStruct value = (CBMCResultValueStruct) wrapper.getResultValue();
-
-		toReturn.add(CBMCResultPresentationHelper.printSingleElement(
-				(CBMCResultValueSingle) value.getResultVariable("arr").getResultValue(), varName.length()));
-
-		return toReturn;
 	}
 }
