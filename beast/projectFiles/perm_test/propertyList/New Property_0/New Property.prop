@@ -1,1 +1,0 @@
-{"name":"New Property","symbolicVariableList":{"symbolicVariableList":[]},"preConditionsDescription":{"code":"(VOTES2, VOTES3) \u003c- SPLIT(PERM(VOTES1));"},"postConditionsDescription":{"code":"ELECT1 !\u003d ELECT2;"},"boundedVarDescription":{"code":""}}

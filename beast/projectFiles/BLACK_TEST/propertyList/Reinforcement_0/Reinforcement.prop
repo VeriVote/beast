@@ -1,1 +1,0 @@
-{"name":"Reinforcement","symbolicVariableList":{"symbolicVariableList":[]},"preConditionsDescription":{"code":"(VOTES2, VOTES3) \u003c- SPLIT(PERM(VOTES1));"},"postConditionsDescription":{"code":"NOTEMPTY(INTERSECT(ELECT2, ELECT3)) \u003d\u003d\u003e ELECT1 \u003d\u003d INTERSECT(ELECT2, ELECT3);"},"boundedVarDescription":{"code":""}}
