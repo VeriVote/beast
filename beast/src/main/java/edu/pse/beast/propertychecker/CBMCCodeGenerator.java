@@ -337,7 +337,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		
 		String dataDef = electionDesc.getContainer().getInputType().getDataTypeAndSign();
 		
-		String definition = dataDef + " *arr = tmp_struct;";
+		String definition = dataDef + " *arr = tmp_struct." + electionDesc.getContainer().getNameContainer().getStructValueName() + ";";
 		
 		code.add(definition);
 		
@@ -400,39 +400,41 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 			return;
 		}
 
-		code.add(electionDesc.getContainer().getOutputStruct().getStructAccess()
-				+ " permutateTwo(unsigned int votes[V][C], " + "unsigned int length) {");
-		code.add("  static unsigned int sub_arr[V][C];");
+		String voteStruct = electionDesc.getContainer().getInputStruct().getStructAccess();
+		
+		code.add(voteStruct
+				+ " permutateTwo(" + voteStruct + " votes, " + "unsigned int length) {");
+		code.add(voteStruct + " sub_arr;");
 		code.add("  ");
-		code.add("  static unsigned int already_used_arr[V];");
+		code.add("unsigned int already_used_arr[V];");
 		code.add("    ");
-		code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
-		code.add("    for(int j = 0; j < C; j++) {");
-		code.add("      sub_arr[i][j] = C;");
-		code.add("    }");
-		code.add("  }");
+		code.add("for(int i = 0; i < V; i++) { //set all to C in the beginning");
+		code.add("for(int j = 0; j < C; j++) {");
+		code.add("sub_arr.arr[i][j] = C;");
+		code.add("}");
+		code.add("}");
+		code.add("");
 		code.add("  ");
-		code.add("  ");
-		code.add("  for(int i = 0; i < length; i++) {");
-		code.add("    unsigned int new_index = nondet_uint();");
-		code.add("    assume((new_index >= 0) && (new_index < length));");
-		code.add("    ");
-		code.add("    for(int j = 0; j < i; j++) {");
-		code.add("      assume(new_index != already_used_arr[j]);");
-		code.add("    }");
+		code.add("for(int i = 0; i < length; i++) {");
+		code.add("unsigned int new_index = nondet_uint();");
+		code.add("assume((new_index >= 0) && (new_index < length));");
+		code.add("");
+		code.add("for(int j = 0; j < i; j++) {");
+		code.add("assume(new_index != already_used_arr[j]);");
+		code.add("}");
 		code.add("    ");
 		code.add("    already_used_arr[i] = new_index;");
 		code.add("    ");
 		code.add("    for(int j = 0; j < C; j++) {");
-		code.add("      sub_arr[new_index][j] = votes[i][j];");
+		code.add("      sub_arr.arr[new_index][j] = votes.arr[i][j];");
 		code.add("    }");
 		code.add("  }");
 		code.add("  ");
-		code.add("  struct vote_double toReturn;");
+		code.add(voteStruct + " toReturn;");
 		code.add("    ");
 		code.add("  for (int i = 0; i < V; i++) {");
 		code.add("    for(int j = 0; j < C; j++) {");
-		code.add("      toReturn.arr[i][j] = sub_arr[i][j];");
+		code.add("      toReturn.arr[i][j] = sub_arr.arr[i][j];");
 		code.add("    }");
 		code.add("  }");
 		code.add("    ");
@@ -445,15 +447,17 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 				|| !electionDesc.getContainer().getInputType().getSizeOfDimensions()[0].equals("V")) {
 			return;
 		}
+		
+		String voteStruct = electionDesc.getContainer().getInputStruct().getStructAccess();
 
-		code.add(electionDesc.getContainer().getInputStruct().getStructAccess()
-				+ " permutateOne(unsigned int votes[V], unsigned int length) {");
-		code.add("  static unsigned int sub_arr[V];");
+		code.add(voteStruct
+				+ " permutateOne(" + voteStruct + " votes, unsigned int length) {");
+		code.add(voteStruct + " sub_arr;");
 		code.add("  ");
-		code.add("  static unsigned int already_used_arr[V];");
+		code.add(" unsigned int already_used_arr[V];");
 		code.add("    ");
 		code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
-		code.add("    sub_arr[i] = C;");
+		code.add("    sub_arr.arr[i] = C;");
 		code.add("  }");
 		code.add("  ");
 		code.add("  ");
@@ -467,13 +471,13 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		code.add("    ");
 		code.add("    already_used_arr[i] = new_index;");
 		code.add("    ");
-		code.add("    sub_arr[new_index] = votes[i];");
+		code.add("    sub_arr.arr[new_index] = votes.arr[i];");
 		code.add("  }");
 		code.add("  ");
-		code.add(electionDesc.getContainer().getInputStruct().getStructAccess() + " toReturn;");
+		code.add(voteStruct + " toReturn;");
 		code.add("    ");
 		code.add("  for (int i = 0; i < V; i++) {");
-		code.add("    toReturn.arr[i] = sub_arr[i];");
+		code.add("    toReturn.arr[i] = sub_arr.arr[i];");
 		code.add("  }");
 		code.add("    ");
 		code.add("  return toReturn;");
@@ -494,21 +498,23 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 			return;
 		}
 
-		code.add(electionDesc.getContainer().getInputStruct().getStructAccess()
-				+ " concatTwo(unsigned int votesOne[V][C], unsigned int sizeOne, "
-				+ "unsigned int votesTwo[V][C], unsigned int sizeTwo) {");
-		code.add("  static unsigned int sub_arr[V][C];");
+		String voteStruct = electionDesc.getContainer().getInputStruct().getStructAccess();
+		
+		code.add(voteStruct
+				+ " concatTwo(" + voteStruct + " votesOne, unsigned int sizeOne, "
+				+ voteStruct + " votesTwo, unsigned int sizeTwo) {");
+		code.add(voteStruct + " sub_arr;");
 		code.add("  ");
 		code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
 		code.add("    for(int j = 0; j < C; j++) {");
-		code.add("      sub_arr[i][j] = C;");
+		code.add("      sub_arr.arr[i][j] = C;");
 		code.add("    }");
 		code.add("  }");
 		code.add("  ");
 		code.add("  for(int i = 0; i < sizeOne; i++) { //limit the size to the upper bound V");
 		code.add("    for(int j = 0; j < C; j++) {");
 		code.add("      if (i < V) {");
-		code.add("        sub_arr[i][j] = votesOne[i][j];");
+		code.add("        sub_arr.arr[i][j] = votesOne.arr[i][j];");
 		code.add("      }");
 		code.add("    }");
 		code.add("  }");
@@ -516,7 +522,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		code.add("  for(int i = 0; i < sizeTwo; i++) { //limit the size to the upper bound V");
 		code.add("    for(int j = 0; j < C; j++) {");
 		code.add("      if (sizeTwo + i < V) {");
-		code.add("        sub_arr[i][j] = votesTwo[i][j];");
+		code.add("        sub_arr.arr[i][j] = votesTwo.arr[i][j];");
 		code.add("      }");
 		code.add("    }");
 		code.add("  }");
@@ -525,7 +531,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		code.add("    ");
 		code.add("  for (int i = 0; i < V; i++) {");
 		code.add("    for (int j = 0; j < C; j++) {");
-		code.add("      toReturn.arr[i][j] = sub_arr[i][j];");
+		code.add("      toReturn.arr[i][j] = sub_arr.arr[i][j];");
 		code.add("    }");
 		code.add("  }");
 		code.add("    ");
@@ -539,31 +545,33 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 			return;
 		}
 
-		code.add(electionDesc.getContainer().getInputStruct().getStructAccess()
-				+ " concatOne(unsigned int votesOne[V], unsigned int sizeOne, "
-				+ "unsigned int votesTwo[V], unsigned int sizeTwo) {");
-		code.add("  static unsigned int sub_arr[V];");
+		String voteStruct = electionDesc.getContainer().getInputStruct().getStructAccess();
+		
+		code.add(voteStruct
+				+ " concatOne(" + voteStruct + " votesOne, unsigned int sizeOne, "
+				+ voteStruct + " votesTwo, unsigned int sizeTwo) {");
+		code.add(voteStruct + " sub_arr;");
 		code.add("  ");
 		code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
-		code.add("    sub_arr[i] = C;");
+		code.add("    sub_arr.arr[i] = C;");
 		code.add("  }");
 		code.add("  ");
 		code.add("  for(int i = 0; i < sizeOne; i++) { //limit the size to the upper bound V");
 		code.add("    if (i < V) {");
-		code.add("      sub_arr[i] = votesOne[i];");
+		code.add("      sub_arr.arr[i] = votesOne.arr[i];");
 		code.add("    }");
 		code.add("  }");
 		code.add("  ");
 		code.add("  for(int i = 0; i < sizeTwo; i++) { //limit the size to the upper bound V");
 		code.add("    if (sizeOne + i < V) {");
-		code.add("      sub_arr[sizeOne + i] = votesTwo[i];");
+		code.add("      sub_arr.arr[sizeOne + i] = votesTwo.arr[i];");
 		code.add("    }");
 		code.add("  }");
 		code.add("  ");
-		code.add(electionDesc.getContainer().getInputStruct().getStructAccess() + " toReturn;");
+		code.add(voteStruct + " toReturn;");
 		code.add("    ");
 		code.add("  for (int i = 0; i < V; i++) {");
-		code.add("    toReturn.arr[i] = sub_arr[i];");
+		code.add("    toReturn.arr[i] = sub_arr.arr[i];");
 		code.add("  }");
 		code.add("    ");
 		code.add("  return toReturn;");
@@ -613,22 +621,25 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		code.add("//start is inclusive, stop is exclusive");
 		code.add("");
 
+		
+		String voteStruct = electionDesc.getContainer().getInputStruct().getStructAccess();
+		
 		if ((electionDesc.getContainer().getInputType().getAmountOfDimensions() == 1
 				&& !electionDesc.getContainer().getInputType().getSizeOfDimensions()[0].equals("V"))) {
 
-			code.add(electionDesc.getContainer().getInputStruct().getStructAccess()
-					+ " splitOne(unsigned int votes[V], " + "unsigned int start, unsigned int stop) {");
-			code.add("  static unsigned int sub_arr[V];");
+			code.add(voteStruct
+					+ " splitOne(" + voteStruct + "votes, " + "unsigned int start, unsigned int stop) {");
+			code.add(voteStruct + " sub_arr;");
 			code.add("  ");
 			code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
-			code.add("    sub_arr[i] = C;");
+			code.add("    sub_arr.arr[i] = C;");
 			code.add("  }");
 			code.add("  ");
 			code.add("  if(start == stop) { //the sub array should be empty");
 			code.add(electionDesc.getContainer().getInputStruct().getStructAccess() + " toReturn;");
 			code.add("    ");
 			code.add("    for (int i = 0; i < V; i++) {");
-			code.add("      toReturn.arr[i] = sub_arr[i];");
+			code.add("      toReturn.arr[i] = sub_arr.arr[i];");
 			code.add("    }");
 			code.add("    ");
 			code.add("    return toReturn;");
@@ -636,7 +647,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 			code.add("");
 			code.add("    for (int i = 0; i < V; i++) {");
 			code.add("      if ((i >= start) && (i < stop)) {");
-			code.add("        sub_arr[i - start] = votes[i];");
+			code.add("        sub_arr[i - start] = votes.arr[i];");
 			code.add("      }");
 			code.add("    }");
 			code.add("  ");
@@ -644,7 +655,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 			code.add(electionDesc.getContainer().getInputStruct().getStructAccess() + " toReturn;");
 			code.add("    ");
 			code.add("    for (int i = 0; i < V; i++) {");
-			code.add("      toReturn.arr[i] = sub_arr[i];");
+			code.add("      toReturn.arr[i] = sub_arr.arr[i];");
 			code.add("    }");
 			code.add("    ");
 			code.add("    return toReturn;");
@@ -659,13 +670,13 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 
 			code.add("//start is inclusive, stop is exclusive");
 			code.add("//used for 2 dim arrays");
-			code.add(electionDesc.getContainer().getInputStruct().getStructAccess()
-					+ " splitTwo(unsigned int votes[V][C], " + "unsigned int start, unsigned int stop) {");
-			code.add("  static unsigned int sub_arr[V][C];");
+			code.add(voteStruct
+					+ " splitTwo(" + voteStruct + ", " + "unsigned int start, unsigned int stop) {");
+			code.add(voteStruct + " sub_arr;");
 			code.add("  ");
 			code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
 			code.add("    for(int j = 0; j < C; j++) {");
-			code.add("      sub_arr[i][j] = C;");
+			code.add("      sub_arr.arr[i][j] = C;");
 			code.add("    }");
 			code.add("  }");
 			code.add("  ");
@@ -674,7 +685,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 			code.add("    ");
 			code.add("    for (int i = 0; i < V; i++) {");
 			code.add("      for(int j = 0; j < V; j++) {");
-			code.add("        toReturn.arr[i][j] = sub_arr[i][j];");
+			code.add("        toReturn.arr[i][j] = sub_arr.arr[i][j];");
 			code.add("      }");
 			code.add("    }");
 			code.add("    ");
@@ -684,7 +695,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 			code.add("    for (int i = 0; i < V; i++) {");
 			code.add("      if ((i >= start) && (i < stop)) {");
 			code.add("        for(int j = 0; j < C; j++) {");
-			code.add("          sub_arr[i - start][j] = votes[i][j];");
+			code.add("          sub_arr.arr[i - start][j] = votes.arr[i][j];");
 			code.add("        }");
 			code.add("      }");
 			code.add("    }");
@@ -693,7 +704,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 			code.add("    ");
 			code.add("    for (int i = 0; i < V; i++) {");
 			code.add("      for(int j = 0; j < V; j++) {");
-			code.add("        toReturn.arr[i][j] = sub_arr[i][j];");
+			code.add("        toReturn.arr[i][j] = sub_arr.arr[i][j];");
 			code.add("      }");
 			code.add("    }");
 			code.add("    ");
