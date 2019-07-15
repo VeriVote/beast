@@ -367,8 +367,6 @@ public class ElectionDescription {
 
 		String[] sizes = container.getInputType().getSizeOfDimensions();
 		
-		sizes[0] = "amountVotes";
-		
 		for (int i = 0; i < dimensions; i++) {
 			toReturn = toReturn // add all needed loop headers
 					+ generateForLoopHeader(loopVariables.get(i), sizes[i]);
