@@ -29,6 +29,10 @@ public class NEWRowOfValues {
 	private ElectionSimulationModel parent;
 	private boolean disabled;
 
+	private final boolean isTwoDim;
+	
+	private int rowSize;
+
 	public NEWRowOfValues(ElectionSimulationModel parent, ElectionTypeContainer container, int amountOfCandidates,
 			int amountOfVoters, int amountOfSeats, int rowIndex, double elementWidth, double elementHeight) {
 		this.parent = parent;
@@ -36,19 +40,21 @@ public class NEWRowOfValues {
 		this.rowIndex = rowIndex;
 		this.elementWidth = elementWidth;
 		this.elementHeight = elementHeight;
-		values = new ArrayList<>(amountOfCandidates);
-		fields = new ArrayList<>(amountOfCandidates);
+		values = new ArrayList<>(rowSize);
+		fields = new ArrayList<>(rowSize);
 		this.amountOfSeats = amountOfSeats;
 		this.amountOfVoters = amountOfVoters;
 
-		this.setCandidates(amountOfCandidates);
+		this.isTwoDim = (container.getInputType().getAmountOfDimensions() == 2);
+
+		this.setRowSize(1);
 	}
 
 	public synchronized void addColumn() {
-		while (values.size() <= amountOfCandidates) {
+		while (values.size() <= rowSize) {
 			values.add("0");
 		}
-		TextField field = new TextField(values.get(amountOfCandidates));
+		TextField field = new TextField(values.get(rowSize));
 		field.setMinSize(elementWidth, elementHeight);
 		field.setMaxSize(elementWidth, elementHeight);
 		field.setPrefSize(elementWidth, elementHeight);
@@ -63,13 +69,13 @@ public class NEWRowOfValues {
 				});
 			}
 		});
-		amountOfCandidates++;
+		rowSize++;
 		update();
 	}
 
 	public synchronized void removeColumn() {
 		if (fields.size() > 0) {
-			amountOfCandidates--;
+			rowSize--;
 		}
 		update();
 	}
@@ -81,7 +87,13 @@ public class NEWRowOfValues {
 				parent.getInputGridPane().getChildren().remove(textField);
 			}
 
-			for (int i = 0; i < amountOfCandidates; i++) {
+			int iterations = 1;
+
+			if (isTwoDim) {
+				iterations = rowSize;
+			}
+
+			for (int i = 0; i < iterations; i++) {
 				TextField field = fields.get(i);
 				field.setText(values.get(i));
 				parent.getInputGridPane().add(field, i, rowIndex);
@@ -89,13 +101,18 @@ public class NEWRowOfValues {
 		}
 	}
 
-	private void checkAndInsertValue(String newValue, int position) {
-		String vettedValue = container.getInputType().vetValue(newValue, position, container, this);
+	private void checkAndInsertValue(String newValue, int positionInRow) {
+		
+		List<NEWRowOfValues> allRows = parent.getRows();
+		allRows.remove(this); //in case that this row is created before it is saved by its parent
+		allRows.add(this);
+		
+		String vettedValue = container.getInputType().vetValue(container, allRows, rowIndex, positionInRow, newValue);
 
-		values.set(position, vettedValue);
+		values.set(positionInRow, vettedValue);
 
-		if (position < fields.size()) {
-			fields.get(position).setText(vettedValue);
+		if (positionInRow < fields.size()) {
+			fields.get(positionInRow).setText(vettedValue);
 		}
 		update();
 	}
@@ -105,16 +122,20 @@ public class NEWRowOfValues {
 	 * @return the values of this row, from 0 up to
 	 */
 	public List<String> getValues() {
-		if (amountOfCandidates == 0) {
+		if (rowSize == 0) {
 			throw new IllegalArgumentException();
 		} else {
-			return values.subList(0, amountOfCandidates);
+			if (isTwoDim) {
+				return values.subList(0, rowSize);
+			} else {
+				return values.subList(0, 1);
+			}
 		}
 	}
 
 	public void setValues(ArrayList<String> values) {
 		this.values = values;
-		this.setCandidates(values.size());
+		this.setRowSize(values.size());
 	}
 
 	public void setContainer(ElectionTypeContainer container) {
@@ -145,23 +166,34 @@ public class NEWRowOfValues {
 //    values.set(index, vettedValue);
 //  }
 
-	public void setCandidates(int amountOfCandidates) {
+	public void setRowSize(int rowSize) {
 
-		if (this.amountOfCandidates < amountOfCandidates) {
-			while (this.amountOfCandidates < amountOfCandidates) {
-				addColumn();
+		if (this.rowSize < rowSize) {
+			if (!isTwoDim) {
+				if (this.rowSize == 0) {
+					addColumn();
+				}
+			} else {
+				while (this.rowSize < rowSize) {
+					addColumn();
+				}
 			}
-		} else if (this.amountOfCandidates > amountOfCandidates) {
-			while (this.amountOfCandidates > amountOfCandidates) {
+		} else if (this.rowSize > rowSize) {
+			while (this.rowSize > rowSize) {
 				removeColumn();
 			}
 		}
-		if (this.amountOfCandidates != amountOfCandidates) {
-			throw new IllegalAccessError();
-		}
+
+		this.rowSize = rowSize;
+
 		updateVetting();
 	}
 
+	public void setCandidates(int amountOfCandidates) {
+		this.amountOfCandidates = amountOfCandidates;
+		updateVetting();
+	}
+	
 	public void setVoters(int amountOfVoters) {
 		this.amountOfVoters = amountOfVoters;
 		updateVetting();

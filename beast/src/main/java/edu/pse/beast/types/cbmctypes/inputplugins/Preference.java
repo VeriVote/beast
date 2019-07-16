@@ -66,7 +66,7 @@ public class Preference extends CBMCInputType {
 	}
 
 	@Override
-	public String vetValue(String newValue, int position, ElectionTypeContainer container, NEWRowOfValues row) {
+	public String vetValue(ElectionTypeContainer container, List<NEWRowOfValues> row, int rowNumber, int positionInRow, String newValue) {
 		final int number;
 		try {
 			number = Integer.parseInt(newValue);
@@ -74,14 +74,27 @@ public class Preference extends CBMCInputType {
 			return "0";
 		}
 		final String result;
-		if (number < 0 || number > row.getAmountCandidates()) {
+		if (number < 0 || number > row.get(rowNumber).getAmountCandidates()) {
 			result = "0";
-		} else if (row.getValues().contains(newValue)) {
+		} else if (row.get(rowNumber).getValues().contains(newValue)) {
 			result = "0";
 		} else {
 			result = newValue;
 		}
 		return result;
+	}
+	
+	@Override
+	public void restrictVotes(String voteName, CodeArrayListBeautifier code) {
+		code.add("for(int loop_r_0 = 0; loop_r_0 < V; loop_r_0++) {"); 
+		code.add("for(int loop_r_1 = 0; loop_r_1 < C; loop_r_1++) {"); 
+		code.add("for(int loop_r_2 = 0; loop_r_2 < C; loop_r_2++) {"); 
+		code.add("if (loop_r_1 != loop_r_2) {");
+		code.add("assume(" + voteName + ".arr[loop_r_0][loop_r_1] != " + voteName + ".arr[loop_r_0][loop_r_2]);");
+		code.add("}");
+		code.add("}");
+		code.add("}");
+		code.add("}");
 	}
 
 	@Override

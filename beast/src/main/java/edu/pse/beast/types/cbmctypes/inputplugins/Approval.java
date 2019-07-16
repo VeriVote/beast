@@ -64,7 +64,7 @@ public class Approval extends CBMCInputType {
 	}
 
 	@Override
-	public String vetValue(String newValue, int position, ElectionTypeContainer container, NEWRowOfValues row) {
+	public String vetValue(ElectionTypeContainer container, List<NEWRowOfValues> rows, int rowNumber, int positionInRow, String newValue) {
 		final int number;
 		try {
 			number = Integer.parseInt(newValue);
@@ -211,5 +211,10 @@ public class Approval extends CBMCInputType {
 			List<String> loopVariables) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void restrictVotes(String voteName, CodeArrayListBeautifier code) {
+		//no extra needed
 	}
 }

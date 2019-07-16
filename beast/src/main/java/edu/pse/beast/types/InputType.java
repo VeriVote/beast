@@ -75,13 +75,15 @@ public abstract class InputType extends InOutType {
 
 	/**
 	 * vets a value to determine if it is legal for the input type, or not
-	 *
-	 * @param newValue       the new value
 	 * @param container      the type container
-	 * @param newRowOfValues the new row of values
+	 * @param rows the new row of values
+	 * @param rowNumber TODO
+	 * @param newValue       the new value
+	 *
 	 * @return the new value
 	 */
-	public abstract String vetValue(String newValue, int position, ElectionTypeContainer container, NEWRowOfValues newRowOfValues);
+	public abstract String vetValue(ElectionTypeContainer container, List<NEWRowOfValues> rows, int rowNumber,
+			int positionInRow, String newValue);
 
 //    public List<ResultValueWrapper> readVote(List<String> toExtract) {
 //        return this.helper.extractVariable(UnifiedNameContainer.getVotingArray(),
@@ -100,17 +102,17 @@ public abstract class InputType extends InOutType {
 
 	// public abstract void addMarginMainCheck(CodeArrayListBeautifier code, int
 	// margin, List<String> origResult);
-	
+
 	/**
 	 * returns the assignment of votingData e.g {1,2,3} for a array of shape [3]
+	 * 
 	 * @param votingData
 	 * @param code
 	 * @return
 	 */
 	public final String getVotingResultCode(CBMCResultValueWrapper wrapper) {
 		return printArray(wrapper);
-	}	
-
+	}
 
 	public abstract void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique);
 
@@ -125,7 +127,7 @@ public abstract class InputType extends InOutType {
 	public abstract int getNumVotingPoints(ResultValueWrapper result);
 
 	public abstract String getVoteDescriptionString(List<List<String>> origVotes);
-	
+
 	public abstract CBMCResultValue convertRowToResultValue(NEWRowOfValues row);
 
 	public String getInfo() { // TODO move later on further down
@@ -133,39 +135,41 @@ public abstract class InputType extends InOutType {
 	}
 
 	/**
-	 * ASSERTION: newVotesName already has to be bounded to the max and min values it can have
-	 * change the vote of origVotesName at a position defined by loopNames to a vote that is different that the original one
+	 * ASSERTION: newVotesName already has to be bounded to the max and min values
+	 * it can have change the vote of origVotesName at a position defined by
+	 * loopNames to a vote that is different that the original one
+	 * 
 	 * @param newVotesName
 	 * @param origVotesName
 	 * @param loopNames
 	 * @return
 	 */
-	public String flipVote(String newVotesName, String origVotesName, List<String> loopVars) {	
+	public String flipVote(String newVotesName, String origVotesName, List<String> loopVars) {
 		String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
-		
+
 		String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
-		
+
 		return "assume(" + newVotesNameAcc + " != " + origVotesNameAcc + ");";
 	}
 
 	public String setVoteValue(String newVotesName, String origVotesName, List<String> loopVars) {
 		String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
-		
+
 		String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
-		
+
 		return (newVotesNameAcc + " = " + origVotesNameAcc + ";");
 	}
-	
+
 	public String getFullVoteAccess(String voteName, List<String> loopVars) {
 		String access = this.getAccessDimensions(loopVars);
-		
+
 		return (voteName + "." + this.getContainer().getNameContainer().getStructValueName() + access);
 	}
-	
+
 	public abstract boolean hasVariableAsMinValue();
-	
+
 	public abstract boolean hasVariableAsMaxValue();
-	
+
 	/**
 	 *
 	 *
@@ -179,4 +183,35 @@ public abstract class InputType extends InOutType {
 	 * @return the maximal value a voter can assign
 	 */
 	public abstract String getMaximalValue();
+
+	public List<Integer> getSizesInOrder(int amountVoters, int amountCandidates, int amountSeats) {
+		return recGetSizesInOrder(amountVoters, amountCandidates, amountSeats, getSizeOfDimensionsAsList());
+	}
+
+	private List<Integer> recGetSizesInOrder(int amountVoters, int amountCandidates, int amountSeats,
+			List<String> sizesOfDimensions) {
+		List<Integer> toReturn = new ArrayList<Integer>();
+
+		if (sizesOfDimensions.size() == 0) {
+			return toReturn;
+		} else {
+
+			String sizeOfDim = sizesOfDimensions.get(0);
+
+			if (sizeOfDim.contentEquals("V")) {
+				toReturn.add(amountVoters);
+			} else if (sizeOfDim.contentEquals("C")) {
+				toReturn.add(amountCandidates);
+			} else if (sizeOfDim.contentEquals("S")) {
+				toReturn.add(amountSeats);
+			}
+
+			toReturn.addAll(recGetSizesInOrder(amountVoters, amountCandidates, amountSeats,
+					sizesOfDimensions.subList(1, sizesOfDimensions.size())));
+
+			return toReturn;
+		}
+	}
+
+	public abstract void restrictVotes(String voteName, CodeArrayListBeautifier code);
 }

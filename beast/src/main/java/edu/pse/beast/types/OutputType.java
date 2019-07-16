@@ -74,6 +74,7 @@ public abstract class OutputType extends InOutType {
 	 *
 	 * @param code       the code
 	 * @param voteNumber the vote number
+	 * @param voteSize TODO
 	 * @return the beautified code
 	 */
 	public abstract CodeArrayListBeautifier addMarginMainTest(CodeArrayListBeautifier code, int voteNumber);

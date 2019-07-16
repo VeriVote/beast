@@ -16,7 +16,7 @@ import java.util.concurrent.CountDownLatch;
  */
 public class ThreadedBufferedReader implements Runnable {
     private static final int CHECKING_INTERVAL = 5000;
-    private static final int WARNING_INTERVAL = 100;
+    private static final int WARNING_INTERVAL = 1000;
     private static final String UNWIND_PREFIX = "  <text>Unwinding loop";
 
     private final BufferedReader reader;
@@ -71,14 +71,15 @@ public class ThreadedBufferedReader implements Runnable {
                                                     .split("file")[0].replace(" ", "")
                                     );
                             if (iteration > WARNING_INTERVAL) {
-                                new Thread() {
+                                new Thread() { 
                                     public void run() {
                                         ErrorForUserDisplayer.displayError(
                                                 "A loop in your c program is still"
                                                 + " (more than a thousand times)"
                                                 + " getting unrolled. Maybe you want"
                                                 + " to stop the checking manually and"
-                                                + " add the \"--unwind\" option.");
+                                                + " add enter an upper bound for how many unrolls are done."
+                                                + "(Parameters->Solveroptions->max loop unwinds");
                                     }
                                 }.start();
                             }

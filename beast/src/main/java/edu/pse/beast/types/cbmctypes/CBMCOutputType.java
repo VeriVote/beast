@@ -13,13 +13,12 @@ public abstract class CBMCOutputType extends OutputType {
 	public CodeArrayListBeautifier addMarginMainTest(CodeArrayListBeautifier code, int voteNumber) {
 		code.add("int main() {");
 		code.addTab();
-		String definition =
-				getContainer().getOutputStruct().getStructAccess() + " " + 
-				getContainer().getNameContainer().getElect() + "1 = " +
-				getContainer().getNameContainer().getVotingMethod() + "(" + 
-				getContainer().getNameContainer().getOrigVotesName() + ");";
+		String definition = getContainer().getOutputStruct().getStructAccess() + " "
+				+ getContainer().getNameContainer().getElect() + "1 = "
+				+ getContainer().getNameContainer().getVotingMethod() + "( ORIG_VOTES_SIZE, "
+				+ getContainer().getNameContainer().getOrigVotesName() + ");";
 		code.add(definition);
-		code.add("assert(0);"); //add an assertion that never holds to be able to extract the data
+		code.add("assert(0);"); // add an assertion that never holds to be able to extract the data
 		code.deleteTab();
 		code.add("}");
 		return code;

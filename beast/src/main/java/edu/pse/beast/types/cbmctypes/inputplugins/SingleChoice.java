@@ -64,23 +64,27 @@ public class SingleChoice extends CBMCInputType {
 	}
 
 	@Override
-	public String vetValue(String newValue, int position, ElectionTypeContainer container, NEWRowOfValues row) {
+	public String vetValue(ElectionTypeContainer container, List<NEWRowOfValues> row, int rowNumber, int positionInRow, String newValue) {
 		final int number;
 		try {
 			number = Integer.parseInt(newValue);
 		} catch (NumberFormatException e) {
 			return "0";
 		}
+		
 		final String result;
-		if (number == 1) {
-			for (int i = 0; i < row.getValues().size(); i++) {
-				row.getValues().set(i, "0");
-			}
-			result = "1";
-		} else {
+		if (number < 0 || number > row.get(rowNumber).getAmountCandidates()) {
 			result = "0";
+		} else {
+			result = newValue;
 		}
+		
 		return result;
+	}
+	
+	@Override
+	public void restrictVotes(String voteName, CodeArrayListBeautifier code) {
+		//dont have to restrict
 	}
 
 	@Override
@@ -190,27 +194,11 @@ public class SingleChoice extends CBMCInputType {
 	public CBMCResultValue convertRowToResultValue(NEWRowOfValues row) {
 		List<String> values = row.getValues();
 		
-		int chosenCandidate = -1;
-		
-		for (int i = 0; i < values.size(); i++) {
-			String value = values.get(i);
-			
-			if (!value.equals("0")) {
-				chosenCandidate = i;
-			}
-		}
-		
-		String chosenValue = "";
-		
-		if (chosenCandidate == -1) {
-			chosenValue = "C"; //A vote for C indicates an abstainment
-		} else {
-			chosenValue = "" + chosenCandidate;
-		}
-		
+		String value = values.get(0);
+
 		CBMCResultValueSingle toReturn = new CBMCResultValueSingle();
 		
-		toReturn.setValue("int", chosenValue, 32);
+		toReturn.setValue("int", value, 32);
 		
 		return toReturn;
 	}

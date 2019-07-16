@@ -11,7 +11,6 @@ import edu.pse.beast.electionsimulator.model.ElectionSimulationModel;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.MenuBarInterface;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
-import edu.pse.beast.toolbox.valueContainer.ResultValue;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValue;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueArray;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
@@ -115,12 +114,12 @@ public class ElectionSimulation implements MenuBarInterface {
 
 			valueWrappers.add(new CBMCResultValueWrapper(result));
 		}
-		
+
 		topArrayValue.setValue(valueWrappers);
 
 		ElectionSimulationData toReturn = new ElectionSimulationData(getNumVoters(), getNumCandidates(), getNumSeats(),
 				new CBMCResultValueWrapper(topArrayValue));
-		
+
 		return toReturn;
 	}
 
@@ -166,6 +165,10 @@ public class ElectionSimulation implements MenuBarInterface {
 		return "" + vetted;
 	}
 
+	public void saveAs(File file) {
+		saverLoader.save(file, generateSaveString());
+	}
+
 	@Override
 	public void open() {
 		String input = saverLoader.load();
@@ -174,19 +177,18 @@ public class ElectionSimulation implements MenuBarInterface {
 
 	private void openInput(String input, boolean bringToFront) {
 		reset();
-		boolean init = false;
 		if (!input.equals("")) {
 			String[] lines = input.split("\n");
 			for (int y = 0; y < lines.length; y++) {
 				String[] values = lines[y].split(CSV_SEPARATOR);
-				if (!init) {
-					GUIController.getController().getInputVoters().setText("" + lines.length);
-					GUIController.getController().getInputCandidates().setText("" + values.length);
-					GUIController.getController().getInputSeats().setText("" + 99999999);
-					init = true;
-				}
-				for (int x = 0; x < values.length; x++) {
-					model.setValue(x, y, values[x]);
+				if (y == 0) {
+					GUIController.getController().getInputVoters().setText("" + values[0]);
+					GUIController.getController().getInputCandidates().setText("" + values[1]);
+					GUIController.getController().getInputSeats().setText("" + values[2]);
+				} else {
+					for (int x = 0; x < values.length; x++) {
+						model.setValue(x, (y - 1), values[x]);
+					}
 				}
 			}
 		}
@@ -214,6 +216,10 @@ public class ElectionSimulation implements MenuBarInterface {
 
 	private String generateSaveString() {
 		String saveString = "";
+
+		saveString = model.getAmountVoters() + CSV_SEPARATOR + model.getAmountCandidates() + CSV_SEPARATOR
+				+ model.getAmountSeats() + "\n";
+
 		List<NEWRowOfValues> rows = model.getRows();
 
 		for (Iterator<NEWRowOfValues> iterator = rows.iterator(); iterator.hasNext();) {
@@ -235,10 +241,6 @@ public class ElectionSimulation implements MenuBarInterface {
 	@Override
 	public void saveAs() {
 		saverLoader.saveAs("", generateSaveString());
-	}
-
-	public void saveAs(File file) {
-		saverLoader.save(file, generateSaveString());
 	}
 
 	@Override

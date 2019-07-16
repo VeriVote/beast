@@ -27,6 +27,8 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
 public class WeightedApproval extends CBMCInputType {
 	
 	private static final int dimensions = 2;
+	
+	private final int maxValue = 100;
 
 	private final static String[] sizeOfDimensions = { UnifiedNameContainer.getVoter(),
 			UnifiedNameContainer.getCandidate() };
@@ -47,7 +49,7 @@ public class WeightedApproval extends CBMCInputType {
 
 	@Override
 	public String getMaximalValue() {
-		return "" + 100;
+		return "" + maxValue;
 	}
 
 	@Override
@@ -66,18 +68,23 @@ public class WeightedApproval extends CBMCInputType {
 	}
 
 	@Override
-	public String vetValue(String newValue, int position, ElectionTypeContainer container, NEWRowOfValues rowOfValues) {
+	public String vetValue(ElectionTypeContainer container, List<NEWRowOfValues> rowOfValues, int rowNumber, int positionInRow, String newValue) {
 		final int number;
 		try {
 			number = Integer.parseInt(newValue);
 		} catch (NumberFormatException e) {
 			return "0";
 		}
-		if (number < 0 || number > 100) {
+		if (number < 0 || number > maxValue) {
 			return "0";
 		} else {
 			return newValue;
 		}
+	}
+	
+	@Override
+	public void restrictVotes(String voteName, CodeArrayListBeautifier code) {
+		//dont have to restrict anything
 	}
 
 	@Override

@@ -156,6 +156,11 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 				+ electionDesc.getContainer().getNameContainer().getOrigVotesName() + " = "
 				+ getVotingResultCode((CBMCResultValueWrapper) votingData.values) + ";";
 
+		String sizeOfVote = "" + electionDesc.getContainer().getInputType().getSizesInOrder(votingData.voters, votingData.candidates, votingData.seats).get(0);
+		String origVotesSize = "int ORIG_VOTES_SIZE = " + sizeOfVote + ";"; 
+		
+		code.add(origVotesSize);
+		
 		code.add(origVotes);
 		addMarginMainCheck(margin, origResult);
 	}
@@ -171,12 +176,17 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		// add the code the user wrote (e.g the election function)
 		code.addAll(GUIController.getController().getElectionDescription().getComplexCode());
 		// add the code which defines the votes
-
 		String origVotes = electionDesc.getContainer().getInputStruct().getStructAccess() + " "
 				+ electionDesc.getContainer().getNameContainer().getOrigVotesName() + " = "
 				+ getVotingResultCode((CBMCResultValueWrapper) votingData.values) + ";";
 
 		code.add(origVotes);
+
+		String sizeOfVote = "" + electionDesc.getContainer().getInputType()
+				.getSizesInOrder(votingData.voters, votingData.candidates, votingData.seats).get(0);
+		String origVotesSize = "int ORIG_VOTES_SIZE = " + sizeOfVote + ";";
+
+		code.add(origVotesSize);
 
 		addMarginMainTest(); // TODO add gcc ability here
 	}
@@ -186,9 +196,9 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		code.add("#ifndef MARGIN\n #define MARGIN " + margin + "\n #endif");
 		// we also add the original result, which is calculated by compiling the
 		// program and running it
-		
+
 		String origResultName = electionDesc.getContainer().getNameContainer().getOrigResultName();
-		
+
 		electionDesc.getContainer().getOutputType().addLastResultAsCode(code, origResult, origResultName);
 		// add the verify method:
 		// taken and adjusted from the paper:
@@ -196,33 +206,37 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 
 		// add the main method
 		code.add("int main() {");
-		
-		addMarginCompMethod(code, electionDesc.getContainer().getInputType(), electionDesc.getContainer().getOutputType(), origResultName);
+
+		addMarginCompMethod(code, electionDesc.getContainer().getInputType(),
+				electionDesc.getContainer().getOutputType(), origResultName);
 
 		code.add("}");
 	}
 
-	private void addMarginCompMethod(CodeArrayListBeautifier code, InputType inType, OutputType outType, String origResultName) {
+	private void addMarginCompMethod(CodeArrayListBeautifier code, InputType inType, OutputType outType,
+			String origResultName) {
 
 		code.add("//Verify for input");
-		
+
 		String voteName = UnifiedNameContainer.getNewVotesName();
 		addMarginCompMethodInput(code, inType, voteName);
-		
+
 		code.add("//Verify for output");
 
 		addMarginCompMethodOutput(code, outType, voteName, origResultName);
-		
+
 	}
-	
+
 	private void addMarginCompMethodInput(CodeArrayListBeautifier code, InputType inType, String voteName) {
-		
+
 		code.add("int total_diff = 0;");
 
 		String voteContainer = inType.getStruct().getStructAccess() + " " + voteName + ";";
 
 		addInitialisedValue(voteName, inType, electionDesc.getContainer().getInputStruct(), inType.getMinimalValue(),
 				inType.getMaximalValue());
+		
+		addConditionalValue(voteName, inType);
 
 		code.add(voteContainer);
 
@@ -236,8 +250,8 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		// if we changed the vote, we keep track of it
 		code.add("total_diff++;");
 
-		code.add(inType.flipVote(voteName, electionDesc.getContainer().getNameContainer().getOrigVotesName(),
-				loopVars));
+		code.add(
+				inType.flipVote(voteName, electionDesc.getContainer().getNameContainer().getOrigVotesName(), loopVars));
 
 		code.deleteTab();
 		code.add("} else {");
@@ -247,31 +261,36 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 				loopVars));
 
 		code.add("}");
-		
+
 		addNestedForrLoopBot(code, inType.getAmountOfDimensions());
 
 		// no more changes than margin allows
 		code.add("assume(total_diff <= MARGIN);");
 	}
-	
-	private void addMarginCompMethodOutput(CodeArrayListBeautifier code, OutputType outType, String newVotesName, String origResultName) {
+
+	private void addConditionalValue(String voteName, InputType inType) {
+		inType.restrictVotes(voteName, code);
+	}
+
+	private void addMarginCompMethodOutput(CodeArrayListBeautifier code, OutputType outType, String newVotesName,
+			String origResultName) {
 		String resultName = outType.getContainer().getNameContainer().getNewResultName();
 
 		String resultContainer = outType.getStruct().getStructAccess() + " " + resultName;
-		
-		String resultAssignment = resultContainer + " = " + outType.getContainer().getNameContainer().getVotingMethod() +
-				"(" + newVotesName + ");";
+
+		String resultAssignment = resultContainer + " = " + outType.getContainer().getNameContainer().getVotingMethod()
+				+ "(ORIG_VOTES_SIZE," + newVotesName + ");";
 
 		code.add(resultAssignment);
-		
+
 		List<String> loopVars = addNestedForLoopTop(code, outType.getSizeOfDimensionsAsList(), new ArrayList<String>());
 
 		String newResultAcc = outType.getFullVarAccess(resultName, loopVars);
-		
+
 		String origResultAcc = outType.getFullVarAccess(origResultName, loopVars);
-		
+
 		code.add("assert(" + newResultAcc + " == " + origResultAcc + ");");
-		
+
 		addNestedForrLoopBot(code, loopVars.size());
 	}
 
@@ -285,7 +304,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 	 */
 	private List<String> addNestedForLoopTop(CodeArrayListBeautifier code, List<String> dimensions,
 			List<String> nameOfLoopVariables) {
-		
+
 		if (dimensions.size() > 0) {
 
 			String name = "loop_" + nameOfLoopVariables.size();
@@ -335,47 +354,46 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 
 		code.add("unsigned int voteSumForCandidate" + (unique ? "Unique" : "")
 				+ "(INPUT, unsigned int amountVotes, unsigned int candidate) {".replace("INPUT", input));
-		
-		
+
 		int dimensions = electionDesc.getContainer().getInputType().getAmountOfDimensions();
-		
+
 		String[] sizes = electionDesc.getContainer().getInputType().getSizeOfDimensions();
-		
+
 		sizes[0] = "amountVotes";
-		
+
 		String forLoopStart = "";
-		
+
 		List<String> loopVariables = generateLoopVariables(dimensions, "arr");
-		
-		
+
 		for (int i = 0; i < dimensions; i++) {
 			forLoopStart = forLoopStart // add all needed loop headers
 					+ generateForLoopHeader(loopVariables.get(i), sizes[i]);
 		}
-		
+
 		String forLoopEnd = "";
-		
+
 		for (int i = 0; i < dimensions; i++) {
 			forLoopEnd = forLoopEnd + "}"; // close the for loops
 		}
-		
+
 		String access = "";
-		
+
 		for (int i = 0; i < dimensions; i++) {
 			access = access + "[" + loopVariables.get(i) + "]";
 		}
-		
-		
+
 		String dataDef = electionDesc.getContainer().getInputType().getDataTypeAndSign();
-		
-		String definition = dataDef + " arr" + electionDesc.getContainer().getInputType().getDimensionDescriptor(true) + ";";
-		
+
+		String definition = dataDef + " arr" + electionDesc.getContainer().getInputType().getDimensionDescriptor(true)
+				+ ";";
+
 		code.add(definition);
-		
-		String assignment = forLoopStart + "arr" + access + " = " + " tmp_struct.arr" + access +";" + forLoopEnd + "\n";
-		
+
+		String assignment = forLoopStart + "arr" + access + " = " + " tmp_struct.arr" + access + ";" + forLoopEnd
+				+ "\n";
+
 		code.add(assignment);
-		
+
 		code.add("unsigned int sum = 0;");
 		code.add("for(unsigned int i = 0; i < amountVotes; i++) {");
 
@@ -436,9 +454,8 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		}
 
 		String voteStruct = electionDesc.getContainer().getInputStruct().getStructAccess();
-		
-		code.add(voteStruct
-				+ " permutateTwo(" + voteStruct + " votes, " + "unsigned int length) {");
+
+		code.add(voteStruct + " permutateTwo(" + voteStruct + " votes, " + "unsigned int length) {");
 		code.add(voteStruct + " sub_arr;");
 		code.add("  ");
 		code.add("unsigned int already_used_arr[V];");
@@ -482,11 +499,10 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 				|| !electionDesc.getContainer().getInputType().getSizeOfDimensions()[0].equals("V")) {
 			return;
 		}
-		
+
 		String voteStruct = electionDesc.getContainer().getInputStruct().getStructAccess();
 
-		code.add(voteStruct
-				+ " permutateOne(" + voteStruct + " votes, unsigned int length) {");
+		code.add(voteStruct + " permutateOne(" + voteStruct + " votes, unsigned int length) {");
 		code.add(voteStruct + " sub_arr;");
 		code.add("  ");
 		code.add(" unsigned int already_used_arr[V];");
@@ -534,10 +550,9 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		}
 
 		String voteStruct = electionDesc.getContainer().getInputStruct().getStructAccess();
-		
-		code.add(voteStruct
-				+ " concatTwo(" + voteStruct + " votesOne, unsigned int sizeOne, "
-				+ voteStruct + " votesTwo, unsigned int sizeTwo) {");
+
+		code.add(voteStruct + " concatTwo(" + voteStruct + " votesOne, unsigned int sizeOne, " + voteStruct
+				+ " votesTwo, unsigned int sizeTwo) {");
 		code.add(voteStruct + " sub_arr;");
 		code.add("  ");
 		code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
@@ -581,10 +596,9 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		}
 
 		String voteStruct = electionDesc.getContainer().getInputStruct().getStructAccess();
-		
-		code.add(voteStruct
-				+ " concatOne(" + voteStruct + " votesOne, unsigned int sizeOne, "
-				+ voteStruct + " votesTwo, unsigned int sizeTwo) {");
+
+		code.add(voteStruct + " concatOne(" + voteStruct + " votesOne, unsigned int sizeOne, " + voteStruct
+				+ " votesTwo, unsigned int sizeTwo) {");
 		code.add(voteStruct + " sub_arr;");
 		code.add("  ");
 		code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
@@ -656,14 +670,12 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		code.add("//start is inclusive, stop is exclusive");
 		code.add("");
 
-		
 		String voteStruct = electionDesc.getContainer().getInputStruct().getStructAccess();
-		
+
 		if ((electionDesc.getContainer().getInputType().getAmountOfDimensions() == 1
 				&& electionDesc.getContainer().getInputType().getSizeOfDimensions()[0].equals("V"))) {
 
-			code.add(voteStruct
-					+ " split(" + voteStruct + " votes, " + "unsigned int start, unsigned int stop) {");
+			code.add(voteStruct + " split(" + voteStruct + " votes, " + "unsigned int start, unsigned int stop) {");
 			code.add(voteStruct + " sub_arr;");
 			code.add("  ");
 			code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
@@ -705,8 +717,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 
 			code.add("//start is inclusive, stop is exclusive");
 			code.add("//used for 2 dim arrays");
-			code.add(voteStruct
-					+ " split(" + voteStruct + " votes, " + "unsigned int start, unsigned int stop) {");
+			code.add(voteStruct + " split(" + voteStruct + " votes, " + "unsigned int start, unsigned int stop) {");
 			code.add(voteStruct + " sub_arr;");
 			code.add("  ");
 			code.add("  for(int i = 0; i < V; i++) { //set all to C in the beginning");
@@ -827,7 +838,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 			code.add("//election number: " + i);
 
 			String sizeOfVotes = electionDesc.getContainer().getNameContainer().getVoter() + i;
-			
+
 			String electX = electionDesc.getContainer().getOutputStruct().getStructAccess() + " elect" + i + " = "
 					+ UnifiedNameContainer.getVotingMethod() + "(" + sizeOfVotes + ", votes" + i + ");";
 			code.add(electX);
@@ -985,7 +996,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 	private String getVotingResultCode(CBMCResultValueWrapper votingData) {
 		return electionDesc.getContainer().getInputType().getVotingResultCode(votingData);
 	}
-	
+
 	private List<String> generateLoopVariables(int dimensions, String variableName) {
 		List<String> generatedVariables = new ArrayList<String>(dimensions);
 
@@ -994,7 +1005,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 
 		for (int i = 0; i < dimensions; i++) {
 			String varName = defaultName + currentIndex;
-			
+
 			boolean duplicate = true;
 			int length = 1;
 			while (duplicate) {
@@ -1010,13 +1021,13 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		}
 		return generatedVariables;
 	}
-	
+
 	private String generateRandomString(int length) {
 		String generatedString = RandomStringUtils.random(length, true, false);
 
 		return generatedString;
 	}
-	
+
 	private String generateForLoopHeader(String indexName, String maxSize) {
 		return "for (unsigned int " + indexName + " = 0; " + indexName + " < " + maxSize + "; " + indexName + "++ ) { ";
 	}

@@ -263,11 +263,6 @@ public abstract class InOutType {
 			toReturn.add(CBMCResultPresentationHelper.printSingleElement(
 					(CBMCResultValueSingle) struct.getResultVariable("arr").getResultValue(), varName.length()));
 		}
-
-		CBMCResultValueArray arr = (CBMCResultValueArray) struct.getResultVariable("arr").getResultValue();
-
-		toReturn.addAll(CBMCResultPresentationHelper.printTwoDimResult(arr, size, varName.length()));
-
 		return toReturn;
 	}
 

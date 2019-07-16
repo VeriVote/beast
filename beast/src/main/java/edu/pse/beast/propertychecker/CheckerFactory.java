@@ -248,12 +248,15 @@ public abstract class CheckerFactory implements Runnable {
 				boolean hasUpperBound = false;
 				boolean hasMargin = false;
 				while ((left < right) && !stopped) {
+					System.out.println("left: " + left + " | right: " + right);
 					// calculate the margin to check
 					margin = (int) (left + Math.floor((float) (right - left) / 2));
 					checkMarginAndWait(margin, origResult, advanced, numVoters, numCandidates, numSeats, origData,
 							result);
 					result.addStatusString(
 							"finished for margin " + margin + " result: " + result.checkAssertionSuccess());
+					
+					System.out.println("finished for margin " + margin + " result: " + result.checkAssertionSuccess());
 					
 					result.setResult(currentlyRunning.getResultList());
 					

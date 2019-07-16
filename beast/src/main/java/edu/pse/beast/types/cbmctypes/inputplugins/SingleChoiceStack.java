@@ -1,28 +1,18 @@
 package edu.pse.beast.types.cbmctypes.inputplugins;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
-import edu.pse.beast.codearea.errorhandling.ErrorDisplayer;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
-import edu.pse.beast.propertychecker.Result;
-import edu.pse.beast.toolbox.CBMCResultPresentationHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
-import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValue;
-import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueArray;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueSingle;
-import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueStruct;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
-import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class SingleChoiceStack extends CBMCInputType {
@@ -66,33 +56,53 @@ public class SingleChoiceStack extends CBMCInputType {
 	}
 
 	@Override
-	public String vetValue(String newValue, int position, ElectionTypeContainer container, NEWRowOfValues row) {
+	public String vetValue(ElectionTypeContainer container, List<NEWRowOfValues> rows, int rowNumber, int positionInRow,
+			String newValue) {
+		
+		if (rows.size() <= rowNumber) {
+			return newValue;
+		}
+		
 		final int number;
 		try {
 			number = Integer.parseInt(newValue);
 		} catch (NumberFormatException e) {
 			return "0";
 		}
-		if (number < 0 || number > row.getAmountVoters()) {
+		if (number < 0 || number > rows.get(rowNumber).getAmountVoters()) {
 			return "0";
 		} else {
-			int newValueInt = Integer.parseInt(newValue);
+			int totalSum = 0;
 
-			List<String> values = row.getValues();
+			for (int i = 0; i < rows.size(); i++) { //add up all values so far
+				List<String> currentValues = rows.get(i).getValues();
 
-			int sum = 0;
-			for (int i = 0; i < values.size(); i++) {
-				if (i != position) {
-					sum = sum + Integer.parseInt(values.get(i));
+				for (int j = 0; j < currentValues.size(); j++) {
+					totalSum = totalSum + Integer.parseInt(currentValues.get(j));
 				}
 			}
-
-			if ((sum + newValueInt) > row.getAmountCandidates()) {
-				return "0";
+			
+			totalSum = totalSum - Integer.parseInt(rows.get(rowNumber).getValues().get(positionInRow));
+			
+			totalSum = totalSum + Integer.parseInt(newValue);
+			
+			if (totalSum > rows.get(rowNumber).getAmountVoters()) {
+				return "0"; //we would exceed the limit with this addition, so we reset to 0
 			} else {
 				return newValue;
 			}
 		}
+	}
+	
+	@Override
+	public void restrictVotes(String voteName, CodeArrayListBeautifier code) {
+		code.add("unsigned int tmp_restr_sum = 0;");
+		
+		code.add("for(int loop_r_0 = 0; loop_r_0 < C; loop_r_0++) {"); 
+		code.add("tmp_restr_sum = tmp_restr_sum + " + voteName + ".arr[loop_r_0];");
+		code.add("}");
+
+		code.add("assume(tmp_restr_sum <= V);");
 	}
 
 	@Override
@@ -137,7 +147,11 @@ public class SingleChoiceStack extends CBMCInputType {
 
 	@Override
 	public int vetAmountVoters(int amountVoters) {
-		return 1;
+		if (amountVoters < 1) {
+			return 1;
+		} else {
+			return amountVoters;
+		}
 	}
 
 	@Override
@@ -151,16 +165,8 @@ public class SingleChoiceStack extends CBMCInputType {
 
 	@Override
 	public int getNumVotingPoints(ResultValueWrapper result) {
-		int sum = 0;
-//        for (int i = 0; i < votingData.length; i++) {
-//            for (int j = 0; j < votingData[0].length; j++) {
-//                sum = sum + Integer.parseInt(votingData[i][j]);
-//            }
-//        }
-
-		System.out.println("fix: SingleChoiceStack:");
-
-		return sum;
+		
+		return GUIController.getController().getElectionSimulation().getNumVoters();
 	}
 
 	public int test(int i) {
@@ -176,33 +182,21 @@ public class SingleChoiceStack extends CBMCInputType {
 	@Override
 	public CBMCResultValue convertRowToResultValue(NEWRowOfValues row) {
 		
-		ErrorForUserDisplayer.displayError("Single choice stack is not yet functioning with Margin comp");
+		List<String> values = row.getValues();
+		String value = values.get(0);
 		
-		throw new IllegalArgumentException(); //TODO
-//		
-//		List<String> values = row.getValues();
-//
-//		String foundValue = "0";
-//
-//		for (Iterator<String> iterator = values.iterator(); iterator.hasNext();) {
-//			String value = (String) iterator.next();
-//
-//			if (!value.equals("0")) {
-//				foundValue = "0";
-//			}
-//		}
-//
-//		CBMCResultValueSingle toReturn = new CBMCResultValueSingle();
-//
-//		toReturn.setValue("int", foundValue, 32);
-//
-//		return toReturn;
+		
+		CBMCResultValueSingle toReturn = new CBMCResultValueSingle();
+		
+		toReturn.setValue("int", value, 32);
+		
+		return toReturn;
 	}
 
 	@Override
 	public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, String valueName,
 			List<String> loopVariables) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

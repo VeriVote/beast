@@ -821,6 +821,8 @@ public class GUIController {
 			codeArea.setNewElectionDescription(
 					new ElectionDescription(triplet.first, triplet.second, triplet.third, 0, 0, 0, true));
 		}
+		
+		this.getElectionSimulation().updateContainer(codeArea.getElectionDescription().getContainer());
 	}
 
 	@FXML
@@ -830,15 +832,19 @@ public class GUIController {
 		newVotingInput();
 		newPropertyList();
 		setOptions(new OptionsNew()); // reset the voting bounds
+		
+		this.getElectionSimulation().updateContainer(codeArea.getElectionDescription().getContainer());
 	}
 
 	@FXML
 	public void openElectionDescription(ActionEvent event) {
 		codeArea.open();
+		this.getElectionSimulation().updateContainer(codeArea.getElectionDescription().getContainer());
 	}
 
 	private void openElectionDescription(File elecDescFile) {
 		codeArea.open(elecDescFile);
+		this.getElectionSimulation().updateContainer(codeArea.getElectionDescription().getContainer());
 	}
 
 	@FXML
