@@ -80,7 +80,7 @@ public class ElectionSimulationModel {
 		this.support.removePropertyChangeListener(pcl);
 	}
 
-	private void addRow() {
+	private synchronized void addRow() {
 		if (currentRows == maxRows) {
 			NEWRowOfValues toAdd = new NEWRowOfValues(this, container, this.getAmountCandidates(),
 					this.getAmountVoters(), this.getAmountSeats(), currentRows, elementWidth, elementHeight);

@@ -95,6 +95,9 @@ public class NEWRowOfValues {
 
 			for (int i = 0; i < iterations; i++) {
 				TextField field = fields.get(i);
+				
+				System.out.println("update " + rowIndex + " to " + values.get(i));
+				
 				field.setText(values.get(i));
 				parent.getInputGridPane().add(field, i, rowIndex);
 			}
@@ -102,6 +105,8 @@ public class NEWRowOfValues {
 	}
 
 	private void checkAndInsertValue(String newValue, int positionInRow) {
+		
+		System.out.println("insert: " + newValue + " in " + rowIndex);
 		
 		List<NEWRowOfValues> allRows = parent.getRows();
 		allRows.remove(this); //in case that this row is created before it is saved by its parent

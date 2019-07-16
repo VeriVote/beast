@@ -180,7 +180,7 @@ public class ElectionSimulation implements MenuBarInterface {
 		if (!input.equals("")) {
 			String[] lines = input.split("\n");
 			for (int y = 0; y < lines.length; y++) {
-				String[] values = lines[y].split(CSV_SEPARATOR);
+				String[] values = lines[y].replaceAll("\\r", "").split(CSV_SEPARATOR);
 				if (y == 0) {
 					GUIController.getController().getInputVoters().setText("" + values[0]);
 					GUIController.getController().getInputCandidates().setText("" + values[1]);
