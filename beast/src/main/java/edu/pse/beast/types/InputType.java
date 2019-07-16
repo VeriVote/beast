@@ -144,12 +144,12 @@ public abstract class InputType extends InOutType {
 	 * @param loopNames
 	 * @return
 	 */
-	public String flipVote(String newVotesName, String origVotesName, List<String> loopVars) {
+	public void flipVote(String newVotesName, String origVotesName, List<String> loopVars, CodeArrayListBeautifier code) {
 		String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
 
 		String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
 
-		return "assume(" + newVotesNameAcc + " != " + origVotesNameAcc + ");";
+		code.add("assume(" + newVotesNameAcc + " != " + origVotesNameAcc + ");");
 	}
 
 	public String setVoteValue(String newVotesName, String origVotesName, List<String> loopVars) {
