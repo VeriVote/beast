@@ -156,11 +156,12 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 				+ electionDesc.getContainer().getNameContainer().getOrigVotesName() + " = "
 				+ getVotingResultCode((CBMCResultValueWrapper) votingData.values) + ";";
 
-		String sizeOfVote = "" + electionDesc.getContainer().getInputType().getSizesInOrder(votingData.voters, votingData.candidates, votingData.seats).get(0);
-		String origVotesSize = "int ORIG_VOTES_SIZE = " + sizeOfVote + ";"; 
-		
+		String sizeOfVote = "" + electionDesc.getContainer().getInputType()
+				.getSizesInOrder(votingData.voters, votingData.candidates, votingData.seats).get(0);
+		String origVotesSize = "int ORIG_VOTES_SIZE = " + sizeOfVote + ";";
+
 		code.add(origVotesSize);
-		
+
 		code.add(origVotes);
 		addMarginMainCheck(margin, origResult);
 	}
@@ -235,7 +236,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 
 		addInitialisedValue(voteName, inType, electionDesc.getContainer().getInputStruct(), inType.getMinimalValue(),
 				inType.getMaximalValue());
-		
+
 		addConditionalValue(voteName, inType);
 
 		code.add(voteContainer);
@@ -250,8 +251,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		// if we changed the vote, we keep track of it
 		code.add("total_diff++;");
 
-		code.add(
-				inType.flipVote(voteName, electionDesc.getContainer().getNameContainer().getOrigVotesName(), loopVars));
+		inType.flipVote(voteName, electionDesc.getContainer().getNameContainer().getOrigVotesName(), loopVars, code);
 
 		code.deleteTab();
 		code.add("} else {");
