@@ -73,18 +73,6 @@ public class ElectionSimulation implements MenuBarInterface {
 		GUIController.getController().getInputSeats().setText("1");
 	}
 
-//    public String[][] getVotingData() { TODO remove later
-//        String[][] votingData = {{"0"}};
-//        votingData = new String[model.getAmountVoters()][model.getAmountCandidates()];
-//        // read the data in a 2d array
-//        for (int i = 0; i < model.getAmountVoters(); i++) {
-//            for (int j = 0; j < model.getAmountCandidates(); j++) {
-//                votingData[i][j] = model.getRows().get(i).getValues().get(j);
-//            }
-//        }
-//        return votingData;
-//    }
-
 	public int getNumVoters() {
 		return model.getAmountVoters();
 	}

@@ -187,6 +187,7 @@ public class ElectionSimulationModel {
 		while (rows.size() <= y) {
 			addRow();
 		}
+
 		rows.get(y).setValue(x, value);
 	}
 

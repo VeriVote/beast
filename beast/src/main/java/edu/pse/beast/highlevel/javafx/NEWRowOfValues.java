@@ -30,8 +30,10 @@ public class NEWRowOfValues {
 	private boolean disabled;
 
 	private final boolean isTwoDim;
-	
+
 	private int rowSize;
+
+	private boolean blocked = true;
 
 	public NEWRowOfValues(ElectionSimulationModel parent, ElectionTypeContainer container, int amountOfCandidates,
 			int amountOfVoters, int amountOfSeats, int rowIndex, double elementWidth, double elementHeight) {
@@ -65,7 +67,12 @@ public class NEWRowOfValues {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				Platform.runLater(() -> {
-					checkAndInsertValue(newValue, position);
+					if (!blocked) {
+						checkAndInsertValue(newValue, position, false);
+					} else {
+						field.setText(values.get(position));
+						blocked = false;
+					}
 				});
 			}
 		});
@@ -95,23 +102,19 @@ public class NEWRowOfValues {
 
 			for (int i = 0; i < iterations; i++) {
 				TextField field = fields.get(i);
-				
-				System.out.println("update " + rowIndex + " to " + values.get(i));
-				
+
 				field.setText(values.get(i));
 				parent.getInputGridPane().add(field, i, rowIndex);
 			}
 		}
 	}
 
-	private void checkAndInsertValue(String newValue, int positionInRow) {
-		
-		System.out.println("insert: " + newValue + " in " + rowIndex);
-		
+	private void checkAndInsertValue(String newValue, int positionInRow, boolean block) {
+
 		List<NEWRowOfValues> allRows = parent.getRows();
-		allRows.remove(this); //in case that this row is created before it is saved by its parent
+		allRows.remove(this); // in case that this row is created before it is saved by its parent
 		allRows.add(this);
-		
+
 		String vettedValue = container.getInputType().vetValue(container, allRows, rowIndex, positionInRow, newValue);
 
 		values.set(positionInRow, vettedValue);
@@ -147,7 +150,7 @@ public class NEWRowOfValues {
 		this.container = container;
 
 		for (int i = 0; i < values.size(); i++) {
-			checkAndInsertValue("0", i);
+			checkAndInsertValue("0", i, false);
 		}
 
 	}
@@ -198,7 +201,7 @@ public class NEWRowOfValues {
 		this.amountOfCandidates = amountOfCandidates;
 		updateVetting();
 	}
-	
+
 	public void setVoters(int amountOfVoters) {
 		this.amountOfVoters = amountOfVoters;
 		updateVetting();
@@ -215,7 +218,7 @@ public class NEWRowOfValues {
 	 */
 	public void updateVetting() {
 		for (int i = 0; i < values.size(); i++) {
-			checkAndInsertValue(values.get(i), i);
+			checkAndInsertValue(values.get(i), i, true);
 		}
 	}
 
@@ -233,6 +236,6 @@ public class NEWRowOfValues {
 	}
 
 	public void setValue(int x, String value) {
-		checkAndInsertValue(value, x);
+		checkAndInsertValue(value, x, true);
 	}
 }

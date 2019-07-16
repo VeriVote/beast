@@ -95,18 +95,23 @@ public class SingleChoiceStack extends CBMCInputType {
 	}
 	
 	@Override
-	public String flipVote(String newVotesName, String origVotesName, List<String> loopVars, CodeArrayListBeautifier code) {
+	public void flipVote(String newVotesName, String origVotesName, List<String> loopVars, CodeArrayListBeautifier code) {
 		String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
 
 		String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
 		
 		code.add("int tmp_diff_stack = abs(" + newVotesNameAcc + " - " + origVotesNameAcc + ");");
 		code.add("assume(tmp_diff_stack == 1);");
-		code.add("unsigned int other_pos = nondet_uint());");
+		code.add("unsigned int other_pos = nondet_uint();");
 		code.add("assume(other_pos >= 0);");
 		code.add("assume(other_pos < C);");
 		code.add("assume(other_pos != " + loopVars.get(0) + ");");
-		code.add(newVotesNameAcc + " = " + newVotesNameAcc + "(" + newVotesNameAcc + " - " + origVotesNameAcc + ");");
+		
+		String newVotesOne = newVotesName + ".arr[other_pos]";
+		
+		code.add(newVotesNameAcc + " = " + newVotesNameAcc + " - (" + newVotesNameAcc + " - " + origVotesNameAcc + ");");
+		
+		code.add(newVotesOne + " = " + newVotesOne + " + (" + newVotesNameAcc + " - " + origVotesNameAcc + ");");
 	}
 	
 	@Override
