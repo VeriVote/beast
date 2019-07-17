@@ -233,34 +233,26 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		code.add("int total_diff = 0;");
 
 		String voteContainer = inType.getStruct().getStructAccess() + " " + voteName + ";";
-
+		
+		code.add(voteContainer);
+		
 		addInitialisedValue(voteName, inType, electionDesc.getContainer().getInputStruct(), inType.getMinimalValue(),
 				inType.getMaximalValue());
 
-		addConditionalValue(voteName, inType);
+		addConditionalValue(voteName, inType); //the votes had to be valid before hand
 
-		code.add(voteContainer);
+		List<String> tmploopVars = addNestedForLoopTop(code, inType.getSizeOfDimensionsAsList(), new ArrayList<String>());
+		
+		code.add(inType.setVoteValue(voteName, electionDesc.getContainer().getNameContainer().getOrigVotesName(),
+				tmploopVars)); //set the previous votes to the new votes
+		
+		addNestedForrLoopBot(code, inType.getAmountOfDimensions());
 
 		List<String> loopVars = addNestedForLoopTop(code, inType.getSizeOfDimensionsAsList(), new ArrayList<String>());
 
-		code.add("int changed = nondet_int();");
-		code.add("assume(0 <= changed);");
-		code.add("assume(changed <= 1);");
-		code.add("if(changed) {");
-		code.addTab();
-		// if we changed the vote, we keep track of it
-		code.add("total_diff++;");
-
 		inType.flipVote(voteName, electionDesc.getContainer().getNameContainer().getOrigVotesName(), loopVars, code);
-
-		code.deleteTab();
-		code.add("} else {");
-		code.addTab();
-
-		code.add(inType.setVoteValue(voteName, electionDesc.getContainer().getNameContainer().getOrigVotesName(),
-				loopVars));
-
-		code.add("}");
+		
+		addConditionalValue(voteName, inType); //the votes have to be valid afterwards
 
 		addNestedForrLoopBot(code, inType.getAmountOfDimensions());
 
@@ -295,14 +287,14 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 	}
 
 	/**
-	 * 
+	 *TODO move to utility class
 	 * @param code                the code beautifier it should be added to
 	 * @param dimensions          the size of each dimension,
 	 * @param nameOfLoopVariables an empty, new list. Every new loop variable will
 	 *                            be appended
 	 * @return
 	 */
-	private List<String> addNestedForLoopTop(CodeArrayListBeautifier code, List<String> dimensions,
+	public static List<String> addNestedForLoopTop(CodeArrayListBeautifier code, List<String> dimensions,
 			List<String> nameOfLoopVariables) {
 
 		if (dimensions.size() > 0) {
@@ -320,9 +312,13 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 		return nameOfLoopVariables;
 	}
 
-	private void addNestedForrLoopBot(CodeArrayListBeautifier code, int dimensions) {
+	/**
+	 * TODO move to utility class
+	 * @param code
+	 * @param dimensions
+	 */
+	public static void addNestedForrLoopBot(CodeArrayListBeautifier code, int dimensions) {
 		for (int i = 0; i < dimensions; i++) {
-			code.deleteTab();
 			code.add("}");
 		}
 	}

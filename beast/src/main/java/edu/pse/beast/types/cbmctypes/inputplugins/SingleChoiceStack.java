@@ -1,11 +1,13 @@
 package edu.pse.beast.types.cbmctypes.inputplugins;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
+import edu.pse.beast.propertychecker.CBMCCodeGenerator;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
@@ -96,22 +98,42 @@ public class SingleChoiceStack extends CBMCInputType {
 	
 	@Override
 	public void flipVote(String newVotesName, String origVotesName, List<String> loopVars, CodeArrayListBeautifier code) {
-		String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
+		String newVotesAccTop = getFullVoteAccess(newVotesName, loopVars);
 
-		String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
+		String origVotesAccTop = getFullVoteAccess(origVotesName, loopVars);
 		
-		code.add("int tmp_diff_stack = abs(" + newVotesNameAcc + " - " + origVotesNameAcc + ");");
-		code.add("assume(tmp_diff_stack == 1);");
-		code.add("unsigned int other_pos = nondet_uint();");
-		code.add("assume(other_pos >= 0);");
-		code.add("assume(other_pos < C);");
-		code.add("assume(other_pos != " + loopVars.get(0) + ");");
+		code.add("int tmp_diff = nondet_int();");
+		code.add("");
+		code.add("assume(abs(tmp_diff) >= 0);");
+		code.add("assume(abs(tmp_diff) <= (MARGIN - total_diff));");
+		code.add("");
+		code.add(newVotesAccTop + " = " + origVotesAccTop + " - tmp_diff;");
+		code.add("");
+		code.add("total_diff = total_diff  + abs(tmp_diff);");
+		code.add("int remaining_share = tmp_diff;");
 		
-		String newVotesOne = newVotesName + ".arr[other_pos]";
 		
-		code.add(newVotesNameAcc + " = " + newVotesNameAcc + " - (" + newVotesNameAcc + " - " + origVotesNameAcc + ");");
+		List<String> subloopVars = CBMCCodeGenerator.addNestedForLoopTop(code, this.getSizeOfDimensionsAsList(), new ArrayList<String>());
 		
-		code.add(newVotesOne + " = " + newVotesOne + " + (" + newVotesNameAcc + " - " + origVotesNameAcc + ");");
+		String newVotesAccSub = getFullVoteAccess(newVotesName, subloopVars);
+		
+		code.add("if(" + loopVars.get(0) + " != " + subloopVars.get(0) + ") {");
+		
+		code.add("int diff_share = nondet_int();");
+		code.add("");
+		code.add("assume((0 <= abs(diff_share)) && (abs(diff_share) <= abs(tmp_diff)));");
+		code.add("assume((abs(remaining_share - diff_share)) <= abs(remaining_share));");
+		code.add("");
+		code.add(newVotesAccSub + " = " + newVotesAccSub + " + diff_share;");
+		code.add("");
+		code.add("remaining_share = remaining_share - diff_share;");
+		code.add("");
+		code.add("}");
+		code.add("");
+		CBMCCodeGenerator.addNestedForrLoopBot(code, dimensions);
+		code.add("");
+		code.add("assume(remaining_share == 0);");
+		code.add("");
 	}
 	
 	@Override

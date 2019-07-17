@@ -14,6 +14,32 @@ public abstract class CBMCInputType extends InputType {
         super(unsigned, dataType, dimensions, sizeOfDimensions);
     }
 	
+	@Override
+	public void flipVote(String newVotesName, String origVotesName, List<String> loopVars, CodeArrayListBeautifier code) {
+		
+		code.add("int changed = nondet_int();");
+		code.add("assume(0 <= changed);");
+		code.add("assume(changed <= 1);");
+		code.add("if(changed) {");
+		
+		String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
+
+		String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
+
+		//we changed one vote, so we keep track of it
+		code.add("total_diff++;");
+		
+		code.add("assume(" + newVotesNameAcc + " != " + origVotesNameAcc + ");");
+		
+		code.add("} else {");
+		code.addTab();
+
+		code.add(this.setVoteValue(newVotesName, this.getContainer().getNameContainer().getOrigVotesName(),
+				loopVars));
+
+		code.add("}");
+	}
+	
     @Override
     public void addCheckerSpecificHeaders(CodeArrayListBeautifier code) {
         // add the headers CBMC needs;
