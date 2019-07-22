@@ -231,33 +231,35 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 	private void addMarginCompMethodInput(CodeArrayListBeautifier code, InputType inType, String voteName) {
 
 		code.add("int total_diff = 0;");
+		code.add("int pos_diff = 0;");
 
 		String voteContainer = inType.getStruct().getStructAccess() + " " + voteName + ";";
 		
 		code.add(voteContainer);
 		
-		addInitialisedValue(voteName, inType, electionDesc.getContainer().getInputStruct(), inType.getMinimalValue(),
-				inType.getMaximalValue());
+		//addInitialisedValue(voteName, inType, electionDesc.getContainer().getInputStruct(), inType.getMinimalValue(),
+		//		inType.getMaximalValue());
 
-		addConditionalValue(voteName, inType); //the votes had to be valid before hand
+		//addConditionalValue(voteName, inType); //the votes had to be valid before hand
 
-		List<String> tmploopVars = addNestedForLoopTop(code, inType.getSizeOfDimensionsAsList(), new ArrayList<String>());
+		//List<String> tmploopVars = addNestedForLoopTop(code, inType.getSizeOfDimensionsAsList(), new ArrayList<String>());
 		
-		code.add(inType.setVoteValue(voteName, electionDesc.getContainer().getNameContainer().getOrigVotesName(),
-				tmploopVars)); //set the previous votes to the new votes
+		//code.add(inType.setVoteValue(voteName, electionDesc.getContainer().getNameContainer().getOrigVotesName(),
+		//		tmploopVars)); //set the previous votes to the new votes
 		
-		addNestedForrLoopBot(code, inType.getAmountOfDimensions());
+		//addNestedForrLoopBot(code, inType.getAmountOfDimensions());
 
 		List<String> loopVars = addNestedForLoopTop(code, inType.getSizeOfDimensionsAsList(), new ArrayList<String>());
 
 		inType.flipVote(voteName, electionDesc.getContainer().getNameContainer().getOrigVotesName(), loopVars, code);
 		
-		addConditionalValue(voteName, inType); //the votes have to be valid afterwards
+		//addConditionalValue(voteName, inType); //the votes have to be valid afterwards
 
 		addNestedForrLoopBot(code, inType.getAmountOfDimensions());
 
 		// no more changes than margin allows
-		code.add("assume(total_diff <= MARGIN);");
+		code.add("assume(pos_diff <= MARGIN);");
+		code.add("assume(total_diff == 0);");
 	}
 
 	private void addConditionalValue(String voteName, InputType inType) {

@@ -27,7 +27,7 @@ public abstract class CBMCInputType extends InputType {
 		String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
 
 		//we changed one vote, so we keep track of it
-		code.add("total_diff++;");
+		code.add("pos_diff++;");
 		
 		code.add("assume(" + newVotesNameAcc + " != " + origVotesNameAcc + ");");
 		

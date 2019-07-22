@@ -241,12 +241,17 @@ public abstract class CheckerFactory implements Runnable {
 				int right = parameter.getNumVotingPoints();
 				if (right == 1) {
 					ErrorForUserDisplayer.displayError("You wanted to computate a margin for one voter / votingPoint, "
-							+ "which does not make any sense.");
+							+ "which does not make sense.");
 				}
 				int margin = 0;
  				List<String> lastFailedRun = new ArrayList<String>();
 				boolean hasUpperBound = false;
 				boolean hasMargin = false;
+				
+				System.out.println("started new margin computation!");
+				
+				int currentRun = 1;
+				
 				while ((left < right) && !stopped) {
 					System.out.println("left: " + left + " | right: " + right);
 					// calculate the margin to check
@@ -257,9 +262,11 @@ public abstract class CheckerFactory implements Runnable {
 					result.setResult(currentlyRunning.getResultList());
 					
 					result.addStatusString(
-							"finished for margin " + margin + " result: " + result.checkAssertionSuccess());
+							"finished run " + currentRun + " for margin " + margin + " Result: " + result.checkAssertionSuccess());
 					
-					System.out.println("finished for margin " + margin + " result: " + result.checkAssertionSuccess());
+					System.out.println("finished run " + currentRun + " for margin " + margin + " Result: " + result.checkAssertionSuccess());
+					
+					currentRun++;
 					
 					if (result.checkAssertionSuccess()) {
 						left = margin + 1;
@@ -283,6 +290,7 @@ public abstract class CheckerFactory implements Runnable {
 				}
 				// hasMargin now is true, if there is an upper bound,
 				// and false, if there is no margin
+				System.out.println("finished: hasFinalMargin: " + hasMargin + " || finalMargin = " + margin);
 				result.addStatusString("finished: hasFinalMargin: " + hasMargin + " || finalMargin = " + margin);
 				result.setMarginComp(true);
 				result.setHasFinalMargin(hasMargin);

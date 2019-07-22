@@ -479,11 +479,11 @@
                                           <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                                             <items>
                                                 <Label text="Voters" />
-                                                <TextField fx:id="inputVoterField" alignment="CENTER_RIGHT" maxWidth="50.0" text="0" />
+                                                <TextField fx:id="inputVoterField" maxWidth="50.0" text="0" />
                                                 <Label text="Candidates" />
-                                                <TextField fx:id="inputCandidateField" alignment="CENTER_RIGHT" maxWidth="50.0" text="0" />
+                                                <TextField fx:id="inputCandidateField" maxWidth="50.0" text="0" />
                                                 <Label text="Seats" />
-                                                <TextField fx:id="inputSeatField" alignment="CENTER_RIGHT" maxWidth="50.0" text="0" />
+                                                <TextField fx:id="inputSeatField" maxWidth="50.0" text="0" />
                                                 <Pane HBox.hgrow="ALWAYS" />
                                                 <Button mnemonicParsing="false" onAction="#resetInput" text="%key.reset" />
                                             </items>
