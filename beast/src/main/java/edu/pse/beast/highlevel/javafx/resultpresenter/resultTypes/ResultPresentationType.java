@@ -21,89 +21,79 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
 
 public abstract class ResultPresentationType {
+    public MenuItem menuItem = null;
+    public abstract Node presentResult(Result result);
+    public abstract String getName();
+    public abstract String getToolTipDescription();
 
-	public MenuItem menuItem = null;
+    /**
+     * 
+     * @return true, if the Node given by this Type support zooming
+     */
+    public abstract boolean supportsZoom();
 
-	public abstract Node presentResult(Result result);
+    /**
+     * 
+     * @return all implementations of this class
+     */
+    public static List<ResultPresentationType> getImplementations() {
+        ServiceLoader<ResultPresentationType> loader =
+                ServiceLoader.load(ResultPresentationType.class);
+        List<ResultPresentationType> implementations = new ArrayList<ResultPresentationType>();
+        for (Iterator<ResultPresentationType> iterator = loader.iterator(); iterator.hasNext();) {
+            ResultPresentationType implementation = iterator.next();
+            implementations.add(implementation);
+        }
+        return implementations;
+    }
 
-	public abstract String getName();
+    public MenuItem getMenuItem() {
+        if (menuItem != null) {
+            return menuItem;
+        } else {
+            CustomMenuItem item = new CustomMenuItem(new Label(getName()));
+            Tooltip tip = new Tooltip(getToolTipDescription());
+            Tooltip.install(item.getContent(), tip);
+            item.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    ResultPresenterNEW.getInstance()
+                            .setPresentationType(ResultPresentationType.this);
+                }
+            });
+            this.menuItem = item;
+            return item;
+        }
+    }
 
-	public abstract String getToolTipDescription();
-	
-	/**
-	 * 
-	 * @return true, if the Node given by this Type support zooming
-	 */
-	public abstract boolean supportsZoom();
+    public abstract void zoomTo(double zoomValue);
 
-	/**
-	 * 
-	 * @return all implementations of this class
-	 */
-	public static List<ResultPresentationType> getImplementations() {
-		ServiceLoader<ResultPresentationType> loader = ServiceLoader.load(ResultPresentationType.class);
+    public abstract boolean supports(AnalysisType analysisType);
 
-		List<ResultPresentationType> implementations = new ArrayList<ResultPresentationType>();
-		for (Iterator<ResultPresentationType> iterator = loader.iterator(); iterator.hasNext();) {
-			ResultPresentationType implementation = iterator.next();
-			implementations.add(implementation);
-		}
-		return implementations;
-	}
+    /**
+     * extracts the value of single value objects. is used to extract the size
+     * of each vote
+     * 
+     * @param toExtract
+     *            has be of the form: ValueWrapper -> ResultValueSingle<Integer>
+     * @return
+     */
+    public Map<Integer, Long> getAllSizes(List<ResultValueWrapper> toExtract) {
+        HashMap<Integer, Long> toReturn = new HashMap<Integer, Long>();
+        for (Iterator<ResultValueWrapper> iterator = toExtract.iterator(); iterator.hasNext();) {
+            ResultValueWrapper currentWrapper = (ResultValueWrapper) iterator.next();
+            int index = currentWrapper.getMainIndex();
+            CBMCResultValueSingle singleValue =
+                    (CBMCResultValueSingle) currentWrapper.getResultValue();
+            toReturn.put(index, (Long) singleValue.getNumberValue());
+        }
+        return toReturn;
+    }
 
-	public MenuItem getMenuItem() {
-		if (menuItem != null) {
-			return menuItem;
-		} else {
-
-			CustomMenuItem item = new CustomMenuItem(new Label(getName()));
-
-			Tooltip tip = new Tooltip(getToolTipDescription());
-
-			Tooltip.install(item.getContent(), tip);
-
-			item.setOnAction(new EventHandler<ActionEvent>() {
-
-				@Override
-				public void handle(ActionEvent event) {
-					ResultPresenterNEW.getInstance().setPresentationType(ResultPresentationType.this);
-				}
-			});
-			
-			this.menuItem = item;
-			
-			return item;
-		}
-	}
-	
-	public abstract void zoomTo(double zoomValue);
-
-	public abstract boolean supports(AnalysisType analysisType);
-	
-	
-	/**
-	 * extracts the value of single value objects. is used to extract the size of each vote
-	 * @param toExtract has be of the form: ValueWrapper -> ResultValueSingle<Integer>
-	 * @return
-	 */
-	public Map<Integer, Long> getAllSizes(List<ResultValueWrapper> toExtract) {
-		HashMap<Integer, Long> toReturn = new HashMap<Integer, Long>();
-		
-		for (Iterator<ResultValueWrapper> iterator = toExtract.iterator(); iterator.hasNext();) {
-			ResultValueWrapper currentWrapper = (ResultValueWrapper) iterator.next();
-			int index = currentWrapper.getMainIndex();
-			
-			CBMCResultValueSingle singleValue = (CBMCResultValueSingle) currentWrapper.getResultValue();
-			
-			toReturn.put(index, (Long)singleValue.getNumberValue());
-		}
-		
-		return toReturn;
-	}
-
-	/**
-	 * indicates if this class should be normally used first to display a result
-	 * @return
-	 */
-	public abstract boolean isDefault();
+    /**
+     * indicates if this class should be normally used first to display a result
+     * 
+     * @return
+     */
+    public abstract boolean isDefault();
 }

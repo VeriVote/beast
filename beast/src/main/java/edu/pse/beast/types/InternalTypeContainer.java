@@ -1,41 +1,41 @@
 package edu.pse.beast.types;
 
 import java.util.List;
-import java.util.Map;
 
-import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
-import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 
 /**
  *
  * @author Niels Hanselmann
  */
-public class InternalTypeContainer extends InOutType { //TODO extract to another interface
+public class InternalTypeContainer extends InOutType { // TODO extract to another interface
 
     private final boolean isList;
     private final InternalTypeRep internalType;
     private final InternalTypeContainer listedType;
 
     /**
-     * If the container is a list, say of votes, then the access type is the type of
-     * the symbolic variable which can be used to access elements of the list. Example:
-     * Every voter elects one candidate: VOTES1(v) <-- access type would be VOTER. Every
-     * voter lists candidates by preference: VOTES1(v)(c) <--- access type c would be
-     * CANDIDATE. This variable is also used to determine the size of the list: type size
-     * VOTER V CANDIDATE C SEAT S
+     * If the container is a list, say of votes, then the access type is the
+     * type of the symbolic variable which can be used to access elements of the
+     * list. Example: Every voter elects one candidate: VOTES1(v) <-- access
+     * type would be VOTER. Every voter lists candidates by preference:
+     * VOTES1(v)(c) <--- access type c would be CANDIDATE. This variable is also
+     * used to determine the size of the list: type size VOTER V CANDIDATE C
+     * SEAT S
      */
     private final InternalTypeRep accessTypeIfList;
 
     /**
      * Constructor for a listed TypeContainer
      *
-     * @param listedType      sets the type of the list elements
-     * @param accessTypeIfList sets the access type for the list elements
+     * @param listedType
+     *            sets the type of the list elements
+     * @param accessTypeIfList
+     *            sets the access type for the list elements
      */
     public InternalTypeContainer(InternalTypeContainer listedType,
                                  InternalTypeRep accessTypeIfList) {
-    	super(false, null, -1, null);
+        super(false, null, -1, null);
         this.isList = true;
         this.listedType = listedType;
         this.accessTypeIfList = accessTypeIfList;
@@ -45,10 +45,11 @@ public class InternalTypeContainer extends InOutType { //TODO extract to another
     /**
      * Constructor for a TypeContainer that is NOT a List
      *
-     * @param internalType the type of this election
+     * @param internalType
+     *            the type of this election
      */
     public InternalTypeContainer(InternalTypeRep internalType) {
-    	super(false, null, 1, null);
+        super(false, null, 1, null);
         this.isList = false;
         this.internalType = internalType;
         this.listedType = null;
@@ -107,8 +108,10 @@ public class InternalTypeContainer extends InOutType { //TODO extract to another
 
     @Override
     public int hashCode() {
-        int result = 31 + (accessTypeIfList != null ? accessTypeIfList.hashCode() : 0);
-        result = 31 * result + ((internalType != null) ? internalType.hashCode() : 0);
+        int result = 31
+                + (accessTypeIfList != null ? accessTypeIfList.hashCode() : 0);
+        result = 31 * result
+                + ((internalType != null) ? internalType.hashCode() : 0);
         result = 31 * result + (isList ? 1231 : 1237);
         result = 31 * result + (listedType != null ? listedType.hashCode() : 0);
         return result;
@@ -134,9 +137,8 @@ public class InternalTypeContainer extends InOutType { //TODO extract to another
         if (isList != other.isList) {
             return false;
         }
-        return listedType != null
-                ? listedType.equals(other.listedType)
-                        : other.listedType == null;
+        return listedType != null ? listedType.equals(other.listedType)
+                : other.listedType == null;
     }
 
     @Override
@@ -149,15 +151,14 @@ public class InternalTypeContainer extends InOutType { //TODO extract to another
         return "";
     }
 
-	@Override
-	public String getInfo() {
-		return "";
-	}
+    @Override
+    public String getInfo() {
+        return "";
+    }
 
-	@Override
-	public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, String valueName,
-			List<String> loopVariables) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code,
+            String valueName, List<String> loopVariables) {
+        // TODO Auto-generated method stub
+    }
 }

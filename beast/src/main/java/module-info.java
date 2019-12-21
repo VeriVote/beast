@@ -8,7 +8,7 @@ module edu.pse.beast {
     uses edu.pse.beast.types.OutputType;
     uses edu.pse.beast.propertychecker.Result;
     uses edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.ResultPresentationType;
-    
+
     exports edu.pse.beast.electionsimulator;
     exports edu.pse.beast.propertychecker;
     exports edu.pse.beast.options.parametereditoroptions;
@@ -64,7 +64,7 @@ module edu.pse.beast {
     exports edu.pse.beast.toolbox.valueContainer;
     exports edu.pse.beast.toolbox.valueContainer.cbmcValueContainers;
     exports edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes;
-    
+
     requires java.sql;
     requires com.sun.jna;
     requires com.sun.jna.platform;
@@ -90,7 +90,7 @@ module edu.pse.beast {
     requires undofx;
     requires wellbehavedfx;
     requires java.base;
-    
+
     opens edu.pse.beast.highlevel.javafx to javafx.fxml;
     opens edu.pse.beast.datatypes.electiondescription to gson;
     opens edu.pse.beast.datatypes.propertydescription to gson;
@@ -98,24 +98,24 @@ module edu.pse.beast {
     opens edu.pse.beast.types.cbmctypes.inputplugins to gson;
     opens edu.pse.beast.propertychecker to gson;
     opens edu.pse.beast.toolbox.valueContainer to gson;
-    
+
     //TODO maybe extract the types into their own modules
     provides InputType with edu.pse.beast.types.cbmctypes.inputplugins.Approval,
         edu.pse.beast.types.cbmctypes.inputplugins.Preference,
         edu.pse.beast.types.cbmctypes.inputplugins.SingleChoice,
         edu.pse.beast.types.cbmctypes.inputplugins.SingleChoiceStack,
         edu.pse.beast.types.cbmctypes.inputplugins.WeightedApproval;
-    
-    
+
+
     provides OutputType with edu.pse.beast.types.cbmctypes.outputplugins.CandidateList, 
         edu.pse.beast.types.cbmctypes.outputplugins.Parliament, 
         edu.pse.beast.types.cbmctypes.outputplugins.ParliamentStack,
         edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
-    
+
     provides Result with edu.pse.beast.propertychecker.CBMCResult;
-    
-    provides ResultPresentationType with edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.Default,
-    	edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.CBMCOutput,
-    	edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.CBMCError;
-    
+
+    provides ResultPresentationType
+                with edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.Default,
+                     edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.CBMCOutput,
+                     edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.CBMCError;   
 }

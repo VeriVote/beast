@@ -26,14 +26,12 @@ import javafx.scene.input.MouseEvent;
 public class ParentTreeItem extends CustomTreeItem {
     private Label propName;
     private CheckBox checkAll = new CheckBox("check all");
-    
+
     ContextMenu contextMenu = new ContextMenu();
     MenuItem deleteItem = new MenuItem("Delete Property");
 
-    private final List<ChildTreeItem> subItems
-          = new ArrayList<ChildTreeItem>();
-    private final List<TreeItem<CustomTreeItem>> childTreeItems
-          = new ArrayList<TreeItem<CustomTreeItem>>();
+    private final List<ChildTreeItem> subItems = new ArrayList<ChildTreeItem>();
+    private final List<TreeItem<CustomTreeItem>> childTreeItems = new ArrayList<TreeItem<CustomTreeItem>>();
     private final PreAndPostConditionsDescription propDesc;
 
     private boolean disabled;
@@ -44,13 +42,10 @@ public class ParentTreeItem extends CustomTreeItem {
     private ChildTreeItem testItem;
     private int counter;
 
-    ParentTreeItem(PreAndPostConditionsDescription propDesc,
-                   boolean isSelected,
+    ParentTreeItem(PreAndPostConditionsDescription propDesc, boolean isSelected,
                    TreeItem<CustomTreeItem> treeItemReference,
                    boolean createChildren) {
-    	
-    	contextMenu.getItems().add(deleteItem);
-    	
+        contextMenu.getItems().add(deleteItem);
         this.setTreeItemReference(treeItemReference);
         this.propDesc = propDesc;
         this.setAlignment(Pos.CENTER_LEFT);
@@ -80,41 +75,41 @@ public class ParentTreeItem extends CustomTreeItem {
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-            	MouseButton button = event.getButton();
-            	
-            	if(button == MouseButton.PRIMARY) {
+                MouseButton button = event.getButton();
+                if (button == MouseButton.PRIMARY) {
                     wasClicked(true);
-            	}
+                }
             }
         });
-        
-        this.deleteItem.setOnAction(new EventHandler<ActionEvent>() {
 
-			@Override
-			public void handle(ActionEvent event) {
-				GUIController.getController().removeProperty(treeItemReference);
-			}
-		});
-        
+        this.deleteItem.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                GUIController.getController().removeProperty(treeItemReference);
+            }
+        });
+
         this.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
             @Override
             public void handle(ContextMenuEvent event) {
-                contextMenu.show(ParentTreeItem.this, event.getScreenX(), event.getScreenY());
+                contextMenu.show(ParentTreeItem.this, event.getScreenX(),
+                                 event.getScreenY());
             }
         });
-        
+
         this.setSelected(isSelected);
         this.getTreeItemReference().setValue(this);
-        
-//        
-//		this.getChildren().add(new Separator(Orientation.VERTICAL));
-//		this.getChildren().add(removeButton);
+
+        //
+        // this.getChildren().add(new Separator(Orientation.VERTICAL));
+        // this.getChildren().add(removeButton);
     }
 
     public void addChildrenToStage() {
         for (Iterator<ChildTreeItem> iterator = subItems.iterator(); iterator.hasNext();) {
             CustomTreeItem item = (CustomTreeItem) iterator.next();
-            // TreeItem<CustomTreeItem> reference = new TreeItem<CustomTreeItem>(item);
+            // TreeItem<CustomTreeItem> reference = new
+            // TreeItem<CustomTreeItem>(item);
             childTreeItems.add(item.getTreeItemReference());
         }
         this.getTreeItemReference().getChildren().addAll(childTreeItems);
@@ -198,8 +193,8 @@ public class ParentTreeItem extends CustomTreeItem {
     }
 
     /**
-     * notifies the parent, that at least one of the children's result changed, so
-     * we have have to check all to update the GUI
+     * notifies the parent, that at least one of the children's result changed,
+     * so we have have to check all to update the GUI
      */
     public void update() {
         for (Iterator<ChildTreeItem> iterator = subItems.iterator(); iterator.hasNext();) {
@@ -214,8 +209,7 @@ public class ParentTreeItem extends CustomTreeItem {
      */
     public boolean isChildSelected() {
         boolean selected = false;
-        for (Iterator<ChildTreeItem> iterator = subItems.iterator();
-                iterator.hasNext();) {
+        for (Iterator<ChildTreeItem> iterator = subItems.iterator(); iterator.hasNext();) {
             ChildTreeItem childItem = (ChildTreeItem) iterator.next();
             selected = selected || childItem.isSelected();
         }
@@ -226,8 +220,9 @@ public class ParentTreeItem extends CustomTreeItem {
         String errorText = "";
         for (Iterator<CodeError> iterator = combinedErrors.iterator(); iterator.hasNext();) {
             CodeError codeError = (CodeError) iterator.next();
-            String error = codeError.getLine() + " : " + codeError.getMsg() + "\n";
-            errorText = errorText + error;
+            String error = codeError.getLine() + " : " + codeError.getMsg()
+                    + "\n";
+            errorText += error;
         }
         GUIController.setErrorText(errorText);
     }
@@ -244,13 +239,16 @@ public class ParentTreeItem extends CustomTreeItem {
         ChildTreeItem child = null;
         switch (index) {
         case 0:
-            child = new CheckChildTreeItem(values, this, new TreeItem<CustomTreeItem>());
+            child = new CheckChildTreeItem(values, this,
+                    new TreeItem<CustomTreeItem>());
             break;
         case 1:
-            child = new MarginChildTreeItem(values, this, new TreeItem<CustomTreeItem>());
+            child = new MarginChildTreeItem(values, this,
+                    new TreeItem<CustomTreeItem>());
             break;
         case 2:
-            child = new TestChildTreeItem(values, this, new TreeItem<CustomTreeItem>());
+            child = new TestChildTreeItem(values, this,
+                    new TreeItem<CustomTreeItem>());
             break;
         default:
             counter--;
@@ -258,7 +256,6 @@ public class ParentTreeItem extends CustomTreeItem {
         }
         subItems.set(index, child);
         counter++;
-
         if (counter == 3) {
             addChildrenToStage();
         }

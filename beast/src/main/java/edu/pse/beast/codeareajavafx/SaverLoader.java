@@ -67,8 +67,7 @@ public class SaverLoader {
      * @param text given text
      */
     public void saveToDisk(File toSaveIn, String text) {
-    	//hasChanges = false; //TODO enable again when it is updated with listeners
-    	
+        //hasChanges = false; //TODO enable again when it is updated with listeners
         PrintWriter out = null;
         try {
             out = new PrintWriter(toSaveIn);
@@ -128,11 +127,11 @@ public class SaverLoader {
     }
 
     public String load(File toLoadFrom) {
-    	checkToSaveChanges();
-    	
+        checkToSaveChanges();
         try {
             return readFile(toLoadFrom, StandardCharsets.UTF_8);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             e.printStackTrace();
             return "";
         }
@@ -142,12 +141,12 @@ public class SaverLoader {
         byte[] encoded = Files.readAllBytes(Paths.get(file.getPath()));
         return new String(encoded, encoding);
     }
-    
+
     private void checkToSaveChanges() {
-    	if (hasChanges) {
-    		GUIController.getController().showSaveChangesDialog(owner);
-    		hasChanges = false;
-    	}
+        if (hasChanges) {
+            GUIController.getController().showSaveChangesDialog(owner);
+            hasChanges = false;
+        }
     }
 
     public void resetHasSaveFile() {
@@ -168,12 +167,12 @@ public class SaverLoader {
             this.hasSaveFile = true;
         }
     }
-    
+
     public void hasChanged() {
-    	this.hasChanges = true;
+        this.hasChanges = true;
     }
-    
+
     public void resetHasChanges() {
-    	this.hasChanges = false;
+        this.hasChanges = false;
     }
 }

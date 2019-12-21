@@ -16,62 +16,57 @@ import edu.pse.beast.toolbox.TextStyle;
 import javafx.scene.Node;
 
 public class CBMCError extends ResultPresentationType {
+    int standartSize = 10;
+    private GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area;
 
-	int standartSize = 10;
+    @Override
+    public Node presentResult(Result result) {
+        if (area == null) {
+            area = TextFieldCreator.getGenericStyledAreaInstance(
+                    TextStyle.DEFAULT.fontSize(standartSize), ParStyle.EMPTY);
+            area.setEditable(false);
+        }
+        List<String> errorText = result.getErrorText();
+        for (Iterator<String> iterator = errorText.iterator(); iterator.hasNext();) {
+            String text = (String) iterator.next();
+            area.appendText(text);
+        }
 
-	private GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area;
+        VirtualizedScrollPane<GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle>>
+            vsPane = new VirtualizedScrollPane<>(area); // Wrap it in a scroll area
+        return vsPane;
+    }
 
-	@Override
-	public Node presentResult(Result result) {
+    @Override
+    public String getName() {
+        return "CBMC Error";
+    }
 
-		if (area == null) {
-			area = TextFieldCreator.getGenericStyledAreaInstance(TextStyle.DEFAULT.fontSize(standartSize),
-					ParStyle.EMPTY);
-			area.setEditable(false);
-		}
+    @Override
+    public String getToolTipDescription() {
+        return "Shows the error output cbmc gave";
+    }
 
-		List<String> errorText = result.getErrorText();
+    @Override
+    public boolean supportsZoom() {
+        return true;
+    }
 
-		for (Iterator<String> iterator = errorText.iterator(); iterator.hasNext();) {
-			String text = (String) iterator.next();
-			area.appendText(text);
-		}
+    @Override
+    public void zoomTo(double zoomValue) {
+        if (area != null) {
+            area.setStyle(0, area.getLength(), TextStyle.DEFAULT
+                    .fontSize((int) (standartSize + zoomValue)));
+        }
+    }
 
-		VirtualizedScrollPane<GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle>> vsPane = new VirtualizedScrollPane<>(
-				area); // Wrap it in a scroll area
+    @Override
+    public boolean supports(AnalysisType analysisType) {
+        return true;
+    }
 
-		return vsPane;
-	}
-
-	@Override
-	public String getName() {
-		return "CBMC Error";
-	}
-
-	@Override
-	public String getToolTipDescription() {
-		return "Shows the error output cbmc gave";
-	}
-
-	@Override
-	public boolean supportsZoom() {
-		return true;
-	}
-
-	@Override
-	public void zoomTo(double zoomValue) {
-		if (area != null) {
-			area.setStyle(0, area.getLength(), TextStyle.DEFAULT.fontSize((int) (standartSize + zoomValue)));
-		}
-	}
-
-	@Override
-	public boolean supports(AnalysisType analysisType) {
-		return true;
-	}
-
-	@Override
-	public boolean isDefault() {
-		return false;
-	}
+    @Override
+    public boolean isDefault() {
+        return false;
+    }
 }

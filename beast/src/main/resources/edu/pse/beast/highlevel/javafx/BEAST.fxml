@@ -379,12 +379,12 @@
                                                       </BorderPane>
                                                    </content>
                                                 </Tab>
-                                                <Tab fx:id="boundVariablesTab" closable="false" text="Voter Vars">
+                                                <Tab fx:id="boundVariablesTab" closable="false" text="Voter Variables">
                                                   <content>
                                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                                                   </content>
                                                 </Tab>
-                                                <Tab fx:id="booleanExpressionTab" closable="false" text="expressions">
+                                                <Tab fx:id="booleanExpressionTab" closable="false" text="Expressions">
                                                   <content>
                                                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                                                   </content>
@@ -395,12 +395,12 @@
                                     </BorderPane>
                                     <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                        <children>
-                                          <TitledPane fx:id="prePropertyPane" animated="false" layoutY="52.0" prefHeight="115.0" prefWidth="405.0" text="PreProperties" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <TitledPane fx:id="prePropertyPane" animated="false" layoutY="52.0" prefHeight="115.0" prefWidth="405.0" text="Precondition" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
                                     <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                        <children>
-                                          <TitledPane fx:id="postPropertyPane" animated="false" text="PostProperties" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <TitledPane fx:id="postPropertyPane" animated="false" text="Postcondition" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
                                 </items>
@@ -565,22 +565,22 @@
                <bottom>
                   <ToolBar BorderPane.alignment="CENTER">
                     <items>
-                      <Button fx:id="newPropButton" mnemonicParsing="false" onAction="#newProperty" text="new">
+                      <Button fx:id="newPropButton" mnemonicParsing="false" onAction="#newProperty" text="New">
                            <tooltip>
                               <Tooltip text="%key.newProp" />
                            </tooltip></Button>
-                        <Button fx:id="loadPropButton" mnemonicParsing="false" onAction="#loadProperty" text="load">
+                        <Button fx:id="loadPropButton" mnemonicParsing="false" onAction="#loadProperty" text="Load Property">
                            <tooltip>
                               <Tooltip text="%key.loadProp" />
                            </tooltip></Button>
-                        <Button fx:id="loadPropListButton" mnemonicParsing="false" onAction="#loadPropertyList" text="List">
+                        <Button fx:id="loadPropListButton" mnemonicParsing="false" onAction="#loadPropertyList" text="Load Multiple Properties">
                            <tooltip>
                               <Tooltip text="%key.loadPropList" />
                            </tooltip>
                         </Button>
                         <Separator orientation="VERTICAL" />
                         <CheckBox mnemonicParsing="false" />
-                        <Label text="propless margin" />
+                        <Label text="Ignore Specification" />
                         <ImageView fx:id="proplessImage" pickOnBounds="true" preserveRatio="true" />
                         <Pane HBox.hgrow="ALWAYS" />
                         <Button mnemonicParsing="false" onAction="#resetPropList" text="Reset List" />

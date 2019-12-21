@@ -6,14 +6,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import javax.print.DocFlavor.STRING;
-
-public final class UnifiedNameContainer { //TODO make not static and then only accessible through electionContainer
+public final class UnifiedNameContainer { // TODO make not static and then only
+                                          // accessible through electionContainer
     private static List<NameChangeListener> listeners = new LinkedList<NameChangeListener>();
     private static Map<String, String> map = new HashMap<String, String>();
 
-    public UnifiedNameContainer() { 
-    	init();
+    public UnifiedNameContainer() {
+        init();
     }
 
     static {
@@ -92,9 +91,9 @@ public final class UnifiedNameContainer { //TODO make not static and then only a
     public static String getOrigResultName() {
         return map.get("orig_result");
     }
-    
+
     public static String getOrigVotesName() {
-    	return map.get("orig_votes");
+        return map.get("orig_votes");
     }
 
     public static String getVotingArray() {
@@ -128,9 +127,9 @@ public final class UnifiedNameContainer { //TODO make not static and then only a
     public static String getVotingArrayKey() {
         return "votingArray";
     }
-    
+
     public static String getOrigVotesKey() {
-    	return "orig_votes";
+        return "orig_votes";
     }
 
     public static void setCandidate(String candidate) {
@@ -141,9 +140,9 @@ public final class UnifiedNameContainer { //TODO make not static and then only a
         setInMap("voter", voter);
     }
 
-    //public static void setVotes(String votes) {
-    //    setInMap("votes", votes);
-    //}  TODO check if used
+    // public static void setVotes(String votes) {
+    // setInMap("votes", votes);
+    // } TODO check if used
 
     public static void setSeats(String seats) {
         setInMap("seats", seats);

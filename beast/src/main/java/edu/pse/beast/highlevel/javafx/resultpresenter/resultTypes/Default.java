@@ -24,86 +24,73 @@ import javafx.scene.Node;
  *
  */
 public class Default extends ResultPresentationType {
+    GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area;
+    int standartSize = 10;
 
-	GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area;
+    @Override
+    public Node presentResult(Result result) {
+        if (area == null) {
+            area = TextFieldCreator.getGenericStyledAreaInstance(
+                    TextStyle.DEFAULT.fontSize(standartSize), ParStyle.EMPTY);
+            area.setEditable(false);
+        }
+        area.clear();
+        InputType inType = result.getElectionDescription().getContainer().getInputType();
+        OutputType outType = result.getElectionDescription().getContainer().getOutputType();
+        String voters = UnifiedNameContainer.getVoter() + "\\d";
+        Map<Integer, Long> sizeOfVoters = getAllSizes(result.readVariableValue(voters));
+        String votesNameMatcher = UnifiedNameContainer.getVotingArray() + "\\d";
+        List<String> toAdd = inType.drawResult(result, votesNameMatcher, sizeOfVoters);
 
-	int standartSize = 10;
+        for (int i = 0; i < toAdd.size(); i++) {
+            area.appendText(toAdd.get(i));
+        }
+        String candidates = UnifiedNameContainer.getCandidate() + "\\d";
+        Map<Integer, Long> sizeOfCandidates = getAllSizes(result.readVariableValue(candidates));
+        String resultNameMatcher = UnifiedNameContainer.getElect() + "\\d";
+        toAdd = outType.drawResult(result, resultNameMatcher, sizeOfCandidates);
 
-	@Override
-	public Node presentResult(Result result) {
+        for (int i = 0; i < toAdd.size(); i++) {
+            area.appendText(toAdd.get(i));
+        }
+        return area;
+    }
 
-		if (area == null) {
-			area = TextFieldCreator.getGenericStyledAreaInstance(TextStyle.DEFAULT.fontSize(standartSize),
-					ParStyle.EMPTY);
-			area.setEditable(false);
-		}
+    @Override
+    public String getName() {
+        return "Default";
+    }
 
-		area.clear();
+    @Override
+    public String getToolTipDescription() {
+        return "The Defaul way of presenting a result";
+    }
 
-		InputType inType = result.getElectionDescription().getContainer().getInputType();
-		OutputType outType = result.getElectionDescription().getContainer().getOutputType();
+    @Override
+    public boolean supportsZoom() {
+        return true;
+    }
 
-		String voters = UnifiedNameContainer.getVoter() + "\\d";
+    @Override
+    public void zoomTo(double zoomValue) {
+        if (area != null) {
+            area.setStyle(0, area.getLength(), TextStyle.DEFAULT
+                    .fontSize((int) (standartSize + zoomValue)));
+        }
+    }
 
-		Map<Integer, Long> sizeOfVoters = getAllSizes(result.readVariableValue(voters));
+    @Override
+    public boolean supports(AnalysisType analysisType) {
+        switch (analysisType) {
+        case Check:
+            return true;
+        default:
+            return false;
+        }
+    }
 
-		String votesNameMatcher = UnifiedNameContainer.getVotingArray() + "\\d";
-
-		List<String> toAdd = inType.drawResult(result, votesNameMatcher, sizeOfVoters);
-
-		for (int i = 0; i < toAdd.size(); i++) {
-			area.appendText(toAdd.get(i));
-		}
-
-		String candidates = UnifiedNameContainer.getCandidate() + "\\d";
-
-		Map<Integer, Long> sizeOfCandidates = getAllSizes(result.readVariableValue(candidates));
-
-		String resultNameMatcher = UnifiedNameContainer.getElect() + "\\d";
-
-		toAdd = outType.drawResult(result, resultNameMatcher, sizeOfCandidates);
-
-		for (int i = 0; i < toAdd.size(); i++) {
-			area.appendText(toAdd.get(i));
-		}
-
-		return area;
-	}
-
-	@Override
-	public String getName() {
-		return "Default";
-	}
-
-	@Override
-	public String getToolTipDescription() {
-		return "The Defaul way of presenting a result";
-	}
-
-	@Override
-	public boolean supportsZoom() {
-		return true;
-	}
-
-	@Override
-	public void zoomTo(double zoomValue) {
-		if (area != null) {
-			area.setStyle(0, area.getLength(), TextStyle.DEFAULT.fontSize((int) (standartSize + zoomValue)));
-		}
-	}
-
-	@Override
-	public boolean supports(AnalysisType analysisType) {
-		switch (analysisType) {
-		case Check:
-			return true;
-		default:
-			return false;
-		}
-	}
-	
-	@Override
-	public boolean isDefault() {
-		return true;
-	}
+    @Override
+    public boolean isDefault() {
+        return true;
+    }
 }

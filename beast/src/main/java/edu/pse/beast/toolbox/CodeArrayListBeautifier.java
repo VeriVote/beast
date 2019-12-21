@@ -31,7 +31,8 @@ public class CodeArrayListBeautifier {
     /**
      * Adds a String to the ArrayList with the indenting
      *
-     * @param addedString the String which is added to the ArrayList
+     * @param addedString
+     *            the String which is added to the ArrayList
      */
     public void add(String addedString) {
         if (addedString != null) {
@@ -50,22 +51,22 @@ public class CodeArrayListBeautifier {
     }
 
     /**
-     * adds another tab to the indenting. If you add another String after this it
-     * will be indented one more time
+     * adds another tab to the indenting. If you add another String after this
+     * it will be indented one more time
      */
     public void addTab() {
-        //numberOfTabs++;
+        // numberOfTabs++;
     }
 
     /**
-     * Decreases the number of tabs by one. If the tab count is already 0 it will no
-     * longer decrease it.
+     * Decreases the number of tabs by one. If the tab count is already 0 it
+     * will no longer decrease it.
      */
     public void deleteTab() {
         if (numberOfTabs > 0) {
-            //numberOfTabs--;
+            // numberOfTabs--;
         } else {
-            //ErrorLogger.log("number of tabs is already 0");
+            // ErrorLogger.log("number of tabs is already 0");
         }
     }
 
@@ -80,13 +81,12 @@ public class CodeArrayListBeautifier {
     /**
      * adds an ArrayList with the indenting
      *
-     * @param list the added ArrayList
+     * @param list
+     *            the added ArrayList
      */
     public void addList(List<String> list) {
         if (list != null) {
-            list.forEach((singleItem) -> {
-                this.add(singleItem);
-            });
+            list.forEach((singleItem) -> {this.add(singleItem);});
         }
     }
 
@@ -94,25 +94,22 @@ public class CodeArrayListBeautifier {
         addList(votingResultCode);
     }
 
-	public boolean contains(String name) {
-		for (Iterator<String> iterator = code.iterator(); iterator.hasNext();) {
-			String line = (String) iterator.next();
-			if (line.contains(name)) {
-				return true;
-			}
-		} 
-		return false;
-	}
-	
-	public String getNotUsedVarName(String preferredName) {
-		int length = Math.min(preferredName.length(), 2);
+    public boolean contains(String name) {
+        for (Iterator<String> iterator = code.iterator(); iterator.hasNext();) {
+            String line = (String) iterator.next();
+            if (line.contains(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-		String name = preferredName;
-
-		while (this.contains(name)) {
-			name = RandomStringUtils.random(length++, true, false);
-		}
-
-		return name;
-	}
+    public String getNotUsedVarName(String preferredName) {
+        int length = Math.min(preferredName.length(), 2);
+        String name = preferredName;
+        while (this.contains(name)) {
+            name = RandomStringUtils.random(length++, true, false);
+        }
+        return name;
+    }
 }

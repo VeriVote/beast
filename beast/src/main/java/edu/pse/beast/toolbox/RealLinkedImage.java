@@ -3,23 +3,21 @@ package edu.pse.beast.toolbox;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 
-
 /**
- * A custom object which contains a file path to an image file.
- * When rendered in the rich text editor, the image is loaded from the
- * specified file.
+ * A custom object which contains a file path to an image file. When rendered in
+ * the rich text editor, the image is loaded from the specified file.
  */
 public class RealLinkedImage implements LinkedImage {
+    private Canvas canvas;
 
-	private Canvas canvas;
-	
     /**
      * Creates a new linked image object.
      *
-     * @param imagePath The path to the image file.
+     * @param imagePath
+     *            The path to the image file.
      */
-    public RealLinkedImage(Canvas canvas) {	
-    	this.canvas = canvas;
+    public RealLinkedImage(Canvas canvas) {
+        this.canvas = canvas;
     }
 
     @Override

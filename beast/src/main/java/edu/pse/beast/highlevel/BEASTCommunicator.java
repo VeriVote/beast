@@ -39,7 +39,8 @@ public final class BEASTCommunicator {
     // PreAndPostConditionsSource
     // if (preAndPostSrc.getPreAndPostConditionsDescriptionsCheck().isEmpty() &&
     // preAndPostSrc.getPreAndPostConditionsDescriptionsMargin().isEmpty()) {
-    // GUIController.setInfoText("no property selected (add string resouce loading
+    // GUIController.setInfoText("no property selected (add string resouce
+    // loading
     // later");
     // checkStatusDisplayer.displayText("noProperty", false, "");
     // return false;
@@ -68,26 +69,30 @@ public final class BEASTCommunicator {
     // int numberOfPresentedResults = 0;
     //
     // while (numberOfPresentedResults <
-    // preAndPostSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size()) {
+    // preAndPostSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size())
+    // {
     // elapsedTime = System.nanoTime() - startTime;
     // passedTimeSeconds = (double) elapsedTime / 1000000000.0;
     // timeString = createTimeString(passedTimeSeconds);
     //
     // checkStatusDisplayer.displayText("waitingForPropertyResult", true,
     // preAndPostSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().
-    // get(numberOfPresentedResults).getDescription().getName() + "' (" + timeString
+    // get(numberOfPresentedResults).getDescription().getName() + "' (" +
+    // timeString
     // + ")");
     //
     // try {
     // Thread.sleep(50);
     // } catch (InterruptedException ex) {
-    // Logger.getLogger(BEASTCommunicator.class.getName()).log(Level.SEVERE, null,
+    // Logger.getLogger(BEASTCommunicator.class.getName()).log(Level.SEVERE,
+    // null,
     // ex);
     // }
     // for (int i = 0; i < resultPresented.length; i++) {
     // ResultInterface result = resultList.get(i);
     // if (result.readyToPresent() && !resultPresented[i]) {
-    // ResultPresenter resultPresenter = centralObjectProvider.getResultPresenter();
+    // ResultPresenter resultPresenter =
+    // centralObjectProvider.getResultPresenter();
     // resultPresenter.presentResult(result, i);
     // resultPresented[i] = true;
     // numberOfPresentedResults++;
@@ -108,32 +113,34 @@ public final class BEASTCommunicator {
     // }
     private static boolean stopped;
 
-    private BEASTCommunicator() { }
+    private BEASTCommunicator() {
+    }
 
     public static synchronized boolean startCheckNEW() {
         stopped = false;
         ElectionDescription electionDesc = GUIController.getController().getElectionDescription();
         List<ParentTreeItem> properties = GUIController.getController().getProperties();
         ElectionCheckParameter parameter = GUIController.getController().getParameter();
-        
+
         if (!hasProperties(properties)) {
-            // checks if there even are any properties selected for analysis in the
-            // PreAndPostConditionsSource
-        	GUIController.setConsoleText("no property selected (add string resouce loading later)");
+            // checks if there even are any properties selected for analysis in
+            // the PreAndPostConditionsSource
+            GUIController.setConsoleText("No property selected"); // TODO: (add string resouce
+                                                                  // loading later)");
             return false;
         }
         if (!checkForErrors(electionDesc, properties)) {
-        	GUIController.setConsoleText("starting Check");
+            GUIController.setConsoleText("Starting verification");
             // TODO load the property checker
             PropertyChecker checker = new PropertyChecker("CBMC");
             currentCheckers.add(checker);
-            // analysis gets started by CheckerCommunicator.checkPropertiesForDescription()
-            List<Result> results
-                = checker.checkPropertiesForDescription(electionDesc,
-                                                       properties,
-                                                          parameter);
+            // analysis gets started by
+            // CheckerCommunicator.checkPropertiesForDescription()
+            List<Result> results = checker.checkPropertiesForDescription(electionDesc, properties,
+                                                                         parameter);
             if (results != null) {
-                // Thread that checks for new presentable results every n milliseconds
+                // Thread that checks for new presentable results every n
+                // milliseconds
                 Thread waitForResultsThread = new Thread(new Runnable() {
                     // DecimalFormat df = new DecimalFormat("#.0");
                     @Override
@@ -150,32 +157,33 @@ public final class BEASTCommunicator {
                             passedTimeSeconds = (double) elapsedTime / 1000000000.0;
                             timeString = createTimeString(passedTimeSeconds);
                             // GUIController.setInfoText("elapsed time "
-                            //                           + df.format(passedTimeSeconds));
+                            // + df.format(passedTimeSeconds));
                             try {
-                                Thread.sleep(
-                                    Math.max(0,
-                                             67 - (System.currentTimeMillis()
-                                                     - frameTime)));
-                            } catch (InterruptedException ex) {
-                                Logger.getLogger(BEASTCommunicator.class.getName())
-                                    .log(Level.SEVERE, null, ex);
+                                Thread.sleep(Math.max(0,
+                                        67 - (System.currentTimeMillis() - frameTime)));
+                            }
+                            catch (InterruptedException ex) {
+                                Logger.getLogger(
+                                        BEASTCommunicator.class.getName()).log(Level.SEVERE,
+                                                                               null, ex);
                             }
                             frameTime = System.currentTimeMillis();
                             // check if all results are finished already
                             allDone = true;
-                            for (Iterator<Result> iterator
-                                    = results.iterator(); iterator.hasNext();) {
+                            for (Iterator<Result> iterator = results.iterator();
+                                    iterator.hasNext();) {
                                 Result result = (Result) iterator.next();
                                 allDone = allDone && result.isFinished();
                             }
                         }
-                        GUIController.setConsoleText("analysis ended after " + timeString);
+                        GUIController.setConsoleText("Verification ended after " + timeString);
                         GUIController.getController().checkFinished();
                     }
                 });
                 waitForResultsThread.start();
                 return !stopped;
-            } else {
+            }
+            else {
                 return false;
             }
         }
@@ -184,33 +192,36 @@ public final class BEASTCommunicator {
 
     public static synchronized boolean stopCheck() {
         stopped = true;
-        for (Iterator<PropertyChecker> iterator = currentCheckers.iterator(); iterator.hasNext();) {
+        for (Iterator<PropertyChecker> iterator = currentCheckers.iterator();
+                iterator.hasNext();) {
             PropertyChecker checker = (PropertyChecker) iterator.next();
             checker.abortChecking();
-            System.out.println("aborting");
+            System.out.println("Aborting");
         }
         return true;
     }
 
     /**
-     * Checks for errors in the current UserInputs from ElectionDescriptionSource,
-     * ParameterSrc and PreAndPostConditionsSource.
+     * Checks for errors in the current UserInputs from
+     * ElectionDescriptionSource, ParameterSrc and PreAndPostConditionsSource.
      *
-     * @param description the election description
-     * @param properties  the properties list
+     * @param description
+     *            the election description
+     * @param properties
+     *            the properties list
      * @return true if errors exist, false otherwise
      */
     public static boolean checkForErrors(ElectionDescription description,
                                          List<ParentTreeItem> properties) {
-        GUIController.setConsoleText("searching for errors");
+        GUIController.setConsoleText("Searching for errors");
         // save the currently opened property
         GUIController.getController().getBooleanExpEditor().savePropertyTextAreasIntoDescription();
-        List<CodeError> codeErrors = CVariableErrorFinder.findErrors(description.getComplexCode(), description);
+        List<CodeError> codeErrors =
+                CVariableErrorFinder.findErrors(description.getComplexCode(), description);
         if (codeErrors.size() != 0) {
             GUIController.getController().getCodeArea().displayErrors(codeErrors);
             return true;
         }
-
         boolean errorsFound = false;
         for (Iterator<ParentTreeItem> iterator = properties.iterator(); iterator.hasNext();) {
             ParentTreeItem parentTreeItem = (ParentTreeItem) iterator.next();
@@ -234,7 +245,8 @@ public final class BEASTCommunicator {
      * Creates a String that contains the given time in seconds in a readable
      * format.
      *
-     * @param passedTimeSeconds the passed time in seconds as a double
+     * @param passedTimeSeconds
+     *            the passed time in seconds as a double
      */
     private static String createTimeString(double passedTimeSeconds) {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");

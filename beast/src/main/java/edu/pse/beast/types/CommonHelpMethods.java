@@ -8,7 +8,7 @@
 //import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 //
 //public abstract class CommonHelpMethods {
-//	
+//
 //    /**
 //     * extracts a variable with given dimension for the given checker from the output
 //     * list
@@ -29,4 +29,4 @@
 //        }
 //        return implementations;
 //    }
-//} 
+//}

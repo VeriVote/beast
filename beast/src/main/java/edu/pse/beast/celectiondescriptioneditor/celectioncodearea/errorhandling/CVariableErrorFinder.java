@@ -15,65 +15,71 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
  * @author Holger Klein
  */
 public final class CVariableErrorFinder {
-	private CVariableErrorFinder() {
-		
-	}
+    private CVariableErrorFinder() {}
 
-	/**
-	 * Find errors in the given c code.
-	 * 
-	 * @param code the c code as list of code lines
-	 * @return a list of code errors
-	 */
-	public static List<CodeError> findErrors(List<String> code, ElectionDescription electionDesc) {
+    /**
+     * Find errors in the given c code.
+     *
+     * @param code
+     *            the c code as list of code lines
+     * @return a list of code errors
+     */
+    public static List<CodeError> findErrors(List<String> code,
+            ElectionDescription electionDesc) {
 
-		// TODO use unfifed name container here later
+        // TODO use unified name container here later
 
-		ArrayList<String> seperated = new ArrayList<>();
-		seperated.add("#ifndef " + UnifiedNameContainer.getVoter());
-		seperated.add("#define " + UnifiedNameContainer.getVoter() + " 1");
-		seperated.add("#endif");
+        ArrayList<String> seperated = new ArrayList<>();
+        seperated.add("#ifndef " + UnifiedNameContainer.getVoter());
+        seperated.add("#define " + UnifiedNameContainer.getVoter() + " 1");
+        seperated.add("#endif");
 
-		seperated.add("#ifndef " + UnifiedNameContainer.getCandidate());
-		seperated.add("#define " + UnifiedNameContainer.getCandidate() + " 1");
-		seperated.add("#endif");
+        seperated.add("#ifndef " + UnifiedNameContainer.getCandidate());
+        seperated.add("#define " + UnifiedNameContainer.getCandidate() + " 1");
+        seperated.add("#endif");
 
-		seperated.add("#ifndef " + UnifiedNameContainer.getSeats());
-		seperated.add("#define " + UnifiedNameContainer.getSeats() + " 1");
-		seperated.add("#endif");
+        seperated.add("#ifndef " + UnifiedNameContainer.getSeats());
+        seperated.add("#define " + UnifiedNameContainer.getSeats() + " 1");
+        seperated.add("#endif");
 
-		// since we want to reserve the function name "verify", we define it here
-		seperated.add("void verify() {}");
+        // since we want to reserve the function name "verify", we define it
+        // here
+        seperated.add("void verify() {}");
 
-		// WORKAROUND: Will change if I think of a more elegant solution (if there is
-		// one) (look at issue 49 on github)
-		// Maybe it is possible to include all CBMC functions, but I will have to see.
-		// At least I can extract it to a file, which would make updating easier.
+        // WORKAROUND: Will change if I think of a more elegant solution (if
+        // there is
+        // one) (look at issue 49 on github)
+        // Maybe it is possible to include all CBMC functions, but I will have
+        // to see.
+        // At least I can extract it to a file, which would make updating
+        // easier.
 
-		seperated.add("void __CPROVER_assert(int x, int y) {}");
-		seperated.add("void __CPROVER_assume(int x) {}");
-		
-		seperated.addAll(Arrays.asList(electionDesc.getContainer().getStructDefinitions().split("\\n"))); //add all used structs
+        seperated.add("void __CPROVER_assert(int x, int y) {}");
+        seperated.add("void __CPROVER_assume(int x) {}");
 
-		seperated.add("void assume(int x) {}");
-		seperated.add("void assert(int x) {}");
-		seperated.add("void assert2(int x, int y) {}");
+        seperated.addAll(Arrays.asList(electionDesc.getContainer()
+                .getStructDefinitions().split("\\n"))); // add all used structs
 
-		seperated.add("int nondet_int() {return 0;}");
-		seperated.add("unsigned int nondet_uint() {return 0;}");
-		seperated.add("unsigned char nondet_uchar() {return 0;}");
-		seperated.add("char nondet_char() {return 0;}");
+        seperated.add("void assume(int x) {}");
+        seperated.add("void assert(int x) {}");
+        seperated.add("void assert2(int x, int y) {}");
 
-		// WORKAROUND end
+        seperated.add("int nondet_int() {return 0;}");
+        seperated.add("unsigned int nondet_uint() {return 0;}");
+        seperated.add("unsigned char nondet_uchar() {return 0;}");
+        seperated.add("char nondet_char() {return 0;}");
 
-		seperated.addAll(code);
-		
-		seperated.add("int main() {");
-		seperated.add("}");
+        // WORKAROUND end
 
-		int lineOffset = seperated.size() + 1;
+        seperated.addAll(code);
 
-		ArrayList<CodeError> found = new ArrayList<>(DeepErrorChecker.checkCodeForErrors(seperated, lineOffset));
-		return found;
-	}
+        seperated.add("int main() {");
+        seperated.add("}");
+
+        int lineOffset = seperated.size() + 1;
+
+        ArrayList<CodeError> found = new ArrayList<>(
+                DeepErrorChecker.checkCodeForErrors(seperated, lineOffset));
+        return found;
+    }
 }

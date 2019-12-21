@@ -16,209 +16,193 @@ import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class SingleChoiceStack extends CBMCInputType {
+    private static final int dimensions = 1;
+    private final static String[] sizeOfDimensions = { UnifiedNameContainer.getCandidate() };
 
-	private static final int dimensions = 1;
+    public SingleChoiceStack() {
+        super(true, DataType.INT, dimensions, sizeOfDimensions);
+    }
 
-	private final static String[] sizeOfDimensions = { UnifiedNameContainer.getCandidate() };
+    @Override
+    public String getInputIDinFile() {
+        return "SINGLE_CHOICE_STACK";
+    }
 
-	public SingleChoiceStack() {
-		super(true, DataType.INT, dimensions, sizeOfDimensions);
-	}
+    @Override
+    public String getMinimalValue() {
+        return "0";
+    }
 
-	@Override
-	public String getInputIDinFile() {
-		return "SINGLE_CHOICE_STACK";
-	}
+    @Override
+    public String getMaximalValue() {
+        return UnifiedNameContainer.getVoter();
+    }
 
-	@Override
-	public String getMinimalValue() {
-		return "0";
-	}
+    @Override
+    public boolean hasVariableAsMinValue() {
+        return false;
+    }
 
-	@Override
-	public String getMaximalValue() {
-		return UnifiedNameContainer.getVoter();
-	}
+    @Override
+    public boolean hasVariableAsMaxValue() {
+        return true;
+    }
 
-	@Override
-	public boolean hasVariableAsMinValue() {
-		return false;
-	}
+    @Override
+    public boolean isVotingForOneCandidate() {
+        return true;
+    }
 
-	@Override
-	public boolean hasVariableAsMaxValue() {
-		return true;
-	}
+    @Override
+    public String vetValue(ElectionTypeContainer container, List<NEWRowOfValues> rows,
+                           int rowNumber, int positionInRow, String newValue) {
+        if (rows.size() <= rowNumber) {
+            return newValue;
+        }
+        final int number;
+        try {
+            number = Integer.parseInt(newValue);
+        } catch (NumberFormatException e) {
+            return "0";
+        }
+        if (number < 0 || number > rows.get(rowNumber).getAmountVoters()) {
+            return "0";
+        } else {
+            int totalSum = 0;
+            for (int i = 0; i < rows.size(); i++) { // add up all values so far
+                List<String> currentValues = rows.get(i).getValues();
+                for (int j = 0; j < currentValues.size(); j++) {
+                    totalSum += Integer.parseInt(currentValues.get(j));
+                }
+            }
+            totalSum -= Integer.parseInt(rows.get(rowNumber).getValues().get(positionInRow));
+            totalSum += Integer.parseInt(newValue);
+            if (totalSum > rows.get(rowNumber).getAmountVoters()) {
+                return "0"; // we would exceed the limit with this addition, so
+                            // we reset to 0
+            } else {
+                return newValue;
+            }
+        }
+    }
 
-	@Override
-	public boolean isVotingForOneCandidate() {
-		return true;
-	}
+    @Override
+    public void flipVote(String newVotesName, String origVotesName,
+                         List<String> loopVars, CodeArrayListBeautifier code) {
+        String newVotesAccTop = getFullVoteAccess(newVotesName, loopVars);
+        String origVotesAccTop = getFullVoteAccess(origVotesName, loopVars);
+        code.add("");
+        code.add("long tmp_diff = nondet_long();");
+        code.add("");
+        code.add("assume(abs(tmp_diff) <= MARGIN);");
+        code.add("assume(0 <= (" + origVotesAccTop + " + tmp_diff));");
+        code.add("if(tmp_diff < 0) {");
+        code.add("");
+        code.add("assume(abs(tmp_diff) <= " + origVotesAccTop + ");");
+        code.add("");
+        code.add("}");
+        code.add(newVotesAccTop + " = " + origVotesAccTop + " + tmp_diff;");
+        code.add("");
+        code.add("pos_diff = total_diff  + abs(tmp_diff);");
+        code.add("total_diff = total_diff + tmp_diff;");
+    }
 
-	@Override
-	public String vetValue(ElectionTypeContainer container, List<NEWRowOfValues> rows, int rowNumber, int positionInRow,
-			String newValue) {
-		
-		if (rows.size() <= rowNumber) {
-			return newValue;
-		}
-		
-		final int number;
-		try {
-			number = Integer.parseInt(newValue);
-		} catch (NumberFormatException e) {
-			return "0";
-		}
-		if (number < 0 || number > rows.get(rowNumber).getAmountVoters()) {
-			return "0";
-		} else {
-			int totalSum = 0;
+    @Override
+    public void restrictVotes(String voteName, CodeArrayListBeautifier code) {
+        code.add("unsigned int tmp_restr_sum = 0;");
+        code.add("for(int loop_r_0 = 0; loop_r_0 < C; loop_r_0++) {");
+        code.add("tmp_restr_sum = tmp_restr_sum + " + voteName
+                 + ".arr[loop_r_0];");
+        code.add("}");
+        code.add("assume(tmp_restr_sum <= V);");
+    }
 
-			for (int i = 0; i < rows.size(); i++) { //add up all values so far
-				List<String> currentValues = rows.get(i).getValues();
+    @Override
+    public String[] getVotePoints(String[][] votes, int amountCandidates, int amountVoters) {
+        return super.wrongInputTypeArray(amountCandidates, amountVoters);
+    }
 
-				for (int j = 0; j < currentValues.size(); j++) {
-					totalSum = totalSum + Integer.parseInt(currentValues.get(j));
-				}
-			}
-			
-			totalSum = totalSum - Integer.parseInt(rows.get(rowNumber).getValues().get(positionInRow));
-			
-			totalSum = totalSum + Integer.parseInt(newValue);
-			
-			if (totalSum > rows.get(rowNumber).getAmountVoters()) {
-				return "0"; //we would exceed the limit with this addition, so we reset to 0
-			} else {
-				return newValue;
-			}
-		}
-	}
-	
-	@Override
-	public void flipVote(String newVotesName, String origVotesName, List<String> loopVars, CodeArrayListBeautifier code) {
-		String newVotesAccTop = getFullVoteAccess(newVotesName, loopVars);
+    @Override
+    public String[] getVotePoints(String[] votes, int amountCandidates, int amountVoters) {
+        Long[] result = new Long[amountCandidates];
+        Arrays.fill(result, 0L);
+        for (int i = 0; i < amountVoters; i++) {
+            int vote = Integer.parseInt(votes[i]);
+            result[vote]++;
+        }
+        String[] toReturn = new String[amountCandidates];
+        for (int i = 0; i < result.length; i++) {
+            toReturn[i] = "" + result[i];
+        }
+        return toReturn;
+    }
 
-		String origVotesAccTop = getFullVoteAccess(origVotesName, loopVars);
-		
-		code.add("");
-		code.add("long tmp_diff = nondet_long();");
-		code.add("");
-		code.add("assume(abs(tmp_diff) <= MARGIN);");
-		code.add("assume(0 <= (" + origVotesAccTop + " + tmp_diff));");
-		code.add("if(tmp_diff < 0) {");
-		code.add("");
-		code.add("assume(abs(tmp_diff) <= " + origVotesAccTop + ");");
-		code.add("");
-		code.add("}");
-		code.add(newVotesAccTop + " = " + origVotesAccTop + " + tmp_diff;");
-		code.add("");
-		code.add("pos_diff = total_diff  + abs(tmp_diff);");
-		code.add("total_diff = total_diff + tmp_diff;");
-	}
-	
-	@Override
-	public void restrictVotes(String voteName, CodeArrayListBeautifier code) {
-		code.add("unsigned int tmp_restr_sum = 0;");
-		
-		code.add("for(int loop_r_0 = 0; loop_r_0 < C; loop_r_0++) {"); 
-		code.add("tmp_restr_sum = tmp_restr_sum + " + voteName + ".arr[loop_r_0];");
-		code.add("}");
+    @Override
+    public void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique) {
+        code.add("if(arr[i] == candidate) sum++;");
+    }
 
-		code.add("assume(tmp_restr_sum <= V);");
-	}
+    @Override
+    public InternalTypeContainer getInternalTypeContainer() {
+        return new InternalTypeContainer(
+                new InternalTypeContainer(InternalTypeRep.CANDIDATE),
+                InternalTypeRep.VOTER);
+    }
 
-	@Override
-	public String[] getVotePoints(String[][] votes, int amountCandidates, int amountVoters) {
-		return super.wrongInputTypeArray(amountCandidates, amountVoters);
-	}
+    @Override
+    public int vetAmountCandidates(int amountCandidates) {
+        if (amountCandidates < 1) {
+            return 1;
+        } else {
+            return amountCandidates;
+        }
+    }
 
-	@Override
-	public String[] getVotePoints(String[] votes, int amountCandidates, int amountVoters) {
-		Long[] result = new Long[amountCandidates];
-		Arrays.fill(result, 0L);
-		for (int i = 0; i < amountVoters; i++) {
-			int vote = Integer.parseInt(votes[i]);
-			result[vote]++;
+    @Override
+    public int vetAmountVoters(int amountVoters) {
+        if (amountVoters < 1) {
+            return 1;
+        } else {
+            return amountVoters;
+        }
+    }
 
-		}
-		String[] toReturn = new String[amountCandidates];
-		for (int i = 0; i < result.length; i++) {
-			toReturn[i] = "" + result[i];
-		}
-		return toReturn;
-	}
+    @Override
+    public int vetAmountSeats(int amountSeats) {
+        if (amountSeats < 1) {
+            return 1;
+        } else {
+            return amountSeats;
+        }
+    }
 
-	@Override
-	public void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique) {
-		code.add("if(arr[i] == candidate) sum++;");
-	}
+    @Override
+    public int getNumVotingPoints(ResultValueWrapper result) {
+        return GUIController.getController().getElectionSimulation()
+                .getNumVoters();
+    }
 
-	@Override
-	public InternalTypeContainer getInternalTypeContainer() {
-		return new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
-	}
+    public int test(int i) {
+        return 5;
+    }
 
-	@Override
-	public int vetAmountCandidates(int amountCandidates) {
-		if (amountCandidates < 1) {
-			return 1;
-		} else {
-			return amountCandidates;
-		}
-	}
+    @Override
+    public String otherToString() {
+        return "Single choice stack";
+    }
 
-	@Override
-	public int vetAmountVoters(int amountVoters) {
-		if (amountVoters < 1) {
-			return 1;
-		} else {
-			return amountVoters;
-		}
-	}
+    @Override
+    public CBMCResultValue convertRowToResultValue(NEWRowOfValues row) {
+        List<String> values = row.getValues();
+        String value = values.get(0);
+        CBMCResultValueSingle toReturn = new CBMCResultValueSingle();
+        toReturn.setValue("int", value, 32);
+        return toReturn;
+    }
 
-	@Override
-	public int vetAmountSeats(int amountSeats) {
-		if (amountSeats < 1) {
-			return 1;
-		} else {
-			return amountSeats;
-		}
-	}
-
-	@Override
-	public int getNumVotingPoints(ResultValueWrapper result) {
-		
-		return GUIController.getController().getElectionSimulation().getNumVoters();
-	}
-
-	public int test(int i) {
-
-		return 5;
-	}
-
-	@Override
-	public String otherToString() {
-		return "Single choice stack";
-	}
-
-	@Override
-	public CBMCResultValue convertRowToResultValue(NEWRowOfValues row) {
-		
-		List<String> values = row.getValues();
-		String value = values.get(0);
-		
-		
-		CBMCResultValueSingle toReturn = new CBMCResultValueSingle();
-		
-		toReturn.setValue("int", value, 32);
-		
-		return toReturn;
-	}
-
-	@Override
-	public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code, String valueName,
-			List<String> loopVariables) {
-		// TODO Auto-generated method stub
-
-	}
+    @Override
+    public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code,
+            String valueName, List<String> loopVariables) {
+        // TODO Auto-generated method stub
+    }
 }

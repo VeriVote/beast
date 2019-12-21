@@ -18,251 +18,250 @@ import edu.pse.beast.types.InputType;
 import javafx.scene.layout.GridPane;
 
 public class ElectionSimulation implements MenuBarInterface {
-	private static final String CSV_SEPARATOR = ",";
+    private static final String CSV_SEPARATOR = ",";
 
-	private ElectionTypeContainer container;
-	private ElectionSimulationModel model;
+    private ElectionTypeContainer container;
+    private ElectionSimulationModel model;
 
-	private GridPane inputGridPane;
-	private GridPane voterGridPane;
-	private GridPane candidateGridPane;
+    private GridPane inputGridPane;
+    private GridPane voterGridPane;
+    private GridPane candidateGridPane;
 
-	private SaverLoader saverLoader;
+    private SaverLoader saverLoader;
 
-	public ElectionSimulation(ElectionTypeContainer container, GridPane inputGridPane, GridPane voterGridPane,
-			GridPane candidateGridPane) {
-		this.container = container;
-		this.saverLoader = new SaverLoader(".elecIn", "Election Input Data", this);
-		this.inputGridPane = inputGridPane;
-		this.voterGridPane = voterGridPane;
-		this.candidateGridPane = candidateGridPane;
-		inputGridPane.setHgap(10);
-		inputGridPane.setVgap(10);
-		voterGridPane.setHgap(10);
-		voterGridPane.setVgap(10);
-		candidateGridPane.setHgap(10);
-		candidateGridPane.setVgap(10);
-		model = new ElectionSimulationModel(container, inputGridPane, voterGridPane, candidateGridPane);
-	}
+    public ElectionSimulation(ElectionTypeContainer container,
+                              GridPane inputGridPane, GridPane voterGridPane,
+                              GridPane candidateGridPane) {
+        this.container = container;
+        this.saverLoader = new SaverLoader(".elecIn", "Election Input Data", this);
+        this.inputGridPane = inputGridPane;
+        this.voterGridPane = voterGridPane;
+        this.candidateGridPane = candidateGridPane;
+        inputGridPane.setHgap(10);
+        inputGridPane.setVgap(10);
+        voterGridPane.setHgap(10);
+        voterGridPane.setVgap(10);
+        candidateGridPane.setHgap(10);
+        candidateGridPane.setVgap(10);
+        model = new ElectionSimulationModel(container, inputGridPane,
+                                            voterGridPane, candidateGridPane);
+    }
 
-	public void updateContainer(ElectionTypeContainer container) {
-		this.container = container;
-		model.changeContainer(container);
-	}
+    public void updateContainer(ElectionTypeContainer container) {
+        this.container = container;
+        model.changeContainer(container);
+    }
 
-	public synchronized void updateRows() {
-		for (Iterator<NEWRowOfValues> iterator = model.getRows().iterator(); iterator.hasNext();) {
-			NEWRowOfValues row = (NEWRowOfValues) iterator.next();
-			row.update();
-		}
-	}
+    public synchronized void updateRows() {
+        for (Iterator<NEWRowOfValues> iterator = model.getRows().iterator(); iterator.hasNext();) {
+            NEWRowOfValues row = (NEWRowOfValues) iterator.next();
+            row.update();
+        }
+    }
 
-	// TODO
-	/**
-	 * resets all fields and returns the view back to its original state
-	 */
-	public void reset() {
-		inputGridPane.getChildren().clear();
-		voterGridPane.getChildren().clear();
-		candidateGridPane.getChildren().clear();
-		model = new ElectionSimulationModel(container, inputGridPane, voterGridPane, candidateGridPane);
-		model.setAmountCandidates(1);
-		model.setAmountVoters(1);
-		GUIController.getController().getInputVoters().setText("1");
-		GUIController.getController().getInputCandidates().setText("1");
-		GUIController.getController().getInputSeats().setText("1");
-	}
+    // TODO
+    /**
+     * resets all fields and returns the view back to its original state
+     */
+    public void reset() {
+        inputGridPane.getChildren().clear();
+        voterGridPane.getChildren().clear();
+        candidateGridPane.getChildren().clear();
+        model = new ElectionSimulationModel(container, inputGridPane,
+                                            voterGridPane, candidateGridPane);
+        model.setAmountCandidates(1);
+        model.setAmountVoters(1);
+        GUIController.getController().getInputVoters().setText("1");
+        GUIController.getController().getInputCandidates().setText("1");
+        GUIController.getController().getInputSeats().setText("1");
+    }
 
-	public int getNumVoters() {
-		return model.getAmountVoters();
-	}
+    public int getNumVoters() {
+        return model.getAmountVoters();
+    }
 
-	public int getNumCandidates() {
-		return model.getAmountCandidates();
-	}
+    public int getNumCandidates() {
+        return model.getAmountCandidates();
+    }
 
-	public int getNumSeats() {
-		return model.getAmountSeats();
-	}
+    public int getNumSeats() {
+        return model.getAmountSeats();
+    }
 
-	public ElectionSimulationData getVotingData() {
+    public ElectionSimulationData getVotingData() {
+        // TODO when multiple Model checkers would be installed, some
+        // distinction would
+        // have to be made here
+        List<NEWRowOfValues> rows = model.getRows();
+        InputType inType = container.getInputType();
+        CBMCResultValueArray topArrayValue = new CBMCResultValueArray();
+        List<CBMCResultValueWrapper> valueWrappers = new ArrayList<CBMCResultValueWrapper>();
 
-		// TODO when multiple Model checkers would be installed, some distinction would
-		// have to be made here
-		List<NEWRowOfValues> rows = model.getRows();
+        for (int i = 0; i < this.getNumCandidates(); i++) {
+            CBMCResultValue result = inType.convertRowToResultValue(rows.get(i));
+            valueWrappers.add(new CBMCResultValueWrapper(result));
+        }
+        topArrayValue.setValue(valueWrappers);
 
-		InputType inType = container.getInputType();
+        ElectionSimulationData toReturn =
+                new ElectionSimulationData(getNumVoters(), getNumCandidates(), getNumSeats(),
+                                           new CBMCResultValueWrapper(topArrayValue));
+        return toReturn;
+    }
 
-		CBMCResultValueArray topArrayValue = new CBMCResultValueArray();
+    public int getNumVotingPoints() {
+        return container.getInputType().getNumVotingPoints(null);
+    }
 
-		List<CBMCResultValueWrapper> valueWrappers = new ArrayList<CBMCResultValueWrapper>();
+    public String getPartyName(int index) {
+        return model.getCandidates().get(index).getText();
+    }
 
-		for (int i = 0; i < this.getNumCandidates(); i++) {
-			CBMCResultValue result = inType.convertRowToResultValue(rows.get(i));
+    public String getVoterName(int index) {
+        return model.getVoters().get(index).getText();
+    }
 
-			valueWrappers.add(new CBMCResultValueWrapper(result));
-		}
+    public void numVotersChanged(int numVoters) {
+        model.setAmountVoters(numVoters);
+    }
 
-		topArrayValue.setValue(valueWrappers);
+    public void numCandidatesChanged(int numCandidates) {
+        model.setAmountCandidates(numCandidates);
+    }
 
-		ElectionSimulationData toReturn = new ElectionSimulationData(getNumVoters(), getNumCandidates(), getNumSeats(),
-				new CBMCResultValueWrapper(topArrayValue));
+    public void numSeatsChanged(int numSeats) {
+        model.setAmountSeats(numSeats);
+    }
 
-		return toReturn;
-	}
+    public String setAndVetVoterNumber(String toVet) {
+        int vetted = container.getInputType().vetAmountVoters(Integer.parseInt(toVet));
+        model.setAmountVoters(vetted);
+        return "" + vetted;
+    }
 
-	public int getNumVotingPoints() {
-		return container.getInputType().getNumVotingPoints(null);
-	}
+    public String setAndVetCandidateNumber(String toVet) {
+        int vetted = container.getInputType().vetAmountCandidates(Integer.parseInt(toVet));
+        model.setAmountCandidates(vetted);
+        return "" + vetted;
+    }
 
-	public String getPartyName(int index) {
-		return model.getCandidates().get(index).getText();
-	}
+    public String setAndVetSeatNumber(String toVet) {
+        int vetted = container.getInputType().vetAmountSeats(Integer.parseInt(toVet));
+        model.setAmountSeats(vetted);
+        return "" + vetted;
+    }
 
-	public String getVoterName(int index) {
-		return model.getVoters().get(index).getText();
-	}
+    public void saveAs(File file) {
+        saverLoader.save(file, generateSaveString());
+    }
 
-	public void numVotersChanged(int numVoters) {
-		model.setAmountVoters(numVoters);
-	}
+    @Override
+    public void open() {
+        String input = saverLoader.load();
+        openInput(input, true);
+    }
 
-	public void numCandidatesChanged(int numCandidates) {
-		model.setAmountCandidates(numCandidates);
-	}
+    private void openInput(String input, boolean bringToFront) {
+        reset();
+        if (!input.equals("")) {
+            String[] lines = input.split("\n");
+            for (int y = 0; y < lines.length; y++) {
+                String[] values = lines[y].replaceAll("\\r", "").split(CSV_SEPARATOR);
+                if (y == 0) {
+                    GUIController.getController().getInputVoters().setText("" + values[0]);
+                    GUIController.getController().getInputCandidates().setText("" + values[1]);
+                    GUIController.getController().getInputSeats().setText("" + values[2]);
+                } else {
+                    for (int x = 0; x < values.length; x++) {
+                        model.setValue(x, (y - 1), values[x]);
+                    }
+                }
+            }
+        }
+        if (bringToFront) {
+            bringToFront();
+        }
+    }
 
-	public void numSeatsChanged(int numSeats) {
-		model.setAmountSeats(numSeats);
-	}
+    public void open(File file) {
+        if (file.exists()) {
+            String input = saverLoader.load(file);
+            openInput(input, false);
+        }
+    }
 
-	public String setAndVetVoterNumber(String toVet) {
-		int vetted = container.getInputType().vetAmountVoters(Integer.parseInt(toVet));
-		model.setAmountVoters(vetted);
-		return "" + vetted;
-	}
+    public void bringToFront() {
+        GUIController.getController().getMainTabPane().getSelectionModel()
+                .select(GUIController.getController().getInputTab());
+    }
 
-	public String setAndVetCandidateNumber(String toVet) {
-		int vetted = container.getInputType().vetAmountCandidates(Integer.parseInt(toVet));
-		model.setAmountCandidates(vetted);
-		return "" + vetted;
-	}
+    @Override
+    public void save() {
+        saverLoader.save("", generateSaveString());
+    }
 
-	public String setAndVetSeatNumber(String toVet) {
-		int vetted = container.getInputType().vetAmountSeats(Integer.parseInt(toVet));
-		model.setAmountSeats(vetted);
-		return "" + vetted;
-	}
+    private String generateSaveString() {
+        String saveString = "";
+        saveString =
+                model.getAmountVoters() + CSV_SEPARATOR
+                + model.getAmountCandidates() + CSV_SEPARATOR
+                + model.getAmountSeats() + "\n";
+        List<NEWRowOfValues> rows = model.getRows();
 
-	public void saveAs(File file) {
-		saverLoader.save(file, generateSaveString());
-	}
+        for (Iterator<NEWRowOfValues> iterator = rows.iterator(); iterator.hasNext();) {
+            NEWRowOfValues row = (NEWRowOfValues) iterator.next();
+            for (Iterator<String> valueIterator = row.getValues().iterator();
+                    valueIterator.hasNext();) {
+                String value = (String) valueIterator.next();
+                saveString = saveString + value;
+                if (valueIterator.hasNext()) { // another value will follow
+                    saveString = saveString + CSV_SEPARATOR;
+                }
+            }
+            if (iterator.hasNext()) {
+                saveString = saveString + "\n";
+            }
+        }
+        return saveString;
+    }
 
-	@Override
-	public void open() {
-		String input = saverLoader.load();
-		openInput(input, true);
-	}
+    @Override
+    public void saveAs() {
+        saverLoader.saveAs("", generateSaveString());
+    }
 
-	private void openInput(String input, boolean bringToFront) {
-		reset();
-		if (!input.equals("")) {
-			String[] lines = input.split("\n");
-			for (int y = 0; y < lines.length; y++) {
-				String[] values = lines[y].replaceAll("\\r", "").split(CSV_SEPARATOR);
-				if (y == 0) {
-					GUIController.getController().getInputVoters().setText("" + values[0]);
-					GUIController.getController().getInputCandidates().setText("" + values[1]);
-					GUIController.getController().getInputSeats().setText("" + values[2]);
-				} else {
-					for (int x = 0; x < values.length; x++) {
-						model.setValue(x, (y - 1), values[x]);
-					}
-				}
-			}
-		}
-		if (bringToFront) {
-			bringToFront();
-		}
-	}
+    @Override
+    public void undo() {
+        // TODO Auto-generated method stub
+    }
 
-	public void open(File file) {
-		if (file.exists()) {
-			String input = saverLoader.load(file);
-			openInput(input, false);
-		}
-	}
+    @Override
+    public void redo() {
+        // TODO Auto-generated method stub
+    }
 
-	public void bringToFront() {
-		GUIController.getController().getMainTabPane().getSelectionModel()
-				.select(GUIController.getController().getInputTab());
-	}
+    @Override
+    public void cut() {
+        // TODO Auto-generated method stub
+    }
 
-	@Override
-	public void save() {
-		saverLoader.save("", generateSaveString());
-	}
+    @Override
+    public void copy() {
+        // TODO Auto-generated method stub
+    }
 
-	private String generateSaveString() {
-		String saveString = "";
+    @Override
+    public void paste() {
+        // TODO Auto-generated method stub
+    }
 
-		saveString = model.getAmountVoters() + CSV_SEPARATOR + model.getAmountCandidates() + CSV_SEPARATOR
-				+ model.getAmountSeats() + "\n";
+    @Override
+    public void delete() {
+        // TODO Auto-generated method stub
+    }
 
-		List<NEWRowOfValues> rows = model.getRows();
-
-		for (Iterator<NEWRowOfValues> iterator = rows.iterator(); iterator.hasNext();) {
-			NEWRowOfValues row = (NEWRowOfValues) iterator.next();
-			for (Iterator<String> valueIterator = row.getValues().iterator(); valueIterator.hasNext();) {
-				String value = (String) valueIterator.next();
-				saveString = saveString + value;
-				if (valueIterator.hasNext()) { // another value will follow
-					saveString = saveString + CSV_SEPARATOR;
-				}
-			}
-			if (iterator.hasNext()) {
-				saveString = saveString + "\n";
-			}
-		}
-		return saveString;
-	}
-
-	@Override
-	public void saveAs() {
-		saverLoader.saveAs("", generateSaveString());
-	}
-
-	@Override
-	public void undo() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void redo() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void cut() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void copy() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void paste() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void delete() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void autoComplete() {
-		// do nothing
-	}
+    @Override
+    public void autoComplete() {
+        // do nothing
+    }
 }

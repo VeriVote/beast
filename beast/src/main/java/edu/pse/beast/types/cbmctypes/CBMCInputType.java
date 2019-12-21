@@ -5,41 +5,34 @@ import java.util.List;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
-import edu.pse.beast.types.InOutType.DataType;
 import edu.pse.beast.types.InputType;
 
 public abstract class CBMCInputType extends InputType {
-	
-	public CBMCInputType(boolean unsigned, DataType dataType, int dimensions, String[] sizeOfDimensions) {
+    public CBMCInputType(boolean unsigned, DataType dataType, int dimensions,
+                         String[] sizeOfDimensions) {
         super(unsigned, dataType, dimensions, sizeOfDimensions);
     }
-	
-	@Override
-	public void flipVote(String newVotesName, String origVotesName, List<String> loopVars, CodeArrayListBeautifier code) {
-		
-		code.add("int changed = nondet_int();");
-		code.add("assume(0 <= changed);");
-		code.add("assume(changed <= 1);");
-		code.add("if(changed) {");
-		
-		String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
 
-		String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
+    @Override
+    public void flipVote(String newVotesName, String origVotesName,
+                         List<String> loopVars, CodeArrayListBeautifier code) {
+        code.add("int changed = nondet_int();");
+        code.add("assume(0 <= changed);");
+        code.add("assume(changed <= 1);");
+        code.add("if(changed) {");
+        String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
+        String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
+        // we changed one vote, so we keep track of it
+        code.add("pos_diff++;");
+        code.add("assume(" + newVotesNameAcc + " != " + origVotesNameAcc + ");");
+        code.add("} else {");
+        code.addTab();
+        code.add(this.setVoteValue(newVotesName,
+                                   this.getContainer().getNameContainer().getOrigVotesName(),
+                                   loopVars));
+        code.add("}");
+    }
 
-		//we changed one vote, so we keep track of it
-		code.add("pos_diff++;");
-		
-		code.add("assume(" + newVotesNameAcc + " != " + origVotesNameAcc + ");");
-		
-		code.add("} else {");
-		code.addTab();
-
-		code.add(this.setVoteValue(newVotesName, this.getContainer().getNameContainer().getOrigVotesName(),
-				loopVars));
-
-		code.add("}");
-	}
-	
     @Override
     public void addCheckerSpecificHeaders(CodeArrayListBeautifier code) {
         // add the headers CBMC needs;
@@ -59,27 +52,25 @@ public abstract class CBMCInputType extends InputType {
     public String getVoteDescriptionString(List<List<String>> origVotes) {
         String votesString = "";
         int voterIndex = 0;
-
         // iterate over the voters
-        for (Iterator<List<String>> iterator = origVotes.iterator(); iterator.hasNext();) {
+        for (Iterator<List<String>> iterator = origVotes.iterator(); iterator
+                .hasNext();) {
             List<String> list = (List<String>) iterator.next();
             String oneVoter = "";
             try {
-                oneVoter = GUIController.getController()
-                            .getElectionSimulation().getVoterName(voterIndex);
+                oneVoter = GUIController.getController().getElectionSimulation()
+                        .getVoterName(voterIndex);
             } catch (IndexOutOfBoundsException e) {
                 oneVoter = "" + voterIndex;
             }
             oneVoter = oneVoter + ": ";
             voterIndex++;
             int partyIndex = 0;
-
             // iterate over the candidates
             for (Iterator<String> iterator2 = list.iterator(); iterator2.hasNext();) {
                 String voteAmount = (String) iterator2.next();
                 try {
-                    oneVoter = oneVoter
-                            + GUIController.getController()
+                    oneVoter = oneVoter + GUIController.getController()
                             .getElectionSimulation().getPartyName(partyIndex);
                 } catch (IndexOutOfBoundsException e) {
                     oneVoter = "" + partyIndex;

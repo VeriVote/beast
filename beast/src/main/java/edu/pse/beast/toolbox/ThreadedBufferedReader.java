@@ -63,7 +63,7 @@ public class ThreadedBufferedReader implements Runnable {
                 if (checkForUnwind && (curr > CHECKING_INTERVAL)) {
                     if (line.startsWith(UNWIND_PREFIX)) {
                         // we are still unwinding, so we check the line now
-                        // to see, how much we are unwinding
+                        // to see how much we are unwinding
                         try {
                             int iteration
                                   = Integer.parseInt(
@@ -71,7 +71,7 @@ public class ThreadedBufferedReader implements Runnable {
                                                     .split("file")[0].replace(" ", "")
                                     );
                             if (iteration > WARNING_INTERVAL) {
-                                new Thread() { 
+                                new Thread() {
                                     public void run() {
                                         ErrorForUserDisplayer.displayError(
                                                 "A loop in your c program is still"

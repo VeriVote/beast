@@ -1,31 +1,22 @@
 package edu.pse.beast.types.cbmctypes.outputplugins;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
-import edu.pse.beast.propertychecker.Result;
-import edu.pse.beast.toolbox.CBMCResultPresentationHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
-import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
-import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueArray;
-import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueStruct;
 import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
 public class Parliament extends CBMCOutputType {
-	
-	private static final int dimensions = 1;
+    private static final int dimensions = 1;
+    private final static String[] sizeOfDimensions = { UnifiedNameContainer.getCandidate() };
 
-	private final static String[] sizeOfDimensions = { UnifiedNameContainer.getCandidate() };
-	
-	public Parliament() {
-		super(true, DataType.INT, dimensions, sizeOfDimensions);
-	}
+    public Parliament() {
+        super(true, DataType.INT, dimensions, sizeOfDimensions);
+    }
 
     @Override
     public String getOutputIDinFile() {
@@ -45,27 +36,31 @@ public class Parliament extends CBMCOutputType {
         // UnifiedNameContainer.getVoter() + "], total_diff, pos_diff;");
 
         code.addTab();
-        code.add(super.getContainer().getOutputStruct().getStructAccess() + "tmp = " + UnifiedNameContainer.getVotingMethod() + "("
+        code.add(super.getContainer().getOutputStruct().getStructAccess()
+                + "tmp = " + UnifiedNameContainer.getVotingMethod() + "("
                 + UnifiedNameContainer.getNewVotesName() + "1);");
         code.add("unsigned int *tmp_result = tmp."
                 + UnifiedNameContainer.getStructValueName() + ";");
         // create the array where the new seats will get saved
-        code.add("unsigned int "
-                + UnifiedNameContainer.getNewResultName() + "1["
-                + UnifiedNameContainer.getSeats() + "];");
+        code.add("unsigned int " + UnifiedNameContainer.getNewResultName()
+                + "1[" + UnifiedNameContainer.getSeats() + "];");
         // iterate over the seat array, and fill it
-        code.add("for (int i = 0; i < " + UnifiedNameContainer.getSeats() + "; i++) {");
+        code.add("for (int i = 0; i < " + UnifiedNameContainer.getSeats()
+                + "; i++) {");
         code.addTab();
         // we do this, so our cbmc parser can read out the value of the
         // array
-        code.add("" + UnifiedNameContainer.getNewResultName() + "1[i] = tmp_result[i];");
+        code.add("" + UnifiedNameContainer.getNewResultName()
+                + "1[i] = tmp_result[i];");
         code.deleteTab();
         code.add("}"); // close the for loop
         // iterate over all candidates / seats
-        code.add("for (int i = 0; i < " + UnifiedNameContainer.getSeats() + "; i++) {");
+        code.add("for (int i = 0; i < " + UnifiedNameContainer.getSeats()
+                + "; i++) {");
         code.addTab();
-        code.add("assert(" + UnifiedNameContainer.getNewResultName() + "1[i] == "
-                + UnifiedNameContainer.getOrigResultName() + "[i]);");
+        code.add(
+                "assert(" + UnifiedNameContainer.getNewResultName() + "1[i] == "
+                        + UnifiedNameContainer.getOrigResultName() + "[i]);");
         code.deleteTab();
         code.add("}"); // end of the for loop
         code.deleteTab();
@@ -76,9 +71,10 @@ public class Parliament extends CBMCOutputType {
     @Override
     public CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code,
                                                         int voteNumber) {
-        String electX = super.getContainer().getOutputStruct().getStructAccess() + " elect" + voteNumber
-                + " = " + UnifiedNameContainer.getVotingMethod()
-                + "(votes" + voteNumber + ");";
+        String electX = super.getContainer().getOutputStruct().getStructAccess()
+                + " elect" + voteNumber + " = "
+                + UnifiedNameContainer.getVotingMethod() + "(votes" + voteNumber
+                + ");";
         code.add(electX);
         return code;
     }
@@ -87,23 +83,27 @@ public class Parliament extends CBMCOutputType {
     public String getCArrayType() {
         return "[" + UnifiedNameContainer.getSeats() + "]";
     }
-    
+
     @Override
     public InternalTypeContainer getInternalTypeContainer() {
         return new InternalTypeContainer(
                 new InternalTypeContainer(InternalTypeRep.CANDIDATE),
-                                          InternalTypeRep.VOTER);
+                InternalTypeRep.VOTER);
     }
-    
+
     @Override
     public String getResultDescriptionString(List<String> result) {
         String toReturn = "[";
-        for (Iterator<String> iterator = result.iterator(); iterator.hasNext();) {
+        for (Iterator<String> iterator = result.iterator(); iterator
+                .hasNext();) {
             String currentValue = (String) iterator.next();
             try {
-                toReturn = toReturn + GUIController.getController().getElectionSimulation()
-                        .getPartyName(Integer.parseInt(currentValue)) + ", ";
-            } catch (NumberFormatException e) {
+                toReturn = toReturn
+                        + GUIController.getController().getElectionSimulation()
+                                .getPartyName(Integer.parseInt(currentValue))
+                        + ", ";
+            }
+            catch (NumberFormatException e) {
                 toReturn = toReturn + currentValue + ", ";
             }
         }

@@ -20,105 +20,85 @@ import edu.pse.beast.types.OutputType;
 import javafx.scene.Node;
 
 public class MarginResult extends ResultPresentationType {
+    GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area;
+    int standartSize = 10;
 
-	GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area;
+    @Override
+    public Node presentResult(Result result) {
+        if (area == null) {
+            area = TextFieldCreator.getGenericStyledAreaInstance(
+                    TextStyle.DEFAULT.fontSize(standartSize), ParStyle.EMPTY);
+            area.setEditable(false);
+        }
+        area.clear();
+        if (!result.hasFinalMargin()) {
+            area.appendText("There is no final margin.");
+        } else {
+            area.appendText("Final Margin: " + result.getFinalMargin());
+            area.appendText("\n=================================================");
+            InputType inType = result.getElectionDescription().getContainer().getInputType();
+            OutputType outType = result.getElectionDescription().getContainer().getOutputType();
+            CBMCResultValueStruct structVotes = new CBMCResultValueStruct();
+            structVotes.setValue(
+                    (CBMCResultValueWrapper) result.getOrigVoting().values,
+                    UnifiedNameContainer.getStructValueName());
+            ResultValueWrapper structVotesWrapped = new CBMCResultValueWrapper(structVotes);
+            List<String> toAdd = inType.drawResult(structVotesWrapped, "\norig votes: ", -1L);
+            for (int i = 0; i < toAdd.size(); i++) {
+                area.appendText(toAdd.get(i));
+            }
+            toAdd = outType.drawResult(result.getOrigWinner().values, "\norig result: ", -1L);
+            for (int i = 0; i < toAdd.size(); i++) {
+                area.appendText(toAdd.get(i));
+            }
+            area.appendText("\n=================================================\n");
+            toAdd = inType.drawResult(result.getNewVotes().values, "\nnew votes: ", -1L);
+            for (int i = 0; i < toAdd.size(); i++) {
+                area.appendText(toAdd.get(i));
+            }
+            toAdd = outType.drawResult(result.getNewWinner().values, "\nnew result: ", -1L);
+            for (int i = 0; i < toAdd.size(); i++) {
+                area.appendText(toAdd.get(i));
+            }
+        }
+        return area;
+    }
 
-	int standartSize = 10;
+    @Override
+    public String getName() {
+        return "Margin Result";
+    }
 
-	@Override
-	public Node presentResult(Result result) {
+    @Override
+    public String getToolTipDescription() {
+        return "The Defaul way of presenting a result";
+    }
 
-		if (area == null) {
-			area = TextFieldCreator.getGenericStyledAreaInstance(TextStyle.DEFAULT.fontSize(standartSize),
-					ParStyle.EMPTY);
-			area.setEditable(false);
-		}
-		
-		area.clear();
-		
-		if (!result.hasFinalMargin()) {
-			area.appendText("There is no final margin.");
-		} else {
+    @Override
+    public boolean supportsZoom() {
+        return true;
+    }
 
-			area.appendText("Final Margin: " + result.getFinalMargin());
+    @Override
+    public void zoomTo(double zoomValue) {
+        if (area != null) {
+            area.setStyle(0, area.getLength(), TextStyle.DEFAULT
+                    .fontSize((int) (standartSize + zoomValue)));
+        }
+    }
 
-			area.appendText("\n=================================================");
-			
-			InputType inType = result.getElectionDescription().getContainer().getInputType();
-			OutputType outType = result.getElectionDescription().getContainer().getOutputType();
+    @Override
+    public boolean supports(AnalysisType analysisType) {
+        switch (analysisType) {
+        case Margin:
+            return true;
+        default:
+            return false;
+        }
+    }
 
-			CBMCResultValueStruct structVotes = new CBMCResultValueStruct();
-
-			structVotes.setValue((CBMCResultValueWrapper) result.getOrigVoting().values,
-					UnifiedNameContainer.getStructValueName());
-
-			ResultValueWrapper structVotesWrapped = new CBMCResultValueWrapper(structVotes);
-
-			List<String> toAdd = inType.drawResult(structVotesWrapped, "\norig votes: ", -1L);
-
-			for (int i = 0; i < toAdd.size(); i++) {
-				area.appendText(toAdd.get(i));
-			}
-
-			toAdd = outType.drawResult(result.getOrigWinner().values, "\norig result: ", -1L);
-
-			for (int i = 0; i < toAdd.size(); i++) {
-				area.appendText(toAdd.get(i));
-			}
-			
-			area.appendText("\n=================================================\n");
-			
-			toAdd = inType.drawResult(result.getNewVotes().values, "\nnew votes: ", -1L);
-			
-			for (int i = 0; i < toAdd.size(); i++) {
-				area.appendText(toAdd.get(i));
-			}
-			
-			toAdd = outType.drawResult(result.getNewWinner().values, "\nnew result: ", -1L);
-			
-			for (int i = 0; i < toAdd.size(); i++) {
-				area.appendText(toAdd.get(i));
-			}
-			
-		}
-		return area;
-	}
-
-	@Override
-	public String getName() {
-		return "Margin Result";
-	}
-
-	@Override
-	public String getToolTipDescription() {
-		return "The Defaul way of presenting a result";
-	}
-
-	@Override
-	public boolean supportsZoom() {
-		return true;
-	}
-
-	@Override
-	public void zoomTo(double zoomValue) {
-		if (area != null) {
-			area.setStyle(0, area.getLength(), TextStyle.DEFAULT.fontSize((int) (standartSize + zoomValue)));
-		}
-	}
-
-	@Override
-	public boolean supports(AnalysisType analysisType) {
-		switch (analysisType) {
-		case Margin:
-			return true;
-		default:
-			return false;
-		}
-	}
-	
-	@Override
-	public boolean isDefault() {
-		return true;
-	}
-
+    @Override
+    public boolean isDefault() {
+        return true;
+    }
 }

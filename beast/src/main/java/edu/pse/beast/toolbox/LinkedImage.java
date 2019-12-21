@@ -12,15 +12,13 @@ import javafx.scene.Node;
 
 public interface LinkedImage {
     static <S> Codec<LinkedImage> codec() {
-    	
-    	System.out.println("Code called! Investigate in LinkedImage, as we don't use paths");
-    	
+        System.out.println("Code called! Investigate in LinkedImage, as we don't use paths");
+
         return new Codec<LinkedImage>() {
             @Override
             public String getName() {
                 return "LinkedImage";
             }
-
             @Override
             public void encode(DataOutputStream os, LinkedImage linkedImage) throws IOException {
                 if (linkedImage.isReal()) {
@@ -31,17 +29,14 @@ public interface LinkedImage {
                     os.writeBoolean(false);
                 }
             }
-
             @Override
             public LinkedImage decode(DataInputStream is) throws IOException {
                 if (is.readBoolean()) {
                     String imagePath = Codec.STRING_CODEC.decode(is);
-                    imagePath = imagePath.replace("\\",  "/");
-                    
-                	//maybe rewrite encoder to encode the image, and not the path
+                    imagePath = imagePath.replace("\\", "/");
+                    // maybe rewrite encoder to encode the image, and not the path
                     throw new AssertionError("Unreachable code");
-                    
-                    //return new RealLinkedImage(imagePath);
+                    // return new RealLinkedImage(imagePath);
                 } else {
                     return new EmptyLinkedImage();
                 }
