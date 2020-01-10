@@ -9,6 +9,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.propertychecker.Result;
 import edu.pse.beast.toolbox.CBMCResultPresentationHelper;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValue;
 import edu.pse.beast.toolbox.valueContainer.ResultValue.ResultType;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
@@ -148,7 +149,7 @@ public abstract class InOutType {
                        // structs
         }
         else {
-            return this.getContainer().getNameContainer().getStructValueName();
+            return UnifiedNameContainer.getStructValueName();
         }
     }
 
@@ -160,7 +161,7 @@ public abstract class InOutType {
             CBMCResultValueStruct struct = (CBMCResultValueStruct) resultValue;
 
             return printArray(struct.getResultVariable(
-                    getContainer().getNameContainer().getStructValueName()));
+                    UnifiedNameContainer.getStructValueName()));
         }
         if (resultValue.getResultType() == ResultType.SINGLE) {
             CBMCResultValueSingle single = (CBMCResultValueSingle) resultValue;
@@ -193,7 +194,7 @@ public abstract class InOutType {
 
     public String getFullVarAccess(String varName, List<String> filling) {
         return varName + "."
-                + this.getContainer().getNameContainer().getStructValueName()
+                + UnifiedNameContainer.getStructValueName()
                 + getAccessDimensions(filling);
     }
 

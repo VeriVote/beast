@@ -176,10 +176,10 @@ public class Preference extends CBMCInputType {
         code.add(loopHead);
 
         code.add("assume (" + valueName + "."
-                + this.getContainer().getNameContainer().getStructValueName()
+                + UnifiedNameContainer.getStructValueName()
                 + "[" + loopVariables.get(0) + "]" + "[" + loopVariables.get(1)
                 + "] != " + valueName + "."
-                + this.getContainer().getNameContainer().getStructValueName()
+                + UnifiedNameContainer.getStructValueName()
                 + "[" + loopVariables.get(0) + "]" + "[" + ownLoopVar + "]);");
         code.deleteTab();
         code.add("}");

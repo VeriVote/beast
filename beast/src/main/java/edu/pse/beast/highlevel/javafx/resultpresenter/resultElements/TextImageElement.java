@@ -5,7 +5,6 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import edu.pse.beast.toolbox.RichTextInformation;
@@ -59,8 +58,8 @@ public class TextImageElement extends ResultImageElement {
 
     @Override
     public void drawElement(Graphics2D graphics, double scale) {
-        double xOffset = 0;
-        for (RichTextInformation info : richTextInfo) {
+        // double xOffset = 0;
+        // for (RichTextInformation info : richTextInfo) {
             // TODO change richtextinfo maybe to TextStyle
             //
             // Font scaledFont = new Font(info.font.getName(),
@@ -77,19 +76,19 @@ public class TextImageElement extends ResultImageElement {
             // xOffset +=
             // scaledFont.getStringBounds(replaceCharacters(info.text),
             // frc).getWidth();
-        }
+        // }
     }
 
     @Deprecated
     private static double getMaxX(double startX,
                                   List<RichTextInformation> textInfo) {
         double maxTextWidth = 0;
-        for (Iterator<RichTextInformation> iterator = textInfo.iterator(); iterator.hasNext();) {
-            RichTextInformation info = (RichTextInformation) iterator.next();
+        // for (Iterator<RichTextInformation> iterator = textInfo.iterator(); iterator.hasNext();) {
+            // RichTextInformation info = (RichTextInformation) iterator.next();
             // maxTextWidth +=
             // info.font.getStringBounds(replaceCharacters(info.text),
             // frc).getWidth();
-        }
+        // }
         return startX + maxTextWidth;
     }
 
@@ -98,12 +97,12 @@ public class TextImageElement extends ResultImageElement {
                                   List<RichTextInformation> textInfo) {
         double maxTextHeight = 0;
 
-        for (Iterator<RichTextInformation> iterator = textInfo.iterator(); iterator.hasNext();) {
-            RichTextInformation info = (RichTextInformation) iterator.next();
+        // for (Iterator<RichTextInformation> iterator = textInfo.iterator(); iterator.hasNext();) {
+            // RichTextInformation info = (RichTextInformation) iterator.next();
             // maxTextHeight = Math.max(maxTextHeight,
             // info.font.getStringBounds(replaceCharacters(info.text),
             // frc).getHeight());
-        }
+        // }
         return startY + maxTextHeight;
     }
 

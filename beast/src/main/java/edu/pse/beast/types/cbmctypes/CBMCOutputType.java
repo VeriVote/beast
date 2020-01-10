@@ -1,6 +1,7 @@
 package edu.pse.beast.types.cbmctypes;
 
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.OutputType;
 
 public abstract class CBMCOutputType extends OutputType {
@@ -15,10 +16,10 @@ public abstract class CBMCOutputType extends OutputType {
         code.add("int main() {");
         code.addTab();
         String definition = getContainer().getOutputStruct().getStructAccess()
-                + " " + getContainer().getNameContainer().getElect() + "1 = "
-                + getContainer().getNameContainer().getVotingMethod()
+                + " " + UnifiedNameContainer.getElect() + "1 = "
+                + UnifiedNameContainer.getVotingMethod()
                 + "( ORIG_VOTES_SIZE, "
-                + getContainer().getNameContainer().getOrigVotesName() + ");";
+                + UnifiedNameContainer.getOrigVotesName() + ");";
         code.add(definition);
         code.add("assert(0);"); // add an assertion that never holds to be able
                                 // to extract the data

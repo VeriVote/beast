@@ -80,8 +80,9 @@ public class TextAndImages extends ResultPresentationType {
             area.replaceText(area.getLength(), area.getLength(), textTest);
         }
         area.replace(area.getLength(), area.getLength(), ros);
-        VirtualizedScrollPane<GenericStyledArea> vsPane =
-                new VirtualizedScrollPane<>(area); // Wrap it in a scroll area
+        VirtualizedScrollPane<GenericStyledArea<ParStyle,
+                              Either<String, LinkedImage>, TextStyle>>
+            vsPane = new VirtualizedScrollPane<>(area); // Wrap it in a scroll area
         return vsPane;
     }
 

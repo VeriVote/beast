@@ -11,6 +11,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import edu.pse.beast.toolbox.CCodeHelper;
 import edu.pse.beast.toolbox.Tuple;
 import edu.pse.beast.toolbox.Tuple3;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 
@@ -111,12 +112,12 @@ public class ElectionDescription {
             access += "[" + loopVariables.get(i) + "]";
         }
         String assignment =
-                getContainer().getNameContainer().getVotingArray()
+                UnifiedNameContainer.getVotingArray()
                 + access + " = " + votesName + ".arr" + access + ";";
         String switchedArray =
                 getContainer().getInputType()
                 .getDataTypeAndSign() + " "
-                + getContainer().getNameContainer().getVotingArray()
+                + UnifiedNameContainer.getVotingArray()
                 + getContainer().getInputType().getDimensionDescriptor(true)
                 + ";" + forLoopStart + assignment + forLoopEnd;
         replacementLine += " " + switchedArray;
@@ -352,7 +353,7 @@ public class ElectionDescription {
         for (int i = 0; i < dimensions; i++) {
             arrayAccess += "[" + loopVariables.get(i) + "]";
         }
-        toReturn += variableName + "." + container.getNameContainer().getStructValueName()
+        toReturn += variableName + "." + UnifiedNameContainer.getStructValueName()
                     + arrayAccess + " = " + valueDefinition + arrayAccess + ";";
         for (int i = 0; i < dimensions; i++) {
             toReturn += "}"; // close the for loops

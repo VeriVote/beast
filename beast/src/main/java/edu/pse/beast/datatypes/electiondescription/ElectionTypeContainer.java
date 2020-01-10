@@ -80,9 +80,9 @@ public class ElectionTypeContainer { // TODO make this class abstract, move code
 
     public String getStructDefinitions() {
         String toReturn = "";
-        toReturn = inputStruct.getStructDefinition(nameContainer) + "\n";
+        toReturn = inputStruct.getStructDefinition() + "\n";
         if (!inputStruct.equals(outputStruct)) {
-            toReturn += outputStruct.getStructDefinition(nameContainer) + "\n";
+            toReturn += outputStruct.getStructDefinition() + "\n";
         }
         return toReturn;
     }

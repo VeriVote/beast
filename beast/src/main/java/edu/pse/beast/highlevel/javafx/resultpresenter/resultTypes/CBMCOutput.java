@@ -23,7 +23,7 @@ public class CBMCOutput extends ResultPresentationType {
     public Node presentResult(Result result) {
         if (area == null) {
             area = TextFieldCreator.getGenericStyledAreaInstance(
-                        TextStyle.DEFAULT.fontSize(standartSize), ParStyle.EMPTY);
+                        TextStyle.fontSize(standartSize), ParStyle.EMPTY);
             area.setEditable(false);
         }
         List<String> resultText = result.getResultText();
@@ -55,7 +55,7 @@ public class CBMCOutput extends ResultPresentationType {
     public void zoomTo(double zoomValue) {
         if (area != null) {
             area.setStyle(0, area.getLength(),
-                          TextStyle.DEFAULT.fontSize((int) (standartSize + zoomValue)));
+                          TextStyle.fontSize((int) (standartSize + zoomValue)));
         }
     }
 

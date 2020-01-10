@@ -5,6 +5,7 @@ import java.util.List;
 
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.InputType;
 
 public abstract class CBMCInputType extends InputType {
@@ -28,7 +29,7 @@ public abstract class CBMCInputType extends InputType {
         code.add("} else {");
         code.addTab();
         code.add(this.setVoteValue(newVotesName,
-                                   this.getContainer().getNameContainer().getOrigVotesName(),
+                                   UnifiedNameContainer.getOrigVotesName(),
                                    loopVars));
         code.add("}");
     }

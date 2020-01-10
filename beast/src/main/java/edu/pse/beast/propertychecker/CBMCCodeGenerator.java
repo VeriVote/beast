@@ -169,7 +169,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         String origVotes =
                 electionDesc.getContainer().getInputStruct().getStructAccess()
                 + " "
-                + electionDesc.getContainer().getNameContainer().getOrigVotesName()
+                + UnifiedNameContainer.getOrigVotesName()
                 + " = " + getVotingResultCode((CBMCResultValueWrapper) votingData.values)
                 + ";";
         String sizeOfVote =
@@ -199,7 +199,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         String origVotes =
                 electionDesc.getContainer().getInputStruct().getStructAccess()
                 + " "
-                + electionDesc.getContainer().getNameContainer().getOrigVotesName()
+                + UnifiedNameContainer.getOrigVotesName()
                 + " = " + getVotingResultCode(
                         (CBMCResultValueWrapper) votingData.values)
                 + ";";
@@ -220,7 +220,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         // we also add the original result, which is calculated by compiling the
         // program and running it
 
-        String origResultName = electionDesc.getContainer().getNameContainer().getOrigResultName();
+        String origResultName = UnifiedNameContainer.getOrigResultName();
         electionDesc.getContainer().getOutputType().addLastResultAsCode(code, origResult,
                                                                         origResultName);
         // add the verify method:
@@ -271,8 +271,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         List<String> loopVars =
                 addNestedForLoopTop(code, inType.getSizeOfDimensionsAsList(),
                                     new ArrayList<String>());
-        inType.flipVote(voteName,
-                        electionDesc.getContainer().getNameContainer().getOrigVotesName(),
+        inType.flipVote(voteName, UnifiedNameContainer.getOrigVotesName(),
                         loopVars, code);
 
         // addConditionalValue(voteName, inType); //the votes have to be valid
@@ -292,11 +291,11 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
                                            OutputType outType, String newVotesName,
                                            String origResultName) {
         String resultName =
-                outType.getContainer().getNameContainer().getNewResultName();
+                UnifiedNameContainer.getNewResultName();
         String resultContainer = outType.getStruct().getStructAccess() + " " + resultName;
         String resultAssignment =
                 resultContainer + " = "
-                + outType.getContainer().getNameContainer().getVotingMethod()
+                + UnifiedNameContainer.getVotingMethod()
                 + "(ORIG_VOTES_SIZE," + newVotesName + ");";
         code.add(resultAssignment);
         List<String> loopVars =
@@ -865,7 +864,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
             }
             code.add("//init for election: " + voteNumber);
             addInitialisedValue(
-                    electionDesc.getContainer().getNameContainer().getVotingArray() + voteNumber,
+                    UnifiedNameContainer.getVotingArray() + voteNumber,
                     electionDesc.getContainer().getInputType(),
                     electionDesc.getContainer().getInputStruct(), minV, maxV);
         }
@@ -875,7 +874,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         // now hold all the elections
         for (int i = 1; i <= numberOfTimesVoted; i++) {
             code.add("//election number: " + i);
-            String sizeOfVotes = electionDesc.getContainer().getNameContainer().getVoter() + i;
+            String sizeOfVotes = UnifiedNameContainer.getVoter() + i;
             String electX =
                     electionDesc.getContainer().getOutputStruct().getStructAccess()
                     + " elect" + i + " = " + UnifiedNameContainer.getVotingMethod()
@@ -1014,8 +1013,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         List<String> loopVariables =
                 addNestedForLoopTop(this.code, inOutType.getSizeOfDimensionsAsList(),
                                     new ArrayList<String>());
-        String assignment = valueName + "." + electionDesc.getContainer()
-                .getNameContainer().getStructValueName();
+        String assignment = valueName + "." + UnifiedNameContainer.getStructValueName();
 
         for (int i = 0; i < inOutType.getAmountOfDimensions(); i++) {
             assignment += "[" + loopVariables.get(i) + "]";

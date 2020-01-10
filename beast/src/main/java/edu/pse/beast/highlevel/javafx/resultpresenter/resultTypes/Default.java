@@ -31,7 +31,7 @@ public class Default extends ResultPresentationType {
     public Node presentResult(Result result) {
         if (area == null) {
             area = TextFieldCreator.getGenericStyledAreaInstance(
-                    TextStyle.DEFAULT.fontSize(standartSize), ParStyle.EMPTY);
+                    TextStyle.fontSize(standartSize), ParStyle.EMPTY);
             area.setEditable(false);
         }
         area.clear();
@@ -74,8 +74,8 @@ public class Default extends ResultPresentationType {
     @Override
     public void zoomTo(double zoomValue) {
         if (area != null) {
-            area.setStyle(0, area.getLength(), TextStyle.DEFAULT
-                    .fontSize((int) (standartSize + zoomValue)));
+            area.setStyle(0, area.getLength(),
+                          TextStyle.fontSize((int) (standartSize + zoomValue)));
         }
     }
 

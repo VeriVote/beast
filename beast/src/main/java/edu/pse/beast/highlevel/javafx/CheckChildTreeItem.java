@@ -1,7 +1,5 @@
 package edu.pse.beast.highlevel.javafx;
 
-import edu.pse.beast.highlevel.javafx.resultpresenter.ResultPresenterNEW;
-import edu.pse.beast.propertychecker.Result;
 import javafx.scene.control.TreeItem;
 
 public class CheckChildTreeItem extends ChildTreeItem {

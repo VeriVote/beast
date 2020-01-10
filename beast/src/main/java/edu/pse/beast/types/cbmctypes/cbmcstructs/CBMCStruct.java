@@ -54,13 +54,13 @@ public class CBMCStruct extends ComplexType {
      * @return the string which defines this struct
      */
     @Override
-    public String getStructDefinition(UnifiedNameContainer nameContainer) {
+    public String getStructDefinition() {
         String sign = "";
         if (inOutType.isDataTypeUnsigned()) {
             sign = "unsigned ";
         }
         return "struct " + structName + " { " + sign + inOutType.getDataType()
-                + " " + nameContainer.getStructValueName()
+                + " " + UnifiedNameContainer.getStructValueName()
                 + inOutType.getDimensionDescriptor(true) + ";};";
     }
 

@@ -803,11 +803,11 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
             // the value the new array shall have is now in voteInput
             String toSaveInto = node.elect.getText().toLowerCase();
             code.add("for(int i = 0; i < "
-                     + electionTypeContainer.getNameContainer().getCandidate()
+                     + UnifiedNameContainer.getCandidate()
                      + "; i++) {");
 
             String structVarAcc =
-                    "." + electionTypeContainer.getNameContainer().getStructValueName() + "[i]";
+                    "." + UnifiedNameContainer.getStructValueName() + "[i]";
             code.add(toSaveInto + " " + structVarAcc + " = " + voteInput
                      + structVarAcc + ";");
             code.add("}");

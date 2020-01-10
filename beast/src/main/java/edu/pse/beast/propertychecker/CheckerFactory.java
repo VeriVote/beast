@@ -326,8 +326,7 @@ public abstract class CheckerFactory implements Runnable {
                 ElectionSimulationData newResult;
                 if (hasMargin) {
                     String voteName = UnifiedNameContainer.getNewVotesName();
-                    String newResName =
-                            electionDesc.getContainer().getNameContainer().getNewResultName();
+                    String newResName = UnifiedNameContainer.getNewResultName();
                     newVotes = new ElectionSimulationData(numVoters,
                             numCandidates, numSeats,
                             result.readVariableValue(voteName).get(0));
@@ -459,7 +458,7 @@ public abstract class CheckerFactory implements Runnable {
                     result.setValid();
                     result.setFinished();
                     this.finished = true;
-                    int count = 0;
+                    // int count = 0;
 
                     System.out.println("fix output CheckerFactory");
                     // for (Iterator<List<String>> iterator =

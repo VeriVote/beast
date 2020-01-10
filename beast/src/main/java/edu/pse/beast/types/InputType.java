@@ -9,6 +9,7 @@ import java.util.ServiceLoader;
 import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
 import edu.pse.beast.highlevel.javafx.NEWRowOfValues;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
+import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValue;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
@@ -165,7 +166,7 @@ public abstract class InputType extends InOutType {
     public String getFullVoteAccess(String voteName, List<String> loopVars) {
         String access = this.getAccessDimensions(loopVars);
         return (voteName + "."
-                + this.getContainer().getNameContainer().getStructValueName()
+                + UnifiedNameContainer.getStructValueName()
                 + access);
     }
 
