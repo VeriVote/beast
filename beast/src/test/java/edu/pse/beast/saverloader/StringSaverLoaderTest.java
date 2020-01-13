@@ -1,5 +1,7 @@
 package edu.pse.beast.saverloader;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -26,6 +28,6 @@ public class StringSaverLoaderTest {
     public void testSaverLoader() {
         String saveString = StringSaverLoader.createSaveString(testString);
         String recreatedString = StringSaverLoader.createFromSaveString(saveString);
-        assert (recreatedString.equals(testString));
+        assertEquals(recreatedString, testString);
     }
 }

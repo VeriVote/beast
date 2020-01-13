@@ -1,5 +1,7 @@
 package edu.pse.beast.saverloader;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
@@ -43,16 +45,16 @@ public class ElectionCheckParameterSaverLoaderTest {
         final ElectionCheckParameter recreatedElectionCheckParameter
             = (ElectionCheckParameter)
                 ElectionCheckParameterSaverLoader.createFromSaveString(saveString);
-        assert (recreatedElectionCheckParameter.getAmountCandidates().get(0).equals(1));
-        assert (recreatedElectionCheckParameter.getAmountCandidates().get(1).equals(2));
-        assert (recreatedElectionCheckParameter.getAmountSeats().get(0).equals(1));
-        assert (recreatedElectionCheckParameter.getAmountSeats().get(1).equals(2));
-        assert (recreatedElectionCheckParameter.getAmountVoters().get(0).equals(1));
-        assert (recreatedElectionCheckParameter.getAmountVoters().get(1).equals(2));
-        // FIXME: assert (recreatedElectionCheckParameter.getArgument().equals("-- unwind 6"));
-        assert (recreatedElectionCheckParameter.getProcesses() == 4);
+        assertEquals((int)recreatedElectionCheckParameter.getAmountCandidates().get(0), 1);
+        assertEquals((int)recreatedElectionCheckParameter.getAmountCandidates().get(1), 2);
+        assertEquals((int)recreatedElectionCheckParameter.getAmountSeats().get(0), 1);
+        assertEquals((int)recreatedElectionCheckParameter.getAmountSeats().get(1), 2);
+        assertEquals((int)recreatedElectionCheckParameter.getAmountVoters().get(0), 1);
+        assertEquals((int)recreatedElectionCheckParameter.getAmountVoters().get(1), 2);
+        assertEquals(recreatedElectionCheckParameter.getArgument(), "--unwind 6");
+        assertEquals((int)recreatedElectionCheckParameter.getProcesses(), 4);
         final TimeOut recreatedTimeOut = recreatedElectionCheckParameter.getTimeout();
-        assert (recreatedTimeOut.getDuration() == 10800000);
-        assert (recreatedTimeOut.getOrigUnit().equals(TimeUnit.HOURS));
+        assertEquals(recreatedTimeOut.getDuration(), 10800000);
+        assertEquals(recreatedTimeOut.getOrigUnit(), TimeUnit.HOURS);
     }
 }

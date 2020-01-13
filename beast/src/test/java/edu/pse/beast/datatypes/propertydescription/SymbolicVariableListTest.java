@@ -1,5 +1,9 @@
 package edu.pse.beast.datatypes.propertydescription;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.LinkedList;
@@ -52,14 +56,14 @@ public class SymbolicVariableListTest {
             = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.addSymbolicVariable(id, internalTypeContainer);
-        assert (((LinkedList<SymbolicVariable>)
+        assertSame(((LinkedList<SymbolicVariable>)
                     instance.getSymbolicVariables())
-                .getFirst().getInternalTypeContainer().getInternalType()
-                == InternalTypeRep.INTEGER);
-        assert (((LinkedList<SymbolicVariable>)
+                .getFirst().getInternalTypeContainer().getInternalType(),
+                InternalTypeRep.INTEGER);
+        assertEquals(((LinkedList<SymbolicVariable>)
                     instance.getSymbolicVariables())
-                .getFirst().getId()
-                .equals("test"));
+                .getFirst().getId(),
+                "test");
     }
 
     /**
@@ -72,9 +76,9 @@ public class SymbolicVariableListTest {
         InternalTypeContainer internalTypeContainer
             = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
-        assert (instance.isVarIDAllowed("test"));
+        assertTrue(instance.isVarIDAllowed("test"));
         instance.addSymbolicVariable(id, internalTypeContainer);
-        assert (!instance.isVarIDAllowed("test"));
+        assertFalse(instance.isVarIDAllowed("test"));
     }
 
     /**
@@ -94,11 +98,11 @@ public class SymbolicVariableListTest {
 
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.setSymbolicVariableList(symbolicVariableList);
-        assert (((LinkedList<SymbolicVariable>)
+        assertEquals(((LinkedList<SymbolicVariable>)
                     instance.getSymbolicVariables())
-                .getFirst().getId()
-                .equals("test"));
-        assert (instance.getSymbolicVariables().get(1).getId().equals("test2"));
+                .getFirst().getId(),
+                "test");
+        assertEquals(instance.getSymbolicVariables().get(1).getId(), "test2");
     }
 
     /**
@@ -112,14 +116,14 @@ public class SymbolicVariableListTest {
             = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.addSymbolicVariable(id, internalTypeContainer);
-        assert (((LinkedList<SymbolicVariable>)
+        assertSame(((LinkedList<SymbolicVariable>)
                     instance.getSymbolicVariables())
-                .getFirst().getInternalTypeContainer().getInternalType()
-                == InternalTypeRep.INTEGER);
-        assert (((LinkedList<SymbolicVariable>)
+                .getFirst().getInternalTypeContainer().getInternalType(),
+                InternalTypeRep.INTEGER);
+        assertEquals(((LinkedList<SymbolicVariable>)
                     instance.getSymbolicVariables())
-                .getFirst().getId()
-                .equals("test"));
+                .getFirst().getId(),
+                "test");
     }
 
     /**
@@ -133,8 +137,8 @@ public class SymbolicVariableListTest {
             = new InternalTypeContainer(InternalTypeRep.INTEGER);
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.addSymbolicVariable(id, internalTypeContainer);
-        assert (instance.removeSymbolicVariable("test"));
-        assert (instance.isVarIDAllowed("test"));
+        assertTrue(instance.removeSymbolicVariable("test"));
+        assertTrue(instance.isVarIDAllowed("test"));
     }
 
     /**
@@ -150,7 +154,7 @@ public class SymbolicVariableListTest {
         SymbolicVariableList instance = new SymbolicVariableList();
         instance.addSymbolicVariable(id, internalTypeContainer);
         instance.removeSymbolicVariable(index);
-        assert (instance.isVarIDAllowed("test"));
+        assertTrue(instance.isVarIDAllowed("test"));
     }
 
     /**

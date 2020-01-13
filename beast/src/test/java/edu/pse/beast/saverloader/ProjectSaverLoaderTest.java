@@ -1,5 +1,9 @@
 //package edu.pse.beast.saverloader;
 //
+//import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertFalse;
+//import static org.junit.Assert.assertTrue;
+//
 //import java.util.ArrayList;
 //import java.util.Arrays;
 //import java.util.concurrent.TimeUnit;
@@ -91,102 +95,85 @@
 //                projectSaverLoader.createSaveString(project));
 //
 //        ElectionDescription recreatedElectionDescription = recreatedProject.getElecDescr();
-//        assert (recreatedElectionDescription.getName().equals("testDescription"));
-//        assert (recreatedElectionDescription.getCode().get(0).equals("sdfgokdffg"));
-//        assert (recreatedElectionDescription.getCode().get(1).equals("sdkofgdfg"));
-//        assert (recreatedElectionDescription.getVotingDeclLine() == 2);
+//        assertEquals(recreatedElectionDescription.getName(), "testDescription");
+//        assertEquals(recreatedElectionDescription.getCode().get(0), "sdfgokdffg");
+//        assertEquals(recreatedElectionDescription.getCode().get(1), "sdkofgdfg");
+//        assertEquals(recreatedElectionDescription.getVotingDeclLine(), 2);
 //
 //        ElectionCheckParameter recreatedElectionCheckParameter =
 //            project.getElectionCheckParameter();
-//        assert (recreatedElectionCheckParameter.getAmountCandidates().get(0).equals(1));
-//        assert (recreatedElectionCheckParameter.getAmountCandidates().get(1).equals(2));
-//        assert (recreatedElectionCheckParameter.getAmountSeats().get(0).equals(1));
-//        assert (recreatedElectionCheckParameter.getAmountSeats().get(1).equals(2));
-//        assert (recreatedElectionCheckParameter.getAmountVoters().get(0).equals(1));
-//        assert (recreatedElectionCheckParameter.getAmountVoters().get(1).equals(2));
-//        assert (recreatedElectionCheckParameter.getArgument().equals("-- unwind 6"));
-//        assert (recreatedElectionCheckParameter.getProcesses() == 4);
+//        assertEquals((int)recreatedElectionCheckParameter.getAmountCandidates().get(0), 1);
+//        assertEquals((int)recreatedElectionCheckParameter.getAmountCandidates().get(1), 2);
+//        assertEquals((int)recreatedElectionCheckParameter.getAmountSeats().get(0), 1);
+//        assertEquals((int)recreatedElectionCheckParameter.getAmountSeats().get(1), 2);
+//        assertEquals((int)recreatedElectionCheckParameter.getAmountVoters().get(0), 1);
+//        assertEquals((int)recreatedElectionCheckParameter.getAmountVoters().get(1), 2);
+//        assertEquals(recreatedElectionCheckParameter.getArgument(), "-- unwind 6");
+//        assertEquals(recreatedElectionCheckParameter.getProcesses(), 4);
 //
 //        TimeOut recreatedTimeOut = recreatedElectionCheckParameter.getTimeout();
-//        assert (recreatedTimeOut.getDuration() == 10800000);
-//        assert (recreatedTimeOut.getOrigUnit().equals(TimeUnit.HOURS));
+//        assertEquals(recreatedTimeOut.getDuration(), 10800000);
+//        assertEquals(recreatedTimeOut.getOrigUnit(), TimeUnit.HOURS);
 //
 //        PLModel recreatedPLModel = recreatedProject.getPropList();
-//        assert (recreatedPLModel.getPropertyList().get(0)
-//                .getDescription().getName().equals("description1"));
-//        assert (recreatedPLModel.getPropertyList().get(0)
-//                .getDescription().getPostConditionsDescription().getCode()
-//                .equals("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD"));
-//        assert (recreatedPLModel.getPropertyList().get(0)
-//                .getDescription().getPreConditionsDescription().getCode()
-//                .equals("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD"));
-//        assert (recreatedPLModel.getPropertyList().get(0)
+//        assertEquals(recreatedPLModel.getPropertyList().get(0)
+//                         .getDescription().getName(), "description1");
+//        assertEquals(recreatedPLModel.getPropertyList().get(0)
+//                .getDescription().getPostConditionsDescription().getCode(),
+//                "CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
+//        assertEquals(recreatedPLModel.getPropertyList().get(0)
+//                .getDescription().getPreConditionsDescription().getCode(),
+//                "CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
+//        assertEquals(recreatedPLModel.getPropertyList().get(0)
+//                .getDescription().getSymbolicVariableList().get(0).getId(), "voter1");
+//        assertEquals(recreatedPLModel.getPropertyList().get(0)
 //                .getDescription().getSymbolicVariableList().get(0)
-//                .getId().equals("voter1"));
-//        assert (recreatedPLModel.getPropertyList().get(0)
-//                .getDescription().getSymbolicVariableList().get(0)
-//                .getInternalTypeContainer().getInternalType()
-//                .equals(InternalTypeRep.VOTER));
-//        assert (recreatedPLModel.getPropertyList().get(0)
+//                .getInternalTypeContainer().getInternalType(), InternalTypeRep.VOTER);
+//        assertEquals(recreatedPLModel.getPropertyList().get(0)
+//                .getDescription().getSymbolicVariableList().get(1).getId(), "voter2");
+//        assertEquals(recreatedPLModel.getPropertyList().get(0)
 //                .getDescription().getSymbolicVariableList().get(1)
-//                .getId().equals("voter2"));
-//        assert (recreatedPLModel.getPropertyList().get(0)
-//                .getDescription().getSymbolicVariableList().get(1)
-//                .getInternalTypeContainer().getInternalType()
-//                .equals(InternalTypeRep.VOTER));
-//        assert (recreatedPLModel.getPropertyList().get(0)
+//                .getInternalTypeContainer().getInternalType(), InternalTypeRep.VOTER);
+//        assertEquals(recreatedPLModel.getPropertyList().get(0)
+//                .getDescription().getSymbolicVariableList().get(2).getId(), "candidate");
+//        assertEquals(recreatedPLModel.getPropertyList().get(0)
 //                .getDescription().getSymbolicVariableList().get(2)
-//                .getId().equals("candidate"));
-//        assert (recreatedPLModel.getPropertyList().get(0)
-//                .getDescription().getSymbolicVariableList().get(2)
-//                .getInternalTypeContainer().getInternalType()
-//                .equals(InternalTypeRep.CANDIDATE));
-//        assert (recreatedPLModel.getPropertyList().get(0)
+//                .getInternalTypeContainer().getInternalType(), InternalTypeRep.CANDIDATE);
+//        assertEquals(recreatedPLModel.getPropertyList().get(0)
+//                .getDescription().getSymbolicVariableList().get(3).getId(), "seat");
+//        assertEquals(recreatedPLModel.getPropertyList().get(0)
 //                .getDescription().getSymbolicVariableList().get(3)
-//                .getId().equals("seat"));
-//        assert (recreatedPLModel.getPropertyList().get(0)
-//                .getDescription().getSymbolicVariableList().get(3)
-//                .getInternalTypeContainer().getInternalType()
-//                .equals(InternalTypeRep.SEAT));
-//        assert (recreatedPLModel.getPropertyList().get(0).getTestStatus().equals(true));
+//                .getInternalTypeContainer().getInternalType(), InternalTypeRep.SEAT);
+//        assertTrue(recreatedPLModel.getPropertyList().get(0).getTestStatus());
 //
-//        assert (recreatedPLModel.getPropertyList().get(1)
-//                .getDescription().getName().equals("description2"));
-//        assert (recreatedPLModel.getPropertyList().get(1)
-//                .getDescription().getPostConditionsDescription().getCode()
-//                .equals("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD"));
-//        assert (recreatedPLModel.getPropertyList().get(1)
-//                .getDescription().getPreConditionsDescription().getCode()
-//                .equals("CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD"));
-//        assert (recreatedPLModel.getPropertyList().get(1)
+//        assertEquals(recreatedPLModel.getPropertyList().get(1)
+//                .getDescription().getName(), "description2");
+//        assertEquals(recreatedPLModel.getPropertyList().get(1)
+//                .getDescription().getPostConditionsDescription().getCode(),
+//                "CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
+//        assertEquals(recreatedPLModel.getPropertyList().get(1)
+//                .getDescription().getPreConditionsDescription().getCode(),
+//                "CODECODEOCDEOASD ASDAOSDASOD ;;; ;ASODAOSD");
+//        assertEquals(recreatedPLModel.getPropertyList().get(1)
+//                .getDescription().getSymbolicVariableList().get(0).getId(), "voter1");
+//        assertEquals(recreatedPLModel.getPropertyList().get(1)
 //                .getDescription().getSymbolicVariableList().get(0)
-//                .getId().equals("voter1"));
-//        assert (recreatedPLModel.getPropertyList().get(1)
-//                .getDescription().getSymbolicVariableList().get(0)
-//                .getInternalTypeContainer().getInternalType()
-//                .equals(InternalTypeRep.VOTER));
-//        assert (recreatedPLModel.getPropertyList().get(1)
+//                .getInternalTypeContainer().getInternalType(), InternalTypeRep.VOTER);
+//        assertEquals(recreatedPLModel.getPropertyList().get(1)
+//                .getDescription().getSymbolicVariableList().get(1).getId(), "voter2");
+//        assertEquals(recreatedPLModel.getPropertyList().get(1)
 //                .getDescription().getSymbolicVariableList().get(1)
-//                .getId().equals("voter2"));
-//        assert (recreatedPLModel.getPropertyList().get(1)
-//                .getDescription().getSymbolicVariableList().get(1)
-//                .getInternalTypeContainer().getInternalType()
-//                .equals(InternalTypeRep.VOTER));
-//        assert (recreatedPLModel.getPropertyList().get(1)
+//                .getInternalTypeContainer().getInternalType(), InternalTypeRep.VOTER);
+//        assertEquals(recreatedPLModel.getPropertyList().get(1)
+//                .getDescription().getSymbolicVariableList().get(2).getId(), "candidate");
+//        assertEquals(recreatedPLModel.getPropertyList().get(1)
 //                .getDescription().getSymbolicVariableList().get(2)
-//                .getId().equals("candidate"));
-//        assert (recreatedPLModel.getPropertyList().get(1)
-//                .getDescription().getSymbolicVariableList().get(2)
-//                .getInternalTypeContainer().getInternalType()
-//                .equals(InternalTypeRep.CANDIDATE));
-//        assert (recreatedPLModel.getPropertyList().get(1)
+//                .getInternalTypeContainer().getInternalType(), InternalTypeRep.CANDIDATE);
+//        assertEquals(recreatedPLModel.getPropertyList().get(1)
+//                .getDescription().getSymbolicVariableList().get(3).getId(), "seat");
+//        assertEquals(recreatedPLModel.getPropertyList().get(1)
 //                .getDescription().getSymbolicVariableList().get(3)
-//                .getId().equals("seat"));
-//        assert (recreatedPLModel.getPropertyList().get(1)
-//                .getDescription().getSymbolicVariableList().get(3)
-//                .getInternalTypeContainer().getInternalType()
-//                .equals(InternalTypeRep.SEAT));
-//        assert (recreatedPLModel.getPropertyList().get(1)
-//                .getTestStatus().equals(false));
+//                .getInternalTypeContainer().getInternalType(), InternalTypeRep.SEAT);
+//        assertFalse(recreatedPLModel.getPropertyList().get(1).getTestStatus());
 //    }
 //}

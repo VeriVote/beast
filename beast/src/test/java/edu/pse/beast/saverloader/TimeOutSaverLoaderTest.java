@@ -1,5 +1,7 @@
 package edu.pse.beast.saverloader;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.concurrent.TimeUnit;
 
 import org.junit.BeforeClass;
@@ -29,7 +31,7 @@ public class TimeOutSaverLoaderTest {
     public void testSaverLoader() {
         String saveString = TimeOutSaverLoader.createSaveString(timeOut);
         TimeOut recreatedTimeOut = TimeOutSaverLoader.createFromSaveString(saveString);
-        assert (recreatedTimeOut.getDuration() == 10800000);
-        assert (recreatedTimeOut.getOrigUnit().equals(TimeUnit.HOURS));
+        assertEquals(recreatedTimeOut.getDuration(), 10800000);
+        assertEquals(recreatedTimeOut.getOrigUnit(), TimeUnit.HOURS);
     }
 }

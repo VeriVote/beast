@@ -1,6 +1,7 @@
 package edu.pse.beast.datatypes.propertydescription;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 
@@ -41,7 +42,7 @@ public class SymbolicVariableTest {
         System.out.println("getInternalTypeContainer");
         InternalTypeContainer result = instance.getInternalTypeContainer();
         assertEquals(InternalTypeRep.INTEGER, result.getInternalType());
-        assert (!result.isList());
+        assertFalse(result.isList());
     }
 
 }

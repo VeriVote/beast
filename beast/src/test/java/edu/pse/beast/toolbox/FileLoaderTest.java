@@ -1,6 +1,8 @@
 package edu.pse.beast.toolbox;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.image.BufferedImage;
@@ -74,6 +76,7 @@ public class FileLoaderTest {
                                 + "/src/test/testfiles/eye.png");
         BufferedImage expResult = null;
         BufferedImage result = FileLoader.loadFileAsImage(toRead);
+        assertNotNull(result);
         try {
             expResult = ImageIO.read(toRead);
         } catch (IOException e) {
@@ -100,9 +103,9 @@ public class FileLoaderTest {
             }
         }
         String result = FileLoader.getNewUniqueName(pathToDir);
-        assert (result != null);
+        assertNotNull(result);
         usedNames.forEach((filename) -> {
-            assert (!(filename.equals(result)));
+            assertNotEquals(filename, result);
         });
     }
 }

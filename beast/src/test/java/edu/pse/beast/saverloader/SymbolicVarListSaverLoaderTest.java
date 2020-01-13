@@ -1,5 +1,7 @@
 package edu.pse.beast.saverloader;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -44,24 +46,17 @@ public class SymbolicVarListSaverLoaderTest {
         String saveString = SymbolicVarListSaverLoader.createSaveString(symbolicVariableList);
         SymbolicVariableList recreatedList
               = SymbolicVarListSaverLoader.createFromSaveString(saveString);
-        assert (recreatedList.getSymbolicVariables().get(0).getId().equals("voter1"));
-        assert (recreatedList.getSymbolicVariables().get(0)
-                .getInternalTypeContainer().getInternalType()
-                .equals(InternalTypeRep.VOTER));
-        assert (recreatedList.getSymbolicVariables().get(1)
-                .getId().equals("voter2"));
-        assert (recreatedList.getSymbolicVariables().get(1)
-                .getInternalTypeContainer().getInternalType()
-                .equals(InternalTypeRep.VOTER));
-        assert (recreatedList.getSymbolicVariables().get(2)
-                .getId().equals("candidate"));
-        assert (recreatedList.getSymbolicVariables().get(2)
-                .getInternalTypeContainer().getInternalType()
-                .equals(InternalTypeRep.CANDIDATE));
-        assert (recreatedList.getSymbolicVariables().get(3)
-                .getId().equals("seat"));
-        assert (recreatedList.getSymbolicVariables().get(3)
-                .getInternalTypeContainer().getInternalType()
-                .equals(InternalTypeRep.SEAT));
+        assertEquals(recreatedList.getSymbolicVariables().get(0).getId(), "voter1");
+        assertEquals(recreatedList.getSymbolicVariables().get(0)
+                         .getInternalTypeContainer().getInternalType(), InternalTypeRep.VOTER);
+        assertEquals(recreatedList.getSymbolicVariables().get(1).getId(), "voter2");
+        assertEquals(recreatedList.getSymbolicVariables().get(1)
+                         .getInternalTypeContainer().getInternalType(), InternalTypeRep.VOTER);
+        assertEquals(recreatedList.getSymbolicVariables().get(2).getId(), "candidate");
+        assertEquals(recreatedList.getSymbolicVariables().get(2)
+                         .getInternalTypeContainer().getInternalType(), InternalTypeRep.CANDIDATE);
+        assertEquals(recreatedList.getSymbolicVariables().get(3).getId(), "seat");
+        assertEquals(recreatedList.getSymbolicVariables().get(3)
+                         .getInternalTypeContainer().getInternalType(), InternalTypeRep.SEAT);
     }
 }

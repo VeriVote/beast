@@ -1,6 +1,7 @@
 package edu.pse.beast.stringresource;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.LinkedList;
 
@@ -31,8 +32,8 @@ public class StringResourceProviderTest {
         String languageId = "test2";
         instance.changeLanguage(languageId);
         StringResourceLoader result = instance.getStringRes();
-        assert (result.containsId("testo"));
-        assert (result.containsId("testo2"));
+        assertTrue(result.containsId("testo"));
+        assertTrue(result.containsId("testo2"));
         assertEquals("es un testo", result.getStringFromID("testo"));
         assertEquals("es un testo tambien", result.getStringFromID("testo2"));
         instance.changeLanguage("test");
@@ -46,8 +47,8 @@ public class StringResourceProviderTest {
         System.out.println("initialize");
         instance.initialize();
         StringResourceLoader result = instance.getStringRes();
-        assert (result.containsId("test"));
-        assert (result.containsId("test2"));
+        assertTrue(result.containsId("test"));
+        assertTrue(result.containsId("test2"));
         assertEquals("this is a test", result.getStringFromID("test"));
         assertEquals("also a test", result.getStringFromID("test2"));
     }
@@ -98,5 +99,4 @@ public class StringResourceProviderTest {
             return stringRes;
         }
     }
-
 }

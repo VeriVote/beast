@@ -1,5 +1,7 @@
 package edu.pse.beast.stringresource;
 
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Test;
 
 /**
@@ -25,7 +27,7 @@ public class StringLoaderInterfaceTest {
     public void testGetPropertyListStringResProvider() {
         System.out.println("getPropertyListStringResProvider");
         PropertyListStringResProvider result = instance.getPropertyListStringResProvider();
-        assert (result != null);
+        assertNotNull(result);
     }
 
     /**
@@ -36,7 +38,7 @@ public class StringLoaderInterfaceTest {
     public void testGetBooleanExpEditorStringResProvider() {
         System.out.println("getBooleanExpEditorStringResProvider");
         BooleanExpEditorStringResProvider result = instance.getBooleanExpEditorStringResProvider();
-        assert (result != null);
+        assertNotNull(result);
     }
 
     /**
@@ -47,7 +49,7 @@ public class StringLoaderInterfaceTest {
     public void testGetCElectionEditorStringResProvider() {
         System.out.println("getCElectionEditorStringResProvider");
         CElectionEditorStringResProvider result = instance.getCElectionEditorStringResProvider();
-        assert (result != null);
+        assertNotNull(result);
     }
 
     /**
@@ -58,7 +60,7 @@ public class StringLoaderInterfaceTest {
     public void testGetParameterEditorStringResProvider() {
         System.out.println("getParameterEditorStringResProvider");
         ParameterEditorStringResProvider result = instance.getParameterEditorStringResProvider();
-        assert (result != null);
+        assertNotNull(result);
     }
 
     /**
@@ -68,7 +70,7 @@ public class StringLoaderInterfaceTest {
     public void testGetOptionStringResProvider() {
         System.out.println("getOptionStringResProvider");
         OptionStringResProvider result = instance.getOptionStringResProvider();
-        assert (result != null);
+        assertNotNull(result);
     }
 
     /**
