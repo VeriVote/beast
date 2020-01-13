@@ -7,7 +7,6 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.pse.beast.propertylist.model.PropertyItem;
@@ -35,14 +34,13 @@ public class PropertyItemTest {
     public void tearDown() throws Exception {
     }
 
-    @Ignore("Test needs to be updated after changes.")
     @Test
     public void testItemEquality() {
         PropertyItem it1 = new PropertyItem();
         PropertyItem it2 = new PropertyItem();
         assertFalse(it1.equals(null));
         assertFalse(it1.equals(it2));
-        // it2.setDescriptionName(it1.getDescription().getName());
+        it2.getDescription().setName(it1.getDescription().getName());
         assertTrue(it1.equals(it2));
     }
 

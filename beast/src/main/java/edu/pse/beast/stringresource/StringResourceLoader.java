@@ -49,7 +49,7 @@ public class StringResourceLoader {
             get = null;
         }
         if (get == null) {
-            ErrorLogger.log("this Id was not found in a Stringfile: "
+            ErrorLogger.log("this Id was not found in a String file: "
                             + (id != null ? id.toLowerCase() : null));
         }
         return get;

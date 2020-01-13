@@ -24,6 +24,7 @@ public final class SuperFolderFinder {
             // the class is two "directories away from the super folder
             // counteract possible whitespace errors on windows
             final String pathName
+            // TODO: Why are we not using 'System.getProperty("user.dir")'?
                   = SuperFolderFinder.class.getProtectionDomain()
                         .getCodeSource().getLocation().getPath();
             File f = new File(pathName);

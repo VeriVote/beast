@@ -1,6 +1,7 @@
 package edu.pse.beast.toolbox;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -17,6 +18,22 @@ import org.junit.Test;
  * @author Niels Hanselmann
  */
 public class FileLoaderTest {
+
+    private boolean bufferedImagesEqual(final BufferedImage img1, final BufferedImage img2) {
+        if (img1 == null) {
+            return img2 == null;
+        } else if (img1.getWidth() == img2.getWidth() && img1.getHeight() == img2.getHeight()) {
+            for (int x = 0; x < img1.getWidth(); x++) {
+                for (int y = 0; y < img1.getHeight(); y++) {
+                    if (img1.getRGB(x, y) != img2.getRGB(x, y))
+                        return false;
+                }
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * file LoaderTest
@@ -53,7 +70,8 @@ public class FileLoaderTest {
     @Test
     public void testLoadFileAsImage() {
         System.out.println("loadFileAsImage");
-        File toRead = new File("/src/test/testfiles/eye.png");
+        File toRead = new File(SuperFolderFinder.getSuperFolder()
+                                + "/src/test/testfiles/eye.png");
         BufferedImage expResult = null;
         BufferedImage result = FileLoader.loadFileAsImage(toRead);
         try {
@@ -61,7 +79,7 @@ public class FileLoaderTest {
         } catch (IOException e) {
             System.out.println("the Testfile eye.png could not be found");
         }
-        assertEquals(expResult, result);
+        assertTrue(bufferedImagesEqual(result, expResult));
     }
 
     /**

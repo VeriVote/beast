@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.pse.beast.types.InternalTypeContainer;
@@ -65,14 +64,17 @@ public class PreAndPostConditionsDescriptionTest {
      * Test of setSymbolicVariableList method, of class
      * PreAndPostConditionsDescription.
      */
-    @Ignore("Test needs to be updated after changes.")
     @Test
     public void testSetSymbolicVariableList() {
         System.out.println("setSymbolicVariableList");
         SymbolicVariableList symbVarList = new SymbolicVariableList();
         symbVarList.addSymbolicVariable("test", new InternalTypeContainer(InternalTypeRep.INTEGER));
         PreAndPostConditionsDescription instance = new PreAndPostConditionsDescription("name");
-        // instance.setSymbolicVariableList(symbVarList);
+        instance = new PreAndPostConditionsDescription(instance.getName(),
+                                                       instance.getPreConditionsDescription(),
+                                                       instance.getPostConditionsDescription(),
+                                                       instance.getBoundedVarDescription(),
+                                                       symbVarList);
         SymbolicVariableList result = instance.getSymVarList();
         assertEquals(symbVarList.getSymbolicVariables().get(0),
                      result.getSymbolicVariables().get(0));
@@ -114,13 +116,17 @@ public class PreAndPostConditionsDescriptionTest {
      * Test of setPostConditionsDescription method, of class
      * PreAndPostConditionsDescription.
      */
-    @Ignore("Test needs to be updated after changes.")
     @Test
     public void testSetPostConditionsDescription() {
         System.out.println("setPostConditionsDescription");
         FormalPropertiesDescription post = new FormalPropertiesDescription("postTest");
         PreAndPostConditionsDescription instance = new PreAndPostConditionsDescription("test");
-        // instance.setPostConditionsDescription(post);
+        instance = new PreAndPostConditionsDescription(instance.getName(),
+                                                       instance.getPreConditionsDescription(),
+                                                       post,
+                                                       instance.getBoundedVarDescription(),
+                                                       instance.getSymVarList());
+        instance.getPostConditionsDescription();
         FormalPropertiesDescription result = instance.getPostConditionsDescription();
         assertEquals(post, result);
     }
@@ -129,13 +135,16 @@ public class PreAndPostConditionsDescriptionTest {
      * Test of setPreConditionsDescription method, of class
      * PreAndPostConditionsDescription.
      */
-    @Ignore("Test needs to be updated after changes.")
     @Test
     public void testSetPreConditionsDescription() {
         System.out.println("setPreConditionsDescription");
         FormalPropertiesDescription pre = new FormalPropertiesDescription("preTest");
         PreAndPostConditionsDescription instance = new PreAndPostConditionsDescription("test");
-        // instance.setPreConditionsDescription(pre);
+        instance = new PreAndPostConditionsDescription(instance.getName(),
+                                                       pre,
+                                                       instance.getPostConditionsDescription(),
+                                                       instance.getBoundedVarDescription(),
+                                                       instance.getSymVarList());
         FormalPropertiesDescription result = instance.getPreConditionsDescription();
         assertEquals(pre, result);
     }
@@ -143,12 +152,11 @@ public class PreAndPostConditionsDescriptionTest {
     /**
      * Test of setNewName method, of class PreAndPostConditionsDescription.
      */
-    @Ignore("Test needs to be updated after changes.")
     @Test
     public void testSetNewName() {
         System.out.println("setNewName");
         PreAndPostConditionsDescription instance = new PreAndPostConditionsDescription("test");
-        // instance.setNewName("test2");
-        assert (instance.getName().equals("test2"));
+        instance.setName("test2");
+        assertEquals(instance.getName(), "test2");
     }
 }
