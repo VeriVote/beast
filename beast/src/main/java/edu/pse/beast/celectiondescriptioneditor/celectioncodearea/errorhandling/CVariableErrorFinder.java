@@ -78,8 +78,13 @@ public final class CVariableErrorFinder {
 
         int lineOffset = seperated.size() + 1;
 
-        ArrayList<CodeError> found = new ArrayList<>(
-                DeepErrorChecker.checkCodeForErrors(seperated, lineOffset));
+        final ArrayList<CodeError> found
+            = new ArrayList<>(
+                DeepErrorChecker.checkCodeForErrors(
+                    seperated,
+                    lineOffset
+                )
+            );
         return found;
     }
 }

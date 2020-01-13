@@ -22,8 +22,8 @@ public class BoundedVarCodeArea extends AutoCompletionCodeArea implements MenuBa
         List<String> code = new ArrayList<String>();
         code.add("");
         String sampleCode = "";
-        String stylesheet
-              = this.getClass().getResource(RESOURCE).toExternalForm();
+        String stylesheet =
+                this.getClass().getResource(RESOURCE).toExternalForm();
         this.getStylesheets().add(stylesheet);
         IntFunction<Node> lineNumbers = LineNumberFactory.get(this);
         this.setParagraphGraphicFactory(lineNumbers);

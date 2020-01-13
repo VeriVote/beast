@@ -356,8 +356,7 @@ public abstract class Result implements ResultInterface {
      * @return a list containing the last values a variable with the following
      *         name has
      */
-    public abstract List<ResultValueWrapper> readVariableValue(
-            String variableMatcher);
+    public abstract List<ResultValueWrapper> readVariableValue(String variableMatcher);
 
     public ElectionSimulationData getOrigVoting() {
         return origVoting;

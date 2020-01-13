@@ -239,10 +239,14 @@ public class WindowsProcess extends CBMCProcess {
             }
         }
         if (getProcess().isAlive()) {
-            ErrorForUserDisplayer.displayError("There was an attempt to stop the cbmc process, but after "
-                    + (WAITING_TIME_FOR_TERMINATION / 1000d) + " seconds of waiting" + " the parent root process "
-                    + "was still alive, even though it should " + "terminate itself when cbmc stopped. Please check "
-                    + "that the cbmc instance was " + "closed properly and if not, please close it yourself!");
+            ErrorForUserDisplayer.displayError(
+                    "There was an attempt to stop the cbmc process, but after "
+                            + (WAITING_TIME_FOR_TERMINATION / 1000d)
+                            + " seconds of waiting" + " the parent root process "
+                            + "was still alive, even though it should "
+                            + "terminate itself when cbmc stopped. Please check "
+                            + "that the cbmc instance was "
+                            + "closed properly and if not, please close it yourself!");
         }
     }
 

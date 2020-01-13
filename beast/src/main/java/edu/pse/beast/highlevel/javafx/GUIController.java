@@ -487,6 +487,7 @@ public class GUIController {
                                                    event.consume();
                                                }
         });
+
         resultScrollPane.setFitToHeight(true);
         resultScrollPane.setFitToWidth(true);
 
@@ -498,6 +499,7 @@ public class GUIController {
                                        inputGridPane,
                                        voterGridPane,
                                        candidateGridPane);
+
         // update all numbers for the input fields
         this.addInputNumberEnforcer(inputVoterField, "");
         addTreeItem(new PreAndPostConditionsDescription("New Property"));

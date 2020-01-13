@@ -59,8 +59,7 @@ public abstract class OutputType extends InOutType {
     // return helper.extractVariable(variableMatcher, toExtract);
     // }
 
-    public abstract CodeArrayListBeautifier addMarginVerifyCheck(
-            CodeArrayListBeautifier code);
+    public abstract CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code);
 
     @Deprecated
     public abstract CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code,

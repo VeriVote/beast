@@ -48,8 +48,8 @@ public class ResultImageRenderer {
         GUIController.getController().getResultBorderPane().widthProperty()
                 .addListener(new ChangeListener<Number>() {
                     @Override
-                    public void changed(ObservableValue<? extends Number> observableValue,
-                                        Number oldSceneWidth, Number newSceneWidth) {
+            public void changed(ObservableValue<? extends Number> observableValue,
+                                Number oldSceneWidth, Number newSceneWidth) {
                         imageMinWidth =
                                 GUIController.getController().getResultBorderPane().getWidth();
                         updateImageSizeAndRedraw();
@@ -59,8 +59,8 @@ public class ResultImageRenderer {
         GUIController.getController().getResultBorderPane().heightProperty()
                 .addListener(new ChangeListener<Number>() {
                     @Override
-                    public void changed(ObservableValue<? extends Number> observableValue,
-                                        Number oldSceneHeight, Number newSceneHeight) {
+            public void changed(ObservableValue<? extends Number> observableValue,
+                                Number oldSceneHeight, Number newSceneHeight) {
                         imageMinHeight =
                                 GUIController.getController().getResultBorderPane().getHeight();
                         updateImageSizeAndRedraw();
@@ -70,8 +70,8 @@ public class ResultImageRenderer {
         GUIController.getController().getZoomSlider().valueProperty()
                 .addListener(new ChangeListener<>() {
                     @Override
-                    public void changed(ObservableValue<? extends Number> observable,
-                                        Number oldValue, Number newValue) {
+            public void changed(ObservableValue<? extends Number> observable,
+                                Number oldValue, Number newValue) {
                         zoomTo((double) newValue);
                     }
                 });

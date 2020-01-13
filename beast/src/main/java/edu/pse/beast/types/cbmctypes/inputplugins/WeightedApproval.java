@@ -156,7 +156,7 @@ public class WeightedApproval extends CBMCInputType {
         code.add("unsigned int candSum = arr[i][candidate];");
         if (unique) {
             code.add("for(unsigned int j = 0; j < "
-                    + UnifiedNameContainer.getCandidate() + "; ++i) {");
+                     + UnifiedNameContainer.getCandidate() + "; ++i) {");
             code.add("if(j != candidate && arr[i][j] >= candSum) candSum = 0;");
             code.add("}");
         }
