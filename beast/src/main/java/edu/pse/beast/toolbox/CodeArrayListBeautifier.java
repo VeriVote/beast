@@ -55,7 +55,7 @@ public class CodeArrayListBeautifier {
      * it will be indented one more time
      */
     public void addTab() {
-        // numberOfTabs++;
+        numberOfTabs++;
     }
 
     /**
@@ -64,9 +64,9 @@ public class CodeArrayListBeautifier {
      */
     public void deleteTab() {
         if (numberOfTabs > 0) {
-            // numberOfTabs--;
+            numberOfTabs--;
         } else {
-            // ErrorLogger.log("number of tabs is already 0");
+            ErrorLogger.log("number of tabs is already 0");
         }
     }
 
