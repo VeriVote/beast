@@ -57,7 +57,7 @@ public class NEWRowOfValues {
         field.setPrefSize(elementWidth, elementHeight);
         fields.add(field);
         field.textProperty().addListener(new ChangeListener<String>() {
-            int position = fields.indexOf(field);
+            private int position = fields.indexOf(field);
             @Override
             public void changed(ObservableValue<? extends String> observable,
                                 String oldValue, String newValue) {

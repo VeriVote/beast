@@ -166,7 +166,7 @@ public abstract class ChildTreeItem extends CustomTreeItem {
                 new Background(
                         new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)
                         )
-                );
+        );
     }
 
     public ChildTreeItemValues getValues() {

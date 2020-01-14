@@ -11,12 +11,12 @@ import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
 public class CandidateList extends CBMCOutputType {
-    private static final int dimensions = 1;
+    private static final int DIMENSIONS = 1;
 
-    private final static String[] sizeOfDimensions = { UnifiedNameContainer.getCandidate() };
+    private final static String[] SIZE_OF_DIMENSIONS = { UnifiedNameContainer.getCandidate() };
 
     public CandidateList() {
-        super(true, DataType.INT, dimensions, sizeOfDimensions);
+        super(true, DataType.INT, DIMENSIONS, SIZE_OF_DIMENSIONS);
     }
 
     @Override
@@ -125,8 +125,7 @@ public class CandidateList extends CBMCOutputType {
                         + GUIController.getController().getElectionSimulation()
                                 .getPartyName(Integer.parseInt(currentValue))
                         + ", ";
-            }
-            catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 toReturn = toReturn + currentValue + ", ";
             }
         }

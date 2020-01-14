@@ -18,7 +18,7 @@ import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-public class ResultImageRenderer {
+public final class ResultImageRenderer {
     private static double scrollPosV;
     private static double scrollPosH;
 
@@ -43,6 +43,8 @@ public class ResultImageRenderer {
     private static BufferedImage image = new BufferedImage(
             (int) imageDesiredWidth, (int) imageDesiredHeight,
             BufferedImage.TYPE_4BYTE_ABGR);
+
+    private ResultImageRenderer() { }
 
     static {
         GUIController.getController().getResultBorderPane().widthProperty()
@@ -78,21 +80,21 @@ public class ResultImageRenderer {
 
         // TODO determine which mouse behavior would fit best
         view.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        double clickX = event.getX();
-                        double clickY = event.getY();
-                        for (ResultImageElement element : elementList) {
-                            if (element.isInside(clickX, clickY)) {
-                                MouseEvent tmpEvent = (MouseEvent) event.clone();
-                                element.isClicked(tmpEvent);
-                                tmpEvent.consume();
-                            }
-                        }
-                        event.consume();
-                        drawElements();
+            @Override
+            public void handle(MouseEvent event) {
+                double clickX = event.getX();
+                double clickY = event.getY();
+                for (ResultImageElement element : elementList) {
+                    if (element.isInside(clickX, clickY)) {
+                        MouseEvent tmpEvent = (MouseEvent) event.clone();
+                        element.isClicked(tmpEvent);
+                        tmpEvent.consume();
                     }
-                });
+                }
+                event.consume();
+                drawElements();
+            }
+        });
     }
 
     public static synchronized void reset() {

@@ -16,13 +16,13 @@ import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class SingleChoice extends CBMCInputType {
-    private static final int dimensions = 1;
+    private static final int DIMENSIONS = 1;
 
-    private final static String[] sizeOfDimensions = {
+    private final static String[] SIZE_OF_DIMENSIONS = {
             UnifiedNameContainer.getVoter() };
 
     public SingleChoice() {
-        super(true, DataType.INT, dimensions, sizeOfDimensions);
+        super(true, DataType.INT, DIMENSIONS, SIZE_OF_DIMENSIONS);
     }
 
     @Override

@@ -15,7 +15,7 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
  * @author Holger Klein
  */
 public final class CVariableErrorFinder {
-    private CVariableErrorFinder() {}
+    private CVariableErrorFinder() { }
 
     /**
      * Find errors in the given c code.

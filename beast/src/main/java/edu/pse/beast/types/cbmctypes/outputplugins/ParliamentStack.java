@@ -11,11 +11,11 @@ import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
 public class ParliamentStack extends CBMCOutputType {
-    private static final int dimensions = 1;
-    private final static String[] sizeOfDimensions = { UnifiedNameContainer.getCandidate() };
+    private static final int DIMENSIONS = 1;
+    private final static String[] SIZE_OF_DIMENSIONS = { UnifiedNameContainer.getCandidate() };
 
     public ParliamentStack() {
-        super(true, DataType.INT, dimensions, sizeOfDimensions);
+        super(true, DataType.INT, DIMENSIONS, SIZE_OF_DIMENSIONS);
     }
 
     @Override
@@ -103,8 +103,7 @@ public class ParliamentStack extends CBMCOutputType {
                 toReturn += GUIController.getController()
                         .getElectionSimulation().getPartyName(index) + ": "
                         + currentValue + ", ";
-            }
-            catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 toReturn = toReturn + index + ": " + currentValue + ", ";
             }
             index++;

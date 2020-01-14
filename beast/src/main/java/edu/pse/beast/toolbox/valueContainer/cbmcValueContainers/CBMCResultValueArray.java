@@ -9,8 +9,8 @@ import org.w3c.dom.NodeList;
 
 public class CBMCResultValueArray implements CBMCResultValue {
 
-    private final String ELEMENT_TAG = "element";
-    private final String INDEX_NAME = "index";
+    private static final String ELEMENT_TAG = "element";
+    private static final String INDEX_NAME = "index";
 
     private List<CBMCResultValueWrapper> values = new ArrayList<CBMCResultValueWrapper>();
 

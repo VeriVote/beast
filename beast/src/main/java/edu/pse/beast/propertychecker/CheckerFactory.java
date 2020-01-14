@@ -371,8 +371,8 @@ public abstract class CheckerFactory implements Runnable {
                 // CBMCResult dummyResult = new CBMCResult();
                 // List<String> origResult = new ArrayList<String>();
                 // origResult =
-                // getElectionDescription().getContainer().getOutputType().getCodeToRunMargin(origResult,
-                // lastResult);
+                // getElectionDescription().getContainer().getOutputType()
+                //     .getCodeToRunMargin(origResult, lastResult);
                 //
                 System.out.println("add namecontainer CHECKERFACTORY");
                 ElectionSimulationData origResult =

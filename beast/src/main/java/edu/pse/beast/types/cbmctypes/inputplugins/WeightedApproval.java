@@ -20,16 +20,16 @@ import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class WeightedApproval extends CBMCInputType {
-    private static final int dimensions = 2;
-    private final int maxValue = 100;
+    private static final int DIMENSIONS = 2;
+    private static final int MAX_VALUE = 100;
 
-    private final static String[] sizeOfDimensions = {
+    private static final String[] SIZE_OF_DIMENSIONS = {
             UnifiedNameContainer.getVoter(),
             UnifiedNameContainer.getCandidate()
-            };
+    };
 
     public WeightedApproval() {
-        super(true, DataType.INT, dimensions, sizeOfDimensions);
+        super(true, DataType.INT, DIMENSIONS, SIZE_OF_DIMENSIONS);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class WeightedApproval extends CBMCInputType {
 
     @Override
     public String getMaximalValue() {
-        return "" + maxValue;
+        return "" + MAX_VALUE;
     }
 
     @Override
@@ -71,7 +71,7 @@ public class WeightedApproval extends CBMCInputType {
         } catch (NumberFormatException e) {
             return "0";
         }
-        if (number < 0 || number > maxValue) {
+        if (number < 0 || number > MAX_VALUE) {
             return "0";
         } else {
             return newValue;

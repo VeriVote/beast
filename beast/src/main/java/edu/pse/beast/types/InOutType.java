@@ -147,8 +147,7 @@ public abstract class InOutType {
         if (dimensions == 0) {
             return ""; // zero dimensional dataTypes are not represented by
                        // structs
-        }
-        else {
+        } else {
             return UnifiedNameContainer.getStructValueName();
         }
     }

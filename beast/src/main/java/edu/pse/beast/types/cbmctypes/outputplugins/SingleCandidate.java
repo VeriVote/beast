@@ -74,8 +74,7 @@ public class SingleCandidate extends CBMCOutputType {
         try {
             toReturn = GUIController.getController().getElectionSimulation()
                     .getPartyName(Integer.parseInt(result.get(0)));
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             toReturn = result.get(0);
         }
         return toReturn;

@@ -335,7 +335,7 @@
 //            Color color = preceding[j].equals(elected[j]) ? Color.BLACK : Color.RED;
 //            if (Long.parseLong(elected[j]) >= ex.getNumOfCandidates()) { // no candidate wins
 //                appendPaneColored(srl.getStringFromID("draw") + "("
-//                        + ex.getSymbolicCandidateForIndex(Long.parseLong(elected[j])) + ")", color);
+//                    + ex.getSymbolicCandidateForIndex(Long.parseLong(elected[j])) + ")", color);
 //            } else {
 //                appendPaneColored("" + elected[j], color);
 //            }

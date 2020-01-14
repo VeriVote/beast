@@ -8,8 +8,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 
 public class CBMCResultValueSingle implements CBMCResultValue {
-    private final String TYPE_NAME = "c_type";
-    private final String WIDTH_NAME = "width";
+    private static final String TYPE_NAME = "c_type";
+    private static final String WIDTH_NAME = "width";
 
     private boolean parsed = false;
     private String type = "";

@@ -25,13 +25,13 @@ import javafx.scene.Node;
  */
 public class Default extends ResultPresentationType {
     GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area;
-    int standartSize = 10;
+    int standardSize = 10;
 
     @Override
     public Node presentResult(Result result) {
         if (area == null) {
             area = TextFieldCreator.getGenericStyledAreaInstance(
-                    TextStyle.fontSize(standartSize), ParStyle.EMPTY);
+                    TextStyle.fontSize(standardSize), ParStyle.EMPTY);
             area.setEditable(false);
         }
         area.clear();
@@ -75,7 +75,7 @@ public class Default extends ResultPresentationType {
     public void zoomTo(double zoomValue) {
         if (area != null) {
             area.setStyle(0, area.getLength(),
-                          TextStyle.fontSize((int) (standartSize + zoomValue)));
+                          TextStyle.fontSize((int) (standardSize + zoomValue)));
         }
     }
 

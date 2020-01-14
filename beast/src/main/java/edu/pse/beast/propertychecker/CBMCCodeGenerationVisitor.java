@@ -295,7 +295,8 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         variableNames.push(varName);
         code.add("unsigned int " + varName + " = 0;");
         String max = getMaxString(node);
-        String tempString = "for(unsigned int SYMBVAR = 0; SYMBVAR < MAX && !THEREEXISTS; SYMBVAR++) {";
+        String tempString =
+                "for(unsigned int SYMBVAR = 0; SYMBVAR < MAX && !THEREEXISTS; SYMBVAR++) {";
         tempString = tempString.replaceAll("SYMBVAR",
                 node.getDeclaredSymbolicVar().getId());
         tempString = tempString.replaceAll("MAX", max);
@@ -636,8 +637,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         if (variableNames.size() == 1) {
             if (assumeOrAssert != null) {
                 code.add(assumeOrAssert + "(" + variableNames.pop() + ");");
-            }
-            else {
+            } else {
                 ErrorLogger.log(
                         "The CodeGeneration Visitor was not set to a proper mode");
             }
@@ -904,8 +904,7 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                     new PermutationExpNode(node.voteEquivalentsContext.permutationExp(),
                                            voteInput, voteInputSize);
             permNode.getVisited(this);
-        }
-        else if (node.voteEquivalentsContext.getChild(0) instanceof ConcatenationExpContext) {
+        } else if (node.voteEquivalentsContext.getChild(0) instanceof ConcatenationExpContext) {
             // we have a concatenation
             voteInput = electionTypeContainer.getInputStruct().getStructAccess()
                         + " " + "tmp_vote" + getTmpIndex();

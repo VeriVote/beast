@@ -341,15 +341,15 @@ public class GUIController {
             new SaverLoader(SaverLoader.PROP_LIST_FILE_ENDING,
                             "BEAST list of properties",
                             new MinimalSaverInterface() {
-                                @Override
-                                public void saveAs() {
-                                    GUIController.getController().saveAsPropertyList(null);
-                                }
+            @Override
+            public void saveAs() {
+                GUIController.getController().saveAsPropertyList(null);
+            }
 
-                                @Override
-                                public void save() {
-                                    GUIController.getController().savePropertyList(null);
-                                }
+            @Override
+            public void save() {
+                GUIController.getController().savePropertyList(null);
+            }
             });
     private SaverLoader childItemSaverLoader =
             new SaverLoader(SaverLoader.CHILD_PROP_FILE_ENDING,
@@ -360,15 +360,15 @@ public class GUIController {
             new SaverLoader(SaverLoader.PROJECT_FILE_ENDING,
                             "BEAST project file",
                             new MinimalSaverInterface() {
-                                @Override
-                                public void saveAs() {
-                                    GUIController.getController().saveAsProject(null);
-                                }
+            @Override
+            public void saveAs() {
+                GUIController.getController().saveAsProject(null);
+            }
 
-                                @Override
-                                public void save() {
-                                    GUIController.getController().saveProject(null);
-                                }
+            @Override
+            public void save() {
+                GUIController.getController().saveProject(null);
+            }
             });
     private OptionsSaverLoader optionSaverLoader =
             new OptionsSaverLoader(SaverLoader.OPT_FILE_ENDING, "BEAST option file");
@@ -428,7 +428,8 @@ public class GUIController {
                                         new PreAndPostConditionsDescription("default description"),
                                         null);
         variableTreeView.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> setSymbVarToRemove(newValue));
+            (observable, oldValue, newValue) -> setSymbVarToRemove(newValue)
+        );
         codeArea.setStyle("-fx-font-family: consolas; -fx-font-size: 11pt;");
 
         Thread scrollUpdater = new Thread(new Runnable() {
@@ -451,7 +452,7 @@ public class GUIController {
                     inputScrollPane.fireEvent(new Event(ScrollEvent.ANY));
                     try {
                         Thread.sleep(Math.max(0, 16 - (System.currentTimeMillis() - time)));
-                    } catch (InterruptedException e) {}
+                    } catch (InterruptedException e) { }
                 }
             }
         });
@@ -474,19 +475,19 @@ public class GUIController {
         voterScrollPane.setPadding(new Insets(0, 0, scrollbarPadding, 0));
         candidateScrollPane.setPadding(new Insets(0, scrollbarPadding, 0, 0));
         voterScrollPane.addEventFilter(ScrollEvent.SCROLL,
-                                       new EventHandler<ScrollEvent>() {
-                                           @Override
-                                           public void handle(ScrollEvent event) {
-                                               event.consume();
-                                           }
-        });
+            new EventHandler<ScrollEvent>() {
+                @Override
+                public void handle(ScrollEvent event) {
+                    event.consume();
+                }
+            });
         candidateScrollPane.addEventFilter(ScrollEvent.SCROLL,
-                                           new EventHandler<ScrollEvent>() {
-                                               @Override
-                                               public void handle(ScrollEvent event) {
-                                                   event.consume();
-                                               }
-        });
+            new EventHandler<ScrollEvent>() {
+                @Override
+                public void handle(ScrollEvent event) {
+                    event.consume();
+                }
+            });
 
         resultScrollPane.setFitToHeight(true);
         resultScrollPane.setFitToWidth(true);
@@ -928,17 +929,17 @@ public class GUIController {
             removeAllProperties();
             String folderName = FilenameUtils.removeExtension(listFile.getName());
             File parent =
-                    new File(listFile.getParentFile()+ Character.toString(SLASH) + folderName);
+                    new File(listFile.getParentFile() + Character.toString(SLASH) + folderName);
             if (listFile != null) {
                 File[] directories = parent.listFiles(File::isDirectory);
                 if (directories != null && directories.length > 0) {
                     for (int i = 0; i < directories.length; i++) {
                         File currentDir = directories[i];
                         String[] property = currentDir.list(new FilenameFilter() {
-                                    public boolean accept(File dir, String name) {
-                                        return name.endsWith(SaverLoader.PROP_DESCR_FILE_ENDING);
-                                    }
-                                });
+                            public boolean accept(File dir, String name) {
+                                return name.endsWith(SaverLoader.PROP_DESCR_FILE_ENDING);
+                            }
+                        });
                         if (property.length != 1) {
                             errorTextArea.setText("invalid property list save format in folder: "
                                                   + currentDir.getName());
@@ -1115,8 +1116,7 @@ public class GUIController {
                     savePropertyListFromFile(listFile, true, true);
                 }
                 file = listFile;
-            }
-            else if (saveAs && askUser) {
+            } else if (saveAs && askUser) {
                 file = propertyListSaverLoader.showFileSaveDialog("");
                 savePropertyListFromFile(file, false, false);
             } else {

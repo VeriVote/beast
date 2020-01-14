@@ -31,7 +31,8 @@ public class SaverLoader {
     private final String fileEnding;
     private final String fileExtensionDescription;
 
-    public SaverLoader(String fileEnding, String fileExtensionDescription, MinimalSaverInterface owner) {
+    public SaverLoader(String fileEnding, String fileExtensionDescription,
+                       MinimalSaverInterface owner) {
         this.initialDir = SuperFolderFinder.getSuperFolder() + "/projectFiles/";
         new File(initialDir).mkdirs(); // make sure, that the initial folder exists
         this.fileEnding = fileEnding;
@@ -130,8 +131,7 @@ public class SaverLoader {
         checkToSaveChanges();
         try {
             return readFile(toLoadFrom, StandardCharsets.UTF_8);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return "";
         }

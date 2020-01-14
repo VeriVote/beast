@@ -161,8 +161,7 @@ public final class BEASTCommunicator {
                             try {
                                 Thread.sleep(Math.max(0,
                                         67 - (System.currentTimeMillis() - frameTime)));
-                            }
-                            catch (InterruptedException ex) {
+                            } catch (InterruptedException ex) {
                                 Logger.getLogger(
                                         BEASTCommunicator.class.getName()).log(Level.SEVERE,
                                                                                null, ex);
@@ -182,8 +181,7 @@ public final class BEASTCommunicator {
                 });
                 waitForResultsThread.start();
                 return !stopped;
-            }
-            else {
+            } else {
                 return false;
             }
         }

@@ -1,7 +1,7 @@
 package edu.pse.beast.types;
 
 public abstract class ComplexType {
-
+    public abstract int hashCode();
     public abstract boolean equals(Object toCompare);
 
     /**

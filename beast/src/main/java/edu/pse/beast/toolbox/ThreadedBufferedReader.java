@@ -78,7 +78,8 @@ public class ThreadedBufferedReader implements Runnable {
                                                 + " (more than a thousand times)"
                                                 + " getting unrolled. Maybe you want"
                                                 + " to stop the checking manually and"
-                                                + " add enter an upper bound for how many unrolls are done."
+                                                + " add enter an upper bound for how many"
+                                                + " unrolls are done."
                                                 + "(Parameters->Solveroptions->max loop unwinds");
                                     }
                                 }.start();

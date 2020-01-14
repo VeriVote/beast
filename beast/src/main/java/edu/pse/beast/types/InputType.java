@@ -53,7 +53,7 @@ public abstract class InputType extends InOutType {
      * @param code
      *            the list to which the headers should be added to
      */
-    public abstract void addCheckerSpecificHeaders( CodeArrayListBeautifier code);
+    public abstract void addCheckerSpecificHeaders(CodeArrayListBeautifier code);
 
     // /**
     // * extracts the voting data out of the given bounded model checker output

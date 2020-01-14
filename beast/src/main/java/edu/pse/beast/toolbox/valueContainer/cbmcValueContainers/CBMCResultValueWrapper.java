@@ -8,12 +8,12 @@ import edu.pse.beast.toolbox.XMLtoolbox;
 import edu.pse.beast.toolbox.valueContainer.ResultValue;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 
-enum C_DATATYPE {
+enum CDATATYPE {
     SINGLE, ARRAY, STRUCT, POINTER;
 }
 
 public class CBMCResultValueWrapper extends ResultValueWrapper {
-    private C_DATATYPE dataType;
+    private CDATATYPE dataType;
     private boolean initialized = false;
     private CBMCResultValue valueContainer;
 
@@ -55,7 +55,7 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
             System.err.println("problem parsing the node to an element");
             return;
         }
-        C_DATATYPE newType = getDataType(element); // get the data type of the first element
+        CDATATYPE newType = getDataType(element); // get the data type of the first element
         if (initialized) {
             if (newType != dataType) {
                 throw new RuntimeException("Mismatching datatypes found while parsing");
@@ -70,7 +70,7 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
         this.valueContainer = newValueContainer;
     }
 
-    private void initialize(C_DATATYPE newType) {
+    private void initialize(CDATATYPE newType) {
         this.dataType = newType;
         initialized = true;
         switch (newType) {
@@ -101,18 +101,18 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
         valueContainer.setValue(element);
     }
 
-    private static C_DATATYPE getDataType(Node node) {
+    private static CDATATYPE getDataType(Node node) {
         String nodeTagName = node.getNodeName();
-        C_DATATYPE type = null;
+        CDATATYPE type = null;
         switch (nodeTagName.toLowerCase()) {
         case "array":
-            type = C_DATATYPE.ARRAY;
+            type = CDATATYPE.ARRAY;
             break;
         case "struct":
-            type = C_DATATYPE.STRUCT;
+            type = CDATATYPE.STRUCT;
             break;
         case "pointer":
-            type = C_DATATYPE.POINTER;
+            type = CDATATYPE.POINTER;
             break;
         default:
             NodeList children = node.getChildNodes();
@@ -122,7 +122,7 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
                         + "which does not contain one child node");
                 throwError();
             } else {
-                type = C_DATATYPE.SINGLE;
+                type = CDATATYPE.SINGLE;
             }
             break;
         }

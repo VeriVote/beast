@@ -15,8 +15,17 @@
   frameworks within Eclipse etc.
 -->
 <module name="Checker">
+    <property name="charset" value="UTF-8"/>
     <property name="localeLanguage" value="en"/>
     <property name="fileExtensions" value="java"/>
+    <property name="severity" value="warning"/>
+
+    <property name="fileExtensions" value="java, properties, xml"/>
+    <!-- Excludes all 'module-info.java' files              -->
+    <!-- See https://checkstyle.org/config_filefilters.html -->
+    <module name="BeforeExecutionExclusionFileFilter">
+        <property name="fileNamePattern" value="module\-info\.java$"/>
+    </module>
 
     <!--
         If you set the basedir property below, then all reported file
@@ -25,6 +34,11 @@
     -->
     <!--KeY <property name="basedir" value="${home.dir}"/> -->
 
+    <!-- Checks that each Java package has a Javadoc file used for commenting. -->
+    <!-- See http://checkstyle.sf.net/config_javadoc.html#JavadocPackage       -->
+    <!-- module name="JavadocPackage">
+        <property name="allowLegacy" value="true"/>
+    </module -->
 
     <!-- This is a filter written for KeY which restricts checks to those 
          files that have been recently touched.
@@ -63,6 +77,10 @@
     </module>
 
     <module name="TreeWalker">
+
+      <!-- required for SuppressWarningsFilter (and other Suppress* rules not used here) -->
+      <!-- see http://checkstyle.sourceforge.net/config_annotation.html#SuppressWarningsHolder -->
+      <module name="SuppressWarningsHolder"/>
 
       <!-- Checks for Javadoc comments.                     -->
       <!-- See http://checkstyle.sf.net/config_javadoc.html -->
@@ -205,6 +223,14 @@
       <!-- See NoEmbeddedPlusPlus.java for details. -->
       <!--KeY <module name="NoEmbeddedPlusPlus"/> -->
 
-    </module>
+  </module>
+
+  <!-- Support @SuppressWarnings (added in Checkstyle 5.7) -->
+  <!-- see http://checkstyle.sourceforge.net/config.html#SuppressWarningsFilter -->
+  <module name="SuppressWarningsFilter"/>
+
+  <!-- Checks properties file for a duplicated properties. -->
+  <!-- See http://checkstyle.sourceforge.net/config_misc.html#UniqueProperties -->
+  <module name="UniqueProperties"/>
 
 </module>

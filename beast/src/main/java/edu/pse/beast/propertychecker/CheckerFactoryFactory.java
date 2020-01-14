@@ -13,7 +13,7 @@ public final class CheckerFactoryFactory {
     private static Map<String, CheckerFactory> factories = new HashMap<String, CheckerFactory>();
     private static boolean initialized = false;
 
-    private CheckerFactoryFactory() {}
+    private CheckerFactoryFactory() { }
 
     static {
         factories = searchForCheckers();

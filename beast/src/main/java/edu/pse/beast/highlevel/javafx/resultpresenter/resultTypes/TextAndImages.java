@@ -29,26 +29,26 @@ public class TextAndImages extends ResultPresentationType {
     private final TextOps<String, TextStyle> styledTextOps = SegmentOps.styledTextOps();
     private final LinkedImageOps<TextStyle> linkedImageOps = new LinkedImageOps<>();
 
-    private Node createNode(StyledSegment<Either<String, LinkedImage>, TextStyle> seg,
-                            BiConsumer<? super TextExt, TextStyle> applyStyle) {
-        return seg.getSegment().unify(
-                        text ->
-                            StyledTextArea.createStyledTextNode(text, seg.getStyle(), applyStyle),
-                        LinkedImage::createNode);
-    }
-
     private final GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area =
             new GenericStyledArea<>(
                     ParStyle.EMPTY, // default paragraph style
                     // paragraph style setter
-                    (paragraph, style) -> paragraph.setStyle(style.toCss()),
+                (paragraph, style) -> paragraph.setStyle(style.toCss()),
                     TextStyle.DEFAULT.updateFontSize(12).updateFontFamily("Serif")
                         .updateTextColor(Color.BLACK), // default segment style
                      // segment operations
                     styledTextOps._or(linkedImageOps, (s1, s2) -> Optional.empty()),
-                    seg -> createNode(seg,
-                            (text, style) -> text.setStyle(style.toCss()))); // Node creator and
-                                                                             // segment style setter
+                seg -> createNode(seg,
+                    (text, style) -> text.setStyle(style.toCss()))); // Node creator and
+                                                                         // segment style setter
+
+    private Node createNode(StyledSegment<Either<String, LinkedImage>, TextStyle> seg,
+                            BiConsumer<? super TextExt, TextStyle> applyStyle) {
+        return seg.getSegment().unify(
+            text ->
+                            StyledTextArea.createStyledTextNode(text, seg.getStyle(), applyStyle),
+                        LinkedImage::createNode);
+    }
 
     @Override
     public Node presentResult(Result result) {
@@ -56,15 +56,15 @@ public class TextAndImages extends ResultPresentationType {
         GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area =
                 new GenericStyledArea<>(ParStyle.EMPTY, // default paragraph style
                                         // paragraph style setter
-                                        (paragraph, style) -> paragraph.setStyle(style.toCss()),
+                    (paragraph, style) -> paragraph.setStyle(style.toCss()),
                                         TextStyle.DEFAULT.updateFontSize(12)
                                         // default segment style
                                         .updateFontFamily("Serif").updateTextColor(Color.BLACK),
                                         // segment operations
                                         styledTextOps._or(linkedImageOps, (s1, s2)
-                                                -> Optional.empty()),
-                                        seg -> createNode(seg, // Node creator and segment
-                                                (text, style) -> text.setStyle(style.toCss())));
+                                            -> Optional.empty()),
+                    seg -> createNode(seg, // Node creator and segment
+                        (text, style) -> text.setStyle(style.toCss())));
         area.setEditable(false);
         Canvas can = new Canvas(100, 100);
         GraphicsContext g = can.getGraphicsContext2D();

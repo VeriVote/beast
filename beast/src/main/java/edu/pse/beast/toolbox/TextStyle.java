@@ -11,7 +11,11 @@ import java.util.Optional;
 
 import org.fxmisc.richtext.model.Codec;
 
-//taken with changes from https://github.com/FXMisc/RichTextFX/blob/5d64bd7ef211292ec096b5b152aa79ee934e4678/richtextfx-demos/src/main/java/org/fxmisc/richtext/demo/hyperlink/TextStyle.java
+/*
+ * taken with changes from https://github.com/FXMisc/RichTextFX/blob/
+ * 5d64bd7ef211292ec096b5b152aa79ee934e4678/richtextfx-demos/src/main/java/org/
+ * fxmisc/richtext/demo/hyperlink/TextStyle.java
+ */
 
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -23,9 +27,9 @@ public class TextStyle {
     public static final TextStyle DEFAULT = new TextStyle();
 
     public static final Codec<TextStyle> CODEC = new Codec<TextStyle>() {
-        private final Codec<Optional<String>> OPT_STRING_CODEC =
+        private final Codec<Optional<String>> optStringCodec =
                 Codec.optionalCodec(Codec.STRING_CODEC);
-        private final Codec<Optional<Color>> OPT_COLOR_CODEC =
+        private final Codec<Optional<Color>> optColorCodec =
                 Codec.optionalCodec(Codec.COLOR_CODEC);
 
         @Override
@@ -37,18 +41,18 @@ public class TextStyle {
         public void encode(DataOutputStream os, TextStyle s) throws IOException {
             os.writeByte(encodeBoldItalicUnderlineStrikethrough(s));
             os.writeInt(encodeOptionalUint(Optional.of((int) s.font.getSize())));
-            OPT_STRING_CODEC.encode(os, Optional.of(s.font.getFamily()));
-            OPT_COLOR_CODEC.encode(os, Optional.of(s.textColor));
-            OPT_COLOR_CODEC.encode(os, Optional.of(s.backgroundColor));
+            optStringCodec.encode(os, Optional.of(s.font.getFamily()));
+            optColorCodec.encode(os, Optional.of(s.textColor));
+            optColorCodec.encode(os, Optional.of(s.backgroundColor));
         }
 
         @Override
         public TextStyle decode(DataInputStream is) throws IOException {
             byte bius = is.readByte();
             Optional<Integer> fontSize = decodeOptionalUint(is.readInt());
-            Optional<String> fontFamily = OPT_STRING_CODEC.decode(is);
-            Optional<Color> textColor = OPT_COLOR_CODEC.decode(is);
-            Optional<Color> bgrColor = OPT_COLOR_CODEC.decode(is);
+            Optional<String> fontFamily = optStringCodec.decode(is);
+            Optional<Color> textColor = optColorCodec.decode(is);
+            Optional<Color> bgrColor = optColorCodec.decode(is);
 
             Font decodedFont =
                     new Font(fontFamily.orElse(getDefaultFont().getFamily()),
@@ -104,9 +108,36 @@ public class TextStyle {
         }
 
         private Optional<Integer> decodeOptionalUint(int i) {
-            return (i < 0) ? Optional.empty(): Optional.of(i);
+            return (i < 0) ? Optional.empty() : Optional.of(i);
         }
     };
+
+    final Optional<Boolean> bold;
+    final Optional<Boolean> italic;
+    final Optional<Boolean> underline;
+    final Optional<Boolean> strikethrough;
+    final Font font;
+    final Color textColor;
+    final Color backgroundColor;
+
+    public TextStyle() {
+        this(Optional.empty(), Optional.empty(), Optional.empty(),
+             Optional.empty(), Optional.empty(), Optional.empty(),
+             Optional.empty());
+    }
+
+    public TextStyle(Optional<Boolean> bold, Optional<Boolean> italic,
+                     Optional<Boolean> underline, Optional<Boolean> strikethrough,
+                     Optional<Font> fontOption, Optional<Color> textColorOption,
+                     Optional<Color> backgroundColorOption) {
+        this.bold = bold;
+        this.italic = italic;
+        this.underline = underline;
+        this.strikethrough = strikethrough;
+        this.font = fontOption.orElse(getDefaultFont());
+        this.textColor = textColorOption.orElse(getDefaultTextColor());
+        this.backgroundColor = backgroundColorOption.orElse(getDefaultBackgroundColor());
+    }
 
     private static Font getDefaultFont() {
         return new Font("Monospaced", 12);
@@ -159,33 +190,6 @@ public class TextStyle {
         return "rgb(" + red + ", " + green + ", " + blue + ")";
     }
 
-    final Optional<Boolean> bold;
-    final Optional<Boolean> italic;
-    final Optional<Boolean> underline;
-    final Optional<Boolean> strikethrough;
-    final Font font;
-    final Color textColor;
-    final Color backgroundColor;
-
-    public TextStyle() {
-        this(Optional.empty(), Optional.empty(), Optional.empty(),
-             Optional.empty(), Optional.empty(), Optional.empty(),
-             Optional.empty());
-    }
-
-    public TextStyle(Optional<Boolean> bold, Optional<Boolean> italic,
-                     Optional<Boolean> underline, Optional<Boolean> strikethrough,
-                     Optional<Font> fontOption, Optional<Color> textColorOption,
-                     Optional<Color> backgroundColorOption) {
-        this.bold = bold;
-        this.italic = italic;
-        this.underline = underline;
-        this.strikethrough = strikethrough;
-        this.font = fontOption.orElse(getDefaultFont());
-        this.textColor = textColorOption.orElse(getDefaultTextColor());
-        this.backgroundColor = backgroundColorOption.orElse(getDefaultBackgroundColor());
-    }
-
     @Override
     public int hashCode() {
         return Objects.hash(bold, italic, underline, strikethrough, font,
@@ -203,8 +207,7 @@ public class TextStyle {
                     && Objects.equals(this.font, that.font)
                     && Objects.equals(this.textColor, that.textColor)
                     && Objects.equals(this.backgroundColor, that.backgroundColor);
-        }
-        else {
+        } else {
             return false;
         }
     }

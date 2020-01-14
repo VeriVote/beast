@@ -18,7 +18,8 @@
 //     * @param toExtract the list to extract from
 //     * @return a two dim wrapper of the voting results
 //     */
-//    public abstract List<ResultValueWrapper> extractVariable(String variableNameMatcher, List<String> toExtract);
+//    public abstract List<ResultValueWrapper> extractVariable(String variableNameMatcher,
+//                                                             List<String> toExtract);
 //
 //    public static List<CommonHelpMethods> getImplementations() {
 //        ServiceLoader<CommonHelpMethods> loader = ServiceLoader.load(CommonHelpMethods.class);

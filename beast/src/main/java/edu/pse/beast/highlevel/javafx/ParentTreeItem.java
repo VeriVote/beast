@@ -27,11 +27,12 @@ public class ParentTreeItem extends CustomTreeItem {
     private Label propName;
     private CheckBox checkAll = new CheckBox("check all");
 
-    ContextMenu contextMenu = new ContextMenu();
-    MenuItem deleteItem = new MenuItem("Delete Property");
+    private ContextMenu contextMenu = new ContextMenu();
+    private MenuItem deleteItem = new MenuItem("Delete Property");
 
     private final List<ChildTreeItem> subItems = new ArrayList<ChildTreeItem>();
-    private final List<TreeItem<CustomTreeItem>> childTreeItems = new ArrayList<TreeItem<CustomTreeItem>>();
+    private final List<TreeItem<CustomTreeItem>> childTreeItems =
+            new ArrayList<TreeItem<CustomTreeItem>>();
     private final PreAndPostConditionsDescription propDesc;
 
     private boolean disabled;

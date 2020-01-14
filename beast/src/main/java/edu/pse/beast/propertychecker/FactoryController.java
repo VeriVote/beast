@@ -21,9 +21,9 @@ public class FactoryController implements Runnable {
     /**
      * gives access to the factory controller for the shutdown hook.
      */
-    protected FactoryController thisObject = this;
+    private FactoryController thisObject = this;
 
-    List<ChildTreeItem> propertiesToCheck = new ArrayList<ChildTreeItem>();
+    private List<ChildTreeItem> propertiesToCheck = new ArrayList<ChildTreeItem>();
 
     // private final ParameterSource parmSrc;
     // private final List<Result> results;

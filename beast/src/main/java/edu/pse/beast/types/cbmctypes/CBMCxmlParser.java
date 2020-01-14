@@ -14,12 +14,14 @@ import edu.pse.beast.toolbox.XMLtoolbox;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 
-public class CBMCxmlParser {
-    private static final String baseName = "base_name";
-    private static final String displayName = "display_name";
-    private static final String mainMethodID = "main::";
-    private static final String valueExpression = "value_expression";
-    private static final String assignment = "assignment";
+public final class CBMCxmlParser {
+    private static final String BASE_NAME = "base_name";
+    private static final String DISPLAY_NAME = "display_name";
+    private static final String MAIN_METHOD_ID = "main::";
+    private static final String VALUE_EXPRESSION = "value_expression";
+    private static final String ASSIGNMENT = "assignment";
+
+    private CBMCxmlParser() { }
 
     public static List<Tuple<String, List<ResultValueWrapper>>> extractVariables(
             Document document, List<String> variablesToFind) {
@@ -34,24 +36,24 @@ public class CBMCxmlParser {
 
         // TODO possible optimization: traverse the document backwards, and stop
         // when
-        // the "last" occurance of a variable is found. If you are given all the
+        // the "last" occurrence of a variable is found. If you are given all the
         // trailing numbers behind the variables, you could even stop
         // prematurely.
 
         XMLtoolbox.clean(document);
 
         NodeList assignments =
-                document.getDocumentElement().getElementsByTagName(assignment);
+                document.getDocumentElement().getElementsByTagName(ASSIGNMENT);
 
         for (int i = 0; i < assignments.getLength(); i++) {
             Node node = assignments.item(i);
             // we extract the name of the variable which a value is described upon
             String identifier =
-                    node.getAttributes().getNamedItem(displayName).getNodeValue();
+                    node.getAttributes().getNamedItem(DISPLAY_NAME).getNodeValue();
             // TODO maybe we can filter for all assignments with function: "main"
-            if (identifier.startsWith(mainMethodID)) { // we only care for variables from the
+            if (identifier.startsWith(MAIN_METHOD_ID)) { // we only care for variables from the
                                                        // main method
-                String name = node.getAttributes().getNamedItem(baseName).getNodeValue();
+                String name = node.getAttributes().getNamedItem(BASE_NAME).getNodeValue();
 
                 for (int index = 0; index < variablesToFind.size(); index++) {
                     String variableNameMatcher = variablesToFind.get(index);
@@ -64,7 +66,7 @@ public class CBMCxmlParser {
                                     "problem parsing the node to an element");
                             continue;
                         }
-                        NodeList valueNodeList = element.getElementsByTagName(valueExpression);
+                        NodeList valueNodeList = element.getElementsByTagName(VALUE_EXPRESSION);
                         if (valueNodeList.getLength() != 1) {
                             System.err.println("Empty value expression found");
                             continue;
@@ -92,8 +94,7 @@ public class CBMCxmlParser {
         try {
             String number = variableWithIndex.replaceAll("[^\\d.]", "");
             return Integer.parseInt(number);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return 0;
         }
     }

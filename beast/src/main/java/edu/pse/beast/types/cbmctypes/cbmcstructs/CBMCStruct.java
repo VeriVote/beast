@@ -33,6 +33,18 @@ public class CBMCStruct extends ComplexType {
     }
 
     @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((dataType == null) ? 0 : dataType.hashCode());
+        result = prime * result + dimensions;
+        result = prime * result + Arrays.hashCode(sizeOfDimensions);
+        result = prime * result + (unsigned ? 1231 : 1237);
+        return result;
+    }
+
+    @Override
     public boolean equals(Object toCompare) {
         if (this == toCompare) {
             return true;

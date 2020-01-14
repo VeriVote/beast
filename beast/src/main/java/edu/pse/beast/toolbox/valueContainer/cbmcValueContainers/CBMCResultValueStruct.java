@@ -8,8 +8,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class CBMCResultValueStruct implements CBMCResultValue {
-    private final String MEMBER_TAG = "member";
-    private final String MEMBER_NAME = "name";
+    private static final String MEMBER_TAG = "member";
+    private static final String MEMBER_NAME = "name";
 
     private Map<String, CBMCResultValueWrapper> values =
             new HashMap<String, CBMCResultValueWrapper>();

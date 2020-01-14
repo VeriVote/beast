@@ -117,13 +117,13 @@ public class ResultTreeItem extends CustomTreeItem {
                         new Background(
                                 new BackgroundFill(Color.AQUA, CornerRadii.EMPTY, Insets.EMPTY)
                                 )
-                        );
+                );
             } else if (!result.isValid()) {
                 this.setBackground(
                         new Background(
                                 new BackgroundFill(Color.YELLOW, CornerRadii.EMPTY, Insets.EMPTY)
                                 )
-                        );
+                );
             } else {
                 if (result.isSuccess()) {
                     this.setBackground(new Background(new BackgroundFill(

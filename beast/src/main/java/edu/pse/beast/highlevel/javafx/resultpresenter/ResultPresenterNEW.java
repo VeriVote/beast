@@ -21,7 +21,7 @@ import javafx.scene.control.ScrollPane;
  * @author Lukas Stapelbroek
  *
  */
-public class ResultPresenterNEW {
+public final class ResultPresenterNEW {
     private static ResultPresenterNEW instance;
     private ResultPresentationType presentationType;
     private final ScrollPane resultScrollPane;

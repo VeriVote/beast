@@ -8,7 +8,8 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueA
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueSingle;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 
-public class CBMCResultPresentationHelper {
+public final class CBMCResultPresentationHelper {
+    private CBMCResultPresentationHelper() { }
 
     private static String getWhiteSpaces(int amount) {
         char[] spaces = new char[amount];
@@ -48,9 +49,9 @@ public class CBMCResultPresentationHelper {
         }
 
         for (int i = 0; i < size; i++) {
-            CBMCResultValueArray current_array =
+            CBMCResultValueArray currentArray =
                     (CBMCResultValueArray) arrayValues.get(i).getResultValue();
-            toReturn.add(printOneDimResult(current_array, -1, offset));
+            toReturn.add(printOneDimResult(currentArray, -1, offset));
         }
         return toReturn;
     }

@@ -24,7 +24,7 @@ import edu.pse.beast.toolbox.XMLtoolbox;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.types.cbmctypes.CBMCxmlParser;
 
-enum C_DATATYPE {
+enum CDATATYPE {
     SINGLE, ARRAY, STRUCT, POINTER;
 }
 

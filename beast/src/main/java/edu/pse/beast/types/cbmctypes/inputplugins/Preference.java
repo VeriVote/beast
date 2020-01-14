@@ -20,14 +20,14 @@ import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
 public class Preference extends CBMCInputType {
-    private static final int dimensions = 2;
-    private final static String[] sizeOfDimensions = {
+    private static final int DIMENSIONS = 2;
+    private final static String[] SIZE_OF_DIMENSIONS = {
             UnifiedNameContainer.getVoter(),
             UnifiedNameContainer.getCandidate()
-            };
+    };
 
     public Preference() {
-        super(true, DataType.INT, dimensions, sizeOfDimensions);
+        super(true, DataType.INT, DIMENSIONS, SIZE_OF_DIMENSIONS);
     }
 
     @Override
@@ -68,8 +68,7 @@ public class Preference extends CBMCInputType {
         final int number;
         try {
             number = Integer.parseInt(newValue);
-        }
-        catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return "0";
         }
         final String result;
