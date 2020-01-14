@@ -46,8 +46,6 @@ public class MainApplicationClass extends Application {
     private static final String FILE_STRING = "file:///";
 
     private static Stage mainStage;
-    
-    
 
     /**
      * Starts BEAST by creating a BEASTCommunicator and corresponding

@@ -4,12 +4,12 @@
 //import edu.pse.beast.toolbox.UserAction;
 //
 ///**
-// * Lets the user save the PropertyList with the already-known filename
-// * or calls SaveAsPropertyList.
+// * Lets the user save the PropertyList with the already-known
+// * filename or calls SaveAsPropertyList.
+// *
 // * @author Justin Hecht
 // */
 //public class SavePropertyList extends UserAction {
-//
 //    private final PropertyList controller;
 //
 //    /**

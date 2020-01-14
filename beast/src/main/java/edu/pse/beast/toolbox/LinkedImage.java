@@ -1,6 +1,6 @@
 package edu.pse.beast.toolbox;
 
-//Taken from the Demos from https://github.com/FXMisc/RichTextFX 
+//Taken from the Demos from https://github.com/FXMisc/RichTextFX
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

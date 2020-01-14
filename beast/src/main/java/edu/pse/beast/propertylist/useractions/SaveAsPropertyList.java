@@ -8,7 +8,6 @@
 // * @author Justin Hecht
 // */
 //public class SaveAsPropertyList extends UserAction {
-//
 //    private final PropertyList controller;
 //
 //    /**

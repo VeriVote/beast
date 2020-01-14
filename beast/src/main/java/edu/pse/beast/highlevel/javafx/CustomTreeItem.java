@@ -4,7 +4,6 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.layout.HBox;
 
 public abstract class CustomTreeItem extends HBox {
-
     private TreeItem<CustomTreeItem> reference;
 
     public void setTreeItemReference(TreeItem<CustomTreeItem> reference) {
@@ -14,5 +13,4 @@ public abstract class CustomTreeItem extends HBox {
     public TreeItem<CustomTreeItem> getTreeItemReference() {
         return reference;
     }
-
 }

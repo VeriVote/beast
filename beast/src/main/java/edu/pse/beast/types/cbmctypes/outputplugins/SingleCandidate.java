@@ -10,13 +10,11 @@ import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
 public class SingleCandidate extends CBMCOutputType {
-
-    private static final int dimensions = 0;
-
-    private final static String[] sizeOfDimensions = {};
+    private static final int DIMENSIONS = 0;
+    private static final String[] SIZE_OF_DIMENSIONS = {};
 
     public SingleCandidate() {
-        super(true, DataType.INT, dimensions, sizeOfDimensions);
+        super(true, DataType.INT, DIMENSIONS, SIZE_OF_DIMENSIONS);
     }
 
     @Override

@@ -18,7 +18,7 @@ public class CBMCResultValueSingle implements CBMCResultValue {
     private Number numberValue = null;
 
     /**
-     * 
+     *
      * @param type
      *            the datatye (e.g "int")
      * @param value

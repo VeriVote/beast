@@ -82,7 +82,7 @@ public abstract class InOutType {
     }
 
     /**
-     * 
+     *
      * @return the size of all dimensions, null if it is 0 dimensional
      */
     public String[] getSizeOfDimensions() {
@@ -128,7 +128,7 @@ public abstract class InOutType {
     }
 
     /**
-     * 
+     *
      * @param content
      *            the content to be put in the bracketes
      * @return e.g "[content]"
@@ -138,7 +138,7 @@ public abstract class InOutType {
     }
 
     /**
-     * 
+     *
      * @return a string which, when written behind a variable which given type,
      *         allows access to its values (e.g ".arr", if it is a struct in
      *         which the value is stored in "arr"
@@ -202,7 +202,7 @@ public abstract class InOutType {
 
     /**
      * A human readable representation of this type.
-     * 
+     *
      * @return
      */
     public abstract String otherToString();
@@ -269,7 +269,7 @@ public abstract class InOutType {
     }
 
     /**
-     * 
+     *
      * @return a text describing everything the user needs to know about this
      *         type (e.g description of structs...)
      */

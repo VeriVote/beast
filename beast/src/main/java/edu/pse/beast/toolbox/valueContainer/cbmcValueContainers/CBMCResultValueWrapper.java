@@ -94,7 +94,7 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
 
     /**
      * set the new value of the underlying property
-     * 
+     *
      * @param element
      */
     private void setNewValue(Element element) {

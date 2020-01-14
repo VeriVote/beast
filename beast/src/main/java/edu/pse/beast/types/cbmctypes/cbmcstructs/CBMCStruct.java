@@ -50,7 +50,7 @@ public class CBMCStruct extends ComplexType {
     }
 
     /**
-     * 
+     *
      * @return the string which defines this struct
      */
     @Override

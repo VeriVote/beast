@@ -77,7 +77,7 @@ public class ElectionDescription {
     }
 
     /**
-     * 
+     *
      * @return code of this description with structs used where applicable
      */
     public List<String> getComplexCode() {
@@ -234,7 +234,7 @@ public class ElectionDescription {
 
     /**
      * splits a string at "\n"
-     * 
+     *
      * @param toConvert
      * @return
      */
@@ -246,14 +246,14 @@ public class ElectionDescription {
     /**
      * replaces all "return" statements in the voting methode with the more
      * complex data types
-     * 
+     *
      * @param toProcess
      *            the String from which the return statements should be
      *            replaced. The String can not be preceded by a comment symbol
      *            which would still be active for this part. It also cannot
      *            start being a text (meaning it has a single (") in front of
      *            it.
-     * 
+     *
      * @return
      */
     private String replaceReturns(String toProcess, String variableName) { // change this to
@@ -306,7 +306,7 @@ public class ElectionDescription {
     }
 
     /**
-     * 
+     *
      * @param toProcess
      *            the String to process, should start immediately after the
      *            "return";
@@ -336,9 +336,9 @@ public class ElectionDescription {
 
     /**
      * wraps the value in the fitting struct for its datatype, and adds
-     * 
+     *
      * @return return + wrapper + ;
-     * 
+     *
      */
     private String wrapInStruct(String variableName, String valueDefinition) {
         String toReturn = container.getOutputStruct().getStructAccess() + " " + variableName + "; ";
@@ -449,7 +449,7 @@ public class ElectionDescription {
     }
 
     /**
-     * 
+     *
      * @param toCheck
      *            the tuple to check if it contains at least one "true"
      *            statement
@@ -462,7 +462,7 @@ public class ElectionDescription {
     /**
      * Wraps a String into curly braces. This is done so single line if
      * conditions or for loops still work when muliple lines are added
-     * 
+     *
      * @param toWrap
      *            the String to wrap
      * @return "{toWrap}"

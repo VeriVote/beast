@@ -114,7 +114,7 @@ public class NEWRowOfValues {
     }
 
     /**
-     * 
+     *
      * @return the values of this row, from 0 up to
      */
     public List<String> getValues() {

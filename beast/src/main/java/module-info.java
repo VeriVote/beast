@@ -105,8 +105,8 @@ module edu.pse.beast {
         edu.pse.beast.types.cbmctypes.inputplugins.WeightedApproval;
 
 
-    provides OutputType with edu.pse.beast.types.cbmctypes.outputplugins.CandidateList, 
-        edu.pse.beast.types.cbmctypes.outputplugins.Parliament, 
+    provides OutputType with edu.pse.beast.types.cbmctypes.outputplugins.CandidateList,
+        edu.pse.beast.types.cbmctypes.outputplugins.Parliament,
         edu.pse.beast.types.cbmctypes.outputplugins.ParliamentStack,
         edu.pse.beast.types.cbmctypes.outputplugins.SingleCandidate;
 
@@ -115,5 +115,5 @@ module edu.pse.beast {
     provides ResultPresentationType
                 with edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.Default,
                      edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.CBMCOutput,
-                     edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.CBMCError;   
+                     edu.pse.beast.highlevel.javafx.resultpresenter.resultTypes.CBMCError;
 }

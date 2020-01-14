@@ -53,7 +53,7 @@ public abstract class Result implements ResultInterface {
 
     /**
      * returns all currently available result types
-     * 
+     *
      * @return list of result types
      */
     public static List<Result> getResultTypes() {
@@ -349,7 +349,7 @@ public abstract class Result implements ResultInterface {
     /**
      * extracts the last values of all variables which name matches the given
      * String
-     * 
+     *
      * @param variableMatcher
      *            a regex which should match all variable names, e.g "votes1",
      *            "votes2", ...

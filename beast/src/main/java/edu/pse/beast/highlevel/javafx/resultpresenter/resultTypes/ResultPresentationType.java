@@ -27,13 +27,13 @@ public abstract class ResultPresentationType {
     public abstract String getToolTipDescription();
 
     /**
-     * 
+     *
      * @return true, if the Node given by this Type support zooming
      */
     public abstract boolean supportsZoom();
 
     /**
-     * 
+     *
      * @return all implementations of this class
      */
     public static List<ResultPresentationType> getImplementations() {
@@ -73,7 +73,7 @@ public abstract class ResultPresentationType {
     /**
      * extracts the value of single value objects. is used to extract the size
      * of each vote
-     * 
+     *
      * @param toExtract
      *            has be of the form: ValueWrapper -> ResultValueSingle<Integer>
      * @return
@@ -92,7 +92,7 @@ public abstract class ResultPresentationType {
 
     /**
      * indicates if this class should be normally used first to display a result
-     * 
+     *
      * @return
      */
     public abstract boolean isDefault();

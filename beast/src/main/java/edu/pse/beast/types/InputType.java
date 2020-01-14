@@ -74,7 +74,7 @@ public abstract class InputType extends InOutType {
 
     /**
      * vets a value to determine if it is legal for the input type, or not
-     * 
+     *
      * @param container
      *            the type container
      * @param rows
@@ -113,7 +113,7 @@ public abstract class InputType extends InOutType {
 
     /**
      * returns the assignment of votingData e.g {1,2,3} for a array of shape [3]
-     * 
+     *
      * @param votingData
      * @param code
      * @return
@@ -147,7 +147,7 @@ public abstract class InputType extends InOutType {
      * ASSERTION: newVotesName already has to be bounded to the max and min
      * values it can have change the vote of origVotesName at a position defined
      * by loopNames to a vote that is different that the original one
-     * 
+     *
      * @param newVotesName
      * @param origVotesName
      * @param loopNames

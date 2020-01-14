@@ -60,7 +60,7 @@ public class CBMCResultValueArray implements CBMCResultValue {
     }
 
     /**
-     * 
+     *
      * @return the size of the datastructure which is represented here
      */
     public int getArraySize() {

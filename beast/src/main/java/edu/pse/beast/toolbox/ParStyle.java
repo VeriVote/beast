@@ -105,7 +105,7 @@ public class ParStyle { //TODO maybe make the same changes that were done to Tex
             }
             sb.append("-fx-text-alignment: " + cssAlignment + ";");
         });
-        
+
         backgroundColor.ifPresent(color -> {
             sb.append("-fx-background-color: " + TextStyle.cssColor(color) + ";");
         });
@@ -126,5 +126,4 @@ public class ParStyle { //TODO maybe make the same changes that were done to Tex
     public ParStyle updateBackgroundColor(Color backgroundColor) {
         return new ParStyle(alignment, Optional.of(backgroundColor));
     }
-
 }

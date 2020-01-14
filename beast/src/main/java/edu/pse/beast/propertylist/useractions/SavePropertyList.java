@@ -10,7 +10,6 @@
 // * @author Justin Hecht
 // */
 //public class SavePropertyList extends UserAction {
-//
 //    private final PropertyList controller;
 //
 //    /**

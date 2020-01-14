@@ -9,7 +9,6 @@
 // * @author Justin Hecht
 // */
 //public class LoadPropertyList extends UserAction {
-//
 //    private final PropertyList controller;
 //
 //    /**

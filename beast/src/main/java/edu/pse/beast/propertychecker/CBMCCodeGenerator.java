@@ -309,7 +309,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 
     /**
      * TODO move to utility class
-     * 
+     *
      * @param code
      *            the code beautifier it should be added to
      * @param dimensions
@@ -336,7 +336,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 
     /**
      * TODO move to utility class
-     * 
+     *
      * @param code
      * @param dimensions
      */
@@ -997,7 +997,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 
     /**
      * adds a value of the fitting size as described
-     * 
+     *
      * @param valueName
      * @param type
      * @param voteNumber

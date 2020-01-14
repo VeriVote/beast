@@ -17,7 +17,7 @@ import javafx.scene.control.ScrollPane;
  * This class is responsible to show the result of Checks. It provides ways of
  * simply printing Text, drawing images with support for charting, and display
  * any JavaFX node
- * 
+ *
  * @author Lukas Stapelbroek
  *
  */
@@ -114,7 +114,7 @@ public class ResultPresenterNEW {
     /**
      * Give the caller complete freedom how he wants to display the result. It
      * can be done in any way javafx permits
-     * 
+     *
      * @param resultNode
      *            the Node which will be shown in the result window
      */

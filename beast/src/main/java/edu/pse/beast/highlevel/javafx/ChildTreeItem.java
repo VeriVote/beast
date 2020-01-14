@@ -202,7 +202,7 @@ public abstract class ChildTreeItem extends CustomTreeItem {
 
     /**
      * shows the result depending on the current presentation type
-     * 
+     *
      * @param result
      */
     public void showResult(Result result) {

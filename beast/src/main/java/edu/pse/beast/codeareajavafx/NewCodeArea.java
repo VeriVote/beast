@@ -425,7 +425,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
     /**
      * Get election description.
-     * 
+     *
      * @return a deep copy of the election description, which does not update
      *         when the text field gets another input
      */

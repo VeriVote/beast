@@ -23,7 +23,7 @@ public class SaverLoader {
     public static final String PROP_DESCR_FILE_ENDING = ".prop";
 
     public final MinimalSaverInterface owner;
-    
+
     private boolean hasChanges = false; //small hack, update values later on with listeners
     private boolean hasSaveFile = false;
     private File saveFile = null;
