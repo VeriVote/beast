@@ -16,12 +16,12 @@ public class CurlyBracesLineBeginningTabHandler implements LineBeginningTabsHand
 
     private JTextPane pane;
 
-    public CurlyBracesLineBeginningTabHandler(JTextPane pane) {
-        this.pane = pane;
+    public CurlyBracesLineBeginningTabHandler(final JTextPane textPane) {
+        this.pane = textPane;
     }
 
     @Override
-    public int getTabsForLine(int caretPos) {
+    public int getTabsForLine(final int caretPos) {
         int amt = 0;
         String code = JTextPaneToolbox.getText(pane);
         int pos = caretPos - 1;

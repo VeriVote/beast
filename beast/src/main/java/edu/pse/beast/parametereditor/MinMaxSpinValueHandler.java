@@ -13,6 +13,8 @@ import javax.swing.event.ChangeListener;
  * @author Jonas Wohnig
  */
 public class MinMaxSpinValueHandler implements ChangeListener {
+    private static final int MIN_VALUE = 1;
+    private static final int MAX_VALUE = 10000;
 
     private final JSpinner minSpinner;
     private final JSpinner maxSpinner;
@@ -22,14 +24,15 @@ public class MinMaxSpinValueHandler implements ChangeListener {
     private boolean hasChanged;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param minSpinner JSpinner for the minimum
-     * @param maxSpinner JSpinner for the maximum
+     * @param minimumSpinner JSpinner for the minimum
+     * @param maximumSpinner JSpinner for the maximum
      */
-    public MinMaxSpinValueHandler(JSpinner minSpinner, JSpinner maxSpinner) {
-        this.minSpinner = minSpinner;
-        this.maxSpinner = maxSpinner;
+    public MinMaxSpinValueHandler(final JSpinner minimumSpinner,
+                                  final JSpinner maximumSpinner) {
+        this.minSpinner = minimumSpinner;
+        this.maxSpinner = maximumSpinner;
         setMinAndMax(1, 1);
         setHasChanged(false);
     }
@@ -55,9 +58,10 @@ public class MinMaxSpinValueHandler implements ChangeListener {
      * @param min new minimum
      * @param max new maximum
      */
-    public synchronized void setMinAndMax(Integer min, Integer max) {
+    public synchronized void setMinAndMax(final Integer min, final Integer max) {
         reacts = true;
-        if (min <= 10000 && min >= 1 && max <= 10000 && max >= 1) {
+        if (min <= MAX_VALUE && min >= MIN_VALUE
+                && max <= MAX_VALUE && max >= MIN_VALUE) {
             minSpinner.setValue(java.lang.Math.min(min, max));
             maxSpinner.setValue(java.lang.Math.max(min, max));
         } else {
@@ -75,13 +79,14 @@ public class MinMaxSpinValueHandler implements ChangeListener {
     }
 
     @Override
-    public synchronized void stateChanged(ChangeEvent e) {
+    public synchronized void stateChanged(final ChangeEvent e) {
         String minString = (minSpinner.getValue().toString());
         String maxString = (maxSpinner.getValue().toString());
         if ((minString + maxString).chars().allMatch(Character::isDigit) && reacts) {
             Integer min = Integer.parseInt(minString);
             Integer max = Integer.parseInt(maxString);
-            if (min <= 10000 && min >= 1 && max <= 10000 && max >= 1) {
+            if (min <= MAX_VALUE && min >= MIN_VALUE
+                    && max <= MAX_VALUE && max >= MIN_VALUE) {
                 if (e.getSource().equals(minSpinner)) {
                     if (min > maxBefore) {
                         max = min;
@@ -108,12 +113,12 @@ public class MinMaxSpinValueHandler implements ChangeListener {
 
     /**
      * Toggles whether the chosen minimum and maximum react to user input (to not
-     * interrupt checks)
+     * interrupt checks).
      *
-     * @param reacts whether they react
+     * @param reactsToUser whether they react
      */
-    protected synchronized void setReacts(boolean reacts) {
-        this.reacts = reacts;
+    protected synchronized void setReacts(final boolean reactsToUser) {
+        this.reacts = reactsToUser;
     }
 
     /**
@@ -129,9 +134,9 @@ public class MinMaxSpinValueHandler implements ChangeListener {
     /**
      * Sets whether the values of the JSpinners were changed since last time saving.
      *
-     * @param hasChanged whether they changed
+     * @param changed whether they changed
      */
-    protected synchronized void setHasChanged(boolean hasChanged) {
-        this.hasChanged = hasChanged;
+    protected synchronized void setHasChanged(final boolean changed) {
+        this.hasChanged = changed;
     }
 }

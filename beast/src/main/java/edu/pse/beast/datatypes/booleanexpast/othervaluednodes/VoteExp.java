@@ -15,17 +15,19 @@ public class VoteExp extends AccessValueNode {
      * @param accessingVars accessing variables
      * @param count the count of this vote
      */
-    public VoteExp(InOutType type, TypeExpression[] accessingVars, int count) {
+    public VoteExp(final InOutType type,
+                   final TypeExpression[] accessingVars,
+                   final int count) {
         super(type, accessingVars, count);
     }
 
     @Override
-    public void getVisited(BooleanExpNodeVisitor visitor) {
+    public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitVoteExp(this);
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         return null;
     }
 }

@@ -10,14 +10,17 @@ import edu.pse.beast.types.InternalTypeContainer;
  *
  */
 public abstract class TypeExpression extends BooleanExpressionNode {
+    protected static final int PRIME_ONE = 31;
+    protected static final int PRIME_TWO = 1231;
+    protected static final int PRIME_THREE = 1237;
     private final InOutType type;
 
     /**
      *
-     * @param type the type of this quantifier
+     * @param inOutType the type of this quantifier
      */
-    public TypeExpression(InOutType type) {
-        this.type = type;
+    public TypeExpression(final InOutType inOutType) {
+        this.type = inOutType;
     }
 
     /**
@@ -29,7 +32,7 @@ public abstract class TypeExpression extends BooleanExpressionNode {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -44,6 +47,6 @@ public abstract class TypeExpression extends BooleanExpressionNode {
 
     @Override
     public int hashCode() {
-        return 31 + (type != null ? type.hashCode() : 0);
+        return PRIME_ONE + (type != null ? type.hashCode() : 0);
     }
 }

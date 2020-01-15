@@ -6,31 +6,31 @@ import edu.pse.beast.codearea.actionadder.ActionlistListener;
 
 /**
  * This class saves actions which can be undone and redone. It provides
- * functionallity to undo and redo these actions in the right order
+ * functionality to undo and redo these actions in the right order.
  *
  * @author Holger Klein
  */
-public class Actionlist {
+public class ActionList {
     private final ArrayList<Action> lastPerformed = new ArrayList<>();
     private final ArrayList<Action> lastUndone = new ArrayList<>();
     private final ArrayList<ActionlistListener> listener = new ArrayList<>();
 
-    public Actionlist() {
+    public ActionList() {
     }
 
     /**
-     * adds the supplied action to the list so if the user calls undoLast
-     * immediatly, this action will be undone
+     * Adds the supplied action to the list so if the user calls undoLast
+     * immediately, this action will be undone.
      *
      * @param acc the action to be added to the list
      */
-    public void add(Action acc) {
+    public void add(final Action acc) {
         lastPerformed.add(acc);
         lastUndone.clear();
     }
 
     /**
-     * calls undo of the last performed action
+     * Calls undo of the last performed action.
      */
     public void undoLast() {
         msgAllListenerStarted();
@@ -45,7 +45,7 @@ public class Actionlist {
     }
 
     /**
-     * calls redo on the last undone action
+     * Calls redo on the last undone action.
      */
     public void redoLast() {
         msgAllListenerStarted();
@@ -60,17 +60,17 @@ public class Actionlist {
     }
 
     /**
-     * the supplied Actionlistlistener will be notified when the list starts and
-     * finishes undoing or redoing actions
+     * The supplied Actionlistlistener will be notified when the list starts and
+     * finishes undoing or redoing actions.
      *
-     * @param listener the object to be notified in the future
+     * @param actListListener the object to be notified in the future
      */
-    public void addActionlistListener(ActionlistListener listener) {
-        this.listener.add(listener);
+    public void addActionlistListener(final ActionlistListener actListListener) {
+        this.listener.add(actListListener);
     }
 
     /**
-     * removes all actions
+     * Removes all actions.
      */
     public void clear() {
         lastPerformed.clear();

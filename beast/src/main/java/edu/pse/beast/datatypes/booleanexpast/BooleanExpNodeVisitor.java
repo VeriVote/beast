@@ -27,7 +27,7 @@ import edu.pse.beast.propertychecker.PermutationExpNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.CandidateListChangeExpNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.VoteEquivalentsNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.generateast.VotingListChangeExpNode;
-import edu.pse.beast.toolbox.antlr.booleanexp.generateast.VotingTupelChangeExpNode;
+import edu.pse.beast.toolbox.antlr.booleanexp.generateast.VotingTupleChangeExpNode;
 
 /**
  *
@@ -122,7 +122,7 @@ public interface BooleanExpNodeVisitor {
 
     void visitAtPosNode(AtPosExp atPosExp);
 
-    void visitVotingTupleChangeNode(VotingTupelChangeExpNode votingTupelChangeExp);
+    void visitVotingTupleChangeNode(VotingTupleChangeExpNode votingTupelChangeExp);
 
     void visitVotingListChangeNode(VotingListChangeExpNode node);
 

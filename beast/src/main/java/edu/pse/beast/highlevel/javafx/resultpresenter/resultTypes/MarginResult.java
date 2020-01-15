@@ -20,14 +20,15 @@ import edu.pse.beast.types.OutputType;
 import javafx.scene.Node;
 
 public class MarginResult extends ResultPresentationType {
-    GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area;
-    int standartSize = 10;
+    private GenericStyledArea<ParStyle,
+                              Either<String, LinkedImage>,
+                              TextStyle> area;
 
     @Override
-    public Node presentResult(Result result) {
+    public Node presentResult(final Result result) {
         if (area == null) {
             area = TextFieldCreator.getGenericStyledAreaInstance(
-                    TextStyle.fontSize(standartSize), ParStyle.EMPTY);
+                    TextStyle.fontSize(STANDARD_SIZE), ParStyle.EMPTY);
             area.setEditable(false);
         }
         area.clear();
@@ -40,23 +41,23 @@ public class MarginResult extends ResultPresentationType {
             OutputType outType = result.getElectionDescription().getContainer().getOutputType();
             CBMCResultValueStruct structVotes = new CBMCResultValueStruct();
             structVotes.setValue(
-                    (CBMCResultValueWrapper) result.getOrigVoting().values,
+                    (CBMCResultValueWrapper) result.getOrigVoting().getValues(),
                     UnifiedNameContainer.getStructValueName());
             ResultValueWrapper structVotesWrapped = new CBMCResultValueWrapper(structVotes);
             List<String> toAdd = inType.drawResult(structVotesWrapped, "\norig votes: ", -1L);
             for (int i = 0; i < toAdd.size(); i++) {
                 area.appendText(toAdd.get(i));
             }
-            toAdd = outType.drawResult(result.getOrigWinner().values, "\norig result: ", -1L);
+            toAdd = outType.drawResult(result.getOrigWinner().getValues(), "\norig result: ", -1L);
             for (int i = 0; i < toAdd.size(); i++) {
                 area.appendText(toAdd.get(i));
             }
             area.appendText("\n=================================================\n");
-            toAdd = inType.drawResult(result.getNewVotes().values, "\nnew votes: ", -1L);
+            toAdd = inType.drawResult(result.getNewVotes().getValues(), "\nnew votes: ", -1L);
             for (int i = 0; i < toAdd.size(); i++) {
                 area.appendText(toAdd.get(i));
             }
-            toAdd = outType.drawResult(result.getNewWinner().values, "\nnew result: ", -1L);
+            toAdd = outType.drawResult(result.getNewWinner().getValues(), "\nnew result: ", -1L);
             for (int i = 0; i < toAdd.size(); i++) {
                 area.appendText(toAdd.get(i));
             }
@@ -80,15 +81,15 @@ public class MarginResult extends ResultPresentationType {
     }
 
     @Override
-    public void zoomTo(double zoomValue) {
+    public void zoomTo(final double zoomValue) {
         if (area != null) {
             area.setStyle(0, area.getLength(),
-                          TextStyle.fontSize((int) (standartSize + zoomValue)));
+                          TextStyle.fontSize((int) (STANDARD_SIZE + zoomValue)));
         }
     }
 
     @Override
-    public boolean supports(AnalysisType analysisType) {
+    public boolean supports(final AnalysisType analysisType) {
         switch (analysisType) {
         case Margin:
             return true;

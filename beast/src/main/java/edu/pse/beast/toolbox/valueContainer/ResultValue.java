@@ -5,5 +5,5 @@ public interface ResultValue {
         ARRAY, POINTER, SINGLE, STRUCT
     }
 
-    public ResultType getResultType();
+    ResultType getResultType();
 }

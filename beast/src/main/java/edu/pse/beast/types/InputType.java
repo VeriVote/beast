@@ -15,8 +15,10 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValue;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 
 public abstract class InputType extends InOutType {
-    public InputType(boolean unsigned, DataType dataType, int dimensions,
-                     String[] sizeOfDimensions) {
+    public InputType(final boolean unsigned,
+                     final DataType dataType,
+                     final int dimensions,
+                     final String[] sizeOfDimensions) {
         super(unsigned, dataType, dimensions, sizeOfDimensions);
     }
 
@@ -48,7 +50,7 @@ public abstract class InputType extends InOutType {
     public abstract boolean isVotingForOneCandidate();
 
     /**
-     * adds the headers needed for the specified checker
+     * Adds the headers needed for the specified checker.
      *
      * @param code
      *            the list to which the headers should be added to
@@ -73,7 +75,7 @@ public abstract class InputType extends InOutType {
     // } TODO remove unused code at the end of refactoring
 
     /**
-     * vets a value to determine if it is legal for the input type, or not
+     * Vets a value to determine if it is legal for the input type, or not.
      *
      * @param container
      *            the type container
@@ -96,7 +98,8 @@ public abstract class InputType extends InOutType {
     // getDimension(), toExtract);
     // }
 
-    public String[] wrongInputTypeArray(int amountCandidates, int amountVoters) {
+    public String[] wrongInputTypeArray(final int amountCandidates,
+                                        final int amountVoters) {
         String[] toReturn = new String[amountCandidates];
         Arrays.fill(toReturn, "wrong input type");
         return toReturn;
@@ -112,13 +115,13 @@ public abstract class InputType extends InOutType {
     // margin, List<String> origResult);
 
     /**
-     * returns the assignment of votingData e.g {1,2,3} for a array of shape [3]
+     * Returns the assignment of votingData e.g {1,2,3} for a array of shape [3].
      *
      * @param votingData
      * @param code
      * @return
      */
-    public final String getVotingResultCode(CBMCResultValueWrapper wrapper) {
+    public final String getVotingResultCode(final CBMCResultValueWrapper wrapper) {
         return printArray(wrapper);
     }
 
@@ -145,8 +148,8 @@ public abstract class InputType extends InOutType {
 
     /**
      * ASSERTION: newVotesName already has to be bounded to the max and min
-     * values it can have change the vote of origVotesName at a position defined
-     * by loopNames to a vote that is different that the original one
+     * values. It can have change the vote of origVotesName at a position defined
+     * by loopNames to a vote that is different than the original one.
      *
      * @param newVotesName
      * @param origVotesName
@@ -157,13 +160,16 @@ public abstract class InputType extends InOutType {
                                   List<String> loopVars,
                                   CodeArrayListBeautifier code);
 
-    public String setVoteValue(String newVotesName, String origVotesName, List<String> loopVars) {
+    public String setVoteValue(final String newVotesName,
+                               final String origVotesName,
+                               final List<String> loopVars) {
         String newVotesNameAcc = getFullVoteAccess(newVotesName, loopVars);
         String origVotesNameAcc = getFullVoteAccess(origVotesName, loopVars);
         return (newVotesNameAcc + " = " + origVotesNameAcc + ";");
     }
 
-    public String getFullVoteAccess(String voteName, List<String> loopVars) {
+    public String getFullVoteAccess(final String voteName,
+                                    final List<String> loopVars) {
         String access = this.getAccessDimensions(loopVars);
         return (voteName + "."
                 + UnifiedNameContainer.getStructValueName()
@@ -188,13 +194,17 @@ public abstract class InputType extends InOutType {
      */
     public abstract String getMaximalValue();
 
-    public List<Integer> getSizesInOrder(int amountVoters, int amountCandidates, int amountSeats) {
+    public List<Integer> getSizesInOrder(final int amountVoters,
+                                         final int amountCandidates,
+                                         final int amountSeats) {
         return recGetSizesInOrder(amountVoters, amountCandidates, amountSeats,
                                   getSizeOfDimensionsAsList());
     }
 
-    private List<Integer> recGetSizesInOrder(int amountVoters, int amountCandidates,
-                                             int amountSeats, List<String> sizesOfDimensions) {
+    private List<Integer> recGetSizesInOrder(final int amountVoters,
+                                             final int amountCandidates,
+                                             final int amountSeats,
+                                             final List<String> sizesOfDimensions) {
         List<Integer> toReturn = new ArrayList<Integer>();
         if (sizesOfDimensions.size() == 0) {
             return toReturn;

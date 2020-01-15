@@ -88,11 +88,12 @@ public class FormalExpErrorFinderTreeListener
      *
      * @param list            the list with the symbolic variables
      * @param codeArea        the editor where the code is
-     * @param elecDescription the voting rule
+     * @param elecDescr the voting rule
      */
-    public FormalExpErrorFinderTreeListener(SymbolicVariableList list, NewCodeArea codeArea,
-                                            ElectionDescription elecDescription) {
-        this.elecDescription = elecDescription;
+    public FormalExpErrorFinderTreeListener(final SymbolicVariableList list,
+                                            final NewCodeArea codeArea,
+                                            final ElectionDescription elecDescr) {
+        this.elecDescription = elecDescr;
         list.addListener(this);
         scopeHandler.enterNewScope();
         for (SymbolicVariable var : list.getSymbolicVariables()) {
@@ -111,41 +112,41 @@ public class FormalExpErrorFinderTreeListener
     }
 
     @Override
-    public void enterBooleanExpList(BooleanExpListContext ctx) {
+    public void enterBooleanExpList(final BooleanExpListContext ctx) {
         expStack = new Stack<>();
         created.clear();
     }
 
     @Override
-    public void exitBooleanExpList(BooleanExpListContext ctx) {
+    public void exitBooleanExpList(final BooleanExpListContext ctx) {
     }
 
     @Override
-    public void enterBooleanExpListElement(BooleanExpListElementContext ctx) {
+    public void enterBooleanExpListElement(final BooleanExpListElementContext ctx) {
     }
 
     @Override
-    public void exitBooleanExpListElement(BooleanExpListElementContext ctx) {
+    public void exitBooleanExpListElement(final BooleanExpListElementContext ctx) {
     }
 
     @Override
-    public void enterBooleanExp(BooleanExpContext ctx) {
+    public void enterBooleanExp(final BooleanExpContext ctx) {
     }
 
     @Override
-    public void exitBooleanExp(BooleanExpContext ctx) {
+    public void exitBooleanExp(final BooleanExpContext ctx) {
     }
 
     @Override
-    public void enterBinaryRelationExp(BinaryRelationExpContext ctx) {
+    public void enterBinaryRelationExp(final BinaryRelationExpContext ctx) {
     }
 
     @Override
-    public void exitBinaryRelationExp(BinaryRelationExpContext ctx) {
+    public void exitBinaryRelationExp(final BinaryRelationExpContext ctx) {
     }
 
     @Override
-    public void enterQuantifierExp(QuantifierExpContext ctx) {
+    public void enterQuantifierExp(final QuantifierExpContext ctx) {
         String quantifierTypeString = ctx.Quantifier().getText();
         InternalTypeContainer varType = null;
         for (InternalTypeRep typeRep
@@ -162,24 +163,24 @@ public class FormalExpErrorFinderTreeListener
     }
 
     @Override
-    public void exitQuantifierExp(QuantifierExpContext ctx) {
+    public void exitQuantifierExp(final QuantifierExpContext ctx) {
         scopeHandler.exitScope();
     }
 
     @Override
-    public void enterNotExp(NotExpContext ctx) {
+    public void enterNotExp(final NotExpContext ctx) {
     }
 
     @Override
-    public void exitNotExp(NotExpContext ctx) {
+    public void exitNotExp(final NotExpContext ctx) {
     }
 
     @Override
-    public void enterComparisonExp(ComparisonExpContext ctx) {
+    public void enterComparisonExp(final ComparisonExpContext ctx) {
     }
 
     @Override
-    public void exitComparisonExp(ComparisonExpContext ctx) {
+    public void exitComparisonExp(final ComparisonExpContext ctx) {
         final TypeExpContext rhexp = ctx.typeExp(1);
         final TypeExpContext lhexp = ctx.typeExp(0);
 
@@ -219,19 +220,19 @@ public class FormalExpErrorFinderTreeListener
     }
 
     @Override
-    public void enterTypeExp(TypeExpContext ctx) {
+    public void enterTypeExp(final TypeExpContext ctx) {
     }
 
     @Override
-    public void exitTypeExp(TypeExpContext ctx) {
+    public void exitTypeExp(final TypeExpContext ctx) {
     }
 
     @Override
-    public void enterNumberExpression(NumberExpressionContext ctx) {
+    public void enterNumberExpression(final NumberExpressionContext ctx) {
     }
 
     @Override
-    public void exitNumberExpression(NumberExpressionContext ctx) {
+    public void exitNumberExpression(final NumberExpressionContext ctx) {
         if (ctx.Mult() != null || ctx.Add() != null) {
             IntegerValuedExpression rhs = (IntegerValuedExpression) expStack.pop();
             IntegerValuedExpression lsh = (IntegerValuedExpression) expStack.pop();
@@ -245,61 +246,61 @@ public class FormalExpErrorFinderTreeListener
     }
 
     @Override
-    public void enterTypeByPosExp(TypeByPosExpContext ctx) {
+    public void enterTypeByPosExp(final TypeByPosExpContext ctx) {
     }
 
     @Override
-    public void exitTypeByPosExp(TypeByPosExpContext ctx) {
+    public void exitTypeByPosExp(final TypeByPosExpContext ctx) {
     }
 
     @Override
-    public void enterVoterByPosExp(VoterByPosExpContext ctx) {
+    public void enterVoterByPosExp(final VoterByPosExpContext ctx) {
     }
 
     @Override
-    public void exitVoterByPosExp(VoterByPosExpContext ctx) {
+    public void exitVoterByPosExp(final VoterByPosExpContext ctx) {
         expStack.push(new AtPosExp(new InternalTypeContainer(InternalTypeRep.VOTER),
                 (IntegerValuedExpression) expStack.pop()));
     }
 
     @Override
-    public void enterCandByPosExp(CandByPosExpContext ctx) {
+    public void enterCandByPosExp(final CandByPosExpContext ctx) {
     }
 
     @Override
-    public void exitCandByPosExp(CandByPosExpContext ctx) {
+    public void exitCandByPosExp(final CandByPosExpContext ctx) {
         expStack.push(new AtPosExp(new InternalTypeContainer(InternalTypeRep.CANDIDATE),
                 (IntegerValuedExpression) expStack.pop()));
     }
 
     @Override
-    public void enterSeatByPosExp(SeatByPosExpContext ctx) {
+    public void enterSeatByPosExp(final SeatByPosExpContext ctx) {
     }
 
     @Override
-    public void exitSeatByPosExp(SeatByPosExpContext ctx) {
+    public void exitSeatByPosExp(final SeatByPosExpContext ctx) {
         expStack.push(new AtPosExp(new InternalTypeContainer(InternalTypeRep.SEAT),
                 (IntegerValuedExpression) expStack.pop()));
     }
 
     @Override
-    public void enterInteger(IntegerContext ctx) {
+    public void enterInteger(final IntegerContext ctx) {
     }
 
     @Override
-    public void exitInteger(IntegerContext ctx) {
+    public void exitInteger(final IntegerContext ctx) {
         int heldInteger = Integer.valueOf(ctx.getText());
         expStack.push(new IntegerNode(heldInteger));
     }
 
     @Override
-    public void enterElectExp(ElectExpContext ctx) {
+    public void enterElectExp(final ElectExpContext ctx) {
         testIfTooManyVarsPassed(ctx.passType(),
                                 container.getOutputType().getInternalTypeContainer());
     }
 
     @Override
-    public void exitElectExp(ElectExpContext ctx) {
+    public void exitElectExp(final ElectExpContext ctx) {
         InternalTypeContainer cont = container.getOutputType().getInternalTypeContainer();
         testIfWrongTypePassed(ctx.passType(), cont);
         for (int i = 0; i < ctx.passType().size() && cont.isList(); ++i) {
@@ -313,13 +314,13 @@ public class FormalExpErrorFinderTreeListener
     }
 
     @Override
-    public void enterVoteExp(VoteExpContext ctx) {
+    public void enterVoteExp(final VoteExpContext ctx) {
         testIfTooManyVarsPassed(ctx.passType(),
                                 container.getInputType().getInternalTypeContainer());
     }
 
     @Override
-    public void exitVoteExp(VoteExpContext ctx) {
+    public void exitVoteExp(final VoteExpContext ctx) {
         InternalTypeContainer cont = container.getInputType().getInternalTypeContainer();
         testIfWrongTypePassed(ctx.passType(), cont);
         for (int i = 0; i < ctx.passType().size() && cont.isList(); ++i) {
@@ -333,15 +334,15 @@ public class FormalExpErrorFinderTreeListener
     }
 
     @Override
-    public void enterPassType(PassTypeContext ctx) {
+    public void enterPassType(final PassTypeContext ctx) {
     }
 
     @Override
-    public void exitPassType(PassTypeContext ctx) {
+    public void exitPassType(final PassTypeContext ctx) {
     }
 
-    private void testIfTooManyVarsPassed(List<PassTypeContext> ctx,
-                                         InternalTypeContainer cont) {
+    private void testIfTooManyVarsPassed(final List<PassTypeContext> ctx,
+                                         final InternalTypeContainer cont) {
         int amountPassedVariables = ctx.size();
         int listDepth = 0;
         InternalTypeContainer c = cont;
@@ -354,8 +355,8 @@ public class FormalExpErrorFinderTreeListener
         }
     }
 
-    private void testIfWrongTypePassed(List<PassTypeContext> ctx,
-                                       InternalTypeContainer cont) {
+    private void testIfWrongTypePassed(final List<PassTypeContext> ctx,
+                                       final InternalTypeContainer cont) {
         int amtPassed = ctx.size();
         Stack<TypeExpression> passedTypes = new Stack<>();
         for (int i = 0; i < amtPassed; ++i) {
@@ -379,24 +380,26 @@ public class FormalExpErrorFinderTreeListener
     }
 
     @Override
-    public void enterConstantExp(ConstantExpContext ctx) {
+    public void enterConstantExp(final ConstantExpContext ctx) {
     }
 
     @Override
-    public void exitConstantExp(ConstantExpContext ctx) {
+    public void exitConstantExp(final ConstantExpContext ctx) {
         expStack.add(new ConstantExp(ctx.getText()));
     }
 
     @Override
-    public void enterVoteSumExp(VoteSumExpContext ctx) {
+    public void enterVoteSumExp(final VoteSumExpContext ctx) {
     }
 
-    private void exitVoteSumExp(ParserRuleContext ctx, boolean unique) {
+    private void exitVoteSumExp(final ParserRuleContext ctx,
+                                final boolean unique) {
         final Class<VoteSumUniqueExpContext> cu = VoteSumUniqueExpContext.class;
         final Class<VoteSumExpContext> c = VoteSumExpContext.class;
 
         TypeExpression passedVar = expStack.pop();
-        if (passedVar.getInternalTypeContainer().getInternalType() != InternalTypeRep.CANDIDATE) {
+        if (passedVar.getInternalTypeContainer().getInternalType()
+                != InternalTypeRep.CANDIDATE) {
             final CodeError ce = unique
                     ? BooleanExpErrorFactory.createWrongVarToVotesumError(cu.cast(ctx),
                             passedVar.getInternalTypeContainer())
@@ -404,8 +407,10 @@ public class FormalExpErrorFinderTreeListener
                             passedVar.getInternalTypeContainer());
             created.add(ce);
         }
-        final TerminalNode tn = unique ? cu.cast(ctx).VotesumUnique() : c.cast(ctx).Votesum();
-        final String expStr = unique ? "VOTE_SUM_FOR_UNIQUE_CANDIDATE" : "VOTE_SUM_FOR_CANDIDATE";
+        final TerminalNode tn = unique
+                ? cu.cast(ctx).VotesumUnique() : c.cast(ctx).Votesum();
+        final String expStr = unique
+                ? "VOTE_SUM_FOR_UNIQUE_CANDIDATE" : "VOTE_SUM_FOR_CANDIDATE";
         String numberString = tn.getText().substring(expStr.length());
 
         final int number = Integer.valueOf(numberString);
@@ -416,49 +421,49 @@ public class FormalExpErrorFinderTreeListener
     }
 
     @Override
-    public void exitVoteSumExp(VoteSumExpContext ctx) {
+    public void exitVoteSumExp(final VoteSumExpContext ctx) {
         exitVoteSumExp(ctx, false);
     }
 
     @Override
-    public void enterVoteSumUniqueExp(VoteSumUniqueExpContext ctx) {
+    public void enterVoteSumUniqueExp(final VoteSumUniqueExpContext ctx) {
     }
 
     @Override
-    public void exitVoteSumUniqueExp(VoteSumUniqueExpContext ctx) {
+    public void exitVoteSumUniqueExp(final VoteSumUniqueExpContext ctx) {
         exitVoteSumExp(ctx, true);
     }
 
     @Override
-    public void enterPassSymbVar(PassSymbVarContext ctx) {
+    public void enterPassSymbVar(final PassSymbVarContext ctx) {
     }
 
     @Override
-    public void exitPassSymbVar(PassSymbVarContext ctx) {
+    public void exitPassSymbVar(final PassSymbVarContext ctx) {
     }
 
     @Override
-    public void enterPassPosition(PassPositionContext ctx) {
+    public void enterPassPosition(final PassPositionContext ctx) {
     }
 
     @Override
-    public void exitPassPosition(PassPositionContext ctx) {
+    public void exitPassPosition(final PassPositionContext ctx) {
     }
 
     @Override
-    public void enterPassByPos(PassByPosContext ctx) {
+    public void enterPassByPos(final PassByPosContext ctx) {
     }
 
     @Override
-    public void exitPassByPos(PassByPosContext ctx) {
+    public void exitPassByPos(final PassByPosContext ctx) {
     }
 
     @Override
-    public void enterSymbolicVarExp(SymbolicVarExpContext ctx) {
+    public void enterSymbolicVarExp(final SymbolicVarExpContext ctx) {
     }
 
     @Override
-    public void exitSymbolicVarExp(SymbolicVarExpContext ctx) {
+    public void exitSymbolicVarExp(final SymbolicVarExpContext ctx) {
         String name = ctx.getText();
         InternalTypeContainer type = scopeHandler.getTypeForVariable(name);
         if (type == null) {
@@ -469,152 +474,152 @@ public class FormalExpErrorFinderTreeListener
     }
 
     @Override
-    public void visitTerminal(TerminalNode tn) {
+    public void visitTerminal(final TerminalNode tn) {
     }
 
     @Override
-    public void visitErrorNode(ErrorNode en) {
+    public void visitErrorNode(final ErrorNode en) {
     }
 
     @Override
-    public void enterEveryRule(ParserRuleContext prc) {
+    public void enterEveryRule(final ParserRuleContext prc) {
     }
 
     @Override
-    public void exitEveryRule(ParserRuleContext prc) {
+    public void exitEveryRule(final ParserRuleContext prc) {
     }
 
     @Override
-    public void addedVar(SymbolicVariable var) {
+    public void addedVar(final SymbolicVariable var) {
         scopeHandler.addVariable(var.getId(), var.getInternalTypeContainer());
     }
 
     @Override
-    public void removedVar(SymbolicVariable var) {
+    public void removedVar(final SymbolicVariable var) {
         scopeHandler.removeFromTopScope(var.getId());
     }
 
     // Here are the new commands:
 
     @Override
-    public void enterVotingListChangeExp(VotingListChangeExpContext ctx) {
+    public void enterVotingListChangeExp(final VotingListChangeExpContext ctx) {
     }
 
     @Override
-    public void exitVotingListChangeExp(VotingListChangeExpContext ctx) {
+    public void exitVotingListChangeExp(final VotingListChangeExpContext ctx) {
     }
 
     @Override
-    public void enterVotingListChangeContent(VotingListChangeContentContext ctx) {
+    public void enterVotingListChangeContent(final VotingListChangeContentContext ctx) {
     }
 
     @Override
-    public void exitVotingListChangeContent(VotingListChangeContentContext ctx) {
+    public void exitVotingListChangeContent(final VotingListChangeContentContext ctx) {
     }
 
     @Override
-    public void enterVotingTupelChangeExp(VotingTupelChangeExpContext ctx) {
+    public void enterVotingTupelChangeExp(final VotingTupelChangeExpContext ctx) {
     }
 
     @Override
-    public void exitVotingTupelChangeExp(VotingTupelChangeExpContext ctx) {
+    public void exitVotingTupelChangeExp(final VotingTupelChangeExpContext ctx) {
     }
 
     @Override
-    public void enterCandidateListChangeExp(CandidateListChangeExpContext ctx) {
+    public void enterCandidateListChangeExp(final CandidateListChangeExpContext ctx) {
     }
 
     @Override
-    public void exitCandidateListChangeExp(CandidateListChangeExpContext ctx) {
+    public void exitCandidateListChangeExp(final CandidateListChangeExpContext ctx) {
     }
 
     @Override
-    public void enterVoteEquivalents(VoteEquivalentsContext ctx) {
+    public void enterVoteEquivalents(final VoteEquivalentsContext ctx) {
     }
 
     @Override
-    public void exitVoteEquivalents(VoteEquivalentsContext ctx) {
+    public void exitVoteEquivalents(final VoteEquivalentsContext ctx) {
     }
 
     @Override
-    public void enterConcatenationExp(ConcatenationExpContext ctx) {
+    public void enterConcatenationExp(final ConcatenationExpContext ctx) {
     }
 
     @Override
-    public void exitConcatenationExp(ConcatenationExpContext ctx) {
+    public void exitConcatenationExp(final ConcatenationExpContext ctx) {
     }
 
     @Override
-    public void enterSplitExp(SplitExpContext ctx) {
+    public void enterSplitExp(final SplitExpContext ctx) {
     }
 
     @Override
-    public void exitSplitExp(SplitExpContext ctx) {
+    public void exitSplitExp(final SplitExpContext ctx) {
     }
 
     @Override
-    public void enterPermutationExp(PermutationExpContext ctx) {
+    public void enterPermutationExp(final PermutationExpContext ctx) {
     }
 
     @Override
-    public void exitPermutationExp(PermutationExpContext ctx) {
+    public void exitPermutationExp(final PermutationExpContext ctx) {
     }
 
     @Override
-    public void enterIntersectExp(IntersectExpContext ctx) {
+    public void enterIntersectExp(final IntersectExpContext ctx) {
     }
 
     @Override
-    public void exitIntersectExp(IntersectExpContext ctx) {
+    public void exitIntersectExp(final IntersectExpContext ctx) {
     }
 
     @Override
-    public void enterIntersectContent(IntersectContentContext ctx) {
+    public void enterIntersectContent(final IntersectContentContext ctx) {
     }
 
     @Override
-    public void exitIntersectContent(IntersectContentContext ctx) {
+    public void exitIntersectContent(final IntersectContentContext ctx) {
     }
 
     @Override
-    public void enterTuple(TupleContext ctx) {
+    public void enterTuple(final TupleContext ctx) {
     }
 
     @Override
-    public void exitTuple(TupleContext ctx) {
+    public void exitTuple(final TupleContext ctx) {
     }
 
     @Override
-    public void enterTupleContent(TupleContentContext ctx) {
+    public void enterTupleContent(final TupleContentContext ctx) {
     }
 
     @Override
-    public void exitTupleContent(TupleContentContext ctx) {
+    public void exitTupleContent(final TupleContentContext ctx) {
     }
 
     // And here are the new/recent new ones.
 
     @Override
-    public void enterNotEmptyExp(NotEmptyExpContext ctx) {
+    public void enterNotEmptyExp(final NotEmptyExpContext ctx) {
     }
 
     @Override
-    public void exitNotEmptyExp(NotEmptyExpContext ctx) {
+    public void exitNotEmptyExp(final NotEmptyExpContext ctx) {
     }
 
     @Override
-    public void enterNotEmptyContent(NotEmptyContentContext ctx) {
+    public void enterNotEmptyContent(final NotEmptyContentContext ctx) {
     }
 
     @Override
-    public void exitNotEmptyContent(NotEmptyContentContext ctx) {
+    public void exitNotEmptyContent(final NotEmptyContentContext ctx) {
     }
 
     @Override
-    public void enterAddedContentExp(AddedContentExpContext ctx) {
+    public void enterAddedContentExp(final AddedContentExpContext ctx) {
     }
 
     @Override
-    public void exitAddedContentExp(AddedContentExpContext ctx) {
+    public void exitAddedContentExp(final AddedContentExpContext ctx) {
     }
 }

@@ -11,24 +11,25 @@ import javax.swing.event.ChangeListener;
  * @author Jonas Wohnig
  */
 public class SingleValueSpinnerHandler implements ChangeListener {
+    private static final int MAX_VALUE = 10000;
     private final JSpinner spinner;
     private Integer valBefore;
     private boolean reacts;
     private boolean hasChanged;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param spinner corresponding JSpinner
+     * @param jSpinner corresponding JSpinner
      */
-    public SingleValueSpinnerHandler(JSpinner spinner) {
-        this.spinner = spinner;
+    public SingleValueSpinnerHandler(final JSpinner jSpinner) {
+        this.spinner = jSpinner;
         valBefore = getValue();
         setHasChanged(false);
     }
 
     /**
-     * Getter for the value of the JSpinner
+     * Getter for the value of the JSpinner.
      *
      * @return Integer of the value
      */
@@ -42,8 +43,8 @@ public class SingleValueSpinnerHandler implements ChangeListener {
      *
      * @param val new value
      */
-    public void setValue(Integer val) {
-        if (val <= 10000 && val >= 0) {
+    public void setValue(final Integer val) {
+        if (val <= MAX_VALUE && val >= 0) {
             spinner.setValue(val);
             setHasChanged(true);
         } else {
@@ -53,7 +54,7 @@ public class SingleValueSpinnerHandler implements ChangeListener {
     }
 
     @Override
-    public void stateChanged(ChangeEvent e) {
+    public void stateChanged(final ChangeEvent e) {
         if (reacts) {
             setValue(getValue());
         } else {
@@ -65,10 +66,10 @@ public class SingleValueSpinnerHandler implements ChangeListener {
      * Toggles whether the value stored reacts to user input (to not interrupt
      * checks).
      *
-     * @param reacts whether it reacts
+     * @param reactsToUser whether it reacts
      */
-    protected void setReacts(boolean reacts) {
-        this.reacts = reacts;
+    protected void setReacts(final boolean reactsToUser) {
+        this.reacts = reactsToUser;
     }
 
     /**
@@ -84,9 +85,9 @@ public class SingleValueSpinnerHandler implements ChangeListener {
     /**
      * Sets whether the value of the JSpinners was changed since last time saving.
      *
-     * @param hasChanged whether it changed
+     * @param changed whether it changed
      */
-    protected void setHasChanged(boolean hasChanged) {
-        this.hasChanged = hasChanged;
+    protected void setHasChanged(final boolean changed) {
+        this.hasChanged = changed;
     }
 }

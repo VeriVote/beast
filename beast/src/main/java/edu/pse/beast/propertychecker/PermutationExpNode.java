@@ -5,26 +5,38 @@ import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressio
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.PermutationExpContext;
 
 public class PermutationExpNode extends BooleanExpressionNode {
-    public final PermutationExpContext permutationExpContext;
-    public final String voteOutput;
-    public final String voteOutoutLength;
+    private final PermutationExpContext permutationExpContext;
+    private final String voteOutput;
+    private final String voteOutputLength;
 
-    public PermutationExpNode(PermutationExpContext permutationExpContext,
-                              String voteOutput,
-                              String voteOutputLength) {
-        this.permutationExpContext = permutationExpContext;
-        this.voteOutput = voteOutput;
-        this.voteOutoutLength = voteOutputLength;
+    public PermutationExpNode(final PermutationExpContext permExpContext,
+                              final String voteOutputString,
+                              final String voteOutputLen) {
+        this.permutationExpContext = permExpContext;
+        this.voteOutput = voteOutputString;
+        this.voteOutputLength = voteOutputLen;
     }
 
     @Override
-    public void getVisited(BooleanExpNodeVisitor visitor) {
+    public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitPermutationExpNode(this);
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         System.out.println("might add treestring");
         return "";
+    }
+
+    public PermutationExpContext getPermutationExpContext() {
+        return permutationExpContext;
+    }
+
+    public String getVoteOutput() {
+        return voteOutput;
+    }
+
+    public String getVoteOutputLength() {
+        return voteOutputLength;
     }
 }

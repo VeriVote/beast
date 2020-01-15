@@ -11,12 +11,12 @@ public final class StringSaverLoader {
     private StringSaverLoader() { }
 
     /**
-     * Creates a String from a given, by createSaveString() generated, saveString
+     * Creates a String from a given, by createSaveString() generated, saveString.
      *
      * @param saveString the saveString
      * @return the String
      */
-    public static String createFromSaveString(String saveString) {
+    public static String createFromSaveString(final String saveString) {
         return saveString.replace(">>", ">");
     }
 
@@ -27,7 +27,7 @@ public final class StringSaverLoader {
      * @param string the String
      * @return the saveString
      */
-    public static String createSaveString(String string) {
+    public static String createSaveString(final String string) {
         return string.replace(">", ">>");
     }
 }

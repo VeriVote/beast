@@ -12,12 +12,13 @@ public class BooleanExpScope {
     private final ArrayList<String> names = new ArrayList<>();
     private final ArrayList<InternalTypeContainer> types = new ArrayList<>();
 
-    public void addTypeForId(String id, InternalTypeContainer type) {
+    public void addTypeForId(final String id,
+                             final InternalTypeContainer type) {
         names.add(id);
         types.add(type);
     }
 
-    public InternalTypeContainer getTypeForId(String id) {
+    public InternalTypeContainer getTypeForId(final String id) {
         for (int i = 0; i < names.size(); ++i) {
             if (names.get(i).equals(id)) {
                 return types.get(i);
@@ -26,7 +27,7 @@ public class BooleanExpScope {
         return null;
     }
 
-    public void remove(String id) {
+    public void remove(final String id) {
         for (int i = 0; i < names.size(); ++i) {
             if (names.get(i).equals(id)) {
                 names.remove(i);

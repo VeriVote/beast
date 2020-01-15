@@ -26,7 +26,7 @@ public class ErrorFinderList {
         return created;
     }
 
-    public void add(ErrorFinder errorFinder) {
+    public void add(final ErrorFinder errorFinder) {
         errorFinderList.add(errorFinder);
     }
 }

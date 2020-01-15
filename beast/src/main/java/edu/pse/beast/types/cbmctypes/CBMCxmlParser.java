@@ -24,7 +24,8 @@ public final class CBMCxmlParser {
     private CBMCxmlParser() { }
 
     public static List<Tuple<String, List<ResultValueWrapper>>> extractVariables(
-            Document document, List<String> variablesToFind) {
+            final Document document,
+            final List<String> variablesToFind) {
         List<Tuple<String, List<ResultValueWrapper>>> toReturn =
                 new ArrayList<Tuple<String, List<ResultValueWrapper>>>();
 
@@ -72,11 +73,11 @@ public final class CBMCxmlParser {
                             continue;
                         }
                         int mainIndex = getMainIndex(name);
-                        expandSparseList(toReturn.get(index).second, mainIndex);
+                        expandSparseList(toReturn.get(index).second(), mainIndex);
                         ResultValueWrapper toAdd =
                                 new CBMCResultValueWrapper(mainIndex, name,
                                                            valueNodeList.item(0).getFirstChild());
-                        toReturn.get(index).second.set(mainIndex, toAdd);
+                        toReturn.get(index).second().set(mainIndex, toAdd);
                     }
                 }
             }
@@ -85,12 +86,12 @@ public final class CBMCxmlParser {
         for (Iterator<Tuple<String, List<ResultValueWrapper>>> iterator = toReturn
                 .iterator(); iterator.hasNext();) {
             Tuple<String, List<ResultValueWrapper>> toClean = iterator.next();
-            cleanSparseList(toClean.second);
+            cleanSparseList(toClean.second());
         }
         return toReturn;
     }
 
-    private static int getMainIndex(String variableWithIndex) {
+    private static int getMainIndex(final String variableWithIndex) {
         try {
             String number = variableWithIndex.replaceAll("[^\\d.]", "");
             return Integer.parseInt(number);
@@ -99,7 +100,7 @@ public final class CBMCxmlParser {
         }
     }
 
-    private static void expandSparseList(List<?> list, int position) {
+    private static void expandSparseList(final List<?> list, final int position) {
         for (int i = list.size(); i < (position + 1); i++) {
             list.add(null);
         }
@@ -111,7 +112,7 @@ public final class CBMCxmlParser {
      *
      * @param toClean
      */
-    private static void cleanSparseList(List<?> toClean) {
+    private static void cleanSparseList(final List<?> toClean) {
         for (Iterator<?> iterator = toClean.iterator(); iterator.hasNext();) {
             Object object = iterator.next();
             if (object == null) {

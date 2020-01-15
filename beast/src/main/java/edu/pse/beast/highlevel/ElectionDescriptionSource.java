@@ -10,7 +10,7 @@ import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
  */
 public interface ElectionDescriptionSource {
     /**
-     * Getter for the ElectionDescription the user created
+     * Getter for the ElectionDescription the user created.
      *
      * @return description of an election as an ElectionDescription object
      */

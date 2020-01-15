@@ -13,9 +13,10 @@ public class OpenCloseChar {
     private final char open;
     private final char close;
 
-    public OpenCloseChar(char open, char close) {
-        this.open = open;
-        this.close = close;
+    public OpenCloseChar(final char openChar,
+                         final char closeChar) {
+        this.open = openChar;
+        this.close = closeChar;
     }
 
     public char getOpen() {
@@ -36,7 +37,8 @@ public class OpenCloseChar {
      * @param pos  the position at which the chars should be inserted
      * @throws BadLocationException if the position is not valid
      */
-    public void insertIntoDocument(JTextPane pane, int pos) throws BadLocationException {
+    public void insertIntoDocument(final JTextPane pane,
+                                   final int pos) throws BadLocationException {
         String stringToInsert = Character.toString(open) + Character.toString(close);
         pane.getStyledDocument().insertString(pos, stringToInsert, null);
         pane.setCaretPosition(pos + 1);

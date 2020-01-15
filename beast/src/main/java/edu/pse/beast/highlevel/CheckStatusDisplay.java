@@ -9,7 +9,7 @@ package edu.pse.beast.highlevel;
 public interface CheckStatusDisplay {
 
     /**
-     * Method that displays the given resources/String
+     * Method that displays the given resources/String.
      *
      * @param stringIdForResources the Id of the main message that can be retrieved
      *                             from a StringResourceLoader
@@ -22,7 +22,7 @@ public interface CheckStatusDisplay {
     void displayText(String stringIdForResources, boolean showLoader, String additionalText);
 
     /**
-     * signals that a repaint should be done
+     * Signals that a repaint should be done.
      */
     void signalThatAnalysisEnded();
 }

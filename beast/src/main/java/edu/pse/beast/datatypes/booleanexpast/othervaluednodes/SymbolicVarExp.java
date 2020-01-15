@@ -15,11 +15,12 @@ public class SymbolicVarExp extends TypeExpression {
     /**
      *
      * @param internalTypeContainer the type of this node
-     * @param symbVar               the symbolic variable that this node describes
+     * @param symbolicVar           the symbolic variable that this node describes
      */
-    public SymbolicVarExp(InternalTypeContainer internalTypeContainer, SymbolicVariable symbVar) {
+    public SymbolicVarExp(final InternalTypeContainer internalTypeContainer,
+                          final SymbolicVariable symbolicVar) {
         super(internalTypeContainer);
-        this.symbVar = symbVar;
+        this.symbVar = symbolicVar;
     }
 
     /**
@@ -31,12 +32,12 @@ public class SymbolicVarExp extends TypeExpression {
     }
 
     @Override
-    public void getVisited(BooleanExpNodeVisitor visitor) {
+    public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitSymbVarExp(this);
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         return "SymbVar: {id " + symbVar.getId() + ", type: "
                 + symbVar.getInternalTypeContainer().getInternalType().toString() + "}\n";
     }
@@ -52,7 +53,7 @@ public class SymbolicVarExp extends TypeExpression {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }

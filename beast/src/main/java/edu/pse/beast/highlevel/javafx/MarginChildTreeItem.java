@@ -4,14 +4,14 @@ import javafx.scene.control.TreeItem;
 
 public class MarginChildTreeItem extends ChildTreeItem {
 
-    MarginChildTreeItem(String name, ParentTreeItem parent,
-                        TreeItem<CustomTreeItem> treeItemReference) {
+    MarginChildTreeItem(final String name, final ParentTreeItem parent,
+                        final TreeItem<CustomTreeItem> treeItemReference) {
         super(name, parent, treeItemReference);
     }
 
-    public MarginChildTreeItem(ChildTreeItemValues values,
-                               ParentTreeItem parent,
-                               TreeItem<CustomTreeItem> treeItemReference) {
+    public MarginChildTreeItem(final ChildTreeItemValues values,
+                               final ParentTreeItem parent,
+                               final TreeItem<CustomTreeItem> treeItemReference) {
         super(values, parent, treeItemReference);
     }
 

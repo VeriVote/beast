@@ -18,7 +18,7 @@ import edu.pse.beast.types.cbmctypes.CBMCInputType;
 public class SingleChoice extends CBMCInputType {
     private static final int DIMENSIONS = 1;
 
-    private final static String[] SIZE_OF_DIMENSIONS = {
+    private static final String[] SIZE_OF_DIMENSIONS = {
             UnifiedNameContainer.getVoter() };
 
     public SingleChoice() {
@@ -56,8 +56,11 @@ public class SingleChoice extends CBMCInputType {
     }
 
     @Override
-    public String vetValue(ElectionTypeContainer container, List<NEWRowOfValues> row,
-                           int rowNumber, int positionInRow, String newValue) {
+    public String vetValue(final ElectionTypeContainer container,
+                           final List<NEWRowOfValues> row,
+                           final int rowNumber,
+                           final int positionInRow,
+                           final String newValue) {
         final int number;
         try {
             number = Integer.parseInt(newValue);
@@ -74,17 +77,22 @@ public class SingleChoice extends CBMCInputType {
     }
 
     @Override
-    public void restrictVotes(String voteName, CodeArrayListBeautifier code) {
-        // dont have to restrict
+    public void restrictVotes(final String voteName,
+                              final CodeArrayListBeautifier code) {
+        // do not need to restrict
     }
 
     @Override
-    public String[] getVotePoints(String[][] votes, int amountCandidates, int amountVoters) {
+    public String[] getVotePoints(final String[][] votes,
+                                  final int amountCandidates,
+                                  final int amountVoters) {
         return super.wrongInputTypeArray(amountCandidates, amountVoters);
     }
 
     @Override
-    public String[] getVotePoints(String[] votes, int amountCandidates, int amountVoters) {
+    public String[] getVotePoints(final String[] votes,
+                                  final int amountCandidates,
+                                  final int amountVoters) {
         Long[] result = new Long[amountCandidates];
         Arrays.fill(result, 0L);
         for (int i = 0; i < amountVoters; i++) {
@@ -132,7 +140,8 @@ public class SingleChoice extends CBMCInputType {
     // }
 
     @Override
-    public void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique) {
+    public void addCodeForVoteSum(final CodeArrayListBeautifier code,
+                                  final boolean unique) {
         code.add("if(arr[i] == candidate) sum++;");
     }
 
@@ -144,7 +153,7 @@ public class SingleChoice extends CBMCInputType {
     }
 
     @Override
-    public int vetAmountCandidates(int amountCandidates) {
+    public int vetAmountCandidates(final int amountCandidates) {
         if (amountCandidates < 1) {
             return 1;
         } else {
@@ -153,7 +162,7 @@ public class SingleChoice extends CBMCInputType {
     }
 
     @Override
-    public int vetAmountVoters(int amountVoters) {
+    public int vetAmountVoters(final int amountVoters) {
         if (amountVoters < 1) {
             return 1;
         } else {
@@ -162,7 +171,7 @@ public class SingleChoice extends CBMCInputType {
     }
 
     @Override
-    public int vetAmountSeats(int amountSeats) {
+    public int vetAmountSeats(final int amountSeats) {
         if (amountSeats < 1) {
             return 1;
         } else {
@@ -171,7 +180,7 @@ public class SingleChoice extends CBMCInputType {
     }
 
     @Override
-    public int getNumVotingPoints(ResultValueWrapper result) {
+    public int getNumVotingPoints(final ResultValueWrapper result) {
         return GUIController.getController().getElectionSimulation().getNumVoters();
     }
 
@@ -181,17 +190,17 @@ public class SingleChoice extends CBMCInputType {
     }
 
     @Override
-    public CBMCResultValue convertRowToResultValue(NEWRowOfValues row) {
+    public CBMCResultValue convertRowToResultValue(final NEWRowOfValues row) {
         List<String> values = row.getValues();
         String value = values.get(0);
         CBMCResultValueSingle toReturn = new CBMCResultValueSingle();
-        toReturn.setValue("int", value, 32);
+        toReturn.setValue("int", value, INT_LENGTH);
         return toReturn;
     }
 
     @Override
-    public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code,
-                                            String valueName,
-                                            List<String> loopVariables) {
+    public void addExtraCodeAtEndOfCodeInit(final CodeArrayListBeautifier code,
+                                            final String valueName,
+                                            final List<String> loopVariables) {
     }
 }

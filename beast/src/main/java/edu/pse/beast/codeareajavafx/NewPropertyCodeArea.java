@@ -88,9 +88,9 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
         NewPropertyCodeArea reference = this;
         this.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void changed(ObservableValue<? extends Boolean> observable,
-                                Boolean oldValue,
-                                Boolean newValue) {
+            public void changed(final ObservableValue<? extends Boolean> observable,
+                                final Boolean oldValue,
+                                final Boolean newValue) {
                 if (newValue != null && newValue) {
                     parent.setFocused(reference);
                 }
@@ -112,7 +112,7 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
         this.replaceText(0, 0, ""); // reset the text
     }
 
-    private static StyleSpans<Collection<String>> computeHighlighting(String text) {
+    private static StyleSpans<Collection<String>> computeHighlighting(final String text) {
         Matcher matcher = PATTERN.matcher(text);
         int lastKwEnd = 0;
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
@@ -143,18 +143,18 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
     }
 
     /**
-     * sets the description for this property codearea (either pre or post prop
-     * description)
+     * Sets the description for this property codearea (either pre or post prop
+     * description).
      *
-     * @param description the description
+     * @param descr the description
      */
-    public void setDescription(FormalPropertiesDescription description) {
-        saveDescription(description);
-        this.description = description;
-        this.replaceText(0, this.getLength(), description.getCode());
+    public void setDescription(final FormalPropertiesDescription descr) {
+        saveDescription(descr);
+        this.description = descr;
+        this.replaceText(0, this.getLength(), descr.getCode());
     }
 
-    public void saveDescription(FormalPropertiesDescription newDescription) {
+    public void saveDescription(final FormalPropertiesDescription newDescription) {
         if (this.description != null) {
             this.description.setCode(this.textProperty().getValue());
         }
@@ -162,11 +162,12 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
 
     public void autoComplete() {
         Tuple3<List<String>, Integer, Integer> completion = getCompletions(recommendations);
-        processAutocompletion(completion.first, completion.second, completion.third);
+        processAutocompletion(completion.first(), completion.second(), completion.third());
     }
 
     @Override
-    public void insertAutoCompletion(int start, int end, String toInsert) {
+    public void insertAutoCompletion(final int start, final int end,
+                                     final String toInsert) {
         replaceText(start, end, toInsert);
     }
 
@@ -216,7 +217,7 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
         this.replaceText(selectionRange, "");
     }
 
-    public void setParent(BooleanExpEditorNEW parent) {
-        this.parent = parent;
+    public void setParent(final BooleanExpEditorNEW parentEditor) {
+        this.parent = parentEditor;
     }
 }

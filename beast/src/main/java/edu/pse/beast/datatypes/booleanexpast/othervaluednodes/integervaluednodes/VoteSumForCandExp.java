@@ -14,17 +14,17 @@ public class VoteSumForCandExp extends IntegerValuedExpression {
     private final boolean unique;
 
     /**
-     * @param voteArrNum the number of the vote array
-     * @param accessingVar the accessing variable
-     * @param unique whether the variable is unique
+     * @param voteArrayNumber the number of the vote array
+     * @param accessingVarExpr the accessing variable
+     * @param uniqueAttr whether the variable is unique
      *
      */
-    public VoteSumForCandExp(int voteArrNum,
-                             TypeExpression accessingVar,
-                             boolean unique) {
-        this.accessingVar = accessingVar;
-        this.voteArrNum = voteArrNum;
-        this.unique = unique;
+    public VoteSumForCandExp(final int voteArrayNumber,
+                             final TypeExpression accessingVarExpr,
+                             final boolean uniqueAttr) {
+        this.accessingVar = accessingVarExpr;
+        this.voteArrNum = voteArrayNumber;
+        this.unique = uniqueAttr;
     }
 
     /**
@@ -36,12 +36,12 @@ public class VoteSumForCandExp extends IntegerValuedExpression {
     }
 
     @Override
-    public void getVisited(BooleanExpNodeVisitor visitor) {
+    public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitVoteSumExp(this, unique);
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         return "Votesum" + (unique ? "Unique" : "") + " " + voteArrNum + "\n"
                 + "\t\t\t\t\t\t\t\t\t\t".substring(0, depth + 1) + "var "
                 + accessingVar.getTreeString(depth + 1);
@@ -64,7 +64,7 @@ public class VoteSumForCandExp extends IntegerValuedExpression {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -89,9 +89,9 @@ public class VoteSumForCandExp extends IntegerValuedExpression {
 
     @Override
     public int hashCode() {
-        int result = 31 + (accessingVar != null ? accessingVar.hashCode() : 0);
-        result = 31 * result + (unique ? 1231 : 1237);
-        result = 31 * result + voteArrNum;
+        int result = PRIME_ONE + (accessingVar != null ? accessingVar.hashCode() : 0);
+        result = PRIME_ONE * result + (unique ? PRIME_TWO : PRIME_THREE);
+        result = PRIME_ONE * result + voteArrNum;
         return result;
     }
 }

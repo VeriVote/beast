@@ -22,7 +22,7 @@ public class SaverLoader {
     public static final String OPT_FILE_ENDING        = ".opt";
     public static final String PROP_DESCR_FILE_ENDING = ".prop";
 
-    public final MinimalSaverInterface owner;
+    private final MinimalSaverInterface owner;
 
     private boolean hasChanges = false; //small hack, update values later on with listeners
     private boolean hasSaveFile = false;
@@ -31,16 +31,16 @@ public class SaverLoader {
     private final String fileEnding;
     private final String fileExtensionDescription;
 
-    public SaverLoader(String fileEnding, String fileExtensionDescription,
-                       MinimalSaverInterface owner) {
+    public SaverLoader(final String fileEnd, final String fileExtensionDescr,
+                       final MinimalSaverInterface ownerInterface) {
         this.initialDir = SuperFolderFinder.getSuperFolder() + "/projectFiles/";
         new File(initialDir).mkdirs(); // make sure, that the initial folder exists
-        this.fileEnding = fileEnding;
-        this.fileExtensionDescription = fileExtensionDescription;
-        this.owner = owner;
+        this.fileEnding = fileEnd;
+        this.fileExtensionDescription = fileExtensionDescr;
+        this.owner = ownerInterface;
     }
 
-    public void save(String fileName, String text) {
+    public void save(final String fileName, final String text) {
         if (hasSaveFile) {
             if (saveFile != null) {
                 saveToDisk(saveFile, text);
@@ -50,7 +50,7 @@ public class SaverLoader {
         }
     }
 
-    public void save(File file, String text) {
+    public void save(final File file, final String text) {
         if (hasSaveFile) {
             if (saveFile != null) {
                 saveToDisk(saveFile, text);
@@ -67,7 +67,7 @@ public class SaverLoader {
      * @param toSaveIn given file
      * @param text given text
      */
-    public void saveToDisk(File toSaveIn, String text) {
+    public void saveToDisk(final File toSaveIn, final String text) {
         //hasChanges = false; //TODO enable again when it is updated with listeners
         PrintWriter out = null;
         try {
@@ -84,20 +84,20 @@ public class SaverLoader {
         }
     }
 
-    public void saveAs(String fileName, String text) {
+    public void saveAs(final String fileName, final String text) {
         File selectedFile = showFileSaveDialog(fileName);
         if (selectedFile != null) {
             saveToDisk(selectedFile, text);
         }
     }
 
-    public void saveAs(File file, String text) {
+    public void saveAs(final File file, final String text) {
         if (file != null) {
             saveToDisk(file, text);
         }
     }
 
-    public File showFileSaveDialog(String fileName) {
+    public File showFileSaveDialog(final String fileName) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters()
                 .add(new FileChooser.ExtensionFilter(fileExtensionDescription, "*" + fileEnding));
@@ -108,7 +108,7 @@ public class SaverLoader {
         return selectedFile;
     }
 
-    public File showFileLoadDialog(String fileName) {
+    public File showFileLoadDialog(final String fileName) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters()
                 .add(new FileChooser.ExtensionFilter(fileExtensionDescription, "*" + fileEnding));
@@ -127,7 +127,7 @@ public class SaverLoader {
         return "";
     }
 
-    public String load(File toLoadFrom) {
+    public String load(final File toLoadFrom) {
         checkToSaveChanges();
         try {
             return readFile(toLoadFrom, StandardCharsets.UTF_8);
@@ -137,7 +137,8 @@ public class SaverLoader {
         }
     }
 
-    private static String readFile(File file, Charset encoding) throws IOException {
+    private static String readFile(final File file,
+                                   final Charset encoding) throws IOException {
         byte[] encoded = Files.readAllBytes(Paths.get(file.getPath()));
         return new String(encoded, encoding);
     }
@@ -161,9 +162,9 @@ public class SaverLoader {
         return saveFile;
     }
 
-    public void setSaveFile(File saveFile) {
-        if (saveFile != null && saveFile.exists()) {
-            this.saveFile = saveFile;
+    public void setSaveFile(final File file) {
+        if (file != null && file.exists()) {
+            this.saveFile = file;
             this.hasSaveFile = true;
         }
     }

@@ -31,32 +31,34 @@ public abstract class ToolbarHandler {
     private final ImageResourceProvider imageRes;
     private final JButton[] buttons;
 
-    public ToolbarHandler(ImageResourceProvider imRes, StringResourceLoader stringRes,
-            ActionIdAndListener[] actionIdsAndListener, JToolBar toolbar) {
-        Arrays.sort(actionIdsAndListener, new ActionIdListenerSorter());
-        this.stringRes = stringRes;
-        this.actionIdsAndListener = actionIdsAndListener;
+    public ToolbarHandler(final ImageResourceProvider imRes,
+                          final StringResourceLoader stringResource,
+                          final ActionIdAndListener[] actionIdsAndListeners,
+                          final JToolBar jToolbar) {
+        Arrays.sort(actionIdsAndListeners, new ActionIdListenerSorter());
+        this.stringRes = stringResource;
+        this.actionIdsAndListener = actionIdsAndListeners;
         this.imageRes = imRes;
-        this.buttons = new JButton[actionIdsAndListener.length];
-        this.toolbar = toolbar;
+        this.buttons = new JButton[actionIdsAndListeners.length];
+        this.toolbar = jToolbar;
 
-        for (int i = 0; i < actionIdsAndListener.length; ++i) {
-            String id = actionIdsAndListener[i].getId();
+        for (int i = 0; i < actionIdsAndListeners.length; ++i) {
+            String id = actionIdsAndListeners[i].getId();
             JButton currentButton = new JButton();
-            currentButton.addActionListener(actionIdsAndListener[i].getListener());
+            currentButton.addActionListener(actionIdsAndListeners[i].getListener());
             currentButton.setIcon(new ImageIcon(
                     imageRes.getImageById(id).getScaledInstance(BUTTON_WIDTH,
                                                                 BUTTON_HEIGHT,
                                                                 Image.SCALE_DEFAULT)));
 
-            currentButton.setToolTipText(stringRes.getStringFromID(id));
-            toolbar.add(currentButton);
+            currentButton.setToolTipText(stringResource.getStringFromID(id));
+            jToolbar.add(currentButton);
             buttons[i] = currentButton;
         }
     }
 
-    protected void updateTooltips(StringResourceLoader stringRes) {
-        this.stringRes = stringRes;
+    protected void updateTooltips(final StringResourceLoader stringResource) {
+        this.stringRes = stringResource;
         updateToolbar();
     }
 
@@ -69,13 +71,14 @@ public abstract class ToolbarHandler {
 
     private class ActionIdListenerSorter implements Comparator<ActionIdAndListener> {
         @Override
-        public int compare(ActionIdAndListener lhs, ActionIdAndListener rhs) {
-            Integer lhsPos = findInarr(lhs.getId());
-            int rhsPos = findInarr(rhs.getId());
+        public int compare(final ActionIdAndListener lhs,
+                           final ActionIdAndListener rhs) {
+            Integer lhsPos = findInArr(lhs.getId());
+            int rhsPos = findInArr(rhs.getId());
             return lhsPos.compareTo(rhsPos);
         }
 
-        private int findInarr(String s) {
+        private int findInArr(final String s) {
             for (int i = 0; i < STANDARD_ID_ORDER.length; i++) {
                 if (STANDARD_ID_ORDER[i].equals(s)) {
                     return i;

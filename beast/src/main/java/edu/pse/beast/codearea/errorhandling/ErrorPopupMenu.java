@@ -9,7 +9,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTextPane;
 
 /**
- * This class is a simple popup menu which displays an error message
+ * This class is a simple popup menu which displays an error message.
  *
  * @author Holger Klein
  */
@@ -17,7 +17,7 @@ public class ErrorPopupMenu extends JPopupMenu implements KeyListener {
     private static final long serialVersionUID = 1L;
     private JMenuItem errorItem;
 
-    public ErrorPopupMenu(JTextPane pane) {
+    public ErrorPopupMenu(final JTextPane pane) {
         errorItem = new JMenuItem("");
         errorItem.setBackground(Color.white);
         add(errorItem);
@@ -30,14 +30,14 @@ public class ErrorPopupMenu extends JPopupMenu implements KeyListener {
     }
 
     @Override
-    public void keyTyped(KeyEvent keyEvent) {
+    public void keyTyped(final KeyEvent keyEvent) {
     }
 
     @Override
-    public void keyPressed(KeyEvent keyEvent) {
+    public void keyPressed(final KeyEvent keyEvent) {
     }
 
     @Override
-    public void keyReleased(KeyEvent keyEvent) {
+    public void keyReleased(final KeyEvent keyEvent) {
     }
 }

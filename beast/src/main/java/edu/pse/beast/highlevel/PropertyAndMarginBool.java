@@ -6,10 +6,10 @@ public class PropertyAndMarginBool {
     private PreAndPostConditionsDescription description;
     private boolean marginStatus;
 
-    public PropertyAndMarginBool(PreAndPostConditionsDescription description,
-                                 boolean marginStatus) {
-        this.description = description;
-        this.marginStatus = marginStatus;
+    public PropertyAndMarginBool(final PreAndPostConditionsDescription descr,
+                                 final boolean marginStat) {
+        this.description = descr;
+        this.marginStatus = marginStat;
     }
 
     public PreAndPostConditionsDescription getDescription() {

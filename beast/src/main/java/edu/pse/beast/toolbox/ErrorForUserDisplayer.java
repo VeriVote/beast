@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public final class ErrorForUserDisplayer {
+    private static final int THOUSAND = 1000;
 
     private static int currentlyDisplayedErrors = 0;
 
@@ -16,20 +17,17 @@ public final class ErrorForUserDisplayer {
      *
      * @param message the message to be displayed
      */
-    public static void displayError(String message) {
+    public static void displayError(final String message) {
         increment();
-
-        JOptionPane.showMessageDialog(new JFrame(), message, "Error", JOptionPane.ERROR_MESSAGE);
-
+        JOptionPane.showMessageDialog(new JFrame(), message,
+                                      "Error", JOptionPane.ERROR_MESSAGE);
         decrement();
-
         while (true) {
-
             if (currentlyDisplayedErrors == 0) {
                 return;
             }
             try {
-                Thread.sleep(1000);
+                Thread.sleep(THOUSAND);
             } catch (InterruptedException e) {
 
             }
@@ -43,5 +41,4 @@ public final class ErrorForUserDisplayer {
     private static synchronized void decrement() {
         currentlyDisplayedErrors--;
     }
-
 }

@@ -11,28 +11,29 @@ public class FontSizeOptionElement extends OptionElement {
     private int size;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param choosableOptions the choosable options
+     * @param availableOptions the choosable options
      * @param chosenSize       the chosen size
      */
-    public FontSizeOptionElement(List<String> choosableOptions, String chosenSize) {
-        super("fontsize", choosableOptions);
+    public FontSizeOptionElement(final List<String> availableOptions,
+                                 final String chosenSize) {
+        super("fontsize", availableOptions);
         handleSelection(chosenSize);
     }
 
     /**
-     * Getter
+     * Getter for the size.
      *
      * @return the current font size
      */
-    public int getsize() {
+    public int getSize() {
         return size;
     }
 
     @Override
-    public void handleSelection(String selection) {
-        this.chosenOption = selection;
+    public void handleSelection(final String selection) {
+        this.setChosenOption(selection);
         this.size = Integer.valueOf(selection);
     }
 }

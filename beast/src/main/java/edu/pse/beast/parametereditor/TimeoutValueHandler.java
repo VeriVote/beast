@@ -18,6 +18,10 @@ import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
  * @author Jonas Wohnig
  */
 public class TimeoutValueHandler implements ChangeListener, ActionListener {
+    private static final int ONE = 1;
+    private static final int TWO = 2;
+    private static final int THREE = 3;
+
     private final JSpinner timeoutSpinner;
     private final JComboBox<String> timeoutUnit;
     private TimeOut timeoutBefore;
@@ -25,21 +29,22 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
     private boolean hasChanged;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param timeoutSpinner JSpinner for the timeout value
-     * @param timeoutUnit    JComboBox for the timeout unit
+     * @param timeoutJSpinner JSpinner for the timeout value
+     * @param timeoutUnits    JComboBox for the timeout unit
      */
-    public TimeoutValueHandler(JSpinner timeoutSpinner, JComboBox<String> timeoutUnit) {
-        this.timeoutSpinner = timeoutSpinner;
-        timeoutSpinner.setValue(0);
-        this.timeoutUnit = timeoutUnit;
+    public TimeoutValueHandler(final JSpinner timeoutJSpinner,
+                               final JComboBox<String> timeoutUnits) {
+        this.timeoutSpinner = timeoutJSpinner;
+        timeoutJSpinner.setValue(0);
+        this.timeoutUnit = timeoutUnits;
         timeoutBefore = getTimeout();
         setHasChanged(false);
     }
 
     /**
-     * Getter for the timeout
+     * Getter for the timeout.
      *
      * @return TimeOut
      */
@@ -55,13 +60,13 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
         case 0:
             timeOut = new TimeOut(TimeUnit.SECONDS, timeoutInt.longValue());
             break;
-        case 1:
+        case ONE:
             timeOut = new TimeOut(TimeUnit.MINUTES, timeoutInt.longValue());
             break;
-        case 2:
+        case TWO:
             timeOut = new TimeOut(TimeUnit.HOURS, timeoutInt.longValue());
             break;
-        case 3:
+        case THREE:
             timeOut = new TimeOut(TimeUnit.DAYS, timeoutInt.longValue());
             break;
         default:
@@ -76,7 +81,7 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
      *
      * @param to new TimeOut
      */
-    public void setValue(TimeOut to) {
+    public void setValue(final TimeOut to) {
         if (reacts) {
             if (to.getDuration() <= 0) {
                 timeoutSpinner.setValue(0);
@@ -91,13 +96,13 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
                 timeoutUnit.setSelectedIndex(0);
                 break;
             case MINUTES:
-                timeoutUnit.setSelectedIndex(1);
+                timeoutUnit.setSelectedIndex(ONE);
                 break;
             case HOURS:
-                timeoutUnit.setSelectedIndex(2);
+                timeoutUnit.setSelectedIndex(TWO);
                 break;
             case DAYS:
-                timeoutUnit.setSelectedIndex(3);
+                timeoutUnit.setSelectedIndex(THREE);
                 break;
             default:
                 System.err.println("Timeout kann nicht auf diesen Wert gesetzt werden.");
@@ -113,13 +118,13 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
                 timeoutUnit.setSelectedIndex(0);
                 break;
             case MINUTES:
-                timeoutUnit.setSelectedIndex(1);
+                timeoutUnit.setSelectedIndex(ONE);
                 break;
             case HOURS:
-                timeoutUnit.setSelectedIndex(2);
+                timeoutUnit.setSelectedIndex(TWO);
                 break;
             case DAYS:
-                timeoutUnit.setSelectedIndex(3);
+                timeoutUnit.setSelectedIndex(THREE);
                 break;
             default:
                 System.err.println("Timeout kann nicht auf diesen Wert gesetzt werden.");
@@ -129,21 +134,21 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
     }
 
     /**
-     * Toggles whether the timeout reacts to user input (to not interrupt checks)
+     * Toggles whether the timeout reacts to user input (to not interrupt checks).
      *
-     * @param reacts whether it reacts
+     * @param reactsToUser whether it reacts
      */
-    void setReacts(boolean reacts) {
-        this.reacts = reacts;
+    void setReacts(final boolean reactsToUser) {
+        this.reacts = reactsToUser;
     }
 
     @Override
-    public void stateChanged(ChangeEvent e) {
+    public void stateChanged(final ChangeEvent e) {
         setValue(getTimeout());
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(final ActionEvent e) {
         setValue(getTimeout());
     }
 
@@ -159,9 +164,9 @@ public class TimeoutValueHandler implements ChangeListener, ActionListener {
     /**
      * Sets whether the TimeOut was changed since last time saving.
      *
-     * @param hasChanged whether it changed
+     * @param changed whether it changed
      */
-    protected void setHasChanged(boolean hasChanged) {
-        this.hasChanged = hasChanged;
+    protected void setHasChanged(final boolean changed) {
+        this.hasChanged = changed;
     }
 }

@@ -16,8 +16,8 @@ public class RealLinkedImage implements LinkedImage {
      * @param imagePath
      *            The path to the image file.
      */
-    public RealLinkedImage(Canvas canvas) {
-        this.canvas = canvas;
+    public RealLinkedImage(final Canvas canv) {
+        this.canvas = canv;
     }
 
     @Override

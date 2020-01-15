@@ -36,12 +36,13 @@ public class ChildTreeItemSaverLoader implements SaverLoader<ChildTreeItemValues
     }
 
     @Override
-    public ChildTreeItemValues createFromSaveString(String toLoad) throws JsonSyntaxException {
+    public ChildTreeItemValues createFromSaveString(final String toLoad)
+            throws JsonSyntaxException {
         return saverLoader.fromJson(toLoad, ChildTreeItemValues.class);
     }
 
     @Override
-    public String createSaveString(ChildTreeItemValues childTreeItemValues) {
+    public String createSaveString(final ChildTreeItemValues childTreeItemValues) {
         return saverLoader.toJson(childTreeItemValues, ChildTreeItemValues.class);
     }
 }

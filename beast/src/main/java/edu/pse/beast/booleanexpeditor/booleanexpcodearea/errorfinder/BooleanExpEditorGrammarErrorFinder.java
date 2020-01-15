@@ -24,11 +24,11 @@ public final class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListe
     private static BooleanExpEditorGrammarErrorFinder finder;
     private final ArrayList<CodeError> errors = new ArrayList<>();
 
-    private BooleanExpEditorGrammarErrorFinder(BooleanExpANTLRHandler antlrHandler) {
+    private BooleanExpEditorGrammarErrorFinder(final BooleanExpANTLRHandler antlrHandler) {
         antlrHandler.getParser().addErrorListener(this);
     }
 
-    public static ArrayList<CodeError> getErrors(BooleanExpANTLRHandler antlrHandler) {
+    public static ArrayList<CodeError> getErrors(final BooleanExpANTLRHandler antlrHandler) {
         finder = new BooleanExpEditorGrammarErrorFinder(antlrHandler);
         antlrHandler.getParseTree();
         return finder.getErrors();
@@ -43,28 +43,32 @@ public final class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListe
     }
 
     @Override
-    public void syntaxError(Recognizer<?, ?> rcgnzr, Object o, int line, int charInline, String msg,
-            RecognitionException re) {
+    public void syntaxError(final Recognizer<?, ?> rcgnzr,
+                            final Object o,
+                            final int line,
+                            final int charInline,
+                            final String msg,
+                            final RecognitionException re) {
         errors.add(BooleanExpErrorFactory.createAntlrError(line, charInline, msg));
     }
 
     @Override
-    public void reportAmbiguity(Parser parser, DFA dfa,
-                                int i, int i1, boolean bln,
-                                BitSet bitset,
-                                ATNConfigSet atncs) {
+    public void reportAmbiguity(final Parser parser, final DFA dfa,
+                                final int i, final int i1, final boolean bln,
+                                final BitSet bitset,
+                                final ATNConfigSet atncs) {
     }
 
     @Override
-    public void reportAttemptingFullContext(Parser parser, DFA dfa,
-                                            int i, int i1,
-                                            BitSet bitset,
-                                            ATNConfigSet atncs) {
+    public void reportAttemptingFullContext(final Parser parser, final DFA dfa,
+                                            final int i, final int i1,
+                                            final BitSet bitset,
+                                            final ATNConfigSet atncs) {
     }
 
     @Override
-    public void reportContextSensitivity(Parser parser, DFA dfa,
-                                         int i, int i1, int i2,
-                                         ATNConfigSet atncs) {
+    public void reportContextSensitivity(final Parser parser, final DFA dfa,
+                                         final int i, final int i1, final int i2,
+                                         final ATNConfigSet atncs) {
     }
 }

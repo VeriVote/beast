@@ -1,41 +1,48 @@
 package edu.pse.beast.types;
 
 /**
- * Represents the InternalType of the Variables
+ * Represents the InternalType of the Variables.
  *
  * @author Niels Hanselmann
  */
 public enum InternalTypeRep {
     /**
-     * VoterType
+     * VoterType.
      */
     VOTER,
+
     /**
-     * CandidateType
+     * CandidateType.
      */
     CANDIDATE,
+
     /**
-     * SeatType
+     * SeatType.
      */
     SEAT,
+
     /**
-     * ApprovalType
+     * ApprovalType.
      */
     APPROVAL,
+
     /**
-     * WeightedApprovalType
+     * WeightedApprovalType.
      */
-    WEIGHTEDAPPROVAL,
+    WEIGHTED_APPROVAL,
+
     /**
-     * IntergerType
+     * IntergerType.
      */
     INTEGER,
+
     /**
-     * NullType
+     * NullType.
      */
     NULL,
+
     /**
-     * A tupel with at least 2 voting arrays in it
+     * A tuple with at least 2 voting arrays in it.
      */
-    TUPEL
+    TUPLE
 }

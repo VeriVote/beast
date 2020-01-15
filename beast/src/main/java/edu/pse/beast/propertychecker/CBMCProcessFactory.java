@@ -27,8 +27,8 @@ public class CBMCProcessFactory extends CheckerFactory {
     private File toCheck = null;
 
     /**
-     * creates a new CBMC checker factory, that determines what operating system
-     * you
+     * Creates a new CBMC checker factory, that determines what operating system
+     * is running.
      *
      * @param controller
      *            the controller that controls this processfactory and that has
@@ -41,9 +41,10 @@ public class CBMCProcessFactory extends CheckerFactory {
      * @param parameter
      *            the source that describes all other parameters
      */
-    protected CBMCProcessFactory(FactoryController controller,
-                                 ElectionDescription electionDesc, Result result,
-                                 ElectionCheckParameter parameter) {
+    protected CBMCProcessFactory(final FactoryController controller,
+                                 final ElectionDescription electionDesc,
+                                 final Result result,
+                                 final ElectionCheckParameter parameter) {
         super(controller, electionDesc, result, parameter);
         os = determineOS();
     }
@@ -297,9 +298,10 @@ public class CBMCProcessFactory extends CheckerFactory {
     }
 
     @Override
-    public CheckerFactory getNewInstance(FactoryController controller,
-                                         ElectionDescription electionDesc, Result result,
-                                         ElectionCheckParameter parameter) {
+    public CheckerFactory getNewInstance(final FactoryController controller,
+                                         final ElectionDescription electionDesc,
+                                         final Result result,
+                                         final ElectionCheckParameter parameter) {
         return new CBMCProcessFactory(controller, electionDesc, result, parameter);
     }
     //
@@ -317,8 +319,8 @@ public class CBMCProcessFactory extends CheckerFactory {
     }
 
     /**
-     * creates a new c-Code file that then can be used by all the underlying
-     * checkers to check it with cbmc
+     * Creates a new c-Code file that then can be used by all the underlying
+     * checkers to check it with cbmc.
      *
      * @param electionDesc
      *            the source that describes the election
@@ -328,8 +330,8 @@ public class CBMCProcessFactory extends CheckerFactory {
      *         variables
      */
 
-    public File createCodeFileCheck(ElectionDescription electionDesc,
-                                    PreAndPostConditionsDescription postAndPrepPropDesc) {
+    public File createCodeFileCheck(final ElectionDescription electionDesc,
+                                    final PreAndPostConditionsDescription postAndPrepPropDesc) {
         // create a code generator, that creates a code file for this call only
         // one time in this factory factory;
         CBMCCodeGenerator generator = new CBMCCodeGenerator(electionDesc,
@@ -350,8 +352,8 @@ public class CBMCProcessFactory extends CheckerFactory {
     }
 
     /**
-     * creates a new c-Code file that then can be used by all the underlying
-     * checkers to check it with cbmc
+     * Creates a new c-Code file that then can be used by all the underlying
+     * checkers to check it with cbmc.
      *
      * @param electionDesc
      *            the source that describes the election
@@ -366,10 +368,11 @@ public class CBMCProcessFactory extends CheckerFactory {
      * @return a file that contains the generated code from the two above
      *         variables
      */
-    public File createCodeFileMargin(ElectionDescription electionDesc,
-                                     PreAndPostConditionsDescription postAndPrepPropDesc,
-                                     int margin, ElectionSimulationData origResult,
-                                     ElectionSimulationData inputData) {
+    public File createCodeFileMargin(final ElectionDescription electionDesc,
+                                     final PreAndPostConditionsDescription postAndPrepPropDesc,
+                                     final int margin,
+                                     final ElectionSimulationData origResult,
+                                     final ElectionSimulationData inputData) {
         // create a code generator, that creates a code file for this call only
         // one time in this factory factory;
         CBMCCodeGenerator generator = new CBMCCodeGenerator(electionDesc,
@@ -390,8 +393,8 @@ public class CBMCProcessFactory extends CheckerFactory {
     }
 
     /**
-     * creates a new c-Code file that then can be used by all the underlying
-     * checkers to check it with cbmc
+     * Creates a new c-Code file that then can be used by all the underlying
+     * checkers to check it with cbmc.
      *
      * @param electionDesc
      *            the source that describes the election
@@ -402,9 +405,9 @@ public class CBMCProcessFactory extends CheckerFactory {
      * @return a file that contains the generated code from the two above
      *         variables
      */
-    public File createCodeFileTest(ElectionDescription electionDesc,
-                                   PreAndPostConditionsDescription postAndPrepPropDesc,
-                                   ElectionSimulationData inputData) {
+    public File createCodeFileTest(final ElectionDescription electionDesc,
+                                   final PreAndPostConditionsDescription postAndPrepPropDesc,
+                                   final ElectionSimulationData inputData) {
         // create a code generator, that creates a code file for this call only
         // one time in this factory factory;
         CBMCCodeGenerator generator = new CBMCCodeGenerator(electionDesc,
@@ -592,10 +595,14 @@ public class CBMCProcessFactory extends CheckerFactory {
     }
 
     @Override
-    protected Checker startProcessCheck(ElectionDescription electionDesc,
-                                        PreAndPostConditionsDescription postAndPrepPropDesc,
-                                        String advanced, int voters, int candidates, int seats,
-                                        CheckerFactory parent, Result result) {
+    protected Checker startProcessCheck(final ElectionDescription electionDesc,
+                                        final PreAndPostConditionsDescription postAndPrepPropDesc,
+                                        final String advanced,
+                                        final int voters,
+                                        final int candidates,
+                                        final int seats,
+                                        final CheckerFactory parent,
+                                        final Result result) {
         String userOptions = advanced.trim().replaceAll(" +", WHITESPACE);
         // remove all unnecessary white spaces
         // create the file in which the code is saved if it does not exist
@@ -628,12 +635,17 @@ public class CBMCProcessFactory extends CheckerFactory {
     }
 
     @Override
-    protected Checker startProcessMargin(ElectionDescription electionDesc,
-                                         PreAndPostConditionsDescription postAndPrepPropDesc,
-                                         String advanced, int voters, int candidates, int seats,
-                                         CheckerFactory parent, int margin,
-                                         ElectionSimulationData origResult,
-                                         ElectionSimulationData votingData, Result result) {
+    protected Checker startProcessMargin(final ElectionDescription electionDesc,
+                                         final PreAndPostConditionsDescription postAndPrepPropDesc,
+                                         final String advanced,
+                                         final int voters,
+                                         final int candidates,
+                                         final int seats,
+                                         final CheckerFactory parent,
+                                         final int margin,
+                                         final ElectionSimulationData origResult,
+                                         final ElectionSimulationData votingData,
+                                         final Result result) {
         String userOptions = advanced.trim().replaceAll(" +", WHITESPACE);
         // remove all unnecessary white spaces
         // create the file in which the code is saved
@@ -663,11 +675,15 @@ public class CBMCProcessFactory extends CheckerFactory {
     }
 
     @Override
-    protected Checker startProcessTest(ElectionDescription electionDesc,
-                                       PreAndPostConditionsDescription postAndPrepPropDesc,
-                                       String advanced, int voters, int candidates, int seats,
-                                       CheckerFactory parent, ElectionSimulationData votingData,
-                                       Result result) {
+    protected Checker startProcessTest(final ElectionDescription electionDesc,
+                                       final PreAndPostConditionsDescription postAndPrepPropDesc,
+                                       final String advanced,
+                                       final int voters,
+                                       final int candidates,
+                                       final int seats,
+                                       final CheckerFactory parent,
+                                       final ElectionSimulationData votingData,
+                                       final Result result) {
         String userOptions = advanced.trim().replaceAll(" +", WHITESPACE);
         // remove all unnecessary white spaces
         // create the file in which the code is saved

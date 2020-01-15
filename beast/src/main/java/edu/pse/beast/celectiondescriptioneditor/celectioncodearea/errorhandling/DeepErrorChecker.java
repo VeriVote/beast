@@ -8,9 +8,9 @@ import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
 
 /**
- * this class gives you access to an underlying, system specific compiler so our
+ * This class gives you access to an underlying, system specific compiler so our
  * program can check for deeper errors in the code, that we could not find on our
- * own
+ * own.
  *
  * @author Lukas Stapelbroek
  *
@@ -26,8 +26,8 @@ public final class DeepErrorChecker {
     }
 
     /**
-     * creates a new checker, that first of all determines its operating system and
-     * then creates the correlating one
+     * Creates a new checker, that first of all determines its operating system and
+     * then creates the correlating one.
      */
     private static void init() {
         OperatingSystems os = determineOS();
@@ -48,18 +48,18 @@ public final class DeepErrorChecker {
         default:
             ErrorLogger.log("Warning, your OS could not be determined or is not supported yet.");
         }
-
         initialized = true;
     }
 
     /**
-     * checks the given list of c code (one entry per line) for errors
+     * Checks the given list of c code (one entry per line) for errors.
      *
      * @param toCheck the code to check
      * @param lineOffset line offset
      * @return a list of codeErros
      */
-    public static List<CodeError> checkCodeForErrors(List<String> toCheck, int lineOffset) {
+    public static List<CodeError> checkCodeForErrors(final List<String> toCheck,
+                                                     final int lineOffset) {
         if (!initialized) {
             init();
         }
@@ -67,7 +67,7 @@ public final class DeepErrorChecker {
     }
 
     /**
-     * determines the operating system that this program is running on
+     * Determines the operating system that this program is running on.
      *
      * @return the OperatingSystem as the enum
      */

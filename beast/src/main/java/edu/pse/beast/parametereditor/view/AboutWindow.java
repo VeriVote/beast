@@ -9,6 +9,7 @@ import edu.pse.beast.stringresource.StringResourceLoader;
  * @author Jonas Wohnig
  */
 public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
+    private static final int PREF_SIZE = 31;
 
     private static final long serialVersionUID = 1L;
 
@@ -21,7 +22,7 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
     // End of variables declaration//GEN-END:variables
 
     /**
-     * Creates new form VersionWindow
+     * Creates new form VersionWindow.
      */
     public AboutWindow() {
         initComponents();
@@ -79,14 +80,14 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
                         .addGroup(layout
                             .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(versionLabel).addComponent(versionNumber))
-                        .addContainerGap(31, Short.MAX_VALUE)));
+                        .addContainerGap(PREF_SIZE, Short.MAX_VALUE)));
         pack();
     } // </editor-fold>//GEN-END:initComponents
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(final String[] args) {
         /* Set the Nimbus look and feel */
         // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
         // (optional) ">
@@ -128,16 +129,16 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
     }
 
     /**
-     * Setter for version of BEAST
+     * Setter for version of BEAST.
      *
      * @param version of BEAST
      */
-    protected void setVersion(String version) {
+    protected void setVersion(final String version) {
         versionNumber.setText(version);
     }
 
     @Override
-    public void updateStringRes(StringLoaderInterface stringResIF) {
+    public void updateStringRes(final StringLoaderInterface stringResIF) {
         StringResourceLoader other
             = stringResIF.getParameterEditorStringResProvider().getOtherStringRes();
         setTitle(other.getStringFromID("title_about"));

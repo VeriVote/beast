@@ -2,7 +2,7 @@ package edu.pse.beast.toolbox;
 
 /**
  * This interface is implemented by all classes which represent actions the user
- * can perform which cannot be undone
+ * can perform which cannot be undone.
  *
  * @author Holger Klein
  */
@@ -11,10 +11,10 @@ public abstract class UserAction {
 
     /**
      *
-     * @param id the identification
+     * @param idString the identification
      */
-    public UserAction(String id) {
-        this.id = id;
+    public UserAction(final String idString) {
+        this.id = idString;
     }
 
     /**
@@ -26,7 +26,7 @@ public abstract class UserAction {
     }
 
     /**
-     * performs the action of the user
+     * Performs the action of the user.
      */
     public abstract void perform();
 }

@@ -20,18 +20,18 @@ public final class FormalPropertySaverLoader {
      * @param desc the FormalPropertiesDescription
      * @return the saveString
      */
-    public static String createSaveString(FormalPropertiesDescription desc) {
+    public static String createSaveString(final FormalPropertiesDescription desc) {
         return StringSaverLoader.createSaveString(desc.getCode());
     }
 
     /**
      * Creates a FormalPropertiesDescription object from a given, by
-     * createSaveString() generated, saveString
+     * createSaveString() generated, saveString.
      *
      * @param saveString the saveString
      * @return the FormalPropertiesDescription object
      */
-    public static FormalPropertiesDescription createFromSaveString(String saveString) {
+    public static FormalPropertiesDescription createFromSaveString(final String saveString) {
         return new FormalPropertiesDescription(StringSaverLoader.createFromSaveString(saveString));
     }
 }

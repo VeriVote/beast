@@ -3,16 +3,34 @@ package edu.pse.beast.electionsimulator;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 
 public class ElectionSimulationData {
-    public final int voters;
-    public final int candidates;
-    public final int seats;
-    public final ResultValueWrapper values;
+    private final int voters;
+    private final int candidates;
+    private final int seats;
+    private final ResultValueWrapper values;
 
-    public ElectionSimulationData(int voters, int candidates, int seats,
-                                  ResultValueWrapper values) {
-        this.voters = voters;
-        this.candidates = candidates;
-        this.seats = seats;
-        this.values = values;
+    public ElectionSimulationData(final int voterNum,
+                                  final int candidateNum,
+                                  final int seatNum,
+                                  final ResultValueWrapper vals) {
+        this.voters = voterNum;
+        this.candidates = candidateNum;
+        this.seats = seatNum;
+        this.values = vals;
+    }
+
+    public int getVoters() {
+        return voters;
+    }
+
+    public int getCandidates() {
+        return candidates;
+    }
+
+    public int getSeats() {
+        return seats;
+    }
+
+    public ResultValueWrapper getValues() {
+        return values;
     }
 }

@@ -26,6 +26,13 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class TextAndImages extends ResultPresentationType {
+    private static final int DEFAULT_FONT_SIZE = 12;
+    private static final int THOUSAND = 1000;
+    private static final int CANVAS_SIZE = 100;
+    private static final int OVAL_X_COORD = 10;
+    private static final int OVAL_Y_COORD = 60;
+    private static final int OVAL_SIZE = 30;
+
     private final TextOps<String, TextStyle> styledTextOps = SegmentOps.styledTextOps();
     private final LinkedImageOps<TextStyle> linkedImageOps = new LinkedImageOps<>();
 
@@ -34,7 +41,7 @@ public class TextAndImages extends ResultPresentationType {
                     ParStyle.EMPTY, // default paragraph style
                     // paragraph style setter
                 (paragraph, style) -> paragraph.setStyle(style.toCss()),
-                    TextStyle.DEFAULT.updateFontSize(12).updateFontFamily("Serif")
+                    TextStyle.DEFAULT.updateFontSize(DEFAULT_FONT_SIZE).updateFontFamily("Serif")
                         .updateTextColor(Color.BLACK), // default segment style
                      // segment operations
                     styledTextOps._or(linkedImageOps, (s1, s2) -> Optional.empty()),
@@ -42,47 +49,53 @@ public class TextAndImages extends ResultPresentationType {
                     (text, style) -> text.setStyle(style.toCss()))); // Node creator and
                                                                          // segment style setter
 
-    private Node createNode(StyledSegment<Either<String, LinkedImage>, TextStyle> seg,
-                            BiConsumer<? super TextExt, TextStyle> applyStyle) {
+    private Node createNode(final StyledSegment<Either<String, LinkedImage>,
+                                                TextStyle> seg,
+                            final BiConsumer<? super TextExt, TextStyle> applyStyle) {
         return seg.getSegment().unify(
             text ->
-                            StyledTextArea.createStyledTextNode(text, seg.getStyle(), applyStyle),
-                        LinkedImage::createNode);
+                            StyledTextArea.createStyledTextNode(text,
+                                                                seg.getStyle(),
+                                                                applyStyle),
+                            LinkedImage::createNode);
     }
 
     @Override
-    public Node presentResult(Result result) {
+    public Node presentResult(final Result result) {
         // TODO still WIP, no images get created
-        GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area =
-                new GenericStyledArea<>(ParStyle.EMPTY, // default paragraph style
+        GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle>
+            resultArea =
+                new GenericStyledArea<>(
+                        ParStyle.EMPTY, // default paragraph style
                                         // paragraph style setter
                     (paragraph, style) -> paragraph.setStyle(style.toCss()),
-                                        TextStyle.DEFAULT.updateFontSize(12)
-                                        // default segment style
-                                        .updateFontFamily("Serif").updateTextColor(Color.BLACK),
-                                        // segment operations
-                                        styledTextOps._or(linkedImageOps, (s1, s2)
-                                            -> Optional.empty()),
+                        TextStyle.DEFAULT.updateFontSize(DEFAULT_FONT_SIZE)
+                        // default segment style
+                        .updateFontFamily("Serif")
+                        .updateTextColor(Color.BLACK),
+                        // segment operations
+                        styledTextOps._or(linkedImageOps,
+                            (s1, s2) -> Optional.empty()),
                     seg -> createNode(seg, // Node creator and segment
                         (text, style) -> text.setStyle(style.toCss())));
-        area.setEditable(false);
-        Canvas can = new Canvas(100, 100);
+        resultArea.setEditable(false);
+        Canvas can = new Canvas(CANVAS_SIZE, CANVAS_SIZE);
         GraphicsContext g = can.getGraphicsContext2D();
 
         ReadOnlyStyledDocument<ParStyle, Either<String, LinkedImage>, TextStyle> ros =
                 ReadOnlyStyledDocument.fromSegment(
-                        Either.right(new RealLinkedImage(new Canvas(100, 100))),
-                        ParStyle.EMPTY, TextStyle.DEFAULT, area.getSegOps());
+                        Either.right(new RealLinkedImage(new Canvas(CANVAS_SIZE, CANVAS_SIZE))),
+                        ParStyle.EMPTY, TextStyle.DEFAULT, resultArea.getSegOps());
         g.setFill(Color.RED);
-        g.fillOval(10, 60, 30, 30);
+        g.fillOval(OVAL_X_COORD, OVAL_Y_COORD, OVAL_SIZE, OVAL_SIZE);
         String textTest = "testasdjfklasdf\n";
-        for (int i = 0; i < 1000; i++) {
-            area.replaceText(area.getLength(), area.getLength(), textTest);
+        for (int i = 0; i < THOUSAND; i++) {
+            resultArea.replaceText(resultArea.getLength(), resultArea.getLength(), textTest);
         }
-        area.replace(area.getLength(), area.getLength(), ros);
+        resultArea.replace(resultArea.getLength(), resultArea.getLength(), ros);
         VirtualizedScrollPane<GenericStyledArea<ParStyle,
                               Either<String, LinkedImage>, TextStyle>>
-            vsPane = new VirtualizedScrollPane<>(area); // Wrap it in a scroll area
+            vsPane = new VirtualizedScrollPane<>(resultArea); // Wrap it in a scroll area
         return vsPane;
     }
 
@@ -102,7 +115,7 @@ public class TextAndImages extends ResultPresentationType {
     }
 
     @Override
-    public void zoomTo(double zoomValue) {
+    public void zoomTo(final double zoomValue) {
         // if (zoomValue < 0) { //TODO add zoom later
         // currentScale = 1 + (0.09 * zoomValue);
         // } else {
@@ -119,7 +132,7 @@ public class TextAndImages extends ResultPresentationType {
     }
 
     @Override
-    public boolean supports(AnalysisType analysisType) {
+    public boolean supports(final AnalysisType analysisType) {
         switch (analysisType) {
         case Check: // TODO
             return false;

@@ -43,7 +43,7 @@ public final class ElectionCheckParameterSaverLoader {
         return EMPTY + BREAK + LEFT + SLASH + type + minOrMax + RIGHT + BREAK;
     }
 
-    private static String boundString(String type) {
+    private static String boundString(final String type) {
         return boundString(type, EMPTY);
     }
 
@@ -51,33 +51,33 @@ public final class ElectionCheckParameterSaverLoader {
         return LEFT + type + minOrMax + RIGHT + BREAK;
     }
 
-    private static String valString(String type) {
+    private static String valString(final String type) {
         return valString(type, EMPTY);
     }
 
-    private static String removeFrom(String[] src, String remove) {
+    private static String removeFrom(final String[] src, final String remove) {
         return src[0].replace(EMPTY + remove, EMPTY);
     }
 
-    private static String getString(String type, String minOrMax) {
+    private static String getString(final String type, final String minOrMax) {
         final int idx = splitString.length <= 1 ? 0 : 1;
         splitString = splitString[idx].split(boundString(type, minOrMax));
         return removeFrom(splitString, valString(type, minOrMax));
     }
 
-    private static String getString(String type) {
+    private static String getString(final String type) {
         return getString(type, EMPTY);
     }
 
-    private static int getInt(String type, String minOrMax) {
+    private static int getInt(final String type, final String minOrMax) {
         return Integer.parseInt(getString(type, minOrMax));
     }
 
-    private static int getInt(String type) {
+    private static int getInt(final String type) {
         return getInt(type, EMPTY);
     }
 
-    private static ArrayList<Integer> toIntList(int start, int end) {
+    private static ArrayList<Integer> toIntList(final int start, final int end) {
         ArrayList<Integer> list = new ArrayList<>();
         for (int i = start; i <= end; i++) {
             list.add(i);
@@ -97,7 +97,7 @@ public final class ElectionCheckParameterSaverLoader {
      * @param electionCheckParameter the ElectionCheckParameter
      * @return the saveString
      */
-    public static String createSaveString(ElectionCheckParameter electionCheckParameter) {
+    public static String createSaveString(final ElectionCheckParameter electionCheckParameter) {
         final String amountVotersMin
               = valString(VOTERS, MIN)
                 + electionCheckParameter.getAmountVoters().get(0)
@@ -140,14 +140,15 @@ public final class ElectionCheckParameterSaverLoader {
     }
 
     /**
-     * Creates an Object from a given, by createSaveString() generated, saveString
+     * Creates an Object from a given, by createSaveString() generated, saveString.
      *
      * @param s the SaveString
      * @return the Object
      * @throws ArrayIndexOutOfBoundsException if the saveString does not contain a
      *                                        valid format
      */
-    public static Object createFromSaveString(String s) throws ArrayIndexOutOfBoundsException {
+    public static Object createFromSaveString(final String s)
+                            throws ArrayIndexOutOfBoundsException {
         setString(s);
         final ArrayList<Integer> amountVoters = getList(VOTERS);
         final ArrayList<Integer> amountCandidates = getList(CANDIDATES);

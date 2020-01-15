@@ -19,6 +19,7 @@ import javafx.scene.layout.GridPane;
 
 public class ElectionSimulation implements MenuBarInterface {
     private static final String CSV_SEPARATOR = ",";
+    private static final int GAP_SIZE = 10;
 
     private ElectionTypeContainer container;
     private ElectionSimulationModel model;
@@ -29,31 +30,35 @@ public class ElectionSimulation implements MenuBarInterface {
 
     private SaverLoader saverLoader;
 
-    public ElectionSimulation(ElectionTypeContainer container,
-                              GridPane inputGridPane, GridPane voterGridPane,
-                              GridPane candidateGridPane) {
-        this.container = container;
-        this.saverLoader = new SaverLoader(".elecIn", "Election Input Data", this);
-        this.inputGridPane = inputGridPane;
-        this.voterGridPane = voterGridPane;
-        this.candidateGridPane = candidateGridPane;
-        inputGridPane.setHgap(10);
-        inputGridPane.setVgap(10);
-        voterGridPane.setHgap(10);
-        voterGridPane.setVgap(10);
-        candidateGridPane.setHgap(10);
-        candidateGridPane.setVgap(10);
-        model = new ElectionSimulationModel(container, inputGridPane,
-                                            voterGridPane, candidateGridPane);
+    public ElectionSimulation(final ElectionTypeContainer elecTypeContainer,
+                              final GridPane inputDataGridPane,
+                              final GridPane votGridPane,
+                              final GridPane candGridPane) {
+        this.container = elecTypeContainer;
+        this.saverLoader =
+                new SaverLoader(".elecIn", "Election Input Data", this);
+        this.inputGridPane = inputDataGridPane;
+        this.voterGridPane = votGridPane;
+        this.candidateGridPane = candGridPane;
+        inputDataGridPane.setHgap(GAP_SIZE);
+        inputDataGridPane.setVgap(GAP_SIZE);
+        votGridPane.setHgap(GAP_SIZE);
+        votGridPane.setVgap(GAP_SIZE);
+        candGridPane.setHgap(GAP_SIZE);
+        candGridPane.setVgap(GAP_SIZE);
+        model = new ElectionSimulationModel(elecTypeContainer,
+                                            inputDataGridPane,
+                                            votGridPane, candGridPane);
     }
 
-    public void updateContainer(ElectionTypeContainer container) {
-        this.container = container;
-        model.changeContainer(container);
+    public void updateContainer(final ElectionTypeContainer elecTypeContainer) {
+        this.container = elecTypeContainer;
+        model.changeContainer(elecTypeContainer);
     }
 
     public synchronized void updateRows() {
-        for (Iterator<NEWRowOfValues> iterator = model.getRows().iterator(); iterator.hasNext();) {
+        for (Iterator<NEWRowOfValues> iterator = model.getRows().iterator();
+                iterator.hasNext();) {
             NEWRowOfValues row = (NEWRowOfValues) iterator.next();
             row.update();
         }
@@ -61,7 +66,7 @@ public class ElectionSimulation implements MenuBarInterface {
 
     // TODO
     /**
-     * resets all fields and returns the view back to its original state
+     * Resets all fields and returns the view back to its original state.
      */
     public void reset() {
         inputGridPane.getChildren().clear();
@@ -113,45 +118,45 @@ public class ElectionSimulation implements MenuBarInterface {
         return container.getInputType().getNumVotingPoints(null);
     }
 
-    public String getPartyName(int index) {
+    public String getPartyName(final int index) {
         return model.getCandidates().get(index).getText();
     }
 
-    public String getVoterName(int index) {
+    public String getVoterName(final int index) {
         return model.getVoters().get(index).getText();
     }
 
-    public void numVotersChanged(int numVoters) {
+    public void numVotersChanged(final int numVoters) {
         model.setAmountVoters(numVoters);
     }
 
-    public void numCandidatesChanged(int numCandidates) {
+    public void numCandidatesChanged(final int numCandidates) {
         model.setAmountCandidates(numCandidates);
     }
 
-    public void numSeatsChanged(int numSeats) {
+    public void numSeatsChanged(final int numSeats) {
         model.setAmountSeats(numSeats);
     }
 
-    public String setAndVetVoterNumber(String toVet) {
+    public String setAndVetVoterNumber(final String toVet) {
         int vetted = container.getInputType().vetAmountVoters(Integer.parseInt(toVet));
         model.setAmountVoters(vetted);
         return "" + vetted;
     }
 
-    public String setAndVetCandidateNumber(String toVet) {
+    public String setAndVetCandidateNumber(final String toVet) {
         int vetted = container.getInputType().vetAmountCandidates(Integer.parseInt(toVet));
         model.setAmountCandidates(vetted);
         return "" + vetted;
     }
 
-    public String setAndVetSeatNumber(String toVet) {
+    public String setAndVetSeatNumber(final String toVet) {
         int vetted = container.getInputType().vetAmountSeats(Integer.parseInt(toVet));
         model.setAmountSeats(vetted);
         return "" + vetted;
     }
 
-    public void saveAs(File file) {
+    public void saveAs(final File file) {
         saverLoader.save(file, generateSaveString());
     }
 
@@ -161,7 +166,7 @@ public class ElectionSimulation implements MenuBarInterface {
         openInput(input, true);
     }
 
-    private void openInput(String input, boolean bringToFront) {
+    private void openInput(final String input, final boolean bringToFront) {
         reset();
         if (!input.equals("")) {
             String[] lines = input.split("\n");
@@ -183,7 +188,7 @@ public class ElectionSimulation implements MenuBarInterface {
         }
     }
 
-    public void open(File file) {
+    public void open(final File file) {
         if (file.exists()) {
             String input = saverLoader.load(file);
             openInput(input, false);

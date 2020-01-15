@@ -10,7 +10,8 @@ import javax.swing.JList;
  * @author Holger Klein
  */
 public class AutocompletionFrame extends javax.swing.JFrame {
-
+    private static final int PREF_VERTICAL_SIZE = 300;
+    private static final int PREF_HORIZONTAL_SIZE = 400;
     private static final long serialVersionUID = 1L;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -20,7 +21,7 @@ public class AutocompletionFrame extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * Creates new form AutocompletionFrame
+     * Creates new form AutocompletionFrame.
      */
     public AutocompletionFrame() {
         setUndecorated(true);
@@ -44,7 +45,7 @@ public class AutocompletionFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
+            public void keyPressed(final java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
             }
         });
@@ -57,17 +58,17 @@ public class AutocompletionFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jScrollPane1,
                               javax.swing.GroupLayout.DEFAULT_SIZE,
-                              400, Short.MAX_VALUE));
+                              PREF_HORIZONTAL_SIZE, Short.MAX_VALUE));
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jScrollPane1,
                               javax.swing.GroupLayout.DEFAULT_SIZE,
-                              300, Short.MAX_VALUE));
-
+                              PREF_VERTICAL_SIZE, Short.MAX_VALUE));
         pack();
     } // </editor-fold>//GEN-END:initComponents
 
-    private void formKeyPressed(java.awt.event.KeyEvent evt) { // GEN-FIRST:event_formKeyPressed
+    private void formKeyPressed(final java.awt.event.KeyEvent evt) {
+        // GEN-FIRST:event_formKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             setVisible(false);
         }
@@ -76,7 +77,7 @@ public class AutocompletionFrame extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(final String[] args) {
         /* Set the Nimbus look and feel */
         // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
         // (optional) ">
@@ -120,7 +121,7 @@ public class AutocompletionFrame extends javax.swing.JFrame {
         });
     }
 
-    void showUserOptions(String[] opts) {
+    void showUserOptions(final String[] opts) {
         jList1.removeAll();
         DefaultListModel<String> model = new DefaultListModel<>();
         for (int i = 0; i < opts.length; i++) {

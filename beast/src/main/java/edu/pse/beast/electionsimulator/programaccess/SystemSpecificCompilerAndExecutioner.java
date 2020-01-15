@@ -19,8 +19,8 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.toolbox.ThreadedBufferedReader;
 
 /**
- * this is the superclass for system specific error checkers that gets
- * implemented for the needed operating systems
+ * This is the superclass for system specific error checkers that gets
+ * implemented for the needed operating systems.
  *
  * @author Lukas Stapelbroek
  *
@@ -30,8 +30,8 @@ public abstract class SystemSpecificCompilerAndExecutioner {
     private static final String DATA_FILE_ENDING = ".votingdata";
 
     /**
-     * constructor creates an error checker that compiles the c code and passes it
-     * on to a system specific compiler
+     * Constructor creates an error checker that compiles the c code and passes it
+     * on to a system specific compiler.
      */
     public SystemSpecificCompilerAndExecutioner() {
         // clear the folder where the files that get checked get saved to,
@@ -46,7 +46,8 @@ public abstract class SystemSpecificCompilerAndExecutioner {
         }
     }
 
-    public List<String> runAnalysis(List<String> code, Result resultToStoreIn) {
+    public List<String> runAnalysis(final List<String> code,
+                                    final Result resultToStoreIn) {
         // array that returns the result
         List<String> toReturn = new ArrayList<String>();
         List<String> result = new ArrayList<String>();

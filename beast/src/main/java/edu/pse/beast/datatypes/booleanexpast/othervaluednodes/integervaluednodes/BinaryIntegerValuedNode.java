@@ -7,30 +7,30 @@ import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
  */
 public class BinaryIntegerValuedNode extends IntegerValuedExpression {
 
-    public final IntegerValuedExpression lhs;
-    public final IntegerValuedExpression rhs;
+    private final IntegerValuedExpression lhs;
+    private final IntegerValuedExpression rhs;
     private final String relationSymbol;
 
-    public BinaryIntegerValuedNode(IntegerValuedExpression lhs,
-                                   IntegerValuedExpression rhs,
-                                   String relationSymbol) {
-        this.lhs = lhs;
-        this.rhs = rhs;
-        this.relationSymbol = relationSymbol;
+    public BinaryIntegerValuedNode(final IntegerValuedExpression lhsExpr,
+                                   final IntegerValuedExpression rhsExpr,
+                                   final String relationSymb) {
+        this.lhs = lhsExpr;
+        this.rhs = rhsExpr;
+        this.relationSymbol = relationSymb;
     }
 
     @Override
-    public void getVisited(BooleanExpNodeVisitor visitor) {
+    public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitBinaryIntegerValuedNode(this);
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         StringBuilder b = new StringBuilder();
         String tabs = "\t\t\t\t\t\t\t\t\t\t".substring(0, depth + 1);
         b.append("BinaryIntNode: Symbol " + relationSymbol + "\n");
-        b.append(tabs + "lhs: " + lhs.getTreeString(depth + 1));
-        b.append(tabs + "rhs: " + rhs.getTreeString(depth + 1));
+        b.append(tabs + "lhs: " + getLhs().getTreeString(depth + 1));
+        b.append(tabs + "rhs: " + getRhs().getTreeString(depth + 1));
         return b.toString();
     }
 
@@ -43,17 +43,17 @@ public class BinaryIntegerValuedNode extends IntegerValuedExpression {
         final int prime = 31;
         int result = super.hashCode();
         result = prime * result
-                + ((lhs == null) ? 0 : lhs.hashCode());
+                + ((getLhs() == null) ? 0 : getLhs().hashCode());
         result = prime * result
                 + ((relationSymbol == null)
                         ? 0 : relationSymbol.hashCode());
         result = prime * result
-                + ((rhs == null) ? 0 : rhs.hashCode());
+                + ((getRhs() == null) ? 0 : getRhs().hashCode());
         return result;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -64,10 +64,10 @@ public class BinaryIntegerValuedNode extends IntegerValuedExpression {
             return false;
         }
         BinaryIntegerValuedNode that = (BinaryIntegerValuedNode) o;
-        if (lhs != null ? !lhs.equals(that.lhs) : that.lhs != null) {
+        if (getLhs() != null ? !getLhs().equals(that.getLhs()) : that.getLhs() != null) {
             return false;
         }
-        if (rhs != null ? !rhs.equals(that.rhs) : that.rhs != null) {
+        if (getRhs() != null ? !getRhs().equals(that.getRhs()) : that.getRhs() != null) {
             return false;
         }
         if (relationSymbol != null
@@ -76,5 +76,13 @@ public class BinaryIntegerValuedNode extends IntegerValuedExpression {
             return false;
         }
         return true;
+    }
+
+    public IntegerValuedExpression getLhs() {
+        return lhs;
+    }
+
+    public IntegerValuedExpression getRhs() {
+        return rhs;
     }
 }

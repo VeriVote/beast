@@ -5,14 +5,16 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.OutputType;
 
 public abstract class CBMCOutputType extends OutputType {
-    public CBMCOutputType(boolean unsigned, DataType dataType, int dimensions,
-                          String[] sizeOfDimensions) {
+    public CBMCOutputType(final boolean unsigned,
+                          final DataType dataType,
+                          final int dimensions,
+                          final String[] sizeOfDimensions) {
         super(unsigned, dataType, dimensions, sizeOfDimensions);
     }
 
     @Override
-    public CodeArrayListBeautifier addMarginMainTest(CodeArrayListBeautifier code,
-                                                     int voteNumber) {
+    public CodeArrayListBeautifier addMarginMainTest(final CodeArrayListBeautifier code,
+                                                     final int voteNumber) {
         code.add("int main() {");
         code.addTab();
         String definition = getContainer().getOutputStruct().getStructAccess()

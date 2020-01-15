@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 /**
  * This class creates all available chars with a corresponding open or closing
- * char
+ * char.
  *
  * @author Holger Klein
  */
@@ -17,7 +17,7 @@ public class OpenCloseCharList {
         initializeOpenCloseChars();
     }
 
-    public boolean isOpenChar(char c) {
+    public boolean isOpenChar(final char c) {
         for (int i = 0; i < openCloseChars.size(); ++i) {
             if (openCloseChars.get(i).getOpen() == c) {
                 return true;
@@ -26,7 +26,7 @@ public class OpenCloseCharList {
         return false;
     }
 
-    public OpenCloseChar getOpenCloseChar(char c) {
+    public OpenCloseChar getOpenCloseChar(final char c) {
         for (int i = 0; i < openCloseChars.size(); ++i) {
             if (openCloseChars.get(i).getOpen() == c
                     || openCloseChars.get(i).getClose() == c) {
@@ -42,7 +42,7 @@ public class OpenCloseCharList {
         }
     }
 
-    public boolean isCloseChar(char c) {
+    public boolean isCloseChar(final char c) {
         for (int i = 0; i < openCloseChars.size(); ++i) {
             if (openCloseChars.get(i).getClose() == c) {
                 return true;

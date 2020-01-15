@@ -15,7 +15,7 @@ public class CBMCResultValueStruct implements CBMCResultValue {
             new HashMap<String, CBMCResultValueWrapper>();
 
     @Override
-    public void setValue(Element element) {
+    public void setValue(final Element element) {
         values.clear();
         // we have an object with tag "array", the children are of the form:
         // <element index="n"\>
@@ -40,11 +40,11 @@ public class CBMCResultValueStruct implements CBMCResultValue {
         }
     }
 
-    public void setValue(CBMCResultValueWrapper wrapper, String name) {
+    public void setValue(final CBMCResultValueWrapper wrapper, final String name) {
         values.put(name, wrapper);
     }
 
-    public CBMCResultValueWrapper getResultVariable(String variableName) {
+    public CBMCResultValueWrapper getResultVariable(final String variableName) {
         return values.get(variableName);
     }
 

@@ -25,12 +25,12 @@ public class PropertyDescriptionSaverLoader
 
     @Override
     public PreAndPostConditionsDescription
-                createFromSaveString(String toLoad) throws JsonSyntaxException {
+                createFromSaveString(final String toLoad) throws JsonSyntaxException {
         return saverLoader.fromJson(toLoad, PreAndPostConditionsDescription.class);
     }
 
     @Override
-    public String createSaveString(PreAndPostConditionsDescription toSave) {
+    public String createSaveString(final PreAndPostConditionsDescription toSave) {
         return saverLoader.toJson(toSave);
     }
 }

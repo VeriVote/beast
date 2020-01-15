@@ -30,7 +30,7 @@ public class BoundedVarCodeArea extends AutoCompletionCodeArea implements MenuBa
         this.replaceText(0, 0, sampleCode);
     }
 
-    public void displayErrors(List<CodeError> codeErrors) {
+    public void displayErrors(final List<CodeError> codeErrors) {
         String toDisplay = "";
         for (Iterator<CodeError> iterator = codeErrors.iterator(); iterator.hasNext();) {
             CodeError codeError = (CodeError) iterator.next();
@@ -38,23 +38,22 @@ public class BoundedVarCodeArea extends AutoCompletionCodeArea implements MenuBa
                 "line: " + codeError.getLine()
                 + "| Message: " + codeError.getMsg() + "\n";
         }
-
         GUIController.setErrorText(toDisplay);
     }
 
     /**
-     * sets the description for this property code area (either pre or post prop
-     * description)
+     * Sets the description for this property code area (either pre or post prop
+     * description).
      *
-     * @param description the description
+     * @param descr the description
      */
-    public void setDescription(FormalPropertiesDescription description) {
-        saveDescription(description);
-        this.description = description;
-        this.replaceText(0, this.getLength(), description.getCode());
+    public void setDescription(final FormalPropertiesDescription descr) {
+        saveDescription(descr);
+        this.description = descr;
+        this.replaceText(0, this.getLength(), descr.getCode());
     }
 
-    public void saveDescription(FormalPropertiesDescription newDescription) {
+    public void saveDescription(final FormalPropertiesDescription newDescription) {
         if (this.description != null) {
             this.description.setCode(this.textProperty().getValue());
         }
@@ -111,7 +110,9 @@ public class BoundedVarCodeArea extends AutoCompletionCodeArea implements MenuBa
     }
 
     @Override
-    public void insertAutoCompletion(int start, int end, String toInsert) {
+    public void insertAutoCompletion(final int start,
+                                     final int end,
+                                     final String toInsert) {
         replaceText(start, end, toInsert);
     }
 }

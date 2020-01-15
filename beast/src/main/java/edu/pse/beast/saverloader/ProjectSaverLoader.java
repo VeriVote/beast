@@ -20,13 +20,13 @@ public class ProjectSaverLoader implements SaverLoader<Project> {
     }
 
     @Override
-    public Project createFromSaveString(String toLoad) throws Exception { // TODO
+    public Project createFromSaveString(final String toLoad) throws Exception { // TODO
         System.out.println("TODO: save string project");
         return saverLoader.fromJson(toLoad, Project.class);
     }
 
     @Override
-    public String createSaveString(Project toSave) { // TODO
+    public String createSaveString(final Project toSave) { // TODO
         System.out.println("TODO: save string project");
         return saverLoader.toJson(toSave);
     }

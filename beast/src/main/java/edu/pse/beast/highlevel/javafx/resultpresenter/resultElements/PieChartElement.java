@@ -11,17 +11,23 @@ import edu.pse.beast.toolbox.Tuple3;
 import javafx.scene.input.MouseEvent;
 
 public class PieChartElement extends ResultImageElement {
+    private static final int CIRCLE_ANGLE = 360;
     private List<Tuple3<String, Double, Color>> resultValues;
     private double totalSize = 0;
     private double width = 0;
     private double height = 0;
 
-    public PieChartElement(double xPosTopLeft, double yPosTopLeft, double width, double height,
-            List<Tuple3<String, Double, Color>> resultValues) {
-        super(xPosTopLeft, yPosTopLeft, xPosTopLeft + width, yPosTopLeft + height);
-        this.resultValues = resultValues;
-        this.width = width;
-        this.height = height;
+    public PieChartElement(final double xPositionTopLeft,
+                           final double yPositionTopLeft,
+                           final double chartWidth,
+                           final double chartHeight,
+                           final List<Tuple3<String, Double, Color>> resultVals) {
+        super(xPositionTopLeft, yPositionTopLeft,
+                xPositionTopLeft + chartWidth,
+                yPositionTopLeft + chartHeight);
+        this.resultValues = resultVals;
+        this.width = chartWidth;
+        this.height = chartHeight;
         init();
     }
 
@@ -32,12 +38,12 @@ public class PieChartElement extends ResultImageElement {
         List<Tuple3<String, Double, Color>> remove
                 = new LinkedList<Tuple3<String, Double, Color>>();
         for (Tuple3<String, Double, Color> value : resultValues) {
-            if (value.second == 0) {
+            if (value.second() == 0) {
                 System.err.println("You are not allowed to have fields "
                                    + "with zero size in this chart");
                 remove.add(value); //remove this element from the chart
             } else {
-                tmpSize += Math.abs(value.second);
+                tmpSize += Math.abs(value.second());
             }
         }
         resultValues.removeAll(remove);
@@ -45,12 +51,12 @@ public class PieChartElement extends ResultImageElement {
     }
 
     @Override
-    public void isClicked(MouseEvent event) {
+    public void isClicked(final MouseEvent event) {
         //do nothing so far
     }
 
     @Override
-    public void drawElement(Graphics2D graphics, double scale) {
+    public void drawElement(final Graphics2D graphics, final double scale) {
         if (totalSize == 0) {
             System.err.println("The pie chart was not given a size larger than zero!");
         } else {
@@ -59,11 +65,12 @@ public class PieChartElement extends ResultImageElement {
                     iterator.hasNext();) {
                 Tuple3<String, Double, Color> value
                     = (Tuple3<String, Double, Color>) iterator.next();
-                double neededAngle = 360 * (value.second / totalSize);
+                double neededAngle = CIRCLE_ANGLE * (value.second() / totalSize);
                 if (!iterator.hasNext()) { // this is the last element, so we have to fill
-                    neededAngle = 360 - currentAngle; //so we have to fill the rest of the circle
+                    // so we have to fill the rest of the circle
+                    neededAngle = CIRCLE_ANGLE - currentAngle;
                 }
-                graphics.setColor(value.third);
+                graphics.setColor(value.third());
                 graphics.fill(new Arc2D.Double(super.getxPosTopLeft() * scale,
                                                super.getyPosTopLeft() * scale,
                                                width * scale, height * scale,

@@ -14,17 +14,18 @@ import edu.pse.beast.codearea.syntaxhighlighting.SyntaxHL;
  * @author Nikolai Schnell
  */
 public class BooleanExpSyntaxHL {
-    private static final String REGEX
-          = "(ELECT[0-9]+\\([a-zA-Z_]*\\))|(VOTES[0-9]+\\([a-zA-Z_]*\\))";
+    private static final String REGEX =
+            "(ELECT[0-9]+\\([a-zA-Z_]*\\))|(VOTES[0-9]+\\([a-zA-Z_]*\\))";
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param antlrHandler the BooleanExpANTLRHandler, provides regular expressions
      *                     StringLists.
      * @param syntaxHL     the BooleanExpEditorCodeAreas SyntaxHL class.
      */
-    public BooleanExpSyntaxHL(BooleanExpANTLRHandler antlrHandler, SyntaxHL syntaxHL) {
+    public BooleanExpSyntaxHL(final BooleanExpANTLRHandler antlrHandler,
+                              final SyntaxHL syntaxHL) {
         ArrayList<RegexAndColor> regexAndColorList = new ArrayList<>();
         for (String s : antlrHandler.getComparisonSymbols()) {
             regexAndColorList.add(new RegexAndColor(s, Color.RED));

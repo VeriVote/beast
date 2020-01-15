@@ -25,19 +25,20 @@ public class PropertyItem implements ResultPresenterElement {
     private Result result;
 
     /**
-     * Constructor for the class
+     * Constructor for the class.
      *
      * @param descr                The property description to add to the property item
      * @param testStatus           Sets whether the property will be analyzed in the next
      *                             check
-     * @param willBeMarginComputed whether the margin will be computed
+     * @param computeMargin whether the margin will be computed
      */
-    public PropertyItem(PreAndPostConditionsDescription descr, boolean testStatus,
-                        boolean willBeMarginComputed) {
+    public PropertyItem(final PreAndPostConditionsDescription descr,
+                        final boolean testStatus,
+                        final boolean computeMargin) {
         description = descr;
         willBeTested = testStatus;
 
-        this.willBeMarginComputed = willBeMarginComputed;
+        this.willBeMarginComputed = computeMargin;
 
         resultType = ResultType.UNTESTED;
     }
@@ -47,7 +48,7 @@ public class PropertyItem implements ResultPresenterElement {
      *
      * @param descr The property description to add to the property item
      */
-    public PropertyItem(PreAndPostConditionsDescription descr) {
+    public PropertyItem(final PreAndPostConditionsDescription descr) {
         this(descr, true, false);
     }
 
@@ -56,7 +57,8 @@ public class PropertyItem implements ResultPresenterElement {
      * description and a blank description.
      */
     public PropertyItem() {
-        this(new PreAndPostConditionsDescription(UUID.randomUUID().toString()), false, false);
+        this(new PreAndPostConditionsDescription(UUID.randomUUID().toString()),
+             false, false);
     }
 
     public Result getResult() {
@@ -64,7 +66,7 @@ public class PropertyItem implements ResultPresenterElement {
     }
 
     @Override
-    public void presentCanceled(boolean isTimeout) {
+    public void presentCanceled(final boolean isTimeout) {
         if (isTimeout) {
             resultType = ResultType.TIMEOUT;
         } else {
@@ -78,29 +80,29 @@ public class PropertyItem implements ResultPresenterElement {
     }
 
     @Override
-    public void presentFailure(List<String> error) {
+    public void presentFailure(final List<String> errorList) {
         resultType = ResultType.FAILURE;
-        this.setError(error);
+        this.setError(errorList);
     }
 
     @Override
-    public void presentFailureExample(Result result) {
+    public void presentFailureExample(final Result resultVal) {
         resultType = ResultType.FAILUREEXAMPLE;
-        this.result = result;
+        this.result = resultVal;
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
-        int result = 1;
-        result = prime * result
+        int resultVal = 1;
+        resultVal = prime * resultVal
                 + ((description == null)
                         ? 0 : description.hashCode());
-        return result;
+        return resultVal;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (o == null || this.getClass() != o.getClass()) {
             return false;
         }
@@ -113,7 +115,7 @@ public class PropertyItem implements ResultPresenterElement {
         return description;
     }
 
-    public void setDescription(PreAndPostConditionsDescription descr) {
+    public void setDescription(final PreAndPostConditionsDescription descr) {
         this.description = descr;
     }
 
@@ -135,11 +137,11 @@ public class PropertyItem implements ResultPresenterElement {
         return this.description.getName();
     }
 
-    public void setTestStatus(boolean newStatus) {
+    public void setTestStatus(final boolean newStatus) {
         willBeTested = newStatus;
     }
 
-    public void setMarginStatus(boolean newStatus) {
+    public void setMarginStatus(final boolean newStatus) {
         willBeMarginComputed = newStatus;
     }
 
@@ -151,16 +153,16 @@ public class PropertyItem implements ResultPresenterElement {
         return resultType;
     }
 
-    public void setResultType(ResultType resultType) {
-        this.resultType = resultType;
+    public void setResultType(final ResultType resType) {
+        this.resultType = resType;
     }
 
     public List<String> getError() {
         return error;
     }
 
-    public void setError(List<String> error) {
-        this.error = error;
+    public void setError(final List<String> errorList) {
+        this.error = errorList;
     }
 
     public boolean getMarginStatus() {
@@ -168,7 +170,7 @@ public class PropertyItem implements ResultPresenterElement {
     }
 
     @Override
-    public void present(Result resultToPresent) {
+    public void present(final Result resultToPresent) {
         this.result = resultToPresent;
         this.resultType = ResultType.FAILUREEXAMPLE;
     }

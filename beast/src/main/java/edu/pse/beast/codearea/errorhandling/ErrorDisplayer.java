@@ -24,6 +24,9 @@ import edu.pse.beast.toolbox.Tuple;
  * @author Holger Klein
  */
 public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMotionListener {
+    private static final int MIN_MOUSE_MOVE = 10;
+    private static final int DISMISS_DELAY = 10000;
+
     private StringResourceLoader currentStringResLoader;
     private JTextPane pane;
 
@@ -33,16 +36,17 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
     private ArrayList<Object> highLights = new ArrayList<>();
     private ErrorPopupMenu errorPopupMenu;
 
-    public ErrorDisplayer(JTextPane pane, StringResourceLoader currentStringResLoader) {
+    public ErrorDisplayer(final JTextPane textPane,
+                          final StringResourceLoader currStrResLoader) {
         absPosToMsg = new ArrayList<>();
         msges = new ArrayList<>();
         ToolTipManager.sharedInstance().setInitialDelay(1);
-        ToolTipManager.sharedInstance().setDismissDelay(10000);
-        this.pane = pane;
-        pane.addMouseMotionListener(this);
+        ToolTipManager.sharedInstance().setDismissDelay(DISMISS_DELAY);
+        this.pane = textPane;
+        textPane.addMouseMotionListener(this);
         this.painter = new SquigglePainter(Color.red);
-        this.currentStringResLoader = currentStringResLoader;
-        errorPopupMenu = new ErrorPopupMenu(pane);
+        this.currentStringResLoader = currStrResLoader;
+        errorPopupMenu = new ErrorPopupMenu(textPane);
     }
 
     protected StringResourceLoader getStringResourceLoader() {
@@ -53,7 +57,7 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         return this.pane;
     }
 
-    protected void setStringResourceLoader(StringResourceLoader stringResLoader) {
+    protected void setStringResourceLoader(final StringResourceLoader stringResLoader) {
         this.currentStringResLoader = stringResLoader;
     }
 
@@ -64,7 +68,7 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
      *
      * @param errors the errors to be presented
      */
-    public void showErrors(ArrayList<CodeError> errors) {
+    public void showErrors(final ArrayList<CodeError> errors) {
         absPosToMsg = new ArrayList<>();
         msges = new ArrayList<>();
 
@@ -74,7 +78,7 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         pane.repaint();
     }
 
-    protected void showError(CodeError er, String msg) {
+    protected void showError(final CodeError er, final String msg) {
         int startpos = er.getStartPos();
         int endpos = er.getEndPos();
         if (startpos == endpos) {
@@ -110,7 +114,7 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
      * @param e
      */
     @Override
-    public void mouseMoved(MouseEvent e) {
+    public void mouseMoved(final MouseEvent e) {
         Point pt = new Point(e.getX(), e.getY());
         int pos = pane.viewToModel2D(pt);
         if (pos == JTextPaneToolbox.getText(pane).length()) {
@@ -118,13 +122,13 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
             // errorPopupMenu.setVisible(false);
             return;
         }
-        if (Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10
-                && Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < 10
+        if (Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < MIN_MOUSE_MOVE
+                && Math.abs(errorPopupMenu.getLocation().x - pt.getX()) < MIN_MOUSE_MOVE
                 && errorPopupMenu.isVisible()) {
             return;
         }
         for (int i = 0; i < absPosToMsg.size(); ++i) {
-            if (absPosToMsg.get(i).first <= pos && absPosToMsg.get(i).second >= pos) {
+            if (absPosToMsg.get(i).first() <= pos && absPosToMsg.get(i).second() >= pos) {
                 pane.setToolTipText(msges.get(i));
                 // errorPopupMenu.getErrorItem().setText(msges.get(i));
                 // errorPopupMenu.show(pane, e.getX(), e.getY() + 20);
@@ -138,6 +142,6 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
     }
 
     @Override
-    public void mouseDragged(MouseEvent e) {
+    public void mouseDragged(final MouseEvent e) {
     }
 }

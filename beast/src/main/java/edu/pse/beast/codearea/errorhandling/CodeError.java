@@ -15,23 +15,27 @@ public class CodeError {
     private int endPos;
     private HashMap<String, String> extraInfo = new HashMap<>();
 
-    public CodeError(int line, int posInLine,
-                     String id, int errorNumber,
-                     int startPos, int endPos) {
-        this.line = line;
-        this.posInLine = posInLine;
-        this.id = id;
-        this.errorNumber = errorNumber;
-        this.startPos = startPos;
-        this.endPos = endPos;
+    public CodeError(final int lineNum,
+                     final int positionInLine,
+                     final String idString,
+                     final int errorNum,
+                     final int startPosition,
+                     final int endPosition) {
+        this.line = lineNum;
+        this.posInLine = positionInLine;
+        this.id = idString;
+        this.errorNumber = errorNum;
+        this.startPos = startPosition;
+        this.endPos = endPosition;
     }
 
-    public String getExtraInfo(String id) {
-        return extraInfo.get(id);
+    public String getExtraInfo(final String idString) {
+        return extraInfo.get(idString);
     }
 
-    public void setExtraInfo(String id, String extra) {
-        extraInfo.put(id, extra);
+    public void setExtraInfo(final String idString,
+                             final String extra) {
+        extraInfo.put(idString, extra);
     }
 
     public String getId() {
@@ -58,15 +62,15 @@ public class CodeError {
         return startPos;
     }
 
-    public void setStartPos(int startPos) {
-        this.startPos = startPos;
+    public void setStartPos(final int startPosition) {
+        this.startPos = startPosition;
     }
 
     public int getEndPos() {
         return endPos;
     }
 
-    public void setEndPos(int endPos) {
-        this.endPos = endPos;
+    public void setEndPos(final int endPosition) {
+        this.endPos = endPosition;
     }
 }

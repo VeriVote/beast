@@ -14,12 +14,12 @@ public class CBMCResultValueArray implements CBMCResultValue {
 
     private List<CBMCResultValueWrapper> values = new ArrayList<CBMCResultValueWrapper>();
 
-    public void setValue(List<CBMCResultValueWrapper> values) {
-        this.values = values;
+    public void setValue(final List<CBMCResultValueWrapper> vals) {
+        this.values = vals;
     }
 
     @Override
-    public void setValue(Element element) {
+    public void setValue(final Element element) {
         values.clear();
         // we have an object with tag "array", the children are of the form:
         // <element index="n"\>
@@ -43,13 +43,14 @@ public class CBMCResultValueArray implements CBMCResultValue {
             }
             int index = Integer.parseInt(childElement.getAttributes()
                             .getNamedItem(INDEX_NAME).getNodeValue());
-            if (index != currentPos) {
-                // throw new RuntimeException("mismatch between indices when
-                // creating an array");
-            } else {
+            if (index == currentPos) {
                 values.add(new CBMCResultValueWrapper(
                         childElement.getFirstChild()));
             }
+            // else {
+                // throw new RuntimeException("mismatch between indices when
+                // creating an array");
+            // }
             currentPos++;
             nextNode = childElement.getNextSibling();
         }

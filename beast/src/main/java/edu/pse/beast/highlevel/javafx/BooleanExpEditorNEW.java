@@ -33,40 +33,42 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
 
     private final SaverLoader saverLoader;
 
-    private final PropertyDescriptionSaverLoader propSaverLoader
-                        = new PropertyDescriptionSaverLoader();
+    private final PropertyDescriptionSaverLoader propSaverLoader =
+            new PropertyDescriptionSaverLoader();
 
     private final ObservableList<TreeItem<String>> symbolicVoterVariableList;
     private final ObservableList<TreeItem<String>> symbolicCandidateVariableList;
     private final ObservableList<TreeItem<String>> symbolicSeatVariableList;
     private NewPropertyCodeArea focusedPane;
 
-    public BooleanExpEditorNEW(NewPropertyCodeArea preArea, NewPropertyCodeArea postArea,
-                               BoundedVarCodeArea boundedVarArea,
-                               PreAndPostConditionsDescription propDesc,
-                               ParentTreeItem currentItem) {
-        preArea.setParent(this);
-        postArea.setParent(this);
+    public BooleanExpEditorNEW(final NewPropertyCodeArea prePropertyArea,
+                               final NewPropertyCodeArea postPropertyArea,
+                               final BoundedVarCodeArea boundedVarCodeArea,
+                               final PreAndPostConditionsDescription propDesc,
+                               final ParentTreeItem currentTreeItem) {
+        prePropertyArea.setParent(this);
+        postPropertyArea.setParent(this);
         this.saverLoader = new SaverLoader(".prop", "BEAST property description", this);
-        this.preArea = preArea;
-        this.postArea = postArea;
-        this.boundedVarArea = boundedVarArea;
+        this.preArea = prePropertyArea;
+        this.postArea = postPropertyArea;
+        this.boundedVarArea = boundedVarCodeArea;
         this.currentPropertyDescription = propDesc;
-        this.currentItem = currentItem;
-        this.symbolicVoterVariableList
-            = GUIController.getController().getVoterTreeItems().getChildren();
-        this.symbolicCandidateVariableList
-            = GUIController.getController().getCandidateTreeItems().getChildren();
-        this.symbolicSeatVariableList
-            = GUIController.getController().getSeatTreeItems().getChildren();
+        this.currentItem = currentTreeItem;
+        this.symbolicVoterVariableList =
+                GUIController.getController().getVoterTreeItems().getChildren();
+        this.symbolicCandidateVariableList =
+                GUIController.getController().getCandidateTreeItems().getChildren();
+        this.symbolicSeatVariableList =
+                GUIController.getController().getSeatTreeItems().getChildren();
     }
 
-    public boolean containsVarName(String name) {
+    public boolean containsVarName(final String name) {
         return getSymbolicVariableNames().stream().anyMatch(str -> str.equals(name));
     }
 
-    public synchronized String addSymbVar(InternalTypeContainer container,
-                                          String toAdd, boolean fromExisting) {
+    public synchronized String addSymbVar(final InternalTypeContainer container,
+                                          final String toAdd,
+                                          final boolean fromExisting) {
         if (toAdd.equals("")) {
             return "";
         }
@@ -99,7 +101,7 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
         return addedString;
     }
 
-    public void removeVariable(String name) {
+    public void removeVariable(final String name) {
         List<SymbolicVariable> toRemove = new LinkedList<SymbolicVariable>();
         for (SymbolicVariable variable : getAllSymbolicVariables().getSymbolicVariables()) {
             if (variable.getId().equals(name)) {
@@ -168,21 +170,22 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
                 .addSymbolicVariableList(getAllSymbolicVariables());
     }
 
-    public void updatePropertyTextAreas(PreAndPostConditionsDescription description) {
+    public void updatePropertyTextAreas(final PreAndPostConditionsDescription description) {
         preArea.setDescription(description.getPreConditionsDescription());
         postArea.setDescription(description.getPostConditionsDescription());
         boundedVarArea.setDescription(description.getBoundedVarDescription());
     }
 
-    public synchronized void setCurrentPropertyDescription(ParentTreeItem propertyItem,
-                                                           boolean bringToFront) {
+    public synchronized void setCurrentPropertyDescription(final ParentTreeItem propertyItem,
+                                                           final boolean bringToFront) {
         savePropertyTextAreasIntoDescription();
         this.currentPropertyDescription = propertyItem.getPreAndPostProperties();
         this.currentItem = propertyItem;
         this.removeAllVariables();
         updatePropertyTextAreas(currentPropertyDescription);
 
-        for (SymbolicVariable variable : currentPropertyDescription.getSymbolicVariablesAsList()) {
+        for (SymbolicVariable variable
+                : currentPropertyDescription.getSymbolicVariablesAsList()) {
             this.addSymbVar(variable.getInternalTypeContainer(), variable.getId(), true);
         }
         if (bringToFront) {
@@ -211,7 +214,7 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
     // }
 
     /**
-     * clears all fields of the editor
+     * Clears all fields of the editor.
      */
     public void clear() {
         this.removeAllVariables();
@@ -219,7 +222,7 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
         this.postArea.clear();
     }
 
-    private PreAndPostConditionsDescription convert(String json) {
+    private PreAndPostConditionsDescription convert(final String json) {
         PreAndPostConditionsDescription newDescription = null;
         if (!json.equals("")) {
             try {
@@ -250,7 +253,7 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
         return toReturn;
     }
 
-    public PreAndPostConditionsDescription open(File file) {
+    public PreAndPostConditionsDescription open(final File file) {
         return convert(saverLoader.load(file));
     }
 
@@ -282,7 +285,8 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
         saverLoader.saveAs("", json);
     }
 
-    public void saveAs(PreAndPostConditionsDescription description, File file) {
+    public void saveAs(final PreAndPostConditionsDescription description,
+                       final File file) {
         savePropertyTextAreasIntoDescription();
         String json = propSaverLoader.createSaveString(description);
         saverLoader.saveAs(file, json);
@@ -354,7 +358,7 @@ public class BooleanExpEditorNEW implements MenuBarInterface {
         return toReturn;
     }
 
-    public void setFocused(NewPropertyCodeArea pane) {
+    public void setFocused(final NewPropertyCodeArea pane) {
         this.focusedPane = pane;
     }
 }

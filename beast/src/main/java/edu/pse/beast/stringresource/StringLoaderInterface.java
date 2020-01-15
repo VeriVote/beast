@@ -18,7 +18,7 @@ public class StringLoaderInterface {
      *
      * @param languageId the languageId. choose "de" for german
      */
-    public StringLoaderInterface(String languageId) {
+    public StringLoaderInterface(final String languageId) {
         propListStr = new PropertyListStringResProvider(languageId);
         booleanExpStr = new BooleanExpEditorStringResProvider(languageId);
         cElecStr = new CElectionEditorStringResProvider(languageId);
@@ -70,7 +70,7 @@ public class StringLoaderInterface {
      *
      * @param languageId sets language. Use "de" for german
      */
-    public void setLanguage(String languageId) {
+    public void setLanguage(final String languageId) {
         propListStr.changeLanguage(languageId);
         booleanExpStr.changeLanguage(languageId);
         cElecStr.changeLanguage(languageId);

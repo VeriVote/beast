@@ -34,20 +34,22 @@ enum CDATATYPE {
  *
  */
 public class CBMCResult extends Result {
-    /**
-     * this xml tag contains the result of the cbmc run
-     */
-    private transient static final String RESULT_TAG = "cprover-status";
+    private static final int WIN_OFFSET = 8;
 
     /**
-     * this will be printed in the above mentioned tag, if it was successful
+     * This xml tag contains the result of the cbmc run.
      */
-    private transient static final String SUCCESS_IDENTIFIER = "SUCCESS";
+    private static final transient String RESULT_TAG = "cprover-status";
 
     /**
-     * this will be printed in the above mentioned tag, if it failued
+     * This will be printed in the above mentioned tag, if it was successful.
      */
-    private transient static final String FAILURE_IDENTIFIER = "FAILURE";
+    private static final transient String SUCCESS_IDENTIFIER = "SUCCESS";
+
+    /**
+     * This will be printed in the above mentioned tag, if it failed.
+     */
+    private static final transient String FAILURE_IDENTIFIER = "FAILURE";
 
     // the charset in which we want to present the data to the xml parser
     // private transient Charset charSet = new UTF_16();
@@ -59,22 +61,25 @@ public class CBMCResult extends Result {
             new HashMap<String, List<ResultValueWrapper>>();
     // the element containing all previous
     private transient Document rootElement = null;
+
     public CBMCResult() {
         // empty constructor
     }
+
     private void reset() {
         this.valueCache.clear();
         this.rootElement = null;
         this.isInitialized();
     }
+
     @Override
-    public void setResult(List<String> result) {
+    public void setResult(final List<String> result) {
         reset();
         super.setResult(result);
         if (result != null) {
             parseResult(); // get the xml list from this list of strings
-            String[] arr = { "votes\\d", "elect\\d" }; // TODO add the
-                                                       // NameContainer here
+            String[] arr = {"votes\\d", "elect\\d"}; // TODO add the
+                                                     // NameContainer here
             readVariableValue(Arrays.asList(arr)); // already read "votes" and
                                                    // "elect", so the access can
                                                    // be faster
@@ -86,7 +91,7 @@ public class CBMCResult extends Result {
         OperatingSystems os = CBMCProcessFactory.determineOS();
         switch (os) {
         case Windows:
-            offset = 8;
+            offset = WIN_OFFSET;
             break;
         case Linux:
             offset = 0;
@@ -113,7 +118,7 @@ public class CBMCResult extends Result {
     }
 
     @Override
-    public List<ResultValueWrapper> readVariableValue(String variableMatcher) {
+    public List<ResultValueWrapper> readVariableValue(final String variableMatcher) {
         List<String> arg = new LinkedList<String>();
         arg.add(variableMatcher);
         if (valueCache.containsKey(variableMatcher)) {
@@ -124,14 +129,14 @@ public class CBMCResult extends Result {
         return valueCache.get(variableMatcher);
     }
 
-    private Map<String, List<ResultValueWrapper>> readVariableValue(List<String> variablesToFind) {
+    private Map<String, List<ResultValueWrapper>>
+                readVariableValue(final List<String> variablesToFind) {
         HashMap<String, List<ResultValueWrapper>> toReturn =
                 new HashMap<String, List<ResultValueWrapper>>();
         if (isInitialized()) {
-            for (Iterator<String> iterator =
-                    variablesToFind.iterator(); iterator.hasNext();) {
+            for (Iterator<String> iterator = variablesToFind.iterator();
+                    iterator.hasNext();) {
                 String currentMatcher = (String) iterator.next();
-
                 if (valueCache.containsKey(currentMatcher)) { // the variable was requested
                                                               // before
                     toReturn.put(currentMatcher,
@@ -143,8 +148,8 @@ public class CBMCResult extends Result {
             List<Tuple<String, List<ResultValueWrapper>>> newValues =
                     CBMCxmlParser.extractVariables(rootElement, variablesToFind);
             for (int i = 0; i < newValues.size(); i++) {
-                valueCache.put(newValues.get(i).first, newValues.get(i).second);
-                toReturn.put(newValues.get(i).first, newValues.get(i).second);
+                valueCache.put(newValues.get(i).first(), newValues.get(i).second());
+                toReturn.put(newValues.get(i).first(), newValues.get(i).second());
             }
             return toReturn;
         } else {
@@ -174,7 +179,7 @@ public class CBMCResult extends Result {
         }
     }
 
-    private boolean checkAssertion(String identifier) {
+    private boolean checkAssertion(final String identifier) {
         if (isInitialized()) {
             NodeList resultElements = rootElement.getElementsByTagName(RESULT_TAG);
             if (resultElements.getLength() == 0) {

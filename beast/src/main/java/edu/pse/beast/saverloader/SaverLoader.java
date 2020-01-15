@@ -9,7 +9,7 @@ package edu.pse.beast.saverloader;
 public interface SaverLoader<T> {
 
     /**
-     * Creates an object from a given, by createSaveString() generated, saveString
+     * Creates an object from a given, by createSaveString() generated, saveString.
      *
      * @param saveString the saveString
      * @return the object

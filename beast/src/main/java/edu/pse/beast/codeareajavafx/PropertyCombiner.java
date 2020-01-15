@@ -18,16 +18,18 @@ public class PropertyCombiner extends TabClass {
     private boolean hasSaveFile = false;
     private File saveFile = null;
 
-    public PropertyCombiner(Tab associatedTab, String fileEnding,
-                            String initialDir,
-                            String fileExtensionDescription) {
+    public PropertyCombiner(final Tab associatedTab, final String fileEnd,
+                            final String initDir,
+                            final String fileExtensionDescr) {
         super(associatedTab);
-        this.fileEnding = fileEnding;
-        this.initialDir = initialDir;
-        this.fileExtensionDescription = fileExtensionDescription;
+        this.fileEnding = fileEnd;
+        this.initialDir = initDir;
+        this.fileExtensionDescription = fileExtensionDescr;
     }
 
-    public void save(String fileName, String preText, String postText) {
+    public void save(final String fileName,
+                     final String preText,
+                     final String postText) {
         if (hasSaveFile) {
             if (saveFile != null) {
                 save(saveFile, preText, postText);
@@ -37,7 +39,9 @@ public class PropertyCombiner extends TabClass {
         }
     }
 
-    public void save(File toSaveIn, String preText, String postText) {
+    public void save(final File toSaveIn,
+                     final String preText,
+                     final String postText) {
         PrintWriter out = null;
         try {
             out = new PrintWriter(toSaveIn);
@@ -52,7 +56,9 @@ public class PropertyCombiner extends TabClass {
         }
     }
 
-    public void saveAs(String fileName, String preText, String postText) {
+    public void saveAs(final String fileName,
+                       final String preText,
+                       final String postText) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
                 fileExtensionDescription + " (*" + fileEnding + ")", "*." + fileEnding));
@@ -72,7 +78,8 @@ public class PropertyCombiner extends TabClass {
         }
     }
 
-    public void load(NewPropertyCodeArea preCodeArea, NewPropertyCodeArea postCodeArea) {
+    public void load(final NewPropertyCodeArea preCodeArea,
+                     final NewPropertyCodeArea postCodeArea) {
         FileChooser fileChooser = new FileChooser();
         // fileChooser.setTitle("Load document");
         fileChooser.setInitialDirectory(new File(initialDir));
@@ -85,8 +92,8 @@ public class PropertyCombiner extends TabClass {
         }
     }
 
-    public void load(File toLoadFrom, NewPropertyCodeArea preCodeArea,
-                     NewPropertyCodeArea postCodeArea) {
+    public void load(final File toLoadFrom, final NewPropertyCodeArea preCodeArea,
+                     final NewPropertyCodeArea postCodeArea) {
         try {
             FileInputStream fis = new FileInputStream(toLoadFrom);
             DataInputStream dis = new DataInputStream(fis);

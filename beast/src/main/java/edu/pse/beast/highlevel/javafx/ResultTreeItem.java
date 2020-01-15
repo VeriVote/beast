@@ -21,9 +21,9 @@ public class ResultTreeItem extends CustomTreeItem {
     private Label name = new Label("Result");
     private Button button = new Button("delete");
 
-    public ResultTreeItem(Result result, ChildTreeItem owner) {
-        this.result = result;
-        this.owner = owner;
+    public ResultTreeItem(final Result resultVal, final ChildTreeItem ownerItem) {
+        this.result = resultVal;
+        this.owner = ownerItem;
         this.result.setOwner(this);
         init();
     }
@@ -35,7 +35,7 @@ public class ResultTreeItem extends CustomTreeItem {
         });
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(final MouseEvent event) {
                 wasClicked();
             }
         });

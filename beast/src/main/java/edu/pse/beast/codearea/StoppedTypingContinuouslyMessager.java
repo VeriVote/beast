@@ -12,7 +12,7 @@ import javax.swing.event.CaretListener;
  * This class messages all its listeners whenever the user stopped typing
  * continuously. This happens if either he pressed a directional key, typed a
  * newline, or the caret position changed by more than + 1. It also occurs if
- * the user deletes text
+ * the user deletes text.
  *
  * @author Holger Klein
  */
@@ -22,24 +22,24 @@ public class StoppedTypingContinuouslyMessager implements KeyListener, CaretList
     private final ArrayList<StoppedTypingContinuouslyListener> listener = new ArrayList<>();
     private int currentCaretPos = 0;
 
-    public StoppedTypingContinuouslyMessager(JTextPane pane) {
-        this.pane = pane;
-        pane.addKeyListener(this);
-        pane.addCaretListener(this);
+    public StoppedTypingContinuouslyMessager(final JTextPane textPane) {
+        this.pane = textPane;
+        textPane.addKeyListener(this);
+        textPane.addCaretListener(this);
     }
 
     /**
-     * adds the supplied listener so it will in future be notified if the user stops
-     * typing continuously
+     * Adds the supplied listener so it will in future be notified if the user stops
+     * typing continuously.
      *
      * @param l the object to be notified
      */
-    public void addListener(StoppedTypingContinuouslyListener l) {
+    public void addListener(final StoppedTypingContinuouslyListener l) {
         listener.add(l);
     }
 
     @Override
-    public void keyTyped(KeyEvent ke) {
+    public void keyTyped(final KeyEvent ke) {
         if (ke.getKeyCode() == KeyEvent.VK_ENTER || ke.getKeyCode() == KeyEvent.VK_RIGHT) {
             msgAllListener(pane.getCaretPosition() + 1);
         } else if (ke.getKeyCode() == KeyEvent.VK_DELETE) {
@@ -48,22 +48,22 @@ public class StoppedTypingContinuouslyMessager implements KeyListener, CaretList
     }
 
     @Override
-    public void keyPressed(KeyEvent ke) {
+    public void keyPressed(final KeyEvent ke) {
     }
 
     @Override
-    public void keyReleased(KeyEvent ke) {
+    public void keyReleased(final KeyEvent ke) {
     }
 
     @Override
-    public void caretUpdate(CaretEvent ce) {
+    public void caretUpdate(final CaretEvent ce) {
         if (ce.getDot() != currentCaretPos + 1 && ce.getDot() != currentCaretPos) {
             msgAllListener(ce.getDot());
         }
         currentCaretPos = ce.getDot();
     }
 
-    private void msgAllListener(int newCaretPos) {
+    private void msgAllListener(final int newCaretPos) {
         for (StoppedTypingContinuouslyListener l : listener) {
             l.stoppedTypingContinuously(newCaretPos);
         }

@@ -1,19 +1,19 @@
 package edu.pse.beast.codearea.useractions;
 
-import edu.pse.beast.codearea.actionlist.Actionlist;
+import edu.pse.beast.codearea.actionlist.ActionList;
 import edu.pse.beast.toolbox.UserAction;
 
 /**
- * this useraction asks the given actionlist to undo the last action
+ * This useraction asks the given actionlist to undo the last action.
  *
  * @author Holger Klein
  */
 public class UndoLastUserAction extends UserAction {
-    private Actionlist list;
+    private ActionList list;
 
-    public UndoLastUserAction(Actionlist list) {
+    public UndoLastUserAction(final ActionList actList) {
         super("undo");
-        this.list = list;
+        this.list = actList;
     }
 
     @Override

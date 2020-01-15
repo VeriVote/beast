@@ -28,7 +28,7 @@ public class SingleCandidate extends CBMCOutputType {
     }
 
     @Override
-    public CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code) {
+    public CodeArrayListBeautifier addMarginVerifyCheck(final CodeArrayListBeautifier code) {
         code.add("void verifyMain() {");
         // code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" +
         // UnifiedNameContainer.getVoter() + "], diff[" +
@@ -47,8 +47,8 @@ public class SingleCandidate extends CBMCOutputType {
     }
 
     @Override
-    public CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code,
-                                                        int voteNumber) {
+    public CodeArrayListBeautifier addVotesArrayAndInit(final CodeArrayListBeautifier code,
+                                                        final int voteNumber) {
         String electX = "unsigned int elect" + voteNumber;
         electX = electX + getCArrayType();
         code.add(electX + ";");
@@ -69,7 +69,7 @@ public class SingleCandidate extends CBMCOutputType {
     }
 
     @Override
-    public String getResultDescriptionString(List<String> result) {
+    public String getResultDescriptionString(final List<String> result) {
         String toReturn = "winner: ";
         try {
             toReturn = GUIController.getController().getElectionSimulation()

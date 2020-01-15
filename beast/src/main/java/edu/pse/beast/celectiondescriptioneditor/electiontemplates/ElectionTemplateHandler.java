@@ -14,7 +14,7 @@ public class ElectionTemplateHandler {
     private final ArrayList<ElectionTypeContainer> resTypes = new ArrayList<>();
 
     /**
-     * creates the template handler and sets it up for usage
+     * Creates the template handler and sets it up for usage.
      */
     public ElectionTemplateHandler() {
     }

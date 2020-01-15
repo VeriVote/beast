@@ -40,7 +40,7 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
         = "*" + FileLoader.C_FILE_ENDING;
 
     @Override
-    public Process checkCodeFileForErrors(File toCheck) {
+    public Process checkCodeFileForErrors(final File toCheck) {
         String vsCmd = null;
         Process startedProcess = null;
         String userIncludeAndPath
@@ -103,9 +103,9 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
     }
 
     @Override
-    protected List<CodeError> parseError(List<String> result,
-                                         List<String> errors,
-                                         int lineOffset) {
+    protected List<CodeError> parseError(final List<String> result,
+                                         final List<String> errors,
+                                         final int lineOffset) {
         List<CodeError> codeErrors = new ArrayList<CodeError>();
 
         // errors are displayed like "(LINENUMBER)" where line number is a whole

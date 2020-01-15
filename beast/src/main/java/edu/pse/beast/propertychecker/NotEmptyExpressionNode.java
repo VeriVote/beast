@@ -6,22 +6,31 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.No
 
 public class NotEmptyExpressionNode extends BooleanExpressionNode {
 
-    public final NotEmptyExpContext context;
-    public final boolean isTop;
+    private final NotEmptyExpContext context;
+    private final boolean isTop;
 
-    public NotEmptyExpressionNode(NotEmptyExpContext context, boolean isTop) {
-        this.context = context;
-        this.isTop = isTop;
+    public NotEmptyExpressionNode(final NotEmptyExpContext notEmptyExpContext,
+                                  final boolean top) {
+        this.context = notEmptyExpContext;
+        this.isTop = top;
     }
 
     @Override
-    public void getVisited(BooleanExpNodeVisitor visitor) {
+    public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitNotEmptyExpNode(this);
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    public NotEmptyExpContext getContext() {
+        return context;
+    }
+
+    public boolean isTop() {
+        return isTop;
     }
 }

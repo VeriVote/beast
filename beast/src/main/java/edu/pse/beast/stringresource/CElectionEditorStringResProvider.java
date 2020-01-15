@@ -1,7 +1,7 @@
 package edu.pse.beast.stringresource;
 
 /**
- * Class that Manages all StringResources for the CElectionEditor
+ * Class that manages all StringResources for the CElectionEditor.
  *
  * @author Niels Hanselmann
  */
@@ -16,7 +16,7 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
      *
      * @param languageId the languageId. Set to "de" for german
      */
-    public CElectionEditorStringResProvider(String languageId) {
+    public CElectionEditorStringResProvider(final String languageId) {
         super(languageId);
         this.initialize();
     }

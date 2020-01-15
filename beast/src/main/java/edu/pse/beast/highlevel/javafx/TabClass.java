@@ -8,8 +8,8 @@ public abstract class TabClass {
 
     private final Tab associatedTab;
 
-    public TabClass(Tab associatedTab) {
-        this.associatedTab = associatedTab;
+    public TabClass(final Tab assocTab) {
+        this.associatedTab = assocTab;
     }
 
     public void gainFocus() {

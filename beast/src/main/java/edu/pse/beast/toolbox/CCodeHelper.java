@@ -38,14 +38,14 @@ public final class CCodeHelper {
     }
 
     /**
-     * returns the C constant which is the max amount of elements in a given
-     * list container
+     * Returns the C constant which is the max amount of elements in a given
+     * list container.
      *
      * @param cont
      *            the type container representing the list
      * @return the size of the container in C Code
      */
-    public static String getListSize(InternalTypeContainer cont) {
+    public static String getListSize(final InternalTypeContainer cont) {
         if (cont.getAccessTypeIfList() == InternalTypeRep.CANDIDATE) {
             return UnifiedNameContainer.getCandidate();
         } else if (cont.getAccessTypeIfList() == InternalTypeRep.VOTER) {
@@ -101,7 +101,7 @@ public final class CCodeHelper {
      *            the container for which the C type should be created
      * @return the amount of square brackets and length constants needed
      */
-    public static String getCArrayType(InternalTypeContainer cont) {
+    public static String getCArrayType(final InternalTypeContainer cont) {
         InternalTypeContainer currentContainer = cont;
         String decl = "";
         while (currentContainer.isList()) {
@@ -122,7 +122,7 @@ public final class CCodeHelper {
      * @return the voting function declaration line
      */
     public static String generateSimpleDeclString(
-            ElectionTypeContainer container) {
+            final ElectionTypeContainer container) {
         String decl = "RESULT " + UnifiedNameContainer.getVotingMethod()
                       + "(unsigned int amountVotes, VOTES) {";
 
@@ -152,7 +152,7 @@ public final class CCodeHelper {
      * @return the voting function declaration line
      */
     public static String generateStructDeclString(
-            ElectionTypeContainer container, String voteStructName) {
+            final ElectionTypeContainer container, final String voteStructName) {
         String decl = "RESULT " + UnifiedNameContainer.getVotingMethod()
                 + "(unsigned int amountVotes, VOTES) {";
 
@@ -181,9 +181,9 @@ public final class CCodeHelper {
      * @return the complete voting function
      */
     public static ElectionDescription generateElectionDescription(
-            ElectionTypeContainer container, String name,
-            ElectionTemplateHandler templateHandler,
-            StringResourceLoader stringResourceLoader) {
+            final ElectionTypeContainer container, final String name,
+            final ElectionTemplateHandler templateHandler,
+            final StringResourceLoader stringResourceLoader) {
         ElectionDescription description =
                 new ElectionDescription(name, container.getInputType(), container.getOutputType(),
                                         0, 0, 0, true);
@@ -202,31 +202,31 @@ public final class CCodeHelper {
     }
 
     /**
-     * returns the max value an element of the given ElectionTypeContainer can
-     * have
+     * Returns the max value an element of the given ElectionTypeContainer can
+     * have.
      *
      * @param container
      *            the list whose elements max value needs to be determined
      * @return max value an element of the given ElectionTypeContainer can have
      */
-    public static String getMax(ElectionTypeContainer container) {
+    public static String getMax(final ElectionTypeContainer container) {
         return container.getInputType().getMaximalValue();
     }
 
     /**
-     * returns the minimum value an element of the given ElectionTypeContainer
-     * can have
+     * Returns the minimum value an element of the given ElectionTypeContainer
+     * can have.
      *
      * @param container
      *            the list whose elements min value needs to be determined
      * @return minimum value an element of the given ElectionTypeContainer can
      *         have
      */
-    public static String getMin(ElectionTypeContainer container) {
+    public static String getMin(final ElectionTypeContainer container) {
         return container.getInputType().getMinimalValue();
     }
 
-    public static boolean isValidCName(String name) {
+    public static boolean isValidCName(final String name) {
         if (name.matches(characterRegex)) {
             if (!cReservedWords.stream().anyMatch(str -> str.equals(name))) {
                 // it is not a reserved word

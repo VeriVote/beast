@@ -9,16 +9,17 @@ import edu.pse.beast.options.OptionElement;
  */
 public class LanguageOptionElement extends OptionElement {
     /**
-     * @param choosableOptions the choosable options
+     * @param availableOptions the choosable options
      * @param chosenLangID     the chosen language ID
      */
-    public LanguageOptionElement(List<String> choosableOptions, String chosenLangID) {
-        super("lang", choosableOptions);
-        this.chosenOption = chosenLangID;
+    public LanguageOptionElement(final List<String> availableOptions,
+                                 final String chosenLangID) {
+        super("lang", availableOptions);
+        this.setChosenOption(chosenLangID);
     }
 
     @Override
-    public void handleSelection(String selection) {
-        this.chosenOption = selection;
+    public void handleSelection(final String selection) {
+        this.setChosenOption(selection);
     }
 }

@@ -8,7 +8,7 @@ import edu.pse.beast.toolbox.ErrorForUserDisplayer;
 import edu.pse.beast.toolbox.ErrorLogger;
 
 /**
- * this class gives you access to an underlying, system specific compiler so our
+ * This class gives you access to an underlying, system specific compiler so our
  * program can check for deeper errors in the code, that we could not find on our
  * own.
  *
@@ -25,7 +25,7 @@ public final class CompilerAndExecutionerOLD {
 
     /**
      * Creates a new checker, that first of all determines its operating system and
-     * then creates the correlating one
+     * then creates the correlating one.
      */
     private static void init() {
         OperatingSystems os = determineOS();
@@ -51,13 +51,14 @@ public final class CompilerAndExecutionerOLD {
     }
 
     /**
-     * checks the given list of c code (one entry per line) for errors
+     * Checks the given list of c code (one entry per line) for errors.
      *
      * @param toCheck the code to check
      * @param result the result
      * @return a list of codeErros
      */
-    public static List<String> compileAndRun(List<String> toCheck, Result result) {
+    public static List<String> compileAndRun(final List<String> toCheck,
+                                             final Result result) {
         if (!initialized) {
             init();
         }
@@ -65,7 +66,7 @@ public final class CompilerAndExecutionerOLD {
     }
 
     /**
-     * determines the operating system that this program is running on.
+     * Determines the operating system that this program is running on.
      *
      * @return the OperatingSystem as the enum
      */

@@ -9,7 +9,7 @@ import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
  */
 public abstract class BooleanExpressionNode {
     /**
-     * visits this node
+     * Visits this node.
      *
      * @param visitor the visitor that visits
      */

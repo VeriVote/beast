@@ -16,7 +16,7 @@ import javafx.scene.control.ScrollPane;
 /**
  * This class is responsible to show the result of Checks. It provides ways of
  * simply printing Text, drawing images with support for charting, and display
- * any JavaFX node
+ * any JavaFX node.
  *
  * @author Lukas Stapelbroek
  *
@@ -33,8 +33,8 @@ public final class ResultPresenterNEW {
         GUIController.getController().getZoomSlider().valueProperty()
                 .addListener(new ChangeListener<>() {
                     @Override
-                    public void changed(ObservableValue<? extends Number> observable,
-                                        Number oldValue, Number newValue) {
+                    public void changed(final ObservableValue<? extends Number> observable,
+                                        final Number oldValue, final Number newValue) {
                         if (presentationType != null && presentationType.supportsZoom()) {
                             presentationType.zoomTo((double) newValue);
                         }
@@ -56,7 +56,7 @@ public final class ResultPresenterNEW {
     }
 
     /**
-     * removes all children from the result pane
+     * Removes all children from the result pane.
      */
     private void reset() {
         ResultImageRenderer.reset();
@@ -65,9 +65,9 @@ public final class ResultPresenterNEW {
         // resultPane.getChildren().clear();
     }
 
-    public void setResult(Result result) {
-        boolean changed = (this.result != result);
-        this.result = result;
+    public void setResult(final Result resultVal) {
+        boolean changed = (this.result != resultVal);
+        this.result = resultVal;
         if (changed) {
             getDefaultPresentation();
             showResult();
@@ -92,10 +92,10 @@ public final class ResultPresenterNEW {
         return eligableTypes;
     }
 
-    public void setPresentationType(ResultPresentationType presentationType) {
-        GUIController.getController().setPresentationTypeText(presentationType.getName());
-        boolean changed = (this.presentationType != presentationType);
-        this.presentationType = presentationType;
+    public void setPresentationType(final ResultPresentationType presType) {
+        GUIController.getController().setPresentationTypeText(presType.getName());
+        boolean changed = (this.presentationType != presType);
+        this.presentationType = presType;
         if (changed) {
             showResult();
         }
@@ -112,19 +112,19 @@ public final class ResultPresenterNEW {
     }
 
     /**
-     * Give the caller complete freedom how he wants to display the result. It
-     * can be done in any way javafx permits
+     * Give the caller complete freedom how they want to display the result. It
+     * can be done in any way javafx permits.
      *
      * @param resultNode
      *            the Node which will be shown in the result window
      */
-    public void setResultNode(Node resultNode) {
+    public void setResultNode(final Node resultNode) {
         ResultImageRenderer.resetScrollBars();
         // resultPane.getChildren().add(resultNode);
         resultScrollPane.setContent(resultNode);
     }
 
-    public synchronized static ResultPresenterNEW getInstance() {
+    public static synchronized ResultPresenterNEW getInstance() {
         if (instance == null) {
             instance = new ResultPresenterNEW();
         }

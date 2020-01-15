@@ -28,6 +28,9 @@ public final class FileLoader {
     public static final String OBJECT_FILE_ENDING = ".obj";
     public static final String OUT_FILE_ENDING    = ".out";
 
+    private static final int HUNDRED = 100;
+    private static final int INT_LENGTH = 32;
+
     private FileLoader() {
     }
 
@@ -39,7 +42,7 @@ public final class FileLoader {
      * @throws FileNotFoundException if the file is not found it throws an exception
      * @throws IOException           throws Exception
      */
-    public static LinkedList<String> loadFileAsString(File file)
+    public static LinkedList<String> loadFileAsString(final File file)
             throws FileNotFoundException, IOException {
         LinkedList<String> stringlist;
         InputStream inputStream = new FileInputStream(file);
@@ -60,7 +63,7 @@ public final class FileLoader {
      * @return the image, if it was possible to read it. In case it could not be
      *         read, the method returns null
      */
-    public static BufferedImage loadFileAsImage(File toRead) {
+    public static BufferedImage loadFileAsImage(final File toRead) {
         BufferedImage toReturn = null;
         try {
             toReturn = ImageIO.read(toRead);
@@ -73,13 +76,13 @@ public final class FileLoader {
     }
 
     /**
-     * creates a new Name inside a directory
+     * Creates a new name inside a directory.
      *
      * @param pathToDir the path of the directory you want the new unique String to
      *                  be created in
      * @return the unique String
      */
-    public static synchronized String getNewUniqueName(String pathToDir) {
+    public static synchronized String getNewUniqueName(final String pathToDir) {
         ArrayList<String> usedNames = new ArrayList<>();
         File folder = new File(pathToDir.replace("\"", ""));
         File[] listOfFiles = folder.listFiles();
@@ -90,26 +93,27 @@ public final class FileLoader {
                 }
             }
         }
-        String newName = getRandomName(100);
+        String newName = getRandomName(HUNDRED);
         while (usedNames.contains(newName)) {
-            newName = getRandomName(100);
+            newName = getRandomName(HUNDRED);
         }
         return newName;
     }
 
-    private static String getRandomName(int wordSize) {
+    private static String getRandomName(final int wordSize) {
         SecureRandom random = new SecureRandom();
-        return new java.math.BigInteger(wordSize, random).toString(32);
+        return new java.math.BigInteger(wordSize, random).toString(INT_LENGTH);
     }
 
     /**
-     * returns all files that end with the specified String that are in this folder
+     * Returns all files that end with the specified String that are in this folder.
      *
      * @param pathToDir the path to the folder
      * @param endsWith  the String
      * @return the described files
      */
-    public static List<String> listAllFilesFromFolder(String pathToDir, String endsWith) {
+    public static List<String> listAllFilesFromFolder(final String pathToDir,
+                                                      final String endsWith) {
         ArrayList<String> foundFiles = new ArrayList<>();
         File folder = new File(pathToDir.replace("\"", ""));
         File[] listOfFiles = folder.listFiles();

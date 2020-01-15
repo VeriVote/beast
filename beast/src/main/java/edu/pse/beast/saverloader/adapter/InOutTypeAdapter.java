@@ -16,11 +16,12 @@ import edu.pse.beast.types.InOutType;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 
-public class InOutTypeAdapter implements JsonSerializer<InOutType>, JsonDeserializer<InOutType> {
-
+public final class InOutTypeAdapter
+                    implements JsonSerializer<InOutType>, JsonDeserializer<InOutType> {
     @Override
-    public InOutType deserialize(JsonElement json, Type typeOf,
-                                 JsonDeserializationContext context) throws JsonParseException {
+    public InOutType deserialize(final JsonElement json, final Type typeOf,
+                                 final JsonDeserializationContext context)
+                                         throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         String type = jsonObject.get("type").getAsString();
         JsonElement element = jsonObject.get("properties");
@@ -48,8 +49,8 @@ public class InOutTypeAdapter implements JsonSerializer<InOutType>, JsonDeserial
     }
 
     @Override
-    public JsonElement serialize(InOutType src, Type typeOfSrc,
-                                 JsonSerializationContext context) {
+    public JsonElement serialize(final InOutType src, final Type typeOfSrc,
+                                 final JsonSerializationContext context) {
         JsonObject result = new JsonObject();
         result.add("type", new JsonPrimitive(src.getClass().getSimpleName()));
         result.add("properties", context.serialize(src, src.getClass()));

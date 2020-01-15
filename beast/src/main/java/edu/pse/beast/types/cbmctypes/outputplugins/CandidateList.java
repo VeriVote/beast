@@ -13,7 +13,7 @@ import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 public class CandidateList extends CBMCOutputType {
     private static final int DIMENSIONS = 1;
 
-    private final static String[] SIZE_OF_DIMENSIONS = { UnifiedNameContainer.getCandidate() };
+    private static final String[] SIZE_OF_DIMENSIONS = {UnifiedNameContainer.getCandidate()};
 
     public CandidateList() {
         super(true, DataType.INT, DIMENSIONS, SIZE_OF_DIMENSIONS);
@@ -30,7 +30,7 @@ public class CandidateList extends CBMCOutputType {
     }
 
     @Override
-    public CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code) {
+    public CodeArrayListBeautifier addMarginVerifyCheck(final CodeArrayListBeautifier code) {
         code.add("void verifyMain() {");
         // code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" +
         // UnifiedNameContainer.getVoter() + "], diff[" +
@@ -73,8 +73,8 @@ public class CandidateList extends CBMCOutputType {
     }
 
     @Override
-    public CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code,
-                                                        int voteNumber) {
+    public CodeArrayListBeautifier addVotesArrayAndInit(final CodeArrayListBeautifier code,
+                                                        final int voteNumber) {
         String electX = super.getContainer().getOutputStruct().getStructAccess()
                 + " elect" + voteNumber + " = "
                 + UnifiedNameContainer.getVotingMethod() + "(votes" + voteNumber
@@ -89,8 +89,8 @@ public class CandidateList extends CBMCOutputType {
     }
 
     // @Override TODO remove
-    // public List<ResultValueWrapper> getCodeToRunMargin(List<String>
-    // origResult, List<String> lastResult) {
+    // public List<ResultValueWrapper> getCodeToRunMargin(final List<String>
+    // final origResult, final List<String> lastResult) {
     // List<ResultValueWrapper> previousVotingResult =
     // super.helper.extractVariable(UnifiedNameContainer.getElect(),
     // lastResult);
@@ -99,8 +99,8 @@ public class CandidateList extends CBMCOutputType {
     // }
     //
     // @Override
-    // public List<ResultValueWrapper> getNewResult(String variableMatcher,
-    // List<String> lastFailedRun) {
+    // public List<ResultValueWrapper> getNewResult(final String variableMatcher,
+    // final List<String> lastFailedRun) {
     // List<ResultValueWrapper> tmpResult =
     // super.helper.extractVariable(variableMatcher, lastFailedRun);
     //
@@ -115,10 +115,10 @@ public class CandidateList extends CBMCOutputType {
     }
 
     @Override
-    public String getResultDescriptionString(List<String> result) {
+    public String getResultDescriptionString(final List<String> result) {
         String toReturn = "[";
-        for (Iterator<String> iterator = result.iterator(); iterator
-                .hasNext();) {
+        for (Iterator<String> iterator = result.iterator();
+                iterator.hasNext();) {
             String currentValue = (String) iterator.next();
             try {
                 toReturn = toReturn

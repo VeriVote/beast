@@ -46,6 +46,11 @@
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
+            <version>13.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>13.0.1</version>
         </dependency>
@@ -54,14 +59,19 @@
             <artifactId>javafx-fxml</artifactId>
             <version>13.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>13.0.1</version>
+        </dependency>
         <!-- comment this in if creating a jar wont work. It sadly fails when launching
             over "javafx:run". so far it seems like it is not needed
              <dependency> <groupId>org.openjfx</groupId>
-            <artifactId>javafx-graphics </artifactId> <version>12.0.1</version> <classifier>win</classifier>
+            <artifactId>javafx-graphics </artifactId> <version>13.0.1</version> <classifier>win</classifier>
             <optional>true</optional> </dependency> <dependency> <groupId>org.openjfx</groupId>
-            <artifactId>javafx-graphics </artifactId> <version>12.0.1</version> <classifier>linux</classifier>
+            <artifactId>javafx-graphics </artifactId> <version>13.0.1</version> <classifier>linux</classifier>
             <optional>true</optional> </dependency> <dependency> <groupId>org.openjfx</groupId>
-            <artifactId>javafx-graphics </artifactId> <version>12.0.1</version> <classifier>mac</classifier>
+            <artifactId>javafx-graphics </artifactId> <version>13.0.1</version> <classifier>mac</classifier>
             <optional>true</optional> </dependency> -->
         <dependency>
             <groupId>junit</groupId>
@@ -225,6 +235,7 @@
                 <version>4.7.2</version>
                 <executions>
                     <execution>
+                        <id>antlr</id>
                         <goals>
                             <goal>antlr4</goal>
                         </goals>
@@ -285,7 +296,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>2.22.2</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -303,12 +314,12 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-deploy-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>2.8.2</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-install-plugin</artifactId>
-                    <version>3.0.0</version>
+                    <version>2.5.2</version>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -327,6 +338,26 @@
                             </manifestEntries>
                         </archive>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>3.2.1</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>shade</goal>
+                            </goals>
+                            <configuration>
+                                <transformers>
+                                    <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                        <mainClass>edu.pse.beast.highlevel.JarMainClass</mainClass>
+                                    </transformer>
+                                </transformers>
+                            </configuration>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>

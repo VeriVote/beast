@@ -20,7 +20,7 @@ public class StringResourceLoader {
      * @param stringRes a Linked List with the correct format. Id : string
      * @throws ArrayIndexOutOfBoundsException if the list is not correctly formatted
      */
-    public StringResourceLoader(LinkedList<String> stringRes)
+    public StringResourceLoader(final LinkedList<String> stringRes)
             throws ArrayIndexOutOfBoundsException {
         idsToString = new HashMap<>();
 
@@ -41,7 +41,7 @@ public class StringResourceLoader {
      * @param id Id of the String you want to load
      * @return the String with the id
      */
-    public String getStringFromID(String id) {
+    public String getStringFromID(final String id) {
         final String get;
         if (id != null) {
             get = idsToString.get(id.toLowerCase());
@@ -56,13 +56,13 @@ public class StringResourceLoader {
     }
 
     /**
-     * if multiple keys have the same Value only the first key is returned
+     * If multiple keys have the same value, only the first key is returned.
      *
      * @param s the String for which you want to know the Id
      * @return if the String is not found null is returned, otherwise the id is
      *         returned
      */
-    public String getIdForString(String s) {
+    public String getIdForString(final String s) {
         if (idsToString.containsValue(s)) {
             for (Entry<String, String> entry : idsToString.entrySet()) {
                 if (Objects.equals(s.toLowerCase(), entry.getValue().toLowerCase())) {
@@ -78,7 +78,7 @@ public class StringResourceLoader {
      * @param id the checked id
      * @return true if it contains the id
      */
-    public boolean containsId(String id) {
+    public boolean containsId(final String id) {
         return id != null && idsToString.containsKey(id.toLowerCase());
     }
 }

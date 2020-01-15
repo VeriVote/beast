@@ -9,12 +9,13 @@ import edu.pse.beast.options.OptionElement;
  */
 public class CheckerOptionElement extends OptionElement {
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param choosableOptions the choosable options
+     * @param choosableOptions the available options
      * @param chosen           the String for the chosen checker
      */
-    public CheckerOptionElement(List<String> choosableOptions, String chosen) {
+    public CheckerOptionElement(final List<String> choosableOptions,
+                                final String chosen) {
         super("checker", choosableOptions);
         if (chosen == null) {
             handleSelection(choosableOptions.get(0));
@@ -24,7 +25,7 @@ public class CheckerOptionElement extends OptionElement {
     }
 
     @Override
-    public void handleSelection(String selection) {
-        this.chosenOption = selection;
+    public void handleSelection(final String selection) {
+        this.setChosenOption(selection);
     }
 }

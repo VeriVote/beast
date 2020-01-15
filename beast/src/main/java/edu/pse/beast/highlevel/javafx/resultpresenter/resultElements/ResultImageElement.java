@@ -12,12 +12,14 @@ public abstract class ResultImageElement {
     private double xPosBottomRight;
     private double yPosBottomRight;
 
-    public ResultImageElement(double xPosTopLeft, double yPosTopLeft,
-                              double xPosBottomRight, double yPosBottomRight) {
-        this.xPosTopLeft = xPosTopLeft;
-        this.yPosTopLeft = yPosTopLeft;
-        this.xPosBottomRight = xPosBottomRight;
-        this.yPosBottomRight = yPosBottomRight;
+    public ResultImageElement(final double xPositionTopLeft,
+                              final double yPositionTopLeft,
+                              final double xPositionBottomRight,
+                              final double yPositionBottomRight) {
+        this.xPosTopLeft = xPositionTopLeft;
+        this.yPosTopLeft = yPositionTopLeft;
+        this.xPosBottomRight = xPositionBottomRight;
+        this.yPosBottomRight = yPositionBottomRight;
     }
 
     public double getxPosTopLeft() {
@@ -37,26 +39,28 @@ public abstract class ResultImageElement {
     }
 
     /**
-     * Determine if a point is inside
+     * Determines if a point is inside.
      * @param posX the x position
      * @param posY the y position
      * @return true, if the point is inside this rectangle
      */
-    public boolean isInside(double posX, double posY) {
-        return ((posX <= xPosBottomRight) && (posX >= xPosTopLeft) && (posY <= yPosBottomRight)
+    public boolean isInside(final double posX, final double posY) {
+        return ((posX <= xPosBottomRight)
+                && (posX >= xPosTopLeft)
+                && (posY <= yPosBottomRight)
                 && (posY >= yPosTopLeft));
     }
 
     //abstract methods
 
     /**
-     * notifies the methods that it was clicked on
+     * Notifies the methods that it was clicked on.
      * @param event the y position where the click was made
      */
     public abstract void isClicked(MouseEvent event);
 
     /**
-     * draws this element, scaled by the "scale" factor
+     * Draws this element, scaled by the "scale" factor.
      * @param graphics the image where the element has to be drawn on
      * @param scale the scale by which the element will be scaled
      */

@@ -1,7 +1,7 @@
 package edu.pse.beast.stringresource;
 
 /**
- * Class that Manages all StringResources for the PropertyList
+ * Class that manages all StringResources for the PropertyList.
  *
  * @author Niels Hanselmann
  */
@@ -15,7 +15,7 @@ public class PropertyListStringResProvider extends StringResourceProvider {
      *
      * @param languageId the languageId. Set to "de" for german
      */
-    public PropertyListStringResProvider(String languageId) {
+    public PropertyListStringResProvider(final String languageId) {
         super(languageId);
         this.initialize();
     }

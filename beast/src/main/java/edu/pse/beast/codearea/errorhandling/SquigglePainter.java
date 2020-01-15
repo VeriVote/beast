@@ -17,7 +17,10 @@ import javax.swing.text.View;
  *  @author https://tips4java.wordpress.com/2008/10/28/rectangle-painter/
  **/
 public class SquigglePainter extends DefaultHighlighter.DefaultHighlightPainter {
-    public SquigglePainter(Color color) {
+    private static final int SQUIGGLE = 2;
+    private static final int ARC = 180;
+
+    public SquigglePainter(final Color color) {
         super(color);
     }
 
@@ -33,11 +36,12 @@ public class SquigglePainter extends DefaultHighlighter.DefaultHighlightPainter 
      * @param view   View painting for
      * @return region drawing occurred in
      */
-    public Shape paintLayer(Graphics g,
-                            int offs0, int offs1,
-                            Shape bounds,
-                            JTextComponent c,
-                            View view) {
+    public Shape paintLayer(final Graphics g,
+                            final int offs0,
+                            final int offs1,
+                            final Shape bounds,
+                            final JTextComponent c,
+                            final View view) {
         Rectangle r = getDrawingArea(offs0, offs1, bounds, view);
         if (r == null) {
             return null;
@@ -46,18 +50,20 @@ public class SquigglePainter extends DefaultHighlighter.DefaultHighlightPainter 
         Color color = getColor();
         g.setColor(color == null ? c.getSelectionColor() : color);
         // Draw the squiggles
-        int squiggle = 2;
-        int twoSquiggles = squiggle * 2;
-        int y = r.y + r.height - squiggle;
+        final int twoSquiggles = SQUIGGLE * 2;
+        int y = r.y + r.height - SQUIGGLE;
         for (int x = r.x; x <= r.x + r.width - twoSquiggles; x += twoSquiggles) {
-            g.drawArc(x, y, squiggle, squiggle, 0, 180);
-            g.drawArc(x + squiggle, y, squiggle, squiggle, 180, 181);
+            g.drawArc(x, y, SQUIGGLE, SQUIGGLE, 0, ARC);
+            g.drawArc(x + SQUIGGLE, y, SQUIGGLE, SQUIGGLE, ARC, ARC + 1);
         }
         // Return the drawing area
         return r;
     }
 
-    private Rectangle getDrawingArea(int offs0, int offs1, Shape bounds, View view) {
+    private Rectangle getDrawingArea(final int offs0,
+                                     final int offs1,
+                                     final Shape bounds,
+                                     final View view) {
         // Contained in view, can just use bounds.
         if (offs0 == view.getStartOffset() && offs1 == view.getEndOffset()) {
             Rectangle alloc;
@@ -75,7 +81,8 @@ public class SquigglePainter extends DefaultHighlighter.DefaultHighlightPainter 
                     = view.modelToView(offs0, Position.Bias.Forward,
                                        offs1, Position.Bias.Backward,
                                        bounds);
-                Rectangle r = (shape instanceof Rectangle) ? (Rectangle) shape : shape.getBounds();
+                Rectangle r = (shape instanceof Rectangle)
+                        ? (Rectangle) shape : shape.getBounds();
                 return r;
             } catch (BadLocationException e) {
                 // cannot render

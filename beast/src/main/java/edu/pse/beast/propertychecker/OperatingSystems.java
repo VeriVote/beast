@@ -2,15 +2,17 @@ package edu.pse.beast.propertychecker;
 
 public enum OperatingSystems {
     /**
-     * all Linux OS
+     * All Linux OS.
      */
     Linux,
+
     /**
-     * the windows OS
+     * T.
      */
     Windows,
+
     /**
-     * MacOS
+     * MacOS.
      */
     Mac
 }

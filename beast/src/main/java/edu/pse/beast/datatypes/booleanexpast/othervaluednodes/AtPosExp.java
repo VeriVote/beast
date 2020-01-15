@@ -10,19 +10,19 @@ import edu.pse.beast.types.InternalTypeContainer;
 public class AtPosExp extends TypeExpression {
     private final IntegerValuedExpression integerValuedExpression;
 
-    public AtPosExp(InternalTypeContainer container,
-                    IntegerValuedExpression integerValuedExpression) {
+    public AtPosExp(final InternalTypeContainer container,
+                    final IntegerValuedExpression integerValuedExpr) {
         super(container);
-        this.integerValuedExpression = integerValuedExpression;
+        this.integerValuedExpression = integerValuedExpr;
     }
 
     @Override
-    public void getVisited(BooleanExpNodeVisitor visitor) {
+    public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitAtPosNode(this);
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         return "atpos\n" + "\t\t\t\t\t\t\t\t\t\t".substring(0, depth + 1) + "int "
                 + integerValuedExpression.getTreeString(depth + 1);
     }
@@ -42,7 +42,7 @@ public class AtPosExp extends TypeExpression {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }

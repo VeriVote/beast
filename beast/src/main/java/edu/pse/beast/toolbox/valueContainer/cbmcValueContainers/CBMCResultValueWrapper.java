@@ -18,7 +18,7 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
     private CBMCResultValue valueContainer;
 
     /**
-     * creates a new wrapper
+     * Creates a new wrapper.
      *
      * @param mainIndex
      *            the index of this variable (for example votes1 has the main
@@ -29,7 +29,9 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
      * @param singleObject
      *            if true, it signals that only a single value will be stored
      */
-    public CBMCResultValueWrapper(int mainIndex, String name, Node node) {
+    public CBMCResultValueWrapper(final int mainIndex,
+                                  final String name,
+                                  final Node node) {
         super(mainIndex, name);
         updateValue(node);
     }
@@ -37,16 +39,16 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
     public CBMCResultValueWrapper() {
     }
 
-    public CBMCResultValueWrapper(CBMCResultValue valueContainer) {
-        this.valueContainer = valueContainer;
+    public CBMCResultValueWrapper(final CBMCResultValue resultValueContainer) {
+        this.valueContainer = resultValueContainer;
     }
 
-    public CBMCResultValueWrapper(Node node) {
+    public CBMCResultValueWrapper(final Node node) {
         super();
         updateValue(node);
     }
 
-    public void updateValue(Node node) {
+    public void updateValue(final Node node) {
         XMLtoolbox.clean(node);
         Element element = null;
         if (node.getNodeType() == Node.ELEMENT_NODE) {
@@ -66,11 +68,11 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
         setNewValue(element);
     }
 
-    public void setValue(CBMCResultValue newValueContainer) {
+    public void setValue(final CBMCResultValue newValueContainer) {
         this.valueContainer = newValueContainer;
     }
 
-    private void initialize(CDATATYPE newType) {
+    private void initialize(final CDATATYPE newType) {
         this.dataType = newType;
         initialized = true;
         switch (newType) {
@@ -93,15 +95,15 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
     }
 
     /**
-     * set the new value of the underlying property
+     * Set the new value of the underlying property.
      *
      * @param element
      */
-    private void setNewValue(Element element) {
+    private void setNewValue(final Element element) {
         valueContainer.setValue(element);
     }
 
-    private static CDATATYPE getDataType(Node node) {
+    private static CDATATYPE getDataType(final Node node) {
         String nodeTagName = node.getNodeName();
         CDATATYPE type = null;
         switch (nodeTagName.toLowerCase()) {

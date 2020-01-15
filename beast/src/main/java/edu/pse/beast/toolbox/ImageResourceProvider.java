@@ -26,9 +26,10 @@ public class ImageResourceProvider {
     private final String folder;
     private final String[] ids;
 
-    public ImageResourceProvider(String folder, String[] ids) {
-        this.folder = folder;
-        this.ids = ids;
+    public ImageResourceProvider(final String folderString,
+                                 final String[] idStrings) {
+        this.folder = folderString;
+        this.ids = idStrings;
         for (String s : this.ids) {
             File toRead
                   = new File(
@@ -49,7 +50,7 @@ public class ImageResourceProvider {
         return toolbar;
     }
 
-    public Image getImageById(String id) {
+    public Image getImageById(final String id) {
         return images.get(id);
     }
 }

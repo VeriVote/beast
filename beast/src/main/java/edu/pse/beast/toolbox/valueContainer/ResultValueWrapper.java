@@ -5,9 +5,9 @@ public abstract class ResultValueWrapper {
     private final String name;
     private final boolean isTopLevel;
 
-    public ResultValueWrapper(int mainIndex, String name) {
-        this.mainIndex = mainIndex;
-        this.name = name;
+    public ResultValueWrapper(final int mainIdx, final String nameString) {
+        this.mainIndex = mainIdx;
+        this.name = nameString;
         this.isTopLevel = true;
     }
 

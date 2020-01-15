@@ -16,9 +16,9 @@ public class RegexAndColor {
     private String regEx;
     private AttributeSet attributeSetForColor;
 
-    public RegexAndColor(String regEx, Color color) {
+    public RegexAndColor(final String regExStr, final Color color) {
         StyleContext styleContext = StyleContext.getDefaultStyleContext();
-        this.regEx = regEx;
+        this.regEx = regExStr;
         this.attributeSetForColor
             = styleContext.addAttribute(styleContext.getEmptySet(),
                                         StyleConstants.Foreground,
@@ -26,7 +26,7 @@ public class RegexAndColor {
     }
 
     /**
-     * Getter
+     * Getter of the regular expression.
      *
      * @return the String containing the regex
      */
@@ -35,7 +35,7 @@ public class RegexAndColor {
     }
 
     /**
-     * Getter
+     * Getter of the attribute set.
      *
      * @return the AttributeSet containing the color
      */

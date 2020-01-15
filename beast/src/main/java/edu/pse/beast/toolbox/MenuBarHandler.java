@@ -22,7 +22,7 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
         };
 
     /**
-     * the JMenuBar
+     * the JMenuBar.
      */
     private JMenuBar createdMenuBar;
 
@@ -34,16 +34,17 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
 
     /**
      *
-     * @param headingIds          the id of the heading
-     * @param actionIDAndListener the IDandListener
+     * @param headIds          the id of the heading
+     * @param actionIDAndListeners the IDandListener
      * @param resLoader           the resourceLoader
      */
-    public MenuBarHandler(String[] headingIds,
-                          ArrayList<ArrayList<ActionIdAndListener>> actionIDAndListener,
-                          StringResourceLoader resLoader) {
-        Arrays.sort(headingIds, new MenuHeadingSorter());
-        this.headingIds = headingIds;
-        this.actionIDAndListener = actionIDAndListener;
+    public MenuBarHandler(final String[] headIds,
+                          final ArrayList<ArrayList<ActionIdAndListener>>
+                                    actionIDAndListeners,
+                          final StringResourceLoader resLoader) {
+        Arrays.sort(headIds, new MenuHeadingSorter());
+        this.headingIds = headIds;
+        this.actionIDAndListener = actionIDAndListeners;
         this.currentResourceLoader = resLoader;
         createMenuBar();
     }
@@ -60,7 +61,7 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
      *
      * @param resLoader the resourceLoader
      */
-    protected void updateStringResLoader(StringResourceLoader resLoader) {
+    protected void updateStringResLoader(final StringResourceLoader resLoader) {
         this.currentResourceLoader = resLoader;
         createMenuBar();
     }
@@ -87,13 +88,13 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
 
     private class MenuHeadingSorter implements Comparator<String> {
         @Override
-        public int compare(String lhs, String rhs) {
-            Integer lhsPos = findInarr(lhs);
-            int rhsPos = findInarr(rhs);
+        public int compare(final String lhs, final String rhs) {
+            Integer lhsPos = findInArr(lhs);
+            int rhsPos = findInArr(rhs);
             return lhsPos.compareTo(rhsPos);
         }
 
-        private int findInarr(String s) {
+        private int findInArr(final String s) {
             for (int i = 0; i < STANDARD_ID_ORDER.length; i++) {
                 if (s.contains(STANDARD_ID_ORDER[i])) {
                     return i;

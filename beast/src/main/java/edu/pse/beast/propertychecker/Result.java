@@ -52,7 +52,7 @@ public abstract class Result implements ResultInterface {
     private int exitCode;
 
     /**
-     * returns all currently available result types
+     * Returns all currently available result types.
      *
      * @return list of result types
      */
@@ -73,8 +73,8 @@ public abstract class Result implements ResultInterface {
         return getAnalysisType() == AnalysisType.Margin;
     }
 
-    public void setMarginComp(boolean isMarginComp) {
-        this.isMarginComp = isMarginComp;
+    public void setMarginComp(final boolean isMarginComputation) {
+        this.isMarginComp = isMarginComputation;
     }
 
     /**
@@ -145,7 +145,7 @@ public abstract class Result implements ResultInterface {
     }
 
     /**
-     * to be set when the checking for this result is completed
+     * To be set when the checking for this result is completed.
      */
     public void setFinished() {
         finished = true;
@@ -157,8 +157,8 @@ public abstract class Result implements ResultInterface {
     }
 
     /**
-     * to be set when the checking was completed and there were no errors during
-     * the checking
+     * To be set when the checking was completed and there were no errors during
+     * the checking.
      */
     public void setValid() {
         valid = true;
@@ -172,8 +172,8 @@ public abstract class Result implements ResultInterface {
     }
 
     /**
-     * sets the flag that shows that a timeout was responsible for the stopped
-     * checking and sets the result to finished
+     * Sets the flag that shows that a timeout was responsible for the stopped
+     * checking and sets the result to finished.
      */
     public void setTimeoutFlag() {
         timeOut = true;
@@ -181,34 +181,34 @@ public abstract class Result implements ResultInterface {
     }
 
     /**
-     * sets the result of this object, so it can be displayed later.
+     * Sets the result of this object, so it can be displayed later.
      *
-     * @param result
+     * @param res
      *            the result of the check that should be stored in this result
      *            object
      */
-    public void setResult(List<String> result) {
-        this.result = result;
+    public void setResult(final List<String> res) {
+        this.result = res;
     }
 
     /**
-     * sets the error of this object, so it can be displayed later.
+     * Sets the error of this object, so it can be displayed later.
      *
-     * @param error
+     * @param errorList
      *            the error of the check that should be stored in this result
      *            object
      */
-    public void setError(List<String> error) {
-        this.error = error;
+    public void setError(final List<String> errorList) {
+        this.error = errorList;
     }
 
     /**
-     * sets a single line as the error output
+     * Sets a single line as the error output.
      *
      * @param errorLine
      *            the error to log
      */
-    public void setError(String errorLine) {
+    public void setError(final String errorLine) {
         this.error = new ArrayList<String>();
         this.error.add(errorLine);
     }
@@ -216,11 +216,11 @@ public abstract class Result implements ResultInterface {
     /**
      * Sets the property that this result contains the result from.
      *
-     * @param property
+     * @param propertyDescr
      *            the property.
      */
-    public void setProperty(PreAndPostConditionsDescription property) {
-        this.property = property;
+    public void setProperty(final PreAndPostConditionsDescription propertyDescr) {
+        this.property = propertyDescr;
     }
 
     /**
@@ -257,49 +257,49 @@ public abstract class Result implements ResultInterface {
 
     /**
      *
-     * @param numVoters
+     * @param numVotersInteger
      *            the amount of voters to be set
      */
-    public void setNumVoters(int numVoters) {
-        this.numVoters = numVoters;
+    public void setNumVoters(final int numVotersInteger) {
+        this.numVoters = numVotersInteger;
     }
 
     /**
      *
-     * @param numSeats
+     * @param numSeatsInteger
      *            the amount of seats to be set
      */
-    public void setNumSeats(int numSeats) {
-        this.numSeats = numSeats;
+    public void setNumSeats(final int numSeatsInteger) {
+        this.numSeats = numSeatsInteger;
     }
 
     /**
      *
-     * @param numCandidates
+     * @param numCand
      *            the amount of candidates to be set
      */
-    public void setNumCandidates(int numCandidates) {
-        this.numCandidates = numCandidates;
+    public void setNumCandidates(final int numCand) {
+        this.numCandidates = numCand;
     }
 
     /**
      *
-     * @param electionDescription
+     * @param electionDescr
      *            the election type to be set
      */
-    public void setElectionType(ElectionDescription electionDescription) {
-        this.electionDescription = electionDescription;
+    public void setElectionType(final ElectionDescription electionDescr) {
+        this.electionDescription = electionDescr;
     }
 
     /**
-     * sets the result to forcefully stop, to indicate that it was stopped by
-     * the user or a timeout
+     * Sets the result to forcefully stop, to indicate that it was stopped by
+     * the user or a timeout.
      */
     public void setForcefullyStopped() {
         this.forcefulleStopped = true;
     }
 
-    public void setFinalMargin(int margin) {
+    public void setFinalMargin(final int margin) {
         this.finalMargin = margin;
     }
 
@@ -307,7 +307,7 @@ public abstract class Result implements ResultInterface {
         return finalMargin;
     }
 
-    public void setHasFinalMargin(boolean b) {
+    public void setHasFinalMargin(final boolean b) {
         this.hasMargin = b;
     }
 
@@ -315,9 +315,9 @@ public abstract class Result implements ResultInterface {
         return hasMargin;
     }
 
-    public void addSubResult(Result subResult) {
+    public void addSubResult(final Result subResultVal) {
         this.hasSubResult = true;
-        this.subResult = subResult;
+        this.subResult = subResultVal;
     }
 
     public PreAndPostConditionsDescription getPropertyDesctiption() {
@@ -333,22 +333,22 @@ public abstract class Result implements ResultInterface {
     }
 
     /**
-     * checks if the assertion holds
+     * Checks if the assertion holds.
      *
      * @return true if the assertion holds, else false
      */
     public abstract boolean checkAssertionSuccess();
 
     /**
-     * checks if the assertion does not hold
+     * Checks if the assertion does not hold.
      *
      * @return true, if the assertion failed, else false
      */
     public abstract boolean checkAssertionFailure();
 
     /**
-     * extracts the last values of all variables which name matches the given
-     * String
+     * Extracts the last values of all variables which name matches the given
+     * String.
      *
      * @param variableMatcher
      *            a regex which should match all variable names, e.g "votes1",
@@ -362,36 +362,36 @@ public abstract class Result implements ResultInterface {
         return origVoting;
     }
 
-    public void setOrigVoting(ElectionSimulationData origVoting) {
-        this.origVoting = origVoting;
+    public void setOrigVoting(final ElectionSimulationData origVotingData) {
+        this.origVoting = origVotingData;
     }
 
     public ElectionSimulationData getOrigWinner() {
         return origWinner;
     }
 
-    public void setOrigWinner(ElectionSimulationData origWinner) {
-        this.origWinner = origWinner;
+    public void setOrigWinner(final ElectionSimulationData origWinnerData) {
+        this.origWinner = origWinnerData;
     }
 
     public ElectionSimulationData getNewVotes() {
         return newVotes;
     }
 
-    public void setNewVotes(ElectionSimulationData newVotes) {
-        this.newVotes = newVotes;
+    public void setNewVotes(final ElectionSimulationData newVoteData) {
+        this.newVotes = newVoteData;
     }
 
     public ElectionSimulationData getNewWinner() {
         return newWinner;
     }
 
-    public void setNewWinner(ElectionSimulationData newWinner) {
-        this.newWinner = newWinner;
+    public void setNewWinner(final ElectionSimulationData newWinnerData) {
+        this.newWinner = newWinnerData;
     }
 
-    public void setOwner(ResultTreeItem owner) {
-        this.owner = owner;
+    public void setOwner(final ResultTreeItem ownerItem) {
+        this.owner = ownerItem;
     }
 
     public AnalysisType getAnalysisType() {
@@ -402,7 +402,7 @@ public abstract class Result implements ResultInterface {
         return wasStarted;
     }
 
-    public void setLastTmpResult(List<String> tmpResult) {
+    public void setLastTmpResult(final List<String> tmpResult) {
         // TODO maybe refactor this so no "tmp" result is used
         this.result = tmpResult;
         // this.lastTmpResult = tmpResult; TODO
@@ -412,7 +412,7 @@ public abstract class Result implements ResultInterface {
         return this.lastTmpResult;
     }
 
-    public void setLastTmpError(List<String> tmpError) {
+    public void setLastTmpError(final List<String> tmpError) {
         this.error = tmpError;
         // this.lastTmpError = tmpError; TODO
     }
@@ -421,7 +421,7 @@ public abstract class Result implements ResultInterface {
         return this.lastTmpError;
     }
 
-    public void addStatusString(String statusToAdd) {
+    public void addStatusString(final String statusToAdd) {
         this.statusStrings.add(statusToAdd);
     }
 
@@ -429,7 +429,7 @@ public abstract class Result implements ResultInterface {
         return this.statusStrings;
     }
 
-    private List<String> addNewLineToList(List<String> toConvert) {
+    private List<String> addNewLineToList(final List<String> toConvert) {
         List<String> toReturn = new ArrayList<String>();
         for (int i = 0; i < toConvert.size(); i++) {
             toReturn.add(toConvert.get(i) + "\n");
@@ -445,8 +445,8 @@ public abstract class Result implements ResultInterface {
         return addNewLineToList(error);
     }
 
-    public void setExitCode(int exitCode) {
-        this.exitCode = exitCode;
+    public void setExitCode(final int exitCodeNumber) {
+        this.exitCode = exitCodeNumber;
     }
 
     public int getExitCode() {

@@ -11,27 +11,27 @@ import java.util.List;
 public abstract class Options {
 
     /**
-     * the list of suboptions that are saved by this object
+     * The list of suboptions that are saved by this object.
      */
     private List<Options> subOptions = new ArrayList<>();
 
     /**
-     * the option elements that are saved by this object
+     * The option elements that are saved by this object.
      */
     private List<OptionElement> optElements = new ArrayList<>();
     private final String id;
 
     /**
-     * creates a new Options object
+     * Creates a new Options object.
      *
-     * @param id the ID of this object
+     * @param idString the ID of this object
      */
-    public Options(String id) {
-        this.id = id;
+    public Options(final String idString) {
+        this.id = idString;
     }
 
     /**
-     * Getter for the ID
+     * Getter for the ID.
      *
      * @return the ID of this object
      */
@@ -40,7 +40,7 @@ public abstract class Options {
     }
 
     /**
-     * Getter for the OptionElements
+     * Getter for the OptionElements.
      *
      * @return the List of OptionElements
      */
@@ -49,7 +49,7 @@ public abstract class Options {
     }
 
     /**
-     * Getter for suboptions
+     * Getter for suboptions.
      *
      * @return the list of all subOptions.
      */
@@ -58,20 +58,20 @@ public abstract class Options {
     }
 
     /**
-     * Adds an OptionElement to the OptionElement list
+     * Adds an OptionElement to the OptionElement list.
      *
      * @param elementToAdd the element to be added to the list
      */
-    public void addOptionElement(OptionElement elementToAdd) {
+    public void addOptionElement(final OptionElement elementToAdd) {
         optElements.add(elementToAdd);
     }
 
     /**
-     * Adds a set of suboptions to the suboptions list
+     * Adds a set of suboptions to the suboptions list.
      *
      * @param optionToAdd the suboption to be added
      */
-    public void addSubOptions(Options optionToAdd) {
+    public void addSubOptions(final Options optionToAdd) {
         subOptions.add(optionToAdd);
     }
 
@@ -86,7 +86,7 @@ public abstract class Options {
     }
 
     /**
-     * re-applies the specialized options
+     * Re-applies the specialized options.
      */
     protected abstract void reapplySpecialized();
 }

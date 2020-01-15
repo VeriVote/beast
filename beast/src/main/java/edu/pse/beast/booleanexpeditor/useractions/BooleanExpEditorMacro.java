@@ -9,12 +9,12 @@ public class BooleanExpEditorMacro {
     private final String macro;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param macro the macro in form of a String
+     * @param macroString the macro in form of a String
      */
-    public BooleanExpEditorMacro(String macro) {
-        this.macro = macro;
+    public BooleanExpEditorMacro(final String macroString) {
+        this.macro = macroString;
     }
 
     @Override

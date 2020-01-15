@@ -9,12 +9,12 @@ public class ComparisonSymbol {
     private final String cStringRepresentation;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param cStringRepresentation the representation of this symbol in C
+     * @param cStringRepr the representation of this symbol in C
      */
-    public ComparisonSymbol(String cStringRepresentation) {
-        this.cStringRepresentation = cStringRepresentation;
+    public ComparisonSymbol(final String cStringRepr) {
+        this.cStringRepresentation = cStringRepr;
     }
 
     /**

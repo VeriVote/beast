@@ -11,18 +11,19 @@ public class SpacesPerTabOptionElement extends OptionElement {
     private int numberTabs;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param choosableOptions the choosable options
-     * @param numberTabs       the number of spaces per tab
+     * @param availableOptions    the available options
+     * @param numberTabsStr       the number of spaces per tab
      */
-    public SpacesPerTabOptionElement(List<String> choosableOptions, String numberTabs) {
-        super("spaces_per_tab", choosableOptions);
-        handleSelection(numberTabs);
+    public SpacesPerTabOptionElement(final List<String> availableOptions,
+                                     final String numberTabsStr) {
+        super("spaces_per_tab", availableOptions);
+        handleSelection(numberTabsStr);
     }
 
     /**
-     * Getter
+     * Getter for the number of spaces per tab.
      *
      * @return the chosen number of tabs
      */
@@ -31,8 +32,8 @@ public class SpacesPerTabOptionElement extends OptionElement {
     }
 
     @Override
-    public void handleSelection(String selection) {
-        chosenOption = selection;
+    public void handleSelection(final String selection) {
+        setChosenOption(selection);
         numberTabs = Integer.valueOf(selection);
     }
 }

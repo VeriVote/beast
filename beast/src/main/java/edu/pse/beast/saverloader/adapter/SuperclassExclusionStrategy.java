@@ -11,17 +11,17 @@ import com.google.gson.FieldAttributes;
  *         https://stackoverflow.com/a/20117863/5853965
  *
  */
-public class SuperclassExclusionStrategy implements ExclusionStrategy {
+public final class SuperclassExclusionStrategy implements ExclusionStrategy {
 
     @Override
-    public boolean shouldSkipField(FieldAttributes fieldAttributes) {
+    public boolean shouldSkipField(final FieldAttributes fieldAttributes) {
         String fieldName = fieldAttributes.getName();
         Class<?> theClass = fieldAttributes.getDeclaringClass();
 
         return isFieldInSuperclass(theClass, fieldName);
     }
 
-    private boolean isFieldInSuperclass(Class<?> subclass, String fieldName) {
+    private boolean isFieldInSuperclass(final Class<?> subclass, final String fieldName) {
         Class<?> superclass = subclass.getSuperclass();
         Field field;
 
@@ -36,7 +36,7 @@ public class SuperclassExclusionStrategy implements ExclusionStrategy {
         return false;
     }
 
-    private Field getField(Class<?> theClass, String fieldName) {
+    private Field getField(final Class<?> theClass, final String fieldName) {
         try {
             return theClass.getDeclaredField(fieldName);
         } catch (NoSuchFieldException | SecurityException e) {
@@ -45,7 +45,7 @@ public class SuperclassExclusionStrategy implements ExclusionStrategy {
     }
 
     @Override
-    public boolean shouldSkipClass(Class<?> clazz) {
+    public boolean shouldSkipClass(final Class<?> clazz) {
         return false;
     }
 }

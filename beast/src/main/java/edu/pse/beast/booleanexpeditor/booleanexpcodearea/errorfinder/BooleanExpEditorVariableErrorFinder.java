@@ -20,9 +20,9 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
 public final class BooleanExpEditorVariableErrorFinder {
     private BooleanExpEditorVariableErrorFinder() { }
 
-    public static ArrayList<CodeError> getErrors(BooleanExpANTLRHandler antlrHandler,
-                                                 SymbolicVariableList list,
-                                                 NewCodeArea codeArea) {
+    public static ArrayList<CodeError> getErrors(final BooleanExpANTLRHandler antlrHandler,
+                                                 final SymbolicVariableList list,
+                                                 final NewCodeArea codeArea) {
         FormalExpErrorFinderTreeListener listener
               =  new FormalExpErrorFinderTreeListener(
                     list, codeArea,

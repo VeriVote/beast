@@ -7,7 +7,7 @@ import edu.pse.beast.types.OutputType;
 import edu.pse.beast.types.cbmctypes.cbmcstructs.CBMCStruct;
 
 /**
- * Datatype for the Input and Output of an Election
+ * Datatype for the Input and Output of an Election.
  *
  * @author Lukas Stapelbroek
  *
@@ -21,17 +21,17 @@ public class ElectionTypeContainer { // TODO make this class abstract, move code
     private UnifiedNameContainer nameContainer = new UnifiedNameContainer();
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param inType
+     * @param inputType
      *            the inType of this election
-     * @param outType
+     * @param outputType
      *            the outType of this election
      */
-    public ElectionTypeContainer(InputType inType, OutputType outType) {
-        this.inType = inType;
+    public ElectionTypeContainer(final InputType inputType, final OutputType outputType) {
+        this.inType = inputType;
         this.inType.setElectionTypeContainer(this);
-        this.outType = outType;
+        this.outType = outputType;
         this.outType.setElectionTypeContainer(this);
         generateStructs();
     }

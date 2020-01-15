@@ -6,25 +6,38 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Co
 
 public class ConcatenationExpNode extends BooleanExpressionNode {
 
-    public final ConcatenationExpContext concatenationExpContext;
-    public final String voteOutput;
-    public final String voteOutoutLength;
+    private final ConcatenationExpContext concatenationExpContext;
+    private final String voteOutput;
+    private final String voteOutputLength;
 
-    public ConcatenationExpNode(ConcatenationExpContext concatenationExpContext, String voteOutput,
-            String voteOutoutLength) {
-        this.concatenationExpContext = concatenationExpContext;
-        this.voteOutput = voteOutput;
-        this.voteOutoutLength = voteOutoutLength;
+    public ConcatenationExpNode(final ConcatenationExpContext concatExpContext,
+                                final String voteOutputString,
+                                final String voteOutputLen) {
+        this.concatenationExpContext = concatExpContext;
+        this.voteOutput = voteOutputString;
+        this.voteOutputLength = voteOutputLen;
     }
 
     @Override
-    public void getVisited(BooleanExpNodeVisitor visitor) {
+    public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitConcatenationExpNode(this);
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         System.out.println("might add treestring");
         return "";
+    }
+
+    public ConcatenationExpContext getConcatenationExpContext() {
+        return concatenationExpContext;
+    }
+
+    public String getVoteOutput() {
+        return voteOutput;
+    }
+
+    public String getVoteOutputLength() {
+        return voteOutputLength;
     }
 }

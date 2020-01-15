@@ -1,7 +1,7 @@
 package edu.pse.beast.stringresource;
 
 /**
- * Class that Manages all StringResources for the Options
+ * Class that manages all StringResources for the Options.
  *
  * @author Niels Hanselmann
  */
@@ -13,7 +13,7 @@ public class OptionStringResProvider extends StringResourceProvider {
      *
      * @param languageId the languageId. Set to "de" for german
      */
-    public OptionStringResProvider(String languageId) {
+    public OptionStringResProvider(final String languageId) {
         super(languageId);
         this.initialize();
     }

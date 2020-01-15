@@ -8,9 +8,10 @@ public class TextDelta {
     private final int offset;
     private final String text;
 
-    public TextDelta(int offset, String text) {
-        this.offset = offset;
-        this.text = text;
+    public TextDelta(final int offsetVal,
+                     final String textStr) {
+        this.offset = offsetVal;
+        this.text = textStr;
     }
 
     public int getOffset() {
@@ -20,5 +21,4 @@ public class TextDelta {
     public String getText() {
         return text;
     }
-
 }

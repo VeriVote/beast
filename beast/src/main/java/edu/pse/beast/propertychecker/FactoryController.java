@@ -139,18 +139,18 @@ public class FactoryController implements Runnable {
     //     }
     // }
 
-    public FactoryController(ElectionDescription elecDesc,
-                             List<ParentTreeItem> parentProperties,
-                             ElectionCheckParameter electionCheckParameter,
-                             String checkerID,
-                             int concurrentChecker) {
+    public FactoryController(final ElectionDescription electionDescription,
+                             final List<ParentTreeItem> parentProperties,
+                             final ElectionCheckParameter electionCheckParameter,
+                             final String checkerIdString,
+                             final int concurrentCheckers) {
         // add a shutdown hook so all the checker are stopped properly so they
         // do not clog the host pc
         Runtime.getRuntime().addShutdownHook(new FactoryEnder());
-        this.elecDesc = elecDesc;
+        this.elecDesc = electionDescription;
         this.parameter = electionCheckParameter;
-        this.checkerID = checkerID;
-        this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentChecker);
+        this.checkerID = checkerIdString;
+        this.currentlyRunning = new ArrayList<CheckerFactory>(concurrentCheckers);
 
         // set the result objects for all the selected children
         for (Iterator<ParentTreeItem> parentIterator = parentProperties.iterator();
@@ -161,7 +161,7 @@ public class FactoryController implements Runnable {
                     .hasNext();) {
                 ChildTreeItem child = (ChildTreeItem) childIterator.next();
                 if (child.isSelected()) {
-                    Result result = CheckerFactoryFactory.getMatchingResult(checkerID);
+                    Result result = CheckerFactoryFactory.getMatchingResult(checkerIdString);
                     result.setProperty(parentTreeItem.getPreAndPostProperties());
                     child.addResult(result);
                     treeItems.add(child);
@@ -172,10 +172,10 @@ public class FactoryController implements Runnable {
 
         // if the user does not specify a concrete amount for concurrent
         // checkers, we just set it to the thread amount of this pc
-        if (concurrentChecker <= 0) {
+        if (concurrentCheckers <= 0) {
             this.concurrentChecker = Runtime.getRuntime().availableProcessors();
         } else {
-            this.concurrentChecker = concurrentChecker;
+            this.concurrentChecker = concurrentCheckers;
         }
         // start the factory controller
         new Thread(this, "FactoryController").start();
@@ -262,7 +262,7 @@ public class FactoryController implements Runnable {
     // }
 
     /**
-     * starts the factoryController, so it then starts the needed checker
+     * Starts the factoryController, so it then starts the needed checker.
      */
     @Override
     public void run() {
@@ -338,12 +338,12 @@ public class FactoryController implements Runnable {
     }
 
     /**
-     * tells the controller to stop checking. It stops all currently running
+     * Tells the controller to stop checking. It stops all currently running
      * Checkers and does not start new ones.
      *
      * @param timeOut if it is true, the checking was stopped because of a timeout;
      */
-    public synchronized void stopChecking(boolean timeOut) {
+    public synchronized void stopChecking(final boolean timeOut) {
         if (!stopped) {
             this.stopped = true;
             // send a signal to all currently running Checkers so they will stop
@@ -366,14 +366,14 @@ public class FactoryController implements Runnable {
     }
 
     /**
-     * notifies the factory that one of the started checker factories finished, so a
+     * Notifies the factory that one of the started checker factories finished, so a
      * new one could be started.
      *
      * @param finishedFactory the factory that just finished, so it can be removed
      *                        from the list of ones to be notified when the checking
      *                        is stopped forcefully
      */
-    public synchronized void notifyThatFinished(CheckerFactory finishedFactory) {
+    public synchronized void notifyThatFinished(final CheckerFactory finishedFactory) {
         if (currentlyRunning.size() == 0) {
             ErrorLogger.log("A checker finished when no checker was active.");
         } else {
@@ -423,10 +423,18 @@ public class FactoryController implements Runnable {
         return results;
     }
 
+    public List<ChildTreeItem> getPropertiesToCheck() {
+        return propertiesToCheck;
+    }
+
+    public void setPropertiesToCheck(final List<ChildTreeItem> propsToCheck) {
+        this.propertiesToCheck = propsToCheck;
+    }
+
     /**
-     * This Class is there for the shutDownHook It is used, so if the program has a
+     * This Class is there for the shutDownHook. It is used, so if the program has a
      * chance of cleaning up, it still has a chance of messaging all checkers to
-     * stop running
+     * stop running.
      *
      * @author Lukas Stapelbroek
      *

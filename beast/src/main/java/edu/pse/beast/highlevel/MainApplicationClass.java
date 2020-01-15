@@ -35,6 +35,9 @@ import javafx.stage.WindowEvent;
  * @author Jonas Wohnig
  */
 public class MainApplicationClass extends Application {
+    private static final int MAIN_SCENE_HEIGHT = 600;
+    private static final int MAIN_SCENE_WIDTH = 1000;
+
     private static final String TITLE = "BEAST";
     private static final String RESOURCE
             = "/src/main/resources/edu/pse/beast/highlevel/javafx/BEAST.fxml";
@@ -55,7 +58,7 @@ public class MainApplicationClass extends Application {
      *
      * @param args not used
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         // new BEASTCommunicator();
         // PSECentralObjectProvider centralObjectProvider = new
         // PSECentralObjectProvider(communicator);
@@ -64,7 +67,7 @@ public class MainApplicationClass extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(final Stage stage) throws Exception {
         Locale locale = Locale.ENGLISH;
         mainStage = stage;
 
@@ -76,7 +79,7 @@ public class MainApplicationClass extends Application {
                             ResourceBundle.getBundle(RESOURCE_BUNDLE, locale));
             loader.setController(controller);
             Parent root = loader.load();
-            Scene scene = new Scene(root, 1000, 600);
+            Scene scene = new Scene(root, MAIN_SCENE_WIDTH, MAIN_SCENE_HEIGHT);
             stage.setTitle(TITLE);
             stage.getIcons().add(
                     new Image(
@@ -86,7 +89,7 @@ public class MainApplicationClass extends Application {
             stage.setScene(scene);
             stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
                 @Override
-                public void handle(WindowEvent t) {
+                public void handle(final WindowEvent t) {
                     Platform.exit();
                     System.exit(0);
                 }
@@ -125,7 +128,7 @@ public class MainApplicationClass extends Application {
                   = new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_DOWN);
             scene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
                 @Override
-                public void handle(KeyEvent event) {
+                public void handle(final KeyEvent event) {
                     if (saveCombination.match(event)) {
                         controller.getFocusedArea().save();
                     }

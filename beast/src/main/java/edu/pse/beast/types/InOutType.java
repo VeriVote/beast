@@ -27,10 +27,10 @@ public abstract class InOutType {
         private final String text;
 
         /**
-         * @param text
+         * @param textString
          */
-        DataType(final String text) {
-            this.text = text;
+        DataType(final String textString) {
+            this.text = textString;
         }
 
         @Override
@@ -48,16 +48,18 @@ public abstract class InOutType {
 
     private transient ElectionTypeContainer container;
 
-    public InOutType(boolean unsigned, DataType dataType, int dimensions,
-            String[] sizeOfDimensions) {
-        this.unsigned = unsigned;
-        this.dataType = dataType;
-        this.dimensions = dimensions;
-        this.sizeOfDimensions = sizeOfDimensions;
+    public InOutType(final boolean usigned,
+                     final DataType datType,
+                     final int dims,
+                     final String[] sizeOfDims) {
+        this.unsigned = usigned;
+        this.dataType = datType;
+        this.dimensions = dims;
+        this.sizeOfDimensions = sizeOfDims;
     }
 
-    public void setElectionTypeContainer(ElectionTypeContainer container) {
-        this.container = container;
+    public void setElectionTypeContainer(final ElectionTypeContainer elecTypeContainer) {
+        this.container = elecTypeContainer;
     }
 
     public boolean isDataTypeUnsigned() {
@@ -99,24 +101,21 @@ public abstract class InOutType {
      * @return returns a String containing the shape of the input object e.g "["
      *         + UnifiedNameContainer.getVoter() + "]" for single choice
      */
-    public String getDimensionDescriptor(boolean includeSizes) {
+    public String getDimensionDescriptor(final boolean includeSizes) {
         return getDimensionDescriptor(sizeOfDimensions);
     }
 
-    public String getDimensionDescriptor(String[] sizes) {
+    public String getDimensionDescriptor(final String[] sizes) {
         String toReturn = "";
-
         for (int i = 0; i < dimensions; i++) {
             String content = sizes[i];
             toReturn = toReturn + createSquareBrackets(content);
         }
-
         return toReturn;
     }
 
     public String getDataTypeAndSign() {
         String sign = "";
-
         if (unsigned) {
             sign = "unsigned ";
         }
@@ -130,10 +129,10 @@ public abstract class InOutType {
     /**
      *
      * @param content
-     *            the content to be put in the bracketes
+     *            the content to be put in the brackets
      * @return e.g "[content]"
      */
-    private String createSquareBrackets(String content) {
+    private String createSquareBrackets(final String content) {
         return "[" + content + "]";
     }
 
@@ -143,7 +142,7 @@ public abstract class InOutType {
      *         allows access to its values (e.g ".arr", if it is a struct in
      *         which the value is stored in "arr"
      */
-    public final String accessValues(ElectionTypeContainer electionContainer) {
+    public final String accessValues(final ElectionTypeContainer electionContainer) {
         if (dimensions == 0) {
             return ""; // zero dimensional dataTypes are not represented by
                        // structs
@@ -152,13 +151,11 @@ public abstract class InOutType {
         }
     }
 
-    public String printArray(CBMCResultValueWrapper wrapper) {
-
+    public String printArray(final CBMCResultValueWrapper wrapper) {
         ResultValue resultValue = wrapper.getResultValue();
 
         if (resultValue.getResultType() == ResultType.STRUCT) {
             CBMCResultValueStruct struct = (CBMCResultValueStruct) resultValue;
-
             return printArray(struct.getResultVariable(
                     UnifiedNameContainer.getStructValueName()));
         }
@@ -183,7 +180,7 @@ public abstract class InOutType {
         }
     }
 
-    public String getAccessDimensions(List<String> filling) {
+    public String getAccessDimensions(final List<String> filling) {
         String dimAccess = "";
         for (int i = 0; i < this.getAmountOfDimensions(); i++) {
             dimAccess = dimAccess + "[" + filling.get(i) + "]";
@@ -191,7 +188,8 @@ public abstract class InOutType {
         return dimAccess;
     }
 
-    public String getFullVarAccess(String varName, List<String> filling) {
+    public String getFullVarAccess(final String varName,
+                                   final List<String> filling) {
         return varName + "."
                 + UnifiedNameContainer.getStructValueName()
                 + getAccessDimensions(filling);
@@ -210,8 +208,9 @@ public abstract class InOutType {
     // String
     // varName);
 
-    public List<String> drawResult(Result result, String varNameMatcher,
-                                   Map<Integer, Long> sizes) {
+    public List<String> drawResult(final Result result,
+                                   final String varNameMatcher,
+                                   final Map<Integer, Long> sizes) {
         List<String> toReturn = new ArrayList<String>();
         List<ResultValueWrapper> votes =
                 result.readVariableValue(varNameMatcher); // TODO name container
@@ -242,7 +241,9 @@ public abstract class InOutType {
         return toReturn;
     }
 
-    public List<String> drawResult(ResultValueWrapper wrapper, String varName, Long size) {
+    public List<String> drawResult(final ResultValueWrapper wrapper,
+                                   final String varName,
+                                   final Long size) {
         List<String> toReturn = new ArrayList<String>();
         toReturn.add(varName);
         CBMCResultValueStruct struct = (CBMCResultValueStruct) wrapper.getResultValue();
@@ -275,7 +276,7 @@ public abstract class InOutType {
     public abstract String getInfo();
 
     /**
-     * so far only used for preference voting
+     * So far only used for preference voting.
      *
      * @param code
      *            the code
@@ -286,8 +287,8 @@ public abstract class InOutType {
                                                      String valueName,
                                                      List<String> loopVariables);
 
-    public void setStruct(ComplexType complexType) {
-        this.complexType = complexType;
+    public void setStruct(final ComplexType complType) {
+        this.complexType = complType;
     }
 
     public ComplexType getStruct() {

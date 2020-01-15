@@ -44,15 +44,20 @@ import javax.swing.text.Utilities;
  */
 public class TextLineNumber extends JPanel
                 implements CaretListener, DocumentListener, PropertyChangeListener {
-    public static final float LEFT = 0.0f;
-    public static final float CENTER = 0.5f;
-    public static final float RIGHT = 1.0f;
+    public static final float LEFT = 0.0F;
+    public static final float CENTER = 0.5F;
+    public static final float RIGHT = 1.0F;
 
     private static final long serialVersionUID = 1L;
 
-    private static final Border OUTER = new MatteBorder(0, 0, 0, 2, Color.GRAY);
+    private static final int RIGHT_BORDER_INSET = 2;
+    private static final int MIN_DISPLAY_WIDTH = 3;
+    private static final int DEFAULT_BORDER_GAP = 5;
+    private static final int OFFSET = 1000000;
+    private static final int HEIGHT = Integer.MAX_VALUE - OFFSET;
 
-    private static final int HEIGHT = Integer.MAX_VALUE - 1000000;
+    private static final Border OUTER =
+            new MatteBorder(0, 0, 0, RIGHT_BORDER_INSET, Color.GRAY);
 
     // Text component this TextTextLineNumber component is in sync with
 
@@ -80,37 +85,38 @@ public class TextLineNumber extends JPanel
      * Create a line number component for a text component. This minimum display
      * width will be based on 3 digits.
      *
-     * @param component the related text component
+     * @param textComponent the related text component
      */
-    public TextLineNumber(JTextComponent component) {
-        this(component, 3);
+    public TextLineNumber(final JTextComponent textComponent) {
+        this(textComponent, MIN_DISPLAY_WIDTH);
     }
 
     /**
      * Create a line number component for a text component.
      *
-     * @param component            the related text component
-     * @param minimumDisplayDigits the number of digits used to calculate the
+     * @param textComponent        the related text component
+     * @param minDisplayDigits     the number of digits used to calculate the
      *                             minimum width of the component
      */
-    public TextLineNumber(JTextComponent component, int minimumDisplayDigits) {
-        this.component = component;
+    public TextLineNumber(final JTextComponent textComponent,
+                          final int minDisplayDigits) {
+        this.component = textComponent;
 
-        setFont(component.getFont());
+        setFont(textComponent.getFont());
 
-        setBorderGap(5);
+        setBorderGap(DEFAULT_BORDER_GAP);
         // setCurrentLineForeground( Color.RED );
         setCurrentLineStyle(Font.BOLD);
         setDigitAlignment(RIGHT);
-        setMinimumDisplayDigits(minimumDisplayDigits);
+        setMinimumDisplayDigits(minDisplayDigits);
 
-        component.getDocument().addDocumentListener(this);
-        component.addCaretListener(this);
-        component.addPropertyChangeListener("font", this);
+        textComponent.getDocument().addDocumentListener(this);
+        textComponent.addCaretListener(this);
+        textComponent.addPropertyChangeListener("font", this);
     }
 
     /**
-     * Gets the update font property
+     * Gets the update font property.
      *
      * @return the update font property
      */
@@ -122,15 +128,15 @@ public class TextLineNumber extends JPanel
      * Set the update font property. Indicates whether this Font should be updated
      * automatically when the Font of the related text component is changed.
      *
-     * @param updateFont when true update the Font and repaint the line numbers,
-     *                   otherwise just repaint the line numbers.
+     * @param updateFontVal when true update the Font and repaint the line numbers,
+     *                      otherwise just repaint the line numbers.
      */
-    public void setUpdateFont(boolean updateFont) {
-        this.updateFont = updateFont;
+    public void setUpdateFont(final boolean updateFontVal) {
+        this.updateFont = updateFontVal;
     }
 
     /**
-     * Gets the border gap
+     * Gets the border gap.
      *
      * @return the border gap in pixels
      */
@@ -142,18 +148,18 @@ public class TextLineNumber extends JPanel
      * The border gap is used in calculating the left and right insets of the
      * border. Default value is 5.
      *
-     * @param borderGap the gap in pixels
+     * @param borderGapVal the gap in pixels
      */
-    public void setBorderGap(int borderGap) {
-        this.borderGap = borderGap;
-        Border inner = new EmptyBorder(0, borderGap, 0, borderGap);
+    public void setBorderGap(final int borderGapVal) {
+        this.borderGap = borderGapVal;
+        Border inner = new EmptyBorder(0, borderGapVal, 0, borderGapVal);
         setBorder(new CompoundBorder(OUTER, inner));
         lastDigits = 0;
         setPreferredWidth();
     }
 
     /**
-     * Gets the current line rendering Color
+     * Gets the current line rendering color.
      *
      * @return the Color used to render the current line number
      */
@@ -164,10 +170,10 @@ public class TextLineNumber extends JPanel
     /**
      * The Color used to render the current line digits. Default is Coolor.RED.
      *
-     * @param currentLineForeground the Color used to render the current line
+     * @param currLineForeground the Color used to render the current line
      */
-    public void setCurrentLineForeground(Color currentLineForeground) {
-        this.currentLineForeground = currentLineForeground;
+    public void setCurrentLineForeground(final Color currLineForeground) {
+        this.currentLineForeground = currLineForeground;
     }
 
     /**
@@ -175,12 +181,12 @@ public class TextLineNumber extends JPanel
      *
      * @param style the style used to render the current line
      */
-    public void setCurrentLineStyle(int style) {
+    public void setCurrentLineStyle(final int style) {
         this.currentLineStyle = style;
     }
 
     /**
-     * Gets the default plain line rendering Style
+     * Gets the default plain line rendering style.
      *
      * @return the Style used to render the default line number
      */
@@ -190,7 +196,7 @@ public class TextLineNumber extends JPanel
     }
 
     /**
-     * Gets the current line rendering Style
+     * Gets the current line rendering style.
      *
      * @return the Style used to render the current line number
      */
@@ -200,7 +206,7 @@ public class TextLineNumber extends JPanel
     }
 
     /**
-     * Gets the digit alignment
+     * Gets the digit alignment.
      *
      * @return the alignment of the painted digits
      */
@@ -217,17 +223,17 @@ public class TextLineNumber extends JPanel
      * <li>TextLineNumber.RIGHT (default)
      * </ul>
      *
-     * @param digitAlignment the Color used to render the current line
+     * @param digitAlignm the Color used to render the current line
      */
-    public void setDigitAlignment(float digitAlignment) {
+    public void setDigitAlignment(final float digitAlignm) {
         this.digitAlignment
-              = digitAlignment > 1.0f
-                ? 1.0f : digitAlignment < 0.0f ? -1.0f
-                    : digitAlignment;
+              = digitAlignm > 1.0f
+                ? 1.0f : digitAlignm < 0.0f ? -1.0f
+                    : digitAlignm;
     }
 
     /**
-     * Gets the minimum display digits
+     * Gets the minimum display digits.
      *
      * @return the minimum display digits
      */
@@ -239,16 +245,16 @@ public class TextLineNumber extends JPanel
      * Specify the mimimum number of digits used to calculate the preferred width of
      * the component. Default is 3.
      *
-     * @param minimumDisplayDigits the number digits used in the preferred width
-     *                             calculation
+     * @param minDisplayDigits the number digits used in the preferred width
+     *                         calculation
      */
-    public void setMinimumDisplayDigits(int minimumDisplayDigits) {
-        this.minimumDisplayDigits = minimumDisplayDigits;
+    public void setMinimumDisplayDigits(final int minDisplayDigits) {
+        this.minimumDisplayDigits = minDisplayDigits;
         setPreferredWidth();
     }
 
     /**
-     * Calculate the width needed to display the maximum line number
+     * Calculate the width needed to display the maximum line number.
      */
     private void setPreferredWidth() {
         Element root = component.getDocument().getDefaultRootElement();
@@ -272,10 +278,10 @@ public class TextLineNumber extends JPanel
     }
 
     /**
-     * Draw the line numbers
+     * Draw the line numbers.
      */
     @Override
-    public void paintComponent(Graphics g) {
+    public void paintComponent(final Graphics g) {
         super.paintComponent(g);
 
         // Determine the width of the space available to draw the line number
@@ -324,7 +330,7 @@ public class TextLineNumber extends JPanel
      * We need to know if the caret is currently positioned on the line we are about
      * to paint so the line number can be highlighted.
      */
-    private boolean isCurrentLine(int rowStartOffset) {
+    private boolean isCurrentLine(final int rowStartOffset) {
         int caretPosition = component.getCaretPosition();
         Element root = component.getDocument().getDefaultRootElement();
         return root.getElementIndex(rowStartOffset)
@@ -335,11 +341,10 @@ public class TextLineNumber extends JPanel
      * Get the line number to be drawn. The empty string will be returned when a
      * line of text has wrapped.
      */
-    protected String getTextLineNumber(int rowStartOffset) {
+    protected String getTextLineNumber(final int rowStartOffset) {
         Element root = component.getDocument().getDefaultRootElement();
         int index = root.getElementIndex(rowStartOffset);
         Element line = root.getElement(index);
-
         if (line.getStartOffset() == rowStartOffset) {
             return String.valueOf(index + 1);
         } else {
@@ -350,15 +355,16 @@ public class TextLineNumber extends JPanel
     /*
      * Determine the X offset to properly align the line number when drawn
      */
-    private int getOffsetX(int availableWidth, int stringWidth) {
+    private int getOffsetX(final int availableWidth, final int stringWidth) {
         return (int) ((availableWidth - stringWidth) * digitAlignment);
     }
 
     /*
      * Determine the Y offset for the current row
      */
-    private int getOffsetY(int rowStartOffset,
-                           FontMetrics fontMetrics) throws BadLocationException {
+    private int getOffsetY(final int rowStartOffset,
+                           final FontMetrics fontMetrics)
+                                   throws BadLocationException {
         // Get the bounding rectangle of the row
         Rectangle2D r = component.modelToView2D(rowStartOffset);
         double lineHeight = fontMetrics.getHeight();
@@ -399,7 +405,7 @@ public class TextLineNumber extends JPanel
 //  Implement CaretListener interface
 //
     @Override
-    public void caretUpdate(CaretEvent e) {
+    public void caretUpdate(final CaretEvent e) {
         // Get the line the caret is positioned on
         int caretPosition = component.getCaretPosition();
         Element root = component.getDocument().getDefaultRootElement();
@@ -416,17 +422,17 @@ public class TextLineNumber extends JPanel
 //  Implement DocumentListener interface
 //
     @Override
-    public void changedUpdate(DocumentEvent e) {
+    public void changedUpdate(final DocumentEvent e) {
         documentChanged();
     }
 
     @Override
-    public void insertUpdate(DocumentEvent e) {
+    public void insertUpdate(final DocumentEvent e) {
         documentChanged();
     }
 
     @Override
-    public void removeUpdate(DocumentEvent e) {
+    public void removeUpdate(final DocumentEvent e) {
         documentChanged();
     }
 
@@ -460,7 +466,7 @@ public class TextLineNumber extends JPanel
 //  Implement PropertyChangeListener interface
 //
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
+    public void propertyChange(final PropertyChangeEvent evt) {
         if (evt.getNewValue() instanceof Font) {
             if (updateFont) {
                 Font newFont = (Font) evt.getNewValue();

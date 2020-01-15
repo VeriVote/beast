@@ -26,6 +26,14 @@ import javafx.scene.text.Font;
 public class TextStyle {
     public static final TextStyle DEFAULT = new TextStyle();
 
+    private static final int TWO = 2;
+    private static final int THREE = 3;
+    private static final int FOUR = 4;
+    private static final int SIX = 6;
+
+    private static final int COLOR_MASK = 255;
+    private static final int DEFAULT_FONT_SIZE = 12;
+
     public static final Codec<TextStyle> CODEC = new Codec<TextStyle>() {
         private final Codec<Optional<String>> optStringCodec =
                 Codec.optionalCodec(Codec.STRING_CODEC);
@@ -38,8 +46,9 @@ public class TextStyle {
         }
 
         @Override
-        public void encode(DataOutputStream os, TextStyle s) throws IOException {
-            os.writeByte(encodeBoldItalicUnderlineStrikethrough(s));
+        public void encode(final DataOutputStream os,
+                           final TextStyle s) throws IOException {
+            os.writeByte(encodeBoldItalicUnderlineStrikeThrough(s));
             os.writeInt(encodeOptionalUint(Optional.of((int) s.font.getSize())));
             optStringCodec.encode(os, Optional.of(s.font.getFamily()));
             optColorCodec.encode(os, Optional.of(s.textColor));
@@ -47,7 +56,7 @@ public class TextStyle {
         }
 
         @Override
-        public TextStyle decode(DataInputStream is) throws IOException {
+        public TextStyle decode(final DataInputStream is) throws IOException {
             byte bius = is.readByte();
             Optional<Integer> fontSize = decodeOptionalUint(is.readInt());
             Optional<String> fontFamily = optStringCodec.decode(is);
@@ -59,66 +68,72 @@ public class TextStyle {
                              fontSize.orElse((int) getDefaultFont().getSize()));
 
             return new TextStyle(bold(bius), italic(bius), underline(bius),
-                                 strikethrough(bius), Optional.of(decodedFont),
+                                 strikeThrough(bius), Optional.of(decodedFont),
                                  Optional.of(textColor.orElse(getDefaultTextColor())),
                                  Optional.of(bgrColor.orElse(getDefaultBackgroundColor())));
         }
 
-        private int encodeBoldItalicUnderlineStrikethrough(TextStyle s) {
-            return encodeOptionalBoolean(s.bold) << 6
-                    | encodeOptionalBoolean(s.italic) << 4
-                    | encodeOptionalBoolean(s.underline) << 2
-                    | encodeOptionalBoolean(s.strikethrough);
+        private int encodeBoldItalicUnderlineStrikeThrough(final TextStyle s) {
+            return encodeOptionalBoolean(s.bold) << SIX
+                    | encodeOptionalBoolean(s.italic) << FOUR
+                    | encodeOptionalBoolean(s.underline) << TWO
+                    | encodeOptionalBoolean(s.strikeThrough);
         }
 
-        private Optional<Boolean> bold(byte bius) throws IOException {
-            return decodeOptionalBoolean((bius >> 6) & 3);
+        private Optional<Boolean> bold(final byte bius)
+                throws IOException {
+            return decodeOptionalBoolean((bius >> SIX) & THREE);
         }
 
-        private Optional<Boolean> italic(byte bius) throws IOException {
-            return decodeOptionalBoolean((bius >> 4) & 3);
+        private Optional<Boolean> italic(final byte bius)
+                throws IOException {
+            return decodeOptionalBoolean((bius >> FOUR) & THREE);
         }
 
-        private Optional<Boolean> underline(byte bius) throws IOException {
-            return decodeOptionalBoolean((bius >> 2) & 3);
+        private Optional<Boolean> underline(final byte bius)
+                throws IOException {
+            return decodeOptionalBoolean((bius >> TWO) & THREE);
         }
 
-        private Optional<Boolean> strikethrough(byte bius) throws IOException {
-            return decodeOptionalBoolean((bius >> 0) & 3);
+        private Optional<Boolean> strikeThrough(final byte bius)
+                throws IOException {
+            return decodeOptionalBoolean((bius >> 0) & THREE);
         }
 
-        private int encodeOptionalBoolean(Optional<Boolean> ob) {
-            return ob.map(b -> 2 + (b ? 1 : 0)).orElse(0);
+        private int encodeOptionalBoolean(final Optional<Boolean> ob) {
+            return ob.map(b -> TWO + (b ? 1 : 0)).orElse(0);
         }
 
-        private Optional<Boolean> decodeOptionalBoolean(int i) throws IOException {
+        private Optional<Boolean> decodeOptionalBoolean(final int i)
+                throws IOException {
             switch (i) {
             case 0:
                 return Optional.empty();
-            case 2:
+            case TWO:
                 return Optional.of(false);
-            case 3:
+            case THREE:
                 return Optional.of(true);
+            default:
+                throw new MalformedInputException(0);
             }
-            throw new MalformedInputException(0);
         }
 
-        private int encodeOptionalUint(Optional<Integer> oi) {
+        private int encodeOptionalUint(final Optional<Integer> oi) {
             return oi.orElse(-1);
         }
 
-        private Optional<Integer> decodeOptionalUint(int i) {
+        private Optional<Integer> decodeOptionalUint(final int i) {
             return (i < 0) ? Optional.empty() : Optional.of(i);
         }
     };
 
-    final Optional<Boolean> bold;
-    final Optional<Boolean> italic;
-    final Optional<Boolean> underline;
-    final Optional<Boolean> strikethrough;
-    final Font font;
-    final Color textColor;
-    final Color backgroundColor;
+    private final Optional<Boolean> bold;
+    private final Optional<Boolean> italic;
+    private final Optional<Boolean> underline;
+    private final Optional<Boolean> strikeThrough;
+    private final Font font;
+    private final Color textColor;
+    private final Color backgroundColor;
 
     public TextStyle() {
         this(Optional.empty(), Optional.empty(), Optional.empty(),
@@ -126,21 +141,25 @@ public class TextStyle {
              Optional.empty());
     }
 
-    public TextStyle(Optional<Boolean> bold, Optional<Boolean> italic,
-                     Optional<Boolean> underline, Optional<Boolean> strikethrough,
-                     Optional<Font> fontOption, Optional<Color> textColorOption,
-                     Optional<Color> backgroundColorOption) {
-        this.bold = bold;
-        this.italic = italic;
-        this.underline = underline;
-        this.strikethrough = strikethrough;
+    public TextStyle(final Optional<Boolean> bld,
+                     final Optional<Boolean> ital,
+                     final Optional<Boolean> underln,
+                     final Optional<Boolean> strikeThroughAttr,
+                     final Optional<Font> fontOption,
+                     final Optional<Color> textColorOption,
+                     final Optional<Color> backgroundColorOption) {
+        this.bold = bld;
+        this.italic = ital;
+        this.underline = underln;
+        this.strikeThrough = strikeThroughAttr;
         this.font = fontOption.orElse(getDefaultFont());
         this.textColor = textColorOption.orElse(getDefaultTextColor());
-        this.backgroundColor = backgroundColorOption.orElse(getDefaultBackgroundColor());
+        this.backgroundColor =
+                backgroundColorOption.orElse(getDefaultBackgroundColor());
     }
 
     private static Font getDefaultFont() {
-        return new Font("Monospaced", 12);
+        return new Font("Monospaced", DEFAULT_FONT_SIZE);
     }
 
     private static Color getDefaultTextColor() {
@@ -151,59 +170,59 @@ public class TextStyle {
         return Color.WHITE;
     }
 
-    public static TextStyle bold(boolean bold) {
+    public static TextStyle bold(final boolean bold) {
         return DEFAULT.updateBold(bold);
     }
 
-    public static TextStyle italic(boolean italic) {
+    public static TextStyle italic(final boolean italic) {
         return DEFAULT.updateItalic(italic);
     }
 
-    public static TextStyle underline(boolean underline) {
+    public static TextStyle underline(final boolean underline) {
         return DEFAULT.updateUnderline(underline);
     }
 
-    public static TextStyle strikethrough(boolean strikethrough) {
-        return DEFAULT.updateStrikethrough(strikethrough);
+    public static TextStyle strikeThrough(final boolean strikethrough) {
+        return DEFAULT.updateStrikeThrough(strikethrough);
     }
 
-    public static TextStyle fontSize(int fontSize) {
+    public static TextStyle fontSize(final int fontSize) {
         return DEFAULT.updateFontSize(fontSize);
     }
 
-    public static TextStyle fontFamily(String family) {
+    public static TextStyle fontFamily(final String family) {
         return DEFAULT.updateFontFamily(family);
     }
 
-    public static TextStyle textColor(Color color) {
+    public static TextStyle textColor(final Color color) {
         return DEFAULT.updateTextColor(color);
     }
 
-    public static TextStyle backgroundColor(Color color) {
+    public static TextStyle backgroundColor(final Color color) {
         return DEFAULT.updateBackgroundColor(color);
     }
 
-    static String cssColor(Color color) {
-        int red = (int) (color.getRed() * 255);
-        int green = (int) (color.getGreen() * 255);
-        int blue = (int) (color.getBlue() * 255);
+    static String cssColor(final Color color) {
+        int red = (int) (color.getRed() * COLOR_MASK);
+        int green = (int) (color.getGreen() * COLOR_MASK);
+        int blue = (int) (color.getBlue() * COLOR_MASK);
         return "rgb(" + red + ", " + green + ", " + blue + ")";
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bold, italic, underline, strikethrough, font,
+        return Objects.hash(bold, italic, underline, strikeThrough, font,
                             textColor, backgroundColor);
     }
 
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (other instanceof TextStyle) {
             TextStyle that = (TextStyle) other;
             return Objects.equals(this.bold, that.bold)
                     && Objects.equals(this.italic, that.italic)
                     && Objects.equals(this.underline, that.underline)
-                    && Objects.equals(this.strikethrough, that.strikethrough)
+                    && Objects.equals(this.strikeThrough, that.strikeThrough)
                     && Objects.equals(this.font, that.font)
                     && Objects.equals(this.textColor, that.textColor)
                     && Objects.equals(this.backgroundColor, that.backgroundColor);
@@ -218,7 +237,7 @@ public class TextStyle {
         bold.ifPresent(b -> styles.add(b.toString()));
         italic.ifPresent(i -> styles.add(i.toString()));
         underline.ifPresent(u -> styles.add(u.toString()));
-        strikethrough.ifPresent(s -> styles.add(s.toString()));
+        strikeThrough.ifPresent(s -> styles.add(s.toString()));
         Optional.of(font.getSize()).ifPresent(s -> styles.add(s.toString()));
         Optional.of(font.getFamily()).ifPresent(s -> styles.add(s.toString()));
         Optional.of(textColor).ifPresent(c -> styles.add(c.toString()));
@@ -249,8 +268,8 @@ public class TextStyle {
                 sb.append("-fx-underline: false;");
             }
         }
-        if (strikethrough.isPresent()) {
-            if (strikethrough.get()) {
+        if (strikeThrough.isPresent()) {
+            if (strikeThrough.get()) {
                 sb.append("-fx-strikethrough: true;");
             } else {
                 sb.append("-fx-strikethrough: false;");
@@ -264,60 +283,60 @@ public class TextStyle {
         return sb.toString();
     }
 
-    public TextStyle updateWith(TextStyle mixin) {
+    public TextStyle updateWith(final TextStyle mixin) {
         return new TextStyle(mixin.bold.isPresent() ? mixin.bold : bold,
                              mixin.italic.isPresent() ? mixin.italic : italic,
                              mixin.underline.isPresent() ? mixin.underline : underline,
-                             mixin.strikethrough.isPresent() ? mixin.strikethrough : strikethrough,
+                             mixin.strikeThrough.isPresent() ? mixin.strikeThrough : strikeThrough,
                              Optional.of(mixin.font), Optional.of(mixin.textColor),
                              Optional.of(mixin.backgroundColor));
     }
 
-    public TextStyle updateBold(boolean bold) {
-        return new TextStyle(Optional.of(bold), italic, underline, strikethrough,
+    public TextStyle updateBold(final boolean bld) {
+        return new TextStyle(Optional.of(bld), italic, underline, strikeThrough,
                              Optional.of(font), Optional.of(textColor),
                              Optional.of(backgroundColor));
     }
 
-    public TextStyle updateItalic(boolean italic) {
-        return new TextStyle(bold, Optional.of(italic), underline,
-                             strikethrough, Optional.of(font), Optional.of(textColor),
+    public TextStyle updateItalic(final boolean ital) {
+        return new TextStyle(bold, Optional.of(ital), underline,
+                             strikeThrough, Optional.of(font), Optional.of(textColor),
                              Optional.of(backgroundColor));
     }
 
-    public TextStyle updateUnderline(boolean underline) {
-        return new TextStyle(bold, italic, Optional.of(underline),
-                             strikethrough, Optional.of(font), Optional.of(textColor),
+    public TextStyle updateUnderline(final boolean underln) {
+        return new TextStyle(bold, italic, Optional.of(underln),
+                             strikeThrough, Optional.of(font), Optional.of(textColor),
                              Optional.of(backgroundColor));
     }
 
-    public TextStyle updateStrikethrough(boolean strikethrough) {
+    public TextStyle updateStrikeThrough(final boolean strikeThroughAttribute) {
         return new TextStyle(bold, italic, underline,
-                             Optional.of(strikethrough), Optional.of(font),
+                             Optional.of(strikeThroughAttribute), Optional.of(font),
                              Optional.of(textColor), Optional.of(backgroundColor));
     }
 
-    public TextStyle updateFontSize(int fontSize) {
-        return new TextStyle(bold, italic, underline, strikethrough,
+    public TextStyle updateFontSize(final int fontSize) {
+        return new TextStyle(bold, italic, underline, strikeThrough,
                              Optional.of(new Font(font.getName(), fontSize)),
                              Optional.of(textColor), Optional.of(backgroundColor));
     }
 
-    public TextStyle updateFontFamily(String fontFamily) {
-        return new TextStyle(bold, italic, underline, strikethrough,
+    public TextStyle updateFontFamily(final String fontFamily) {
+        return new TextStyle(bold, italic, underline, strikeThrough,
                              Optional.of(new Font(fontFamily, font.getSize())),
                              Optional.of(textColor), Optional.of(backgroundColor));
     }
 
-    public TextStyle updateTextColor(Color textColor) {
-        return new TextStyle(bold, italic, underline, strikethrough,
-                             Optional.of(font), Optional.of(textColor),
+    public TextStyle updateTextColor(final Color textClr) {
+        return new TextStyle(bold, italic, underline, strikeThrough,
+                             Optional.of(font), Optional.of(textClr),
                              Optional.of(backgroundColor));
     }
 
-    public TextStyle updateBackgroundColor(Color backgroundColor) {
-        return new TextStyle(bold, italic, underline, strikethrough,
+    public TextStyle updateBackgroundColor(final Color backColor) {
+        return new TextStyle(bold, italic, underline, strikeThrough,
                              Optional.of(font), Optional.of(textColor),
-                             Optional.of(backgroundColor));
+                             Optional.of(backColor));
     }
 }

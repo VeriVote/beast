@@ -12,13 +12,14 @@ public class SymbolicVariable {
     private final InternalTypeContainer internalTypeContainer;
 
     /**
-     * creates a new SymbolicVariable
+     * Creates a new SymbolicVariable.
      *
-     * @param id              the id of the new variabele
+     * @param idVal              the id of the new variabele
      * @param internalTypeRep the Type of the new variable
      */
-    public SymbolicVariable(String id, InternalTypeContainer internalTypeRep) {
-        this.id = id;
+    public SymbolicVariable(final String idVal,
+                            final InternalTypeContainer internalTypeRep) {
+        this.id = idVal;
         this.internalTypeContainer = internalTypeRep;
     }
 
@@ -57,7 +58,7 @@ public class SymbolicVariable {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }

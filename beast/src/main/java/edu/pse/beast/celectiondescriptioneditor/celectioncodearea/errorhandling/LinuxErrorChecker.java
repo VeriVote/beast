@@ -13,15 +13,17 @@ import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
 /**
- * the linux implementation for checking the code This implementation uses gcc
- * for checking
+ * The Linux implementation for checking the code. This implementation uses gcc
+ * for checking.
  *
  * @author Lukas Stapelbroek
  *
  */
 public class LinuxErrorChecker extends SystemSpecificErrorChecker {
+    private static final int FOUR = 4;
+
     @Override
-    public Process checkCodeFileForErrors(File toCheck) {
+    public Process checkCodeFileForErrors(final File toCheck) {
         String nameOfOutFile
             = toCheck.getName().replace(FileLoader.C_FILE_ENDING,
                                         FileLoader.OUT_FILE_ENDING);
@@ -64,9 +66,9 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
     }
 
     @Override
-    protected List<CodeError> parseError(List<String> result,
-                                         List<String> errors,
-                                         int lineOffset) {
+    protected List<CodeError> parseError(final List<String> result,
+                                         final List<String> errors,
+                                         final int lineOffset) {
         List<CodeError> codeErrors = new ArrayList<CodeError>();
         // gcc gives the errors out in the error stream so we traverse it
         for (Iterator<String> iterator = errors.iterator(); iterator.hasNext();) {
@@ -80,7 +82,7 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
                 // we want the format :line:position: ... error:
                 // so we need at least 4 ":" in the string to be sure to find a
                 // line and the position and the error
-                if (line.split(":").length > 4) {
+                if (line.split(":").length > FOUR) {
                     try {
                         // put the output in the containers for them
                         lineNumber = Integer.parseInt(line.split(":")[1]) - lineOffset;
@@ -118,7 +120,7 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
                 // so we need at least 4 ":" in the string to be sure to find a
                 // line and the position and the error
                 String[] splittedLine = line.split(":");
-                if (splittedLine.length >= 4) {
+                if (splittedLine.length >= FOUR) {
                     try {
                         // the output has the form"FILENANE:LINE:COLUMN
                         // warning:control reaches..."

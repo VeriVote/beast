@@ -26,7 +26,7 @@ public class LinuxProcess extends CBMCProcess {
     private static final String C_FILE_ENDING = ".c";
 
     /**
-     * creates a new CBMC Checker for the windows OS
+     * Creates a new CBMC Checker for the windows OS.
      *
      * @param voters     the amount of voters
      * @param candidates the amount of candidates
@@ -37,20 +37,27 @@ public class LinuxProcess extends CBMCProcess {
      *                   finished checking
      * @param result     the result
      */
-    public LinuxProcess(int voters, int candidates, int seats,
-                        String advanced, File toCheck, CheckerFactory parent,
-                        Result result) {
+    public LinuxProcess(final int voters,
+                        final int candidates,
+                        final int seats,
+                        final String advanced,
+                        final File toCheck,
+                        final CheckerFactory parent,
+                        final Result result) {
         super(voters, candidates, seats, advanced, toCheck, parent, result);
     }
 
     @Override
-    protected String sanitizeArguments(String toSanitize) {
+    protected String sanitizeArguments(final String toSanitize) {
         return toSanitize;
     }
 
     @Override
-    public Process createProcess(File toCheck, int voters, int candidates,
-                                 int seats, String advanced) {
+    public Process createProcess(final File toCheck,
+                                 final int voters,
+                                 final int candidates,
+                                 final int seats,
+                                 final String advanced) {
         List<String> arguments = new ArrayList<String>();
         String cbmc
               = "\"" + new File(SuperFolderFinder.getSuperFolder()
@@ -121,7 +128,6 @@ public class LinuxProcess extends CBMCProcess {
         } else {
             getProcess().destroyForcibly();
         }
-
         try {
             Thread.sleep(WAITING_TIME);
         } catch (InterruptedException e) {

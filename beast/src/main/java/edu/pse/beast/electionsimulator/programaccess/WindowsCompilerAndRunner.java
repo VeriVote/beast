@@ -31,7 +31,7 @@ public class WindowsCompilerAndRunner extends SystemSpecificCompilerAndExecution
     private static final String COMPILE_ALL_INCLUDES_IN_FOLDER = "*.c";
 
     @Override
-    protected Process compileCFile(File toCheck) {
+    protected Process compileCFile(final File toCheck) {
         String vsCmd = null;
         Process startedProcess = null;
         String userIncludeAndPath
@@ -99,7 +99,7 @@ public class WindowsCompilerAndRunner extends SystemSpecificCompilerAndExecution
     }
 
     @Override
-    protected Process runWithData(String toRun, File dataFile) {
+    protected Process runWithData(final String toRun, final File dataFile) {
         Process startedProcess = null;
         // Windows wants one big String to call programs
         String callString = "";

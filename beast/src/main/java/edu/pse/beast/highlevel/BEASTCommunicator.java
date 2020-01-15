@@ -24,6 +24,12 @@ import edu.pse.beast.propertychecker.Result;
  * @author Jonas Wohnig
  */
 public final class BEASTCommunicator {
+    private static final int SIXTYSEVEN = 67;
+    private static final int SECONDS_IN_MINUTE = 60;
+    private static final int SECONDS_IN_HOUR = 3600;
+    private static final int SECONDS_IN_DAY = 86400;
+    private static final double NANO_TO_SECONDS = 1000000000.0;
+
     private static List<PropertyChecker> currentCheckers = new ArrayList<PropertyChecker>();
     // public static boolean startCheck() {
     // centralObjectProvider.getResultPresenter().resetResults();
@@ -72,7 +78,7 @@ public final class BEASTCommunicator {
     // preAndPostSrc.getPreAndPostPropertiesDescriptionsCheckAndMargin().size())
     // {
     // elapsedTime = System.nanoTime() - startTime;
-    // passedTimeSeconds = (double) elapsedTime / 1000000000.0;
+    // passedTimeSeconds = (double) elapsedTime / NANO_TO_SECONDS;
     // timeString = createTimeString(passedTimeSeconds);
     //
     // checkStatusDisplayer.displayText("waitingForPropertyResult", true,
@@ -154,13 +160,13 @@ public final class BEASTCommunicator {
                         boolean allDone = false;
                         while (!allDone && !stopped) {
                             elapsedTime = System.nanoTime() - startTime;
-                            passedTimeSeconds = (double) elapsedTime / 1000000000.0;
+                            passedTimeSeconds = (double) elapsedTime / NANO_TO_SECONDS;
                             timeString = createTimeString(passedTimeSeconds);
                             // GUIController.setInfoText("elapsed time "
                             // + df.format(passedTimeSeconds));
                             try {
                                 Thread.sleep(Math.max(0,
-                                        67 - (System.currentTimeMillis() - frameTime)));
+                                        SIXTYSEVEN - (System.currentTimeMillis() - frameTime)));
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(
                                         BEASTCommunicator.class.getName()).log(Level.SEVERE,
@@ -209,8 +215,8 @@ public final class BEASTCommunicator {
      *            the properties list
      * @return true if errors exist, false otherwise
      */
-    public static boolean checkForErrors(ElectionDescription description,
-                                         List<ParentTreeItem> properties) {
+    public static boolean checkForErrors(final ElectionDescription description,
+                                         final List<ParentTreeItem> properties) {
         GUIController.setConsoleText("Searching for errors");
         // save the currently opened property
         GUIController.getController().getBooleanExpEditor().savePropertyTextAreasIntoDescription();
@@ -230,9 +236,10 @@ public final class BEASTCommunicator {
         return errorsFound;
     }
 
-    private static boolean hasProperties(List<ParentTreeItem> properties) {
+    private static boolean hasProperties(final List<ParentTreeItem> properties) {
         boolean hasProperties = false;
-        for (Iterator<ParentTreeItem> iterator = properties.iterator(); iterator.hasNext();) {
+        for (Iterator<ParentTreeItem> iterator = properties.iterator();
+                iterator.hasNext();) {
             ParentTreeItem item = (ParentTreeItem) iterator.next();
             hasProperties = hasProperties || item.isChildSelected();
         }
@@ -246,7 +253,7 @@ public final class BEASTCommunicator {
      * @param passedTimeSeconds
      *            the passed time in seconds as a double
      */
-    private static String createTimeString(double passedTimeSeconds) {
+    private static String createTimeString(final double passedTimeSeconds) {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
         String timeString = "";
         if (passedTimeLongerThanDay(passedTimeSeconds)) {
@@ -262,51 +269,51 @@ public final class BEASTCommunicator {
         return timeString;
     }
 
-    private static String createTimeStringLongerThanMinute(double passedTimeSeconds,
-                                                           DecimalFormat decimalFormat) {
+    private static String createTimeStringLongerThanMinute(final double passedTimeSeconds,
+                                                           final DecimalFormat decimalFormat) {
         String timeString;
-        int minutes = (int) passedTimeSeconds / 60;
-        double minutesRemainder = passedTimeSeconds % 60;
+        int minutes = (int) passedTimeSeconds / SECONDS_IN_MINUTE;
+        double minutesRemainder = passedTimeSeconds % SECONDS_IN_MINUTE;
         String seconds = decimalFormat.format(minutesRemainder);
         timeString = minutes + "min " + seconds + "s";
         return timeString;
     }
 
-    private static String createTimeStringLongerThanHour(double passedTimeSeconds,
-                                                         DecimalFormat decimalFormat) {
+    private static String createTimeStringLongerThanHour(final double passedTimeSeconds,
+                                                         final DecimalFormat decimalFormat) {
         String timeString;
-        int hours = (int) passedTimeSeconds / 3600;
-        double hoursRemainder = passedTimeSeconds % 3600;
-        int minutes = (int) hoursRemainder / 60;
-        double minutesRemainder = hoursRemainder % 60;
+        int hours = (int) passedTimeSeconds / SECONDS_IN_HOUR;
+        double hoursRemainder = passedTimeSeconds % SECONDS_IN_HOUR;
+        int minutes = (int) hoursRemainder / SECONDS_IN_MINUTE;
+        double minutesRemainder = hoursRemainder % SECONDS_IN_MINUTE;
         String seconds = decimalFormat.format(minutesRemainder);
         timeString = hours + "h " + minutes + "m " + seconds + "s";
         return timeString;
     }
 
-    private static String createTimeStringLongerThanDay(double passedTimeSeconds,
-                                                        DecimalFormat decimalFormat) {
+    private static String createTimeStringLongerThanDay(final double passedTimeSeconds,
+                                                        final DecimalFormat decimalFormat) {
         String timeString;
-        int days = (int) passedTimeSeconds / 86400;
-        double daysRemainder = passedTimeSeconds % 86400;
-        int hours = (int) daysRemainder / 3600;
-        double hoursRemainder = daysRemainder % 3600;
-        int minutes = (int) hoursRemainder / 60;
-        double minutesRemainder = hoursRemainder % 60;
+        int days = (int) passedTimeSeconds / SECONDS_IN_DAY;
+        double daysRemainder = passedTimeSeconds % SECONDS_IN_DAY;
+        int hours = (int) daysRemainder / SECONDS_IN_HOUR;
+        double hoursRemainder = daysRemainder % SECONDS_IN_HOUR;
+        int minutes = (int) hoursRemainder / SECONDS_IN_MINUTE;
+        double minutesRemainder = hoursRemainder % SECONDS_IN_MINUTE;
         String seconds = decimalFormat.format(minutesRemainder);
         timeString = days + "d " + hours + "h " + minutes + "m " + seconds + "s";
         return timeString;
     }
 
-    private static boolean passedTimeLongerThanDay(double passedTimeSeconds) {
-        return passedTimeSeconds >= 86400;
+    private static boolean passedTimeLongerThanDay(final double passedTimeSeconds) {
+        return passedTimeSeconds >= SECONDS_IN_DAY;
     }
 
-    private static boolean passedTimeLongerThanHour(double passedTimeSeconds) {
-        return passedTimeSeconds >= 3600;
+    private static boolean passedTimeLongerThanHour(final double passedTimeSeconds) {
+        return passedTimeSeconds >= SECONDS_IN_HOUR;
     }
 
-    private static boolean passedTimeLongerThanMinute(double passedTimeSeconds) {
-        return passedTimeSeconds >= 60;
+    private static boolean passedTimeLongerThanMinute(final double passedTimeSeconds) {
+        return passedTimeSeconds >= SECONDS_IN_MINUTE;
     }
 }

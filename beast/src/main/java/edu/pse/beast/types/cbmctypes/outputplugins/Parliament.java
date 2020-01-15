@@ -12,7 +12,7 @@ import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
 public class Parliament extends CBMCOutputType {
     private static final int DIMENSIONS = 1;
-    private final static String[] SIZE_OF_DIMENSIONS = { UnifiedNameContainer.getCandidate() };
+    private static final String[] SIZE_OF_DIMENSIONS = {UnifiedNameContainer.getCandidate()};
 
     public Parliament() {
         super(true, DataType.INT, DIMENSIONS, SIZE_OF_DIMENSIONS);
@@ -29,7 +29,7 @@ public class Parliament extends CBMCOutputType {
     }
 
     @Override
-    public CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code) {
+    public CodeArrayListBeautifier addMarginVerifyCheck(final CodeArrayListBeautifier code) {
         code.add("void verifyMain() {");
         // code.add("int " + UnifiedNameContainer.getNewVotesName() + "1[" +
         // UnifiedNameContainer.getVoter() + "], diff[" +
@@ -69,8 +69,8 @@ public class Parliament extends CBMCOutputType {
     }
 
     @Override
-    public CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code,
-                                                        int voteNumber) {
+    public CodeArrayListBeautifier addVotesArrayAndInit(final CodeArrayListBeautifier code,
+                                                        final int voteNumber) {
         String electX = super.getContainer().getOutputStruct().getStructAccess()
                 + " elect" + voteNumber + " = "
                 + UnifiedNameContainer.getVotingMethod() + "(votes" + voteNumber
@@ -92,7 +92,7 @@ public class Parliament extends CBMCOutputType {
     }
 
     @Override
-    public String getResultDescriptionString(List<String> result) {
+    public String getResultDescriptionString(final List<String> result) {
         String toReturn = "[";
         for (Iterator<String> iterator = result.iterator(); iterator
                 .hasNext();) {

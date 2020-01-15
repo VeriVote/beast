@@ -37,13 +37,14 @@ public class ParStyle {
         }
 
         @Override
-        public void encode(DataOutputStream os, ParStyle t) throws IOException {
+        public void encode(final DataOutputStream os,
+                           final ParStyle t) throws IOException {
             optAlignmentCodec.encode(os, t.alignment);
             optColorCodec.encode(os, t.backgroundColor);
         }
 
         @Override
-        public ParStyle decode(DataInputStream is) throws IOException {
+        public ParStyle decode(final DataInputStream is) throws IOException {
             return new ParStyle(
                     optAlignmentCodec.decode(is),
                     optColorCodec.decode(is));
@@ -51,16 +52,17 @@ public class ParStyle {
 
     };
 
-    final Optional<TextAlignment> alignment;
-    final Optional<Color> backgroundColor;
+    private final Optional<TextAlignment> alignment;
+    private final Optional<Color> backgroundColor;
 
     public ParStyle() {
         this(Optional.empty(), Optional.empty());
     }
 
-    public ParStyle(Optional<TextAlignment> alignment, Optional<Color> backgroundColor) {
-        this.alignment = alignment;
-        this.backgroundColor = backgroundColor;
+    public ParStyle(final Optional<TextAlignment> align,
+                    final Optional<Color> backColor) {
+        this.alignment = align;
+        this.backgroundColor = backColor;
     }
 
     public static ParStyle alignLeft() {
@@ -79,7 +81,7 @@ public class ParStyle {
         return EMPTY.updateAlignment(JUSTIFY);
     }
 
-    public static ParStyle backgroundColor(Color color) {
+    public static ParStyle backgroundColor(final Color color) {
         return EMPTY.updateBackgroundColor(color);
     }
 
@@ -89,11 +91,11 @@ public class ParStyle {
     }
 
     @Override
-    public boolean equals(Object other) {
-        if(other instanceof ParStyle) {
+    public boolean equals(final Object other) {
+        if (other instanceof ParStyle) {
             ParStyle that = (ParStyle) other;
-            return Objects.equals(this.alignment, that.alignment) &&
-                   Objects.equals(this.backgroundColor, that.backgroundColor);
+            return Objects.equals(this.alignment, that.alignment)
+                && Objects.equals(this.backgroundColor, that.backgroundColor);
         } else {
             return false;
         }
@@ -109,7 +111,7 @@ public class ParStyle {
 
         alignment.ifPresent(al -> {
             String cssAlignment;
-            switch(al) {
+            switch (al) {
             case LEFT:
                 cssAlignment = "left";
                 break;
@@ -135,17 +137,17 @@ public class ParStyle {
         return sb.toString();
     }
 
-    public ParStyle updateWith(ParStyle mixin) {
+    public ParStyle updateWith(final ParStyle mixin) {
         return new ParStyle(
                 mixin.alignment.isPresent() ? mixin.alignment : alignment,
                 mixin.backgroundColor.isPresent() ? mixin.backgroundColor : backgroundColor);
     }
 
-    public ParStyle updateAlignment(TextAlignment alignment) {
-        return new ParStyle(Optional.of(alignment), backgroundColor);
+    public ParStyle updateAlignment(final TextAlignment align) {
+        return new ParStyle(Optional.of(align), backgroundColor);
     }
 
-    public ParStyle updateBackgroundColor(Color backgroundColor) {
-        return new ParStyle(alignment, Optional.of(backgroundColor));
+    public ParStyle updateBackgroundColor(final Color backColor) {
+        return new ParStyle(alignment, Optional.of(backColor));
     }
 }

@@ -25,7 +25,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
 public abstract class ChildTreeItem extends CustomTreeItem {
-    protected ArrayList<ResultTreeItem> results = new ArrayList<ResultTreeItem>();
+    private ArrayList<ResultTreeItem> results = new ArrayList<ResultTreeItem>();
     private Label propName;
     private CheckBox checkBox = new CheckBox();
     private final ParentTreeItem parent;
@@ -35,24 +35,25 @@ public abstract class ChildTreeItem extends CustomTreeItem {
     private final List<TreeItem<CustomTreeItem>> resultTreeItems =
             new ArrayList<TreeItem<CustomTreeItem>>();
 
-    ChildTreeItem(ChildTreeItemValues values, ParentTreeItem parent,
-                  TreeItem<CustomTreeItem> treeItemReference) {
-        this.parent = parent;
-        this.checkBox.setSelected(values.checkBoxStatus);
-        this.propName = new Label(values.propertyName);
-        this.disabled = values.disabled;
+    ChildTreeItem(final ChildTreeItemValues values,
+                  final ParentTreeItem parentItem,
+                  final TreeItem<CustomTreeItem> treeItemReference) {
+        this.parent = parentItem;
+        this.checkBox.setSelected(values.getCheckBoxStatus());
+        this.propName = new Label(values.getPropertyName());
+        this.disabled = values.isDisabled();
         this.setTreeItemReference(treeItemReference);
         treeItemReference.setValue(this);
-        for (Iterator<Result> iterator = values.results.iterator(); iterator.hasNext();) {
+        for (Iterator<Result> iterator = values.getResults().iterator(); iterator.hasNext();) {
             Result result = (Result) iterator.next();
             addResult(result);
         }
         init();
     }
 
-    ChildTreeItem(String name, ParentTreeItem parent,
-                  TreeItem<CustomTreeItem> treeItemReference) {
-        this.parent = parent;
+    ChildTreeItem(final String name, final ParentTreeItem parentItem,
+                  final TreeItem<CustomTreeItem> treeItemReference) {
+        this.parent = parentItem;
         propName = new Label(name);
         this.setTreeItemReference(treeItemReference);
         treeItemReference.setValue(this);
@@ -62,8 +63,8 @@ public abstract class ChildTreeItem extends CustomTreeItem {
     private void init() {
         this.setAlignment(Pos.CENTER_LEFT);
         checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            public void changed(ObservableValue<? extends Boolean> ov,
-                                Boolean oldValue, Boolean newValue) {
+            public void changed(final ObservableValue<? extends Boolean> ov,
+                                final Boolean oldValue, final Boolean newValue) {
                 if (!disabled) {
                     parent.childCheckboxChanged();
                 }
@@ -71,7 +72,7 @@ public abstract class ChildTreeItem extends CustomTreeItem {
         });
         this.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(final MouseEvent event) {
                 wasClicked();
             }
         });
@@ -92,19 +93,19 @@ public abstract class ChildTreeItem extends CustomTreeItem {
     }
 
     /**
-     * sets the value of the checkbox, while disabling the listener for the
-     * checkbox beforehand, and re-enabling it afterwards
+     * Sets the value of the checkbox, while disabling the listener for the
+     * checkbox beforehand, and re-enabling it afterwards.
      *
      * @param state
      *            new checkbox value
      */
-    public void setSelected(boolean state) {
+    public void setSelected(final boolean state) {
         this.disabled = true;
         checkBox.setSelected(state);
         this.disabled = false;
     }
 
-    public void addResult(Result result) {
+    public void addResult(final Result result) {
         ResultTreeItem resultItem = new ResultTreeItem(result, this);
         results.add(resultItem);
         TreeItem<CustomTreeItem> reference = new TreeItem<CustomTreeItem>(resultItem);
@@ -124,14 +125,14 @@ public abstract class ChildTreeItem extends CustomTreeItem {
     // }
 
     /**
-     * notifies the child object that its result object changed, so it has to
-     * update its gui
+     * Notifies the child object that its result object changed, so it has to
+     * update its gui.
      */
     public void update() {
         // TODO ?
     }
 
-    public void resetResult(Result result) {
+    public void resetResult(final Result result) {
         this.addResult(result);
     }
 
@@ -195,17 +196,17 @@ public abstract class ChildTreeItem extends CustomTreeItem {
         this.getTreeItemReference().getChildren().addAll(resultTreeItems);
     }
 
-    public void deleteResult(ResultTreeItem resultTreeItem) {
+    public void deleteResult(final ResultTreeItem resultTreeItem) {
         results.remove(resultTreeItem);
         addChildrenToStage();
     }
 
     /**
-     * shows the result depending on the current presentation type
+     * Shows the result depending on the current presentation type.
      *
      * @param result
      */
-    public void showResult(Result result) {
+    public void showResult(final Result result) {
         ResultPresenterNEW.getInstance().setResult(result);
     }
 }

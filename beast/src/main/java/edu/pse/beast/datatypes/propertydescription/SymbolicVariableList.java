@@ -13,27 +13,24 @@ import edu.pse.beast.types.InternalTypeContainer;
  * @author Niels Hanselmann
  */
 public class SymbolicVariableList {
-
-    private final LinkedList<SymbolicVariable> symbolicVariableList
-          = new LinkedList<>();
-    private final transient List<VariableListListener> listenerList
-          = new ArrayList<VariableListListener>();
+    private final LinkedList<SymbolicVariable> symbolicVariableList =
+            new LinkedList<>();
+    private final transient List<VariableListListener> listenerList =
+            new ArrayList<VariableListListener>();
 
     /**
      *
      */
-    public SymbolicVariableList() {
-
-    }
+    public SymbolicVariableList() { }
 
     /**
      *
      * @param id                    id of the variable
      * @param internalTypeContainer the type of the added variable
      */
-    public synchronized void addSymbolicVariable(String id,
-                                                 InternalTypeContainer
-                                                     internalTypeContainer) {
+    public synchronized void addSymbolicVariable(final String id,
+                                                 final InternalTypeContainer
+                                                         internalTypeContainer) {
         if (id != null && internalTypeContainer != null) {
             SymbolicVariable var = new SymbolicVariable(id, internalTypeContainer);
             symbolicVariableList.add(var);
@@ -50,19 +47,18 @@ public class SymbolicVariableList {
      *
      * @param var the symbolic variable
      */
-    public synchronized void addSymbolicVariable(SymbolicVariable var) {
+    public synchronized void addSymbolicVariable(final SymbolicVariable var) {
         symbolicVariableList.add(var);
         listenerList.forEach((listener) -> {
             listener.addedVar(var);
         });
-
     }
 
     /**
      * @param id id which is to be tested
      * @return true if the variable id is not already used
      */
-    public synchronized boolean isVarIDAllowed(String id) {
+    public synchronized boolean isVarIDAllowed(final String id) {
         boolean varAllowed = true;
         if (!symbolicVariableList.isEmpty()) {
             for (SymbolicVariable var : symbolicVariableList) {
@@ -76,13 +72,14 @@ public class SymbolicVariableList {
     }
 
     /**
-     * sets the symbolic Variable list and updates it for all listeners
+     * Sets the symbolic Variable list and updates it for all listeners.
      *
-     * @param symbolicVariableList the new var list
+     * @param symbVarList the new var list
      */
-    public synchronized void setSymbolicVariableList(List<SymbolicVariable> symbolicVariableList) {
+    public synchronized void setSymbolicVariableList(final List<SymbolicVariable>
+                                                            symbVarList) {
         this.symbolicVariableList.clear();
-        for (SymbolicVariable var : symbolicVariableList) {
+        for (SymbolicVariable var : symbVarList) {
             this.symbolicVariableList.add(var);
             listenerList.forEach((VariableListListener listener) -> {
                 listener.addedVar(var);
@@ -111,7 +108,7 @@ public class SymbolicVariableList {
      * @param id the id of the variable, that is to be removed
      * @return returns true if the variable was found
      */
-    public synchronized boolean removeSymbolicVariable(String id) {
+    public synchronized boolean removeSymbolicVariable(final String id) {
         boolean varFound = false;
         for (SymbolicVariable var : symbolicVariableList) {
             varFound = var.getId().equals(id);
@@ -130,7 +127,7 @@ public class SymbolicVariableList {
      *
      * @param index the index of the variable, that is to be removed
      */
-    public synchronized void removeSymbolicVariable(int index) {
+    public synchronized void removeSymbolicVariable(final int index) {
         if (index >= 0) {
             SymbolicVariable var = symbolicVariableList.get(index);
             listenerList.forEach((l) -> {
@@ -144,7 +141,7 @@ public class SymbolicVariableList {
      *
      * @param listener the listenerList which is to add
      */
-    public synchronized void addListener(VariableListListener listener) {
+    public synchronized void addListener(final VariableListListener listener) {
         this.listenerList.add(listener);
         symbolicVariableList.forEach((var) -> {
             listener.addedVar(var);
@@ -155,7 +152,7 @@ public class SymbolicVariableList {
      *
      * @param listener the listenerList that will be removed
      */
-    public synchronized void removeListener(VariableListListener listener) {
+    public synchronized void removeListener(final VariableListListener listener) {
         this.listenerList.remove(listener);
         symbolicVariableList.forEach((var) -> {
             listener.removedVar(var);
@@ -166,7 +163,7 @@ public class SymbolicVariableList {
         symbolicVariableList.clear();
     }
 
-    public void addSymbolicVariableList(SymbolicVariableList allSymbolicVariables) {
+    public void addSymbolicVariableList(final SymbolicVariableList allSymbolicVariables) {
         for (Iterator<SymbolicVariable> iterator
               = allSymbolicVariables.getSymbolicVariables().iterator();
                 iterator.hasNext();) {
@@ -202,7 +199,7 @@ public class SymbolicVariableList {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }

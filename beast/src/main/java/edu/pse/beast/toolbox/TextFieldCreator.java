@@ -19,8 +19,10 @@ public final class TextFieldCreator {
 
     private TextFieldCreator() { }
 
-    private static Node createNode(StyledSegment<Either<String, LinkedImage>, TextStyle> seg,
-                                   BiConsumer<? super TextExt, TextStyle> applyStyle) {
+    private static Node createNode(final StyledSegment<Either<String, LinkedImage>,
+                                                       TextStyle> seg,
+                                   final BiConsumer<? super TextExt, TextStyle>
+                                        applyStyle) {
         return seg.getSegment().unify(
             text -> StyledTextArea.createStyledTextNode(text, seg.getStyle(),
                                                         applyStyle),
@@ -28,7 +30,8 @@ public final class TextFieldCreator {
     }
 
     public static GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle>
-                    getGenericStyledAreaInstance(TextStyle textStyle, ParStyle paragraphStyle) {
+                    getGenericStyledAreaInstance(final TextStyle textStyle,
+                                                 final ParStyle paragraphStyle) {
         GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area =
                 new GenericStyledArea<>(paragraphStyle, // default paragraph style
                     // paragraph style setter

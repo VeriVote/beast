@@ -6,18 +6,36 @@ import edu.pse.beast.propertychecker.Result;
 
 public class ChildTreeItemValues {
 
-    public final String propertyName;
-    public final boolean checkBoxStatus;
-    public final boolean disabled;
+    private final String propertyName;
+    private final boolean checkBoxStatus;
+    private final boolean disabled;
 
-    public final ArrayList<Result> results;
+    private final ArrayList<Result> results;
 
-    public ChildTreeItemValues(String propertyName, boolean checkBoxStatus, boolean disabled,
-            ArrayList<Result> results) {
-        this.propertyName = propertyName;
-        this.checkBoxStatus = checkBoxStatus;
-        this.disabled = disabled;
+    public ChildTreeItemValues(final String propertyNameStr,
+                               final boolean checkBoxStat,
+                               final boolean disabledAttribute,
+                               final ArrayList<Result> resultList) {
+        this.propertyName = propertyNameStr;
+        this.checkBoxStatus = checkBoxStat;
+        this.disabled = disabledAttribute;
 
-        this.results = results;
+        this.results = resultList;
+    }
+
+    public String getPropertyName() {
+        return propertyName;
+    }
+
+    public boolean getCheckBoxStatus() {
+        return checkBoxStatus;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public ArrayList<Result> getResults() {
+        return results;
     }
 }

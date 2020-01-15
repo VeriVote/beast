@@ -11,10 +11,12 @@ public abstract class AccessValueNode extends TypeExpression {
     private final TypeExpression[] accessingVars;
     private final int count;
 
-    protected AccessValueNode(InOutType type, TypeExpression[] accessingVars, int count) {
+    protected AccessValueNode(final InOutType type,
+                              final TypeExpression[] accessingVariables,
+                              final int countVal) {
         super(type);
-        this.accessingVars = accessingVars;
-        this.count = count;
+        this.accessingVars = accessingVariables;
+        this.count = countVal;
     }
 
     public TypeExpression[] getAccessingVars() {
@@ -35,7 +37,7 @@ public abstract class AccessValueNode extends TypeExpression {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }

@@ -7,7 +7,7 @@ import javax.swing.text.AbstractDocument;
 
 /**
  * Instances of this class are able to apply syntax highlighting to the given
- * JTextPane
+ * JTextPane.
  *
  * @author Nikolai Schnell
  */
@@ -15,21 +15,21 @@ public class SyntaxHL {
     private JTextPane textPane;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param textPane JTextPane the filter should be applied to
+     * @param pane JTextPane the filter should be applied to
      */
-    public SyntaxHL(JTextPane textPane) {
-        this.textPane = textPane;
+    public SyntaxHL(final JTextPane pane) {
+        this.textPane = pane;
     }
 
     /**
-     * Creates a new SyntaxHlCompositeFilter and gives it to the textpane
+     * Creates a new SyntaxHlCompositeFilter and gives it to the textpane.
      *
      * @param regexAndColorList the list of RegexAndColor elements containint the
      *                          information for syntaxHL
      */
-    public void updateFilter(ArrayList<RegexAndColor> regexAndColorList) {
+    public void updateFilter(final ArrayList<RegexAndColor> regexAndColorList) {
         ((AbstractDocument) textPane.getStyledDocument())
                 .setDocumentFilter(new SyntaxHLCompositeFilter(textPane, regexAndColorList));
     }

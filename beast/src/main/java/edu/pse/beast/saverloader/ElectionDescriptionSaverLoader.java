@@ -28,12 +28,13 @@ public class ElectionDescriptionSaverLoader implements SaverLoader<ElectionDescr
     }
 
     @Override
-    public ElectionDescription createFromSaveString(String toLoad) throws JsonSyntaxException {
+    public ElectionDescription createFromSaveString(final String toLoad)
+            throws JsonSyntaxException {
         return saverLoader.fromJson(toLoad, ElectionDescription.class);
     }
 
     @Override
-    public String createSaveString(ElectionDescription toSave) {
+    public String createSaveString(final ElectionDescription toSave) {
         return saverLoader.toJson(toSave);
     }
 }

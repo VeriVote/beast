@@ -22,19 +22,19 @@ public class CAntlrHandler {
     private CParser cParser;
 
     /**
-     * constructor
+     * Constructor.
      *
-     * @param pane the pane to hold the handler
+     * @param textPane the pane to hold the handler
      */
-    public CAntlrHandler(JTextPane pane) {
-        this.pane = pane;
-        lexer = new CLexer(CharStreams.fromString(pane.getText()));
+    public CAntlrHandler(final JTextPane textPane) {
+        this.pane = textPane;
+        lexer = new CLexer(CharStreams.fromString(textPane.getText()));
         CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
         cParser = new CParser(commonTokenStream);
     }
 
     /**
-     * gives the parse tree
+     * Gives the parse tree.
      *
      * @return the parse tree
      */
@@ -52,7 +52,7 @@ public class CAntlrHandler {
     }
 
     /**
-     * updates the parser
+     * Updates the parser.
      */
     public void updateParser() {
         try {

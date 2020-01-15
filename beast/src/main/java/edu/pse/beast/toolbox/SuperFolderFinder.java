@@ -14,8 +14,8 @@ public final class SuperFolderFinder {
     private SuperFolderFinder() { }
 
     /**
-     * this class is used so other classes can get the folder that BEAST is
-     * installed in so resources can be found easily
+     * This class is used so other classes can get the folder that BEAST is
+     * installed in so resources can be found easily.
      *
      * @return the location of the top folder containing beast
      */

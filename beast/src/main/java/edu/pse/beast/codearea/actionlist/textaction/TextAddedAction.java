@@ -9,8 +9,8 @@ import javax.swing.text.StyledDocument;
 import edu.pse.beast.codearea.actionlist.Action;
 
 /**
- * This class represents the act of adding text to a Styleddocument and makes
- * undoing this action possible
+ * This class represents the act of adding text to a styled document and makes
+ * undoing this action possible.
  *
  * @author Holger Klein
  */
@@ -19,9 +19,10 @@ public class TextAddedAction implements Action {
     private final TextDelta td;
     private final StyledDocument doc;
 
-    public TextAddedAction(TextDelta td, StyledDocument doc) {
-        this.doc = doc;
-        this.td = td;
+    public TextAddedAction(final TextDelta textDelta,
+                           final StyledDocument styledDoc) {
+        this.doc = styledDoc;
+        this.td = textDelta;
     }
 
     @Override

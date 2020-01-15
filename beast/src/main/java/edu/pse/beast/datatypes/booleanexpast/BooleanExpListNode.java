@@ -17,7 +17,8 @@ public class BooleanExpListNode {
      * boolNodesPerElectLevel.get(3) ELECT2 == ELECT5; <-- would be stored in
      * boolNodesPerElectLevel.get(5)
      */
-    private ArrayList<ArrayList<BooleanExpressionNode>> boolNodesPerElectLevel = new ArrayList<>();
+    private ArrayList<ArrayList<BooleanExpressionNode>>
+        boolNodesPerElectLevel = new ArrayList<>();
     private int maxVoteLevel;
 
     public ArrayList<ArrayList<BooleanExpressionNode>> getBooleanExpressions() {
@@ -28,9 +29,9 @@ public class BooleanExpListNode {
         return boolNodesPerElectLevel.size() - 1;
     }
 
-    public void setMaxVoteLevel(int maxVoteLevel) {
-        if (maxVoteLevel > this.maxVoteLevel) {
-            this.maxVoteLevel = maxVoteLevel;
+    public void setMaxVoteLevel(final int maxVoteLevelNumber) {
+        if (maxVoteLevelNumber > this.maxVoteLevel) {
+            this.maxVoteLevel = maxVoteLevelNumber;
         }
     }
 
@@ -38,7 +39,8 @@ public class BooleanExpListNode {
         return maxVoteLevel;
     }
 
-    public void addNode(BooleanExpressionNode node, int highestElectNumber) {
+    public void addNode(final BooleanExpressionNode node,
+                        final int highestElectNumber) {
         while (highestElectNumber >= boolNodesPerElectLevel.size()) {
             boolNodesPerElectLevel.add(new ArrayList<BooleanExpressionNode>());
         }

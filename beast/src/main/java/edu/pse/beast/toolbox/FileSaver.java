@@ -17,7 +17,8 @@ public final class FileSaver {
      * @param file the file where it should be saved. WARNING: it overwrites
      *             everything that stood in it before
      */
-    public static void writeStringLinesToFile(List<String> text, File file) {
+    public static void writeStringLinesToFile(final List<String> text,
+                                              final File file) {
         if (!file.exists()) {
             try {
                 file.createNewFile();

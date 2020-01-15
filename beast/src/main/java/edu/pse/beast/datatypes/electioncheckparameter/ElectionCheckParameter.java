@@ -22,45 +22,45 @@ public class ElectionCheckParameter {
 
     /**
      *
-     * @param amountVoters     the list that specifies the range of voters
-     * @param amountCandidates the list that specifies the range of candidates
-     * @param amountSeats      the list that specifies the range of seats
-     * @param marginVotes      the amount of votes for the computed margin
-     * @param marginCandidates the amount of candidates for the computed margin
-     * @param marginSeats      the amount of seats for the computed margin
-     * @param timeOut          the timeout that specifies how long the checker
-     *                         should run
-     * @param processes        max number of processes of the checker
-     * @param argument         the arguments given by the user
+     * @param amountOfVoters        the list that specifies the range of voters
+     * @param amountOfCandidates    the list that specifies the range of candidates
+     * @param amountOfSeats         the list that specifies the range of seats
+     * @param marginVoteNumber      the amount of votes for the computed margin
+     * @param marginCandidateNumber the amount of candidates for the computed margin
+     * @param marginSeatNumber      the amount of seats for the computed margin
+     * @param timeOutVal            the timeout that specifies how long the checker
+     *                              should run
+     * @param procs                 max number of processes of the checker
+     * @param arg                   the arguments given by the user
      */
-    public ElectionCheckParameter(List<Integer> amountVoters,
-                                  List<Integer> amountCandidates,
-                                  List<Integer> amountSeats,
-                                  int marginVotes,
-                                  int marginCandidates,
-                                  int marginSeats,
-                                  TimeOut timeOut,
-                                  Integer processes,
-                                  String argument) {
-        this.amountVoters = amountVoters;
-        this.amountCandidates = amountCandidates;
-        this.amountSeats = amountSeats;
-        this.marginVotes = marginVotes;
-        this.marginCandidates = marginCandidates;
-        this.marginSeats = marginSeats;
-        this.timeOut = timeOut;
-        this.processes = processes;
-        this.argument = argument;
+    public ElectionCheckParameter(final List<Integer> amountOfVoters,
+                                  final List<Integer> amountOfCandidates,
+                                  final List<Integer> amountOfSeats,
+                                  final int marginVoteNumber,
+                                  final int marginCandidateNumber,
+                                  final int marginSeatNumber,
+                                  final TimeOut timeOutVal,
+                                  final Integer procs,
+                                  final String arg) {
+        this.amountVoters = amountOfVoters;
+        this.amountCandidates = amountOfCandidates;
+        this.amountSeats = amountOfSeats;
+        this.marginVotes = marginVoteNumber;
+        this.marginCandidates = marginCandidateNumber;
+        this.marginSeats = marginSeatNumber;
+        this.timeOut = timeOutVal;
+        this.processes = procs;
+        this.argument = arg;
     }
 
-    public ElectionCheckParameter(List<Integer> amountVoters,
-                                  List<Integer> amountCandidates,
-                                  List<Integer> amountSeats,
-                                  TimeOut timeOut,
-                                  Integer processes,
-                                  String argument) {
-        this(amountVoters, amountCandidates, amountSeats,
-             1, 1, 1, timeOut, processes, argument);
+    public ElectionCheckParameter(final List<Integer> amountOfVoters,
+                                  final List<Integer> amountOfCandidates,
+                                  final List<Integer> amountOfSeats,
+                                  final TimeOut timeOutVal,
+                                  final Integer procs,
+                                  final String arg) {
+        this(amountOfVoters, amountOfCandidates, amountOfSeats,
+             1, 1, 1, timeOutVal, procs, arg);
     }
 
     /**

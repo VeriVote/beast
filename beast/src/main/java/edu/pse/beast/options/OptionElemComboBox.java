@@ -12,17 +12,17 @@ public class OptionElemComboBox extends JComboBox<String> {
     private final OptionElement elem;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param elem OptionElement displayed by this OptionElemComboBox
+     * @param optElem OptionElement displayed by this OptionElemComboBox
      */
-    public OptionElemComboBox(OptionElement elem) {
+    public OptionElemComboBox(final OptionElement optElem) {
         super();
-        this.elem = elem;
+        this.elem = optElem;
     }
 
     /**
-     * Getter for the displayed OptionElement
+     * Getter for the displayed OptionElement.
      *
      * @return displayed OptionElement
      */

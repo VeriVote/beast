@@ -63,8 +63,11 @@ public class WeightedApproval extends CBMCInputType {
     }
 
     @Override
-    public String vetValue(ElectionTypeContainer container, List<NEWRowOfValues> rowOfValues,
-                           int rowNumber, int positionInRow, String newValue) {
+    public String vetValue(final ElectionTypeContainer container,
+                           final List<NEWRowOfValues> rowOfValues,
+                           final int rowNumber,
+                           final int positionInRow,
+                           final String newValue) {
         final int number;
         try {
             number = Integer.parseInt(newValue);
@@ -79,14 +82,17 @@ public class WeightedApproval extends CBMCInputType {
     }
 
     @Override
-    public void restrictVotes(String voteName, CodeArrayListBeautifier code) {
+    public void restrictVotes(final String voteName,
+                              final CodeArrayListBeautifier code) {
         // we do not need to restrict anything
     }
 
     @Override
-    public String[] getVotePoints(String[][] votes, int amountCandidates, int amountVoters) {
+    public String[] getVotePoints(final String[][] votes,
+                                  final int amountCandidates,
+                                  final int amountVoters) {
         Long[] result = new Long[amountCandidates];
-        Arrays.fill(result, 0l);
+        Arrays.fill(result, 0L);
         for (int i = 0; i < amountVoters; i++) {
             String[] vote = votes[i];
             for (int j = 0; j < amountCandidates; j++) {
@@ -101,7 +107,9 @@ public class WeightedApproval extends CBMCInputType {
     }
 
     @Override
-    public String[] getVotePoints(String[] votes, int amountCandidates, int amountVoters) {
+    public String[] getVotePoints(final String[] votes,
+                                  final int amountCandidates,
+                                  final int amountVoters) {
         return super.wrongInputTypeArray(amountCandidates, amountVoters);
     }
 
@@ -152,7 +160,8 @@ public class WeightedApproval extends CBMCInputType {
     // } TODO remove unused code
 
     @Override
-    public void addCodeForVoteSum(CodeArrayListBeautifier code, boolean unique) {
+    public void addCodeForVoteSum(final CodeArrayListBeautifier code,
+                                  final boolean unique) {
         code.add("unsigned int candSum = arr[i][candidate];");
         if (unique) {
             code.add("for(unsigned int j = 0; j < "
@@ -173,7 +182,7 @@ public class WeightedApproval extends CBMCInputType {
     }
 
     @Override
-    public int vetAmountCandidates(int amountCandidates) {
+    public int vetAmountCandidates(final int amountCandidates) {
         if (amountCandidates < 1) {
             return 1;
         } else {
@@ -182,7 +191,7 @@ public class WeightedApproval extends CBMCInputType {
     }
 
     @Override
-    public int vetAmountVoters(int amountVoters) {
+    public int vetAmountVoters(final int amountVoters) {
         if (amountVoters < 1) {
             return 1;
         } else {
@@ -191,7 +200,7 @@ public class WeightedApproval extends CBMCInputType {
     }
 
     @Override
-    public int vetAmountSeats(int amountSeats) {
+    public int vetAmountSeats(final int amountSeats) {
         if (amountSeats < 1) {
             return 1;
         } else {
@@ -200,7 +209,7 @@ public class WeightedApproval extends CBMCInputType {
     }
 
     @Override
-    public int getNumVotingPoints(ResultValueWrapper result) {
+    public int getNumVotingPoints(final ResultValueWrapper result) {
         return GUIController.getController().getElectionSimulation().getNumVoters();
     }
 
@@ -210,14 +219,14 @@ public class WeightedApproval extends CBMCInputType {
     }
 
     @Override
-    public CBMCResultValue convertRowToResultValue(NEWRowOfValues row) {
+    public CBMCResultValue convertRowToResultValue(final NEWRowOfValues row) {
         List<String> values = row.getValues();
         List<CBMCResultValueWrapper> wrappedValues = new ArrayList<CBMCResultValueWrapper>();
         for (Iterator<String> iterator = values.iterator(); iterator.hasNext();) {
             String value = (String) iterator.next();
             CBMCResultValueWrapper wrapper = new CBMCResultValueWrapper();
             CBMCResultValueSingle toWrap = new CBMCResultValueSingle();
-            toWrap.setValue("int", value, 32);
+            toWrap.setValue("int", value, INT_LENGTH);
             wrapper.setValue(toWrap);
         }
         CBMCResultValueArray toReturn = new CBMCResultValueArray();
@@ -226,8 +235,9 @@ public class WeightedApproval extends CBMCInputType {
     }
 
     @Override
-    public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code,
-            String valueName, List<String> loopVariables) {
+    public void addExtraCodeAtEndOfCodeInit(final CodeArrayListBeautifier code,
+                                            final String valueName,
+                                            final List<String> loopVariables) {
         // TODO Auto-generated method stub
     }
 }

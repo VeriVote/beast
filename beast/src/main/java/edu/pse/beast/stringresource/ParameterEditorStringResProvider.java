@@ -1,7 +1,7 @@
 package edu.pse.beast.stringresource;
 
 /**
- * Class that Manages all StringResources for the ParameterEditor
+ * Class that manages all StringResources for the ParameterEditor.
  *
  * @author Niels Hanselmann
  */
@@ -15,7 +15,7 @@ public class ParameterEditorStringResProvider extends StringResourceProvider {
      *
      * @param languageId the languageId. Set to "de" for german
      */
-    public ParameterEditorStringResProvider(String languageId) {
+    public ParameterEditorStringResProvider(final String languageId) {
         super(languageId);
         this.initialize();
     }

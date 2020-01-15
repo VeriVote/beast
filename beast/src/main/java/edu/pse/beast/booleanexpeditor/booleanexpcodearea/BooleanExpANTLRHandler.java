@@ -19,13 +19,13 @@ public class BooleanExpANTLRHandler {
     private FormalPropertyDescriptionParser parser;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param input the StyledDocument instance to analyze
+     * @param inputString the StyledDocument instance to analyze
      */
-    public BooleanExpANTLRHandler(String input) {
-        this.input = input;
-        lexer = new FormalPropertyDescriptionLexer(CharStreams.fromString(input));
+    public BooleanExpANTLRHandler(final String inputString) {
+        this.input = inputString;
+        lexer = new FormalPropertyDescriptionLexer(CharStreams.fromString(inputString));
         CommonTokenStream ts = new CommonTokenStream(lexer);
         parser = new FormalPropertyDescriptionParser(ts);
     }
@@ -45,7 +45,7 @@ public class BooleanExpANTLRHandler {
     }
 
     /**
-     * Getter
+     * Getter for the parser.
      *
      * @return the FormalPropertyDescriptionParser object
      */
@@ -54,7 +54,7 @@ public class BooleanExpANTLRHandler {
     }
 
     /**
-     * Method that
+     * Method that gets the macro regular expressions.
      *
      * @return s a String array of regular expressions matching all possible macros.
      *         Used for SyntaxHL.
@@ -76,7 +76,7 @@ public class BooleanExpANTLRHandler {
     }
 
     /**
-     * Method that
+     * Method that gets the comparison symbols.
      *
      * @return s a String array of regular expressions matching all possible
      *         comparison symbols. Used for SyntaxHL.
@@ -86,7 +86,7 @@ public class BooleanExpANTLRHandler {
     }
 
     /**
-     * Method that
+     * Method that gets the logical operators.
      *
      * @return s a String array of regular expressions matching all possible logical
      *         operators. Used for SyntaxHL.
@@ -96,7 +96,7 @@ public class BooleanExpANTLRHandler {
     }
 
     /**
-     * Method that
+     * Method that gets the constants.
      *
      * @return s a String array of regular expressions matching all possible
      *         constants. Used for SyntaxHL.

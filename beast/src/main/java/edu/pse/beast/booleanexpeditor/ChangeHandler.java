@@ -21,18 +21,18 @@ public class ChangeHandler {
     private JTextPane postPane;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param prePane              JTextPane of the preCondition BooleanExpCodeArea
-     * @param postPane             JTextPane of the postCondition BooleanExpCodeArea
-     * @param symbolicVariableList SymbolicVariableList of a newly loaded or saved
-     *                             PreAndPostConditionsDescription object.
+     * @param preTextPane              JTextPane of the preCondition BooleanExpCodeArea
+     * @param postTextPane             JTextPane of the postCondition BooleanExpCodeArea
+     * @param symbolicVarList          SymbolicVariableList of a newly loaded or saved
+     *                                     PreAndPostConditionsDescription object.
      */
-    public ChangeHandler(JTextPane prePane, JTextPane postPane,
-                         SymbolicVariableList symbolicVariableList) {
-        this.symbolicVariableList = symbolicVariableList;
-        this.prePane = prePane;
-        this.postPane = postPane;
+    public ChangeHandler(final JTextPane preTextPane, final JTextPane postTextPane,
+                         final SymbolicVariableList symbolicVarList) {
+        this.symbolicVariableList = symbolicVarList;
+        this.prePane = preTextPane;
+        this.postPane = postTextPane;
         updatePreValues();
     }
 
@@ -40,12 +40,13 @@ public class ChangeHandler {
      * Method that adds new JTextPanes to the changeHandler incase the
      * BooleanExpEditor created new ones.
      *
-     * @param prePane  the new preConditions JTextPane
-     * @param postPane the new postConditions JTextPane
+     * @param preTextPane  the new preConditions JTextPane
+     * @param postTextPane the new postConditions JTextPane
      */
-    public void addNewTextPanes(JTextPane prePane, JTextPane postPane) {
-        this.prePane = prePane;
-        this.postPane = postPane;
+    public void addNewTextPanes(final JTextPane preTextPane,
+                                final JTextPane postTextPane) {
+        this.prePane = preTextPane;
+        this.postPane = postTextPane;
         updatePreValues();
     }
 

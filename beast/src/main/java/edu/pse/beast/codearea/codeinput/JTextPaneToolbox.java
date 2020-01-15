@@ -17,7 +17,7 @@ public final class JTextPaneToolbox {
     private JTextPaneToolbox() { }
 
     /**
-     * returns the text represented by the JTextPane in a non-OS dependent manner.
+     * Returns the text represented by the JTextPane in a non-OS dependent manner.
      * In Windows for example, line breaks are represented by an additional \r before
      * the \n. These will not be returned by this function. This is very useful since
      * the pane's caret position uses these indices instead of the OS-specific ones.
@@ -27,7 +27,7 @@ public final class JTextPaneToolbox {
      * @param pane the pane who's text should be retrieved
      * @return the text shown by the pane in an OS-independent manner
      */
-    public static String getText(JTextPane pane) {
+    public static String getText(final JTextPane pane) {
         try {
             return pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
         } catch (BadLocationException ex) {
@@ -37,14 +37,15 @@ public final class JTextPaneToolbox {
     }
 
     /**
-     * calculates the distance to the closest line break before the given position.
+     * Calculates the distance to the closest line break before the given position.
      * If the position is in the first line, it returns position.
      *
      * @param pane the pane who's text should be considered
      * @param pos  the starting position
      * @return the distance of the closest line break before the position
      */
-    public static int getDistanceToClosestLineBeginning(JTextPane pane, int pos) {
+    public static int getDistanceToClosestLineBeginning(final JTextPane pane,
+                                                        final int pos) {
         String code = getText(pane);
         for (int i = pos - 1; i >= 0; --i) {
             if (code.charAt(i) == '\n') {
@@ -55,24 +56,26 @@ public final class JTextPaneToolbox {
     }
 
     /**
-     * takes a given absolute position and transforms it into the line number
+     * Takes a given absolute position and transforms it into the line number.
      *
      * @param pane   the pane who's text should be considered
      * @param absPos the absolute position to be converted into a line number
      * @return the line number of the line containing absPos
      */
-    public static int transformToLineNumber(JTextPane pane, int absPos) {
+    public static int transformToLineNumber(final JTextPane pane,
+                                            final int absPos) {
         return transformToLineNumber(getText(pane), absPos);
     }
 
     /**
-     * takes a given absolute position and transforms it into the line number
+     * Takes a given absolute position and transforms it into the line number.
      *
      * @param code   The text in which the line number should be found
      * @param absPos the absolute position to be converted into a line number
      * @return the line number of the line containing absPos
      */
-    public static int transformToLineNumber(String code, int absPos) {
+    public static int transformToLineNumber(final String code,
+                                            final int absPos) {
         int amt = 0;
         for (int i = 0; i < absPos && i < code.length(); ++i) {
             if (code.charAt(i) == '\n') {
@@ -83,13 +86,14 @@ public final class JTextPaneToolbox {
     }
 
     /**
-     * finds and returns the absolute position of the beginning of the given line
+     * Finds and returns the absolute position of the beginning of the given line.
      *
      * @param pane the pane who's code should be searched for the position
      * @param line the line who's beginning should be found
      * @return the absolute position of the line beginning of line
      */
-    public static int getLineBeginning(JTextPane pane, int line) {
+    public static int getLineBeginning(final JTextPane pane,
+                                       final int line) {
         String code = getText(pane);
         int absPos = 0;
         int lineNumber = 0;
@@ -102,13 +106,14 @@ public final class JTextPaneToolbox {
     }
 
     /**
-     * finds the closest line break after the given absolute position
+     * Finds the closest line break after the given absolute position.
      *
      * @param pane   the pane who's code should be searched for the line break
      * @param absPos the absolute position after which the first line break is to be found
      * @return the first line break after absolute position
      */
-    public static int getClosestLineBeginningAfter(JTextPane pane, int absPos) {
+    public static int getClosestLineBeginningAfter(final JTextPane pane,
+                                                   final int absPos) {
         String code = getText(pane);
         int pos = absPos;
         ++pos;
@@ -121,7 +126,7 @@ public final class JTextPaneToolbox {
     }
 
     /**
-     * finds all line numbers between an absolute start and end position. example:
+     * Finds all line numbers between an absolute start and end position. example:
      * ("i like\nyou very\nmuch", 0,17) would return 0,1,2
      *
      * @param pane  the pane in who's text the line positions need to be searched
@@ -130,9 +135,10 @@ public final class JTextPaneToolbox {
      * @return the line numbers between the absolute position start and end
      * @throws BadLocationException when location does not exist
      */
-    public static ArrayList<Integer> getLinesBetween(JTextPane pane,
-                                                     int start,
-                                                     int end) throws BadLocationException {
+    public static ArrayList<Integer> getLinesBetween(final JTextPane pane,
+                                                     final int start,
+                                                     final int end)
+                                                             throws BadLocationException {
         int startingline = transformToLineNumber(pane, start);
         ArrayList<Integer> lines = new ArrayList<>();
         lines.add(startingline);
@@ -154,7 +160,7 @@ public final class JTextPaneToolbox {
      * @param pane the pane from who's text the char should be extracted
      * @return the first char to the left of the caret position
      */
-    public static String getCharToTheLeftOfCaret(JTextPane pane) {
+    public static String getCharToTheLeftOfCaret(final JTextPane pane) {
         String code = getText(pane);
         int caretPos = pane.getCaretPosition();
         if (caretPos == 0) {
@@ -165,13 +171,13 @@ public final class JTextPaneToolbox {
     }
 
     /**
-     * returns the first character to the right of the caret or "" if there is no such character.
+     * Returns the first character to the right of the caret or "" if there is no such character.
      * position 0: asd|asd returns s
      *
      * @param pane the pane from who's text the char should be extracted
      * @return the first char to the right of the caret position
      */
-    public static String getCharToTheRightOfCaret(JTextPane pane) {
+    public static String getCharToTheRightOfCaret(final JTextPane pane) {
         String code = getText(pane);
         int caretPos = pane.getCaretPosition();
         if (caretPos == code.length()) {
@@ -182,7 +188,7 @@ public final class JTextPaneToolbox {
     }
 
     /**
-     * returns the position of the first non white-space character in the given
+     * Returns the position of the first non white-space character in the given
      * line. If no such character exists, it returns the end of the line.
      *
      * @param pane the pane in which the character position should be found
@@ -190,26 +196,27 @@ public final class JTextPaneToolbox {
      *             found
      * @return the absolute position of the first non-whitespace character in line
      */
-    public static int getFirstCharPosInLine(JTextPane pane, int line) {
+    public static int getFirstCharPosInLine(final JTextPane pane,
+                                            final int line) {
         String code = getText(pane);
         int absPos = getLineBeginning(pane, line);
-        for (; absPos < code.length()
+        while (absPos < code.length()
                 && code.charAt(absPos) == ' '
-                && code.charAt(absPos) != '\n';
-                ++absPos) {
+                && code.charAt(absPos) != '\n') {
+            ++absPos;
         }
         return absPos;
     }
 
     /**
-     * finds the absolute position of the beginning of the word in which the current
-     * caret position is: "asd 12|asd asd" returns 3
+     * Finds the absolute position of the beginning of the word in which the current
+     * caret position is: "asd 12|asd asd" returns 3.
      *
      * @param pane the text pane
      * @return the absolute position of the beginning of the word on which the caret
      *         is centered
      */
-    public static int getWordBeginningAtCursor(JTextPane pane) {
+    public static int getWordBeginningAtCursor(final JTextPane pane) {
         String code = getText(pane);
         for (int pos = pane.getCaretPosition() - 1; pos >= 0; pos--) {
             if (code.charAt(pos) == ' ' || code.charAt(pos) == '\n') {

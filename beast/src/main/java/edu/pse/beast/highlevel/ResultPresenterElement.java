@@ -14,26 +14,26 @@ import edu.pse.beast.propertychecker.Result;
 public interface ResultPresenterElement {
 
     /**
-     * Presents that a timeOut stopped the checking
+     * Presents that a timeOut stopped the checking.
      *
      * @param isTimeout true if it was a timeout, false if it was by the user
      */
     void presentCanceled(boolean isTimeout);
 
     /**
-     * Presents that the check was successful
+     * Presents that the check was successful.
      */
     void presentSuccess();
 
     /**
-     * Presents that the check was a failure
+     * Presents that the check was a failure.
      *
      * @param error what exactly went wrong
      */
     void presentFailure(List<String> error);
 
     /**
-     * Presents the example that fails the property
+     * Presents the example that fails the property.
      *
      * @param result the example to be presented
      */

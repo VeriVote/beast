@@ -17,17 +17,17 @@ public class PropertyChecker implements ResultCheckerCommunicator {
 
     /**
      *
-     * @param checkerID the ID for the checker to be used
+     * @param checkerIdString the ID for the checker to be used
      */
-    public PropertyChecker(String checkerID) {
-        this.checkerID = checkerID;
+    public PropertyChecker(final String checkerIdString) {
+        this.checkerID = checkerIdString;
     }
 
     @Override
     public List<Result>
-            checkPropertiesForDescription(ElectionDescription elecDescr,
-                                          List<ParentTreeItem> parentProperties,
-                                          ElectionCheckParameter electionCheckParameter) {
+            checkPropertiesForDescription(final ElectionDescription elecDescr,
+                                          final List<ParentTreeItem> parentProperties,
+                                          final ElectionCheckParameter electionCheckParameter) {
         if (elecDescr == null || parentProperties == null || electionCheckParameter == null) {
             return null;
         } else {

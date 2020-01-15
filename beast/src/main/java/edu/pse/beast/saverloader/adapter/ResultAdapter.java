@@ -14,12 +14,12 @@ import com.google.gson.JsonSerializer;
 
 import edu.pse.beast.propertychecker.Result;
 
-public class ResultAdapter implements
+public final class ResultAdapter implements
         JsonSerializer<Result>, JsonDeserializer<Result> {
 
     @Override
-    public Result deserialize(JsonElement json, Type typeOfT,
-                              JsonDeserializationContext context)
+    public Result deserialize(final JsonElement json, final Type typeOfT,
+                              final JsonDeserializationContext context)
             throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         String type = jsonObject.get("type").getAsString();
@@ -40,7 +40,8 @@ public class ResultAdapter implements
     }
 
     @Override
-    public JsonElement serialize(Result src, Type typeOfSrc, JsonSerializationContext context) {
+    public JsonElement serialize(final Result src, final Type typeOfSrc,
+                                 final JsonSerializationContext context) {
         JsonObject result = new JsonObject();
         result.add("type", new JsonPrimitive(src.getClass().getSimpleName()));
         result.add("properties", context.serialize(src, src.getClass()));

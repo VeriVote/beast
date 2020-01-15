@@ -5,8 +5,8 @@ import java.io.File;
 public abstract class CBMCProcess extends Checker {
 
     /**
-     * creates a new CBMCProcess that is a super class for the system specific
-     * processes that run cbmc
+     * Creates a new CBMCProcess that is a super class for the system specific
+     * processes that run cbmc.
      *
      * @param voters     the amount of voters
      * @param candidates the amount of candidates
@@ -17,8 +17,13 @@ public abstract class CBMCProcess extends Checker {
      *                   finished checking
      * @param result     the result
      */
-    public CBMCProcess(int voters, int candidates, int seats, String advanced,
-                       File toCheck, CheckerFactory parent, Result result) {
+    public CBMCProcess(final int voters,
+                       final int candidates,
+                       final int seats,
+                       final String advanced,
+                       final File toCheck,
+                       final CheckerFactory parent,
+                       final Result result) {
         super(voters, candidates, seats, advanced, toCheck, parent, result);
     }
 }

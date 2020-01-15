@@ -27,6 +27,8 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.WindowsOStoolbox;
 
 public class WindowsProcess extends CBMCProcess {
+    private static final double A_VERY_LONG_TIME = 1000d;
+
     private static final long WAITING_TIME_FOR_TERMINATION = 8000;
 
     private static final String RELATIVE_PATH_TO_CBMC_64 = "/windows/cbmcWIN/cbmc.exe";
@@ -39,7 +41,7 @@ public class WindowsProcess extends CBMCProcess {
     private static final String C_FILE_ENDING = ".c";
 
     /**
-     * creates a new CBMC Checker for the windows OS
+     * Creates a new CBMC Checker for the windows OS.
      *
      * @param voters     the amount of voters
      * @param candidates the amount of candidates
@@ -50,14 +52,22 @@ public class WindowsProcess extends CBMCProcess {
      *                   finished checking
      * @param result     the result
      */
-    public WindowsProcess(int voters, int candidates, int seats, String advanced,
-                          File toCheck, CheckerFactory parent, Result result) {
+    public WindowsProcess(final int voters,
+                          final int candidates,
+                          final int seats,
+                          final String advanced,
+                          final File toCheck,
+                          final CheckerFactory parent,
+                          final Result result) {
         super(voters, candidates, seats, advanced, toCheck, parent, result);
     }
 
     @Override
-    protected Process createProcess(File toCheck, int voters, int candidates, int seats,
-                                    String advanced) {
+    protected Process createProcess(final File toCheck,
+                                    final int voters,
+                                    final int candidates,
+                                    final int seats,
+                                    final String advanced) {
         String userCommands = String.join(" ", advanced.split(";"));
         // trace is mandatory under windows, or the counter example cannot get
         // generated
@@ -261,7 +271,7 @@ public class WindowsProcess extends CBMCProcess {
         if (getProcess().isAlive()) {
             ErrorForUserDisplayer.displayError(
                     "There was an attempt to stop the cbmc process, but after "
-                            + (WAITING_TIME_FOR_TERMINATION / 1000d)
+                            + (WAITING_TIME_FOR_TERMINATION / A_VERY_LONG_TIME)
                             + " seconds of waiting" + " the parent root process "
                             + "was still alive, even though it should "
                             + "terminate itself when cbmc stopped. Please check "
@@ -271,7 +281,7 @@ public class WindowsProcess extends CBMCProcess {
     }
 
     @Override
-    protected String sanitizeArguments(String toSanitize) {
+    protected String sanitizeArguments(final String toSanitize) {
         return toSanitize;
     }
 
@@ -281,7 +291,7 @@ public class WindowsProcess extends CBMCProcess {
      * @return the processID of the given process or -1 if it could not be
      *         determined
      */
-    private int getWindowsProcessId(Process proc) {
+    private int getWindowsProcessId(final Process proc) {
         // credits for the method to:
         // http://cnkmym.blogspot.de/2011/10/how-to-get-process-id-in-windows.html
         if (proc.getClass().getName().equals("java.lang.Win32Process")

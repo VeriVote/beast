@@ -66,7 +66,7 @@ public final class Internationalization {
         return LOCALE.get();
     }
 
-    public static void setLocale(Locale locale) {
+    public static void setLocale(final Locale locale) {
         localeProperty().set(locale);
         Locale.setDefault(locale);
     }
@@ -97,7 +97,8 @@ public final class Internationalization {
      * @param args arguments
      * @return String binding
      */
-    public static StringBinding createStringBinding(final String key, Object... args) {
+    public static StringBinding createStringBinding(final String key,
+                                                    final Object... args) {
         return Bindings.createStringBinding(() -> get(key, args), LOCALE);
     }
 
@@ -108,7 +109,7 @@ public final class Internationalization {
      * @param func function called on every change
      * @return StringBinding
      */
-    public static StringBinding createStringBinding(Callable<String> func) {
+    public static StringBinding createStringBinding(final Callable<String> func) {
         return Bindings.createStringBinding(func, LOCALE);
     }
 
@@ -118,7 +119,7 @@ public final class Internationalization {
      * @param func the function to compute the value
      * @return Label
      */
-    public static Label labelForValue(Callable<String> func) {
+    public static Label labelForValue(final Callable<String> func) {
         Label label = new Label();
         label.textProperty().bind(createStringBinding(func));
         return label;

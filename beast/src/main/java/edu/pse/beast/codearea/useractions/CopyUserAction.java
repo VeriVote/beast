@@ -10,7 +10,7 @@ import edu.pse.beast.toolbox.UserAction;
 
 /**
  * This useraction takes the selected string in the given textpane and copies it
- * to the clipboard
+ * to the clipboard.
  *
  * @author Holger Klein
  */
@@ -18,9 +18,9 @@ public class CopyUserAction extends UserAction {
     private JTextPane pane;
     private Clipboard clipboard;
 
-    public CopyUserAction(JTextPane pane) {
+    public CopyUserAction(final JTextPane textPane) {
         super("copy");
-        this.pane = pane;
+        this.pane = textPane;
         this.clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
     }
 

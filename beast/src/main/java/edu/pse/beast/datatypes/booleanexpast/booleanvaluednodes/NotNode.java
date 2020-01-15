@@ -13,11 +13,11 @@ public class NotNode extends BooleanExpressionNode {
     /**
      * Creates a new NotNode.
      *
-     * @param followingNode the node that follows this node (the node that gets
-     *                      negated)
+     * @param followingExprNode the node that follows this node (the node that gets
+     *                          negated)
      */
-    public NotNode(BooleanExpressionNode followingNode) {
-        this.followingNode = followingNode;
+    public NotNode(final BooleanExpressionNode followingExprNode) {
+        this.followingNode = followingExprNode;
     }
 
     /**
@@ -29,12 +29,12 @@ public class NotNode extends BooleanExpressionNode {
     }
 
     @Override
-    public void getVisited(BooleanExpNodeVisitor visitor) {
+    public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitNotNode(this);
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         String tabs = "\t\t\t\t\t\t\t\t\t\t\t\t".substring(0, depth + 1);
         return "NOT\n" + tabs + "following: " + followingNode.getTreeString(depth + 1);
     }
@@ -49,7 +49,7 @@ public class NotNode extends BooleanExpressionNode {
         return result;
     }
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }

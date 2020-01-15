@@ -8,21 +8,22 @@ import edu.pse.beast.types.InOutType;
 import edu.pse.beast.types.InOutType.DataType;
 
 public class CBMCStruct extends ComplexType {
-    public final InOutType inOutType;
-
-    public final DataType dataType;
-    public final int dimensions;
-    public final String[] sizeOfDimensions;
-    public final boolean unsigned;
-
+    private static final int PRIME_THREE = 1237;
+    private static final int PRIME_TWO = 1231;
+    private static final int PRIME_ONE = 31;
+    private final InOutType inOutType;
+    private final DataType dataType;
+    private final int dimensions;
+    private final String[] sizeOfDimensions;
+    private final boolean unsigned;
     private final String structName;
 
-    public CBMCStruct(InOutType inOutType) {
-        this.inOutType = inOutType;
-        this.dataType = inOutType.getDataType();
-        this.dimensions = inOutType.getAmountOfDimensions();
-        this.sizeOfDimensions = inOutType.getSizeOfDimensions();
-        this.unsigned = inOutType.isDataTypeUnsigned();
+    public CBMCStruct(final InOutType inputOutputType) {
+        this.inOutType = inputOutputType;
+        this.dataType = inputOutputType.getDataType();
+        this.dimensions = inputOutputType.getAmountOfDimensions();
+        this.sizeOfDimensions = inputOutputType.getSizeOfDimensions();
+        this.unsigned = inputOutputType.isDataTypeUnsigned();
         String generatedName = "auto_"
                 + this.dataType.toString().replaceAll("\\s", "");
 
@@ -34,18 +35,17 @@ public class CBMCStruct extends ComplexType {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
         int result = 1;
-        result = prime * result
+        result = PRIME_ONE * result
                 + ((dataType == null) ? 0 : dataType.hashCode());
-        result = prime * result + dimensions;
-        result = prime * result + Arrays.hashCode(sizeOfDimensions);
-        result = prime * result + (unsigned ? 1231 : 1237);
+        result = PRIME_ONE * result + dimensions;
+        result = PRIME_ONE * result + Arrays.hashCode(sizeOfDimensions);
+        result = PRIME_ONE * result + (unsigned ? PRIME_TWO : PRIME_THREE);
         return result;
     }
 
     @Override
-    public boolean equals(Object toCompare) {
+    public boolean equals(final Object toCompare) {
         if (this == toCompare) {
             return true;
         }

@@ -12,12 +12,13 @@ public class ActionIdAndListener {
 
     /**
      *
-     * @param id       the id
-     * @param listener the listener to be save here
+     * @param idString       the id
+     * @param actionListener the listener to be save here
      */
-    public ActionIdAndListener(String id, ActionListener listener) {
-        this.listener = listener;
-        this.id = id;
+    public ActionIdAndListener(final String idString,
+                               final ActionListener actionListener) {
+        this.listener = actionListener;
+        this.id = idString;
     }
 
     /**

@@ -27,21 +27,21 @@ public class ThreadedBufferedReader implements Runnable {
     private final boolean checkForUnwind;
 
     /**
-     * Class for reading a stream from the program
+     * Class for reading a stream from the program.
      *
-     * @param reader         the reader to be read from.
-     * @param readLines      the list where the read lines should be added
-     * @param latch          the latch to synchronize on
-     * @param checkForUnwind whether we care for the amount of loop unwindings
+     * @param bufferedReader         the reader to be read from.
+     * @param rdLines      the list where the read lines should be added
+     * @param cntDwnLatch          the latch to synchronize on
+     * @param checkUnwind whether we care for the amount of loop unwindings
      */
-    public ThreadedBufferedReader(BufferedReader reader,
-                                  List<String> readLines,
-                                  CountDownLatch latch,
-                                  boolean checkForUnwind) {
-        this.reader = reader;
-        this.readLines = readLines;
-        this.latch = latch;
-        this.checkForUnwind = checkForUnwind;
+    public ThreadedBufferedReader(final BufferedReader bufferedReader,
+                                  final List<String> rdLines,
+                                  final CountDownLatch cntDwnLatch,
+                                  final boolean checkUnwind) {
+        this.reader = bufferedReader;
+        this.readLines = rdLines;
+        this.latch = cntDwnLatch;
+        this.checkForUnwind = checkUnwind;
         new Thread(this, "ReaderThread").start();
     }
 
@@ -101,7 +101,7 @@ public class ThreadedBufferedReader implements Runnable {
     }
 
     /**
-     * interrupts the reader if it is needed
+     * Interrupts the reader if it is needed.
      */
     public void stopReading() {
         isInterrupted = true;

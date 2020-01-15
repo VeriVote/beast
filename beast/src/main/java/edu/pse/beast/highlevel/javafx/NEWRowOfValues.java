@@ -30,20 +30,21 @@ public class NEWRowOfValues {
     private int rowSize;
     private boolean blocked = true;
 
-    public NEWRowOfValues(ElectionSimulationModel parent,
-                          ElectionTypeContainer container, int amountOfCandidates,
-                          int amountOfVoters, int amountOfSeats, int rowIndex,
-                          double elementWidth, double elementHeight) {
-        this.parent = parent;
-        this.container = container;
-        this.rowIndex = rowIndex;
-        this.elementWidth = elementWidth;
-        this.elementHeight = elementHeight;
+    public NEWRowOfValues(final ElectionSimulationModel parentModel,
+                          final ElectionTypeContainer elecTypeContainer,
+                          final int amountCandidates, final int amountVoters,
+                          final int amountSeats, final int rowIdx,
+                          final double elemWidth, final double elemHeight) {
+        this.parent = parentModel;
+        this.container = elecTypeContainer;
+        this.rowIndex = rowIdx;
+        this.elementWidth = elemWidth;
+        this.elementHeight = elemHeight;
         values = new ArrayList<>(rowSize);
         fields = new ArrayList<>(rowSize);
-        this.amountOfSeats = amountOfSeats;
-        this.amountOfVoters = amountOfVoters;
-        this.isTwoDim = (container.getInputType().getAmountOfDimensions() == 2);
+        this.amountOfSeats = amountSeats;
+        this.amountOfVoters = amountVoters;
+        this.isTwoDim = (elecTypeContainer.getInputType().getAmountOfDimensions() == 2);
         this.setRowSize(1);
     }
 
@@ -59,8 +60,8 @@ public class NEWRowOfValues {
         field.textProperty().addListener(new ChangeListener<String>() {
             private int position = fields.indexOf(field);
             @Override
-            public void changed(ObservableValue<? extends String> observable,
-                                String oldValue, String newValue) {
+            public void changed(final ObservableValue<? extends String> observable,
+                                final String oldValue, final String newValue) {
                 Platform.runLater(() -> {
                     if (!blocked) {
                         checkAndInsertValue(newValue, position, false);
@@ -100,7 +101,9 @@ public class NEWRowOfValues {
         }
     }
 
-    private void checkAndInsertValue(String newValue, int positionInRow, boolean block) {
+    private void checkAndInsertValue(final String newValue,
+                                     final int positionInRow,
+                                     final boolean block) {
         List<NEWRowOfValues> allRows = parent.getRows();
         allRows.remove(this); // in case that this row is created before it is saved by its parent
         allRows.add(this);
@@ -129,13 +132,13 @@ public class NEWRowOfValues {
         }
     }
 
-    public void setValues(ArrayList<String> values) {
-        this.values = values;
-        this.setRowSize(values.size());
+    public void setValues(final ArrayList<String> vals) {
+        this.values = vals;
+        this.setRowSize(vals.size());
     }
 
-    public void setContainer(ElectionTypeContainer container) {
-        this.container = container;
+    public void setContainer(final ElectionTypeContainer electTypeContainer) {
+        this.container = electTypeContainer;
         for (int i = 0; i < values.size(); i++) {
             checkAndInsertValue("0", i, false);
         }
@@ -161,44 +164,44 @@ public class NEWRowOfValues {
     // values.set(index, vettedValue);
     // }
 
-    public void setRowSize(int rowSize) {
-        if (this.rowSize < rowSize) {
+    public void setRowSize(final int rowSizeInteger) {
+        if (this.rowSize < rowSizeInteger) {
             if (!isTwoDim) {
                 if (this.rowSize == 0) {
                     addColumn();
                 }
             } else {
-                while (this.rowSize < rowSize) {
+                while (this.rowSize < rowSizeInteger) {
                     addColumn();
                 }
             }
-        } else if (this.rowSize > rowSize) {
-            while (this.rowSize > rowSize) {
+        } else if (this.rowSize > rowSizeInteger) {
+            while (this.rowSize > rowSizeInteger) {
                 removeColumn();
             }
         }
-        this.rowSize = rowSize;
+        this.rowSize = rowSizeInteger;
         updateVetting();
     }
 
-    public void setCandidates(int amountOfCandidates) {
-        this.amountOfCandidates = amountOfCandidates;
+    public void setCandidates(final int amountCandidates) {
+        this.amountOfCandidates = amountCandidates;
         updateVetting();
     }
 
-    public void setVoters(int amountOfVoters) {
-        this.amountOfVoters = amountOfVoters;
+    public void setVoters(final int amountVoters) {
+        this.amountOfVoters = amountVoters;
         updateVetting();
     }
 
-    public void setSeats(int amountOfSeats) {
-        this.amountOfSeats = amountOfSeats;
+    public void setSeats(final int amountSeats) {
+        this.amountOfSeats = amountSeats;
         updateVetting();
     }
 
     /**
-     * vets all numbers in the fields again, in case they are dependent of a
-     * variable that was changed
+     * Vets all numbers in the fields again, in case they are dependent of a
+     * variable that was changed.
      */
     public void updateVetting() {
         for (int i = 0; i < values.size(); i++) {
@@ -219,7 +222,7 @@ public class NEWRowOfValues {
         }
     }
 
-    public void setValue(int x, String value) {
+    public void setValue(final int x, final String value) {
         checkAndInsertValue(value, x, true);
     }
 }

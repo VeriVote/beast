@@ -9,7 +9,7 @@ import edu.pse.beast.codearea.errorhandling.CodeError;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 
 /**
- * Controller of the JTextPane for displaying errors in a BooleanExpEditorWindow
+ * Controller of the JTextPane for displaying errors in a BooleanExpEditorWindow.
  *
  * @author Nikolai Schnell
  */
@@ -26,13 +26,14 @@ public class ErrorWindow {
     private String postConditionsString;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param textPane              JTextPane for ErrorWindow
-     * @param stringLoaderInterface stringLoaderInterface to load needed Strings
+     * @param pane                     JTextPane for ErrorWindow
+     * @param stringLoaderInterface    Interface to load needed Strings
      */
-    public ErrorWindow(JTextPane textPane, StringLoaderInterface stringLoaderInterface) {
-        this.textPane = textPane;
+    public ErrorWindow(final JTextPane pane,
+                       final StringLoaderInterface stringLoaderInterface) {
+        this.textPane = pane;
         updateStringRes(stringLoaderInterface);
     }
 
@@ -46,9 +47,9 @@ public class ErrorWindow {
      * @param booleanExpErrorDisplayer the ErrorDisplayer that creates the messages
      *                                 given CodeError objects
      */
-    public void displayErrors(ArrayList<CodeError> preConditionErrors,
-                              ArrayList<CodeError> postConditionErrors,
-                              BooleanExpErrorDisplayer booleanExpErrorDisplayer) {
+    public void displayErrors(final ArrayList<CodeError> preConditionErrors,
+                              final ArrayList<CodeError> postConditionErrors,
+                              final BooleanExpErrorDisplayer booleanExpErrorDisplayer) {
         int numberOfErrors = postConditionErrors.size() + preConditionErrors.size();
         String errorsAsString = errorString + ": " + numberOfErrors + "\n";
 
@@ -76,7 +77,7 @@ public class ErrorWindow {
      *
      * @param stringLoaderInterface the new stringLoaderInterface
      */
-    public void updateStringRes(StringLoaderInterface stringLoaderInterface) {
+    public void updateStringRes(final StringLoaderInterface stringLoaderInterface) {
         errorString
               = stringLoaderInterface.getBooleanExpEditorStringResProvider()
                 .getBooleanExpErrorStringRes().getStringFromID(ERROR);

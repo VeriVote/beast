@@ -21,7 +21,9 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
 
 public abstract class ResultPresentationType {
-    public MenuItem menuItem = null;
+    static final int STANDARD_SIZE = 10;
+
+    private MenuItem menuItem = null;
     public abstract Node presentResult(Result result);
     public abstract String getName();
     public abstract String getToolTipDescription();
@@ -56,7 +58,7 @@ public abstract class ResultPresentationType {
             Tooltip.install(item.getContent(), tip);
             item.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
-                public void handle(ActionEvent event) {
+                public void handle(final ActionEvent event) {
                     ResultPresenterNEW.getInstance()
                             .setPresentationType(ResultPresentationType.this);
                 }
@@ -71,14 +73,14 @@ public abstract class ResultPresentationType {
     public abstract boolean supports(AnalysisType analysisType);
 
     /**
-     * extracts the value of single value objects. is used to extract the size
-     * of each vote
+     * Extracts the value of single value objects. It is used to extract the size
+     * of each vote.
      *
      * @param toExtract
      *            has be of the form: ValueWrapper -> ResultValueSingle<Integer>
      * @return
      */
-    public Map<Integer, Long> getAllSizes(List<ResultValueWrapper> toExtract) {
+    public Map<Integer, Long> getAllSizes(final List<ResultValueWrapper> toExtract) {
         HashMap<Integer, Long> toReturn = new HashMap<Integer, Long>();
         for (Iterator<ResultValueWrapper> iterator = toExtract.iterator(); iterator.hasNext();) {
             ResultValueWrapper currentWrapper = (ResultValueWrapper) iterator.next();
@@ -91,7 +93,7 @@ public abstract class ResultPresentationType {
     }
 
     /**
-     * indicates if this class should be normally used first to display a result
+     * Indicates if this class should be normally used first to display a result.
      *
      * @return
      */

@@ -18,15 +18,15 @@ import java.util.List;
  */
 public class SortedIntegerList {
     /**
-     * this list contains all the stored integers
+     * This list contains all the stored integers.
      */
     private ArrayList<Integer> container = new ArrayList<>();
     /**
-     * a comparator for integers, used to sort container
+     * A comparator for integers, used to sort container.
      */
     private final Comparator<Integer> comp = new Comparator<Integer>() {
         @Override
-        public int compare(Integer lhs, Integer rhs) {
+        public int compare(final Integer lhs, final Integer rhs) {
             if (lhs < rhs) {
                 return -1;
             } else if (rhs < lhs) {
@@ -38,7 +38,7 @@ public class SortedIntegerList {
     };
 
     /**
-     * default constructor
+     * Default constructor.
      */
     public SortedIntegerList() {
     }
@@ -47,7 +47,7 @@ public class SortedIntegerList {
      * @param index the position of the integer to be returned
      * @return the integer at position index
      */
-    public int get(int index) {
+    public int get(final int index) {
         return container.get(index);
     }
 
@@ -59,11 +59,11 @@ public class SortedIntegerList {
     }
 
     /**
-     * adds the supplied integer to container while making sure it remains sorted
+     * Adds the supplied integer to container while making sure it remains sorted.
      *
      * @param i the integer added to container
      */
-    public void add(int i) {
+    public void add(final int i) {
         container.add(i);
         container.sort(comp);
     }
@@ -73,7 +73,7 @@ public class SortedIntegerList {
      *
      * @param number the integer to be removed
      */
-    public void remove(int number) {
+    public void remove(final int number) {
         int i = 0;
         while (i < container.size() && container.get(i) < number) {
             i++;
@@ -85,13 +85,13 @@ public class SortedIntegerList {
     }
 
     /**
-     * removes all integers value between to supplied borders from container,
-     * including lo but excluding hi
+     * Removes all integers value between to supplied borders from container,
+     * including lo but excluding hi.
      *
      * @param lo the starting number for removal
      * @param hi the ceiling for removal
      */
-    public void removeBetween(int lo, int hi) {
+    public void removeBetween(final int lo, final int hi) {
         int i = 0;
         while (i < container.size() && container.get(i) < lo) {
             ++i;
@@ -105,7 +105,7 @@ public class SortedIntegerList {
      * @param num the number to be compared to
      * @return the biggest integer smaller or equal to than the num
      */
-    public int getBiggestSmallerOrEqual(int num) {
+    public int getBiggestSmallerOrEqual(final int num) {
         int max = Integer.MIN_VALUE;
         for (int i = 0; i < container.size() && container.get(i) <= num; ++i) {
             max = container.get(i);
@@ -114,15 +114,15 @@ public class SortedIntegerList {
     }
 
     /**
-     * subtracts subtract from all saved numbers bigger than start
+     * Subtracts subtract from all saved numbers bigger than start.
      *
      * @param start    defines the exclusive lower bound
      * @param subtract number to be subtracted from all elements > start
      * @param func     the function
      */
-    public void subtractIfBigger(int start,
-                                 int subtract,
-                                 SortedIntegerListCalleeFunction func) {
+    public void subtractIfBigger(final int start,
+                                 final int subtract,
+                                 final SortedIntegerListCalleeFunction func) {
         int i = 0;
         while (i < container.size() && container.get(i) <= start) {
             ++i;
@@ -136,14 +136,14 @@ public class SortedIntegerList {
     }
 
     /**
-     * adds add to all numbers bigger than start
+     * Adds add to all numbers bigger than start.
      *
      * @param start defines the exclusive lower bound
      * @param add   number to be subtracted from all elements > start
      * @param func  the function
      */
-    public void addIfBigger(int start, int add,
-                            SortedIntegerListCalleeFunction func) {
+    public void addIfBigger(final int start, final int add,
+                            final SortedIntegerListCalleeFunction func) {
         int i = 0;
         while (i < container.size() && container.get(i) <= start) {
             ++i;
@@ -157,12 +157,12 @@ public class SortedIntegerList {
     }
 
     /**
-     * uses binary search to quickly determine whether container contains i
+     * Uses binary search to quickly determine whether container contains i.
      *
      * @param i the value to be searched for
      * @return true, if the the container contains the number "i", false otherwise
      */
-    public boolean contains(int i) {
+    public boolean contains(final int i) {
         return Arrays.binarySearch(container.toArray(), i) >= 0;
     }
 
@@ -176,7 +176,7 @@ public class SortedIntegerList {
      *         the array are less than the specified key. Note that this guarantees
      *         that the return value will be >= 0 if and only if the key is found.
      */
-    public int getPositionOf(int i) {
+    public int getPositionOf(final int i) {
         return Arrays.binarySearch(container.toArray(), i);
     }
 
@@ -185,7 +185,7 @@ public class SortedIntegerList {
      * @param num the exclusive upper bound of the check
      * @return the amount of elements that are smaller than num
      */
-    public int getAmountBefore(int num) {
+    public int getAmountBefore(final int num) {
         int amt = 0;
         for (int i = 0; i < container.size() && container.get(i) < num; ++i) {
             amt++;
@@ -194,7 +194,7 @@ public class SortedIntegerList {
     }
 
     /**
-     * clears the container
+     * Clears the container.
      */
     public void clear() {
         container.clear();

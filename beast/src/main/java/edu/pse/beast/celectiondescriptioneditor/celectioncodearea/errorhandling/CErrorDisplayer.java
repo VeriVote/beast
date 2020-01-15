@@ -18,17 +18,18 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
  */
 public class CErrorDisplayer extends ErrorDisplayer {
     /**
-     * constructor
+     * Constructor.
      *
      * @param pane        the pane the errors get shown in
      * @param stringResIF the string resource interface
      */
-    public CErrorDisplayer(JTextPane pane, StringLoaderInterface stringResIF) {
+    public CErrorDisplayer(final JTextPane pane,
+                           final StringLoaderInterface stringResIF) {
         super(pane, stringResIF.getCElectionEditorStringResProvider().getCErrorStringRes());
     }
 
     @Override
-    public void showErrors(ArrayList<CodeError> errors) {
+    public void showErrors(final ArrayList<CodeError> errors) {
         super.showErrors(errors);
         for (CodeError er : errors) {
             showError(er, createMsg(er));
@@ -36,12 +37,12 @@ public class CErrorDisplayer extends ErrorDisplayer {
     }
 
     /**
-     * creates a message to the user detailing an error
+     * Creates a message to the user detailing an error.
      *
      * @param er the code Error to be turned into a readable form
      * @return the code error, formatted to a string
      */
-    public String createMsg(CodeError er) {
+    public String createMsg(final CodeError er) {
         if (er.getId().equals("antlr")) {
             int line = er.getLine();
             int start = JTextPaneToolbox.getLineBeginning(getJTextPane(), line - 2);
@@ -66,7 +67,7 @@ public class CErrorDisplayer extends ErrorDisplayer {
     }
 
     @Override
-    public void updateStringRes(StringLoaderInterface stringResIF) {
+    public void updateStringRes(final StringLoaderInterface stringResIF) {
         setStringResourceLoader(stringResIF
                                 .getCElectionEditorStringResProvider().getCErrorStringRes());
     }

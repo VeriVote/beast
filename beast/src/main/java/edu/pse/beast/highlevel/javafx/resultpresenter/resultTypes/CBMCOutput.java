@@ -16,14 +16,13 @@ import edu.pse.beast.toolbox.TextStyle;
 import javafx.scene.Node;
 
 public class CBMCOutput extends ResultPresentationType {
-    GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area;
-    int standartSize = 10;
+    private GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area;
 
     @Override
-    public Node presentResult(Result result) {
+    public Node presentResult(final Result result) {
         if (area == null) {
             area = TextFieldCreator.getGenericStyledAreaInstance(
-                        TextStyle.fontSize(standartSize), ParStyle.EMPTY);
+                        TextStyle.fontSize(STANDARD_SIZE), ParStyle.EMPTY);
             area.setEditable(false);
         }
         List<String> resultText = result.getResultText();
@@ -52,15 +51,15 @@ public class CBMCOutput extends ResultPresentationType {
     }
 
     @Override
-    public void zoomTo(double zoomValue) {
+    public void zoomTo(final double zoomValue) {
         if (area != null) {
             area.setStyle(0, area.getLength(),
-                          TextStyle.fontSize((int) (standartSize + zoomValue)));
+                          TextStyle.fontSize((int) (STANDARD_SIZE + zoomValue)));
         }
     }
 
     @Override
-    public boolean supports(AnalysisType analysisType) {
+    public boolean supports(final AnalysisType analysisType) {
         return true;
     }
 

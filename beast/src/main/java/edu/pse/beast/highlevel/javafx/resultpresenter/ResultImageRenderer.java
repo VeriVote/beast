@@ -19,6 +19,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 public final class ResultImageRenderer {
+    private static final double ZOOM_IN_RATIO = 0.9;
+    private static final double ZOOM_OUT_RATIO = 0.09;
+    private static final double IMAGE_MAX_WIDTH = 10000;
+    private static final double IMAGE_MAX_HEIGHT = 10000;
+
     private static double scrollPosV;
     private static double scrollPosH;
 
@@ -32,9 +37,6 @@ public final class ResultImageRenderer {
             GUIController.getController().getResultBorderPane().getWidth();
     private static double imageMinHeight =
             GUIController.getController().getResultBorderPane().getHeight();
-
-    private static final double IMAGE_MAX_WIDTH = 10000;
-    private static final double IMAGE_MAX_HEIGHT = 10000;
 
     private static double imageDesiredWidth = imageMinWidth;
     private static double imageDesiredHeight = imageMinHeight;
@@ -50,8 +52,8 @@ public final class ResultImageRenderer {
         GUIController.getController().getResultBorderPane().widthProperty()
                 .addListener(new ChangeListener<Number>() {
                     @Override
-            public void changed(ObservableValue<? extends Number> observableValue,
-                                Number oldSceneWidth, Number newSceneWidth) {
+            public void changed(final ObservableValue<? extends Number> observableValue,
+                                final Number oldSceneWidth, final Number newSceneWidth) {
                         imageMinWidth =
                                 GUIController.getController().getResultBorderPane().getWidth();
                         updateImageSizeAndRedraw();
@@ -61,8 +63,8 @@ public final class ResultImageRenderer {
         GUIController.getController().getResultBorderPane().heightProperty()
                 .addListener(new ChangeListener<Number>() {
                     @Override
-            public void changed(ObservableValue<? extends Number> observableValue,
-                                Number oldSceneHeight, Number newSceneHeight) {
+            public void changed(final ObservableValue<? extends Number> observableValue,
+                                final Number oldSceneHeight, final Number newSceneHeight) {
                         imageMinHeight =
                                 GUIController.getController().getResultBorderPane().getHeight();
                         updateImageSizeAndRedraw();
@@ -72,8 +74,8 @@ public final class ResultImageRenderer {
         GUIController.getController().getZoomSlider().valueProperty()
                 .addListener(new ChangeListener<>() {
                     @Override
-            public void changed(ObservableValue<? extends Number> observable,
-                                Number oldValue, Number newValue) {
+            public void changed(final ObservableValue<? extends Number> observable,
+                                final Number oldValue, final Number newValue) {
                         zoomTo((double) newValue);
                     }
                 });
@@ -81,7 +83,7 @@ public final class ResultImageRenderer {
         // TODO determine which mouse behavior would fit best
         view.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(final MouseEvent event) {
                 double clickX = event.getX();
                 double clickY = event.getY();
                 for (ResultImageElement element : elementList) {
@@ -109,15 +111,15 @@ public final class ResultImageRenderer {
      * @param element
      *            the element which will be added to the list
      */
-    public static synchronized void addElement(ResultImageElement element) {
+    public static synchronized void addElement(final ResultImageElement element) {
         imageDesiredWidth = Math.max(imageDesiredWidth, element.getxPosBottomRight());
         imageDesiredHeight = Math.max(imageDesiredHeight, element.getyPosBottomRight());
         elementList.add(element);
     }
 
     /**
-     * draw all elements on the underlying image, and show this image in the
-     * image view
+     * Draw all elements on the underlying image, and show this image in the
+     * image view.
      */
     public static void drawElements() {
         if (image.getWidth() != imageDesiredWidth
@@ -170,11 +172,11 @@ public final class ResultImageRenderer {
         setScrollBars();
     }
 
-    private static synchronized void zoomTo(double zoomValue) {
+    private static synchronized void zoomTo(final double zoomValue) {
         if (zoomValue < 0) {
-            currentScale = 1 + (0.09 * zoomValue);
+            currentScale = 1 + (ZOOM_OUT_RATIO * zoomValue);
         } else {
-            currentScale = 1 + (0.9 * zoomValue);
+            currentScale = 1 + (ZOOM_IN_RATIO * zoomValue);
         }
         if (imageDesiredWidth * currentScale > IMAGE_MAX_WIDTH) {
             currentScale = Math.max(1, IMAGE_MAX_WIDTH / imageDesiredWidth);

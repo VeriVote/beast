@@ -14,12 +14,12 @@ import com.google.gson.JsonSerializer;
 
 import edu.pse.beast.types.OutputType;
 
-public class OutputTypeAdapter
+public final class OutputTypeAdapter
                 implements JsonSerializer<OutputType>, JsonDeserializer<OutputType> {
 
     @Override
-    public OutputType deserialize(JsonElement json, Type typeOfT,
-                                  JsonDeserializationContext context)
+    public OutputType deserialize(final JsonElement json, final Type typeOfT,
+                                  final JsonDeserializationContext context)
             throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         String type = jsonObject.get("type").getAsString();
@@ -43,7 +43,8 @@ public class OutputTypeAdapter
     }
 
     @Override
-    public JsonElement serialize(OutputType src, Type typeOfSrc, JsonSerializationContext context) {
+    public JsonElement serialize(final OutputType src, final Type typeOfSrc,
+                                 final JsonSerializationContext context) {
         JsonObject result = new JsonObject();
         result.add("type", new JsonPrimitive(src.getClass().getSimpleName()));
         result.add("properties", context.serialize(src, src.getClass()));

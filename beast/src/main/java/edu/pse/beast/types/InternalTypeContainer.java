@@ -9,6 +9,9 @@ import edu.pse.beast.toolbox.CodeArrayListBeautifier;
  * @author Niels Hanselmann
  */
 public class InternalTypeContainer extends InOutType { // TODO extract to another interface
+    private static final int PRIME_THREE = 1237;
+    private static final int PRIME_TWO = 1231;
+    private static final int PRIME_ONE = 31;
 
     private final boolean isList;
     private final InternalTypeRep internalType;
@@ -26,38 +29,38 @@ public class InternalTypeContainer extends InOutType { // TODO extract to anothe
     private final InternalTypeRep accessTypeIfList;
 
     /**
-     * Constructor for a listed TypeContainer
+     * Constructor for a listed TypeContainer.
      *
-     * @param listedType
+     * @param listType
      *            sets the type of the list elements
-     * @param accessTypeIfList
+     * @param accTypeIfList
      *            sets the access type for the list elements
      */
-    public InternalTypeContainer(InternalTypeContainer listedType,
-                                 InternalTypeRep accessTypeIfList) {
+    public InternalTypeContainer(final InternalTypeContainer listType,
+                                 final InternalTypeRep accTypeIfList) {
         super(false, null, -1, null);
         this.isList = true;
-        this.listedType = listedType;
-        this.accessTypeIfList = accessTypeIfList;
+        this.listedType = listType;
+        this.accessTypeIfList = accTypeIfList;
         this.internalType = null;
     }
 
     /**
-     * Constructor for a TypeContainer that is NOT a List
+     * Constructor for a TypeContainer that is NOT a List.
      *
-     * @param internalType
+     * @param internType
      *            the type of this election
      */
-    public InternalTypeContainer(InternalTypeRep internalType) {
+    public InternalTypeContainer(final InternalTypeRep internType) {
         super(false, null, 1, null);
         this.isList = false;
-        this.internalType = internalType;
+        this.internalType = internType;
         this.listedType = null;
         this.accessTypeIfList = null;
     }
 
     /**
-     * Returns if the TypeContainer is a list
+     * Returns if the TypeContainer is a list.
      *
      * @return isList
      */
@@ -66,7 +69,7 @@ public class InternalTypeContainer extends InOutType { // TODO extract to anothe
     }
 
     /**
-     * getter for internalType
+     * Getter for internalType.
      *
      * @return returns internalType
      */
@@ -75,7 +78,7 @@ public class InternalTypeContainer extends InOutType { // TODO extract to anothe
     }
 
     /**
-     * getter for listedType If isList is false it returns null
+     * Getter for listedType. If isList is false it returns null.
      *
      * @return returns listedType
      */
@@ -84,7 +87,7 @@ public class InternalTypeContainer extends InOutType { // TODO extract to anothe
     }
 
     /**
-     * returns NULL if it is not a list
+     * Returns NULL if it is not a list.
      *
      * @return the access type of the list
      */
@@ -108,17 +111,17 @@ public class InternalTypeContainer extends InOutType { // TODO extract to anothe
 
     @Override
     public int hashCode() {
-        int result = 31
+        int result = PRIME_ONE
                 + (accessTypeIfList != null ? accessTypeIfList.hashCode() : 0);
-        result = 31 * result
+        result = PRIME_ONE * result
                 + ((internalType != null) ? internalType.hashCode() : 0);
-        result = 31 * result + (isList ? 1231 : 1237);
-        result = 31 * result + (listedType != null ? listedType.hashCode() : 0);
+        result = PRIME_ONE * result + (isList ? PRIME_TWO : PRIME_THREE);
+        result = PRIME_ONE * result + (listedType != null ? listedType.hashCode() : 0);
         return result;
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }
@@ -157,8 +160,9 @@ public class InternalTypeContainer extends InOutType { // TODO extract to anothe
     }
 
     @Override
-    public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code,
-            String valueName, List<String> loopVariables) {
+    public void addExtraCodeAtEndOfCodeInit(final CodeArrayListBeautifier code,
+                                            final String valueName,
+                                            final List<String> loopVariables) {
         // TODO Auto-generated method stub
     }
 }

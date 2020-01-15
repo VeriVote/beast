@@ -12,7 +12,8 @@ public class OptionsSaverLoader
                 implements SaverLoader<OptionsNew> {
     private static Gson saverLoader;
 
-    public OptionsSaverLoader(String fileEnding, String fileExtensionDescription) {
+    public OptionsSaverLoader(final String fileEnding,
+                              final String fileExtensionDescription) {
         super(fileEnding, fileExtensionDescription, null);
         // TODO Auto-generated constructor stub
     }
@@ -23,12 +24,12 @@ public class OptionsSaverLoader
     }
 
     @Override
-    public OptionsNew createFromSaveString(String toLoad) throws JsonSyntaxException {
+    public OptionsNew createFromSaveString(final String toLoad) throws JsonSyntaxException {
         return saverLoader.fromJson(toLoad, OptionsNew.class);
     }
 
     @Override
-    public String createSaveString(OptionsNew toSave) {
+    public String createSaveString(final OptionsNew toSave) {
         return saverLoader.toJson(toSave, OptionsNew.class);
     }
 }

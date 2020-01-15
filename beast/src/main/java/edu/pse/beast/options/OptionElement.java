@@ -10,25 +10,26 @@ import java.util.List;
 public abstract class OptionElement {
 
     /**
-     * the currently chosen option
+     * The currently chosen option.
      */
-    protected String chosenOption;
+    private String chosenOption;
     private final String id;
-    private final List<String> choosableOptions;
+    private final List<String> availableOptions;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param id               The ID of this OptionElement
-     * @param choosableOptions A List of Strings with the choosableOptions
+     * @param idString            The ID of this OptionElement
+     * @param availableOpts A List of Strings with the availableOptions
      */
-    public OptionElement(String id, List<String> choosableOptions) {
-        this.id = id;
-        this.choosableOptions = choosableOptions;
+    public OptionElement(final String idString,
+                         final List<String> availableOpts) {
+        this.id = idString;
+        this.availableOptions = availableOpts;
     }
 
     /**
-     * Getter for the ID
+     * Getter for the ID.
      *
      * @return the ID of this OptionElement
      */
@@ -37,27 +38,31 @@ public abstract class OptionElement {
     }
 
     /**
-     * Getter for ChoosableOptions
+     * Getter for ChoosableOptions.
      *
      * @return the List of the ChoosableOptions
      */
     public List<String> getChoosableOptions() {
-        return choosableOptions;
+        return availableOptions;
     }
 
     /**
-     * Handles the selection
+     * Handles the selection.
      *
      * @param selection identifies the selection
      */
     public abstract void handleSelection(String selection);
 
     /**
-     * Getter for the currently chosen option
+     * Getter for the currently chosen option.
      *
      * @return the chosen option
      */
     public String getChosenOption() {
         return chosenOption;
+    }
+
+    public void setChosenOption(final String chosenOpt) {
+        this.chosenOption = chosenOpt;
     }
 }

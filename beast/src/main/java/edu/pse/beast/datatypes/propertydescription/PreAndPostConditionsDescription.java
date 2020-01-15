@@ -7,15 +7,14 @@ import java.util.List;
  * @author Niels Hanselmann
  */
 public class PreAndPostConditionsDescription {
-
     private String name;
     private final SymbolicVariableList symbolicVariableList;
     private final FormalPropertiesDescription preConditionsDescription;
     private final FormalPropertiesDescription postConditionsDescription;
     private final FormalPropertiesDescription boundedVarDescription;
 
-    public PreAndPostConditionsDescription(String name) {
-        this.name = name;
+    public PreAndPostConditionsDescription(final String nameString) {
+        this.name = nameString;
         this.symbolicVariableList = new SymbolicVariableList();
         this.preConditionsDescription = new FormalPropertiesDescription("");
         this.postConditionsDescription = new FormalPropertiesDescription("");
@@ -23,24 +22,24 @@ public class PreAndPostConditionsDescription {
     }
 
     /**
-     * Creator with a SymbolicVariableList
+     * Creator with a SymbolicVariableList.
      *
-     * @param name                  name of the PreAndPostConditionsDescription
+     * @param nameString            name of the PreAndPostConditionsDescription
      * @param preDescr              the preConditionDescription
      * @param postDescr             the postConditionDescription
-     * @param boundedVarDescription the boundedVarDescription
-     * @param symbolicVariableList  the symbolicVariableList
+     * @param boundedVarDesc        the boundedVarDescription
+     * @param symbVarList           the symbolicVariableList
      */
-    public PreAndPostConditionsDescription(String name,
-                                           FormalPropertiesDescription preDescr,
-                                           FormalPropertiesDescription postDescr,
-                                           FormalPropertiesDescription boundedVarDescription,
-                                           SymbolicVariableList symbolicVariableList) {
-        this.name = name;
+    public PreAndPostConditionsDescription(final String nameString,
+                                           final FormalPropertiesDescription preDescr,
+                                           final FormalPropertiesDescription postDescr,
+                                           final FormalPropertiesDescription boundedVarDesc,
+                                           final SymbolicVariableList symbVarList) {
+        this.name = nameString;
         this.preConditionsDescription = preDescr;
         this.postConditionsDescription = postDescr;
-        this.boundedVarDescription = boundedVarDescription;
-        this.symbolicVariableList = symbolicVariableList;
+        this.boundedVarDescription = boundedVarDesc;
+        this.symbolicVariableList = symbVarList;
     }
 
     public String getName() {
@@ -87,8 +86,8 @@ public class PreAndPostConditionsDescription {
         return boundedVarDescription;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(final String nameString) {
+        this.name = nameString;
     }
 
     @Override
@@ -113,7 +112,7 @@ public class PreAndPostConditionsDescription {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }

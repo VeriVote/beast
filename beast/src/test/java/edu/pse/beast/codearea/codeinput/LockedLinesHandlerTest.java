@@ -14,7 +14,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.pse.beast.codearea.SaveTextBeforeRemove;
-import edu.pse.beast.codearea.actionlist.Actionlist;
+import edu.pse.beast.codearea.actionlist.ActionList;
 
 /**
  *
@@ -27,7 +27,7 @@ public class LockedLinesHandlerTest {
 
     public LockedLinesHandlerTest() {
         this.pane = new JTextPane();
-        Actionlist actionlist = new Actionlist();
+        ActionList actionlist = new ActionList();
         beforeRemove = new SaveTextBeforeRemove(pane, actionlist);
 
         this.lockedLinesHandler = new LockedLinesHandler(pane, beforeRemove);

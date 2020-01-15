@@ -13,22 +13,22 @@ public class CElectionDescriptionEditorChangeHandler {
     private JTextPane codeArea;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param codeArea JTextPane of the CElectionEditorCodeArea
+     * @param cArea JTextPane of the CElectionEditorCodeArea
      */
-    public CElectionDescriptionEditorChangeHandler(JTextPane codeArea) {
-        this.codeArea = codeArea;
+    public CElectionDescriptionEditorChangeHandler(final JTextPane cArea) {
+        this.codeArea = cArea;
         updatePreValue();
     }
 
     /**
-     * adds a new text pane
+     * Adds a new text pane.
      *
-     * @param codeArea the text pane to add
+     * @param cArea the text pane to add
      */
-    public void addNewTextPane(JTextPane codeArea) {
-        this.codeArea = codeArea;
+    public void addNewTextPane(final JTextPane cArea) {
+        this.codeArea = cArea;
         updatePreValue();
     }
 

@@ -12,8 +12,10 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueW
 public abstract class OutputType extends InOutType {
     // protected CommonHelpMethods helper; TODO remove
 
-    public OutputType(boolean unsigned, DataType dataType, int dimensions,
-                      String[] sizeOfDimensions) {
+    public OutputType(final boolean unsigned,
+                      final DataType dataType,
+                      final int dimensions,
+                      final String[] sizeOfDimensions) {
         super(unsigned, dataType, dimensions, sizeOfDimensions);
     }
 
@@ -90,13 +92,13 @@ public abstract class OutputType extends InOutType {
 
     public abstract InternalTypeContainer getInternalTypeContainer();
 
-    public void addLastResultAsCode(CodeArrayListBeautifier code,
-                                    ElectionSimulationData origResult,
-                                    String origResultName) {
+    public void addLastResultAsCode(final CodeArrayListBeautifier code,
+                                    final ElectionSimulationData origResult,
+                                    final String origResultName) {
         // first create the declaration of the array:
         String declaration = getContainer().getOutputStruct().getStructAccess()
                 + " " + origResultName + " = {"
-                + printArray((CBMCResultValueWrapper) origResult.values) + "};";
+                + printArray((CBMCResultValueWrapper) origResult.getValues()) + "};";
         code.add(declaration);
     }
 
@@ -107,8 +109,9 @@ public abstract class OutputType extends InOutType {
     }
 
     @Override
-    public void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code,
-            String valueName, List<String> loopVariables) {
+    public void addExtraCodeAtEndOfCodeInit(final CodeArrayListBeautifier code,
+                                            final String valueName,
+                                            final List<String> loopVariables) {
         // as this is a output type, nothing has to be done
     }
 }

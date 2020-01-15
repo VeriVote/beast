@@ -21,6 +21,7 @@ import edu.pse.beast.types.OutputType;
  *
  */
 public class ElectionDescription {
+    private static final int LEN = 4;
     private String name;
     private String code = "";
     private ElectionTypeContainer container;
@@ -33,7 +34,7 @@ public class ElectionDescription {
 
     /**
      *
-     * @param name
+     * @param nameString
      *            the name of the description
      * @param inputType
      *            the input type
@@ -41,28 +42,34 @@ public class ElectionDescription {
      *            the output type
      * @param votingDeclLine
      *            the votingDeclerationLine
-     * @param lockedLineStart
+     * @param lockedLineStartPos
      *            start of locked line
-     * @param lockedLineEnd
+     * @param lockedLineEndPos
      *            end of locked line
-     * @param lockedBrace
+     * @param lockedBracePosition
      *            locked brace
-     * @param isNew
+     * @param isNewAttribute
      *            isNew
      */
-    public ElectionDescription(String name, InputType inputType,
-                               OutputType outputType, int lockedLineStart, int lockedLineEnd,
-                               int lockedBrace, boolean isNew) {
-        this.name = name;
+    public ElectionDescription(final String nameString,
+                               final InputType inputType,
+                               final OutputType outputType,
+                               final int lockedLineStartPos,
+                               final int lockedLineEndPos,
+                               final int lockedBracePosition,
+                               final boolean isNewAttribute) {
+        this.name = nameString;
         this.container = new ElectionTypeContainer(inputType, outputType);
-        this.lockedLineStart = lockedLineStart;
-        this.lockedLineEnd = lockedLineEnd;
-        this.lockedBracePos = lockedBrace;
-        this.isNew = isNew;
+        this.lockedLineStart = lockedLineStartPos;
+        this.lockedLineEnd = lockedLineEndPos;
+        this.lockedBracePos = lockedBracePosition;
+        this.isNew = isNewAttribute;
     }
 
-    public ElectionDescription(String name, InputType inputType, OutputType outputType) {
-        this.name = name;
+    public ElectionDescription(final String nameString,
+                               final InputType inputType,
+                               final OutputType outputType) {
+        this.name = nameString;
         this.container = new ElectionTypeContainer(inputType, outputType);
         this.isNew = true;
     }
@@ -84,7 +91,7 @@ public class ElectionDescription {
         String firstPart = code.substring(0, lockedLineStart);
         boolean duplicate = true;
         String votesName = "auto_votes";
-        int length = 4;
+        int length = LEN;
         while (duplicate) {
             if (code.contains(votesName)) {
                 votesName = generateRandomString(length);
@@ -128,7 +135,7 @@ public class ElectionDescription {
         // which transforms the one data type into another
         duplicate = true;
         String electName = "toReturn";
-        length = 4;
+        length = LEN;
         while (duplicate) {
             if (code.contains(electName)) {
                 electName = generateRandomString(length);
@@ -164,29 +171,29 @@ public class ElectionDescription {
 
     /**
      *
-     * @param code
+     * @param codeList
      *            of this description
      */
-    public void setCode(List<String> code) {
-        this.code = String.join("\n", code);
+    public void setCode(final List<String> codeList) {
+        this.code = String.join("\n", codeList);
     }
 
     /**
      *
-     * @param code
+     * @param codeString
      *            of this description
      */
-    public void setCode(String code) {
-        this.code = code;
+    public void setCode(final String codeString) {
+        this.code = codeString;
     }
 
     /**
      *
-     * @param name
+     * @param nameString
      *            of this description
      */
-    public void setName(String name) {
-        this.name = name;
+    public void setName(final String nameString) {
+        this.name = nameString;
     }
 
     /**
@@ -194,7 +201,7 @@ public class ElectionDescription {
      * @param newContainer
      *            type container of this description
      */
-    public void setContainer(ElectionTypeContainer newContainer) {
+    public void setContainer(final ElectionTypeContainer newContainer) {
         this.container = newContainer;
     }
 
@@ -226,26 +233,28 @@ public class ElectionDescription {
         this.isNew = false;
     }
 
-    public void setLockedPositions(int lockedLineStart, int lockedLineEnd, int lockedBracePos) {
-        this.lockedLineStart = lockedLineStart;
-        this.lockedLineEnd = lockedLineEnd;
-        this.lockedBracePos = lockedBracePos;
+    public void setLockedPositions(final int lockedLineStartPosition,
+                                   final int lockedLineEndPosition,
+                                   final int lockedBracePosition) {
+        this.lockedLineStart = lockedLineStartPosition;
+        this.lockedLineEnd = lockedLineEndPosition;
+        this.lockedBracePos = lockedBracePosition;
     }
 
     /**
-     * splits a string at "\n"
+     * Splits a string at "\n".
      *
      * @param toConvert
      * @return
      */
-    private List<String> stringToList(String toConvert) {
+    private List<String> stringToList(final String toConvert) {
         String[] split = toConvert.split("\n");
         return new ArrayList<>(Arrays.asList(split));
     }
 
     /**
-     * replaces all "return" statements in the voting methode with the more
-     * complex data types
+     * Replaces all "return" statements in the voting methode with the more
+     * complex data types.
      *
      * @param toProcess
      *            the String from which the return statements should be
@@ -256,18 +265,19 @@ public class ElectionDescription {
      *
      * @return
      */
-    private String replaceReturns(String toProcess, String variableName) { // change this to
-                                                                           // antLR maybe
+    private String replaceReturns(final String toProcess, final String variableName) {
+        // change this to antLR maybe
+        String toProc = toProcess;
         String toReturn = "";
         Pattern returnPattern = Pattern.compile("(?:\\s|^)return");
         Tuple3<Boolean, Boolean, Boolean> executionValues = new Tuple3<>(false, false, false);
-        Matcher matcher = returnPattern.matcher(toProcess);
+        Matcher matcher = returnPattern.matcher(toProc);
         while (matcher.find()) {
-            executionValues = checkIfExecutedCode(executionValues, toProcess, 0, matcher.end());
+            executionValues = checkIfExecutedCode(executionValues, toProc, 0, matcher.end());
             if (!checkForTrue(executionValues)) { // the return statement was
                                                   // NOT standing in a comment block
                 Tuple<String, Integer> replacement =
-                        replaceSpecificReturnStatement(toProcess.substring(matcher.end()),
+                        replaceSpecificReturnStatement(toProc.substring(matcher.end()),
                                                        variableName);
                 // replacement now contains one or multiple lines which assign
                 // the fitting
@@ -280,28 +290,28 @@ public class ElectionDescription {
                 // use single line
                 // if cases or similar things
                 String toInsert =
-                        wrapInCurlyBraces(replacement.first + " return " + variableName + "; ");
+                        wrapInCurlyBraces(replacement.first() + " return " + variableName + "; ");
                 // the part which was changed
-                String leadingPart = toProcess.substring(0, matcher.start()) + toInsert;
+                String leadingPart = toProc.substring(0, matcher.start()) + toInsert;
                 // replacement.second contains the position after the ";",
                 // therefore we have to
                 // append this end part again at the end
-                String trailingPart = toProcess.substring((matcher.end() + replacement.second));
+                String trailingPart = toProc.substring((matcher.end() + replacement.second()));
                 toReturn += leadingPart;
                 // now that we changed the underlying string, we have to update
                 // the matcher
                 matcher = returnPattern.matcher(trailingPart);
-                toProcess = trailingPart;
+                toProc = trailingPart;
             } else { // we are in a comment, so we add the part to here and continue on
-                toReturn += toProcess.substring(0, matcher.end()); // add the analysed part
-                String trailingPart = toProcess.substring(matcher.end());
+                toReturn += toProc.substring(0, matcher.end()); // add the analysed part
+                String trailingPart = toProc.substring(matcher.end());
                 // now that we changed the underlying string, we have to update
                 // the matcher
                 matcher = returnPattern.matcher(trailingPart);
-                toProcess = trailingPart;
+                toProc = trailingPart;
             }
         }
-        toReturn += toProcess; // add the last parts which were not processed
+        toReturn += toProc; // add the last parts which were not processed
         return toReturn;
     }
 
@@ -314,8 +324,8 @@ public class ElectionDescription {
      *         statement, and the length of the previous expression after
      *         "return" up to ";"
      */
-    private Tuple<String, Integer> replaceSpecificReturnStatement(String toProcess,
-                                                                  String variableName) {
+    private Tuple<String, Integer> replaceSpecificReturnStatement(final String toProcess,
+                                                                  final String variableName) {
         Tuple3<Boolean, Boolean, Boolean> executionValues = new Tuple3<>(false, false, false);
         Pattern returnPattern = Pattern.compile(";");
         Matcher matcher = returnPattern.matcher(toProcess);
@@ -335,12 +345,12 @@ public class ElectionDescription {
     }
 
     /**
-     * wraps the value in the fitting struct for its datatype, and adds
+     * Wraps the value in the fitting struct for its datatype, and adds.
      *
      * @return return + wrapper + ;
      *
      */
-    private String wrapInStruct(String variableName, String valueDefinition) {
+    private String wrapInStruct(final String variableName, final String valueDefinition) {
         String toReturn = container.getOutputStruct().getStructAccess() + " " + variableName + "; ";
         int dimensions = container.getOutputType().getAmountOfDimensions();
         List<String> loopVariables = generateLoopVariables(dimensions, variableName);
@@ -361,12 +371,14 @@ public class ElectionDescription {
         return toReturn;
     }
 
-    private String generateForLoopHeader(String indexName, String maxSize) {
+    private String generateForLoopHeader(final String indexName,
+                                         final String maxSize) {
         return "for (unsigned int " + indexName + " = 0; " + indexName + " < "
                 + maxSize + "; " + indexName + "++ ) { ";
     }
 
-    private List<String> generateLoopVariables(int dimensions, String variableName) {
+    private List<String> generateLoopVariables(final int dimensions,
+                                               final String variableName) {
         List<String> generatedVariables = new ArrayList<String>(dimensions);
         int currentIndex = 0;
         String defaultName = "loop_index_"; // use i as the default name for a loop
@@ -391,11 +403,12 @@ public class ElectionDescription {
     }
 
     private Tuple3<Boolean, Boolean, Boolean> checkIfExecutedCode(
-            Tuple3<Boolean, Boolean, Boolean> prevValues, String text,
-            int start, int end) {
-        boolean lineComment = prevValues.first;
-        boolean multiComment = prevValues.second;
-        boolean isText = prevValues.third;
+            final Tuple3<Boolean, Boolean, Boolean> prevValues,
+            final String text,
+            final int start, final int end) {
+        boolean lineComment = prevValues.first();
+        boolean multiComment = prevValues.second();
+        boolean isText = prevValues.third();
 
         boolean lastCharSlash = false;
         boolean lastCharStar = false;
@@ -455,8 +468,8 @@ public class ElectionDescription {
      *            statement
      * @return true, if at least one true statement is present, false otherwise
      */
-    private boolean checkForTrue(Tuple3<Boolean, Boolean, Boolean> toCheck) {
-        return toCheck.first || toCheck.second || toCheck.third;
+    private boolean checkForTrue(final Tuple3<Boolean, Boolean, Boolean> toCheck) {
+        return toCheck.first() || toCheck.second() || toCheck.third();
     }
 
     /**
@@ -467,11 +480,11 @@ public class ElectionDescription {
      *            the String to wrap
      * @return "{toWrap}"
      */
-    private String wrapInCurlyBraces(String toWrap) {
+    private String wrapInCurlyBraces(final String toWrap) {
         return "{" + toWrap + "}";
     }
 
-    private String generateRandomString(int length) {
+    private String generateRandomString(final int length) {
         return RandomStringUtils.random(length, true, false);
     }
 }

@@ -13,6 +13,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
 public class ElectionSimulationModel {
+    private static final double ELEMENT_WIDTH = 50;
+    private static final double ELEMENT_HEIGHT = 25;
+
     private PropertyChangeSupport support;
     private List<NEWRowOfValues> rows = new ArrayList<NEWRowOfValues>();
     private List<TextField> xDescriptors = new ArrayList<TextField>();
@@ -32,36 +35,34 @@ public class ElectionSimulationModel {
 
     private int currentCandidates = 0;
 
-    private double elementWidth = 50;
-    private double elementHeight = 25;
-
     private final String xLabel;
     private final String yLabel;
     private final boolean isTwoDim;
 
-    public ElectionSimulationModel(ElectionTypeContainer container,
-                                   GridPane inputGridPane, GridPane voterGridPane,
-                                   GridPane candidateGridPane) {
+    public ElectionSimulationModel(final ElectionTypeContainer elTypeContainer,
+                                   final GridPane inputDataGridPane,
+                                   final GridPane votGridPane,
+                                   final GridPane candGridPane) {
         this.support = new PropertyChangeSupport(this);
-        this.container = container;
-        this.inputGridPane = inputGridPane;
-        this.voterGridPane = voterGridPane;
-        this.candidateGridPane = candidateGridPane;
-        this.yLabel = container.getInputType().getSizeOfDimensions()[0];
+        this.container = elTypeContainer;
+        this.inputGridPane = inputDataGridPane;
+        this.voterGridPane = votGridPane;
+        this.candidateGridPane = candGridPane;
+        this.yLabel = elTypeContainer.getInputType().getSizeOfDimensions()[0];
 
-        if (container.getInputType().getAmountOfDimensions() == 2) {
-            this.xLabel = container.getInputType().getSizeOfDimensions()[1];
+        if (elTypeContainer.getInputType().getAmountOfDimensions() == 2) {
+            this.xLabel = elTypeContainer.getInputType().getSizeOfDimensions()[1];
         } else {
             this.xLabel = "";
         }
-        isTwoDim = (container.getInputType().getAmountOfDimensions() == 2);
+        isTwoDim = (elTypeContainer.getInputType().getAmountOfDimensions() == 2);
     }
 
-    public void addPropertyChangeListener(PropertyChangeListener pcl) {
+    public void addPropertyChangeListener(final PropertyChangeListener pcl) {
         this.support.addPropertyChangeListener(pcl);
     }
 
-    public void removePropertyChangeListener(PropertyChangeListener pcl) {
+    public void removePropertyChangeListener(final PropertyChangeListener pcl) {
         this.support.removePropertyChangeListener(pcl);
     }
 
@@ -70,14 +71,14 @@ public class ElectionSimulationModel {
             NEWRowOfValues toAdd =
                     new NEWRowOfValues(this, container,
                                        this.getAmountCandidates(), this.getAmountVoters(),
-                                       this.getAmountSeats(), currentRows, elementWidth,
-                                       elementHeight);
+                                       this.getAmountSeats(), currentRows, ELEMENT_WIDTH,
+                                       ELEMENT_HEIGHT);
             rows.add(toAdd);
             TextField newVoter = new TextField(yLabel + currentRows);
             yDescriptors.add(newVoter);
-            newVoter.setMinSize(elementWidth, elementHeight);
-            newVoter.setPrefSize(elementWidth, elementHeight);
-            newVoter.setMaxSize(elementWidth, elementHeight);
+            newVoter.setMinSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
+            newVoter.setPrefSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
+            newVoter.setMaxSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
             voterGridPane.add(newVoter, 0, currentRows);
             currentRows++;
             maxRows++;
@@ -97,11 +98,12 @@ public class ElectionSimulationModel {
         }
     }
 
-    public void changeContainer(ElectionTypeContainer container) {
-        this.container = container;
-        for (Iterator<NEWRowOfValues> iterator = rows.iterator(); iterator.hasNext();) {
+    public void changeContainer(final ElectionTypeContainer elTypeContainer) {
+        this.container = elTypeContainer;
+        for (Iterator<NEWRowOfValues> iterator = rows.iterator();
+                iterator.hasNext();) {
             NEWRowOfValues currentRow = iterator.next();
-            currentRow.setContainer(container);
+            currentRow.setContainer(elTypeContainer);
         }
     }
 
@@ -109,7 +111,7 @@ public class ElectionSimulationModel {
         return xDescriptors;
     }
 
-    public void setCandidates(ArrayList<TextField> candidates) {
+    public void setCandidates(final ArrayList<TextField> candidates) {
         this.xDescriptors = candidates;
     }
 
@@ -148,22 +150,23 @@ public class ElectionSimulationModel {
         return amountVoters;
     }
 
-    public void setAmountCandidates(int amountCandidates) {
-        this.amountCandidates = container.getInputType().vetAmountCandidates(amountCandidates);
+    public void setAmountCandidates(final int candidates) {
+        this.amountCandidates = container.getInputType().vetAmountCandidates(candidates);
         update();
     }
 
-    public void setAmountVoters(int amountVoters) {
-        this.amountVoters = container.getInputType().vetAmountVoters(amountVoters);
+    public void setAmountVoters(final int voters) {
+        this.amountVoters = container.getInputType().vetAmountVoters(voters);
         update();
     }
 
-    public void setAmountSeats(int amountSeats) {
-        this.amountSeats = container.getInputType().vetAmountSeats(amountSeats);
+    public void setAmountSeats(final int seats) {
+        this.amountSeats = container.getInputType().vetAmountSeats(seats);
         update();
     }
 
-    public void setValue(int x, int y, String value) {
+    public void setValue(final int x, final int y,
+                         final String value) {
         while (rows.size() <= y) {
             addRow();
         }
@@ -211,7 +214,7 @@ public class ElectionSimulationModel {
         return inputGridPane;
     }
 
-    private void updateY(int size) {
+    private void updateY(final int size) {
         if (currentRows < size) {
             while (currentRows < size) {
                 addRow();
@@ -223,7 +226,7 @@ public class ElectionSimulationModel {
         }
     }
 
-    private void updateX(int size) {
+    private void updateX(final int size) {
         for (Iterator<NEWRowOfValues> iterator = rows.iterator(); iterator.hasNext();) {
             NEWRowOfValues row = (NEWRowOfValues) iterator.next();
             row.setRowSize(size);
@@ -237,9 +240,9 @@ public class ElectionSimulationModel {
                     } else {
                         TextField candToAdd = new TextField(xLabel + currentCandidates);
                         candToAdd.setEditable(true);
-                        candToAdd.setMinSize(elementWidth, elementHeight);
-                        candToAdd.setPrefSize(elementWidth, elementHeight);
-                        candToAdd.setMaxSize(elementWidth, elementHeight);
+                        candToAdd.setMinSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
+                        candToAdd.setPrefSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
+                        candToAdd.setMaxSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
                         xDescriptors.add(candToAdd);
                         candidateGridPane.add(candToAdd, currentCandidates, 0);
                     }
@@ -256,9 +259,9 @@ public class ElectionSimulationModel {
             if (xDescriptors.size() == 0) {
                 TextField descriptorToAdd = new TextField("Values");
                 descriptorToAdd.setEditable(false);
-                descriptorToAdd.setMinSize(elementWidth, elementHeight);
-                descriptorToAdd.setPrefSize(elementWidth, elementHeight);
-                descriptorToAdd.setMaxSize(elementWidth, elementHeight);
+                descriptorToAdd.setMinSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
+                descriptorToAdd.setPrefSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
+                descriptorToAdd.setMaxSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
                 xDescriptors.add(descriptorToAdd);
                 candidateGridPane.add(descriptorToAdd, 0, 0);
             }

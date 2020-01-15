@@ -6,23 +6,31 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.In
 
 public class IntersectContentNode extends BooleanExpressionNode {
 
-    public final IntersectContentContext intersectContentContext;
-    public final String voteOutput;
+    private final IntersectContentContext intersectContentContext;
+    private final String voteOutput;
 
-    public IntersectContentNode(IntersectContentContext intersectContentContext,
-                                String voteOutput) {
-        this.intersectContentContext = intersectContentContext;
-        this.voteOutput = voteOutput;
+    public IntersectContentNode(final IntersectContentContext intersectContContext,
+                                final String voteOutputString) {
+        this.intersectContentContext = intersectContContext;
+        this.voteOutput = voteOutputString;
     }
 
     @Override
-    public void getVisited(BooleanExpNodeVisitor visitor) {
+    public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitIntersectContentNode(this);
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         System.out.println("might add treestring");
         return "";
+    }
+
+    public IntersectContentContext getIntersectContentContext() {
+        return intersectContentContext;
+    }
+
+    public String getVoteOutput() {
+        return voteOutput;
     }
 }

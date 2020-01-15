@@ -10,22 +10,22 @@ import java.util.Map;
 public class SaverLoaderHelper {
     private String currentSaveString;
 
-    public String getStringForAttr(String attrName, String content) {
+    public String getStringForAttr(final String attrName, final String content) {
         return attrName.length() + " " + attrName + content.length() + " " + content;
     }
 
-    public String getStringForAttr(String attrName, int content) {
+    public String getStringForAttr(final String attrName, final int content) {
         String contentString = String.valueOf(content);
         return attrName.length() + " " + attrName + contentString.length() + " " + contentString;
     }
 
-    public String getStringForAttr(String attrName, List<String> content) {
+    public String getStringForAttr(final String attrName, final List<String> content) {
         StringBuilder code = new StringBuilder();
         content.forEach(s -> code.append(s + "\n"));
         return getStringForAttr(attrName, code.toString());
     }
 
-    public Map<String, String> parseSaveString(String saveFile) {
+    public Map<String, String> parseSaveString(final String saveFile) {
         Map<String, String> attrNameToContent = new HashMap<>();
         currentSaveString = saveFile;
         try {
@@ -44,7 +44,7 @@ public class SaverLoaderHelper {
         return attrNameToContent;
     }
 
-    private String getAttrFromStringAndRemoveIt(int len) {
+    private String getAttrFromStringAndRemoveIt(final int len) {
         String attr = currentSaveString.substring(0, len);
         currentSaveString = currentSaveString.substring(len);
         return attr;
@@ -52,7 +52,8 @@ public class SaverLoaderHelper {
 
     private int getNumberAndRemoveNumberPartFromString() {
         int i = 0;
-        for (; currentSaveString.charAt(i) != ' '; i++) {
+        while (currentSaveString.charAt(i) != ' ') {
+            i++;
         }
         String numberS = currentSaveString.substring(0, i);
         currentSaveString = currentSaveString.substring(i + 1);

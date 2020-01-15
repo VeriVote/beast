@@ -24,8 +24,8 @@ public final class CVariableErrorFinder {
      *            the c code as list of code lines
      * @return a list of code errors
      */
-    public static List<CodeError> findErrors(List<String> code,
-            ElectionDescription electionDesc) {
+    public static List<CodeError> findErrors(final List<String> code,
+                                             final ElectionDescription electionDesc) {
 
         // TODO use unified name container here later
 

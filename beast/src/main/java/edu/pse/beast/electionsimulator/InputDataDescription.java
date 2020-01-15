@@ -6,13 +6,27 @@ import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 
 public class InputDataDescription {
-    public final List<List<String>> data;
-    public final InputType inType;
-    public final OutputType outType;
+    private final List<List<String>> data;
+    private final InputType inType;
+    private final OutputType outType;
 
-    public InputDataDescription(List<List<String>> data, InputType inType, OutputType outType) {
-        this.data = data;
-        this.inType = inType;
-        this.outType = outType;
+    public InputDataDescription(final List<List<String>> dataList,
+                                final InputType inputType,
+                                final OutputType outputType) {
+        this.data = dataList;
+        this.inType = inputType;
+        this.outType = outputType;
+    }
+
+    public List<List<String>> getData() {
+        return data;
+    }
+
+    public InputType getInputType() {
+        return inType;
+    }
+
+    public OutputType getOutputType() {
+        return outType;
     }
 }

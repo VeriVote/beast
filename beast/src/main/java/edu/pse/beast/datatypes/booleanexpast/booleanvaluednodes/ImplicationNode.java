@@ -13,17 +13,18 @@ public class ImplicationNode extends BinaryRelationshipNode {
      * @param lhsExpNode the lhs node
      * @param rhsExpNode the rhs node
      */
-    public ImplicationNode(BooleanExpressionNode lhsExpNode, BooleanExpressionNode rhsExpNode) {
+    public ImplicationNode(final BooleanExpressionNode lhsExpNode,
+                           final BooleanExpressionNode rhsExpNode) {
         super(lhsExpNode, rhsExpNode);
     }
 
     @Override
-    public void getVisited(BooleanExpNodeVisitor visitor) {
+    public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitImplicationNode(this);
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         String tabs = "\t\t\t\t\t\t\t\t\t\t\t\t".substring(0, depth + 1);
         return "==>\n" + tabs
                 + "lhs: " + getLHSBooleanExpNode().getTreeString(depth + 1) + tabs

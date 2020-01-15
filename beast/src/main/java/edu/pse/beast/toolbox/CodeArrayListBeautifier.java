@@ -20,7 +20,7 @@ public class CodeArrayListBeautifier {
     private final ArrayList<String> code;
 
     /**
-     * Creates a new CodeArrayListBeautifier with an empty ArrayList
+     * Creates a new CodeArrayListBeautifier with an empty ArrayList.
      */
     public CodeArrayListBeautifier() {
         super();
@@ -29,12 +29,12 @@ public class CodeArrayListBeautifier {
     }
 
     /**
-     * Adds a String to the ArrayList with the indenting
+     * Adds a String to the ArrayList with the indenting.
      *
      * @param addedString
      *            the String which is added to the ArrayList
      */
-    public void add(String addedString) {
+    public void add(final String addedString) {
         if (addedString != null) {
             if (addedString.contains("}")) {
                 Math.max(0, numberOfTabs--);
@@ -79,12 +79,12 @@ public class CodeArrayListBeautifier {
     }
 
     /**
-     * adds an ArrayList with the indenting
+     * Adds an ArrayList with the indenting.
      *
      * @param list
      *            the added ArrayList
      */
-    public void addList(List<String> list) {
+    public void addList(final List<String> list) {
         if (list != null) {
             list.forEach((singleItem) -> {
                 this.add(singleItem);
@@ -92,11 +92,11 @@ public class CodeArrayListBeautifier {
         }
     }
 
-    public void addAll(List<String> votingResultCode) {
+    public void addAll(final List<String> votingResultCode) {
         addList(votingResultCode);
     }
 
-    public boolean contains(String name) {
+    public boolean contains(final String name) {
         for (Iterator<String> iterator = code.iterator(); iterator.hasNext();) {
             String line = (String) iterator.next();
             if (line.contains(name)) {
@@ -106,7 +106,7 @@ public class CodeArrayListBeautifier {
         return false;
     }
 
-    public String getNotUsedVarName(String preferredName) {
+    public String getNotUsedVarName(final String preferredName) {
         int length = Math.min(preferredName.length(), 2);
         String name = preferredName;
         while (this.contains(name)) {

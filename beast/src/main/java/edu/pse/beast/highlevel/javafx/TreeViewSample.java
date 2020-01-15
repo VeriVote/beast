@@ -25,12 +25,12 @@ public class TreeViewSample extends Application {
     private static final String ROOT = "root.png";
     private static final String DEPARTMENT = "department.png";
 
-    private final Node rootIcon
-          = new ImageView(new Image(getClass().getResourceAsStream(ROOT)));
-    private final Image depIcon
-          = new Image(getClass().getResourceAsStream(DEPARTMENT));
-    private List<Employee> employees
-          = Arrays.<Employee>asList(
+    private final Node rootIcon =
+            new ImageView(new Image(getClass().getResourceAsStream(ROOT)));
+    private final Image depIcon =
+            new Image(getClass().getResourceAsStream(DEPARTMENT));
+    private List<Employee> employees =
+            Arrays.<Employee>asList(
                     new Employee("Ethan Williams", "Sales Department"),
                     new Employee("Emma Jones", "Sales Department"),
                     new Employee("Michael Brown", "Sales Department"),
@@ -42,15 +42,15 @@ public class TreeViewSample extends Application {
                     new Employee("Gregory Smith", "IT Support"),
                     new Employee("Jacob Smith", "Accounts Department"),
                     new Employee("Isabella Johnson", "Accounts Department"));
-    private TreeItem<String> rootNode
-        = new TreeItem<String>("MyCompany Human Resources", rootIcon);
+    private TreeItem<String> rootNode =
+            new TreeItem<String>("MyCompany Human Resources", rootIcon);
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         Application.launch(args);
     }
 
     @Override
-    public void start(Stage stage) {
+    public void start(final Stage stage) {
         rootNode.setExpanded(true);
         for (Employee employee : employees) {
             TreeItem<String> empLeaf = new TreeItem<String>(employee.getName());
@@ -63,8 +63,8 @@ public class TreeViewSample extends Application {
                 }
             }
             if (!found) {
-                TreeItem<String> depNode
-                      = new TreeItem<String>(employee.getDepartment(),
+                TreeItem<String> depNode =
+                        new TreeItem<String>(employee.getDepartment(),
                                              new ImageView(depIcon));
                 rootNode.getChildren().add(depNode);
                 depNode.getChildren().add(empLeaf);
@@ -80,7 +80,7 @@ public class TreeViewSample extends Application {
         treeView.setEditable(true);
         treeView.setCellFactory(new Callback<TreeView<String>, TreeCell<String>>() {
             @Override
-            public TreeCell<String> call(TreeView<String> p) {
+            public TreeCell<String> call(final TreeView<String> p) {
                 return new TextFieldTreeCellImpl();
             }
         });
@@ -94,7 +94,7 @@ public class TreeViewSample extends Application {
 
         private TextField textField;
 
-        public TextFieldTreeCellImpl() {
+        TextFieldTreeCellImpl() {
         }
 
         @Override
@@ -116,7 +116,7 @@ public class TreeViewSample extends Application {
         }
 
         @Override
-        public void updateItem(String item, boolean empty) {
+        public void updateItem(final String item, final boolean empty) {
             super.updateItem(item, empty);
             if (empty) {
                 setText(null);
@@ -140,7 +140,7 @@ public class TreeViewSample extends Application {
             textField.setOnKeyReleased(new EventHandler<KeyEvent>() {
 
                 @Override
-                public void handle(KeyEvent t) {
+                public void handle(final KeyEvent t) {
                     if (t.getCode() == KeyCode.ENTER) {
                         commitEdit(textField.getText());
                     } else if (t.getCode() == KeyCode.ESCAPE) {
@@ -160,16 +160,16 @@ public class TreeViewSample extends Application {
         private final SimpleStringProperty name;
         private final SimpleStringProperty department;
 
-        private Employee(String name, String department) {
-            this.name = new SimpleStringProperty(name);
-            this.department = new SimpleStringProperty(department);
+        private Employee(final String nameString, final String departmentString) {
+            this.name = new SimpleStringProperty(nameString);
+            this.department = new SimpleStringProperty(departmentString);
         }
 
         public String getName() {
             return name.get();
         }
 
-        public void setName(String fName) {
+        public void setName(final String fName) {
             name.set(fName);
         }
 
@@ -177,7 +177,7 @@ public class TreeViewSample extends Application {
             return department.get();
         }
 
-        public void setDepartment(String fName) {
+        public void setDepartment(final String fName) {
             department.set(fName);
         }
     }

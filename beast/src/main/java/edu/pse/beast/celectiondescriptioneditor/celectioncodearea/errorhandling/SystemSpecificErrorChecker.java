@@ -27,7 +27,7 @@ import edu.pse.beast.toolbox.ThreadedBufferedReader;
  */
 public abstract class SystemSpecificErrorChecker {
     /**
-     * Program that is to be used for checking
+     * Program that is to be used for checking.
      */
     static final String COMPILER_STRING = "gcc";
 
@@ -61,8 +61,8 @@ public abstract class SystemSpecificErrorChecker {
     private static final String PATH_TO_TEMP_FOLDER = "/core/c_tempfiles/";
 
     /**
-     * constructor creates an error checker that compiles the c code and passes it
-     * on to a system specific compiler
+     * Constructor creates an error checker that compiles the c code and passes it
+     * on to a system specific compiler.
      */
     public SystemSpecificErrorChecker() {
         // clear the folder where the files that get checked get saved to, because
@@ -78,14 +78,14 @@ public abstract class SystemSpecificErrorChecker {
     }
 
     /**
-     * Taken from "org.apache.commons.io.FileUtils" Lists files in a directory,
-     * asserting that the supplied directory satisfies exists and is a directory
+     * Taken from "org.apache.commons.io.FileUtils". Lists files in a directory,
+     * asserting that the supplied directory satisfies exists and is a directory.
      *
      * @param directory The directory to list
      * @return The files in the directory, never null.
      * @throws IOException if an I/O error occurs
      */
-    private static File[] verifiedListFiles(File directory) throws IOException {
+    private static File[] verifiedListFiles(final File directory) throws IOException {
         if (!directory.exists()) {
             throw new IllegalArgumentException(directory + " does not exist");
         }
@@ -108,7 +108,8 @@ public abstract class SystemSpecificErrorChecker {
      * @throws IllegalArgumentException if {@code directory} does not exist or is
      *                                  not a directory
      */
-    private static void cleanDirectory(final File directory, String keep) throws IOException {
+    private static void cleanDirectory(final File directory,
+                                       final String keep) throws IOException {
         final File[] files = verifiedListFiles(directory);
         IOException exception = null;
         for (final File file : files) {
@@ -132,7 +133,8 @@ public abstract class SystemSpecificErrorChecker {
      * @param lineOffset line offset
      * @return all errors found in a list
      */
-    public List<CodeError> checkCodeForErrors(List<String> toCheck, int lineOffset) {
+    public List<CodeError> checkCodeForErrors(final List<String> toCheck,
+                                              final int lineOffset) {
         List<String> result = new ArrayList<String>();
         List<String> errors = new ArrayList<String>();
         String absolutePath = SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER;

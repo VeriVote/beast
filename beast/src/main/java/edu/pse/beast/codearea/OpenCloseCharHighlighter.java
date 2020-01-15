@@ -29,19 +29,19 @@ public class OpenCloseCharHighlighter implements CaretListener {
     private final DefaultHighlighter.DefaultHighlightPainter hPainter;
     private final ArrayList<Object> addedHls = new ArrayList<>();
 
-    public OpenCloseCharHighlighter(OpenCloseCharList charList,
-                                    JTextPane pane) {
-        this.charList = charList;
-        this.pane = pane;
-        pane.addCaretListener(this);
-        highlighter = (DefaultHighlighter) pane.getHighlighter();
+    public OpenCloseCharHighlighter(final OpenCloseCharList chars,
+                                    final JTextPane textPane) {
+        this.charList = chars;
+        this.pane = textPane;
+        textPane.addCaretListener(this);
+        highlighter = (DefaultHighlighter) textPane.getHighlighter();
         hPainter = new DefaultHighlighter.DefaultHighlightPainter(Color.LIGHT_GRAY);
     }
 
     @Override
-    public void caretUpdate(CaretEvent ce) {
+    public void caretUpdate(final CaretEvent ce) {
         removeAllHighlights();
-        char surroundingChars[] = {' ', ' '};
+        char[] surroundingChars = {' ', ' '};
         try {
             surroundingChars[0] = JTextPaneToolbox.getCharToTheLeftOfCaret(pane).charAt(0);
             surroundingChars[1] = JTextPaneToolbox.getCharToTheRightOfCaret(pane).charAt(0);
@@ -64,7 +64,8 @@ public class OpenCloseCharHighlighter implements CaretListener {
         }
     }
 
-    private void highlightCorrespondingOpenChar(int pos, OpenCloseChar openCloseChar) {
+    private void highlightCorrespondingOpenChar(final int pos,
+                                                final OpenCloseChar openCloseChar) {
         char open = openCloseChar.getOpen();
         char close = openCloseChar.getClose();
         String code = JTextPaneToolbox.getText(pane);
@@ -83,7 +84,8 @@ public class OpenCloseCharHighlighter implements CaretListener {
         }
     }
 
-    private void highlightCorrespondingCloseChar(int pos, OpenCloseChar openCloseChar) {
+    private void highlightCorrespondingCloseChar(final int pos,
+                                                 final OpenCloseChar openCloseChar) {
         char open = openCloseChar.getOpen();
         char close = openCloseChar.getClose();
         String code = JTextPaneToolbox.getText(pane);
@@ -102,7 +104,7 @@ public class OpenCloseCharHighlighter implements CaretListener {
         }
     }
 
-    private void highlightChar(int pos) {
+    private void highlightChar(final int pos) {
         try {
             addedHls.add(highlighter.addHighlight(pos - 1, pos, hPainter));
         } catch (BadLocationException ex) {

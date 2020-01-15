@@ -32,8 +32,9 @@ public class ShowHelpUserAction extends UserAction implements DisplaysStringsToU
     }
 
     @Override
-    public void updateStringRes(StringLoaderInterface stringResIF) {
-        this.pathToHelpFile = stringResIF.getBooleanExpEditorStringResProvider().getMenuStringRes()
+    public void updateStringRes(final StringLoaderInterface stringResIF) {
+        this.pathToHelpFile =
+                stringResIF.getBooleanExpEditorStringResProvider().getMenuStringRes()
                 .getStringFromID("pathToLangHelp");
     }
 }

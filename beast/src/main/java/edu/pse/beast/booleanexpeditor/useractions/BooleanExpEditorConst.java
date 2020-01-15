@@ -12,12 +12,12 @@ public class BooleanExpEditorConst {
     private final String constant;
 
     /**
-     * String should be either "Voters", "Candidates" or "Seats"
+     * String should be either "Voters", "Candidates" or "Seats".
      *
-     * @param constant the String representing the constant, either "V", "C" or "S"
+     * @param constantString the String representing the constant, either "V", "C" or "S"
      */
-    public BooleanExpEditorConst(String constant) {
-        this.constant = constant;
+    public BooleanExpEditorConst(final String constantString) {
+        this.constant = constantString;
     }
 
     @Override

@@ -11,10 +11,13 @@ import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.ThreadedBufferedReader;
 
 public abstract class Checker implements Runnable {
+    private static final int EXIT_ON_SUCCESS = 0;
+    private static final int EXIT_ON_INCORRECT_ENVIRONMENT = 10;
+
     private static final long POLLING_INTERVAL = 1000;
 
     /**
-     * the process that this chcker runs
+     * The process that this checker runs.
      */
     private Process process;
 
@@ -39,31 +42,36 @@ public abstract class Checker implements Runnable {
      * a checker is to check a vote for the given properties and then return the
      * result.
      *
-     * @param voters
+     * @param voterAmount
      *            the amount of voters to check with
-     * @param candidates
+     * @param candAmount
      *            the amount of candidates to check with
-     * @param seats
-     *            the amoutn of seats to check with
-     * @param advanced
+     * @param seatAmount
+     *            the amount of seats to check with
+     * @param advancedOptions
      *            all advanced options that might be applied
-     * @param toCheck
+     * @param fileToCheck
      *            the path to the file to check
-     * @param parent
+     * @param parentFactory
      *            the parent checkerfactory that has to be notified about
      *            finished checking
-     * @param result
+     * @param resultVal
      *            the result
      */
-    public Checker(int voters, int candidates, int seats, String advanced,
-                   File toCheck, CheckerFactory parent, Result result) {
-        this.voters = voters;
-        this.candidates = candidates;
-        this.seats = seats;
-        this.advanced = advanced;
-        this.toCheck = toCheck;
-        this.parent = parent;
-        this.result = result;
+    public Checker(final int voterAmount,
+                   final int candAmount,
+                   final int seatAmount,
+                   final String advancedOptions,
+                   final File fileToCheck,
+                   final CheckerFactory parentFactory,
+                   final Result resultVal) {
+        this.voters = voterAmount;
+        this.candidates = candAmount;
+        this.seats = seatAmount;
+        this.advanced = advancedOptions;
+        this.toCheck = fileToCheck;
+        this.parent = parentFactory;
+        this.result = resultVal;
         new Thread(this, "Checker").start();
     }
 
@@ -93,10 +101,10 @@ public abstract class Checker implements Runnable {
             polling: while (!interrupted || !finished) {
                 if (!process.isAlive() && !interrupted) {
                     result.setExitCode(process.exitValue());
-                    if (process.exitValue() == 0) {
+                    if (process.exitValue() == EXIT_ON_SUCCESS) {
                         success = true;
                     } else {
-                        if (process.exitValue() != 10) {
+                        if (process.exitValue() != EXIT_ON_INCORRECT_ENVIRONMENT) {
                             ErrorLogger.log("Process finished with exitcode: "
                                             + process.exitValue());
                         }
@@ -161,15 +169,15 @@ public abstract class Checker implements Runnable {
     }
 
     /**
-     * tells the Checker to stop checking and also kill the sub processes
+     * Tells the Checker to stop checking and also kill the sub processes.
      */
     public void stopChecking() {
         interrupted = true;
     }
 
     /**
-     * used to filter out arguments that can be used on some plattforms, but
-     * would crash the checker on others
+     * Used to filter out arguments that can be used on some plattforms, but
+     * would crash the checker on others.
      *
      * @param toSanitize
      *            the string to be sanitized
@@ -178,26 +186,27 @@ public abstract class Checker implements Runnable {
     protected abstract String sanitizeArguments(String toSanitize);
 
     /**
-     * creates the process, which is run in a separate thread
+     * Creates the process, which is run in a separate thread.
      *
-     * @param voters
+     * @param voterAmount
      *            the amount of voters to check with
-     * @param candidates
+     * @param candAmount
      *            the amount of candidates to check with
-     * @param seats
-     *            the amoutn of seats to check with
-     * @param advanced
+     * @param seatAmount
+     *            the amount of seats to check with
+     * @param advancedOptions
      *            all advanced options that might be applied
-     * @param toCheck
+     * @param fileToCheck
      *            the path to the file to check
      * @return a process that describes the system process that is currently
      *         checking the property
      */
-    protected abstract Process createProcess(File toCheck, int voters,
-            int candidates, int seats, String advanced);
+    protected abstract Process createProcess(File fileToCheck, int voterAmount,
+                                             int candAmount, int seatAmount,
+                                             String advancedOptions);
 
     /**
-     * system specific implementation to stop the process that got started
+     * System specific implementation to stop the process that got started.
      */
     protected abstract void stopProcess();
 }

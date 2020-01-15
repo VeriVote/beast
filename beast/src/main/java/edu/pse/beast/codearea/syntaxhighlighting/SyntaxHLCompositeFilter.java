@@ -14,7 +14,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
 /**
- * Class that creates a DocumentFilter
+ * Class that creates a DocumentFilter.
  *
  * @author Nikolai Schnell
  */
@@ -29,31 +29,40 @@ public class SyntaxHLCompositeFilter extends DocumentFilter {
 
     /**
      *
-     * @param textPane the text pane
-     * @param regexAndColorList the regex and color list
+     * @param pane the text pane
+     * @param regexAndColors the regex and color list
      */
-    public SyntaxHLCompositeFilter(JTextPane textPane, ArrayList<RegexAndColor> regexAndColorList) {
-        this.regexAndColorList = regexAndColorList;
-        this.textPane = textPane;
+    public SyntaxHLCompositeFilter(final JTextPane pane,
+                                   final ArrayList<RegexAndColor> regexAndColors) {
+        this.regexAndColorList = regexAndColors;
+        this.textPane = pane;
     }
 
     @Override
-    public void insertString(FilterBypass fb, int offset, String text, AttributeSet attributeSet)
+    public void insertString(final FilterBypass fb,
+                             final int offset,
+                             final String text,
+                             final AttributeSet attributeSet)
             throws BadLocationException {
         super.insertString(fb, offset, text, attributeSet);
         handleTextChanged();
     }
 
     @Override
-    public void remove(FilterBypass fb, int offset, int length) throws BadLocationException {
+    public void remove(final FilterBypass fb,
+                       final int offset,
+                       final int length) throws BadLocationException {
         super.remove(fb, offset, length);
         handleTextChanged();
     }
 
     @Override
-    public void replace(FilterBypass fb, int offset, int length,
-                        String text, AttributeSet attributeSet)
-            throws BadLocationException {
+    public void replace(final FilterBypass fb,
+                        final int offset,
+                        final int length,
+                        final String text,
+                        final AttributeSet attributeSet)
+                                throws BadLocationException {
         super.replace(fb, offset, length, text, attributeSet);
         handleTextChanged();
     }
@@ -73,7 +82,7 @@ public class SyntaxHLCompositeFilter extends DocumentFilter {
      *
      * @return the regular expression as a Pattern
      */
-    private Pattern buildPattern(String token) {
+    private Pattern buildPattern(final String token) {
         return Pattern.compile(token);
     }
 

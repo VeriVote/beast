@@ -10,31 +10,23 @@ import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.TypeExpression;
  *
  */
 public class ComparisonNode extends BooleanExpressionNode {
-    protected final TypeExpression lhsTypeExp;
-    protected final TypeExpression rhsTypeExp;
-    protected final ComparisonSymbol comparisonSymbol;
+    private final TypeExpression lhsTypeExp;
+    private final TypeExpression rhsTypeExp;
+    private final ComparisonSymbol comparisonSymbol;
 
     /**
      *
-     * @param lhsTypeExp       the lhsExpression
-     * @param rhsTypeExp       the rhsExpression
-     * @param comparisonSymbol the symbol that describes this comparision (for
+     * @param lhsTypeExpr       the lhsExpression
+     * @param rhsTypeExpr       the rhsExpression
+     * @param comparisonSymb the symbol that describes this comparision (for
      *                         example <, >, == )
      */
-    public ComparisonNode(TypeExpression lhsTypeExp,
-                          TypeExpression rhsTypeExp,
-                          ComparisonSymbol comparisonSymbol) {
-        this.lhsTypeExp = lhsTypeExp;
-        this.rhsTypeExp = rhsTypeExp;
-        this.comparisonSymbol = comparisonSymbol;
-    }
-
-    /**
-     *
-     * @return the symbol that describes this comparison
-     */
-    public ComparisonSymbol getComparisonSymbol() {
-        return comparisonSymbol;
+    public ComparisonNode(final TypeExpression lhsTypeExpr,
+                          final TypeExpression rhsTypeExpr,
+                          final ComparisonSymbol comparisonSymb) {
+        this.lhsTypeExp = lhsTypeExpr;
+        this.rhsTypeExp = rhsTypeExpr;
+        this.comparisonSymbol = comparisonSymb;
     }
 
     /**
@@ -42,7 +34,7 @@ public class ComparisonNode extends BooleanExpressionNode {
      * @return the LHSNode
      */
     public TypeExpression getLHSBooleanExpNode() {
-        return lhsTypeExp;
+        return getLhsTypeExp();
     }
 
     /**
@@ -50,11 +42,11 @@ public class ComparisonNode extends BooleanExpressionNode {
      * @return the RHSNode
      */
     public TypeExpression getRHSBooleanExpNode() {
-        return rhsTypeExp;
+        return getRhsTypeExp();
     }
 
     @Override
-    public void getVisited(BooleanExpNodeVisitor visitor) {
+    public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitComparisonNode(this);
     }
 
@@ -66,16 +58,16 @@ public class ComparisonNode extends BooleanExpressionNode {
                 + ((comparisonSymbol == null)
                         ? 0 : comparisonSymbol.hashCode());
         result = prime * result
-                + ((lhsTypeExp == null)
-                        ? 0 : lhsTypeExp.hashCode());
+                + ((getLhsTypeExp() == null)
+                        ? 0 : getLhsTypeExp().hashCode());
         result = prime * result
-                + ((rhsTypeExp == null)
-                        ? 0 : rhsTypeExp.hashCode());
+                + ((getRhsTypeExp() == null)
+                        ? 0 : getRhsTypeExp().hashCode());
         return result;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
@@ -83,14 +75,14 @@ public class ComparisonNode extends BooleanExpressionNode {
             return false;
         }
         ComparisonNode that = (ComparisonNode) o;
-        if (lhsTypeExp != null
-                ? !lhsTypeExp.equals(that.lhsTypeExp)
-                        : that.lhsTypeExp != null) {
+        if (getLhsTypeExp() != null
+                ? !getLhsTypeExp().equals(that.getLhsTypeExp())
+                        : that.getLhsTypeExp() != null) {
             return false;
         }
-        if (rhsTypeExp != null
-                ? !rhsTypeExp.equals(that.rhsTypeExp)
-                        : that.rhsTypeExp != null) {
+        if (getRhsTypeExp() != null
+                ? !getRhsTypeExp().equals(that.getRhsTypeExp())
+                        : that.getRhsTypeExp() != null) {
             return false;
         }
         return comparisonSymbol != null ? comparisonSymbol.equals(that.comparisonSymbol)
@@ -98,12 +90,28 @@ public class ComparisonNode extends BooleanExpressionNode {
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         StringBuilder b = new StringBuilder();
         String tabs = "\t\t\t\t\t\t\t\t\t\t\t".substring(0, depth);
         b.append(tabs + comparisonSymbol.getCStringRep() + "\n");
-        b.append(tabs + "\t" + "lhs: " + lhsTypeExp.getTreeString(depth + 1));
-        b.append(tabs + "\t" + "rhs: " + rhsTypeExp.getTreeString(depth + 1));
+        b.append(tabs + "\t" + "lhs: " + getLhsTypeExp().getTreeString(depth + 1));
+        b.append(tabs + "\t" + "rhs: " + getRhsTypeExp().getTreeString(depth + 1));
         return b.toString();
+    }
+
+    /**
+     *
+     * @return the symbol that describes this comparison
+     */
+    public ComparisonSymbol getComparisonSymbol() {
+        return comparisonSymbol;
+    }
+
+    public TypeExpression getLhsTypeExp() {
+        return lhsTypeExp;
+    }
+
+    public TypeExpression getRhsTypeExp() {
+        return rhsTypeExp;
     }
 }

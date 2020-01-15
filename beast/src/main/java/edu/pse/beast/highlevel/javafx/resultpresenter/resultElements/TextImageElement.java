@@ -12,9 +12,9 @@ import javafx.scene.input.MouseEvent;
 
 public class TextImageElement extends ResultImageElement {
     // objects needed to calculate the size of the text
-    private static AffineTransform affinetransform = new AffineTransform();
+    private static AffineTransform affineTransform = new AffineTransform();
     private static FontRenderContext frc =
-            new FontRenderContext(affinetransform, true, true);
+            new FontRenderContext(affineTransform, true, true);
     private List<RichTextInformation> richTextInfo;
 
     /**
@@ -25,14 +25,14 @@ public class TextImageElement extends ResultImageElement {
      *            the top left x value of the text
      * @param yPosTopLeft
      *            the top left y value of the text
-     * @param richTextInfo
+     * @param richTextInfoList
      *            the text to be displayed
      */
-    public TextImageElement(double xPosTopLeft, double yPosTopLeft,
-                            List<RichTextInformation> richTextInfo) {
-        super(xPosTopLeft, yPosTopLeft, getMaxX(xPosTopLeft, richTextInfo),
-                getMaxY(yPosTopLeft, richTextInfo));
-        this.richTextInfo = richTextInfo;
+    public TextImageElement(final double xPosTopLeft, final double yPosTopLeft,
+                            final List<RichTextInformation> richTextInfoList) {
+        super(xPosTopLeft, yPosTopLeft, getMaxX(xPosTopLeft, richTextInfoList),
+                getMaxY(yPosTopLeft, richTextInfoList));
+        this.richTextInfo = richTextInfoList;
     }
 
     /**
@@ -43,21 +43,22 @@ public class TextImageElement extends ResultImageElement {
      *            the top left x value of the text
      * @param yPosTopLeft
      *            the top left y value of the text
-     * @param richTextInfo
+     * @param richTextInfoList
      *            the text to be displayed
      */
-    public TextImageElement(double xPosTopLeft, double yPosTopLeft,
-                            RichTextInformation richTextInfo) {
-        this(xPosTopLeft, yPosTopLeft, new ArrayList<>(Arrays.asList(richTextInfo)));
+    public TextImageElement(final double xPosTopLeft, final double yPosTopLeft,
+                            final RichTextInformation richTextInfoList) {
+        this(xPosTopLeft, yPosTopLeft,
+                new ArrayList<>(Arrays.asList(richTextInfoList)));
     }
 
     @Override
-    public void isClicked(MouseEvent event) {
+    public void isClicked(final MouseEvent event) {
         // TODO Auto-generated method stub
     }
 
     @Override
-    public void drawElement(Graphics2D graphics, double scale) {
+    public void drawElement(final Graphics2D graphics, final double scale) {
         // double xOffset = 0;
         // for (RichTextInformation info : richTextInfo) {
             // TODO change richtextinfo maybe to TextStyle
@@ -80,8 +81,8 @@ public class TextImageElement extends ResultImageElement {
     }
 
     @Deprecated
-    private static double getMaxX(double startX,
-                                  List<RichTextInformation> textInfo) {
+    private static double getMaxX(final double startX,
+                                  final List<RichTextInformation> textInfo) {
         double maxTextWidth = 0;
         // for (Iterator<RichTextInformation> iterator = textInfo.iterator(); iterator.hasNext();) {
             // RichTextInformation info = (RichTextInformation) iterator.next();
@@ -93,8 +94,8 @@ public class TextImageElement extends ResultImageElement {
     }
 
     @Deprecated
-    private static double getMaxY(double startY,
-                                  List<RichTextInformation> textInfo) {
+    private static double getMaxY(final double startY,
+                                  final List<RichTextInformation> textInfo) {
         double maxTextHeight = 0;
 
         // for (Iterator<RichTextInformation> iterator = textInfo.iterator(); iterator.hasNext();) {
@@ -106,7 +107,7 @@ public class TextImageElement extends ResultImageElement {
         return startY + maxTextHeight;
     }
 
-    private static String replaceCharacters(String toClean) {
+    private static String replaceCharacters(final String toClean) {
         // 4 spaces TODO maybe extract the tabs per spaces from the codearea
         String replacString = toClean.replace("\t", " " + " " + " " + " ");
         replacString = replacString.replace("\b", "");

@@ -11,15 +11,15 @@ public class SymbolicVarNameAndNumber {
     private final long number;
 
     /**
-     * this class wraps a name for a symbolic variable and the number that the
-     * checker determined for this candidate
+     * This class wraps a name for a symbolic variable and the number that the
+     * checker determined for this candidate.
      *
-     * @param name   the variable name
-     * @param number the determined number
+     * @param nam the variable name
+     * @param num the determined number
      */
-    public SymbolicVarNameAndNumber(String name, long number) {
-        this.name = name;
-        this.number = number;
+    public SymbolicVarNameAndNumber(final String nam, final long num) {
+        this.name = nam;
+        this.number = num;
     }
 
     public String getName() {

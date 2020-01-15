@@ -45,6 +45,8 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 
 public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterface {
+    private static final int TAB_SPACES = 4;
+
     // TODO maybe change to generic styled area
     private static final String[] KEYWORDS = {
         "auto", "break", "case", "const", "continue", "default", "do",
@@ -110,23 +112,23 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
     private static Set<String> recommendations = new TreeSet<String>();
 
-    final KeyCombination selectAllCombination =
+    private final KeyCombination selectAllCombination =
             new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN); // select all
-    final KeyCombination backspaceCombination =
+    private final KeyCombination backspaceCombination =
             new KeyCodeCombination(KeyCode.BACK_SPACE); // backspace
-    final KeyCombination deleteCombination =
+    private final KeyCombination deleteCombination =
             new KeyCodeCombination(KeyCode.DELETE); // delete
-    final KeyCombination enterCombination =
+    private final KeyCombination enterCombination =
             new KeyCodeCombination(KeyCode.ENTER); // enter
-    final KeyCombination undoCombination =
+    private final KeyCombination undoCombination =
             new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN); // undo
-    final KeyCombination redoCombination =
+    private final KeyCombination redoCombination =
             new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN); // redo
-    final KeyCombination pasteCombination =
+    private final KeyCombination pasteCombination =
             new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN); // paste
-    final KeyCombination cutCombination =
+    private final KeyCombination cutCombination =
             new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_DOWN); // paste
-    final KeyCombination tabulatorCombination =
+    private final KeyCombination tabulatorCombination =
             new KeyCodeCombination(KeyCode.TAB); // tab key
 
     private final SaverLoader saverLoader;
@@ -138,7 +140,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     private int lockedLineEnd = 0;
     private int lockedBracePos;
     // private int amountTabs = 0;
-    private int spacesPerTab = 4;
+    private int spacesPerTab = TAB_SPACES;
 
     private String lastChar = "";
 
@@ -190,7 +192,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
                 }
                 lockedLineSafeInsertText(replacement, false, false, null);
                 this.moveTo(Math.max(0, this.getCaretPosition() + step));
-                this.lastChar = value;
+                this.setLastChar(value);
             }
         });
 
@@ -229,7 +231,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
                 });
     }
 
-    private static void consume(KeyEvent event) {
+    private static void consume(final KeyEvent event) {
         if (event != null) {
             event.consume();
         }
@@ -238,7 +240,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     /**
      * @param event
      */
-    private void delete(KeyEvent event) {
+    private void delete(final KeyEvent event) {
         lockedLineSafeInsertText("", false, true, null);
         consume(event);
     }
@@ -246,7 +248,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     /**
      * @param event
      */
-    private void paste(KeyEvent event) {
+    private void paste(final KeyEvent event) {
         String clipboardText = "";
         try {
             clipboardText = (String) Toolkit.getDefaultToolkit()
@@ -261,7 +263,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     /**
      * @param event
      */
-    private void cut(KeyEvent event) {
+    private void cut(final KeyEvent event) {
         String selectedText = this.getSelectedText();
         if (lockedLineSafeInsertText("", true, false, null)) {
             StringSelection selection = new StringSelection(selectedText);
@@ -274,7 +276,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     /**
      * @param event
      */
-    private void redo(KeyEvent event) {
+    private void redo(final KeyEvent event) {
         LiveList<?> redoList = this.getUndoManager().nextRedoProperty()
                 .asList();
         if (redoList.size() == 1) {
@@ -291,7 +293,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     /**
      * @param event
      */
-    private void undo(KeyEvent event) {
+    private void undo(final KeyEvent event) {
         LiveList<?> undoList = this.getUndoManager().nextUndoProperty()
                 .asList();
         if (undoList.size() == 1) {
@@ -320,13 +322,15 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
      *            from the cursor or the marked area
      * @return
      */
-    private boolean lockedLineSafeInsertText(String replacement,
-            boolean backspace, boolean delete, Tuple<Integer, Integer> tuple) {
+    private boolean lockedLineSafeInsertText(final String replacement,
+                                             final boolean backspace,
+                                             final boolean delete,
+                                             final Tuple<Integer, Integer> tuple) {
         int selectionStart = 0;
         int selectionEnd = 0;
         if (tuple != null) {
-            selectionStart = tuple.first;
-            selectionEnd = tuple.second;
+            selectionStart = tuple.first();
+            selectionEnd = tuple.second();
         } else {
             IndexRange selectionRange = this.getSelection();
             selectionStart = selectionRange.getStart();
@@ -370,7 +374,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         }
     }
 
-    private void updateLockedLineNumber(int changePosition, int lengthChange) {
+    private void updateLockedLineNumber(final int changePosition,
+                                        final int lengthChange) {
         if (changePosition <= lockedLineStart) {
             lockedLineStart += lengthChange;
             lockedLineEnd += lengthChange;
@@ -382,12 +387,12 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     }
 
     private static StyleSpans<Collection<String>> computeHighlighting(
-            String text) {
+            final String text) {
         Matcher matcher = PATTERN.matcher(text);
         int lastKwEnd = 0;
         StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
         while (matcher.find()) {
-            final String styleClasses[] = new String[] {
+            final String[] styleClasses = new String[] {
                 KEYWORD_STRING, PREPROCESSOR_STRING, METHOD_STRING, DATATYPE_STRING,
                 POINTER_STRING, INCLUDE_STRING, PAREN_STRING, BRACE_STRING,
                 BRACKET_STRING, SEMICOLON_STRING, STRING_STRING, COMMENT_STRING
@@ -422,7 +427,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         return elecDescription.getDeepCopy();
     }
 
-    public void displayErrors(List<CodeError> codeErrors) {
+    public void displayErrors(final List<CodeError> codeErrors) {
         String toDisplay = "";
         for (CodeError codeError : codeErrors) {
             toDisplay += "line: " + codeError.getLine() + "| Message: "
@@ -431,7 +436,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         GUIController.setErrorText(toDisplay);
     }
 
-    public void setNewElectionDescription(ElectionDescription newDescription) {
+    public void setNewElectionDescription(final ElectionDescription newDescription) {
         this.elecDescription = newDescription;
         if (newDescription.isNew()) {
             String declarationString = CCodeHelper
@@ -465,7 +470,6 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         String combined = inputInfo + "\n\n\n" + outputInfo;
 
         GUIController.setInfoText(combined);
-
     }
 
     // public void setElectionDescription(ElectionDescription newDescription) {
@@ -489,7 +493,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         openJson(json, true);
     }
 
-    private void openJson(String json, boolean bringToFront) {
+    private void openJson(final String json, final boolean bringToFront) {
         ElectionDescription newDescription = null;
         try {
             newDescription = json.equals("") ? null
@@ -505,7 +509,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         }
     }
 
-    public void open(File elecDescFile) {
+    public void open(final File elecDescFile) {
         openJson(saverLoader.load(elecDescFile), false);
     }
 
@@ -521,7 +525,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
                 .createSaveString(elecDescription.getDeepCopy()));
     }
 
-    public void saveAs(File file) {
+    public void saveAs(final File file) {
         saverLoader.saveAs(file, electionSaverLoader
                 .createSaveString(elecDescription.getDeepCopy()));
     }
@@ -570,8 +574,25 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     }
 
     @Override
-    public void insertAutoCompletion(int start, int end, String toInsert) {
+    public void insertAutoCompletion(final int start, final int end,
+                                     final String toInsert) {
         lockedLineSafeInsertText(toInsert, false, false,
                 new Tuple<Integer, Integer>(start, end));
+    }
+
+    public String getLastChar() {
+        return lastChar;
+    }
+
+    public void setLastChar(final String lastCharString) {
+        this.lastChar = lastCharString;
+    }
+
+    public KeyCombination getRedoCombination() {
+        return redoCombination;
+    }
+
+    public KeyCombination getUndoCombination() {
+        return undoCombination;
     }
 }

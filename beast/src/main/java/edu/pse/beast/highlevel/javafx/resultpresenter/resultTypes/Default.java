@@ -18,20 +18,21 @@ import edu.pse.beast.types.OutputType;
 import javafx.scene.Node;
 
 /**
- * We just print out the input votes, and the result
+ * We just print out the input votes, and the result.
  *
  * @author Lukas Stapelbroek
  *
  */
 public class Default extends ResultPresentationType {
-    GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area;
-    int standardSize = 10;
+    private GenericStyledArea<ParStyle,
+                              Either<String, LinkedImage>,
+                              TextStyle> area;
 
     @Override
-    public Node presentResult(Result result) {
+    public Node presentResult(final Result result) {
         if (area == null) {
             area = TextFieldCreator.getGenericStyledAreaInstance(
-                    TextStyle.fontSize(standardSize), ParStyle.EMPTY);
+                    TextStyle.fontSize(STANDARD_SIZE), ParStyle.EMPTY);
             area.setEditable(false);
         }
         area.clear();
@@ -72,15 +73,15 @@ public class Default extends ResultPresentationType {
     }
 
     @Override
-    public void zoomTo(double zoomValue) {
+    public void zoomTo(final double zoomValue) {
         if (area != null) {
             area.setStyle(0, area.getLength(),
-                          TextStyle.fontSize((int) (standardSize + zoomValue)));
+                          TextStyle.fontSize((int) (STANDARD_SIZE + zoomValue)));
         }
     }
 
     @Override
-    public boolean supports(AnalysisType analysisType) {
+    public boolean supports(final AnalysisType analysisType) {
         switch (analysisType) {
         case Check:
             return true;

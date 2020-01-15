@@ -37,18 +37,20 @@ public final class UnifiedNameContainer { // TODO make not static and then only
         map.put("orig_votes", "ORIG_VOTES");
     }
 
-    public static void addListener(NameChangeListener toAdd) {
+    public static void addListener(final NameChangeListener toAdd) {
         listeners.add(toAdd);
     }
 
     private static void notifyNameChangeListeners() {
-        for (Iterator<NameChangeListener> iterator = listeners.iterator(); iterator.hasNext();) {
-            NameChangeListener nameChangeListener = (NameChangeListener) iterator.next();
+        for (Iterator<NameChangeListener> iterator = listeners.iterator();
+                iterator.hasNext();) {
+            NameChangeListener nameChangeListener =
+                    (NameChangeListener) iterator.next();
             nameChangeListener.notifyNameChange();
         }
     }
 
-    public static String getByKey(String key) {
+    public static String getByKey(final String key) {
         if (map.containsKey(key)) {
             return map.get(key);
         } else {
@@ -132,35 +134,35 @@ public final class UnifiedNameContainer { // TODO make not static and then only
         return "orig_votes";
     }
 
-    public static void setCandidate(String candidate) {
+    public static void setCandidate(final String candidate) {
         setInMap("candidate", candidate);
     }
 
-    public static void setVoter(String voter) {
+    public static void setVoter(final String voter) {
         setInMap("voter", voter);
     }
 
-    // public static void setVotes(String votes) {
+    // public static void setVotes(final String votes) {
     // setInMap("votes", votes);
     // } TODO check if used
 
-    public static void setSeats(String seats) {
+    public static void setSeats(final String seats) {
         setInMap("seats", seats);
     }
 
-    public static void setVotingMethod(String votingMethod) {
+    public static void setVotingMethod(final String votingMethod) {
         setInMap("votingMethod", votingMethod);
     }
 
-    public static void setResultArrName(String resultArrName) {
+    public static void setResultArrName(final String resultArrName) {
         setInMap("result_arr_name", resultArrName);
     }
 
-    public static void setVotingArray(String votingArray) {
+    public static void setVotingArray(final String votingArray) {
         setInMap("votingArray", votingArray);
     }
 
-    private static void setInMap(String key, String toSet) {
+    private static void setInMap(final String key, final String toSet) {
         map.put(key, toSet);
         notifyNameChangeListeners();
     }

@@ -13,6 +13,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class AutoCompleter {
+    private static final int SCENE_WIDTH = 350;
+    private static final int SCENE_HEIGHT = 100;
+
     private Stage autoCompletionStage = new Stage();
     private ListView<String> list = new ListView<String>();
     private Scene scene;
@@ -28,10 +31,10 @@ public class AutoCompleter {
         // SuperFolderFinder.getSuperFolder() + "/core/images/other/autocomplete.png"));
         list.prefWidthProperty().bind(autoCompletionStage.widthProperty());
         list.prefHeightProperty().bind(autoCompletionStage.heightProperty());
-        scene = new Scene(box, 350, 100);
+        scene = new Scene(box, SCENE_WIDTH, SCENE_HEIGHT);
         list.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
-            public void handle(KeyEvent event) {
+            public void handle(final KeyEvent event) {
                 switch (event.getCode()) {
                 case ENTER:
                     notifyCaller();
@@ -46,7 +49,7 @@ public class AutoCompleter {
         });
         list.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
+            public void handle(final MouseEvent event) {
                 notifyCaller();
             }
         });
@@ -62,9 +65,10 @@ public class AutoCompleter {
         reset();
     }
 
-    public synchronized void showAutoCompletionWindows(int x, int y, List<String> content,
-            AutoCompletionCodeArea caller) {
-        this.caller = caller;
+    public synchronized void showAutoCompletionWindows(final int x, final int y,
+                                                       final List<String> content,
+                                                       final AutoCompletionCodeArea c) {
+        this.caller = c;
 
         autoCompletionStage.setX(x);
         autoCompletionStage.setY(y);

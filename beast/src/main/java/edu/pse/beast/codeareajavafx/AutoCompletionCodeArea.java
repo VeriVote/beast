@@ -13,8 +13,10 @@ import edu.pse.beast.toolbox.Tuple;
 import edu.pse.beast.toolbox.Tuple3;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.geometry.Bounds;
 
 public abstract class AutoCompletionCodeArea extends CodeArea {
+    private static final int BOUND_OFFSET = 4;
     private static final String CONTROL_CHARACTERS = "\\p{Cntrl}";
     private static final String WORD = "([A-Za-z]+[A-Za-z0-9]*)";
     private static final String WHITESPACE = " ";
@@ -27,8 +29,8 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
     public AutoCompletionCodeArea() {
         this.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void changed(ObservableValue<? extends Boolean> ov,
-                                Boolean onHidden, Boolean onShown) {
+            public void changed(final ObservableValue<? extends Boolean> ov,
+                                final Boolean onHidden, final Boolean onShown) {
                 if (onShown) {
                     GUIController.getController().getAutoCompleter().reset();
                 }
@@ -37,34 +39,41 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
     }
 
     private Tuple<Integer, Integer> getAbsolutCaretPosition() {
-        return new Tuple<Integer, Integer>((int) this.getCaretBounds().get().getMaxX() + 4,
-                (int) this.getCaretBounds().get().getMaxY() + 4);
+        final Bounds bounds = this.getCaretBounds().get();
+        return new Tuple<Integer, Integer>(
+                (int) bounds.getMaxX() + BOUND_OFFSET,
+                (int) bounds.getMaxY() + BOUND_OFFSET);
     }
 
-    public void processAutocompletion(List<String> content,
-                                      Integer start,
-                                      Integer end) {
+    public void processAutocompletion(final List<String> content,
+                                      final Integer startIdx,
+                                      final Integer endIdx) {
         Tuple<Integer, Integer> position = getAbsolutCaretPosition();
-        this.start = start;
-        this.end = end;
+        this.start = startIdx;
+        this.end = endIdx;
         if (content.size() == 1) {
             // there is only one element, so the user probably wants that one
-            insertAutoCompletion(start, end, content.get(0));
+            insertAutoCompletion(startIdx, endIdx, content.get(0));
         } else {
             GUIController.getController().getAutoCompleter()
-            .showAutoCompletionWindows(position.first, position.second, content, this);
+            .showAutoCompletionWindows(position.first(), position.second(), content, this);
         }
     }
 
-    public void processAutocompletion(Tuple3<List<String>, Integer, Integer> completion) {
-        processAutocompletion(completion.first, completion.second, completion.third);
+    public void processAutocompletion(final Tuple3<List<String>,
+                                                   Integer,
+                                                   Integer> completion) {
+        processAutocompletion(completion.first(),
+                              completion.second(),
+                              completion.third());
     }
 
-    public abstract void insertAutoCompletion(int start, int end,
+    public abstract void insertAutoCompletion(int startIdx,
+                                              int endIdx,
                                               String toInsert);
 
     protected Tuple3<List<String>, Integer, Integer>
-                getCompletions(Set<String> recommendations) {
+                getCompletions(final Set<String> recommendations) {
         String completeText = this.getText();
         int prefixEnd = caretPositionProperty().getValue();
         int prefixStart = prefixEnd;
@@ -125,13 +134,13 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
                 }
             }
         }
-        if (possibleList.size() == 1) {
-        }
+        // if (possibleList.size() == 1) {
+        // }
 
         return new Tuple3<List<String>, Integer, Integer>(possibleList, prefixStart, prefixEnd);
     }
 
-    public void insertHiddenAutoCompletion(String toInsert) {
+    public void insertHiddenAutoCompletion(final String toInsert) {
         insertAutoCompletion(start, end, toInsert);
     }
 }

@@ -16,7 +16,7 @@ import edu.pse.beast.codearea.errorhandling.CodeError;
 import edu.pse.beast.codearea.errorhandling.ErrorFinder;
 
 /**
- * This class uses antlr to find syntax errors in the C code
+ * This class uses antlr to find syntax errors in the C code.
  *
  * @author Holger Klein
  */
@@ -25,14 +25,14 @@ public class CGrammarErrorFinder implements ErrorFinder, ANTLRErrorListener {
     private final ArrayList<CodeError> errors = new ArrayList<>();
 
     /**
-     * constructor
+     * Constructor.
      *
-     * @param antlrHandler the handle to AntLR used for error finding
+     * @param antlrHandlr the handle to AntLR used for error finding
      */
-    public CGrammarErrorFinder(CAntlrHandler antlrHandler) {
-        this.antlrHandler = antlrHandler;
-        antlrHandler.getParser().removeErrorListeners();
-        antlrHandler.getParser().addErrorListener(this);
+    public CGrammarErrorFinder(final CAntlrHandler antlrHandlr) {
+        this.antlrHandler = antlrHandlr;
+        antlrHandlr.getParser().removeErrorListeners();
+        antlrHandlr.getParser().addErrorListener(this);
     }
 
     @Override
@@ -43,12 +43,12 @@ public class CGrammarErrorFinder implements ErrorFinder, ANTLRErrorListener {
     }
 
     @Override
-    public void syntaxError(Recognizer<?, ?> rcgnzr,
-                            Object offendingSymbol,
-                            int line,
-                            int charPosInLine,
-                            String msg,
-                            RecognitionException e) {
+    public void syntaxError(final Recognizer<?, ?> rcgnzr,
+                            final Object offendingSymbol,
+                            final int line,
+                            final int charPosInLine,
+                            final String msg,
+                            final RecognitionException e) {
         CodeError err
             = new CodeError(line, charPosInLine, "antlr", 0,
                             ((Token) offendingSymbol).getStartIndex(),
@@ -58,20 +58,21 @@ public class CGrammarErrorFinder implements ErrorFinder, ANTLRErrorListener {
     }
 
     @Override
-    public void reportAmbiguity(Parser parser, DFA dfa,
-                                int i, int i1, boolean bln,
-                                BitSet bitset, ATNConfigSet atncs) {
+    public void reportAmbiguity(final Parser parser, final DFA dfa,
+                                final int i, final int i1, final boolean bln,
+                                final BitSet bitset, final ATNConfigSet atncs) {
     }
 
     @Override
-    public void reportAttemptingFullContext(Parser parser, DFA dfa,
-                                            int i, int i1,
-                                            BitSet bitset, ATNConfigSet atncs) {
+    public void reportAttemptingFullContext(final Parser parser, final DFA dfa,
+                                            final int i, final int i1,
+                                            final BitSet bitset,
+                                            final ATNConfigSet atncs) {
     }
 
     @Override
-    public void reportContextSensitivity(Parser parser, DFA dfa,
-                                         int i, int i1, int i2,
-                                         ATNConfigSet atncs) {
+    public void reportContextSensitivity(final Parser parser, final DFA dfa,
+                                         final int i, final int i1, final int i2,
+                                         final ATNConfigSet atncs) {
     }
 }

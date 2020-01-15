@@ -10,8 +10,8 @@ import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
 /**
- * the linux implementation for checking the code This implementation uses gcc
- * for checking
+ * The Linux implementation for checking the code. This implementation uses gcc
+ * for checking.
  *
  * @author Lukas Stapelbroek
  *
@@ -36,7 +36,7 @@ public class LinuxCompilerAndRunner extends SystemSpecificCompilerAndExecutioner
     private static final String OUT_FILE_ENDING = ".out";
 
     @Override
-    protected Process compileCFile(File toCheck) {
+    protected Process compileCFile(final File toCheck) {
         // the name of the file
         final String nameOfOutFile = toCheck.getName().replace(C_FILE_ENDING, OUT_FILE_ENDING);
         final File outFile = new File(toCheck.getParentFile(), nameOfOutFile);
@@ -73,7 +73,7 @@ public class LinuxCompilerAndRunner extends SystemSpecificCompilerAndExecutioner
     }
 
     @Override
-    protected Process runWithData(String toRun, File dataFile) {
+    protected Process runWithData(final String toRun, final File dataFile) {
         Process startedProcess = null;
         // the list where the arguments for the call get saved in
         List<String> arguments = new ArrayList<String>();

@@ -13,9 +13,9 @@ public class BarCharElement extends ResultImageElement {
     private List<Tuple3<String, Double, Color>> resultValues;
     private double totalSize = 0;
 
-    public BarCharElement(double xPosTopLeft, double yPosTopLeft,
-                          double xPosBottomRight, double yPosBottomRight,
-                          List<Tuple3<String, Double, Color>> resultValues) {
+    public BarCharElement(final double xPosTopLeft, final double yPosTopLeft,
+                          final double xPosBottomRight, final double yPosBottomRight,
+                          final List<Tuple3<String, Double, Color>> resultVals) {
         super(xPosTopLeft, yPosTopLeft, xPosBottomRight, yPosBottomRight);
         init();
     }
@@ -27,12 +27,12 @@ public class BarCharElement extends ResultImageElement {
         List<Tuple3<String, Double, Color>> remove =
                 new LinkedList<Tuple3<String, Double, Color>>();
         for (Tuple3<String, Double, Color> value: resultValues) {
-            if (value.second == 0) {
+            if (value.second() == 0) {
                 System.err.println("You are not allowed to have fields "
                                    + "with zero size in this chart");
                 remove.add(value); // remove this element from the chart
             } else {
-                tmpSize += Math.abs(value.second);
+                tmpSize += Math.abs(value.second());
             }
         }
         resultValues.removeAll(remove);
@@ -40,12 +40,12 @@ public class BarCharElement extends ResultImageElement {
     }
 
     @Override
-    public void isClicked(MouseEvent event) {
+    public void isClicked(final MouseEvent event) {
         // do nothing so far
     }
 
     @Override
-    public void drawElement(Graphics2D graphics, double scale) {
+    public void drawElement(final Graphics2D graphics, final double scale) {
         if (totalSize == 0) {
             System.err.println(
                     "The bar chart was not given a size larger than zero!");
@@ -53,6 +53,7 @@ public class BarCharElement extends ResultImageElement {
             for (Iterator<Tuple3<String, Double, Color>> iterator = resultValues.iterator();
                     iterator.hasNext();) {
                 // TODO implement bar chart later
+                System.err.println("The bar chart is not implemented yet!");
             }
         }
     }

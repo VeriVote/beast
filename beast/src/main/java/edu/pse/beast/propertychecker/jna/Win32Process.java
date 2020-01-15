@@ -9,28 +9,33 @@ import com.sun.jna.platform.win32.Kernel32Util;
 import com.sun.jna.platform.win32.WinNT;
 
 public class Win32Process {
+    private static final int SYNCHRONIZE = 0x00100000;
+    private static final int PROCESS_TERMINATE = 0x0001;
+    private static final int PROCESS_SUSPEND_RESUME = 0x0800;
+    private static final int PROCESS_QUERY_INFORMATION = 0x0400;
+
     /**
-     * the windows new technology handle for this process
+     * The windows new technology handle for this process.
      */
     private WinNT.HANDLE handle;
 
     /**
-     * the process id for this process
+     * The process id for this process.
      */
     private int pid;
 
     /**
-     * creates a new Win32 Process given a process id
+     * Creates a new Win32 Process given a process id.
      *
-     * @param pid the process id that describes this process
+     * @param procId       the process id that describes this process
      * @throws IOException if something goes wrong with creating the process
      *                     reference
      */
-    public Win32Process(int pid) throws IOException {
-        handle = Kernel32.INSTANCE.OpenProcess(0x0400 | /* PROCESS_QUERY_INFORMATION */
-                0x0800 | /* PROCESS_SUSPEND_RESUME */
-                0x0001 | /* PROCESS_TERMINATE */
-                0x00100000 /* SYNCHRONIZE */, false, pid);
+    public Win32Process(final int procId) throws IOException {
+        handle = Kernel32.INSTANCE.OpenProcess(
+                PROCESS_QUERY_INFORMATION | PROCESS_SUSPEND_RESUME
+                    | PROCESS_TERMINATE | SYNCHRONIZE,
+                false, procId);
         if (handle == null) {
             throw new IOException(
                     "OpenProcess failed: "
@@ -39,7 +44,7 @@ public class Win32Process {
                     )
             );
         }
-        this.pid = pid;
+        this.setPid(procId);
     }
 
     @Override
@@ -48,9 +53,17 @@ public class Win32Process {
     }
 
     /**
-     * terminates the process that is represented by the given handle
+     * Terminates the process that is represented by the given handle.
      */
     public void terminate() {
         Kernel32.INSTANCE.TerminateProcess(handle, 0);
+    }
+
+    public int getPid() {
+        return pid;
+    }
+
+    public void setPid(final int procId) {
+        this.pid = procId;
     }
 }

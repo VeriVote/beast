@@ -11,10 +11,10 @@ public class FormalPropertiesDescription {
     private String code;
 
     /**
-     * @param code the code of the FormalPropertyDescription
+     * @param codeString the code of the FormalPropertyDescription
      */
-    public FormalPropertiesDescription(String code) {
-        this.code = code;
+    public FormalPropertiesDescription(final String codeString) {
+        this.code = codeString;
     }
 
     /**
@@ -27,10 +27,10 @@ public class FormalPropertiesDescription {
 
     /**
      * Sets the code of this property. Replaces the previous code.
-     * @param code the code of the FormalPropertyDescription
+     * @param codeString the code of the FormalPropertyDescription
      */
-    public void setCode(String code) {
-        this.code = code;
+    public void setCode(final String codeString) {
+        this.code = codeString;
     }
 
     public List<String> getCodeAsList() {
@@ -49,7 +49,7 @@ public class FormalPropertiesDescription {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }

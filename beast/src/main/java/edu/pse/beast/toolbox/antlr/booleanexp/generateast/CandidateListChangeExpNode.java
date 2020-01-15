@@ -7,22 +7,32 @@ import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressio
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntersectExpContext;
 
 public class CandidateListChangeExpNode extends BooleanExpressionNode {
-    public final TerminalNode elect;
-    public final IntersectExpContext intersectExp;
+    private final TerminalNode elect;
+    private final IntersectExpContext intersectExp;
 
-    public CandidateListChangeExpNode(TerminalNode elect, IntersectExpContext intersectExp) {
-        this.elect = elect;
-        this.intersectExp = intersectExp;
+    public CandidateListChangeExpNode(final TerminalNode electNode,
+                                      final IntersectExpContext
+                                              intersectExpContext) {
+        this.elect = electNode;
+        this.intersectExp = intersectExpContext;
     }
 
     @Override
-    public void getVisited(BooleanExpNodeVisitor visitor) {
+    public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitCandidateListChangeExpNode(this);
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         System.out.println("might add treestring");
         return "";
+    }
+
+    public TerminalNode getElect() {
+        return elect;
+    }
+
+    public IntersectExpContext getIntersectExp() {
+        return intersectExp;
     }
 }

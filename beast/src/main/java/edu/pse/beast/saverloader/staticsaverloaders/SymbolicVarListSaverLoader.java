@@ -12,6 +12,9 @@ import edu.pse.beast.types.InternalTypeRep;
  * @author Holger Klein
  */
 public final class SymbolicVarListSaverLoader {
+    private static final int ID_LEN = 2;
+    private static final int TYPE_LEN = 4;
+
     private SymbolicVarListSaverLoader() { }
 
     /**
@@ -22,7 +25,7 @@ public final class SymbolicVarListSaverLoader {
      * @param list the SymbolicVariableList
      * @return the saveString
      */
-    public static String createSaveString(SymbolicVariableList list) {
+    public static String createSaveString(final SymbolicVariableList list) {
         String created = "";
         for (SymbolicVariable var : list.getSymbolicVariables()) {
             created += "symbolic_variable: ";
@@ -31,19 +34,19 @@ public final class SymbolicVarListSaverLoader {
         return created;
     }
 
-    private static String createSaveStringForVar(SymbolicVariable var) {
+    private static String createSaveStringForVar(final SymbolicVariable var) {
         return "id: " + var.getId() + " type: "
                 + var.getInternalTypeContainer().getInternalType().toString();
     }
 
     /**
      * Creates a SymbolicVariableList object from a given, by createSaveString()
-     * generated, saveString
+     * generated, saveString.
      *
      * @param s the SaveString
      * @return the SymbolicVariableList object
      */
-    public static SymbolicVariableList createFromSaveString(String s) {
+    public static SymbolicVariableList createFromSaveString(final String s) {
         SymbolicVariableList created = new SymbolicVariableList();
         String newString = s.replaceAll("\n", "");
         String[] var = newString.split(";");
@@ -53,13 +56,14 @@ public final class SymbolicVarListSaverLoader {
         return created;
     }
 
-    private static void createSymbVarFromSaveString(String s, SymbolicVariableList list) {
+    private static void createSymbVarFromSaveString(final String s,
+                                                    final SymbolicVariableList list) {
         if (s == null || s.length() == 0) {
             return;
         }
         String[] data = s.split(" ");
-        String id = data[2];
-        String typeString = data[4];
+        String id = data[ID_LEN];
+        String typeString = data[TYPE_LEN];
         InternalTypeRep type = InternalTypeRep.valueOf(typeString);
         list.addSymbolicVariable(id, new InternalTypeContainer(type));
     }

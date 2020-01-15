@@ -20,7 +20,9 @@ public interface LinkedImage {
                 return "LinkedImage";
             }
             @Override
-            public void encode(DataOutputStream os, LinkedImage linkedImage) throws IOException {
+            public void encode(final DataOutputStream os,
+                               final LinkedImage linkedImage)
+                                       throws IOException {
                 if (linkedImage.isReal()) {
                     os.writeBoolean(true);
                     String externalPath = linkedImage.getImagePath().replace("\\", "/");
@@ -30,7 +32,8 @@ public interface LinkedImage {
                 }
             }
             @Override
-            public LinkedImage decode(DataInputStream is) throws IOException {
+            public LinkedImage decode(final DataInputStream is)
+                    throws IOException {
                 if (is.readBoolean()) {
                     String imagePath = Codec.STRING_CODEC.decode(is);
                     imagePath = imagePath.replace("\\", "/");

@@ -22,23 +22,23 @@ public abstract class StringResourceProvider {
      * The constructor does not call initialize. If you make a subclass you have to
      * call it yourself
      *
-     * @param languageId the language. Choose "de" for German
+     * @param langId the language. Choose "de" for German
      */
-    public StringResourceProvider(String languageId) {
-        this.languageId = languageId;
+    public StringResourceProvider(final String langId) {
+        this.languageId = langId;
     }
 
     /**
      *
-     * @param languageId the language. Choose "de" for German
+     * @param langId the language. Choose "de" for German
      */
-    public void changeLanguage(String languageId) {
-        this.languageId = languageId;
+    public void changeLanguage(final String langId) {
+        this.languageId = langId;
         this.initialize();
     }
 
     /**
-     * this has to be implemented by every subclass.
+     * This has to be implemented by every subclass.
      */
     protected abstract void initialize();
 
@@ -47,49 +47,51 @@ public abstract class StringResourceProvider {
      * @param moduleName the Name of the StringResource you want
      * @return the relative fileLocation
      */
-    private String getFileLocationString(String moduleName) {
+    private String getFileLocationString(final String moduleName) {
         return ("/core/stringfiles/" + languageId + "/" + moduleName + "_" + languageId + ".txt");
     }
 
     /**
-     * reports Error to the class file tool-box
+     * Reports Error to the class file tool-box.
      *
      * @param file that has the wrongFormat
      */
-    private void errorFileHasWrongFormat(File file) {
+    private void errorFileHasWrongFormat(final File file) {
         ErrorLogger.log("The file " + file.getName() + " is not correctly formated");
         ErrorLogger.log("You can find and correct the file in this directory "
                         + file.getAbsolutePath());
     }
 
-    private void fileNotFound(File file) {
+    private void fileNotFound(final File file) {
         ErrorLogger.log("The file " + file.getName() + " can not be found");
         ErrorLogger.log("The file should be in this directory " + file.getAbsolutePath());
     }
 
     /**
-     * This method is used to initialize the StringResourceLoaders of the subclasses
+     * This method is used to initialize the StringResourceLoaders of the subclasses.
      *
      * @param moduleName the Name of the txt File without the language or the path
      * @return returns the StringResourceLoader
      */
-    protected final StringResourceLoader getStringResourceLoaderFromModuleName(String moduleName) {
-        String subFolderAndFilename = getFileLocationString(moduleName);
-        String superFolder = SuperFolderFinder.getSuperFolder();
-        String location = superFolder + subFolderAndFilename;
-        File file = new File(location);
-        {
-            LinkedList<String> inputList;
-            try {
-                inputList = FileLoader.loadFileAsString(file);
-                return new StringResourceLoader(inputList);
-            } catch (IOException ex) {
-                fileNotFound(file);
-            } catch (IndexOutOfBoundsException ie) {
-                errorFileHasWrongFormat(file);
-            }
+    protected final StringResourceLoader
+                        getStringResourceLoaderFromModuleName(final String moduleName) {
+        final String subFolderAndFilename = getFileLocationString(moduleName);
+        final String superFolder = SuperFolderFinder.getSuperFolder();
+        final String location = superFolder + subFolderAndFilename;
+        final File file = new File(location);
 
+        //////////////////////////////////
+        final LinkedList<String> inputList;
+        try {
+            inputList = FileLoader.loadFileAsString(file);
+            return new StringResourceLoader(inputList);
+        } catch (IOException ex) {
+            fileNotFound(file);
+        } catch (IndexOutOfBoundsException ie) {
+            errorFileHasWrongFormat(file);
         }
+        //////////////////////////////////
+
         return null;
     }
 }

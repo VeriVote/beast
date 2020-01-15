@@ -14,7 +14,7 @@ public class TimeOut {
      *                 {@link java.util.concurrent.TimeUnit}
      * @param duration the duration how long the timeout is in the specified unit.
      */
-    public TimeOut(TimeUnit unit, long duration) {
+    public TimeOut(final TimeUnit unit, final long duration) {
         amount = unit.toMillis(duration);
         originalUnit = unit;
         if (amount != 0) {

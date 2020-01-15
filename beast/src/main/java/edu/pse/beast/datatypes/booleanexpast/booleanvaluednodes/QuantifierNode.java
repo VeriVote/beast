@@ -13,12 +13,13 @@ public abstract class QuantifierNode extends BooleanExpressionNode {
 
     /**
      *
-     * @param declSymbVar   the symbolic variable of this quantifier
-     * @param followingNode the following node of this quantifier
+     * @param declSymbVariable  the symbolic variable of this quantifier
+     * @param followingExprNode the following node of this quantifier
      */
-    public QuantifierNode(SymbolicVariable declSymbVar, BooleanExpressionNode followingNode) {
-        this.declSymbVar = declSymbVar;
-        this.followingNode = followingNode;
+    public QuantifierNode(final SymbolicVariable declSymbVariable,
+                          final BooleanExpressionNode followingExprNode) {
+        this.declSymbVar = declSymbVariable;
+        this.followingNode = followingExprNode;
     }
 
     @Override
@@ -35,7 +36,7 @@ public abstract class QuantifierNode extends BooleanExpressionNode {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }

@@ -41,7 +41,7 @@ public final class CheckerFactoryFactory {
     }
 
     /**
-     * is used to get a list of all available checkers
+     * Is used to get a list of all available checkers.
      *
      * @return a list of all available checkers
      */
@@ -50,14 +50,14 @@ public final class CheckerFactoryFactory {
     }
 
     /**
-     * Creates a property checker for the given ID
+     * Creates a property checker for the given ID.
      *
      * @param checkerID
      *            the ID for the PropertyChecker
      * @return the by the ID specified PropertyChecker, if the ID is found, or
      *         null, if it is not found
      */
-    public static PropertyChecker createPropertyChecker(String checkerID) {
+    public static PropertyChecker createPropertyChecker(final String checkerID) {
         if (factories.keySet().contains(checkerID)) {
             return new PropertyChecker(checkerID);
         } else {
@@ -104,11 +104,11 @@ public final class CheckerFactoryFactory {
     // }
     // }
 
-    public static CheckerFactory getCheckerFactory(String checkerID,
-                                                   FactoryController controller,
-                                                   ElectionDescription electionDesc,
-                                                   Result result,
-                                                   ElectionCheckParameter parameter) {
+    public static CheckerFactory getCheckerFactory(final String checkerID,
+                                                   final FactoryController controller,
+                                                   final ElectionDescription electionDesc,
+                                                   final Result result,
+                                                   final ElectionCheckParameter parameter) {
         if (factories.keySet().contains(checkerID)) {
             return factories.get(checkerID).getNewInstance(controller,
                                                            electionDesc, result, parameter);
@@ -119,25 +119,24 @@ public final class CheckerFactoryFactory {
     }
 
     /**
-     * creates a specified amount of result objects that fit for the checkerID
+     * Creates a specified amount of result objects that fit for the checkerID.
      *
      * @param checkerID
      *            the ID for the checker
      * @return a list of the specified result objects with the length of
      *         "amount", null else
      */
-    public static Result getMatchingResult(String checkerID) {
+    public static Result getMatchingResult(final String checkerID) {
         if (factories.keySet().contains(checkerID)) {
             return factories.get(checkerID).getMatchingResult();
-
         } else {
             ErrorLogger.log("The specified checkerID was not found");
             return null;
         }
     }
 
-    public static List<Result> getMatchingUnprocessedResult(String checkerID,
-            int amount) {
+    public static List<Result> getMatchingUnprocessedResult(final String checkerID,
+                                                            final int amount) {
         List<Result> results = new ArrayList<Result>();
         for (int i = 0; i < amount; i++) {
             // results.add(new UnprocessedCBMCResult()); TODO find all classes

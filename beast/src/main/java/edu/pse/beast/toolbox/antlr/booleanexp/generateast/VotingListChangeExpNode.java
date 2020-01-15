@@ -7,27 +7,35 @@ import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressio
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VotingListChangeContentContext;
 
 public class VotingListChangeExpNode extends BooleanExpressionNode {
-    public final TerminalNode vote;
-    public final VotingListChangeContentContext votingListChangeContent;
+    private final TerminalNode vote;
+    private final VotingListChangeContentContext votingListChangeContent;
 
-    public VotingListChangeExpNode(TerminalNode vote,
-                                   VotingListChangeContentContext
-                                       votingListChangeContent) {
-        this.vote = vote;
-        this.votingListChangeContent = votingListChangeContent;
+    public VotingListChangeExpNode(final TerminalNode voteNode,
+                                   final VotingListChangeContentContext
+                                       votingListChangeCont) {
+        this.vote = voteNode;
+        this.votingListChangeContent = votingListChangeCont;
     }
 
     /**
-     * visits this node
+     * Visits this node.
      *
      * @param visitor the visitor that visits
      */
-    public void getVisited(BooleanExpNodeVisitor visitor) {
+    public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitVotingListChangeNode(this);
     }
 
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         System.out.println("might add treestring");
         return "";
+    }
+
+    public TerminalNode getVote() {
+        return vote;
+    }
+
+    public VotingListChangeContentContext getVotingListChangeContent() {
+        return votingListChangeContent;
     }
 }

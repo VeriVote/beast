@@ -36,26 +36,27 @@ public abstract class CheckerFactory implements Runnable {
 
     /**
      *
-     * @param controller
+     * @param factController
      *            the factoryController that started this factory
-     * @param electionDesc
+     * @param electionDescription
      *            the electionDescription
-     * @param result
+     * @param res
      *            the result object where the result has to be put in
-     * @param parameter
+     * @param param
      *            the parameter
      */
-    protected CheckerFactory(FactoryController controller,
-                             ElectionDescription electionDesc, Result result,
-                             ElectionCheckParameter parameter) {
-        this.controller = controller;
-        this.electionDesc = electionDesc;
-        this.result = result;
-        this.parameter = parameter;
+    protected CheckerFactory(final FactoryController factController,
+                             final ElectionDescription electionDescription,
+                             final Result res,
+                             final ElectionCheckParameter param) {
+        this.controller = factController;
+        this.electionDesc = electionDescription;
+        this.result = res;
+        this.parameter = param;
         // because we create a new instance with all variables null, we have to
         // catch it here
-        if (result != null) {
-            result.setElectionType(getElectionDescription());
+        if (res != null) {
+            res.setElectionType(getElectionDescription());
         }
     }
 
@@ -81,7 +82,7 @@ public abstract class CheckerFactory implements Runnable {
     // }
 
     /**
-     * the main working thread in this CheckerFactory. It cycles through all
+     * The main working thread in this CheckerFactory. It cycles through all
      * possible configurations and creates sequentially a new checker for each
      */
     public void run() {
@@ -144,10 +145,10 @@ public abstract class CheckerFactory implements Runnable {
     /**
      * @param advanced
      *            advanced options
-     * @param result
+     * @param res
      *            the result
      */
-    private void runCheck(String advanced, Result result) {
+    private void runCheck(final String advanced, final Result res) {
         outerLoop:
             for (Iterator<Integer> voteIterator = parameter.getAmountVoters().iterator();
                     voteIterator.hasNext();) {
@@ -161,14 +162,14 @@ public abstract class CheckerFactory implements Runnable {
                     synchronized (this) {
                         if (!stopped) {
                             currentlyRunning = startProcessCheck(electionDesc,
-                                    result.getPropertyDesctiption(), advanced,
-                                    voters, candidates, seats, this, result);
+                                    res.getPropertyDesctiption(), advanced,
+                                    voters, candidates, seats, this, res);
                             // check if the creation was successful
                             if (currentlyRunning == null) {
                                 // the process creation failed
                                 stopped = true;
-                                result.setFinished();
-                                result.setError(
+                                res.setFinished();
+                                res.setError(
                                         "Could not start the process, please follow "
                                                 + "the instructions you "
                                                 + "got shown on the screen before");
@@ -177,7 +178,7 @@ public abstract class CheckerFactory implements Runnable {
                     }
                     busyWaiting();
                     if (stopped) {
-                        result.setFinished();
+                        res.setFinished();
                         break outerLoop;
                     } else {
                         // if it got started normally
@@ -190,23 +191,23 @@ public abstract class CheckerFactory implements Runnable {
                         // if the last check was successful, we have to
                         // keep checking the other ones
 
-                        if (result.checkAssertionSuccess()) {
+                        if (res.checkAssertionSuccess()) {
                             finished = false;
                         } else {
                             // this was not successful for some reason, so stop
                             // now
                             finished = true;
-                            if (result.checkAssertionFailure()) {
-                                result.setNumVoters(voters);
-                                result.setNumCandidates(candidates);
-                                result.setNumSeats(seats);
-                                result.setResult(lastResult);
-                                result.setError(lastError);
-                                result.setValid();
+                            if (res.checkAssertionFailure()) {
+                                res.setNumVoters(voters);
+                                res.setNumCandidates(candidates);
+                                res.setNumSeats(seats);
+                                res.setResult(lastResult);
+                                res.setError(lastError);
+                                res.setValid();
                             } else {
-                                result.setError(lastError);
+                                res.setError(lastError);
                             }
-                            result.setFinished();
+                            res.setFinished();
                             break outerLoop;
                         }
                     }
@@ -239,24 +240,24 @@ public abstract class CheckerFactory implements Runnable {
      *            amount of seats
      * @param origData
      *            original data
-     * @param result
+     * @param res
      *            the result
      */
-    private void runMargin(String advanced, int numVoters, int numCandidates,
-                           int numSeats, ElectionSimulationData origData,
-                           Result result) {
+    private void runMargin(final String advanced, final int numVoters, final int numCandidates,
+                           final int numSeats, final ElectionSimulationData origData,
+                           final Result res) {
         synchronized (this) {
             if (!stopped) {
                 // determine the winner of this input of votes
                 currentlyRunning =
                         startProcessTest(electionDesc,
-                                         result.getPropertyDesctiption(),
+                                         res.getPropertyDesctiption(),
                                          advanced, numVoters, numCandidates,
-                                         numSeats, this, origData, result);
+                                         numSeats, this, origData, res);
                 busyWaiting();
                 ElectionSimulationData origResult =
                         new ElectionSimulationData(numVoters, numCandidates, numSeats,
-                                                   result.readVariableValue("elect\\d").get(0));
+                                                   res.readVariableValue("elect\\d").get(0));
                 int left = 0;
                 int right = parameter.getNumVotingPoints();
                 if (right == 1) {
@@ -275,16 +276,16 @@ public abstract class CheckerFactory implements Runnable {
                     // calculate the margin to check
                     margin = (int) (left + Math.floor((float) (right - left) / 2));
                     checkMarginAndWait(margin, origResult, advanced, numVoters,
-                            numCandidates, numSeats, origData, result);
-                    result.setResult(currentlyRunning.getResultList());
-                    result.addStatusString("finished run " + currentRun
+                            numCandidates, numSeats, origData, res);
+                    res.setResult(currentlyRunning.getResultList());
+                    res.addStatusString("finished run " + currentRun
                                            + " for margin " + margin + " Result: "
-                                           + result.checkAssertionSuccess());
+                                           + res.checkAssertionSuccess());
                     System.out.println("finished run " + currentRun
                                        + " for margin " + margin + " Result: "
-                                       + result.checkAssertionSuccess());
+                                       + res.checkAssertionSuccess());
                     currentRun++;
-                    if (result.checkAssertionSuccess()) {
+                    if (res.checkAssertionSuccess()) {
                         left = margin + 1;
                         margin = margin + 1;
                         hasMargin = true;
@@ -298,8 +299,8 @@ public abstract class CheckerFactory implements Runnable {
                 // margin, so we must check the last computed margin now:
                 if (!hasUpperBound) {
                     checkMarginAndWait(margin, origResult, advanced, numVoters,
-                                       numCandidates, numSeats, origData, result);
-                    hasMargin = result.checkAssertionFailure();
+                                       numCandidates, numSeats, origData, res);
+                    hasMargin = res.checkAssertionFailure();
                     if (hasMargin) {
                         lastFailedRun = lastResult;
                     }
@@ -308,19 +309,19 @@ public abstract class CheckerFactory implements Runnable {
                 // and false, if there is no margin
                 System.out.println("finished: hasFinalMargin: " + hasMargin
                                    + " || finalMargin = " + margin);
-                result.addStatusString("finished: hasFinalMargin: " + hasMargin
+                res.addStatusString("finished: hasFinalMargin: " + hasMargin
                                        + " || finalMargin = " + margin);
-                result.setMarginComp(true);
-                result.setHasFinalMargin(hasMargin);
-                result.setOrigWinner(origResult);
-                result.setOrigVoting(GUIController.getController()
+                res.setMarginComp(true);
+                res.setHasFinalMargin(hasMargin);
+                res.setOrigWinner(origResult);
+                res.setOrigVoting(GUIController.getController()
                                         .getElectionSimulation().getVotingData());
                 if (hasMargin) {
-                    result.setResult(lastFailedRun);
-                    result.setFinalMargin(margin);
+                    res.setResult(lastFailedRun);
+                    res.setFinalMargin(margin);
                 } else {
-                    result.setResult(currentlyRunning.getResultList());
-                    result.setFinalMargin(-1);
+                    res.setResult(currentlyRunning.getResultList());
+                    res.setFinalMargin(-1);
                 }
                 ElectionSimulationData newVotes;
                 ElectionSimulationData newResult;
@@ -329,17 +330,17 @@ public abstract class CheckerFactory implements Runnable {
                     String newResName = UnifiedNameContainer.getNewResultName();
                     newVotes = new ElectionSimulationData(numVoters,
                             numCandidates, numSeats,
-                            result.readVariableValue(voteName).get(0));
+                            res.readVariableValue(voteName).get(0));
                     newResult = new ElectionSimulationData(
                             numVoters, numCandidates, numSeats,
-                            result.readVariableValue(newResName).get(0));
-                    result.setNewVotes(newVotes);
-                    result.setNewWinner(newResult);
-                    result.setValid();
-                    result.setFinished();
+                            res.readVariableValue(newResName).get(0));
+                    res.setNewVotes(newVotes);
+                    res.setNewWinner(newResult);
+                    res.setValid();
+                    res.setFinished();
                     this.finished = true;
                 }
-                result.setFinished();
+                res.setFinished();
             }
         }
     }
@@ -355,18 +356,21 @@ public abstract class CheckerFactory implements Runnable {
      *            amount of seats
      * @param origData
      *            original data
-     * @param result
+     * @param res
      *            the result
      */
-    private void runTest(String advanced, int numVoters, int numCandidates,
-                         int numSeats, ElectionSimulationData origData, Result result) {
+    private void runTest(final String advanced,
+                         final int numVoters, final int numCandidates,
+                         final int numSeats,
+                         final ElectionSimulationData origData,
+                         final Result res) {
         synchronized (this) {
             if (!stopped) {
                 // determine the winner of this input of votes
                 currentlyRunning =
-                        startProcessTest(electionDesc, result.getPropertyDesctiption(),
-                                         advanced, numVoters, numCandidates, numSeats, this,
-                                         origData, result);
+                        startProcessTest(electionDesc, res.getPropertyDesctiption(),
+                                         advanced, numVoters, numCandidates, numSeats,
+                                         this, origData, res);
                 busyWaiting();
                 // CBMCResult dummyResult = new CBMCResult();
                 // List<String> origResult = new ArrayList<String>();
@@ -377,7 +381,7 @@ public abstract class CheckerFactory implements Runnable {
                 System.out.println("add namecontainer CHECKERFACTORY");
                 ElectionSimulationData origResult =
                         new ElectionSimulationData(numVoters, numCandidates, numSeats,
-                                                   result.readVariableValue("elect\\d").get(0));
+                                                   res.readVariableValue("elect\\d").get(0));
                 int left = 0;
                 // how many votes we have
                 int right =
@@ -395,10 +399,10 @@ public abstract class CheckerFactory implements Runnable {
                     // calculate the margin to check
                     margin = (int) (left + Math.floor((float) (right - left) / 2));
                     checkMarginAndWait(margin, origResult, advanced, numVoters,
-                                       numCandidates, numSeats, origData, result);
+                                       numCandidates, numSeats, origData, res);
                     System.out.println("finished for margin " + margin
-                                       + " result: " + result.checkAssertionSuccess());
-                    if (result.checkAssertionSuccess()) {
+                                       + " result: " + res.checkAssertionSuccess());
+                    if (res.checkAssertionSuccess()) {
                         left = margin + 1;
                         margin = margin + 1;
                         hasMargin = true;
@@ -412,8 +416,8 @@ public abstract class CheckerFactory implements Runnable {
                 // margin, so we have to check the last computed margin now:
                 if (!hasUpperBound) {
                     checkMarginAndWait(margin, origResult, advanced, numVoters,
-                            numCandidates, numSeats, origData, result);
-                    hasMargin = result.checkAssertionFailure();
+                            numCandidates, numSeats, origData, res);
+                    hasMargin = res.checkAssertionFailure();
                     if (hasMargin) {
                         lastFailedRun = lastResult;
                     }
@@ -422,19 +426,19 @@ public abstract class CheckerFactory implements Runnable {
                 // and false, if there is no margin
                 System.out.println("finished: hasFinalMargin: " + hasMargin
                                    + " || finalMargin = " + margin);
-                result.setMarginComp(true);
-                result.setHasFinalMargin(hasMargin);
-                result.setOrigWinner(origResult);
+                res.setMarginComp(true);
+                res.setHasFinalMargin(hasMargin);
+                res.setOrigWinner(origResult);
                 // result.setOrigVoting(GUIController.getController()
                 // .getElectionSimulation().getVotingDataListofList());
-                result.setOrigVoting(GUIController.getController()
+                res.setOrigVoting(GUIController.getController()
                                         .getElectionSimulation().getVotingData());
                 if (hasMargin) {
-                    result.setResult(currentlyRunning.getResultList());
-                    result.setFinalMargin(margin);
+                    res.setResult(currentlyRunning.getResultList());
+                    res.setFinalMargin(margin);
                 } else {
-                    result.setResult(null);
-                    result.setFinalMargin(-1);
+                    res.setResult(null);
+                    res.setFinalMargin(-1);
                 }
                 // List<List<String>> newVotes = new ArrayList<List<String>>();
                 // List<String> newResult = new ArrayList<String>();
@@ -449,14 +453,14 @@ public abstract class CheckerFactory implements Runnable {
                     //  .getNewVotes(lastFailedRun, 0);
                     newResult = new ElectionSimulationData(numVoters,
                             numCandidates, numSeats,
-                            result.readVariableValue("elect\\d").get(0));
+                            res.readVariableValue("elect\\d").get(0));
                     newVotes = new ElectionSimulationData(numVoters,
                             numCandidates, numSeats,
-                            result.readVariableValue("votes\\d").get(0));
-                    result.setNewVotes(newVotes);
-                    result.setNewWinner(newResult);
-                    result.setValid();
-                    result.setFinished();
+                            res.readVariableValue("votes\\d").get(0));
+                    res.setNewVotes(newVotes);
+                    res.setNewWinner(newResult);
+                    res.setValid();
+                    res.setFinished();
                     this.finished = true;
                     // int count = 0;
 
@@ -500,23 +504,24 @@ public abstract class CheckerFactory implements Runnable {
     }
 
     /**
-     * when a checker finished it calls this method to let the factory know that
-     * it can start the next one, if it still has more to start
+     * When a checker finished, it calls this method to let the factory know that
+     * it can start the next one, if it still has more to start.
      *
-     * @param lastResult
+     * @param lastRes
      *            the last result output from the checker that finished last
-     * @param lastError
+     * @param lastErr
      *            the last error output from the checker that finished last
      */
-    public void notifyThatFinished(List<String> lastResult, List<String> lastError) {
+    public void notifyThatFinished(final List<String> lastRes,
+                                   final List<String> lastErr) {
         finished = true;
-        this.lastResult = lastResult;
-        this.lastError = lastError;
+        this.lastResult = lastRes;
+        this.lastError = lastErr;
     }
 
     /**
-     * executes a margin computation and waits for it to finish. The
-     * result/error is in "lastResult/lastError" after the method returned
+     * Executes a margin computation and waits for it to finish. The
+     * result/error is in "lastResult/lastError" after the method returned.
      *
      * @param margin
      *            the margin
@@ -532,17 +537,20 @@ public abstract class CheckerFactory implements Runnable {
      *            amount of seats
      * @param votingData
      *            the voting data
-     * @param result
+     * @param res
      *            the result
      */
-    protected void checkMarginAndWait(int margin, ElectionSimulationData origData,
-                                      String advanced, int numVoters, int numCandidates,
-                                      int numSeats, ElectionSimulationData votingData,
-                                      Result result) {
+    protected void checkMarginAndWait(final int margin,
+                                      final ElectionSimulationData origData,
+                                      final String advanced,
+                                      final int numVoters, final int numCandidates,
+                                      final int numSeats,
+                                      final ElectionSimulationData votingData,
+                                      final Result res) {
         currentlyRunning =
-                startProcessMargin(electionDesc, result.getPropertyDesctiption(),
+                startProcessMargin(electionDesc, res.getPropertyDesctiption(),
                                    advanced, numVoters, numCandidates, numSeats, this,
-                                   margin, origData, votingData, result);
+                                   margin, origData, votingData, res);
         while (!currentlyRunning.isFinished()) {
             try {
                 Thread.sleep(SLEEP_INTERVAL);
@@ -553,10 +561,10 @@ public abstract class CheckerFactory implements Runnable {
     }
 
     /**
-     * starts a new Checker with the given parameters. Implementation depends on
-     * the extending class
+     * Starts a new Checker with the given parameters. Implementation depends on
+     * the extending class.
      *
-     * @param electionDesc
+     * @param elecDesc
      *            the election description
      * @param postAndPrepPropDesc
      *            the property description
@@ -570,22 +578,23 @@ public abstract class CheckerFactory implements Runnable {
      *            the amount of seats
      * @param parent
      *            the parent that has to be notified when the checker finished
-     * @param result
+     * @param res
      *            the result
      * @return the newly created Checker that is now checking the given file and
      *         other properties
      */
     protected abstract Checker startProcessCheck(
-            ElectionDescription electionDesc,
+            ElectionDescription elecDesc,
             PreAndPostConditionsDescription postAndPrepPropDesc,
-            String advanced, int voters, int candidates, int seats,
-            CheckerFactory parent, Result result);
+            String advanced, int voters,
+            int candidates, int seats,
+            CheckerFactory parent, Result res);
 
     /**
-     * starts a new Checker with the given parameters. Implementation depends on
-     * the extending class
+     * Starts a new Checker with the given parameters. Implementation depends on
+     * the extending class.
      *
-     * @param electionDesc
+     * @param elecDesc
      *            the election description
      * @param postAndPrepPropDesc
      *            the property description
@@ -605,24 +614,25 @@ public abstract class CheckerFactory implements Runnable {
      *            the voting data
      * @param votingData
      *            TODO
-     * @param result
+     * @param res
      *            the result
      * @return the newly created Checker that is now checking the given file and
      *         other properties
      */
     protected abstract Checker startProcessMargin(
-            ElectionDescription electionDesc,
+            ElectionDescription elecDesc,
             PreAndPostConditionsDescription postAndPrepPropDesc,
-            String advanced, int voters, int candidates, int seats,
+            String advanced, int voters,
+            int candidates, int seats,
             CheckerFactory parent, int margin,
             ElectionSimulationData origResult,
-            ElectionSimulationData votingData, Result result);
+            ElectionSimulationData votingData, Result res);
 
     /**
-     * starts a new Checker with the given parameters. Implementation depends on
-     * the extending class
+     * Starts a new Checker with the given parameters. Implementation depends on
+     * the extending class.
      *
-     * @param electionDesc
+     * @param elecDesc
      *            the election description
      * @param postAndPrepPropDesc
      *            the property description
@@ -638,16 +648,19 @@ public abstract class CheckerFactory implements Runnable {
      *            the parent that has to be notified when the checker finished
      * @param origData
      *            the voting data
-     * @param result
+     * @param res
      *            the result
      * @return the newly created Checker that is now checking the given file and
      *         other properties
      */
-    protected abstract Checker startProcessTest(ElectionDescription electionDesc,
-                                                PreAndPostConditionsDescription postAndPrepPropDesc,
-                                                String advanced, int voters, int candidates,
+    protected abstract Checker startProcessTest(ElectionDescription elecDesc,
+                                                PreAndPostConditionsDescription
+                                                        postAndPrepPropDesc,
+                                                String advanced,
+                                                int voters, int candidates,
                                                 int seats, CheckerFactory parent,
-                                                ElectionSimulationData origData, Result result);
+                                                ElectionSimulationData origData,
+                                                Result res);
 
     // /**
     // * starts a new Checker with the given parameters. Implementation depends
@@ -767,10 +780,10 @@ public abstract class CheckerFactory implements Runnable {
     // ElectionCheckParameter parameter, Result result, boolean isMargin);
     //
 
-    public abstract CheckerFactory getNewInstance(FactoryController controller,
-                                                  ElectionDescription electionDesc,
-                                                  Result result,
-                                                  ElectionCheckParameter parameter);
+    public abstract CheckerFactory getNewInstance(FactoryController contr,
+                                                  ElectionDescription electionDescription,
+                                                  Result res,
+                                                  ElectionCheckParameter param);
 
     //
     // /**
@@ -791,7 +804,7 @@ public abstract class CheckerFactory implements Runnable {
     // Result result, boolean isMargin);
 
     /**
-     * this method extracts the electionType from the description
+     * This method extracts the electionType from the description.
      *
      * @return the election Type that the here give ElectionDescriptionSource
      *         describes

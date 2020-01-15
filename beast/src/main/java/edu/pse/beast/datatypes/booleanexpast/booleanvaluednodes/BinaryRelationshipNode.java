@@ -11,13 +11,13 @@ public abstract class BinaryRelationshipNode extends BooleanExpressionNode {
 
     /**
      *
-     * @param lhsExpNode the lhs node
-     * @param rhsExpNode the rhs node
+     * @param lhsExprNode the lhs node
+     * @param rhsExprNode the rhs node
      */
-    public BinaryRelationshipNode(BooleanExpressionNode lhsExpNode,
-                                  BooleanExpressionNode rhsExpNode) {
-        this.lhsExpNode = lhsExpNode;
-        this.rhsExpNode = rhsExpNode;
+    public BinaryRelationshipNode(final BooleanExpressionNode lhsExprNode,
+                                  final BooleanExpressionNode rhsExprNode) {
+        this.lhsExpNode = lhsExprNode;
+        this.rhsExpNode = rhsExprNode;
     }
 
     /**
@@ -50,7 +50,7 @@ public abstract class BinaryRelationshipNode extends BooleanExpressionNode {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }

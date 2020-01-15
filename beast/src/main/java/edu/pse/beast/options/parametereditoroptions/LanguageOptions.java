@@ -18,23 +18,24 @@ public class LanguageOptions extends Options {
     private LanguageOptionElement langOptElem;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param sli             the string loader interface
+     * @param slInterf             the string loader interface
      * @param stringResLoader StringResourceLoader
      */
-    public LanguageOptions(StringLoaderInterface sli, StringResourceLoader stringResLoader) {
+    public LanguageOptions(final StringLoaderInterface slInterf,
+                           final StringResourceLoader stringResLoader) {
         super("lang_opts");
-        this.sli = sli;
+        this.sli = slInterf;
         String chosenLang = stringResLoader.getStringFromID("lang");
         List<String> choosableLangsList = Arrays.asList("de", "en");
         langOptElem = new LanguageOptionElement(choosableLangsList, chosenLang);
         addOptionElement(langOptElem);
     }
 
-    public LanguageOptions(StringLoaderInterface sli) {
+    public LanguageOptions(final StringLoaderInterface slInterf) {
         super("lang_opts");
-        this.sli = sli;
+        this.sli = slInterf;
         ArrayList<String> choosableLangsList = new ArrayList<>();
         choosableLangsList.add("de");
         langOptElem = new LanguageOptionElement(choosableLangsList, "de");
@@ -47,7 +48,7 @@ public class LanguageOptions extends Options {
      *
      * @param dis the class implementing DisplaysStringsToUser
      */
-    public void addStringDisplayer(DisplaysStringsToUser dis) {
+    public void addStringDisplayer(final DisplaysStringsToUser dis) {
         stringDisplays.add(dis);
     }
 

@@ -5,25 +5,38 @@ import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressio
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.VoteEquivalentsContext;
 
 public class VoteEquivalentsNode extends BooleanExpressionNode {
-    public final VoteEquivalentsContext voteEquivalentsContext;
-    public final String toOutput;
-    public final String voteOutputLength;
+    private final VoteEquivalentsContext voteEquivalentsContext;
+    private final String toOutput;
+    private final String voteOutputLength;
 
-    public VoteEquivalentsNode(VoteEquivalentsContext voteEquivalentsContext, String toOutput,
-            String voteOutputLength) {
-        this.voteEquivalentsContext = voteEquivalentsContext;
-        this.toOutput = toOutput;
-        this.voteOutputLength = voteOutputLength;
+    public VoteEquivalentsNode(final VoteEquivalentsContext voteEquivContext,
+                               final String toOutputString,
+                               final String voteOutputLen) {
+        this.voteEquivalentsContext = voteEquivContext;
+        this.toOutput = toOutputString;
+        this.voteOutputLength = voteOutputLen;
     }
 
     @Override
-    public void getVisited(BooleanExpNodeVisitor visitor) {
+    public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitVoteEquivalentsNode(this);
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         System.out.println("might add treestring");
         return "";
+    }
+
+    public VoteEquivalentsContext getVoteEquivalentsContext() {
+        return voteEquivalentsContext;
+    }
+
+    public String getToOutput() {
+        return toOutput;
+    }
+
+    public String getVoteOutputLength() {
+        return voteOutputLength;
     }
 }

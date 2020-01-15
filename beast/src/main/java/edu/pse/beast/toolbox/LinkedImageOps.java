@@ -11,7 +11,7 @@ public class LinkedImageOps<S> extends NodeSegmentOpsBase<LinkedImage, S> {
     }
 
     @Override
-    public int length(LinkedImage linkedImage) {
+    public int length(final LinkedImage linkedImage) {
         return linkedImage.isReal() ? 1 : 0;
     }
 

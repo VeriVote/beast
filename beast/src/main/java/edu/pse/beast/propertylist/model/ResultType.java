@@ -1,7 +1,7 @@
 package edu.pse.beast.propertylist.model;
 
 /**
- * Gives the result type of the property analysis
+ * Gives the result type of the property analysis.
  *
  * @author Justin Hecht
  */

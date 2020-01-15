@@ -16,19 +16,20 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
  */
 public class BooleanExpErrorDisplayer extends ErrorDisplayer {
     /**
-     * Constructor
+     * Constructor.
      *
      * @param pane        the JTextPane to display the errors in
      * @param stringResIF the String
      */
-    public BooleanExpErrorDisplayer(JTextPane pane, StringLoaderInterface stringResIF) {
+    public BooleanExpErrorDisplayer(final JTextPane pane,
+                                    final StringLoaderInterface stringResIF) {
         super(pane,
               stringResIF.getBooleanExpEditorStringResProvider()
               .getBooleanExpErrorStringRes());
     }
 
     @Override
-    public void showErrors(ArrayList<CodeError> errors) {
+    public void showErrors(final ArrayList<CodeError> errors) {
         super.showErrors(errors);
         for (CodeError er : errors) {
             showError(er, createMsg(er));
@@ -42,7 +43,7 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
      * @param codeError the CodeError object
      * @return the message
      */
-    public String createMsg(CodeError codeError) {
+    public String createMsg(final CodeError codeError) {
         if (codeError.getId().equals("antlr")) {
             String template = getTemplateString("antlr") + ": " + codeError.getExtraInfo("msg");
             return template;
@@ -84,12 +85,12 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
         return "";
     }
 
-    private String getTemplateString(String id) {
+    private String getTemplateString(final String id) {
         return getStringResourceLoader().getStringFromID(id + "_descr");
     }
 
     @Override
-    public void updateStringRes(StringLoaderInterface stringResIF) {
+    public void updateStringRes(final StringLoaderInterface stringResIF) {
         setStringResourceLoader(stringResIF.getBooleanExpEditorStringResProvider()
                                 .getBooleanExpErrorStringRes());
     }

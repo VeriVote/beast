@@ -14,13 +14,13 @@ import com.google.gson.JsonSerializer;
 import edu.pse.beast.booleanexpeditor.booleanexpcodearea.errorfinder.FormalExpErrorFinderTreeListener;
 import edu.pse.beast.datatypes.propertydescription.VariableListListener;
 
-public class VariableListListenerAdapter
+public final class VariableListListenerAdapter
         implements JsonSerializer<VariableListListener>,
                    JsonDeserializer<VariableListListener> {
 
     @Override
-    public VariableListListener deserialize(JsonElement json, Type typeOfT,
-                                            JsonDeserializationContext context)
+    public VariableListListener deserialize(final JsonElement json, final Type typeOfT,
+                                            final JsonDeserializationContext context)
             throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
         String type = jsonObject.get("type").getAsString();
@@ -40,8 +40,8 @@ public class VariableListListenerAdapter
     }
 
     @Override
-    public JsonElement serialize(VariableListListener src, Type typeOfSrc,
-                                 JsonSerializationContext context) {
+    public JsonElement serialize(final VariableListListener src, final Type typeOfSrc,
+                                 final JsonSerializationContext context) {
         JsonObject result = new JsonObject();
         result.add("type", new JsonPrimitive(src.getClass().getSimpleName()));
         result.add("properties", context.serialize(src, src.getClass()));

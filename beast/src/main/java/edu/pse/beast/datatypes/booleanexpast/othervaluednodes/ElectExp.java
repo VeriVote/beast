@@ -14,17 +14,19 @@ public class ElectExp extends AccessValueNode {
      * @param accessVar accessing variable
      * @param count    the count of this vote expression
      */
-    public ElectExp(InOutType type, TypeExpression[] accessVar, int count) {
+    public ElectExp(final InOutType type,
+                    final TypeExpression[] accessVar,
+                    final int count) {
         super(type, accessVar, count);
     }
 
     @Override
-    public void getVisited(BooleanExpNodeVisitor visitor) {
+    public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitElectExp(this);
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         return null;
     }
 }

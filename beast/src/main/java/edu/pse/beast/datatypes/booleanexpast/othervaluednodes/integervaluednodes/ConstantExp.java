@@ -11,10 +11,10 @@ public class ConstantExp extends IntegerValuedExpression {
     private final String constant;
 
     /**
-     * @param constant the constant saved in this node
+     * @param constantStr the constant saved in this node
      */
-    public ConstantExp(String constant) {
-        this.constant = constant;
+    public ConstantExp(final String constantStr) {
+        this.constant = constantStr;
     }
 
     /**
@@ -26,17 +26,17 @@ public class ConstantExp extends IntegerValuedExpression {
     }
 
     @Override
-    public void getVisited(BooleanExpNodeVisitor visitor) {
+    public void getVisited(final BooleanExpNodeVisitor visitor) {
         visitor.visitConstExp(this);
     }
 
     @Override
-    public String getTreeString(int depth) {
+    public String getTreeString(final int depth) {
         return "const " + constant + "\n";
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }

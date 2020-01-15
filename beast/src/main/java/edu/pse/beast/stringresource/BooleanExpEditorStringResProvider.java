@@ -1,7 +1,7 @@
 package edu.pse.beast.stringresource;
 
 /**
- * Class that Manages all StringResources for the BooleanExpEditor
+ * Class that manages all StringResources for the BooleanExpEditor.
  *
  * @author Niels Hanselmann
  */
@@ -22,7 +22,7 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
      *
      * @param languageId the languageId. Set to "de" for german
      */
-    public BooleanExpEditorStringResProvider(String languageId) {
+    public BooleanExpEditorStringResProvider(final String languageId) {
         super(languageId);
         this.initialize();
     }

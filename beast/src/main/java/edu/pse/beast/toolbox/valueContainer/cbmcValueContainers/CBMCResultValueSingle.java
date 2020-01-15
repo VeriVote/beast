@@ -8,6 +8,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 
 public class CBMCResultValueSingle implements CBMCResultValue {
+    private static final int INT_LENGTH = 32;
+    private static final int LONG_LENGTH = 64;
     private static final String TYPE_NAME = "c_type";
     private static final String WIDTH_NAME = "width";
 
@@ -19,21 +21,23 @@ public class CBMCResultValueSingle implements CBMCResultValue {
 
     /**
      *
-     * @param type
+     * @param typeString
      *            the datatye (e.g "int")
-     * @param value
+     * @param val
      *            the value (e.g "5")
      * @param bitWidth
      *            the width in bit this datatype has (e.g 32 for int)
      */
-    public void setValue(String type, String value, int bitWidth) {
-        this.type = type;
-        this.value = value;
+    public void setValue(final String typeString,
+                         final String val,
+                         final int bitWidth) {
+        this.type = typeString;
+        this.value = val;
         this.width = bitWidth;
     }
 
     @Override
-    public void setValue(Element element) {
+    public void setValue(final Element element) {
         NamedNodeMap attributes = element.getAttributes();
         this.type = attributes.getNamedItem(TYPE_NAME).getNodeValue();
         this.value = // the value is saved in the first child
@@ -62,7 +66,7 @@ public class CBMCResultValueSingle implements CBMCResultValue {
         return numberValue;
     }
 
-    private void checkIndex(List<Integer> indices) {
+    private void checkIndex(final List<Integer> indices) {
         if (indices.size() != 0) {
             throw new IndexOutOfBoundsException(
                     "ResultValueSingle objects only contain one element, "
@@ -70,7 +74,9 @@ public class CBMCResultValueSingle implements CBMCResultValue {
         }
     }
 
-    private static Number parseNumber(String dataType, String dataValue, int dataWidth) {
+    private static Number parseNumber(final String dataType,
+                                      final String dataValue,
+                                      final int dataWidth) {
         if (dataType.contains("char") || dataType.contains("byte")
                 || dataType.contains("short") || dataType.contains("int")
                 || (dataType.contains("long") && (!dataType.contains("double")
@@ -84,23 +90,25 @@ public class CBMCResultValueSingle implements CBMCResultValue {
         }
     }
 
-    private static Number parseNaturalNumber(String dataValue, int dataWidth) {
+    private static Number parseNaturalNumber(final String dataValue,
+                                             final int dataWidth) {
         // we are non inclusive in the width checks, as unsigned values could be
         // cut off
         // otherwise
-        if (dataWidth < 32) {
+        if (dataWidth < INT_LENGTH) {
             return Integer.parseInt(dataValue);
-        } else if (dataWidth < 64) {
+        } else if (dataWidth < LONG_LENGTH) {
             return Long.parseLong(dataValue);
         } else {
             return new BigInteger(dataValue);
         }
     }
 
-    private static Number parseDecimalNumber(String dataValue, int dataWidth) {
-        if (dataWidth <= 32) {
+    private static Number parseDecimalNumber(final String dataValue,
+                                             final int dataWidth) {
+        if (dataWidth <= INT_LENGTH) {
             return Float.parseFloat(dataValue);
-        } else if (dataWidth <= 64) {
+        } else if (dataWidth <= LONG_LENGTH) {
             return Double.parseDouble(dataValue);
         } else {
             return new BigDecimal(dataValue);

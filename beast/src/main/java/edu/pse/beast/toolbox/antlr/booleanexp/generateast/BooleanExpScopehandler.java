@@ -16,7 +16,7 @@ public class BooleanExpScopehandler {
         currentScopes.add(new BooleanExpScope());
     }
 
-    public void enterNewScope(BooleanExpScope scope) {
+    public void enterNewScope(final BooleanExpScope scope) {
         currentScopes.add(scope);
     }
 
@@ -24,14 +24,15 @@ public class BooleanExpScopehandler {
         currentScopes.remove(currentScopes.size() - 1);
     }
 
-    public void addVariable(String id, InternalTypeContainer type) {
+    public void addVariable(final String id,
+                            final InternalTypeContainer type) {
         if (currentScopes.size() == 0) {
             enterNewScope();
         }
         currentScopes.get(currentScopes.size() - 1).addTypeForId(id, type);
     }
 
-    public InternalTypeContainer getTypeForVariable(String id) {
+    public InternalTypeContainer getTypeForVariable(final String id) {
         InternalTypeContainer cont = null;
         for (int i = currentScopes.size() - 1; i >= 0; --i) {
             cont = currentScopes.get(i).getTypeForId(id);
@@ -42,7 +43,7 @@ public class BooleanExpScopehandler {
         return cont;
     }
 
-    public void removeFromTopScope(String id) {
+    public void removeFromTopScope(final String id) {
         currentScopes.get(0).remove(id);
     }
 }

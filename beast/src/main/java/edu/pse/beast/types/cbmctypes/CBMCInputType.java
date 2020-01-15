@@ -9,14 +9,20 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.InputType;
 
 public abstract class CBMCInputType extends InputType {
-    public CBMCInputType(boolean unsigned, DataType dataType, int dimensions,
-                         String[] sizeOfDimensions) {
+    protected static final int INT_LENGTH = 32;
+
+    public CBMCInputType(final boolean unsigned,
+                         final DataType dataType,
+                         final int dimensions,
+                         final String[] sizeOfDimensions) {
         super(unsigned, dataType, dimensions, sizeOfDimensions);
     }
 
     @Override
-    public void flipVote(String newVotesName, String origVotesName,
-                         List<String> loopVars, CodeArrayListBeautifier code) {
+    public void flipVote(final String newVotesName,
+                         final String origVotesName,
+                         final List<String> loopVars,
+                         final CodeArrayListBeautifier code) {
         code.add("int changed = nondet_int();");
         code.add("assume(0 <= changed);");
         code.add("assume(changed <= 1);");
@@ -35,7 +41,7 @@ public abstract class CBMCInputType extends InputType {
     }
 
     @Override
-    public void addCheckerSpecificHeaders(CodeArrayListBeautifier code) {
+    public void addCheckerSpecificHeaders(final CodeArrayListBeautifier code) {
         // add the headers CBMC needs;
         code.add("#include <stdlib.h>");
         code.add("#include <stdint.h>");
@@ -50,7 +56,7 @@ public abstract class CBMCInputType extends InputType {
     }
 
     @Override
-    public String getVoteDescriptionString(List<List<String>> origVotes) {
+    public String getVoteDescriptionString(final List<List<String>> origVotes) {
         String votesString = "";
         int voterIndex = 0;
         // iterate over the voters
