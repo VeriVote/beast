@@ -4,11 +4,23 @@ import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressionNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.NotEmptyContentContext;
 
+/**
+ * The Class NotEmptyContentNode.
+ */
 public class NotEmptyContentNode extends BooleanExpressionNode {
 
+    /** The context. */
     private final NotEmptyContentContext context;
+
+    /** The voting output. */
     private final String votingOutput;
 
+    /**
+     * Instantiates a new not empty content node.
+     *
+     * @param contentContext the content context
+     * @param votingOutputString the voting output string
+     */
     public NotEmptyContentNode(final NotEmptyContentContext contentContext,
                                final String votingOutputString) {
         this.context = contentContext;
@@ -26,10 +38,20 @@ public class NotEmptyContentNode extends BooleanExpressionNode {
         return null;
     }
 
+    /**
+     * Gets the context.
+     *
+     * @return the context
+     */
     public NotEmptyContentContext getContext() {
         return context;
     }
 
+    /**
+     * Gets the voting output.
+     *
+     * @return the voting output
+     */
     public String getVotingOutput() {
         return votingOutput;
     }

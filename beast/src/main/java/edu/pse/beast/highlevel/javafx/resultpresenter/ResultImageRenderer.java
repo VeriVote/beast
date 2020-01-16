@@ -18,34 +18,67 @@ import javafx.event.EventHandler;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * The Class ResultImageRenderer.
+ */
 public final class ResultImageRenderer {
+
+    /** The Constant ZOOM_IN_RATIO. */
     private static final double ZOOM_IN_RATIO = 0.9;
+
+    /** The Constant ZOOM_OUT_RATIO. */
     private static final double ZOOM_OUT_RATIO = 0.09;
+
+    /** The Constant IMAGE_MAX_WIDTH. */
     private static final double IMAGE_MAX_WIDTH = 10000;
+
+    /** The Constant IMAGE_MAX_HEIGHT. */
     private static final double IMAGE_MAX_HEIGHT = 10000;
 
+    /** The scroll pos V. */
     private static double scrollPosV;
+
+    /** The scroll pos H. */
     private static double scrollPosH;
 
+    /** The drawing blocked. */
     private static Boolean drawingBlocked = false;
+
+    /** The current scale. */
     private static double currentScale = 1;
+
+    /** The element list. */
     private static List<ResultImageElement> elementList = new ArrayList<ResultImageElement>();
+
+    /** The view. */
     private static ImageView view = new ImageView();
+
+    /** The background color. */
     private static Color backgroundColor = Color.white;
 
+    /** The image min width. */
     private static double imageMinWidth =
             GUIController.getController().getResultBorderPane().getWidth();
+
+    /** The image min height. */
     private static double imageMinHeight =
             GUIController.getController().getResultBorderPane().getHeight();
 
+    /** The image desired width. */
     private static double imageDesiredWidth = imageMinWidth;
+
+    /** The image desired height. */
     private static double imageDesiredHeight = imageMinHeight;
 
+    /** The image. */
     // the next image the graphic will be drawn on
     private static BufferedImage image = new BufferedImage(
             (int) imageDesiredWidth, (int) imageDesiredHeight,
             BufferedImage.TYPE_4BYTE_ABGR);
 
+    /**
+     * Instantiates a new result image renderer.
+     */
     private ResultImageRenderer() { }
 
     static {
@@ -99,6 +132,9 @@ public final class ResultImageRenderer {
         });
     }
 
+    /**
+     * Reset.
+     */
     public static synchronized void reset() {
         elementList.clear();
         imageDesiredWidth = imageMinWidth;
@@ -146,7 +182,7 @@ public final class ResultImageRenderer {
                 RenderingHints.VALUE_STROKE_PURE);
 
         for (Iterator<ResultImageElement> iterator = elementList.iterator(); iterator.hasNext();) {
-            ResultImageElement element = (ResultImageElement) iterator.next();
+            ResultImageElement element = iterator.next();
             element.drawElement((Graphics2D) graphics.create(), currentScale);
         }
         graphics.dispose();
@@ -156,10 +192,18 @@ public final class ResultImageRenderer {
         }
     }
 
+    /**
+     * Gets the image view.
+     *
+     * @return the image view
+     */
     public static ImageView getImageView() {
         return view;
     }
 
+    /**
+     * Update image size.
+     */
     private static void updateImageSize() {
         image = new BufferedImage(
                 (int) (Math.max(imageMinWidth, imageDesiredWidth) * currentScale),
@@ -167,11 +211,19 @@ public final class ResultImageRenderer {
                 BufferedImage.TYPE_4BYTE_ABGR);
     }
 
+    /**
+     * Update image size and redraw.
+     */
     private static void updateImageSizeAndRedraw() {
         drawElements();
         setScrollBars();
     }
 
+    /**
+     * Zoom to.
+     *
+     * @param zoomValue the zoom value
+     */
     private static synchronized void zoomTo(final double zoomValue) {
         if (zoomValue < 0) {
             currentScale = 1 + (ZOOM_OUT_RATIO * zoomValue);
@@ -191,6 +243,9 @@ public final class ResultImageRenderer {
         updateImageSizeAndRedraw();
     }
 
+    /**
+     * Sets the scroll bars.
+     */
     private static void setScrollBars() {
         Platform.runLater(new Runnable() {
             @Override
@@ -201,6 +256,9 @@ public final class ResultImageRenderer {
         });
     }
 
+    /**
+     * Reset scroll bars.
+     */
     public static void resetScrollBars() {
         Platform.runLater(new Runnable() {
             @Override

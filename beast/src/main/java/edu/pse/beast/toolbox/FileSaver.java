@@ -7,10 +7,18 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * The Class FileSaver.
+ */
 public final class FileSaver {
+
+    /**
+     * Instantiates a new file saver.
+     */
     private FileSaver() { }
 
     /**
+     * Write string lines to file.
      *
      * @param text the text, in a list where each entry is a line that is to be
      *             saved
@@ -33,7 +41,7 @@ public final class FileSaver {
             ErrorLogger.log("File not found");
         }
         for (Iterator<String> iterator = text.iterator(); iterator.hasNext();) {
-            String line = (String) iterator.next();
+            String line = iterator.next();
             writer.println(line);
         }
         writer.close();

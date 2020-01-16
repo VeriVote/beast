@@ -5,11 +5,21 @@ import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednodes
 import edu.pse.beast.types.InternalTypeContainer;
 
 /**
+ * The Class AtPosExp.
+ *
  * @author Holger Klein
  */
 public class AtPosExp extends TypeExpression {
+
+    /** The integer valued expression. */
     private final IntegerValuedExpression integerValuedExpression;
 
+    /**
+     * Instantiates a new at pos exp.
+     *
+     * @param container the container
+     * @param integerValuedExpr the integer valued expr
+     */
     public AtPosExp(final InternalTypeContainer container,
                     final IntegerValuedExpression integerValuedExpr) {
         super(container);
@@ -27,6 +37,11 @@ public class AtPosExp extends TypeExpression {
                 + integerValuedExpression.getTreeString(depth + 1);
     }
 
+    /**
+     * Gets the integer valued expression.
+     *
+     * @return the integer valued expression
+     */
     public IntegerValuedExpression getIntegerValuedExpression() {
         return integerValuedExpression;
     }

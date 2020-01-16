@@ -19,15 +19,24 @@ import javax.swing.text.StyleContext;
  * @author Nikolai Schnell
  */
 public class SyntaxHLCompositeFilter extends DocumentFilter {
+
+    /** The text pane. */
     private JTextPane textPane;
+
+    /** The regex and color list. */
     private ArrayList<RegexAndColor> regexAndColorList;
+
+    /** The style context. */
     private StyleContext styleContext = StyleContext.getDefaultStyleContext();
+
+    /** The black attribute set. */
     private AttributeSet blackAttributeSet
         = styleContext.addAttribute(styleContext.getEmptySet(),
                                     StyleConstants.Foreground,
                                     Color.BLACK);
 
     /**
+     * Instantiates a new syntax HL composite filter.
      *
      * @param pane the text pane
      * @param regexAndColors the regex and color list
@@ -80,12 +89,16 @@ public class SyntaxHLCompositeFilter extends DocumentFilter {
      * Build the regular expression that looks for the whole word of each word that
      * you wish to find.
      *
+     * @param token the token
      * @return the regular expression as a Pattern
      */
     private Pattern buildPattern(final String token) {
         return Pattern.compile(token);
     }
 
+    /**
+     * Update text styles.
+     */
     private void updateTextStyles() {
         // Remove old syntax HL
         textPane.getStyledDocument()

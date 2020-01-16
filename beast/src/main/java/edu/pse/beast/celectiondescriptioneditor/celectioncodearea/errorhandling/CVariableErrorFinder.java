@@ -15,6 +15,10 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
  * @author Holger Klein
  */
 public final class CVariableErrorFinder {
+
+    /**
+     * Instantiates a new c variable error finder.
+     */
     private CVariableErrorFinder() { }
 
     /**
@@ -22,6 +26,8 @@ public final class CVariableErrorFinder {
      *
      * @param code
      *            the c code as list of code lines
+     * @param electionDesc
+     *            the election description
      * @return a list of code errors
      */
     public static List<CodeError> findErrors(final List<String> code,

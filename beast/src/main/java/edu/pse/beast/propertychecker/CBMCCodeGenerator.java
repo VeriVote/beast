@@ -36,15 +36,29 @@ import edu.pse.beast.types.OutputType;
  * @author Niels Hanselmann
  */
 public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes later on
+    /** The code. */
     private CodeArrayListBeautifier code;
+
+    /** The election desc. */
     private final ElectionDescription electionDesc;
+
+    /** The pre and post cond desc. */
     private final PreAndPostConditionsDescription preAndPostCondDesc;
+
+    /** The translator. */
     private final FormalPropertySyntaxTreeToAstTranslator translator;
+
+    /** The visitor. */
     private final CBMCCodeGenerationVisitor visitor;
 
+    /** The number of times voted. */
     // this number should be the number of votes we want to perform
     private int numberOfTimesVoted;
+
+    /** The margin. */
     private int margin;
+
+    /** The orig result. */
     private ElectionSimulationData origResult;
 
     /**
@@ -136,6 +150,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
     }
 
     /**
+     * Gets the code.
      *
      * @return returns the generated code
      */
@@ -143,6 +158,9 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         return code.getCodeArrayList();
     }
 
+    /**
+     * Generate code check.
+     */
     private void generateCodeCheck() {
         code = addHeader(code);
         addVoteSumFunc(false);
@@ -158,7 +176,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
     /**
      * We want to create code for a margin computation or just a test run.
      *
-     * @param votingData
+     * @param votingData the voting data
      */
     private void generateCodeMargin(final ElectionSimulationData votingData) {
         // add the header and the voting data
@@ -188,7 +206,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
     /**
      * We want to create code for a margin computation or just a test run.
      *
-     * @param votingData
+     * @param votingData the voting data
      */
     private void generateCodeTest(final ElectionSimulationData votingData) {
         // add the header and the voting data
@@ -214,6 +232,12 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         addMarginMainTest(); // TODO add gcc ability here
     }
 
+    /**
+     * Adds the margin main check.
+     *
+     * @param marginVal the margin val
+     * @param origData the orig data
+     */
     private void addMarginMainCheck(final int marginVal,
                                     final ElectionSimulationData origData) {
         // we add the margin which will get computed by the model checker
@@ -237,6 +261,14 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         code.add("}");
     }
 
+    /**
+     * Adds the margin comp method.
+     *
+     * @param codeList the code list
+     * @param inType the in type
+     * @param outType the out type
+     * @param origResultName the orig result name
+     */
     private void addMarginCompMethod(final CodeArrayListBeautifier codeList,
                                      final InputType inType,
                                      final OutputType outType,
@@ -248,6 +280,13 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         addMarginCompMethodOutput(codeList, outType, voteName, origResultName);
     }
 
+    /**
+     * Adds the margin comp method input.
+     *
+     * @param codeList the code list
+     * @param inType the in type
+     * @param voteName the vote name
+     */
     private void addMarginCompMethodInput(final CodeArrayListBeautifier codeList,
                                           final InputType inType,
                                           final String voteName) {
@@ -288,11 +327,25 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         codeList.add("assume(total_diff == 0);");
     }
 
+    /**
+     * Adds the conditional value.
+     *
+     * @param voteName the vote name
+     * @param inType the in type
+     */
     private void addConditionalValue(final String voteName,
                                      final InputType inType) {
         inType.restrictVotes(voteName, code);
     }
 
+    /**
+     * Adds the margin comp method output.
+     *
+     * @param codeList the code list
+     * @param outType the out type
+     * @param newVotesName the new votes name
+     * @param origResultName the orig result name
+     */
     private void addMarginCompMethodOutput(final CodeArrayListBeautifier codeList,
                                            final OutputType outType,
                                            final String newVotesName,
@@ -318,13 +371,10 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
     /**
      * TODO move to utility class.
      *
-     * @param code
-     *            the code beautifier it should be added to
-     * @param dimensions
-     *            the size of each dimension,
-     * @param nameOfLoopVariables
-     *            an empty, new list. Every new loop variable will be appended
-     * @return
+     * @param code                  the code beautifier it should be added to
+     * @param dimensions            the size of each dimension,
+     * @param nameOfLoopVariables   an empty, new list. Every new loop variable will be appended
+     * @return the list
      */
     public static List<String> addNestedForLoopTop(final CodeArrayListBeautifier code,
                                                    final List<String> dimensions,
@@ -345,8 +395,8 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
     /**
      * TODO move to utility class.
      *
-     * @param code
-     * @param dimensions
+     * @param code the code
+     * @param dimensions the dimensions
      */
     public static void addNestedForrLoopBot(final CodeArrayListBeautifier code,
                                             final int dimensions) {
@@ -358,7 +408,7 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
     /**
      * Add the headers CBMC needs.
      *
-     * @param votingData
+     * @param votingData the voting data
      */
     private void addMarginHeaders(final ElectionSimulationData votingData) {
         code = addHeader(code);
@@ -373,11 +423,19 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
                  + "\n #endif");
     }
 
+    /**
+     * Adds the margin main test.
+     */
     private void addMarginMainTest() {
         int voteNumber = 1; // because we only have one vote, we hard-code the value "one" here
         code = electionDesc.getContainer().getOutputType().addMarginMainTest(code, voteNumber);
     }
 
+    /**
+     * Adds the vote sum func.
+     *
+     * @param unique the unique
+     */
     private void addVoteSumFunc(final boolean unique) {
         String input = electionDesc.getContainer().getInputStruct().getStructAccess()
                        + " tmp_struct";
@@ -430,6 +488,9 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         addIntersectFunction();
     }
 
+    /**
+     * Adds the intersect function.
+     */
     private void addIntersectFunction() {
         if (electionDesc.getContainer().getOutputType()
                 .getAmountOfDimensions() != 1
@@ -462,11 +523,17 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         code.add("}");
     }
 
+    /**
+     * Adds the permutation functions.
+     */
     private void addPermutationFunctions() {
         addPermutateOneFunction();
         addPermutateTwoFunction();
     }
 
+    /**
+     * Adds the permutate two function.
+     */
     private void addPermutateTwoFunction() {
         if (electionDesc.getContainer().getInputType().getAmountOfDimensions() != 2
                 || !electionDesc.getContainer().getInputType()
@@ -519,6 +586,9 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         code.add("}");
     }
 
+    /**
+     * Adds the permutate one function.
+     */
     private void addPermutateOneFunction() {
         if (electionDesc.getContainer().getInputType().getAmountOfDimensions() != 1
                 || !electionDesc.getContainer().getInputType()
@@ -564,11 +634,17 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         code.add("");
     }
 
+    /**
+     * Adds the concatenation functions.
+     */
     private void addConcatenationFunctions() {
         addConcatOneFunction();
         addConcatTwoFunction();
     }
 
+    /**
+     * Adds the concat two function.
+     */
     private void addConcatTwoFunction() {
         if (electionDesc.getContainer().getInputType().getAmountOfDimensions() != 2
                 || !electionDesc.getContainer().getInputType()
@@ -621,6 +697,9 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         code.add("}");
     }
 
+    /**
+     * Adds the concat one function.
+     */
     private void addConcatOneFunction() {
         if (electionDesc.getContainer().getInputType().getAmountOfDimensions() != 1
                 || !electionDesc.getContainer().getInputType()
@@ -664,6 +743,9 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         code.add("");
     }
 
+    /**
+     * Adds the split array functions.
+     */
     private void addSplitArrayFunctions() {
         code.add("//split array");
         code.add("");
@@ -959,6 +1041,8 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
     /**
      * This adds the Code of the PreProperties. It uses a visitor which it
      * creates.
+     *
+     * @param preAST the pre AST
      */
     private void addPreProperties(final BooleanExpListNode preAST) {
         code.add("");
@@ -974,6 +1058,8 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
 
     /**
      * this adds the Code of the PostProperties. It uses a Visitor it creates.
+     *
+     * @param postAST the post AST
      */
     private void addPostProperties(final BooleanExpListNode postAST) {
         code.add("");
@@ -987,11 +1073,22 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         });
     }
 
+    /**
+     * Report unsupported type.
+     *
+     * @param id the id
+     */
     private void reportUnsupportedType(final String id) {
         ErrorLogger.log("Der Typ der symbolischen Variable " + id
                 + " wird nicht unterstützt");
     }
 
+    /**
+     * Initialize number of times voted.
+     *
+     * @param preAST the pre AST
+     * @param postAST the post AST
+     */
     private void initializeNumberOfTimesVoted(final BooleanExpListNode preAST,
                                               final BooleanExpListNode postAST) {
         numberOfTimesVoted = (preAST.getMaxVoteLevel() > postAST
@@ -1008,11 +1105,11 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
     /**
      * Adds a value of the fitting size as described.
      *
-     * @param valueName
-     * @param type
-     * @param voteNumber
-     *            if multiple instances of this variable should be created for
-     *            multiple votes, this number has to be given
+     * @param valueName the value name
+     * @param inOutType the in out type
+     * @param complexType the complex type
+     * @param minValue the min value
+     * @param maxValue the max value
      */
     private void addInitialisedValue(final String valueName,
                                      final InOutType inOutType,
@@ -1037,6 +1134,12 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         addNestedForrLoopBot(this.code, inOutType.getAmountOfDimensions());
     }
 
+    /**
+     * Generate AST.
+     *
+     * @param codeString the code string
+     * @return the boolean exp list node
+     */
     private BooleanExpListNode generateAST(final String codeString) {
         FormalPropertyDescriptionLexer l =
                 new FormalPropertyDescriptionLexer(CharStreams.fromString(codeString));
@@ -1054,10 +1157,23 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
                 declaredVars);
     }
 
+    /**
+     * Gets the voting result code.
+     *
+     * @param votingData the voting data
+     * @return the voting result code
+     */
     private String getVotingResultCode(final CBMCResultValueWrapper votingData) {
         return electionDesc.getContainer().getInputType().getVotingResultCode(votingData);
     }
 
+    /**
+     * Generate loop variables.
+     *
+     * @param dimensions the dimensions
+     * @param variableName the variable name
+     * @return the list
+     */
     private List<String> generateLoopVariables(final int dimensions,
                                                final String variableName) {
         List<String> generatedVariables = new ArrayList<String>(dimensions);
@@ -1082,10 +1198,23 @@ public class CBMCCodeGenerator { // TODO refactor this into multiple sub classes
         return generatedVariables;
     }
 
+    /**
+     * Generate random string.
+     *
+     * @param length the length
+     * @return the string
+     */
     private String generateRandomString(final int length) {
         return RandomStringUtils.random(length, true, false);
     }
 
+    /**
+     * Generate for loop header.
+     *
+     * @param indexName the index name
+     * @param maxSize the max size
+     * @return the string
+     */
     private String generateForLoopHeader(final String indexName,
                                          final String maxSize) {
         return "for (unsigned int " + indexName + " = 0; " + indexName + " < "

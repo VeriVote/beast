@@ -16,40 +16,46 @@ import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 
 /**
+ * The Class ElectionDescription.
  *
  * @author Lukas Stapelbroek
- *
  */
 public class ElectionDescription {
+
+    /** The Constant LEN. */
     private static final int LEN = 4;
+
+    /** The name. */
     private String name;
+
+    /** The code. */
     private String code = "";
+
+    /** The container. */
     private ElectionTypeContainer container;
 
+    /** The locked line start. */
     private int lockedLineStart = 0;
+
+    /** The locked line end. */
     private int lockedLineEnd = 0;
+
+    /** The locked brace pos. */
     private int lockedBracePos = 0;
 
+    /** The is new. */
     private boolean isNew = false;
 
     /**
+     * Instantiates a new election description.
      *
-     * @param nameString
-     *            the name of the description
-     * @param inputType
-     *            the input type
-     * @param outputType
-     *            the output type
-     * @param votingDeclLine
-     *            the votingDeclerationLine
-     * @param lockedLineStartPos
-     *            start of locked line
-     * @param lockedLineEndPos
-     *            end of locked line
-     * @param lockedBracePosition
-     *            locked brace
-     * @param isNewAttribute
-     *            isNew
+     * @param nameString            the name of the description
+     * @param inputType            the input type
+     * @param outputType            the output type
+     * @param lockedLineStartPos            start of locked line
+     * @param lockedLineEndPos            end of locked line
+     * @param lockedBracePosition            locked brace
+     * @param isNewAttribute            isNew
      */
     public ElectionDescription(final String nameString,
                                final InputType inputType,
@@ -66,6 +72,13 @@ public class ElectionDescription {
         this.isNew = isNewAttribute;
     }
 
+    /**
+     * Instantiates a new election description.
+     *
+     * @param nameString the name string
+     * @param inputType the input type
+     * @param outputType the output type
+     */
     public ElectionDescription(final String nameString,
                                final InputType inputType,
                                final OutputType outputType) {
@@ -75,6 +88,7 @@ public class ElectionDescription {
     }
 
     /**
+     * Gets the simple code.
      *
      * @return code of this description as seen by the user The methode
      *         signature consists of the simplest possible types, eg int[]
@@ -84,6 +98,7 @@ public class ElectionDescription {
     }
 
     /**
+     * Gets the complex code.
      *
      * @return code of this description with structs used where applicable
      */
@@ -149,11 +164,17 @@ public class ElectionDescription {
         return stringToList(firstPart + replacementLine + middlePart + thirdPart);
     }
 
+    /**
+     * Gets the code as string.
+     *
+     * @return the code as string
+     */
     public String getCodeAsString() {
         return code;
     }
 
     /**
+     * Gets the name.
      *
      * @return the name of the Description
      */
@@ -162,6 +183,7 @@ public class ElectionDescription {
     }
 
     /**
+     * Gets the container.
      *
      * @return the outputType of this description
      */
@@ -170,41 +192,46 @@ public class ElectionDescription {
     }
 
     /**
+     * Sets the code.
      *
-     * @param codeList
-     *            of this description
+     * @param codeList            of this description
      */
     public void setCode(final List<String> codeList) {
         this.code = String.join("\n", codeList);
     }
 
     /**
+     * Sets the code.
      *
-     * @param codeString
-     *            of this description
+     * @param codeString            of this description
      */
     public void setCode(final String codeString) {
         this.code = codeString;
     }
 
     /**
+     * Sets the name.
      *
-     * @param nameString
-     *            of this description
+     * @param nameString            of this description
      */
     public void setName(final String nameString) {
         this.name = nameString;
     }
 
     /**
+     * Sets the container.
      *
-     * @param newContainer
-     *            type container of this description
+     * @param newContainer            type container of this description
      */
     public void setContainer(final ElectionTypeContainer newContainer) {
         this.container = newContainer;
     }
 
+    /**
+     * Gets the deep copy.
+     *
+     * @return the deep copy
+     */
     public ElectionDescription getDeepCopy() {
         ElectionDescription deepCopy =
                 new ElectionDescription(name, container.getInputType(), container.getOutputType(),
@@ -213,26 +240,56 @@ public class ElectionDescription {
         return deepCopy;
     }
 
+    /**
+     * Checks if is new.
+     *
+     * @return true, if is new
+     */
     public boolean isNew() {
         return isNew;
     }
 
+    /**
+     * Gets the locked line start.
+     *
+     * @return the locked line start
+     */
     public int getLockedLineStart() {
         return lockedLineStart;
     }
 
+    /**
+     * Gets the locked line end.
+     *
+     * @return the locked line end
+     */
     public int getLockedLineEnd() {
         return lockedLineEnd;
     }
 
+    /**
+     * Gets the locked brace pos.
+     *
+     * @return the locked brace pos
+     */
     public int getLockedBracePos() {
         return lockedBracePos;
     }
 
+    /**
+     * Sets the not new.
+     */
     public void setNotNew() {
         this.isNew = false;
     }
 
+    /**
+     * Sets the locked positions.
+     *
+     * @param lockedLineStartPosition the locked line start position
+     * @param lockedLineEndPosition the locked line end position
+     * @param lockedBracePosition the locked brace position
+     */
     public void setLockedPositions(final int lockedLineStartPosition,
                                    final int lockedLineEndPosition,
                                    final int lockedBracePosition) {
@@ -244,8 +301,8 @@ public class ElectionDescription {
     /**
      * Splits a string at "\n".
      *
-     * @param toConvert
-     * @return
+     * @param toConvert the to convert
+     * @return the list
      */
     private List<String> stringToList(final String toConvert) {
         String[] split = toConvert.split("\n");
@@ -256,14 +313,13 @@ public class ElectionDescription {
      * Replaces all "return" statements in the voting methode with the more
      * complex data types.
      *
-     * @param toProcess
-     *            the String from which the return statements should be
+     * @param toProcess            the String from which the return statements should be
      *            replaced. The String can not be preceded by a comment symbol
      *            which would still be active for this part. It also cannot
      *            start being a text (meaning it has a single (") in front of
      *            it.
-     *
-     * @return
+     * @param variableName the variable name
+     * @return the string
      */
     private String replaceReturns(final String toProcess, final String variableName) {
         // change this to antLR maybe
@@ -316,10 +372,11 @@ public class ElectionDescription {
     }
 
     /**
+     * Replace specific return statement.
      *
-     * @param toProcess
-     *            the String to process, should start immediately after the
+     * @param toProcess            the String to process, should start immediately after the
      *            "return";
+     * @param variableName the variable name
      * @return a tuple containgin the string containing the next return
      *         statement, and the length of the previous expression after
      *         "return" up to ";"
@@ -347,8 +404,9 @@ public class ElectionDescription {
     /**
      * Wraps the value in the fitting struct for its datatype, and adds.
      *
+     * @param variableName the variable name
+     * @param valueDefinition the value definition
      * @return return + wrapper + ;
-     *
      */
     private String wrapInStruct(final String variableName, final String valueDefinition) {
         String toReturn = container.getOutputStruct().getStructAccess() + " " + variableName + "; ";
@@ -371,12 +429,26 @@ public class ElectionDescription {
         return toReturn;
     }
 
+    /**
+     * Generate for loop header.
+     *
+     * @param indexName the index name
+     * @param maxSize the max size
+     * @return the string
+     */
     private String generateForLoopHeader(final String indexName,
                                          final String maxSize) {
         return "for (unsigned int " + indexName + " = 0; " + indexName + " < "
                 + maxSize + "; " + indexName + "++ ) { ";
     }
 
+    /**
+     * Generate loop variables.
+     *
+     * @param dimensions the dimensions
+     * @param variableName the variable name
+     * @return the list
+     */
     private List<String> generateLoopVariables(final int dimensions,
                                                final String variableName) {
         List<String> generatedVariables = new ArrayList<String>(dimensions);
@@ -402,6 +474,15 @@ public class ElectionDescription {
         return generatedVariables;
     }
 
+    /**
+     * Check if executed code.
+     *
+     * @param prevValues the prev values
+     * @param text the text
+     * @param start the start
+     * @param end the end
+     * @return the tuple 3
+     */
     private Tuple3<Boolean, Boolean, Boolean> checkIfExecutedCode(
             final Tuple3<Boolean, Boolean, Boolean> prevValues,
             final String text,
@@ -462,9 +543,9 @@ public class ElectionDescription {
     }
 
     /**
+     * Check for true.
      *
-     * @param toCheck
-     *            the tuple to check if it contains at least one "true"
+     * @param toCheck            the tuple to check if it contains at least one "true"
      *            statement
      * @return true, if at least one true statement is present, false otherwise
      */
@@ -484,6 +565,12 @@ public class ElectionDescription {
         return "{" + toWrap + "}";
     }
 
+    /**
+     * Generate random string.
+     *
+     * @param length the length
+     * @return the string
+     */
     private String generateRandomString(final int length) {
         return RandomStringUtils.random(length, true, false);
     }

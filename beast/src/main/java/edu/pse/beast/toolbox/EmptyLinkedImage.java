@@ -4,6 +4,9 @@ package edu.pse.beast.toolbox;
 
 import javafx.scene.Node;
 
+/**
+ * The Class EmptyLinkedImage.
+ */
 public class EmptyLinkedImage implements LinkedImage {
 
     @Override

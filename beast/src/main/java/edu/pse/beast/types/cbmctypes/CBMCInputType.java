@@ -8,9 +8,22 @@ import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.InputType;
 
+/**
+ * The Class CBMCInputType.
+ */
 public abstract class CBMCInputType extends InputType {
+
+    /** The Constant INT_LENGTH. */
     protected static final int INT_LENGTH = 32;
 
+    /**
+     * The constructor.
+     *
+     * @param unsigned the unsigned
+     * @param dataType the data type
+     * @param dimensions the dimensions
+     * @param sizeOfDimensions the size of dimensions
+     */
     public CBMCInputType(final boolean unsigned,
                          final DataType dataType,
                          final int dimensions,
@@ -62,7 +75,7 @@ public abstract class CBMCInputType extends InputType {
         // iterate over the voters
         for (Iterator<List<String>> iterator = origVotes.iterator(); iterator
                 .hasNext();) {
-            List<String> list = (List<String>) iterator.next();
+            List<String> list = iterator.next();
             String oneVoter = "";
             try {
                 oneVoter = GUIController.getController().getElectionSimulation()
@@ -75,7 +88,7 @@ public abstract class CBMCInputType extends InputType {
             int partyIndex = 0;
             // iterate over the candidates
             for (Iterator<String> iterator2 = list.iterator(); iterator2.hasNext();) {
-                String voteAmount = (String) iterator2.next();
+                String voteAmount = iterator2.next();
                 try {
                     oneVoter = oneVoter + GUIController.getController()
                             .getElectionSimulation().getPartyName(partyIndex);

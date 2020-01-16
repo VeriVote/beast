@@ -8,20 +8,48 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueA
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueSingle;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 
+/**
+ * The Class CBMCResultPresentationHelper.
+ */
 public final class CBMCResultPresentationHelper {
+
+    /**
+     * The constructor.
+     */
     private CBMCResultPresentationHelper() { }
 
+    /**
+     * Gets the white spaces.
+     *
+     * @param amount the amount
+     * @return the white spaces
+     */
     private static String getWhiteSpaces(final int amount) {
         char[] spaces = new char[amount];
         Arrays.fill(spaces, ' ');
         return new String(spaces);
     }
 
+    /**
+     * Prints the single element.
+     *
+     * @param single the single
+     * @param offset the offset
+     * @return the string
+     */
     public static String printSingleElement(final CBMCResultValueSingle single,
                                             final int offset) {
         return getWhiteSpaces(offset) + single.getValue() + "\n";
     }
 
+    /**
+     * Prints the one dim result.
+     *
+     * @param array the array
+     * @param size the size
+     * @param offset the offset
+     * @return the string
+     */
     public static String printOneDimResult(final CBMCResultValueArray array,
                                            final long size, final int offset) {
         String toReturn = getWhiteSpaces(offset);
@@ -42,6 +70,14 @@ public final class CBMCResultPresentationHelper {
         return toReturn + "\n";
     }
 
+    /**
+     * Prints the two dim result.
+     *
+     * @param array the array
+     * @param size the size
+     * @param offset the offset
+     * @return the list
+     */
     public static List<String> printTwoDimResult(final CBMCResultValueArray array,
                                                  final long size, final int offset) {
         List<String> toReturn = new ArrayList<String>();

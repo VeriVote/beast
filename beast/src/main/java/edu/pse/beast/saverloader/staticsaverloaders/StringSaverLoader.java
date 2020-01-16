@@ -8,6 +8,9 @@ package edu.pse.beast.saverloader.staticsaverloaders;
  * @author Nikolai Schnell
  */
 public final class StringSaverLoader {
+    /**
+     * Instantiates a new string saver loader.
+     */
     private StringSaverLoader() { }
 
     /**

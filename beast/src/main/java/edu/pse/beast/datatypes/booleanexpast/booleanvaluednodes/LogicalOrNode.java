@@ -3,12 +3,14 @@ package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 
 /**
+ * The Class LogicalOrNode.
  *
  * @author Lukas Stapelbroek
- *
  */
 public class LogicalOrNode extends BinaryRelationshipNode {
+
     /**
+     * Instantiates a new logical or node.
      *
      * @param lhsExpNode the lhs node
      * @param rhsExpNode the rhs node

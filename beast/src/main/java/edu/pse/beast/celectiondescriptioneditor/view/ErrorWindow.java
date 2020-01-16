@@ -9,11 +9,19 @@ import edu.pse.beast.codearea.errorhandling.CodeError;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 
 /**
+ * The Class ErrorWindow.
+ *
  * @author Nikolai Schnell
  */
 public class ErrorWindow {
+
+    /** The text pane. */
     private final JTextPane textPane;
+
+    /** The error string. */
     private String errorString;
+
+    /** The line string. */
     private String lineString;
 
     /**

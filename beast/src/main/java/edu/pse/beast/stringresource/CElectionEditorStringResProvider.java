@@ -6,13 +6,20 @@ package edu.pse.beast.stringresource;
  * @author Niels Hanselmann
  */
 public class CElectionEditorStringResProvider extends StringResourceProvider {
-
+    /** The menu string res. */
     private StringResourceLoader menuStringRes;
+
+    /** The toolbar tip string res. */
     private StringResourceLoader toolbarTipStringRes;
+
+    /** The c error string res. */
     private StringResourceLoader cErrorStringRes;
+
+    /** The election string res. */
     private StringResourceLoader electionStringRes;
 
     /**
+     * Instantiates a new c election editor string res provider.
      *
      * @param languageId the languageId. Set to "de" for german
      */
@@ -22,6 +29,7 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
     }
 
     /**
+     * Gets the menu string res.
      *
      * @return theCEllectionEditorMenuStringRes
      */
@@ -30,6 +38,7 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
     }
 
     /**
+     * Gets the toolbar tip string res.
      *
      * @return the CEllectionToolbarTipStringRes
      */
@@ -38,6 +47,7 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
     }
 
     /**
+     * Gets the c error string res.
      *
      * @return the CErrorStringRes
      */
@@ -45,10 +55,8 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
         return cErrorStringRes;
     }
 
-    /**
-     * Initializes all attributes. Loads all StringResourceLoaders with the
-     * filenames. The superclass provides the functions for this process
-     */
+    // Initializes all attributes. Loads all StringResourceLoaders with the
+    // filenames. The superclass provides the functions for this process
     @Override
     protected final void initialize() {
         toolbarTipStringRes = this.getStringResourceLoaderFromModuleName("CElectionEditorToolbar");
@@ -58,6 +66,7 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
     }
 
     /**
+     * Gets the election string res.
      *
      * @return the Election String res
      */

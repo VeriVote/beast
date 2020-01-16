@@ -1,5 +1,18 @@
 package edu.pse.beast.highlevel.javafx;
 
+/**
+ * The Enum AnalysisStatus.
+ */
 public enum AnalysisStatus {
-    NONE, SUCCESS, FAILURE, RUNNING, ERROR
+
+    /** The none. */
+    NONE,
+ /** The success. */
+ SUCCESS,
+ /** The failure. */
+ FAILURE,
+ /** The running. */
+ RUNNING,
+ /** The error. */
+ ERROR
 }

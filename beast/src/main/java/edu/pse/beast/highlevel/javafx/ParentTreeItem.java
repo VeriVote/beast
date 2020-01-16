@@ -23,28 +23,62 @@ import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * The Class ParentTreeItem.
+ */
 public class ParentTreeItem extends CustomTreeItem {
+
+    /** The Constant THREE. */
     private static final int THREE = 3;
 
+    /** The prop name. */
     private Label propName;
+
+    /** The check all. */
     private CheckBox checkAll = new CheckBox("check all");
 
+    /** The context menu. */
     private ContextMenu contextMenu = new ContextMenu();
+
+    /** The delete item. */
     private MenuItem deleteItem = new MenuItem("Delete Property");
 
+    /** The sub items. */
     private final List<ChildTreeItem> subItems = new ArrayList<ChildTreeItem>();
+
+    /** The child tree items. */
     private final List<TreeItem<CustomTreeItem>> childTreeItems =
             new ArrayList<TreeItem<CustomTreeItem>>();
+
+    /** The prop desc. */
     private final PreAndPostConditionsDescription propDesc;
 
+    /** The disabled. */
     private boolean disabled;
+
+    /** The initialized. */
     private boolean initialized = false;
 
+    /** The check item. */
     private ChildTreeItem checkItem;
+
+    /** The margin item. */
     private ChildTreeItem marginItem;
+
+    /** The test item. */
     private ChildTreeItem testItem;
+
+    /** The counter. */
     private int counter;
 
+    /**
+     * Instantiates a new parent tree item.
+     *
+     * @param propertyDesc the property desc
+     * @param isSelected the is selected
+     * @param treeItemReference the tree item reference
+     * @param createChildren the create children
+     */
     ParentTreeItem(final PreAndPostConditionsDescription propertyDesc,
                    final boolean isSelected,
                    final TreeItem<CustomTreeItem> treeItemReference,
@@ -71,6 +105,7 @@ public class ParentTreeItem extends CustomTreeItem {
             subItems.add(null);
         }
         checkAll.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
             public void changed(final ObservableValue<? extends Boolean> ov,
                                 final Boolean oldValue, final Boolean newValue) {
                 checkBoxChanged(newValue);
@@ -109,9 +144,12 @@ public class ParentTreeItem extends CustomTreeItem {
         // this.getChildren().add(removeButton);
     }
 
+    /**
+     * Adds the children to stage.
+     */
     public void addChildrenToStage() {
         for (Iterator<ChildTreeItem> iterator = subItems.iterator(); iterator.hasNext();) {
-            CustomTreeItem item = (CustomTreeItem) iterator.next();
+            CustomTreeItem item = iterator.next();
             // TreeItem<CustomTreeItem> reference = new
             // TreeItem<CustomTreeItem>(item);
             childTreeItems.add(item.getTreeItemReference());
@@ -120,15 +158,25 @@ public class ParentTreeItem extends CustomTreeItem {
         initialized = true;
     }
 
+    /**
+     * Was clicked.
+     *
+     * @param bringToFront the bring to front
+     */
     public void wasClicked(final boolean bringToFront) {
         GUIController.getController().setCurrentPropertyDescription(this, bringToFront);
     }
 
+    /**
+     * Check box changed.
+     *
+     * @param state the state
+     */
     private void checkBoxChanged(final boolean state) {
         if (initialized) {
             for (Iterator<ChildTreeItem> iterator = subItems.iterator();
                     iterator.hasNext();) {
-                ChildTreeItem childTreeItem = (ChildTreeItem) iterator.next();
+                ChildTreeItem childTreeItem = iterator.next();
                 if (!disabled) {
                     childTreeItem.setSelected(state);
                 }
@@ -141,23 +189,41 @@ public class ParentTreeItem extends CustomTreeItem {
         }
     }
 
+    /**
+     * Checks if is selected.
+     *
+     * @return true, if is selected
+     */
     public boolean isSelected() {
         return checkAll.isSelected();
     }
 
+    /**
+     * Sets the selected.
+     *
+     * @param state the new selected
+     */
     public void setSelected(final boolean state) {
         checkAll.setSelected(state);
         checkBoxChanged(state);
     }
 
+    /**
+     * Gets the sub items.
+     *
+     * @return the sub items
+     */
     public List<ChildTreeItem> getSubItems() {
         return subItems;
     }
 
+    /**
+     * Child checkbox changed.
+     */
     public void childCheckboxChanged() {
         boolean acc = true;
         for (Iterator<ChildTreeItem> iterator = subItems.iterator(); iterator.hasNext();) {
-            ChildTreeItem item = (ChildTreeItem) iterator.next();
+            ChildTreeItem item = iterator.next();
             acc = acc && item.isSelected();
         }
         if (acc) {
@@ -169,30 +235,65 @@ public class ParentTreeItem extends CustomTreeItem {
         }
     }
 
+    /**
+     * Gets the check item.
+     *
+     * @return the check item
+     */
     public ChildTreeItem getCheckItem() {
         return checkItem;
     }
 
+    /**
+     * Gets the margin item.
+     *
+     * @return the margin item
+     */
     public ChildTreeItem getMarginItem() {
         return marginItem;
     }
 
+    /**
+     * Sets the check result.
+     *
+     * @param result the new check result
+     */
     public void setCheckResult(final Result result) {
         checkItem.addResult(result);
     }
 
+    /**
+     * Sets the margin result.
+     *
+     * @param result the new margin result
+     */
     public void setMarginResult(final Result result) {
         marginItem.addResult(result);
     }
 
+    /**
+     * Sets the check status.
+     *
+     * @param status the new check status
+     */
     public void setCheckStatus(final AnalysisStatus status) {
         // checkItem.setStatus(status);
     }
 
+    /**
+     * Sets the margin status.
+     *
+     * @param status the new margin status
+     */
     public void setMarginStatus(final AnalysisStatus status) {
         // marginItem.setStatus(status);
     }
 
+    /**
+     * Gets the pre and post properties.
+     *
+     * @return the pre and post properties
+     */
     public PreAndPostConditionsDescription getPreAndPostProperties() {
         return propDesc;
     }
@@ -204,12 +305,13 @@ public class ParentTreeItem extends CustomTreeItem {
     public void update() {
         for (Iterator<ChildTreeItem> iterator = subItems.iterator();
                 iterator.hasNext();) {
-            ChildTreeItem child = (ChildTreeItem) iterator.next();
+            ChildTreeItem child = iterator.next();
             child.update();
         }
     }
 
     /**
+     * Checks if is child selected.
      *
      * @return true, if at least one of the children has to be checked
      */
@@ -217,17 +319,22 @@ public class ParentTreeItem extends CustomTreeItem {
         boolean selected = false;
         for (Iterator<ChildTreeItem> iterator = subItems.iterator();
                 iterator.hasNext();) {
-            ChildTreeItem childItem = (ChildTreeItem) iterator.next();
+            ChildTreeItem childItem = iterator.next();
             selected = selected || childItem.isSelected();
         }
         return selected;
     }
 
+    /**
+     * Adds the errors.
+     *
+     * @param combinedErrors the combined errors
+     */
     public void addErrors(final List<CodeError> combinedErrors) {
         String errorText = "";
         for (Iterator<CodeError> iterator = combinedErrors.iterator();
                 iterator.hasNext();) {
-            CodeError codeError = (CodeError) iterator.next();
+            CodeError codeError = iterator.next();
             String error = codeError.getLine() + " : " + codeError.getMsg()
                     + "\n";
             errorText += error;
@@ -235,14 +342,30 @@ public class ParentTreeItem extends CustomTreeItem {
         GUIController.setErrorText(errorText);
     }
 
+    /**
+     * Sets the text.
+     *
+     * @param text the new text
+     */
     public void setText(final String text) {
         propName.setText(text);
     }
 
+    /**
+     * Gets the text.
+     *
+     * @return the text
+     */
     public String getText() {
         return propName.getText();
     }
 
+    /**
+     * Adds the child.
+     *
+     * @param values the values
+     * @param index the index
+     */
     public void addChild(final ChildTreeItemValues values, final int index) {
         ChildTreeItem child = null;
         switch (index) {
@@ -269,6 +392,11 @@ public class ParentTreeItem extends CustomTreeItem {
         }
     }
 
+    /**
+     * Gets the counter.
+     *
+     * @return the counter
+     */
     public int getCounter() {
         return counter;
     }

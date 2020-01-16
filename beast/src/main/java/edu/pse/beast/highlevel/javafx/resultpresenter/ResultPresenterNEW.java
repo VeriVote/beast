@@ -22,11 +22,22 @@ import javafx.scene.control.ScrollPane;
  *
  */
 public final class ResultPresenterNEW {
+
+    /** The instance. */
     private static ResultPresenterNEW instance;
+
+    /** The presentation type. */
     private ResultPresentationType presentationType;
+
+    /** The result scroll pane. */
     private final ScrollPane resultScrollPane;
+
+    /** The result. */
     private Result result = null;
 
+    /**
+     * Instantiates a new result presenter NEW.
+     */
     private ResultPresenterNEW() {
         this.resultScrollPane = GUIController.getController().getResultScrollPane();
 
@@ -42,10 +53,13 @@ public final class ResultPresenterNEW {
                 });
     }
 
+    /**
+     * Gets the default presentation.
+     */
     private void getDefaultPresentation() {
         List<ResultPresentationType> types = getEligablePresentationTypes();
         for (Iterator<ResultPresentationType> iterator = types.iterator(); iterator.hasNext();) {
-            ResultPresentationType type = (ResultPresentationType) iterator.next();
+            ResultPresentationType type = iterator.next();
             if (!result.isValid()) {
                 setPresentationType(new CBMCOutput());
             } else if (type.isDefault()) {
@@ -65,6 +79,11 @@ public final class ResultPresenterNEW {
         // resultPane.getChildren().clear();
     }
 
+    /**
+     * Sets the result.
+     *
+     * @param resultVal the new result
+     */
     public void setResult(final Result resultVal) {
         boolean changed = (this.result != resultVal);
         this.result = resultVal;
@@ -74,6 +93,11 @@ public final class ResultPresenterNEW {
         }
     }
 
+    /**
+     * Gets the eligable presentation types.
+     *
+     * @return the eligable presentation types
+     */
     private List<ResultPresentationType> getEligablePresentationTypes() {
         this.presentationType = null;
         List<ResultPresentationType> eligableTypes = new ArrayList<ResultPresentationType>();
@@ -81,7 +105,7 @@ public final class ResultPresenterNEW {
         for (Iterator<ResultPresentationType> iterator =
                 ResultPresentationType.getImplementations().iterator();
                 iterator.hasNext();) {
-            ResultPresentationType typeToCheck = (ResultPresentationType) iterator.next();
+            ResultPresentationType typeToCheck = iterator.next();
             if (typeToCheck.supports(result.getAnalysisType())) {
                 eligableTypes.add(typeToCheck);
             }
@@ -92,6 +116,11 @@ public final class ResultPresenterNEW {
         return eligableTypes;
     }
 
+    /**
+     * Sets the presentation type.
+     *
+     * @param presType the new presentation type
+     */
     public void setPresentationType(final ResultPresentationType presType) {
         GUIController.getController().setPresentationTypeText(presType.getName());
         boolean changed = (this.presentationType != presType);
@@ -101,6 +130,9 @@ public final class ResultPresenterNEW {
         }
     }
 
+    /**
+     * Show result.
+     */
     private void showResult() {
         reset();
         if (result == null) {
@@ -124,6 +156,11 @@ public final class ResultPresenterNEW {
         resultScrollPane.setContent(resultNode);
     }
 
+    /**
+     * Gets the single instance of ResultPresenterNEW.
+     *
+     * @return single instance of ResultPresenterNEW
+     */
     public static synchronized ResultPresenterNEW getInstance() {
         if (instance == null) {
             instance = new ResultPresenterNEW();

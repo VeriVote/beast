@@ -15,7 +15,12 @@ import edu.pse.beast.toolbox.TextFieldCreator;
 import edu.pse.beast.toolbox.TextStyle;
 import javafx.scene.Node;
 
+/**
+ * The Class CBMCError.
+ */
 public class CBMCError extends ResultPresentationType {
+
+    /** The area. */
     private GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area;
 
     @Override
@@ -27,7 +32,7 @@ public class CBMCError extends ResultPresentationType {
         }
         List<String> errorText = result.getErrorText();
         for (Iterator<String> iterator = errorText.iterator(); iterator.hasNext();) {
-            String text = (String) iterator.next();
+            String text = iterator.next();
             area.appendText(text);
         }
 

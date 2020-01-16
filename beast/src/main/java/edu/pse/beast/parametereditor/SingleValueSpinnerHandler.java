@@ -11,10 +11,20 @@ import javax.swing.event.ChangeListener;
  * @author Jonas Wohnig
  */
 public class SingleValueSpinnerHandler implements ChangeListener {
+
+    /** The Constant MAX_VALUE. */
     private static final int MAX_VALUE = 10000;
+
+    /** The spinner. */
     private final JSpinner spinner;
+
+    /** The val before. */
     private Integer valBefore;
+
+    /** The reacts. */
     private boolean reacts;
+
+    /** The has changed. */
     private boolean hasChanged;
 
     /**

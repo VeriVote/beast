@@ -9,10 +9,17 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
 import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 
+/**
+ * The Class BooleanExpEditorGeneralErrorFinder.
+ */
 public final class BooleanExpEditorGeneralErrorFinder {
+    /**
+     * Instantiates a new boolean exp editor general error finder.
+     */
     private BooleanExpEditorGeneralErrorFinder() { }
 
     /**
+     * Checks for errors.
      *
      * @param parentTreeItem parent tree item
      * @return true, if there are errors, else false
@@ -27,6 +34,12 @@ public final class BooleanExpEditorGeneralErrorFinder {
         }
     }
 
+    /**
+     * Gets the errors.
+     *
+     * @param parentTreeItem the parent tree item
+     * @return the errors
+     */
     public static List<CodeError> getErrors(final ParentTreeItem parentTreeItem) {
         List<CodeError> combinedErrors = new ArrayList<CodeError>();
         final PreAndPostConditionsDescription property = parentTreeItem.getPreAndPostProperties();

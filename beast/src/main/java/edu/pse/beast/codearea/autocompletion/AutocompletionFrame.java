@@ -6,17 +6,29 @@ import javax.swing.DefaultListModel;
 import javax.swing.JList;
 
 /**
+ * The Class AutocompletionFrame.
  *
  * @author Holger Klein
  */
 public class AutocompletionFrame extends javax.swing.JFrame {
+
+    /** The Constant PREF_VERTICAL_SIZE. */
     private static final int PREF_VERTICAL_SIZE = 300;
+
+    /** The Constant PREF_HORIZONTAL_SIZE. */
     private static final int PREF_HORIZONTAL_SIZE = 400;
+
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The j list 1. */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList<String> jList1;
+
+    /** The j menu item 1. */
     private javax.swing.JMenuItem jMenuItem1;
+
+    /** The j scroll pane 1. */
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 
@@ -45,6 +57,7 @@ public class AutocompletionFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyPressed(final java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
             }
@@ -67,6 +80,11 @@ public class AutocompletionFrame extends javax.swing.JFrame {
         pack();
     } // </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Form key pressed.
+     *
+     * @param evt the evt
+     */
     private void formKeyPressed(final java.awt.event.KeyEvent evt) {
         // GEN-FIRST:event_formKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
@@ -75,6 +93,8 @@ public class AutocompletionFrame extends javax.swing.JFrame {
     } // GEN-LAST:event_formKeyPressed
 
     /**
+     * The main method.
+     *
      * @param args the command line arguments
      */
     public static void main(final String[] args) {
@@ -115,12 +135,18 @@ public class AutocompletionFrame extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new AutocompletionFrame().setVisible(true);
             }
         });
     }
 
+    /**
+     * Show user options.
+     *
+     * @param opts the opts
+     */
     void showUserOptions(final String[] opts) {
         jList1.removeAll();
         DefaultListModel<String> model = new DefaultListModel<>();
@@ -130,6 +156,11 @@ public class AutocompletionFrame extends javax.swing.JFrame {
         jList1.setModel(model);
     }
 
+    /**
+     * Gets the j list 1.
+     *
+     * @return the j list 1
+     */
     public JList<String> getjList1() {
         return jList1;
     }

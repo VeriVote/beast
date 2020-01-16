@@ -4,8 +4,16 @@ package edu.pse.beast.toolbox;
 
 import org.fxmisc.richtext.model.NodeSegmentOpsBase;
 
+/**
+ * The Class LinkedImageOps.
+ *
+ * @param <S> the generic type
+ */
 public class LinkedImageOps<S> extends NodeSegmentOpsBase<LinkedImage, S> {
 
+    /**
+     * Instantiates a new linked image ops.
+     */
     public LinkedImageOps() {
         super(new EmptyLinkedImage());
     }

@@ -19,15 +19,26 @@ import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
+/**
+ * The Class WeightedApproval.
+ */
 public class WeightedApproval extends CBMCInputType {
+
+    /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 2;
+
+    /** The Constant MAX_VALUE. */
     private static final int MAX_VALUE = 100;
 
+    /** The Constant SIZE_OF_DIMENSIONS. */
     private static final String[] SIZE_OF_DIMENSIONS = {
             UnifiedNameContainer.getVoter(),
             UnifiedNameContainer.getCandidate()
     };
 
+    /**
+     * The constructor.
+     */
     public WeightedApproval() {
         super(true, DataType.INT, DIMENSIONS, SIZE_OF_DIMENSIONS);
     }
@@ -223,7 +234,7 @@ public class WeightedApproval extends CBMCInputType {
         List<String> values = row.getValues();
         List<CBMCResultValueWrapper> wrappedValues = new ArrayList<CBMCResultValueWrapper>();
         for (Iterator<String> iterator = values.iterator(); iterator.hasNext();) {
-            String value = (String) iterator.next();
+            String value = iterator.next();
             CBMCResultValueWrapper wrapper = new CBMCResultValueWrapper();
             CBMCResultValueSingle toWrap = new CBMCResultValueSingle();
             toWrap.setValue("int", value, INT_LENGTH);

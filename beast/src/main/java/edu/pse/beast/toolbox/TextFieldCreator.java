@@ -13,12 +13,29 @@ import org.reactfx.util.Either;
 
 import javafx.scene.Node;
 
+/**
+ * The Class TextFieldCreator.
+ */
 public final class TextFieldCreator {
+
+    /** The Constant STYLED_TEXT_OPS. */
     private static final TextOps<String, TextStyle> STYLED_TEXT_OPS = SegmentOps.styledTextOps();
+
+    /** The Constant LINKED_IMAGE_OPS. */
     private static final LinkedImageOps<TextStyle> LINKED_IMAGE_OPS = new LinkedImageOps<>();
 
+    /**
+     * The constructor.
+     */
     private TextFieldCreator() { }
 
+    /**
+     * Creates the node.
+     *
+     * @param seg the seg
+     * @param applyStyle the apply style
+     * @return the node
+     */
     private static Node createNode(final StyledSegment<Either<String, LinkedImage>,
                                                        TextStyle> seg,
                                    final BiConsumer<? super TextExt, TextStyle>
@@ -29,6 +46,13 @@ public final class TextFieldCreator {
             LinkedImage::createNode);
     }
 
+    /**
+     * Gets the generic styled area instance.
+     *
+     * @param textStyle the text style
+     * @param paragraphStyle the paragraph style
+     * @return the generic styled area instance
+     */
     public static GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle>
                     getGenericStyledAreaInstance(final TextStyle textStyle,
                                                  final ParStyle paragraphStyle) {

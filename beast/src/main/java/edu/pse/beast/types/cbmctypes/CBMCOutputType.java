@@ -4,7 +4,19 @@ import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.types.OutputType;
 
+/**
+ * The Class CBMCOutputType.
+ */
 public abstract class CBMCOutputType extends OutputType {
+
+    /**
+     * The constructor.
+     *
+     * @param unsigned the unsigned
+     * @param dataType the data type
+     * @param dimensions the dimensions
+     * @param sizeOfDimensions the size of dimensions
+     */
     public CBMCOutputType(final boolean unsigned,
                           final DataType dataType,
                           final int dimensions,

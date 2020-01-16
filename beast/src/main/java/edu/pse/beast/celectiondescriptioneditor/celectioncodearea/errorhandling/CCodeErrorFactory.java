@@ -9,12 +9,17 @@ import edu.pse.beast.codearea.errorhandling.CodeError;
  * @author Holger Klein
  */
 public final class CCodeErrorFactory {
+
+    /** The Constant IDS. */
     private static final String[] IDS
     = {
         "compilererror",
         "antlr"
         };
 
+    /**
+     * Instantiates a new c code error factory.
+     */
     private CCodeErrorFactory() { }
 
     /**

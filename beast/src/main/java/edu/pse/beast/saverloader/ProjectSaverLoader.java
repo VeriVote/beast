@@ -12,6 +12,8 @@ import edu.pse.beast.toolbox.Project;
  * @author Lukas Stapelbroek
  */
 public class ProjectSaverLoader implements SaverLoader<Project> {
+
+    /** The saver loader. */
     private static Gson saverLoader;
 
     static { // here you have the chance to register typeAdapters

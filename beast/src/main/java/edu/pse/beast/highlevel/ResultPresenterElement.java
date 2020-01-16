@@ -39,5 +39,10 @@ public interface ResultPresenterElement {
      */
     void presentFailureExample(Result result);
 
+    /**
+     * Present.
+     *
+     * @param cbmcResult the cbmc result
+     */
     void present(Result cbmcResult);
 }

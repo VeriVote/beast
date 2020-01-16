@@ -14,6 +14,8 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
  */
 public class PropertyDescriptionSaverLoader
                 implements SaverLoader<PreAndPostConditionsDescription> {
+
+    /** The saver loader. */
     private static Gson saverLoader;
 
     static { // here you have the chance to register typeAdapters

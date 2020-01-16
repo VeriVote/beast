@@ -10,19 +10,39 @@ import javax.swing.text.BadLocationException;
  * @author Holger Klein
  */
 public class OpenCloseChar {
+
+    /** The open. */
     private final char open;
+
+    /** The close. */
     private final char close;
 
+    /**
+     * Instantiates a new open close char.
+     *
+     * @param openChar the open char
+     * @param closeChar the close char
+     */
     public OpenCloseChar(final char openChar,
                          final char closeChar) {
         this.open = openChar;
         this.close = closeChar;
     }
 
+    /**
+     * Gets the open.
+     *
+     * @return the open
+     */
     public char getOpen() {
         return this.open;
     }
 
+    /**
+     * Gets the close.
+     *
+     * @return the close
+     */
     public char getClose() {
         return this.close;
     }

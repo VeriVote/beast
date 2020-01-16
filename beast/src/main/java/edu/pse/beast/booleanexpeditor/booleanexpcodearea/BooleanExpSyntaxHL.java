@@ -14,6 +14,8 @@ import edu.pse.beast.codearea.syntaxhighlighting.SyntaxHL;
  * @author Nikolai Schnell
  */
 public class BooleanExpSyntaxHL {
+
+    /** The Constant REGEX. */
     private static final String REGEX =
             "(ELECT[0-9]+\\([a-zA-Z_]*\\))|(VOTES[0-9]+\\([a-zA-Z_]*\\))";
 

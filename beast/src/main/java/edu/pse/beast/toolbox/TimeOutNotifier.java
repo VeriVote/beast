@@ -2,10 +2,21 @@ package edu.pse.beast.toolbox;
 
 import edu.pse.beast.propertychecker.FactoryController;
 
+/**
+ * The Class TimeOutNotifier.
+ */
 public class TimeOutNotifier implements Runnable {
+
+    /** The disabled. */
     private boolean disabled = false;
+
+    /** The to interrupt. */
     private final FactoryController toInterrupt;
+
+    /** The end time. */
     private final long endTime;
+
+    /** The interrupter thread. */
     private final Thread interrupterThread;
 
     /**

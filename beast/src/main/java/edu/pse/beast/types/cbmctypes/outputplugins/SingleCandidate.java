@@ -9,10 +9,20 @@ import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
+/**
+ * The Class SingleCandidate.
+ */
 public class SingleCandidate extends CBMCOutputType {
+
+    /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 0;
+
+    /** The Constant SIZE_OF_DIMENSIONS. */
     private static final String[] SIZE_OF_DIMENSIONS = {};
 
+    /**
+     * The constructor.
+     */
     public SingleCandidate() {
         super(true, DataType.INT, DIMENSIONS, SIZE_OF_DIMENSIONS);
     }

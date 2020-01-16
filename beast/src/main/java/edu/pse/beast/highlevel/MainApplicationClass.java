@@ -35,19 +35,33 @@ import javafx.stage.WindowEvent;
  * @author Jonas Wohnig
  */
 public class MainApplicationClass extends Application {
+
+    /** The Constant MAIN_SCENE_HEIGHT. */
     private static final int MAIN_SCENE_HEIGHT = 600;
+
+    /** The Constant MAIN_SCENE_WIDTH. */
     private static final int MAIN_SCENE_WIDTH = 1000;
 
+    /** The Constant TITLE. */
     private static final String TITLE = "BEAST";
+
+    /** The Constant RESOURCE. */
     private static final String RESOURCE
             = "/src/main/resources/edu/pse/beast/highlevel/javafx/BEAST.fxml";
+
+    /** The Constant RESOURCE_BUNDLE. */
     //private static final String RESOURCE = "/edu/pse/beast/highlevel/javafx/BEAST.fxml";
     private static final String RESOURCE_BUNDLE
          // = "/src/main/resources/edu.pse.beast.highlevel.javafx.bundles.LangBundle";
             = "edu.pse.beast.highlevel.javafx.bundles.LangBundle";
+
+    /** The Constant BEAST_ICON. */
     private static final String BEAST_ICON = "/core/images/other/BEAST.png";
+
+    /** The Constant FILE_STRING. */
     private static final String FILE_STRING = "file:///";
 
+    /** The main stage. */
     private static Stage mainStage;
 
     /**
@@ -158,6 +172,11 @@ public class MainApplicationClass extends Application {
         }
     }
 
+    /**
+     * Gets the main stage.
+     *
+     * @return the main stage
+     */
     public static Stage getMainStage() {
         return mainStage;
     }

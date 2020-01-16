@@ -2,9 +2,18 @@ package edu.pse.beast.datatypes.electioncheckparameter;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The Class TimeOut.
+ */
 public class TimeOut {
+
+    /** The amount. */
     private final long amount;
+
+    /** The original unit. */
     private final TimeUnit originalUnit;
+
+    /** The active. */
     private final boolean active;
 
     /**
@@ -35,6 +44,7 @@ public class TimeOut {
     }
 
     /**
+     * Gets the duration.
      *
      * @return the duration of the timeout in milliseconds
      */
@@ -43,6 +53,7 @@ public class TimeOut {
     }
 
     /**
+     * Gets the orig unit.
      *
      * @return the unit with which the unit was given, so it might be used for
      *         saving in plain text again.
@@ -52,6 +63,7 @@ public class TimeOut {
     }
 
     /**
+     * Checks if is active.
      *
      * @return true, when the timeout
      */

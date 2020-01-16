@@ -6,10 +6,10 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 
 /**
+ * The Class SuperclassExclusionStrategy.
  *
  * @author Adrian Lee, Stackoverflow
  *         https://stackoverflow.com/a/20117863/5853965
- *
  */
 public final class SuperclassExclusionStrategy implements ExclusionStrategy {
 
@@ -21,6 +21,13 @@ public final class SuperclassExclusionStrategy implements ExclusionStrategy {
         return isFieldInSuperclass(theClass, fieldName);
     }
 
+    /**
+     * Checks if is field in superclass.
+     *
+     * @param subclass the subclass
+     * @param fieldName the field name
+     * @return true, if is field in superclass
+     */
     private boolean isFieldInSuperclass(final Class<?> subclass, final String fieldName) {
         Class<?> superclass = subclass.getSuperclass();
         Field field;
@@ -36,6 +43,13 @@ public final class SuperclassExclusionStrategy implements ExclusionStrategy {
         return false;
     }
 
+    /**
+     * Gets the field.
+     *
+     * @param theClass the the class
+     * @param fieldName the field name
+     * @return the field
+     */
     private Field getField(final Class<?> theClass, final String fieldName) {
         try {
             return theClass.getDeclaredField(fieldName);

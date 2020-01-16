@@ -1,11 +1,13 @@
 package edu.pse.beast.datatypes.booleanexpast;
 
 /**
+ * The Class ComparisonSymbol.
  *
  * @author Lukas Stapelbroek
- *
  */
 public class ComparisonSymbol {
+
+    /** The c string representation. */
     private final String cStringRepresentation;
 
     /**
@@ -18,6 +20,7 @@ public class ComparisonSymbol {
     }
 
     /**
+     * Gets the c string rep.
      *
      * @return the representation of this symbol in C
      */

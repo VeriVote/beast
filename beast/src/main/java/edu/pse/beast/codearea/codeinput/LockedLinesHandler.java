@@ -26,12 +26,28 @@ import edu.pse.beast.toolbox.SortedIntegerList;
  * @author Holger Klein
  */
 public class LockedLinesHandler implements DocumentListener {
+
+    /** The locked lines. */
     private SortedIntegerList lockedLines = new SortedIntegerList();
+
+    /** The doc. */
     private StyledDocument doc;
+
+    /** The pane. */
     private JTextPane pane;
+
+    /** The save before remove. */
     private SaveTextBeforeRemove saveBeforeRemove;
+
+    /** The listeners. */
     private ArrayList<LockedLinesListener> listeners = new ArrayList<>();
 
+    /**
+     * Instantiates a new locked lines handler.
+     *
+     * @param textPane the text pane
+     * @param saveBeforeRemoveListener the save before remove listener
+     */
     public LockedLinesHandler(final JTextPane textPane,
                               final SaveTextBeforeRemove saveBeforeRemoveListener) {
         this.pane = textPane;
@@ -40,6 +56,11 @@ public class LockedLinesHandler implements DocumentListener {
         this.saveBeforeRemove = saveBeforeRemoveListener;
     }
 
+    /**
+     * Lock line.
+     *
+     * @param line the line
+     */
     public void lockLine(final int line) {
         lockedLines.add(line);
         for (LockedLinesListener l : listeners) {
@@ -47,6 +68,11 @@ public class LockedLinesHandler implements DocumentListener {
         }
     }
 
+    /**
+     * Unlock line.
+     *
+     * @param line the line
+     */
     public void unlockLine(final int line) {
         lockedLines.remove(line);
         for (LockedLinesListener l : listeners) {
@@ -54,10 +80,21 @@ public class LockedLinesHandler implements DocumentListener {
         }
     }
 
+    /**
+     * Checks if is line locked.
+     *
+     * @param line the line
+     * @return true, if is line locked
+     */
     public boolean isLineLocked(final int line) {
         return lockedLines.contains(line);
     }
 
+    /**
+     * Gets the first locked line.
+     *
+     * @return the first locked line
+     */
     public int getFirstLockedLine() {
         return lockedLines.get(0);
     }
@@ -124,10 +161,18 @@ public class LockedLinesHandler implements DocumentListener {
     public void changedUpdate(final DocumentEvent de) {
     }
 
+    /**
+     * Adds the locked lines listener.
+     *
+     * @param l the l
+     */
     public void addLockedLinesListener(final LockedLinesListener l) {
         listeners.add(l);
     }
 
+    /**
+     * Unlock all.
+     */
     public void unlockAll() {
         for (int i = 0; i < lockedLines.size(); ++i) {
             for (LockedLinesListener l : listeners) {
@@ -137,6 +182,11 @@ public class LockedLinesHandler implements DocumentListener {
         lockedLines.clear();
     }
 
+    /**
+     * Gets the locked lines.
+     *
+     * @return the locked lines
+     */
     public List<Integer> getLockedLines() {
         return lockedLines.getCopiedList();
     }

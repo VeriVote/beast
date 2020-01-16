@@ -12,15 +12,32 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+/**
+ * The Class AutoCompleter.
+ */
 public class AutoCompleter {
+
+    /** The Constant SCENE_WIDTH. */
     private static final int SCENE_WIDTH = 350;
+
+    /** The Constant SCENE_HEIGHT. */
     private static final int SCENE_HEIGHT = 100;
 
+    /** The auto completion stage. */
     private Stage autoCompletionStage = new Stage();
+
+    /** The list. */
     private ListView<String> list = new ListView<String>();
+
+    /** The scene. */
     private Scene scene;
+
+    /** The caller. */
     private AutoCompletionCodeArea caller = null;
 
+    /**
+     * The Constructor.
+     */
     public AutoCompleter() {
         autoCompletionStage.initStyle(StageStyle.UNDECORATED);
         // autoCompletionStage.initModality(Modality.APPLICATION_MODAL);
@@ -56,6 +73,9 @@ public class AutoCompleter {
         autoCompletionStage.setScene(scene);
     }
 
+    /**
+     * Notify caller.
+     */
     private void notifyCaller() {
         synchronized (this) {
             if (caller != null && list.getSelectionModel().getSelectedItem() != null) {
@@ -65,6 +85,14 @@ public class AutoCompleter {
         reset();
     }
 
+    /**
+     * Show auto completion windows.
+     *
+     * @param x the x
+     * @param y the y
+     * @param content the content
+     * @param c the c
+     */
     public synchronized void showAutoCompletionWindows(final int x, final int y,
                                                        final List<String> content,
                                                        final AutoCompletionCodeArea c) {
@@ -79,6 +107,9 @@ public class AutoCompleter {
         autoCompletionStage.requestFocus(); // put this window on top
     }
 
+    /**
+     * Reset AutoCompleter.
+     */
     public synchronized void reset() {
         list.setItems(null);
         autoCompletionStage.hide();

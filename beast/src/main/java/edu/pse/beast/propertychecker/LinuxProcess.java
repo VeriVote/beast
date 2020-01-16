@@ -12,16 +12,26 @@ import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 
+/**
+ * The Class LinuxProcess.
+ */
 public class LinuxProcess extends CBMCProcess {
+
+    /** The Constant RELATIVE_PATH_TO_CBMC_64. */
     private static final String RELATIVE_PATH_TO_CBMC_64 = "/linux/cbmcLin/cbmc";
 
+    /** The Constant WAITING_TIME. */
     // the time in milliseconds to wait for the termination of the process on linux
     private static final long WAITING_TIME = 3000;
 
+    /** The Constant ENABLE_USER_INCLUDE. */
     private static final String ENABLE_USER_INCLUDE = "-I";
+
+    /** The Constant USER_INCLUDE_FOLDER. */
     private static final String USER_INCLUDE_FOLDER = "/core/user_includes/";
 
     // we want to compile all available c files, so the user does not need to
+    /** The Constant C_FILE_ENDING. */
     // specify anything
     private static final String C_FILE_ENDING = ".c";
 
@@ -90,7 +100,7 @@ public class LinuxProcess extends CBMCProcess {
             arguments.add(toCheck.getAbsolutePath().replace("\"", ""));
             // iterate over all "*.c" files from the include folder, to include them
             for (Iterator<String> iterator = allFiles.iterator(); iterator.hasNext();) {
-                String toBeIncludedFile = (String) iterator.next();
+                String toBeIncludedFile = iterator.next();
                 arguments.add(toBeIncludedFile.replace("\"", ""));
             }
             // here we supply this call with the correct values for the voters,

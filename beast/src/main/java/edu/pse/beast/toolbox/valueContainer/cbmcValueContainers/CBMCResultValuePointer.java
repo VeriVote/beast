@@ -2,6 +2,9 @@ package edu.pse.beast.toolbox.valueContainer.cbmcValueContainers;
 
 import org.w3c.dom.Element;
 
+/**
+ * The Class CBMCResultValuePointer.
+ */
 public class CBMCResultValuePointer implements CBMCResultValue {
 
     @Override

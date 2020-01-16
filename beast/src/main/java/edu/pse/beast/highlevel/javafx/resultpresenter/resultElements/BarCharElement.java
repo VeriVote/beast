@@ -9,10 +9,26 @@ import java.util.List;
 import edu.pse.beast.toolbox.Tuple3;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * The Class BarCharElement.
+ */
 public class BarCharElement extends ResultImageElement {
+
+    /** The result values. */
     private List<Tuple3<String, Double, Color>> resultValues;
+
+    /** The total size. */
     private double totalSize = 0;
 
+    /**
+     * Instantiates a new bar char element.
+     *
+     * @param xPosTopLeft the x pos top left
+     * @param yPosTopLeft the y pos top left
+     * @param xPosBottomRight the x pos bottom right
+     * @param yPosBottomRight the y pos bottom right
+     * @param resultVals the result vals
+     */
     public BarCharElement(final double xPosTopLeft, final double yPosTopLeft,
                           final double xPosBottomRight, final double yPosBottomRight,
                           final List<Tuple3<String, Double, Color>> resultVals) {
@@ -20,6 +36,9 @@ public class BarCharElement extends ResultImageElement {
         init();
     }
 
+    /**
+     * Inits the.
+     */
     private void init() {
         double tmpSize = 0;
         // iterate over the values, adding up their sizes, therefore getting the

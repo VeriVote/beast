@@ -7,9 +7,11 @@ package edu.pse.beast.stringresource;
  */
 public class OptionStringResProvider extends StringResourceProvider {
 
+    /** The option string res. */
     private StringResourceLoader optionStringRes;
 
     /**
+     * Instantiates a new option string res provider.
      *
      * @param languageId the languageId. Set to "de" for german
      */
@@ -19,6 +21,7 @@ public class OptionStringResProvider extends StringResourceProvider {
     }
 
     /**
+     * Gets the option string res.
      *
      * @return OptionStringRes
      */
@@ -26,10 +29,9 @@ public class OptionStringResProvider extends StringResourceProvider {
         return optionStringRes;
     }
 
-    /**
-     * Initializes all attributes. Loads all StringResourceLoaders with the
-     * filenames. The superclass provides the functions for this process
-     */
+
+    // Initializes all attributes. Loads all StringResourceLoaders with the
+    // filenames. The superclass provides the functions for this process
     @Override
     protected final void initialize() {
 

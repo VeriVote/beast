@@ -16,8 +16,12 @@ import edu.pse.beast.types.InOutType;
 import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 
+/**
+ * The Class InOutTypeAdapter.
+ */
 public final class InOutTypeAdapter
                     implements JsonSerializer<InOutType>, JsonDeserializer<InOutType> {
+
     @Override
     public InOutType deserialize(final JsonElement json, final Type typeOf,
                                  final JsonDeserializationContext context)
@@ -28,7 +32,7 @@ public final class InOutTypeAdapter
         try {
             for (Iterator<InputType> iterator = InputType.getInputTypes().iterator();
                     iterator.hasNext();) {
-                InputType inType = (InputType) iterator.next();
+                InputType inType = iterator.next();
                 if (inType.getClass().getSimpleName().equals(type)) {
                     return context.deserialize(element,
                                                Class.forName(inType.getClass().getName()));
@@ -36,7 +40,7 @@ public final class InOutTypeAdapter
             }
             for (Iterator<OutputType> iterator = OutputType.getOutputTypes().iterator();
                     iterator.hasNext();) {
-                OutputType outType = (OutputType) iterator.next();
+                OutputType outType = iterator.next();
                 if (outType.getClass().getSimpleName().equals(type)) {
                     return context.deserialize(element,
                                                Class.forName(outType.getClass().getName()));

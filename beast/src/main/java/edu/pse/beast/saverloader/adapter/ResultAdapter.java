@@ -14,6 +14,9 @@ import com.google.gson.JsonSerializer;
 
 import edu.pse.beast.propertychecker.Result;
 
+/**
+ * The Class ResultAdapter.
+ */
 public final class ResultAdapter implements
         JsonSerializer<Result>, JsonDeserializer<Result> {
 
@@ -28,7 +31,7 @@ public final class ResultAdapter implements
             for (Iterator<Result> iterator
                   = Result.getResultTypes().iterator();
                     iterator.hasNext();) {
-                Result result = (Result) iterator.next();
+                Result result = iterator.next();
                 if (result.getClass().getSimpleName().equals(type)) {
                     return context.deserialize(element, Class.forName(result.getClass().getName()));
                 }

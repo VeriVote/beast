@@ -14,8 +14,14 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser;
  * @author Nikolai Schnell
  */
 public class BooleanExpANTLRHandler {
+
+    /** The input. */
     private String input;
+
+    /** The lexer. */
     private FormalPropertyDescriptionLexer lexer;
+
+    /** The parser. */
     private FormalPropertyDescriptionParser parser;
 
     /**

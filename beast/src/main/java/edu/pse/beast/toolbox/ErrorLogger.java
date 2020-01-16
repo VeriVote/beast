@@ -1,11 +1,15 @@
 package edu.pse.beast.toolbox;
 
 /**
+ * The Class ErrorLogger.
  *
  * @author Lukas Stapelbroek
- *
  */
 public final class ErrorLogger {
+
+    /**
+     * Instantiates a new error logger.
+     */
     private ErrorLogger() { }
 
     /**

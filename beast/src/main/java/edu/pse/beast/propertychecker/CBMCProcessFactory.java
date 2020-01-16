@@ -14,15 +14,24 @@ import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.FileSaver;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
+/**
+ * A factory for creating CBMCProcess objects.
+ */
 public class CBMCProcessFactory extends CheckerFactory {
     // TODO clean up this file
 
+    /** The Constant WHITESPACE. */
     private static final String WHITESPACE = " ";
+
+    /** The Constant PATH_TO_TEMP_FOLDER. */
     private static final String PATH_TO_TEMP_FOLDER = "/core/generated_c_files/";
+
+    /** The os. */
     private final OperatingSystems os;
 
     // this file can be used for all checkers. So if it is not null, it will not
     // be
+    /** The to check. */
     // created, but the file that is already there will be reused
     private File toCheck = null;
 
@@ -281,6 +290,11 @@ public class CBMCProcessFactory extends CheckerFactory {
     // return startedChecker;
     // }
 
+    /**
+     * Determine OS.
+     *
+     * @return the operating systems
+     */
     public static OperatingSystems determineOS() { // TODO extract to UTIl
         String environment = System.getProperty("os.name");
         OperatingSystems determinedOS = null;

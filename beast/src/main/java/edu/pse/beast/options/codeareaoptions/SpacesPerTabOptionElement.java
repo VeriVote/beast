@@ -8,6 +8,8 @@ import edu.pse.beast.options.OptionElement;
  * OptionElement subclass for the spacespertabs option.
  */
 public class SpacesPerTabOptionElement extends OptionElement {
+
+    /** The number tabs. */
     private int numberTabs;
 
     /**

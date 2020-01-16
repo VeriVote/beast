@@ -4,11 +4,16 @@ import edu.pse.beast.types.InternalTypeContainer;
 
 //import edu.pse.beast.datatypes.internal.InternalTypeContainer;
 /**
+ * The Class SymbolicVariable.
  *
  * @author Niels Hanselmann
  */
 public class SymbolicVariable {
+
+    /** The id. */
     private final String id;
+
+    /** The internal type container. */
     private final InternalTypeContainer internalTypeContainer;
 
     /**
@@ -24,6 +29,7 @@ public class SymbolicVariable {
     }
 
     /**
+     * Gets the id.
      *
      * @return the Id of the variable
      */
@@ -32,6 +38,7 @@ public class SymbolicVariable {
     }
 
     /**
+     * Gets the internal type container.
      *
      * @return the type of the Variable
      */

@@ -13,9 +13,19 @@ import javax.swing.text.StyleContext;
  * @author Nikolai Schnell
  */
 public class RegexAndColor {
+
+    /** The reg ex. */
     private String regEx;
+
+    /** The attribute set for color. */
     private AttributeSet attributeSetForColor;
 
+    /**
+     * Instantiates a new regex and color.
+     *
+     * @param regExStr the reg ex str
+     * @param color the color
+     */
     public RegexAndColor(final String regExStr, final Color color) {
         StyleContext styleContext = StyleContext.getDefaultStyleContext();
         this.regEx = regExStr;

@@ -80,239 +80,362 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+/**
+ * The Class GUIController.
+ */
 public class GUIController {
+
+    /** The Constant ITEM_COUNT. */
     private static final int ITEM_COUNT = 3;
+
+    /** The Constant GAP_SIZE. */
     private static final int GAP_SIZE = 10;
+
+    /** The Constant SCROLLBAR_PADDING. */
     private static final double SCROLLBAR_PADDING = 15;
+
+    /** The Constant SIXTEEN. */
     private static final int SIXTEEN = 16;
+
+    /** The Constant TOP. */
     private static final int TOP = 20;
+
+    /** The Constant WIDTH. */
     private static final int WIDTH = 150;
 
+    /** The Constant THRESHOLD. */
     // 10 seconds to click "remove item" after one was selected
     private static final int THRESHOLD = 10000;
 
+    /** The controller. */
     private static GUIController controller;
+
+    /** The properties. */
     private static List<ParentTreeItem> properties = new ArrayList<ParentTreeItem>();
+
+    /** The tree items. */
     private static List<TreeItem<CustomTreeItem>> treeItems =
             new ArrayList<TreeItem<CustomTreeItem>>();
+
+    /** The root. */
     private static TreeItem<CustomTreeItem> root;
 
+    /** The Constant SLASH. */
     private static final char SLASH = '/';
+
+    /** The Constant FILE. */
     private static final String FILE = "file:///";
+
+    /** The Constant RELATIVE_PATH. */
     private static final String RELATIVE_PATH = "/core/images/";
+
+    /** The Constant PATH_TO_IMAGES. */
     private static final String PATH_TO_IMAGES =
             FILE + SuperFolderFinder.getSuperFolder() + RELATIVE_PATH;
+
+    /** The Constant BEAST_LOGO. */
     private static final String BEAST_LOGO = "other/BEAST.png";
+
+    /** The Constant START_BUTTON. */
     private static final String START_BUTTON = "toolbar/start.png";
+
+    /** The Constant STOP_BUTTON. */
     private static final String STOP_BUTTON = "toolbar/stop.png";
+
+    /** The Constant LOAD_BUTTON. */
     private static final String LOAD_BUTTON = "toolbar/load.png";
+
+    /** The Constant SAVE_BUTTON. */
     private static final String SAVE_BUTTON = "toolbar/save.png";
+
+    /** The Constant SAVE_AS_BUTTON. */
     private static final String SAVE_AS_BUTTON = "toolbar/save_as.png";
+
+    /** The Constant UNDO_BUTTON. */
     private static final String UNDO_BUTTON = "toolbar/undo.png";
+
+    /** The Constant REDO_BUTTON. */
     private static final String REDO_BUTTON = "toolbar/redo.png";
+
+    /** The Constant CUT_BUTTON. */
     private static final String CUT_BUTTON = "toolbar/cut.png";
+
+    /** The Constant COPY_BUTTON. */
     private static final String COPY_BUTTON = "toolbar/copy.png";
+
+    /** The Constant PASTE_BUTTON. */
     private static final String PASTE_BUTTON = "toolbar/paste.png";
+
+    /** The Constant X_MARK_BUTTON. */
     private static final String X_MARK_BUTTON = "toolbar/x-mark.png";
 
+    /** The focused main tab. */
     private MenuBarInterface focusedMainTab;
+
+    /** The election simulation. */
     private ElectionSimulation electionSimulation;
 
+    /** The max voter. */
     @FXML // fx:id="maxVoter"
     private TextField maxVoter;
 
+    /** The min voter. */
     @FXML // fx:id="minVoter"
     private TextField minVoter;
 
+    /** The max candidates. */
     @FXML // fx:id="maxCandidates"
     private TextField maxCandidates;
 
+    /** The min candidates. */
     @FXML // fx:id="minCandidates"
     private TextField minCandidates;
 
+    /** The max seats. */
     @FXML // fx:id="maxSeats"
     private TextField maxSeats;
 
+    /** The min seats. */
     @FXML // fx:id="minSeats"
     private TextField minSeats;
 
+    /** The time out. */
     @FXML // fx:id="timeOut"
     private TextField timeOut;
 
+    /** The time unit choice. */
     @FXML // fx:id="timeUnitChoice"
     private ChoiceBox<TimeUnit> timeUnitChoice;
 
+    /** The processes. */
     @FXML // fx:id="processes"
     private TextField processes;
 
+    /** The solver choice. */
     @FXML // fx:id="solverChoice"
     private ChoiceBox<?> solverChoice;
 
+    /** The advanced parameters. */
     @FXML // fx:id="advancedParameters1"
     private TextField advancedParameters;
 
+    /** The max unrolls. */
     @FXML // fx:id="maxUnrolls"
     private TextField maxUnrolls;
 
+    /** The help button. */
     @FXML // fx:id="helpButton"
     private MenuItem helpButton;
 
+    /** The start stop button. */
     @FXML // fx:id="startStopButton"
     private Button startStopButton;
 
+    /** The open button. */
     @FXML // fx:id="openButton"
     private Button openButton;
 
+    /** The save button. */
     @FXML // fx:id="saveButton"
     private Button saveButton;
 
+    /** The save as button. */
     @FXML // fx:id="saveAsButton"
     private Button saveAsButton;
 
+    /** The undo button. */
     @FXML // fx:id="undoButton"
     private Button undoButton;
 
+    /** The redo button. */
     @FXML // fx:id="redoButton"
     private Button redoButton;
 
+    /** The cut button. */
     @FXML // fx:id="cutButton"
     private Button cutButton;
 
+    /** The copy button. */
     @FXML // fx:id="copyButton"
     private Button copyButton;
 
+    /** The paste button. */
     @FXML // fx:id="pasteButton"
     private Button pasteButton;
 
+    /** The delete button. */
     @FXML // fx:id="deleteButton"
     private Button deleteButton;
 
+    /** The button. */
     @FXML
     private Button button;
 
+    /** The load prop. */
     @FXML
     private Button loadProp;
 
+    /** The load prop list. */
     @FXML
     private Button loadPropList;
 
+    /** The delete items checkbox. */
     @FXML
     private CheckBox deleteItemsCheckbox;
 
+    /** The code pane. */
     @FXML // fx:id="codePane"
     private Tab codePane;
 
+    /** The property pane. */
     @FXML // fx:id="propertyPane"
     private Tab propertyPane;
 
+    /** The result tab. */
     @FXML // fx:id="resultPane"
     private Tab resultTab;
 
+    /** The input pane. */
     @FXML // fx:id="inputPane"
     private Tab inputPane;
 
+    /** The error pane. */
     @FXML // fx:id="errorPane"
     private Tab errorPane;
 
+    /** The console pane. */
     @FXML // fx:id="consolePane"
     private Tab consolePane;
 
+    /** The display format. */
     @FXML
     private MenuButton displayFormat;
 
+    /** The bound variables tab. */
     @FXML
     private Tab boundVariablesTab;
 
+    /** The boolean expression tab. */
     @FXML
     private Tab booleanExpressionTab;
 
+    /** The information pane. */
     @FXML
     private Tab informationPane;
 
+    /** The property scroll pane. */
     @FXML
     private ScrollPane propertyScrollPane;
 
+    /** The result scroll pane. */
     @FXML
     private ScrollPane resultScrollPane;
 
+    /** The input scroll pane. */
     @FXML
     private ScrollPane inputScrollPane;
 
+    /** The pre property pane. */
     @FXML
     private TitledPane prePropertyPane;
 
+    /** The post property pane. */
     @FXML
     private TitledPane postPropertyPane;
 
+    /** The info text area. */
     @FXML
     private TextArea infoTextArea;
 
+    /** The console text area. */
     @FXML
     private TextArea consoleTextArea;
 
+    /** The error text area. */
     @FXML
     private TextArea errorTextArea;
 
+    /** The tree view. */
     @FXML
     private TreeView<CustomTreeItem> treeView;
 
+    /** The main tab pane. */
     @FXML
     private TabPane mainTabPane;
 
+    /** The sub tab pane. */
     @FXML
     private TabPane subTabPane;
 
+    /** The variable tree view. */
     @FXML
     private TreeView<String> variableTreeView;
 
+    /** The symb var field. */
     @FXML
     private TextField symbVarField;
 
+    /** The input voter field. */
     @FXML
     private TextField inputVoterField;
 
+    /** The input candidate field. */
     @FXML
     private TextField inputCandidateField;
 
+    /** The input seat field. */
     @FXML
     private TextField inputSeatField;
 
+    /** The input grid pane. */
     @FXML
     private GridPane inputGridPane;
 
+    /** The voter scroll pane. */
     @FXML
     private ScrollPane voterScrollPane;
 
+    /** The voter grid pane. */
     @FXML
     private GridPane voterGridPane;
 
+    /** The candidate scroll pane. */
     @FXML
     private ScrollPane candidateScrollPane;
 
+    /** The candidate grid pane. */
     @FXML
     private GridPane candidateGridPane;
 
+    /** The remove symb var button. */
     @FXML
     private Button removeSymbVarButton;
 
+    /** The add symb var button. */
     @FXML
     private MenuButton addSymbVarButton;
 
+    /** The prop name button. */
     @FXML
     private Button propNameButton;
 
+    /** The prop name field. */
     @FXML
     private TextField propNameField;
 
+    /** The result name field. */
     @FXML
     private TextField resultNameField;
 
+    /** The result border pane. */
     @FXML
     private BorderPane resultBorderPane;
 
+    /** The zoom slider. */
     @FXML
     private Slider zoomSlider;
 
+    /** The running. */
     @FXML
 
     // @FXML
@@ -323,26 +446,52 @@ public class GUIController {
 
     private boolean running = false;
 
+    /** The auto complete. */
     private AutoCompleter autoComplete = new AutoCompleter();
+
+    /** The code area. */
     private NewCodeArea codeArea;
+
+    /** The bounded var area. */
     private BoundedVarCodeArea boundedVarArea;
+
+    /** The pre area. */
     private NewPropertyCodeArea preArea;
+
+    /** The post area. */
     private NewPropertyCodeArea postArea;
+
+    /** The result area. */
     private ResultArea resultArea = new ResultArea();
+
+    /** The boolean exp editor. */
     private BooleanExpEditorNEW booleanExpEditor;
 
+    /** The voter items. */
     private TreeItem<String> voterItems;
+
+    /** The candidate items. */
     private TreeItem<String> candidateItems;
+
+    /** The seat items. */
     private TreeItem<String> seatItems;
 
+    /** The last clicked. */
     private long lastClicked = 0;
 
+    /** The symb var to remove. */
     private TreeItem<String> symbVarToRemove;
+
+    /** The property to remove. */
     private TreeItem<CustomTreeItem> propertyToRemove;
+
+    /** The main stage. */
     private Stage mainStage;
 
+    /** The name field is changeable. */
     private boolean nameFieldIsChangeable = false;
 
+    /** The property list saver loader. */
     private SaverLoader propertyListSaverLoader =
             new SaverLoader(SaverLoader.PROP_LIST_FILE_ENDING,
                             "BEAST list of properties",
@@ -357,11 +506,17 @@ public class GUIController {
                 GUIController.getController().savePropertyList(null);
             }
             });
+
+    /** The child item saver loader. */
     private SaverLoader childItemSaverLoader =
             new SaverLoader(SaverLoader.CHILD_PROP_FILE_ENDING,
                             "BEAST child property item",
                             null);
+
+    /** The property list GSON. */
     private ChildTreeItemSaverLoader propertyListGSON = new ChildTreeItemSaverLoader();
+
+    /** The project saver loader. */
     private SaverLoader projectSaverLoader =
             new SaverLoader(SaverLoader.PROJECT_FILE_ENDING,
                             "BEAST project file",
@@ -376,15 +531,25 @@ public class GUIController {
                 GUIController.getController().saveProject(null);
             }
             });
+
+    /** The option saver loader. */
     private OptionsSaverLoader optionSaverLoader =
             new OptionsSaverLoader(SaverLoader.OPT_FILE_ENDING, "BEAST option file");
     // private ProjectSaverLoader projectGSON = new ProjectSaverLoader();
 
+    /**
+     * The constructor.
+     *
+     * @param mainJfxStage the main jfx stage
+     */
     public GUIController(final Stage mainJfxStage) {
         this.mainStage = mainJfxStage;
     }
 
     // initial setup
+    /**
+     * Initialize.
+     */
     @FXML
     public void initialize() {
         controller = this;
@@ -513,6 +678,9 @@ public class GUIController {
         properties.get(0).wasClicked(false);
     }
 
+    /**
+     * Sets the button images.
+     */
     private void setButtonImages() {
         startStopButton.setGraphic(new ImageView(PATH_TO_IMAGES + START_BUTTON));
         openButton.setGraphic(new ImageView(PATH_TO_IMAGES + LOAD_BUTTON));
@@ -526,6 +694,9 @@ public class GUIController {
         deleteButton.setGraphic(new ImageView(PATH_TO_IMAGES + X_MARK_BUTTON));
     }
 
+    /**
+     * Adds the listeners.
+     */
     private void addListeners() {
         addNumberEnforcer(minVoter, maxVoter, 1);
         addNumberEnforcer(maxVoter, minVoter, -1);
@@ -564,24 +735,49 @@ public class GUIController {
     }
 
     // Top Panels
+    /**
+     * Result pane clicked.
+     *
+     * @param event the event
+     */
     @FXML
     public void resultPaneClicked(final Event event) {
     }
 
+    /**
+     * Error pane clicked.
+     *
+     * @param event the event
+     */
     @FXML
     public void errorPaneClicked(final Event event) {
     }
 
+    /**
+     * Input pane clicked.
+     *
+     * @param event the event
+     */
     @FXML
     public void inputPaneClicked(final Event event) {
     }
 
+    /**
+     * Property pane clicked.
+     *
+     * @param event the event
+     */
     @FXML
     public void propertyPaneClicked(final Event event) {
     }
 
     // ------------
     // symb Var
+    /**
+     * Adds the symb cand.
+     *
+     * @param event the event
+     */
     @FXML
     public void addSymbCand(final ActionEvent event) {
         String toAdd = GUIController.getController().getVariableNameField().getText();
@@ -590,6 +786,11 @@ public class GUIController {
                                             false);
     }
 
+    /**
+     * Adds the symb seat.
+     *
+     * @param event the event
+     */
     @FXML
     public void addSymbSeat(final ActionEvent event) {
         String toAdd = GUIController.getController().getVariableNameField().getText();
@@ -598,6 +799,11 @@ public class GUIController {
                                             false);
     }
 
+    /**
+     * Adds the symb voter.
+     *
+     * @param event the event
+     */
     @FXML
     public void addSymbVoter(final ActionEvent event) {
         String toAdd = GUIController.getController().getVariableNameField().getText();
@@ -606,6 +812,9 @@ public class GUIController {
                                             false);
     }
 
+    /**
+     * Removes the symb var.
+     */
     @FXML
     public void removeSymbVar() {
         if (symbVarToRemove != null) {
@@ -617,6 +826,9 @@ public class GUIController {
         }
     }
 
+    /**
+     * Reset prop list.
+     */
     @FXML
     public void resetPropList() {
         Alert confirmation = new Alert(AlertType.CONFIRMATION);
@@ -637,6 +849,11 @@ public class GUIController {
         }
     }
 
+    /**
+     * Removes the property.
+     *
+     * @param toRemove the to remove
+     */
     public void removeProperty(final TreeItem<CustomTreeItem> toRemove) {
         properties.remove(toRemove.getValue());
         root.getChildren().remove(toRemove);
@@ -646,6 +863,9 @@ public class GUIController {
         GUIController.getController().getResultScrollPane().setContent(null);
     }
 
+    /**
+     * Removes the all properties.
+     */
     private void removeAllProperties() {
         List<TreeItem<CustomTreeItem>> tmpCopy = new ArrayList<TreeItem<CustomTreeItem>>();
         tmpCopy.addAll(treeItems);
@@ -654,28 +874,56 @@ public class GUIController {
         }
     }
 
+    /**
+     * Gets the input voters.
+     *
+     * @return the input voters
+     */
     public TextField getInputVoters() {
         return inputVoterField;
     }
 
+    /**
+     * Gets the input candidates.
+     *
+     * @return the input candidates
+     */
     public TextField getInputCandidates() {
         return inputCandidateField;
     }
 
+    /**
+     * Gets the input seats.
+     *
+     * @return the input seats
+     */
     public TextField getInputSeats() {
         return inputSeatField;
     }
 
     // ------------
     // Bottom Panels
+    /**
+     * Code pane clicked.
+     *
+     * @param event the event
+     */
     @FXML
     public void codePaneClicked(final Event event) {
     }
 
+    /**
+     * Console pane clicked.
+     *
+     * @param event the event
+     */
     @FXML
     public void consolePaneClicked(final Event event) {
     }
 
+    /**
+     * Check finished.
+     */
     public void checkFinished() {
         Platform.runLater(new Runnable() {
             @Override
@@ -688,6 +936,11 @@ public class GUIController {
 
     // --------
     // Icon Bar
+    /**
+     * Start stop pressed.
+     *
+     * @param event the event
+     */
     @FXML
     public synchronized void startStopPressed(final ActionEvent event) {
         if (!running) {
@@ -704,77 +957,152 @@ public class GUIController {
         }
     }
 
+    /**
+     * Copy button.
+     *
+     * @param event the event
+     */
     @FXML
     public void copyButton(final ActionEvent event) {
         getFocusedArea().copy();
     }
 
+    /**
+     * Undo button.
+     *
+     * @param event the event
+     */
     @FXML
     public void undoButton(final ActionEvent event) {
         getFocusedArea().undo();
     }
 
+    /**
+     * Cut button.
+     *
+     * @param event the event
+     */
     @FXML
     public void cutButton(final ActionEvent event) {
         getFocusedArea().cut();
     }
 
+    /**
+     * Open button.
+     *
+     * @param event the event
+     */
     @FXML
     public void openButton(final ActionEvent event) {
         getFocusedArea().open();
     }
 
+    /**
+     * Paste button.
+     *
+     * @param event the event
+     */
     @FXML
     public void pasteButton(final ActionEvent event) {
         getFocusedArea().paste();
     }
 
+    /**
+     * Redo button.
+     *
+     * @param event the event
+     */
     @FXML
     public void redoButton(final ActionEvent event) {
         getFocusedArea().redo();
     }
 
+    /**
+     * Save as button.
+     *
+     * @param event the event
+     */
     @FXML
     public void saveAsButton(final ActionEvent event) {
         getFocusedArea().saveAs();
     }
 
+    /**
+     * Save button.
+     *
+     * @param event the event
+     */
     @FXML
     public void saveButton(final ActionEvent event) {
         getFocusedArea().save();
     }
 
+    /**
+     * Delete button.
+     *
+     * @param event the event
+     */
     @FXML
     public void deleteButton(final ActionEvent event) {
         getFocusedArea().delete();
     }
 
     // text manipulation menu buttons
+    /**
+     * Copy.
+     *
+     * @param event the event
+     */
     @FXML
     public void copy(final ActionEvent event) {
         copyButton(event);
     }
 
+    /**
+     * Delete.
+     *
+     * @param event the event
+     */
     @FXML
     public void delete(final ActionEvent event) {
         deleteButton(event);
     }
 
+    /**
+     * Cut.
+     *
+     * @param event the event
+     */
     @FXML
     public void cut(final ActionEvent event) {
         cutButton(event);
     }
 
+    /**
+     * Paste.
+     *
+     * @param event the event
+     */
     @FXML
     public void paste(final ActionEvent event) {
         pasteButton(event);
     }
 
+    /**
+     * Redo.
+     *
+     * @param event the event
+     */
     @FXML
     public void redo(final ActionEvent event) {
         redoButton(event);
     }
 
+    /**
+     * Undo.
+     *
+     * @param event the event
+     */
     @FXML
     public void undo(final ActionEvent event) {
         undoButton(event);
@@ -782,6 +1110,11 @@ public class GUIController {
 
     // other menu buttons
 
+    /**
+     * Prop name button clicked.
+     *
+     * @param event the event
+     */
     @FXML // the user wants to edit the name of the current property
     public void propNameButtonClicked(final Event event) {
         if (nameFieldIsChangeable) {
@@ -807,43 +1140,93 @@ public class GUIController {
         }
     }
 
+    /**
+     * Advanced parameters.
+     *
+     * @param event the event
+     */
     @FXML
     public void advancedParameters(final Event event) {
     }
 
+    /**
+     * Help clicked.
+     *
+     * @param event the event
+     */
     @FXML
     public void helpClicked(final ActionEvent event) {
     }
 
+    /**
+     * Max candidates.
+     *
+     * @param event the event
+     */
     @FXML
     public void maxCandidates(final ActionEvent event) {
     }
 
+    /**
+     * Max seats.
+     *
+     * @param event the event
+     */
     @FXML
     public void maxSeats(final ActionEvent event) {
     }
 
+    /**
+     * Max unrolls.
+     *
+     * @param event the event
+     */
     @FXML
     public void maxUnrolls(final ActionEvent event) {
     }
 
+    /**
+     * Max voter.
+     *
+     * @param event the event
+     */
     @FXML
     public void maxVoter(final ActionEvent event) {
         System.out.println(maxVoter.getText());
     }
 
+    /**
+     * Min candidates.
+     *
+     * @param event the event
+     */
     @FXML
     public void minCandidates(final ActionEvent event) {
     }
 
+    /**
+     * Min seats.
+     *
+     * @param event the event
+     */
     @FXML
     public void minSeats(final ActionEvent event) {
     }
 
+    /**
+     * Min voter.
+     *
+     * @param event the event
+     */
     @FXML
     public void minVoter(final ActionEvent event) {
     }
 
+    /**
+     * New election description.
+     *
+     * @param event the event
+     */
     @FXML
     public void newElectionDescription(final ActionEvent event) {
         codeArea.resetSaveFile();
@@ -863,6 +1246,11 @@ public class GUIController {
                 codeArea.getElectionDescription().getContainer());
     }
 
+    /**
+     * New project.
+     *
+     * @param event the event
+     */
     @FXML
     public void newProject(final ActionEvent event) {
         projectSaverLoader.resetHasSaveFile();
@@ -875,6 +1263,11 @@ public class GUIController {
                 codeArea.getElectionDescription().getContainer());
     }
 
+    /**
+     * Open election description.
+     *
+     * @param event the event
+     */
     @FXML
     public void openElectionDescription(final ActionEvent event) {
         codeArea.open();
@@ -882,17 +1275,32 @@ public class GUIController {
                 codeArea.getElectionDescription().getContainer());
     }
 
+    /**
+     * Open election description.
+     *
+     * @param elecDescFile the elec desc file
+     */
     private void openElectionDescription(final File elecDescFile) {
         codeArea.open(elecDescFile);
         this.getElectionSimulation().updateContainer(
                 codeArea.getElectionDescription().getContainer());
     }
 
+    /**
+     * Open property.
+     *
+     * @param event the event
+     */
     @FXML
     public void openProperty(final ActionEvent event) {
         booleanExpEditor.open();
     }
 
+    /**
+     * Open project.
+     *
+     * @param event the event
+     */
     @FXML
     public void openProject(final ActionEvent event) {
         File projectFile = projectSaverLoader.showFileLoadDialog("");
@@ -923,12 +1331,22 @@ public class GUIController {
         }
     }
 
+    /**
+     * Open property list.
+     *
+     * @param event the event
+     */
     @FXML
     public void openPropertyList(final ActionEvent event) {
         File listFile = propertyListSaverLoader.showFileLoadDialog("");
         openPropertyListFile(listFile);
     }
 
+    /**
+     * Open property list file.
+     *
+     * @param listFile the list file
+     */
     private void openPropertyListFile(final File listFile) {
         projectSaverLoader.resetHasSaveFile();
         if (listFile != null) {
@@ -942,6 +1360,7 @@ public class GUIController {
                     for (int i = 0; i < directories.length; i++) {
                         File currentDir = directories[i];
                         String[] property = currentDir.list(new FilenameFilter() {
+                            @Override
                             public boolean accept(final File dir, final String name) {
                                 return name.endsWith(SaverLoader.PROP_DESCR_FILE_ENDING);
                             }
@@ -955,6 +1374,7 @@ public class GUIController {
                                 booleanExpEditor.open(new File(currentDir.getPath() + SLASH
                                                       + property[0]));
                         String[] children = currentDir.list(new FilenameFilter() {
+                            @Override
                             public boolean accept(final File dir, final String name) {
                                 return name.endsWith(SaverLoader.CHILD_PROP_FILE_ENDING);
                             }
@@ -997,59 +1417,119 @@ public class GUIController {
         }
     }
 
+    /**
+     * Open property list.
+     *
+     * @param propListFile the prop list file
+     */
     private void openPropertyList(final File propListFile) {
         openPropertyListFile(propListFile);
     }
 
+    /**
+     * Open voting input.
+     *
+     * @param event the event
+     */
     @FXML
     public void openVotingInput(final ActionEvent event) {
         electionSimulation.open();
     }
 
+    /**
+     * Open voting input.
+     *
+     * @param file the file
+     */
     public void openVotingInput(final File file) {
         if (file.exists()) {
             electionSimulation.open(file);
         }
     }
 
+    /**
+     * Processes.
+     *
+     * @param event the event
+     */
     @FXML
     public void processes(final ActionEvent event) {
     }
 
+    /**
+     * Quit program.
+     *
+     * @param event the event
+     */
     @FXML
     public void quitProgram(final ActionEvent event) {
     }
 
+    /**
+     * Save as election description.
+     *
+     * @param event the event
+     */
     @FXML
     public void saveAsElectionDescription(final ActionEvent event) {
         codeArea.saveAs();
     }
 
+    /**
+     * Save as property list.
+     *
+     * @param event the event
+     */
     @FXML
     public void saveAsPropertyList(final ActionEvent event) {
         savePropertyListFromFile(null, true, true);
     }
 
+    /**
+     * Save as voting input.
+     *
+     * @param event the event
+     */
     @FXML
     public void saveAsVotingInput(final ActionEvent event) {
         electionSimulation.saveAs();
     }
 
+    /**
+     * Save election description.
+     *
+     * @param event the event
+     */
     @FXML
     public void saveElectionDescription(final ActionEvent event) {
         codeArea.save();
     }
 
+    /**
+     * Save property.
+     *
+     * @param event the event
+     */
     @FXML
     public void saveProperty(final ActionEvent event) {
         booleanExpEditor.save();
     }
 
+    /**
+     * Save as property.
+     *
+     * @param event the event
+     */
     @FXML
     public void saveAsProperty(final ActionEvent event) {
         booleanExpEditor.saveAs();
     }
 
+    /**
+     * Save project.
+     *
+     * @param event the event
+     */
     @FXML
     public void saveProject(final ActionEvent event) {
         if (projectSaverLoader.hasSaveFile()) {
@@ -1059,6 +1539,11 @@ public class GUIController {
         }
     }
 
+    /**
+     * Save project file.
+     *
+     * @param projectFile the project file
+     */
     private void saveProjectFile(final File projectFile) {
         if (projectFile != null) {
             File folder = createFolderWithName(projectFile, true);
@@ -1080,6 +1565,11 @@ public class GUIController {
         }
     }
 
+    /**
+     * Save as project.
+     *
+     * @param event the event
+     */
     @FXML
     public void saveAsProject(final ActionEvent event) {
         File projectFile = projectSaverLoader.showFileSaveDialog("");
@@ -1087,15 +1577,28 @@ public class GUIController {
         projectSaverLoader.setSaveFile(projectFile);
     }
 
+    /**
+     * Save as election description.
+     *
+     * @param file the file
+     */
     private void saveAsElectionDescription(final File file) {
         codeArea.saveAs(file);
     }
 
+    /**
+     * Save property list.
+     *
+     * @param event the event
+     */
     @FXML
     public void savePropertyList(final ActionEvent event) {
         savePropertyListFromFile(null, true, false);
     }
 
+    /**
+     * New property list.
+     */
     public void newPropertyList() {
         propertyListSaverLoader.resetHasSaveFile();
         if (properties.size() > 0) {
@@ -1108,10 +1611,20 @@ public class GUIController {
         GUIController.getController().getResultScrollPane().setContent(null);
     }
 
+    /**
+     * New voting input.
+     */
     public void newVotingInput() {
         electionSimulation.reset();
     }
 
+    /**
+     * Save property list from file.
+     *
+     * @param listFile the list file
+     * @param askUser the ask user
+     * @param saveAs the save as
+     */
     private void savePropertyListFromFile(final File listFile,
                                           final boolean askUser,
                                           final boolean saveAs) {
@@ -1171,6 +1684,11 @@ public class GUIController {
         }
     }
 
+    /**
+     * Save options.
+     *
+     * @param file the file
+     */
     private void saveOptions(final File file) {
         OptionsNew toSave = new OptionsNew();
         toSave = fillOptionObject(toSave);
@@ -1178,6 +1696,11 @@ public class GUIController {
         optionSaverLoader.save(file, json);
     }
 
+    /**
+     * Open options.
+     *
+     * @param file the file
+     */
     private void openOptions(final File file) {
         if (file.exists()) {
             String jsonToLoad = optionSaverLoader.load(file);
@@ -1193,6 +1716,11 @@ public class GUIController {
         }
     }
 
+    /**
+     * Sets the options.
+     *
+     * @param options the new options
+     */
     private void setOptions(final OptionsNew options) {
         this.minVoter.setText("" + options.getMinVoters());
         this.maxVoter.setText("" + options.getMaxVoters());
@@ -1204,6 +1732,12 @@ public class GUIController {
         this.maxSeats.setText("" + options.getMaxSeats());
     }
 
+    /**
+     * Fill option object.
+     *
+     * @param options the options
+     * @return the options new
+     */
     private OptionsNew fillOptionObject(final OptionsNew options) {
         options.setMinVoters(Integer.parseInt(minVoter.getText()));
         options.setMaxVoters(Integer.parseInt(maxVoter.getText()));
@@ -1216,31 +1750,61 @@ public class GUIController {
         return options;
     }
 
+    /**
+     * Save voting input.
+     *
+     * @param event the event
+     */
     @FXML
     public void saveVotingInput(final ActionEvent event) {
         electionSimulation.save();
     }
 
+    /**
+     * Time out.
+     *
+     * @param event the event
+     */
     @FXML
     public void timeOut(final ActionEvent event) {
 
     }
 
+    /**
+     * New property.
+     *
+     * @param event the event
+     */
     @FXML
     public void newProperty(final ActionEvent event) {
         addProperty(new PreAndPostConditionsDescription("New Property"));
     }
 
+    /**
+     * Load property.
+     *
+     * @param event the event
+     */
     @FXML
     public void loadProperty(final ActionEvent event) {
         openProperty(null);
     }
 
+    /**
+     * Load property list.
+     *
+     * @param event the event
+     */
     @FXML
     public void loadPropertyList(final ActionEvent event) {
         openPropertyList(new ActionEvent());
     }
 
+    /**
+     * Reset input.
+     *
+     * @param event the event
+     */
     @FXML
     public void resetInput(final ActionEvent event) {
         Alert confirmation = new Alert(AlertType.CONFIRMATION);
@@ -1262,6 +1826,11 @@ public class GUIController {
         }
     }
 
+    /**
+     * Adds the number enforcer.
+     *
+     * @param field the field
+     */
     private void addNumberEnforcer(final TextField field) {
         field.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -1275,14 +1844,12 @@ public class GUIController {
     }
 
     /**
+     * Adds the number enforcer.
      *
-     * @param field
-     *            the field which shall be enforced
-     * @param partnerField
-     *            the partner field, which is supposed to be not bigger /
+     * @param field            the field which shall be enforced
+     * @param partnerField            the partner field, which is supposed to be not bigger /
      *            smaller than the main field
-     * @param sign
-     *            a sign to show if the field has to be bigger or smaller than
+     * @param sign            a sign to show if the field has to be bigger or smaller than
      *            the other one. e.g a sign of 1 means field <= partnerField, a
      *            sign of (-1) would mean field => partner field
      */
@@ -1312,6 +1879,11 @@ public class GUIController {
         });
     }
 
+    /**
+     * Gets the parameter.
+     *
+     * @return the parameter
+     */
     public ElectionCheckParameter getParameter() {
         List<Integer> voter = getValues(minVoter, maxVoter);
         List<Integer> cand = getValues(minCandidates, maxCandidates);
@@ -1340,6 +1912,13 @@ public class GUIController {
         return param;
     }
 
+    /**
+     * Gets the values.
+     *
+     * @param minfield the minfield
+     * @param maxField the max field
+     * @return the values
+     */
     private List<Integer> getValues(final TextField minfield,
                                     final TextField maxField) {
         List<Integer> toReturn = new ArrayList<Integer>();
@@ -1351,33 +1930,69 @@ public class GUIController {
         return toReturn;
     }
 
+    /**
+     * Gets the info text.
+     *
+     * @return the info text
+     */
     public static String getInfoText() {
         return controller.infoTextArea.getText();
     }
 
+    /**
+     * Sets the info text.
+     *
+     * @param text the new info text
+     */
     public static void setInfoText(final String text) {
         controller.infoTextArea.setText(text);
         controller.getSubTabPane().getSelectionModel().select(controller.informationPane);
     }
 
+    /**
+     * Gets the console text.
+     *
+     * @return the console text
+     */
     public static String getConsoleText() {
         return controller.consoleTextArea.getText();
     }
 
+    /**
+     * Sets the console text.
+     *
+     * @param text the new console text
+     */
     public static void setConsoleText(final String text) {
         controller.consoleTextArea.setText(text);
         controller.getSubTabPane().getSelectionModel().select(controller.consolePane);
     }
 
+    /**
+     * Gets the error text.
+     *
+     * @return the error text
+     */
     public static String getErrorText() {
         return controller.errorTextArea.getText();
     }
 
+    /**
+     * Sets the error text.
+     *
+     * @param text the new error text
+     */
     public static void setErrorText(final String text) {
         controller.errorTextArea.setText(text);
         controller.getSubTabPane().getSelectionModel().select(controller.errorPane);
     }
 
+    /**
+     * Adds the tree item.
+     *
+     * @param description the description
+     * @return the tree item
+     */
     public static TreeItem<CustomTreeItem> addTreeItem(
             final PreAndPostConditionsDescription description) {
         TreeItem<CustomTreeItem> propRoot = new TreeItem<CustomTreeItem>();
@@ -1387,86 +2002,192 @@ public class GUIController {
         return propRoot;
     }
 
+    /**
+     * Removes the tree item.
+     *
+     * @param item the item
+     */
     public static void removeTreeItem(final TreeItem<String> item) {
         root.getChildren().remove(item);
     }
 
+    /**
+     * Gets the controller.
+     *
+     * @return the controller
+     */
     public static GUIController getController() {
         return controller;
     }
 
+    /**
+     * Gets the result border pane.
+     *
+     * @return the result border pane
+     */
     public BorderPane getResultBorderPane() {
         return resultBorderPane;
     }
 
+    /**
+     * Gets the code area.
+     *
+     * @return the code area
+     */
     public NewCodeArea getCodeArea() {
         return codeArea;
     }
 
+    /**
+     * Gets the pre conditions area.
+     *
+     * @return the pre conditions area
+     */
     public NewPropertyCodeArea getPreConditionsArea() {
         return preArea;
     }
 
+    /**
+     * Gets the post conditions area.
+     *
+     * @return the post conditions area
+     */
     public NewPropertyCodeArea getPostConditionsArea() {
         return postArea;
     }
 
+    /**
+     * Gets the main tab pane.
+     *
+     * @return the main tab pane
+     */
     public TabPane getMainTabPane() {
         return mainTabPane;
     }
 
+    /**
+     * Gets the sub tab pane.
+     *
+     * @return the sub tab pane
+     */
     public TabPane getSubTabPane() {
         return subTabPane;
     }
 
+    /**
+     * Gets the property tab.
+     *
+     * @return the property tab
+     */
     public Tab getPropertyTab() {
         return propertyPane;
     }
 
+    /**
+     * Gets the result tab.
+     *
+     * @return the result tab
+     */
     public Tab getResultTab() {
         return resultTab;
     }
 
+    /**
+     * Gets the code tab.
+     *
+     * @return the code tab
+     */
     public Tab getCodeTab() {
         return codePane;
     }
 
+    /**
+     * Gets the input tab.
+     *
+     * @return the input tab
+     */
     public Tab getInputTab() {
         return inputPane;
     }
 
+    /**
+     * Gets the zoom slider.
+     *
+     * @return the zoom slider
+     */
     public Slider getZoomSlider() {
         return zoomSlider;
     }
 
+    /**
+     * Gets the result scroll pane.
+     *
+     * @return the result scroll pane
+     */
     public ScrollPane getResultScrollPane() {
         return resultScrollPane;
     }
 
+    /**
+     * Gets the properties.
+     *
+     * @return the properties
+     */
     public List<ParentTreeItem> getProperties() {
         return properties;
     }
 
+    /**
+     * Gets the election description.
+     *
+     * @return the election description
+     */
     public ElectionDescription getElectionDescription() {
         return codeArea.getElectionDescription();
     }
 
+    /**
+     * Gets the pre code area.
+     *
+     * @return the pre code area
+     */
     public NewPropertyCodeArea getPreCodeArea() {
         return preArea;
     }
 
+    /**
+     * Gets the post code area.
+     *
+     * @return the post code area
+     */
     public NewPropertyCodeArea getPostCodeArea() {
         return postArea;
     }
 
+    /**
+     * Gets the variable name field.
+     *
+     * @return the variable name field
+     */
     public TextField getVariableNameField() {
         return symbVarField;
     }
 
+    /**
+     * Gets the delete tmp files.
+     *
+     * @return the delete tmp files
+     */
     public boolean getDeleteTmpFiles() {
         return deleteItemsCheckbox.isSelected();
     }
 
+    /**
+     * Adds the input number enforcer.
+     *
+     * @param field the field
+     * @param newValue the new value
+     */
     private void addInputNumberEnforcer(final TextField field,
                                         final String newValue) {
         final String val = newValue.replaceAll(" ", "");
@@ -1504,31 +2225,67 @@ public class GUIController {
         }
     }
 
+    /**
+     * Gets the election simulation.
+     *
+     * @return the election simulation
+     */
     public ElectionSimulation getElectionSimulation() {
         return electionSimulation;
     }
 
+    /**
+     * Gets the boolean exp editor.
+     *
+     * @return the boolean exp editor
+     */
     public BooleanExpEditorNEW getBooleanExpEditor() {
         return booleanExpEditor;
     }
 
+    /**
+     * Gets the voter tree items.
+     *
+     * @return the voter tree items
+     */
     public TreeItem<String> getVoterTreeItems() {
         return voterItems;
     }
 
+    /**
+     * Gets the candidate tree items.
+     *
+     * @return the candidate tree items
+     */
     public TreeItem<String> getCandidateTreeItems() {
         return candidateItems;
     }
 
+    /**
+     * Gets the seat tree items.
+     *
+     * @return the seat tree items
+     */
     public TreeItem<String> getSeatTreeItems() {
         return seatItems;
     }
 
+    /**
+     * Sets the symb var to remove.
+     *
+     * @param item the new symb var to remove
+     */
     public void setSymbVarToRemove(final TreeItem<String> item) {
         this.symbVarToRemove = item;
         this.lastClicked = System.currentTimeMillis();
     }
 
+    /**
+     * Sets the current property description.
+     *
+     * @param propertyItem the property item
+     * @param bringToFront the bring to front
+     */
     public void setCurrentPropertyDescription(final ParentTreeItem propertyItem,
                                               final boolean bringToFront) {
         if (nameFieldIsChangeable) {
@@ -1539,10 +2296,26 @@ public class GUIController {
         resultNameField.setText(propertyItem.getPreAndPostProperties().getName());
     }
 
+    /**
+     * Sets the prop name field.
+     *
+     * @param newText the new prop name field
+     */
     public void setPropNameField(final String newText) {
         propNameField.setText(newText);
     }
 
+    /**
+     * Show pop up.
+     *
+     * @param titleText the title text
+     * @param infoText the info text
+     * @param inTypeDescription the in type description
+     * @param inTypes the in types
+     * @param outTypeDescription the out type description
+     * @param outTypes the out types
+     * @return the tuple 3
+     */
     private Tuple3<String, InputType, OutputType> showPopUp(final String titleText,
                                                             final String infoText,
                                                             final String inTypeDescription,
@@ -1629,6 +2402,13 @@ public class GUIController {
         return isMatch;
     }
 
+    /**
+     * Creates the folder with name.
+     *
+     * @param desiredFolderName the desired folder name
+     * @param clearFolder the clear folder
+     * @return the file
+     */
     private File createFolderWithName(final File desiredFolderName,
                                       final boolean clearFolder) {
         String origFileNameWithougExt =
@@ -1645,10 +2425,20 @@ public class GUIController {
         return finalListFile;
     }
 
+    /**
+     * Adds the property.
+     *
+     * @param prop the prop
+     */
     public void addProperty(final PreAndPostConditionsDescription prop) {
         addTreeItem(prop);
     }
 
+    /**
+     * Sets the shortcuts to consume.
+     *
+     * @param shortcutsToConsume the new shortcuts to consume
+     */
     public void setShortcutsToConsume(final InputMap<Event> shortcutsToConsume) {
         Nodes.addInputMap(codeArea, shortcutsToConsume);
         Nodes.addInputMap(preArea, shortcutsToConsume);
@@ -1656,26 +2446,56 @@ public class GUIController {
         // TODO maybe add more areas later
     }
 
+    /**
+     * Gets the focused area.
+     *
+     * @return the focused area
+     */
     public MenuBarInterface getFocusedArea() {
         return focusedMainTab;
     }
 
+    /**
+     * Gets the auto completer.
+     *
+     * @return the auto completer
+     */
     public AutoCompleter getAutoCompleter() {
         return autoComplete;
     }
 
+    /**
+     * Gets the result presenter.
+     *
+     * @return the result presenter
+     */
     public ResultPresenterNEW getResultPresenter() {
         return ResultPresenterNEW.getInstance();
     }
 
+    /**
+     * Sets the presentation type text.
+     *
+     * @param name the new presentation type text
+     */
     public void setPresentationTypeText(final String name) {
         this.displayFormat.setText(name);
     }
 
+    /**
+     * Disable zoom slider.
+     *
+     * @param disabled the disabled
+     */
     public void disableZoomSlider(final boolean disabled) {
         zoomSlider.setDisable(disabled);
     }
 
+    /**
+     * Sets the eligable types.
+     *
+     * @param eligableTypes the new eligable types
+     */
     public void setEligableTypes(final List<ResultPresentationType> eligableTypes) {
         displayFormat.getItems().clear();
         for (Iterator<ResultPresentationType> iterator = eligableTypes.iterator();
@@ -1685,6 +2505,11 @@ public class GUIController {
         }
     }
 
+    /**
+     * Show save changes dialog.
+     *
+     * @param caller the caller
+     */
     public void showSaveChangesDialog(final MinimalSaverInterface caller) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         Point position = MouseInfo.getPointerInfo().getLocation();
@@ -1713,11 +2538,21 @@ public class GUIController {
         // }
     }
 
+    /**
+     * Gets the max unrolls.
+     *
+     * @return the max unrolls
+     */
     public int getMaxUnrolls() {
         String text = maxUnrolls.getText();
         return text.equals("") ? -1 : Integer.parseInt(maxUnrolls.getText());
     }
 
+    /**
+     * Sets the previous state.
+     *
+     * @param result the new previous state
+     */
     public void setPreviousState(final Result result) {
         result.getPropertyDesctiption();
     }

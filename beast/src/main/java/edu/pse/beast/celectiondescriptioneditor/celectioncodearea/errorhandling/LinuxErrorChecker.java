@@ -20,6 +20,8 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
  *
  */
 public class LinuxErrorChecker extends SystemSpecificErrorChecker {
+
+    /** The Constant FOUR. */
     private static final int FOUR = 4;
 
     @Override
@@ -48,7 +50,7 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
         arguments.add(toCheck.getAbsolutePath());
         // iterate over all "*.c" files from the include folder, to include them
         for (Iterator<String> iterator = allFiles.iterator(); iterator.hasNext();) {
-            String toBeIncludedFile = (String) iterator.next();
+            String toBeIncludedFile = iterator.next();
             arguments.add(toBeIncludedFile.replace("\"", "").replace(" ", "\\ "));
         }
         // defines the position to what place the compiled files should be sent
@@ -72,7 +74,7 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
         List<CodeError> codeErrors = new ArrayList<CodeError>();
         // gcc gives the errors out in the error stream so we traverse it
         for (Iterator<String> iterator = errors.iterator(); iterator.hasNext();) {
-            String line = (String) iterator.next();
+            String line = iterator.next();
             int lineNumber = -1;
             int linePos = -1;
             String varName = "";

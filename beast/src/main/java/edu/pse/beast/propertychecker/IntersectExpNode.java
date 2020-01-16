@@ -4,11 +4,23 @@ import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes.BooleanExpressionNode;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntersectExpContext;
 
+/**
+ * The Class IntersectExpNode.
+ */
 public class IntersectExpNode extends BooleanExpressionNode {
 
+    /** The intersect exp context. */
     private final IntersectExpContext intersectExpContext;
+
+    /** The vote output. */
     private final String voteOutput;
 
+    /**
+     * Instantiates a new intersect exp node.
+     *
+     * @param intersectExpressionContext the intersect expression context
+     * @param voteOutString the vote out string
+     */
     public IntersectExpNode(final IntersectExpContext intersectExpressionContext,
                             final String voteOutString) {
         this.intersectExpContext = intersectExpressionContext;
@@ -26,10 +38,20 @@ public class IntersectExpNode extends BooleanExpressionNode {
         return "";
     }
 
+    /**
+     * Gets the intersect exp context.
+     *
+     * @return the intersect exp context
+     */
     public IntersectExpContext getIntersectExpContext() {
         return intersectExpContext;
     }
 
+    /**
+     * Gets the vote output.
+     *
+     * @return the vote output
+     */
     public String getVoteOutput() {
         return voteOutput;
     }

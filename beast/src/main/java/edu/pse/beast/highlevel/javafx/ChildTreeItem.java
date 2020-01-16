@@ -24,17 +24,38 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
+/**
+ * The Class ChildTreeItem.
+ */
 public abstract class ChildTreeItem extends CustomTreeItem {
+
+    /** The results. */
     private ArrayList<ResultTreeItem> results = new ArrayList<ResultTreeItem>();
+
+    /** The prop name. */
     private Label propName;
+
+    /** The check box. */
     private CheckBox checkBox = new CheckBox();
+
+    /** The parent. */
     private final ParentTreeItem parent;
+
+    /** The disabled. */
     // private ImageView statusIcon = new ImageView();
     private boolean disabled = false;
 
+    /** The result tree items. */
     private final List<TreeItem<CustomTreeItem>> resultTreeItems =
             new ArrayList<TreeItem<CustomTreeItem>>();
 
+    /**
+     * The constructor.
+     *
+     * @param values the values
+     * @param parentItem the parent item
+     * @param treeItemReference the tree item reference
+     */
     ChildTreeItem(final ChildTreeItemValues values,
                   final ParentTreeItem parentItem,
                   final TreeItem<CustomTreeItem> treeItemReference) {
@@ -51,6 +72,13 @@ public abstract class ChildTreeItem extends CustomTreeItem {
         init();
     }
 
+    /**
+     * Instantiates a new child tree item.
+     *
+     * @param name the name
+     * @param parentItem the parent item
+     * @param treeItemReference the tree item reference
+     */
     ChildTreeItem(final String name, final ParentTreeItem parentItem,
                   final TreeItem<CustomTreeItem> treeItemReference) {
         this.parent = parentItem;
@@ -60,9 +88,13 @@ public abstract class ChildTreeItem extends CustomTreeItem {
         init();
     }
 
+    /**
+     * Inits the.
+     */
     private void init() {
         this.setAlignment(Pos.CENTER_LEFT);
         checkBox.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
             public void changed(final ObservableValue<? extends Boolean> ov,
                                 final Boolean oldValue, final Boolean newValue) {
                 if (!disabled) {
@@ -81,10 +113,18 @@ public abstract class ChildTreeItem extends CustomTreeItem {
         this.getChildren().add(propName);
     }
 
+    /**
+     * Checks if is selected.
+     *
+     * @return true, if is selected
+     */
     public boolean isSelected() {
         return checkBox.isSelected();
     }
 
+    /**
+     * Was clicked.
+     */
     private void wasClicked() {
         parent.wasClicked(false);
         if (results.size() > 0) {
@@ -105,6 +145,11 @@ public abstract class ChildTreeItem extends CustomTreeItem {
         this.disabled = false;
     }
 
+    /**
+     * Adds the result.
+     *
+     * @param result the result
+     */
     public void addResult(final Result result) {
         ResultTreeItem resultItem = new ResultTreeItem(result, this);
         results.add(resultItem);
@@ -132,12 +177,27 @@ public abstract class ChildTreeItem extends CustomTreeItem {
         // TODO ?
     }
 
+    /**
+     * Reset result.
+     *
+     * @param result the result
+     */
     public void resetResult(final Result result) {
         this.addResult(result);
     }
 
+    /**
+     * Gets the analysis type.
+     *
+     * @return the analysis type
+     */
     public abstract AnalysisType getAnalysisType();
 
+    /**
+     * Gets the pre and post properties.
+     *
+     * @return the pre and post properties
+     */
     public PreAndPostConditionsDescription getPreAndPostProperties() {
         return parent.getPreAndPostProperties();
     }
@@ -162,6 +222,9 @@ public abstract class ChildTreeItem extends CustomTreeItem {
     //
     // }
     //
+    /**
+     * Reset presentable.
+     */
     public void resetPresentable() {
         this.setBackground(
                 new Background(
@@ -170,6 +233,11 @@ public abstract class ChildTreeItem extends CustomTreeItem {
         );
     }
 
+    /**
+     * Gets the values.
+     *
+     * @return the values
+     */
     public ChildTreeItemValues getValues() {
         ArrayList<Result> tmpList = new ArrayList<Result>();
         for (Iterator<ResultTreeItem> iterator = results.iterator(); iterator.hasNext();) {
@@ -181,6 +249,9 @@ public abstract class ChildTreeItem extends CustomTreeItem {
                                        false, tmpList);
     }
 
+    /**
+     * Adds the children to stage.
+     */
     public void addChildrenToStage() {
         resultTreeItems.clear();
         TreeItem<CustomTreeItem> item2 = this.getTreeItemReference();
@@ -196,6 +267,11 @@ public abstract class ChildTreeItem extends CustomTreeItem {
         this.getTreeItemReference().getChildren().addAll(resultTreeItems);
     }
 
+    /**
+     * Delete result.
+     *
+     * @param resultTreeItem the result tree item
+     */
     public void deleteResult(final ResultTreeItem resultTreeItem) {
         results.remove(resultTreeItem);
         addChildrenToStage();
@@ -204,7 +280,7 @@ public abstract class ChildTreeItem extends CustomTreeItem {
     /**
      * Shows the result depending on the current presentation type.
      *
-     * @param result
+     * @param result the result
      */
     public void showResult(final Result result) {
         ResultPresenterNEW.getInstance().setResult(result);

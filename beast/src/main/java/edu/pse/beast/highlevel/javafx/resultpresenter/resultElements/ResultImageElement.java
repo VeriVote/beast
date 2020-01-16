@@ -4,14 +4,32 @@ import java.awt.Graphics2D;
 
 import javafx.scene.input.MouseEvent;
 
+/**
+ * The Class ResultImageElement.
+ */
 public abstract class ResultImageElement {
 
+    /** The x pos top left. */
     // the position this element is located at
     private double xPosTopLeft;
+
+    /** The y pos top left. */
     private double yPosTopLeft;
+
+    /** The x pos bottom right. */
     private double xPosBottomRight;
+
+    /** The y pos bottom right. */
     private double yPosBottomRight;
 
+    /**
+     * Instantiates a new result image element.
+     *
+     * @param xPositionTopLeft the x position top left
+     * @param yPositionTopLeft the y position top left
+     * @param xPositionBottomRight the x position bottom right
+     * @param yPositionBottomRight the y position bottom right
+     */
     public ResultImageElement(final double xPositionTopLeft,
                               final double yPositionTopLeft,
                               final double xPositionBottomRight,
@@ -22,18 +40,38 @@ public abstract class ResultImageElement {
         this.yPosBottomRight = yPositionBottomRight;
     }
 
+    /**
+     * Gets the x pos top left.
+     *
+     * @return the x pos top left
+     */
     public double getxPosTopLeft() {
         return xPosTopLeft;
     }
 
+    /**
+     * Gets the y pos top left.
+     *
+     * @return the y pos top left
+     */
     public double getyPosTopLeft() {
         return yPosTopLeft;
     }
 
+    /**
+     * Gets the x pos bottom right.
+     *
+     * @return the x pos bottom right
+     */
     public double getxPosBottomRight() {
         return xPosBottomRight;
     }
 
+    /**
+     * Gets the y pos bottom right.
+     *
+     * @return the y pos bottom right
+     */
     public double getyPosBottomRight() {
         return yPosBottomRight;
     }

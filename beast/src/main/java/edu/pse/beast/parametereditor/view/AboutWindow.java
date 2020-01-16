@@ -5,18 +5,29 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
 import edu.pse.beast.stringresource.StringResourceLoader;
 
 /**
+ * The Class AboutWindow.
  *
  * @author Jonas Wohnig
  */
 public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
+
+    /** The Constant PREF_SIZE. */
     private static final int PREF_SIZE = 31;
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The beast label. */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel beastLabel;
+
+    /** The j label 1. */
     private javax.swing.JLabel jLabel1;
+
+    /** The version label. */
     private javax.swing.JLabel versionLabel;
+
+    /** The version number. */
     private javax.swing.JLabel versionNumber;
 
     // End of variables declaration//GEN-END:variables
@@ -85,6 +96,8 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
     } // </editor-fold>//GEN-END:initComponents
 
     /**
+     * The main method.
+     *
      * @param args the command line arguments
      */
     public static void main(final String[] args) {
@@ -122,6 +135,7 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new AboutWindow().setVisible(true);
             }

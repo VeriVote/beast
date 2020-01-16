@@ -12,6 +12,8 @@ import javax.swing.text.AbstractDocument;
  * @author Nikolai Schnell
  */
 public class SyntaxHL {
+
+    /** The text pane. */
     private JTextPane textPane;
 
     /**

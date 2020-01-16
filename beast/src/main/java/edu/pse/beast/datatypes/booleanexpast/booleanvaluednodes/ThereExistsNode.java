@@ -4,12 +4,14 @@ import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 
 /**
+ * The Class ThereExistsNode.
  *
  * @author Holger
- *
  */
 public class ThereExistsNode extends QuantifierNode {
+
     /**
+     * Instantiates a new there exists node.
      *
      * @param declSymbVar   the symbolic variable of this quantifier
      * @param followingNode the following node of this quantifier

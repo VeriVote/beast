@@ -9,21 +9,27 @@ import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.types.InternalTypeContainer;
 
 /**
+ * The Class SymbolicVariableList.
  *
  * @author Niels Hanselmann
  */
 public class SymbolicVariableList {
+
+    /** The symbolic variable list. */
     private final LinkedList<SymbolicVariable> symbolicVariableList =
             new LinkedList<>();
+
+    /** The listener list. */
     private final transient List<VariableListListener> listenerList =
             new ArrayList<VariableListListener>();
 
     /**
-     *
+     * Instantiates a new symbolic variable list.
      */
     public SymbolicVariableList() { }
 
     /**
+     * Adds the symbolic variable.
      *
      * @param id                    id of the variable
      * @param internalTypeContainer the type of the added variable
@@ -44,6 +50,7 @@ public class SymbolicVariableList {
     }
 
     /**
+     * Adds the symbolic variable.
      *
      * @param var the symbolic variable
      */
@@ -55,6 +62,8 @@ public class SymbolicVariableList {
     }
 
     /**
+     * Checks if is var ID allowed.
+     *
      * @param id id which is to be tested
      * @return true if the variable id is not already used
      */
@@ -88,6 +97,7 @@ public class SymbolicVariableList {
     }
 
     /**
+     * Gets the symbolic variables.
      *
      * @return returns the linked List of SymbolicVariables
      */
@@ -96,6 +106,7 @@ public class SymbolicVariableList {
     }
 
     /**
+     * Gets the symbolic variables cloned.
      *
      * @return returns the linked List of SymbolicVariables
      */
@@ -104,6 +115,7 @@ public class SymbolicVariableList {
     }
 
     /**
+     * Removes the symbolic variable.
      *
      * @param id the id of the variable, that is to be removed
      * @return returns true if the variable was found
@@ -124,6 +136,7 @@ public class SymbolicVariableList {
     }
 
     /**
+     * Removes the symbolic variable.
      *
      * @param index the index of the variable, that is to be removed
      */
@@ -138,6 +151,7 @@ public class SymbolicVariableList {
     }
 
     /**
+     * Adds the listener.
      *
      * @param listener the listenerList which is to add
      */
@@ -149,6 +163,7 @@ public class SymbolicVariableList {
     }
 
     /**
+     * Removes the listener.
      *
      * @param listener the listenerList that will be removed
      */
@@ -159,20 +174,29 @@ public class SymbolicVariableList {
         });
     }
 
+    /**
+     * Clear list.
+     */
     public void clearList() {
         symbolicVariableList.clear();
     }
 
+    /**
+     * Adds the symbolic variable list.
+     *
+     * @param allSymbolicVariables the all symbolic variables
+     */
     public void addSymbolicVariableList(final SymbolicVariableList allSymbolicVariables) {
         for (Iterator<SymbolicVariable> iterator
               = allSymbolicVariables.getSymbolicVariables().iterator();
                 iterator.hasNext();) {
-            SymbolicVariable var = (SymbolicVariable) iterator.next();
+            SymbolicVariable var = iterator.next();
             this.addSymbolicVariable(var);
         }
     }
 
     /**
+     * Clone symb vars.
      *
      * @return a clone of the symbVarList
      */
@@ -182,7 +206,7 @@ public class SymbolicVariableList {
         for (Iterator<SymbolicVariable> iterator = symbolicVariableList.iterator();
                 iterator.hasNext();) {
             SymbolicVariable symbolicVariable
-                  = (SymbolicVariable) iterator.next();
+                  = iterator.next();
             clonedSymbVariables.add(symbolicVariable.clone());
         }
         return clonedSymbVariables;

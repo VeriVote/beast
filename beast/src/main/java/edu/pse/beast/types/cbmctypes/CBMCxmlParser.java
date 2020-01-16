@@ -14,15 +14,38 @@ import edu.pse.beast.toolbox.XMLtoolbox;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 
+/**
+ * The Class CBMCxmlParser.
+ */
 public final class CBMCxmlParser {
+
+    /** The Constant BASE_NAME. */
     private static final String BASE_NAME = "base_name";
+
+    /** The Constant DISPLAY_NAME. */
     private static final String DISPLAY_NAME = "display_name";
+
+    /** The Constant MAIN_METHOD_ID. */
     private static final String MAIN_METHOD_ID = "main::";
+
+    /** The Constant VALUE_EXPRESSION. */
     private static final String VALUE_EXPRESSION = "value_expression";
+
+    /** The Constant ASSIGNMENT. */
     private static final String ASSIGNMENT = "assignment";
 
+    /**
+     * The constructor.
+     */
     private CBMCxmlParser() { }
 
+    /**
+     * Extract variables.
+     *
+     * @param document the document
+     * @param variablesToFind the variables to find
+     * @return the list
+     */
     public static List<Tuple<String, List<ResultValueWrapper>>> extractVariables(
             final Document document,
             final List<String> variablesToFind) {
@@ -91,6 +114,12 @@ public final class CBMCxmlParser {
         return toReturn;
     }
 
+    /**
+     * Gets the main index.
+     *
+     * @param variableWithIndex the variable with index
+     * @return the main index
+     */
     private static int getMainIndex(final String variableWithIndex) {
         try {
             String number = variableWithIndex.replaceAll("[^\\d.]", "");
@@ -100,6 +129,12 @@ public final class CBMCxmlParser {
         }
     }
 
+    /**
+     * Expand sparse list.
+     *
+     * @param list the list
+     * @param position the position
+     */
     private static void expandSparseList(final List<?> list, final int position) {
         for (int i = list.size(); i < (position + 1); i++) {
             list.add(null);
@@ -110,7 +145,7 @@ public final class CBMCxmlParser {
      * removes all null objects from a list. The previous order of the elements
      * will not be changed
      *
-     * @param toClean
+     * @param toClean the to clean
      */
     private static void cleanSparseList(final List<?> toClean) {
         for (Iterator<?> iterator = toClean.iterator(); iterator.hasNext();) {

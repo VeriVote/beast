@@ -14,6 +14,9 @@ import com.google.gson.JsonSerializer;
 
 import edu.pse.beast.types.OutputType;
 
+/**
+ * The Class OutputTypeAdapter.
+ */
 public final class OutputTypeAdapter
                 implements JsonSerializer<OutputType>, JsonDeserializer<OutputType> {
 

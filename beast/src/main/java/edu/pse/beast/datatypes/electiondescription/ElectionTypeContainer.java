@@ -14,10 +14,20 @@ import edu.pse.beast.types.cbmctypes.cbmcstructs.CBMCStruct;
  */
 public class ElectionTypeContainer { // TODO make this class abstract, move code
                                      // to "CBMCElectionTypeContainer"
+
+    /** The in type. */
     private final InputType inType;
+
+    /** The out type. */
     private final OutputType outType;
+
+    /** The input struct. */
     private CBMCStruct inputStruct;
+
+    /** The output struct. */
     private CBMCStruct outputStruct;
+
+    /** The name container. */
     private UnifiedNameContainer nameContainer = new UnifiedNameContainer();
 
     /**
@@ -36,6 +46,9 @@ public class ElectionTypeContainer { // TODO make this class abstract, move code
         generateStructs();
     }
 
+    /**
+     * Generate structs.
+     */
     private void generateStructs() {
         this.inputStruct = new CBMCStruct(inType);
         this.outputStruct = new CBMCStruct(outType);
@@ -48,6 +61,7 @@ public class ElectionTypeContainer { // TODO make this class abstract, move code
     }
 
     /**
+     * Gets the input type.
      *
      * @return the id of this input typecontainer
      */
@@ -56,6 +70,7 @@ public class ElectionTypeContainer { // TODO make this class abstract, move code
     }
 
     /**
+     * Gets the output type.
      *
      * @return the id of this output typecontainer
      */
@@ -63,6 +78,11 @@ public class ElectionTypeContainer { // TODO make this class abstract, move code
         return outType;
     }
 
+    /**
+     * Gets the name container.
+     *
+     * @return the name container
+     */
     public UnifiedNameContainer getNameContainer() {
         if (this.nameContainer == null) {
             this.nameContainer = new UnifiedNameContainer();
@@ -70,14 +90,29 @@ public class ElectionTypeContainer { // TODO make this class abstract, move code
         return nameContainer;
     }
 
+    /**
+     * Gets the input struct.
+     *
+     * @return the input struct
+     */
     public ComplexType getInputStruct() {
         return inputStruct;
     }
 
+    /**
+     * Gets the output struct.
+     *
+     * @return the output struct
+     */
     public ComplexType getOutputStruct() {
         return outputStruct;
     }
 
+    /**
+     * Gets the struct definitions.
+     *
+     * @return the struct definitions
+     */
     public String getStructDefinitions() {
         String toReturn = "";
         toReturn = inputStruct.getStructDefinition() + "\n";

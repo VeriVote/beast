@@ -12,10 +12,13 @@ import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.TimeOutNotifier;
 
 /**
+ * The Class FactoryController.
  *
  * @author Niels Hanselmann, Lukas Stapelbroek
  */
 public class FactoryController implements Runnable {
+
+    /** The Constant POLLING_INTERVAL. */
     private static final long POLLING_INTERVAL = 1000;
 
     /**
@@ -23,27 +26,40 @@ public class FactoryController implements Runnable {
      */
     private FactoryController thisObject = this;
 
+    /** The properties to check. */
     private List<ChildTreeItem> propertiesToCheck = new ArrayList<ChildTreeItem>();
 
     // private final ParameterSource parmSrc;
+    /** The notifier. */
     // private final List<Result> results;
     private final TimeOutNotifier notifier;
 
     // private final List<ParentTreeItem> propertyParents;
 
+    /** The currently running. */
     private List<CheckerFactory> currentlyRunning;
+
+    /** The checker ID. */
     private final String checkerID;
+
+    /** The stopped. */
     private volatile boolean stopped = false;
+
+    /** The concurrent checker. */
     private final int concurrentChecker;
 
+    /** The parameter. */
     private ElectionCheckParameter parameter;
 
+    /** The elec desc. */
     private final ElectionDescription elecDesc;
 
     // private final List<ParentTreeItem> propertyParents;
 
+    /** The results. */
     private List<Result> results = new ArrayList<Result>();
 
+    /** The tree items. */
     private List<ChildTreeItem> treeItems = new ArrayList<ChildTreeItem>();
 
     // /**
@@ -139,6 +155,15 @@ public class FactoryController implements Runnable {
     //     }
     // }
 
+    /**
+     * The constructor.
+     *
+     * @param electionDescription the election description
+     * @param parentProperties the parent properties
+     * @param electionCheckParameter the election check parameter
+     * @param checkerIdString the checker id string
+     * @param concurrentCheckers the concurrent checkers
+     */
     public FactoryController(final ElectionDescription electionDescription,
                              final List<ParentTreeItem> parentProperties,
                              final ElectionCheckParameter electionCheckParameter,
@@ -159,7 +184,7 @@ public class FactoryController implements Runnable {
             for (Iterator<ChildTreeItem> childIterator
                   = parentTreeItem.getSubItems().iterator(); childIterator
                     .hasNext();) {
-                ChildTreeItem child = (ChildTreeItem) childIterator.next();
+                ChildTreeItem child = childIterator.next();
                 if (child.isSelected()) {
                     Result result = CheckerFactoryFactory.getMatchingResult(checkerIdString);
                     result.setProperty(parentTreeItem.getPreAndPostProperties());
@@ -261,9 +286,7 @@ public class FactoryController implements Runnable {
     // }
     // }
 
-    /**
-     * Starts the factoryController, so it then starts the needed checker.
-     */
+    // Starts the factoryController, so it then starts the needed checker.
     @Override
     public void run() {
         outerLoop: for (int i = 0; i < results.size(); i++) {
@@ -349,7 +372,7 @@ public class FactoryController implements Runnable {
             // send a signal to all currently running Checkers so they will stop
             for (Iterator<CheckerFactory> iterator = currentlyRunning.iterator();
                     iterator.hasNext();) {
-                CheckerFactory toStop = (CheckerFactory) iterator.next();
+                CheckerFactory toStop = iterator.next();
                 toStop.stopChecking();
             }
             // set all not finished results to finished, to indicate that they
@@ -419,14 +442,29 @@ public class FactoryController implements Runnable {
     //     }
     // }
 
+    /**
+     * Gets the results.
+     *
+     * @return the results
+     */
     public List<Result> getResults() {
         return results;
     }
 
+    /**
+     * Gets the properties to check.
+     *
+     * @return the properties to check
+     */
     public List<ChildTreeItem> getPropertiesToCheck() {
         return propertiesToCheck;
     }
 
+    /**
+     * Sets the properties to check.
+     *
+     * @param propsToCheck the new properties to check
+     */
     public void setPropertiesToCheck(final List<ChildTreeItem> propsToCheck) {
         this.propertiesToCheck = propsToCheck;
     }
@@ -440,6 +478,10 @@ public class FactoryController implements Runnable {
      *
      */
     public class FactoryEnder extends Thread {
+
+        /**
+         * Run.
+         */
         @Override
         public void run() {
             thisObject.stopChecking(false);

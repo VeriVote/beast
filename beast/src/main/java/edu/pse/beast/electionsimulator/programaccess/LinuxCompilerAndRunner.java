@@ -17,22 +17,33 @@ import edu.pse.beast.toolbox.SuperFolderFinder;
  *
  */
 public class LinuxCompilerAndRunner extends SystemSpecificCompilerAndExecutioner {
+
+    /** The Constant COMPILER_STRING. */
     // program that is to be used for checking
     private static final String COMPILER_STRING = "gcc";
 
     // this flag prohibits that file are creates by the compiler and
+    /** The Constant FIND_MISSING_RETURN_OPTION. */
     // only the syntax is checked
     private static final String FIND_MISSING_RETURN_OPTION = "-Wreturn-type";
 
     // we want to compile to a specific name, so we can delete the file
+    /** The Constant SET_OUTPUT_FILE_NAME. */
     // then later on
     private static final String SET_OUTPUT_FILE_NAME = "-o ";
+
+    /** The Constant ENABLE_USER_INCLUDE. */
     private static final String ENABLE_USER_INCLUDE = "-I/";
+
+    /** The Constant USER_INCLUDE_FOLDER. */
     private static final String USER_INCLUDE_FOLDER = "/core/user_includes/";
 
     // we want to compile all available c files, so the user does not need to
+    /** The Constant C_FILE_ENDING. */
     // specify anything
     private static final String C_FILE_ENDING = ".c";
+
+    /** The Constant OUT_FILE_ENDING. */
     private static final String OUT_FILE_ENDING = ".out";
 
     @Override
@@ -58,7 +69,7 @@ public class LinuxCompilerAndRunner extends SystemSpecificCompilerAndExecutioner
         arguments.add(toCheck.getAbsolutePath());
         // iterate over all "*.c" files from the include folder, to include them
         for (Iterator<String> iterator = allFiles.iterator(); iterator.hasNext();) {
-            String toBeIncludedFile = (String) iterator.next();
+            String toBeIncludedFile = iterator.next();
             arguments.add(toBeIncludedFile.replace("\"", "").replace(" ", "\\ "));
         }
         // defines the position to what place the compiled files should be sent

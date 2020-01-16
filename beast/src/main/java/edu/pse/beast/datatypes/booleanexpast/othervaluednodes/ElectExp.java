@@ -4,12 +4,15 @@ import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.types.InOutType;
 
 /**
+ * The Class ElectExp.
  *
  * @author Holger Klein
- *
  */
 public class ElectExp extends AccessValueNode {
+
     /**
+     * Instantiates a new elect exp.
+     *
      * @param type     type
      * @param accessVar accessing variable
      * @param count    the count of this vote expression

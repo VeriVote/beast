@@ -19,13 +19,23 @@ import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
+/**
+ * The Class Approval.
+ */
 public class Approval extends CBMCInputType {
+
+    /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 2;
+
+    /** The Constant SIZE_OF_DIMENSIONS. */
     private static final String[] SIZE_OF_DIMENSIONS = {
             UnifiedNameContainer.getVoter(),
             UnifiedNameContainer.getCandidate()
     };
 
+    /**
+     * The constructor.
+     */
     public Approval() {
         super(true, DataType.INT, DIMENSIONS, SIZE_OF_DIMENSIONS);
     }
@@ -199,7 +209,7 @@ public class Approval extends CBMCInputType {
         List<CBMCResultValueWrapper> wrappedValues = new ArrayList<CBMCResultValueWrapper>();
 
         for (Iterator<String> iterator = values.iterator(); iterator.hasNext();) {
-            String value = (String) iterator.next();
+            String value = iterator.next();
             CBMCResultValueWrapper wrapper = new CBMCResultValueWrapper();
             CBMCResultValueSingle toWrap = new CBMCResultValueSingle();
             toWrap.setValue("int", value, INT_LENGTH);

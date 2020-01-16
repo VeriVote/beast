@@ -16,25 +16,42 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 /**
+ * The Class FileLoader.
  *
  * @author Niels Hanselmann
  */
 public final class FileLoader {
     // we want to compile all available c files, so the user does not need to
+    /** The Constant C_FILE_ENDING. */
     // specify anything
     public static final String C_FILE_ENDING      = ".c";
+
+    /** The Constant BAT_FILE_ENDING. */
     public static final String BAT_FILE_ENDING    = ".bat";
+
+    /** The Constant EXE_FILE_ENDING. */
     public static final String EXE_FILE_ENDING    = ".exe";
+
+    /** The Constant OBJECT_FILE_ENDING. */
     public static final String OBJECT_FILE_ENDING = ".obj";
+
+    /** The Constant OUT_FILE_ENDING. */
     public static final String OUT_FILE_ENDING    = ".out";
 
+    /** The Constant HUNDRED. */
     private static final int HUNDRED = 100;
+
+    /** The Constant INT_LENGTH. */
     private static final int INT_LENGTH = 32;
 
+    /**
+     * Instantiates a new file loader.
+     */
     private FileLoader() {
     }
 
     /**
+     * Load file as string.
      *
      * @param file the file that will be read
      * @return A LinkedList of String elements which are in the same order as in the
@@ -59,6 +76,8 @@ public final class FileLoader {
     }
 
     /**
+     * Load file as image.
+     *
      * @param toRead the File you want to read
      * @return the image, if it was possible to read it. In case it could not be
      *         read, the method returns null
@@ -100,6 +119,12 @@ public final class FileLoader {
         return newName;
     }
 
+    /**
+     * Gets the random name.
+     *
+     * @param wordSize the word size
+     * @return the random name
+     */
     private static String getRandomName(final int wordSize) {
         SecureRandom random = new SecureRandom();
         return new java.math.BigInteger(wordSize, random).toString(INT_LENGTH);

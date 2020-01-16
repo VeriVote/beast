@@ -25,19 +25,38 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+/**
+ * The Class TextAndImages.
+ */
 public class TextAndImages extends ResultPresentationType {
+
+    /** The Constant DEFAULT_FONT_SIZE. */
     private static final int DEFAULT_FONT_SIZE = 12;
+
+    /** The Constant THOUSAND. */
     private static final int THOUSAND = 1000;
+
+    /** The Constant CANVAS_SIZE. */
     private static final int CANVAS_SIZE = 100;
+
+    /** The Constant OVAL_X_COORD. */
     private static final int OVAL_X_COORD = 10;
+
+    /** The Constant OVAL_Y_COORD. */
     private static final int OVAL_Y_COORD = 60;
+
+    /** The Constant OVAL_SIZE. */
     private static final int OVAL_SIZE = 30;
 
+    /** The styled text ops. */
     private final TextOps<String, TextStyle> styledTextOps = SegmentOps.styledTextOps();
+
+    /** The linked image ops. */
     private final LinkedImageOps<TextStyle> linkedImageOps = new LinkedImageOps<>();
 
+    /** The area. */
     private final GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area =
-            new GenericStyledArea<>(
+            new GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle>(
                     ParStyle.EMPTY, // default paragraph style
                     // paragraph style setter
                 (paragraph, style) -> paragraph.setStyle(style.toCss()),
@@ -47,8 +66,15 @@ public class TextAndImages extends ResultPresentationType {
                     styledTextOps._or(linkedImageOps, (s1, s2) -> Optional.empty()),
                 seg -> createNode(seg,
                     (text, style) -> text.setStyle(style.toCss()))); // Node creator and
-                                                                         // segment style setter
+                                                                     // segment style setter
 
+    /**
+     * Creates the node.
+     *
+     * @param seg the seg
+     * @param applyStyle the apply style
+     * @return the node
+     */
     private Node createNode(final StyledSegment<Either<String, LinkedImage>,
                                                 TextStyle> seg,
                             final BiConsumer<? super TextExt, TextStyle> applyStyle) {

@@ -10,7 +10,11 @@ import edu.pse.beast.datatypes.electiondescription.ElectionTypeContainer;
  * @author Holger Klein
  */
 public class ElectionTemplateHandler {
+
+    /** The input types. */
     private final ArrayList<ElectionTypeContainer> inputTypes = new ArrayList<>();
+
+    /** The res types. */
     private final ArrayList<ElectionTypeContainer> resTypes = new ArrayList<>();
 
     /**

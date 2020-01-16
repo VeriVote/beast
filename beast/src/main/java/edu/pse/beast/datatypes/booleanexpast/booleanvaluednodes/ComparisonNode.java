@@ -5,16 +5,23 @@ import edu.pse.beast.datatypes.booleanexpast.ComparisonSymbol;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.TypeExpression;
 
 /**
+ * The Class ComparisonNode.
  *
  * @author Lukas Stapelbroek
- *
  */
 public class ComparisonNode extends BooleanExpressionNode {
+
+    /** The lhs type exp. */
     private final TypeExpression lhsTypeExp;
+
+    /** The rhs type exp. */
     private final TypeExpression rhsTypeExp;
+
+    /** The comparison symbol. */
     private final ComparisonSymbol comparisonSymbol;
 
     /**
+     * Instantiates a new comparison node.
      *
      * @param lhsTypeExpr       the lhsExpression
      * @param rhsTypeExpr       the rhsExpression
@@ -30,6 +37,7 @@ public class ComparisonNode extends BooleanExpressionNode {
     }
 
     /**
+     * Gets the LHS boolean exp node.
      *
      * @return the LHSNode
      */
@@ -38,6 +46,7 @@ public class ComparisonNode extends BooleanExpressionNode {
     }
 
     /**
+     * Gets the RHS boolean exp node.
      *
      * @return the RHSNode
      */
@@ -100,6 +109,7 @@ public class ComparisonNode extends BooleanExpressionNode {
     }
 
     /**
+     * Gets the comparison symbol.
      *
      * @return the symbol that describes this comparison
      */
@@ -107,10 +117,20 @@ public class ComparisonNode extends BooleanExpressionNode {
         return comparisonSymbol;
     }
 
+    /**
+     * Gets the lhs type exp.
+     *
+     * @return the lhs type exp
+     */
     public TypeExpression getLhsTypeExp() {
         return lhsTypeExp;
     }
 
+    /**
+     * Gets the rhs type exp.
+     *
+     * @return the rhs type exp
+     */
     public TypeExpression getRhsTypeExp() {
         return rhsTypeExp;
     }

@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2016 sothawo
+ *
+ * http://www.sothawo.com
+ */
 package edu.pse.beast.toolbox;
 
 import java.text.MessageFormat;
@@ -7,12 +12,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.concurrent.Callable;
-
-/**
- * Copyright (c) 2016 sothawo
- *
- * http://www.sothawo.com
- */
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.StringBinding;
@@ -35,6 +34,9 @@ public final class Internationalization {
     /** the current selected Locale. */
     private static final ObjectProperty<Locale> LOCALE;
 
+    /**
+     * Instantiates a new internationalization.
+     */
     private Internationalization() { }
 
     static {
@@ -62,15 +64,30 @@ public final class Internationalization {
         return getSupportedLocales().contains(sysDefault) ? sysDefault : Locale.ENGLISH;
     }
 
+    /**
+     * Gets the locale.
+     *
+     * @return the locale
+     */
     public static Locale getLocale() {
         return LOCALE.get();
     }
 
+    /**
+     * Sets the locale.
+     *
+     * @param locale the new locale
+     */
     public static void setLocale(final Locale locale) {
         localeProperty().set(locale);
         Locale.setDefault(locale);
     }
 
+    /**
+     * Locale property.
+     *
+     * @return the object property
+     */
     public static ObjectProperty<Locale> localeProperty() {
         return LOCALE;
     }

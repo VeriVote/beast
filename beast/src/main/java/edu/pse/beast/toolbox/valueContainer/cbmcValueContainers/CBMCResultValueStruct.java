@@ -7,10 +7,18 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * The Class CBMCResultValueStruct.
+ */
 public class CBMCResultValueStruct implements CBMCResultValue {
+
+    /** The Constant MEMBER_TAG. */
     private static final String MEMBER_TAG = "member";
+
+    /** The Constant MEMBER_NAME. */
     private static final String MEMBER_NAME = "name";
 
+    /** The values. */
     private Map<String, CBMCResultValueWrapper> values =
             new HashMap<String, CBMCResultValueWrapper>();
 
@@ -40,10 +48,22 @@ public class CBMCResultValueStruct implements CBMCResultValue {
         }
     }
 
+    /**
+     * Sets the value.
+     *
+     * @param wrapper the wrapper
+     * @param name the name
+     */
     public void setValue(final CBMCResultValueWrapper wrapper, final String name) {
         values.put(name, wrapper);
     }
 
+    /**
+     * Gets the result variable.
+     *
+     * @param variableName the variable name
+     * @return the result variable
+     */
     public CBMCResultValueWrapper getResultVariable(final String variableName) {
         return values.get(variableName);
     }

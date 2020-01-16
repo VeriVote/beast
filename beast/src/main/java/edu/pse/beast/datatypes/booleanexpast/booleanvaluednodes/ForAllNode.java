@@ -4,12 +4,14 @@ import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 
 /**
+ * The Class ForAllNode.
  *
  * @author Holger
- *
  */
 public class ForAllNode extends QuantifierNode {
+
     /**
+     * Instantiates a new for all node.
      *
      * @param declSymbVar   the symbolic variable of this quantifier
      * @param followingNode the following node of this quantifier

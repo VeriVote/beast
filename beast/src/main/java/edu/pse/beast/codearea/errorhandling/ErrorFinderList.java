@@ -10,6 +10,8 @@ import java.util.ArrayList;
  * @author Holger Klein
  */
 public class ErrorFinderList {
+
+    /** The error finder list. */
     private ArrayList<ErrorFinder> errorFinderList = new ArrayList<>();
 
     /**
@@ -26,6 +28,11 @@ public class ErrorFinderList {
         return created;
     }
 
+    /**
+     * Adds the.
+     *
+     * @param errorFinder the error finder
+     */
     public void add(final ErrorFinder errorFinder) {
         errorFinderList.add(errorFinder);
     }

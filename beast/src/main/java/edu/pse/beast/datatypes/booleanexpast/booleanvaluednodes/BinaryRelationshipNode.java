@@ -1,15 +1,20 @@
 package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
 
 /**
+ * The Class BinaryRelationshipNode.
  *
  * @author Lukas Stapelbroek
- *
  */
 public abstract class BinaryRelationshipNode extends BooleanExpressionNode {
+
+    /** The lhs exp node. */
     private final BooleanExpressionNode lhsExpNode;
+
+    /** The rhs exp node. */
     private final BooleanExpressionNode rhsExpNode;
 
     /**
+     * Instantiates a new binary relationship node.
      *
      * @param lhsExprNode the lhs node
      * @param rhsExprNode the rhs node
@@ -21,6 +26,7 @@ public abstract class BinaryRelationshipNode extends BooleanExpressionNode {
     }
 
     /**
+     * Gets the LHS boolean exp node.
      *
      * @return the LHSNode
      */
@@ -29,6 +35,7 @@ public abstract class BinaryRelationshipNode extends BooleanExpressionNode {
     }
 
     /**
+     * Gets the RHS boolean exp node.
      *
      * @return the RHSNode
      */

@@ -9,6 +9,7 @@ import edu.pse.beast.toolbox.FileLoader;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 
 /**
+ * The Class StringResourceProvider.
  *
  * @author Niels Hanselmann
  */
@@ -29,6 +30,7 @@ public abstract class StringResourceProvider {
     }
 
     /**
+     * Change language.
      *
      * @param langId the language. Choose "de" for German
      */
@@ -43,6 +45,7 @@ public abstract class StringResourceProvider {
     protected abstract void initialize();
 
     /**
+     * Gets the file location string.
      *
      * @param moduleName the Name of the StringResource you want
      * @return the relative fileLocation
@@ -62,6 +65,11 @@ public abstract class StringResourceProvider {
                         + file.getAbsolutePath());
     }
 
+    /**
+     * File not found.
+     *
+     * @param file the file
+     */
     private void fileNotFound(final File file) {
         ErrorLogger.log("The file " + file.getName() + " can not be found");
         ErrorLogger.log("The file should be in this directory " + file.getAbsolutePath());

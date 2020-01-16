@@ -8,12 +8,14 @@ import javafx.scene.canvas.Canvas;
  * the rich text editor, the image is loaded from the specified file.
  */
 public class RealLinkedImage implements LinkedImage {
+
+    /** The canvas. */
     private Canvas canvas;
 
     /**
      * Creates a new linked image object.
      *
-     * @param imagePath
+     * @param canv
      *            The path to the image file.
      */
     public RealLinkedImage(final Canvas canv) {

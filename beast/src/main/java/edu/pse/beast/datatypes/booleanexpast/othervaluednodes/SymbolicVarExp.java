@@ -5,14 +5,17 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariable;
 import edu.pse.beast.types.InternalTypeContainer;
 
 /**
+ * The Class SymbolicVarExp.
  *
  * @author Lukas Stapelbroek
- *
  */
 public class SymbolicVarExp extends TypeExpression {
+
+    /** The symb var. */
     private final SymbolicVariable symbVar;
 
     /**
+     * Instantiates a new symbolic var exp.
      *
      * @param internalTypeContainer the type of this node
      * @param symbolicVar           the symbolic variable that this node describes
@@ -24,6 +27,7 @@ public class SymbolicVarExp extends TypeExpression {
     }
 
     /**
+     * Gets the symbolic var.
      *
      * @return the symbolic variable that this node describes
      */

@@ -3,14 +3,18 @@ package edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednode
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 
 /**
+ * The Class ConstantExp.
  *
  * @author Holger
- *
  */
 public class ConstantExp extends IntegerValuedExpression {
+
+    /** The constant. */
     private final String constant;
 
     /**
+     * Instantiates a new constant exp.
+     *
      * @param constantStr the constant saved in this node
      */
     public ConstantExp(final String constantStr) {
@@ -18,6 +22,7 @@ public class ConstantExp extends IntegerValuedExpression {
     }
 
     /**
+     * Gets the constant.
      *
      * @return the constant saved in this node
      */

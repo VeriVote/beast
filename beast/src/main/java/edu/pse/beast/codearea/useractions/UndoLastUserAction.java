@@ -9,8 +9,15 @@ import edu.pse.beast.toolbox.UserAction;
  * @author Holger Klein
  */
 public class UndoLastUserAction extends UserAction {
+
+    /** The list. */
     private ActionList list;
 
+    /**
+     * Instantiates a new undo last user action.
+     *
+     * @param actList the act list
+     */
     public UndoLastUserAction(final ActionList actList) {
         super("undo");
         this.list = actList;

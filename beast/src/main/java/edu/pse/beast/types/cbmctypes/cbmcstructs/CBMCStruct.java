@@ -7,17 +7,43 @@ import edu.pse.beast.types.ComplexType;
 import edu.pse.beast.types.InOutType;
 import edu.pse.beast.types.InOutType.DataType;
 
+/**
+ * The Class CBMCStruct.
+ */
 public class CBMCStruct extends ComplexType {
+
+    /** The Constant PRIME_THREE. */
     private static final int PRIME_THREE = 1237;
+
+    /** The Constant PRIME_TWO. */
     private static final int PRIME_TWO = 1231;
+
+    /** The Constant PRIME_ONE. */
     private static final int PRIME_ONE = 31;
+
+    /** The in out type. */
     private final InOutType inOutType;
+
+    /** The data type. */
     private final DataType dataType;
+
+    /** The dimensions. */
     private final int dimensions;
+
+    /** The size of dimensions. */
     private final String[] sizeOfDimensions;
+
+    /** The unsigned. */
     private final boolean unsigned;
+
+    /** The struct name. */
     private final String structName;
 
+    /**
+     * The constructor.
+     *
+     * @param inputOutputType the input output type
+     */
     public CBMCStruct(final InOutType inputOutputType) {
         this.inOutType = inputOutputType;
         this.dataType = inputOutputType.getDataType();
@@ -61,10 +87,6 @@ public class CBMCStruct extends ComplexType {
         return false;
     }
 
-    /**
-     *
-     * @return the string which defines this struct
-     */
     @Override
     public String getStructDefinition() {
         String sign = "";

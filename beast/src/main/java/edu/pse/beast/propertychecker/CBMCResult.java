@@ -24,16 +24,31 @@ import edu.pse.beast.toolbox.XMLtoolbox;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 import edu.pse.beast.types.cbmctypes.CBMCxmlParser;
 
+/**
+ * The Enum CDATATYPE.
+ */
 enum CDATATYPE {
-    SINGLE, ARRAY, STRUCT, POINTER;
+    /** The single. */
+    SINGLE,
+
+    /** The array. */
+    ARRAY,
+
+    /** The struct. */
+    STRUCT,
+
+    /** The pointer. */
+    POINTER;
 }
 
 /**
+ * The Class CBMCResult.
  *
  * @author Lukas Stapelbroek
- *
  */
 public class CBMCResult extends Result {
+
+    /** The Constant WIN_OFFSET. */
     private static final int WIN_OFFSET = 8;
 
     /**
@@ -54,18 +69,28 @@ public class CBMCResult extends Result {
     // the charset in which we want to present the data to the xml parser
     // private transient Charset charSet = new UTF_16();
 
+    /** The char set. */
     private transient Charset charSet = Charset.forName("UTF-8"); // TODO check if this
                                                                   // charset is fitting for
+                                                                  /** The value cache. */
                                                                   // both windows and linux
     private transient Map<String, List<ResultValueWrapper>> valueCache =
             new HashMap<String, List<ResultValueWrapper>>();
+
+    /** The root element. */
     // the element containing all previous
     private transient Document rootElement = null;
 
+    /**
+     * Instantiates a new CBMC result.
+     */
     public CBMCResult() {
         // empty constructor
     }
 
+    /**
+     * Reset.
+     */
     private void reset() {
         this.valueCache.clear();
         this.rootElement = null;
@@ -86,6 +111,9 @@ public class CBMCResult extends Result {
         }
     }
 
+    /**
+     * Parses the result.
+     */
     private void parseResult() {
         int offset = 0; // TODO beautify
         OperatingSystems os = CBMCProcessFactory.determineOS();
@@ -129,6 +157,12 @@ public class CBMCResult extends Result {
         return valueCache.get(variableMatcher);
     }
 
+    /**
+     * Read variable value.
+     *
+     * @param variablesToFind the variables to find
+     * @return the map
+     */
     private Map<String, List<ResultValueWrapper>>
                 readVariableValue(final List<String> variablesToFind) {
         HashMap<String, List<ResultValueWrapper>> toReturn =
@@ -136,7 +170,7 @@ public class CBMCResult extends Result {
         if (isInitialized()) {
             for (Iterator<String> iterator = variablesToFind.iterator();
                     iterator.hasNext();) {
-                String currentMatcher = (String) iterator.next();
+                String currentMatcher = iterator.next();
                 if (valueCache.containsKey(currentMatcher)) { // the variable was requested
                                                               // before
                     toReturn.put(currentMatcher,
@@ -167,6 +201,11 @@ public class CBMCResult extends Result {
         return checkAssertion(FAILURE_IDENTIFIER);
     }
 
+    /**
+     * Checks if is initialized.
+     *
+     * @return true, if is initialized
+     */
     private boolean isInitialized() {
         if (super.getResult() != null && super.getResult().size() > 0) { // the result object
                                                                          // is set
@@ -179,6 +218,12 @@ public class CBMCResult extends Result {
         }
     }
 
+    /**
+     * Check assertion.
+     *
+     * @param identifier the identifier
+     * @return true, if successful
+     */
     private boolean checkAssertion(final String identifier) {
         if (isInitialized()) {
             NodeList resultElements = rootElement.getElementsByTagName(RESULT_TAG);

@@ -14,13 +14,29 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 
+/**
+ * The Class ResultTreeItem.
+ */
 public class ResultTreeItem extends CustomTreeItem {
+
+    /** The result. */
     private final Result result;
+
+    /** The owner. */
     private final ChildTreeItem owner;
 
+    /** The name. */
     private Label name = new Label("Result");
+
+    /** The button. */
     private Button button = new Button("delete");
 
+    /**
+     * Instantiates a new result tree item.
+     *
+     * @param resultVal the result val
+     * @param ownerItem the owner item
+     */
     public ResultTreeItem(final Result resultVal, final ChildTreeItem ownerItem) {
         this.result = resultVal;
         this.owner = ownerItem;
@@ -28,6 +44,9 @@ public class ResultTreeItem extends CustomTreeItem {
         init();
     }
 
+    /**
+     * Inits the.
+     */
     private void init() {
         this.setAlignment(Pos.CENTER_LEFT);
         button.setOnAction((event) -> {
@@ -44,6 +63,9 @@ public class ResultTreeItem extends CustomTreeItem {
         this.getChildren().add(button);
     }
 
+    /**
+     * Was clicked.
+     */
     public void wasClicked() {
         if (result != null) {
             owner.showResult(result);
@@ -110,6 +132,9 @@ public class ResultTreeItem extends CustomTreeItem {
     // return resultString.getCodeArrayList();
     // }
 
+    /**
+     * Sets the presentable.
+     */
     public void setPresentable() {
         if (result != null && result.isFinished()) {
             if (result.isMarginComp() || result.isTest()) {
@@ -136,10 +161,20 @@ public class ResultTreeItem extends CustomTreeItem {
         }
     }
 
+    /**
+     * Gets the result.
+     *
+     * @return the result
+     */
     public Result getResult() {
         return result;
     }
 
+    /**
+     * Gets the owner.
+     *
+     * @return the owner
+     */
     public ChildTreeItem getOwner() {
         return owner;
     }

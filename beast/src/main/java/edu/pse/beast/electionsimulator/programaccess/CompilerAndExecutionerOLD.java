@@ -16,10 +16,16 @@ import edu.pse.beast.toolbox.ErrorLogger;
  *
  */
 public final class CompilerAndExecutionerOLD {
+
+    /** The specific com and exe. */
     private static SystemSpecificCompilerAndExecutioner specificComAndExe = null;
 
+    /** The initialized. */
     private static boolean initialized = false;
 
+    /**
+     * Instantiates a new compiler and executioner OLD.
+     */
     private CompilerAndExecutionerOLD() {
     }
 

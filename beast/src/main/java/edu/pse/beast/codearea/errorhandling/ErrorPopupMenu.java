@@ -14,9 +14,18 @@ import javax.swing.JTextPane;
  * @author Holger Klein
  */
 public class ErrorPopupMenu extends JPopupMenu implements KeyListener {
+
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
+
+    /** The error item. */
     private JMenuItem errorItem;
 
+    /**
+     * Instantiates a new error popup menu.
+     *
+     * @param pane the pane
+     */
     public ErrorPopupMenu(final JTextPane pane) {
         errorItem = new JMenuItem("");
         errorItem.setBackground(Color.white);
@@ -25,6 +34,11 @@ public class ErrorPopupMenu extends JPopupMenu implements KeyListener {
         this.addKeyListener(this);
     }
 
+    /**
+     * Gets the error item.
+     *
+     * @return the error item
+     */
     public JMenuItem getErrorItem() {
         return errorItem;
     }

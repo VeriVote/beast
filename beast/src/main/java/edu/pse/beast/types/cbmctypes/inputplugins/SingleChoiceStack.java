@@ -15,12 +15,23 @@ import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
+/**
+ * The Class SingleChoiceStack.
+ */
 public class SingleChoiceStack extends CBMCInputType {
+
+    /** The Constant FIVE. */
     private static final int FIVE = 5;
 
+    /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 1;
+
+    /** The Constant SIZE_OF_DIMENSIONS. */
     private static final String[] SIZE_OF_DIMENSIONS = {UnifiedNameContainer.getCandidate()};
 
+    /**
+     * The constructor.
+     */
     public SingleChoiceStack() {
         super(true, DataType.INT, DIMENSIONS, SIZE_OF_DIMENSIONS);
     }
@@ -195,6 +206,12 @@ public class SingleChoiceStack extends CBMCInputType {
                 .getNumVoters();
     }
 
+    /**
+     * Test method.
+     *
+     * @param i the i
+     * @return the int
+     */
     public int test(final int i) {
         return FIVE;
     }

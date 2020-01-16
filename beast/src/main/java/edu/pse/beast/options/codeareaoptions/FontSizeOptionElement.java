@@ -8,6 +8,8 @@ import edu.pse.beast.options.OptionElement;
  * OptionElement subclass for the fontsize option.
  */
 public class FontSizeOptionElement extends OptionElement {
+
+    /** The size. */
     private int size;
 
     /**

@@ -13,10 +13,12 @@ import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 
 /**
+ * The Class ElectionDescriptionSaverLoader.
  *
  * @author Lukas Stapelbroek
  */
 public class ElectionDescriptionSaverLoader implements SaverLoader<ElectionDescription> {
+    /** The saver loader. */
     private static Gson saverLoader;
 
     static { // here you have the chance to register typeAdapters

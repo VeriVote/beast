@@ -8,14 +8,20 @@ import edu.pse.beast.highlevel.ResultCheckerCommunicator;
 import edu.pse.beast.highlevel.javafx.ParentTreeItem;
 
 /**
+ * The Class PropertyChecker.
  *
  * @author Niels Hanselmann
  */
 public class PropertyChecker implements ResultCheckerCommunicator {
+
+    /** The factory controller. */
     private FactoryController factoryController;
+
+    /** The checker ID. */
     private final String checkerID;
 
     /**
+     * Instantiates a new property checker.
      *
      * @param checkerIdString the ID for the checker to be used
      */

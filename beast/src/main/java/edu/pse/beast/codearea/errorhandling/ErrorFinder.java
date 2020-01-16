@@ -8,5 +8,11 @@ import java.util.ArrayList;
  * @author Holger Klein
  */
 public interface ErrorFinder {
+
+    /**
+     * Gets the errors.
+     *
+     * @return the errors
+     */
     ArrayList<CodeError> getErrors();
 }

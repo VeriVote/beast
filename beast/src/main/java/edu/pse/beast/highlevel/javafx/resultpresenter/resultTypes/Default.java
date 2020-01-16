@@ -24,9 +24,12 @@ import javafx.scene.Node;
  *
  */
 public class Default extends ResultPresentationType {
+
+    /** The area. */
     private GenericStyledArea<ParStyle,
                               Either<String, LinkedImage>,
                               TextStyle> area;
+
 
     @Override
     public Node presentResult(final Result result) {

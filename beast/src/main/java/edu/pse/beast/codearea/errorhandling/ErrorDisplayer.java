@@ -24,18 +24,40 @@ import edu.pse.beast.toolbox.Tuple;
  * @author Holger Klein
  */
 public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMotionListener {
+
+    /** The Constant MIN_MOUSE_MOVE. */
     private static final int MIN_MOUSE_MOVE = 10;
+
+    /** The Constant DISMISS_DELAY. */
     private static final int DISMISS_DELAY = 10000;
 
+    /** The current string res loader. */
     private StringResourceLoader currentStringResLoader;
+
+    /** The pane. */
     private JTextPane pane;
 
+    /** The painter. */
     private SquigglePainter painter;
+
+    /** The abs pos to msg. */
     private ArrayList<Tuple<Integer, Integer>> absPosToMsg;
+
+    /** The msges. */
     private ArrayList<String> msges;
+
+    /** The high lights. */
     private ArrayList<Object> highLights = new ArrayList<>();
+
+    /** The error popup menu. */
     private ErrorPopupMenu errorPopupMenu;
 
+    /**
+     * Instantiates a new error displayer.
+     *
+     * @param textPane the text pane
+     * @param currStrResLoader the curr str res loader
+     */
     public ErrorDisplayer(final JTextPane textPane,
                           final StringResourceLoader currStrResLoader) {
         absPosToMsg = new ArrayList<>();
@@ -49,14 +71,29 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         errorPopupMenu = new ErrorPopupMenu(textPane);
     }
 
+    /**
+     * Gets the string resource loader.
+     *
+     * @return the string resource loader
+     */
     protected StringResourceLoader getStringResourceLoader() {
         return this.currentStringResLoader;
     }
 
+    /**
+     * Gets the j text pane.
+     *
+     * @return the j text pane
+     */
     protected JTextPane getJTextPane() {
         return this.pane;
     }
 
+    /**
+     * Sets the string resource loader.
+     *
+     * @param stringResLoader the new string resource loader
+     */
     protected void setStringResourceLoader(final StringResourceLoader stringResLoader) {
         this.currentStringResLoader = stringResLoader;
     }
@@ -78,6 +115,12 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
         pane.repaint();
     }
 
+    /**
+     * Show error.
+     *
+     * @param er the er
+     * @param msg the msg
+     */
     protected void showError(final CodeError er, final String msg) {
         int startpos = er.getStartPos();
         int endpos = er.getEndPos();
@@ -107,12 +150,6 @@ public abstract class ErrorDisplayer implements DisplaysStringsToUser, MouseMoti
      * template; }
      */
 
-    /**
-     * checks if the mouse position is over a part of the code which contains an
-     * error. if so, it displays a popupmenu with the error message
-     *
-     * @param e
-     */
     @Override
     public void mouseMoved(final MouseEvent e) {
         Point pt = new Point(e.getX(), e.getY());

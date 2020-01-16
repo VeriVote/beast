@@ -15,10 +15,13 @@ import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.Vo
 import edu.pse.beast.types.InternalTypeContainer;
 
 /**
+ * A factory for creating BooleanExpError objects.
  *
  * @author Holger Klein
  */
 public final class BooleanExpErrorFactory {
+
+    /** The Constant ERROR_IDS. */
     private static final String[] ERROR_IDS
       = {
           "antlr", "var_not_decl", "too_many_vars_passed", "wrong_var_type_passed",
@@ -26,8 +29,17 @@ public final class BooleanExpErrorFactory {
           "number_must_be_greater_0"
       };
 
+    /**
+     * Instantiates a new boolean exp error factory.
+     */
     private BooleanExpErrorFactory() { }
 
+    /**
+     * Gets the error num.
+     *
+     * @param id the id
+     * @return the error num
+     */
     private static int getErrorNum(final String id) {
         for (int i = 0; i < ERROR_IDS.length; ++i) {
             if (ERROR_IDS[i].equals(id)) {
@@ -200,6 +212,13 @@ public final class BooleanExpErrorFactory {
         return err;
     }
 
+    /**
+     * Generate standard error.
+     *
+     * @param ctx the ctx
+     * @param id the id
+     * @return the code error
+     */
     private static CodeError generateStandardError(final ParserRuleContext ctx,
                                                    final String id) {
         int pos = ctx.getStart().getStartIndex();

@@ -3,14 +3,28 @@ package edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednode
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 
 /**
+ * The Class BinaryIntegerValuedNode.
+ *
  * @author Holger Klein
  */
 public class BinaryIntegerValuedNode extends IntegerValuedExpression {
 
+    /** The lhs. */
     private final IntegerValuedExpression lhs;
+
+    /** The rhs. */
     private final IntegerValuedExpression rhs;
+
+    /** The relation symbol. */
     private final String relationSymbol;
 
+    /**
+     * Instantiates a new binary integer valued node.
+     *
+     * @param lhsExpr the lhs expr
+     * @param rhsExpr the rhs expr
+     * @param relationSymb the relation symb
+     */
     public BinaryIntegerValuedNode(final IntegerValuedExpression lhsExpr,
                                    final IntegerValuedExpression rhsExpr,
                                    final String relationSymb) {
@@ -34,6 +48,11 @@ public class BinaryIntegerValuedNode extends IntegerValuedExpression {
         return b.toString();
     }
 
+    /**
+     * Gets the relation symbol.
+     *
+     * @return the relation symbol
+     */
     public String getRelationSymbol() {
         return relationSymbol;
     }
@@ -78,10 +97,20 @@ public class BinaryIntegerValuedNode extends IntegerValuedExpression {
         return true;
     }
 
+    /**
+     * Gets the lhs.
+     *
+     * @return the lhs
+     */
     public IntegerValuedExpression getLhs() {
         return lhs;
     }
 
+    /**
+     * Gets the rhs.
+     *
+     * @return the rhs
+     */
     public IntegerValuedExpression getRhs() {
         return rhs;
     }

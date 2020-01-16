@@ -13,14 +13,29 @@ import javax.swing.event.ChangeListener;
  * @author Jonas Wohnig
  */
 public class MinMaxSpinValueHandler implements ChangeListener {
+
+    /** The Constant MIN_VALUE. */
     private static final int MIN_VALUE = 1;
+
+    /** The Constant MAX_VALUE. */
     private static final int MAX_VALUE = 10000;
 
+    /** The min spinner. */
     private final JSpinner minSpinner;
+
+    /** The max spinner. */
     private final JSpinner maxSpinner;
+
+    /** The min before. */
     private Integer minBefore;
+
+    /** The max before. */
     private Integer maxBefore;
+
+    /** The reacts. */
     private boolean reacts;
+
+    /** The has changed. */
     private boolean hasChanged;
 
     /**

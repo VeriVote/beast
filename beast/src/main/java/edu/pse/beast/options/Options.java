@@ -19,6 +19,8 @@ public abstract class Options {
      * The option elements that are saved by this object.
      */
     private List<OptionElement> optElements = new ArrayList<>();
+
+    /** The id. */
     private final String id;
 
     /**

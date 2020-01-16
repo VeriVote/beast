@@ -21,14 +21,26 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+/**
+ * The Class TreeViewSample.
+ */
 public class TreeViewSample extends Application {
+
+    /** The Constant ROOT. */
     private static final String ROOT = "root.png";
+
+    /** The Constant DEPARTMENT. */
     private static final String DEPARTMENT = "department.png";
 
+    /** The root icon. */
     private final Node rootIcon =
             new ImageView(new Image(getClass().getResourceAsStream(ROOT)));
+
+    /** The dep icon. */
     private final Image depIcon =
             new Image(getClass().getResourceAsStream(DEPARTMENT));
+
+    /** The employees. */
     private List<Employee> employees =
             Arrays.<Employee>asList(
                     new Employee("Ethan Williams", "Sales Department"),
@@ -42,9 +54,16 @@ public class TreeViewSample extends Application {
                     new Employee("Gregory Smith", "IT Support"),
                     new Employee("Jacob Smith", "Accounts Department"),
                     new Employee("Isabella Johnson", "Accounts Department"));
+
+    /** The root node. */
     private TreeItem<String> rootNode =
             new TreeItem<String>("MyCompany Human Resources", rootIcon);
 
+    /**
+     * The main method.
+     *
+     * @param args the arguments
+     */
     public static void main(final String[] args) {
         Application.launch(args);
     }
@@ -90,13 +109,23 @@ public class TreeViewSample extends Application {
         stage.show();
     }
 
+    /**
+     * The Class TextFieldTreeCellImpl.
+     */
     private final class TextFieldTreeCellImpl extends TreeCell<String> {
 
+        /** The text field. */
         private TextField textField;
 
+        /**
+         * Instantiates a new text field tree cell impl.
+         */
         TextFieldTreeCellImpl() {
         }
 
+        /**
+         * Start edit.
+         */
         @Override
         public void startEdit() {
             super.startEdit();
@@ -108,13 +137,22 @@ public class TreeViewSample extends Application {
             textField.selectAll();
         }
 
+        /**
+         * Cancel edit.
+         */
         @Override
         public void cancelEdit() {
             super.cancelEdit();
-            setText((String) getItem());
+            setText(getItem());
             setGraphic(getTreeItem().getGraphic());
         }
 
+        /**
+         * Update item.
+         *
+         * @param item the item
+         * @param empty the empty
+         */
         @Override
         public void updateItem(final String item, final boolean empty) {
             super.updateItem(item, empty);
@@ -135,6 +173,9 @@ public class TreeViewSample extends Application {
             }
         }
 
+        /**
+         * Creates the text field.
+         */
         private void createTextField() {
             textField = new TextField(getString());
             textField.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -150,33 +191,70 @@ public class TreeViewSample extends Application {
             });
         }
 
+        /**
+         * Gets the string.
+         *
+         * @return the string
+         */
         private String getString() {
             return getItem() == null ? "" : getItem().toString();
         }
     }
 
+    /**
+     * The Class Employee.
+     */
     public static final class Employee {
 
+        /** The name. */
         private final SimpleStringProperty name;
+
+        /** The department. */
         private final SimpleStringProperty department;
 
+        /**
+         * Instantiates a new employee.
+         *
+         * @param nameString the name string
+         * @param departmentString the department string
+         */
         private Employee(final String nameString, final String departmentString) {
             this.name = new SimpleStringProperty(nameString);
             this.department = new SimpleStringProperty(departmentString);
         }
 
+        /**
+         * Gets the name.
+         *
+         * @return the name
+         */
         public String getName() {
             return name.get();
         }
 
+        /**
+         * Sets the name.
+         *
+         * @param fName the new name
+         */
         public void setName(final String fName) {
             name.set(fName);
         }
 
+        /**
+         * Gets the department.
+         *
+         * @return the department
+         */
         public String getDepartment() {
             return department.get();
         }
 
+        /**
+         * Sets the department.
+         *
+         * @param fName the new department
+         */
         public void setDepartment(final String fName) {
             department.set(fName);
         }

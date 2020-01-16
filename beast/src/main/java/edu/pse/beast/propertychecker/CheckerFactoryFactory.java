@@ -9,16 +9,31 @@ import edu.pse.beast.datatypes.electioncheckparameter.ElectionCheckParameter;
 import edu.pse.beast.datatypes.electiondescription.ElectionDescription;
 import edu.pse.beast.toolbox.ErrorLogger;
 
+/**
+ * A factory for creating CheckerFactory objects.
+ */
 public final class CheckerFactoryFactory {
+
+    /** The factories. */
     private static Map<String, CheckerFactory> factories = new HashMap<String, CheckerFactory>();
+
+    /** The initialized. */
     private static boolean initialized = false;
 
+    /**
+     * The constructor.
+     */
     private CheckerFactoryFactory() { }
 
     static {
         factories = searchForCheckers();
     }
 
+    /**
+     * Search for checkers.
+     *
+     * @return the map
+     */
     private static Map<String, CheckerFactory> searchForCheckers() {
         Map<String, CheckerFactory> foundFactories = new HashMap<String, CheckerFactory>();
         // cbmc is always included, so we add it here
@@ -28,6 +43,9 @@ public final class CheckerFactoryFactory {
         return foundFactories;
     }
 
+    /**
+     * Reload checkers.
+     */
     public static void reloadCheckers() {
         factories.clear();
         factories = searchForCheckers();
@@ -104,6 +122,16 @@ public final class CheckerFactoryFactory {
     // }
     // }
 
+    /**
+     * Gets the checker factory.
+     *
+     * @param checkerID the checker ID
+     * @param controller the controller
+     * @param electionDesc the election desc
+     * @param result the result
+     * @param parameter the parameter
+     * @return the checker factory
+     */
     public static CheckerFactory getCheckerFactory(final String checkerID,
                                                    final FactoryController controller,
                                                    final ElectionDescription electionDesc,
@@ -135,6 +163,13 @@ public final class CheckerFactoryFactory {
         }
     }
 
+    /**
+     * Gets the matching unprocessed result.
+     *
+     * @param checkerID the checker ID
+     * @param amount the amount
+     * @return the matching unprocessed result
+     */
     public static List<Result> getMatchingUnprocessedResult(final String checkerID,
                                                             final int amount) {
         List<Result> results = new ArrayList<Result>();

@@ -25,19 +25,25 @@ import edu.pse.beast.toolbox.WindowsOStoolbox;
  */
 public class WindowsErrorChecker extends SystemSpecificErrorChecker {
 
+    /** The Constant COMPILER_STRING. */
     // the compiler we use on windows, because it is also needed by cbmc
     private static final String COMPILER_STRING = "cl" + FileLoader.EXE_FILE_ENDING;
 
+    /** The Constant CMD_STRING. */
     private static final String CMD_STRING = "cmd" + FileLoader.EXE_FILE_ENDING;
 
+    /** The Constant ENABLE_USER_INCLUDE. */
     // used to enable includes from the users own written classes
     private static final String ENABLE_USER_INCLUDE = "/I";
+
+    /** The Constant USER_INCLUDE_FOLDER. */
     private static final String USER_INCLUDE_FOLDER = "/core/user_includes/";
 
     // we want to compile all available c files, so the user does not need to
+    /** The Constant COMPILE_ALL_INCLUDES_IN_FOLDER. */
     // specify anything
-    private static final String COMPILE_ALL_INCLUDES_IN_FOLDER
-        = "*" + FileLoader.C_FILE_ENDING;
+    private static final String COMPILE_ALL_INCLUDES_IN_FOLDER =
+            "*" + FileLoader.C_FILE_ENDING;
 
     @Override
     public Process checkCodeFileForErrors(final File toCheck) {
@@ -114,7 +120,7 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
 
         // cl.exe prints out the results in the result list
         for (Iterator<String> iterator = result.iterator(); iterator.hasNext();) {
-            String line = (String) iterator.next();
+            String line = iterator.next();
             Matcher linesMatcher = lineExtractor.matcher(line);
             int lineNumber = -1;
             String varName = "";

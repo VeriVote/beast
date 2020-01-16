@@ -15,9 +15,18 @@ import edu.pse.beast.toolbox.UserAction;
  * @author Holger Klein
  */
 public class CopyUserAction extends UserAction {
+
+    /** The pane. */
     private JTextPane pane;
+
+    /** The clipboard. */
     private Clipboard clipboard;
 
+    /**
+     * Instantiates a new copy user action.
+     *
+     * @param textPane the text pane
+     */
     public CopyUserAction(final JTextPane textPane) {
         super("copy");
         this.pane = textPane;

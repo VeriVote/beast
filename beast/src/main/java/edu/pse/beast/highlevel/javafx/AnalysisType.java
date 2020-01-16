@@ -1,5 +1,14 @@
 package edu.pse.beast.highlevel.javafx;
 
+/**
+ * The Enum AnalysisType.
+ */
 public enum AnalysisType {
-    Check, Margin, Test
+
+    /** The Check. */
+    Check,
+ /** The Margin. */
+ Margin,
+ /** The Test. */
+ Test
 }

@@ -24,12 +24,23 @@ import edu.pse.beast.propertychecker.Result;
  * @author Jonas Wohnig
  */
 public final class BEASTCommunicator {
+
+    /** The Constant SIXTYSEVEN. */
     private static final int SIXTYSEVEN = 67;
+
+    /** The Constant SECONDS_IN_MINUTE. */
     private static final int SECONDS_IN_MINUTE = 60;
+
+    /** The Constant SECONDS_IN_HOUR. */
     private static final int SECONDS_IN_HOUR = 3600;
+
+    /** The Constant SECONDS_IN_DAY. */
     private static final int SECONDS_IN_DAY = 86400;
+
+    /** The Constant NANO_TO_SECONDS. */
     private static final double NANO_TO_SECONDS = 1000000000.0;
 
+    /** The current checkers. */
     private static List<PropertyChecker> currentCheckers = new ArrayList<PropertyChecker>();
     // public static boolean startCheck() {
     // centralObjectProvider.getResultPresenter().resetResults();
@@ -116,12 +127,21 @@ public final class BEASTCommunicator {
     // } else {
     // return false;
     // }
+    /** The stopped. */
     // }
     private static boolean stopped;
 
+    /**
+     * Instantiates a new BEAST communicator.
+     */
     private BEASTCommunicator() {
     }
 
+    /**
+     * Start check NEW.
+     *
+     * @return true, if successful
+     */
     public static synchronized boolean startCheckNEW() {
         stopped = false;
         ElectionDescription electionDesc = GUIController.getController().getElectionDescription();
@@ -160,7 +180,7 @@ public final class BEASTCommunicator {
                         boolean allDone = false;
                         while (!allDone && !stopped) {
                             elapsedTime = System.nanoTime() - startTime;
-                            passedTimeSeconds = (double) elapsedTime / NANO_TO_SECONDS;
+                            passedTimeSeconds = elapsedTime / NANO_TO_SECONDS;
                             timeString = createTimeString(passedTimeSeconds);
                             // GUIController.setInfoText("elapsed time "
                             // + df.format(passedTimeSeconds));
@@ -177,7 +197,7 @@ public final class BEASTCommunicator {
                             allDone = true;
                             for (Iterator<Result> iterator = results.iterator();
                                     iterator.hasNext();) {
-                                Result result = (Result) iterator.next();
+                                Result result = iterator.next();
                                 allDone = allDone && result.isFinished();
                             }
                         }
@@ -194,11 +214,16 @@ public final class BEASTCommunicator {
         return false;
     }
 
+    /**
+     * Stop check.
+     *
+     * @return true, if successful
+     */
     public static synchronized boolean stopCheck() {
         stopped = true;
         for (Iterator<PropertyChecker> iterator = currentCheckers.iterator();
                 iterator.hasNext();) {
-            PropertyChecker checker = (PropertyChecker) iterator.next();
+            PropertyChecker checker = iterator.next();
             checker.abortChecking();
             System.out.println("Aborting");
         }
@@ -228,7 +253,7 @@ public final class BEASTCommunicator {
         }
         boolean errorsFound = false;
         for (Iterator<ParentTreeItem> iterator = properties.iterator(); iterator.hasNext();) {
-            ParentTreeItem parentTreeItem = (ParentTreeItem) iterator.next();
+            ParentTreeItem parentTreeItem = iterator.next();
             if (parentTreeItem.isChildSelected()) {
                 errorsFound |= BooleanExpEditorGeneralErrorFinder.hasErrors(parentTreeItem);
             }
@@ -236,11 +261,17 @@ public final class BEASTCommunicator {
         return errorsFound;
     }
 
+    /**
+     * Checks for properties.
+     *
+     * @param properties the properties
+     * @return true, if successful
+     */
     private static boolean hasProperties(final List<ParentTreeItem> properties) {
         boolean hasProperties = false;
         for (Iterator<ParentTreeItem> iterator = properties.iterator();
                 iterator.hasNext();) {
-            ParentTreeItem item = (ParentTreeItem) iterator.next();
+            ParentTreeItem item = iterator.next();
             hasProperties = hasProperties || item.isChildSelected();
         }
         return hasProperties;
@@ -250,8 +281,8 @@ public final class BEASTCommunicator {
      * Creates a String that contains the given time in seconds in a readable
      * format.
      *
-     * @param passedTimeSeconds
-     *            the passed time in seconds as a double
+     * @param passedTimeSeconds            the passed time in seconds as a double
+     * @return the string
      */
     private static String createTimeString(final double passedTimeSeconds) {
         DecimalFormat decimalFormat = new DecimalFormat("#.##");
@@ -269,6 +300,13 @@ public final class BEASTCommunicator {
         return timeString;
     }
 
+    /**
+     * Creates the time string longer than minute.
+     *
+     * @param passedTimeSeconds the passed time seconds
+     * @param decimalFormat the decimal format
+     * @return the string
+     */
     private static String createTimeStringLongerThanMinute(final double passedTimeSeconds,
                                                            final DecimalFormat decimalFormat) {
         String timeString;
@@ -279,6 +317,13 @@ public final class BEASTCommunicator {
         return timeString;
     }
 
+    /**
+     * Creates the time string longer than hour.
+     *
+     * @param passedTimeSeconds the passed time seconds
+     * @param decimalFormat the decimal format
+     * @return the string
+     */
     private static String createTimeStringLongerThanHour(final double passedTimeSeconds,
                                                          final DecimalFormat decimalFormat) {
         String timeString;
@@ -291,6 +336,13 @@ public final class BEASTCommunicator {
         return timeString;
     }
 
+    /**
+     * Creates the time string longer than day.
+     *
+     * @param passedTimeSeconds the passed time seconds
+     * @param decimalFormat the decimal format
+     * @return the string
+     */
     private static String createTimeStringLongerThanDay(final double passedTimeSeconds,
                                                         final DecimalFormat decimalFormat) {
         String timeString;
@@ -305,14 +357,32 @@ public final class BEASTCommunicator {
         return timeString;
     }
 
+    /**
+     * Passed time longer than day.
+     *
+     * @param passedTimeSeconds the passed time seconds
+     * @return true, if successful
+     */
     private static boolean passedTimeLongerThanDay(final double passedTimeSeconds) {
         return passedTimeSeconds >= SECONDS_IN_DAY;
     }
 
+    /**
+     * Passed time longer than hour.
+     *
+     * @param passedTimeSeconds the passed time seconds
+     * @return true, if successful
+     */
     private static boolean passedTimeLongerThanHour(final double passedTimeSeconds) {
         return passedTimeSeconds >= SECONDS_IN_HOUR;
     }
 
+    /**
+     * Passed time longer than minute.
+     *
+     * @param passedTimeSeconds the passed time seconds
+     * @return true, if successful
+     */
     private static boolean passedTimeLongerThanMinute(final double passedTimeSeconds) {
         return passedTimeSeconds >= SECONDS_IN_MINUTE;
     }

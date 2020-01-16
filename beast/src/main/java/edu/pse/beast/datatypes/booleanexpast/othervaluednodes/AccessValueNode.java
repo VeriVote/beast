@@ -5,12 +5,25 @@ import java.util.Arrays;
 import edu.pse.beast.types.InOutType;
 
 /**
+ * The Class AccessValueNode.
+ *
  * @author Holger Klein
  */
 public abstract class AccessValueNode extends TypeExpression {
+
+    /** The accessing vars. */
     private final TypeExpression[] accessingVars;
+
+    /** The count. */
     private final int count;
 
+    /**
+     * Instantiates a new access value node.
+     *
+     * @param type the type
+     * @param accessingVariables the accessing variables
+     * @param countVal the count val
+     */
     protected AccessValueNode(final InOutType type,
                               final TypeExpression[] accessingVariables,
                               final int countVal) {
@@ -19,10 +32,20 @@ public abstract class AccessValueNode extends TypeExpression {
         this.count = countVal;
     }
 
+    /**
+     * Gets the accessing vars.
+     *
+     * @return the accessing vars
+     */
     public TypeExpression[] getAccessingVars() {
         return accessingVars;
     }
 
+    /**
+     * Gets the count.
+     *
+     * @return the count
+     */
     public int getCount() {
         return count;
     }

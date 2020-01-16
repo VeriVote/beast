@@ -14,10 +14,20 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
  * @author Nikolai Schnell
  */
 public class ChangeHandler {
+
+    /** The pre symbolic variable list. */
     private LinkedList<SymbolicVariable> preSymbolicVariableList;
+
+    /** The symbolic variable list. */
     private final SymbolicVariableList symbolicVariableList;
+
+    /** The pre string. */
     private String preString = "";
+
+    /** The pre pane. */
     private JTextPane prePane;
+
+    /** The post pane. */
     private JTextPane postPane;
 
     /**
@@ -66,7 +76,7 @@ public class ChangeHandler {
      * @return true if it has changed, false otherwise
      */
     public boolean hasChanged() {
-        return !(preString.equals((String) prePane.getText() + postPane.getText())
+        return !(preString.equals(prePane.getText() + postPane.getText())
                 && preSymbolicVariableList.equals(symbolicVariableList.getSymbolicVariables()));
     }
 }

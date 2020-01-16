@@ -13,8 +13,14 @@ import edu.pse.beast.stringresource.StringResourceLoader;
  * Options subclass for the language options.
  */
 public class LanguageOptions extends Options {
+
+    /** The sli. */
     private StringLoaderInterface sli;
+
+    /** The string displays. */
     private List<DisplaysStringsToUser> stringDisplays = new ArrayList<>();
+
+    /** The lang opt elem. */
     private LanguageOptionElement langOptElem;
 
     /**
@@ -33,6 +39,11 @@ public class LanguageOptions extends Options {
         addOptionElement(langOptElem);
     }
 
+    /**
+     * Instantiates a new language options.
+     *
+     * @param slInterf the sl interf
+     */
     public LanguageOptions(final StringLoaderInterface slInterf) {
         super("lang_opts");
         this.sli = slInterf;

@@ -11,16 +11,35 @@ import edu.pse.beast.toolbox.UserAction;
  * @author Holger Klein
  */
 public class ShortcutHandler {
+
+    /** The Constant NO_CHAR. */
     private static final int NO_CHAR = -1;
+
+    /** The Constant N_CHAR. */
     private static final int N_CHAR = 78;
+
+    /** The Constant O_CHAR. */
     private static final int O_CHAR = 79;
+
+    /** The Constant S_CHAR. */
     private static final int S_CHAR = 83;
+
+    /** The Constant V_CHAR. */
     private static final int V_CHAR = 86;
+
+    /** The Constant X_CHAR. */
     private static final int X_CHAR = 88;
+
+    /** The Constant C_CHAR. */
     private static final int C_CHAR = 67;
+
+    /** The Constant R_CHAR. */
     private static final int R_CHAR = 82;
+
+    /** The Constant Z_CHAR. */
     private static final int Z_CHAR = 90;
 
+    /** The shortcut map. */
     private HashMap<Integer, UserAction> shortcutMap = new HashMap<>();
 
     /**
@@ -45,6 +64,12 @@ public class ShortcutHandler {
         shortcutMap.put(getKeyCode(keyChar), ac);
     }
 
+    /**
+     * Gets the mappedchar for.
+     *
+     * @param id the id
+     * @return the mappedchar for
+     */
     public Integer getMappedcharFor(final String id) {
         for (Integer i : shortcutMap.keySet()) {
             if (shortcutMap.get(i).getId() == id) {
@@ -54,6 +79,12 @@ public class ShortcutHandler {
         return NO_CHAR;
     }
 
+    /**
+     * Gets the key code.
+     *
+     * @param keyChar the key char
+     * @return the key code
+     */
     private Integer getKeyCode(final char keyChar) {
         switch (keyChar) {
         case 'z':

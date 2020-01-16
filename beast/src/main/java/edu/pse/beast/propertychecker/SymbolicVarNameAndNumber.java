@@ -1,13 +1,16 @@
 package edu.pse.beast.propertychecker;
 
 /**
+ * The Class SymbolicVarNameAndNumber.
  *
  * @author Lukas Stapelbroek
- *
  */
 public class SymbolicVarNameAndNumber {
 
+    /** The name. */
     private final String name;
+
+    /** The number. */
     private final long number;
 
     /**
@@ -22,10 +25,20 @@ public class SymbolicVarNameAndNumber {
         this.number = num;
     }
 
+    /**
+     * Gets the name.
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Gets the number.
+     *
+     * @return the number
+     */
     public long getNumber() {
         return number;
     }

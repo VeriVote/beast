@@ -19,13 +19,23 @@ import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
+/**
+ * The Class Preference.
+ */
 public class Preference extends CBMCInputType {
+
+    /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 2;
+
+    /** The Constant SIZE_OF_DIMENSIONS. */
     private static final String[] SIZE_OF_DIMENSIONS = {
             UnifiedNameContainer.getVoter(),
             UnifiedNameContainer.getCandidate()
     };
 
+    /**
+     * The constructor.
+     */
     public Preference() {
         super(true, DataType.INT, DIMENSIONS, SIZE_OF_DIMENSIONS);
     }
@@ -107,7 +117,7 @@ public class Preference extends CBMCInputType {
         for (int i = 0; i < amountVoters; i++) {
             String[] vote = votes[i];
             for (int j = 0; j < amountCandidates; j++) {
-                String chosenCandidate = (String) vote[j];
+                String chosenCandidate = vote[j];
                 int iChosenCandidate = Integer.parseInt(chosenCandidate);
                 result[iChosenCandidate] += amountCandidates - 1 - j;
             }
@@ -246,7 +256,7 @@ public class Preference extends CBMCInputType {
         List<CBMCResultValueWrapper> wrappedValues = new ArrayList<CBMCResultValueWrapper>();
         for (Iterator<String> iterator = values.iterator(); iterator
                 .hasNext();) {
-            String value = (String) iterator.next();
+            String value = iterator.next();
             CBMCResultValueWrapper wrapper = new CBMCResultValueWrapper();
             CBMCResultValueSingle toWrap = new CBMCResultValueSingle();
             toWrap.setValue("int", value, INT_LENGTH);

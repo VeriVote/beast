@@ -8,10 +8,21 @@ import com.sun.jna.platform.win32.Kernel32;
 import com.sun.jna.platform.win32.Kernel32Util;
 import com.sun.jna.platform.win32.WinNT;
 
+/**
+ * The Class Win32Process.
+ */
 public class Win32Process {
+
+    /** The Constant SYNCHRONIZE. */
     private static final int SYNCHRONIZE = 0x00100000;
+
+    /** The Constant PROCESS_TERMINATE. */
     private static final int PROCESS_TERMINATE = 0x0001;
+
+    /** The Constant PROCESS_SUSPEND_RESUME. */
     private static final int PROCESS_SUSPEND_RESUME = 0x0800;
+
+    /** The Constant PROCESS_QUERY_INFORMATION. */
     private static final int PROCESS_QUERY_INFORMATION = 0x0400;
 
     /**
@@ -59,10 +70,20 @@ public class Win32Process {
         Kernel32.INSTANCE.TerminateProcess(handle, 0);
     }
 
+    /**
+     * Gets the pid.
+     *
+     * @return the pid
+     */
     public int getPid() {
         return pid;
     }
 
+    /**
+     * Sets the pid.
+     *
+     * @param procId the new pid
+     */
     public void setPid(final int procId) {
         this.pid = procId;
     }

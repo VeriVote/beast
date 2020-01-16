@@ -3,7 +3,14 @@ package edu.pse.beast.toolbox;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * The Class XMLtoolbox.
+ */
 public final class XMLtoolbox {
+
+    /**
+     * Instantiates a new XM ltoolbox.
+     */
     private XMLtoolbox() { }
 
     /**

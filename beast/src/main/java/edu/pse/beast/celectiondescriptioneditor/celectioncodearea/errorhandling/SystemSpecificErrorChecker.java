@@ -42,7 +42,11 @@ public abstract class SystemSpecificErrorChecker {
      * then later on.
      */
     static final String SET_OUTPUT_FILE_NAME = "-o ";
+
+    /** The Constant ENABLE_USER_INCLUDE. */
     static final String ENABLE_USER_INCLUDE = "-I/";
+
+    /** The Constant USER_INCLUDE_FOLDER. */
     static final String USER_INCLUDE_FOLDER = "/core/user_includes/";
 
     /** If gcc finds, that a return is missing, it prints out this error message.
@@ -58,6 +62,7 @@ public abstract class SystemSpecificErrorChecker {
     static final String GCC_MISSING_FUNCTION_FOUND
         = "warning: implicit declaration of function";
 
+    /** The Constant PATH_TO_TEMP_FOLDER. */
     private static final String PATH_TO_TEMP_FOLDER = "/core/c_tempfiles/";
 
     /**
@@ -104,6 +109,7 @@ public abstract class SystemSpecificErrorChecker {
      * without deleting it.
      *
      * @param directory directory to clean
+     * @param keep the keep
      * @throws IOException              in case cleaning is unsuccessful
      * @throws IllegalArgumentException if {@code directory} does not exist or is
      *                                  not a directory

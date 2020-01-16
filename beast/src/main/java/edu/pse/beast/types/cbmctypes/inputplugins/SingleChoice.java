@@ -15,12 +15,21 @@ import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCInputType;
 
+/**
+ * The Class SingleChoice.
+ */
 public class SingleChoice extends CBMCInputType {
+
+    /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 1;
 
+    /** The Constant SIZE_OF_DIMENSIONS. */
     private static final String[] SIZE_OF_DIMENSIONS = {
             UnifiedNameContainer.getVoter() };
 
+    /**
+     * The constructor.
+     */
     public SingleChoice() {
         super(true, DataType.INT, DIMENSIONS, SIZE_OF_DIMENSIONS);
     }

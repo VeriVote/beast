@@ -10,7 +10,17 @@ import org.fxmisc.richtext.model.Codec;
 
 import javafx.scene.Node;
 
+/**
+ * The Interface LinkedImage.
+ */
 public interface LinkedImage {
+
+    /**
+     * Codec.
+     *
+     * @param <S> the generic type
+     * @return the codec
+     */
     static <S> Codec<LinkedImage> codec() {
         System.out.println("Code called! Investigate in LinkedImage, as we don't use paths");
 
@@ -47,12 +57,24 @@ public interface LinkedImage {
         };
     }
 
+    /**
+     * Checks if is real.
+     *
+     * @return true, if is real
+     */
     boolean isReal();
 
     /**
+     * Gets the image path.
+     *
      * @return The path of the image to render.
      */
     String getImagePath();
 
+    /**
+     * Creates the node.
+     *
+     * @return the node
+     */
     Node createNode();
 }

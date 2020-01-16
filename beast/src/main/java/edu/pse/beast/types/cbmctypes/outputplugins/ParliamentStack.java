@@ -10,10 +10,20 @@ import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.cbmctypes.CBMCOutputType;
 
+/**
+ * The Class ParliamentStack.
+ */
 public class ParliamentStack extends CBMCOutputType {
+
+    /** The Constant DIMENSIONS. */
     private static final int DIMENSIONS = 1;
+
+    /** The Constant SIZE_OF_DIMENSIONS. */
     private static final String[] SIZE_OF_DIMENSIONS = {UnifiedNameContainer.getCandidate()};
 
+    /**
+     * The constructor.
+     */
     public ParliamentStack() {
         super(true, DataType.INT, DIMENSIONS, SIZE_OF_DIMENSIONS);
     }
@@ -98,7 +108,7 @@ public class ParliamentStack extends CBMCOutputType {
         int index = 0;
         for (Iterator<String> iterator = result.iterator(); iterator
                 .hasNext();) {
-            String currentValue = (String) iterator.next();
+            String currentValue = iterator.next();
             try {
                 toReturn += GUIController.getController()
                         .getElectionSimulation().getPartyName(index) + ": "

@@ -85,6 +85,12 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
         return "";
     }
 
+    /**
+     * Gets the template string.
+     *
+     * @param id the id
+     * @return the template string
+     */
     private String getTemplateString(final String id) {
         return getStringResourceLoader().getStringFromID(id + "_descr");
     }

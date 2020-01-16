@@ -13,11 +13,20 @@ import edu.pse.beast.highlevel.javafx.GUIController;
 import edu.pse.beast.highlevel.javafx.MenuBarInterface;
 import javafx.scene.Node;
 
+/**
+ * The Class BoundedVarCodeArea.
+ */
 public class BoundedVarCodeArea extends AutoCompletionCodeArea implements MenuBarInterface {
+
+    /** The Constant RESOURCE. */
     private static final String RESOURCE = "codeAreaSyntaxHighlight.css";
 
+    /** The description. */
     private FormalPropertiesDescription description;
 
+    /**
+     * The constructor.
+     */
     public BoundedVarCodeArea() {
         List<String> code = new ArrayList<String>();
         code.add("");
@@ -30,6 +39,11 @@ public class BoundedVarCodeArea extends AutoCompletionCodeArea implements MenuBa
         this.replaceText(0, 0, sampleCode);
     }
 
+    /**
+     * Display errors.
+     *
+     * @param codeErrors the code errors
+     */
     public void displayErrors(final List<CodeError> codeErrors) {
         String toDisplay = "";
         for (Iterator<CodeError> iterator = codeErrors.iterator(); iterator.hasNext();) {
@@ -53,6 +67,11 @@ public class BoundedVarCodeArea extends AutoCompletionCodeArea implements MenuBa
         this.replaceText(0, this.getLength(), descr.getCode());
     }
 
+    /**
+     * Save description.
+     *
+     * @param newDescription the new description
+     */
     public void saveDescription(final FormalPropertiesDescription newDescription) {
         if (this.description != null) {
             this.description.setCode(this.textProperty().getValue());

@@ -18,14 +18,29 @@ import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
  * @author Jonas Wohnig
  */
 public class TimeoutValueHandler implements ChangeListener, ActionListener {
+
+    /** The Constant ONE. */
     private static final int ONE = 1;
+
+    /** The Constant TWO. */
     private static final int TWO = 2;
+
+    /** The Constant THREE. */
     private static final int THREE = 3;
 
+    /** The timeout spinner. */
     private final JSpinner timeoutSpinner;
+
+    /** The timeout unit. */
     private final JComboBox<String> timeoutUnit;
+
+    /** The timeout before. */
     private TimeOut timeoutBefore;
+
+    /** The reacts. */
     private boolean reacts;
+
+    /** The has changed. */
     private boolean hasChanged;
 
     /**

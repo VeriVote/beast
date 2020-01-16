@@ -13,9 +13,7 @@
 //
 //public class RowOfValues extends JPanel implements DocumentListener {
 //
-//  /**
-//   *
-//   */
+//
 //  private static final long serialVersionUID = 2852540931615771801L;
 //  private int elementHeight;
 //  private int elementWidth;

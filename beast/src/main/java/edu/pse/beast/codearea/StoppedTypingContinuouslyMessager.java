@@ -18,10 +18,20 @@ import javax.swing.event.CaretListener;
  */
 public class StoppedTypingContinuouslyMessager implements KeyListener, CaretListener {
 
+    /** The pane. */
     private final JTextPane pane;
+
+    /** The listener. */
     private final ArrayList<StoppedTypingContinuouslyListener> listener = new ArrayList<>();
+
+    /** The current caret pos. */
     private int currentCaretPos = 0;
 
+    /**
+     * Instantiates a new stopped typing continuously messager.
+     *
+     * @param textPane the text pane
+     */
     public StoppedTypingContinuouslyMessager(final JTextPane textPane) {
         this.pane = textPane;
         textPane.addKeyListener(this);
@@ -63,6 +73,11 @@ public class StoppedTypingContinuouslyMessager implements KeyListener, CaretList
         currentCaretPos = ce.getDot();
     }
 
+    /**
+     * Msg all listener.
+     *
+     * @param newCaretPos the new caret pos
+     */
     private void msgAllListener(final int newCaretPos) {
         for (StoppedTypingContinuouslyListener l : listener) {
             l.stoppedTypingContinuously(newCaretPos);

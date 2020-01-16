@@ -14,10 +14,22 @@ import edu.pse.beast.highlevel.javafx.ParentTreeItem;
  */
 public class Project {
 
+    /** The election description. */
     private final ElectionDescription electionDescription;
+
+    /** The properties. */
     private final List<ParentTreeItem> properties;
+
+    /** The input data. */
     private final InputDataDescription inputData;
 
+    /**
+     * The constructor.
+     *
+     * @param electionDescr the election descr
+     * @param propertyList the property list
+     * @param inputDataDescr the input data descr
+     */
     public Project(final ElectionDescription electionDescr,
                    final List<ParentTreeItem> propertyList,
                    final InputDataDescription inputDataDescr) {
@@ -26,14 +38,29 @@ public class Project {
         this.inputData = inputDataDescr;
     }
 
+    /**
+     * Gets the election description.
+     *
+     * @return the election description
+     */
     public ElectionDescription getElectionDescription() {
         return electionDescription;
     }
 
+    /**
+     * Gets the properties.
+     *
+     * @return the properties
+     */
     public List<ParentTreeItem> getProperties() {
         return properties;
     }
 
+    /**
+     * Gets the input data.
+     *
+     * @return the input data
+     */
     public InputDataDescription getInputData() {
         return inputData;
     }

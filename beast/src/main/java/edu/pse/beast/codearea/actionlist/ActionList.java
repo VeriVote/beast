@@ -11,10 +11,19 @@ import edu.pse.beast.codearea.actionadder.ActionlistListener;
  * @author Holger Klein
  */
 public class ActionList {
+
+    /** The last performed. */
     private final ArrayList<Action> lastPerformed = new ArrayList<>();
+
+    /** The last undone. */
     private final ArrayList<Action> lastUndone = new ArrayList<>();
+
+    /** The listener. */
     private final ArrayList<ActionlistListener> listener = new ArrayList<>();
 
+    /**
+     * Instantiates a new action list.
+     */
     public ActionList() {
     }
 
@@ -77,12 +86,18 @@ public class ActionList {
         lastUndone.clear();
     }
 
+    /**
+     * Msg all listener started.
+     */
     private void msgAllListenerStarted() {
         for (ActionlistListener ad : listener) {
             ad.undoingAction();
         }
     }
 
+    /**
+     * Msg all listener ended.
+     */
     private void msgAllListenerEnded() {
         for (ActionlistListener ad : listener) {
             ad.finishedUndoingAction();

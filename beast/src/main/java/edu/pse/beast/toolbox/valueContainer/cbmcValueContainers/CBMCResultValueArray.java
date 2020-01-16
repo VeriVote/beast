@@ -7,13 +7,25 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+/**
+ * The Class CBMCResultValueArray.
+ */
 public class CBMCResultValueArray implements CBMCResultValue {
 
+    /** The Constant ELEMENT_TAG. */
     private static final String ELEMENT_TAG = "element";
+
+    /** The Constant INDEX_NAME. */
     private static final String INDEX_NAME = "index";
 
+    /** The values. */
     private List<CBMCResultValueWrapper> values = new ArrayList<CBMCResultValueWrapper>();
 
+    /**
+     * Sets the value.
+     *
+     * @param vals the new value
+     */
     public void setValue(final List<CBMCResultValueWrapper> vals) {
         this.values = vals;
     }
@@ -56,13 +68,19 @@ public class CBMCResultValueArray implements CBMCResultValue {
         }
     }
 
+    /**
+     * Gets the values.
+     *
+     * @return the values
+     */
     public List<CBMCResultValueWrapper> getValues() {
         return values;
     }
 
     /**
+     * Gets the array size.
      *
-     * @return the size of the datastructure which is represented here
+     * @return the size of the data structure which is represented here
      */
     public int getArraySize() {
         return values.size();

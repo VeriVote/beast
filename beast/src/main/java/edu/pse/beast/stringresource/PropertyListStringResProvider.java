@@ -6,12 +6,17 @@ package edu.pse.beast.stringresource;
  * @author Niels Hanselmann
  */
 public class PropertyListStringResProvider extends StringResourceProvider {
-
+    /** The menu string res. */
     private StringResourceLoader menuStringRes;
+
+    /** The toolbar tip string res. */
     private StringResourceLoader toolbarTipStringRes;
+
+    /** The other string res. */
     private StringResourceLoader otherStringRes;
 
     /**
+     * Instantiates a new property list string res provider.
      *
      * @param languageId the languageId. Set to "de" for german
      */
@@ -21,6 +26,7 @@ public class PropertyListStringResProvider extends StringResourceProvider {
     }
 
     /**
+     * Gets the menu string res.
      *
      * @return MenuStringRes
      */
@@ -29,6 +35,7 @@ public class PropertyListStringResProvider extends StringResourceProvider {
     }
 
     /**
+     * Gets the toolbar tip string res.
      *
      * @return ToolbarTipStringRes
      */
@@ -37,6 +44,7 @@ public class PropertyListStringResProvider extends StringResourceProvider {
     }
 
     /**
+     * Gets the other string res.
      *
      * @return otherStringRes
      */
@@ -44,10 +52,8 @@ public class PropertyListStringResProvider extends StringResourceProvider {
         return otherStringRes;
     }
 
-    /**
-     * Initializes all attributes. Loads all StringResourceLoaders with the
-     * filenames. The superclass provides the functions for this process
-     */
+    // Initializes all attributes. Loads all StringResourceLoaders with the
+    // filenames. The superclass provides the functions for this process.
     @Override
     protected final void initialize() {
         toolbarTipStringRes = this.getStringResourceLoaderFromModuleName("PropertyListToolbar");

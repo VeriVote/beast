@@ -12,10 +12,13 @@ import edu.pse.beast.highlevel.DisplaysStringsToUser;
 import edu.pse.beast.stringresource.StringResourceLoader;
 
 /**
+ * The Class MenuBarHandler.
  *
  * @author Holger Klein
  */
 public abstract class MenuBarHandler implements DisplaysStringsToUser {
+
+    /** The Constant STANDARD_ID_ORDER. */
     private static final String[] STANDARD_ID_ORDER
         = {
             "file", "edit", "code"
@@ -26,13 +29,23 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
      */
     private JMenuBar createdMenuBar;
 
+    /** The heading ids. */
     private final String[] headingIds;
+
+    /** The action ID and listener. */
     private final ArrayList<ArrayList<ActionIdAndListener>> actionIDAndListener;
+
+    /** The created menus. */
     private JMenu[] createdMenus;
+
+    /** The created items. */
     private final ArrayList<ArrayList<JMenuItem>> createdItems = new ArrayList<>();
+
+    /** The current resource loader. */
     private StringResourceLoader currentResourceLoader;
 
     /**
+     * Instantiates a new menu bar handler.
      *
      * @param headIds          the id of the heading
      * @param actionIDAndListeners the IDandListener
@@ -50,6 +63,7 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
     }
 
     /**
+     * Gets the created menu bar.
      *
      * @return the created Menu bar
      */
@@ -58,6 +72,7 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
     }
 
     /**
+     * Update string res loader.
      *
      * @param resLoader the resourceLoader
      */
@@ -66,6 +81,9 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
         createMenuBar();
     }
 
+    /**
+     * Creates the menu bar.
+     */
     private void createMenuBar() {
         createdMenuBar = new JMenuBar();
         createdMenus = new JMenu[headingIds.length];
@@ -86,7 +104,18 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
         }
     }
 
+    /**
+     * The Class MenuHeadingSorter.
+     */
     private class MenuHeadingSorter implements Comparator<String> {
+
+        /**
+         * Compare.
+         *
+         * @param lhs the lhs
+         * @param rhs the rhs
+         * @return the int
+         */
         @Override
         public int compare(final String lhs, final String rhs) {
             Integer lhsPos = findInArr(lhs);
@@ -94,6 +123,12 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
             return lhsPos.compareTo(rhsPos);
         }
 
+        /**
+         * Find in arr.
+         *
+         * @param s the s
+         * @return the int
+         */
         private int findInArr(final String s) {
             for (int i = 0; i < STANDARD_ID_ORDER.length; i++) {
                 if (s.contains(STANDARD_ID_ORDER[i])) {

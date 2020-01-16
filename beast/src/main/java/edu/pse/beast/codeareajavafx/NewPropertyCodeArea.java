@@ -23,50 +23,89 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.control.IndexRange;
 
+/**
+ * The Class NewPropertyCodeArea.
+ */
 public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuBarInterface {
+
+    /** The Constant OPERATORS. */
     private static final String[] OPERATORS = {"\\*", "/", "\\+", "-"};
+
+    /** The Constant COMPARISON. */
     private static final String[] COMPARISON
         = {"==", "\\!\\=", "\\<\\=", "\\>\\=", "\\<", "\\>"};
+
+    /** The Constant RELATION. */
     private static final String[] RELATION
         = {"&&", "\\|\\|", "==>", "<==>", "<--", "\\+\\+"};
+
+    /** The Constant MACROS. */
     private static final String[] MACROS
         = {
             "VOTES", "ELECT", "VOTE_SUM_FOR_CANDIDATE",
             "VOTE_SUM_FOR_UNIQUE_CANDIDATE"
         };
+
+    /** The Constant QUANTIFIERS. */
     private static final String[] QUANTIFIERS
         = {
             "FOR_ALL_VOTERS", "FOR_ALL_CANDIDATES", "FOR_ALL_SEATS",
             "EXISTS_ONE_VOTER", "EXISTS_ONE_CANDIDATE", "EXISTS_ONE_SEAT",
             "PERM", "SPLIT", "INTERSECT", "NOTEMPTY"
         };
+
+    /** The Constant OPERATORS_PATTERN. */
     private static final String OPERATORS_PATTERN
             = "(" + String.join("|", OPERATORS) + ")";
+
+    /** The Constant COMPARISON_PATTERN. */
     private static final String COMPARISON_PATTERN
             = "(" + String.join("|", COMPARISON) + ")";
+
+    /** The Constant RELATION_PATTERN. */
     private static final String RELATION_PATTERN
             = "(" + String.join("|", RELATION) + ")";
 
+    /** The Constant MACROS_PATTERN. */
     private static final String MACROS_PATTERN
           = "\\b("
             + String.join(
                 "|",
                 Arrays.stream(MACROS).map(s
                     -> s + "[0-9]+").toArray(String[]::new)) + ")\\b";
+
+    /** The Constant QUANTIFIERS_PATTERN. */
     private static final String QUANTIFIERS_PATTERN
           = "\\b(" + String.join("|", QUANTIFIERS) + ")\\b";
 
+    /** The Constant PAREN_PATTERN. */
     private static final String PAREN_PATTERN = "\\(|\\)";
+
+    /** The Constant SEMICOLON_PATTERN. */
     private static final String SEMICOLON_PATTERN = "\\;";
 
+    /** The Constant OPERATORS_STRING. */
     private static final String OPERATORS_STRING = "OPERATORS";
+
+    /** The Constant COMPARISON_STRING. */
     private static final String COMPARISON_STRING = "COMPARISON";
+
+    /** The Constant RELATION_STRING. */
     private static final String RELATION_STRING = "RELATION";
+
+    /** The Constant MACROS_STRING. */
     private static final String MACROS_STRING = "MACROS";
+
+    /** The Constant QUANTIFIERS_STRING. */
     private static final String QUANTIFIERS_STRING = "QUANTIFIERS";
+
+    /** The Constant PAREN_STRING. */
     private static final String PAREN_STRING = "PAREN";
+
+    /** The Constant SEMICOLON_STRING. */
     private static final String SEMICOLON_STRING = "SEMICOLON";
 
+    /** The Constant PATTERN. */
     private static final Pattern PATTERN = Pattern.compile(
             "(?<" + OPERATORS_STRING + ">" + OPERATORS_PATTERN + ")"
             + "|(?<" + RELATION_STRING + ">" + RELATION_PATTERN + ")"
@@ -76,14 +115,21 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
             + "|(?<" + PAREN_STRING + ">" + PAREN_PATTERN + ")"
             + "|(?<" + SEMICOLON_STRING + ">" + SEMICOLON_PATTERN + ")");
 
+    /** The Constant RESOURCE. */
     private static final String RESOURCE = "propertyAreaSyntaxHighlight.css";
 
+    /** The recommendations. */
     private static Set<String> recommendations = new TreeSet<String>();
 
+    /** The description. */
     private FormalPropertiesDescription description;
 
+    /** The parent. */
     private BooleanExpEditorNEW parent;
 
+    /**
+     * The constructor.
+     */
     public NewPropertyCodeArea() {
         NewPropertyCodeArea reference = this;
         this.focusedProperty().addListener(new ChangeListener<Boolean>() {
@@ -112,6 +158,12 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
         this.replaceText(0, 0, ""); // reset the text
     }
 
+    /**
+     * Compute highlighting.
+     *
+     * @param text the text
+     * @return the style spans
+     */
     private static StyleSpans<Collection<String>> computeHighlighting(final String text) {
         Matcher matcher = PATTERN.matcher(text);
         int lastKwEnd = 0;
@@ -154,12 +206,18 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
         this.replaceText(0, this.getLength(), descr.getCode());
     }
 
+    /**
+     * Save description.
+     *
+     * @param newDescription the new description
+     */
     public void saveDescription(final FormalPropertiesDescription newDescription) {
         if (this.description != null) {
             this.description.setCode(this.textProperty().getValue());
         }
     }
 
+    @Override
     public void autoComplete() {
         Tuple3<List<String>, Integer, Integer> completion = getCompletions(recommendations);
         processAutocompletion(completion.first(), completion.second(), completion.third());
@@ -217,6 +275,11 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
         this.replaceText(selectionRange, "");
     }
 
+    /**
+     * Sets the parent.
+     *
+     * @param parentEditor the new parent
+     */
     public void setParent(final BooleanExpEditorNEW parentEditor) {
         this.parent = parentEditor;
     }

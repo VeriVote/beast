@@ -7,9 +7,12 @@ package edu.pse.beast.toolbox;
  * @author Holger Klein
  */
 public abstract class UserAction {
+
+    /** The id. */
     private final String id;
 
     /**
+     * Instantiates a new user action.
      *
      * @param idString the identification
      */
@@ -18,6 +21,7 @@ public abstract class UserAction {
     }
 
     /**
+     * Gets the id.
      *
      * @return the identification
      */

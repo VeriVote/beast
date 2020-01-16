@@ -9,8 +9,15 @@ import edu.pse.beast.toolbox.UserAction;
  * @author Holger Klein
  */
 public class RedoLastUserAction extends UserAction {
+
+    /** The list. */
     private ActionList list;
 
+    /**
+     * Instantiates a new redo last user action.
+     *
+     * @param actList the act list
+     */
     public RedoLastUserAction(final ActionList actList) {
         super("redo");
         this.list = actList;

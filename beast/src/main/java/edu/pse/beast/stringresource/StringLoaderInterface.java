@@ -7,14 +7,23 @@ package edu.pse.beast.stringresource;
  * @author Niels Hanselmann
  */
 public class StringLoaderInterface {
-
+    /** The prop list str. */
     private final PropertyListStringResProvider propListStr;
+
+    /** The boolean exp str. */
     private final BooleanExpEditorStringResProvider booleanExpStr;
+
+    /** The c elec str. */
     private final CElectionEditorStringResProvider cElecStr;
+
+    /** The param ed str. */
     private final ParameterEditorStringResProvider paramEdStr;
+
+    /** The option str. */
     private final OptionStringResProvider optionStr;
 
     /**
+     * Instantiates a new string loader interface.
      *
      * @param languageId the languageId. choose "de" for german
      */
@@ -27,6 +36,7 @@ public class StringLoaderInterface {
     }
 
     /**
+     * Gets the property list string res provider.
      *
      * @return thePropertyListStringResProvider
      */
@@ -35,6 +45,7 @@ public class StringLoaderInterface {
     }
 
     /**
+     * Gets the boolean exp editor string res provider.
      *
      * @return the BooleanExpEditorStringResProvider
      */
@@ -43,6 +54,7 @@ public class StringLoaderInterface {
     }
 
     /**
+     * Gets the c election editor string res provider.
      *
      * @return the CEledctionEditorStringResProvider
      */
@@ -51,6 +63,7 @@ public class StringLoaderInterface {
     }
 
     /**
+     * Gets the parameter editor string res provider.
      *
      * @return the ParameterEditorStringResProvider
      */
@@ -59,6 +72,7 @@ public class StringLoaderInterface {
     }
 
     /**
+     * Gets the option string res provider.
      *
      * @return the OptionStringResProvider
      */
@@ -67,6 +81,7 @@ public class StringLoaderInterface {
     }
 
     /**
+     * Sets the language.
      *
      * @param languageId sets language. Use "de" for german
      */

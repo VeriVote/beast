@@ -5,26 +5,59 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * The Class SaverLoaderHelper.
+ *
  * @author Holger Klein
  */
 public class SaverLoaderHelper {
+    /** The current save string. */
     private String currentSaveString;
 
-    public String getStringForAttr(final String attrName, final String content) {
+    /**
+     * Gets the string for attr.
+     *
+     * @param attrName the attr name
+     * @param content the content
+     * @return the string for attr
+     */
+    public String getStringForAttr(final String attrName,
+                                   final String content) {
         return attrName.length() + " " + attrName + content.length() + " " + content;
     }
 
-    public String getStringForAttr(final String attrName, final int content) {
+    /**
+     * Gets the string for attr.
+     *
+     * @param attrName the attr name
+     * @param content the content
+     * @return the string for attr
+     */
+    public String getStringForAttr(final String attrName,
+                                   final int content) {
         String contentString = String.valueOf(content);
         return attrName.length() + " " + attrName + contentString.length() + " " + contentString;
     }
 
-    public String getStringForAttr(final String attrName, final List<String> content) {
+    /**
+     * Gets the string for attr.
+     *
+     * @param attrName the attr name
+     * @param content the content
+     * @return the string for attr
+     */
+    public String getStringForAttr(final String attrName,
+                                   final List<String> content) {
         StringBuilder code = new StringBuilder();
         content.forEach(s -> code.append(s + "\n"));
         return getStringForAttr(attrName, code.toString());
     }
 
+    /**
+     * Parses the save string.
+     *
+     * @param saveFile the save file
+     * @return the map
+     */
     public Map<String, String> parseSaveString(final String saveFile) {
         Map<String, String> attrNameToContent = new HashMap<>();
         currentSaveString = saveFile;
@@ -44,12 +77,23 @@ public class SaverLoaderHelper {
         return attrNameToContent;
     }
 
+    /**
+     * Gets the attr from string and remove it.
+     *
+     * @param len the len
+     * @return the attr from string and remove it
+     */
     private String getAttrFromStringAndRemoveIt(final int len) {
         String attr = currentSaveString.substring(0, len);
         currentSaveString = currentSaveString.substring(len);
         return attr;
     }
 
+    /**
+     * Gets the number and remove number part from string.
+     *
+     * @return the number and remove number part from string
+     */
     private int getNumberAndRemoveNumberPartFromString() {
         int i = 0;
         while (currentSaveString.charAt(i) != ' ') {

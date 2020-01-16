@@ -2,6 +2,9 @@ package edu.pse.beast.propertychecker;
 
 import java.io.File;
 
+/**
+ * The Class CBMCProcess.
+ */
 public abstract class CBMCProcess extends Checker {
 
     /**

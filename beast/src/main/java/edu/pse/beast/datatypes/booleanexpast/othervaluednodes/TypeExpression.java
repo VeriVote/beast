@@ -5,17 +5,26 @@ import edu.pse.beast.types.InOutType;
 import edu.pse.beast.types.InternalTypeContainer;
 
 /**
+ * The Class TypeExpression.
  *
  * @author Holger Klein
- *
  */
 public abstract class TypeExpression extends BooleanExpressionNode {
+
+    /** The Constant PRIME_ONE. */
     protected static final int PRIME_ONE = 31;
+
+    /** The Constant PRIME_TWO. */
     protected static final int PRIME_TWO = 1231;
+
+    /** The Constant PRIME_THREE. */
     protected static final int PRIME_THREE = 1237;
+
+    /** The type. */
     private final InOutType type;
 
     /**
+     * Instantiates a new type expression.
      *
      * @param inOutType the type of this quantifier
      */
@@ -24,6 +33,7 @@ public abstract class TypeExpression extends BooleanExpressionNode {
     }
 
     /**
+     * Gets the internal type container.
      *
      * @return the type of this quantifier
      */

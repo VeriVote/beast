@@ -19,7 +19,12 @@ import edu.pse.beast.types.InputType;
 import edu.pse.beast.types.OutputType;
 import javafx.scene.Node;
 
+/**
+ * The Class MarginResult.
+ */
 public class MarginResult extends ResultPresentationType {
+
+    /** The area. */
     private GenericStyledArea<ParStyle,
                               Either<String, LinkedImage>,
                               TextStyle> area;

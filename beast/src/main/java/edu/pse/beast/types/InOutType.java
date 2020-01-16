@@ -18,36 +18,80 @@ import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueS
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueStruct;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 
+/**
+ * The Class InOutType.
+ */
 public abstract class InOutType {
 
+    /**
+     * The Enum DataType.
+     */
     public enum DataType {
-        CHAR("byte"), SHORT("short"), INT("int"), LONG("long"), DOUBLE(
-                "double");
 
+        /** The char. */
+        CHAR("byte"),
+
+        /** The short. */
+        SHORT("short"),
+
+        /** The int. */
+        INT("int"),
+
+        /** The long. */
+        LONG("long"),
+
+        /** The double. */
+        DOUBLE("double");
+
+        /** The text. */
         private final String text;
 
         /**
-         * @param textString
+         * Instantiates a new data type.
+         *
+         * @param textString the text string
          */
         DataType(final String textString) {
             this.text = textString;
         }
 
+        /**
+         * To string.
+         *
+         * @return the string
+         */
         @Override
         public String toString() {
             return text;
         }
     }
 
+    /** The unsigned. */
     private final boolean unsigned;
+
+    /** The data type. */
     private final DataType dataType;
+
+    /** The dimensions. */
     private final int dimensions;
+
+    /** The size of dimensions. */
     private final String[] sizeOfDimensions;
 
+    /** The complex type. */
     private transient ComplexType complexType;
 
+    /** The container. */
     private transient ElectionTypeContainer container;
 
+    /**
+     * The constructor.
+     *
+     * @param usigned the usigned
+     * @param datType the dat type
+     * @param dims the dims
+     * @param sizeOfDims the size of dims
+     */
     public InOutType(final boolean usigned,
                      final DataType datType,
                      final int dims,
@@ -58,23 +102,44 @@ public abstract class InOutType {
         this.sizeOfDimensions = sizeOfDims;
     }
 
+    /**
+     * Sets the election type container.
+     *
+     * @param elecTypeContainer the new election type container
+     */
     public void setElectionTypeContainer(final ElectionTypeContainer elecTypeContainer) {
         this.container = elecTypeContainer;
     }
 
+    /**
+     * Checks if is data type unsigned.
+     *
+     * @return true, if is data type unsigned
+     */
     public boolean isDataTypeUnsigned() {
         return this.unsigned;
     }
 
+    /**
+     * Gets the data type.
+     *
+     * @return the data type
+     */
     public DataType getDataType() {
         return this.dataType;
     }
 
+    /**
+     * Gets the data type as string.
+     *
+     * @return the data type as string
+     */
     public String getDataTypeAsString() {
         return this.dataType.toString();
     }
 
     /**
+     * Gets the amount of dimensions.
      *
      * @return the dimensions of the array which holds the votes (e.g 1 for
      *         single choice, 2 for approval, 0 for single candidate)
@@ -84,6 +149,7 @@ public abstract class InOutType {
     }
 
     /**
+     * Gets the size of dimensions.
      *
      * @return the size of all dimensions, null if it is 0 dimensional
      */
@@ -92,12 +158,19 @@ public abstract class InOutType {
                                          // as it should not be changed
     }
 
+    /**
+     * Gets the size of dimensions as list.
+     *
+     * @return the size of dimensions as list
+     */
     public List<String> getSizeOfDimensionsAsList() {
         return Arrays.asList(sizeOfDimensions);
     }
 
     /**
+     * Gets the dimension descriptor.
      *
+     * @param includeSizes the include sizes
      * @return returns a String containing the shape of the input object e.g "["
      *         + UnifiedNameContainer.getVoter() + "]" for single choice
      */
@@ -105,6 +178,12 @@ public abstract class InOutType {
         return getDimensionDescriptor(sizeOfDimensions);
     }
 
+    /**
+     * Gets the dimension descriptor.
+     *
+     * @param sizes the sizes
+     * @return the dimension descriptor
+     */
     public String getDimensionDescriptor(final String[] sizes) {
         String toReturn = "";
         for (int i = 0; i < dimensions; i++) {
@@ -114,6 +193,11 @@ public abstract class InOutType {
         return toReturn;
     }
 
+    /**
+     * Gets the data type and sign.
+     *
+     * @return the data type and sign
+     */
     public String getDataTypeAndSign() {
         String sign = "";
         if (unsigned) {
@@ -122,14 +206,19 @@ public abstract class InOutType {
         return sign + this.dataType;
     }
 
+    /**
+     * Gets the container.
+     *
+     * @return the container
+     */
     public ElectionTypeContainer getContainer() {
         return container;
     }
 
     /**
+     * Creates the square brackets.
      *
-     * @param content
-     *            the content to be put in the brackets
+     * @param content            the content to be put in the brackets
      * @return e.g "[content]"
      */
     private String createSquareBrackets(final String content) {
@@ -137,7 +226,9 @@ public abstract class InOutType {
     }
 
     /**
+     * Access values.
      *
+     * @param electionContainer the election container
      * @return a string which, when written behind a variable which given type,
      *         allows access to its values (e.g ".arr", if it is a struct in
      *         which the value is stored in "arr"
@@ -151,6 +242,12 @@ public abstract class InOutType {
         }
     }
 
+    /**
+     * Prints the array.
+     *
+     * @param wrapper the wrapper
+     * @return the string
+     */
     public String printArray(final CBMCResultValueWrapper wrapper) {
         ResultValue resultValue = wrapper.getResultValue();
 
@@ -180,6 +277,12 @@ public abstract class InOutType {
         }
     }
 
+    /**
+     * Gets the access dimensions.
+     *
+     * @param filling the filling
+     * @return the access dimensions
+     */
     public String getAccessDimensions(final List<String> filling) {
         String dimAccess = "";
         for (int i = 0; i < this.getAmountOfDimensions(); i++) {
@@ -188,6 +291,13 @@ public abstract class InOutType {
         return dimAccess;
     }
 
+    /**
+     * Gets the full var access.
+     *
+     * @param varName the var name
+     * @param filling the filling
+     * @return the full var access
+     */
     public String getFullVarAccess(final String varName,
                                    final List<String> filling) {
         return varName + "."
@@ -195,12 +305,17 @@ public abstract class InOutType {
                 + getAccessDimensions(filling);
     }
 
+    /**
+     * Gets the internal type container.
+     *
+     * @return the internal type container
+     */
     public abstract InternalTypeContainer getInternalTypeContainer();
 
     /**
      * A human readable representation of this type.
      *
-     * @return
+     * @return the string
      */
     public abstract String otherToString();
 
@@ -208,6 +323,14 @@ public abstract class InOutType {
     // String
     // varName);
 
+    /**
+     * Draw result.
+     *
+     * @param result the result
+     * @param varNameMatcher the var name matcher
+     * @param sizes the sizes
+     * @return the list
+     */
     public List<String> drawResult(final Result result,
                                    final String varNameMatcher,
                                    final Map<Integer, Long> sizes) {
@@ -241,6 +364,14 @@ public abstract class InOutType {
         return toReturn;
     }
 
+    /**
+     * Draw result.
+     *
+     * @param wrapper the wrapper
+     * @param varName the var name
+     * @param size the size
+     * @return the list
+     */
     public List<String> drawResult(final ResultValueWrapper wrapper,
                                    final String varName,
                                    final Long size) {
@@ -269,6 +400,7 @@ public abstract class InOutType {
     }
 
     /**
+     * Gets the info.
      *
      * @return a text describing everything the user needs to know about this
      *         type (e.g description of structs...)
@@ -278,19 +410,28 @@ public abstract class InOutType {
     /**
      * So far only used for preference voting.
      *
-     * @param code
-     *            the code
-     * @param voteNumber
-     *            the amount of votes
+     * @param code            the code
+     * @param valueName the value name
+     * @param loopVariables the loop variables
      */
     public abstract void addExtraCodeAtEndOfCodeInit(CodeArrayListBeautifier code,
                                                      String valueName,
                                                      List<String> loopVariables);
 
+    /**
+     * Sets the struct.
+     *
+     * @param complType the new struct
+     */
     public void setStruct(final ComplexType complType) {
         this.complexType = complType;
     }
 
+    /**
+     * Gets the struct.
+     *
+     * @return the struct
+     */
     public ComplexType getStruct() {
         return complexType;
     }

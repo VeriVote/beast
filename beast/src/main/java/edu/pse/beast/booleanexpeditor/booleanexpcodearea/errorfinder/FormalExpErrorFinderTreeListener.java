@@ -70,17 +70,33 @@ import edu.pse.beast.types.InternalTypeContainer;
 import edu.pse.beast.types.InternalTypeRep;
 
 /**
+ * The listener interface for receiving formalExpErrorFinderTree events.
+ * The class that is interested in processing a formalExpErrorFinderTree
+ * event implements this interface, and the object created
+ * with that class is registered with a component using the
+ * component's <code>addFormalExpErrorFinderTreeListener</code> method. When
+ * the formalExpErrorFinderTree event occurs, that object's appropriate
+ * method is invoked.
  *
  * @author Holger Klein
  */
 public class FormalExpErrorFinderTreeListener
         implements FormalPropertyDescriptionListener,
                     VariableListListener {
+
+    /** The created. */
     private final ArrayList<CodeError> created = new ArrayList<>();
+
+    /** The scope handler. */
     private final BooleanExpScopehandler scopeHandler = new BooleanExpScopehandler();
+
+    /** The elec description. */
     private final ElectionDescription elecDescription;
 
+    /** The container. */
     private ElectionTypeContainer container;
+
+    /** The exp stack. */
     private Stack<TypeExpression> expStack;
 
     /**
@@ -341,6 +357,12 @@ public class FormalExpErrorFinderTreeListener
     public void exitPassType(final PassTypeContext ctx) {
     }
 
+    /**
+     * Test if too many vars passed.
+     *
+     * @param ctx the ctx
+     * @param cont the cont
+     */
     private void testIfTooManyVarsPassed(final List<PassTypeContext> ctx,
                                          final InternalTypeContainer cont) {
         int amountPassedVariables = ctx.size();
@@ -355,6 +377,12 @@ public class FormalExpErrorFinderTreeListener
         }
     }
 
+    /**
+     * Test if wrong type passed.
+     *
+     * @param ctx the ctx
+     * @param cont the cont
+     */
     private void testIfWrongTypePassed(final List<PassTypeContext> ctx,
                                        final InternalTypeContainer cont) {
         int amtPassed = ctx.size();
@@ -392,6 +420,12 @@ public class FormalExpErrorFinderTreeListener
     public void enterVoteSumExp(final VoteSumExpContext ctx) {
     }
 
+    /**
+     * Exit vote sum exp.
+     *
+     * @param ctx the ctx
+     * @param unique the unique
+     */
     private void exitVoteSumExp(final ParserRuleContext ctx,
                                 final boolean unique) {
         final Class<VoteSumUniqueExpContext> cu = VoteSumUniqueExpContext.class;

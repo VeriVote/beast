@@ -8,7 +8,11 @@ import javax.swing.JComboBox;
  * @author Holger Klein
  */
 public class OptionElemComboBox extends JComboBox<String> {
+
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
+
+    /** The elem. */
     private final OptionElement elem;
 
     /**

@@ -3,12 +3,14 @@ package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 
 /**
+ * The Class ImplicationNode.
  *
  * @author Lukas Stapelbroek
- *
  */
 public class ImplicationNode extends BinaryRelationshipNode {
+
     /**
+     * Instantiates a new implication node.
      *
      * @param lhsExpNode the lhs node
      * @param rhsExpNode the rhs node

@@ -13,7 +13,12 @@ import org.fxmisc.richtext.model.StyleSpansBuilder;
 
 import javafx.scene.Node;
 
+/**
+ * The Class RichTextFXCodeArea.
+ */
 public class RichTextFXCodeArea extends CodeArea {
+
+    /** The Constant KEYWORDS. */
     private static final String[] KEYWORDS
         = {
             "abstract", "assert", "boolean", "break", "byte", "case",
@@ -27,22 +32,49 @@ public class RichTextFXCodeArea extends CodeArea {
             "throws", "transient", "try", "void", "volatile", "while"
         };
 
+    /** The Constant KEYWORD_PATTERN. */
     private static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
+
+    /** The Constant PAREN_PATTERN. */
     private static final String PAREN_PATTERN = "\\(|\\)";
+
+    /** The Constant BRACE_PATTERN. */
     private static final String BRACE_PATTERN = "\\{|\\}";
+
+    /** The Constant BRACKET_PATTERN. */
     private static final String BRACKET_PATTERN = "\\[|\\]";
+
+    /** The Constant SEMICOLON_PATTERN. */
     private static final String SEMICOLON_PATTERN = "\\;";
+
+    /** The Constant STRING_PATTERN. */
     private static final String STRING_PATTERN = "\"([^\"\\\\]|\\\\.)*\"";
+
+    /** The Constant COMMENT_PATTERN. */
     private static final String COMMENT_PATTERN = "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/";
 
+    /** The Constant KEYWORD_STRING. */
     private static final String KEYWORD_STRING = "KEYWORD_STRING";
+
+    /** The Constant PAREN_STRING. */
     private static final String PAREN_STRING = "PAREN_STRING";
+
+    /** The Constant BRACE_STRING. */
     private static final String BRACE_STRING = "BRACE_STRING";
+
+    /** The Constant BRACKET_STRING. */
     private static final String BRACKET_STRING = "BRACKET_STRING";
+
+    /** The Constant SEMICOLON_STRING. */
     private static final String SEMICOLON_STRING = "SEMICOLON_STRING";
+
+    /** The Constant STRING_STRING. */
     private static final String STRING_STRING = "STRING_STRING";
+
+    /** The Constant COMMENT_STRING. */
     private static final String COMMENT_STRING = "COMMENT_STRING";
 
+    /** The Constant PATTERN. */
     private static final Pattern PATTERN = Pattern.compile(
             "(?<" + KEYWORD_STRING + ">" + KEYWORD_PATTERN + ")"
             + "|(?<" + PAREN_STRING + ">" + PAREN_PATTERN + ")"
@@ -52,8 +84,12 @@ public class RichTextFXCodeArea extends CodeArea {
             + "|(?<" + STRING_STRING + ">" + STRING_PATTERN + ")"
             + "|(?<" + COMMENT_STRING + ">" + COMMENT_PATTERN + ")");
 
+    /** The Constant RESOURCE. */
     private static final String RESOURCE = "codeAreaJAVAFXStyleSheet.css";
 
+    /**
+     * The constructor.
+     */
     public RichTextFXCodeArea() {
         String sampleCode
             = String.join("\n",
@@ -95,6 +131,12 @@ public class RichTextFXCodeArea extends CodeArea {
         this.replaceText(0, 0, sampleCode);
     }
 
+    /**
+     * Compute highlighting.
+     *
+     * @param text the text
+     * @return the style spans
+     */
     private static StyleSpans<Collection<String>> computeHighlighting(final String text) {
         Matcher matcher = PATTERN.matcher(text);
         int lastKwEnd = 0;

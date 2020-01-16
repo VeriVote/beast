@@ -14,6 +14,9 @@ import com.google.gson.JsonSerializer;
 import edu.pse.beast.highlevel.javafx.ChildTreeItem;
 import edu.pse.beast.highlevel.javafx.CustomTreeItem;
 
+/**
+ * The Class CustomTreeItemAdapter.
+ */
 public final class CustomTreeItemAdapter
                 implements JsonSerializer<CustomTreeItem>,
                            JsonDeserializer<CustomTreeItem> {

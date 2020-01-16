@@ -3,16 +3,32 @@ package edu.pse.beast.datatypes.propertydescription;
 import java.util.List;
 
 /**
+ * The Class PreAndPostConditionsDescription.
  *
  * @author Niels Hanselmann
  */
 public class PreAndPostConditionsDescription {
+
+    /** The name. */
     private String name;
+
+    /** The symbolic variable list. */
     private final SymbolicVariableList symbolicVariableList;
+
+    /** The pre conditions description. */
     private final FormalPropertiesDescription preConditionsDescription;
+
+    /** The post conditions description. */
     private final FormalPropertiesDescription postConditionsDescription;
+
+    /** The bounded var description. */
     private final FormalPropertiesDescription boundedVarDescription;
 
+    /**
+     * Instantiates a new pre and post conditions description.
+     *
+     * @param nameString the name string
+     */
     public PreAndPostConditionsDescription(final String nameString) {
         this.name = nameString;
         this.symbolicVariableList = new SymbolicVariableList();
@@ -42,11 +58,17 @@ public class PreAndPostConditionsDescription {
         this.symbolicVariableList = symbVarList;
     }
 
+    /**
+     * Gets the name.
+     *
+     * @return the name
+     */
     public String getName() {
         return this.name;
     }
 
     /**
+     * Gets the symbolic variables as list.
      *
      * @return the SymbolicVariableList as a List
      */
@@ -54,11 +76,17 @@ public class PreAndPostConditionsDescription {
         return symbolicVariableList.getSymbolicVariables();
     }
 
+    /**
+     * Gets the symbolic variables cloned.
+     *
+     * @return the symbolic variables cloned
+     */
     public List<SymbolicVariable> getSymbolicVariablesCloned() {
         return symbolicVariableList.getSymbolicVariablesCloned();
     }
 
     /**
+     * Gets the sym var list.
      *
      * @return the symbolicVariableList as the datatype
      */
@@ -67,6 +95,7 @@ public class PreAndPostConditionsDescription {
     }
 
     /**
+     * Gets the post conditions description.
      *
      * @return the postConditionsDescription
      */
@@ -75,6 +104,7 @@ public class PreAndPostConditionsDescription {
     }
 
     /**
+     * Gets the pre conditions description.
      *
      * @return the preConditionsDescirption
      */
@@ -82,10 +112,20 @@ public class PreAndPostConditionsDescription {
         return preConditionsDescription;
     }
 
+    /**
+     * Gets the bounded var description.
+     *
+     * @return the bounded var description
+     */
     public FormalPropertiesDescription getBoundedVarDescription() {
         return boundedVarDescription;
     }
 
+    /**
+     * Sets the name.
+     *
+     * @param nameString the new name
+     */
     public void setName(final String nameString) {
         this.name = nameString;
     }

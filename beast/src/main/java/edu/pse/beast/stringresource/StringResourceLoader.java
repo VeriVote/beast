@@ -9,13 +9,16 @@ import java.util.Objects;
 import edu.pse.beast.toolbox.ErrorLogger;
 
 /**
+ * The Class StringResourceLoader.
  *
  * @author Niels Hanselmann
  */
 public class StringResourceLoader {
+    /** The ids to string. */
     private final HashMap<String, String> idsToString;
 
     /**
+     * Instantiates a new string resource loader.
      *
      * @param stringRes a Linked List with the correct format. Id : string
      * @throws ArrayIndexOutOfBoundsException if the list is not correctly formatted
@@ -25,7 +28,7 @@ public class StringResourceLoader {
         idsToString = new HashMap<>();
 
         for (Iterator<String> iterator = stringRes.iterator(); iterator.hasNext();) {
-            String line = (String) iterator.next();
+            String line = iterator.next();
 
             if (line.length() != 0) {
                 String[] split = line.split(":", 2);
@@ -38,6 +41,8 @@ public class StringResourceLoader {
     }
 
     /**
+     * Gets the string from ID.
+     *
      * @param id Id of the String you want to load
      * @return the String with the id
      */
@@ -74,6 +79,7 @@ public class StringResourceLoader {
     }
 
     /**
+     * Contains id.
      *
      * @param id the checked id
      * @return true if it contains the id

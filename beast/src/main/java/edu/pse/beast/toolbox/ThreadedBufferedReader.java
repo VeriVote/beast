@@ -15,15 +15,29 @@ import java.util.concurrent.CountDownLatch;
  *
  */
 public class ThreadedBufferedReader implements Runnable {
+
+    /** The Constant CHECKING_INTERVAL. */
     private static final int CHECKING_INTERVAL = 5000;
+
+    /** The Constant WARNING_INTERVAL. */
     private static final int WARNING_INTERVAL = 1000;
+
+    /** The Constant UNWIND_PREFIX. */
     private static final String UNWIND_PREFIX = "  <text>Unwinding loop";
 
+    /** The reader. */
     private final BufferedReader reader;
+
+    /** The read lines. */
     private final List<String> readLines;
+
+    /** The is interrupted. */
     private volatile boolean isInterrupted = false;
+
+    /** The latch. */
     private final CountDownLatch latch;
 
+    /** The check for unwind. */
     private final boolean checkForUnwind;
 
     /**
@@ -45,10 +59,8 @@ public class ThreadedBufferedReader implements Runnable {
         new Thread(this, "ReaderThread").start();
     }
 
-    /**
-     * Starts the thread. The reader reads each line, adds it to the list. At the
-     * end it notifies a latch, that it is finished.
-     */
+    // Starts the thread. The reader reads each line, adds it to the list. At the
+    // end it notifies a latch, that it is finished.
     @Override
     public void run() {
 
@@ -72,6 +84,7 @@ public class ThreadedBufferedReader implements Runnable {
                                     );
                             if (iteration > WARNING_INTERVAL) {
                                 new Thread() {
+                                    @Override
                                     public void run() {
                                         ErrorForUserDisplayer.displayError(
                                                 "A loop in your c program is still"
@@ -112,6 +125,9 @@ public class ThreadedBufferedReader implements Runnable {
         }
     }
 
+    /**
+     * Finish.
+     */
     public void finish() {
         // nothing, just to get the warning away
     }

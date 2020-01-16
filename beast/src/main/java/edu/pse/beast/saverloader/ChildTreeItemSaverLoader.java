@@ -22,6 +22,8 @@ import edu.pse.beast.types.OutputType;
  * @author Lukas Stapelbroek
  */
 public class ChildTreeItemSaverLoader implements SaverLoader<ChildTreeItemValues> {
+
+    /** The saver loader. */
     private static Gson saverLoader;
 
     static { // here you have the chance to register typeAdapters

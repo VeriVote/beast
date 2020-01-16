@@ -11,13 +11,34 @@ import edu.pse.beast.highlevel.javafx.TabClass;
 import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 
+/**
+ * The Class PropertyCombiner.
+ */
 public class PropertyCombiner extends TabClass {
+
+    /** The file ending. */
     private final String fileEnding;
+
+    /** The initial dir. */
     private final String initialDir;
+
+    /** The file extension description. */
     private final String fileExtensionDescription;
+
+    /** The has save file. */
     private boolean hasSaveFile = false;
+
+    /** The save file. */
     private File saveFile = null;
 
+    /**
+     * The constructor.
+     *
+     * @param associatedTab the associated tab
+     * @param fileEnd the file end
+     * @param initDir the init dir
+     * @param fileExtensionDescr the file extension descr
+     */
     public PropertyCombiner(final Tab associatedTab, final String fileEnd,
                             final String initDir,
                             final String fileExtensionDescr) {
@@ -27,6 +48,13 @@ public class PropertyCombiner extends TabClass {
         this.fileExtensionDescription = fileExtensionDescr;
     }
 
+    /**
+     * Save.
+     *
+     * @param fileName the file name
+     * @param preText the pre text
+     * @param postText the post text
+     */
     public void save(final String fileName,
                      final String preText,
                      final String postText) {
@@ -39,6 +67,13 @@ public class PropertyCombiner extends TabClass {
         }
     }
 
+    /**
+     * Save.
+     *
+     * @param toSaveIn the to save in
+     * @param preText the pre text
+     * @param postText the post text
+     */
     public void save(final File toSaveIn,
                      final String preText,
                      final String postText) {
@@ -56,6 +91,13 @@ public class PropertyCombiner extends TabClass {
         }
     }
 
+    /**
+     * Save as.
+     *
+     * @param fileName the file name
+     * @param preText the pre text
+     * @param postText the post text
+     */
     public void saveAs(final String fileName,
                        final String preText,
                        final String postText) {
@@ -78,6 +120,12 @@ public class PropertyCombiner extends TabClass {
         }
     }
 
+    /**
+     * Load.
+     *
+     * @param preCodeArea the pre code area
+     * @param postCodeArea the post code area
+     */
     public void load(final NewPropertyCodeArea preCodeArea,
                      final NewPropertyCodeArea postCodeArea) {
         FileChooser fileChooser = new FileChooser();
@@ -92,6 +140,13 @@ public class PropertyCombiner extends TabClass {
         }
     }
 
+    /**
+     * Load.
+     *
+     * @param toLoadFrom the to load from
+     * @param preCodeArea the pre code area
+     * @param postCodeArea the post code area
+     */
     public void load(final File toLoadFrom, final NewPropertyCodeArea preCodeArea,
                      final NewPropertyCodeArea postCodeArea) {
         try {

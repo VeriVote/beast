@@ -7,7 +7,18 @@ package edu.pse.beast.codearea.codeinput;
  * @author Holger Klein
  */
 public interface LockedLinesListener {
+
+    /**
+     * Locked line.
+     *
+     * @param lineNumber the line number
+     */
     void lockedLine(int lineNumber);
 
+    /**
+     * Unlocked line.
+     *
+     * @param lineNumber the line number
+     */
     void unlockedLine(int lineNumber);
 }

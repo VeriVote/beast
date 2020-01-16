@@ -14,36 +14,52 @@ import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 
 /**
+ * A factory for creating Checker objects.
  *
  * @author Lukas Stapelbroek
- *
  */
 public abstract class CheckerFactory implements Runnable {
+
+    /** The Constant SLEEP_INTERVAL. */
     private static final long SLEEP_INTERVAL = 1000;
+
+    /** The Constant POLLING_INTERVAL. */
     private static final long POLLING_INTERVAL = 1000;
 
+    /** The controller. */
     private final FactoryController controller;
+
+    /** The election desc. */
     private final ElectionDescription electionDesc;
+
+    /** The parameter. */
     private final ElectionCheckParameter parameter;
 
+    /** The currently running. */
     private Checker currentlyRunning;
+
+    /** The stopped. */
     private boolean stopped = false;
+
+    /** The finished. */
     private boolean finished = false;
+
+    /** The last result. */
     private List<String> lastResult;
+
+    /** The last error. */
     private List<String> lastError;
 
+    /** The result. */
     private Result result;
 
     /**
+     * Instantiates a new checker factory.
      *
-     * @param factController
-     *            the factoryController that started this factory
-     * @param electionDescription
-     *            the electionDescription
-     * @param res
-     *            the result object where the result has to be put in
-     * @param param
-     *            the parameter
+     * @param factController            the factoryController that started this factory
+     * @param electionDescription            the electionDescription
+     * @param res            the result object where the result has to be put in
+     * @param param            the parameter
      */
     protected CheckerFactory(final FactoryController factController,
                              final ElectionDescription electionDescription,
@@ -81,10 +97,9 @@ public abstract class CheckerFactory implements Runnable {
     // // }
     // }
 
-    /**
-     * The main working thread in this CheckerFactory. It cycles through all
-     * possible configurations and creates sequentially a new checker for each
-     */
+    // The main working thread in this CheckerFactory. It cycles through all
+    // possible configurations and creates sequentially a new checker for each
+    @Override
     public void run() {
         String advanced = parameter.getArgument();
         String[] toTrim = advanced.split(";");
@@ -143,22 +158,22 @@ public abstract class CheckerFactory implements Runnable {
     }
 
     /**
-     * @param advanced
-     *            advanced options
-     * @param res
-     *            the result
+     * Run check.
+     *
+     * @param advanced            advanced options
+     * @param res            the result
      */
     private void runCheck(final String advanced, final Result res) {
         outerLoop:
             for (Iterator<Integer> voteIterator = parameter.getAmountVoters().iterator();
                     voteIterator.hasNext();) {
-            int voters = (int) voteIterator.next();
+            int voters = voteIterator.next();
             for (Iterator<Integer> candidateIterator = parameter.getAmountCandidates().iterator();
                     candidateIterator.hasNext();) {
-                int candidates = (int) candidateIterator.next();
+                int candidates = candidateIterator.next();
                 for (Iterator<Integer> seatsIterator = parameter.getAmountSeats().iterator();
                         seatsIterator.hasNext();) {
-                    int seats = (int) seatsIterator.next();
+                    int seats = seatsIterator.next();
                     synchronized (this) {
                         if (!stopped) {
                             currentlyRunning = startProcessCheck(electionDesc,
@@ -216,6 +231,9 @@ public abstract class CheckerFactory implements Runnable {
         }
     }
 
+    /**
+     * Busy waiting.
+     */
     private void busyWaiting() {
         // wait until we get stopped or the checker finished
         while (!finished && !stopped) {
@@ -230,18 +248,14 @@ public abstract class CheckerFactory implements Runnable {
     }
 
     /**
-     * @param advanced
-     *            advanced options
-     * @param numVoters
-     *            amount of voters
-     * @param numCandidates
-     *            amount of candidates
-     * @param numSeats
-     *            amount of seats
-     * @param origData
-     *            original data
-     * @param res
-     *            the result
+     * Run margin.
+     *
+     * @param advanced            advanced options
+     * @param numVoters            amount of voters
+     * @param numCandidates            amount of candidates
+     * @param numSeats            amount of seats
+     * @param origData            original data
+     * @param res            the result
      */
     private void runMargin(final String advanced, final int numVoters, final int numCandidates,
                            final int numSeats, final ElectionSimulationData origData,
@@ -346,18 +360,14 @@ public abstract class CheckerFactory implements Runnable {
     }
 
     /**
-     * @param advanced
-     *            advanced options
-     * @param numVoters
-     *            amount of voters
-     * @param numCandidates
-     *            amount of candidates
-     * @param numSeats
-     *            amount of seats
-     * @param origData
-     *            original data
-     * @param res
-     *            the result
+     * Run test.
+     *
+     * @param advanced            advanced options
+     * @param numVoters            amount of voters
+     * @param numCandidates            amount of candidates
+     * @param numSeats            amount of seats
+     * @param origData            original data
+     * @param res            the result
      */
     private void runTest(final String advanced,
                          final int numVoters, final int numCandidates,
@@ -523,22 +533,14 @@ public abstract class CheckerFactory implements Runnable {
      * Executes a margin computation and waits for it to finish. The
      * result/error is in "lastResult/lastError" after the method returned.
      *
-     * @param margin
-     *            the margin
-     * @param origResult
-     *            the original result
-     * @param advanced
-     *            advanced options
-     * @param numVoters
-     *            amount of voters
-     * @param numCandidates
-     *            amount of candidates
-     * @param numSeats
-     *            amount of seats
-     * @param votingData
-     *            the voting data
-     * @param res
-     *            the result
+     * @param margin            the margin
+     * @param origData the orig data
+     * @param advanced            advanced options
+     * @param numVoters            amount of voters
+     * @param numCandidates            amount of candidates
+     * @param numSeats            amount of seats
+     * @param votingData            the voting data
+     * @param res            the result
      */
     protected void checkMarginAndWait(final int margin,
                                       final ElectionSimulationData origData,
@@ -752,6 +754,7 @@ public abstract class CheckerFactory implements Runnable {
     protected abstract void cleanUp();
 
     /**
+     * Gets the matching result.
      *
      * @return the result object that belongs to the Checker produced by this
      *         factory
@@ -780,6 +783,15 @@ public abstract class CheckerFactory implements Runnable {
     // ElectionCheckParameter parameter, Result result, boolean isMargin);
     //
 
+    /**
+     * Gets the new instance.
+     *
+     * @param contr the contr
+     * @param electionDescription the election description
+     * @param res the res
+     * @param param the param
+     * @return the new instance
+     */
     public abstract CheckerFactory getNewInstance(FactoryController contr,
                                                   ElectionDescription electionDescription,
                                                   Result res,

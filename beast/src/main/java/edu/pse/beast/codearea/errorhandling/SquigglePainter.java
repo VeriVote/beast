@@ -17,25 +17,23 @@ import javax.swing.text.View;
  *  @author https://tips4java.wordpress.com/2008/10/28/rectangle-painter/
  **/
 public class SquigglePainter extends DefaultHighlighter.DefaultHighlightPainter {
+
+    /** The Constant SQUIGGLE. */
     private static final int SQUIGGLE = 2;
+
+    /** The Constant ARC. */
     private static final int ARC = 180;
 
+    /**
+     * Instantiates a new squiggle painter.
+     *
+     * @param color the color
+     */
     public SquigglePainter(final Color color) {
         super(color);
     }
 
-    /**
-     * Paints a portion of a highlight.
-     *
-     * @param g      the graphics context
-     * @param offs0  the starting model offset >= 0
-     * @param offs1  the ending model offset >= offs1
-     * @param bounds the bounding box of the view, which is not necessarily the
-     *               region to paint.
-     * @param c      the editor
-     * @param view   View painting for
-     * @return region drawing occurred in
-     */
+    @Override
     public Shape paintLayer(final Graphics g,
                             final int offs0,
                             final int offs1,
@@ -60,6 +58,15 @@ public class SquigglePainter extends DefaultHighlighter.DefaultHighlightPainter 
         return r;
     }
 
+    /**
+     * Gets the drawing area.
+     *
+     * @param offs0 the offs 0
+     * @param offs1 the offs 1
+     * @param bounds the bounds
+     * @param view the view
+     * @return the drawing area
+     */
     private Rectangle getDrawingArea(final int offs0,
                                      final int offs1,
                                      final Shape bounds,

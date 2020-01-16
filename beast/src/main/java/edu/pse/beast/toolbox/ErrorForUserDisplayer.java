@@ -3,11 +3,20 @@ package edu.pse.beast.toolbox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+/**
+ * The Class ErrorForUserDisplayer.
+ */
 public final class ErrorForUserDisplayer {
+
+    /** The Constant THOUSAND. */
     private static final int THOUSAND = 1000;
 
+    /** The currently displayed errors. */
     private static int currentlyDisplayedErrors = 0;
 
+    /**
+     * Instantiates a new error for user displayer.
+     */
     private ErrorForUserDisplayer() {
     }
 
@@ -34,10 +43,16 @@ public final class ErrorForUserDisplayer {
         }
     }
 
+    /**
+     * Increment.
+     */
     private static synchronized void increment() {
         currentlyDisplayedErrors++;
     }
 
+    /**
+     * Decrement.
+     */
     private static synchronized void decrement() {
         currentlyDisplayedErrors--;
     }

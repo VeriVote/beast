@@ -10,11 +10,20 @@ import java.util.List;
 import edu.pse.beast.toolbox.RichTextInformation;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * The Class TextImageElement.
+ */
 public class TextImageElement extends ResultImageElement {
+
+    /** The affine transform. */
     // objects needed to calculate the size of the text
     private static AffineTransform affineTransform = new AffineTransform();
+
+    /** The frc. */
     private static FontRenderContext frc =
             new FontRenderContext(affineTransform, true, true);
+
+    /** The rich text info. */
     private List<RichTextInformation> richTextInfo;
 
     /**
@@ -80,6 +89,13 @@ public class TextImageElement extends ResultImageElement {
         // }
     }
 
+    /**
+     * Gets the max X.
+     *
+     * @param startX the start X
+     * @param textInfo the text info
+     * @return the max X
+     */
     @Deprecated
     private static double getMaxX(final double startX,
                                   final List<RichTextInformation> textInfo) {
@@ -93,6 +109,13 @@ public class TextImageElement extends ResultImageElement {
         return startX + maxTextWidth;
     }
 
+    /**
+     * Gets the max Y.
+     *
+     * @param startY the start Y
+     * @param textInfo the text info
+     * @return the max Y
+     */
     @Deprecated
     private static double getMaxY(final double startY,
                                   final List<RichTextInformation> textInfo) {
@@ -107,6 +130,12 @@ public class TextImageElement extends ResultImageElement {
         return startY + maxTextHeight;
     }
 
+    /**
+     * Replace characters.
+     *
+     * @param toClean the to clean
+     * @return the string
+     */
     private static String replaceCharacters(final String toClean) {
         // 4 spaces TODO maybe extract the tabs per spaces from the codearea
         String replacString = toClean.replace("\t", " " + " " + " " + " ");

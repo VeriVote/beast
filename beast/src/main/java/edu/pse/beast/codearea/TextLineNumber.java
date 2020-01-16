@@ -12,10 +12,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 
-/**
- *
- * @author https://tips4java.wordpress.com/2009/05/23/text-component-line-number/
- */
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
@@ -41,44 +37,81 @@ import javax.swing.text.Utilities;
  *
  * This class was designed to be used as a component added to the row header of
  * a JScrollPane.
+ *
+ * @author https://tips4java.wordpress.com/2009/05/23/text-component-line-number/
  */
 public class TextLineNumber extends JPanel
                 implements CaretListener, DocumentListener, PropertyChangeListener {
+
+    /** The Constant LEFT. */
     public static final float LEFT = 0.0F;
+
+    /** The Constant CENTER. */
     public static final float CENTER = 0.5F;
+
+    /** The Constant RIGHT. */
     public static final float RIGHT = 1.0F;
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The Constant RIGHT_BORDER_INSET. */
     private static final int RIGHT_BORDER_INSET = 2;
+
+    /** The Constant MIN_DISPLAY_WIDTH. */
     private static final int MIN_DISPLAY_WIDTH = 3;
+
+    /** The Constant DEFAULT_BORDER_GAP. */
     private static final int DEFAULT_BORDER_GAP = 5;
+
+    /** The Constant OFFSET. */
     private static final int OFFSET = 1000000;
+
+    /** The Constant HEIGHT. */
     private static final int HEIGHT = Integer.MAX_VALUE - OFFSET;
 
+    /** The Constant OUTER. */
     private static final Border OUTER =
             new MatteBorder(0, 0, 0, RIGHT_BORDER_INSET, Color.GRAY);
 
     // Text component this TextTextLineNumber component is in sync with
 
+    /** The component. */
     private JTextComponent component;
 
     // Properties that can be changed
 
+    /** The update font. */
     private boolean updateFont;
+
+    /** The border gap. */
     private int borderGap;
+
+    /** The current line foreground. */
     private Color currentLineForeground;
+
+    /** The current line style. */
     private int currentLineStyle;
+
+    /** The digit alignment. */
     private float digitAlignment;
+
+    /** The minimum display digits. */
     private int minimumDisplayDigits;
 
     // Keep history information to reduce the number of times the component
     // needs to be repainted
 
+    /** The last digits. */
     private int lastDigits;
+
+    /** The last height. */
     private int lastHeight;
+
+    /** The last line. */
     private int lastLine;
 
+    /** The fonts. */
     private HashMap<String, FontMetrics> fonts;
 
     /**
@@ -277,9 +310,6 @@ public class TextLineNumber extends JPanel
         }
     }
 
-    /**
-     * Draw the line numbers.
-     */
     @Override
     public void paintComponent(final Graphics g) {
         super.paintComponent(g);
@@ -326,9 +356,13 @@ public class TextLineNumber extends JPanel
         }
     }
 
-    /*
+    /**
+     * Checks if is current line.
      * We need to know if the caret is currently positioned on the line we are about
      * to paint so the line number can be highlighted.
+     *
+     * @param rowStartOffset the row start offset
+     * @return true, if is current line
      */
     private boolean isCurrentLine(final int rowStartOffset) {
         int caretPosition = component.getCaretPosition();
@@ -337,9 +371,12 @@ public class TextLineNumber extends JPanel
                 == root.getElementIndex(caretPosition);
     }
 
-    /*
+    /**
      * Get the line number to be drawn. The empty string will be returned when a
      * line of text has wrapped.
+     *
+     * @param rowStartOffset the row start offset
+     * @return the text line number
      */
     protected String getTextLineNumber(final int rowStartOffset) {
         Element root = component.getDocument().getDefaultRootElement();
@@ -352,15 +389,24 @@ public class TextLineNumber extends JPanel
         }
     }
 
-    /*
-     * Determine the X offset to properly align the line number when drawn
+    /**
+     * Determine the X offset to properly align the line number when drawn.
+     *
+     * @param availableWidth the available width
+     * @param stringWidth the string width
+     * @return the offset X
      */
     private int getOffsetX(final int availableWidth, final int stringWidth) {
         return (int) ((availableWidth - stringWidth) * digitAlignment);
     }
 
-    /*
-     * Determine the Y offset for the current row
+    /**
+     * Determine the Y offset for the current row.
+     *
+     * @param rowStartOffset the row start offset
+     * @param fontMetrics the font metrics
+     * @return the offset Y
+     * @throws BadLocationException the bad location exception
      */
     private int getOffsetY(final int rowStartOffset,
                            final FontMetrics fontMetrics)
@@ -404,6 +450,7 @@ public class TextLineNumber extends JPanel
 //
 //  Implement CaretListener interface
 //
+
     @Override
     public void caretUpdate(final CaretEvent e) {
         // Get the line the caret is positioned on
@@ -421,6 +468,7 @@ public class TextLineNumber extends JPanel
 //
 //  Implement DocumentListener interface
 //
+
     @Override
     public void changedUpdate(final DocumentEvent e) {
         documentChanged();
@@ -436,7 +484,7 @@ public class TextLineNumber extends JPanel
         documentChanged();
     }
 
-    /*
+    /**
      * A document change may affect the number of displayed lines of text. Therefore
      * the lines numbers will also change.
      */
@@ -465,6 +513,7 @@ public class TextLineNumber extends JPanel
 //
 //  Implement PropertyChangeListener interface
 //
+
     @Override
     public void propertyChange(final PropertyChangeEvent evt) {
         if (evt.getNewValue() instanceof Font) {

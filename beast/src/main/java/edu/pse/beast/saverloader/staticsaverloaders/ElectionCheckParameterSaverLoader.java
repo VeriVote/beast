@@ -12,71 +12,173 @@ import edu.pse.beast.datatypes.electioncheckparameter.TimeOut;
  * @author Nikolai Schnell
  */
 public final class ElectionCheckParameterSaverLoader {
+    /** The Constant LEFT. */
     private static final char LEFT         = '<';
+
+    /** The Constant RIGHT. */
     private static final char RIGHT        = '>';
+
+    /** The Constant BREAK. */
     private static final char BREAK        = '\n';
+
+    /** The Constant SLASH. */
     private static final char SLASH        = '/';
 
+    /** The Constant EMPTY. */
     private static final String EMPTY      = "";
+
+    /** The Constant MIN. */
     private static final String MIN        = "Min";
+
+    /** The Constant MAX. */
     private static final String MAX        = "Max";
+
+    /** The Constant VOTERS. */
     private static final String VOTERS     = "amountVoters";
+
+    /** The Constant CANDIDATES. */
     private static final String CANDIDATES = "amountCandidates";
+
+    /** The Constant SEATS. */
     private static final String SEATS      = "amountSeats";
+
+    /** The Constant TIMEOUT. */
     private static final String TIMEOUT    = "timeout";
+
+    /** The Constant PROCS. */
     private static final String PROCS      = "processes";
+
+    /** The Constant ARG. */
     private static final String ARG        = "argument";
 
+    /** The split string. */
     private static String[] splitString = {EMPTY};
 
+    /**
+     * Instantiates a new election check parameter saver loader.
+     */
     private ElectionCheckParameterSaverLoader() { }
 
+    /**
+     * Sets the string.
+     *
+     * @param s the new string
+     */
     private static void setString(final String s) {
         splitString = new String[] {s};
     }
 
+    /**
+     * Reset string.
+     */
     private static void resetString() {
         setString(EMPTY);
     }
 
+    /**
+     * Bound string.
+     *
+     * @param type the type
+     * @param minOrMax the min or max
+     * @return the string
+     */
     private static String boundString(final String type, final String minOrMax) {
         return EMPTY + BREAK + LEFT + SLASH + type + minOrMax + RIGHT + BREAK;
     }
 
+    /**
+     * Bound string.
+     *
+     * @param type the type
+     * @return the string
+     */
     private static String boundString(final String type) {
         return boundString(type, EMPTY);
     }
 
+    /**
+     * Val string.
+     *
+     * @param type the type
+     * @param minOrMax the min or max
+     * @return the string
+     */
     private static String valString(final String type, final String minOrMax) {
         return LEFT + type + minOrMax + RIGHT + BREAK;
     }
 
+    /**
+     * Val string.
+     *
+     * @param type the type
+     * @return the string
+     */
     private static String valString(final String type) {
         return valString(type, EMPTY);
     }
 
+    /**
+     * Removes the from.
+     *
+     * @param src the src
+     * @param remove the remove
+     * @return the string
+     */
     private static String removeFrom(final String[] src, final String remove) {
         return src[0].replace(EMPTY + remove, EMPTY);
     }
 
+    /**
+     * Gets the string.
+     *
+     * @param type the type
+     * @param minOrMax the min or max
+     * @return the string
+     */
     private static String getString(final String type, final String minOrMax) {
         final int idx = splitString.length <= 1 ? 0 : 1;
         splitString = splitString[idx].split(boundString(type, minOrMax));
         return removeFrom(splitString, valString(type, minOrMax));
     }
 
+    /**
+     * Gets the string.
+     *
+     * @param type the type
+     * @return the string
+     */
     private static String getString(final String type) {
         return getString(type, EMPTY);
     }
 
+    /**
+     * Gets the int.
+     *
+     * @param type the type
+     * @param minOrMax the min or max
+     * @return the int
+     */
     private static int getInt(final String type, final String minOrMax) {
         return Integer.parseInt(getString(type, minOrMax));
     }
 
+    /**
+     * Gets the int.
+     *
+     * @param type the type
+     * @return the int
+     */
     private static int getInt(final String type) {
         return getInt(type, EMPTY);
     }
 
+    /**
+     * To int list.
+     *
+     * @param start the start
+     * @param end the end
+     * @return the array list
+     */
     private static ArrayList<Integer> toIntList(final int start, final int end) {
         ArrayList<Integer> list = new ArrayList<>();
         for (int i = start; i <= end; i++) {
@@ -85,6 +187,12 @@ public final class ElectionCheckParameterSaverLoader {
         return list;
     }
 
+    /**
+     * Gets the list.
+     *
+     * @param type the type
+     * @return the list
+     */
     private static ArrayList<Integer> getList(final String type) {
         return toIntList(getInt(type, MIN), getInt(type, MAX));
     }

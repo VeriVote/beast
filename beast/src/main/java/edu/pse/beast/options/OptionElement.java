@@ -13,7 +13,11 @@ public abstract class OptionElement {
      * The currently chosen option.
      */
     private String chosenOption;
+
+    /** The id. */
     private final String id;
+
+    /** The available options. */
     private final List<String> availableOptions;
 
     /**
@@ -62,6 +66,11 @@ public abstract class OptionElement {
         return chosenOption;
     }
 
+    /**
+     * Sets the chosen option.
+     *
+     * @param chosenOpt the new chosen option
+     */
     public void setChosenOption(final String chosenOpt) {
         this.chosenOption = chosenOpt;
     }

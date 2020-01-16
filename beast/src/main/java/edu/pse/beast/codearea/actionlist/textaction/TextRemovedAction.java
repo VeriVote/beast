@@ -15,9 +15,19 @@ import edu.pse.beast.codearea.actionlist.Action;
  * @author Holger Klein
  */
 public class TextRemovedAction implements Action {
+
+    /** The td. */
     private final TextDelta td;
+
+    /** The doc. */
     private final StyledDocument doc;
 
+    /**
+     * Instantiates a new text removed action.
+     *
+     * @param textDelta the text delta
+     * @param styledDoc the styled doc
+     */
     public TextRemovedAction(final TextDelta textDelta,
                              final StyledDocument styledDoc) {
         this.doc = styledDoc;

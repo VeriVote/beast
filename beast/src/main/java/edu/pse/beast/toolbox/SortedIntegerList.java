@@ -44,6 +44,8 @@ public class SortedIntegerList {
     }
 
     /**
+     * Gets the.
+     *
      * @param index the position of the integer to be returned
      * @return the integer at position index
      */
@@ -52,6 +54,8 @@ public class SortedIntegerList {
     }
 
     /**
+     * Size.
+     *
      * @return the amount of objects in container
      */
     public int size() {
@@ -102,6 +106,8 @@ public class SortedIntegerList {
     }
 
     /**
+     * Gets the biggest smaller or equal.
+     *
      * @param num the number to be compared to
      * @return the biggest integer smaller or equal to than the num
      */
@@ -167,6 +173,7 @@ public class SortedIntegerList {
     }
 
     /**
+     * Gets the position of.
      *
      * @param i the value of the number to get the position of
      * @return index of the search key, if it is contained in the array; otherwise,
@@ -181,6 +188,7 @@ public class SortedIntegerList {
     }
 
     /**
+     * Gets the amount before.
      *
      * @param num the exclusive upper bound of the check
      * @return the amount of elements that are smaller than num
@@ -201,6 +209,7 @@ public class SortedIntegerList {
     }
 
     /**
+     * Gets the arr.
      *
      * @return this List in array form
      */
@@ -221,6 +230,11 @@ public class SortedIntegerList {
         return s;
     }
 
+    /**
+     * Gets the copied list.
+     *
+     * @return the copied list
+     */
     public List<Integer> getCopiedList() {
         List<Integer> toReturn = new ArrayList<Integer>();
         Collections.copy(toReturn, container);

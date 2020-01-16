@@ -5,14 +5,25 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+/**
+ * The Class RichTextInformation.
+ */
 public class RichTextInformation {
+
+    /** The Constant DEFAULT_FONT_SIZE. */
     private static final int DEFAULT_FONT_SIZE = 12;
 
+    /** The text. */
     private final String text;
+
+    /** The font. */
     private final javafx.scene.text.Font font;
+
+    /** The color. */
     private final Color color;
 
     /**
+     * The constructor.
      *
      * @param textString
      *            the text which has to be displayed
@@ -29,9 +40,9 @@ public class RichTextInformation {
     }
 
     /**
+     * Instantiates a new rich text information.
      *
-     * @param represents
-     *            standard text in black with size 12
+     * @param textString            standard text in black with size 12
      */
     public RichTextInformation(final String textString) {
         this.text = textString;
@@ -39,12 +50,22 @@ public class RichTextInformation {
         this.color = Color.BLACK;
     }
 
+    /**
+     * Gets the size.
+     *
+     * @return the size
+     */
     public Bounds getSize() {
         Text textField = new Text(this.text);
         textField.setFont(this.font);
         return textField.getBoundsInLocal();
     }
 
+    /**
+     * Gets the color.
+     *
+     * @return the color
+     */
     public Color getColor() {
         return color;
     }

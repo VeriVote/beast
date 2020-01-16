@@ -10,6 +10,9 @@ import edu.pse.beast.datatypes.propertydescription.FormalPropertiesDescription;
  * @author Holger Klein
  */
 public final class FormalPropertySaverLoader {
+    /**
+     * Instantiates a new formal property saver loader.
+     */
     private FormalPropertySaverLoader() { }
 
     /**

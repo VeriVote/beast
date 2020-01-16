@@ -9,7 +9,11 @@ import javax.swing.JTextPane;
  * @author Nikolai Schnell
  */
 public class CElectionDescriptionEditorChangeHandler {
+
+    /** The pre string. */
     private String preString = "";
+
+    /** The code area. */
     private JTextPane codeArea;
 
     /**
@@ -41,6 +45,8 @@ public class CElectionDescriptionEditorChangeHandler {
     }
 
     /**
+     * Checks for changed.
+     *
      * @return true if the currently loaded CElectionDescription object differs from
      *         what is currently displayed in CElectionEditorWindow, false otherwise
      */

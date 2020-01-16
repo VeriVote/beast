@@ -4,20 +4,27 @@ import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.TypeExpression;
 
 /**
+ * The Class VoteSumForCandExp.
  *
  * @author Lukas Stapelbroek
- *
  */
 public class VoteSumForCandExp extends IntegerValuedExpression {
+
+    /** The accessing var. */
     private final TypeExpression accessingVar;
+
+    /** The vote arr num. */
     private final int voteArrNum;
+
+    /** The unique. */
     private final boolean unique;
 
     /**
+     * Instantiates a new vote sum for cand exp.
+     *
      * @param voteArrayNumber the number of the vote array
      * @param accessingVarExpr the accessing variable
      * @param uniqueAttr whether the variable is unique
-     *
      */
     public VoteSumForCandExp(final int voteArrayNumber,
                              final TypeExpression accessingVarExpr,
@@ -28,6 +35,7 @@ public class VoteSumForCandExp extends IntegerValuedExpression {
     }
 
     /**
+     * Gets the accessing variable.
      *
      * @return the symbolic variable of this node
      */
@@ -48,6 +56,7 @@ public class VoteSumForCandExp extends IntegerValuedExpression {
     }
 
     /**
+     * Gets the vote number.
      *
      * @return the number of the vote array
      */
@@ -56,6 +65,7 @@ public class VoteSumForCandExp extends IntegerValuedExpression {
     }
 
     /**
+     * Checks if is unique.
      *
      * @return whether only unique candidate sums are taken into account
      */

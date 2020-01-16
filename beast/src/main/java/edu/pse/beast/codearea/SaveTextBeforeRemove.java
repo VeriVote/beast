@@ -23,11 +23,17 @@ import edu.pse.beast.codearea.actionlist.ActionList;
  * @author Holger Klein
  */
 public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
+
+    /** The pane. */
     private JTextPane pane;
+
+    /** The prev text. */
     private String prevText;
     // private Actionlist actionlist;
 
     /**
+     * Instantiates a new save text before remove.
+     *
      * @param textPane       The JTextPane of whose StyledDocument the text should be
      *                   saved before remove commands
      * @param actionlist the actionlist which performs redo and undo action in the
@@ -49,6 +55,11 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
         }
     }
 
+    /**
+     * Gets the prev text.
+     *
+     * @return the prev text
+     */
     public String getPrevText() {
         return prevText;
     }

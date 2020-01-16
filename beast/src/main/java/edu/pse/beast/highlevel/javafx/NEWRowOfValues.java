@@ -11,25 +11,65 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 
+/**
+ * The Class NEWRowOfValues.
+ */
 public class NEWRowOfValues {
+
+    /** The element height. */
     private double elementHeight;
+
+    /** The element width. */
     private double elementWidth;
+
+    /** The row index. */
     private int rowIndex;
 
+    /** The values. */
     private ArrayList<String> values;
+
+    /** The fields. */
     private ArrayList<TextField> fields;
+
+    /** The container. */
     private ElectionTypeContainer container;
 
+    /** The amount of candidates. */
     private int amountOfCandidates = 0;
+
+    /** The amount of voters. */
     private int amountOfVoters = 0;
+
+    /** The amount of seats. */
     private int amountOfSeats = 0;
+
+    /** The parent. */
     private ElectionSimulationModel parent;
+
+    /** The disabled. */
     private boolean disabled;
 
+    /** The is two dim. */
     private final boolean isTwoDim;
+
+    /** The row size. */
     private int rowSize;
+
+    /** The blocked. */
     private boolean blocked = true;
 
+    /**
+     * The constructor.
+     *
+     * @param parentModel the parent model
+     * @param elecTypeContainer the elec type container
+     * @param amountCandidates the amount candidates
+     * @param amountVoters the amount voters
+     * @param amountSeats the amount seats
+     * @param rowIdx the row idx
+     * @param elemWidth the elem width
+     * @param elemHeight the elem height
+     */
     public NEWRowOfValues(final ElectionSimulationModel parentModel,
                           final ElectionTypeContainer elecTypeContainer,
                           final int amountCandidates, final int amountVoters,
@@ -48,6 +88,9 @@ public class NEWRowOfValues {
         this.setRowSize(1);
     }
 
+    /**
+     * Adds the column.
+     */
     public synchronized void addColumn() {
         while (values.size() <= rowSize) {
             values.add("0");
@@ -76,6 +119,9 @@ public class NEWRowOfValues {
         update();
     }
 
+    /**
+     * Removes the column.
+     */
     public synchronized void removeColumn() {
         if (fields.size() > 0) {
             rowSize--;
@@ -83,10 +129,13 @@ public class NEWRowOfValues {
         update();
     }
 
+    /**
+     * Update.
+     */
     public void update() {
         if (!disabled) {
             for (Iterator<TextField> iterator = fields.iterator(); iterator.hasNext();) {
-                TextField textField = (TextField) iterator.next();
+                TextField textField = iterator.next();
                 parent.getInputGridPane().getChildren().remove(textField);
             }
             int iterations = 1;
@@ -101,6 +150,13 @@ public class NEWRowOfValues {
         }
     }
 
+    /**
+     * Check and insert value.
+     *
+     * @param newValue the new value
+     * @param positionInRow the position in row
+     * @param block the block
+     */
     private void checkAndInsertValue(final String newValue,
                                      final int positionInRow,
                                      final boolean block) {
@@ -117,6 +173,7 @@ public class NEWRowOfValues {
     }
 
     /**
+     * Gets the values.
      *
      * @return the values of this row, from 0 up to
      */
@@ -132,11 +189,21 @@ public class NEWRowOfValues {
         }
     }
 
+    /**
+     * Sets the values.
+     *
+     * @param vals the new values
+     */
     public void setValues(final ArrayList<String> vals) {
         this.values = vals;
         this.setRowSize(vals.size());
     }
 
+    /**
+     * Sets the container.
+     *
+     * @param electTypeContainer the new container
+     */
     public void setContainer(final ElectionTypeContainer electTypeContainer) {
         this.container = electTypeContainer;
         for (int i = 0; i < values.size(); i++) {
@@ -144,14 +211,29 @@ public class NEWRowOfValues {
         }
     }
 
+    /**
+     * Gets the amount candidates.
+     *
+     * @return the amount candidates
+     */
     public int getAmountCandidates() {
         return amountOfCandidates;
     }
 
+    /**
+     * Gets the amount voters.
+     *
+     * @return the amount voters
+     */
     public int getAmountVoters() {
         return amountOfVoters;
     }
 
+    /**
+     * Gets the amount seats.
+     *
+     * @return the amount seats
+     */
     public int getAmountSeats() {
         return amountOfSeats;
     }
@@ -164,6 +246,11 @@ public class NEWRowOfValues {
     // values.set(index, vettedValue);
     // }
 
+    /**
+     * Sets the row size.
+     *
+     * @param rowSizeInteger the new row size
+     */
     public void setRowSize(final int rowSizeInteger) {
         if (this.rowSize < rowSizeInteger) {
             if (!isTwoDim) {
@@ -184,16 +271,31 @@ public class NEWRowOfValues {
         updateVetting();
     }
 
+    /**
+     * Sets the candidates.
+     *
+     * @param amountCandidates the new candidates
+     */
     public void setCandidates(final int amountCandidates) {
         this.amountOfCandidates = amountCandidates;
         updateVetting();
     }
 
+    /**
+     * Sets the voters.
+     *
+     * @param amountVoters the new voters
+     */
     public void setVoters(final int amountVoters) {
         this.amountOfVoters = amountVoters;
         updateVetting();
     }
 
+    /**
+     * Sets the seats.
+     *
+     * @param amountSeats the new seats
+     */
     public void setSeats(final int amountSeats) {
         this.amountOfSeats = amountSeats;
         updateVetting();
@@ -209,19 +311,31 @@ public class NEWRowOfValues {
         }
     }
 
+    /**
+     * Enable.
+     */
     public void enable() {
         this.disabled = false;
         update();
     }
 
+    /**
+     * Disable.
+     */
     public void disable() {
         this.disabled = true;
         for (Iterator<TextField> iterator = fields.iterator(); iterator.hasNext();) {
-            TextField textField = (TextField) iterator.next();
+            TextField textField = iterator.next();
             parent.getInputGridPane().getChildren().remove(textField);
         }
     }
 
+    /**
+     * Sets the value.
+     *
+     * @param x the x
+     * @param value the value
+     */
     public void setValue(final int x, final String value) {
         checkAndInsertValue(value, x, true);
     }

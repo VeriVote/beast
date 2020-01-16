@@ -20,21 +20,48 @@ import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
 
+/**
+ * The Class ResultPresentationType.
+ */
 public abstract class ResultPresentationType {
+
+    /** The Constant STANDARD_SIZE. */
     static final int STANDARD_SIZE = 10;
 
+    /** The menu item. */
     private MenuItem menuItem = null;
+
+    /**
+     * Present result.
+     *
+     * @param result the result
+     * @return the node
+     */
     public abstract Node presentResult(Result result);
+
+    /**
+     * Gets the name.
+     *
+     * @return the name
+     */
     public abstract String getName();
+
+    /**
+     * Gets the tool tip description.
+     *
+     * @return the tool tip description
+     */
     public abstract String getToolTipDescription();
 
     /**
+     * Supports zoom.
      *
      * @return true, if the Node given by this Type support zooming
      */
     public abstract boolean supportsZoom();
 
     /**
+     * Gets the implementations.
      *
      * @return all implementations of this class
      */
@@ -49,6 +76,11 @@ public abstract class ResultPresentationType {
         return implementations;
     }
 
+    /**
+     * Gets the menu item.
+     *
+     * @return the menu item
+     */
     public MenuItem getMenuItem() {
         if (menuItem != null) {
             return menuItem;
@@ -68,22 +100,32 @@ public abstract class ResultPresentationType {
         }
     }
 
+    /**
+     * Zoom to.
+     *
+     * @param zoomValue the zoom value
+     */
     public abstract void zoomTo(double zoomValue);
 
+    /**
+     * Supports.
+     *
+     * @param analysisType the analysis type
+     * @return true, if successful
+     */
     public abstract boolean supports(AnalysisType analysisType);
 
     /**
      * Extracts the value of single value objects. It is used to extract the size
      * of each vote.
      *
-     * @param toExtract
-     *            has be of the form: ValueWrapper -> ResultValueSingle<Integer>
-     * @return
+     * @param toExtract            has be of the form: ValueWrapper -> ResultValueSingle<Integer>
+     * @return the all sizes
      */
     public Map<Integer, Long> getAllSizes(final List<ResultValueWrapper> toExtract) {
         HashMap<Integer, Long> toReturn = new HashMap<Integer, Long>();
         for (Iterator<ResultValueWrapper> iterator = toExtract.iterator(); iterator.hasNext();) {
-            ResultValueWrapper currentWrapper = (ResultValueWrapper) iterator.next();
+            ResultValueWrapper currentWrapper = iterator.next();
             int index = currentWrapper.getMainIndex();
             CBMCResultValueSingle singleValue =
                     (CBMCResultValueSingle) currentWrapper.getResultValue();
@@ -95,7 +137,7 @@ public abstract class ResultPresentationType {
     /**
      * Indicates if this class should be normally used first to display a result.
      *
-     * @return
+     * @return true, if is default
      */
     public abstract boolean isDefault();
 }

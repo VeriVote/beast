@@ -9,6 +9,7 @@ package edu.pse.beast.highlevel;
 public interface ResultInterface {
 
     /**
+     * Ready to present.
      *
      * @return if the result is in a state where it can be presented
      */

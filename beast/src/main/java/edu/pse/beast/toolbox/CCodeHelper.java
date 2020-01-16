@@ -19,8 +19,11 @@ import edu.pse.beast.types.InternalTypeRep;
  */
 public final class CCodeHelper {
     // String that only allows string in valid C format (they can still contain
+    /** The character regex. */
     // identifiers)
     private static String characterRegex = "[_a-zA-Z][_a-zA-Z0-9]{0,30}";
+
+    /** The reserved words. */
     private static String[] reservedWords = {
         "auto", "break", "case", "char", "const", "continue", "default",
         "do", "double", "else", "enum", "extern", "float", "for", "goto",
@@ -31,9 +34,13 @@ public final class CCodeHelper {
         "_Generic", "_Imaginary", "_Noreturn", "_Static_assert", "_Thread_local"
     };
 
+    /** The c reserved words. */
     private static List<String> cReservedWords =
             new ArrayList<String>(Arrays.asList(reservedWords));
 
+    /**
+     * Instantiates a new c code helper.
+     */
     private CCodeHelper() {
     }
 
@@ -147,8 +154,8 @@ public final class CCodeHelper {
      * generates the declaration String for a voting function depending on its
      * input and result type.
      *
-     * @param container
-     *            the input format of the voting array passed to the function
+     * @param container            the input format of the voting array passed to the function
+     * @param voteStructName the vote struct name
      * @return the voting function declaration line
      */
     public static String generateStructDeclString(
@@ -226,6 +233,12 @@ public final class CCodeHelper {
         return container.getInputType().getMinimalValue();
     }
 
+    /**
+     * Checks if is valid C name.
+     *
+     * @param name the name
+     * @return true, if is valid C name
+     */
     public static boolean isValidCName(final String name) {
         if (name.matches(characterRegex)) {
             if (!cReservedWords.stream().anyMatch(str -> str.equals(name))) {

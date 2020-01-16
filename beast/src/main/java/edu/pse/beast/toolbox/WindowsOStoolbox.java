@@ -7,12 +7,21 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+/**
+ * The Class WindowsOStoolbox.
+ */
 public final class WindowsOStoolbox {
+
+    /** The Constant RELATIVE_PATH_TO_VS_CMD. */
     private static final String RELATIVE_PATH_TO_VS_CMD = "/windows/VsDevCmd.bat";
 
+    /**
+     * Instantiates a new windows O stoolbox.
+     */
     private WindowsOStoolbox() { }
 
     /**
+     * Gets the v scmd path.
      *
      * @return the String that should lead to a vsDevCMD which is required to run
      *         cbmc on windows
@@ -38,7 +47,7 @@ public final class WindowsOStoolbox {
                     .forEach(VSPath -> toSearch.add(VSPath.toString()));
 
             for (Iterator<String> iterator = toSearch.iterator(); iterator.hasNext();) {
-                String toCheck = ((String) iterator.next()) + pathToBatch;
+                String toCheck = (iterator.next()) + pathToBatch;
                 if (Files.isReadable(new File(toCheck).toPath())) {
                     return toCheck;
                 }

@@ -67,17 +67,41 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
      * the following attributes are the counters for the variables in the code
      * they make the variable names unique
      */
+
+    /** The and node counter. */
     private int andNodeCounter;
+
+    /** The or node counter. */
     private int orNodeCounter;
+
+    /** The implication node counter. */
     private int implicationNodeCounter;
+
+    /** The aquivalency node counter. */
     private int aquivalencyNodeCounter;
+
+    /** The for all node counter. */
     private int forAllNodeCounter;
+
+    /** The there exists node counter. */
     private int thereExistsNodeCounter;
+
+    /** The not node counter. */
     private int notNodeCounter;
+
+    /** The comparison node counter. */
     private int comparisonNodeCounter;
+
+    /** The vote sum counter. */
     private int voteSumCounter;
+
+    /** The listlvl. */
     private int listlvl = 0;
+
+    /** The amt by pos var. */
     private int amtByPosVar = 0;
+
+    /** The number vars. */
     private int numberVars;
 
     /**
@@ -90,8 +114,13 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
      */
     private CodeArrayListBeautifier code;
 
+    /** The tmp index. */
     private int tmpIndex = 0;
+
+    /** The election type container. */
     private final ElectionTypeContainer electionTypeContainer;
+
+    /** The post. */
     private boolean post;
 
     /**
@@ -120,6 +149,11 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         code = new CodeArrayListBeautifier();
     }
 
+    /**
+     * Gets the tmp index.
+     *
+     * @return the tmp index
+     */
     private synchronized int getTmpIndex() {
         int tmp = tmpIndex;
         tmpIndex++;
@@ -158,12 +192,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         return code.getCodeArrayList();
     }
 
-    /**
-     * Generates the code for an logical and node.
-     *
-     * @param node
-     *            the visited and node
-     */
     @Override
     public void visitAndNode(final LogicalAndNode node) {
         String varName = "and_" + andNodeCounter;
@@ -176,12 +204,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         testIfLast();
     }
 
-    /**
-     * Generates the code for logical an or node.
-     *
-     * @param node
-     *            the visited or node
-     */
     @Override
     public void visitOrNode(final LogicalOrNode node) {
         String varName = "or_" + orNodeCounter;
@@ -194,12 +216,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         testIfLast();
     }
 
-    /**
-     * Generates the code for the Implication Node.
-     *
-     * @param node
-     *            the visited implication node
-     */
     @Override
     public void visitImplicationNode(final ImplicationNode node) {
         String varName = "implication_" + implicationNodeCounter;
@@ -214,12 +230,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         testIfLast();
     }
 
-    /**
-     * Generates the code for an EquivalencyNode.
-     *
-     * @param node
-     *            equivalence node
-     */
     @Override
     public void visitEquivalencyNode(final EquivalencyNode node) {
         String varName = "aquivalency_" + aquivalencyNodeCounter;
@@ -234,12 +244,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         testIfLast();
     }
 
-    /**
-     * Generates the code for an ForAllNode.
-     *
-     * @param node
-     *            the visited node
-     */
     @Override
     public void visitForAllNode(final ForAllNode node) {
         String varName = "forAll_" + forAllNodeCounter;
@@ -262,6 +266,12 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         testIfLast();
     }
 
+    /**
+     * Gets the max string.
+     *
+     * @param node the node
+     * @return the max string
+     */
     private String getMaxString(final QuantifierNode node) {
         String max;
         final InternalTypeRep typeRep =
@@ -283,6 +293,14 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
     }
 
 
+    /**
+     * Compute counter.
+     *
+     * @param varName the var name
+     * @param maxListLevel the max list level
+     * @param cont the cont
+     * @return the array list
+     */
     private ArrayList<String> computeCounter(final String varName,
                                              final int maxListLevel,
                                              final InternalTypeContainer cont) {
@@ -327,12 +345,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         return counter;
     }
 
-    /**
-     * Generates the code to an ThereExistsNode.
-     *
-     * @param node
-     *            the visited node
-     */
     @Override
     public void visitThereExistsNode(final ThereExistsNode node) {
         String varName = "thereExists_" + thereExistsNodeCounter;
@@ -355,12 +367,6 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         testIfLast();
     }
 
-    /**
-     * Generates the code for a notNode.
-     *
-     * @param node
-     *            the visited node
-     */
     @Override
     public void visitNotNode(final NotNode node) {
         if (node.getNegatedExpNode() instanceof NotNode) {
@@ -377,14 +383,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         testIfLast();
     }
 
-    /**
-     * Generates the code for the comparison of 2 types which are not integers.
-     * These types can be lists which may have different depth and might be
-     * accessed by variables.
-     *
-     * @param node
-     *            the node to visit
-     */
+    // Generates the code for the comparison of 2 types which are not integers.
+    // These types can be lists which may have different depth and might be
+    // accessed by variables.
     @Override
     public void visitComparisonNode(final ComparisonNode node) {
         String varName = "comparison_" + comparisonNodeCounter;
@@ -557,6 +558,11 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         variableNames.push(tempCode);
     }
 
+    /**
+     * Visit accessing nodes reverse order.
+     *
+     * @param exp the exp
+     */
     private void visitAccessingNodesReverseOrder(final AccessValueNode exp) {
         for (int i = exp.getAccessingVars().length - 1; i >= 0; i--) {
             exp.getAccessingVars()[i].getVisited(this);
@@ -589,6 +595,11 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         variableNames.push(varName);
     }
 
+    /**
+     * Gets the new number variable name.
+     *
+     * @return the new number variable name
+     */
     private String getNewNumberVariableName() {
         String newNumberVariable = "integerVar_" + numberVars;
         numberVars++;
@@ -637,6 +648,12 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         variableNames.push(varName);
     }
 
+    /**
+     * Gets the at pos var name.
+     *
+     * @param atPosExp the at pos exp
+     * @return the at pos var name
+     */
     private String getAtPosVarName(final AtPosExp atPosExp) {
         int amtByPos = amtByPosVar;
         amtByPosVar++;
@@ -644,6 +661,9 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
                 .toLowerCase() + "AtPos_" + amtByPos;
     }
 
+    /**
+     * Test if last.
+     */
     private void testIfLast() {
         if (variableNames.size() == 1) {
             if (assumeOrAssert != null) {
@@ -862,6 +882,15 @@ public class CBMCCodeGenerationVisitor implements BooleanExpNodeVisitor {
         variableNames.push(toOutputTo);
     }
 
+    /**
+     * Intersect help method.
+     *
+     * @param contextOne the context one
+     * @param voteInputOne the vote input one
+     * @param contextTwo the context two
+     * @param voteInputTwo the vote input two
+     * @param toOutputTo the to output to
+     */
     private void intersectHelpMethod(final IntersectContentContext contextOne,
                                      final String voteInputOne,
                                      final IntersectContentContext contextTwo,

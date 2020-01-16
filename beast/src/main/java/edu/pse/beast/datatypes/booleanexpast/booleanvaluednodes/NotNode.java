@@ -3,11 +3,13 @@ package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 
 /**
+ * The Class NotNode.
  *
  * @author Lukas Stapelbroek
- *
  */
 public class NotNode extends BooleanExpressionNode {
+
+    /** The following node. */
     private BooleanExpressionNode followingNode;
 
     /**
@@ -21,6 +23,7 @@ public class NotNode extends BooleanExpressionNode {
     }
 
     /**
+     * Gets the negated exp node.
      *
      * @return the negated expression node
      */
@@ -48,6 +51,7 @@ public class NotNode extends BooleanExpressionNode {
                         ? 0 : followingNode.hashCode());
         return result;
     }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

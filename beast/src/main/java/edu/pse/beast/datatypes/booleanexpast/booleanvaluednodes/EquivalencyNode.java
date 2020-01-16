@@ -3,12 +3,14 @@ package edu.pse.beast.datatypes.booleanexpast.booleanvaluednodes;
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 
 /**
+ * The Class EquivalencyNode.
  *
  * @author Lukas Stapelbroek
- *
  */
 public class EquivalencyNode extends BinaryRelationshipNode {
+
     /**
+     * Instantiates a new equivalency node.
      *
      * @param lhsExpNode the lhs node
      * @param rhsExpNode the rhs node

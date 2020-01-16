@@ -4,13 +4,18 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * The Class FormalPropertiesDescription.
  *
  * @author Holger
  */
 public class FormalPropertiesDescription {
+
+    /** The code. */
     private String code;
 
     /**
+     * Instantiates a new formal properties description.
+     *
      * @param codeString the code of the FormalPropertyDescription
      */
     public FormalPropertiesDescription(final String codeString) {
@@ -18,6 +23,7 @@ public class FormalPropertiesDescription {
     }
 
     /**
+     * Gets the code.
      *
      * @return the code of the FormalPropertyDescription
      */
@@ -33,6 +39,11 @@ public class FormalPropertiesDescription {
         this.code = codeString;
     }
 
+    /**
+     * Gets the code as list.
+     *
+     * @return the code as list
+     */
     public List<String> getCodeAsList() {
         String[] split = code.split("\n");
         return Arrays.asList(split);

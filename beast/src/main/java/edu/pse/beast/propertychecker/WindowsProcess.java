@@ -26,17 +26,28 @@ import edu.pse.beast.toolbox.ThreadedBufferedReader;
 import edu.pse.beast.toolbox.UnifiedNameContainer;
 import edu.pse.beast.toolbox.WindowsOStoolbox;
 
+/**
+ * The Class WindowsProcess.
+ */
 public class WindowsProcess extends CBMCProcess {
+
+    /** The Constant A_VERY_LONG_TIME. */
     private static final double A_VERY_LONG_TIME = 1000d;
 
+    /** The Constant WAITING_TIME_FOR_TERMINATION. */
     private static final long WAITING_TIME_FOR_TERMINATION = 8000;
 
+    /** The Constant RELATIVE_PATH_TO_CBMC_64. */
     private static final String RELATIVE_PATH_TO_CBMC_64 = "/windows/cbmcWIN/cbmc.exe";
 
+    /** The Constant ENABLE_USER_INCLUDE. */
     private static final String ENABLE_USER_INCLUDE = "-I";
+
+    /** The Constant USER_INCLUDE_FOLDER. */
     private static final String USER_INCLUDE_FOLDER = "/core/user_includes/";
 
     // we want to compile all available c files, so the user does not need to
+    /** The Constant C_FILE_ENDING. */
     // specify anything
     private static final String C_FILE_ENDING = ".c";
 
@@ -217,7 +228,7 @@ public class WindowsProcess extends CBMCProcess {
                 }
                 // traverse all children
                 for (Iterator<String> iterator = children.iterator(); iterator.hasNext();) {
-                    String line = (String) iterator.next();
+                    String line = iterator.next();
                     // trim it down so it only has a single space in between, so
                     // we can split there
                     line = line.trim().replaceAll(" +", " ");
@@ -286,6 +297,7 @@ public class WindowsProcess extends CBMCProcess {
     }
 
     /**
+     * Gets the windows process id.
      *
      * @param proc the process whose processID you want to find out
      * @return the processID of the given process or -1 if it could not be

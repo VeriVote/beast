@@ -7,26 +7,44 @@ import java.util.List;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 
+/**
+ * The Class CBMCResultValueSingle.
+ */
 public class CBMCResultValueSingle implements CBMCResultValue {
+
+    /** The Constant INT_LENGTH. */
     private static final int INT_LENGTH = 32;
+
+    /** The Constant LONG_LENGTH. */
     private static final int LONG_LENGTH = 64;
+
+    /** The Constant TYPE_NAME. */
     private static final String TYPE_NAME = "c_type";
+
+    /** The Constant WIDTH_NAME. */
     private static final String WIDTH_NAME = "width";
 
+    /** The parsed. */
     private boolean parsed = false;
+
+    /** The type. */
     private String type = "";
+
+    /** The value. */
     private String value = "";
+
+    /** The width. */
     private int width = 0;
+
+    /** The number value. */
     private Number numberValue = null;
 
     /**
+     * Sets the value.
      *
-     * @param typeString
-     *            the datatye (e.g "int")
-     * @param val
-     *            the value (e.g "5")
-     * @param bitWidth
-     *            the width in bit this datatype has (e.g 32 for int)
+     * @param typeString            the datatye (e.g "int")
+     * @param val            the value (e.g "5")
+     * @param bitWidth            the width in bit this datatype has (e.g 32 for int)
      */
     public void setValue(final String typeString,
                          final String val,
@@ -46,18 +64,38 @@ public class CBMCResultValueSingle implements CBMCResultValue {
                 Integer.parseInt(attributes.getNamedItem(WIDTH_NAME).getNodeValue());
     }
 
+    /**
+     * Gets the value.
+     *
+     * @return the value
+     */
     public String getValue() {
         return value;
     }
 
+    /**
+     * Gets the value type.
+     *
+     * @return the value type
+     */
     public String getValueType() {
         return type;
     }
 
+    /**
+     * Gets the value width.
+     *
+     * @return the value width
+     */
     public int getValueWidth() {
         return width;
     }
 
+    /**
+     * Gets the number value.
+     *
+     * @return the number value
+     */
     public Number getNumberValue() {
         if (!parsed) {
             this.numberValue = parseNumber(type, value, width);
@@ -66,6 +104,11 @@ public class CBMCResultValueSingle implements CBMCResultValue {
         return numberValue;
     }
 
+    /**
+     * Check index.
+     *
+     * @param indices the indices
+     */
     private void checkIndex(final List<Integer> indices) {
         if (indices.size() != 0) {
             throw new IndexOutOfBoundsException(
@@ -74,6 +117,14 @@ public class CBMCResultValueSingle implements CBMCResultValue {
         }
     }
 
+    /**
+     * Parses the number.
+     *
+     * @param dataType the data type
+     * @param dataValue the data value
+     * @param dataWidth the data width
+     * @return the number
+     */
     private static Number parseNumber(final String dataType,
                                       final String dataValue,
                                       final int dataWidth) {
@@ -90,6 +141,13 @@ public class CBMCResultValueSingle implements CBMCResultValue {
         }
     }
 
+    /**
+     * Parses the natural number.
+     *
+     * @param dataValue the data value
+     * @param dataWidth the data width
+     * @return the number
+     */
     private static Number parseNaturalNumber(final String dataValue,
                                              final int dataWidth) {
         // we are non inclusive in the width checks, as unsigned values could be
@@ -104,6 +162,13 @@ public class CBMCResultValueSingle implements CBMCResultValue {
         }
     }
 
+    /**
+     * Parses the decimal number.
+     *
+     * @param dataValue the data value
+     * @param dataWidth the data width
+     * @return the number
+     */
     private static Number parseDecimalNumber(final String dataValue,
                                              final int dataWidth) {
         if (dataWidth <= INT_LENGTH) {
@@ -115,6 +180,11 @@ public class CBMCResultValueSingle implements CBMCResultValue {
         }
     }
 
+    /**
+     * Gets the value as number.
+     *
+     * @return the value as number
+     */
     public Number getValueAsNumber() {
         return getNumberValue();
     }

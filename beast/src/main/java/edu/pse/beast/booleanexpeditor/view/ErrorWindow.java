@@ -14,15 +14,32 @@ import edu.pse.beast.stringresource.StringLoaderInterface;
  * @author Nikolai Schnell
  */
 public class ErrorWindow {
+
+    /** The Constant ERROR. */
     private static final String ERROR = "error";
+
+    /** The Constant LINE. */
     private static final String LINE = "line";
+
+    /** The Constant PRECONDITIONS. */
     private static final String PRECONDITIONS = "preConditions";
+
+    /** The Constant POSTCONDITIONS. */
     private static final String POSTCONDITIONS = "postConditions";
 
+    /** The text pane. */
     private final JTextPane textPane;
+
+    /** The error string. */
     private String errorString;
+
+    /** The line string. */
     private String lineString;
+
+    /** The pre conditions string. */
     private String preConditionsString;
+
+    /** The post conditions string. */
     private String postConditionsString;
 
     /**

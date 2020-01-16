@@ -3,11 +3,20 @@ package edu.pse.beast.datatypes.booleanexpast.othervaluednodes.integervaluednode
 import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
 
 /**
+ * The Class IntegerNode.
+ *
  * @author Holger Klein
  */
 public class IntegerNode extends IntegerValuedExpression {
+
+    /** The held integer. */
     private final int heldInteger;
 
+    /**
+     * Instantiates a new integer node.
+     *
+     * @param heldIntValue the held int value
+     */
     public IntegerNode(final int heldIntValue) {
         this.heldInteger = heldIntValue;
     }
@@ -22,6 +31,11 @@ public class IntegerNode extends IntegerValuedExpression {
         return "Integer: " + heldInteger + "\n";
     }
 
+    /**
+     * Gets the held integer.
+     *
+     * @return the held integer
+     */
     public int getHeldInteger() {
         return heldInteger;
     }

@@ -5,9 +5,20 @@ import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.TypeExpression;
 import edu.pse.beast.toolbox.antlr.booleanexp.FormalPropertyDescriptionParser.IntersectExpContext;
 import edu.pse.beast.types.InOutType;
 
+/**
+ * The Class IntersectTypeExpNode.
+ */
 public class IntersectTypeExpNode extends TypeExpression {
+
+    /** The context. */
     private final IntersectExpContext context;
 
+    /**
+     * Instantiates a new intersect type exp node.
+     *
+     * @param type the type
+     * @param exprContext the expr context
+     */
     public IntersectTypeExpNode(final InOutType type,
                                 final IntersectExpContext exprContext) {
         super(type);
@@ -25,6 +36,11 @@ public class IntersectTypeExpNode extends TypeExpression {
         return null;
     }
 
+    /**
+     * Gets the context.
+     *
+     * @return the context
+     */
     public IntersectExpContext getContext() {
         return context;
     }

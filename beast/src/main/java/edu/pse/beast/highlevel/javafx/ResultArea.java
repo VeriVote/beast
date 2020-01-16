@@ -1,5 +1,8 @@
 package edu.pse.beast.highlevel.javafx;
 
+/**
+ * The Class ResultArea.
+ */
 public class ResultArea implements MenuBarInterface {
 
     @Override

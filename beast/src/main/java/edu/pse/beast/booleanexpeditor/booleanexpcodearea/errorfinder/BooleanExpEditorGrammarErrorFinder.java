@@ -21,23 +21,46 @@ import edu.pse.beast.codearea.errorhandling.CodeError;
  * @author Nikolai Schnell
  */
 public final class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListener {
+
+    /** The finder. */
     private static BooleanExpEditorGrammarErrorFinder finder;
+
+    /** The errors. */
     private final ArrayList<CodeError> errors = new ArrayList<>();
 
+    /**
+     * Instantiates a new boolean exp editor grammar error finder.
+     *
+     * @param antlrHandler the antlr handler
+     */
     private BooleanExpEditorGrammarErrorFinder(final BooleanExpANTLRHandler antlrHandler) {
         antlrHandler.getParser().addErrorListener(this);
     }
 
+    /**
+     * Gets the errors.
+     *
+     * @param antlrHandler the antlr handler
+     * @return the errors
+     */
     public static ArrayList<CodeError> getErrors(final BooleanExpANTLRHandler antlrHandler) {
         finder = new BooleanExpEditorGrammarErrorFinder(antlrHandler);
         antlrHandler.getParseTree();
         return finder.getErrors();
     }
 
+    /**
+     * Clear errors.
+     */
     public void clearErrors() {
         errors.clear();
     }
 
+    /**
+     * Gets the errors.
+     *
+     * @return the errors
+     */
     public ArrayList<CodeError> getErrors() {
         return errors;
     }

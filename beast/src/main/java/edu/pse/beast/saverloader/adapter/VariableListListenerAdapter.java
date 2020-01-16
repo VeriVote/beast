@@ -14,6 +14,9 @@ import com.google.gson.JsonSerializer;
 import edu.pse.beast.booleanexpeditor.booleanexpcodearea.errorfinder.FormalExpErrorFinderTreeListener;
 import edu.pse.beast.datatypes.propertydescription.VariableListListener;
 
+/**
+ * The Class VariableListListenerAdapter.
+ */
 public final class VariableListListenerAdapter
         implements JsonSerializer<VariableListListener>,
                    JsonDeserializer<VariableListListener> {

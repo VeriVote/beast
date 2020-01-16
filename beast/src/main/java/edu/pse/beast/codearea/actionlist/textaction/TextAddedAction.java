@@ -16,9 +16,18 @@ import edu.pse.beast.codearea.actionlist.Action;
  */
 public class TextAddedAction implements Action {
 
+    /** The td. */
     private final TextDelta td;
+
+    /** The doc. */
     private final StyledDocument doc;
 
+    /**
+     * Instantiates a new text added action.
+     *
+     * @param textDelta the text delta
+     * @param styledDoc the styled doc
+     */
     public TextAddedAction(final TextDelta textDelta,
                            final StyledDocument styledDoc) {
         this.doc = styledDoc;

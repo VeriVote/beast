@@ -8,26 +8,45 @@ import edu.pse.beast.toolbox.XMLtoolbox;
 import edu.pse.beast.toolbox.valueContainer.ResultValue;
 import edu.pse.beast.toolbox.valueContainer.ResultValueWrapper;
 
+/**
+ * The Enum CDATATYPE.
+ */
 enum CDATATYPE {
-    SINGLE, ARRAY, STRUCT, POINTER;
+    /** The single. */
+    SINGLE,
+
+    /** The array. */
+    ARRAY,
+
+    /** The struct. */
+    STRUCT,
+
+    /** The pointer. */
+    POINTER;
 }
 
+/**
+ * The Class CBMCResultValueWrapper.
+ */
 public class CBMCResultValueWrapper extends ResultValueWrapper {
+
+    /** The data type. */
     private CDATATYPE dataType;
+
+    /** The initialized. */
     private boolean initialized = false;
+
+    /** The value container. */
     private CBMCResultValue valueContainer;
 
     /**
      * Creates a new wrapper.
      *
-     * @param mainIndex
-     *            the index of this variable (for example votes1 has the main
+     * @param mainIndex            the index of this variable (for example votes1 has the main
      *            index of 1)
-     * @param name
-     *            the name of this variable (for example votes1 has the name
+     * @param name            the name of this variable (for example votes1 has the name
      *            votes)
-     * @param singleObject
-     *            if true, it signals that only a single value will be stored
+     * @param node the node
      */
     public CBMCResultValueWrapper(final int mainIndex,
                                   final String name,
@@ -36,18 +55,36 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
         updateValue(node);
     }
 
+    /**
+     * The constructor.
+     */
     public CBMCResultValueWrapper() {
     }
 
+    /**
+     * The constructor.
+     *
+     * @param resultValueContainer the result value container
+     */
     public CBMCResultValueWrapper(final CBMCResultValue resultValueContainer) {
         this.valueContainer = resultValueContainer;
     }
 
+    /**
+     * The constructor.
+     *
+     * @param node the node
+     */
     public CBMCResultValueWrapper(final Node node) {
         super();
         updateValue(node);
     }
 
+    /**
+     * Update value.
+     *
+     * @param node the node
+     */
     public void updateValue(final Node node) {
         XMLtoolbox.clean(node);
         Element element = null;
@@ -68,10 +105,20 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
         setNewValue(element);
     }
 
+    /**
+     * Sets the value.
+     *
+     * @param newValueContainer the new value
+     */
     public void setValue(final CBMCResultValue newValueContainer) {
         this.valueContainer = newValueContainer;
     }
 
+    /**
+     * Initialize.
+     *
+     * @param newType the new type
+     */
     private void initialize(final CDATATYPE newType) {
         this.dataType = newType;
         initialized = true;
@@ -97,12 +144,18 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
     /**
      * Set the new value of the underlying property.
      *
-     * @param element
+     * @param element the new new value
      */
     private void setNewValue(final Element element) {
         valueContainer.setValue(element);
     }
 
+    /**
+     * Gets the data type.
+     *
+     * @param node the node
+     * @return the data type
+     */
     private static CDATATYPE getDataType(final Node node) {
         String nodeTagName = node.getNodeName();
         CDATATYPE type = null;
@@ -135,6 +188,9 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
     // return valueContainer.getResultValue(indices);
     // }
 
+    /**
+     * Throw error.
+     */
     private static void throwError() {
         throw new IndexOutOfBoundsException(
                 "The dimension of the object does not match the dimension of this container");

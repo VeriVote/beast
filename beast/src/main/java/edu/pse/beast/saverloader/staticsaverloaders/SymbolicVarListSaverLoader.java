@@ -12,9 +12,15 @@ import edu.pse.beast.types.InternalTypeRep;
  * @author Holger Klein
  */
 public final class SymbolicVarListSaverLoader {
+    /** The Constant ID_LEN. */
     private static final int ID_LEN = 2;
+
+    /** The Constant TYPE_LEN. */
     private static final int TYPE_LEN = 4;
 
+    /**
+     * Instantiates a new symbolic var list saver loader.
+     */
     private SymbolicVarListSaverLoader() { }
 
     /**
@@ -34,6 +40,12 @@ public final class SymbolicVarListSaverLoader {
         return created;
     }
 
+    /**
+     * Creates the save string for var.
+     *
+     * @param var the var
+     * @return the string
+     */
     private static String createSaveStringForVar(final SymbolicVariable var) {
         return "id: " + var.getId() + " type: "
                 + var.getInternalTypeContainer().getInternalType().toString();
@@ -56,6 +68,12 @@ public final class SymbolicVarListSaverLoader {
         return created;
     }
 
+    /**
+     * Creates the symb var from save string.
+     *
+     * @param s the s
+     * @param list the list
+     */
     private static void createSymbVarFromSaveString(final String s,
                                                     final SymbolicVariableList list) {
         if (s == null || s.length() == 0) {

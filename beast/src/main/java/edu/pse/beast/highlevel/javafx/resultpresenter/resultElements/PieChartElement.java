@@ -10,13 +10,35 @@ import java.util.List;
 import edu.pse.beast.toolbox.Tuple3;
 import javafx.scene.input.MouseEvent;
 
+/**
+ * The Class PieChartElement.
+ */
 public class PieChartElement extends ResultImageElement {
+
+    /** The Constant CIRCLE_ANGLE. */
     private static final int CIRCLE_ANGLE = 360;
+
+    /** The result values. */
     private List<Tuple3<String, Double, Color>> resultValues;
+
+    /** The total size. */
     private double totalSize = 0;
+
+    /** The width. */
     private double width = 0;
+
+    /** The height. */
     private double height = 0;
 
+    /**
+     * Instantiates a new pie chart element.
+     *
+     * @param xPositionTopLeft the x position top left
+     * @param yPositionTopLeft the y position top left
+     * @param chartWidth the chart width
+     * @param chartHeight the chart height
+     * @param resultVals the result vals
+     */
     public PieChartElement(final double xPositionTopLeft,
                            final double yPositionTopLeft,
                            final double chartWidth,
@@ -31,6 +53,9 @@ public class PieChartElement extends ResultImageElement {
         init();
     }
 
+    /**
+     * Inits the.
+     */
     private void init() {
         double tmpSize = 0;
         // iterate over the values, adding up their sizes, therefore getting the total

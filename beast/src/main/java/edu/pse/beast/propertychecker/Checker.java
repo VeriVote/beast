@@ -10,10 +10,18 @@ import java.util.concurrent.CountDownLatch;
 import edu.pse.beast.toolbox.ErrorLogger;
 import edu.pse.beast.toolbox.ThreadedBufferedReader;
 
+/**
+ * The Class Checker.
+ */
 public abstract class Checker implements Runnable {
+
+    /** The Constant EXIT_ON_SUCCESS. */
     private static final int EXIT_ON_SUCCESS = 0;
+
+    /** The Constant EXIT_ON_INCORRECT_ENVIRONMENT. */
     private static final int EXIT_ON_INCORRECT_ENVIRONMENT = 10;
 
+    /** The Constant POLLING_INTERVAL. */
     private static final long POLLING_INTERVAL = 1000;
 
     /**
@@ -21,20 +29,40 @@ public abstract class Checker implements Runnable {
      */
     private Process process;
 
+    /** The voters. */
     private final int voters;
+
+    /** The candidates. */
     private final int candidates;
+
+    /** The seats. */
     private final int seats;
+
+    /** The advanced. */
     private final String advanced;
+
+    /** The to check. */
     private final File toCheck;
+
+    /** The parent. */
     private final CheckerFactory parent;
 
+    /** The output. */
     private final List<String> output = new ArrayList<String>();
+
+    /** The errors. */
     private final List<String> errors = new ArrayList<String>();
 
+    /** The result. */
     private final Result result;
 
+    /** The finished. */
     private boolean finished = false;
+
+    /** The success. */
     private boolean success = false;
+
+    /** The interrupted. */
     private volatile boolean interrupted = false;
 
     /**
@@ -75,6 +103,11 @@ public abstract class Checker implements Runnable {
         new Thread(this, "Checker").start();
     }
 
+    /**
+     * Gets the process.
+     *
+     * @return the process
+     */
     Process getProcess() {
         return this.process;
     }
@@ -136,6 +169,7 @@ public abstract class Checker implements Runnable {
     }
 
     /**
+     * Gets the result list.
      *
      * @return the list that contains the output of the checker
      */
@@ -144,6 +178,7 @@ public abstract class Checker implements Runnable {
     }
 
     /**
+     * Gets the error list.
      *
      * @return the list that contains the errors that were returned by the
      *         checker
@@ -153,6 +188,7 @@ public abstract class Checker implements Runnable {
     }
 
     /**
+     * Checks if is success.
      *
      * @return true, if the property is satisfied, false, if it is violated
      */
@@ -161,6 +197,7 @@ public abstract class Checker implements Runnable {
     }
 
     /**
+     * Checks if is finished.
      *
      * @return true, when the checking has finished, false else
      */
@@ -188,16 +225,11 @@ public abstract class Checker implements Runnable {
     /**
      * Creates the process, which is run in a separate thread.
      *
-     * @param voterAmount
-     *            the amount of voters to check with
-     * @param candAmount
-     *            the amount of candidates to check with
-     * @param seatAmount
-     *            the amount of seats to check with
-     * @param advancedOptions
-     *            all advanced options that might be applied
-     * @param fileToCheck
-     *            the path to the file to check
+     * @param fileToCheck            the path to the file to check
+     * @param voterAmount            the amount of voters to check with
+     * @param candAmount            the amount of candidates to check with
+     * @param seatAmount            the amount of seats to check with
+     * @param advancedOptions            all advanced options that might be applied
      * @return a process that describes the system process that is currently
      *         checking the property
      */

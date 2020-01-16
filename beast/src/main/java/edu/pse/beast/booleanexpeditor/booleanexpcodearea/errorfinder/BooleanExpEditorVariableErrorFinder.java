@@ -18,8 +18,20 @@ import edu.pse.beast.datatypes.propertydescription.SymbolicVariableList;
  * @author Nikolai Schnell
  */
 public final class BooleanExpEditorVariableErrorFinder {
+
+    /**
+     * Instantiates a new boolean exp editor variable error finder.
+     */
     private BooleanExpEditorVariableErrorFinder() { }
 
+    /**
+     * Gets the errors.
+     *
+     * @param antlrHandler the antlr handler
+     * @param list the list
+     * @param codeArea the code area
+     * @return the errors
+     */
     public static ArrayList<CodeError> getErrors(final BooleanExpANTLRHandler antlrHandler,
                                                  final SymbolicVariableList list,
                                                  final NewCodeArea codeArea) {

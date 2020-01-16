@@ -9,6 +9,8 @@ import edu.pse.beast.toolbox.UnifiedNameContainer;
  * @author Nikolai Schnell
  */
 public class BooleanExpEditorConst {
+
+    /** The constant. */
     private final String constant;
 
     /**

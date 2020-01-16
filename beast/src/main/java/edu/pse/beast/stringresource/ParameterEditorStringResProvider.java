@@ -6,12 +6,17 @@ package edu.pse.beast.stringresource;
  * @author Niels Hanselmann
  */
 public class ParameterEditorStringResProvider extends StringResourceProvider {
-
+    /** The menu string res. */
     private StringResourceLoader menuStringRes;
+
+    /** The toolbar tip string res. */
     private StringResourceLoader toolbarTipStringRes;
+
+    /** The other string res. */
     private StringResourceLoader otherStringRes;
 
     /**
+     * Instantiates a new parameter editor string res provider.
      *
      * @param languageId the languageId. Set to "de" for german
      */
@@ -21,6 +26,7 @@ public class ParameterEditorStringResProvider extends StringResourceProvider {
     }
 
     /**
+     * Gets the menu string res.
      *
      * @return MenuStringRes
      */
@@ -29,6 +35,7 @@ public class ParameterEditorStringResProvider extends StringResourceProvider {
     }
 
     /**
+     * Gets the toolbar tip string res.
      *
      * @return ToolbarTipStringRes
      */
@@ -37,6 +44,7 @@ public class ParameterEditorStringResProvider extends StringResourceProvider {
     }
 
     /**
+     * Gets the other string res.
      *
      * @return OtherStringRes
      */
@@ -44,10 +52,8 @@ public class ParameterEditorStringResProvider extends StringResourceProvider {
         return otherStringRes;
     }
 
-    /**
-     * Initializes all attributes. Loads all StringResourceLoaders with the
-     * filenames. The superclass provides the functions for this process
-     */
+    // Initializes all attributes. Loads all StringResourceLoaders with the
+    // filenames. The superclass provides the functions for this process
     @Override
     protected final void initialize() {
 

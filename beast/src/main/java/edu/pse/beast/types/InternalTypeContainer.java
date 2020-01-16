@@ -5,16 +5,28 @@ import java.util.List;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 
 /**
+ * The Class InternalTypeContainer.
  *
  * @author Niels Hanselmann
  */
-public class InternalTypeContainer extends InOutType { // TODO extract to another interface
+public class InternalTypeContainer extends InOutType {
+ /** The Constant PRIME_THREE. */
+ // TODO extract to another interface
     private static final int PRIME_THREE = 1237;
+
+    /** The Constant PRIME_TWO. */
     private static final int PRIME_TWO = 1231;
+
+    /** The Constant PRIME_ONE. */
     private static final int PRIME_ONE = 31;
 
+    /** The is list. */
     private final boolean isList;
+
+    /** The internal type. */
     private final InternalTypeRep internalType;
+
+    /** The listed type. */
     private final InternalTypeContainer listedType;
 
     /**
@@ -96,6 +108,7 @@ public class InternalTypeContainer extends InOutType { // TODO extract to anothe
     }
 
     /**
+     * Gets the list lvl.
      *
      * @return the amount levels that this Container is made up of lists
      */

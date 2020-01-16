@@ -26,7 +26,11 @@ import edu.pse.beast.toolbox.ThreadedBufferedReader;
  *
  */
 public abstract class SystemSpecificCompilerAndExecutioner {
+
+    /** The Constant PATH_TO_TEMP_FOLDER. */
     private static final String PATH_TO_TEMP_FOLDER = "/core/c_tempfiles/";
+
+    /** The Constant DATA_FILE_ENDING. */
     private static final String DATA_FILE_ENDING = ".votingdata";
 
     /**
@@ -46,6 +50,13 @@ public abstract class SystemSpecificCompilerAndExecutioner {
         }
     }
 
+    /**
+     * Run analysis.
+     *
+     * @param code the code
+     * @param resultToStoreIn the result to store in
+     * @return the list
+     */
     public List<String> runAnalysis(final List<String> code,
                                     final Result resultToStoreIn) {
         // array that returns the result
@@ -163,6 +174,7 @@ public abstract class SystemSpecificCompilerAndExecutioner {
     protected abstract Process compileCFile(File toCheck);
 
     /**
+     * Run with data.
      *
      * @param toRun     a String that describes what name the file to run will have. The
      *                  implementation will have to add the OS specific file ending.

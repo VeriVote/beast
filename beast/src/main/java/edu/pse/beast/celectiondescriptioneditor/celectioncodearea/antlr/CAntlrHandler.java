@@ -17,8 +17,14 @@ import org.antlr.v4.runtime.tree.ParseTree;
  * @author Holger Klein
  */
 public class CAntlrHandler {
+
+    /** The pane. */
     private JTextPane pane;
+
+    /** The lexer. */
     private CLexer lexer;
+
+    /** The c parser. */
     private CParser cParser;
 
     /**
@@ -66,6 +72,8 @@ public class CAntlrHandler {
     }
 
     /**
+     * Gets the parser.
+     *
      * @return the parser
      */
     public CParser getParser() {
@@ -73,6 +81,8 @@ public class CAntlrHandler {
     }
 
     /**
+     * Gets the type literals.
+     *
      * @return the string of type literals
      */
     public String[] getTypeLiterals() {
@@ -84,6 +94,8 @@ public class CAntlrHandler {
     }
 
     /**
+     * Gets the controll literals.
+     *
      * @return the string of control literals
      */
     public String[] getControllLiterals() {
@@ -95,6 +107,8 @@ public class CAntlrHandler {
     }
 
     /**
+     * Gets the string regex.
+     *
      * @return the string regex
      */
     public String getStringRegex() {
@@ -103,6 +117,8 @@ public class CAntlrHandler {
 
     // http://blog.ostermiller.org/find-comment
     /**
+     * Gets the comment regex.
+     *
      * @return a regex that searches for comments
      */
     public String getCommentRegex() {

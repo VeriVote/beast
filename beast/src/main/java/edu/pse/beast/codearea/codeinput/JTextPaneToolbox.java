@@ -14,6 +14,10 @@ import javax.swing.text.BadLocationException;
  * @author Holger Klein
  */
 public final class JTextPaneToolbox {
+
+    /**
+     * Instantiates a new j text pane toolbox.
+     */
     private JTextPaneToolbox() { }
 
     /**

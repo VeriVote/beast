@@ -45,6 +45,11 @@ public interface PreAndPostConditionsDescriptionSource {
      */
     void resumeReacting();
 
+    /**
+     * Gets the pre and post properties descriptions check and margin.
+     *
+     * @return the pre and post properties descriptions check and margin
+     */
     List<PropertyAndMarginBool> getPreAndPostPropertiesDescriptionsCheckAndMargin();
 
 //  /**

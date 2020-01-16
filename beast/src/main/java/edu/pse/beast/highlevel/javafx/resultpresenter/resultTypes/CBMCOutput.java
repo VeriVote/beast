@@ -15,7 +15,12 @@ import edu.pse.beast.toolbox.TextFieldCreator;
 import edu.pse.beast.toolbox.TextStyle;
 import javafx.scene.Node;
 
+/**
+ * The Class CBMCOutput.
+ */
 public class CBMCOutput extends ResultPresentationType {
+
+    /** The area. */
     private GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area;
 
     @Override
@@ -27,7 +32,7 @@ public class CBMCOutput extends ResultPresentationType {
         }
         List<String> resultText = result.getResultText();
         for (Iterator<String> iterator = resultText.iterator(); iterator.hasNext();) {
-            String text = (String) iterator.next();
+            String text = iterator.next();
             area.appendText(text);
         }
         VirtualizedScrollPane<GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle>>

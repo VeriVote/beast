@@ -3,14 +3,21 @@ package edu.pse.beast.toolbox;
 import java.io.File;
 
 /**
+ * The Class SuperFolderFinder.
  *
  * @author Lukas Stapelbroek
- *
  */
 public final class SuperFolderFinder {
+
+    /** The initialized. */
     private static boolean initialized = false;
+
+    /** The super folder. */
     private static String superFolder = "";
 
+    /**
+     * Instantiates a new super folder finder.
+     */
     private SuperFolderFinder() { }
 
     /**

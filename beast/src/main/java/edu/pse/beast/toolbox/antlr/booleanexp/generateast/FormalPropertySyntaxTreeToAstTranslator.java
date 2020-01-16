@@ -80,38 +80,85 @@ import edu.pse.beast.types.InternalTypeRep;
 import edu.pse.beast.types.OutputType;
 
 /**
+ * The Class FormalPropertySyntaxTreeToAstTranslator.
  *
  * @author Holger Klein
  */
 public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescriptionBaseListener {
+
+    /** The Constant AND. */
     private static final String AND             = "&&";
+
+    /** The Constant OR. */
     private static final String OR              = "||";
+
+    /** The Constant IMPL. */
     private static final String IMPL            = "==>";
+
+    /** The Constant EQUIV. */
     private static final String EQUIV           = "<==>";
+
+    /** The Constant FOR_ALL. */
     private static final String FOR_ALL         = "FOR_ALL";
+
+    /** The Constant EXISTS. */
     private static final String EXISTS          = "EXISTS_ONE";
 
+    /** The Constant VOTE_SUM. */
     private static final String VOTE_SUM        = "VOTE_SUM_FOR_CANDIDATE";
+
+    /** The Constant VOTE_SUM_UNIQUE. */
     private static final String VOTE_SUM_UNIQUE = "VOTE_SUM_FOR_UNIQUE_CANDIDATE";
 
+    /** The Constant VOTER. */
     private static final String VOTER           = "VOTER";
+
+    /** The Constant CANDIDATE. */
     private static final String CANDIDATE       = "CANDIDATE";
+
+    /** The Constant SEAT. */
     private static final String SEAT            = "SEAT";
+
+    /** The Constant ELECT. */
     private static final String ELECT           = "ELECT";
 
+    /** The generated. */
     private BooleanExpListNode generated;
+
+    /** The input type. */
     private InputType inputType;
+
+    /** The res type. */
     private OutputType resType;
+
+    /** The max vote exp. */
     private int maxVoteExp = 0;
+
+    /** The current highest elect. */
     private int currentHighestElect = 0;
+
+    /** The scope handler. */
     private BooleanExpScopehandler scopeHandler;
 
+    /** The had binary before. */
     private boolean hadBinaryBefore = false;
 
+    /** The node stack. */
     // Stacks
     private Stack<BooleanExpressionNode> nodeStack;
+
+    /** The exp stack. */
     private Stack<TypeExpression> expStack;
 
+    /**
+     * The constructor.
+     *
+     * @param parseTree the parse tree
+     * @param inType the in type
+     * @param resultType the result type
+     * @param declaredVars the declared vars
+     * @return the boolean exp list node
+     */
     public BooleanExpListNode generateFromSyntaxTree(
             final BooleanExpListContext parseTree,
             final InputType inType,
@@ -126,6 +173,11 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         return generated;
     }
 
+    /**
+     * Sets the new max vote.
+     *
+     * @param number the new new max vote
+     */
     private void setNewMaxVote(final int number) {
         if (number > maxVoteExp) {
             maxVoteExp = number;
@@ -378,6 +430,13 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
     public void enterVoteSumExp(final VoteSumExpContext ctx) {
     }
 
+    /**
+     * Exit vote sum.
+     *
+     * @param exprStr the expr str
+     * @param tn the tn
+     * @param unique the unique
+     */
     private void exitVoteSum(final String exprStr, final TerminalNode tn,
                              final boolean unique) {
         String numberString = tn.getText().substring(exprStr.length());
@@ -434,6 +493,10 @@ public class FormalPropertySyntaxTreeToAstTranslator extends FormalPropertyDescr
         expStack.push(integerNode);
     }
 
+    /**
+     * Push at position node.
+     * @param rep internal type presentation
+     */
     private void pushAtPosNode(final InternalTypeRep rep) {
         expStack.push(new AtPosExp(new InternalTypeContainer(rep),
                                    (IntegerValuedExpression) expStack.pop()));

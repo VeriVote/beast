@@ -9,9 +9,20 @@ import edu.pse.beast.electionsimulator.ElectionSimulationData;
 import edu.pse.beast.toolbox.CodeArrayListBeautifier;
 import edu.pse.beast.toolbox.valueContainer.cbmcValueContainers.CBMCResultValueWrapper;
 
+/**
+ * The Class OutputType.
+ */
 public abstract class OutputType extends InOutType {
     // protected CommonHelpMethods helper; TODO remove
 
+    /**
+     * The constructor.
+     *
+     * @param unsigned the unsigned
+     * @param dataType the data type
+     * @param dimensions the dimensions
+     * @param sizeOfDimensions the size of dimensions
+     */
     public OutputType(final boolean unsigned,
                       final DataType dataType,
                       final int dimensions,
@@ -19,11 +30,16 @@ public abstract class OutputType extends InOutType {
         super(unsigned, dataType, dimensions, sizeOfDimensions);
     }
 
+    /**
+     * Gets the output types.
+     *
+     * @return the output types
+     */
     public static List<OutputType> getOutputTypes() {
         ServiceLoader<OutputType> loader = ServiceLoader.load(OutputType.class);
         List<OutputType> types = new ArrayList<OutputType>();
         for (Iterator<OutputType> iterator = loader.iterator(); iterator.hasNext();) {
-            OutputType type = (OutputType) iterator.next();
+            OutputType type = iterator.next();
             types.add(type);
         }
         return types;
@@ -37,12 +53,14 @@ public abstract class OutputType extends InOutType {
     // protected abstract void getHelper();
 
     /**
+     * Gets the output I din file.
      *
      * @return the ID this output type uses in the string resources
      */
     public abstract String getOutputIDinFile();
 
     /**
+     * Checks if is output one candidate.
      *
      * @return true, if the output is just one candidate
      */
@@ -61,12 +79,30 @@ public abstract class OutputType extends InOutType {
     // return helper.extractVariable(variableMatcher, toExtract);
     // }
 
+    /**
+     * Adds the margin verify check.
+     *
+     * @param code the code
+     * @return the code array list beautifier
+     */
     public abstract CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code);
 
+    /**
+     * Adds the votes array and init.
+     *
+     * @param code the code
+     * @param voteNumber the vote number
+     * @return the code array list beautifier
+     */
     @Deprecated
     public abstract CodeArrayListBeautifier addVotesArrayAndInit(CodeArrayListBeautifier code,
                                                                  int voteNumber);
 
+    /**
+     * Gets the c array type.
+     *
+     * @return the c array type
+     */
     public abstract String getCArrayType();
 
     /**
@@ -74,12 +110,8 @@ public abstract class OutputType extends InOutType {
      * method must end with an assertion that let's cbmc fail, so we can extract
      * the result.
      *
-     * @param code
-     *            the code
-     * @param voteNumber
-     *            the vote number
-     * @param voteSize
-     *            TODO
+     * @param code            the code
+     * @param voteNumber            the vote number
      * @return the beautified code
      */
     public abstract CodeArrayListBeautifier addMarginMainTest(CodeArrayListBeautifier code,
@@ -90,8 +122,16 @@ public abstract class OutputType extends InOutType {
     // return helper.extractVariable(variableMatcher, lastResult);
     // } TODO remove
 
+    @Override
     public abstract InternalTypeContainer getInternalTypeContainer();
 
+    /**
+     * Adds the last result as code.
+     *
+     * @param code the code
+     * @param origResult the orig result
+     * @param origResultName the orig result name
+     */
     public void addLastResultAsCode(final CodeArrayListBeautifier code,
                                     final ElectionSimulationData origResult,
                                     final String origResultName) {
@@ -102,8 +142,15 @@ public abstract class OutputType extends InOutType {
         code.add(declaration);
     }
 
+    /**
+     * Gets the result description string.
+     *
+     * @param result the result
+     * @return the result description string
+     */
     public abstract String getResultDescriptionString(List<String> result);
 
+    @Override
     public String getInfo() { // TODO move later on further down
         return "";
     }

@@ -14,23 +14,57 @@ import edu.pse.beast.saverloader.MinimalSaverInterface;
 import edu.pse.beast.toolbox.SuperFolderFinder;
 import javafx.stage.FileChooser;
 
+/**
+ * The Class SaverLoader.
+ */
 public class SaverLoader {
+
+    /** The Constant PROP_LIST_FILE_ENDING. */
     public static final String PROP_LIST_FILE_ENDING  = ".propList";
+
+    /** The Constant CHILD_PROP_FILE_ENDING. */
     public static final String CHILD_PROP_FILE_ENDING = ".child";
+
+    /** The Constant PROJECT_FILE_ENDING. */
     public static final String PROJECT_FILE_ENDING    = ".proj";
+
+    /** The Constant ELEC_DESCR_FILE_ENDING. */
     public static final String ELEC_DESCR_FILE_ENDING = ".elec";
+
+    /** The Constant OPT_FILE_ENDING. */
     public static final String OPT_FILE_ENDING        = ".opt";
+
+    /** The Constant PROP_DESCR_FILE_ENDING. */
     public static final String PROP_DESCR_FILE_ENDING = ".prop";
 
+    /** The owner. */
     private final MinimalSaverInterface owner;
 
+    /** The has changes. */
     private boolean hasChanges = false; //small hack, update values later on with listeners
+
+    /** The has save file. */
     private boolean hasSaveFile = false;
+
+    /** The save file. */
     private File saveFile = null;
+
+    /** The initial dir. */
     private final String initialDir;
+
+    /** The file ending. */
     private final String fileEnding;
+
+    /** The file extension description. */
     private final String fileExtensionDescription;
 
+    /**
+     * The constructor.
+     *
+     * @param fileEnd the file end
+     * @param fileExtensionDescr the file extension descr
+     * @param ownerInterface the owner interface
+     */
     public SaverLoader(final String fileEnd, final String fileExtensionDescr,
                        final MinimalSaverInterface ownerInterface) {
         this.initialDir = SuperFolderFinder.getSuperFolder() + "/projectFiles/";
@@ -40,6 +74,12 @@ public class SaverLoader {
         this.owner = ownerInterface;
     }
 
+    /**
+     * Save.
+     *
+     * @param fileName the file name
+     * @param text the text
+     */
     public void save(final String fileName, final String text) {
         if (hasSaveFile) {
             if (saveFile != null) {
@@ -50,6 +90,12 @@ public class SaverLoader {
         }
     }
 
+    /**
+     * Save.
+     *
+     * @param file the file
+     * @param text the text
+     */
     public void save(final File file, final String text) {
         if (hasSaveFile) {
             if (saveFile != null) {
@@ -84,6 +130,12 @@ public class SaverLoader {
         }
     }
 
+    /**
+     * Save as.
+     *
+     * @param fileName the file name
+     * @param text the text
+     */
     public void saveAs(final String fileName, final String text) {
         File selectedFile = showFileSaveDialog(fileName);
         if (selectedFile != null) {
@@ -91,12 +143,24 @@ public class SaverLoader {
         }
     }
 
+    /**
+     * Save as.
+     *
+     * @param file the file
+     * @param text the text
+     */
     public void saveAs(final File file, final String text) {
         if (file != null) {
             saveToDisk(file, text);
         }
     }
 
+    /**
+     * Show file save dialog.
+     *
+     * @param fileName the file name
+     * @return the file
+     */
     public File showFileSaveDialog(final String fileName) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters()
@@ -108,6 +172,12 @@ public class SaverLoader {
         return selectedFile;
     }
 
+    /**
+     * Show file load dialog.
+     *
+     * @param fileName the file name
+     * @return the file
+     */
     public File showFileLoadDialog(final String fileName) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.getExtensionFilters()
@@ -119,6 +189,11 @@ public class SaverLoader {
         return selectedFile;
     }
 
+    /**
+     * Load.
+     *
+     * @return the string
+     */
     public String load() {
         File selectedFile = showFileLoadDialog("");
         if (selectedFile != null) {
@@ -127,6 +202,12 @@ public class SaverLoader {
         return "";
     }
 
+    /**
+     * Load.
+     *
+     * @param toLoadFrom the to load from
+     * @return the string
+     */
     public String load(final File toLoadFrom) {
         checkToSaveChanges();
         try {
@@ -137,12 +218,23 @@ public class SaverLoader {
         }
     }
 
+    /**
+     * Read file.
+     *
+     * @param file the file
+     * @param encoding the encoding
+     * @return the string
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     private static String readFile(final File file,
                                    final Charset encoding) throws IOException {
         byte[] encoded = Files.readAllBytes(Paths.get(file.getPath()));
         return new String(encoded, encoding);
     }
 
+    /**
+     * Check to save changes.
+     */
     private void checkToSaveChanges() {
         if (hasChanges) {
             GUIController.getController().showSaveChangesDialog(owner);
@@ -150,18 +242,36 @@ public class SaverLoader {
         }
     }
 
+    /**
+     * Reset has save file.
+     */
     public void resetHasSaveFile() {
         hasSaveFile = false;
     }
 
+    /**
+     * Checks for save file.
+     *
+     * @return true, if successful
+     */
     public boolean hasSaveFile() {
         return hasSaveFile;
     }
 
+    /**
+     * Gets the save file.
+     *
+     * @return the save file
+     */
     public File getSaveFile() {
         return saveFile;
     }
 
+    /**
+     * Sets the save file.
+     *
+     * @param file the new save file
+     */
     public void setSaveFile(final File file) {
         if (file != null && file.exists()) {
             this.saveFile = file;
@@ -169,10 +279,16 @@ public class SaverLoader {
         }
     }
 
+    /**
+     * Checks for changed.
+     */
     public void hasChanged() {
         this.hasChanges = true;
     }
 
+    /**
+     * Reset has changes.
+     */
     public void resetHasChanges() {
         this.hasChanges = false;
     }

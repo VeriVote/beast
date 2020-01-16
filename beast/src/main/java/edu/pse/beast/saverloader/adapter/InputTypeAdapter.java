@@ -14,6 +14,9 @@ import com.google.gson.JsonSerializer;
 
 import edu.pse.beast.types.InputType;
 
+/**
+ * The Class InputTypeAdapter.
+ */
 public final class InputTypeAdapter
                 implements JsonSerializer<InputType>,
                            JsonDeserializer<InputType> {

@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.lang3.RandomStringUtils;
 
 /**
+ * The Class CodeArrayListBeautifier.
  *
  * @author Niels Hanselmann
  */
@@ -16,7 +17,10 @@ public class CodeArrayListBeautifier {
      */
     static final String TAB = "    ";
 
+    /** The number of tabs. */
     private int numberOfTabs;
+
+    /** The code. */
     private final ArrayList<String> code;
 
     /**
@@ -71,6 +75,7 @@ public class CodeArrayListBeautifier {
     }
 
     /**
+     * Gets the code array list.
      *
      * @return the ArrayList with the indenting
      */
@@ -92,13 +97,24 @@ public class CodeArrayListBeautifier {
         }
     }
 
+    /**
+     * Adds the all.
+     *
+     * @param votingResultCode the voting result code
+     */
     public void addAll(final List<String> votingResultCode) {
         addList(votingResultCode);
     }
 
+    /**
+     * Contains.
+     *
+     * @param name the name
+     * @return true, if successful
+     */
     public boolean contains(final String name) {
         for (Iterator<String> iterator = code.iterator(); iterator.hasNext();) {
-            String line = (String) iterator.next();
+            String line = iterator.next();
             if (line.contains(name)) {
                 return true;
             }
@@ -106,6 +122,12 @@ public class CodeArrayListBeautifier {
         return false;
     }
 
+    /**
+     * Gets the not used var name.
+     *
+     * @param preferredName the preferred name
+     * @return the not used var name
+     */
     public String getNotUsedVarName(final String preferredName) {
         int length = Math.min(preferredName.length(), 2);
         String name = preferredName;

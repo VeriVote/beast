@@ -15,17 +15,36 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Bounds;
 
+/**
+ * The Class AutoCompletionCodeArea.
+ */
 public abstract class AutoCompletionCodeArea extends CodeArea {
+
+    /** The Constant BOUND_OFFSET. */
     private static final int BOUND_OFFSET = 4;
+
+    /** The Constant CONTROL_CHARACTERS. */
     private static final String CONTROL_CHARACTERS = "\\p{Cntrl}";
+
+    /** The Constant WORD. */
     private static final String WORD = "([A-Za-z]+[A-Za-z0-9]*)";
+
+    /** The Constant WHITESPACE. */
     private static final String WHITESPACE = " ";
+
+    /** The Constant SPECIAL_CHARACTER_REGEX. */
     private static final String SPECIAL_CHARACTER_REGEX
         = ",|;|\\.|\\(|\\)|\\{|\\}|\\[|\\|\\|/|\\+|-|\\*";
 
+    /** The start. */
     private int start;
+
+    /** The end. */
     private int end;
 
+    /**
+     * The constructor.
+     */
     public AutoCompletionCodeArea() {
         this.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
@@ -38,6 +57,11 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
         });
     }
 
+    /**
+     * Gets the absolut caret position.
+     *
+     * @return the absolut caret position
+     */
     private Tuple<Integer, Integer> getAbsolutCaretPosition() {
         final Bounds bounds = this.getCaretBounds().get();
         return new Tuple<Integer, Integer>(
@@ -45,6 +69,13 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
                 (int) bounds.getMaxY() + BOUND_OFFSET);
     }
 
+    /**
+     * Process autocompletion.
+     *
+     * @param content the content
+     * @param startIdx the start idx
+     * @param endIdx the end idx
+     */
     public void processAutocompletion(final List<String> content,
                                       final Integer startIdx,
                                       final Integer endIdx) {
@@ -60,6 +91,11 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
         }
     }
 
+    /**
+     * Process autocompletion.
+     *
+     * @param completion the completion
+     */
     public void processAutocompletion(final Tuple3<List<String>,
                                                    Integer,
                                                    Integer> completion) {
@@ -68,10 +104,23 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
                               completion.third());
     }
 
+    /**
+     * Insert auto completion.
+     *
+     * @param startIdx the start idx
+     * @param endIdx the end idx
+     * @param toInsert the to insert
+     */
     public abstract void insertAutoCompletion(int startIdx,
                                               int endIdx,
                                               String toInsert);
 
+    /**
+     * Gets the completions.
+     *
+     * @param recommendations the recommendations
+     * @return the completions
+     */
     protected Tuple3<List<String>, Integer, Integer>
                 getCompletions(final Set<String> recommendations) {
         String completeText = this.getText();
@@ -128,7 +177,7 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
         } else { // we already have started a word, so we have to filter out all non fitting
                  // words
             for (Iterator<String> iterator = possibilities.iterator(); iterator.hasNext();) {
-                String str = (String) iterator.next();
+                String str = iterator.next();
                 if (str != null && str.toLowerCase().startsWith(prefix.toLowerCase())) {
                     possibleList.add(str);
                 }
@@ -140,6 +189,11 @@ public abstract class AutoCompletionCodeArea extends CodeArea {
         return new Tuple3<List<String>, Integer, Integer>(possibleList, prefixStart, prefixEnd);
     }
 
+    /**
+     * Insert hidden auto completion.
+     *
+     * @param toInsert the to insert
+     */
     public void insertHiddenAutoCompletion(final String toInsert) {
         insertAutoCompletion(start, end, toInsert);
     }
