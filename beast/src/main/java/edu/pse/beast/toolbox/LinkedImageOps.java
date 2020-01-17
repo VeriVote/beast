@@ -5,9 +5,7 @@ import org.fxmisc.richtext.model.NodeSegmentOpsBase;
 /**
  * The Class LinkedImageOps.
  *
- * Taken from the Demos from https://github.com/FXMisc/RichTextFX.
- *
- * @author Lukas Stapelbroek
+ * @author Taken from the Demos from https://github.com/FXMisc/RichTextFX.
  *
  * @param <S>
  *            the generic type
