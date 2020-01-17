@@ -5,6 +5,8 @@ import javax.swing.JOptionPane;
 
 /**
  * The Class ErrorForUserDisplayer.
+ *
+ * @author Lukas Stapelbroek
  */
 public final class ErrorForUserDisplayer {
 
