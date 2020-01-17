@@ -31,7 +31,8 @@ public final class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListe
     /**
      * Instantiates a new boolean exp editor grammar error finder.
      *
-     * @param antlrHandler the antlr handler
+     * @param antlrHandler
+     *            the antlr handler
      */
     private BooleanExpEditorGrammarErrorFinder(final BooleanExpANTLRHandler antlrHandler) {
         antlrHandler.getParser().addErrorListener(this);
@@ -40,7 +41,8 @@ public final class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListe
     /**
      * Gets the errors.
      *
-     * @param antlrHandler the antlr handler
+     * @param antlrHandler
+     *            the antlr handler
      * @return the errors
      */
     public static ArrayList<CodeError> getErrors(final BooleanExpANTLRHandler antlrHandler) {
@@ -77,7 +79,8 @@ public final class BooleanExpEditorGrammarErrorFinder implements ANTLRErrorListe
 
     @Override
     public void reportAmbiguity(final Parser parser, final DFA dfa,
-                                final int i, final int i1, final boolean bln,
+                                final int i, final int i1,
+                                final boolean bln,
                                 final BitSet bitset,
                                 final ATNConfigSet atncs) {
     }

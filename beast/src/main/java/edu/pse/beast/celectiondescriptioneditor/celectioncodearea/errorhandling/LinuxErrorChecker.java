@@ -26,20 +26,18 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
 
     @Override
     public Process checkCodeFileForErrors(final File toCheck) {
-        String nameOfOutFile
-            = toCheck.getName().replace(FileLoader.C_FILE_ENDING,
-                                        FileLoader.OUT_FILE_ENDING);
-        File outFile = new File(toCheck.getParentFile(), nameOfOutFile);
-        String compileToThis = SET_OUTPUT_FILE_NAME + outFile.getAbsolutePath();
-        String userIncludeAndPath
-              = ENABLE_USER_INCLUDE + SuperFolderFinder.getSuperFolder()
-                + USER_INCLUDE_FOLDER;
+        final String nameOfOutFile =
+                toCheck.getName().replace(FileLoader.C_FILE_ENDING, FileLoader.OUT_FILE_ENDING);
+        final File outFile = new File(toCheck.getParentFile(), nameOfOutFile);
+        final String compileToThis = SET_OUTPUT_FILE_NAME + outFile.getAbsolutePath();
+        final String userIncludeAndPath =
+                ENABLE_USER_INCLUDE + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER;
         // get all Files from the form "*.c" so we can include them into cbmc,
-        List<String> allFiles
-            = FileLoader.listAllFilesFromFolder(
-                "\"" + SuperFolderFinder.getSuperFolder()
-                + USER_INCLUDE_FOLDER + "\"", FileLoader.C_FILE_ENDING
-            );
+        List<String> allFiles =
+                FileLoader.listAllFilesFromFolder(
+                        "\"" + SuperFolderFinder.getSuperFolder()
+                            + USER_INCLUDE_FOLDER + "\"",
+                        FileLoader.C_FILE_ENDING);
         Process startedProcess = null;
         List<String> arguments = new ArrayList<String>();
         // add the arguments needed for the call
@@ -49,15 +47,18 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
         // add the path to the created file that should be checked
         arguments.add(toCheck.getAbsolutePath());
         // iterate over all "*.c" files from the include folder, to include them
-        for (Iterator<String> iterator = allFiles.iterator(); iterator.hasNext();) {
-            String toBeIncludedFile = iterator.next();
+        for (final Iterator<String> iterator = allFiles.iterator();
+                iterator.hasNext();) {
+            final String toBeIncludedFile = iterator.next();
             arguments.add(toBeIncludedFile.replace("\"", "").replace(" ", "\\ "));
         }
         // defines the position to what place the compiled files should be sent
         arguments.add(compileToThis);
-        ProcessBuilder prossBuild = new ProcessBuilder(arguments.toArray(new String[0]));
+        final ProcessBuilder prossBuild =
+                new ProcessBuilder(arguments.toArray(new String[0]));
         Map<String, String> environment = prossBuild.environment();
-        environment.put("LC_ALL", "C"); // set the language for the following call to english
+        environment.put("LC_ALL", "C"); // set the language for the following
+                                        // call to english
         try {
             // start the process
             startedProcess = prossBuild.start();
@@ -73,8 +74,9 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
                                          final int lineOffset) {
         List<CodeError> codeErrors = new ArrayList<CodeError>();
         // gcc gives the errors out in the error stream so we traverse it
-        for (Iterator<String> iterator = errors.iterator(); iterator.hasNext();) {
-            String line = iterator.next();
+        for (final Iterator<String> iterator = errors.iterator();
+                iterator.hasNext();) {
+            final String line = iterator.next();
             int lineNumber = -1;
             int linePos = -1;
             String varName = "";
@@ -87,17 +89,21 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
                 if (line.split(":").length > FOUR) {
                     try {
                         // put the output in the containers for them
-                        lineNumber = Integer.parseInt(line.split(":")[1]) - lineOffset;
+                        lineNumber =
+                                Integer.parseInt(line.split(":")[1]) - lineOffset;
                         linePos = Integer.parseInt(line.split(":")[2]);
                         message = line.split("error:")[1];
                         if (message.contains("‘") && message.contains("’")) {
                             varName = message.split("‘")[1].split("’")[0];
                         }
                         codeErrors.add(
-                            CCodeErrorFactory.generateCompilerError(lineNumber, linePos,
-                                                                    varName, message));
+                                CCodeErrorFactory.generateCompilerError(
+                                        lineNumber, linePos,
+                                        varName, message)
+                        );
                     } catch (NumberFormatException e) {
-                        ErrorLogger.log("Cannot parse the current error line from gcc");
+                        ErrorLogger.log("Cannot parse the current"
+                                        + " error line from gcc");
                     }
                 }
             } else if (line.contains(GCC_MISSING_RETURN_FOUND)) {
@@ -112,10 +118,12 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
                     varName = "";
                     message = "Missing return";
                     codeErrors.add(
-                        CCodeErrorFactory.generateCompilerError(lineNumber, linePos,
-                                                                varName, message));
+                            CCodeErrorFactory.generateCompilerError(
+                                    lineNumber, linePos,
+                                    varName, message));
                 } catch (NumberFormatException e) {
-                    ErrorLogger.log("Cannot parse the current error line from gcc");
+                    ErrorLogger.log("Cannot parse the current"
+                                    + " error line from gcc");
                 }
             } else if (line.contains(GCC_MISSING_FUNCTION_FOUND)) {
                 // we want the format :line:position: ... error:
@@ -133,10 +141,13 @@ public class LinuxErrorChecker extends SystemSpecificErrorChecker {
                         }
                         message = line.split("warning:")[1];
                         codeErrors.add(
-                            CCodeErrorFactory.generateCompilerError(lineNumber, linePos,
-                                                                    varName, message));
+                                CCodeErrorFactory.generateCompilerError(
+                                        lineNumber, linePos,
+                                        varName, message)
+                        );
                     } catch (NumberFormatException e) {
-                        ErrorLogger.log("cannot parse the current error line from gcc");
+                        ErrorLogger.log("cannot parse the current"
+                                        + " error line from gcc");
                     }
                 }
             }

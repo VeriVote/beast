@@ -8,6 +8,8 @@ import edu.pse.beast.datatypes.booleanexpast.BooleanExpNodeVisitor;
  * @author Holger Klein
  */
 public class BinaryIntegerValuedNode extends IntegerValuedExpression {
+    /** The Constant PRIME. */
+    private static final int PRIME = 31;
 
     /** The lhs. */
     private final IntegerValuedExpression lhs;
@@ -21,9 +23,12 @@ public class BinaryIntegerValuedNode extends IntegerValuedExpression {
     /**
      * Instantiates a new binary integer valued node.
      *
-     * @param lhsExpr the lhs expr
-     * @param rhsExpr the rhs expr
-     * @param relationSymb the relation symb
+     * @param lhsExpr
+     *            the lhs expr
+     * @param rhsExpr
+     *            the rhs expr
+     * @param relationSymb
+     *            the relation symb
      */
     public BinaryIntegerValuedNode(final IntegerValuedExpression lhsExpr,
                                    final IntegerValuedExpression rhsExpr,
@@ -59,14 +64,12 @@ public class BinaryIntegerValuedNode extends IntegerValuedExpression {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
         int result = super.hashCode();
-        result = prime * result
+        result = PRIME * result
                 + ((getLhs() == null) ? 0 : getLhs().hashCode());
-        result = prime * result
-                + ((relationSymbol == null)
-                        ? 0 : relationSymbol.hashCode());
-        result = prime * result
+        result = PRIME * result
+                + ((relationSymbol == null) ? 0 : relationSymbol.hashCode());
+        result = PRIME * result
                 + ((getRhs() == null) ? 0 : getRhs().hashCode());
         return result;
     }
@@ -83,15 +86,16 @@ public class BinaryIntegerValuedNode extends IntegerValuedExpression {
             return false;
         }
         BinaryIntegerValuedNode that = (BinaryIntegerValuedNode) o;
-        if (getLhs() != null ? !getLhs().equals(that.getLhs()) : that.getLhs() != null) {
+        if (getLhs() != null ? !getLhs().equals(that.getLhs())
+                : that.getLhs() != null) {
             return false;
         }
-        if (getRhs() != null ? !getRhs().equals(that.getRhs()) : that.getRhs() != null) {
+        if (getRhs() != null ? !getRhs().equals(that.getRhs())
+                : that.getRhs() != null) {
             return false;
         }
-        if (relationSymbol != null
-                ? !relationSymbol.equals(that.relationSymbol)
-                        : that.relationSymbol != null) {
+        if (relationSymbol != null ? !relationSymbol.equals(that.relationSymbol)
+                : that.relationSymbol != null) {
             return false;
         }
         return true;

@@ -18,14 +18,16 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
     /**
      * Constructor.
      *
-     * @param pane        the JTextPane to display the errors in
-     * @param stringResIF the String
+     * @param pane
+     *            the JTextPane to display the errors in
+     * @param stringResIF
+     *            the String
      */
     public BooleanExpErrorDisplayer(final JTextPane pane,
                                     final StringLoaderInterface stringResIF) {
         super(pane,
               stringResIF.getBooleanExpEditorStringResProvider()
-              .getBooleanExpErrorStringRes());
+                  .getBooleanExpErrorStringRes());
     }
 
     @Override
@@ -40,7 +42,8 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
      * Creates meaningful message in form of String based on a given CodeError
      * object.
      *
-     * @param codeError the CodeError object
+     * @param codeError
+     *            the CodeError object
      * @return the message
      */
     public String createMsg(final CodeError codeError) {
@@ -88,7 +91,8 @@ public class BooleanExpErrorDisplayer extends ErrorDisplayer {
     /**
      * Gets the template string.
      *
-     * @param id the id
+     * @param id
+     *            the id
      * @return the template string
      */
     private String getTemplateString(final String id) {

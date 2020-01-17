@@ -16,13 +16,16 @@ public class ErrorFinderList {
 
     /**
      * starts asking all error finders to look for errors in the code. Once the
-     * first error finder finds errors, it stops the search and returns these errors
+     * first error finder finds errors, it stops the search and returns these
+     * errors
      *
      * @return the list of errors found be the errorfinders
      */
     public ArrayList<CodeError> getErrors() {
         ArrayList<CodeError> created = new ArrayList<>();
-        for (int i = 0; i < errorFinderList.size() && created.size() == 0; ++i) {
+        for (int i = 0;
+                i < errorFinderList.size() && created.size() == 0;
+                ++i) {
             created.addAll(errorFinderList.get(i).getErrors());
         }
         return created;
@@ -31,7 +34,8 @@ public class ErrorFinderList {
     /**
      * Adds the.
      *
-     * @param errorFinder the error finder
+     * @param errorFinder
+     *            the error finder
      */
     public void add(final ErrorFinder errorFinder) {
         errorFinderList.add(errorFinder);

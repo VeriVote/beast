@@ -27,7 +27,8 @@ public class RepaintThread implements Runnable {
     /**
      * The constructor.
      *
-     * @param jFrame the j frame
+     * @param jFrame
+     *            the j frame
      */
     public RepaintThread(final JFrame jFrame) {
         this.frame = jFrame;
@@ -46,7 +47,8 @@ public class RepaintThread implements Runnable {
             try {
                 Thread.sleep(THOUSAND / SIXTY);
             } catch (InterruptedException ex) {
-                Logger.getLogger(RepaintThread.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RepaintThread.class.getName())
+                        .log(Level.SEVERE, null, ex);
             }
             frame.repaint();
         }

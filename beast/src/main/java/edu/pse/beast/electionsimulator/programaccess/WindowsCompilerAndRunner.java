@@ -17,7 +17,8 @@ import edu.pse.beast.toolbox.WindowsOStoolbox;
  * @author Lukas Stapelbroek
  *
  */
-public class WindowsCompilerAndRunner extends SystemSpecificCompilerAndExecutioner {
+public class WindowsCompilerAndRunner
+        extends SystemSpecificCompilerAndExecutioner {
 
     /** The Constant COMPILER_STRING. */
     // the compiler we use on windows, because it is also needed by cbmc
@@ -39,14 +40,14 @@ public class WindowsCompilerAndRunner extends SystemSpecificCompilerAndExecution
     protected Process compileCFile(final File toCheck) {
         String vsCmd = null;
         Process startedProcess = null;
-        String userIncludeAndPath
-              = ENABLE_USER_INCLUDE + "\"" + SuperFolderFinder.getSuperFolder()
-                + USER_INCLUDE_FOLDER + "\"";
+        String userIncludeAndPath = ENABLE_USER_INCLUDE + "\""
+                + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER
+                + "\"";
         // we must compile all includes that the user puts in that folder, in
         // case some of them are needed
-        String compileAllIncludesInIncludePath
-              = "\"" + SuperFolderFinder.getSuperFolder()
-                + USER_INCLUDE_FOLDER + COMPILE_ALL_INCLUDES_IN_FOLDER + "\"";
+        String compileAllIncludesInIncludePath = "\""
+                + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER
+                + COMPILE_ALL_INCLUDES_IN_FOLDER + "\"";
 
         // try to get the vsCMD
         try {
@@ -72,9 +73,8 @@ public class WindowsCompilerAndRunner extends SystemSpecificCompilerAndExecution
             // VScmd has to be in one giant string. Put the created file in the
             // output directory, so
             // it can be deleted afterwards
-            String clExeCall
-                  = "\"" + vsCmd + "\""
-                    + " & " + COMPILER_STRING + " " + userIncludeAndPath + " "
+            String clExeCall = "\"" + vsCmd + "\"" + " & " + COMPILER_STRING
+                    + " " + userIncludeAndPath + " "
                     + ("\"" + toCheck.getAbsolutePath() + "\"") + " "
                     + (" /Fo" + toCheck.getParent() + "\\ ")
                     + (" /Fe" + toCheck.getParent() + "\\ ")
@@ -82,17 +82,16 @@ public class WindowsCompilerAndRunner extends SystemSpecificCompilerAndExecution
 
             List<String> callInList = new ArrayList<String>();
             callInList.add(clExeCall);
-            File batFile
-                  = new File(toCheck.getParent() + "\\"
-                             + toCheck.getName().replace(".c", ".bat"));
+            File batFile = new File(toCheck.getParent() + "\\"
+                    + toCheck.getName().replace(".c", ".bat"));
             FileSaver.writeStringLinesToFile(callInList, batFile);
 
             // this call starts a new VScmd instance and lets cl.exe (the
             // compiler) run in it
             // ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c",
             // clExeCall);
-            ProcessBuilder prossBuild
-                  = new ProcessBuilder("cmd.exe", "/c", batFile.getAbsolutePath());
+            ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c",
+                                                           batFile.getAbsolutePath());
 
             try {
                 startedProcess = prossBuild.start();
@@ -111,7 +110,8 @@ public class WindowsCompilerAndRunner extends SystemSpecificCompilerAndExecution
         callString = toRun + ".exe";
         // the absolute path to the file that holds
         callString = callString + " " + dataFile.getAbsolutePath();
-        ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c", callString);
+        ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c",
+                                                       callString);
         try {
             // start the process
             startedProcess = prossBuild.start();

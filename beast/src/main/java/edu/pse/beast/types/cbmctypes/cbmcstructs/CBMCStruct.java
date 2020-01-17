@@ -42,7 +42,8 @@ public class CBMCStruct extends ComplexType {
     /**
      * The constructor.
      *
-     * @param inputOutputType the input output type
+     * @param inputOutputType
+     *            the input output type
      */
     public CBMCStruct(final InOutType inputOutputType) {
         this.inOutType = inputOutputType;

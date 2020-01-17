@@ -17,21 +17,26 @@ import edu.pse.beast.highlevel.javafx.CustomTreeItem;
 /**
  * The Class CustomTreeItemAdapter.
  */
-public final class CustomTreeItemAdapter
-                implements JsonSerializer<CustomTreeItem>,
-                           JsonDeserializer<CustomTreeItem> {
+public final class CustomTreeItemAdapter implements
+        JsonSerializer<CustomTreeItem>, JsonDeserializer<CustomTreeItem> {
+    /** The Constant PROPERTIES. */
+    private static final String PROPERTIES = "properties";
+
+    /** The Constant TYPE. */
+    private static final String TYPE = "type";
 
     @Override
-    public CustomTreeItem deserialize(final JsonElement json, final Type typeOfT,
+    public CustomTreeItem deserialize(final JsonElement json,
+                                      final Type typeOfT,
                                       final JsonDeserializationContext context)
             throws JsonParseException {
         JsonObject jsonObject = json.getAsJsonObject();
-        String type = jsonObject.get("type").getAsString();
-        JsonElement element = jsonObject.get("properties");
+        String type = jsonObject.get(TYPE).getAsString();
+        JsonElement element = jsonObject.get(PROPERTIES);
         if (type.equals(ChildTreeItem.class.getSimpleName())) {
             return context.deserialize(element, ChildTreeItem.class);
         } else {
-            System.out.println("you should not serialize parent tree items");
+            System.out.println("You should not serialize parent tree items.");
         }
         return null;
     }
@@ -40,8 +45,8 @@ public final class CustomTreeItemAdapter
     public JsonElement serialize(final CustomTreeItem src, final Type typeOfSrc,
                                  final JsonSerializationContext context) {
         JsonObject result = new JsonObject();
-        result.add("type", new JsonPrimitive(src.getClass().getSimpleName()));
-        result.add("properties", context.serialize(src, src.getClass()));
+        result.add(TYPE, new JsonPrimitive(src.getClass().getSimpleName()));
+        result.add(PROPERTIES, context.serialize(src, src.getClass()));
         return result;
     }
 }

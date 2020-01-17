@@ -22,9 +22,12 @@ public class InputDataDescription {
     /**
      * Instantiates a new input data description.
      *
-     * @param dataList the data list
-     * @param inputType the input type
-     * @param outputType the output type
+     * @param dataList
+     *            the data list
+     * @param inputType
+     *            the input type
+     * @param outputType
+     *            the output type
      */
     public InputDataDescription(final List<List<String>> dataList,
                                 final InputType inputType,

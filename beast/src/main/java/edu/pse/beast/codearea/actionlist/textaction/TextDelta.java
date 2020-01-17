@@ -16,11 +16,12 @@ public class TextDelta {
     /**
      * Instantiates a new text delta.
      *
-     * @param offsetVal the offset val
-     * @param textStr the text str
+     * @param offsetVal
+     *            the offset val
+     * @param textStr
+     *            the text str
      */
-    public TextDelta(final int offsetVal,
-                     final String textStr) {
+    public TextDelta(final int offsetVal, final String textStr) {
         this.offset = offsetVal;
         this.text = textStr;
     }

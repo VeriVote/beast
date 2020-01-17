@@ -26,8 +26,10 @@ public class LanguageOptions extends Options {
     /**
      * Constructor.
      *
-     * @param slInterf             the string loader interface
-     * @param stringResLoader StringResourceLoader
+     * @param slInterf
+     *            the string loader interface
+     * @param stringResLoader
+     *            StringResourceLoader
      */
     public LanguageOptions(final StringLoaderInterface slInterf,
                            final StringResourceLoader stringResLoader) {
@@ -42,7 +44,8 @@ public class LanguageOptions extends Options {
     /**
      * Instantiates a new language options.
      *
-     * @param slInterf the sl interf
+     * @param slInterf
+     *            the sl interf
      */
     public LanguageOptions(final StringLoaderInterface slInterf) {
         super("lang_opts");
@@ -57,7 +60,8 @@ public class LanguageOptions extends Options {
      * Method with which Builder classes can add classes implementing
      * DisplaysStringsToUser to the stringDisplays list.
      *
-     * @param dis the class implementing DisplaysStringsToUser
+     * @param dis
+     *            the class implementing DisplaysStringsToUser
      */
     public void addStringDisplayer(final DisplaysStringsToUser dis) {
         stringDisplays.add(dis);

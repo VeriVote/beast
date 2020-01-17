@@ -49,13 +49,20 @@ public class ElectionDescription {
     /**
      * Instantiates a new election description.
      *
-     * @param nameString            the name of the description
-     * @param inputType            the input type
-     * @param outputType            the output type
-     * @param lockedLineStartPos            start of locked line
-     * @param lockedLineEndPos            end of locked line
-     * @param lockedBracePosition            locked brace
-     * @param isNewAttribute            isNew
+     * @param nameString
+     *            the name of the description
+     * @param inputType
+     *            the input type
+     * @param outputType
+     *            the output type
+     * @param lockedLineStartPos
+     *            start of locked line
+     * @param lockedLineEndPos
+     *            end of locked line
+     * @param lockedBracePosition
+     *            locked brace
+     * @param isNewAttribute
+     *            isNew
      */
     public ElectionDescription(final String nameString,
                                final InputType inputType,
@@ -75,9 +82,12 @@ public class ElectionDescription {
     /**
      * Instantiates a new election description.
      *
-     * @param nameString the name string
-     * @param inputType the input type
-     * @param outputType the output type
+     * @param nameString
+     *            the name string
+     * @param inputType
+     *            the input type
+     * @param outputType
+     *            the output type
      */
     public ElectionDescription(final String nameString,
                                final InputType inputType,
@@ -116,14 +126,16 @@ public class ElectionDescription {
                 duplicate = false;
             }
         }
-        String replacementLine = CCodeHelper.generateStructDeclString(container, votesName);
+        String replacementLine =
+                CCodeHelper.generateStructDeclString(container, votesName);
         int dimensions = container.getInputType().getAmountOfDimensions();
         List<String> loopVariables = generateLoopVariables(dimensions, "votes");
         String[] sizes = container.getInputType().getSizeOfDimensions();
         sizes[0] = "amountVotes";
         String forLoopStart = "";
         for (int i = 0; i < dimensions; i++) { // add all needed loop headers
-            forLoopStart += generateForLoopHeader(loopVariables.get(i), sizes[i]);
+            forLoopStart += generateForLoopHeader(loopVariables.get(i),
+                                                  sizes[i]);
         }
         String forLoopEnd = "";
         for (int i = 0; i < dimensions; i++) {
@@ -133,12 +145,10 @@ public class ElectionDescription {
         for (int i = 0; i < dimensions; i++) {
             access += "[" + loopVariables.get(i) + "]";
         }
-        String assignment =
-                UnifiedNameContainer.getVotingArray()
-                + access + " = " + votesName + ".arr" + access + ";";
+        String assignment = UnifiedNameContainer.getVotingArray() + access
+                            + " = " + votesName + ".arr" + access + ";";
         String switchedArray =
-                getContainer().getInputType()
-                .getDataTypeAndSign() + " "
+                getContainer().getInputType().getDataTypeAndSign() + " "
                 + UnifiedNameContainer.getVotingArray()
                 + getContainer().getInputType().getDimensionDescriptor(true)
                 + ";" + forLoopStart + assignment + forLoopEnd;
@@ -161,7 +171,8 @@ public class ElectionDescription {
             }
         }
         middlePart = replaceReturns(middlePart, electName);
-        return stringToList(firstPart + replacementLine + middlePart + thirdPart);
+        return stringToList(
+                firstPart + replacementLine + middlePart + thirdPart);
     }
 
     /**
@@ -194,7 +205,8 @@ public class ElectionDescription {
     /**
      * Sets the code.
      *
-     * @param codeList            of this description
+     * @param codeList
+     *            of this description
      */
     public void setCode(final List<String> codeList) {
         this.code = String.join("\n", codeList);
@@ -203,7 +215,8 @@ public class ElectionDescription {
     /**
      * Sets the code.
      *
-     * @param codeString            of this description
+     * @param codeString
+     *            of this description
      */
     public void setCode(final String codeString) {
         this.code = codeString;
@@ -212,7 +225,8 @@ public class ElectionDescription {
     /**
      * Sets the name.
      *
-     * @param nameString            of this description
+     * @param nameString
+     *            of this description
      */
     public void setName(final String nameString) {
         this.name = nameString;
@@ -221,7 +235,8 @@ public class ElectionDescription {
     /**
      * Sets the container.
      *
-     * @param newContainer            type container of this description
+     * @param newContainer
+     *            type container of this description
      */
     public void setContainer(final ElectionTypeContainer newContainer) {
         this.container = newContainer;
@@ -234,8 +249,10 @@ public class ElectionDescription {
      */
     public ElectionDescription getDeepCopy() {
         ElectionDescription deepCopy =
-                new ElectionDescription(name, container.getInputType(), container.getOutputType(),
-                                        lockedLineStart, lockedLineEnd, lockedBracePos, isNew);
+                new ElectionDescription(name, container.getInputType(),
+                                        container.getOutputType(),
+                                        lockedLineStart, lockedLineEnd,
+                                        lockedBracePos, isNew);
         deepCopy.setCode(code);
         return deepCopy;
     }
@@ -286,9 +303,12 @@ public class ElectionDescription {
     /**
      * Sets the locked positions.
      *
-     * @param lockedLineStartPosition the locked line start position
-     * @param lockedLineEndPosition the locked line end position
-     * @param lockedBracePosition the locked brace position
+     * @param lockedLineStartPosition
+     *            the locked line start position
+     * @param lockedLineEndPosition
+     *            the locked line end position
+     * @param lockedBracePosition
+     *            the locked brace position
      */
     public void setLockedPositions(final int lockedLineStartPosition,
                                    final int lockedLineEndPosition,
@@ -301,40 +321,50 @@ public class ElectionDescription {
     /**
      * Splits a string at "\n".
      *
-     * @param toConvert the to convert
+     * @param toConvert
+     *            the to convert
      * @return the list
      */
     private List<String> stringToList(final String toConvert) {
         String[] split = toConvert.split("\n");
-        return new ArrayList<>(Arrays.asList(split));
+        return new ArrayList<String>(Arrays.asList(split));
     }
 
     /**
      * Replaces all "return" statements in the voting methode with the more
      * complex data types.
      *
-     * @param toProcess            the String from which the return statements should be
+     * @param toProcess
+     *            the String from which the return statements should be
      *            replaced. The String can not be preceded by a comment symbol
      *            which would still be active for this part. It also cannot
      *            start being a text (meaning it has a single (") in front of
      *            it.
-     * @param variableName the variable name
+     * @param variableName
+     *            the variable name
      * @return the string
      */
-    private String replaceReturns(final String toProcess, final String variableName) {
+    private String replaceReturns(final String toProcess,
+                                  final String variableName) {
         // change this to antLR maybe
         String toProc = toProcess;
         String toReturn = "";
         Pattern returnPattern = Pattern.compile("(?:\\s|^)return");
-        Tuple3<Boolean, Boolean, Boolean> executionValues = new Tuple3<>(false, false, false);
+        Tuple3<Boolean, Boolean, Boolean> executionValues =
+                new Tuple3<Boolean, Boolean, Boolean>(false, false, false);
         Matcher matcher = returnPattern.matcher(toProc);
         while (matcher.find()) {
-            executionValues = checkIfExecutedCode(executionValues, toProc, 0, matcher.end());
+            executionValues =
+                    checkIfExecutedCode(executionValues, toProc, 0,
+                                        matcher.end());
             if (!checkForTrue(executionValues)) { // the return statement was
-                                                  // NOT standing in a comment block
+                                                  // NOT standing in a comment
+                                                  // block
                 Tuple<String, Integer> replacement =
-                        replaceSpecificReturnStatement(toProc.substring(matcher.end()),
-                                                       variableName);
+                        replaceSpecificReturnStatement(
+                                toProc.substring(matcher.end()),
+                                variableName
+                                );
                 // replacement now contains one or multiple lines which assign
                 // the fitting
                 // return value to "variableName"
@@ -346,20 +376,30 @@ public class ElectionDescription {
                 // use single line
                 // if cases or similar things
                 String toInsert =
-                        wrapInCurlyBraces(replacement.first() + " return " + variableName + "; ");
+                        wrapInCurlyBraces(
+                                replacement.first() + " return "
+                                        + variableName + "; "
+                                );
                 // the part which was changed
-                String leadingPart = toProc.substring(0, matcher.start()) + toInsert;
+                String leadingPart = toProc.substring(0, matcher.start())
+                                    + toInsert;
                 // replacement.second contains the position after the ";",
                 // therefore we have to
                 // append this end part again at the end
-                String trailingPart = toProc.substring((matcher.end() + replacement.second()));
+                String trailingPart =
+                        toProc.substring(
+                                (matcher.end()
+                                        + replacement.second())
+                                );
                 toReturn += leadingPart;
                 // now that we changed the underlying string, we have to update
                 // the matcher
                 matcher = returnPattern.matcher(trailingPart);
                 toProc = trailingPart;
-            } else { // we are in a comment, so we add the part to here and continue on
-                toReturn += toProc.substring(0, matcher.end()); // add the analysed part
+            } else { // we are in a comment, so we add the part to here and
+                   // continue on
+                toReturn += toProc.substring(0, matcher.end()); // add the
+                                                                // analysed part
                 String trailingPart = toProc.substring(matcher.end());
                 // now that we changed the underlying string, we have to update
                 // the matcher
@@ -374,55 +414,69 @@ public class ElectionDescription {
     /**
      * Replace specific return statement.
      *
-     * @param toProcess            the String to process, should start immediately after the
+     * @param toProcess
+     *            the String to process, should start immediately after the
      *            "return";
-     * @param variableName the variable name
+     * @param variableName
+     *            the variable name
      * @return a tuple containgin the string containing the next return
      *         statement, and the length of the previous expression after
      *         "return" up to ";"
      */
-    private Tuple<String, Integer> replaceSpecificReturnStatement(final String toProcess,
-                                                                  final String variableName) {
-        Tuple3<Boolean, Boolean, Boolean> executionValues = new Tuple3<>(false, false, false);
+    private Tuple<String, Integer>
+                replaceSpecificReturnStatement(final String toProcess,
+                                               final String variableName) {
+        Tuple3<Boolean, Boolean, Boolean> executionValues =
+                new Tuple3<Boolean, Boolean, Boolean>(false, false, false);
         Pattern returnPattern = Pattern.compile(";");
         Matcher matcher = returnPattern.matcher(toProcess);
 
         // find the first ";" which is valid
         while (matcher.find()) {
-            executionValues = checkIfExecutedCode(executionValues, toProcess, 0, matcher.end());
+            executionValues = checkIfExecutedCode(executionValues, toProcess, 0,
+                                                  matcher.end());
             if (!checkForTrue(executionValues)) { // the found ";" is valid
-                String wrapped = wrapInStruct(variableName,
-                        toProcess.substring(0, matcher.end() - 1)); // ignore the last char, as
-                                                                    // it will be a ";"
-                return new Tuple<>(wrapped, matcher.end());
+                String wrapped =
+                        wrapInStruct(variableName,
+                                     toProcess.substring(0, matcher.end() - 1));
+                // ignore the last char, as it will be a ";"
+
+                return new Tuple<String, Integer>(wrapped, matcher.end());
             }
             // otherwise, the found ";" is not valid, so we continue
         }
-        throw new RuntimeException("no fitting return found, this should not happen");
+        throw new RuntimeException(
+                "no fitting return found, this should not happen");
     }
 
     /**
      * Wraps the value in the fitting struct for its datatype, and adds.
      *
-     * @param variableName the variable name
-     * @param valueDefinition the value definition
+     * @param variableName
+     *            the variable name
+     * @param valueDefinition
+     *            the value definition
      * @return return + wrapper + ;
      */
-    private String wrapInStruct(final String variableName, final String valueDefinition) {
-        String toReturn = container.getOutputStruct().getStructAccess() + " " + variableName + "; ";
+    private String wrapInStruct(final String variableName,
+                                final String valueDefinition) {
+        String toReturn = container.getOutputStruct().getStructAccess() + " "
+                            + variableName + "; ";
         int dimensions = container.getOutputType().getAmountOfDimensions();
-        List<String> loopVariables = generateLoopVariables(dimensions, variableName);
+        List<String> loopVariables = generateLoopVariables(dimensions,
+                                                           variableName);
         String[] sizes = container.getInputType().getSizeOfDimensions();
         for (int i = 0; i < dimensions; i++) {
-            toReturn = toReturn // add all needed loop headers
-                    + generateForLoopHeader(loopVariables.get(i), sizes[i]);
+            toReturn += // add all needed loop headers
+                    generateForLoopHeader(loopVariables.get(i), sizes[i]);
         }
         String arrayAccess = "";
         for (int i = 0; i < dimensions; i++) {
             arrayAccess += "[" + loopVariables.get(i) + "]";
         }
-        toReturn += variableName + "." + UnifiedNameContainer.getStructValueName()
-                    + arrayAccess + " = " + valueDefinition + arrayAccess + ";";
+        toReturn += variableName + "."
+                    + UnifiedNameContainer.getStructValueName() + arrayAccess
+                    + " = " + valueDefinition + arrayAccess + ";";
         for (int i = 0; i < dimensions; i++) {
             toReturn += "}"; // close the for loops
         }
@@ -432,8 +486,10 @@ public class ElectionDescription {
     /**
      * Generate for loop header.
      *
-     * @param indexName the index name
-     * @param maxSize the max size
+     * @param indexName
+     *            the index name
+     * @param maxSize
+     *            the max size
      * @return the string
      */
     private String generateForLoopHeader(final String indexName,
@@ -445,15 +501,18 @@ public class ElectionDescription {
     /**
      * Generate loop variables.
      *
-     * @param dimensions the dimensions
-     * @param variableName the variable name
+     * @param dimensions
+     *            the dimensions
+     * @param variableName
+     *            the variable name
      * @return the list
      */
     private List<String> generateLoopVariables(final int dimensions,
                                                final String variableName) {
         List<String> generatedVariables = new ArrayList<String>(dimensions);
         int currentIndex = 0;
-        String defaultName = "loop_index_"; // use i as the default name for a loop
+        String defaultName = "loop_index_"; // use i as the default name for a
+                                            // loop
 
         for (int i = 0; i < dimensions; i++) {
             String varName = defaultName + currentIndex;
@@ -477,16 +536,19 @@ public class ElectionDescription {
     /**
      * Check if executed code.
      *
-     * @param prevValues the prev values
-     * @param text the text
-     * @param start the start
-     * @param end the end
+     * @param prevValues
+     *            the prev values
+     * @param text
+     *            the text
+     * @param start
+     *            the start
+     * @param end
+     *            the end
      * @return the tuple 3
      */
-    private Tuple3<Boolean, Boolean, Boolean> checkIfExecutedCode(
-            final Tuple3<Boolean, Boolean, Boolean> prevValues,
-            final String text,
-            final int start, final int end) {
+    private Tuple3<Boolean, Boolean, Boolean>
+                checkIfExecutedCode(final Tuple3<Boolean, Boolean, Boolean> prevValues,
+                                    final String text, final int start, final int end) {
         boolean lineComment = prevValues.first();
         boolean multiComment = prevValues.second();
         boolean isText = prevValues.third();
@@ -504,12 +566,14 @@ public class ElectionDescription {
                 if (currentChar == '"') {
                     isText = false;
                 }
-            } else if (lineComment || multiComment) { // we are in a commented area
+            } else if (lineComment || multiComment) {
+                // we are in a commented area
                 if (currentChar == '\n') {
                     lineComment = false; // a new line ends a line comment
                 }
                 if (currentChar == '/') {
-                    if (prevLastCharStar) { // */ ends a comment in c no matter what
+                    if (prevLastCharStar) { // */ ends a comment in c no matter
+                                            // what
                         lineComment = false;
                         multiComment = false;
                     } else {
@@ -539,13 +603,15 @@ public class ElectionDescription {
                 }
             }
         }
-        return new Tuple3<Boolean, Boolean, Boolean>(lineComment, multiComment, isText);
+        return new Tuple3<Boolean, Boolean, Boolean>(lineComment, multiComment,
+                                                     isText);
     }
 
     /**
      * Check for true.
      *
-     * @param toCheck            the tuple to check if it contains at least one "true"
+     * @param toCheck
+     *            the tuple to check if it contains at least one "true"
      *            statement
      * @return true, if at least one true statement is present, false otherwise
      */
@@ -568,7 +634,8 @@ public class ElectionDescription {
     /**
      * Generate random string.
      *
-     * @param length the length
+     * @param length
+     *            the length
      * @return the string
      */
     private String generateRandomString(final int length) {

@@ -43,10 +43,14 @@ public class ThreadedBufferedReader implements Runnable {
     /**
      * Class for reading a stream from the program.
      *
-     * @param bufferedReader         the reader to be read from.
-     * @param rdLines      the list where the read lines should be added
-     * @param cntDwnLatch          the latch to synchronize on
-     * @param checkUnwind whether we care for the amount of loop unwindings
+     * @param bufferedReader
+     *            the reader to be read from.
+     * @param rdLines
+     *            the list where the read lines should be added
+     * @param cntDwnLatch
+     *            the latch to synchronize on
+     * @param checkUnwind
+     *            whether we care for the amount of loop unwindings
      */
     public ThreadedBufferedReader(final BufferedReader bufferedReader,
                                   final List<String> rdLines,
@@ -59,13 +63,12 @@ public class ThreadedBufferedReader implements Runnable {
         new Thread(this, "ReaderThread").start();
     }
 
-    // Starts the thread. The reader reads each line, adds it to the list. At the
+    // Starts the thread. The reader reads each line, adds it to the list. At
+    // the
     // end it notifies a latch, that it is finished.
     @Override
     public void run() {
-
         int curr = 0;
-
         String line = null;
 
         try {
@@ -77,23 +80,31 @@ public class ThreadedBufferedReader implements Runnable {
                         // we are still unwinding, so we check the line now
                         // to see how much we are unwinding
                         try {
-                            int iteration
-                                  = Integer.parseInt(
-                                            line.split("iteration")[1]
-                                                    .split("file")[0].replace(" ", "")
+                            int iteration =
+                                    Integer.parseInt(
+                                            line.split("iteration")[1].split("file")[0]
+                                                    .replace(" ", "")
                                     );
                             if (iteration > WARNING_INTERVAL) {
                                 new Thread() {
                                     @Override
                                     public void run() {
-                                        ErrorForUserDisplayer.displayError(
-                                                "A loop in your c program is still"
-                                                + " (more than a thousand times)"
-                                                + " getting unrolled. Maybe you want"
-                                                + " to stop the checking manually and"
-                                                + " add enter an upper bound for how many"
-                                                + " unrolls are done."
-                                                + "(Parameters->Solveroptions->max loop unwinds");
+                                        ErrorForUserDisplayer
+                                            .displayError("A loop in your C"
+                                                        + " program is still"
+                                                        + " (more than a"
+                                                        + " thousand times)"
+                                                        + " getting unrolled."
+                                                        + " Maybe you want"
+                                                        + " to stop the"
+                                                        + " checking manually"
+                                                        + " and add enter an"
+                                                        + " upper bound for"
+                                                        + " how many unrolls"
+                                                        + " are done."
+                                                        + "(Parameters->"
+                                                        + "Solveroptions->"
+                                                        + "max loop unwinds");
                                     }
                                 }.start();
                             }

@@ -21,9 +21,12 @@ public class PermutationExpNode extends BooleanExpressionNode {
     /**
      * Instantiates a new permutation exp node.
      *
-     * @param permExpContext the perm exp context
-     * @param voteOutputString the vote output string
-     * @param voteOutputLen the vote output len
+     * @param permExpContext
+     *            the perm exp context
+     * @param voteOutputString
+     *            the vote output string
+     * @param voteOutputLen
+     *            the vote output len
      */
     public PermutationExpNode(final PermutationExpContext permExpContext,
                               final String voteOutputString,

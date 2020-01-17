@@ -14,7 +14,8 @@ import edu.pse.beast.toolbox.UserAction;
  *
  * @author Holger Klein
  */
-public class ShowHelpUserAction extends UserAction implements DisplaysStringsToUser {
+public class ShowHelpUserAction extends UserAction
+        implements DisplaysStringsToUser {
 
     /** The path to help file. */
     private String pathToHelpFile;

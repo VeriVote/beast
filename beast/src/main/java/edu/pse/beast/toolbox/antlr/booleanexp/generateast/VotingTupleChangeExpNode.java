@@ -19,8 +19,10 @@ public class VotingTupleChangeExpNode extends BooleanExpressionNode {
     /**
      * The constructor.
      *
-     * @param tupleContext the tuple context
-     * @param splitExpContext the split exp context
+     * @param tupleContext
+     *            the tuple context
+     * @param splitExpContext
+     *            the split exp context
      */
     public VotingTupleChangeExpNode(final TupleContext tupleContext,
                                     final SplitExpContext splitExpContext) {

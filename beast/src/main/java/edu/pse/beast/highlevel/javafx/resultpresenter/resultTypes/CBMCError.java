@@ -31,13 +31,16 @@ public class CBMCError extends ResultPresentationType {
             area.setEditable(false);
         }
         List<String> errorText = result.getErrorText();
-        for (Iterator<String> iterator = errorText.iterator(); iterator.hasNext();) {
+        for (Iterator<String> iterator = errorText.iterator();
+                iterator.hasNext();) {
             String text = iterator.next();
             area.appendText(text);
         }
 
-        VirtualizedScrollPane<GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle>>
-            vsPane = new VirtualizedScrollPane<>(area); // Wrap it in a scroll area
+        VirtualizedScrollPane<GenericStyledArea<ParStyle,
+                                                Either<String, LinkedImage>,
+                                                TextStyle>> vsPane =
+            new VirtualizedScrollPane<>(area); // Wrap it in a scroll area
         return vsPane;
     }
 

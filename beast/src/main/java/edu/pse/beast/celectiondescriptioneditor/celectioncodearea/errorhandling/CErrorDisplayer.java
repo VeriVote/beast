@@ -10,9 +10,9 @@ import edu.pse.beast.codearea.errorhandling.ErrorDisplayer;
 import edu.pse.beast.stringresource.StringLoaderInterface;
 
 /**
- * This class prepares CodeErrors so its parent class error displayer can display
- * them. As such, it mainly creates error messages, depending on the code errors
- * id
+ * This class prepares CodeErrors so its parent class error displayer can
+ * display them. As such, it mainly creates error messages, depending on the
+ * code errors id
  *
  * @author Holger Klein
  */
@@ -20,8 +20,10 @@ public class CErrorDisplayer extends ErrorDisplayer {
     /**
      * Constructor.
      *
-     * @param pane        the pane the errors get shown in
-     * @param stringResIF the string resource interface
+     * @param pane
+     *            the pane the errors get shown in
+     * @param stringResIF
+     *            the string resource interface
      */
     public CErrorDisplayer(final JTextPane pane,
                            final StringLoaderInterface stringResIF) {
@@ -39,7 +41,8 @@ public class CErrorDisplayer extends ErrorDisplayer {
     /**
      * Creates a message to the user detailing an error.
      *
-     * @param er the code Error to be turned into a readable form
+     * @param er
+     *            the code Error to be turned into a readable form
      * @return the code error, formatted to a string
      */
     public String createMsg(final CodeError er) {
@@ -68,7 +71,8 @@ public class CErrorDisplayer extends ErrorDisplayer {
 
     @Override
     public void updateStringRes(final StringLoaderInterface stringResIF) {
-        setStringResourceLoader(stringResIF
-                                .getCElectionEditorStringResProvider().getCErrorStringRes());
+        setStringResourceLoader(
+                stringResIF.getCElectionEditorStringResProvider().getCErrorStringRes()
+        );
     }
 }

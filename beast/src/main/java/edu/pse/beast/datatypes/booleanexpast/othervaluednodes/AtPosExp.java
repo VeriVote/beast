@@ -10,15 +10,18 @@ import edu.pse.beast.types.InternalTypeContainer;
  * @author Holger Klein
  */
 public class AtPosExp extends TypeExpression {
-
+    /** The Constant PRIME. */
+    private static final int PRIME = 31;
     /** The integer valued expression. */
     private final IntegerValuedExpression integerValuedExpression;
 
     /**
      * Instantiates a new at pos exp.
      *
-     * @param container the container
-     * @param integerValuedExpr the integer valued expr
+     * @param container
+     *            the container
+     * @param integerValuedExpr
+     *            the integer valued expr
      */
     public AtPosExp(final InternalTypeContainer container,
                     final IntegerValuedExpression integerValuedExpr) {
@@ -33,8 +36,8 @@ public class AtPosExp extends TypeExpression {
 
     @Override
     public String getTreeString(final int depth) {
-        return "atpos\n" + "\t\t\t\t\t\t\t\t\t\t".substring(0, depth + 1) + "int "
-                + integerValuedExpression.getTreeString(depth + 1);
+        return "atpos\n" + "\t\t\t\t\t\t\t\t\t\t".substring(0, depth + 1)
+                + "int " + integerValuedExpression.getTreeString(depth + 1);
     }
 
     /**
@@ -48,11 +51,9 @@ public class AtPosExp extends TypeExpression {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
         int result = super.hashCode();
-        result = prime * result
-                + ((integerValuedExpression == null)
-                        ? 0 : integerValuedExpression.hashCode());
+        result = PRIME * result + ((integerValuedExpression == null) ? 0
+                : integerValuedExpression.hashCode());
         return result;
     }
 
@@ -66,7 +67,8 @@ public class AtPosExp extends TypeExpression {
         }
         AtPosExp atPosExp = (AtPosExp) o;
         return integerValuedExpression != null
-                ? integerValuedExpression.equals(atPosExp.integerValuedExpression)
+                ? integerValuedExpression
+                        .equals(atPosExp.integerValuedExpression)
                 : atPosExp.integerValuedExpression == null;
     }
 }

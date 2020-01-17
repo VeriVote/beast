@@ -15,7 +15,8 @@ public class IntegerNode extends IntegerValuedExpression {
     /**
      * Instantiates a new integer node.
      *
-     * @param heldIntValue the held int value
+     * @param heldIntValue
+     *            the held int value
      */
     public IntegerNode(final int heldIntValue) {
         this.heldInteger = heldIntValue;

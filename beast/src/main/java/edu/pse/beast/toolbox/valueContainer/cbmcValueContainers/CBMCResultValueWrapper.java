@@ -42,14 +42,16 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
     /**
      * Creates a new wrapper.
      *
-     * @param mainIndex            the index of this variable (for example votes1 has the main
+     * @param mainIndex
+     *            the index of this variable (for example votes1 has the main
      *            index of 1)
-     * @param name            the name of this variable (for example votes1 has the name
+     * @param name
+     *            the name of this variable (for example votes1 has the name
      *            votes)
-     * @param node the node
+     * @param node
+     *            the node
      */
-    public CBMCResultValueWrapper(final int mainIndex,
-                                  final String name,
+    public CBMCResultValueWrapper(final int mainIndex, final String name,
                                   final Node node) {
         super(mainIndex, name);
         updateValue(node);
@@ -64,7 +66,8 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
     /**
      * The constructor.
      *
-     * @param resultValueContainer the result value container
+     * @param resultValueContainer
+     *            the result value container
      */
     public CBMCResultValueWrapper(final CBMCResultValue resultValueContainer) {
         this.valueContainer = resultValueContainer;
@@ -73,7 +76,8 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
     /**
      * The constructor.
      *
-     * @param node the node
+     * @param node
+     *            the node
      */
     public CBMCResultValueWrapper(final Node node) {
         super();
@@ -83,7 +87,8 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
     /**
      * Update value.
      *
-     * @param node the node
+     * @param node
+     *            the node
      */
     public void updateValue(final Node node) {
         XMLtoolbox.clean(node);
@@ -94,10 +99,12 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
             System.err.println("problem parsing the node to an element");
             return;
         }
-        CDATATYPE newType = getDataType(element); // get the data type of the first element
+        CDATATYPE newType = getDataType(element); // get the data type of the
+                                                  // first element
         if (initialized) {
             if (newType != dataType) {
-                throw new RuntimeException("Mismatching datatypes found while parsing");
+                throw new RuntimeException("Mismatching datatypes found"
+                                            + " while parsing");
             }
         } else {
             initialize(newType);
@@ -108,7 +115,8 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
     /**
      * Sets the value.
      *
-     * @param newValueContainer the new value
+     * @param newValueContainer
+     *            the new value
      */
     public void setValue(final CBMCResultValue newValueContainer) {
         this.valueContainer = newValueContainer;
@@ -117,7 +125,8 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
     /**
      * Initialize.
      *
-     * @param newType the new type
+     * @param newType
+     *            the new type
      */
     private void initialize(final CDATATYPE newType) {
         this.dataType = newType;
@@ -136,7 +145,7 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
             valueContainer = new CBMCResultValueSingle();
             break;
         default:
-            System.err.println("unrecognized data type");
+            System.err.println("Unrecognized data type.");
             break;
         }
     }
@@ -144,7 +153,8 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
     /**
      * Set the new value of the underlying property.
      *
-     * @param element the new new value
+     * @param element
+     *            the new new value
      */
     private void setNewValue(final Element element) {
         valueContainer.setValue(element);
@@ -153,7 +163,8 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
     /**
      * Gets the data type.
      *
-     * @param node the node
+     * @param node
+     *            the node
      * @return the data type
      */
     private static CDATATYPE getDataType(final Node node) {
@@ -172,9 +183,9 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
         default:
             NodeList children = node.getChildNodes();
             if (children.getLength() != 1) {
-                System.err.println(
-                        "parsing the XML encounterd a 'single' element "
-                        + "which does not contain one child node");
+                System.err.println("Parsing the XML encounterd a"
+                                    + " 'single' element, which"
+                                    + " does not contain one child node");
                 throwError();
             } else {
                 type = CDATATYPE.SINGLE;
@@ -183,6 +194,7 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
         }
         return type;
     }
+
     //
     // public CBMCResultValue getResultValueAtPos(List<Integer> indices) {
     // return valueContainer.getResultValue(indices);
@@ -192,8 +204,9 @@ public class CBMCResultValueWrapper extends ResultValueWrapper {
      * Throw error.
      */
     private static void throwError() {
-        throw new IndexOutOfBoundsException(
-                "The dimension of the object does not match the dimension of this container");
+        throw new IndexOutOfBoundsException("The dimension of the object does"
+                                            + " not match the dimension of"
+                                            + " this container.");
     }
 
     @Override

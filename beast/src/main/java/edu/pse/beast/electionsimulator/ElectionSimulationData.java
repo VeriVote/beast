@@ -22,13 +22,16 @@ public class ElectionSimulationData {
     /**
      * Instantiates a new election simulation data.
      *
-     * @param voterNum the voter num
-     * @param candidateNum the candidate num
-     * @param seatNum the seat num
-     * @param vals the vals
+     * @param voterNum
+     *            the voter num
+     * @param candidateNum
+     *            the candidate num
+     * @param seatNum
+     *            the seat num
+     * @param vals
+     *            the vals
      */
-    public ElectionSimulationData(final int voterNum,
-                                  final int candidateNum,
+    public ElectionSimulationData(final int voterNum, final int candidateNum,
                                   final int seatNum,
                                   final ResultValueWrapper vals) {
         this.voters = voterNum;

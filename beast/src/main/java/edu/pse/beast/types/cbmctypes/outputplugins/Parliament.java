@@ -19,7 +19,9 @@ public class Parliament extends CBMCOutputType {
     private static final int DIMENSIONS = 1;
 
     /** The Constant SIZE_OF_DIMENSIONS. */
-    private static final String[] SIZE_OF_DIMENSIONS = {UnifiedNameContainer.getCandidate()};
+    private static final String[] SIZE_OF_DIMENSIONS = {
+            UnifiedNameContainer.getCandidate()
+    };
 
     /**
      * The constructor.
@@ -98,7 +100,8 @@ public class Parliament extends CBMCOutputType {
     public InternalTypeContainer getInternalTypeContainer() {
         return new InternalTypeContainer(
                 new InternalTypeContainer(InternalTypeRep.CANDIDATE),
-                InternalTypeRep.VOTER);
+                InternalTypeRep.VOTER
+        );
     }
 
     @Override

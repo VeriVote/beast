@@ -33,19 +33,22 @@ public class CodeError {
     /**
      * Instantiates a new code error.
      *
-     * @param lineNum the line num
-     * @param positionInLine the position in line
-     * @param idString the id string
-     * @param errorNum the error num
-     * @param startPosition the start position
-     * @param endPosition the end position
+     * @param lineNum
+     *            the line num
+     * @param positionInLine
+     *            the position in line
+     * @param idString
+     *            the id string
+     * @param errorNum
+     *            the error num
+     * @param startPosition
+     *            the start position
+     * @param endPosition
+     *            the end position
      */
-    public CodeError(final int lineNum,
-                     final int positionInLine,
-                     final String idString,
-                     final int errorNum,
-                     final int startPosition,
-                     final int endPosition) {
+    public CodeError(final int lineNum, final int positionInLine,
+                     final String idString, final int errorNum,
+                     final int startPosition, final int endPosition) {
         this.line = lineNum;
         this.posInLine = positionInLine;
         this.id = idString;
@@ -57,7 +60,8 @@ public class CodeError {
     /**
      * Gets the extra info.
      *
-     * @param idString the id string
+     * @param idString
+     *            the id string
      * @return the extra info
      */
     public String getExtraInfo(final String idString) {
@@ -67,11 +71,12 @@ public class CodeError {
     /**
      * Sets the extra info.
      *
-     * @param idString the id string
-     * @param extra the extra
+     * @param idString
+     *            the id string
+     * @param extra
+     *            the extra
      */
-    public void setExtraInfo(final String idString,
-                             final String extra) {
+    public void setExtraInfo(final String idString, final String extra) {
         extraInfo.put(idString, extra);
     }
 
@@ -132,7 +137,8 @@ public class CodeError {
     /**
      * Sets the start pos.
      *
-     * @param startPosition the new start pos
+     * @param startPosition
+     *            the new start pos
      */
     public void setStartPos(final int startPosition) {
         this.startPos = startPosition;
@@ -150,7 +156,8 @@ public class CodeError {
     /**
      * Sets the end pos.
      *
-     * @param endPosition the new end pos
+     * @param endPosition
+     *            the new end pos
      */
     public void setEndPos(final int endPosition) {
         this.endPos = endPosition;

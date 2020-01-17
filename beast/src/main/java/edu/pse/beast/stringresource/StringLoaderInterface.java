@@ -1,8 +1,8 @@
 package edu.pse.beast.stringresource;
 
 /**
- * This class manages all StringResProviders and therefore all
- * access to all Strings the user gets to see.
+ * This class manages all StringResProviders and therefore all access to all
+ * Strings the user gets to see.
  *
  * @author Niels Hanselmann
  */
@@ -25,7 +25,8 @@ public class StringLoaderInterface {
     /**
      * Instantiates a new string loader interface.
      *
-     * @param languageId the languageId. choose "de" for german
+     * @param languageId
+     *            the languageId. choose "de" for german
      */
     public StringLoaderInterface(final String languageId) {
         propListStr = new PropertyListStringResProvider(languageId);
@@ -83,7 +84,8 @@ public class StringLoaderInterface {
     /**
      * Sets the language.
      *
-     * @param languageId sets language. Use "de" for german
+     * @param languageId
+     *            sets language. Use "de" for german
      */
     public void setLanguage(final String languageId) {
         propListStr.changeLanguage(languageId);

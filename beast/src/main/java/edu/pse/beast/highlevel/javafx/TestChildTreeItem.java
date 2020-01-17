@@ -10,9 +10,12 @@ public class TestChildTreeItem extends ChildTreeItem {
     /**
      * Instantiates a new test child tree item.
      *
-     * @param name the name
-     * @param parent the parent
-     * @param treeItemReference the tree item reference
+     * @param name
+     *            the name
+     * @param parent
+     *            the parent
+     * @param treeItemReference
+     *            the tree item reference
      */
     TestChildTreeItem(final String name, final ParentTreeItem parent,
                       final TreeItem<CustomTreeItem> treeItemReference) {
@@ -22,9 +25,12 @@ public class TestChildTreeItem extends ChildTreeItem {
     /**
      * Instantiates a new test child tree item.
      *
-     * @param values the values
-     * @param parent the parent
-     * @param treeItemReference the tree item reference
+     * @param values
+     *            the values
+     * @param parent
+     *            the parent
+     * @param treeItemReference
+     *            the tree item reference
      */
     public TestChildTreeItem(final ChildTreeItemValues values,
                              final ParentTreeItem parent,

@@ -11,14 +11,16 @@ public interface LockedLinesListener {
     /**
      * Locked line.
      *
-     * @param lineNumber the line number
+     * @param lineNumber
+     *            the line number
      */
     void lockedLine(int lineNumber);
 
     /**
      * Unlocked line.
      *
-     * @param lineNumber the line number
+     * @param lineNumber
+     *            the line number
      */
     void unlockedLine(int lineNumber);
 }

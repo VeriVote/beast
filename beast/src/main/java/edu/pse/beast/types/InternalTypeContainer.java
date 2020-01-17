@@ -10,8 +10,9 @@ import edu.pse.beast.toolbox.CodeArrayListBeautifier;
  * @author Niels Hanselmann
  */
 public class InternalTypeContainer extends InOutType {
- /** The Constant PRIME_THREE. */
- // TODO extract to another interface
+    // TODO extract to another interface
+
+    /** The Constant PRIME_THREE. */
     private static final int PRIME_THREE = 1237;
 
     /** The Constant PRIME_TWO. */
@@ -129,7 +130,8 @@ public class InternalTypeContainer extends InOutType {
         result = PRIME_ONE * result
                 + ((internalType != null) ? internalType.hashCode() : 0);
         result = PRIME_ONE * result + (isList ? PRIME_TWO : PRIME_THREE);
-        result = PRIME_ONE * result + (listedType != null ? listedType.hashCode() : 0);
+        result = PRIME_ONE * result
+                + (listedType != null ? listedType.hashCode() : 0);
         return result;
     }
 

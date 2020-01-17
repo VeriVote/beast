@@ -70,10 +70,11 @@ public class CBMCResult extends Result {
     // private transient Charset charSet = new UTF_16();
 
     /** The char set. */
-    private transient Charset charSet = Charset.forName("UTF-8"); // TODO check if this
-                                                                  // charset is fitting for
-                                                                  /** The value cache. */
-                                                                  // both windows and linux
+    private transient Charset charSet = Charset.forName("UTF-8");
+    // TODO check if this charset is fitting for
+
+    /** The value cache. */
+    // both windows and linux
     private transient Map<String, List<ResultValueWrapper>> valueCache =
             new HashMap<String, List<ResultValueWrapper>>();
 
@@ -105,9 +106,8 @@ public class CBMCResult extends Result {
             parseResult(); // get the xml list from this list of strings
             String[] arr = {"votes\\d", "elect\\d"}; // TODO add the
                                                      // NameContainer here
-            readVariableValue(Arrays.asList(arr)); // already read "votes" and
-                                                   // "elect", so the access can
-                                                   // be faster
+            readVariableValue(Arrays.asList(arr));
+            // already read "votes" and "elect", so the access can be faster
         }
     }
 
@@ -130,10 +130,12 @@ public class CBMCResult extends Result {
 
         InputStream xmlStream =
                 IOUtils.toInputStream(
-                        String.join("",
-                                    super.getResult().subList(offset, super.getResult().size())
+                        String.join(
+                                "",
+                                super.getResult().subList(offset, super.getResult().size())
                                 ),
-                        charSet);
+                        charSet
+                        );
         DocumentBuilder builder;
         try {
             builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -152,7 +154,8 @@ public class CBMCResult extends Result {
         if (valueCache.containsKey(variableMatcher)) {
             return valueCache.get(variableMatcher);
         } else {
-            readVariableValue(arg); // afterwards, variables matching are in the cache
+            readVariableValue(arg); // afterwards, variables matching are in the
+                                    // cache
         }
         return valueCache.get(variableMatcher);
     }
@@ -160,7 +163,8 @@ public class CBMCResult extends Result {
     /**
      * Read variable value.
      *
-     * @param variablesToFind the variables to find
+     * @param variablesToFind
+     *            the variables to find
      * @return the map
      */
     private Map<String, List<ResultValueWrapper>>
@@ -171,19 +175,21 @@ public class CBMCResult extends Result {
             for (Iterator<String> iterator = variablesToFind.iterator();
                     iterator.hasNext();) {
                 String currentMatcher = iterator.next();
-                if (valueCache.containsKey(currentMatcher)) { // the variable was requested
-                                                              // before
+                if (valueCache.containsKey(currentMatcher)) {
+                    // the variable was requested before
                     toReturn.put(currentMatcher,
-                                 valueCache.get(currentMatcher));
-                    iterator.remove(); // we don't have to request for this
+                            valueCache.get(currentMatcher));
+                    iterator.remove(); // we do not need to request for this
                                        // value to be extracted again
                 }
             }
             List<Tuple<String, List<ResultValueWrapper>>> newValues =
                     CBMCxmlParser.extractVariables(rootElement, variablesToFind);
             for (int i = 0; i < newValues.size(); i++) {
-                valueCache.put(newValues.get(i).first(), newValues.get(i).second());
-                toReturn.put(newValues.get(i).first(), newValues.get(i).second());
+                valueCache.put(newValues.get(i).first(),
+                               newValues.get(i).second());
+                toReturn.put(newValues.get(i).first(),
+                             newValues.get(i).second());
             }
             return toReturn;
         } else {
@@ -207,8 +213,8 @@ public class CBMCResult extends Result {
      * @return true, if is initialized
      */
     private boolean isInitialized() {
-        if (super.getResult() != null && super.getResult().size() > 0) { // the result object
-                                                                         // is set
+        if (super.getResult() != null && super.getResult().size() > 0) {
+            // the result object is set
             if (rootElement == null) {
                 parseResult();
             }
@@ -221,17 +227,20 @@ public class CBMCResult extends Result {
     /**
      * Check assertion.
      *
-     * @param identifier the identifier
+     * @param identifier
+     *            the identifier
      * @return true, if successful
      */
     private boolean checkAssertion(final String identifier) {
         if (isInitialized()) {
-            NodeList resultElements = rootElement.getElementsByTagName(RESULT_TAG);
+            NodeList resultElements =
+                    rootElement.getElementsByTagName(RESULT_TAG);
             if (resultElements.getLength() == 0) {
                 return false; // no result tag found, so it can not hold
             } else if (resultElements.getLength() > 1) {
                 throw new IndexOutOfBoundsException(
-                        "Multiple Result Tags detected, this can not happen");
+                        "Multiple Result Tags detected, this can not happen"
+                        );
             } else {
                 return resultElements.item(0).getTextContent().equals(identifier);
             }

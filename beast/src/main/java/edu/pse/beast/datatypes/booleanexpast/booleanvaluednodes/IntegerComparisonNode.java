@@ -14,10 +14,13 @@ public class IntegerComparisonNode extends ComparisonNode {
     /**
      * Instantiates a new integer comparison node.
      *
-     * @param lhsTypeExp       the lhsExpression
-     * @param rhsTypeExp       the rhsExpression
-     * @param comparisonSymbol the symbol that describes this comparison (for
-     *                         example <, >, == )
+     * @param lhsTypeExp
+     *            the lhsExpression
+     * @param rhsTypeExp
+     *            the rhsExpression
+     * @param comparisonSymbol
+     *            the symbol that describes this comparison (for example <, >,
+     *            == )
      */
     public IntegerComparisonNode(final TypeExpression lhsTypeExp,
                                  final TypeExpression rhsTypeExp,
@@ -36,8 +39,10 @@ public class IntegerComparisonNode extends ComparisonNode {
         String tabs = "\t\t\t\t\t\t\t\t\t\t\t".substring(0, depth);
         b.append(tabs + "IntegerComparisonNode: Symbol "
                 + getComparisonSymbol().getCStringRep() + "\n");
-        b.append(tabs + "\t" + "lhs: " + getLhsTypeExp().getTreeString(depth + 1));
-        b.append(tabs + "\t" + "rhs: " + getRhsTypeExp().getTreeString(depth + 1));
+        b.append(tabs + "\t" + "lhs: "
+                + getLhsTypeExp().getTreeString(depth + 1));
+        b.append(tabs + "\t" + "rhs: "
+                + getRhsTypeExp().getTreeString(depth + 1));
         return b.toString();
     }
 }

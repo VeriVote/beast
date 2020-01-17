@@ -18,6 +18,10 @@ public class AutocompletionFrame extends javax.swing.JFrame {
     /** The Constant PREF_HORIZONTAL_SIZE. */
     private static final int PREF_HORIZONTAL_SIZE = 400;
 
+    /** The Constant DEFAULT_SIZE. */
+    private static final int DEFAULT_SIZE =
+            javax.swing.GroupLayout.DEFAULT_SIZE;
+
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
@@ -65,25 +69,27 @@ public class AutocompletionFrame extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jList1);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        javax.swing.GroupLayout layout =
+                new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane1,
-                              javax.swing.GroupLayout.DEFAULT_SIZE,
-                              PREF_HORIZONTAL_SIZE, Short.MAX_VALUE));
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, DEFAULT_SIZE,
+                                  PREF_HORIZONTAL_SIZE, Short.MAX_VALUE)
+        );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane1,
-                              javax.swing.GroupLayout.DEFAULT_SIZE,
-                              PREF_VERTICAL_SIZE, Short.MAX_VALUE));
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, DEFAULT_SIZE,
+                                  PREF_VERTICAL_SIZE, Short.MAX_VALUE)
+        );
         pack();
     } // </editor-fold>//GEN-END:initComponents
 
     /**
      * Form key pressed.
      *
-     * @param evt the evt
+     * @param evt
+     *            the evt
      */
     private void formKeyPressed(final java.awt.event.KeyEvent evt) {
         // GEN-FIRST:event_formKeyPressed
@@ -95,16 +101,19 @@ public class AutocompletionFrame extends javax.swing.JFrame {
     /**
      * The main method.
      *
-     * @param args the command line arguments
+     * @param args
+     *            the command line arguments
      */
     public static void main(final String[] args) {
         /* Set the Nimbus look and feel */
-        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting
+        // code
         // (optional) ">
         /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
-         * look and feel. For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         * If Nimbus (introduced in Java SE 6) is not available, stay with the
+         * default look and feel. For details see
+         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.
+         * html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info
@@ -115,21 +124,21 @@ public class AutocompletionFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(
-                AutocompletionFrame.class.getName())
-                .log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger
+                    .getLogger(AutocompletionFrame.class.getName())
+                    .log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(
-                AutocompletionFrame.class.getName())
-                .log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger
+                    .getLogger(AutocompletionFrame.class.getName())
+                    .log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(
-                AutocompletionFrame.class.getName())
-                .log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger
+                    .getLogger(AutocompletionFrame.class.getName())
+                    .log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(
-                AutocompletionFrame.class.getName())
-                .log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger
+                    .getLogger(AutocompletionFrame.class.getName())
+                    .log(java.util.logging.Level.SEVERE, null, ex);
         }
         // </editor-fold>
 
@@ -145,7 +154,8 @@ public class AutocompletionFrame extends javax.swing.JFrame {
     /**
      * Show user options.
      *
-     * @param opts the opts
+     * @param opts
+     *            the opts
      */
     void showUserOptions(final String[] opts) {
         jList1.removeAll();

@@ -25,10 +25,9 @@ public class CBMCResultValueStruct implements CBMCResultValue {
     @Override
     public void setValue(final Element element) {
         values.clear();
-        // we have an object with tag "array", the children are of the form:
+        // We have an object with tag "array", the children are of the form:
         // <element index="n"\>
         NodeList subVariables = element.getElementsByTagName(MEMBER_TAG);
-
         if (subVariables.getLength() == 0) {
             System.err.println("no elements found inside a struct");
             return;
@@ -42,8 +41,13 @@ public class CBMCResultValueStruct implements CBMCResultValue {
             } else {
                 currentMember = (Element) subVariables.item(i);
                 String memberName =
-                        currentMember.getAttributes().getNamedItem(MEMBER_NAME).getNodeValue();
-                values.put(memberName, new CBMCResultValueWrapper(currentMember.getFirstChild()));
+                        currentMember.getAttributes()
+                            .getNamedItem(MEMBER_NAME).getNodeValue();
+                values.put(memberName,
+                           new CBMCResultValueWrapper(
+                                   currentMember.getFirstChild()
+                           )
+                );
             }
         }
     }
@@ -51,17 +55,21 @@ public class CBMCResultValueStruct implements CBMCResultValue {
     /**
      * Sets the value.
      *
-     * @param wrapper the wrapper
-     * @param name the name
+     * @param wrapper
+     *            the wrapper
+     * @param name
+     *            the name
      */
-    public void setValue(final CBMCResultValueWrapper wrapper, final String name) {
+    public void setValue(final CBMCResultValueWrapper wrapper,
+                         final String name) {
         values.put(name, wrapper);
     }
 
     /**
      * Gets the result variable.
      *
-     * @param variableName the variable name
+     * @param variableName
+     *            the variable name
      * @return the result variable
      */
     public CBMCResultValueWrapper getResultVariable(final String variableName) {

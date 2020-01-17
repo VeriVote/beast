@@ -10,7 +10,8 @@ import java.util.Map;
  * The Class UnifiedNameContainer.
  */
 public final class UnifiedNameContainer { // TODO make not static and then only
-                                          // accessible through electionContainer
+                                          // accessible through
+                                          // electionContainer
     /** The listeners. */
     private static List<NameChangeListener> listeners = new LinkedList<NameChangeListener>();
 
@@ -52,7 +53,8 @@ public final class UnifiedNameContainer { // TODO make not static and then only
     /**
      * Adds the listener.
      *
-     * @param toAdd the to add
+     * @param toAdd
+     *            the to add
      */
     public static void addListener(final NameChangeListener toAdd) {
         listeners.add(toAdd);
@@ -62,10 +64,10 @@ public final class UnifiedNameContainer { // TODO make not static and then only
      * Notify name change listeners.
      */
     private static void notifyNameChangeListeners() {
-        for (Iterator<NameChangeListener> iterator = listeners.iterator();
+        for (Iterator<NameChangeListener> iterator =
+                    listeners.iterator();
                 iterator.hasNext();) {
-            NameChangeListener nameChangeListener =
-                    iterator.next();
+            NameChangeListener nameChangeListener = iterator.next();
             nameChangeListener.notifyNameChange();
         }
     }
@@ -73,7 +75,8 @@ public final class UnifiedNameContainer { // TODO make not static and then only
     /**
      * Gets the by key.
      *
-     * @param key the key
+     * @param key
+     *            the key
      * @return the by key
      */
     public static String getByKey(final String key) {
@@ -258,7 +261,8 @@ public final class UnifiedNameContainer { // TODO make not static and then only
     /**
      * Sets the candidate.
      *
-     * @param candidate the new candidate
+     * @param candidate
+     *            the new candidate
      */
     public static void setCandidate(final String candidate) {
         setInMap("candidate", candidate);
@@ -267,7 +271,8 @@ public final class UnifiedNameContainer { // TODO make not static and then only
     /**
      * Sets the voter.
      *
-     * @param voter the new voter
+     * @param voter
+     *            the new voter
      */
     public static void setVoter(final String voter) {
         setInMap("voter", voter);
@@ -280,7 +285,8 @@ public final class UnifiedNameContainer { // TODO make not static and then only
     /**
      * Sets the seats.
      *
-     * @param seats the new seats
+     * @param seats
+     *            the new seats
      */
     public static void setSeats(final String seats) {
         setInMap("seats", seats);
@@ -289,7 +295,8 @@ public final class UnifiedNameContainer { // TODO make not static and then only
     /**
      * Sets the voting method.
      *
-     * @param votingMethod the new voting method
+     * @param votingMethod
+     *            the new voting method
      */
     public static void setVotingMethod(final String votingMethod) {
         setInMap("votingMethod", votingMethod);
@@ -298,7 +305,8 @@ public final class UnifiedNameContainer { // TODO make not static and then only
     /**
      * Sets the result arr name.
      *
-     * @param resultArrName the new result arr name
+     * @param resultArrName
+     *            the new result arr name
      */
     public static void setResultArrName(final String resultArrName) {
         setInMap("result_arr_name", resultArrName);
@@ -307,7 +315,8 @@ public final class UnifiedNameContainer { // TODO make not static and then only
     /**
      * Sets the voting array.
      *
-     * @param votingArray the new voting array
+     * @param votingArray
+     *            the new voting array
      */
     public static void setVotingArray(final String votingArray) {
         setInMap("votingArray", votingArray);
@@ -316,8 +325,10 @@ public final class UnifiedNameContainer { // TODO make not static and then only
     /**
      * Sets the in map.
      *
-     * @param key the key
-     * @param toSet the to set
+     * @param key
+     *            the key
+     * @param toSet
+     *            the to set
      */
     private static void setInMap(final String key, final String toSet) {
         map.put(key, toSet);

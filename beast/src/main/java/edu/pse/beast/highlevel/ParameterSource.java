@@ -36,8 +36,8 @@ public interface ParameterSource {
     void resumeReacting();
 
     /**
-     * Returns the View of the ParameterSrc, since this is the MainWindow its used
-     * for displaying the status of the Analysis by the BEASTCommunicator.
+     * Returns the View of the ParameterSrc, since this is the MainWindow its
+     * used for displaying the status of the Analysis by the BEASTCommunicator.
      *
      * @return the view of the parameter source
      */

@@ -16,7 +16,8 @@ public class RedoLastUserAction extends UserAction {
     /**
      * Instantiates a new redo last user action.
      *
-     * @param actList the act list
+     * @param actList
+     *            the act list
      */
     public RedoLastUserAction(final ActionList actList) {
         super("redo");

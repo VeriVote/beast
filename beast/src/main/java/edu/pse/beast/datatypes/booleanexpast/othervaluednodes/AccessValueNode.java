@@ -10,6 +10,8 @@ import edu.pse.beast.types.InOutType;
  * @author Holger Klein
  */
 public abstract class AccessValueNode extends TypeExpression {
+    /** The Constant PRIME. */
+    private static final int PRIME = 31;
 
     /** The accessing vars. */
     private final TypeExpression[] accessingVars;
@@ -20,9 +22,12 @@ public abstract class AccessValueNode extends TypeExpression {
     /**
      * Instantiates a new access value node.
      *
-     * @param type the type
-     * @param accessingVariables the accessing variables
-     * @param countVal the count val
+     * @param type
+     *            the type
+     * @param accessingVariables
+     *            the accessing variables
+     * @param countVal
+     *            the count val
      */
     protected AccessValueNode(final InOutType type,
                               final TypeExpression[] accessingVariables,
@@ -52,10 +57,9 @@ public abstract class AccessValueNode extends TypeExpression {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + Arrays.hashCode(accessingVars);
-        result = prime * result + count;
+        result = PRIME * result + Arrays.hashCode(accessingVars);
+        result = PRIME * result + count;
         return result;
     }
 

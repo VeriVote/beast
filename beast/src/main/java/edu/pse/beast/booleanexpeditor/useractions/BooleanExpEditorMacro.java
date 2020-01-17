@@ -13,7 +13,8 @@ public class BooleanExpEditorMacro {
     /**
      * Constructor.
      *
-     * @param macroString the macro in form of a String
+     * @param macroString
+     *            the macro in form of a String
      */
     public BooleanExpEditorMacro(final String macroString) {
         this.macro = macroString;

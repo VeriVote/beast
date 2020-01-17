@@ -20,8 +20,10 @@ public class CandidateListChangeExpNode extends BooleanExpressionNode {
     /**
      * The constructor.
      *
-     * @param electNode the elect node
-     * @param intersectExpContext the intersect exp context
+     * @param electNode
+     *            the elect node
+     * @param intersectExpContext
+     *            the intersect exp context
      */
     public CandidateListChangeExpNode(final TerminalNode electNode,
                                       final IntersectExpContext

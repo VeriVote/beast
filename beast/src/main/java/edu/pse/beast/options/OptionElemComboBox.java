@@ -18,7 +18,8 @@ public class OptionElemComboBox extends JComboBox<String> {
     /**
      * Constructor.
      *
-     * @param optElem OptionElement displayed by this OptionElemComboBox
+     * @param optElem
+     *            OptionElement displayed by this OptionElemComboBox
      */
     public OptionElemComboBox(final OptionElement optElem) {
         super();

@@ -24,10 +24,14 @@ public class ChildTreeItemValues {
     /**
      * Instantiates a new child tree item values.
      *
-     * @param propertyNameStr the property name str
-     * @param checkBoxStat the check box stat
-     * @param disabledAttribute the disabled attribute
-     * @param resultList the result list
+     * @param propertyNameStr
+     *            the property name str
+     * @param checkBoxStat
+     *            the check box stat
+     * @param disabledAttribute
+     *            the disabled attribute
+     * @param resultList
+     *            the result list
      */
     public ChildTreeItemValues(final String propertyNameStr,
                                final boolean checkBoxStat,

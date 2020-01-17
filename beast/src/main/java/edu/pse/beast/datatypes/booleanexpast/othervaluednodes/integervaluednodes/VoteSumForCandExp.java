@@ -22,9 +22,12 @@ public class VoteSumForCandExp extends IntegerValuedExpression {
     /**
      * Instantiates a new vote sum for cand exp.
      *
-     * @param voteArrayNumber the number of the vote array
-     * @param accessingVarExpr the accessing variable
-     * @param uniqueAttr whether the variable is unique
+     * @param voteArrayNumber
+     *            the number of the vote array
+     * @param accessingVarExpr
+     *            the accessing variable
+     * @param uniqueAttr
+     *            whether the variable is unique
      */
     public VoteSumForCandExp(final int voteArrayNumber,
                              final TypeExpression accessingVarExpr,
@@ -99,7 +102,8 @@ public class VoteSumForCandExp extends IntegerValuedExpression {
 
     @Override
     public int hashCode() {
-        int result = PRIME_ONE + (accessingVar != null ? accessingVar.hashCode() : 0);
+        int result = PRIME_ONE
+                + (accessingVar != null ? accessingVar.hashCode() : 0);
         result = PRIME_ONE * result + (unique ? PRIME_TWO : PRIME_THREE);
         result = PRIME_ONE * result + voteArrNum;
         return result;

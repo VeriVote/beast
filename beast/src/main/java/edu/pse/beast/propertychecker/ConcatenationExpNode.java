@@ -21,9 +21,12 @@ public class ConcatenationExpNode extends BooleanExpressionNode {
     /**
      * Instantiates a new concatenation exp node.
      *
-     * @param concatExpContext the concat exp context
-     * @param voteOutputString the vote output string
-     * @param voteOutputLen the vote output len
+     * @param concatExpContext
+     *            the concat exp context
+     * @param voteOutputString
+     *            the vote output string
+     * @param voteOutputLen
+     *            the vote output len
      */
     public ConcatenationExpNode(final ConcatenationExpContext concatExpContext,
                                 final String voteOutputString,

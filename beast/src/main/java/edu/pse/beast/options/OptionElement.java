@@ -23,8 +23,10 @@ public abstract class OptionElement {
     /**
      * Constructor.
      *
-     * @param idString            The ID of this OptionElement
-     * @param availableOpts A List of Strings with the availableOptions
+     * @param idString
+     *            The ID of this OptionElement
+     * @param availableOpts
+     *            A List of Strings with the availableOptions
      */
     public OptionElement(final String idString,
                          final List<String> availableOpts) {
@@ -53,7 +55,8 @@ public abstract class OptionElement {
     /**
      * Handles the selection.
      *
-     * @param selection identifies the selection
+     * @param selection
+     *            identifies the selection
      */
     public abstract void handleSelection(String selection);
 
@@ -69,7 +72,8 @@ public abstract class OptionElement {
     /**
      * Sets the chosen option.
      *
-     * @param chosenOpt the new chosen option
+     * @param chosenOpt
+     *            the new chosen option
      */
     public void setChosenOption(final String chosenOpt) {
         this.chosenOption = chosenOpt;

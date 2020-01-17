@@ -7,8 +7,8 @@ public enum AnalysisType {
 
     /** The Check. */
     Check,
- /** The Margin. */
- Margin,
- /** The Test. */
- Test
+    /** The Margin. */
+    Margin,
+    /** The Test. */
+    Test
 }

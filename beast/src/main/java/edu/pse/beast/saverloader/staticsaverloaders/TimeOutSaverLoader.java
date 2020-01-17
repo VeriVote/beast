@@ -17,15 +17,18 @@ public final class TimeOutSaverLoader {
     private TimeOutSaverLoader() { }
 
     /**
-     * Creates a String from a given TimeOut, that can then be saved to a file and
-     * later given to createFromSaveString() to retrieve the saved object.
+     * Creates a String from a given TimeOut, that can then be saved to a file
+     * and later given to createFromSaveString() to retrieve the saved object.
      *
-     * @param timeOut the TimeOut
+     * @param timeOut
+     *            the TimeOut
      * @return the saveString
      */
     public static String createSaveString(final TimeOut timeOut) {
-        String amount = "<duration>\n" + timeOut.getDuration() + "\n</duration>\n";
-        String timeunit = "<timeunit>\n" + timeOut.getOrigUnit().name() + "\n</timeunit>\n";
+        String amount = "<duration>\n" + timeOut.getDuration()
+                    + "\n</duration>\n";
+        String timeunit = "<timeunit>\n" + timeOut.getOrigUnit().name()
+                    + "\n</timeunit>\n";
         return amount + timeunit;
     }
 
@@ -33,7 +36,8 @@ public final class TimeOutSaverLoader {
      * Creates a TimeOut object from a given, by createSaveString() generated,
      * saveString.
      *
-     * @param s the SaveString
+     * @param s
+     *            the SaveString
      * @return the TimeOut object
      */
     public static TimeOut createFromSaveString(final String s) {

@@ -49,10 +49,14 @@ public class ElectionSimulation implements MenuBarInterface {
     /**
      * Instantiates a new election simulation.
      *
-     * @param elecTypeContainer the elec type container
-     * @param inputDataGridPane the input data grid pane
-     * @param votGridPane the vot grid pane
-     * @param candGridPane the cand grid pane
+     * @param elecTypeContainer
+     *            the elec type container
+     * @param inputDataGridPane
+     *            the input data grid pane
+     * @param votGridPane
+     *            the vot grid pane
+     * @param candGridPane
+     *            the cand grid pane
      */
     public ElectionSimulation(final ElectionTypeContainer elecTypeContainer,
                               final GridPane inputDataGridPane,
@@ -78,7 +82,8 @@ public class ElectionSimulation implements MenuBarInterface {
     /**
      * Update container.
      *
-     * @param elecTypeContainer the elec type container
+     * @param elecTypeContainer
+     *            the elec type container
      */
     public void updateContainer(final ElectionTypeContainer elecTypeContainer) {
         this.container = elecTypeContainer;
@@ -89,7 +94,8 @@ public class ElectionSimulation implements MenuBarInterface {
      * Update rows.
      */
     public synchronized void updateRows() {
-        for (Iterator<NEWRowOfValues> iterator = model.getRows().iterator();
+        for (Iterator<NEWRowOfValues> iterator =
+                model.getRows().iterator();
                 iterator.hasNext();) {
             NEWRowOfValues row = iterator.next();
             row.update();
@@ -152,16 +158,20 @@ public class ElectionSimulation implements MenuBarInterface {
         List<NEWRowOfValues> rows = model.getRows();
         InputType inType = container.getInputType();
         CBMCResultValueArray topArrayValue = new CBMCResultValueArray();
-        List<CBMCResultValueWrapper> valueWrappers = new ArrayList<CBMCResultValueWrapper>();
+        List<CBMCResultValueWrapper> valueWrappers =
+                new ArrayList<CBMCResultValueWrapper>();
 
         for (int i = 0; i < this.getNumCandidates(); i++) {
-            CBMCResultValue result = inType.convertRowToResultValue(rows.get(i));
+            CBMCResultValue result =
+                    inType
+                    .convertRowToResultValue(rows.get(i));
             valueWrappers.add(new CBMCResultValueWrapper(result));
         }
         topArrayValue.setValue(valueWrappers);
 
         ElectionSimulationData toReturn =
-                new ElectionSimulationData(getNumVoters(), getNumCandidates(), getNumSeats(),
+                new ElectionSimulationData(getNumVoters(), getNumCandidates(),
+                                           getNumSeats(),
                                            new CBMCResultValueWrapper(topArrayValue));
         return toReturn;
     }
@@ -178,7 +188,8 @@ public class ElectionSimulation implements MenuBarInterface {
     /**
      * Gets the party name.
      *
-     * @param index the index
+     * @param index
+     *            the index
      * @return the party name
      */
     public String getPartyName(final int index) {
@@ -188,7 +199,8 @@ public class ElectionSimulation implements MenuBarInterface {
     /**
      * Gets the voter name.
      *
-     * @param index the index
+     * @param index
+     *            the index
      * @return the voter name
      */
     public String getVoterName(final int index) {
@@ -198,7 +210,8 @@ public class ElectionSimulation implements MenuBarInterface {
     /**
      * Num voters changed.
      *
-     * @param numVoters the num voters
+     * @param numVoters
+     *            the num voters
      */
     public void numVotersChanged(final int numVoters) {
         model.setAmountVoters(numVoters);
@@ -207,7 +220,8 @@ public class ElectionSimulation implements MenuBarInterface {
     /**
      * Num candidates changed.
      *
-     * @param numCandidates the num candidates
+     * @param numCandidates
+     *            the num candidates
      */
     public void numCandidatesChanged(final int numCandidates) {
         model.setAmountCandidates(numCandidates);
@@ -216,7 +230,8 @@ public class ElectionSimulation implements MenuBarInterface {
     /**
      * Num seats changed.
      *
-     * @param numSeats the num seats
+     * @param numSeats
+     *            the num seats
      */
     public void numSeatsChanged(final int numSeats) {
         model.setAmountSeats(numSeats);
@@ -225,11 +240,13 @@ public class ElectionSimulation implements MenuBarInterface {
     /**
      * Sets the and vet voter number.
      *
-     * @param toVet the to vet
+     * @param toVet
+     *            the to vet
      * @return the string
      */
     public String setAndVetVoterNumber(final String toVet) {
-        int vetted = container.getInputType().vetAmountVoters(Integer.parseInt(toVet));
+        int vetted = container.getInputType()
+                .vetAmountVoters(Integer.parseInt(toVet));
         model.setAmountVoters(vetted);
         return "" + vetted;
     }
@@ -237,11 +254,13 @@ public class ElectionSimulation implements MenuBarInterface {
     /**
      * Sets the and vet candidate number.
      *
-     * @param toVet the to vet
+     * @param toVet
+     *            the to vet
      * @return the string
      */
     public String setAndVetCandidateNumber(final String toVet) {
-        int vetted = container.getInputType().vetAmountCandidates(Integer.parseInt(toVet));
+        int vetted = container.getInputType()
+                .vetAmountCandidates(Integer.parseInt(toVet));
         model.setAmountCandidates(vetted);
         return "" + vetted;
     }
@@ -249,11 +268,13 @@ public class ElectionSimulation implements MenuBarInterface {
     /**
      * Sets the and vet seat number.
      *
-     * @param toVet the to vet
+     * @param toVet
+     *            the to vet
      * @return the string
      */
     public String setAndVetSeatNumber(final String toVet) {
-        int vetted = container.getInputType().vetAmountSeats(Integer.parseInt(toVet));
+        int vetted = container.getInputType()
+                .vetAmountSeats(Integer.parseInt(toVet));
         model.setAmountSeats(vetted);
         return "" + vetted;
     }
@@ -261,7 +282,8 @@ public class ElectionSimulation implements MenuBarInterface {
     /**
      * Save as.
      *
-     * @param file the file
+     * @param file
+     *            the file
      */
     public void saveAs(final File file) {
         saverLoader.save(file, generateSaveString());
@@ -276,19 +298,25 @@ public class ElectionSimulation implements MenuBarInterface {
     /**
      * Open input.
      *
-     * @param input the input
-     * @param bringToFront the bring to front
+     * @param input
+     *            the input
+     * @param bringToFront
+     *            the bring to front
      */
     private void openInput(final String input, final boolean bringToFront) {
         reset();
         if (!input.equals("")) {
             String[] lines = input.split("\n");
             for (int y = 0; y < lines.length; y++) {
-                String[] values = lines[y].replaceAll("\\r", "").split(CSV_SEPARATOR);
+                String[] values = lines[y].replaceAll("\\r", "")
+                        .split(CSV_SEPARATOR);
                 if (y == 0) {
-                    GUIController.getController().getInputVoters().setText("" + values[0]);
-                    GUIController.getController().getInputCandidates().setText("" + values[1]);
-                    GUIController.getController().getInputSeats().setText("" + values[2]);
+                    GUIController.getController().getInputVoters()
+                            .setText("" + values[0]);
+                    GUIController.getController().getInputCandidates()
+                            .setText("" + values[1]);
+                    GUIController.getController().getInputSeats()
+                            .setText("" + values[2]);
                 } else {
                     for (int x = 0; x < values.length; x++) {
                         model.setValue(x, (y - 1), values[x]);
@@ -304,7 +332,8 @@ public class ElectionSimulation implements MenuBarInterface {
     /**
      * Open.
      *
-     * @param file the file
+     * @param file
+     *            the file
      */
     public void open(final File file) {
         if (file.exists()) {
@@ -333,24 +362,25 @@ public class ElectionSimulation implements MenuBarInterface {
      */
     private String generateSaveString() {
         String saveString = "";
-        saveString =
-                model.getAmountVoters() + CSV_SEPARATOR
+        saveString = model.getAmountVoters() + CSV_SEPARATOR
                 + model.getAmountCandidates() + CSV_SEPARATOR
                 + model.getAmountSeats() + "\n";
         List<NEWRowOfValues> rows = model.getRows();
 
-        for (Iterator<NEWRowOfValues> iterator = rows.iterator(); iterator.hasNext();) {
+        for (Iterator<NEWRowOfValues> iterator = rows.iterator();
+                iterator.hasNext();) {
             NEWRowOfValues row = iterator.next();
-            for (Iterator<String> valueIterator = row.getValues().iterator();
+            for (Iterator<String> valueIterator =
+                    row.getValues().iterator();
                     valueIterator.hasNext();) {
                 String value = valueIterator.next();
-                saveString = saveString + value;
+                saveString += value;
                 if (valueIterator.hasNext()) { // another value will follow
-                    saveString = saveString + CSV_SEPARATOR;
+                    saveString += CSV_SEPARATOR;
                 }
             }
             if (iterator.hasNext()) {
-                saveString = saveString + "\n";
+                saveString += "\n";
             }
         }
         return saveString;

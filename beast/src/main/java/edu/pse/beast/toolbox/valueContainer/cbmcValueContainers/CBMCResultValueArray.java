@@ -24,7 +24,8 @@ public class CBMCResultValueArray implements CBMCResultValue {
     /**
      * Sets the value.
      *
-     * @param vals the new value
+     * @param vals
+     *            the new value
      */
     public void setValue(final List<CBMCResultValueWrapper> vals) {
         this.values = vals;
@@ -53,11 +54,13 @@ public class CBMCResultValueArray implements CBMCResultValue {
             } else {
                 childElement = (Element) nextNode;
             }
-            int index = Integer.parseInt(childElement.getAttributes()
+            int index =
+                    Integer.parseInt(childElement.getAttributes()
                             .getNamedItem(INDEX_NAME).getNodeValue());
             if (index == currentPos) {
                 values.add(new CBMCResultValueWrapper(
-                        childElement.getFirstChild()));
+                        childElement.getFirstChild())
+                );
             }
             // else {
                 // throw new RuntimeException("mismatch between indices when

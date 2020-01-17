@@ -34,7 +34,8 @@ public abstract class ResultPresentationType {
     /**
      * Present result.
      *
-     * @param result the result
+     * @param result
+     *            the result
      * @return the node
      */
     public abstract Node presentResult(Result result);
@@ -68,8 +69,10 @@ public abstract class ResultPresentationType {
     public static List<ResultPresentationType> getImplementations() {
         ServiceLoader<ResultPresentationType> loader =
                 ServiceLoader.load(ResultPresentationType.class);
-        List<ResultPresentationType> implementations = new ArrayList<ResultPresentationType>();
-        for (Iterator<ResultPresentationType> iterator = loader.iterator(); iterator.hasNext();) {
+        List<ResultPresentationType> implementations =
+                new ArrayList<ResultPresentationType>();
+        for (Iterator<ResultPresentationType> iterator = loader.iterator();
+                iterator.hasNext();) {
             ResultPresentationType implementation = iterator.next();
             implementations.add(implementation);
         }
@@ -103,28 +106,32 @@ public abstract class ResultPresentationType {
     /**
      * Zoom to.
      *
-     * @param zoomValue the zoom value
+     * @param zoomValue
+     *            the zoom value
      */
     public abstract void zoomTo(double zoomValue);
 
     /**
      * Supports.
      *
-     * @param analysisType the analysis type
+     * @param analysisType
+     *            the analysis type
      * @return true, if successful
      */
     public abstract boolean supports(AnalysisType analysisType);
 
     /**
-     * Extracts the value of single value objects. It is used to extract the size
-     * of each vote.
+     * Extracts the value of single value objects. It is used to extract the
+     * size of each vote.
      *
-     * @param toExtract            has be of the form: ValueWrapper -> ResultValueSingle<Integer>
+     * @param toExtract
+     *            has be of the form: ValueWrapper -> ResultValueSingle<Integer>
      * @return the all sizes
      */
     public Map<Integer, Long> getAllSizes(final List<ResultValueWrapper> toExtract) {
         HashMap<Integer, Long> toReturn = new HashMap<Integer, Long>();
-        for (Iterator<ResultValueWrapper> iterator = toExtract.iterator(); iterator.hasNext();) {
+        for (Iterator<ResultValueWrapper> iterator = toExtract.iterator();
+                iterator.hasNext();) {
             ResultValueWrapper currentWrapper = iterator.next();
             int index = currentWrapper.getMainIndex();
             CBMCResultValueSingle singleValue =
@@ -135,7 +142,8 @@ public abstract class ResultPresentationType {
     }
 
     /**
-     * Indicates if this class should be normally used first to display a result.
+     * Indicates if this class should be normally used first to display a
+     * result.
      *
      * @return true, if is default
      */

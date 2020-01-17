@@ -80,10 +80,14 @@ public class ElectionSimulationModel {
     /**
      * Instantiates a new election simulation model.
      *
-     * @param elTypeContainer the el type container
-     * @param inputDataGridPane the input data grid pane
-     * @param votGridPane the vot grid pane
-     * @param candGridPane the cand grid pane
+     * @param elTypeContainer
+     *            the el type container
+     * @param inputDataGridPane
+     *            the input data grid pane
+     * @param votGridPane
+     *            the vot grid pane
+     * @param candGridPane
+     *            the cand grid pane
      */
     public ElectionSimulationModel(final ElectionTypeContainer elTypeContainer,
                                    final GridPane inputDataGridPane,
@@ -97,17 +101,22 @@ public class ElectionSimulationModel {
         this.yLabel = elTypeContainer.getInputType().getSizeOfDimensions()[0];
 
         if (elTypeContainer.getInputType().getAmountOfDimensions() == 2) {
-            this.xLabel = elTypeContainer.getInputType().getSizeOfDimensions()[1];
+            this.xLabel =
+                    elTypeContainer.getInputType()
+                    .getSizeOfDimensions()[1];
         } else {
             this.xLabel = "";
         }
-        isTwoDim = (elTypeContainer.getInputType().getAmountOfDimensions() == 2);
+        isTwoDim =
+                (elTypeContainer.getInputType()
+                .getAmountOfDimensions() == 2);
     }
 
     /**
      * Adds the property change listener.
      *
-     * @param pcl the pcl
+     * @param pcl
+     *            the pcl
      */
     public void addPropertyChangeListener(final PropertyChangeListener pcl) {
         this.support.addPropertyChangeListener(pcl);
@@ -116,7 +125,8 @@ public class ElectionSimulationModel {
     /**
      * Removes the property change listener.
      *
-     * @param pcl the pcl
+     * @param pcl
+     *            the pcl
      */
     public void removePropertyChangeListener(final PropertyChangeListener pcl) {
         this.support.removePropertyChangeListener(pcl);
@@ -129,8 +139,10 @@ public class ElectionSimulationModel {
         if (currentRows == maxRows) {
             NEWRowOfValues toAdd =
                     new NEWRowOfValues(this, container,
-                                       this.getAmountCandidates(), this.getAmountVoters(),
-                                       this.getAmountSeats(), currentRows, ELEMENT_WIDTH,
+                                       this.getAmountCandidates(),
+                                       this.getAmountVoters(),
+                                       this.getAmountSeats(),
+                                       currentRows, ELEMENT_WIDTH,
                                        ELEMENT_HEIGHT);
             rows.add(toAdd);
             TextField newVoter = new TextField(yLabel + currentRows);
@@ -142,7 +154,7 @@ public class ElectionSimulationModel {
             currentRows++;
             maxRows++;
         } else { // we already have a row with for this index, so we just make it
-               // visible again
+                 // visible again
             rows.get(currentRows).enable();
             voterGridPane.add(yDescriptors.get(currentRows), 0, currentRows);
             currentRows++;
@@ -163,7 +175,8 @@ public class ElectionSimulationModel {
     /**
      * Change container.
      *
-     * @param elTypeContainer the el type container
+     * @param elTypeContainer
+     *            the el type container
      */
     public void changeContainer(final ElectionTypeContainer elTypeContainer) {
         this.container = elTypeContainer;
@@ -186,7 +199,8 @@ public class ElectionSimulationModel {
     /**
      * Sets the candidates.
      *
-     * @param candidates the new candidates
+     * @param candidates
+     *            the new candidates
      */
     public void setCandidates(final ArrayList<TextField> candidates) {
         this.xDescriptors = candidates;
@@ -205,10 +219,10 @@ public class ElectionSimulationModel {
      * Update.
      */
     private void update() {
-        List<Integer> list =
-                container.getInputType().getSizesInOrder(amountVoters, amountCandidates,
-                                                         amountSeats);
-        for (Iterator<NEWRowOfValues> iterator = rows.iterator(); iterator.hasNext();) {
+        List<Integer> list = container.getInputType()
+                .getSizesInOrder(amountVoters, amountCandidates, amountSeats);
+        for (Iterator<NEWRowOfValues> iterator = rows.iterator();
+                iterator.hasNext();) {
             NEWRowOfValues row = iterator.next();
             row.setVoters(getAmountVoters());
             row.setCandidates(getAmountCandidates());
@@ -253,17 +267,21 @@ public class ElectionSimulationModel {
     /**
      * Sets the amount candidates.
      *
-     * @param candidates the new amount candidates
+     * @param candidates
+     *            the new amount candidates
      */
     public void setAmountCandidates(final int candidates) {
-        this.amountCandidates = container.getInputType().vetAmountCandidates(candidates);
+        this.amountCandidates =
+                container.getInputType()
+                .vetAmountCandidates(candidates);
         update();
     }
 
     /**
      * Sets the amount voters.
      *
-     * @param voters the new amount voters
+     * @param voters
+     *            the new amount voters
      */
     public void setAmountVoters(final int voters) {
         this.amountVoters = container.getInputType().vetAmountVoters(voters);
@@ -273,7 +291,8 @@ public class ElectionSimulationModel {
     /**
      * Sets the amount seats.
      *
-     * @param seats the new amount seats
+     * @param seats
+     *            the new amount seats
      */
     public void setAmountSeats(final int seats) {
         this.amountSeats = container.getInputType().vetAmountSeats(seats);
@@ -283,12 +302,14 @@ public class ElectionSimulationModel {
     /**
      * Sets the value.
      *
-     * @param x the x
-     * @param y the y
-     * @param value the value
+     * @param x
+     *            the x
+     * @param y
+     *            the y
+     * @param value
+     *            the value
      */
-    public void setValue(final int x, final int y,
-                         final String value) {
+    public void setValue(final int x, final int y, final String value) {
         while (rows.size() <= y) {
             addRow();
         }
@@ -357,7 +378,8 @@ public class ElectionSimulationModel {
     /**
      * Update Y.
      *
-     * @param size the size
+     * @param size
+     *            the size
      */
     private void updateY(final int size) {
         if (currentRows < size) {
@@ -374,10 +396,12 @@ public class ElectionSimulationModel {
     /**
      * Update X.
      *
-     * @param size the size
+     * @param size
+     *            the size
      */
     private void updateX(final int size) {
-        for (Iterator<NEWRowOfValues> iterator = rows.iterator(); iterator.hasNext();) {
+        for (Iterator<NEWRowOfValues> iterator = rows.iterator();
+                iterator.hasNext();) {
             NEWRowOfValues row = iterator.next();
             row.setRowSize(size);
         }
@@ -386,9 +410,11 @@ public class ElectionSimulationModel {
             if (currentRowSize < size) {
                 while (currentRowSize < size) {
                     if (xDescriptors.size() > currentRowSize) {
-                        candidateGridPane.add(xDescriptors.get(currentRowSize), currentRowSize, 0);
+                        candidateGridPane.add(xDescriptors.get(currentRowSize),
+                                              currentRowSize, 0);
                     } else {
-                        TextField candToAdd = new TextField(xLabel + currentCandidates);
+                        TextField candToAdd =
+                                new TextField(xLabel + currentCandidates);
                         candToAdd.setEditable(true);
                         candToAdd.setMinSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
                         candToAdd.setPrefSize(ELEMENT_WIDTH, ELEMENT_HEIGHT);
@@ -422,7 +448,8 @@ public class ElectionSimulationModel {
      * Update vetting.
      */
     private void updateVetting() {
-        for (Iterator<NEWRowOfValues> iterator = rows.iterator(); iterator.hasNext();) {
+        for (Iterator<NEWRowOfValues> iterator = rows.iterator();
+                iterator.hasNext();) {
             NEWRowOfValues row = iterator.next();
             row.updateVetting();
         }

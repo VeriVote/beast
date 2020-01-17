@@ -15,12 +15,12 @@ public class ImageResourceProvider {
     private static final String PNG_FILE_ENDING = ".png";
 
     /** The Constant IDS. */
-    private static final String[] IDS
-        = {
-            "new", "load", "save", "save_as",
-            "undo", "redo", "cut", "copy", "paste",
-            "start", "stop",
-            "showHelpToUser", "simulation"
+    private static final String[] IDS =
+        {
+        "new", "load", "save", "save_as",
+        "undo", "redo", "cut", "copy",
+        "paste", "start", "stop",
+        "showHelpToUser", "simulation"
         };
 
     /** The Constant RESOURCE. */
@@ -30,7 +30,8 @@ public class ImageResourceProvider {
     private static ImageResourceProvider toolbar;
 
     /** The images. */
-    private final HashMap<String, Image> images = new HashMap<>();
+    private final HashMap<String, Image> images =
+            new HashMap<String, Image>();
 
     /** The folder. */
     private final String folder;
@@ -41,19 +42,19 @@ public class ImageResourceProvider {
     /**
      * Instantiates a new image resource provider.
      *
-     * @param folderString the folder string
-     * @param idStrings the id strings
+     * @param folderString
+     *            the folder string
+     * @param idStrings
+     *            the id strings
      */
     public ImageResourceProvider(final String folderString,
                                  final String[] idStrings) {
         this.folder = folderString;
         this.ids = idStrings;
-        for (String s : this.ids) {
-            File toRead
-                  = new File(
-                            SuperFolderFinder.getSuperFolder()
-                            + this.folder + s + PNG_FILE_ENDING
-                            );
+        for (final String s : this.ids) {
+            File toRead =
+                    new File(SuperFolderFinder.getSuperFolder()
+                    + this.folder + s + PNG_FILE_ENDING);
             Image img = null;
             img = FileLoader.loadFileAsImage(toRead);
             images.put(s, img);
@@ -76,7 +77,8 @@ public class ImageResourceProvider {
     /**
      * Gets the image by id.
      *
-     * @param id the id
+     * @param id
+     *            the id
      * @return the image by id
      */
     public Image getImageById(final String id) {

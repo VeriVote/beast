@@ -18,13 +18,16 @@ public abstract class OutputType extends InOutType {
     /**
      * The constructor.
      *
-     * @param unsigned the unsigned
-     * @param dataType the data type
-     * @param dimensions the dimensions
-     * @param sizeOfDimensions the size of dimensions
+     * @param unsigned
+     *            the unsigned
+     * @param dataType
+     *            the data type
+     * @param dimensions
+     *            the dimensions
+     * @param sizeOfDimensions
+     *            the size of dimensions
      */
-    public OutputType(final boolean unsigned,
-                      final DataType dataType,
+    public OutputType(final boolean unsigned, final DataType dataType,
                       final int dimensions,
                       final String[] sizeOfDimensions) {
         super(unsigned, dataType, dimensions, sizeOfDimensions);
@@ -38,7 +41,8 @@ public abstract class OutputType extends InOutType {
     public static List<OutputType> getOutputTypes() {
         ServiceLoader<OutputType> loader = ServiceLoader.load(OutputType.class);
         List<OutputType> types = new ArrayList<OutputType>();
-        for (Iterator<OutputType> iterator = loader.iterator(); iterator.hasNext();) {
+        for (Iterator<OutputType> iterator = loader.iterator();
+                iterator.hasNext();) {
             OutputType type = iterator.next();
             types.add(type);
         }
@@ -82,7 +86,8 @@ public abstract class OutputType extends InOutType {
     /**
      * Adds the margin verify check.
      *
-     * @param code the code
+     * @param code
+     *            the code
      * @return the code array list beautifier
      */
     public abstract CodeArrayListBeautifier addMarginVerifyCheck(CodeArrayListBeautifier code);
@@ -90,8 +95,10 @@ public abstract class OutputType extends InOutType {
     /**
      * Adds the votes array and init.
      *
-     * @param code the code
-     * @param voteNumber the vote number
+     * @param code
+     *            the code
+     * @param voteNumber
+     *            the vote number
      * @return the code array list beautifier
      */
     @Deprecated
@@ -110,8 +117,10 @@ public abstract class OutputType extends InOutType {
      * method must end with an assertion that let's cbmc fail, so we can extract
      * the result.
      *
-     * @param code            the code
-     * @param voteNumber            the vote number
+     * @param code
+     *            the code
+     * @param voteNumber
+     *            the vote number
      * @return the beautified code
      */
     public abstract CodeArrayListBeautifier addMarginMainTest(CodeArrayListBeautifier code,
@@ -128,9 +137,12 @@ public abstract class OutputType extends InOutType {
     /**
      * Adds the last result as code.
      *
-     * @param code the code
-     * @param origResult the orig result
-     * @param origResultName the orig result name
+     * @param code
+     *            the code
+     * @param origResult
+     *            the orig result
+     * @param origResultName
+     *            the orig result name
      */
     public void addLastResultAsCode(final CodeArrayListBeautifier code,
                                     final ElectionSimulationData origResult,
@@ -138,14 +150,16 @@ public abstract class OutputType extends InOutType {
         // first create the declaration of the array:
         String declaration = getContainer().getOutputStruct().getStructAccess()
                 + " " + origResultName + " = {"
-                + printArray((CBMCResultValueWrapper) origResult.getValues()) + "};";
+                + printArray((CBMCResultValueWrapper) origResult.getValues())
+                + "};";
         code.add(declaration);
     }
 
     /**
      * Gets the result description string.
      *
-     * @param result the result
+     * @param result
+     *            the result
      * @return the result description string
      */
     public abstract String getResultDescriptionString(List<String> result);

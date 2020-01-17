@@ -16,13 +16,15 @@ import javax.swing.event.CaretListener;
  *
  * @author Holger Klein
  */
-public class StoppedTypingContinuouslyMessager implements KeyListener, CaretListener {
+public class StoppedTypingContinuouslyMessager
+        implements KeyListener, CaretListener {
 
     /** The pane. */
     private final JTextPane pane;
 
     /** The listener. */
-    private final ArrayList<StoppedTypingContinuouslyListener> listener = new ArrayList<>();
+    private final ArrayList<StoppedTypingContinuouslyListener> listener =
+            new ArrayList<StoppedTypingContinuouslyListener>();
 
     /** The current caret pos. */
     private int currentCaretPos = 0;
@@ -30,7 +32,8 @@ public class StoppedTypingContinuouslyMessager implements KeyListener, CaretList
     /**
      * Instantiates a new stopped typing continuously messager.
      *
-     * @param textPane the text pane
+     * @param textPane
+     *            the text pane
      */
     public StoppedTypingContinuouslyMessager(final JTextPane textPane) {
         this.pane = textPane;
@@ -39,10 +42,11 @@ public class StoppedTypingContinuouslyMessager implements KeyListener, CaretList
     }
 
     /**
-     * Adds the supplied listener so it will in future be notified if the user stops
-     * typing continuously.
+     * Adds the supplied listener so it will in future be notified if the user
+     * stops typing continuously.
      *
-     * @param l the object to be notified
+     * @param l
+     *            the object to be notified
      */
     public void addListener(final StoppedTypingContinuouslyListener l) {
         listener.add(l);
@@ -50,7 +54,8 @@ public class StoppedTypingContinuouslyMessager implements KeyListener, CaretList
 
     @Override
     public void keyTyped(final KeyEvent ke) {
-        if (ke.getKeyCode() == KeyEvent.VK_ENTER || ke.getKeyCode() == KeyEvent.VK_RIGHT) {
+        if (ke.getKeyCode() == KeyEvent.VK_ENTER
+                || ke.getKeyCode() == KeyEvent.VK_RIGHT) {
             msgAllListener(pane.getCaretPosition() + 1);
         } else if (ke.getKeyCode() == KeyEvent.VK_DELETE) {
             msgAllListener(pane.getCaretPosition());
@@ -67,7 +72,8 @@ public class StoppedTypingContinuouslyMessager implements KeyListener, CaretList
 
     @Override
     public void caretUpdate(final CaretEvent ce) {
-        if (ce.getDot() != currentCaretPos + 1 && ce.getDot() != currentCaretPos) {
+        if (ce.getDot() != currentCaretPos + 1
+                && ce.getDot() != currentCaretPos) {
             msgAllListener(ce.getDot());
         }
         currentCaretPos = ce.getDot();
@@ -76,7 +82,8 @@ public class StoppedTypingContinuouslyMessager implements KeyListener, CaretList
     /**
      * Msg all listener.
      *
-     * @param newCaretPos the new caret pos
+     * @param newCaretPos
+     *            the new caret pos
      */
     private void msgAllListener(final int newCaretPos) {
         for (StoppedTypingContinuouslyListener l : listener) {

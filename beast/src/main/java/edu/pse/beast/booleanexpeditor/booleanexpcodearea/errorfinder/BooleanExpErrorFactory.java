@@ -22,12 +22,13 @@ import edu.pse.beast.types.InternalTypeContainer;
 public final class BooleanExpErrorFactory {
 
     /** The Constant ERROR_IDS. */
-    private static final String[] ERROR_IDS
-      = {
-          "antlr", "var_not_decl", "too_many_vars_passed", "wrong_var_type_passed",
-          "incomparable_types", "incomparable_list_sizes", "wrong_var_passed_to_votesum",
-          "number_must_be_greater_0"
-      };
+    private static final String[] ERROR_IDS =
+        {
+        "antlr", "var_not_decl",
+        "too_many_vars_passed", "wrong_var_type_passed",
+        "incomparable_types", "incomparable_list_sizes",
+        "wrong_var_passed_to_votesum", "number_must_be_greater_0"
+    };
 
     /**
      * Instantiates a new boolean exp error factory.
@@ -37,7 +38,8 @@ public final class BooleanExpErrorFactory {
     /**
      * Gets the error num.
      *
-     * @param id the id
+     * @param id
+     *            the id
      * @return the error num
      */
     private static int getErrorNum(final String id) {
@@ -52,11 +54,11 @@ public final class BooleanExpErrorFactory {
     /**
      * Creates an error when a variable was not created.
      *
-     * @param ctx the context* of the symbolic variable expression
+     * @param ctx
+     *            the context* of the symbolic variable expression
      * @return the error object that describes the problem
      */
-    public static CodeError
-                createVarNotDeclaredErr(final SymbolicVarExpContext ctx) {
+    public static CodeError createVarNotDeclaredErr(final SymbolicVarExpContext ctx) {
         CodeError err = generateStandardError(ctx, "var_not_decl");
         err.setExtraInfo("var_name", ctx.Identifier().getText());
         return err;
@@ -65,9 +67,12 @@ public final class BooleanExpErrorFactory {
     /**
      * Creates an antlr error.
      *
-     * @param line       the line the error is in
-     * @param charInline the amount of characters in the line
-     * @param msg        the message to be displayed
+     * @param line
+     *            the line the error is in
+     * @param charInline
+     *            the amount of characters in the line
+     * @param msg
+     *            the message to be displayed
      * @return the error that describes contains the information given to this
      *         function
      */
@@ -83,11 +88,11 @@ public final class BooleanExpErrorFactory {
     /**
      * Creates an error when too many variables are passed.
      *
-     * @param ctx the context of the symbolic variable expression
+     * @param ctx
+     *            the context of the symbolic variable expression
      * @return the error object that describes the problem
      */
     public static CodeError createTooManyVarsPassedError(final PassTypeContext ctx) {
-
         CodeError err = generateStandardError(ctx, "too_many_vars_passed");
         err.setExtraInfo("var_name", ctx.getText());
         return err;
@@ -96,22 +101,22 @@ public final class BooleanExpErrorFactory {
     /**
      * Creates an error when a wrong variable was passed.
      *
-     * @param cont          the internal type
-     * @param ctx           the context of the symbolic variable expression
-     * @param currentVarExp the current variable expression
+     * @param cont
+     *            the internal type
+     * @param ctx
+     *            the context of the symbolic variable expression
+     * @param currentVarExp
+     *            the current variable expression
      * @return the code error that describes the problem
      */
     static CodeError createWrongVarTypePassed(final InternalTypeContainer cont,
                                               final FormalPropertyDescriptionParser
                                                           .PassTypeContext ctx,
                                               final TypeExpression currentVarExp) {
-
         CodeError err = generateStandardError(ctx, "wrong_var_type_passed");
-
         err.setExtraInfo("var_name", ctx.getText());
-        err.setExtraInfo(
-            "passed_type",
-            currentVarExp.getInternalTypeContainer().getInternalType().toString());
+        err.setExtraInfo("passed_type",
+                         currentVarExp.getInternalTypeContainer().getInternalType().toString());
         err.setExtraInfo("expected_type", cont.getAccessTypeIfList().toString());
         return err;
     }
@@ -119,9 +124,12 @@ public final class BooleanExpErrorFactory {
     /**
      * Creates an error when two not comparable things are being compared.
      *
-     * @param ctx     the context of the symbolic variable expression
-     * @param lhsCont the left hand side content
-     * @param rhsCont the right hand side content
+     * @param ctx
+     *            the context of the symbolic variable expression
+     * @param lhsCont
+     *            the left hand side content
+     * @param rhsCont
+     *            the right hand side content
      * @return the error that describes the problem
      */
     static CodeError createCantCompareDifferentListLevels(final ComparisonExpContext ctx,
@@ -136,9 +144,12 @@ public final class BooleanExpErrorFactory {
     /**
      * Creates an error when two incomparable things get compared.
      *
-     * @param ctx     the comparison context
-     * @param lhsCont the left hand side content
-     * @param rhsCont the right hand side content
+     * @param ctx
+     *            the comparison context
+     * @param lhsCont
+     *            the left hand side content
+     * @param rhsCont
+     *            the right hand side content
      * @return the code error
      */
     static CodeError createCantCompareTypes(final ComparisonExpContext ctx,
@@ -153,8 +164,10 @@ public final class BooleanExpErrorFactory {
     /**
      * Create code error for a wrong variable to votesum.
      *
-     * @param ctx        the sum expression context
-     * @param passedType the passed type
+     * @param ctx
+     *            the sum expression context
+     * @param passedType
+     *            the passed type
      * @return the code error
      */
     static CodeError createWrongVarToVotesumError(final VoteSumExpContext ctx,
@@ -167,8 +180,10 @@ public final class BooleanExpErrorFactory {
     /**
      * Create code error for a wrong variable to votesum.
      *
-     * @param ctx        the sum expression context
-     * @param passedType the passed type
+     * @param ctx
+     *            the sum expression context
+     * @param passedType
+     *            the passed type
      * @return the code error
      */
     static CodeError createWrongVarToVotesumError(final VoteSumUniqueExpContext ctx,
@@ -182,7 +197,8 @@ public final class BooleanExpErrorFactory {
      * Create the error that indicates that a number must be greater than zero
      * for a votesum.
      *
-     * @param ctx the vote sum expression context
+     * @param ctx
+     *            the vote sum expression context
      * @return the code error
      */
     static CodeError createNumberMustBeGreaterZeroVotesum(final ParserRuleContext ctx) {
@@ -193,7 +209,8 @@ public final class BooleanExpErrorFactory {
     /**
      * Creates an error if an "elect" value is smaller than zero.
      *
-     * @param ctx the election expression context
+     * @param ctx
+     *            the election expression context
      * @return the code error
      */
     static CodeError createNumberMustBeGreaterZeroElect(final ElectExpContext ctx) {
@@ -204,7 +221,8 @@ public final class BooleanExpErrorFactory {
     /**
      * Creates an error if an "votes" value is smaller than zero.
      *
-     * @param ctx the vote expression context
+     * @param ctx
+     *            the vote expression context
      * @return the code error
      */
     static CodeError createNumberMustBeGreaterZeroVotes(final VoteExpContext ctx) {
@@ -215,8 +233,10 @@ public final class BooleanExpErrorFactory {
     /**
      * Generate standard error.
      *
-     * @param ctx the ctx
-     * @param id the id
+     * @param ctx
+     *            the ctx
+     * @param id
+     *            the id
      * @return the code error
      */
     private static CodeError generateStandardError(final ParserRuleContext ctx,

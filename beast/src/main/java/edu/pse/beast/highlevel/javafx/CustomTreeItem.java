@@ -14,7 +14,8 @@ public abstract class CustomTreeItem extends HBox {
     /**
      * Sets the tree item reference.
      *
-     * @param itemReference the new tree item reference
+     * @param itemReference
+     *            the new tree item reference
      */
     public void setTreeItemReference(final TreeItem<CustomTreeItem> itemReference) {
         this.reference = itemReference;

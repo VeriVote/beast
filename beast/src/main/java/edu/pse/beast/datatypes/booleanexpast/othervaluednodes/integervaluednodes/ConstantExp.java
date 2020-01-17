@@ -15,7 +15,8 @@ public class ConstantExp extends IntegerValuedExpression {
     /**
      * Instantiates a new constant exp.
      *
-     * @param constantStr the constant saved in this node
+     * @param constantStr
+     *            the constant saved in this node
      */
     public ConstantExp(final String constantStr) {
         this.constant = constantStr;
@@ -53,8 +54,7 @@ public class ConstantExp extends IntegerValuedExpression {
         }
         ConstantExp that = (ConstantExp) o;
         return constant != null
-                ? constant.equals(that.constant)
-                        : that.constant == null;
+                ? constant.equals(that.constant) : that.constant == null;
     }
 
     @Override

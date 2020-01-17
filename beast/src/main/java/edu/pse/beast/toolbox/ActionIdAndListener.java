@@ -3,13 +3,11 @@ package edu.pse.beast.toolbox;
 import java.awt.event.ActionListener;
 
 /**
- * The listener interface for receiving actionIdAnd events.
- * The class that is interested in processing a actionIdAnd
- * event implements this interface, and the object created
- * with that class is registered with a component using the
- * component's <code>addActionIdAndListener</code> method. When
- * the actionIdAnd event occurs, that object's appropriate
- * method is invoked.
+ * The listener interface for receiving actionIdAnd events. The class that is
+ * interested in processing a actionIdAnd event implements this interface, and
+ * the object created with that class is registered with a component using the
+ * component's <code>addActionIdAndListener</code> method. When the actionIdAnd
+ * event occurs, that object's appropriate method is invoked.
  *
  * @author Holger Klein, Lukas Stapelbroek
  */
@@ -24,8 +22,10 @@ public class ActionIdAndListener {
     /**
      * Instantiates a new action id and listener.
      *
-     * @param idString       the id
-     * @param actionListener the listener to be save here
+     * @param idString
+     *            the id
+     * @param actionListener
+     *            the listener to be save here
      */
     public ActionIdAndListener(final String idString,
                                final ActionListener actionListener) {

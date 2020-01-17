@@ -25,9 +25,7 @@ import javafx.scene.Node;
 public class MarginResult extends ResultPresentationType {
 
     /** The area. */
-    private GenericStyledArea<ParStyle,
-                              Either<String, LinkedImage>,
-                              TextStyle> area;
+    private GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area;
 
     @Override
     public Node presentResult(final Result result) {
@@ -41,28 +39,37 @@ public class MarginResult extends ResultPresentationType {
             area.appendText("There is no final margin.");
         } else {
             area.appendText("Final Margin: " + result.getFinalMargin());
-            area.appendText("\n=================================================");
-            InputType inType = result.getElectionDescription().getContainer().getInputType();
-            OutputType outType = result.getElectionDescription().getContainer().getOutputType();
+            area.appendText(
+                    "\n=================================================");
+            InputType inType = result.getElectionDescription().getContainer()
+                    .getInputType();
+            OutputType outType = result.getElectionDescription().getContainer()
+                    .getOutputType();
             CBMCResultValueStruct structVotes = new CBMCResultValueStruct();
             structVotes.setValue(
                     (CBMCResultValueWrapper) result.getOrigVoting().getValues(),
                     UnifiedNameContainer.getStructValueName());
-            ResultValueWrapper structVotesWrapped = new CBMCResultValueWrapper(structVotes);
-            List<String> toAdd = inType.drawResult(structVotesWrapped, "\norig votes: ", -1L);
+            ResultValueWrapper structVotesWrapped = new CBMCResultValueWrapper(
+                    structVotes);
+            List<String> toAdd = inType.drawResult(structVotesWrapped,
+                    "\norig votes: ", -1L);
             for (int i = 0; i < toAdd.size(); i++) {
                 area.appendText(toAdd.get(i));
             }
-            toAdd = outType.drawResult(result.getOrigWinner().getValues(), "\norig result: ", -1L);
+            toAdd = outType.drawResult(result.getOrigWinner().getValues(),
+                    "\norig result: ", -1L);
             for (int i = 0; i < toAdd.size(); i++) {
                 area.appendText(toAdd.get(i));
             }
-            area.appendText("\n=================================================\n");
-            toAdd = inType.drawResult(result.getNewVotes().getValues(), "\nnew votes: ", -1L);
+            area.appendText(
+                    "\n=================================================\n");
+            toAdd = inType.drawResult(result.getNewVotes().getValues(),
+                    "\nnew votes: ", -1L);
             for (int i = 0; i < toAdd.size(); i++) {
                 area.appendText(toAdd.get(i));
             }
-            toAdd = outType.drawResult(result.getNewWinner().getValues(), "\nnew result: ", -1L);
+            toAdd = outType.drawResult(result.getNewWinner().getValues(),
+                    "\nnew result: ", -1L);
             for (int i = 0; i < toAdd.size(); i++) {
                 area.appendText(toAdd.get(i));
             }
@@ -89,7 +96,7 @@ public class MarginResult extends ResultPresentationType {
     public void zoomTo(final double zoomValue) {
         if (area != null) {
             area.setStyle(0, area.getLength(),
-                          TextStyle.fontSize((int) (STANDARD_SIZE + zoomValue)));
+                    TextStyle.fontSize((int) (STANDARD_SIZE + zoomValue)));
         }
     }
 

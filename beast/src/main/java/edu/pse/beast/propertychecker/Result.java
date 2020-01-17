@@ -135,7 +135,8 @@ public abstract class Result implements ResultInterface {
     /**
      * Sets the margin comp.
      *
-     * @param isMarginComputation the new margin comp
+     * @param isMarginComputation
+     *            the new margin comp
      */
     public void setMarginComp(final boolean isMarginComputation) {
         this.isMarginComp = isMarginComputation;
@@ -332,7 +333,8 @@ public abstract class Result implements ResultInterface {
     /**
      * Sets the num voters.
      *
-     * @param numVotersInteger            the amount of voters to be set
+     * @param numVotersInteger
+     *            the amount of voters to be set
      */
     public void setNumVoters(final int numVotersInteger) {
         this.numVoters = numVotersInteger;
@@ -341,7 +343,8 @@ public abstract class Result implements ResultInterface {
     /**
      * Sets the num seats.
      *
-     * @param numSeatsInteger            the amount of seats to be set
+     * @param numSeatsInteger
+     *            the amount of seats to be set
      */
     public void setNumSeats(final int numSeatsInteger) {
         this.numSeats = numSeatsInteger;
@@ -350,7 +353,8 @@ public abstract class Result implements ResultInterface {
     /**
      * Sets the num candidates.
      *
-     * @param numCand            the amount of candidates to be set
+     * @param numCand
+     *            the amount of candidates to be set
      */
     public void setNumCandidates(final int numCand) {
         this.numCandidates = numCand;
@@ -359,7 +363,8 @@ public abstract class Result implements ResultInterface {
     /**
      * Sets the election type.
      *
-     * @param electionDescr            the election type to be set
+     * @param electionDescr
+     *            the election type to be set
      */
     public void setElectionType(final ElectionDescription electionDescr) {
         this.electionDescription = electionDescr;
@@ -376,7 +381,8 @@ public abstract class Result implements ResultInterface {
     /**
      * Sets the final margin.
      *
-     * @param margin the new final margin
+     * @param margin
+     *            the new final margin
      */
     public void setFinalMargin(final int margin) {
         this.finalMargin = margin;
@@ -394,7 +400,8 @@ public abstract class Result implements ResultInterface {
     /**
      * Sets the checks for final margin.
      *
-     * @param b the new checks for final margin
+     * @param b
+     *            the new checks for final margin
      */
     public void setHasFinalMargin(final boolean b) {
         this.hasMargin = b;
@@ -412,7 +419,8 @@ public abstract class Result implements ResultInterface {
     /**
      * Adds the sub result.
      *
-     * @param subResultVal the sub result val
+     * @param subResultVal
+     *            the sub result val
      */
     public void addSubResult(final Result subResultVal) {
         this.hasSubResult = true;
@@ -484,7 +492,8 @@ public abstract class Result implements ResultInterface {
     /**
      * Sets the orig voting.
      *
-     * @param origVotingData the new orig voting
+     * @param origVotingData
+     *            the new orig voting
      */
     public void setOrigVoting(final ElectionSimulationData origVotingData) {
         this.origVoting = origVotingData;
@@ -502,7 +511,8 @@ public abstract class Result implements ResultInterface {
     /**
      * Sets the orig winner.
      *
-     * @param origWinnerData the new orig winner
+     * @param origWinnerData
+     *            the new orig winner
      */
     public void setOrigWinner(final ElectionSimulationData origWinnerData) {
         this.origWinner = origWinnerData;
@@ -520,7 +530,8 @@ public abstract class Result implements ResultInterface {
     /**
      * Sets the new votes.
      *
-     * @param newVoteData the new new votes
+     * @param newVoteData
+     *            the new new votes
      */
     public void setNewVotes(final ElectionSimulationData newVoteData) {
         this.newVotes = newVoteData;
@@ -538,7 +549,8 @@ public abstract class Result implements ResultInterface {
     /**
      * Sets the new winner.
      *
-     * @param newWinnerData the new new winner
+     * @param newWinnerData
+     *            the new new winner
      */
     public void setNewWinner(final ElectionSimulationData newWinnerData) {
         this.newWinner = newWinnerData;
@@ -547,7 +559,8 @@ public abstract class Result implements ResultInterface {
     /**
      * Sets the owner.
      *
-     * @param ownerItem the new owner
+     * @param ownerItem
+     *            the new owner
      */
     public void setOwner(final ResultTreeItem ownerItem) {
         this.owner = ownerItem;
@@ -574,7 +587,8 @@ public abstract class Result implements ResultInterface {
     /**
      * Sets the last tmp result.
      *
-     * @param tmpResult the new last tmp result
+     * @param tmpResult
+     *            the new last tmp result
      */
     public void setLastTmpResult(final List<String> tmpResult) {
         // TODO maybe refactor this so no "tmp" result is used
@@ -594,7 +608,8 @@ public abstract class Result implements ResultInterface {
     /**
      * Sets the last tmp error.
      *
-     * @param tmpError the new last tmp error
+     * @param tmpError
+     *            the new last tmp error
      */
     public void setLastTmpError(final List<String> tmpError) {
         this.error = tmpError;
@@ -613,7 +628,8 @@ public abstract class Result implements ResultInterface {
     /**
      * Adds the status string.
      *
-     * @param statusToAdd the status to add
+     * @param statusToAdd
+     *            the status to add
      */
     public void addStatusString(final String statusToAdd) {
         this.statusStrings.add(statusToAdd);
@@ -631,7 +647,8 @@ public abstract class Result implements ResultInterface {
     /**
      * Adds the new line to list.
      *
-     * @param toConvert the to convert
+     * @param toConvert
+     *            the to convert
      * @return the list
      */
     private List<String> addNewLineToList(final List<String> toConvert) {
@@ -663,7 +680,8 @@ public abstract class Result implements ResultInterface {
     /**
      * Sets the exit code.
      *
-     * @param exitCodeNumber the new exit code
+     * @param exitCodeNumber
+     *            the new exit code
      */
     public void setExitCode(final int exitCodeNumber) {
         this.exitCode = exitCodeNumber;

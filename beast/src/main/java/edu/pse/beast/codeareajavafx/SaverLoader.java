@@ -20,19 +20,19 @@ import javafx.stage.FileChooser;
 public class SaverLoader {
 
     /** The Constant PROP_LIST_FILE_ENDING. */
-    public static final String PROP_LIST_FILE_ENDING  = ".propList";
+    public static final String PROP_LIST_FILE_ENDING = ".propList";
 
     /** The Constant CHILD_PROP_FILE_ENDING. */
     public static final String CHILD_PROP_FILE_ENDING = ".child";
 
     /** The Constant PROJECT_FILE_ENDING. */
-    public static final String PROJECT_FILE_ENDING    = ".proj";
+    public static final String PROJECT_FILE_ENDING = ".proj";
 
     /** The Constant ELEC_DESCR_FILE_ENDING. */
     public static final String ELEC_DESCR_FILE_ENDING = ".elec";
 
     /** The Constant OPT_FILE_ENDING. */
-    public static final String OPT_FILE_ENDING        = ".opt";
+    public static final String OPT_FILE_ENDING = ".opt";
 
     /** The Constant PROP_DESCR_FILE_ENDING. */
     public static final String PROP_DESCR_FILE_ENDING = ".prop";
@@ -41,7 +41,8 @@ public class SaverLoader {
     private final MinimalSaverInterface owner;
 
     /** The has changes. */
-    private boolean hasChanges = false; //small hack, update values later on with listeners
+    private boolean hasChanges = false; // small hack, update values later on
+                                        // with listeners
 
     /** The has save file. */
     private boolean hasSaveFile = false;
@@ -61,14 +62,18 @@ public class SaverLoader {
     /**
      * The constructor.
      *
-     * @param fileEnd the file end
-     * @param fileExtensionDescr the file extension descr
-     * @param ownerInterface the owner interface
+     * @param fileEnd
+     *            the file end
+     * @param fileExtensionDescr
+     *            the file extension descr
+     * @param ownerInterface
+     *            the owner interface
      */
     public SaverLoader(final String fileEnd, final String fileExtensionDescr,
                        final MinimalSaverInterface ownerInterface) {
         this.initialDir = SuperFolderFinder.getSuperFolder() + "/projectFiles/";
-        new File(initialDir).mkdirs(); // make sure, that the initial folder exists
+        new File(initialDir).mkdirs(); // make sure, that the initial folder
+                                       // exists
         this.fileEnding = fileEnd;
         this.fileExtensionDescription = fileExtensionDescr;
         this.owner = ownerInterface;
@@ -77,8 +82,10 @@ public class SaverLoader {
     /**
      * Save.
      *
-     * @param fileName the file name
-     * @param text the text
+     * @param fileName
+     *            the file name
+     * @param text
+     *            the text
      */
     public void save(final String fileName, final String text) {
         if (hasSaveFile) {
@@ -93,8 +100,10 @@ public class SaverLoader {
     /**
      * Save.
      *
-     * @param file the file
-     * @param text the text
+     * @param file
+     *            the file
+     * @param text
+     *            the text
      */
     public void save(final File file, final String text) {
         if (hasSaveFile) {
@@ -110,11 +119,14 @@ public class SaverLoader {
      * Saves the given text in the given file. Does NOT check if there already
      * exists a previous save file
      *
-     * @param toSaveIn given file
-     * @param text given text
+     * @param toSaveIn
+     *            given file
+     * @param text
+     *            given text
      */
     public void saveToDisk(final File toSaveIn, final String text) {
-        //hasChanges = false; //TODO enable again when it is updated with listeners
+        // hasChanges = false; //TODO enable again when it is updated with
+        // listeners
         PrintWriter out = null;
         try {
             out = new PrintWriter(toSaveIn);
@@ -133,8 +145,10 @@ public class SaverLoader {
     /**
      * Save as.
      *
-     * @param fileName the file name
-     * @param text the text
+     * @param fileName
+     *            the file name
+     * @param text
+     *            the text
      */
     public void saveAs(final String fileName, final String text) {
         File selectedFile = showFileSaveDialog(fileName);
@@ -146,8 +160,10 @@ public class SaverLoader {
     /**
      * Save as.
      *
-     * @param file the file
-     * @param text the text
+     * @param file
+     *            the file
+     * @param text
+     *            the text
      */
     public void saveAs(final File file, final String text) {
         if (file != null) {
@@ -158,34 +174,40 @@ public class SaverLoader {
     /**
      * Show file save dialog.
      *
-     * @param fileName the file name
+     * @param fileName
+     *            the file name
      * @return the file
      */
     public File showFileSaveDialog(final String fileName) {
         FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
+                fileExtensionDescription, "*" + fileEnding));
         fileChooser.getExtensionFilters()
-                .add(new FileChooser.ExtensionFilter(fileExtensionDescription, "*" + fileEnding));
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All (*.*)", "*.*"));
+                .add(new FileChooser.ExtensionFilter("All (*.*)", "*.*"));
         fileChooser.setInitialDirectory(new File(initialDir));
         fileChooser.setInitialFileName(fileName + fileEnding);
-        File selectedFile = fileChooser.showSaveDialog(MainApplicationClass.getMainStage());
+        File selectedFile = fileChooser
+                .showSaveDialog(MainApplicationClass.getMainStage());
         return selectedFile;
     }
 
     /**
      * Show file load dialog.
      *
-     * @param fileName the file name
+     * @param fileName
+     *            the file name
      * @return the file
      */
     public File showFileLoadDialog(final String fileName) {
         FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(
+                fileExtensionDescription, "*" + fileEnding));
         fileChooser.getExtensionFilters()
-                .add(new FileChooser.ExtensionFilter(fileExtensionDescription, "*" + fileEnding));
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("All (*.*)", "*.*"));
+                .add(new FileChooser.ExtensionFilter("All (*.*)", "*.*"));
         fileChooser.setInitialDirectory(new File(initialDir));
         fileChooser.setInitialFileName(fileName + fileEnding);
-        File selectedFile = fileChooser.showOpenDialog(MainApplicationClass.getMainStage());
+        File selectedFile = fileChooser
+                .showOpenDialog(MainApplicationClass.getMainStage());
         return selectedFile;
     }
 
@@ -205,7 +227,8 @@ public class SaverLoader {
     /**
      * Load.
      *
-     * @param toLoadFrom the to load from
+     * @param toLoadFrom
+     *            the to load from
      * @return the string
      */
     public String load(final File toLoadFrom) {
@@ -221,13 +244,16 @@ public class SaverLoader {
     /**
      * Read file.
      *
-     * @param file the file
-     * @param encoding the encoding
+     * @param file
+     *            the file
+     * @param encoding
+     *            the encoding
      * @return the string
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
-    private static String readFile(final File file,
-                                   final Charset encoding) throws IOException {
+    private static String readFile(final File file, final Charset encoding)
+            throws IOException {
         byte[] encoded = Files.readAllBytes(Paths.get(file.getPath()));
         return new String(encoded, encoding);
     }
@@ -270,7 +296,8 @@ public class SaverLoader {
     /**
      * Sets the save file.
      *
-     * @param file the new save file
+     * @param file
+     *            the new save file
      */
     public void setSaveFile(final File file) {
         if (file != null && file.exists()) {

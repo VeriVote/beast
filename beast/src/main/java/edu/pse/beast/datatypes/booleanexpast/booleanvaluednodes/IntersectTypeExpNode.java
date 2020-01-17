@@ -16,8 +16,10 @@ public class IntersectTypeExpNode extends TypeExpression {
     /**
      * Instantiates a new intersect type exp node.
      *
-     * @param type the type
-     * @param exprContext the expr context
+     * @param type
+     *            the type
+     * @param exprContext
+     *            the expr context
      */
     public IntersectTypeExpNode(final InOutType type,
                                 final IntersectExpContext exprContext) {

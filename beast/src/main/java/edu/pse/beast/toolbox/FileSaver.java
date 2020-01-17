@@ -20,10 +20,12 @@ public final class FileSaver {
     /**
      * Write string lines to file.
      *
-     * @param text the text, in a list where each entry is a line that is to be
-     *             saved
-     * @param file the file where it should be saved. WARNING: it overwrites
-     *             everything that stood in it before
+     * @param text
+     *            the text, in a list where each entry is a line that is to be
+     *            saved
+     * @param file
+     *            the file where it should be saved. WARNING: it overwrites
+     *            everything that stood in it before
      */
     public static void writeStringLinesToFile(final List<String> text,
                                               final File file) {
@@ -40,7 +42,8 @@ public final class FileSaver {
         } catch (FileNotFoundException e) {
             ErrorLogger.log("File not found");
         }
-        for (Iterator<String> iterator = text.iterator(); iterator.hasNext();) {
+        for (Iterator<String> iterator = text.iterator();
+                iterator.hasNext();) {
             String line = iterator.next();
             writer.println(line);
         }

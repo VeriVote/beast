@@ -22,12 +22,14 @@ public class BooleanExpSyntaxHL {
     /**
      * Constructor.
      *
-     * @param antlrHandler the BooleanExpANTLRHandler, provides regular expressions
-     *                     StringLists.
-     * @param syntaxHL     the BooleanExpEditorCodeAreas SyntaxHL class.
+     * @param antlrHandler
+     *            the BooleanExpANTLRHandler, provides regular expressions
+     *            StringLists.
+     * @param syntaxHL
+     *            the BooleanExpEditorCodeAreas SyntaxHL class.
      */
     public BooleanExpSyntaxHL(final BooleanExpANTLRHandler antlrHandler,
-                              final SyntaxHL syntaxHL) {
+            final SyntaxHL syntaxHL) {
         ArrayList<RegexAndColor> regexAndColorList = new ArrayList<>();
         for (String s : antlrHandler.getComparisonSymbols()) {
             regexAndColorList.add(new RegexAndColor(s, Color.RED));
@@ -38,8 +40,7 @@ public class BooleanExpSyntaxHL {
         for (String s : antlrHandler.getMacroRegex()) {
             regexAndColorList.add(new RegexAndColor(s, Color.BLUE));
         }
-        regexAndColorList.add(
-                new RegexAndColor(REGEX, Color.GREEN.darker()));
+        regexAndColorList.add(new RegexAndColor(REGEX, Color.GREEN.darker()));
         syntaxHL.updateFilter(regexAndColorList);
     }
 }

@@ -9,8 +9,8 @@ import edu.pse.beast.toolbox.ErrorLogger;
 
 /**
  * This class gives you access to an underlying, system specific compiler so our
- * program can check for deeper errors in the code, that we could not find on our
- * own.
+ * program can check for deeper errors in the code, that we could not find on
+ * our own.
  *
  * @author Lukas Stapelbroek
  *
@@ -26,12 +26,11 @@ public final class CompilerAndExecutionerOLD {
     /**
      * Instantiates a new compiler and executioner OLD.
      */
-    private CompilerAndExecutionerOLD() {
-    }
+    private CompilerAndExecutionerOLD() { }
 
     /**
-     * Creates a new checker, that first of all determines its operating system and
-     * then creates the correlating one.
+     * Creates a new checker, that first of all determines its operating system
+     * and then creates the correlating one.
      */
     private static void init() {
         OperatingSystems os = determineOS();
@@ -44,13 +43,13 @@ public final class CompilerAndExecutionerOLD {
             specificComAndExe = new WindowsCompilerAndRunner();
             break;
         case Mac:
-            ErrorForUserDisplayer.displayError(
-                    "MacOS is not supported yet. "
+            ErrorForUserDisplayer.displayError("MacOS is not supported yet. "
                     + "To simulate specific elections, "
                     + "extend the \"SystemSpecificCompilerandExecutioner\" .");
             break;
         default:
-            ErrorLogger.log("Warning, your OS could not be determined or is not supported yet.");
+            ErrorLogger.log("Warning, your OS could not be determined or"
+                            + " is not supported yet.");
         }
 
         initialized = true;
@@ -59,8 +58,10 @@ public final class CompilerAndExecutionerOLD {
     /**
      * Checks the given list of c code (one entry per line) for errors.
      *
-     * @param toCheck the code to check
-     * @param result the result
+     * @param toCheck
+     *            the code to check
+     * @param result
+     *            the result
      * @return a list of codeErros
      */
     public static List<String> compileAndRun(final List<String> toCheck,
@@ -86,7 +87,8 @@ public final class CompilerAndExecutionerOLD {
         } else if (environment.toLowerCase().contains("mac")) {
             determinedOS = OperatingSystems.Mac;
         } else {
-            ErrorLogger.log("Sorry, your OS " + environment + " is not supported");
+            ErrorLogger.log("Sorry, your OS (" + environment
+                            + ") is not supported");
         }
         return determinedOS;
     }

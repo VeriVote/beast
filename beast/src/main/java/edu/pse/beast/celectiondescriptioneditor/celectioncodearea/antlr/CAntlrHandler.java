@@ -30,7 +30,8 @@ public class CAntlrHandler {
     /**
      * Constructor.
      *
-     * @param textPane the pane to hold the handler
+     * @param textPane
+     *            the pane to hold the handler
      */
     public CAntlrHandler(final JTextPane textPane) {
         this.pane = textPane;
@@ -46,7 +47,8 @@ public class CAntlrHandler {
      */
     public ParseTree getCParseTree() {
         try {
-            String code = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
+            String code =
+                    pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
             lexer.setInputStream(CharStreams.fromString(code));
             CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
             cParser.setTokenStream(commonTokenStream);
@@ -62,7 +64,8 @@ public class CAntlrHandler {
      */
     public void updateParser() {
         try {
-            String code = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
+            String code =
+                    pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
             lexer.setInputStream(CharStreams.fromString(code));
             CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
             cParser.setTokenStream(commonTokenStream);
@@ -101,8 +104,7 @@ public class CAntlrHandler {
     public String[] getControllLiterals() {
         return new String[] {
             "if", "else", "do", "while", "break", "switch",
-            "continue", "default", "case", "return",
-            "for"
+            "continue", "default", "case", "return", "for"
         };
     }
 

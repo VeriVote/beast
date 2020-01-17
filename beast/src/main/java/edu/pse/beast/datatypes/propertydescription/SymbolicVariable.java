@@ -9,6 +9,8 @@ import edu.pse.beast.types.InternalTypeContainer;
  * @author Niels Hanselmann
  */
 public class SymbolicVariable {
+    /** The Constant PRIME. */
+    private static final int PRIME = 31;
 
     /** The id. */
     private final String id;
@@ -19,8 +21,10 @@ public class SymbolicVariable {
     /**
      * Creates a new SymbolicVariable.
      *
-     * @param idVal              the id of the new variabele
-     * @param internalTypeRep the Type of the new variable
+     * @param idVal
+     *            the id of the new variabele
+     * @param internalTypeRep
+     *            the Type of the new variable
      */
     public SymbolicVariable(final String idVal,
                             final InternalTypeContainer internalTypeRep) {
@@ -53,12 +57,9 @@ public class SymbolicVariable {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
         int result = 1;
-        result = prime * result
-                + ((id == null)
-                        ? 0 : id.hashCode());
-        result = prime * result
+        result = PRIME * result + ((id == null) ? 0 : id.hashCode());
+        result = PRIME * result
                 + ((internalTypeContainer == null)
                         ? 0 : internalTypeContainer.hashCode());
         return result;

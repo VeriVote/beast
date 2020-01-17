@@ -10,15 +10,18 @@ import edu.pse.beast.types.InternalTypeContainer;
  * @author Lukas Stapelbroek
  */
 public class SymbolicVarExp extends TypeExpression {
-
+    /** The Constant PRIME. */
+    private static final int PRIME = 31;
     /** The symb var. */
     private final SymbolicVariable symbVar;
 
     /**
      * Instantiates a new symbolic var exp.
      *
-     * @param internalTypeContainer the type of this node
-     * @param symbolicVar           the symbolic variable that this node describes
+     * @param internalTypeContainer
+     *            the type of this node
+     * @param symbolicVar
+     *            the symbolic variable that this node describes
      */
     public SymbolicVarExp(final InternalTypeContainer internalTypeContainer,
                           final SymbolicVariable symbolicVar) {
@@ -42,17 +45,16 @@ public class SymbolicVarExp extends TypeExpression {
 
     @Override
     public String getTreeString(final int depth) {
-        return "SymbVar: {id " + symbVar.getId() + ", type: "
-                + symbVar.getInternalTypeContainer().getInternalType().toString() + "}\n";
+        return "SymbVar: {id "
+                + symbVar.getId() + ", type: " + symbVar
+                        .getInternalTypeContainer().getInternalType().toString()
+                + "}\n";
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
         int result = super.hashCode();
-        result = prime * result
-                + ((symbVar == null)
-                        ? 0 : symbVar.hashCode());
+        result = PRIME * result + ((symbVar == null) ? 0 : symbVar.hashCode());
         return result;
     }
 
@@ -65,8 +67,7 @@ public class SymbolicVarExp extends TypeExpression {
             return false;
         }
         SymbolicVarExp that = (SymbolicVarExp) o;
-        return symbVar != null
-                ? symbVar.equals(that.symbVar)
-                        : that.symbVar == null;
+        return symbVar != null ? symbVar.equals(that.symbVar)
+                : that.symbVar == null;
     }
 }

@@ -39,14 +39,16 @@ public final class ResultPresenterNEW {
      * Instantiates a new result presenter NEW.
      */
     private ResultPresenterNEW() {
-        this.resultScrollPane = GUIController.getController().getResultScrollPane();
+        this.resultScrollPane =
+                GUIController.getController().getResultScrollPane();
 
         GUIController.getController().getZoomSlider().valueProperty()
                 .addListener(new ChangeListener<>() {
                     @Override
                     public void changed(final ObservableValue<? extends Number> observable,
                                         final Number oldValue, final Number newValue) {
-                        if (presentationType != null && presentationType.supportsZoom()) {
+                        if (presentationType != null
+                                && presentationType.supportsZoom()) {
                             presentationType.zoomTo((double) newValue);
                         }
                     }
@@ -58,7 +60,9 @@ public final class ResultPresenterNEW {
      */
     private void getDefaultPresentation() {
         List<ResultPresentationType> types = getEligablePresentationTypes();
-        for (Iterator<ResultPresentationType> iterator = types.iterator(); iterator.hasNext();) {
+        for (Iterator<ResultPresentationType> iterator =
+                types.iterator();
+                iterator.hasNext();) {
             ResultPresentationType type = iterator.next();
             if (!result.isValid()) {
                 setPresentationType(new CBMCOutput());
@@ -82,7 +86,8 @@ public final class ResultPresenterNEW {
     /**
      * Sets the result.
      *
-     * @param resultVal the new result
+     * @param resultVal
+     *            the new result
      */
     public void setResult(final Result resultVal) {
         boolean changed = (this.result != resultVal);
@@ -110,8 +115,10 @@ public final class ResultPresenterNEW {
                 eligableTypes.add(typeToCheck);
             }
         }
-        this.setPresentationType(new CBMCOutput()); // TODO maybe find a better way to find the
-                                                    // best presenter for every type
+        this.setPresentationType(new CBMCOutput()); // TODO maybe find a better
+                                                    // way to find the
+                                                    // best presenter for every
+                                                    // type
         GUIController.getController().setEligableTypes(eligableTypes);
         return eligableTypes;
     }
@@ -119,10 +126,12 @@ public final class ResultPresenterNEW {
     /**
      * Sets the presentation type.
      *
-     * @param presType the new presentation type
+     * @param presType
+     *            the new presentation type
      */
     public void setPresentationType(final ResultPresentationType presType) {
-        GUIController.getController().setPresentationTypeText(presType.getName());
+        GUIController.getController()
+                .setPresentationTypeText(presType.getName());
         boolean changed = (this.presentationType != presType);
         this.presentationType = presType;
         if (changed) {
@@ -139,7 +148,8 @@ public final class ResultPresenterNEW {
             return;
         }
         Node finishedResult = presentationType.presentResult(result);
-        GUIController.getController().disableZoomSlider(!presentationType.supportsZoom());
+        GUIController.getController()
+                .disableZoomSlider(!presentationType.supportsZoom());
         this.setResultNode(finishedResult);
     }
 

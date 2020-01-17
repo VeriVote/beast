@@ -15,8 +15,10 @@ public class FontSizeOptionElement extends OptionElement {
     /**
      * Constructor.
      *
-     * @param availableOptions the choosable options
-     * @param chosenSize       the chosen size
+     * @param availableOptions
+     *            the choosable options
+     * @param chosenSize
+     *            the chosen size
      */
     public FontSizeOptionElement(final List<String> availableOptions,
                                  final String chosenSize) {

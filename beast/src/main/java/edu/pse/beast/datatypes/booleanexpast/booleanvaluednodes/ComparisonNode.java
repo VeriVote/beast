@@ -10,6 +10,8 @@ import edu.pse.beast.datatypes.booleanexpast.othervaluednodes.TypeExpression;
  * @author Lukas Stapelbroek
  */
 public class ComparisonNode extends BooleanExpressionNode {
+    /** The Constant PRIME. */
+    private static final int PRIME = 31;
 
     /** The lhs type exp. */
     private final TypeExpression lhsTypeExp;
@@ -23,10 +25,13 @@ public class ComparisonNode extends BooleanExpressionNode {
     /**
      * Instantiates a new comparison node.
      *
-     * @param lhsTypeExpr       the lhsExpression
-     * @param rhsTypeExpr       the rhsExpression
-     * @param comparisonSymb the symbol that describes this comparision (for
-     *                         example <, >, == )
+     * @param lhsTypeExpr
+     *            the lhsExpression
+     * @param rhsTypeExpr
+     *            the rhsExpression
+     * @param comparisonSymb
+     *            the symbol that describes this comparision (for example <, >,
+     *            == )
      */
     public ComparisonNode(final TypeExpression lhsTypeExpr,
                           final TypeExpression rhsTypeExpr,
@@ -61,17 +66,13 @@ public class ComparisonNode extends BooleanExpressionNode {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
         int result = 1;
-        result = prime * result
-                + ((comparisonSymbol == null)
-                        ? 0 : comparisonSymbol.hashCode());
-        result = prime * result
-                + ((getLhsTypeExp() == null)
-                        ? 0 : getLhsTypeExp().hashCode());
-        result = prime * result
-                + ((getRhsTypeExp() == null)
-                        ? 0 : getRhsTypeExp().hashCode());
+        result = PRIME * result + ((comparisonSymbol == null) ? 0
+                : comparisonSymbol.hashCode());
+        result = PRIME * result
+                + ((getLhsTypeExp() == null) ? 0 : getLhsTypeExp().hashCode());
+        result = PRIME * result
+                + ((getRhsTypeExp() == null) ? 0 : getRhsTypeExp().hashCode());
         return result;
     }
 
@@ -86,15 +87,16 @@ public class ComparisonNode extends BooleanExpressionNode {
         ComparisonNode that = (ComparisonNode) o;
         if (getLhsTypeExp() != null
                 ? !getLhsTypeExp().equals(that.getLhsTypeExp())
-                        : that.getLhsTypeExp() != null) {
+                : that.getLhsTypeExp() != null) {
             return false;
         }
         if (getRhsTypeExp() != null
                 ? !getRhsTypeExp().equals(that.getRhsTypeExp())
-                        : that.getRhsTypeExp() != null) {
+                : that.getRhsTypeExp() != null) {
             return false;
         }
-        return comparisonSymbol != null ? comparisonSymbol.equals(that.comparisonSymbol)
+        return comparisonSymbol != null
+                ? comparisonSymbol.equals(that.comparisonSymbol)
                 : that.comparisonSymbol == null;
     }
 
@@ -103,8 +105,10 @@ public class ComparisonNode extends BooleanExpressionNode {
         StringBuilder b = new StringBuilder();
         String tabs = "\t\t\t\t\t\t\t\t\t\t\t".substring(0, depth);
         b.append(tabs + comparisonSymbol.getCStringRep() + "\n");
-        b.append(tabs + "\t" + "lhs: " + getLhsTypeExp().getTreeString(depth + 1));
-        b.append(tabs + "\t" + "rhs: " + getRhsTypeExp().getTreeString(depth + 1));
+        b.append(tabs + "\t" + "lhs: "
+                + getLhsTypeExp().getTreeString(depth + 1));
+        b.append(tabs + "\t" + "rhs: "
+                + getRhsTypeExp().getTreeString(depth + 1));
         return b.toString();
     }
 

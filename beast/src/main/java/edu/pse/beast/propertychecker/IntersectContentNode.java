@@ -18,8 +18,10 @@ public class IntersectContentNode extends BooleanExpressionNode {
     /**
      * Instantiates a new intersect content node.
      *
-     * @param intersectContContext the intersect cont context
-     * @param voteOutputString the vote output string
+     * @param intersectContContext
+     *            the intersect cont context
+     * @param voteOutputString
+     *            the vote output string
      */
     public IntersectContentNode(final IntersectContentContext intersectContContext,
                                 final String voteOutputString) {

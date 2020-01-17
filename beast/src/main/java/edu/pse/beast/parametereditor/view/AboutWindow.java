@@ -9,7 +9,10 @@ import edu.pse.beast.stringresource.StringResourceLoader;
  *
  * @author Jonas Wohnig
  */
-public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsToUser {
+public class AboutWindow extends javax.swing.JFrame
+        implements DisplaysStringsToUser {
+    /** The Constant DEFAULT_SIZE. */
+    private static final int DEFAULT_SIZE = javax.swing.GroupLayout.DEFAULT_SIZE;
 
     /** The Constant PREF_SIZE. */
     private static final int PREF_SIZE = 31;
@@ -63,34 +66,38 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
 
         jLabel1.setText("B.E.A.S.T.");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(
+                getContentPane());
         getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        layout.setHorizontalGroup(layout
+                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup().addContainerGap()
-                        .addGroup(
-                            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup().addComponent(versionLabel)
-                                    .addPreferredGap(
-                                            javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                        .addComponent(versionLabel)
+                                        .addPreferredGap(
+                                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(versionNumber))
                                 .addComponent(jLabel1))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                        layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                 Short.MAX_VALUE)
-                                .addComponent(beastLabel).addContainerGap()));
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup().addContainerGap().addComponent(jLabel1)
+                        .addContainerGap(DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout
+                        .createSequentialGroup()
+                        .addContainerGap(DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(beastLabel).addContainerGap()));
+        layout.setVerticalGroup(layout
+                .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup().addContainerGap()
+                        .addComponent(jLabel1)
                         .addPreferredGap(
-                            javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(beastLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout
-                            .createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(versionLabel).addComponent(versionNumber))
+                        .addPreferredGap(
+                                javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(
+                                javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(versionLabel)
+                                .addComponent(versionNumber))
                         .addContainerGap(PREF_SIZE, Short.MAX_VALUE)));
         pack();
     } // </editor-fold>//GEN-END:initComponents
@@ -98,16 +105,19 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
     /**
      * The main method.
      *
-     * @param args the command line arguments
+     * @param args
+     *            the command line arguments
      */
     public static void main(final String[] args) {
         /* Set the Nimbus look and feel */
-        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting
+        // code
         // (optional) ">
         /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
-         * look and feel. For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         * If Nimbus (introduced in Java SE 6) is not available, stay with the
+         * default look and feel. For details see
+         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.
+         * html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info
@@ -119,16 +129,16 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
             }
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(AboutWindow.class.getName())
-                .log(java.util.logging.Level.SEVERE, null, ex);
+                    .log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
             java.util.logging.Logger.getLogger(AboutWindow.class.getName())
-                .log(java.util.logging.Level.SEVERE, null, ex);
+                    .log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
             java.util.logging.Logger.getLogger(AboutWindow.class.getName())
-                .log(java.util.logging.Level.SEVERE, null, ex);
+                    .log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(AboutWindow.class.getName())
-                .log(java.util.logging.Level.SEVERE, null, ex);
+                    .log(java.util.logging.Level.SEVERE, null, ex);
         }
         // </editor-fold>
         // </editor-fold>
@@ -145,7 +155,8 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
     /**
      * Setter for version of BEAST.
      *
-     * @param version of BEAST
+     * @param version
+     *            of BEAST
      */
     protected void setVersion(final String version) {
         versionNumber.setText(version);
@@ -153,8 +164,8 @@ public class AboutWindow extends javax.swing.JFrame implements DisplaysStringsTo
 
     @Override
     public void updateStringRes(final StringLoaderInterface stringResIF) {
-        StringResourceLoader other
-            = stringResIF.getParameterEditorStringResProvider().getOtherStringRes();
+        StringResourceLoader other =
+                stringResIF.getParameterEditorStringResProvider().getOtherStringRes();
         setTitle(other.getStringFromID("title_about"));
         versionLabel.setText(other.getStringFromID("version"));
     }

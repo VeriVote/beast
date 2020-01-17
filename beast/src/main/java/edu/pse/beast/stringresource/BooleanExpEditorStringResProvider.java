@@ -7,19 +7,19 @@ package edu.pse.beast.stringresource;
  */
 public class BooleanExpEditorStringResProvider extends StringResourceProvider {
     /** The Constant TOOLBAR_TIP. */
-    private static final String TOOLBAR_TIP       = "BooleanExpEditorToolbar";
+    private static final String TOOLBAR_TIP = "BooleanExpEditorToolbar";
 
     /** The Constant MENU. */
-    private static final String MENU              = "BooleanExpEditorMenu";
+    private static final String MENU = "BooleanExpEditorMenu";
 
     /** The Constant BOOLEAN_EXP_ERROR. */
     private static final String BOOLEAN_EXP_ERROR = "BooleanExpEditorBooleanExpError";
 
     /** The Constant WINDOW. */
-    private static final String WINDOW            = "BooleanExpEditorWindow";
+    private static final String WINDOW = "BooleanExpEditorWindow";
 
     /** The Constant SYMB_VAR_LIST. */
-    private static final String SYMB_VAR_LIST     = "BooleanExpEditorSymbVarList";
+    private static final String SYMB_VAR_LIST = "BooleanExpEditorSymbVarList";
 
     /** The menu string res. */
     private StringResourceLoader menuStringRes;
@@ -39,7 +39,8 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
     /**
      * Instantiates a new boolean exp editor string res provider.
      *
-     * @param languageId the languageId. Set to "de" for german
+     * @param languageId
+     *            the languageId. Set to "de" for german
      */
     public BooleanExpEditorStringResProvider(final String languageId) {
         super(languageId);
@@ -95,10 +96,14 @@ public class BooleanExpEditorStringResProvider extends StringResourceProvider {
     // filenames. The superclass provides the functions for this process
     @Override
     protected final void initialize() {
-        toolbarTipStringRes            = getStringResourceLoaderFromModuleName(TOOLBAR_TIP);
-        menuStringRes                  = getStringResourceLoaderFromModuleName(MENU);
-        booleanExpErrorStringRes       = getStringResourceLoaderFromModuleName(BOOLEAN_EXP_ERROR);
-        booleanExpEditorWindowRes      = getStringResourceLoaderFromModuleName(WINDOW);
-        booleanExpEditorSymbVarListRes = getStringResourceLoaderFromModuleName(SYMB_VAR_LIST);
+        toolbarTipStringRes =
+                getStringResourceLoaderFromModuleName(TOOLBAR_TIP);
+        menuStringRes = getStringResourceLoaderFromModuleName(MENU);
+        booleanExpErrorStringRes =
+                getStringResourceLoaderFromModuleName(BOOLEAN_EXP_ERROR);
+        booleanExpEditorWindowRes =
+                getStringResourceLoaderFromModuleName(WINDOW);
+        booleanExpEditorSymbVarListRes =
+                getStringResourceLoaderFromModuleName(SYMB_VAR_LIST);
     }
 }

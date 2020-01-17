@@ -24,7 +24,8 @@ public class ErrorPopupMenu extends JPopupMenu implements KeyListener {
     /**
      * Instantiates a new error popup menu.
      *
-     * @param pane the pane
+     * @param pane
+     *            the pane
      */
     public ErrorPopupMenu(final JTextPane pane) {
         errorItem = new JMenuItem("");

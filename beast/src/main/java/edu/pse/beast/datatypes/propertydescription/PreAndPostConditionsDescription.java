@@ -8,6 +8,8 @@ import java.util.List;
  * @author Niels Hanselmann
  */
 public class PreAndPostConditionsDescription {
+    /** The Constant PRIME. */
+    private static final int PRIME = 31;
 
     /** The name. */
     private String name;
@@ -15,19 +17,20 @@ public class PreAndPostConditionsDescription {
     /** The symbolic variable list. */
     private final SymbolicVariableList symbolicVariableList;
 
-    /** The pre conditions description. */
+    /** The preconditions description. */
     private final FormalPropertiesDescription preConditionsDescription;
 
-    /** The post conditions description. */
+    /** The postconditions description. */
     private final FormalPropertiesDescription postConditionsDescription;
 
-    /** The bounded var description. */
+    /** The bounded variable description. */
     private final FormalPropertiesDescription boundedVarDescription;
 
     /**
      * Instantiates a new pre and post conditions description.
      *
-     * @param nameString the name string
+     * @param nameString
+     *            the name string
      */
     public PreAndPostConditionsDescription(final String nameString) {
         this.name = nameString;
@@ -40,11 +43,16 @@ public class PreAndPostConditionsDescription {
     /**
      * Creator with a SymbolicVariableList.
      *
-     * @param nameString            name of the PreAndPostConditionsDescription
-     * @param preDescr              the preConditionDescription
-     * @param postDescr             the postConditionDescription
-     * @param boundedVarDesc        the boundedVarDescription
-     * @param symbVarList           the symbolicVariableList
+     * @param nameString
+     *            name of the PreAndPostConditionsDescription
+     * @param preDescr
+     *            the preConditionDescription
+     * @param postDescr
+     *            the postConditionDescription
+     * @param boundedVarDesc
+     *            the boundedVarDescription
+     * @param symbVarList
+     *            the symbolicVariableList
      */
     public PreAndPostConditionsDescription(final String nameString,
                                            final FormalPropertiesDescription preDescr,
@@ -124,7 +132,8 @@ public class PreAndPostConditionsDescription {
     /**
      * Sets the name.
      *
-     * @param nameString the new name
+     * @param nameString
+     *            the new name
      */
     public void setName(final String nameString) {
         this.name = nameString;
@@ -132,20 +141,19 @@ public class PreAndPostConditionsDescription {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
         int result = 1;
-        result = prime * result
+        result = PRIME * result
                 + ((boundedVarDescription == null)
                         ? 0 : boundedVarDescription.hashCode());
-        result = prime * result + ((name == null)
-                ? 0 : name.hashCode());
-        result = prime * result
+        result = PRIME * result
+                + ((name == null) ? 0 : name.hashCode());
+        result = PRIME * result
                 + ((postConditionsDescription == null)
                         ? 0 : postConditionsDescription.hashCode());
-        result = prime * result
+        result = PRIME * result
                 + ((preConditionsDescription == null)
                         ? 0 : preConditionsDescription.hashCode());
-        result = prime * result
+        result = PRIME * result
                 + ((symbolicVariableList == null)
                         ? 0 : symbolicVariableList.hashCode());
         return result;
@@ -162,14 +170,12 @@ public class PreAndPostConditionsDescription {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        PreAndPostConditionsDescription other
-              = (PreAndPostConditionsDescription) obj;
+        PreAndPostConditionsDescription other = (PreAndPostConditionsDescription) obj;
         if (boundedVarDescription == null) {
             if (other.boundedVarDescription != null) {
                 return false;
             }
-        } else if (!boundedVarDescription
-                .equals(other.boundedVarDescription)) {
+        } else if (!boundedVarDescription.equals(other.boundedVarDescription)) {
             return false;
         }
         if (name == null) {
@@ -199,8 +205,7 @@ public class PreAndPostConditionsDescription {
             if (other.symbolicVariableList != null) {
                 return false;
             }
-        } else if (!symbolicVariableList
-                .equals(other.symbolicVariableList)) {
+        } else if (!symbolicVariableList.equals(other.symbolicVariableList)) {
             return false;
         }
         return true;

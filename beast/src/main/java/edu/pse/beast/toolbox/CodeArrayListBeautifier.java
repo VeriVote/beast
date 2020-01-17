@@ -28,7 +28,7 @@ public class CodeArrayListBeautifier {
      */
     public CodeArrayListBeautifier() {
         super();
-        code = new ArrayList<>();
+        code = new ArrayList<String>();
         numberOfTabs = 0;
     }
 
@@ -100,7 +100,8 @@ public class CodeArrayListBeautifier {
     /**
      * Adds the all.
      *
-     * @param votingResultCode the voting result code
+     * @param votingResultCode
+     *            the voting result code
      */
     public void addAll(final List<String> votingResultCode) {
         addList(votingResultCode);
@@ -109,7 +110,8 @@ public class CodeArrayListBeautifier {
     /**
      * Contains.
      *
-     * @param name the name
+     * @param name
+     *            the name
      * @return true, if successful
      */
     public boolean contains(final String name) {
@@ -125,7 +127,8 @@ public class CodeArrayListBeautifier {
     /**
      * Gets the not used var name.
      *
-     * @param preferredName the preferred name
+     * @param preferredName
+     *            the preferred name
      * @return the not used var name
      */
     public String getNotUsedVarName(final String preferredName) {

@@ -16,8 +16,10 @@ public class PropertyAndMarginBool {
     /**
      * Instantiates a new property and margin bool.
      *
-     * @param descr the descr
-     * @param marginStat the margin stat
+     * @param descr
+     *            the descr
+     * @param marginStat
+     *            the margin stat
      */
     public PropertyAndMarginBool(final PreAndPostConditionsDescription descr,
                                  final boolean marginStat) {

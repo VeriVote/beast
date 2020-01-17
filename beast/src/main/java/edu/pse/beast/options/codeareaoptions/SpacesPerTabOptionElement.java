@@ -15,8 +15,10 @@ public class SpacesPerTabOptionElement extends OptionElement {
     /**
      * Constructor.
      *
-     * @param availableOptions    the available options
-     * @param numberTabsStr       the number of spaces per tab
+     * @param availableOptions
+     *            the available options
+     * @param numberTabsStr
+     *            the number of spaces per tab
      */
     public SpacesPerTabOptionElement(final List<String> availableOptions,
                                      final String numberTabsStr) {

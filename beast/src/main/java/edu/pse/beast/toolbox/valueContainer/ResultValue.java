@@ -12,12 +12,12 @@ public interface ResultValue {
 
         /** The array. */
         ARRAY,
- /** The pointer. */
- POINTER,
- /** The single. */
- SINGLE,
- /** The struct. */
- STRUCT
+        /** The pointer. */
+        POINTER,
+        /** The single. */
+        SINGLE,
+        /** The struct. */
+        STRUCT
     }
 
     /**

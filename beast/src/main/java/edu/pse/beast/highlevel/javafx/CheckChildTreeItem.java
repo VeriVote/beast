@@ -10,9 +10,12 @@ public class CheckChildTreeItem extends ChildTreeItem {
     /**
      * Instantiates a new check child tree item.
      *
-     * @param values the values
-     * @param parent the parent
-     * @param treeItemReference the tree item reference
+     * @param values
+     *            the values
+     * @param parent
+     *            the parent
+     * @param treeItemReference
+     *            the tree item reference
      */
     CheckChildTreeItem(final ChildTreeItemValues values,
                        final ParentTreeItem parent,
@@ -23,9 +26,12 @@ public class CheckChildTreeItem extends ChildTreeItem {
     /**
      * Instantiates a new check child tree item.
      *
-     * @param name the name
-     * @param parent the parent
-     * @param treeItemReference the tree item reference
+     * @param name
+     *            the name
+     * @param parent
+     *            the parent
+     * @param treeItemReference
+     *            the tree item reference
      */
     CheckChildTreeItem(final String name, final ParentTreeItem parent,
                        final TreeItem<CustomTreeItem> treeItemReference) {

@@ -19,10 +19,8 @@ import edu.pse.beast.stringresource.StringResourceLoader;
 public abstract class MenuBarHandler implements DisplaysStringsToUser {
 
     /** The Constant STANDARD_ID_ORDER. */
-    private static final String[] STANDARD_ID_ORDER
-        = {
-            "file", "edit", "code"
-        };
+    private static final String[] STANDARD_ID_ORDER =
+        {"file", "edit", "code"};
 
     /**
      * the JMenuBar.
@@ -39,7 +37,8 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
     private JMenu[] createdMenus;
 
     /** The created items. */
-    private final ArrayList<ArrayList<JMenuItem>> createdItems = new ArrayList<>();
+    private final ArrayList<ArrayList<JMenuItem>> createdItems =
+            new ArrayList<ArrayList<JMenuItem>>();
 
     /** The current resource loader. */
     private StringResourceLoader currentResourceLoader;
@@ -47,9 +46,12 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
     /**
      * Instantiates a new menu bar handler.
      *
-     * @param headIds          the id of the heading
-     * @param actionIDAndListeners the IDandListener
-     * @param resLoader           the resourceLoader
+     * @param headIds
+     *            the id of the heading
+     * @param actionIDAndListeners
+     *            the IDandListener
+     * @param resLoader
+     *            the resourceLoader
      */
     public MenuBarHandler(final String[] headIds,
                           final ArrayList<ArrayList<ActionIdAndListener>>
@@ -74,7 +76,8 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
     /**
      * Update string res loader.
      *
-     * @param resLoader the resourceLoader
+     * @param resLoader
+     *            the resourceLoader
      */
     protected void updateStringResLoader(final StringResourceLoader resLoader) {
         this.currentResourceLoader = resLoader;
@@ -88,14 +91,16 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
         createdMenuBar = new JMenuBar();
         createdMenus = new JMenu[headingIds.length];
         for (int i = 0; i < headingIds.length; ++i) {
-            JMenu currentMenu = new JMenu(currentResourceLoader.getStringFromID(headingIds[i]));
+            JMenu currentMenu =
+                    new JMenu(currentResourceLoader.getStringFromID(headingIds[i]));
             createdMenus[i] = currentMenu;
-            createdItems.add(new ArrayList<>());
+            createdItems.add(new ArrayList<JMenuItem>());
             for (int j = 0; j < actionIDAndListener.get(i).size(); ++j) {
-                ActionIdAndListener currentAccIdAndL = actionIDAndListener.get(i).get(j);
+                ActionIdAndListener currentAccIdAndL =
+                        actionIDAndListener.get(i).get(j);
                 String currentAcId = currentAccIdAndL.getId();
-                JMenuItem currentItem
-                      = new JMenuItem(currentResourceLoader.getStringFromID(currentAcId));
+                JMenuItem currentItem = new JMenuItem(
+                        currentResourceLoader.getStringFromID(currentAcId));
                 currentItem.addActionListener(currentAccIdAndL.getListener());
                 createdItems.get(i).add(currentItem);
                 currentMenu.add(currentItem);
@@ -112,21 +117,24 @@ public abstract class MenuBarHandler implements DisplaysStringsToUser {
         /**
          * Compare.
          *
-         * @param lhs the lhs
-         * @param rhs the rhs
+         * @param lhs
+         *            the lhs
+         * @param rhs
+         *            the rhs
          * @return the int
          */
         @Override
         public int compare(final String lhs, final String rhs) {
-            Integer lhsPos = findInArr(lhs);
-            int rhsPos = findInArr(rhs);
+            final Integer lhsPos = findInArr(lhs);
+            final int rhsPos = findInArr(rhs);
             return lhsPos.compareTo(rhsPos);
         }
 
         /**
          * Find in arr.
          *
-         * @param s the s
+         * @param s
+         *            the s
          * @return the int
          */
         private int findInArr(final String s) {

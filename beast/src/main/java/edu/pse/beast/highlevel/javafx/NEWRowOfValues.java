@@ -61,14 +61,22 @@ public class NEWRowOfValues {
     /**
      * The constructor.
      *
-     * @param parentModel the parent model
-     * @param elecTypeContainer the elec type container
-     * @param amountCandidates the amount candidates
-     * @param amountVoters the amount voters
-     * @param amountSeats the amount seats
-     * @param rowIdx the row idx
-     * @param elemWidth the elem width
-     * @param elemHeight the elem height
+     * @param parentModel
+     *            the parent model
+     * @param elecTypeContainer
+     *            the elec type container
+     * @param amountCandidates
+     *            the amount candidates
+     * @param amountVoters
+     *            the amount voters
+     * @param amountSeats
+     *            the amount seats
+     * @param rowIdx
+     *            the row idx
+     * @param elemWidth
+     *            the elem width
+     * @param elemHeight
+     *            the elem height
      */
     public NEWRowOfValues(final ElectionSimulationModel parentModel,
                           final ElectionTypeContainer elecTypeContainer,
@@ -84,7 +92,8 @@ public class NEWRowOfValues {
         fields = new ArrayList<>(rowSize);
         this.amountOfSeats = amountSeats;
         this.amountOfVoters = amountVoters;
-        this.isTwoDim = (elecTypeContainer.getInputType().getAmountOfDimensions() == 2);
+        this.isTwoDim = (elecTypeContainer.getInputType()
+                .getAmountOfDimensions() == 2);
         this.setRowSize(1);
     }
 
@@ -102,6 +111,7 @@ public class NEWRowOfValues {
         fields.add(field);
         field.textProperty().addListener(new ChangeListener<String>() {
             private int position = fields.indexOf(field);
+
             @Override
             public void changed(final ObservableValue<? extends String> observable,
                                 final String oldValue, final String newValue) {
@@ -134,7 +144,8 @@ public class NEWRowOfValues {
      */
     public void update() {
         if (!disabled) {
-            for (Iterator<TextField> iterator = fields.iterator(); iterator.hasNext();) {
+            for (Iterator<TextField> iterator = fields.iterator();
+                    iterator.hasNext();) {
                 TextField textField = iterator.next();
                 parent.getInputGridPane().getChildren().remove(textField);
             }
@@ -153,18 +164,22 @@ public class NEWRowOfValues {
     /**
      * Check and insert value.
      *
-     * @param newValue the new value
-     * @param positionInRow the position in row
-     * @param block the block
+     * @param newValue
+     *            the new value
+     * @param positionInRow
+     *            the position in row
+     * @param block
+     *            the block
      */
     private void checkAndInsertValue(final String newValue,
                                      final int positionInRow,
                                      final boolean block) {
         List<NEWRowOfValues> allRows = parent.getRows();
-        allRows.remove(this); // in case that this row is created before it is saved by its parent
+        allRows.remove(this); // in case that this row is created before it is
+                              // saved by its parent
         allRows.add(this);
-        String vettedValue = container.getInputType().vetValue(container, allRows, rowIndex,
-                                                               positionInRow, newValue);
+        String vettedValue = container.getInputType().vetValue(container,
+                allRows, rowIndex, positionInRow, newValue);
         values.set(positionInRow, vettedValue);
         if (positionInRow < fields.size()) {
             fields.get(positionInRow).setText(vettedValue);
@@ -192,7 +207,8 @@ public class NEWRowOfValues {
     /**
      * Sets the values.
      *
-     * @param vals the new values
+     * @param vals
+     *            the new values
      */
     public void setValues(final ArrayList<String> vals) {
         this.values = vals;
@@ -202,7 +218,8 @@ public class NEWRowOfValues {
     /**
      * Sets the container.
      *
-     * @param electTypeContainer the new container
+     * @param electTypeContainer
+     *            the new container
      */
     public void setContainer(final ElectionTypeContainer electTypeContainer) {
         this.container = electTypeContainer;
@@ -249,7 +266,8 @@ public class NEWRowOfValues {
     /**
      * Sets the row size.
      *
-     * @param rowSizeInteger the new row size
+     * @param rowSizeInteger
+     *            the new row size
      */
     public void setRowSize(final int rowSizeInteger) {
         if (this.rowSize < rowSizeInteger) {
@@ -274,7 +292,8 @@ public class NEWRowOfValues {
     /**
      * Sets the candidates.
      *
-     * @param amountCandidates the new candidates
+     * @param amountCandidates
+     *            the new candidates
      */
     public void setCandidates(final int amountCandidates) {
         this.amountOfCandidates = amountCandidates;
@@ -284,7 +303,8 @@ public class NEWRowOfValues {
     /**
      * Sets the voters.
      *
-     * @param amountVoters the new voters
+     * @param amountVoters
+     *            the new voters
      */
     public void setVoters(final int amountVoters) {
         this.amountOfVoters = amountVoters;
@@ -294,7 +314,8 @@ public class NEWRowOfValues {
     /**
      * Sets the seats.
      *
-     * @param amountSeats the new seats
+     * @param amountSeats
+     *            the new seats
      */
     public void setSeats(final int amountSeats) {
         this.amountOfSeats = amountSeats;
@@ -324,7 +345,8 @@ public class NEWRowOfValues {
      */
     public void disable() {
         this.disabled = true;
-        for (Iterator<TextField> iterator = fields.iterator(); iterator.hasNext();) {
+        for (Iterator<TextField> iterator = fields.iterator(); iterator
+                .hasNext();) {
             TextField textField = iterator.next();
             parent.getInputGridPane().getChildren().remove(textField);
         }
@@ -333,8 +355,10 @@ public class NEWRowOfValues {
     /**
      * Sets the value.
      *
-     * @param x the x
-     * @param value the value
+     * @param x
+     *            the x
+     * @param value
+     *            the value
      */
     public void setValue(final int x, final String value) {
         checkAndInsertValue(value, x, true);

@@ -20,11 +20,13 @@ public class TimeOutNotifier implements Runnable {
     private final Thread interrupterThread;
 
     /**
-     * This class is used for notifying FactoryController that a set amount of time
-     * has passed.
+     * This class is used for notifying FactoryController that a set amount of
+     * time has passed.
      *
-     * @param toInterruptController the FactoryController to interrupt
-     * @param timeOut     the time to wait before sending the interrupt message
+     * @param toInterruptController
+     *            the FactoryController to interrupt
+     * @param timeOut
+     *            the time to wait before sending the interrupt message
      */
     public TimeOutNotifier(final FactoryController toInterruptController,
                            final long timeOut) {
@@ -41,9 +43,8 @@ public class TimeOutNotifier implements Runnable {
                 Thread.sleep(endTime - System.currentTimeMillis());
             } catch (InterruptedException e) {
                 if (!disabled) {
-                    ErrorLogger.log(
-                            "The Timeout interrupter was interrupted. "
-                            + "It still continues though");
+                    ErrorLogger.log("The Timeout interrupter was interrupted. "
+                                    + "It still continues though");
                 }
             }
         }

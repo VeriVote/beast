@@ -14,11 +14,12 @@ public final class XMLtoolbox {
     private XMLtoolbox() { }
 
     /**
-     * Removes all empty text child nodes from a node taken from the following link.
-     * https://stackoverflow.com/questions/978810/
+     * Removes all empty text child nodes from a node taken from the following
+     * link. https://stackoverflow.com/questions/978810/
      * how-to-strip-whitespace-only-text-nodes-from-a-dom-before-serialization/16285664#16285664
      *
-     * @param node the node which child items should be cleaned
+     * @param node
+     *            the node which child items should be cleaned
      */
     public static void clean(final Node node) {
         NodeList childNodes = node.getChildNodes();

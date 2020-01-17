@@ -26,10 +26,7 @@ import javafx.scene.Node;
 public class Default extends ResultPresentationType {
 
     /** The area. */
-    private GenericStyledArea<ParStyle,
-                              Either<String, LinkedImage>,
-                              TextStyle> area;
-
+    private GenericStyledArea<ParStyle, Either<String, LinkedImage>, TextStyle> area;
 
     @Override
     public Node presentResult(final Result result) {
@@ -39,18 +36,23 @@ public class Default extends ResultPresentationType {
             area.setEditable(false);
         }
         area.clear();
-        InputType inType = result.getElectionDescription().getContainer().getInputType();
-        OutputType outType = result.getElectionDescription().getContainer().getOutputType();
+        InputType inType =
+                result.getElectionDescription().getContainer().getInputType();
+        OutputType outType =
+                result.getElectionDescription().getContainer().getOutputType();
         String voters = UnifiedNameContainer.getVoter() + "\\d";
-        Map<Integer, Long> sizeOfVoters = getAllSizes(result.readVariableValue(voters));
+        Map<Integer, Long> sizeOfVoters =
+                getAllSizes(result.readVariableValue(voters));
         String votesNameMatcher = UnifiedNameContainer.getVotingArray() + "\\d";
-        List<String> toAdd = inType.drawResult(result, votesNameMatcher, sizeOfVoters);
+        List<String> toAdd = inType.drawResult(result, votesNameMatcher,
+                                               sizeOfVoters);
 
         for (int i = 0; i < toAdd.size(); i++) {
             area.appendText(toAdd.get(i));
         }
         String candidates = UnifiedNameContainer.getCandidate() + "\\d";
-        Map<Integer, Long> sizeOfCandidates = getAllSizes(result.readVariableValue(candidates));
+        Map<Integer, Long> sizeOfCandidates =
+                getAllSizes(result.readVariableValue(candidates));
         String resultNameMatcher = UnifiedNameContainer.getElect() + "\\d";
         toAdd = outType.drawResult(result, resultNameMatcher, sizeOfCandidates);
 

@@ -11,8 +11,10 @@ public class CheckerOptionElement extends OptionElement {
     /**
      * Constructor.
      *
-     * @param choosableOptions the available options
-     * @param chosen           the String for the chosen checker
+     * @param choosableOptions
+     *            the available options
+     * @param chosen
+     *            the String for the chosen checker
      */
     public CheckerOptionElement(final List<String> choosableOptions,
                                 final String chosen) {

@@ -21,7 +21,8 @@ public final class CBMCResultPresentationHelper {
     /**
      * Gets the white spaces.
      *
-     * @param amount the amount
+     * @param amount
+     *            the amount
      * @return the white spaces
      */
     private static String getWhiteSpaces(final int amount) {
@@ -33,8 +34,10 @@ public final class CBMCResultPresentationHelper {
     /**
      * Prints the single element.
      *
-     * @param single the single
-     * @param offset the offset
+     * @param single
+     *            the single
+     * @param offset
+     *            the offset
      * @return the string
      */
     public static String printSingleElement(final CBMCResultValueSingle single,
@@ -45,9 +48,12 @@ public final class CBMCResultPresentationHelper {
     /**
      * Prints the one dim result.
      *
-     * @param array the array
-     * @param size the size
-     * @param offset the offset
+     * @param array
+     *            the array
+     * @param size
+     *            the size
+     * @param offset
+     *            the offset
      * @return the string
      */
     public static String printOneDimResult(final CBMCResultValueArray array,
@@ -65,7 +71,7 @@ public final class CBMCResultPresentationHelper {
         for (int i = 0; i < s; i++) {
             CBMCResultValueSingle singleValue =
                     (CBMCResultValueSingle) arrayValues.get(i).getResultValue();
-            toReturn = toReturn + singleValue.getValue() + " ";
+            toReturn += singleValue.getValue() + " ";
         }
         return toReturn + "\n";
     }
@@ -73,13 +79,17 @@ public final class CBMCResultPresentationHelper {
     /**
      * Prints the two dim result.
      *
-     * @param array the array
-     * @param size the size
-     * @param offset the offset
+     * @param array
+     *            the array
+     * @param size
+     *            the size
+     * @param offset
+     *            the offset
      * @return the list
      */
     public static List<String> printTwoDimResult(final CBMCResultValueArray array,
-                                                 final long size, final int offset) {
+                                                 final long size,
+                                                 final int offset) {
         List<String> toReturn = new ArrayList<String>();
         List<CBMCResultValueWrapper> arrayValues = array.getValues();
 

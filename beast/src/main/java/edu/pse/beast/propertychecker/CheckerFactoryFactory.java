@@ -15,7 +15,8 @@ import edu.pse.beast.toolbox.ErrorLogger;
 public final class CheckerFactoryFactory {
 
     /** The factories. */
-    private static Map<String, CheckerFactory> factories = new HashMap<String, CheckerFactory>();
+    private static Map<String, CheckerFactory> factories =
+            new HashMap<String, CheckerFactory>();
 
     /** The initialized. */
     private static boolean initialized = false;
@@ -35,10 +36,11 @@ public final class CheckerFactoryFactory {
      * @return the map
      */
     private static Map<String, CheckerFactory> searchForCheckers() {
-        Map<String, CheckerFactory> foundFactories = new HashMap<String, CheckerFactory>();
+        Map<String, CheckerFactory> foundFactories =
+                new HashMap<String, CheckerFactory>();
         // cbmc is always included, so we add it here
         foundFactories.put("CBMC",
-                new CBMCProcessFactory(null, null, null, null));
+                           new CBMCProcessFactory(null, null, null, null));
         // TODO search for other factories
         return foundFactories;
     }
@@ -125,11 +127,16 @@ public final class CheckerFactoryFactory {
     /**
      * Gets the checker factory.
      *
-     * @param checkerID the checker ID
-     * @param controller the controller
-     * @param electionDesc the election desc
-     * @param result the result
-     * @param parameter the parameter
+     * @param checkerID
+     *            the checker ID
+     * @param controller
+     *            the controller
+     * @param electionDesc
+     *            the election desc
+     * @param result
+     *            the result
+     * @param parameter
+     *            the parameter
      * @return the checker factory
      */
     public static CheckerFactory getCheckerFactory(final String checkerID,
@@ -138,8 +145,8 @@ public final class CheckerFactoryFactory {
                                                    final Result result,
                                                    final ElectionCheckParameter parameter) {
         if (factories.keySet().contains(checkerID)) {
-            return factories.get(checkerID).getNewInstance(controller,
-                                                           electionDesc, result, parameter);
+            return factories.get(checkerID)
+                    .getNewInstance(controller, electionDesc, result, parameter);
         } else {
             ErrorLogger.log("The specified checkerID was not found");
             return null;
@@ -166,8 +173,10 @@ public final class CheckerFactoryFactory {
     /**
      * Gets the matching unprocessed result.
      *
-     * @param checkerID the checker ID
-     * @param amount the amount
+     * @param checkerID
+     *            the checker ID
+     * @param amount
+     *            the amount
      * @return the matching unprocessed result
      */
     public static List<Result> getMatchingUnprocessedResult(final String checkerID,

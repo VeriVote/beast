@@ -18,8 +18,10 @@ public class NotEmptyExpressionNode extends BooleanExpressionNode {
     /**
      * The constructor.
      *
-     * @param notEmptyExpContext the not empty exp context
-     * @param top the top
+     * @param notEmptyExpContext
+     *            the not empty exp context
+     * @param top
+     *            the top
      */
     public NotEmptyExpressionNode(final NotEmptyExpContext notEmptyExpContext,
                                   final boolean top) {

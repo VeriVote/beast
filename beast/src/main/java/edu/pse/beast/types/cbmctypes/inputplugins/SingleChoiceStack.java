@@ -27,7 +27,9 @@ public class SingleChoiceStack extends CBMCInputType {
     private static final int DIMENSIONS = 1;
 
     /** The Constant SIZE_OF_DIMENSIONS. */
-    private static final String[] SIZE_OF_DIMENSIONS = {UnifiedNameContainer.getCandidate()};
+    private static final String[] SIZE_OF_DIMENSIONS = {
+            UnifiedNameContainer.getCandidate()
+    };
 
     /**
      * The constructor.
@@ -91,7 +93,9 @@ public class SingleChoiceStack extends CBMCInputType {
                     totalSum += Integer.parseInt(currentValues.get(j));
                 }
             }
-            totalSum -= Integer.parseInt(rows.get(rowNumber).getValues().get(positionInRow));
+            totalSum -= Integer.parseInt(
+                    rows.get(rowNumber).getValues().get(positionInRow)
+                    );
             totalSum += Integer.parseInt(newValue);
             if (totalSum > rows.get(rowNumber).getAmountVoters()) {
                 return "0"; // we would exceed the limit with this addition, so
@@ -131,7 +135,7 @@ public class SingleChoiceStack extends CBMCInputType {
         code.add("unsigned int tmp_restr_sum = 0;");
         code.add("for(int loop_r_0 = 0; loop_r_0 < C; loop_r_0++) {");
         code.add("tmp_restr_sum = tmp_restr_sum + " + voteName
-                 + ".arr[loop_r_0];");
+                + ".arr[loop_r_0];");
         code.add("}");
         code.add("assume(tmp_restr_sum <= V);");
     }
@@ -202,14 +206,14 @@ public class SingleChoiceStack extends CBMCInputType {
 
     @Override
     public int getNumVotingPoints(final ResultValueWrapper result) {
-        return GUIController.getController().getElectionSimulation()
-                .getNumVoters();
+        return GUIController.getController().getElectionSimulation().getNumVoters();
     }
 
     /**
      * Test method.
      *
-     * @param i the i
+     * @param i
+     *            the i
      * @return the int
      */
     public int test(final int i) {

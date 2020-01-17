@@ -47,41 +47,53 @@ import javafx.scene.input.KeyEvent;
 /**
  * The Class NewCodeArea.
  */
-public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterface {
+public class NewCodeArea extends AutoCompletionCodeArea
+        implements MenuBarInterface {
 
     /** The Constant TAB_SPACES. */
     private static final int TAB_SPACES = 4;
 
     /** The Constant KEYWORDS. */
     // TODO maybe change to generic styled area
-    private static final String[] KEYWORDS = {
-        "auto", "break", "case", "const", "continue", "default", "do",
-        "else", "error", "const", "continue", "default", "do", "else",
-        "enum", "extern", "for", "goto", "if", "return", "signed",
-        "sizeof", "static", "struct", "switch", "typedef", "union",
-        "unsigned", "volatile", "while"
+    private static final String[] KEYWORDS =
+        {
+        "auto", "break", "case", "const",
+        "continue", "default", "do", "else",
+        "error", "const", "continue",
+        "default", "do", "else", "enum",
+        "extern", "for", "goto", "if",
+        "return", "signed", "sizeof",
+        "static", "struct", "switch",
+        "typedef", "union", "unsigned",
+        "volatile", "while"
         };
 
     /** The Constant PREPROCESSOR. */
-    private static final String[] PREPROCESSOR = {
-        "#define", "#elif", "#endif", "#ifdef", "#ifndef", "#include"
+    private static final String[] PREPROCESSOR =
+        {
+        "#define", "#elif", "#endif",
+        "#ifdef", "#ifndef", "#include"
         };
 
     /** The Constant DATATYPES. */
-    private static final String[] DATATYPES = {
-        "char", "double", "enum", "float", "int", "long", "register", "void"
+    private static final String[] DATATYPES =
+        {
+        "char", "double", "enum",
+        "float", "int", "long",
+        "register", "void"
         };
 
     /** The Constant KEYWORD_PATTERN. */
-    private static final String KEYWORD_PATTERN = "\\b(" + String.join("|", KEYWORDS) + ")\\b";
+    private static final String KEYWORD_PATTERN =
+            "\\b(" + String.join("|", KEYWORDS) + ")\\b";
 
     /** The Constant PREPROCESSOR_PATTERN. */
-    private static final String PREPROCESSOR_PATTERN = "\\b("
-            + String.join("|", PREPROCESSOR) + ")\\b";
+    private static final String PREPROCESSOR_PATTERN =
+            "\\b(" + String.join("|", PREPROCESSOR) + ")\\b";
 
     /** The Constant DATATYPE_PATTERN. */
-    private static final String DATATYPE_PATTERN = "\\b("
-            + String.join("|", DATATYPES) + ")\\b";
+    private static final String DATATYPE_PATTERN =
+            "\\b(" + String.join("|", DATATYPES) + ")\\b";
 
     /** The Constant POINTER_PATTERN. */
     private static final String POINTER_PATTERN =
@@ -91,10 +103,12 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
             + ")\\b";
 
     /** The Constant METHOD_PATTERN. */
-    private static final String METHOD_PATTERN = "[\\w]+[\\s]*\\(";
+    private static final String METHOD_PATTERN =
+            "[\\w]+[\\s]*\\(";
 
     /** The Constant INCLUDE_PATTERN. */
-    private static final String INCLUDE_PATTERN = "[.]*include[\\s]+[<|\"].+\\.[\\w]*[>|\"]";
+    private static final String INCLUDE_PATTERN =
+            "[.]*include[\\s]+[<|\"].+\\.[\\w]*[>|\"]";
 
     /** The Constant PAREN_PATTERN. */
     private static final String PAREN_PATTERN = "\\(|\\)";
@@ -109,11 +123,12 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     private static final String SEMICOLON_PATTERN = "\\;";
 
     /** The Constant STRING_PATTERN. */
-    private static final String STRING_PATTERN = "\"([^\"\\\\]|\\\\.)*\"";
+    private static final String STRING_PATTERN =
+            "\"([^\"\\\\]|\\\\.)*\"";
 
     /** The Constant COMMENT_PATTERN. */
-    private static final String COMMENT_PATTERN = "//[^\n]*" + "|"
-            + "/\\*(.|\\R)*?\\*/";
+    private static final String COMMENT_PATTERN =
+            "//[^\n]*" + "|" + "/\\*(.|\\R)*?\\*/";
 
     /** The Constant KEYWORD_STRING. */
     private static final String KEYWORD_STRING = "KEYWORD";
@@ -153,18 +168,30 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
     /** The Constant PATTERN. */
     private static final Pattern PATTERN = Pattern
-            .compile("(?<" + KEYWORD_STRING + ">" + KEYWORD_PATTERN + ")"
-                    + "|(?<" + PREPROCESSOR_STRING + ">" + PREPROCESSOR_PATTERN
-                    + ")" + "|(?<" + DATATYPE_STRING + ">" + DATATYPE_PATTERN
-                    + ")" + "|(?<" + POINTER_STRING + ">" + POINTER_PATTERN
-                    + ")" + "|(?<" + METHOD_STRING + ">" + METHOD_PATTERN + ")"
-                    + "|(?<" + INCLUDE_STRING + ">" + INCLUDE_PATTERN + ")"
-                    + "|(?<" + PAREN_STRING + ">" + PAREN_PATTERN + ")" + "|(?<"
-                    + BRACE_STRING + ">" + BRACE_PATTERN + ")" + "|(?<"
-                    + BRACKET_STRING + ">" + BRACKET_PATTERN + ")" + "|(?<"
-                    + SEMICOLON_STRING + ">" + SEMICOLON_PATTERN + ")" + "|(?<"
-                    + STRING_STRING + ">" + STRING_PATTERN + ")" + "|(?<"
-                    + COMMENT_STRING + ">" + COMMENT_PATTERN + ")");
+            .compile("(?<" + KEYWORD_STRING + ">"
+                    + KEYWORD_PATTERN + ")"
+                    + "|(?<" + PREPROCESSOR_STRING + ">"
+                    + PREPROCESSOR_PATTERN
+                    + ")" + "|(?<" + DATATYPE_STRING + ">"
+                    + DATATYPE_PATTERN
+                    + ")" + "|(?<" + POINTER_STRING + ">"
+                    + POINTER_PATTERN
+                    + ")" + "|(?<" + METHOD_STRING + ">"
+                    + METHOD_PATTERN + ")"
+                    + "|(?<" + INCLUDE_STRING + ">"
+                    + INCLUDE_PATTERN + ")"
+                    + "|(?<" + PAREN_STRING + ">"
+                    + PAREN_PATTERN + ")" + "|(?<"
+                    + BRACE_STRING + ">"
+                    + BRACE_PATTERN + ")" + "|(?<"
+                    + BRACKET_STRING + ">"
+                    + BRACKET_PATTERN + ")" + "|(?<"
+                    + SEMICOLON_STRING + ">"
+                    + SEMICOLON_PATTERN + ")" + "|(?<"
+                    + STRING_STRING + ">"
+                    + STRING_PATTERN + ")" + "|(?<"
+                    + COMMENT_STRING + ">"
+                    + COMMENT_PATTERN + ")");
 
     /** The Constant RESOURCE. */
     private static final String RESOURCE = "codeAreaSyntaxHighlight.css";
@@ -174,7 +201,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
     /** The select all combination. */
     private final KeyCombination selectAllCombination =
-            new KeyCodeCombination(KeyCode.A, KeyCombination.CONTROL_DOWN); // select all
+            new KeyCodeCombination(KeyCode.A,
+                                   KeyCombination.CONTROL_DOWN); // select all
 
     /** The backspace combination. */
     private final KeyCombination backspaceCombination =
@@ -190,19 +218,23 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
     /** The undo combination. */
     private final KeyCombination undoCombination =
-            new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN); // undo
+            new KeyCodeCombination(KeyCode.Z,
+                                   KeyCombination.CONTROL_DOWN); // undo
 
     /** The redo combination. */
     private final KeyCombination redoCombination =
-            new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN); // redo
+            new KeyCodeCombination(KeyCode.Y,
+                                   KeyCombination.CONTROL_DOWN); // redo
 
     /** The paste combination. */
     private final KeyCombination pasteCombination =
-            new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN); // paste
+            new KeyCodeCombination(KeyCode.V,
+                                   KeyCombination.CONTROL_DOWN); // paste
 
     /** The cut combination. */
     private final KeyCombination cutCombination =
-            new KeyCodeCombination(KeyCode.X, KeyCombination.CONTROL_DOWN); // paste
+            new KeyCodeCombination(KeyCode.X,
+                                   KeyCombination.CONTROL_DOWN); // paste
 
     /** The tabulator combination. */
     private final KeyCombination tabulatorCombination =
@@ -252,8 +284,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         List<String> code = new ArrayList<String>();
         code.add("");
         // code.add(source.getContainer().getInputType().);
-        String stylesheet = this.getClass().getResource(RESOURCE)
-                .toExternalForm();
+        String stylesheet =
+                this.getClass().getResource(RESOURCE).toExternalForm();
         this.getStylesheets().add(stylesheet);
         IntFunction<Node> lineNumbers = LineNumberFactory.get(this);
         this.setParagraphGraphicFactory(lineNumbers);
@@ -295,7 +327,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
 
         this.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
             // System.out.println(event.getCode());
-            if (selectAllCombination.match(event)) { // we just want to select all
+            if (selectAllCombination.match(event)) { // we just want to select
+                                                     // all
                 this.selectAll();
                 consume(event);
             } else if (backspaceCombination.match(event)) {
@@ -311,7 +344,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
             } else if (cutCombination.match(event)) {
                 cut(event);
             } else if (tabulatorCombination.match(event)) {
-                String whitespaces = new String(new char[spacesPerTab]).replace("\0", " ");
+                String whitespaces =
+                        new String(new char[spacesPerTab]).replace("\0", " ");
                 lockedLineSafeInsertText(whitespaces, false, false, null);
                 consume(event);
             }
@@ -327,7 +361,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     /**
      * Consume.
      *
-     * @param event the event
+     * @param event
+     *            the event
      */
     private static void consume(final KeyEvent event) {
         if (event != null) {
@@ -338,7 +373,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     /**
      * Delete.
      *
-     * @param event the event
+     * @param event
+     *            the event
      */
     private void delete(final KeyEvent event) {
         lockedLineSafeInsertText("", false, true, null);
@@ -348,14 +384,16 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     /**
      * Paste.
      *
-     * @param event the event
+     * @param event
+     *            the event
      */
     private void paste(final KeyEvent event) {
         String clipboardText = "";
         try {
             clipboardText = (String) Toolkit.getDefaultToolkit()
                     .getSystemClipboard().getData(DataFlavor.stringFlavor);
-        } catch (HeadlessException | UnsupportedFlavorException | IOException e) {
+        } catch (HeadlessException | UnsupportedFlavorException
+                | IOException e) {
             return;
         }
         lockedLineSafeInsertText(clipboardText, false, false, null);
@@ -365,7 +403,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     /**
      * Cut.
      *
-     * @param event the event
+     * @param event
+     *            the event
      */
     private void cut(final KeyEvent event) {
         String selectedText = this.getSelectedText();
@@ -380,17 +419,18 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     /**
      * Redo.
      *
-     * @param event the event
+     * @param event
+     *            the event
      */
     private void redo(final KeyEvent event) {
-        LiveList<?> redoList = this.getUndoManager().nextRedoProperty()
-                .asList();
+        LiveList<?> redoList =
+                this.getUndoManager().nextRedoProperty().asList();
         if (redoList.size() == 1) {
             List<?> list = (List<?>) redoList.get(0);
             PlainTextChange change = (PlainTextChange) list.get(0);
             System.out.println("redo length:  " + change.getNetLength());
             updateLockedLineNumber(change.getRemovalEnd(),
-                    change.getRemoved().length());
+                                   change.getRemoved().length());
         } else {
             consume(event);
         }
@@ -399,16 +439,17 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     /**
      * Undo.
      *
-     * @param event the event
+     * @param event
+     *            the event
      */
     private void undo(final KeyEvent event) {
-        LiveList<?> undoList = this.getUndoManager().nextUndoProperty()
-                .asList();
+        LiveList<?> undoList =
+                this.getUndoManager().nextUndoProperty().asList();
         if (undoList.size() == 1) {
             List<?> list = (List<?>) undoList.get(0);
             PlainTextChange change = (PlainTextChange) list.get(0);
             updateLockedLineNumber(change.getInsertionEnd(),
-                    -1 * change.getNetLength());
+                                   -1 * change.getNetLength());
         } else {
             consume(event);
         }
@@ -418,10 +459,14 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
      * tries to insert text into this text pane. It will not override locked
      * lines
      *
-     * @param replacement            the text to be inserted
-     * @param backspace            if the backspace key was pressed
-     * @param delete            if the delete key was pressed
-     * @param tuple            alternative variable to set the bounds where text should be
+     * @param replacement
+     *            the text to be inserted
+     * @param backspace
+     *            if the backspace key was pressed
+     * @param delete
+     *            if the delete key was pressed
+     * @param tuple
+     *            alternative variable to set the bounds where text should be
      *            replaced. If it is null, the area to replace will be inferred
      *            from the cursor or the marked area
      * @return true, if successful
@@ -455,7 +500,7 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
                 selectionStart = Math.max(0, selectionStart - 1);
             } else if (delete) {
                 selectionEnd = Math.min(this.getText().length(),
-                        selectionEnd + 1);
+                                        selectionEnd + 1);
             }
             selectionLength = (backspace || delete)
                     ? selectionEnd - selectionStart
@@ -465,11 +510,12 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
         // // find out, if the selected range overlaps with a locked line
         // anywhere
         boolean notOverlapping = ((selectionEnd < lockedLineStart)
-                || (lockedLineEnd <= selectionStart))
-                && (((selectionEnd <= lockedBracePos)
-                        || (lockedBracePos < selectionStart)));
-        if (notOverlapping || (selectionEnd == lockedLineStart
-                && (r.endsWith("\n") || backspace || delete))) {
+                                    || (lockedLineEnd <= selectionStart))
+                                && (((selectionEnd <= lockedBracePos)
+                                        || (lockedBracePos < selectionStart)));
+        if (notOverlapping
+                || (selectionEnd == lockedLineStart
+                    && (r.endsWith("\n") || backspace || delete))) {
             this.replaceText(selectionStart, selectionEnd, r);
             updateLockedLineNumber(selectionEnd, r.length() - selectionLength);
             return true;
@@ -481,8 +527,10 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     /**
      * Update locked line number.
      *
-     * @param changePosition the change position
-     * @param lengthChange the length change
+     * @param changePosition
+     *            the change position
+     * @param lengthChange
+     *            the length change
      */
     private void updateLockedLineNumber(final int changePosition,
                                         final int lengthChange) {
@@ -499,20 +547,25 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     /**
      * Compute highlighting.
      *
-     * @param text the text
+     * @param text
+     *            the text
      * @return the style spans
      */
-    private static StyleSpans<Collection<String>> computeHighlighting(
-            final String text) {
+    private static StyleSpans<Collection<String>> computeHighlighting(final String text) {
         Matcher matcher = PATTERN.matcher(text);
         int lastKwEnd = 0;
-        StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
+        StyleSpansBuilder<Collection<String>> spansBuilder =
+                new StyleSpansBuilder<Collection<String>>();
         while (matcher.find()) {
-            final String[] styleClasses = new String[] {
-                KEYWORD_STRING, PREPROCESSOR_STRING, METHOD_STRING, DATATYPE_STRING,
-                POINTER_STRING, INCLUDE_STRING, PAREN_STRING, BRACE_STRING,
-                BRACKET_STRING, SEMICOLON_STRING, STRING_STRING, COMMENT_STRING
-            };
+            final String[] styleClasses =
+                    new String[] {
+                        KEYWORD_STRING, PREPROCESSOR_STRING,
+                        METHOD_STRING, DATATYPE_STRING,
+                        POINTER_STRING, INCLUDE_STRING,
+                        PAREN_STRING, BRACE_STRING,
+                        BRACKET_STRING, SEMICOLON_STRING,
+                        STRING_STRING, COMMENT_STRING
+                    };
             String styleClass = null;
             for (String style : styleClasses) {
                 if (styleClass == null && matcher.group(style) != null) {
@@ -521,9 +574,9 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
             }
             /* never happens */ assert styleClass != null;
             spansBuilder.add(Collections.emptyList(),
-                    matcher.start() - lastKwEnd);
+                             matcher.start() - lastKwEnd);
             spansBuilder.add(Collections.singleton(styleClass),
-                    matcher.end() - matcher.start());
+                             matcher.end() - matcher.start());
             lastKwEnd = matcher.end();
         }
         spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
@@ -538,21 +591,21 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
      */
     public ElectionDescription getElectionDescription() {
         elecDescription.setLockedPositions(lockedLineStart, lockedLineEnd,
-                lockedBracePos);
-
+                                           lockedBracePos);
         return elecDescription.getDeepCopy();
     }
 
     /**
      * Display errors.
      *
-     * @param codeErrors the code errors
+     * @param codeErrors
+     *            the code errors
      */
     public void displayErrors(final List<CodeError> codeErrors) {
         String toDisplay = "";
         for (CodeError codeError : codeErrors) {
             toDisplay += "line: " + codeError.getLine() + "| Message: "
-                    + codeError.getMsg() + "\n";
+                            + codeError.getMsg() + "\n";
         }
         GUIController.setErrorText(toDisplay);
     }
@@ -560,7 +613,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     /**
      * Sets the new election description.
      *
-     * @param newDescription the new new election description
+     * @param newDescription
+     *            the new new election description
      */
     public void setNewElectionDescription(final ElectionDescription newDescription) {
         this.elecDescription = newDescription;
@@ -581,20 +635,16 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
             saverLoader.resetHasSaveFile();
         }
         this.elecDescription.setLockedPositions(lockedLineStart, lockedLineEnd,
-                lockedBracePos);
+                                                lockedBracePos);
         this.setStyleSpans(0, computeHighlighting(this.getText()));
         saverLoader.resetHasSaveFile();
         // force the undo manager to not be able to return to previous text
         this.getUndoManager().forgetHistory();
-
-        String inputInfo = elecDescription.getContainer().getInputType()
-                .getInfo();
-
-        String outputInfo = elecDescription.getContainer().getOutputType()
-                .getInfo();
-
+        String inputInfo =
+                elecDescription.getContainer().getInputType().getInfo();
+        String outputInfo =
+                elecDescription.getContainer().getOutputType().getInfo();
         String combined = inputInfo + "\n\n\n" + outputInfo;
-
         GUIController.setInfoText(combined);
     }
 
@@ -625,8 +675,10 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     /**
      * Open json.
      *
-     * @param json the json
-     * @param bringToFront the bring to front
+     * @param json
+     *            the json
+     * @param bringToFront
+     *            the bring to front
      */
     private void openJson(final String json, final boolean bringToFront) {
         ElectionDescription newDescription = null;
@@ -647,7 +699,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     /**
      * Open.
      *
-     * @param elecDescFile the elec desc file
+     * @param elecDescFile
+     *            the elec desc file
      */
     public void open(final File elecDescFile) {
         openJson(saverLoader.load(elecDescFile), false);
@@ -668,7 +721,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     /**
      * Save as.
      *
-     * @param file the file
+     * @param file
+     *            the file
      */
     public void saveAs(final File file) {
         saverLoader.saveAs(file, electionSaverLoader
@@ -718,14 +772,16 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     public void autoComplete() {
         Tuple3<List<String>, Integer, Integer> completions =
                 getCompletions(recommendations);
-        processAutocompletion(completions);
+        processAutoCompletion(completions);
     }
 
     @Override
     public void insertAutoCompletion(final int start, final int end,
                                      final String toInsert) {
-        lockedLineSafeInsertText(toInsert, false, false,
-                new Tuple<Integer, Integer>(start, end));
+        lockedLineSafeInsertText(
+                toInsert, false, false,
+                new Tuple<Integer, Integer>(start, end)
+        );
     }
 
     /**
@@ -740,7 +796,8 @@ public class NewCodeArea extends AutoCompletionCodeArea implements MenuBarInterf
     /**
      * Sets the last char.
      *
-     * @param lastCharString the new last char
+     * @param lastCharString
+     *            the new last char
      */
     public void setLastChar(final String lastCharString) {
         this.lastChar = lastCharString;

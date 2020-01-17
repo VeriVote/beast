@@ -27,7 +27,8 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
 
     /** The Constant COMPILER_STRING. */
     // the compiler we use on windows, because it is also needed by cbmc
-    private static final String COMPILER_STRING = "cl" + FileLoader.EXE_FILE_ENDING;
+    private static final String COMPILER_STRING =
+            "cl" + FileLoader.EXE_FILE_ENDING;
 
     /** The Constant CMD_STRING. */
     private static final String CMD_STRING = "cmd" + FileLoader.EXE_FILE_ENDING;
@@ -49,14 +50,14 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
     public Process checkCodeFileForErrors(final File toCheck) {
         String vsCmd = null;
         Process startedProcess = null;
-        String userIncludeAndPath
-              = ENABLE_USER_INCLUDE + "\"" + SuperFolderFinder.getSuperFolder()
-                + USER_INCLUDE_FOLDER + "\"";
+        String userIncludeAndPath = ENABLE_USER_INCLUDE + "\""
+                + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER
+                + "\"";
         // we have to compile all includes that the user puts in that folder, in
         // case some of them are needed
-        String compileAllIncludesInIncludePath
-              = "\"" + SuperFolderFinder.getSuperFolder()
-                + USER_INCLUDE_FOLDER + COMPILE_ALL_INCLUDES_IN_FOLDER + "\"";
+        String compileAllIncludesInIncludePath = "\""
+                + SuperFolderFinder.getSuperFolder() + USER_INCLUDE_FOLDER
+                + COMPILE_ALL_INCLUDES_IN_FOLDER + "\"";
 
         // try to get the vsCMD
         try {
@@ -66,39 +67,38 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
         }
         if (vsCmd == null) {
             ErrorForUserDisplayer.displayError(
-                "The program \"VsDevCmd.bat\" could not be found. "
-                + "It is required to run this program, so "
-                + "please supply it with it. \n"
-                + " To do so, download the Visual Studio Community Version, "
-                + "install it (including the C++ pack). \n "
-                + "Then, search for the VsDevCmd.bat in it, and copy and paste "
-                + "it into the foler /windows/ in the BEAST installation folder.");
+                    "The program \"VsDevCmd.bat\" could not be found. "
+                            + "It is required to run this program, so "
+                            + "please supply it with it. \n"
+                            + " To do so, download the Visual Studio Community Version, "
+                            + "install it (including the C++ pack). \n "
+                            + "Then, search for the VsDevCmd.bat in it, and copy and paste "
+                            + "it into the foler /windows/ in the BEAST installation folder.");
             return null;
         } else {
             // Since Windows is weird, the whole call that will get placed
             // inside VScmd has to be in one giant string. Put the created
             // file in the output directory, such that it can be deleted
             // afterwards.
-            String clExeCall
-                = "\"" + vsCmd + "\"" + " & "
-                  + COMPILER_STRING + " " + userIncludeAndPath + " "
-                  + ("\"" + toCheck.getAbsolutePath() + "\"") + " "
-                  + (" /Fo" + toCheck.getParent() + "\\ ")
-                  + (" /Fe" + toCheck.getParent() + "\\ ")
-                  + compileAllIncludesInIncludePath;
+            String clExeCall = "\"" + vsCmd + "\"" + " & " + COMPILER_STRING
+                    + " " + userIncludeAndPath + " "
+                    + ("\"" + toCheck.getAbsolutePath() + "\"") + " "
+                    + (" /Fo" + toCheck.getParent() + "\\ ")
+                    + (" /Fe" + toCheck.getParent() + "\\ ")
+                    + compileAllIncludesInIncludePath;
             List<String> callInList = new ArrayList<String>();
             callInList.add(clExeCall);
-            File batFile
-                = new File(toCheck.getParent() + "\\"
-                           + toCheck.getName().replace(FileLoader.C_FILE_ENDING,
-                                                       FileLoader.BAT_FILE_ENDING));
+            File batFile = new File(toCheck.getParent() + "\\"
+                    + toCheck.getName().replace(FileLoader.C_FILE_ENDING,
+                            FileLoader.BAT_FILE_ENDING));
             FileSaver.writeStringLinesToFile(callInList, batFile);
             // This call starts a new VScmd instance and let's cl.exe (the
             // compiler) run in it.
             // ProcessBuilder prossBuild = new ProcessBuilder("cmd.exe", "/c",
             // clExeCall);
-            ProcessBuilder prossBuild
-                = new ProcessBuilder(CMD_STRING, "/c", batFile.getAbsolutePath());
+            ProcessBuilder prossBuild =
+                    new ProcessBuilder(CMD_STRING, "/c",
+                                       batFile.getAbsolutePath());
             try {
                 startedProcess = prossBuild.start();
             } catch (IOException e) {
@@ -119,9 +119,10 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
         Pattern lineExtractor = Pattern.compile("((.*)(\\([0-9]*\\))(.*))");
 
         // cl.exe prints out the results in the result list
-        for (Iterator<String> iterator = result.iterator(); iterator.hasNext();) {
-            String line = iterator.next();
-            Matcher linesMatcher = lineExtractor.matcher(line);
+        for (final Iterator<String> iterator = result.iterator();
+                iterator.hasNext();) {
+            final String line = iterator.next();
+            final Matcher linesMatcher = lineExtractor.matcher(line);
             int lineNumber = -1;
             String varName = "";
             String message = "";
@@ -131,39 +132,43 @@ public class WindowsErrorChecker extends SystemSpecificErrorChecker {
                     // identifier, so we do not need to worry
                     // about code injection from strings or such
                     // then we split at "(" and ")" to extract the number
-                    lineNumber
-                          = Integer.parseInt(
-                                  linesMatcher.group(1).split("\\(")[1]
-                                          .split("\\)")[0]
-                                  ) - lineOffset;
+                    lineNumber =
+                            Integer.parseInt(linesMatcher.group(1).split("\\(")[1]
+                                                .split("\\)")[0]) - lineOffset;
                     // get the error message here by splitting at a common
                     // (error/warning C[ERRORNUMBER]) identifier
-                    String[] varAndMessage = line.split("([a-zA-Z]+ C[0-9]+:)");
+                    final String[] varAndMessage = line.split("([a-zA-Z]+ C[0-9]+:)");
                     // String msg = line.substring(line.lastIndexOf(":"));
                     // to prevent exceptions
                     if (varAndMessage.length > 1) {
                         String toSplit = varAndMessage[1];
-                        // the variable and compiler message is between ":"'s, so
+                        // the variable and compiler message is between ":"'s,
+                        // so
                         // we split there.
                         if (toSplit.contains(":")) {
-                            varName = toSplit.split(":")[0].replaceAll("\"", "");
+                            varName =
+                                    toSplit.split(":")[0].replaceAll("\"", "");
                             message = toSplit.split(":")[1];
                         } else {
                             message = toSplit;
                         }
                     }
-                    codeErrors.add(
-                        CCodeErrorFactory.generateCompilerError(lineNumber,
-                                                                -1, varName,
-                                                                message));
+                    codeErrors.add(CCodeErrorFactory.generateCompilerError(
+                                    lineNumber, -1, varName, message)
+                    );
                 } catch (NumberFormatException e) {
-                    ErrorLogger.log("cannot parse the current error line from cl.exe");
+                    ErrorLogger.log("cannot parse the current"
+                                    + " error line from cl.exe");
                 }
             } else if (line.contains(" : error LNK")) {
                 String[] splittedArray = line.split(":");
                 if (splittedArray.length >= 2) {
                     String subString = splittedArray[2];
-                    codeErrors.add(CCodeErrorFactory.generateCompilerError(-1, -1, "", subString));
+                    codeErrors.add(
+                            CCodeErrorFactory.generateCompilerError(
+                                    -1, -1, "", subString
+                                    )
+                    );
                 }
             }
         }

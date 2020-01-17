@@ -19,7 +19,9 @@ public class ParliamentStack extends CBMCOutputType {
     private static final int DIMENSIONS = 1;
 
     /** The Constant SIZE_OF_DIMENSIONS. */
-    private static final String[] SIZE_OF_DIMENSIONS = {UnifiedNameContainer.getCandidate()};
+    private static final String[] SIZE_OF_DIMENSIONS = {
+            UnifiedNameContainer.getCandidate()
+    };
 
     /**
      * The constructor.
@@ -81,8 +83,8 @@ public class ParliamentStack extends CBMCOutputType {
     }
 
     @Override
-    public CodeArrayListBeautifier addVotesArrayAndInit(
-            final CodeArrayListBeautifier code, final int voteNumber) {
+    public CodeArrayListBeautifier addVotesArrayAndInit(final CodeArrayListBeautifier code,
+                                                        final int voteNumber) {
         String electX = super.getContainer().getOutputStruct().getStructAccess()
                 + " elect" + voteNumber + " = "
                 + UnifiedNameContainer.getVotingMethod() + "(votes" + voteNumber
@@ -98,8 +100,10 @@ public class ParliamentStack extends CBMCOutputType {
 
     @Override
     public InternalTypeContainer getInternalTypeContainer() {
-        return new InternalTypeContainer(new InternalTypeContainer(InternalTypeRep.CANDIDATE),
-                                         InternalTypeRep.VOTER);
+        return new InternalTypeContainer(
+                new InternalTypeContainer(InternalTypeRep.CANDIDATE),
+                InternalTypeRep.VOTER
+        );
     }
 
     @Override

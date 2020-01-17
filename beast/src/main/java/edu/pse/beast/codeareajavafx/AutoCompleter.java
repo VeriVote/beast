@@ -45,7 +45,8 @@ public class AutoCompleter {
         box.setSpacing(0);
         box.getChildren().add(list);
         // autoCompletionStage.getIcons().add(new Image("file:///" +
-        // SuperFolderFinder.getSuperFolder() + "/core/images/other/autocomplete.png"));
+        // SuperFolderFinder.getSuperFolder() +
+        // "/core/images/other/autocomplete.png"));
         list.prefWidthProperty().bind(autoCompletionStage.widthProperty());
         list.prefHeightProperty().bind(autoCompletionStage.heightProperty());
         scene = new Scene(box, SCENE_WIDTH, SCENE_HEIGHT);
@@ -78,8 +79,10 @@ public class AutoCompleter {
      */
     private void notifyCaller() {
         synchronized (this) {
-            if (caller != null && list.getSelectionModel().getSelectedItem() != null) {
-                caller.insertHiddenAutoCompletion(list.getSelectionModel().getSelectedItem());
+            if (caller != null
+                    && list.getSelectionModel().getSelectedItem() != null) {
+                caller.insertHiddenAutoCompletion(
+                        list.getSelectionModel().getSelectedItem());
             }
         }
         reset();
@@ -88,10 +91,14 @@ public class AutoCompleter {
     /**
      * Show auto completion windows.
      *
-     * @param x the x
-     * @param y the y
-     * @param content the content
-     * @param c the c
+     * @param x
+     *            the x
+     * @param y
+     *            the y
+     * @param content
+     *            the content
+     * @param c
+     *            the c
      */
     public synchronized void showAutoCompletionWindows(final int x, final int y,
                                                        final List<String> content,

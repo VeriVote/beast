@@ -16,11 +16,12 @@ public final class FormalPropertySaverLoader {
     private FormalPropertySaverLoader() { }
 
     /**
-     * Creates a String from a given FormalPropertiesDescription, that can then be
-     * saved to a file and later given to createFromSaveString() to retrieve the
-     * saved object.
+     * Creates a String from a given FormalPropertiesDescription, that can then
+     * be saved to a file and later given to createFromSaveString() to retrieve
+     * the saved object.
      *
-     * @param desc the FormalPropertiesDescription
+     * @param desc
+     *            the FormalPropertiesDescription
      * @return the saveString
      */
     public static String createSaveString(final FormalPropertiesDescription desc) {
@@ -31,10 +32,13 @@ public final class FormalPropertySaverLoader {
      * Creates a FormalPropertiesDescription object from a given, by
      * createSaveString() generated, saveString.
      *
-     * @param saveString the saveString
+     * @param saveString
+     *            the saveString
      * @return the FormalPropertiesDescription object
      */
     public static FormalPropertiesDescription createFromSaveString(final String saveString) {
-        return new FormalPropertiesDescription(StringSaverLoader.createFromSaveString(saveString));
+        return new FormalPropertiesDescription(
+                StringSaverLoader.createFromSaveString(saveString)
+                );
     }
 }

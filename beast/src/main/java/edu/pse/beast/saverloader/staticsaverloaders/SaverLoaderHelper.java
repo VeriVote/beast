@@ -16,38 +16,45 @@ public class SaverLoaderHelper {
     /**
      * Gets the string for attr.
      *
-     * @param attrName the attr name
-     * @param content the content
+     * @param attrName
+     *            the attr name
+     * @param content
+     *            the content
      * @return the string for attr
      */
     public String getStringForAttr(final String attrName,
                                    final String content) {
-        return attrName.length() + " " + attrName + content.length() + " " + content;
+        return attrName.length() + " " + attrName + content.length() + " "
+                + content;
     }
 
     /**
      * Gets the string for attr.
      *
-     * @param attrName the attr name
-     * @param content the content
+     * @param attrName
+     *            the attr name
+     * @param content
+     *            the content
      * @return the string for attr
      */
-    public String getStringForAttr(final String attrName,
-                                   final int content) {
-        String contentString = String.valueOf(content);
-        return attrName.length() + " " + attrName + contentString.length() + " " + contentString;
+    public String getStringForAttr(final String attrName, final int content) {
+        final String contentString = String.valueOf(content);
+        return attrName.length() + " " + attrName + contentString.length() + " "
+                + contentString;
     }
 
     /**
      * Gets the string for attr.
      *
-     * @param attrName the attr name
-     * @param content the content
+     * @param attrName
+     *            the attr name
+     * @param content
+     *            the content
      * @return the string for attr
      */
     public String getStringForAttr(final String attrName,
                                    final List<String> content) {
-        StringBuilder code = new StringBuilder();
+        final StringBuilder code = new StringBuilder();
         content.forEach(s -> code.append(s + "\n"));
         return getStringForAttr(attrName, code.toString());
     }
@@ -55,23 +62,25 @@ public class SaverLoaderHelper {
     /**
      * Parses the save string.
      *
-     * @param saveFile the save file
+     * @param saveFile
+     *            the save file
      * @return the map
      */
     public Map<String, String> parseSaveString(final String saveFile) {
-        Map<String, String> attrNameToContent = new HashMap<>();
+        Map<String, String> attrNameToContent = new HashMap<String, String>();
         currentSaveString = saveFile;
         try {
             while (currentSaveString.length() > 0) {
                 int len = getNumberAndRemoveNumberPartFromString();
-                String attr = getAttrFromStringAndRemoveIt(len);
+                final String attr = getAttrFromStringAndRemoveIt(len);
                 len = getNumberAndRemoveNumberPartFromString();
-                String cont = getAttrFromStringAndRemoveIt(len);
+                final String cont = getAttrFromStringAndRemoveIt(len);
                 attrNameToContent.put(attr, cont);
             }
         } catch (StringIndexOutOfBoundsException ex) {
             // if the string gets loaded from the file it ends with a \n which
-            // causes the load algorithm to throw a StringIndexOutOfBoundsException
+            // causes the load algorithm to throw a
+            // StringIndexOutOfBoundsException
             // this exception can safely be ignored
         }
         return attrNameToContent;
@@ -80,11 +89,12 @@ public class SaverLoaderHelper {
     /**
      * Gets the attr from string and remove it.
      *
-     * @param len the len
+     * @param len
+     *            the len
      * @return the attr from string and remove it
      */
     private String getAttrFromStringAndRemoveIt(final int len) {
-        String attr = currentSaveString.substring(0, len);
+        final String attr = currentSaveString.substring(0, len);
         currentSaveString = currentSaveString.substring(len);
         return attr;
     }
@@ -99,7 +109,7 @@ public class SaverLoaderHelper {
         while (currentSaveString.charAt(i) != ' ') {
             i++;
         }
-        String numberS = currentSaveString.substring(0, i);
+        final String numberS = currentSaveString.substring(0, i);
         currentSaveString = currentSaveString.substring(i + 1);
         return Integer.valueOf(numberS);
     }

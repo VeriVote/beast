@@ -27,8 +27,10 @@ public class ErrorWindow {
     /**
      * Constructor.
      *
-     * @param pane              JTextPane for ErrorWindow
-     * @param stringLoaderInterface stringLoaderInterface to load needed Strings
+     * @param pane
+     *            JTextPane for ErrorWindow
+     * @param stringLoaderInterface
+     *            stringLoaderInterface to load needed Strings
      */
     public ErrorWindow(final JTextPane pane,
                        final StringLoaderInterface stringLoaderInterface) {
@@ -39,17 +41,19 @@ public class ErrorWindow {
     /**
      * Method to display ArrayList of Errors in the ErrorWindow.
      *
-     * @param errors          ArrayList of Errors
-     * @param cErrorDisplayer Error displayer
+     * @param errors
+     *            ArrayList of Errors
+     * @param cErrorDisplayer
+     *            Error displayer
      */
     public void displayErrors(final ArrayList<CodeError> errors,
                               final CErrorDisplayer cErrorDisplayer) {
         String errorsAsString = errorString + ": " + errors.size() + "\n";
         for (int i = 0; i < errors.size(); i++) {
-            errorsAsString +=
-                (i + 1) + ": " + cErrorDisplayer.createMsg(errors.get(i))
-                + " (" + lineString + " " + (errors.get(i).getLine() - 1) + ")"
-                + "\n";
+            errorsAsString += (i + 1) + ": "
+                    + cErrorDisplayer.createMsg(errors.get(i)) + " ("
+                    + lineString + " " + (errors.get(i).getLine() - 1) + ")"
+                    + "\n";
         }
         textPane.setText(errorsAsString);
     }
@@ -57,14 +61,15 @@ public class ErrorWindow {
     /**
      * Update the language dependent displayed Strings in this class.
      *
-     * @param stringLoaderInterface the new stringLoaderInterface
+     * @param stringLoaderInterface
+     *            the new stringLoaderInterface
      */
     public void updateStringRes(final StringLoaderInterface stringLoaderInterface) {
-        errorString
-            = stringLoaderInterface.getBooleanExpEditorStringResProvider()
-              .getBooleanExpErrorStringRes().getStringFromID("error");
-        lineString
-            = stringLoaderInterface.getBooleanExpEditorStringResProvider()
-              .getBooleanExpErrorStringRes().getStringFromID("line");
+        errorString = stringLoaderInterface
+                .getBooleanExpEditorStringResProvider()
+                .getBooleanExpErrorStringRes().getStringFromID("error");
+        lineString = stringLoaderInterface
+                .getBooleanExpEditorStringResProvider()
+                .getBooleanExpErrorStringRes().getStringFromID("line");
     }
 }

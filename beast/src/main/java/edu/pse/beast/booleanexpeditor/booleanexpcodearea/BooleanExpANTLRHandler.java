@@ -27,7 +27,8 @@ public class BooleanExpANTLRHandler {
     /**
      * Constructor.
      *
-     * @param inputString the StyledDocument instance to analyze
+     * @param inputString
+     *            the StyledDocument instance to analyze
      */
     public BooleanExpANTLRHandler(final String inputString) {
         this.input = inputString;
@@ -37,9 +38,9 @@ public class BooleanExpANTLRHandler {
     }
 
     /**
-     * Method that parses the current input of a BooleanExpCodeArea and returns a
-     * FormalPropertyDescriptionParser.BooleanExpListContext object which can then
-     * be used for building an AST out of the input.
+     * Method that parses the current input of a BooleanExpCodeArea and returns
+     * a FormalPropertyDescriptionParser.BooleanExpListContext object which can
+     * then be used for building an AST out of the input.
      *
      * @return a BooleanExpListContext node from the ANTLR generated ParseTree.
      */
@@ -62,8 +63,8 @@ public class BooleanExpANTLRHandler {
     /**
      * Method that gets the macro regular expressions.
      *
-     * @return s a String array of regular expressions matching all possible macros.
-     *         Used for SyntaxHL.
+     * @return s a String array of regular expressions matching all possible
+     *         macros. Used for SyntaxHL.
      */
     public String[] getMacroRegex() {
         return new String[] {
@@ -94,8 +95,8 @@ public class BooleanExpANTLRHandler {
     /**
      * Method that gets the logical operators.
      *
-     * @return s a String array of regular expressions matching all possible logical
-     *         operators. Used for SyntaxHL.
+     * @return s a String array of regular expressions matching all possible
+     *         logical operators. Used for SyntaxHL.
      */
     public String[] getLogicalOperators() {
         return new String[] {"==>", "<==>", "&&", "||"};

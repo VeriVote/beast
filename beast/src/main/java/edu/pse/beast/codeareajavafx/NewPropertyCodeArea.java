@@ -26,57 +26,67 @@ import javafx.scene.control.IndexRange;
 /**
  * The Class NewPropertyCodeArea.
  */
-public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuBarInterface {
+public class NewPropertyCodeArea extends AutoCompletionCodeArea
+        implements MenuBarInterface {
 
     /** The Constant OPERATORS. */
-    private static final String[] OPERATORS = {"\\*", "/", "\\+", "-"};
+    private static final String[] OPERATORS =
+        {
+        "\\*", "/", "\\+", "-"
+        };
 
     /** The Constant COMPARISON. */
-    private static final String[] COMPARISON
-        = {"==", "\\!\\=", "\\<\\=", "\\>\\=", "\\<", "\\>"};
+    private static final String[] COMPARISON =
+        {
+        "==", "\\!\\=", "\\<\\=",
+        "\\>\\=", "\\<", "\\>"
+        };
 
     /** The Constant RELATION. */
-    private static final String[] RELATION
-        = {"&&", "\\|\\|", "==>", "<==>", "<--", "\\+\\+"};
+    private static final String[] RELATION =
+        {
+        "&&", "\\|\\|", "==>", "<==>",
+        "<--", "\\+\\+"
+        };
 
     /** The Constant MACROS. */
-    private static final String[] MACROS
-        = {
-            "VOTES", "ELECT", "VOTE_SUM_FOR_CANDIDATE",
-            "VOTE_SUM_FOR_UNIQUE_CANDIDATE"
+    private static final String[] MACROS =
+        {
+        "VOTES", "ELECT",
+        "VOTE_SUM_FOR_CANDIDATE", "VOTE_SUM_FOR_UNIQUE_CANDIDATE"
         };
 
     /** The Constant QUANTIFIERS. */
-    private static final String[] QUANTIFIERS
-        = {
-            "FOR_ALL_VOTERS", "FOR_ALL_CANDIDATES", "FOR_ALL_SEATS",
-            "EXISTS_ONE_VOTER", "EXISTS_ONE_CANDIDATE", "EXISTS_ONE_SEAT",
-            "PERM", "SPLIT", "INTERSECT", "NOTEMPTY"
+    private static final String[] QUANTIFIERS =
+        {
+        "FOR_ALL_VOTERS", "FOR_ALL_CANDIDATES",
+        "FOR_ALL_SEATS", "EXISTS_ONE_VOTER",
+        "EXISTS_ONE_CANDIDATE", "EXISTS_ONE_SEAT",
+        "PERM", "SPLIT",
+        "INTERSECT", "NOTEMPTY"
         };
 
     /** The Constant OPERATORS_PATTERN. */
-    private static final String OPERATORS_PATTERN
-            = "(" + String.join("|", OPERATORS) + ")";
+    private static final String OPERATORS_PATTERN =
+            "(" + String.join("|", OPERATORS) + ")";
 
     /** The Constant COMPARISON_PATTERN. */
-    private static final String COMPARISON_PATTERN
-            = "(" + String.join("|", COMPARISON) + ")";
+    private static final String COMPARISON_PATTERN =
+            "(" + String.join("|", COMPARISON) + ")";
 
     /** The Constant RELATION_PATTERN. */
-    private static final String RELATION_PATTERN
-            = "(" + String.join("|", RELATION) + ")";
+    private static final String RELATION_PATTERN =
+            "(" + String.join("|", RELATION) + ")";
 
     /** The Constant MACROS_PATTERN. */
-    private static final String MACROS_PATTERN
-          = "\\b("
-            + String.join(
-                "|",
-                Arrays.stream(MACROS).map(s
-                    -> s + "[0-9]+").toArray(String[]::new)) + ")\\b";
+    private static final String MACROS_PATTERN =
+            "\\b(" + String.join("|",
+                    Arrays.stream(MACROS).map(s -> s + "[0-9]+").toArray(String[]::new))
+            + ")\\b";
 
     /** The Constant QUANTIFIERS_PATTERN. */
-    private static final String QUANTIFIERS_PATTERN
-          = "\\b(" + String.join("|", QUANTIFIERS) + ")\\b";
+    private static final String QUANTIFIERS_PATTERN =
+            "\\b(" + String.join("|", QUANTIFIERS) + ")\\b";
 
     /** The Constant PAREN_PATTERN. */
     private static final String PAREN_PATTERN = "\\(|\\)";
@@ -106,14 +116,21 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
     private static final String SEMICOLON_STRING = "SEMICOLON";
 
     /** The Constant PATTERN. */
-    private static final Pattern PATTERN = Pattern.compile(
-            "(?<" + OPERATORS_STRING + ">" + OPERATORS_PATTERN + ")"
-            + "|(?<" + RELATION_STRING + ">" + RELATION_PATTERN + ")"
-            + "|(?<" + COMPARISON_STRING + ">" + COMPARISON_PATTERN + ")"
-            + "|(?<" + MACROS_STRING + ">" + MACROS_PATTERN + ")"
-            + "|(?<" + QUANTIFIERS_STRING + ">" + QUANTIFIERS_PATTERN + ")"
-            + "|(?<" + PAREN_STRING + ">" + PAREN_PATTERN + ")"
-            + "|(?<" + SEMICOLON_STRING + ">" + SEMICOLON_PATTERN + ")");
+    private static final Pattern PATTERN =
+            Pattern.compile("(?<" + OPERATORS_STRING + ">"
+                                + OPERATORS_PATTERN + ")"
+                                + "|(?<" + RELATION_STRING + ">"
+                                + RELATION_PATTERN + ")"
+                                + "|(?<" + COMPARISON_STRING + ">"
+                                + COMPARISON_PATTERN + ")"
+                                + "|(?<" + MACROS_STRING + ">"
+                                + MACROS_PATTERN + ")"
+                                + "|(?<" + QUANTIFIERS_STRING + ">"
+                                + QUANTIFIERS_PATTERN + ")"
+                                + "|(?<" + PAREN_STRING + ">"
+                                + PAREN_PATTERN + ")"
+                                + "|(?<" + SEMICOLON_STRING + ">"
+                                + SEMICOLON_PATTERN + ")");
 
     /** The Constant RESOURCE. */
     private static final String RESOURCE = "propertyAreaSyntaxHighlight.css";
@@ -134,7 +151,8 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
         NewPropertyCodeArea reference = this;
         this.focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void changed(final ObservableValue<? extends Boolean> observable,
+            public void changed(final ObservableValue<? extends Boolean>
+                                        observable,
                                 final Boolean oldValue,
                                 final Boolean newValue) {
                 if (newValue != null && newValue) {
@@ -145,49 +163,47 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
         // add all standard recommendations
         recommendations.addAll(Arrays.asList(MACROS));
         recommendations.addAll(Arrays.asList(QUANTIFIERS));
-        String stylesheet = this.getClass().getResource(RESOURCE).toExternalForm();
+        String stylesheet =
+                this.getClass().getResource(RESOURCE).toExternalForm();
 
         this.getStylesheets().add(stylesheet);
         IntFunction<Node> lineNumbers = LineNumberFactory.get(this);
         this.setParagraphGraphicFactory(lineNumbers);
-        this.richChanges().filter(ch
-            -> !ch.getInserted().equals(ch.getRemoved())).subscribe(change
-                -> {
-                this.setStyleSpans(0, computeHighlighting(this.getText()));
-            });
+        this.richChanges()
+                .filter(ch -> !ch.getInserted().equals(ch.getRemoved()))
+                .subscribe(change -> {
+                    this.setStyleSpans(0, computeHighlighting(this.getText()));
+                });
         this.replaceText(0, 0, ""); // reset the text
     }
 
     /**
      * Compute highlighting.
      *
-     * @param text the text
+     * @param text
+     *            the text
      * @return the style spans
      */
     private static StyleSpans<Collection<String>> computeHighlighting(final String text) {
         Matcher matcher = PATTERN.matcher(text);
         int lastKwEnd = 0;
-        StyleSpansBuilder<Collection<String>> spansBuilder = new StyleSpansBuilder<>();
+        StyleSpansBuilder<Collection<String>> spansBuilder =
+                new StyleSpansBuilder<Collection<String>>();
         while (matcher.find()) {
-            String styleClass
-                = matcher.group(OPERATORS_STRING) != null
-                  ? OPERATORS_STRING.toLowerCase()
-                      : matcher.group(COMPARISON_STRING) != null
-                      ? COMPARISON_STRING.toLowerCase()
-                          : matcher.group(RELATION_STRING) != null
-                          ? RELATION_STRING.toLowerCase()
-                              : matcher.group(MACROS_STRING) != null
-                              ? MACROS_STRING.toLowerCase()
-                                  : matcher.group(QUANTIFIERS_STRING) != null
-                                  ? QUANTIFIERS_STRING.toLowerCase()
-                                      : matcher.group(PAREN_STRING) != null
-                                      ? PAREN_STRING.toLowerCase()
-                                          : matcher.group(SEMICOLON_STRING) != null
-                                          ? SEMICOLON_STRING.toLowerCase()
-                                              : null;
+            String styleClass =
+                    matcher.group(OPERATORS_STRING) != null
+                    ? OPERATORS_STRING.toLowerCase() : matcher.group(COMPARISON_STRING) != null
+                    ? COMPARISON_STRING.toLowerCase() : matcher.group(RELATION_STRING) != null
+                    ? RELATION_STRING.toLowerCase() : matcher.group(MACROS_STRING) != null
+                    ? MACROS_STRING.toLowerCase() : matcher.group(QUANTIFIERS_STRING) != null
+                    ? QUANTIFIERS_STRING.toLowerCase() : matcher.group(PAREN_STRING) != null
+                    ? PAREN_STRING.toLowerCase() : matcher.group(SEMICOLON_STRING) != null
+                    ? SEMICOLON_STRING.toLowerCase() : null;
             /* never happens */ assert styleClass != null;
-            spansBuilder.add(Collections.emptyList(), matcher.start() - lastKwEnd);
-            spansBuilder.add(Collections.singleton(styleClass), matcher.end() - matcher.start());
+            spansBuilder.add(Collections.emptyList(),
+                             matcher.start() - lastKwEnd);
+            spansBuilder.add(Collections.singleton(styleClass),
+                             matcher.end() - matcher.start());
             lastKwEnd = matcher.end();
         }
         spansBuilder.add(Collections.emptyList(), text.length() - lastKwEnd);
@@ -198,7 +214,8 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
      * Sets the description for this property codearea (either pre or post prop
      * description).
      *
-     * @param descr the description
+     * @param descr
+     *            the description
      */
     public void setDescription(final FormalPropertiesDescription descr) {
         saveDescription(descr);
@@ -209,9 +226,11 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
     /**
      * Save description.
      *
-     * @param newDescription the new description
+     * @param newDescription
+     *            the new description
      */
-    public void saveDescription(final FormalPropertiesDescription newDescription) {
+    public void saveDescription(
+            final FormalPropertiesDescription newDescription) {
         if (this.description != null) {
             this.description.setCode(this.textProperty().getValue());
         }
@@ -219,8 +238,10 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
 
     @Override
     public void autoComplete() {
-        Tuple3<List<String>, Integer, Integer> completion = getCompletions(recommendations);
-        processAutocompletion(completion.first(), completion.second(), completion.third());
+        Tuple3<List<String>, Integer, Integer> completion =
+                getCompletions(recommendations);
+        processAutoCompletion(completion.first(), completion.second(),
+                              completion.third());
     }
 
     @Override
@@ -278,7 +299,8 @@ public class NewPropertyCodeArea extends AutoCompletionCodeArea implements MenuB
     /**
      * Sets the parent.
      *
-     * @param parentEditor the new parent
+     * @param parentEditor
+     *            the new parent
      */
     public void setParent(final BooleanExpEditorNEW parentEditor) {
         this.parent = parentEditor;

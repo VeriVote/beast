@@ -25,8 +25,10 @@ public class TextAddedAction implements Action {
     /**
      * Instantiates a new text added action.
      *
-     * @param textDelta the text delta
-     * @param styledDoc the styled doc
+     * @param textDelta
+     *            the text delta
+     * @param styledDoc
+     *            the styled doc
      */
     public TextAddedAction(final TextDelta textDelta,
                            final StyledDocument styledDoc) {
@@ -39,7 +41,8 @@ public class TextAddedAction implements Action {
         try {
             doc.remove(td.getOffset(), td.getText().length());
         } catch (BadLocationException ex) {
-            Logger.getLogger(TextAddedAction.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TextAddedAction.class.getName())
+                    .log(Level.SEVERE, null, ex);
         }
     }
 
@@ -48,7 +51,8 @@ public class TextAddedAction implements Action {
         try {
             doc.insertString(td.getOffset(), td.getText(), null);
         } catch (BadLocationException ex) {
-            Logger.getLogger(TextAddedAction.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TextAddedAction.class.getName())
+                    .log(Level.SEVERE, null, ex);
         }
     }
 }

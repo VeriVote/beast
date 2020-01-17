@@ -12,7 +12,8 @@ import edu.pse.beast.types.InternalTypeContainer;
 public class BooleanExpScopehandler {
 
     /** The current scopes. */
-    private final ArrayList<BooleanExpScope> currentScopes = new ArrayList<>();
+    private final ArrayList<BooleanExpScope> currentScopes =
+            new ArrayList<BooleanExpScope>();
 
     /**
      * The constructor.
@@ -24,7 +25,8 @@ public class BooleanExpScopehandler {
     /**
      * Enter new scope.
      *
-     * @param scope the scope
+     * @param scope
+     *            the scope
      */
     public void enterNewScope(final BooleanExpScope scope) {
         currentScopes.add(scope);
@@ -40,11 +42,12 @@ public class BooleanExpScopehandler {
     /**
      * Adds the variable.
      *
-     * @param id the id
-     * @param type the type
+     * @param id
+     *            the id
+     * @param type
+     *            the type
      */
-    public void addVariable(final String id,
-                            final InternalTypeContainer type) {
+    public void addVariable(final String id, final InternalTypeContainer type) {
         if (currentScopes.size() == 0) {
             enterNewScope();
         }
@@ -54,7 +57,8 @@ public class BooleanExpScopehandler {
     /**
      * Gets the type for variable.
      *
-     * @param id the id
+     * @param id
+     *            the id
      * @return the type for variable
      */
     public InternalTypeContainer getTypeForVariable(final String id) {
@@ -71,7 +75,8 @@ public class BooleanExpScopehandler {
     /**
      * Removes the from top scope.
      *
-     * @param id the id
+     * @param id
+     *            the id
      */
     public void removeFromTopScope(final String id) {
         currentScopes.get(0).remove(id);

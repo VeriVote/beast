@@ -13,7 +13,7 @@ import edu.pse.beast.datatypes.propertydescription.PreAndPostConditionsDescripti
  * @author Lukas Stapelbroek
  */
 public class PropertyDescriptionSaverLoader
-                implements SaverLoader<PreAndPostConditionsDescription> {
+        implements SaverLoader<PreAndPostConditionsDescription> {
 
     /** The saver loader. */
     private static Gson saverLoader;
@@ -26,9 +26,10 @@ public class PropertyDescriptionSaverLoader
     }
 
     @Override
-    public PreAndPostConditionsDescription
-                createFromSaveString(final String toLoad) throws JsonSyntaxException {
-        return saverLoader.fromJson(toLoad, PreAndPostConditionsDescription.class);
+    public PreAndPostConditionsDescription createFromSaveString(final String toLoad)
+            throws JsonSyntaxException {
+        return saverLoader.fromJson(toLoad,
+                                    PreAndPostConditionsDescription.class);
     }
 
     @Override

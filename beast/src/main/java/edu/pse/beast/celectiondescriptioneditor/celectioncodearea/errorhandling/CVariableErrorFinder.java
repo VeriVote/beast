@@ -32,7 +32,6 @@ public final class CVariableErrorFinder {
      */
     public static List<CodeError> findErrors(final List<String> code,
                                              final ElectionDescription electionDesc) {
-
         // TODO use unified name container here later
 
         ArrayList<String> seperated = new ArrayList<>();
@@ -84,13 +83,10 @@ public final class CVariableErrorFinder {
 
         int lineOffset = seperated.size() + 1;
 
-        final ArrayList<CodeError> found
-            = new ArrayList<>(
-                DeepErrorChecker.checkCodeForErrors(
-                    seperated,
-                    lineOffset
-                )
-            );
+        final ArrayList<CodeError> found =
+                new ArrayList<CodeError>(
+                        DeepErrorChecker.checkCodeForErrors(seperated, lineOffset)
+                );
         return found;
     }
 }

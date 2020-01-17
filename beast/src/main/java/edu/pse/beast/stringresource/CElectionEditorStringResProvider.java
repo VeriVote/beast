@@ -6,6 +6,18 @@ package edu.pse.beast.stringresource;
  * @author Niels Hanselmann
  */
 public class CElectionEditorStringResProvider extends StringResourceProvider {
+    /** The Constant C_ELECTION_EDITOR_TOOLBAR. */
+    private static final String C_ELECTION_EDITOR_TOOLBAR = "CElectionEditorToolbar";
+
+    /** The Constant C_ELECTION_EDITOR_MENU. */
+    private static final String C_ELECTION_EDITOR_MENU = "CElectionEditorMenu";
+
+    /** The Constant C_ELECTION_EDITOR_C_ERROR. */
+    private static final String C_ELECTION_EDITOR_C_ERROR = "CElectionEditorCError";
+
+    /** The Constant C_ELECTION_EDITOR_ELECTION. */
+    private static final String C_ELECTION_EDITOR_ELECTION = "CElectionEditorElection";
+
     /** The menu string res. */
     private StringResourceLoader menuStringRes;
 
@@ -21,7 +33,8 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
     /**
      * Instantiates a new c election editor string res provider.
      *
-     * @param languageId the languageId. Set to "de" for german
+     * @param languageId
+     *            the languageId. Set to "de" for german
      */
     public CElectionEditorStringResProvider(final String languageId) {
         super(languageId);
@@ -59,10 +72,14 @@ public class CElectionEditorStringResProvider extends StringResourceProvider {
     // filenames. The superclass provides the functions for this process
     @Override
     protected final void initialize() {
-        toolbarTipStringRes = this.getStringResourceLoaderFromModuleName("CElectionEditorToolbar");
-        menuStringRes = this.getStringResourceLoaderFromModuleName("CElectionEditorMenu");
-        cErrorStringRes = this.getStringResourceLoaderFromModuleName("CElectionEditorCError");
-        electionStringRes = this.getStringResourceLoaderFromModuleName("CElectionEditorElection");
+        toolbarTipStringRes =
+                this.getStringResourceLoaderFromModuleName(C_ELECTION_EDITOR_TOOLBAR);
+        menuStringRes =
+                this.getStringResourceLoaderFromModuleName(C_ELECTION_EDITOR_MENU);
+        cErrorStringRes =
+                this.getStringResourceLoaderFromModuleName(C_ELECTION_EDITOR_C_ERROR);
+        electionStringRes =
+                this.getStringResourceLoaderFromModuleName(C_ELECTION_EDITOR_ELECTION);
     }
 
     /**

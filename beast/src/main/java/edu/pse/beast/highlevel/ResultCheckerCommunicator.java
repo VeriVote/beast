@@ -13,33 +13,20 @@ import edu.pse.beast.propertychecker.Result;
  * @author Niels Hanselmann
  */
 public interface ResultCheckerCommunicator {
-//    /**
-//     * Starts checks.
-//     * @param elecDescr
-//     *            ElectionDescriptionSource
-//     * @param propDescrSrc
-//     *            PreAndPostConditionsDescription
-//     * @param params
-//     *            ElectionCheckParameter
-//     * @return array of ResultInterfaces
-//     */
-//    public List<ResultInterface>
-//                checkPropertiesForDescription(ElectionDescriptionSource elecDescr,
-//                                              PreAndPostConditionsDescriptionSource propDescrSrc,
-//                                              ElectionCheckParameter params);
-
     /**
      * Starts checks.
      *
-     * @param electDescr             election description
-     * @param parentProperties       properties
-     * @param electionCheckParameter election check parameter
+     * @param electDescr
+     *            election description
+     * @param parentProperties
+     *            properties
+     * @param electionCheckParameter
+     *            election check parameter
      * @return array of ResultInterfaces
      */
-    List<Result>
-            checkPropertiesForDescription(ElectionDescription electDescr,
-                                          List<ParentTreeItem> parentProperties,
-                                          ElectionCheckParameter electionCheckParameter);
+    List<Result> checkPropertiesForDescription(ElectionDescription electDescr,
+                                               List<ParentTreeItem> parentProperties,
+                                               ElectionCheckParameter electionCheckParameter);
 
 //
 //    /**
@@ -51,7 +38,7 @@ public interface ResultCheckerCommunicator {
 //    public UnprocessedCBMCResult checkFile(File toCheck,
 //                                           ElectionDescription elecDescr,
 //                                           ParameterSource params);
-//
+
     /**
      * Stops checks.
      *

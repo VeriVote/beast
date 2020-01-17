@@ -93,7 +93,7 @@ public class Approval extends CBMCInputType {
     public String[] getVotePoints(final String[][] votes,
                                   final int amountCandidates,
                                   final int amountVoters) {
-        String[] result = new String[amountCandidates];
+        final String[] result = new String[amountCandidates];
         Arrays.fill(result, 0L);
         return result;
     }
@@ -163,7 +163,8 @@ public class Approval extends CBMCInputType {
                 new InternalTypeContainer(
                         new InternalTypeContainer(InternalTypeRep.INTEGER),
                         InternalTypeRep.CANDIDATE),
-                InternalTypeRep.VOTER);
+                InternalTypeRep.VOTER
+        );
     }
 
     @Override
@@ -195,7 +196,8 @@ public class Approval extends CBMCInputType {
 
     @Override
     public int getNumVotingPoints(final ResultValueWrapper result) {
-        return GUIController.getController().getElectionSimulation().getNumVoters();
+        return GUIController.getController().getElectionSimulation()
+                    .getNumVoters();
     }
 
     @Override
@@ -205,17 +207,19 @@ public class Approval extends CBMCInputType {
 
     @Override
     public CBMCResultValue convertRowToResultValue(final NEWRowOfValues row) {
-        List<String> values = row.getValues();
-        List<CBMCResultValueWrapper> wrappedValues = new ArrayList<CBMCResultValueWrapper>();
+        final List<String> values = row.getValues();
+        final List<CBMCResultValueWrapper> wrappedValues =
+                new ArrayList<CBMCResultValueWrapper>();
 
-        for (Iterator<String> iterator = values.iterator(); iterator.hasNext();) {
-            String value = iterator.next();
-            CBMCResultValueWrapper wrapper = new CBMCResultValueWrapper();
-            CBMCResultValueSingle toWrap = new CBMCResultValueSingle();
+        for (Iterator<String> iterator = values.iterator();
+                iterator.hasNext();) {
+            final String value = iterator.next();
+            final CBMCResultValueWrapper wrapper = new CBMCResultValueWrapper();
+            final CBMCResultValueSingle toWrap = new CBMCResultValueSingle();
             toWrap.setValue("int", value, INT_LENGTH);
             wrapper.setValue(toWrap);
         }
-        CBMCResultValueArray toReturn = new CBMCResultValueArray();
+        final CBMCResultValueArray toReturn = new CBMCResultValueArray();
         toReturn.setValue(wrappedValues);
         return toReturn;
     }

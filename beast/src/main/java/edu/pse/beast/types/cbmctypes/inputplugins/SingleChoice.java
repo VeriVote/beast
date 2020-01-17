@@ -25,7 +25,8 @@ public class SingleChoice extends CBMCInputType {
 
     /** The Constant SIZE_OF_DIMENSIONS. */
     private static final String[] SIZE_OF_DIMENSIONS = {
-            UnifiedNameContainer.getVoter() };
+            UnifiedNameContainer.getVoter()
+    };
 
     /**
      * The constructor.
@@ -158,7 +159,8 @@ public class SingleChoice extends CBMCInputType {
     public InternalTypeContainer getInternalTypeContainer() {
         return new InternalTypeContainer(
                 new InternalTypeContainer(InternalTypeRep.CANDIDATE),
-                InternalTypeRep.VOTER);
+                InternalTypeRep.VOTER
+        );
     }
 
     @Override
@@ -190,7 +192,8 @@ public class SingleChoice extends CBMCInputType {
 
     @Override
     public int getNumVotingPoints(final ResultValueWrapper result) {
-        return GUIController.getController().getElectionSimulation().getNumVoters();
+        return GUIController.getController().getElectionSimulation()
+                    .getNumVoters();
     }
 
     @Override
@@ -200,8 +203,8 @@ public class SingleChoice extends CBMCInputType {
 
     @Override
     public CBMCResultValue convertRowToResultValue(final NEWRowOfValues row) {
-        List<String> values = row.getValues();
-        String value = values.get(0);
+        final List<String> values = row.getValues();
+        final String value = values.get(0);
         CBMCResultValueSingle toReturn = new CBMCResultValueSingle();
         toReturn.setValue("int", value, INT_LENGTH);
         return toReturn;

@@ -18,8 +18,10 @@ public class IntersectExpNode extends BooleanExpressionNode {
     /**
      * Instantiates a new intersect exp node.
      *
-     * @param intersectExpressionContext the intersect expression context
-     * @param voteOutString the vote out string
+     * @param intersectExpressionContext
+     *            the intersect expression context
+     * @param voteOutString
+     *            the vote out string
      */
     public IntersectExpNode(final IntersectExpContext intersectExpressionContext,
                             final String voteOutString) {

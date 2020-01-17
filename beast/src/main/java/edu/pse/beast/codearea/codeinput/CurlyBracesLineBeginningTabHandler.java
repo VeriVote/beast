@@ -9,16 +9,17 @@ import javax.swing.JTextPane;
  *
  * @author Holger Klein
  */
-public class CurlyBracesLineBeginningTabHandler implements LineBeginningTabsHandler {
+public class CurlyBracesLineBeginningTabHandler
+        implements LineBeginningTabsHandler {
 
     /** The Constant BRACE_LEFT. */
-    private static final char BRACE_LEFT  = '{';
+    private static final char BRACE_LEFT = '{';
 
     /** The Constant BRACE_RIGHT. */
     private static final char BRACE_RIGHT = '}';
 
     /** The Constant NEW_LINE. */
-    private static final char NEW_LINE    = '\n';
+    private static final char NEW_LINE = '\n';
 
     /** The pane. */
     private JTextPane pane;
@@ -26,7 +27,8 @@ public class CurlyBracesLineBeginningTabHandler implements LineBeginningTabsHand
     /**
      * Instantiates a new curly braces line beginning tab handler.
      *
-     * @param textPane the text pane
+     * @param textPane
+     *            the text pane
      */
     public CurlyBracesLineBeginningTabHandler(final JTextPane textPane) {
         this.pane = textPane;
@@ -48,9 +50,7 @@ public class CurlyBracesLineBeginningTabHandler implements LineBeginningTabsHand
             }
             --pos;
         }
-
-        if (caretPos < code.length()
-                && code.charAt(caretPos) == BRACE_RIGHT) {
+        if (caretPos < code.length() && code.charAt(caretPos) == BRACE_RIGHT) {
             --amt;
         }
         return amt;

@@ -26,7 +26,8 @@ public abstract class TypeExpression extends BooleanExpressionNode {
     /**
      * Instantiates a new type expression.
      *
-     * @param inOutType the type of this quantifier
+     * @param inOutType
+     *            the type of this quantifier
      */
     public TypeExpression(final InOutType inOutType) {
         this.type = inOutType;
@@ -50,9 +51,7 @@ public abstract class TypeExpression extends BooleanExpressionNode {
             return false;
         }
         TypeExpression that = (TypeExpression) o;
-        return type != null
-                ? type.equals(that.type)
-                        : that.type == null;
+        return type != null ? type.equals(that.type) : that.type == null;
     }
 
     @Override

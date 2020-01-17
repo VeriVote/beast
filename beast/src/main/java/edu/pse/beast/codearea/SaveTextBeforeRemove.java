@@ -14,11 +14,11 @@ import edu.pse.beast.codearea.actionlist.ActionList;
 /**
  * This class saves the text of a styled document before a removed event is
  * triggered. This is needed because the remove event does not carry the
- * information of which text was removed. This info is needed, e.g., by the
- * text changed action adder. It listens to keystrokes such as backspace which
+ * information of which text was removed. This info is needed, e.g., by the text
+ * changed action adder. It listens to keystrokes such as backspace which
  * indicate that text is about to be removed from the pane. It also listens to
- * the action list so it can save the text when an action is about to be undone /
- * redone.
+ * the action list so it can save the text when an action is about to be undone
+ * / redone.
  *
  * @author Holger Klein
  */
@@ -34,11 +34,13 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
     /**
      * Instantiates a new save text before remove.
      *
-     * @param textPane       The JTextPane of whose StyledDocument the text should be
-     *                   saved before remove commands
-     * @param actionlist the actionlist which performs redo and undo action in the
-     *                   pane. This is needed to save before the actionlist re-does or
-     *                   undoes actions which remove text from the pane
+     * @param textPane
+     *            The JTextPane of whose StyledDocument the text should be saved
+     *            before remove commands
+     * @param actionlist
+     *            the actionlist which performs redo and undo action in the
+     *            pane. This is needed to save before the actionlist re-does or
+     *            undoes actions which remove text from the pane
      */
     public SaveTextBeforeRemove(final JTextPane textPane,
                                 final ActionList actionlist) {
@@ -47,11 +49,12 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
         // this.actionlist = actionlist;
         actionlist.addActionlistListener(this);
         try {
-            prevText = textPane.getStyledDocument()
-                    .getText(0, textPane.getStyledDocument().getLength());
+            prevText =
+                    textPane.getStyledDocument()
+                        .getText(0, textPane.getStyledDocument().getLength());
         } catch (BadLocationException ex) {
             Logger.getLogger(SaveTextBeforeRemove.class.getName())
-                .log(Level.SEVERE, null, ex);
+                    .log(Level.SEVERE, null, ex);
         }
     }
 
@@ -68,8 +71,10 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
      * Returns the String starting at offset of length length before the last
      * textRemovedEvent.
      *
-     * @param offset the offset of the first character of the removed string
-     * @param length the length of the removed string
+     * @param offset
+     *            the offset of the first character of the removed string
+     * @param length
+     *            the length of the removed string
      * @return the removed string
      */
     public String getRemoveString(final int offset, final int length) {
@@ -87,19 +92,23 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
 
     @Override
     public void keyTyped(final KeyEvent ke) {
-        if (ke.getKeyCode() == KeyEvent.VK_LEFT || ke.getKeyCode() == KeyEvent.VK_RIGHT
-                || ke.getKeyCode() == KeyEvent.VK_UP || ke.getKeyCode() == KeyEvent.VK_DOWN) {
+        if (ke.getKeyCode() == KeyEvent.VK_LEFT
+                || ke.getKeyCode() == KeyEvent.VK_RIGHT
+                || ke.getKeyCode() == KeyEvent.VK_UP
+                || ke.getKeyCode() == KeyEvent.VK_DOWN) {
             return;
         }
-        if (pane.getSelectedText() != null || ke.getKeyChar() == KeyEvent.VK_DELETE
+        if (pane.getSelectedText() != null
+                || ke.getKeyChar() == KeyEvent.VK_DELETE
                 || ke.getKeyChar() == KeyEvent.VK_BACK_SPACE
                 || (ke.isShiftDown() && ke.getKeyChar() == KeyEvent.VK_TAB)) {
             try {
-                prevText
-                    = pane.getStyledDocument()
-                      .getText(0, pane.getStyledDocument().getLength());
+                prevText =
+                        pane.getStyledDocument()
+                                .getText(0, pane.getStyledDocument().getLength());
             } catch (BadLocationException ex) {
-                Logger.getLogger(SaveTextBeforeRemove.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SaveTextBeforeRemove.class.getName())
+                        .log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -107,9 +116,12 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
     @Override
     public void keyPressed(final KeyEvent ke) {
         try {
-            prevText = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
+            prevText =
+                    pane.getStyledDocument()
+                            .getText(0, pane.getStyledDocument().getLength());
         } catch (BadLocationException ex) {
-            Logger.getLogger(SaveTextBeforeRemove.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SaveTextBeforeRemove.class.getName())
+                    .log(Level.SEVERE, null, ex);
         }
     }
 
@@ -120,19 +132,25 @@ public class SaveTextBeforeRemove implements KeyListener, ActionlistListener {
     @Override
     public void undoingAction() {
         try {
-            prevText = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
+            prevText =
+                    pane.getStyledDocument()
+                            .getText(0, pane.getStyledDocument().getLength());
         } catch (BadLocationException ex) {
-            Logger.getLogger(SaveTextBeforeRemove.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SaveTextBeforeRemove.class.getName())
+                    .log(Level.SEVERE, null, ex);
         }
     }
 
     /**
      * Saves the current text of the given jtextpane.
      *
-     * @throws BadLocationException should never be thrown
+     * @throws BadLocationException
+     *             should never be thrown
      */
     public void save() throws BadLocationException {
-        prevText = pane.getStyledDocument().getText(0, pane.getStyledDocument().getLength());
+        prevText =
+                pane.getStyledDocument()
+                        .getText(0, pane.getStyledDocument().getLength());
     }
 
     @Override

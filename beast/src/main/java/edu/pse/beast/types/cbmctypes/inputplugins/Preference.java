@@ -191,11 +191,11 @@ public class Preference extends CBMCInputType {
         code.add(loopHead);
 
         code.add("assume (" + valueName + "."
-                + UnifiedNameContainer.getStructValueName()
-                + "[" + loopVariables.get(0) + "]" + "[" + loopVariables.get(1)
+                + UnifiedNameContainer.getStructValueName() + "["
+                + loopVariables.get(0) + "]" + "[" + loopVariables.get(1)
                 + "] != " + valueName + "."
-                + UnifiedNameContainer.getStructValueName()
-                + "[" + loopVariables.get(0) + "]" + "[" + ownLoopVar + "]);");
+                + UnifiedNameContainer.getStructValueName() + "["
+                + loopVariables.get(0) + "]" + "[" + ownLoopVar + "]);");
         code.deleteTab();
         code.add("}");
     }
@@ -208,9 +208,12 @@ public class Preference extends CBMCInputType {
 
     @Override
     public InternalTypeContainer getInternalTypeContainer() {
-        return new InternalTypeContainer(new InternalTypeContainer(
-                new InternalTypeContainer(InternalTypeRep.INTEGER),
-                InternalTypeRep.CANDIDATE), InternalTypeRep.VOTER);
+        return new InternalTypeContainer(
+                new InternalTypeContainer(
+                        new InternalTypeContainer(InternalTypeRep.INTEGER),
+                        InternalTypeRep.CANDIDATE),
+                InternalTypeRep.VOTER
+        );
     }
 
     @Override
@@ -233,7 +236,8 @@ public class Preference extends CBMCInputType {
 
     @Override
     public int getNumVotingPoints(final ResultValueWrapper result) {
-        return GUIController.getController().getElectionSimulation().getNumVoters();
+        return GUIController.getController().getElectionSimulation()
+                .getNumVoters();
     }
 
     @Override
@@ -252,17 +256,18 @@ public class Preference extends CBMCInputType {
 
     @Override
     public CBMCResultValue convertRowToResultValue(final NEWRowOfValues row) {
-        List<String> values = row.getValues();
-        List<CBMCResultValueWrapper> wrappedValues = new ArrayList<CBMCResultValueWrapper>();
-        for (Iterator<String> iterator = values.iterator(); iterator
-                .hasNext();) {
+        final List<String> values = row.getValues();
+        final List<CBMCResultValueWrapper> wrappedValues =
+                new ArrayList<CBMCResultValueWrapper>();
+        for (final Iterator<String> iterator = values.iterator();
+                iterator.hasNext();) {
             String value = iterator.next();
             CBMCResultValueWrapper wrapper = new CBMCResultValueWrapper();
             CBMCResultValueSingle toWrap = new CBMCResultValueSingle();
             toWrap.setValue("int", value, INT_LENGTH);
             wrapper.setValue(toWrap);
         }
-        CBMCResultValueArray toReturn = new CBMCResultValueArray();
+        final CBMCResultValueArray toReturn = new CBMCResultValueArray();
         toReturn.setValue(wrappedValues);
         return toReturn;
     }

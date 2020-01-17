@@ -34,8 +34,8 @@ public abstract class SystemSpecificCompilerAndExecutioner {
     private static final String DATA_FILE_ENDING = ".votingdata";
 
     /**
-     * Constructor creates an error checker that compiles the c code and passes it
-     * on to a system specific compiler.
+     * Constructor creates an error checker that compiles the c code and passes
+     * it on to a system specific compiler.
      */
     public SystemSpecificCompilerAndExecutioner() {
         // clear the folder where the files that get checked get saved to,
@@ -43,7 +43,8 @@ public abstract class SystemSpecificCompilerAndExecutioner {
         // persist from the last time BEAST was run
         try {
             FileUtils.cleanDirectory(
-                    new File(SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER));
+                    new File(SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER)
+            );
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -53,8 +54,10 @@ public abstract class SystemSpecificCompilerAndExecutioner {
     /**
      * Run analysis.
      *
-     * @param code the code
-     * @param resultToStoreIn the result to store in
+     * @param code
+     *            the code
+     * @param resultToStoreIn
+     *            the result to store in
      * @return the list
      */
     public List<String> runAnalysis(final List<String> code,
@@ -63,8 +66,10 @@ public abstract class SystemSpecificCompilerAndExecutioner {
         List<String> toReturn = new ArrayList<String>();
         List<String> result = new ArrayList<String>();
         List<String> errors = new ArrayList<String>();
-        String absolutePath = SuperFolderFinder.getSuperFolder() + PATH_TO_TEMP_FOLDER;
-        String pathToNewFile = absolutePath + FileLoader.getNewUniqueName(absolutePath);
+        String absolutePath = SuperFolderFinder.getSuperFolder()
+                                + PATH_TO_TEMP_FOLDER;
+        String pathToNewFile = absolutePath
+                                + FileLoader.getNewUniqueName(absolutePath);
         File dataFile = new File(pathToNewFile + DATA_FILE_ENDING);
         // create two links to files, so in case an object file gets created we
         // can delete it afterwards too
@@ -84,14 +89,20 @@ public abstract class SystemSpecificCompilerAndExecutioner {
         Process process = compileCFile(cFile);
         if (process != null) {
             CountDownLatch latch = new CountDownLatch(2);
-            ThreadedBufferedReader outReader
-                = new ThreadedBufferedReader(
-                    new BufferedReader(new InputStreamReader(process.getInputStream())),
-                    result, latch, false);
-            ThreadedBufferedReader errReader
-                = new ThreadedBufferedReader(
-                    new BufferedReader(new InputStreamReader(process.getErrorStream())),
-                    errors, latch, false);
+            ThreadedBufferedReader outReader =
+                    new ThreadedBufferedReader(
+                            new BufferedReader(
+                                    new InputStreamReader(process.getInputStream())
+                                    ),
+                            result, latch, false
+                            );
+            ThreadedBufferedReader errReader =
+                    new ThreadedBufferedReader(
+                            new BufferedReader(
+                                    new InputStreamReader(process.getErrorStream())
+                                    ),
+                            errors, latch, false
+                            );
             resultToStoreIn.setLastTmpResult(result);
             resultToStoreIn.setLastTmpResult(errors);
             // wait for the process to finish;
@@ -109,16 +120,20 @@ public abstract class SystemSpecificCompilerAndExecutioner {
             Process programProcess = runWithData(pathToNewFile, dataFile);
             if (programProcess != null) {
                 latch = new CountDownLatch(2);
-                outReader
-                    = new ThreadedBufferedReader(
-                        new BufferedReader(
-                            new InputStreamReader(programProcess.getInputStream())),
-                        result, latch, false);
-                errReader
-                    = new ThreadedBufferedReader(
-                        new BufferedReader(
-                            new InputStreamReader(programProcess.getErrorStream())),
-                        errors, latch, false);
+                outReader =
+                        new ThreadedBufferedReader(
+                                new BufferedReader(
+                                        new InputStreamReader(programProcess.getInputStream())
+                                        ),
+                                result, latch, false
+                                );
+                errReader =
+                        new ThreadedBufferedReader(
+                                new BufferedReader(
+                                        new InputStreamReader(programProcess.getErrorStream())
+                                        ),
+                                errors, latch, false
+                                );
                 // wait for the process to finish;
                 try {
                     process.waitFor();
@@ -127,12 +142,14 @@ public abstract class SystemSpecificCompilerAndExecutioner {
                 } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 }
-                for (Iterator<String> iterator = errors.iterator(); iterator.hasNext();) {
+                for (Iterator<String> iterator = errors.iterator();
+                        iterator.hasNext();) {
                     String error = iterator.next();
                     System.out.println(error);
                 }
                 // here the computation is done
-                // the winning candidate gets printed as a number in the last line
+                // the winning candidate gets printed as a number in the last
+                // line
                 // like this:
                 // winner = x (,y, z ..) ( = if seats are selected)
                 String winner = result.get(0);
@@ -147,7 +164,8 @@ public abstract class SystemSpecificCompilerAndExecutioner {
                 }
             } else {
                 ErrorLogger.log("Could not compile the source file");
-                // deletes the temporary file, so it does not clog up the filesystem
+                // deletes the temporary file, so it does not clog up the
+                // filesystem
             }
             outReader.finish();
             errReader.finish();
@@ -168,7 +186,8 @@ public abstract class SystemSpecificCompilerAndExecutioner {
     /**
      * checks a file for errors. Has to be implemented system specific
      *
-     * @param toCheck the file to check
+     * @param toCheck
+     *            the file to check
      * @return a process that is currently checking the file
      */
     protected abstract Process compileCFile(File toCheck);
@@ -176,9 +195,12 @@ public abstract class SystemSpecificCompilerAndExecutioner {
     /**
      * Run with data.
      *
-     * @param toRun     a String that describes what name the file to run will have. The
-     *                  implementation will have to add the OS specific file ending.
-     * @param dataFile  the data to be used by the program.
+     * @param toRun
+     *            a String that describes what name the file to run will have.
+     *            The implementation will have to add the OS specific file
+     *            ending.
+     * @param dataFile
+     *            the data to be used by the program.
      * @return the running process that is running right now.
      */
     protected abstract Process runWithData(String toRun, File dataFile);
